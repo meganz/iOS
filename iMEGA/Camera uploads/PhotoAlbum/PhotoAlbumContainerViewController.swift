@@ -57,9 +57,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                                                style: .plain,
                                                target: self,
                                                action: #selector(deleteAlbumButtonPressed))
-    lazy var selectBarButton = UIBarButtonItem(image: UIColor.isDesignTokenEnabled()
-                                               ? UIImage(resource: .selectAllItems).withRenderingMode(.alwaysTemplate).withTintColor(TokenColors.Icon.primary)
-                                               : UIImage(resource: .selectAllItems),
+    lazy var selectBarButton = UIBarButtonItem(image: UIImage(resource: .selectAllItems).withRenderingMode(.alwaysTemplate).withTintColor(TokenColors.Icon.primary),
                                                style: .plain,
                                                target: self,
                                                action: #selector(toggleEditing))
@@ -79,8 +77,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         setUpPagerTabView()
         setUpPageViewController()
         
-        let backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
-        view.backgroundColor = backgroundColor
+        view.backgroundColor = TokenColors.Background.page
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
@@ -200,7 +197,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                 monitorCameraUploadUseCase: MonitorCameraUploadUseCase(
                     cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
                     networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-                    preferenceUseCase: PreferenceUseCase.default), 
+                    preferenceUseCase: PreferenceUseCase.default),
                 devicePermissionHandler: DevicePermissionsHandler.makeHandler(),
                 cameraUploadsSettingsViewRouter: CameraUploadsSettingsViewRouter(presenter: navigationController) { }
             )
@@ -329,7 +326,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                 guard let self else { return }
                 $0 ? showToolbar() : hideToolbar()
             }.store(in: &subscriptions)
-
+        
         viewModel.$disableSelectBarButton
             .removeDuplicates()
             .receive(on: DispatchQueue.main)

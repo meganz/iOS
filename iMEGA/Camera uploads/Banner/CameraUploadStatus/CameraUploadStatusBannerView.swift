@@ -16,9 +16,7 @@ struct CameraUploadBannerStatusView: View {
     }
 
     private var backgroundColor: Color {
-        UIColor.isDesignTokenEnabled()
-            ? TokenColors.Background.page.swiftUI
-            : UIColor.backgroundRegularPrimaryElevated.swiftUI
+        TokenColors.Background.page.swiftUI
     }
 
     @ViewBuilder

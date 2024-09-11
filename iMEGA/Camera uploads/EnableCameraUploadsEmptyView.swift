@@ -15,22 +15,22 @@ struct EnableCameraUploadsEmptyView: View {
                 
                 Text(Strings.Localizable.enableCameraUploadsButton)
                     .font(.headline)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Text(Strings.Localizable.automaticallyBackupYourPhotosAndVideosToTheCloudDrive)
                     .font(.subheadline)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
             .frame(maxHeight: .infinity)
             
             Button(action: action) {
                 Text(Strings.Localizable.enable)
                     .font(.body.weight(.semibold))
-                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.inverse.swiftUI : .whiteFFFFFF)
+                    .foregroundColor(TokenColors.Text.inverse.swiftUI)
                     .frame(width: 288, height: 50)
-                    .background(isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : .green00A886)
+                    .background(TokenColors.Button.primary.swiftUI)
                     .cornerRadius(8)
                     .shadow(color: .black000000.opacity(0.15), radius: 2, x: 0, y: 1)
                     .contentShape(Rectangle())

@@ -19,10 +19,7 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         toolbar.alpha = 0.0
         tabBarController.view.addSubview(toolbar)
         
-        toolbar.backgroundColor = UIColor.isDesignTokenEnabled()
-        ? TokenColors.Background.surface1
-        : UIColor.mnz_mainBars(for: traitCollection)
-        
+        toolbar.backgroundColor = TokenColors.Background.surface1
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -56,7 +53,7 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         deleteBarButton.isEnabled = isSelected
         shareLinkBarButton.isEnabled = isSelected
         
-        if isSelected && UIColor.isDesignTokenEnabled() {
+        if isSelected {
             deleteBarButton.tintColor = TokenColors.Icon.primary
             shareLinkBarButton.tintColor = TokenColors.Icon.primary
         }

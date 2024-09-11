@@ -10,13 +10,7 @@ protocol CameraUploadBannerStatusViewPresenterProtocol {
 
 extension CameraUploadBannerStatusViewPresenterProtocol {
     func bottomBorder(for scheme: ColorScheme) -> Color {
-        if CameraUploadBannerStatusViewStates.isDesignTokenEnabled {
-            return TokenColors.Border.subtle.swiftUI
-        }
-
-        return scheme == .dark 
-            ? UIColor.gray545458.swiftUI.opacity(0.3)
-            : UIColor.gray3C3C43.swiftUI.opacity(0.65)
+        TokenColors.Border.subtle.swiftUI
     }
 }
 

@@ -28,11 +28,11 @@ struct CameraUploadStatusImageView: View {
             }
             
             Image(viewModel.baseImageResource)
-                .renderingMode(isDesignTokenEnabled ? .template : .original)
+                .renderingMode(.template)
                 .resizable()
                 .frame(width: 21.5,
                        height: 21.5)
-                .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : nil)
+                .foregroundColor(TokenColors.Icon.primary.swiftUI)
             
             if let statusImageResource = viewModel.statusImageResource {
                 Group {
@@ -67,11 +67,11 @@ struct CameraUploadStatusImageView: View {
     @ViewBuilder
     private func statusImage(resource: ImageResource) -> some View {
         Image(resource)
-            .renderingMode(isDesignTokenEnabled ? .template : .original)
+            .renderingMode(.template)
             .resizable()
             .frame(width: 12.5,
                    height: 12.5)
-            .foregroundColor(isDesignTokenEnabled ? statusImageTintColor : nil)
+            .foregroundColor(statusImageTintColor)
     }
     
     private var statusImageAnimation: Animation {
