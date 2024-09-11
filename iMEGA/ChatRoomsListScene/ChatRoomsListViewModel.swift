@@ -34,7 +34,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
     private let retryPendingConnectionsUseCase: any RetryPendingConnectionsUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let chatViewType: ChatViewType
     private var networkMonitorTask: Task<Void, Never>?
     
@@ -132,18 +131,9 @@ final class ChatRoomsListViewModel: ObservableObject {
         (currentTip == .startMeeting || (currentTip == .recurringOrStartMeeting && !presentingRecurringMeetingTip))
     }
     
-    var showNewEmptyScreen: Bool {
-        featureFlagProvider.newChatEmptyScreen
-    }
-    
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
     
-    private lazy var emptyViewStateFactory: ChatRoomsEmptyViewStateFactory = {
-        ChatRoomsEmptyViewStateFactory(
-            newEmptyStates: featureFlagProvider.newChatEmptyScreen,
-            designTokenEnabled: UIColor.isDesignTokenEnabled()
-        )
-    }()
+    private let emptyViewStateFactory = ChatRoomsEmptyViewStateFactory()
     
     let urlOpener: (URL) -> Void
     
@@ -162,7 +152,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         urlOpener: @escaping (URL) -> Void
     ) {
         self.router = router
@@ -181,7 +170,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatListItemCacheUseCase = chatListItemCacheUseCase
         self.retryPendingConnectionsUseCase = retryPendingConnectionsUseCase
         self.tracker = tracker
-        self.featureFlagProvider = featureFlagProvider
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         self.urlOpener = urlOpener
@@ -201,14 +189,16 @@ final class ChatRoomsListViewModel: ObservableObject {
             .contains { $0.visibility == .visible }
     }
     
+    var isSearching: Bool {
+        isSearchActive || searchText.isNotEmpty
+    }
+    
     func emptyViewState() -> ChatRoomsEmptyViewState? {
         guard isChatRoomEmpty else {
             return nil
         }
         
-        let searching = isSearchActive || searchText.isNotEmpty
-        
-        return if searching {
+        return if isSearching {
             emptyViewStateFactory.searchEmptyViewState()
         } else {
             emptyViewStateFactory.emptyChatRoomsViewState(
@@ -1000,11 +990,5 @@ extension ChatRoomsListViewModel: PushNotificationControlProtocol {
     
     func pushNotificationSettingsLoaded() {
         refreshContextMenu()
-    }
-}
-
-extension FeatureFlagProviderProtocol {
-    var newChatEmptyScreen: Bool {
-        isFeatureFlagEnabled(for: .chatEmptyStates)
     }
 }

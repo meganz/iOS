@@ -5,13 +5,8 @@ import XCTest
 final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
     class Harness {
         var sut: ChatRoomsEmptyViewStateFactory
-        init(
-            newEmptyStates: Bool = true
-        ) {
-            sut = .init(
-                newEmptyStates: newEmptyStates,
-                designTokenEnabled: true
-            )
+        init() {
+            sut = .init()
         }
         
         func chatEmptyState(
