@@ -24,12 +24,16 @@ struct DeviceListContentView: View {
     var body: some View {
         ListViewContainer(
             selectedItem: $selectedViewModel,
-            hasNetworkConnection: $viewModel.hasNetworkConnection) {
+            hasNetworkConnection: $viewModel.hasNetworkConnection
+        ) {
             PlaceholderContainerView(
                 isLoading: $viewModel.isLoadingPlaceholderVisible,
                 content: content,
                 placeholder: PlaceholderContentView(placeholderRow: placeholderRowView)
             )
+        }
+        .task {
+            viewModel.updateInternetConnectionStatus()
         }
     }
     
@@ -77,7 +81,6 @@ struct DeviceListContentView: View {
             }
         }
         .throwingTask {
-            viewModel.updateInternetConnectionStatus()
             try await viewModel.startAutoRefreshUserDevices()
         }
     }
