@@ -1,0 +1,3 @@
+protocol WarningBannerViewRouting {
+    func goToSettings()
+}

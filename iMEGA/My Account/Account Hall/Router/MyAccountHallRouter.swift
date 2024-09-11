@@ -103,7 +103,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         
         let warningViewModel =
             warningMessage != nil ?
-                WarningViewModel(warningType: .backupStatusError(warningMessage ?? "")): nil
+                WarningBannerViewModel(warningType: .backupStatusError(warningMessage ?? "")): nil
         
         return factory.buildBare(
             parentNode: node,

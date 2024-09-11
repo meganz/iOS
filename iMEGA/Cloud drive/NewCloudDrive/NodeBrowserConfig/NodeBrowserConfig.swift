@@ -6,7 +6,7 @@ struct NodeBrowserConfig {
     var isFromSharedItem: Bool?
     var showsAvatar: Bool?
     var shouldRemovePlayerDelegate: Bool?
-    var warningViewModel: WarningViewModel?
+    var warningViewModel: WarningBannerViewModel?
     // this should enabled for non-root nodes
     var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
     // Determines whether the NodeBrowserView should handle upgrade encouragement flow or not, default value is true
@@ -28,7 +28,7 @@ struct NodeBrowserConfig {
         return config
     }
     
-    static func withOptionalDisplayMode(_ displayMode: DisplayMode?, warningViewModel: WarningViewModel?) -> Self {
+    static func withOptionalDisplayMode(_ displayMode: DisplayMode?, warningViewModel: WarningBannerViewModel?) -> Self {
         var config = Self.default
         config.displayMode = displayMode
         config.warningViewModel = warningViewModel
