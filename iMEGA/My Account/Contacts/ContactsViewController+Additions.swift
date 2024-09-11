@@ -78,7 +78,7 @@ extension ContactsViewController {
         }
         
         if hostingViewUIView == nil {
-            hostingViewUIView = UIHostingController(rootView: WarningView(viewModel: .init(warningType: .contactsNotVerified))).view
+            hostingViewUIView = UIHostingController(rootView: WarningBannerView(viewModel: .init(warningType: .contactsNotVerified))).view
         }
 
         guard let hostingViewUIView else { return }

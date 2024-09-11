@@ -4338,6 +4338,12 @@
 "inviteContact.title"="Invite";
 /* Visual media search history empty description */
 "photos.searchHistory.empty.description"="Try searching for any media files.";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="Your storage is full";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Upgrade now";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="To keep uploading data, upgrade now to get more storage.";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title" = "Protect your calls";
 /* Description of meetings screen empty view */

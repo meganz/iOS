@@ -20,7 +20,7 @@ protocol NodeRouting {
         isFromSharedItem: Bool
     )
 
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningViewModel?)
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel?)
 
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?)
     
@@ -80,7 +80,7 @@ final class HomeSearchResultRouter: NodeRouting {
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningViewModel? = nil) {
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
         guard let node = nodeUseCase.nodeForHandle(nodeHandle) else { return }
         if node.isTakenDown {
             showTakenDownAlert(isFolder: node.isFolder)
