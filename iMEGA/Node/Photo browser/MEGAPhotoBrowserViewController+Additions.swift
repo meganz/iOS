@@ -2,6 +2,7 @@ import Accounts
 import Combine
 import FirebaseCrashlytics
 import MEGAAnalyticsiOS
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -31,7 +32,11 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func backgroundColor() -> UIColor {
-        MEGAAppColor.Black._000000.uiColor
+        TokenColors.Background.page
+    }
+    
+    @objc func fullScreenBackgroundColor() -> UIColor {
+        UIColor.pageBgColorDark
     }
     
     @objc func freeUpSpace(
