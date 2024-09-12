@@ -7,8 +7,8 @@ public enum AlbumEntityType: Sendable {
     case user
 }
 
-public struct AlbumEntity: Identifiable, Sendable {
-    public let id: HandleEntity
+public struct AlbumEntity: Sendable {
+    public let setIdentifier: SetIdentifier
     public var name: String
     public var coverNode: NodeEntity?
     public var count: Int
@@ -18,7 +18,7 @@ public struct AlbumEntity: Identifiable, Sendable {
     public var sharedLinkStatus: SharedLinkStatusEntity
     public let metaData: AlbumMetaDataEntity?
     
-    public init(id: HandleEntity,
+    public init(setIdentifier: SetIdentifier,
                 name: String,
                 coverNode: NodeEntity?,
                 count: Int,
@@ -27,7 +27,7 @@ public struct AlbumEntity: Identifiable, Sendable {
                 modificationTime: Date? = nil,
                 sharedLinkStatus: SharedLinkStatusEntity = .unavailable,
                 metaData: AlbumMetaDataEntity? = nil) {
-        self.id = id
+        self.setIdentifier = setIdentifier
         self.name = name
         self.coverNode = coverNode
         self.count = count
@@ -36,6 +36,36 @@ public struct AlbumEntity: Identifiable, Sendable {
         self.modificationTime = modificationTime
         self.sharedLinkStatus = sharedLinkStatus
         self.metaData = metaData
+    }
+    
+    public init(
+        id: SetHandleEntity,
+        name: String,
+        coverNode: NodeEntity?,
+        count: Int,
+        type: AlbumEntityType,
+        creationTime: Date? = nil,
+        modificationTime: Date? = nil,
+        sharedLinkStatus: SharedLinkStatusEntity = .unavailable,
+        metaData: AlbumMetaDataEntity? = nil
+    ) {
+        self.init(
+            setIdentifier: SetIdentifier(handle: id),
+            name: name,
+            coverNode: coverNode,
+            count: count,
+            type: type,
+            creationTime: creationTime,
+            modificationTime: modificationTime,
+            sharedLinkStatus: sharedLinkStatus,
+            metaData: metaData
+        )
+    }
+}
+
+extension AlbumEntity: Identifiable {
+    public var id: SetHandleEntity {
+        setIdentifier.handle
     }
 }
 
