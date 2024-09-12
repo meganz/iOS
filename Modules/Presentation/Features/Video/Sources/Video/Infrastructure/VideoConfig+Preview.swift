@@ -74,7 +74,7 @@ extension VideoConfig {
                     textColor: TokenColors.Text.primary.swiftUI,
                     iconColor: TokenColors.Icon.secondary.swiftUI
                 ),
-                recentsEmptyStateImage: MEGAAssetsImageProvider.image(named: "recentsEmptyState")!
+                recentsEmptyStateImage: MEGAAssetsImageProvider.image(named: "recentlyWatchedVideosEmptyState")!
             ),
             listView: .init(
                 header: .init(
