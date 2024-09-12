@@ -15,21 +15,9 @@ struct MeetingDescriptionView: View {
                 .padding(.horizontal)
             Text(description)
                 .font(.body)
-                .foregroundColor(foregroundColor)
+                .foregroundColor(TokenColors.Text.secondary.swiftUI)
                 .padding(.horizontal)
             Divider()
-        }
-    }
-    
-    private var foregroundColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.secondary.swiftUI
-        } else {
-            Color(
-                colorScheme == .dark ? 
-                UIColor.grayEBEBF5 :
-                UIColor.gray3C3C43).opacity(0.6
-            )
         }
     }
 }

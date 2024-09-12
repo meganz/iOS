@@ -23,11 +23,7 @@ class ReactionContainerView: UIView {
         let addMoreView = UIButton()
         addMoreView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
         addMoreView.imageView?.contentMode = .scaleAspectFit
-        if UIColor.isDesignTokenEnabled() {
-            addMoreView.layer.borderColor = TokenColors.Border.strong.cgColor
-        } else {
-            addMoreView.layer.borderColor = UIColor.chatReactionBubbleBorder.cgColor
-        }
+        addMoreView.layer.borderColor = TokenColors.Border.strong.cgColor
         addMoreView.layer.borderWidth = 1
         addMoreView.layer.cornerRadius = 12
         addMoreView.backgroundColor = UIColor.mnz_secondaryBackground(for: addMoreView.traitCollection)
@@ -99,14 +95,8 @@ class ReactionContainerView: UIView {
     }
     
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            addMoreView.backgroundColor = TokenColors.Button.secondary
-            addMoreView.layer.borderColor = TokenColors.Border.strong.cgColor
-        } else {
-            addMoreView.backgroundColor = UIColor.mnz_secondaryBackground(for: self.traitCollection)
-            addMoreView.layer.borderColor = UIColor.chatReactionBubbleBorder.cgColor
-        }
-
+        addMoreView.backgroundColor = TokenColors.Button.secondary
+        addMoreView.layer.borderColor = TokenColors.Border.strong.cgColor
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

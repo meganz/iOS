@@ -28,12 +28,11 @@ struct ChatRoomsTopRowViewState: Identifiable {
 
 extension ChatRoomsTopRowViewState {
     static func contactsOnMega(
-        designTokenEnabled: Bool,
         action: @escaping () -> Void
     ) -> Self {
         ChatRoomsTopRowViewState(
             id: "contacts",
-            image: designTokenEnabled ? UIImage.inviteToChatDesignToken : UIImage.inviteToChat,
+            image: UIImage.inviteToChatDesignToken,
             description: Strings.Localizable.inviteContactNow,
             hasDivider: false,
             action: action

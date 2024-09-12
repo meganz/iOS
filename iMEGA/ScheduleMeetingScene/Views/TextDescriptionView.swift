@@ -60,11 +60,7 @@ struct FocusableTextDescriptionView: View {
         .onChange(of: focused) { isFocused in
             onChange(isFocused)
         }
-        .foregroundStyle(focused ?
-                         isDesignTokenEnabled
-                         ? TokenColors.Text.primary.swiftUI : .primary
-                         : isDesignTokenEnabled
-                         ? TokenColors.Text.secondary.swiftUI : colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(Constants.titleOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.titleOpacity))
+        .foregroundStyle(focused ? TokenColors.Text.primary.swiftUI : TokenColors.Text.secondary.swiftUI)
         .padding(.top, !focused && $descriptionText.wrappedValue.isNotEmpty ? Constants.titleHeight : 0)
         .overlay(
             VStack(spacing: Constants.spacing) {

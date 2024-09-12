@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ChatRoomActiveCallView: View {
     @Environment(\.colorScheme) private var colorScheme
-
+    
     @ObservedObject var viewModel: ActiveCallViewModel
     
     var body: some View {
@@ -12,11 +12,7 @@ struct ChatRoomActiveCallView: View {
             Text(viewModel.message)
                 .font(.caption)
                 .bold()
-                .foregroundColor(
-                    isDesignTokenEnabled ?
-                        TokenColors.Text.inverseAccent.swiftUI :
-                        UIColor.whiteFFFFFF.swiftUI
-                )
+                .foregroundColor(TokenColors.Text.inverseAccent.swiftUI)
             Image(uiImage: viewModel.muted)
             Image(uiImage: viewModel.video)
             Spacer()
@@ -30,14 +26,6 @@ struct ChatRoomActiveCallView: View {
     }
     
     func backgroundColor(isReconnecting: Bool) -> Color {
-        if isReconnecting {
-            return Color(.systemOrange)
-        } else {
-            if isDesignTokenEnabled {
-                return TokenColors.Button.primary.swiftUI
-            } else {
-                return colorScheme == .dark ? UIColor.green00C29A.swiftUI : UIColor.green00A886.swiftUI
-            }
-        }
+        isReconnecting ? Color(.systemOrange) : TokenColors.Button.primary.swiftUI
     }
 }

@@ -77,11 +77,9 @@ class ChatViewAttachmentCell: MessageContentCell {
         titleLabel.text = attachmentViewModel.title
         detailLabel.text = attachmentViewModel.subtitle
         attachmentViewModel.set(imageView: imageView)
-        if UIColor.isDesignTokenEnabled() {
-            titleLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
-            titleLabel.apply(style: .footnote, weight: .bold)
-            detailLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
-        }
+        titleLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
+        titleLabel.apply(style: .footnote, weight: .bold)
+        detailLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
     }
     
     override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -97,14 +95,9 @@ class ChatViewAttachmentCell: MessageContentCell {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if UIColor.isDesignTokenEnabled() {
-            titleLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
-            titleLabel.apply(style: .footnote, weight: .bold)
-            detailLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
-        } else {
-            titleLabel.textColor = UIColor.label
-            detailLabel.textColor = UIColor.mnz_subtitles(for: UIScreen.main.traitCollection)
-        }
+        titleLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
+        titleLabel.apply(style: .footnote, weight: .bold)
+        detailLabel.textColor = attachmentViewModel.isFromCurrentSender ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
     }
     
     func sizeThatFits() -> CGSize {

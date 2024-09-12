@@ -16,15 +16,9 @@ class RichPreviewContentView: UIView {
     }
     
     private func updateAppearance () {
-        if UIColor.isDesignTokenEnabled() {
-            backgroundColor = TokenColors.Background.page
-            titleLabel.textColor = TokenColors.Text.primary
-            descriptionLabel.textColor = TokenColors.Text.secondary
-        } else {
-            backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
-            titleLabel.textColor = UIColor.label
-            descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
-        }
+        backgroundColor = TokenColors.Background.page
+        titleLabel.textColor = TokenColors.Text.primary
+        descriptionLabel.textColor = TokenColors.Text.secondary
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

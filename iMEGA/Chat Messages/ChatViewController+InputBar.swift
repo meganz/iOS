@@ -38,9 +38,8 @@ extension ChatViewController {
 
     private var joinInputBar: JoinInputBar {
         let joinInputBar = JoinInputBar.instanceFromNib
-        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
-        joinInputBar.joinButton.backgroundColor = isDesignTokenEnabled ? TokenColors.Button.primary : UIColor.green00A886
-        joinInputBar.joinButton.setTitleColor(isDesignTokenEnabled ? TokenColors.Text.inverseAccent : .white, for: .normal)
+        joinInputBar.joinButton.backgroundColor = TokenColors.Button.primary
+        joinInputBar.joinButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
         joinInputBar.buttonTappedHandler = { [weak self] button in
             self?.join(button: button)
         }

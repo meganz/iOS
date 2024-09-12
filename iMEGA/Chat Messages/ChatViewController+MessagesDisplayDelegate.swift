@@ -20,20 +20,12 @@ extension ChatViewController: MessagesDisplayDelegate {
         }
         
         if chatMessage.transfer?.transferChatMessageType() == .attachment {
-            if UIColor.isDesignTokenEnabled() {
-                return chatBubbleBackgroundColor(for: message)
-            } else {
-                return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
-            }
+            return chatBubbleBackgroundColor(for: message)
         }
         
         switch chatMessage.message.type {
         case .contact, .attachment:
-            if UIColor.isDesignTokenEnabled() {
-                return chatBubbleBackgroundColor(for: message)
-            } else {
-                return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
-            }
+            return chatBubbleBackgroundColor(for: message)
         case .normal:
             if ((chatMessage.message.content ?? "") as NSString).mnz_isPureEmojiString() {
                 return .clear
@@ -47,11 +39,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
 
     func textColor(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            return isFromCurrentSender(message: message) ? TokenColors.Text.inverse : TokenColors.Text.primary
-        } else {
-            return isFromCurrentSender(message: message) ? UIColor.whiteFFFFFF : .label
-        }
+        return isFromCurrentSender(message: message) ? TokenColors.Text.inverse : TokenColors.Text.primary
     }
 
     func messageStyle(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -122,11 +110,7 @@ extension ChatViewController: MessagesDisplayDelegate {
         if let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed {
             button.setImage(UIImage(resource: .triangle).imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         } else {
-            let forwardImage = if UIColor.isDesignTokenEnabled() {
-                UIImage(resource: .forwardButton).imageFlippedForRightToLeftLayoutDirection()
-            } else {
-                UIImage(resource: .forward).imageFlippedForRightToLeftLayoutDirection()
-            }
+            let forwardImage = UIImage(resource: .forwardButton).imageFlippedForRightToLeftLayoutDirection()
             button.setImage(forwardImage, for: .normal)
         }
     }
@@ -192,12 +176,8 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
     
     private func chatBubbleBackgroundColor(for message: any MessageType) -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            return isFromCurrentSender(message: message) ?
-                TokenColors.Background.surfaceInverseAccent :
-                TokenColors.Background.surface2
-        } else {
-            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
-        }
+        return isFromCurrentSender(message: message) ?
+            TokenColors.Background.surfaceInverseAccent :
+            TokenColors.Background.surface2
     }
 }

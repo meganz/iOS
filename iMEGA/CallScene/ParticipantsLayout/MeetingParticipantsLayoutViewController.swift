@@ -9,9 +9,9 @@ import SwiftUI
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType, SnackBarPresenting {
     
     private enum Constants {
-        static let notificationMessageWhiteBackgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.inverse : UIColor(white: 1.0, alpha: 0.95)
-        static let notificationMessageWhiteTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.whiteFFFFFF
-        static let notificationMessageBlackTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.inverse : UIColor.black000000
+        static let notificationMessageWhiteBackgroundColor = TokenColors.Background.inverse
+        static let notificationMessageWhiteTextColor = TokenColors.Text.primary
+        static let notificationMessageBlackTextColor = TokenColors.Text.inverse
     }
     
     @IBOutlet private weak var callCollectionView: CallCollectionView!
@@ -111,9 +111,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         overrideUserInterfaceStyle = .dark
         callCollectionView.overrideUserInterfaceStyle = .dark
         
-        if UIColor.isDesignTokenEnabled() {
-            view.backgroundColor = TokenColors.Background.page
-        }
+        view.backgroundColor = TokenColors.Background.page
         
         viewModel.invokeCommand = { [weak self] in
             self?.executeCommand($0)

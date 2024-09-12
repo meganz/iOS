@@ -5,7 +5,7 @@ import SwiftUI
 struct ScheduleMeetingCreationPropertiesView: View {
     @ObservedObject var viewModel: ScheduleMeetingViewModel
     @Environment(\.colorScheme) private var colorScheme
-
+    
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
@@ -18,9 +18,7 @@ struct ScheduleMeetingCreationPropertiesView: View {
                         .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
                 }
                 .frame(minHeight: 44)
-                .toggleStyle(SwitchToggleStyle(tint: isDesignTokenEnabled
-                                               ? TokenColors.Support.success.swiftUI
-                                               : Color(UIColor.mnz_green00A886())))
+                .toggleStyle(SwitchToggleStyle(tint: TokenColors.Support.success.swiftUI))
                 .padding(.horizontal)
                 .disabled(
                     !viewModel.meetingLinkToggleUIEnabled
@@ -29,9 +27,7 @@ struct ScheduleMeetingCreationPropertiesView: View {
                 Divider()
                     .foregroundStyle(TokenColors.Border.subtle.swiftUI)
             }
-            .background(isDesignTokenEnabled
-                        ? TokenColors.Background.page.swiftUI
-                        : colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+            .background(TokenColors.Background.page.swiftUI)
             
             ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.Link.description)
                 .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)

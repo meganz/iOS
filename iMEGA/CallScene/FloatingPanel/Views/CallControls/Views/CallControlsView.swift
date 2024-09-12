@@ -14,7 +14,7 @@ struct CallControlsView<ViewModel: CallControlsViewModelProtocol>: View {
                 VStack {
                     AirPlayButton(tintColor: TokenColors.Text.primary, activeTintColor: TokenColors.Text.primary)
                         .frame(maxWidth: 56, maxHeight: 56, alignment: .center)
-                        .background(backgroundEnabledColor)
+                        .background(TokenColors.Button.secondary.swiftUI)
                         .clipShape(Circle())
                     Text(Strings.Localizable.Meetings.QuickAction.speaker)
                         .font(.caption2)
@@ -37,10 +37,6 @@ struct CallControlsView<ViewModel: CallControlsViewModelProtocol>: View {
             CallControlView(config: .endCall(action: viewModel.endCallTapped))
         }
         .frame(maxWidth: .infinity, maxHeight: 100)
-    }
-    
-    private var backgroundEnabledColor: Color {
-        isDesignTokenEnabled ? TokenColors.Button.secondary.swiftUI : Color(.gray474747)
     }
 }
 

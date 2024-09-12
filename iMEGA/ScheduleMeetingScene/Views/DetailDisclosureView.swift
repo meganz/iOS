@@ -54,14 +54,10 @@ struct DetailDisclosureView: View {
             Spacer()
             if let detail {
                 Text(detail)
-                    .foregroundStyle(isDesignTokenEnabled
-                                     ? TokenColors.Text.secondary.swiftUI
-                                     : colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(Constants.disclosureOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.disclosureOpacity))
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
             Image(systemName: Constants.disclosureIndicator)
-                .foregroundStyle(isDesignTokenEnabled
-                                 ? TokenColors.Text.secondary.swiftUI
-                                 : MEGAAppColor.Gray._8E8E93.color.opacity(Constants.disclosureOpacity))
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
     }

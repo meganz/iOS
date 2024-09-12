@@ -7,18 +7,10 @@ struct WaitingRoomMessageView: View {
     var body: some View {
         Text(title)
             .font(.subheadline)
-            .foregroundColor(
-                isDesignTokenEnabled ?
-                    TokenColors.Text.inverse.swiftUI :
-                    Color(.black000000)
-            )
+            .foregroundColor(TokenColors.Text.inverse.swiftUI)
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .background(
-                isDesignTokenEnabled ?
-                    TokenColors.Background.inverse.swiftUI :
-                    Color(.whiteFFFFFF)
-            )
+            .background(TokenColors.Background.inverse.swiftUI)
             .cornerRadius(44)
     }
 }

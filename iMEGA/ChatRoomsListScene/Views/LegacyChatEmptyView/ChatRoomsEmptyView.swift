@@ -51,13 +51,11 @@ struct ChatRoomsEmptyView: View {
         case .action(let action):
             ChatRoomsEmptyBottomButtonView(
                 name: model.title,
-                isDesignTokenEnabled: isDesignTokenEnabled,
                 action: action
             )
         case .menu(let menu):
             ChatRoomsEmptyBottomButtonView(
                 name: model.title,
-                isDesignTokenEnabled: isDesignTokenEnabled,
                 menus: menu
             )
         }
