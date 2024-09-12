@@ -125,19 +125,19 @@ extension NodeVersionsViewController {
     }
     
     @objc func swipeIconTintColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.onColor : .mnz_whiteFFFFFF()
+        TokenColors.Icon.onColor
     }
     
     @objc func deleteSwipeBackgroundColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .mnz_red(for: traitCollection)
+        TokenColors.Support.error
     }
     
     @objc func revertSwipeBackgroundColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Support.warning : .mnz_primaryGray(for: traitCollection)
+        TokenColors.Support.warning
     }
     
     @objc func offlineSwipeBackgroundColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Support.success : .mnz_turquoise(for: traitCollection)
+        TokenColors.Support.success
     }
 }
 

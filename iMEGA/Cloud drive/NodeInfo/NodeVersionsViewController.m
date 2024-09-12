@@ -85,7 +85,7 @@ MEGADelegate
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.backgroundColor = [UIColor isDesignTokenEnabled] ? [self defaultBackgroundColor] : [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [self defaultBackgroundColor];
 }
 
 #pragma mark - UITableViewDataSource
@@ -138,7 +138,7 @@ MEGADelegate
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor isDesignTokenEnabled] ? [self defaultBackgroundColor] : [UIColor mnz_tertiaryBackground:self.traitCollection];
+    cell.backgroundColor = [self defaultBackgroundColor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -181,9 +181,7 @@ MEGADelegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     GenericHeaderFooterView *sectionHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
-    if ([UIColor isDesignTokenEnabled]) {
-        [sectionHeader setPreferredBackgroundColor:[self defaultBackgroundColor]];
-    }
+    [sectionHeader setPreferredBackgroundColor:[self defaultBackgroundColor]];
     
     if (section == 0) {
         [sectionHeader configureWithTitle:LocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
@@ -196,9 +194,7 @@ MEGADelegate
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     GenericHeaderFooterView *sectionFooter = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
-    if ([UIColor isDesignTokenEnabled]) {
-        [sectionFooter setPreferredBackgroundColor:[self defaultBackgroundColor]];
-    }
+    [sectionFooter setPreferredBackgroundColor:[self defaultBackgroundColor]];
     
     [sectionFooter configureWithTitle:nil topDistance:2.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:NO];
     

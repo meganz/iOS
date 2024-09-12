@@ -68,7 +68,7 @@ private struct CopyrightWarningView: View {
                     } label: {
                         Text(Strings.Localizable.disagree)
                             .font(.body)
-                            .foregroundColor(textColor)
+                            .foregroundColor(TokenColors.Text.primary.swiftUI)
                     }
                     
                     Button {
@@ -76,19 +76,11 @@ private struct CopyrightWarningView: View {
                     } label: {
                         Text(Strings.Localizable.agree)
                             .font(.body)
-                            .foregroundColor(textColor)
+                            .foregroundColor(TokenColors.Text.primary.swiftUI)
                     }
                 }
             }
             .navigationTitle(Strings.Localizable.copyrightWarning)
-        }
-    }
-    
-    private var textColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            Color(colorScheme == .dark ? UIColor.mnz_grayD1D1D1() : UIColor.mnz_gray515151())
         }
     }
 }

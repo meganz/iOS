@@ -75,9 +75,7 @@ final class NodeDescriptionViewCell: UITableViewCell {
     }
     
     private func textColor(isPlaceholderText: Bool) -> UIColor {
-        UIColor.isDesignTokenEnabled()
-        ? isPlaceholderText ? TokenColors.Text.secondary : TokenColors.Text.primary
-        : isPlaceholderText ? UIColor.secondaryLabel : UIColor.label
+        isPlaceholderText ? TokenColors.Text.secondary : TokenColors.Text.primary
     }
     
     private func wrap(_ textView: UITextView, inside content: UIView) {

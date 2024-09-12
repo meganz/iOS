@@ -106,13 +106,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 action: #selector(selectAllButtonPressed(_:))
             )
         } else {
-            if UIColor.isDesignTokenEnabled() {
-                leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: TokenColors.Text.primary], for: .normal)
-            } else {
-                let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
-                leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
-            }
-
+            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: TokenColors.Text.primary], for: .normal)
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
     }

@@ -35,14 +35,10 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     }
     
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            backgroundColor = TokenColors.Background.page
-            nameLabel.textColor = TokenColors.Text.primary
-            sizeLabel.textColor = TokenColors.Text.primary
-            shareButton.mnz_setupPrimary(traitCollection)
-        } else {
-            backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        }
+        backgroundColor = TokenColors.Background.page
+        nameLabel.textColor = TokenColors.Text.primary
+        sizeLabel.textColor = TokenColors.Text.primary
+        shareButton.mnz_setupPrimary(traitCollection)
     }
     
     func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {

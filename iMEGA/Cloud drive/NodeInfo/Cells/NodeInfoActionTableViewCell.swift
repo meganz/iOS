@@ -29,17 +29,11 @@ class NodeInfoActionTableViewCell: UITableViewCell {
     }
 
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            backgroundColor = TokenColors.Background.page
-            separatorView.backgroundColor = TokenColors.Border.strong
-            iconImageView.tintColor = TokenColors.Icon.primary
-            titleLabel.textColor = TokenColors.Text.primary
-            subtitleLabel.textColor = TokenColors.Text.primary
-        } else {
-            backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-            separatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)
-            iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
-        }
+        backgroundColor = TokenColors.Background.page
+        separatorView.backgroundColor = TokenColors.Border.strong
+        iconImageView.tintColor = TokenColors.Icon.primary
+        titleLabel.textColor = TokenColors.Text.primary
+        subtitleLabel.textColor = TokenColors.Text.primary
     }
     
     func configureLinkCell(forNode node: MEGANode) {
