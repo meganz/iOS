@@ -35,66 +35,77 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertTrue(harness.endCallNotifiedToCallManager())
     }
     
+    @MainActor
     func testEnableSpeaker() {
         let harness = Harness(speakerEnabled: false)
         harness.sut.toggleSpeakerTapped()
         XCTAssertTrue(harness.enableLoudSpeakerCalled())
     }
     
+    @MainActor
     func testDisableSpeaker() {
         let harness = Harness(speakerEnabled: true)
         harness.sut.toggleSpeakerTapped()
         XCTAssertTrue(harness.disableLoudSpeakerCalled())
     }
     
+    @MainActor
     func testToggleMic_notGrantedAudioPermission_shouldShowPermissionAlert() async {
         let harness = Harness()
         await harness.toggleMicTapped()
         XCTAssertTrue(harness.showAudioPermissionAlert())
     }
     
+    @MainActor
     func testToggleMic_grantedAudioPermission_shouldShowPermissionAlert() async {
         let harness = Harness(permissionsAuthorised: true)
         await harness.toggleMicTapped()
         XCTAssertTrue(harness.muteCallNotifiedToCallManager())
     }
     
+    @MainActor
     func testEnableCamera_notGrantedVideoPermission_shouldShowPermissionAlert() async {
         let harness = Harness(cameraEnabled: false)
         await harness.toggleCameraTapped()
         XCTAssertTrue(harness.showVideoPermissionAlert())
     }
     
+    @MainActor
     func testEnableCamera_grantedVideoPermission_shouldShowPermissionAlert() async {
         let harness = Harness(permissionsAuthorised: true, cameraEnabled: false)
         await harness.toggleCameraTapped()
         XCTAssertTrue(harness.enableCameraCalled())
     }
     
+    @MainActor
     func testDisableCamera_grantedVideoPermission_shouldShowPermissionAlert() async {
         let harness = Harness(permissionsAuthorised: true, cameraEnabled: true)
         await harness.toggleCameraTapped()
         XCTAssertTrue(harness.disableCameraCalled())
     }
     
+    @MainActor
     func testSwitchCamera_cameraNotEnabled_shouldNotSwitchCamera() async {
         let harness = Harness(permissionsAuthorised: true, cameraEnabled: false)
         await harness.switchCameraTapped()
         XCTAssertFalse(harness.switchCameraCalled())
     }
     
+    @MainActor
     func testSwitchCamera_cameraEnabled_shouldNotSwitchCamera() async {
         let harness = Harness(permissionsAuthorised: true, cameraEnabled: true)
         await harness.switchCameraTapped()
         XCTAssertTrue(harness.switchCameraCalled())
     }
     
+    @MainActor
     func testAudioRouteChange_bluetoothConnected_shouldShowRouteView() {
         let harness = Harness(bluetoothAudioDeviceAvailable: true)
         harness.postAudioRouteChangeNotification()
         XCTAssertTrue(harness.sut.routeViewVisible)
     }
     
+    @MainActor
     func testAudioRouteChange_noBluetoothConnectedSpeakerEnabled_shouldShowSpeakerEnabled() {
         let harness = Harness(audioPortOutput: .builtInSpeaker, bluetoothAudioDeviceAvailable: false)
         harness.postAudioRouteChangeNotification()
@@ -102,23 +113,27 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertFalse(harness.sut.routeViewVisible)
     }
     
+    @MainActor
     func testAudioRouteChange_noBluetoothConnectedSpeakerDisabled_shouldShowSpeakerDisabled() {
         let harness = Harness(audioPortOutput: .builtInReceiver, bluetoothAudioDeviceAvailable: false)
         harness.postAudioRouteChangeNotification()
         XCTAssertFalse(harness.sut.speakerEnabled)
         XCTAssertFalse(harness.sut.routeViewVisible)
     }
-                
+              
+    @MainActor
     func testMoreButtonShow_OneToOneCall_NotShown() {
         let harness = Harness(chatType: .oneToOne)
         XCTAssertFalse(harness.sut.showMoreButton)
     }
     
+    @MainActor
     func testMoreButtonShow_notOneToOneCall_Shown() {
         let harness = Harness.withMoreButtonEnabled()
         XCTAssertTrue(harness.sut.showMoreButton)
     }
     
+    @MainActor
     func testMoreButtonTapped_HasCorrectActions_handRaised() async {
         let harness = Harness.withMoreButtonEnabled().raisedHand(true)
         await harness.sut.moreButtonTapped()
@@ -129,6 +144,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
     }
     
+    @MainActor
     func testMoreButtonTapped_HasCorrectActions_handLowered() async {
         let harness = Harness.withMoreButtonEnabled().raisedHand(false)
         await harness.sut.moreButtonTapped()
@@ -139,6 +155,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
     }
     
+    @MainActor
     func testMoreButtonTapped_HasCorrectActions_grid() async {
         let harness = Harness
             .withMoreButtonEnabled()
@@ -153,6 +170,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
     }
     
+    @MainActor
     func testMoreButtonTapped_HasCorrectActions_speakerView() async {
         let harness = Harness
             .withMoreButtonEnabled()
@@ -167,6 +185,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.presentedMenuActions.map(\.title), expected)
     }
     
+    @MainActor
     func testMoreButtonActionSwitchLayout_LayoutChannelUsed() async throws {
         let harness = Harness.withMoreButtonEnabled()
         await harness.sut.moreButtonTapped()
@@ -175,6 +194,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertTrue(harness.layoutUpdates.isNotEmpty)
     }
     
+    @MainActor
     func testSwitchLayoutAction_Disabled_WhenLayoutChannelReturnFalse() async throws {
         let harness = Harness.withMoreButtonEnabled()
         harness.layoutUpdateChannel.layoutSwitchingEnabled = { false }
@@ -182,6 +202,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertFalse(switchAction.enabled)
     }
     
+    @MainActor
     func testSwitchLayoutAction_Enabled_WhenLayoutChannelReturnTrue() async throws {
         let harness = Harness.withMoreButtonEnabled()
         harness.layoutUpdateChannel.layoutSwitchingEnabled = { true }
@@ -189,6 +210,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertTrue(switchAction.enabled)
     }
     
+    @MainActor
     func testRaiseHandAction_TriggersCallUseCase() async throws {
         await withMainSerialExecutor {
             let harness = Harness.withMoreButtonEnabled().raisedHand(false)
@@ -209,6 +231,7 @@ final class CallControlsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testRaiseHandAction_TriggersRaiseHandEvent() async throws {
         await withMainSerialExecutor {
             let harness = Harness.withMoreButtonEnabled().raisedHand(false)
@@ -222,6 +245,7 @@ final class CallControlsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testLowerHandAction_TriggersLowerHandEvent() async throws {
         await withMainSerialExecutor {
             let harness = Harness.withMoreButtonEnabled().raisedHand(true)
@@ -235,30 +259,47 @@ final class CallControlsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testLocalAudioFlagUpdatedToMuted_shouldShowDisabledMicUI() {
         let harness = Harness()
         harness.localAudioFlagUpdated(enabled: false)
         XCTAssertFalse(harness.sut.micEnabled)
     }
     
+    @MainActor
     func testLocalAudioFlagUpdatedToUnmuted_shouldShowEnabledMicUI() {
+        // given
+        let expectation = expectation(description: #function)
         let harness = Harness()
+        var micEnabled: Bool?
+        let subscription = harness.sut.$micEnabled.dropFirst().sink {
+            micEnabled = $0
+            expectation.fulfill()
+        }
+        
+        // when
         harness.localAudioFlagUpdated(enabled: true)
-        XCTAssertTrue(harness.sut.micEnabled)
+        wait(for: [expectation], timeout: 1)
+        
+        // then
+        XCTAssertTrue(micEnabled == true)
     }
     
+    @MainActor
     func testViewAppear_raiseHandBadgeNeverPresented_badgeMustBeShown() async {
         let harness = Harness().raiseHandBadge(presented: true)
         await harness.sut.checkRaiseHandBadge()
         XCTAssertTrue(harness.sut.showRaiseHandBadge)
     }
     
+    @MainActor
     func testViewAppear_raiseHandBadgeReachedMaxTimesPresented_badgeMustNotBeShown() async {
         let harness = Harness().raiseHandBadge(presented: false)
         await harness.sut.checkRaiseHandBadge()
         XCTAssertFalse(harness.sut.showRaiseHandBadge)
     }
     
+    @MainActor
     func testMoreButtonTapped_raiseHandBadgeNotReachedMaxTimesPresented_badgeMustBeShownAndIncrementCalled() async {
         let harness = Harness().raiseHandBadge(presented: true)
         await harness.sut.checkRaiseHandBadge()
@@ -291,6 +332,7 @@ final class CallControlsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     class Harness {
         let sut: CallControlsViewModel
         let chatRoom: ChatRoomEntity
@@ -422,6 +464,7 @@ final class CallControlsViewModelTests: XCTestCase {
             notificationCenter.postAudioRouteChangeNotification()
         }
         
+        @MainActor
         static func withMoreButtonEnabled() -> Harness {
             Harness(chatType: .meeting)
         }
@@ -500,3 +543,5 @@ extension CallEntity {
         )
     }
 }
+
+extension ActionSheetAction: @unchecked Sendable {}

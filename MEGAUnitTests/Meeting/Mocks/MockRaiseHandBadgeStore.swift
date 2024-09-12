@@ -1,6 +1,6 @@
 @testable import MEGA
 
-class MockRaiseHandBadgeStore: RaiseHandBadgeStoring {
+class MockRaiseHandBadgeStore: RaiseHandBadgeStoring, @unchecked Sendable {
     var shouldPresentRaiseHandBadge_CallCount = 0
     var incrementRaiseHandBadgePresented_CallCount = 0
     var saveRaiseHandBadgeAsPresented_CallCount = 0

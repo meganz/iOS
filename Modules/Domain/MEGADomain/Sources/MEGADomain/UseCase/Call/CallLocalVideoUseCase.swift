@@ -1,6 +1,7 @@
 import Foundation
+import MEGASwift
 
-public protocol CallLocalVideoUseCaseProtocol {
+public protocol CallLocalVideoUseCaseProtocol: Sendable {
     func enableLocalVideo(for chatId: HandleEntity) async throws
     func disableLocalVideo(for chatId: HandleEntity) async throws
     func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
@@ -19,8 +20,8 @@ public protocol CallLocalVideoCallbacksUseCaseProtocol: AnyObject {
     func localVideoChangedCameraPosition()
 }
 
-public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: NSObject, CallLocalVideoUseCaseProtocol {
-    
+public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: NSObject, CallLocalVideoUseCaseProtocol, @unchecked Sendable {
+    private let lock = NSLock()
     private let repository: T
     private weak var localVideoCallbacksDelegate: (any CallLocalVideoCallbacksUseCaseProtocol)?
     
@@ -45,12 +46,16 @@ public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: N
     }
     
     public func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
-        localVideoCallbacksDelegate = callbacksDelegate
+        lock.withLock {
+            localVideoCallbacksDelegate = callbacksDelegate
+        }
         repository.addLocalVideo(for: chatId, localVideoListener: self)
     }
     
     public func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
-        localVideoCallbacksDelegate = nil
+        lock.withLock {
+            localVideoCallbacksDelegate = nil
+        }
         repository.removeLocalVideo(for: chatId, localVideoListener: self)
     }
     
@@ -77,10 +82,14 @@ public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: N
 
 extension CallLocalVideoUseCase: CallLocalVideoListenerRepositoryProtocol {
     public func localVideoFrameData(width: Int, height: Int, buffer: Data) {
-        localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
+        lock.withLock {
+            localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
+        }
     }
     
     public func localVideoChangedCameraPosition() {
-        localVideoCallbacksDelegate?.localVideoChangedCameraPosition()
+        lock.withLock {
+            localVideoCallbacksDelegate?.localVideoChangedCameraPosition()
+        }
     }
 }
