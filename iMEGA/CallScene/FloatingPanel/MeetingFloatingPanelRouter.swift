@@ -80,6 +80,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         self.actionsViewController = actionsViewController
     }
     
+    @MainActor
     func build() -> UIViewController {
         guard let containerViewModel = containerViewModel else { return UIViewController() }
         let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance())
@@ -155,6 +156,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         return vc
     }
     
+    @MainActor
     func start(completion: @escaping () -> Void) {
         guard let viewController = build() as? any PanModalPresentable & UIViewController else { return }
         viewController.modalPresentationStyle = .custom

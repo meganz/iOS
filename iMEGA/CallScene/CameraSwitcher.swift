@@ -3,7 +3,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 
-protocol CameraSwitching {
+protocol CameraSwitching: Sendable {
     func switchCamera() async
 }
 

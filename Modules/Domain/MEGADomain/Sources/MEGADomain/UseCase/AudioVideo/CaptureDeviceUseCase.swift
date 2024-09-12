@@ -1,4 +1,4 @@
-public protocol CaptureDeviceUseCaseProtocol {
+public protocol CaptureDeviceUseCaseProtocol: Sendable {
     func wideAngleCameraLocalizedName(position: CameraPositionEntity) -> String?
 }
 

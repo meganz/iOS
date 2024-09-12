@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol CallLocalVideoRepositoryProtocol: RepositoryProtocol {
+public protocol CallLocalVideoRepositoryProtocol: RepositoryProtocol, Sendable {
     func enableLocalVideo(for chatId: HandleEntity) async throws
     func disableLocalVideo(for chatId: HandleEntity) async throws
     func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
@@ -14,7 +14,7 @@ public protocol CallLocalVideoRepositoryProtocol: RepositoryProtocol {
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
 }
 
-public protocol CallLocalVideoListenerRepositoryProtocol {
+public protocol CallLocalVideoListenerRepositoryProtocol: AnyObject {
     func localVideoFrameData(width: Int, height: Int, buffer: Data)
     func localVideoChangedCameraPosition()
 }
