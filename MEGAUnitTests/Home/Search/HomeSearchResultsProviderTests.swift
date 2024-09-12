@@ -8,6 +8,7 @@ import MEGAPresentationMock
 import MEGASdk
 import MEGASDKRepoMock
 import MEGASwift
+import MEGATest
 import Search
 import SearchMock
 import SwiftUI
@@ -71,7 +72,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
         let nodeDetails: MockNodeDetailUseCase
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
-        let nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository
         let downloadTransfersListener: MockDownloadTransfersListener
         let contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase
         let sut: HomeSearchResultsProvider
@@ -82,7 +82,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
             nodes: [NodeEntity] = [],
             showHiddenNodes: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
-            onSearchResultsUpdated: @escaping (SearchResultUpdateSignal) -> Void = { _ in },
+            nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             file: StaticString = #filePath,
             line: UInt = #line
         ) {
@@ -96,11 +96,11 @@ class HomeSearchResultsProviderTests: XCTestCase {
             let nodeListEntity = NodeListEntity(nodes: nodes)
             filesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic), nodeListSearchResult: .success(nodeListEntity))
             
-            nodeDataUseCase = MockNodeDataUseCase(rootNode: NodeEntity(handle: 1000))
+            nodeDataUseCase = MockNodeDataUseCase(
+                rootNode: NodeEntity(handle: 1000),
+                nodeUpdateAsyncSequence: nodeUpdates)
 
             mediaUseCase = MockMediaUseCase()
-
-            nodesUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
             
             downloadTransfersListener = MockDownloadTransfersListener()
              
@@ -114,7 +114,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
                 mediaUseCase: mediaUseCase,
-                nodesUpdateListenerRepo: nodesUpdateListenerRepo,
                 downloadTransferListener: downloadTransfersListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
@@ -125,11 +124,10 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
                 hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-                isDesignTokenEnabled: true,
-                onSearchResultsUpdated: onSearchResultsUpdated
+                isDesignTokenEnabled: true
             )
             
-            testCase.trackForMemoryLeaks(on: sut, file: file, line: line)
+            testCase.trackForMemoryLeaks(on: sut, timeoutNanoseconds: 100_000_000, file: file, line: line)
         }
         
         func propertyIdsForFoundNode() async throws -> Set<NodePropertyId> {
@@ -723,51 +721,56 @@ class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(resultIds?.count, 100)
     }
     
-    func testNodeUpdatesListener_whenNodeUpdateIsNotNeeded_shouldNotProcessNodeUpdates() async {
+    func testSearchResultUpdateSignalSequence_whenNodeUpdateIsNotNeeded_shouldNotProcessNodeUpdates() {
         // given
         let nodes = NodeEntity.entities(startHandle: 1, endHandle: 3)
         
-        var nodeUpdatesSignals = [SearchResultUpdateSignal]()
+        let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
+        let harness = Harness(self, nodes: nodes, nodeUpdates: stream.eraseToAnyAsyncSequence())
         
-        let harness = Harness(self, nodes: nodes, onSearchResultsUpdated: {
-            nodeUpdatesSignals.append($0)
-        })
+        let exp = expectation(description: "Should not signal")
+        exp.isInverted = true
         
-        // when
-        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?(nodes)
-        
-        // then
-        XCTAssertTrue(nodeUpdatesSignals.isEmpty)
-    }
-    
-    func testNodeUpdatesListener_whenShouldProcessNodesUpdate_shouldProcessNodeUpdates() async {
-        // given
-        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 2)
-        
-        var nodeUpdatesSignals = [SearchResultUpdateSignal]()
-        
-        let expectation = expectation(description: "Waiting node updates signal")
-        
-        let harness = Harness(self, nodes: nodes, onSearchResultsUpdated: {
-            nodeUpdatesSignals.append($0)
-            if nodeUpdatesSignals.count == 2 {
-                expectation.fulfill()
+        trackTaskCancellation {
+            for await _ in harness.sut.searchResultUpdateSignalSequence() {
+                exp.fulfill()
             }
-        })
-        _ = await harness.sut.search(queryRequest: .initial, lastItemIndex: nil)
-
-        let task = Task {
-            await harness.sut.listenToSpecificResultUpdates()
         }
         
         // when
+        continuation.yield(nodes)
+        continuation.finish()
         
-        harness.nodesUpdateListenerRepo.onNodesUpdateHandler?([.init(parentHandle: Harness.parentNodeHandle)]) // Trigger .generic signal
+        // then
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testSearchResultUpdateSignalSequence_whenShouldProcessNodesUpdate_shouldProcessNodeUpdates() async throws {
+        // given
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 2)
+        let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
+        let harness = Harness(self, nodes: nodes, nodeUpdates: stream.eraseToAnyAsyncSequence())
+        
+        var nodeUpdatesSignals = [SearchResultUpdateSignal]()
+        let exp = expectation(description: "wait for update signals")
+        exp.expectedFulfillmentCount = 2
+        
+        trackTaskCancellation {
+            for await nodeUpdatesSignal in harness.sut.searchResultUpdateSignalSequence() {
+                nodeUpdatesSignals.append(nodeUpdatesSignal)
+                exp.fulfill()
+            }
+        }
+        
+        // when
+        continuation.yield([.init(parentHandle: Harness.parentNodeHandle)]) // Trigger .generic signal
+        try await Task.sleep(nanoseconds: 50_000_000)
         harness.downloadTransfersListener.simulateDownloadedNode(nodes[1]) // Trigger .specific signal
         
-        await fulfillment(of: [expectation], timeout: 1.0)
-        task.cancel()
         // then
+        await fulfillment(of: [exp], timeout: 1.0)
+        continuation.finish()
+        
         guard case .generic = nodeUpdatesSignals[0] else {
             XCTFail("Expecting .generic update signal")
             return
@@ -779,6 +782,55 @@ class HomeSearchResultsProviderTests: XCTestCase {
         }
         
         XCTAssertEqual(result.id, 2)
+    }
+    
+    func testSearchResultUpdateSignalSequence_onDidFallbackToMakingOfflineForMediaNodeNotification_shouldTriggerSpecificUpdate() async throws {
+        // given
+        let offlineNode = NodeEntity(handle: 65)
+        let harness = Harness(self)
+        
+        let exp = expectation(description: "wait for specific update signal")
+        
+        trackTaskCancellation {
+            for await nodeUpdatesSignal in harness.sut.searchResultUpdateSignalSequence() {
+                guard case .specific(let result) = nodeUpdatesSignal else {
+                    XCTFail("Expecting .specific update signal")
+                    return
+                }
+                XCTAssertEqual(result.id, offlineNode.handle)
+                exp.fulfill()
+            }
+        }
+        // Wait for sequence to setup
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        NotificationCenter.default.post(name: .didFallbackToMakingOfflineForMediaNode, object: offlineNode)
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+    }
+    
+    func testSearchResultUpdateSignalSequence_nodeUpdatePartOfResults_shouldTriggerGenericUpdateSignal() async throws {
+        let nodes = NodeEntity.entities(startHandle: 1, endHandle: 100)
+        let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
+        let harness = Harness(self, nodes: nodes, nodeUpdates: stream.eraseToAnyAsyncSequence())
+        
+        _ = try await harness.sut.searchInitially(queryRequest: .initial)
+        let randomResultIds = try await harness.sut.refreshedSearchResults(queryRequest: .initial)?.results.map(\.id)
+        let randomResultId = try XCTUnwrap(randomResultIds?.randomElement())
+        
+        let exp = expectation(description: "generic update signal")
+        
+        trackTaskCancellation {
+            for await nodeUpdatesSignal in harness.sut.searchResultUpdateSignalSequence() {
+                XCTAssertEqual(nodeUpdatesSignal, .generic)
+                exp.fulfill()
+            }
+        }
+        
+        continuation.yield([.init(handle: randomResultId)])
+        continuation.finish()
+        
+        await fulfillment(of: [exp], timeout: 1.0)
     }
 
     func testSearchInitially_withNodeAsRubbishBinRootWhenShowHiddenItemsUISettingIsEnabled_noSensitiveFilterApplied() async throws {

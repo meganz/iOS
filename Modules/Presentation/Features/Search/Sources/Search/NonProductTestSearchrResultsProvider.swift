@@ -1,11 +1,11 @@
 import Foundation
 import MEGAL10n
+import MEGASwift
 import UIKit
 
 /// Development only implementation, will be moved to SearchMocks on next MR once
 /// we have actual results provider using real SDK
 public struct NonProductionTestResultsProvider: SearchResultsProviding {
-    public func listenToSpecificResultUpdates() async {}
     
     public func refreshedSearchResults(queryRequest: SearchQuery) async throws -> SearchResultsEntity? {
         nil
@@ -39,6 +39,10 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
             availableChips: allChips,
             appliedChips: chipsFor(query: queryRequest)
         )
+    }
+    
+    public func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
 
     func filter(using query: String, chip: SearchChipEntity?) -> [SearchResult] {

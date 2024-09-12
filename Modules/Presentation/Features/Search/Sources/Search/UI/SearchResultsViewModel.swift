@@ -130,12 +130,6 @@ public class SearchResultsViewModel: ObservableObject {
                 await _self?.queryChanged(to: query, isSearchActive: true)
             }
         }
-        
-        self.bridge.onSearchResultsUpdated = { [weak self] signal in
-            guard self != nil else { return }
-            // Use of publisher also attempts to fix crash issue SAO-1916
-            updatedSearchResultsPublisher.append(signal)
-        }
 
         self.bridge.queryCleaned = { [weak self] in
             let _self = self
@@ -225,7 +219,12 @@ public class SearchResultsViewModel: ObservableObject {
     
     /// To be called on a separate `.task` modifier from the client View to get the benefit of task cancellation upon appearing/disappearing
     func startMonitoringResults() async {
-        await resultsProvider.listenToSpecificResultUpdates()
+        for await updateSignal in resultsProvider.searchResultUpdateSignalSequence() {
+            guard !Task.isCancelled else { break }
+            
+            // Use of publisher also attempts to fix crash issue SAO-1916
+            updatedSearchResultsPublisher.append(updateSignal)
+        }
     }
     
     private func defaultSearchQuery() async {
