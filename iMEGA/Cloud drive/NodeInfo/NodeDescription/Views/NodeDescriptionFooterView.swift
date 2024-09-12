@@ -20,20 +20,12 @@ struct NodeDescriptionFooterView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 6)
-        .background(backgroundColor)
+        .background()
     }
 
     private func view(for text: String) -> some View {
         Text(text)
             .font(.footnote)
             .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-    }
-
-    private var backgroundColor: Color {
-        isDesignTokenEnabled
-        ? TokenColors.Background.page.swiftUI
-        : colorScheme == .dark
-        ? Color(UIColor.black1C1C1E)
-        : Color(UIColor.whiteF7F7F7)
     }
 }

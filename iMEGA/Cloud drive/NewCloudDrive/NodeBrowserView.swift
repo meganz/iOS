@@ -101,7 +101,7 @@ struct NodeBrowserView: View {
         switch viewModel.viewState {
         case .editing:
             Button(Strings.Localizable.cancel) { viewModel.stopEditing() }
-                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : UIColor.barButtonTextColor.swiftUI)
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
         case .regular:
             viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
             viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()

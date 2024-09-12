@@ -13,7 +13,7 @@ extension ThumbnailViewerTableViewCell {
     }
     
     @objc func indicatorTintColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : UIColor.grayBBBBBB
+        TokenColors.Icon.secondary
     }
     
     @objc func createViewModel(nodes: [MEGANode]) -> ThumbnailViewerTableViewCellViewModel {

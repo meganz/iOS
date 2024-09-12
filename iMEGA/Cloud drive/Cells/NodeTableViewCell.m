@@ -65,9 +65,7 @@
     self.node = node;
     [self bindWithViewModel:[self createViewModelWithNode:node shouldApplySensitiveBehaviour:shouldApplySensitiveBehaviour]];
 
-    if (UIColor.isDesignTokenEnabled) {
-        [self updateWithTrait:self.traitCollection];
-    }
+    [self updateWithTrait:self.traitCollection];
     
     self.downloadingArrowImageView.hidden = self.downloadProgressView.hidden = YES;
     
@@ -102,8 +100,7 @@
         self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColorFor: self.traitCollection];
     } else {
         self.nameLabel.text = node.name;
-        self.nameLabel.textColor = [UIColor isDesignTokenEnabled] ? [UIColor cellTitleColorFor: self.traitCollection] :
-        [UIColor labelColor];
+        self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
         self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
@@ -166,7 +163,7 @@
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
-    NSString *imageName = [UIColor isDesignTokenEnabled] ? @"standardDisclosureIndicator_designToken" : @"standardDisclosureIndicator";
+    NSString *imageName = @"standardDisclosureIndicator_designToken";
     self.disclosureIndicator.image = [UIImage imageNamed:imageName];
     
     MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
@@ -217,9 +214,7 @@
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.infoStringRightLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    if (self.cellFlavor == NodeTableViewCellFlavorRecentAction || UIColor.isDesignTokenEnabled) {
-        [self setCellBackgroundColorWith:self.traitCollection];
-    }
+    [self setCellBackgroundColorWith:self.traitCollection];
    
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;

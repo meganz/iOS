@@ -3,18 +3,18 @@ import UIKit
 
 extension CloudDriveViewController {
     @objc var pageBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .systemBackground
+        TokenColors.Background.page
     }
 
     @objc var invalidTextFieldColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .systemRed
+        TokenColors.Text.error
     }
 
     @objc var validTextFieldColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
+        TokenColors.Text.primary
     }
 
     @objc var toolBarBackgroundColor: UIColor {
-        return UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : .mnz_mainBars(for: traitCollection)
+        TokenColors.Background.surface1
     }
 }

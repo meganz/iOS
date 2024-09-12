@@ -60,10 +60,10 @@ class SetLinkPasswordViewController: UIViewController {
     
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        encryptButton.setTitleColor(UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_turquoise(for: traitCollection), for: .normal)
+        encryptButton.setTitleColor(TokenColors.Text.primary, for: .normal)
         separators.forEach { $0.backgroundColor = UIColor.mnz_separator(for: traitCollection) }
         backgrounds.forEach {
-            $0.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+            $0.backgroundColor = TokenColors.Background.page
         }
     }
     

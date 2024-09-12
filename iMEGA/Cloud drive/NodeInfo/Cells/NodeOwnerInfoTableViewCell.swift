@@ -31,15 +31,15 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
     }
 
     private func updateAppearance() {
-        backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        backgroundColor = TokenColors.Background.page
     }
     
     func configure(
         user: MEGAUser,
         shouldDisplayUserVerifiedIcon: Bool
     ) {
-        let primaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
-        let secondaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_secondaryGray(for: traitCollection)
+        let primaryTextColor = TokenColors.Text.primary
+        let secondaryTextColor = TokenColors.Text.secondary
         emailLabel.textColor = primaryTextColor
         emailLabel.text = user.email
         

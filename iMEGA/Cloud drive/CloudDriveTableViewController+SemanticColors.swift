@@ -3,14 +3,14 @@ import UIKit
 
 extension CloudDriveTableViewController {
     @objc var tableViewSeparatorColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : .mnz_separator(for: traitCollection)
+        TokenColors.Border.strong
     }
 
     @objc var bucketHeaderViewBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_backgroundElevated(traitCollection)
+        TokenColors.Background.page
     }
 
     @objc var bucketHeaderViewTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_secondaryGray(for: traitCollection)
+        TokenColors.Text.secondary
     }
 }

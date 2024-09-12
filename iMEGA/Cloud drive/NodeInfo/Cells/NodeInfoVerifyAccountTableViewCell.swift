@@ -11,7 +11,7 @@ struct NodeInfoVerifyAccountTableViewCell: View {
             label: {
                 Text(Strings.Localizable.verifyCredentials)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.Green._00A886.color)
+                    .foregroundColor(TokenColors.Support.success.swiftUI)
             }
         )
     }
