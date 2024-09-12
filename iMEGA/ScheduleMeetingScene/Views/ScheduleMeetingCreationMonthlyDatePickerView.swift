@@ -8,7 +8,7 @@ struct ScheduleMeetingCreationMonthlyDatePickerView: View {
     let columnPadding: Int
     let allowsMultipleSelection: Bool
     @Binding var selectedDays: Set<String>
-        
+    
     var body: some View {
         VStack(spacing: 0) {
             ForEach(0..<rows, id: \.self) { row in
@@ -97,15 +97,13 @@ private struct ScheduleMeetingCreationMonthlyDatePickerTileView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(isDesignTokenEnabled
-                      ? TokenColors.Support.success.swiftUI : colorScheme == .dark ? MEGAAppColor.Green._00C29A.color : MEGAAppColor.Green._00A886.color)
+                .fill(TokenColors.Support.success.swiftUI)
                 .opacity(selected ? 1.0 : 0.0)
             Text(day)
                 .font(.title3)
                 .foregroundStyle(
                     (colorScheme == .light && selected) ?
-                    isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color(UIColor.systemBackground)
-                    : isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary
+                    TokenColors.Background.page.swiftUI : TokenColors.Text.primary.swiftUI
                 )
         }
     }

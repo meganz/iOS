@@ -43,16 +43,8 @@ struct WaitingRoomControl: View {
                 .frame(width: 24, height: 24)
         }
         .frame(maxWidth: 56, maxHeight: 56, alignment: .center)
-        .background(enabled ? backgroundEnabledColor : backgroundDisabledColor)
+        .background(enabled ? TokenColors.Button.secondary.swiftUI : TokenColors.Button.primary.swiftUI)
         .clipShape(Circle())
-    }
-    
-    private var backgroundEnabledColor: Color {
-        isDesignTokenEnabled ? TokenColors.Button.secondary.swiftUI : Color(.gray474747)
-    }
-    
-    private var backgroundDisabledColor: Color {
-        isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : Color(.whiteFFFFFF)
     }
 }
 

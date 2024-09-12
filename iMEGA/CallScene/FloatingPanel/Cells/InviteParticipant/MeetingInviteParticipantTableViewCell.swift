@@ -11,7 +11,7 @@ class MeetingInviteParticipantTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         inviteLabel.text = Strings.Localizable.Meetings.Panel.inviteParticipants
-        inviteIcon.image = UIColor.isDesignTokenEnabled() ? .inviteToChatDesignToken : .inviteContactGray
+        inviteIcon.image = .inviteToChatDesignToken
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:))))
     }

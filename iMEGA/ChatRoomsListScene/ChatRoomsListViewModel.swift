@@ -73,10 +73,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var displayFutureMeetings: [FutureMeetingSection]?
     
     var contactsOnMegaViewState: ChatRoomsTopRowViewState {
-        ChatRoomsTopRowViewState.contactsOnMega(
-            designTokenEnabled: UIColor.isDesignTokenEnabled(),
-            action: {[weak self] in self?.goToInviteContact() }
-        )
+        ChatRoomsTopRowViewState.contactsOnMega(action: {[weak self] in self?.goToInviteContact() })
     }
     
     @Published var activeCallViewModel: ActiveCallViewModel?

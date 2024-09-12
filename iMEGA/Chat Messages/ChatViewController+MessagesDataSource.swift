@@ -6,11 +6,11 @@ extension ChatViewController: MessagesDataSource {
     public func currentSender() -> any SenderType {
         return myUser
     }
-
+    
     public func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
-
+    
     public func messageForItem(at indexPath: IndexPath,
                                in messagesCollectionView: MessagesCollectionView) -> any MessageType {
         return messages[safe: indexPath.section] ?? ConcreteMessageType(sender: User(senderId: "", displayName: ""), messageId: "", sentDate: Date(), kind: .text(""))
@@ -23,61 +23,46 @@ extension ChatViewController: MessagesDataSource {
         }
         
         if isTimeLabelVisible(at: indexPath) {
-            if UIColor.isDesignTokenEnabled() {
-                let dateString = chatMessage.sentDate.string(withDateFormat: "HH:mm")
-                let displayName = if !isFromCurrentSender(message: chatMessage) && chatRoom.isGroup {
-                    !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
-                } else {
-                    ""
-                }
-                let fullText = "\(displayName)\(dateString)"
-                
-                let attributedString = NSMutableAttributedString(
-                    string: fullText,
-                    attributes: [
-                        NSAttributedString.Key.font: UIFont.preferredFont(style: .caption1, weight: .bold)
-                    ]
-                )
-                
-                let dateRange = (fullText as NSString).range(of: dateString)
-                attributedString.addAttribute(.foregroundColor, value: TokenColors.Text.secondary, range: dateRange)
-
-                if !displayName.isEmpty {
-                    let displayNameRange = (fullText as NSString).range(of: displayName)
-                    attributedString.addAttribute(.foregroundColor, value: TokenColors.Text.primary, range: displayNameRange)
-                }
-
-                return attributedString
+            let dateString = chatMessage.sentDate.string(withDateFormat: "HH:mm")
+            let displayName = if !isFromCurrentSender(message: chatMessage) && chatRoom.isGroup {
+                !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
             } else {
-                var topLabelString: String = chatMessage.sentDate.string(withDateFormat: "HH:mm")
-                
-                if !isFromCurrentSender(message: chatMessage) && chatRoom.isGroup {
-                    let displayName = !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
-                    topLabelString = displayName + topLabelString
-                }
-                return NSAttributedString(
-                    string: topLabelString,
-                    attributes: [
-                        NSAttributedString.Key.font: UIFont.preferredFont(style: .footnote, weight: .medium),
-                        NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
-                )
+                ""
             }
+            let fullText = "\(displayName)\(dateString)"
+            
+            let attributedString = NSMutableAttributedString(
+                string: fullText,
+                attributes: [
+                    NSAttributedString.Key.font: UIFont.preferredFont(style: .caption1, weight: .bold)
+                ]
+            )
+            
+            let dateRange = (fullText as NSString).range(of: dateString)
+            attributedString.addAttribute(.foregroundColor, value: TokenColors.Text.secondary, range: dateRange)
+            
+            if !displayName.isEmpty {
+                let displayNameRange = (fullText as NSString).range(of: displayName)
+                attributedString.addAttribute(.foregroundColor, value: TokenColors.Text.primary, range: displayNameRange)
+            }
+            
+            return attributedString
         }
+        
         return nil
     }
-
+    
     func cellTopLabelAttributedText(for message: any MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isDateLabelVisible(for: indexPath) {
-            let textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
             return NSAttributedString(
                 string: NSCalendar.current.isDateInToday(message.sentDate) ? Strings.Localizable.today : message.sentDate.string(withDateFormat: "E dd MMM"),
                 attributes: [
                     NSAttributedString.Key.font: UIFont.preferredFont(style: .subheadline, weight: .bold),
-                    NSAttributedString.Key.foregroundColor: textColor
+                    NSAttributedString.Key.foregroundColor: TokenColors.Text.primary
                 ]
             )
         }
-
+        
         return nil
     }
     
@@ -110,7 +95,7 @@ extension ChatViewController: MessagesDataSource {
     
     func messageBottomLabelAttributedText(for message: any MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         guard let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed else {
-           return nil
+            return nil
         }
         
         let bottomLabelString = Strings.Localizable.CouldnTLoad.redTapToRetryRED
@@ -118,12 +103,8 @@ extension ChatViewController: MessagesDataSource {
             return nil
         }
         let description = (bottomLabelString as NSString).replacingOccurrences(of: String(format: "[RED]%@[/RED]", title), with: "")
-        
-        let errorColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Text.error :
-            UIColor.mnz_errorRed(for: traitCollection)
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: errorColor,
+            NSAttributedString.Key.foregroundColor: TokenColors.Text.error,
             NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)
         ]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
@@ -145,22 +126,22 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         guard chatRoom.canAddReactions else {
             return
         }
-    
+        
         let vc = ReactionPickerViewController()
         
         vc.message = chatMessage
         dismissKeyboardIfRequired()
         presentPanModal(vc, sourceView: sender, sourceRect: sender.bounds)
     }
-
+    
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
         guard chatRoom.canAddReactions else {
             return
         }
         guard let emojisStringList = MEGAChatSdk.shared.messageReactions(forChat: chatRoom.chatId,
-                                 messageId: chatMessage.message.messageId) else {
-                                    MEGALogDebug("Could not fetch the emoji list for a message")
-                                    return
+                                                                         messageId: chatMessage.message.messageId) else {
+            MEGALogDebug("Could not fetch the emoji list for a message")
+            return
         }
         
         let emojis = (0..<emojisStringList.size).compactMap { emojisStringList.string(at: $0) }

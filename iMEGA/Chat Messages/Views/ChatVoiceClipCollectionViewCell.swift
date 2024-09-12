@@ -156,13 +156,11 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
             }
         }
         
-        if UIColor.isDesignTokenEnabled() {
-            let buttonColor = isFromCurrentSender(message: message) ? TokenColors.Icon.inverse : TokenColors.Icon.primary
-            let playButtonImage = UIImage(resource: .playVoiceClipButton).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
-            let pauseButtonImage = UIImage(resource: .pauseVoiceClip).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
-            playButton.setImage(playButtonImage, for: .normal)
-            playButton.setImage(pauseButtonImage, for: .selected)
-        }
+        let buttonColor = isFromCurrentSender(message: message) ? TokenColors.Icon.inverse : TokenColors.Icon.primary
+        let playButtonImage = UIImage(resource: .playVoiceClipButton).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
+        let pauseButtonImage = UIImage(resource: .pauseVoiceClip).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
+        playButton.setImage(playButtonImage, for: .normal)
+        playButton.setImage(pauseButtonImage, for: .selected)
     }
     
     private func configureLoadingView() {

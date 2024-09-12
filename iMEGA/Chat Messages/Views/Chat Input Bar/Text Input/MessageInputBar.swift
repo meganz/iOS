@@ -128,12 +128,9 @@ class MessageInputBar: UIView {
         
         calculateAddButtonBotomSpacing()
         updateAppearance()
-        if UIColor.isDesignTokenEnabled() {
-            setSendButtonColor()
-        }
-        backgroundColor = UIColor.isDesignTokenEnabled()
-            ? TokenColors.Background.page
-            : .systemBackground
+        setSendButtonColor()
+        
+        backgroundColor = TokenColors.Background.page
     }
     
     override var intrinsicContentSize: CGSize {
@@ -278,12 +275,9 @@ class MessageInputBar: UIView {
     private func configureEditField() {
         guard let editMessage = editMessage else {
             editViewHeightConstraint.constant = 0
-            if UIColor.isDesignTokenEnabled() {
-                setSendButtonColor()
-            } else {
-                sendButton.setImage(UIImage(resource: .sendButton), for: .normal)
-            }
+            setSendButtonColor()
             sendButton.isEnabled = true
+            
             return
         }
         calculateEditViewHeight()
@@ -308,17 +302,10 @@ class MessageInputBar: UIView {
     }
     
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            micButton.backgroundColor = TokenColors.Background.surface1
-            messageTextViewCoverView.backgroundColor = TokenColors.Background.surface1
-            addButton.tintColor = TokenColors.Icon.primary
-            expandedTextViewCoverView.backgroundColor = TokenColors.Background.page
-        } else {
-            micButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-            messageTextViewCoverView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-            addButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-            expandedTextViewCoverView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
-        }
+        micButton.backgroundColor = TokenColors.Background.surface1
+        messageTextViewCoverView.backgroundColor = TokenColors.Background.surface1
+        addButton.tintColor = TokenColors.Icon.primary
+        expandedTextViewCoverView.backgroundColor = TokenColors.Background.page
         messageTextView.keyboardAppearance = traitCollection.userInterfaceStyle == .dark ? .dark : .light
     }
     

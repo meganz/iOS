@@ -51,18 +51,8 @@ class ReactionEmojiButton: UIButton {
         layer.borderWidth = 1
         layer.cornerRadius = 12
         
-        if UIColor.isDesignTokenEnabled() {
-            layer.borderColor = emojiSelected ? TokenColors.Border.strongSelected.cgColor : TokenColors.Border.strong.cgColor
-            backgroundColor = TokenColors.Button.secondary
-        } else {
-            if emojiSelected {
-                layer.borderColor = UIColor.green009476.cgColor
-            } else {
-                layer.borderColor = UIColor.chatReactionBubbleBorder.cgColor
-            }
-            backgroundColor = UIColor.mnz_reactionBubbleBackgroundColor(self.traitCollection, selected: emojiSelected)
-        }
-
+        layer.borderColor = emojiSelected ? TokenColors.Border.strongSelected.cgColor : TokenColors.Border.strong.cgColor
+        backgroundColor = TokenColors.Button.secondary
     }
     
     private func updateAppearance () {

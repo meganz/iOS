@@ -3,14 +3,14 @@ import SwiftUI
 
 struct DatePickerView: View {
     @Environment(\.colorScheme) private var colorScheme
-
+    
     let title: String
     @Binding var dateFormatted: String
     @Binding var datePickerVisible: Bool
     @Binding var date: Date
     let dateRange: PartialRangeFrom<Date>
     let action: (() -> Void)
-
+    
     var body: some View {
         HStack {
             Text(title)
@@ -18,11 +18,9 @@ struct DatePickerView: View {
             Spacer()
             Text(dateFormatted)
                 .foregroundStyle(
-                    datePickerVisible ? 
-                    (isDesignTokenEnabled ?
-                     TokenColors.Support.success.swiftUI : Color(UIColor.mnz_green00A886()))
-                    : (isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : (colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
-                ))
+                    datePickerVisible ? TokenColors.Support.success.swiftUI
+                    : TokenColors.Text.secondary.swiftUI
+                )
         }
         .frame(minHeight: 44)
         .contentShape(Rectangle())
@@ -46,9 +44,7 @@ struct DatePickerView: View {
             .onAppear {
                 UIDatePicker.appearance().minuteInterval = 5
             }
-            .background(isDesignTokenEnabled
-                        ? TokenColors.Background.page.swiftUI
-                        : colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+            .background(TokenColors.Background.page.swiftUI)
         }
     }
 }

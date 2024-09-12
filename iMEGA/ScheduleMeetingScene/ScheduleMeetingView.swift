@@ -55,9 +55,7 @@ struct ScheduleMeetingView: View {
             }
         }
         .padding(.vertical)
-        .background(isDesignTokenEnabled
-                    ? TokenColors.Background.page.swiftUI
-                    : (colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color))
+        .background(TokenColors.Background.page.swiftUI)
         .ignoresSafeArea(.container, edges: [.top, .bottom])
         .onAppear {
             Task { @MainActor in

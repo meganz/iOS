@@ -25,20 +25,12 @@ struct HangOrEndCallView: View {
                     }, label: {
                         Text(Strings.Localizable.Meetings.LeaveCall.buttonTitle)
                             .font(.headline)
-                            .foregroundColor(
-                                isDesignTokenEnabled ?
-                                    TokenColors.Text.accent.swiftUI :
-                                    Color(.green00C29A)
-                            )
+                            .foregroundColor(TokenColors.Text.accent.swiftUI)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(
-                                isDesignTokenEnabled ?
-                                    TokenColors.Button.secondary.swiftUI :
-                                    Color(.gray363638)
-                            )
+                            .background(TokenColors.Button.secondary.swiftUI)
                             .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: shadowColor.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                            .shadow(color: TokenColors.Background.page.swiftUI.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })
                     
                     Button(action: {
@@ -46,38 +38,20 @@ struct HangOrEndCallView: View {
                     }, label: {
                         Text(Strings.Localizable.Meetings.EndForAll.buttonTitle)
                             .font(.headline)
-                            .foregroundColor(
-                                isDesignTokenEnabled ?
-                                    TokenColors.Text.primary.swiftUI :
-                                    Color(.whiteFFFFFF)
-                            )
+                            .foregroundColor(TokenColors.Text.primary.swiftUI)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(
-                                isDesignTokenEnabled ?
-                                    TokenColors.Components.interactive.swiftUI :
-                                    Color(.redFF453A)
-                            )
+                            .background(TokenColors.Components.interactive.swiftUI)
                             .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: shadowColor.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                            .shadow(color: TokenColors.Background.page.swiftUI.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })
                 }
                 .padding(Constants.buttonsPadding)
             }
             .cornerRadius(Constants.cornerRadius, corners: [.topLeft, .topRight])
-            .background((
-                isDesignTokenEnabled ?
-                    TokenColors.Background.page.swiftUI :
-                    Color(.black1C1C1E)
-                )
+            .background(TokenColors.Background.page.swiftUI
                 .edgesIgnoringSafeArea(.bottom)
             )
         }
-    }
-    
-    private var shadowColor: Color {
-        isDesignTokenEnabled ?
-            TokenColors.Background.page.swiftUI :
-            Color(.black000000)
     }
 }

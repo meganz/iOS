@@ -70,13 +70,11 @@ final class MeetingFloatingPanelViewController: UIViewController {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
 
-        backgroundView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : .black2C2C2E
+        backgroundView.backgroundColor = TokenColors.Background.surface1
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
 
-        shareLinkLabel.textColor = UIColor.isDesignTokenEnabled() ? 
-            TokenColors.Text.accent :
-            .green00C29A
+        shareLinkLabel.textColor = TokenColors.Text.accent
         
         registerTableViewCells()
         
@@ -366,26 +364,6 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         guard let callParticipantsListView, let cell = participantsTableView.dequeueReusableCell(withIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier, for: indexPath) as? EmptyParticipantsListTableViewCell else { return EmptyParticipantsListTableViewCell() }
         cell.configure(for: callParticipantsListView.selectedTab)
         return cell
-    }
-    
-    private var iconNormalTintColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : UIColor.whiteFFFFFF
-    }
-    
-    private var iconSelectedTintColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.inverse : UIColor.black000000
-    }
-    
-    private var iconNormalBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.secondary : UIColor.gray474747
-    }
-    
-    private var iconSelectedBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.whiteFFFFFF
-    }
-    
-    private var endCallNormalBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : UIColor.redFF453A
     }
     
     private func addCallControlsView() {

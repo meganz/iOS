@@ -2,7 +2,7 @@ import UIKit
 
 extension String {
     public func createAttributedStringForAccentTags(
-        linkColor: () -> UIColor,
+        linkColor: UIColor,
         underline: Bool,
         tappable: Bool = false
     ) -> AttributedString {
@@ -18,7 +18,7 @@ extension String {
         let substringRange = startIndex..<endIndex
         let searchedString = attributedString[substringRange]
         let _searchedString = String(searchedString.characters[...])
-        attributedString[substringRange].foregroundColor = linkColor()
+        attributedString[substringRange].foregroundColor = linkColor
         
         if underline {
             attributedString[substringRange].underlineStyle = .single

@@ -33,13 +33,11 @@ struct MenuButtonModel: Identifiable {
     init(
         theme: MenuButtonModel.Theme = .dark,
         title: String,
-        interaction: MenuButtonModel.Interaction,
-        isDesignTokenEnabled: Bool
+        interaction: MenuButtonModel.Interaction
     ) {
         self.theme = theme
         self.title = title
         self.interaction = interaction
-        self.isDesignTokenEnabled = isDesignTokenEnabled
     }
     
     struct Menu: Identifiable {
@@ -69,13 +67,7 @@ struct MenuButtonModel: Identifiable {
     var interaction: Interaction
     
     var backgroundColor: Color {
-        isDesignTokenEnabled ? 
-           tokenBackgroundColor :
-           legacyBackgroundColor
-    }
-    
-    private var legacyBackgroundColor: Color {
-        theme == .dark ? Color(red: 0, green: 0.66, blue: 0.52) : Color(red: 0, green: 0.66, blue: 0.52)
+        tokenBackgroundColor
     }
     
     private var tokenBackgroundColor: Color {
@@ -83,9 +75,8 @@ struct MenuButtonModel: Identifiable {
     }
     
     var textColor: Color {
-        isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : MEGAAppColor.White._FFFFFF.color }
-    
-    let isDesignTokenEnabled: Bool
+        TokenColors.Text.inverseAccent.swiftUI
+    }
     
     var id: String {
         title

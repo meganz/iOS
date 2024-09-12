@@ -43,11 +43,7 @@ class MessageTextView: UITextView {
     
     private lazy var placeholderTextView: UITextView = {
         let textView = UITextView()
-        if UIColor.isDesignTokenEnabled() {
-            textView.textColor = TokenColors.Text.placeholder
-        } else {
-            textView.textColor = UIColor.gray848484
-        }
+        textView.textColor = TokenColors.Text.placeholder
         textView.backgroundColor = UIColor.black000000.withAlphaComponent(0)
         textView.font = font
         textView.adjustsFontForContentSizeCategory = true
@@ -140,12 +136,8 @@ class MessageTextView: UITextView {
     // MARK: - Private methods
     
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            tintColor = TokenColors.Icon.accent
-            placeholderTextView.textColor = TokenColors.Text.placeholder
-        } else {
-            placeholderTextView.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        }
+        tintColor = TokenColors.Icon.accent
+        placeholderTextView.textColor = TokenColors.Text.placeholder
     }
     
     private func updatePlaceholder() {

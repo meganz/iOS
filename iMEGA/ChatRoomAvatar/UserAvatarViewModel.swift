@@ -105,7 +105,7 @@ final class UserAvatarViewModel: ObservableObject {
             forInitials: initials,
             size: size,
             backgroundColor: avatarBackgroundColor,
-            textColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor: UIColor.whiteFFFFFF,
+            textColor: TokenColors.Text.onColor,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)
     }

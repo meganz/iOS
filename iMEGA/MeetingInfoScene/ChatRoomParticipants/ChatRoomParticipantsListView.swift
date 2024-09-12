@@ -17,7 +17,7 @@ struct ChatRoomParticipantsListView: View {
             HStack {
                 Text(Strings.Localizable.Meetings.Panel.participantsCount(viewModel.totalParticipantsCount))
                     .font(.footnote)
-                    .foregroundColor(titleTextColor)
+                    .foregroundColor(TokenColors.Text.secondary.swiftUI)
                 Spacer()
             }
             .padding()
@@ -41,16 +41,6 @@ struct ChatRoomParticipantsListView: View {
                         viewModel.seeMoreParticipantsTapped()
                     }
             }
-        }
-    }
-    
-    private var titleTextColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.secondary.swiftUI
-        } else {
-            colorScheme == .dark ? 
-            Color(UIColor.mnz_grayB5B5B5().withAlphaComponent(Constants.textOpacity)) :
-            Color(UIColor.mnz_gray3C3C43().withAlphaComponent(Constants.textOpacity))
         }
     }
 }

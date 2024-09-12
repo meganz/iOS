@@ -2,7 +2,6 @@ import MEGAL10n
 import SwiftUI
 
 struct ChatRoomsEmptyViewStateFactory {
-    var designTokenEnabled: Bool
     
     struct ChatEmptyViewActions {
         var startMeeting: () -> Void
@@ -18,10 +17,6 @@ struct ChatRoomsEmptyViewStateFactory {
             newChat: {},
             linkTappedAction: {}
         )
-    }
-    
-    init() {
-        self.designTokenEnabled = true
     }
     
     func searchEmptyViewState() -> ChatRoomsEmptyViewState {
@@ -124,14 +119,12 @@ struct ChatRoomsEmptyViewStateFactory {
         let invite = MenuButtonModel(
             theme: .dark,
             title: Strings.Localizable.Chat.Chats.EmptyState.V2.Button.Invite.title,
-            interaction: .action(actions.inviteFriend),
-            isDesignTokenEnabled: designTokenEnabled
+            interaction: .action(actions.inviteFriend)
         )
         let newChat = MenuButtonModel(
             theme: .light,
             title: Strings.Localizable.Chat.Chats.EmptyState.Button.title,
-            interaction: .action(actions.newChat),
-            isDesignTokenEnabled: designTokenEnabled
+            interaction: .action(actions.newChat)
         )
         
         return if hasContacts {
@@ -147,14 +140,12 @@ struct ChatRoomsEmptyViewStateFactory {
         let startMeeting = MenuButtonModel(
             theme: .dark,
             title: Strings.Localizable.Chat.Meetings.EmptyState.V2.Button.startMeetingNow,
-            interaction: .action(actions.startMeeting),
-            isDesignTokenEnabled: designTokenEnabled
+            interaction: .action(actions.startMeeting)
         )
         let scheduleMeeting = MenuButtonModel(
             theme: .light,
             title: Strings.Localizable.Chat.Meetings.EmptyState.V2.Button.scheduleMeeting,
-            interaction: .action(actions.scheduleMeeting),
-            isDesignTokenEnabled: designTokenEnabled
+            interaction: .action(actions.scheduleMeeting)
         )
         
         return [startMeeting, scheduleMeeting]
@@ -240,8 +231,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 .init(
                     theme: .dark,
                     title: Strings.Localizable.invite,
-                    interaction: .action(goToInvite),
-                    isDesignTokenEnabled: designTokenEnabled
+                    interaction: .action(goToInvite)
                 )
             ]
         )
@@ -256,7 +246,6 @@ struct ChatRoomsEmptyViewStateFactory {
             hasArchivedChats: true,
             chatViewMode: .chats,
             contactsOnMega: .contactsOnMega(
-                designTokenEnabled: true,
                 action: {}
             ),
             archivedChats: .archivedChatsViewState(
@@ -275,7 +264,6 @@ struct ChatRoomsEmptyViewStateFactory {
             hasContacts: false,
             chatViewMode: .chats,
             contactsOnMega: .contactsOnMega(
-                designTokenEnabled: false,
                 action: {}
             ),
             archivedChats: .archivedChatsViewState(
@@ -296,7 +284,6 @@ struct ChatRoomsEmptyViewStateFactory {
             hasContacts: false,
             chatViewMode: .chats,
             contactsOnMega: .contactsOnMega(
-                designTokenEnabled: false,
                 action: {}
             ),
             archivedChats: .archivedChatsViewState(
@@ -317,7 +304,6 @@ struct ChatRoomsEmptyViewStateFactory {
             hasContacts: false,
             chatViewMode: .meetings,
             contactsOnMega: .contactsOnMega(
-                designTokenEnabled: false,
                 action: {}
             ),
             archivedChats: .archivedChatsViewState(
@@ -338,7 +324,6 @@ struct ChatRoomsEmptyViewStateFactory {
             hasContacts: false,
             chatViewMode: .meetings,
             contactsOnMega: .contactsOnMega(
-                designTokenEnabled: false,
                 action: {}
             ),
             archivedChats: .archivedChatsViewState(
@@ -359,7 +344,6 @@ struct ChatRoomsEmptyViewStateFactory {
             hasContacts: false,
             chatViewMode: .chats,
             contactsOnMega: .contactsOnMega(
-                designTokenEnabled: false,
                 action: {}
             ),
             archivedChats: .archivedChatsViewState(

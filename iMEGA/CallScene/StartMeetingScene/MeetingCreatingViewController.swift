@@ -18,20 +18,13 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     private struct Constants {
         static let bottomBarText = UIFont.preferredFont(style: .title3, weight: .semibold)
         static let bottomBarButtonText = UIFont.preferredFont(forTextStyle: .headline)
-        static let backgroundColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Background.page :  UIColor.gray332F2F
-        static let iconTintColorNormal = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Icon.primary : UIColor.whiteFFFFFF
-        static let iconTintColorSelected = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Icon.inverse : UIColor.black000000
-        static let iconBackgroundColorNormal = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Button.secondary : UIColor.black222222
-        static let iconBackgroundColorSelected = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Button.primary : UIColor.whiteFFFFFF
-        static let meetingNameTextColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Text.placeholder : UIColor.whiteFFFFFF.withAlphaComponent(0.2)
-        static let placeholderTextColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Text.placeholder : UIColor.whiteFFFFFF.withAlphaComponent(0.2)
+        static let backgroundColor = TokenColors.Background.page
+        static let iconTintColorNormal = TokenColors.Icon.primary
+        static let iconTintColorSelected = TokenColors.Icon.inverse
+        static let iconBackgroundColorNormal = TokenColors.Button.secondary
+        static let iconBackgroundColorSelected = TokenColors.Button.primary
+        static let meetingNameTextColor = TokenColors.Text.placeholder
+        static let placeholderTextColor = TokenColors.Text.placeholder
     }
     
     @IBOutlet weak var localUserView: LocalUserView!
@@ -131,27 +124,20 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         meetingNameInputTextfield.addTarget(self, action: #selector(textFieldTextChanged(textField:)), for: .editingChanged)
         
         startMeetingButton.setTitle(Strings.Localizable.Meetings.CreateMeeting.startMeeting, for: .normal)
-        if UIColor.isDesignTokenEnabled() {
-            setupColorForStartMeetingButton()
-            startMeetingButton.layer.cornerRadius = 8
-        } else {
-            startMeetingButton.mnz_setupPrimary(traitCollection)
-        }
+        setupColorForStartMeetingButton()
+        startMeetingButton.layer.cornerRadius = 8
         startMeetingButton.titleLabel?.font = Constants.bottomBarButtonText
         
         speakerQuickActionView.properties = MeetingQuickActionView.Properties(
             iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: Constants.iconTintColorNormal, selected: Constants.iconTintColorSelected),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: backgroundDisabledColor, selected: backgroundEnabledColor)
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: TokenColors.Button.primary, selected: TokenColors.Button.secondary)
         )
         
-        if UIColor.isDesignTokenEnabled() {
-            bottomPanelView.backgroundColor = TokenColors.Background.surface1
-            localUserView.backgroundColor = TokenColors.Background.page
-        }
-        
-        enableDisableVideoButton.backgroundColor = backgroundDisabledColor
+        bottomPanelView.backgroundColor = TokenColors.Background.surface1
+        localUserView.backgroundColor = TokenColors.Background.page
+        enableDisableVideoButton.backgroundColor = TokenColors.Button.primary
         enableDisableVideoButton.layer.cornerRadius = enableDisableVideoButton.frame.size.width / 2
-        muteUnmuteMicrophoneButton.backgroundColor = backgroundEnabledColor
+        muteUnmuteMicrophoneButton.backgroundColor = TokenColors.Button.secondary
         muteUnmuteMicrophoneButton.layer.cornerRadius = enableDisableVideoButton.frame.size.width / 2
     }
 
@@ -177,11 +163,11 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             localUserView.updateAvatar(image: image)
         case .updateVideoButton(enabled: let isSelected):
             enableDisableVideoButton.isSelected = isSelected
-            enableDisableVideoButton.backgroundColor = isSelected ? backgroundEnabledColor : backgroundDisabledColor
+            enableDisableVideoButton.backgroundColor = isSelected ? TokenColors.Button.secondary : TokenColors.Button.primary
             localUserView.switchVideo(to: isSelected)
         case .updateMicrophoneButton(enabled: let isSelected):
             muteUnmuteMicrophoneButton.isSelected = !isSelected
-            muteUnmuteMicrophoneButton.backgroundColor = isSelected ? backgroundDisabledColor : backgroundEnabledColor
+            muteUnmuteMicrophoneButton.backgroundColor = isSelected ? TokenColors.Button.primary : TokenColors.Button.secondary
         case .loadingStartMeeting:
             showLoadingStartMeeting()
         case .loadingEndMeeting:
@@ -224,11 +210,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         let trimmedFirstName = firstName.trimmingCharacters(in: .whitespaces)
         let trimmedLastName = lastname.trimmingCharacters(in: .whitespaces)
         startMeetingButton.isEnabled = !trimmedFirstName.isEmpty && !trimmedLastName.isEmpty
-        if UIColor.isDesignTokenEnabled() {
-            setupColorForStartMeetingButton()
-        } else {
-            startMeetingButton.alpha = startMeetingButton.isEnabled ? 1.0 : 0.5
-        }
+        setupColorForStartMeetingButton()
     }
     
     private func showLoadingEndMeeting() {
@@ -265,11 +247,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             meetingNameInputTextfield.isHidden = true
             startMeetingButton.setTitle(Strings.Localizable.Meetings.Link.Guest.joinButtonText, for: .normal)
             startMeetingButton.isEnabled = false
-            if UIColor.isDesignTokenEnabled() {
-                setupColorForStartMeetingButton()
-            } else {
-                startMeetingButton.alpha = 0.5
-            }
+            setupColorForStartMeetingButton()
             
             firstNameTextfield.attributedPlaceholder = NSAttributedString(
                 string: Strings.Localizable.firstName,
@@ -359,14 +337,6 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             startMeetingButton.backgroundColor = TokenColors.Button.disabled
             startMeetingButton.setTitleColor(TokenColors.Text.disabled, for: UIControl.State.normal)
         }
-    }
-    
-    private var backgroundEnabledColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.secondary : .gray474747
-    }
-    
-    private var backgroundDisabledColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : .whiteFFFFFF
     }
 }
 
