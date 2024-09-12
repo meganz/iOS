@@ -81,6 +81,8 @@ final class ChatContentViewModel: ViewModelType {
     private var updateContentTask: Task<Void, Never>?
     private var chatCallUpdateTask: Task<Void, Never>?
 
+    private var isStartingOrJoiningCall: Bool = false
+    
     init(chatRoom: ChatRoomEntity,
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
@@ -131,7 +133,9 @@ final class ChatContentViewModel: ViewModelType {
         case .startCallBarButtonTapped(let isVideoEnabled):
             checkPermissionsAndStartCall(isVideoEnabled: isVideoEnabled, notRinging: false)
         case .startOrJoinFloatingButtonTapped:
-            guard !existsOtherCallInProgress() else { return }
+            guard !existsOtherCallInProgress(),
+                  !isStartingOrJoiningCall
+            else { return }
             checkPermissionsAndStartCall(isVideoEnabled: false, notRinging: true)
         case .returnToCallBannerButtonTapped:
             returnToCallUI()
@@ -235,6 +239,7 @@ final class ChatContentViewModel: ViewModelType {
     
     private func updateStartOrJoinCallButton( _ scheduledMeetings: [ScheduledMeetingEntity]) {
         stopTimer()
+        isStartingOrJoiningCall = false
         invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
     }
     
@@ -363,6 +368,7 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     private func manageStartOrJoinCall(videoCall: Bool, notRinging: Bool) {
+        isStartingOrJoiningCall = true
         if shouldOpenWaitingRoom() {
             openWaitingRoom()
         } else {
