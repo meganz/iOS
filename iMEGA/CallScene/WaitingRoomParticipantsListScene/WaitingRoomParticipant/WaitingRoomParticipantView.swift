@@ -34,11 +34,7 @@ struct WaitingRoomParticipantView: View {
                 HStack {
                     Text(viewModel.name)
                         .font(.subheadline)
-                        .foregroundColor(
-                            isDesignTokenEnabled ?
-                                TokenColors.Text.primary.swiftUI :
-                                .whiteFFFFFF
-                        )
+                        .foregroundColor(TokenColors.Text.primary.swiftUI)
                     Spacer()
                     Button {
                         viewModel.denyTapped()
@@ -56,11 +52,7 @@ struct WaitingRoomParticipantView: View {
                 .padding(.trailing, Constants.viewPadding)
                 Spacer()
                 Divider()
-                    .background(
-                        isDesignTokenEnabled ?
-                            TokenColors.Background.surface1.swiftUI :
-                            .gray545458.opacity(0.65)
-                    )
+                    .background(TokenColors.Background.surface1.swiftUI)
             }
         }
         .frame(height: Constants.viewHeight)

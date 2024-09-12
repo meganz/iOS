@@ -43,12 +43,8 @@ final class ScheduleMeetingViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        createBarButtonItem.setTitleTextAttributes([.foregroundColor: barButtonForegroundColor], for: .normal)
-        cancelBarButtonItem.setTitleTextAttributes([.foregroundColor: barButtonForegroundColor], for: .normal)
-    }
-    
-    var barButtonForegroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
+        createBarButtonItem.setTitleTextAttributes([.foregroundColor: TokenColors.Text.primary], for: .normal)
+        cancelBarButtonItem.setTitleTextAttributes([.foregroundColor: TokenColors.Text.primary], for: .normal)
     }
     
     @objc func submitButtonItemTapped() {

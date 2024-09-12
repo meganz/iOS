@@ -24,14 +24,10 @@ class ChatBottomNewMessageIndicatorView: UIView {
         let backgroundView = UIButton()
         backgroundView.layer.cornerRadius = 22
         backgroundView.clipsToBounds = true
-        if UIColor.isDesignTokenEnabled() {
-            backgroundView.backgroundColor = TokenColors.Icon.primary
-            let jumpToLatestImage = UIImage(resource: .jumpToLatest).withTintColor(TokenColors.Icon.inverseAccent, renderingMode: .alwaysOriginal)
-            backgroundView.setImage(jumpToLatestImage, for: .normal)
-        } else {
-            backgroundView.backgroundColor = UIColor.gray333333.withAlphaComponent(0.9)
-            backgroundView.setImage(UIImage(resource: .jumpToLatest), for: .normal)
-        }
+        backgroundView.backgroundColor = TokenColors.Icon.primary
+        let jumpToLatestImage = UIImage(resource: .jumpToLatest).withTintColor(TokenColors.Icon.inverseAccent, renderingMode: .alwaysOriginal)
+        backgroundView.setImage(jumpToLatestImage, for: .normal)
+        
         return backgroundView
     }()
     

@@ -178,8 +178,6 @@ class VoiceClipInputBar: UIView {
     
     private func updateAppearance() {
         backgroundColor = UIColor.mnz_voiceRecordingViewBackground(traitCollection)
-        if UIColor.isDesignTokenEnabled() {
-            sendView.backgroundColor = TokenColors.Button.primary
-        }
+        sendView.backgroundColor = TokenColors.Button.primary
     }
 }

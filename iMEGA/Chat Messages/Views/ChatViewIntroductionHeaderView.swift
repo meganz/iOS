@@ -106,17 +106,10 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         chattingWithTextLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         participantsLabel.font = UIFont.preferredFont(forTextStyle: .title2)
         statusLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        if UIColor.isDesignTokenEnabled() {
-            chattingWithTextLabel.textColor = TokenColors.Components.interactive
-            descriptionLabel.textColor = TokenColors.Text.secondary
-            participantsLabel.textColor = TokenColors.Text.primary
-            statusLabel.textColor = TokenColors.Text.secondary
-        } else {
-            chattingWithTextLabel.textColor = UIColor.mnz_red(for: traitCollection)
-            descriptionLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
-            participantsLabel.textColor = UIColor.label
-            statusLabel.textColor = UIColor.label
-        }
+        chattingWithTextLabel.textColor = TokenColors.Components.interactive
+        descriptionLabel.textColor = TokenColors.Text.secondary
+        participantsLabel.textColor = TokenColors.Text.primary
+        statusLabel.textColor = TokenColors.Text.secondary
 
         chattingWithTextLabel.text = Strings.Localizable.chattingWith
         descriptionLabel.text = Strings.Localizable.Chat.IntroductionHeader.Privacy.description

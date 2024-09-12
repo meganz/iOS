@@ -35,18 +35,10 @@ struct WaitingRoomParticipantsListView: View {
             VStack {
                 Text(Strings.Localizable.Chat.Call.WaitingRoom.ParticipantsList.title)
                     .font(.subheadline)
-                    .foregroundColor(
-                        isDesignTokenEnabled ?
-                            TokenColors.Text.primary.swiftUI :
-                            .whiteFFFFFF
-                    )
+                    .foregroundColor(TokenColors.Text.primary.swiftUI)
                 Text(Strings.Localizable.Chat.Call.WaitingRoom.participantsCount(viewModel.displayWaitingRoomParticipants.count))
                     .font(.caption)
-                    .foregroundColor(
-                        isDesignTokenEnabled ?
-                            TokenColors.Text.primary.swiftUI :
-                            .whiteFFFFFF
-                    )
+                    .foregroundColor(TokenColors.Text.primary.swiftUI)
                     .opacity(0.8)
             }
             HStack {
@@ -78,11 +70,7 @@ struct WaitingRoomParticipantsListView: View {
             .opacity(viewModel.admitAllButtonDisabled ? 0.25 : 1.0)
             .disabled(viewModel.admitAllButtonDisabled)
             .font(.body.bold())
-            .foregroundColor(
-                isDesignTokenEnabled ?
-                    TokenColors.Link.primary.swiftUI :
-                    .green00C29A
-            )
+            .foregroundColor(TokenColors.Link.primary.swiftUI)
             .frame(width: 288, height: 50, alignment: .center)
             .background(.gray363638)
             .cornerRadius(8)

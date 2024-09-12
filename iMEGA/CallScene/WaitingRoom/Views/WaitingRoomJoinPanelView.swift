@@ -29,51 +29,29 @@ struct WaitingRoomJoinPanelView: View {
                 )
                 .frame(maxWidth: 120)
             }
-            if isDesignTokenEnabled {
-                Button {
-                    tapJoinAction(firstName, lastName)
-                    hideKeyboard()
-                } label: {
-                    Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
-                        .foregroundColor(
-                            disableJoinButton ?
-                                TokenColors.Text.disabled.swiftUI :
-                                TokenColors.Text.inverse.swiftUI
-                        )
-                        .font(.system(size: 17, weight: .bold))
-                        .frame(width: 288, height: 50)
-                        .background(
-                            disableJoinButton ?
-                                TokenColors.Button.disabled.swiftUI :
-                                TokenColors.Button.primary.swiftUI
-                        )
-                }
-                .cornerRadius(8)
-                .disabled(disableJoinButton)
-            } else {
-                Button {
-                    tapJoinAction(firstName, lastName)
-                    hideKeyboard()
-                } label: {
-                    Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
-                        .foregroundColor(Color(.whiteFFFFFF))
-                        .font(.system(size: 17, weight: .bold))
-                        .frame(width: 288, height: 50)
-                        .background(
-                            Color(.green00C29A)
-                        )
-                }
-                .cornerRadius(8)
-                .disabled(disableJoinButton)
-                .opacity(disableJoinButton ? 0.3 : 1)
+            Button {
+                tapJoinAction(firstName, lastName)
+                hideKeyboard()
+            } label: {
+                Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
+                    .foregroundColor(
+                        disableJoinButton ?
+                            TokenColors.Text.disabled.swiftUI :
+                            TokenColors.Text.inverse.swiftUI
+                    )
+                    .font(.system(size: 17, weight: .bold))
+                    .frame(width: 288, height: 50)
+                    .background(
+                        disableJoinButton ?
+                            TokenColors.Button.disabled.swiftUI :
+                            TokenColors.Button.primary.swiftUI
+                    )
             }
+            .cornerRadius(8)
+            .disabled(disableJoinButton)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            isDesignTokenEnabled ?
-                TokenColors.Background.surface1.swiftUI :
-                Color(.black1C1C1E)
-        )
+        .background(TokenColors.Background.surface1.swiftUI)
     }
     
     struct FocusableNameTextFieldView: View {

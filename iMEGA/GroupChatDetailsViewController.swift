@@ -151,31 +151,24 @@ extension GroupChatDetailsViewController {
         tableView.backgroundColor = backgroundGroupedColor()
         groupInfoView.backgroundColor = backgroundElevatedColor()
         
-        if UIColor.isDesignTokenEnabled() {
-            participantsLabel.textColor = TokenColors.Text.secondary
-            groupInfoBottomSeparatorView.backgroundColor = TokenColors.Border.strong
-        } else {
-            participantsLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
-            groupInfoBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        }
+        participantsLabel.textColor = TokenColors.Text.secondary
+        groupInfoBottomSeparatorView.backgroundColor = TokenColors.Border.strong
     }
     
     @objc func backgroundGroupedColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ?
-        TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+        TokenColors.Background.page
     }
     
     @objc func backgroundElevatedColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ?
-        TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        TokenColors.Background.page
     }
     
     @objc func iconPrimaryColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary: UIColor.mnz_primaryGray(for: traitCollection)
+        TokenColors.Icon.primary
     }
     
     @objc func iconRedColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+        TokenColors.Support.error
     }
     
     @objc func configLeftImageForLeftGroup(for cell: GroupChatDetailsViewTableViewCell?) {
@@ -186,17 +179,12 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func groupChatAddParticipantImage() -> UIImage {
-        if UIColor.isDesignTokenEnabled() {
-            UIImage.groupChatAddParticipant
-        } else {
-            UIImage.inviteToChat
-        }
+        UIImage.groupChatAddParticipant
     }
     
     @objc func setTableHeaderFooterViewBackgroundColor(
         _ headerFooterView: GenericHeaderFooterView
     ) {
-        guard UIColor.isDesignTokenEnabled() else { return }
         headerFooterView.setPreferredBackgroundColor(TokenColors.Background.page)
     }
 }
@@ -224,7 +212,7 @@ extension GroupChatDetailsViewController: MEGAChatRoomDelegate {
         }
     }
 }
- 
+
 extension GroupChatDetailsViewController: GroupChatDetailsViewTableViewCellDelegate {
     public func controlSwitchValueChanged(_ sender: UISwitch, from cell: GroupChatDetailsViewTableViewCell) {
         guard let section = tableView.indexPath(for: cell)?.section else { return }

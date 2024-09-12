@@ -24,8 +24,6 @@ struct ScheduleMeetingCreationNameView: View {
 
             Divider()
         }
-        .background(isDesignTokenEnabled
-                    ? TokenColors.Background.surface1.swiftUI
-                    : colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .background(TokenColors.Background.surface1.swiftUI)
     }
 }

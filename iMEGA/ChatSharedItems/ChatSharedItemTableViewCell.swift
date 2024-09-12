@@ -35,9 +35,8 @@ class ChatSharedItemTableViewCell: UITableViewCell {
         ownerNameLabel.textColor = .mnz_subtitles(for: traitCollection)
         infoLabel.text = Helper.sizeAndModificationDate(for: node, api: .shared)
         infoLabel.textColor = .mnz_subtitles(for: traitCollection)
-        if UIColor.isDesignTokenEnabled() {
-            moreButton.tintColor = TokenColors.Icon.primary
-        }
+        moreButton.tintColor = TokenColors.Icon.primary
+        
         if node.hasThumbnail() {
             let thumbnailFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "thumbnailsV3")
             if FileManager.default.fileExists(atPath: thumbnailFilePath) {

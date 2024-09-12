@@ -8,13 +8,13 @@ struct TaggableText: View {
     var text: String
     var underline: Bool
     var tappable: Bool
-    var linkColor: (ColorScheme) -> UIColor
+    var linkColor: UIColor
     
     init(
         _ text: String,
         underline: Bool,
         tappable: Bool = false,
-        linkColor: @escaping (ColorScheme) -> UIColor
+        linkColor: UIColor
     ) {
         self.text = text
         self.underline = underline
@@ -24,7 +24,7 @@ struct TaggableText: View {
     
     var processedText: AttributedString {
         text.createAttributedStringForAccentTags(
-            linkColor: { linkColor(colorScheme) },
+            linkColor: linkColor,
             underline: underline,
             tappable: tappable
         )
@@ -40,7 +40,7 @@ struct TaggableText: View {
         TaggableText(
             "Some interesting long copy with a [A]LINK[/A]",
             underline: false,
-            linkColor: { _ in .red }
+            linkColor: .red
         )
         .foregroundColor(.blue)
         .colorScheme(.light)
@@ -48,7 +48,7 @@ struct TaggableText: View {
         TaggableText(
             "Some interesting long copy with a [A]LINK[/A]",
             underline: true,
-            linkColor: { _ in .blue }
+            linkColor: .blue
         )
         .foregroundColor(.black)
         .colorScheme(.light)

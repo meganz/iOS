@@ -8,7 +8,7 @@ struct ChatTabsSelectorView: View {
     let shouldDisplayUnreadBadgeForChats: Bool
     let shouldDisplayUnreadBadgeForMeetings: Bool
     var action: (ChatViewMode) -> Void
-
+    
     var body: some View {
         HStack(spacing: 0) {
             VStack {
@@ -18,19 +18,19 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.chat)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(chatViewMode == .chats ? selectedColor : unselectedColor)
+                        .foregroundColor(chatViewMode == .chats ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
                     
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(isDesignTokenEnabled ? TokenColors.Components.interactive.swiftUI : MEGAAppColor.Red._F30C14_badge.color)
+                        .fill(TokenColors.Components.interactive.swiftUI)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForChats ? 1 : 0)
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .chats ? selectedColor : unselectedDividerColor)
+                    .background(chatViewMode == .chats ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
                     .opacity(chatViewMode == .chats ? 1 : 0)
             }
             
@@ -41,34 +41,22 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.meeting)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(chatViewMode == .meetings ? selectedColor : unselectedColor)
+                        .foregroundColor(chatViewMode == .meetings ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(isDesignTokenEnabled ? TokenColors.Components.interactive.swiftUI : MEGAAppColor.Red._F30C14_badge.color)
+                        .fill(TokenColors.Components.interactive.swiftUI)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForMeetings ? 1 : 0)
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .meetings ? selectedColor : unselectedDividerColor)
+                    .background(chatViewMode == .meetings ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
                     .opacity(chatViewMode == .meetings ? 1 : 0)
             }
         }
         .frame(maxHeight: 44)
         .background(colorScheme == .dark ? MEGAAppColor.Black._161616.color : MEGAAppColor.White._F7F7F7.color)
-    }
-    
-    private var selectedColor: Color {
-        isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Chat.chatTabSelectedText.color
-    }
-    
-    private var unselectedColor: Color {
-        isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : MEGAAppColor.Chat.chatTabNormalText.color
-    }
-    
-    private var unselectedDividerColor: Color {
-        isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : MEGAAppColor.Chat.chatTabNormalBackground.color
     }
 }

@@ -59,11 +59,8 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         titleLabel.textColor = .white // static color does change when dark/light mode changes
         warningLabel.preferredMaxLayoutWidth = 300
         warningLabel.font  = UIFont.preferredFont(forTextStyle: .caption2).bold()
-        let titleColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Link.primary :
-            .green00A886
-        actionButton.setTitleColor(titleColor, for: .normal)
-        actionButton.setTitleColor(titleColor.withAlphaComponent(0.4), for: .disabled)
+        actionButton.setTitleColor(TokenColors.Link.primary, for: .normal)
+        actionButton.setTitleColor(TokenColors.Link.primary.withAlphaComponent(0.4), for: .disabled)
         actionButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         
@@ -124,9 +121,9 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
             let theme = BannerView.Config.Theme.darkMeetingsFloatingPanel
             closeButtonTappedHandler = info.dismissTapped
             warningLabel.text = info.copy
-            warningLabel.textColor = theme.foregroundUIColor(.dark)
-            closeButton.tintColor = theme.foregroundUIColor(.dark)
-            warningStack.backgroundColor = UIColor(theme.background(.dark))
+            warningLabel.textColor = theme.foregroundUIColor
+            closeButton.tintColor = theme.foregroundUIColor
+            warningStack.backgroundColor = UIColor(theme.background)
             warningLabel.numberOfLines = 0
             warningStack.isHidden = false
         } else {

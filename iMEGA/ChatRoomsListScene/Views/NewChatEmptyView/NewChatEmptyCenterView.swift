@@ -26,7 +26,7 @@ struct NewChatRoomsEmptyCenterView: View {
                     description,
                     underline: true,
                     tappable: true,
-                    linkColor: { _ in TokenColors.Text.secondary }
+                    linkColor: TokenColors.Text.secondary 
                 )
                 .multilineTextAlignment(.center)
                 // line below is needed for tappable link to work

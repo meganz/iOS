@@ -7,8 +7,7 @@ struct ErrorView: View {
     var body: some View {
         Text(error)
             .font(.footnote)
-            .foregroundStyle(isDesignTokenEnabled ?
-                             TokenColors.Text.error.swiftUI : MEGAAppColor.Red._F30C14.color)
+            .foregroundStyle(TokenColors.Text.error.swiftUI)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
     }

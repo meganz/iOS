@@ -8,18 +8,14 @@ struct ScheduleMeetingCreationCustomOptionsSelectionHeaderView: View {
     let tapAction: () -> Void
     
     @Environment(\.colorScheme) private var colorScheme
-
+    
     var body: some View {
         HStack {
             Text(title)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
             Text(selectedText)
-                .foregroundStyle(
-                    colorScheme == .dark
-                    ? darkThemeForegroundTextColor()
-                    : lightThemeForegroundTextColor()
-                )
+                .foregroundStyle(foregroundTextColor())
         }
         .contentShape(Rectangle())
         .onTapGesture {
@@ -27,15 +23,9 @@ struct ScheduleMeetingCreationCustomOptionsSelectionHeaderView: View {
         }
     }
     
-    private func lightThemeForegroundTextColor() -> Color {
+    private func foregroundTextColor() -> Color {
         isExpanded
-        ? (isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color(UIColor.mnz_green00A886()))
-        : (isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.Gray._3C3C43.color)
-    }
-    
-    private func darkThemeForegroundTextColor() -> Color {
-        isExpanded
-        ? (isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.Green._00C29A.color)
-        : (isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.White._FFFFFF.color.opacity(0.6))
+        ? TokenColors.Support.success.swiftUI
+        : TokenColors.Text.secondary.swiftUI
     }
 }

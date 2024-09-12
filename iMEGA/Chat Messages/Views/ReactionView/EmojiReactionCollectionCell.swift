@@ -38,11 +38,7 @@ class EmojiReactionCollectionCell: UICollectionViewCell {
     }
         
     private func updateAppearance() {
-        let color = if UIColor.isDesignTokenEnabled() {
-            isSelected ? TokenColors.Button.secondary : UIColor.label
-        } else {
-            isSelected ? UIColor.mnz_emojiLabelSelectedState(traitCollection) : UIColor.label
-        }
+        let color = isSelected ? TokenColors.Button.secondary : UIColor.label
         numberOfUsersReactedLabel.textColor = color
         selectedMarkerView.backgroundColor = color
     }

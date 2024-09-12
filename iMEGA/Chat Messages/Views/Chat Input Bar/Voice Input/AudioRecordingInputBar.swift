@@ -46,9 +46,7 @@ class AudioRecordingInputBar: UIView {
         suggestionLabel.text = Strings.Localizable.dragLeftToCancelReleaseToSend
         audioWavesView = AudioWavesView.instanceFromNib
         audioWavesholderView.wrap(audioWavesView)
-        if UIColor.isDesignTokenEnabled() {
-            trashView.imageView.image = UIImage(resource: .rubbishBin).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
-        }
+        trashView.imageView.image = UIImage(resource: .rubbishBin).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
         updateAppearance()
 
         audioRecorder.updateHandler = {[weak self] timeString, level in
@@ -59,9 +57,7 @@ class AudioRecordingInputBar: UIView {
             self.recordTimeLabel.text = timeString
             self.audioWavesView.updateAudioView(withLevel: level)
         }
-        backgroundColor = UIColor.isDesignTokenEnabled()
-            ? TokenColors.Background.page
-            : .systemBackground
+        backgroundColor = TokenColors.Background.page
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -103,13 +99,9 @@ class AudioRecordingInputBar: UIView {
         let width = voiceView.bounds.width - trashView.bounds.width
         voiceView.finalRatio = width / voiceView.bounds.width
         voiceView.imageView.image = UIImage(resource: .sendChatDisabled)
-        if UIColor.isDesignTokenEnabled() {
-            voiceView.selectionView.backgroundColor = TokenColors.Button.primary
-            voiceView.imageView.renderImage(withColor: TokenColors.Icon.inverseAccent)
-        } else {
-            voiceView.selectionView.backgroundColor = UIColor.green009476
-            voiceView.imageView.renderImage(withColor: UIColor.whiteFFFFFF)
-        }
+        voiceView.selectionView.backgroundColor = TokenColors.Button.primary
+        voiceView.imageView.renderImage(withColor: TokenColors.Icon.inverseAccent)
+        
         let audioWaveTrailing = self.trashView.frame.width
             + (self.trashView.frame.origin.x * CGFloat(2.0))
         audioWavesholderViewTrailingConstraint.constant = audioWaveTrailing
@@ -175,12 +167,7 @@ class AudioRecordingInputBar: UIView {
     }
     
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            suggestionLabel.textColor = TokenColors.Text.secondary
-            audioWavesBackgroundView.backgroundColor = TokenColors.Background.surface1
-        } else {
-            suggestionLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-            audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        }
+        suggestionLabel.textColor = TokenColors.Text.secondary
+        audioWavesBackgroundView.backgroundColor = TokenColors.Background.surface1
     }
 }
