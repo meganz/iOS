@@ -1,13 +1,13 @@
 import MEGADomain
 
-protocol RaiseHandBadgeStoring {
+protocol RaiseHandBadgeStoring: Sendable {
     func shouldPresentRaiseHandBadge() async -> Bool
     func incrementRaiseHandBadgePresented() async
     func saveRaiseHandBadgeAsPresented() async
 }
 
 struct RaiseHandBadgeStore: RaiseHandBadgeStoring {
-    var userAttributeUseCase: any UserAttributeUseCaseProtocol
+    let userAttributeUseCase: any UserAttributeUseCaseProtocol
 
     enum Constants {
         static let raiseHandBadgeMaxPresentedCount = 5

@@ -1,3 +1,4 @@
+@MainActor
 protocol CallControlsViewModelProtocol: ObservableObject {
     var micEnabled: Bool { get }
     var cameraEnabled: Bool { get }
