@@ -45,7 +45,7 @@ extension NodeTableViewCell {
     }
     
     @objc func configureMoreButtonUI() {
-        moreButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : UIColor.grayBBBBBB
+        moreButton.tintColor = TokenColors.Icon.secondary
     }
     
     @objc func setAccessibilityLabelsForIcons(in node: MEGANode) {
@@ -55,8 +55,6 @@ extension NodeTableViewCell {
     }
     
     @objc func configureIconsImageColor() {
-        guard UIColor.isDesignTokenEnabled() else { return }
-        
         configureIconImageColor(for: favouriteImageView)
         configureIconImageColor(for: linkImageView)
         configureIconImageColor(for: versionedImageView)
@@ -120,14 +118,6 @@ extension NodeTableViewCell {
     }
     
     @objc func setCellBackgroundColor(with traitCollection: UITraitCollection) {
-        var bgColor: UIColor = .black
-        
-        if UIColor.isDesignTokenEnabled() {
-            bgColor = TokenColors.Background.page
-        } else {
-            bgColor = traitCollection.userInterfaceStyle == .dark ? UIColor.black1C1C1E : UIColor.whiteFFFFFF
-        }
-        
-        backgroundColor = bgColor
+        backgroundColor = TokenColors.Background.page
     }
 }

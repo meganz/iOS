@@ -201,7 +201,7 @@ final class NodeInfoViewController: UITableViewController {
     // MARK: - Private methods
 
     private func updateAppearance() {
-        let backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_secondaryBackground(for: traitCollection)
+        let backgroundColor = TokenColors.Background.page
         view.backgroundColor = backgroundColor
         tableView.backgroundColor = backgroundColor
     }
@@ -573,7 +573,7 @@ final class NodeInfoViewController: UITableViewController {
         )
         cell.host(upgradeCellView, parent: self)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = TokenColors.Background.page
         return cell
     }
     
@@ -585,7 +585,7 @@ final class NodeInfoViewController: UITableViewController {
         
         cell.host(NodeInfoLocationView(viewModel: nodeInfoLocationViewModel), parent: self)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = TokenColors.Background.page
         
         return cell
     }
@@ -625,9 +625,9 @@ final class NodeInfoViewController: UITableViewController {
             return UITableViewCell()
         }
         
-        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = TokenColors.Background.page
         cell.permissionsImageView.isHidden = true
-        cell.avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.inviteContactShare : UIImage.inviteToChat
+        cell.avatarImageView.image = UIImage.inviteContactShare
         cell.nameLabel.text = Strings.Localizable.addContact
         cell.shareLabel.isHidden = true
         
@@ -644,7 +644,7 @@ final class NodeInfoViewController: UITableViewController {
             return UITableViewCell()
         }
         
-        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = TokenColors.Background.page
         cell.avatarImageView.mnz_setImage(forUserHandle: user.handle, name: user.mnz_displayName)
         cell.verifiedImageView.isHidden = !sdk.areCredentialsVerified(of: user)
         if user.mnz_displayName != "" {
@@ -658,12 +658,8 @@ final class NodeInfoViewController: UITableViewController {
         cell.permissionsImageView.isHidden = false
         
         let permissionImage = UIImage.mnz_permissionsButtonImage(for: cachedActiveShares[indexPath.row - 1].access)
-        if UIColor.isDesignTokenEnabled() {
-            cell.permissionsImageView.image = permissionImage?.withRenderingMode(.alwaysTemplate)
-            cell.permissionsImageView.tintColor = TokenColors.Icon.secondary
-        } else {
-            cell.permissionsImageView.image = permissionImage
-        }
+        cell.permissionsImageView.image = permissionImage?.withRenderingMode(.alwaysTemplate)
+        cell.permissionsImageView.tintColor = TokenColors.Icon.secondary
         return cell
     }
     
@@ -672,29 +668,27 @@ final class NodeInfoViewController: UITableViewController {
             fatalError("Could not get ContactTableViewCell")
         }
         
-        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = TokenColors.Background.page
         cell.avatarImageView.mnz_setImage(forUserHandle: MEGAInvalidHandle, name: cachedPendingShares[indexPath.row].user ?? "")
         cell.nameLabel.text = cachedPendingShares[indexPath.row].user
         cell.shareLabel.isHidden = true
         cell.permissionsImageView.isHidden = false
         cell.permissionsImageView.image = UIImage.delete
-        cell.permissionsImageView.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+        cell.permissionsImageView.tintColor = TokenColors.Support.error
         return cell
     }
     
     private func removeSharingCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nodeInfoRemoveSharing", for: indexPath)
         
-        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = TokenColors.Background.page
         guard let removeLabel = cell.viewWithTag(1) as? UILabel else {
             fatalError("Could not get RemoveLabel")
         }
 
         removeLabel.text = Strings.Localizable.removeShare
         
-        if UIColor.isDesignTokenEnabled() {
-            removeLabel.textColor = TokenColors.Text.error
-        }
+        removeLabel.textColor = TokenColors.Text.error
         return cell
     }
 
@@ -802,7 +796,7 @@ extension NodeInfoViewController {
             return UIView(frame: .zero)
         }
         
-        header.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
+        header.setPreferredBackgroundColor(TokenColors.Background.page)
         
         switch cachedSections[section] {
         case .details:
@@ -835,7 +829,7 @@ extension NodeInfoViewController {
         guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        footer.setPreferredBackgroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : .mnz_secondaryBackground(for: traitCollection))
+        footer.setPreferredBackgroundColor(TokenColors.Background.page)
 
         let isTopSeparatorVisible = switch cachedSections[section] {
         case .location, .description:

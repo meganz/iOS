@@ -131,52 +131,17 @@ extension NodeCollectionViewCell {
     }
     
     @objc func setupThumbnailBackground() {
-        if UIColor.isDesignTokenEnabled() {
-            topNodeIconsView?.backgroundColor = TokenColors.Background.surface2
-            thumbnailImageView?.backgroundColor = TokenColors.Background.surface1
-        } else {
-            setupLegacyThumbnailBackgroundColor()
-        }
-    }
-    
-    private func setupLegacyThumbnailBackgroundColor() {
-        switch traitCollection.userInterfaceStyle {
-        case .light:
-            self.topNodeIconsView?.backgroundColor = UIColor.init(white: 1, alpha: 0.3)
-            self.thumbnailImageView?.backgroundColor = UIColor.mnz_whiteF7F7F7()
-        case .dark:
-            self.topNodeIconsView?.backgroundColor = UIColor.init(white: 0, alpha: 0.4)
-            self.thumbnailImageView?.backgroundColor = UIColor.mnz_black1C1C1E()
-        default:
-            self.topNodeIconsView?.backgroundColor = UIColor.init(white: 1, alpha: 0.3)
-            self.thumbnailImageView?.backgroundColor = UIColor.mnz_whiteF7F7F7()
-        }
+        topNodeIconsView?.backgroundColor = TokenColors.Background.surface2
+        thumbnailImageView?.backgroundColor = TokenColors.Background.surface1
     }
     
     @objc func updateSelection() {
         if moreButton?.isHidden ?? false && self.isSelected {
-            selectImageView?.image = UIColor.isDesignTokenEnabled() ? UIImage.checkBoxSelectedSemantic : UIImage(resource: .thumbnailSelected)
+            selectImageView?.image = UIImage.checkBoxSelectedSemantic
             self.contentView.layer.borderColor = UIColor.mnz_green00A886().cgColor
         } else {
             selectImageView?.image = UIImage(resource: .checkBoxUnselected)
-            
-            guard !UIColor.isDesignTokenEnabled() else {
-                self.contentView.layer.borderColor = TokenColors.Border.strong.cgColor
-                return
-            }
-            
-            setupLegacyContentViewBorderColor()
-        }
-    }
-    
-    private func setupLegacyContentViewBorderColor() {
-        switch traitCollection.userInterfaceStyle {
-        case .light:
-            self.contentView.layer.borderColor = UIColor.mnz_whiteF7F7F7().cgColor
-        case .dark:
-            self.contentView.layer.borderColor = UIColor.mnz_gray545458().cgColor
-        default:
-            self.contentView.layer.borderColor = UIColor.mnz_whiteF7F7F7().cgColor
+            self.contentView.layer.borderColor = TokenColors.Border.strong.cgColor
         }
     }
 }
