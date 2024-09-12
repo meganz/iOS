@@ -66,9 +66,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.whiteFFFFFF
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
-        label.layer.shadowColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Background.blur.cgColor :
-            UIColor.blackAlpha20.cgColor
+        label.layer.shadowColor = TokenColors.Background.blur.cgColor
         label.layer.shadowOffset = CGSize(width: 0, height: 1)
         label.layer.shadowRadius = 2
         label.layer.shadowOpacity = 1

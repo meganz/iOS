@@ -25,7 +25,7 @@ struct ChatRoomsTopRowView: View {
             }
             
             Image(systemName: disclosureIndicator)
-                .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : MEGAAppColor.Gray._8E8E93.color.opacity(0.6))
+                .foregroundColor(TokenColors.Icon.secondary.swiftUI)
                 .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
         .contentShape(Rectangle())

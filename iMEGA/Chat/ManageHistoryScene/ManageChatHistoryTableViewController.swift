@@ -206,12 +206,7 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
         
         historyRetentionCustomLabel.textColor = .mnz_turquoise(for: traitCollection)
         historyRetentionSaveButton.setTitleColor(.mnz_turquoise(for: traitCollection), for: .normal)
-        
-        if UIColor.isDesignTokenEnabled() {
-            clearAllChatHistoryLabel.textColor = TokenColors.Text.error
-        } else {
-            clearAllChatHistoryLabel.textColor = .mnz_red(for: traitCollection)
-        }
+        clearAllChatHistoryLabel.textColor = TokenColors.Text.error
 
         tableView.reloadData()
     }

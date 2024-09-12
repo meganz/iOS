@@ -41,20 +41,14 @@ struct FutureMeetingRoomView: View {
                         : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
                     )
                     .font(.caption)
-                    .foregroundColor(
-                        isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
-                    )
+                    .foregroundColor(TokenColors.Text.primary.swiftUI)
                 } else {
                     HStack(spacing: 3) {
                         Text(viewModel.time)
-                            .foregroundColor(
-                                isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : UIColor.chatListMeetingTimeText.swiftUI
-                            )
+                            .foregroundColor(TokenColors.Button.brand.swiftUI)
                             .font(.caption)
                         Text(viewModel.recurrence)
-                            .foregroundColor(
-                                isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : UIColor.chatListMeetingTimeText.swiftUI
-                            )
+                            .foregroundColor(TokenColors.Button.brand.swiftUI)
                             .font(.caption)
                     }
                 }
@@ -77,7 +71,7 @@ struct FutureMeetingRoomView: View {
                         if viewModel.shouldShowUnreadCount {
                             UnreadCountBadgeView(
                                 unreadCountString: viewModel.unreadCountString,
-                                backgroundColor: isDesignTokenEnabled ? TokenColors.Components.interactive.swiftUI : .red
+                                backgroundColor: TokenColors.Components.interactive.swiftUI
                             )
                         }
                     }
@@ -131,7 +125,7 @@ struct FutureMeetingRoomView: View {
     }
 
     private var inCallImage: some View {
-        Image(isDesignTokenEnabled ? .makeCallRoundToken : .onACall)
+        Image(.makeCallRoundToken)
             .resizable()
             .frame(width: 21, height: 21)
     }

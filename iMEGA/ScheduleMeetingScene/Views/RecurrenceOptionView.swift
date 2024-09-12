@@ -12,8 +12,7 @@ struct RecurrenceOptionView: View {
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
             Image(systemName: "checkmark")
-                .foregroundStyle(isDesignTokenEnabled ?
-                                 TokenColors.Support.success.swiftUI : MEGAAppColor.Chat.chatMeetingFrequencySelectionTickMark.color)
+                .foregroundStyle(TokenColors.Support.success.swiftUI)
                 .font(.system(.footnote).bold())
                 .opacity(isSelected ? 1 : 0)
         }

@@ -14,11 +14,7 @@ struct ChatRoomView: View {
                     ForEach(swipeActionLabels()) { label in
                         if let image = UIImage(named: label.imageName)?
                             .withRenderingMode(.alwaysTemplate)
-                            .withTintColor(
-                                isDesignTokenEnabled ?
-                                    TokenColors.Icon.onColor :
-                                    UIColor.whiteFFFFFF
-                            ) {
+                            .withTintColor(TokenColors.Icon.onColor) {
                             Button {
                                 label.action()
                             } label: {
@@ -54,14 +50,14 @@ struct ChatRoomView: View {
         [
             SwipeActionLabel(
                 imageName: "archiveChatSwipeActionButton",
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Support.warning.swiftUI :  UIColor.chatListArchiveSwipeActionBackground.swiftUI,
+                backgroundColor: TokenColors.Support.warning.swiftUI,
                 action: {
                     viewModel.archiveChat()
                 }
             ),
             SwipeActionLabel(
                 imageName: "moreListChatSwipeActionButton",
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Support.info.swiftUI : UIColor.chatListMoreSwipeActionBackground.swiftUI,
+                backgroundColor: TokenColors.Support.info.swiftUI,
                 action: {
                     viewModel.presentMoreOptionsForChat()
                 }
@@ -140,7 +136,7 @@ private struct ChatRoomContentDetailsView: View {
                         if viewModel.shouldShowUnreadCount {
                             UnreadCountBadgeView(
                                 unreadCountString: viewModel.unreadCountString,
-                                backgroundColor: isDesignTokenEnabled ? TokenColors.Components.interactive.swiftUI : .red
+                                backgroundColor: TokenColors.Components.interactive.swiftUI
                             )
                         }
                     }
@@ -167,7 +163,7 @@ private struct ChatRoomContentDetailsView: View {
     }
     
     private var inCallImage: some View {
-        Image(isDesignTokenEnabled ? .makeCallRoundToken : .onACall)
+        Image(.makeCallRoundToken)
             .resizable()
             .frame(width: 21, height: 21)
     }
@@ -241,10 +237,6 @@ private struct ChatRoomContentDescriptionView: View {
     }
     
     var descriptionTextColor: Color {
-        if isDesignTokenEnabled {
-            viewModel.shouldShowUnreadCount ? TokenColors.Text.primary.swiftUI : TokenColors.Text.secondary.swiftUI
-        } else {
-            UIColor.chatListSubtitleText.swiftUI
-        }
+        viewModel.shouldShowUnreadCount ? TokenColors.Text.primary.swiftUI : TokenColors.Text.secondary.swiftUI
     }
 }
