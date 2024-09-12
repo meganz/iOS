@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import MEGADomain
 import MEGAL10n
@@ -17,7 +18,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let filesSearchUseCase: any FilesSearchUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
-    private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
     private let downloadTransferListener: any DownloadTransfersListening
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sdk: MEGASdk
@@ -34,10 +34,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var availableChips: [SearchChipEntity]
     private let hiddenNodesFeatureEnabled: Bool
     
-    // To be invoked when there are updates in search results
-    // Suggestion for improvements: When time permits, we can replace closure-based callbacks with an async sequence
-    private let onSearchResultsUpdated: (_ updated: SearchResultUpdateSignal) -> Void
-    
     // The node from which we want start searching from,
     // root node can be nil in case when we start app in offline
     private let parentNodeProvider: () -> NodeEntity?
@@ -51,7 +47,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
-        nodesUpdateListenerRepo: some NodesUpdateListenerProtocol,
         downloadTransferListener: some DownloadTransfersListening,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
@@ -60,14 +55,12 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         sdk: MEGASdk,
         nodeActions: NodeActions,
         hiddenNodesFeatureEnabled: Bool,
-        isDesignTokenEnabled: Bool,
-        onSearchResultsUpdated: @escaping (SearchResultUpdateSignal) -> Void
+        isDesignTokenEnabled: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.filesSearchUseCase = filesSearchUseCase
         self.nodeUseCase = nodeUseCase
         self.mediaUseCase = mediaUseCase
-        self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.downloadTransferListener = downloadTransferListener
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.notificationCenter = notificationCenter
@@ -85,19 +78,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
             isDesignTokenEnabled: isDesignTokenEnabled
         )
-
-        self.onSearchResultsUpdated = onSearchResultsUpdated
-        
-        // Possible improvement: With [SAO-1507], we can convert node updates into async sequence and remove this `addNodesUpdateHandler` out of `init`
-        addNodesUpdateHandler()
-        
-        notificationCenter
-            .publisher(for: .didFallbackToMakingOfflineForMediaNode)
-            .compactMap { $0.object as? NodeEntity }
-            .sink { [weak self] node in
-                guard let self else { return }
-                onSearchResultsUpdated(.specific(result: mapNodeToSearchResult(node)))
-            }.store(in: &subscriptions)
     }
     
     /// Get the most updated results from data source according to a query.
@@ -169,14 +149,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         }
     }
     
-    // We can merge `downloadTransferListener.downloadedNodes` with the output of [SAO-1507] to form a unified async sequence for client to listen to
-    func listenToSpecificResultUpdates() async {
-        for await node in downloadTransferListener.downloadedNodes {
-            guard !Task.isCancelled else {
-                break
-            }
-            self.onSearchResultsUpdated(.specific(result: self.mapNodeToSearchResult(node)))
-        }
+    func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        merge(specificNodeUpdateSequence(), genericNodeUpdateSequence())
+            .eraseToAnyAsyncSequence()
     }
     
     @LoadMoreActor
@@ -299,17 +274,40 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         mapper.map(node: node)
     }
     
-    // Need some improvements node update listening mechanism - [SAO-1821]
-    private func addNodesUpdateHandler() {
-        nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] updatedNodes in
-            guard let self else { return }
-            Task { [weak self] in
-                guard let self, let parentNodeHandle = self.parentNode?.handle,
-                      updatedNodes.contains(where: { $0.handle == parentNodeHandle })
-                        || updatedNodes.contains(where: { $0.parentHandle == parentNodeHandle }) else { return }
-                self.onSearchResultsUpdated(.generic)
+    private func genericNodeUpdateSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        nodeUseCase.nodeUpdates
+            .compactMap { [weak self] updatedNodes -> SearchResultUpdateSignal? in
+                guard let self,
+                      let parentNodeHandle = parentNodeProvider()?.handle,
+                      updatedNodes.contains(where: { 
+                          // check if parent node is updated or any of the children
+                          $0.handle == parentNodeHandle || $0.parentHandle == parentNodeHandle
+                      }) || nodeUpdateContainsCurrentSearchResultValue(nodeUpdates: updatedNodes) else { return nil }
+                
+                return SearchResultUpdateSignal.generic
             }
-        }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private func specificNodeUpdateSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        let downloadedNodesSearchResultSequence = downloadTransferListener.downloadedNodes
+        
+        let offlineNodeUpdateSequence = notificationCenter
+            .publisher(for: .didFallbackToMakingOfflineForMediaNode)
+            .compactMap { $0.object as? NodeEntity }
+            .values
+        
+        return merge(downloadedNodesSearchResultSequence, offlineNodeUpdateSequence)
+            .map { [mapper] in
+            SearchResultUpdateSignal.specific(result: mapper.map(node: $0))
+        }.eraseToAnyAsyncSequence()
+    }
+    
+    /// Check to see if the current search results contains the updated nodes. Search can contain nodes not part of the parent node.
+    /// - Parameter nodeUpdates: The updated nodes
+    private func nodeUpdateContainsCurrentSearchResultValue(nodeUpdates: [NodeEntity]) -> Bool {
+        let currentResultIds = currentResultIds()
+        return nodeUpdates.contains(where: { currentResultIds.contains($0.id) })
     }
 }
 

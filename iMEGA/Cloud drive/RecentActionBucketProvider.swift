@@ -1,10 +1,12 @@
 import MEGADomain
 import MEGASdk
+import MEGASwift
 import Search
 
 struct RecentActionBucketProvider: SearchResultsProviding {
-    
-    func listenToSpecificResultUpdates() async {}
+    func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    }
     
     func refreshedSearchResults(queryRequest: Search.SearchQuery) async throws -> Search.SearchResultsEntity? {
         // To be addressed in [SAO-1273]

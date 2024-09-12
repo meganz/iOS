@@ -2,6 +2,9 @@ import AsyncAlgorithms
 import MEGASwift
 // MARK: - Use case protocol -
 public protocol NodeUseCaseProtocol: Sendable {
+    /// Node updates
+    /// - Returns: `AnyAsyncSequence` that will yield `[NodeEntity]` items until sequence terminated.
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
     func rootNode() -> NodeEntity?
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity
@@ -73,6 +76,10 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
         self.nodeDataRepository = nodeDataRepository
         self.nodeValidationRepository = nodeValidationRepository
         self.nodeRepository = nodeRepository
+    }
+    
+    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        nodeRepository.nodeUpdates
     }
     
     public func rootNode() -> NodeEntity? {
