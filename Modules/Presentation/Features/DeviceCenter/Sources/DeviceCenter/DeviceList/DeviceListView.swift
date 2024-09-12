@@ -31,6 +31,8 @@ struct DeviceListContentView: View {
                 content: content,
                 placeholder: PlaceholderContentView(placeholderRow: placeholderRowView)
             )
+        }.task {
+            viewModel.updateInternetConnectionStatus()
         }
         .task {
             viewModel.updateInternetConnectionStatus()
@@ -72,7 +74,7 @@ struct DeviceListContentView: View {
             }
         }
         .listStyle(.plain)
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+        .background()
         .onReceive(viewModel.refreshDevicesPublisher) { _ in
             Task {
                 let userDevices = await self.viewModel.fetchUserDevices()
