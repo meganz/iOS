@@ -26,12 +26,10 @@ class ContactsTableViewHeader: UIView {
         configDetailsLabel()
         updateAppearance()
         
-        if UIColor.isDesignTokenEnabled() {
-            disclosureIndicatorRequestImageView.image?.withRenderingMode(.alwaysTemplate)
-            disclosureIndicatorRequestImageView.tintColor = TokenColors.Icon.secondary
-            disclosureIndicatorGroupsImageView.image?.withRenderingMode(.alwaysTemplate)
-            disclosureIndicatorGroupsImageView.tintColor = TokenColors.Icon.secondary
-        }
+        disclosureIndicatorRequestImageView.image?.withRenderingMode(.alwaysTemplate)
+        disclosureIndicatorRequestImageView.tintColor = TokenColors.Icon.secondary
+        disclosureIndicatorGroupsImageView.image?.withRenderingMode(.alwaysTemplate)
+        disclosureIndicatorGroupsImageView.tintColor = TokenColors.Icon.secondary
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -45,18 +43,16 @@ class ContactsTableViewHeader: UIView {
     // MARK: - Private
     
     private func updateAppearance() {
-        backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        backgroundColor = TokenColors.Background.page
         
-        requestsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
-        groupsLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
-        requestsDetailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
+        requestsLabel.textColor = TokenColors.Text.primary
+        groupsLabel.textColor = TokenColors.Text.primary
+        requestsDetailLabel.textColor = TokenColors.Text.secondary
         
         requestsSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         
-        // contactRequestsIcon should be deleted on assets when design token is permanently applied. It is only used here.
-        requestsImageView.image = (UIColor.isDesignTokenEnabled() ? UIImage.contactRequests : UIImage.contactRequestsIcon).imageFlippedForRightToLeftLayoutDirection()
-        // contactGroupsIcon should be deleted on assets when design token is permanently applied. It is only used here.
-        groupsImageView.image = (UIColor.isDesignTokenEnabled() ? UIImage.contactGroups : UIImage.contactGroupsIcon).imageFlippedForRightToLeftLayoutDirection()
+        requestsImageView.image = UIImage.contactRequests.imageFlippedForRightToLeftLayoutDirection()
+        groupsImageView.image = UIImage.contactGroups.imageFlippedForRightToLeftLayoutDirection()
     }
     
     private func configDetailsLabel() {
