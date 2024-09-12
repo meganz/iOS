@@ -3,18 +3,9 @@ import MEGAPresentation
 import SwiftUI
 
 struct DeviceCenterItemView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: DeviceCenterItemViewModel
     @Binding var selectedViewModel: DeviceCenterItemViewModel?
-    
-    private var titleColor: Color {
-        guard isDesignTokenEnabled else {
-            return colorScheme == .dark ? .white: .black
-        }
         
-        return TokenColors.Text.primary.swiftUI
-    }
-    
     init(viewModel: DeviceCenterItemViewModel, selectedViewModel: Binding<DeviceCenterItemViewModel?>) {
         self._viewModel = ObservedObject(wrappedValue: viewModel)
         self._selectedViewModel = selectedViewModel
@@ -34,12 +25,12 @@ struct DeviceCenterItemView: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .lineLimit(2)
-                    .foregroundStyle(titleColor)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 HStack(spacing: 4) {
                     if viewModel.shouldShowBackupPercentage {
                         Text(viewModel.backupPercentage)
                             .font(.caption)
-                            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : .white)
+                            .foregroundStyle(TokenColors.Text.onColor.swiftUI)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
                             .background(Color(viewModel.assets.backupStatus.color))
@@ -62,7 +53,7 @@ struct DeviceCenterItemView: View {
             } label: {
                 Image(viewModel.mainActionIconName)
                     .renderingMode(.template)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color(red: 0.733, green: 0.733, blue: 0.733))
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .scaledToFit()
                     .frame(width: 28, height: 28)
             }
@@ -73,7 +64,7 @@ struct DeviceCenterItemView: View {
         .onTapGesture {
             viewModel.showDetail()
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+        .background()
         .frame(minHeight: 60)
     }
 }
