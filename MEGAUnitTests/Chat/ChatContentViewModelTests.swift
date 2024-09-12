@@ -645,6 +645,44 @@ final class ChatContentViewModelTests: XCTestCase {
         XCTAssertEqual(result, .audioCall)
     }
     
+    @MainActor func testStartOrJoinFloatingButtonTappedTwice_startCall_startCallCalledJustOnce() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let callManager = MockCallManager()
+        let (sut, _) = makeChatContentViewModel(
+            chatRoom: chatRoom,
+            chatUseCase: chatUseCase,
+            callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
+            callManager: callManager
+        )
+        
+        test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
+             expectedCommands: [])
+        test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
+             expectedCommands: [])
+        XCTAssert(callManager.startCall_CalledTimes == 1)
+    }
+    
+    @MainActor func testStartOrJoinFloatingButtonTappedTwice_joinCallInProgress_startCallCalledJustOnce() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let call = CallEntity(status: .userNoPresent)
+        let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
+        let callManager = MockCallManager()
+        let (sut, _) = makeChatContentViewModel(
+            chatRoom: chatRoom,
+            chatUseCase: chatUseCase,
+            callUseCase: callUseCase,
+            callManager: callManager
+        )
+        
+        test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
+             expectedCommands: [])
+        test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
+             expectedCommands: [])
+        XCTAssert(callManager.startCall_CalledTimes == 1)
+    }
+    
     // MARK: - Private
     
     @MainActor private func makeChatContentViewModel(
