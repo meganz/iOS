@@ -1,5 +1,6 @@
-import ConcurrencyExtras
 import MEGAFoundation
+import MEGASwift
+import MEGATest
 @testable import MEGAUIKit
 @testable import Search
 import SearchMock
@@ -36,9 +37,11 @@ final class SearchResultsViewModelTests: XCTestCase {
         var emptyContentRequested: [EmptyContent] = []
         weak var testcase: XCTestCase?
         
-        init(_ testcase: XCTestCase) {
+        init(_ testcase: XCTestCase,
+             searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence()) {
             self.testcase = testcase
-            resultsProvider = MockSearchResultsProviding()
+            resultsProvider = MockSearchResultsProviding(
+                searchResultUpdateSignalSequence: searchResultUpdateSignalSequence)
             
             var selection: (SearchResultSelection) -> Void = { _ in }
             var context: (SearchResult, UIButton) -> Void = { _, _ in }
@@ -543,69 +546,81 @@ final class SearchResultsViewModelTests: XCTestCase {
     }
     
     func testOnSearchResultsUpdated_whenGenericUpdate_shouldReturnExpectedResults() async {
-        await withMainSerialExecutor {
-            // given
-            let harness = Harness(self).withResultsPrepared(count: 10) // Initially there are 10 results
-            await harness.sut.task()
-            harness.resetResultFactory()
-            harness.prepareRefreshedResults(startId: 1, endId: 15) // After refreshing, there will be 15 results
-
-            // when
-            harness.bridge.onSearchResultsUpdated(.generic)
-            await Task.megaYield()
-
-            let exp = expectation(description: "Wait for the list to update")
-            let cancellable = harness.sut.$listItems.sink { results in
-                if results.map({ $0.result.id }) == Array(1...15) {
-                    exp.fulfill()
+        // given
+        let (stream, continuation) = AsyncStream.makeStream(of: SearchResultUpdateSignal.self)
+        let harness = Harness(self, searchResultUpdateSignalSequence: stream.eraseToAnyAsyncSequence())
+            .withResultsPrepared(count: 10) // Initially there are 10 results
+        
+        let initialSearchExp = expectation(description: "Wait for the initial update")
+        let updateExp = expectation(description: "Wait for the list to update")
+        let cancellable = harness.sut.$listItems
+            .sink { results in
+                let resultIds = results.map({ $0.result.id })
+                if resultIds == Array(1...10) {
+                    initialSearchExp.fulfill()
+                } else if resultIds == Array(1...15) {
+                    updateExp.fulfill()
                 }
             }
-
-            await fulfillment(of: [exp], timeout: 2.0)
-            // then
-            XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...15))
-            cancellable.cancel()
+        trackTaskCancellation {
+            await harness.sut.task()
         }
+        
+        await fulfillment(of: [initialSearchExp], timeout: 1.0)
+        
+        harness.resetResultFactory()
+        harness.prepareRefreshedResults(startId: 1, endId: 15) // After refreshing, there will be 15 results
+        
+        // when
+        continuation.yield(.generic)
+        
+        await fulfillment(of: [updateExp], timeout: 1.0)
+        // then
+        XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...15))
+        cancellable.cancel()
+        continuation.finish()
     }
     
     func testOnSearchResultsUpdated_whenSpecificUpdate_shouldReturnExpectedResults() async {
-        await withMainSerialExecutor {
-            // given
-            let harness = Harness(self).withResultsPrepared(count: 10)
+        // given
+        let (stream, continuation) = AsyncStream.makeStream(of: SearchResultUpdateSignal.self)
+        let harness = Harness(self, searchResultUpdateSignalSequence: stream.eraseToAnyAsyncSequence())
+            .withResultsPrepared(count: 10)
+        trackTaskCancellation {
             await harness.sut.task()
-            await Task.megaYield()
-
-            let thumbnailImage1 = UIImage(systemName: "square.and.arrow.up.fill")!.pngData()!
-            let thumbnailImage2 = UIImage(systemName: "pencil.circle.fill")!.pngData()!
-            let thumbnailImage3 = UIImage(systemName: "pencil.tip")!.pngData()!
-
-            let exp = expectation(description: "Wait for the images to be updated")
-            exp.expectedFulfillmentCount = 2
-
-            let cancellable1 = harness.sut.listItems[0].$thumbnailImage.sink { image in
-                if image.pngData()?.count == thumbnailImage1.count {
-                    exp.fulfill()
-                }
-            }
-
-            let cancellable2 = harness.sut.listItems[1].$thumbnailImage.sink { image in
-                if image.pngData()?.count == thumbnailImage2.count {
-                    exp.fulfill()
-                }
-            }
-
-            let updatedResult1 = SearchResult.resultWith(id: 1, thumbnailImageData: thumbnailImage1)
-            let updatedResult2 = SearchResult.resultWith(id: 2, thumbnailImageData: thumbnailImage2)
-            let updatedResult100 = SearchResult.resultWith(id: 100, thumbnailImageData: thumbnailImage3)
-
-            harness.bridge.onSearchResultsUpdated(.specific(result: updatedResult1)) // Triggers item update
-            harness.bridge.onSearchResultsUpdated(.specific(result: updatedResult2)) // Triggers item updates
-            harness.bridge.onSearchResultsUpdated(.specific(result: updatedResult100)) // Not triggering item update
-
-            await fulfillment(of: [exp], timeout: 2.0)
-            cancellable1.cancel()
-            cancellable2.cancel()
         }
+
+        let thumbnailImage1 = UIImage(systemName: "square.and.arrow.up.fill")!.pngData()!
+        let thumbnailImage2 = UIImage(systemName: "pencil.circle.fill")!.pngData()!
+        let thumbnailImage3 = UIImage(systemName: "pencil.tip")!.pngData()!
+
+        let exp = expectation(description: "Wait for the images to be updated")
+        exp.expectedFulfillmentCount = 2
+
+        let cancellable1 = harness.sut.listItems[0].$thumbnailImage.sink { image in
+            if image.pngData()?.count == thumbnailImage1.count {
+                exp.fulfill()
+            }
+        }
+
+        let cancellable2 = harness.sut.listItems[1].$thumbnailImage.sink { image in
+            if image.pngData()?.count == thumbnailImage2.count {
+                exp.fulfill()
+            }
+        }
+
+        let updatedResult1 = SearchResult.resultWith(id: 1, thumbnailImageData: thumbnailImage1)
+        let updatedResult2 = SearchResult.resultWith(id: 2, thumbnailImageData: thumbnailImage2)
+        let updatedResult100 = SearchResult.resultWith(id: 100, thumbnailImageData: thumbnailImage3)
+
+        continuation.yield(.specific(result: updatedResult1)) // Triggers item update
+        continuation.yield(.specific(result: updatedResult2)) // Triggers item updates
+        continuation.yield(.specific(result: updatedResult100)) // Not triggering item update
+        continuation.finish()
+        
+        await fulfillment(of: [exp], timeout: 2.0)
+        cancellable1.cancel()
+        cancellable2.cancel()
     }
 
     func testSelectedRows_whenMultipleRowsSelected_shouldMatchResultsIds() {

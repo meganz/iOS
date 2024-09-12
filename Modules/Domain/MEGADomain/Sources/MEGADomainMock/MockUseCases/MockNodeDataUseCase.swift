@@ -22,6 +22,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
     private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
     private let sensitivityChangesForNode: AnyAsyncSequence<Bool>
     private let _rootNode: NodeEntity?
+    private let nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]>
 
     public var labelStringToReturn: Atomic<String>
     public var isMultimediaFileNode_CalledTimes = 0
@@ -44,7 +45,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
                 isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:],
                 monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
                 sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-                rootNode: NodeEntity? = nil
+                rootNode: NodeEntity? = nil,
+                nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         labelStringToReturn = Atomic(wrappedValue: labelString)
@@ -65,6 +67,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
         self.monitorInheritedSensitivityForNode = monitorInheritedSensitivityForNode
         self.sensitivityChangesForNode = sensitivityChangesForNode
         self._rootNode = rootNode
+        self.nodeUpdateAsyncSequence = nodeUpdateAsyncSequence
+    }
+    
+    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        nodeUpdateAsyncSequence
     }
     
     public func rootNode() -> NodeEntity? {

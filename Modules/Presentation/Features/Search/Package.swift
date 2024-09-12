@@ -29,7 +29,8 @@ let package = Package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
             from: "1.12.0"
         ),
-        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
+        .package(path: "../../../Infrastracture/MEGATest"),
     ],
     targets: [
         .target(
@@ -55,7 +56,8 @@ let package = Package(
                 "SearchMock",
                 "MEGAUIKit",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras")
+                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
+                "MEGATest"
             ],
             resources: [
                 .process("folder.png"),

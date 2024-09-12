@@ -1,11 +1,7 @@
+import MEGASwift
 import Search
 
 public class MockSearchResultsProviding: SearchResultsProviding {
-    
-    public var listenToDownloadsCalled = false
-    public func listenToSpecificResultUpdates() async {
-        listenToDownloadsCalled = true
-    }
     
     public var refreshedSearchResultsToReturn: Search.SearchResultsEntity?
     public func refreshedSearchResults(queryRequest: Search.SearchQuery) async throws -> Search.SearchResultsEntity? {
@@ -16,14 +12,18 @@ public class MockSearchResultsProviding: SearchResultsProviding {
         currentResultIdsToReturn
     }
     
+    private let _searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal>
     public var passedInQueries: [SearchQuery] = []
     public var currentResultIdsToReturn: [ResultId] = []
     public var resultFactory: (_ query: SearchQuery) async -> SearchResultsEntity?
     
-    public init() {
+    public init(
+        searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    ) {
         resultFactory = { _ in
             .resultWithNoItemsAndSingleChip
         }
+        _searchResultUpdateSignalSequence = searchResultUpdateSignalSequence
     }
 
     public func search(
@@ -32,6 +32,10 @@ public class MockSearchResultsProviding: SearchResultsProviding {
     ) async -> SearchResultsEntity? {
         passedInQueries.append(queryRequest)
         return await resultFactory(queryRequest)
+    }
+    
+    public func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        _searchResultUpdateSignalSequence
     }
 }
 
