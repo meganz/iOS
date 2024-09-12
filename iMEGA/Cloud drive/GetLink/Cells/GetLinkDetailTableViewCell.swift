@@ -14,7 +14,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     lazy private var detailLabelSelectedTextColor: UIColor = {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_turquoise(for: traitCollection)
+        TokenColors.Text.primary
     }()
     
     func configurePasswordCell(passwordActive: Bool, isPro: Bool, justUpgraded: Bool) {
@@ -23,7 +23,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
         } else {
             nameLabel.text = Strings.Localizable.setPassword
         }
-        nameLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        nameLabel.textColor = TokenColors.Text.primary
         proImageView.isHidden = justUpgraded ? true : isPro
         detailLabel.isHidden = true
         

@@ -49,7 +49,7 @@
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     self.viewModel = [self createViewModelWithNodes:nodesArray];
     
-    NSString *imageName = [UIColor isDesignTokenEnabled] ? @"standardDisclosureIndicator_designToken" : @"standardDisclosureIndicator";
+    NSString *imageName = @"standardDisclosureIndicator_designToken";
     
     if (recentActionBucket.mnz_isExpanded) {
         self.indicatorImageView.image = [UIImage imageNamed:imageName].imageByRotateRight90;

@@ -33,9 +33,7 @@ static NSString *kFileSize = @"kFileSize";
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    if ([UIColor isDesignTokenEnabled]) {
-        [self setupTokenColors];
-    }
+    [self setupTokenColors];
 }
 
 - (void)setSelected:(BOOL)selected {
