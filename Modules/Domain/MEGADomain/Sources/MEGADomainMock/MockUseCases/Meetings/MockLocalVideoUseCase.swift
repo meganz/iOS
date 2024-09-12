@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
+public final class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol, @unchecked Sendable {
     public var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
     private let releaseDeviceResult: Result<Void, CallErrorEntity> = .failure(.generic)
     private let selectCameraResult: Result<Void, Error> = .failure(GenericErrorEntity())

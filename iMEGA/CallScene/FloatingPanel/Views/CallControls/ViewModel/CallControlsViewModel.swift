@@ -6,6 +6,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 
+@MainActor
 final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     private let router: any MeetingFloatingPanelRouting
@@ -113,7 +114,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         showRaiseHandBadge = await raiseHandBadgeStoring.shouldPresentRaiseHandBadge()
     }
     
-    @MainActor
     func moreButtonTapped() async {
         menuPresenter(moreMenuActions)
         if showRaiseHandBadge {
@@ -252,7 +252,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         }
     }
     
-    @MainActor private func toggleMic() async {
+    private func toggleMic() async {
         if await permissionHandler.requestPermission(for: .audio) {
             callManager.muteCall(in: chatRoom, muted: micEnabled)
             micEnabled.toggle()
@@ -261,7 +261,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         }
     }
     
-    @MainActor private func toggleCamera() async {
+    private func toggleCamera() async {
         if await permissionHandler.requestPermission(for: .video) {
             do {
                 if cameraEnabled {
@@ -278,7 +278,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         }
     }
     
-    @MainActor private func switchCamera() async {
+    private func switchCamera() async {
         if cameraEnabled {
             await cameraSwitcher.switchCamera()
         }
@@ -305,8 +305,11 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private func listenToCallUpdates() {
         callUseCase.onCallUpdate()
             .receive(on: scheduler)
-            .sink { [weak self] call in
-                self?.onCallUpdate(call)
+            .sink { @Sendable [weak self] call in
+                guard let self else { return }
+                Task {
+                    await self.onCallUpdate(call)
+                }
             }
             .store(in: &subscriptions)
     }

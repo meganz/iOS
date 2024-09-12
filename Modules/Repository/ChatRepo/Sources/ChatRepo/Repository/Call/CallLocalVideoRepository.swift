@@ -2,13 +2,14 @@ import MEGAChatSdk
 import MEGADomain
 import MEGASwift
 
-public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol {
+public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: CallLocalVideoRepository {
         CallLocalVideoRepository(chatSdk: .sharedChatSdk)
     }
     
+    private let lock = NSLock()
     private let chatSdk: MEGAChatSdk
-    private var localVideoCallbacksDelegate: (any CallLocalVideoListenerRepositoryProtocol)?
+    private weak var localVideoCallbacksDelegate: (any CallLocalVideoListenerRepositoryProtocol)?
 
     public init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
@@ -65,13 +66,17 @@ public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryP
     public func addLocalVideo(for chatId: HandleEntity, localVideoListener: some CallLocalVideoListenerRepositoryProtocol) {
         chatSdk.addChatLocalVideo(chatId, delegate: self)
         chatSdk.add(self)
-        localVideoCallbacksDelegate = localVideoListener
+        lock.withLock {
+            localVideoCallbacksDelegate = localVideoListener
+        }
     }
     
     public func removeLocalVideo(for chatId: HandleEntity, localVideoListener: some CallLocalVideoListenerRepositoryProtocol) {
         chatSdk.removeChatLocalVideo(chatId, delegate: self)
         chatSdk.remove(self)
-        localVideoCallbacksDelegate = nil
+        lock.withLock {
+            localVideoCallbacksDelegate = nil
+        }
     }
     
     public func videoDeviceSelected() -> String? {
@@ -127,13 +132,16 @@ public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryP
 
 extension CallLocalVideoRepository: MEGAChatVideoDelegate {
     public func onChatVideoData(_ api: MEGAChatSdk, chatId: UInt64, width: Int, height: Int, buffer: Data) {
-        localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
+        lock.withLock {
+            localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
+        }
     }
 }
 
 extension CallLocalVideoRepository: MEGAChatRequestDelegate {
     public func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
-        if request.type == .changeVideoStream {
+        guard request.type == .changeVideoStream else { return }
+        lock.withLock {
             localVideoCallbacksDelegate?.localVideoChangedCameraPosition()
         }
     }
