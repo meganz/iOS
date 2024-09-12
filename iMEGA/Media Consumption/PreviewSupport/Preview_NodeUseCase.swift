@@ -2,6 +2,10 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_NodeUseCase: NodeUseCaseProtocol {
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    }
+    
     func rootNode() -> NodeEntity? { nil }
     
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {

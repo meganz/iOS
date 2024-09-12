@@ -278,6 +278,20 @@ final class NodeUseCaseTests: XCTestCase {
         task.cancel()
     }
     
+    func testNodeUpdates_onNodeUpdate_shouldYieldValues() async {
+        let nodeUpdates = [NodeEntity(changeTypes: .new, handle: 4)]
+        let nodeUpdateAsyncSequence = SingleItemAsyncSequence(item: nodeUpdates)
+            .eraseToAnyAsyncSequence()
+
+        let sut = makeSUT(nodeUpdates: nodeUpdateAsyncSequence)
+        
+        var iterator = sut.nodeUpdates.makeAsyncIterator()
+        
+        let result = await iterator.next()
+        
+        XCTAssertEqual(result, nodeUpdates)
+    }
+    
     private func makeSUT(
         accessLevel: NodeAccessTypeEntity = .unknown,
         label: String = "",

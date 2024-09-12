@@ -150,10 +150,6 @@ final class HomeScreenFactory: NSObject {
     private func makeFeatureFlagProvider() -> some FeatureFlagProviderProtocol {
         DIContainer.featureFlagProvider
     }
-    
-    private func makeNodesUpdateListenerRepo() -> some NodesUpdateListenerProtocol {
-        SDKNodesUpdateListenerRepository(sdk: sdk)
-    }
 
     private func makeDownloadTransfersListener() -> some DownloadTransfersListening {
         CloudDriveDownloadTransfersListener(sdk: sdk, transfersListenerUsecase: TransfersListenerUseCase(repo: TransfersListenerRepository.newRepo), fileSystemRepo: FileSystemRepository.newRepo)
@@ -235,7 +231,6 @@ final class HomeScreenFactory: NSObject {
         let vm = SearchResultsViewModel(
             resultsProvider: makeResultsProvider(
                 parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
-                searchBridge: searchBridge,
                 navigationController: navigationController
             ),
             bridge: searchBridge,
@@ -299,7 +294,6 @@ final class HomeScreenFactory: NSObject {
 
     func makeResultsProvider(
         parentNodeProvider: @escaping () -> NodeEntity?,
-        searchBridge: SearchBridge,
         navigationController: UINavigationController
     ) -> HomeSearchResultsProvider {
         let featureFlagProvider = makeFeatureFlagProvider()
@@ -309,7 +303,6 @@ final class HomeScreenFactory: NSObject {
             nodeDetailUseCase: makeNodeDetailUseCase(),
             nodeUseCase: makeNodeUseCase(),
             mediaUseCase: makeMediaUseCase(),
-            nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
             downloadTransferListener: makeDownloadTransfersListener(),
             nodeIconUsecase: makeNodeIconUsecase(),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
@@ -317,10 +310,7 @@ final class HomeScreenFactory: NSObject {
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
             hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-            isDesignTokenEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .designToken),
-            onSearchResultsUpdated: { [weak searchBridge] searchResult in
-                searchBridge?.onSearchResultsUpdated(searchResult)
-            }
+            isDesignTokenEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
         )
     }
     private static func allChips() -> [SearchChipEntity] {

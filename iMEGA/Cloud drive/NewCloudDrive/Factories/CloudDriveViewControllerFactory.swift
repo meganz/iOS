@@ -877,7 +877,6 @@ struct CloudDriveViewControllerFactory {
         case .node(let nodeProvider):
             homeScreenFactory.makeResultsProvider(
                 parentNodeProvider: nodeProvider,
-                searchBridge: searchBridge, 
                 navigationController: navigationController
             )
         case .recentActionBucket(let bucket):
