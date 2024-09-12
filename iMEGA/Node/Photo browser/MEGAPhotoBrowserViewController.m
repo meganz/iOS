@@ -319,7 +319,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
-    self.view.backgroundColor = transparent ? UIColor.clearColor : UIColor.systemBackgroundColor;
+    self.view.backgroundColor = transparent ? UIColor.clearColor : [self backgroundColor];
     self.view.superview.superview.backgroundColor = transparent ? UIColor.clearColor : UIColor.systemBackgroundColor;
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
@@ -368,7 +368,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     [self reloadTitleWithCompletionHandler:^{}];
     
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
+    self.view.backgroundColor = [self backgroundColor];
 }
 
 - (CGFloat)maximumZoomScaleWith:(MEGANode *)node zoomableView:(UIScrollView *)zoomableView imageView:(UIView *)imageView {
@@ -961,12 +961,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [UIView animateWithDuration:0.3 animations:^{
         if (self.isInterfaceHidden) {
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
-            self.view.backgroundColor = UIColor.systemBackgroundColor;
             self.interfaceHidden = NO;
-        } else {
             self.view.backgroundColor = [self backgroundColor];
+        } else {
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             self.interfaceHidden = YES;
+            self.view.backgroundColor = [self fullScreenBackgroundColor];
         }
         
         [self configLiveTextLayout];
@@ -1015,11 +1015,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     UIColor *color;
     switch (index) {
         case 0:
-            color = [UIColor.mnz_whiteFFFFFF colorWithAlphaComponent:0.2];
+            color = [UIColor.whiteColor colorWithAlphaComponent:0.2];
             break;
             
         default:
-            color = [[self backgroundColor] colorWithAlphaComponent:0.1];
+            color = [UIColor.blackColor colorWithAlphaComponent:0.1];
             break;
     }
     return color;
