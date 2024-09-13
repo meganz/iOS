@@ -59,65 +59,65 @@ final class SearchResultMapperTests: XCTestCase {
     }
     
     func test_isSensitive_whenHiddenNodesFeatureIsOff_shouldReturnFalse() {
-        //given
+        // given
         let sut = makeSUT(hiddenNodesFeatureEnabled: false)
         
-        //when
+        // when
         let node = NodeEntity(isMarkedSensitive: true)
         let result = sut.map(node: node)
         
-        //then
+        // then
         XCTAssertFalse(result.isSensitive)
     }
     
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeIsSensitive_shouldReturnTrue() {
-        //given
+        // given
         let sut = makeSUT(hiddenNodesFeatureEnabled: true)
         
-        //when
+        // when
         let node = NodeEntity(isMarkedSensitive: true)
         let result = sut.map(node: node)
         
-        //then
+        // then
         XCTAssertTrue(result.isSensitive)
     }
     
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeParentIsSensitive_shouldReturnTrue() {
-        //given
+        // given
         let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(true))
         let sut = makeSUT(nodeUseCase: nodeUseCase, hiddenNodesFeatureEnabled: true)
         
-        //when
+        // when
         let node = NodeEntity(isMarkedSensitive: false)
         let result = sut.map(node: node)
         
-        //then
+        // then
         XCTAssertTrue(result.isSensitive)
     }
     
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeParentIsNotSensitive_shouldReturnFalse() {
-        //given
+        // given
         let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
         let sut = makeSUT(nodeUseCase: nodeUseCase, hiddenNodesFeatureEnabled: true)
         
-        //when
+        // when
         let node = NodeEntity(isMarkedSensitive: false)
         let result = sut.map(node: node)
         
-        //then
+        // then
         XCTAssertFalse(result.isSensitive)
     }
     
     func test_isSensitive_whenIsInheritingSensitivityThrowError_shouldReturnFalse() {
-        //given
+        // given
         let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .failure(GenericErrorEntity()))
         let sut = makeSUT(nodeUseCase: nodeUseCase, hiddenNodesFeatureEnabled: true)
         
-        //when
+        // when
         let node = NodeEntity(isMarkedSensitive: false)
         let result = sut.map(node: node)
         
-        //then
+        // then
         XCTAssertFalse(result.isSensitive)
     }
 
@@ -142,8 +142,7 @@ final class SearchResultMapperTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             mediaUseCase: mediaUseCase, 
             nodeActions: nodeActions,
-            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-            isDesignTokenEnabled: isDesignTokenEnabled
+            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
         )
     }
 

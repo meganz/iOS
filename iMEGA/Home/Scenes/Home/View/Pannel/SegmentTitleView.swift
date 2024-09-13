@@ -99,10 +99,7 @@ final class SegmentTitleView: UIView {
 
     private func updateView(with trait: UITraitCollection) {
         updateButtons(buttons, withTrait: trait)
-        
-        if UIColor.isDesignTokenEnabled() {
-            backgroundColor = TokenColors.Background.page
-        }
+        backgroundColor = TokenColors.Background.page
     }
 
     private func updateButtons(_ buttons: [UIButton], withTrait trait: UITraitCollection) {
@@ -110,8 +107,8 @@ final class SegmentTitleView: UIView {
         buttons.forEach(styleTitleButton)
 
         switch trait.theme {
-        case .dark: backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.black1C1C1E
-        case .light: backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.whiteFFFFFF
+        case .dark: backgroundColor = TokenColors.Text.primary
+        case .light: backgroundColor = TokenColors.Text.primary
         }
     }
 
@@ -133,9 +130,7 @@ final class SegmentTitleView: UIView {
             stackView.topAnchor.constraint(equalTo: topAnchor)
         ])
 
-        if UIColor.isDesignTokenEnabled() {
-            stackView.backgroundColor = TokenColors.Background.page
-        }
+        stackView.backgroundColor = TokenColors.Background.page
     }
 
     private enum Constants {

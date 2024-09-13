@@ -48,9 +48,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     override func configureSearchController(_ searchController: UISearchController) {
         tableView.tableHeaderView = searchController.searchBar
-        searchController.searchBar.barTintColor = UIColor.isDesignTokenEnabled() 
-        ? TokenColors.Background.page
-        : .mnz_backgroundElevated(traitCollection)
+        searchController.searchBar.barTintColor = TokenColors.Background.page
     }
     
     override func removeSearchController(_ searchController: UISearchController) {

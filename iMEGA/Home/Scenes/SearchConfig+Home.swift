@@ -92,8 +92,6 @@ extension SearchConfig {
         contextPreviewFactory: ContextPreviewFactory,
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
-        // To be removed when Semantic Color is fully released . Ticket is [SAO-1482]
-        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
         return .init(
             chipAssets: .init(
                 selectionIndicatorImage: UIImage.turquoiseCheckmark,
@@ -105,15 +103,15 @@ extension SearchConfig {
             ),
             emptyViewAssetFactory: { chip, query in
                 let titleTextColor = TokenColors.Icon.secondary.swiftUI
-
+                
                 guard let chip else {
                     guard !query.isSearchActive else {
                         return searchEmptyState(with: titleTextColor)
                     }
-
+                    
                     return defaultEmptyViewAsset()
                 }
-
+                
                 switch chip.id {
                 case SearchChipEntity.docs.id:
                     return .init(
@@ -172,7 +170,7 @@ extension SearchConfig {
                 default:
                     break
                 }
-
+                
                 switch chip.type {
                 case .timeFrame:
                     return searchEmptyState(with: titleTextColor)
@@ -181,29 +179,27 @@ extension SearchConfig {
                 }
             },
             rowAssets: .init(
-                contextImage: isDesignTokenEnabled ? UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary) : UIImage.moreList,
-                itemSelected: isDesignTokenEnabled ? UIImage.checkBoxSelectedSemantic : UIImage.checkBoxSelected,
-                itemUnselected: isDesignTokenEnabled ? UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong)  : UIImage.checkBoxUnselected,
+                contextImage: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
+                itemSelected: UIImage.checkBoxSelectedSemantic,
+                itemUnselected: UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong),
                 playImage: UIImage.videoList,
                 downloadedImage: UIImage.downloaded,
-                moreList: isDesignTokenEnabled ? UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary)
-                : UIImage.moreList.withTintColorAsOriginal(.cloudDriveThumbnailMoreButton),
-                moreGrid: isDesignTokenEnabled ? UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary) 
-                : UIImage.moreGrid.withTintColor(.cloudDriveThumbnailMoreButton)
+                moreList: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
+                moreGrid: UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
             ),
             colorAssets: .init(
-                unselectedBorderColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : UIColor.cloudDriveThumbnailModeBorder.swiftUI,
-                selectedBorderColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : UIColor.turquoise.swiftUI,
+                unselectedBorderColor: TokenColors.Border.strong.swiftUI,
+                selectedBorderColor: TokenColors.Support.success.swiftUI,
                 titleTextColor: UIColor.primaryTextColor().swiftUI,
-                subtitleTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.cloudDriveSubtitleText.swiftUI,
-                vibrantColor: isDesignTokenEnabled ? TokenColors.Text.error.swiftUI : UIColor.cloudDriveVibrance.swiftUI,
-                resultPropertyColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.cloudDrivePropertyIcon.swiftUI,
-                verticalThumbnailFooterText: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.cloudDriveVideoDurationText.swiftUI,
-                verticalThumbnailFooterBackground: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.cloudDriveVideoDurationBackground.swiftUI,
-                verticalThumbnailPreviewBackground: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.cloudDriveVerticalThumbnailPreviewBackground.swiftUI,
-                verticalThumbnailTopIconsBackground: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : UIColor.cloudDriveVerticalThumbnailTopIconsBackground.swiftUI,
-                verticalThumbnailTopPropertyColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.cloudDriveVerticalThumbnailTopIcons.swiftUI,
-                listRowSeparator: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : UIColor.cloudDriveListRowSeparator.swiftUI,
+                subtitleTextColor: TokenColors.Text.secondary.swiftUI,
+                vibrantColor: TokenColors.Text.error.swiftUI,
+                resultPropertyColor: TokenColors.Icon.secondary.swiftUI,
+                verticalThumbnailFooterText: TokenColors.Text.primary.swiftUI,
+                verticalThumbnailFooterBackground: TokenColors.Background.surface1.swiftUI,
+                verticalThumbnailPreviewBackground: TokenColors.Background.surface1.swiftUI,
+                verticalThumbnailTopIconsBackground: TokenColors.Background.surface2.swiftUI,
+                verticalThumbnailTopPropertyColor: TokenColors.Icon.secondary.swiftUI,
+                listRowSeparator: TokenColors.Border.strong.swiftUI,
                 F7F7F7: UIColor.whiteF7F7F7.swiftUI,
                 _161616: UIColor.black161616.swiftUI,
                 _545458: UIColor.gray545458.swiftUI,
@@ -214,12 +210,12 @@ extension SearchConfig {
                 _1C1C1E: UIColor.black1C1C1E.swiftUI,
                 _00A886: UIColor.green00A886.swiftUI,
                 _3C3C43: UIColor.gray3C3C43.swiftUI,
-                checkmarkBackgroundTintColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : UIColor.turquoise.swiftUI
+                checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI
             ),
             contextPreviewFactory: contextPreviewFactory
         )
     }
-
+    
     private static func searchEmptyState(
         with titleTextColor: Color
     ) -> SearchConfig.EmptyViewAssets {

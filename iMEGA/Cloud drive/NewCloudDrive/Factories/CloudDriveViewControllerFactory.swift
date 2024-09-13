@@ -170,8 +170,7 @@ struct CloudDriveViewControllerFactory {
                 nodeUseCase: nodeUseCase,
                 mediaUseCase: homeFactory.makeMediaUseCase(), 
                 nodeActions: nodeActions,
-                hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-                isDesignTokenEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+                hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
             ),
             nodeUseCase: nodeUseCase,
             preferences: PreferenceUseCase.default, 

@@ -65,17 +65,7 @@ class FileExplorerGridCell: UICollectionViewCell {
     }
 
     private func updateBorderColor() {
-        if markSelection {
-            borderColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.success : UIColor.green00A886
-        } else {
-            if UIColor.isDesignTokenEnabled() {
-                borderColor = TokenColors.Border.strong
-            } else {
-                borderColor = traitCollection.theme == .dark
-                ? UIColor.gray545457.withAlphaComponent(0.65)
-                : UIColor.whiteF7F7F7
-            }
-        }
+        markSelection ? TokenColors.Support.success : TokenColors.Border.strong
     }
 
     override func prepareForReuse() {

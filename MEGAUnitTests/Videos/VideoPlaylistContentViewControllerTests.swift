@@ -65,7 +65,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
         let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc)
         let videoSelection = VideoSelection()
         let sut = VideoPlaylistContentViewController(
-            videoConfig: .live(isDesignTokenEnabled: true),
+            videoConfig: .live(),
             videoPlaylistEntity: anyVideoPlaylist(),
             videoPlaylistContentsUseCase: MockVideoPlaylistContentUseCase(),
             thumbnailUseCase: MockThumbnailUseCase(),
