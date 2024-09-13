@@ -1,8 +1,11 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import MEGASwift
 
+@MainActor
 final class NodeDescriptionCellViewModel {
     let textViewEdgeInsets: UIEdgeInsets
     let editingDisabled: () -> Bool
@@ -12,10 +15,12 @@ final class NodeDescriptionCellViewModel {
     private let maxCharactersAllowed: Int
     private let hasReadOnlyAccess: () -> Bool
     private let descriptionProvider: () -> NodeDescriptionCellControllerModel.Description?
+    private let tracker: any AnalyticsTracking
     
     var onUpdate: (() -> Void)?
 
     init(
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         maxCharactersAllowed: Int,
         editingDisabled: @escaping () -> Bool,
         textViewEdgeInsets: UIEdgeInsets,
@@ -25,6 +30,7 @@ final class NodeDescriptionCellViewModel {
         saveDescription: @escaping (String) -> Void,
         isTextViewFocused: @escaping (Bool) -> Void
     ) {
+        self.tracker = tracker
         self.maxCharactersAllowed = maxCharactersAllowed
         self.editingDisabled = editingDisabled
         self.textViewEdgeInsets = textViewEdgeInsets
@@ -75,8 +81,14 @@ final class NodeDescriptionCellViewModel {
         currentText: String,
         replacementText: String
     ) -> Bool {
-        let newLength = currentText.utf16.count - range.length + replacementText.utf16.count
+        let currentLength = currentText.utf16.count
+        let newLength = currentLength - range.length + replacementText.utf16.count
+        if currentLength < maxCharactersAllowed && newLength >= maxCharactersAllowed {
+            tracker.trackAnalyticsEvent(with: NodeInfoDescriptionCharacterLimitEvent())
+        }
+        
         guard newLength > maxCharactersAllowed else { return true }
+        
         return false
     }
 
@@ -94,5 +106,16 @@ final class NodeDescriptionCellViewModel {
         }
 
         return currentText.replacingCharacters(in: stringRange, with: truncatedText)
+    }
+}
+
+// MARK: Analytics
+extension NodeDescriptionCellViewModel {
+    func trackNodeInfoDescriptionConfirmed() {
+        tracker.trackAnalyticsEvent(with: NodeInfoDescriptionConfirmedEvent())
+    }
+    
+    func trackNodeInfoDescriptionEntered() {
+        tracker.trackAnalyticsEvent(with: NodeInfoDescriptionEnteredEvent())
     }
 }
