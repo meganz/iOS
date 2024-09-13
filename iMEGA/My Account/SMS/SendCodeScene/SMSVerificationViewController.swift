@@ -105,8 +105,8 @@ final class SMSVerificationViewController: UIViewController, ViewType {
 
     @IBAction private func didEditingChangedInPhoneNumberField() {
         nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
-        phoneNumberLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_secondaryGray(for: traitCollection)
-        phoneNumberTextField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        phoneNumberLabel.textColor = TokenColors.Text.secondary
+        phoneNumberTextField.textColor = TokenColors.Text.primary
         errorView.isHidden = true
     }
 
@@ -164,45 +164,42 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
         
-        let primaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.White._FFFFFF.uiColor
-        let secondaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_secondaryGray(for: traitCollection)
+        let primaryTextColor = TokenColors.Text.primary
+        let secondaryTextColor = TokenColors.Text.secondary
         let separatorColor = UIColor.mnz_separator(for: traitCollection)
         let fieldBackgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
-        let labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         
         titleLabel.textColor = primaryTextColor
         cancelButton.setTitleColor(primaryTextColor, for: .normal)
-        descriptionTextView.textColor = labelColor
+        descriptionTextView.textColor = primaryTextColor
         
         countryTopSeparatorView.backgroundColor = separatorColor
         countryContainerView.backgroundColor = fieldBackgroundColor
         countryLabel.textColor = secondaryTextColor
         countryBottomSeparatorView.backgroundColor = separatorColor
-        countryNameLabel.textColor = labelColor
+        countryNameLabel.textColor = primaryTextColor
         
         phoneNumberTopSeparatorView.backgroundColor = separatorColor
         phoneNumberContainerView.backgroundColor = fieldBackgroundColor
         phoneNumberLabel.textColor = secondaryTextColor
         phoneNumberBottomSeparatorView.backgroundColor = separatorColor
         
-        errorImageView.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.systemRed
-        errorMessageLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        errorImageView.tintColor = TokenColors.Support.error
+        errorMessageLabel.textColor = TokenColors.Text.error
         
-        if UIColor.isDesignTokenEnabled() {
-            disclosureIndicatorImageView.image = UIImage.standardDisclosureIndicatorDesignToken
-            countryFieldImageView.image = UIImage.verificationCountry.withRenderingMode(.alwaysTemplate)
-            phoneFieldImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
-            
-            let iconTintColor = TokenColors.Icon.secondary
-            countryFieldImageView.tintColor = iconTintColor
-            phoneFieldImageView.tintColor = iconTintColor
-        }
+        disclosureIndicatorImageView.image = UIImage.standardDisclosureIndicatorDesignToken
+        countryFieldImageView.image = UIImage.verificationCountry.withRenderingMode(.alwaysTemplate)
+        phoneFieldImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
+        
+        let iconTintColor = TokenColors.Icon.secondary
+        countryFieldImageView.tintColor = iconTintColor
+        phoneFieldImageView.tintColor = iconTintColor
         
         nextButton.mnz_setupPrimary(traitCollection)
     }
 
     private func showSendCodeErrorMessage(_ message: String?) {
-        let errorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        let errorColor = TokenColors.Text.error
         phoneNumberLabel.textColor = errorColor
         phoneNumberTextField.textColor = errorColor
         errorMessageLabel.text = message

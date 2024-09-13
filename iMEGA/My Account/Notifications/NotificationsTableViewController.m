@@ -446,10 +446,10 @@
     [self configureTypeLabel:cell.typeLabel forType:userAlert.type];
     if (userAlert.isSeen) {
         cell.theNewView.hidden = YES;
-        cell.backgroundColor = [UIColor isDesignTokenEnabled] ? [self notificationCellBackground: userAlert.isSeen] : [UIColor mnz_notificationSeenBackgroundForTraitCollection:self.traitCollection];
+        cell.backgroundColor = [self notificationCellBackground: userAlert.isSeen];
     } else {
         cell.theNewView.hidden = NO;
-        cell.backgroundColor = [UIColor isDesignTokenEnabled] ? [self notificationCellBackground: userAlert.isSeen] : [UIColor mnz_tertiaryBackground:self.traitCollection];
+        cell.backgroundColor = [self notificationCellBackground: userAlert.isSeen];
     }
     [self configureHeadingLabel:cell.headingLabel forAlert:userAlert];
     [self configureContentLabel:cell.contentLabel forAlert:userAlert indexPath:indexPath];

@@ -56,33 +56,21 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    if (UIColor.isDesignTokenEnabled) {
-        UIColor *backgroundColor = [self defaultBackgroundColor];
-        UIColor *primaryTextColor = [self primaryTextColor];
-        UIColor *secondaryTextColor = [self secondayTextColor];
-        
-        self.view.backgroundColor = backgroundColor;
-        
-        self.inviteYourFriendsView.backgroundColor = backgroundColor;
-        self.inviteYourFriendsSubtitleLabel.textColor = secondaryTextColor;
-        
-        self.howItWorksView.backgroundColor = backgroundColor;
-        self.howItWorksLabel.textColor = primaryTextColor;
-        self.howItWorksFirstParagraphLabel.textColor = primaryTextColor;
-        self.howItWorksSecondParagraphLabel.textColor = primaryTextColor;
-        self.howItWorksThirdParagraphLabel.textColor = secondaryTextColor;
-        self.howItWorksTopSeparatorView.backgroundColor = [self separatorColor];
-    } else {
-        self.view.backgroundColor = UIColor.systemBackgroundColor;
-        
-        self.inviteYourFriendsView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-        self.inviteYourFriendsSubtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-        
-        self.howItWorksView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-        self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-        self.howItWorksFirstParagraphLabel.textColor = self.howItWorksSecondParagraphLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-        self.howItWorksThirdParagraphLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    }
+    UIColor *backgroundColor = [self defaultBackgroundColor];
+    UIColor *primaryTextColor = [self primaryTextColor];
+    UIColor *secondaryTextColor = [self secondayTextColor];
+    
+    self.view.backgroundColor = backgroundColor;
+    
+    self.inviteYourFriendsView.backgroundColor = backgroundColor;
+    self.inviteYourFriendsSubtitleLabel.textColor = secondaryTextColor;
+    
+    self.howItWorksView.backgroundColor = backgroundColor;
+    self.howItWorksLabel.textColor = primaryTextColor;
+    self.howItWorksFirstParagraphLabel.textColor = primaryTextColor;
+    self.howItWorksSecondParagraphLabel.textColor = primaryTextColor;
+    self.howItWorksThirdParagraphLabel.textColor = secondaryTextColor;
+    self.howItWorksTopSeparatorView.backgroundColor = [self separatorColor];
     
     [self.inviteButton mnz_setupPrimary:self.traitCollection];
 }

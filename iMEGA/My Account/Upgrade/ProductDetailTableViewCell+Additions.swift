@@ -3,9 +3,9 @@ import MEGADesignToken
 extension ProductDetailTableViewCell {
     
     @objc func updateAppearance() {
-        backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.systemBackground
+        backgroundColor = TokenColors.Background.page
         
-        let primaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        let primaryTextColor = TokenColors.Text.primary
         periodLabel.textColor = primaryTextColor
         priceLabel.textColor = primaryTextColor
     }

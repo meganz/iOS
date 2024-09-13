@@ -104,25 +104,19 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if UIColor.isDesignTokenEnabled() {
-            cell.backgroundColor = TokenColors.Background.page
-        }
+        cell.backgroundColor = TokenColors.Background.page
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
 
-        if UIColor.isDesignTokenEnabled() {
-            headerFooterView.textLabel?.textColor = TokenColors.Text.secondary
-        }
+        headerFooterView.textLabel?.textColor = TokenColors.Text.secondary
     }
 
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
 
-        if UIColor.isDesignTokenEnabled() {
-            headerFooterView.textLabel?.textColor = TokenColors.Text.secondary
-        }
+        headerFooterView.textLabel?.textColor = TokenColors.Text.secondary
     }
 }
 
@@ -131,15 +125,10 @@ extension FileVersioningTableViewController: TraitEnvironmentAware {
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: currentTrait)
         tableView.separatorColor = UIColor.mnz_separator(for: currentTrait)
 
-        if UIColor.isDesignTokenEnabled() {
-            fileVersionsLabel.textColor = TokenColors.Text.primary
-            fileVersioningLabel.textColor = TokenColors.Text.primary
-            detailLabel.textColor = TokenColors.Text.secondary
-            deleteOldVersionsLabel.textColor = TokenColors.Text.error
-        } else {
-            detailLabel.textColor = UIColor.secondaryLabel
-            deleteOldVersionsLabel.textColor = UIColor.mnz_red(for: currentTrait)
-        }
+        fileVersionsLabel.textColor = TokenColors.Text.primary
+        fileVersioningLabel.textColor = TokenColors.Text.primary
+        detailLabel.textColor = TokenColors.Text.secondary
+        deleteOldVersionsLabel.textColor = TokenColors.Text.error
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

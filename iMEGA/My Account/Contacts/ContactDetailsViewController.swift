@@ -58,51 +58,35 @@ extension ContactDetailsViewController {
     }
     
     @objc func readWritePermissionsIcon() -> UIImage {
-        if UIColor.isDesignTokenEnabled() {
-            UIImage(resource: .readWritePermissions)
-                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
-        } else {
-            UIImage(resource: .readWritePermissions)
-        }
+        UIImage(resource: .readWritePermissions)
+            .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
     @objc func moderatorIcon() -> UIImage {
-        if UIColor.isDesignTokenEnabled() {
-            UIImage(resource: .moderator)
-                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
-        } else {
-            UIImage(resource: .moderator)
-        }
+        UIImage(resource: .moderator)
+            .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
     @objc func standardIcon() -> UIImage {
-        if UIColor.isDesignTokenEnabled() {
-            UIImage(resource: .standard)
-                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
-        } else {
-            UIImage(resource: .standard)
-        }
+        UIImage(resource: .standard)
+            .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
     @objc func readOnlyChatIcon() -> UIImage {
-        if UIColor.isDesignTokenEnabled() {
-            UIImage(resource: .readOnlyChat)
-                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
-        } else {
-            UIImage(resource: .readOnlyChat)
-        }
+        UIImage(resource: .readOnlyChat)
+            .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
     @objc var redIconColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+        TokenColors.Support.error
     }
     
     @objc var redTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.mnz_red(for: traitCollection)
+        TokenColors.Text.error
     }
     
     @objc var primaryIconColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary : .label
+        TokenColors.Icon.primary
     }
 }
 
@@ -138,11 +122,11 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
     
     @objc
     func updateAppearance() {
-        actionsView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
-        actionsBottomSeparatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
-        tableView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
-        tableView.separatorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
-        let buttonTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_secondaryGray(for: traitCollection)
+        actionsView.backgroundColor = TokenColors.Background.page
+        actionsBottomSeparatorView.backgroundColor = TokenColors.Border.strong
+        tableView.backgroundColor = TokenColors.Background.page
+        tableView.separatorColor = TokenColors.Border.strong
+        let buttonTextColor = TokenColors.Text.primary
         messageLabel.textColor = buttonTextColor
         callLabel.textColor = buttonTextColor
         videoLabel.textColor = buttonTextColor
@@ -151,24 +135,20 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
         callButton.contentMode = .scaleAspectFit
         videoCallButton.contentMode = .scaleAspectFit
         
-        if UIColor.isDesignTokenEnabled() {
-            let message = MEGAAssetsImageProvider.image(named: "sendMessageRound_token")
-            messageButton.setImage(message, for: .normal)
-            messageButton.setImage(message?.applying(alpha: 0.5), for: .disabled)
-            let call = MEGAAssetsImageProvider.image(named: "makeCallRound_token")
-            callButton.setImage(call, for: .normal)
-            callButton.setImage(message?.applying(alpha: 0.5), for: .disabled)
-            let videoCall = MEGAAssetsImageProvider.image(named: "callVideoRound_token")
-            videoCallButton.setImage(videoCall, for: .normal)
-            videoCallButton.setImage(videoCall?.applying(alpha: 0.5), for: .disabled)
-        }
+        messageButton.setImage(UIImage.sendMessageRoundToken, for: .normal)
+        messageButton.setImage(UIImage.sendMessageRoundToken.applying(alpha: 0.5), for: .disabled)
+        
+        let call = MEGAAssetsImageProvider.image(named: "makeCallRound_token")
+        callButton.setImage(call, for: .normal)
+        callButton.setImage(UIImage.sendMessageRoundToken.applying(alpha: 0.5), for: .disabled)
+        let videoCall = MEGAAssetsImageProvider.image(named: "callVideoRound_token")
+        videoCallButton.setImage(videoCall, for: .normal)
+        videoCallButton.setImage(videoCall?.applying(alpha: 0.5), for: .disabled)
     }
     
     @objc
     func updateHeaderBackgroundColor(headerView: GenericHeaderFooterView) {
-        if UIColor.isDesignTokenEnabled() {
-            headerView.tokenBackgroundColor = TokenColors.Background.page
-        }
+        headerView.tokenBackgroundColor = TokenColors.Background.page
     }
     
     @objc func reloadTableViewAsync() {

@@ -20,15 +20,10 @@
 - (void)setupCell {
     self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
-    if ([UIColor isDesignTokenEnabled]) {
-        self.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
-        self.storageQuotaRewardLabel.textColor =  [UIColor mnz_badgeTextColor];
-        self.titleLabel.textColor = [UIColor primaryTextColor];
-        self.subtitleLabel.textColor = [UIColor secondaryTextColor];
-    } else {
-        self.storageQuotaRewardView.backgroundColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
-        self.storageQuotaRewardLabel.textColor = UIColor.mnz_whiteFFFFFF;
-    }
+    self.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
+    self.storageQuotaRewardLabel.textColor =  [UIColor mnz_badgeTextColor];
+    self.titleLabel.textColor = [UIColor primaryTextColor];
+    self.subtitleLabel.textColor = [UIColor secondaryTextColor];
 }
 
 @end

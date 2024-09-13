@@ -63,29 +63,29 @@ extension UsageViewController {
     @objc func colorForSlice(at index: Int) -> UIColor {
         switch index {
         case 0: // Storage / Transfer Quota
-            colorForPage(usagePageControl?.currentPage ?? 0, isDesignTokenEnabled: UIColor.isDesignTokenEnabled(), traitCollection: traitCollection)
+            colorForPage(usagePageControl?.currentPage ?? 0, traitCollection: traitCollection)
         default: // Available storage/quota or default
-            availableStorageColor(isDesignTokenEnabled: UIColor.isDesignTokenEnabled(), traitCollection: traitCollection)
+            availableStorageColor(traitCollection: traitCollection)
         }
     }
     
-    @objc func colorForPage(_ currentPage: Int, isDesignTokenEnabled: Bool, traitCollection: UITraitCollection) -> UIColor {
+    @objc func colorForPage(_ currentPage: Int, traitCollection: UITraitCollection) -> UIColor {
         guard isFull(currentPage: currentPage) else {
-            return isDesignTokenEnabled ? TokenColors.Support.success : UIColor.mnz_turquoise(for: traitCollection)
+            return TokenColors.Support.success
         }
-        return isDesignTokenEnabled ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+        
+        return TokenColors.Support.error
     }
     
-    private func availableStorageColor(isDesignTokenEnabled: Bool, traitCollection: UITraitCollection) -> UIColor {
-        isDesignTokenEnabled ? TokenColors.Border.strong : UIColor.mnz_tertiaryGray(for: traitCollection)
+    private func availableStorageColor(traitCollection: UITraitCollection) -> UIColor {
+        TokenColors.Border.strong
     }
     
     @objc func updateAppearance() {
-        UIColor.isDesignTokenEnabled() ? setupTokenColors() : setupColors()
+        setupTokenColors()
         
         pieChartMainLabel?.textColor = colorForPage(
             usagePageControl?.currentPage ?? 0,
-            isDesignTokenEnabled: UIColor.isDesignTokenEnabled(),
             traitCollection: traitCollection
         )
         

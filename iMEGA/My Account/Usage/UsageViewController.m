@@ -56,7 +56,7 @@
 - (void)reloadPieChart:(NSInteger)currentPage {
     [_pieChartMainLabel setAttributedText:[self textForMainLabel:currentPage]];
     
-    self.pieChartMainLabel.textColor = [self colorForPage:self.usagePageControl.currentPage isDesignTokenEnabled:[UIColor isDesignTokenEnabled] traitCollection:self.traitCollection];
+    self.pieChartMainLabel.textColor = [self colorForPage:self.usagePageControl.currentPage traitCollection:self.traitCollection];
     
     [self textForSecondaryAndTertiaryLabels:currentPage];
     

@@ -16,17 +16,14 @@ extension MasterKeyViewController {
     }
 
     @objc func updateAppearance() {
-        view.backgroundColor = UIColor.isDesignTokenEnabled() ?
-        TokenColors.Background.page : UIColor.systemBackground
+        view.backgroundColor = TokenColors.Background.page
 
-        illustrationView?.backgroundColor = UIColor.isDesignTokenEnabled() ?
-        TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+        illustrationView?.backgroundColor = TokenColors.Background.page
 
         carbonCopyMasterKeyButton?.mnz_setupSecondary(traitCollection)
         saveMasterKey?.mnz_setupPrimary(traitCollection)
 
-        let recoveryButtonColor = UIColor.isDesignTokenEnabled() ?
-        TokenColors.Link.primary : UIColor.mnz_turquoise(for: traitCollection)
+        let recoveryButtonColor = TokenColors.Link.primary 
 
         whyDoINeedARecoveryKeyButton?.setTitleColor(recoveryButtonColor, for: .normal)
     }

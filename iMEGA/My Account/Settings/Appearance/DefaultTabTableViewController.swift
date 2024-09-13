@@ -27,9 +27,7 @@ final class DefaultTabTableViewController: UITableViewController {
             let title = tab.title
             cell.textLabel?.text = Strings.localized(title, comment: title)
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-                cell.textLabel?.textColor = UIColor.mnz_primaryTextColor()
-            }
+            cell.textLabel?.textColor = UIColor.mnz_primaryTextColor()
         }
         cell.accessoryView = UIImageView(image: UIImage.turquoiseCheckmark)
         cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)

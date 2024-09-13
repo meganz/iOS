@@ -170,7 +170,7 @@ static NSString *kisDirectory = @"kisDirectory";
            backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
                                 traitCollection:self.traitCollection];
         if (self.flavor == HomeScreen) {
-            self.view.backgroundColor = [UIColor isDesignTokenEnabled] ? [UIColor pageBackgroundForTraitCollection:self.traitCollection] : UIColor.mnz_black1C1C1E;
+            self.view.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
         }
         
         [self reloadData];

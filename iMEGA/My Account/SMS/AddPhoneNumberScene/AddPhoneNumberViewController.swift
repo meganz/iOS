@@ -50,8 +50,8 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
     
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-        addPhoneNumberTitle.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
-        descriptionLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        addPhoneNumberTitle.textColor = TokenColors.Text.primary
+        descriptionLabel.textColor = TokenColors.Text.primary
         addPhoneNumberButton.mnz_setupPrimary(traitCollection)
         notNowButton.mnz_setupCancel(traitCollection)
         dontShowAgainButton.mnz_setupCancel(traitCollection)

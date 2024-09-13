@@ -54,11 +54,11 @@ extension OfflineTableViewViewController {
     func updateAppearanceForTraitCollection(_ traitCollection: UITraitCollection) {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            self.tableView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteFFFFFF
+            self.tableView?.backgroundColor = TokenColors.Background.page
         case .dark:
-            self.tableView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black1C1C1E
+            self.tableView?.backgroundColor = TokenColors.Background.page
         @unknown default:
-            self.tableView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteFFFFFF
+            self.tableView?.backgroundColor = TokenColors.Background.page
         }
     }
     
