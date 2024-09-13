@@ -84,29 +84,21 @@ final class PSAView: UIView, ViewType {
     }
     
     private func setupView(with trait: UITraitCollection) {
-        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
-        
         if psaEntity?.positiveText != nil,
            psaEntity?.positiveLink != nil {
-            leftButton.backgroundColor = isDesignTokenEnabled ? TokenColors.Button.primary : .mnz_turquoise(for: trait)
-            rightButton.backgroundColor = isDesignTokenEnabled ? TokenColors.Button.secondary : .mnz_secondaryGray(for: trait)
-            
-            if isDesignTokenEnabled {
-                leftButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
-                rightButton.setTitleColor(TokenColors.Text.accent, for: .normal)
-            }
+            leftButton.backgroundColor = TokenColors.Button.primary
+            rightButton.backgroundColor = TokenColors.Button.secondary
+            leftButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
+            rightButton.setTitleColor(TokenColors.Text.accent, for: .normal)
         } else {
-            leftButton.backgroundColor = isDesignTokenEnabled ? TokenColors.Button.secondary : .mnz_secondaryGray(for: trait)
-            
-            if isDesignTokenEnabled {
-                leftButton.setTitleColor(TokenColors.Text.accent, for: .normal)
-            }
+            leftButton.backgroundColor = TokenColors.Button.secondary
+            leftButton.setTitleColor(TokenColors.Text.accent, for: .normal)
         }
         
-        backgroundColor = isDesignTokenEnabled ? TokenColors.Background.surface1 : .mnz_notificationSeenBackground(for: trait)
-        topBorderView.backgroundColor = isDesignTokenEnabled ? TokenColors.Border.strong : .mnz_separator(for: trait)
-        bottomBorderView.backgroundColor = isDesignTokenEnabled ? TokenColors.Border.strong : .mnz_separator(for: trait)
-        imageView.backgroundColor = isDesignTokenEnabled ? TokenColors.Background.surface1 : UIColor.psaImageBackground
+        backgroundColor = TokenColors.Background.surface1
+        topBorderView.backgroundColor = TokenColors.Border.strong
+        bottomBorderView.backgroundColor = TokenColors.Border.strong
+        imageView.backgroundColor = TokenColors.Background.surface1
     }
     
     @IBAction func leftButtonTapped(_ sender: UIButton) {

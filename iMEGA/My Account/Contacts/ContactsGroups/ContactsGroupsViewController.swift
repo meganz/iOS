@@ -24,7 +24,7 @@ class ContactsGroupsViewController: UIViewController {
         title = Strings.Localizable.groups
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.groups)
         newGroupChatLabel.text = Strings.Localizable.newGroupChat
-        newGroupChatImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.groupChatToken : UIImage.createGroup
+        newGroupChatImageView.image = UIImage.groupChatToken
         
         searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
         navigationItem.searchController = searchController
@@ -54,11 +54,11 @@ class ContactsGroupsViewController: UIViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        newGroupChatLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
-        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
-        separatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
-        tableView.separatorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
-        disclosureIndicatorImageView.image = UIColor.isDesignTokenEnabled() ? UIImage(resource: .disclosure) : UIImage(resource: .standardDisclosureIndicator)
+        newGroupChatLabel.textColor = TokenColors.Text.primary
+        view.backgroundColor = TokenColors.Background.page
+        separatorView.backgroundColor = TokenColors.Border.strong
+        tableView.separatorColor = TokenColors.Border.strong
+        disclosureIndicatorImageView.image =  UIImage(resource: .disclosure)
         tableView.reloadData()
     }
 

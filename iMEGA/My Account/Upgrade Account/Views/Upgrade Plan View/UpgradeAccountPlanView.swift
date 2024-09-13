@@ -29,9 +29,7 @@ struct UpgradeAccountPlanView: View {
             viewModel.cancelUpgradeButtonTapped()
         } label: {
             Text(Strings.Localizable.cancel)
-                .foregroundColor(
-                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
-                )
+                .foregroundColor(TokenColors.Text.primary.swiftUI)
         }
         .padding()
     }
@@ -44,9 +42,7 @@ struct UpgradeAccountPlanView: View {
                 LazyVStack(pinnedViews: viewModel.viewType == .upgrade ? .sectionFooters : .init()) {
                     UpgradeSectionHeaderView(currentPlanName: viewModel.currentPlanName,
                                              selectedCycleTab: $viewModel.selectedCycleTab,
-                                             subMessageBackgroundColor:
-                                                isDesignTokenEnabled ? TokenColors.Notifications.notificationSuccess.swiftUI :
-                                                MEGAAppColor.Account.upgradeAccountSubMessageBackground.color)
+                                             subMessageBackgroundColor: TokenColors.Notifications.notificationSuccess.swiftUI)
                     
                     Section {
                         ForEach(viewModel.filteredPlanList, id: \.self) { plan in

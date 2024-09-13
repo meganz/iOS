@@ -9,8 +9,7 @@ extension MyAccountHallTableViewCell {
         }
         
         if let icon = data.icon, iconImageView != nil {
-            let image = UIColor.isDesignTokenEnabled() ? icon.withRenderingMode(.alwaysTemplate) : icon
-            iconImageView.image = image
+            iconImageView.image = icon.withRenderingMode(.alwaysTemplate)
         }
         
         if data.isPendingViewVisible, let pendingText = data.pendingText, pendingLabel != nil, pendingView != nil {
@@ -33,22 +32,22 @@ extension MyAccountHallTableViewCell {
         
         if let storageText = data.storageText, storageLabel != nil {
             storageLabel.text = storageText
-            storageLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.info : UIColor.mnz_blue(for: traitCollection)
+            storageLabel.textColor = TokenColors.Text.info
         }
         
         if let storageUsedText = data.storageUsedText, storageUsedLabel != nil {
             storageUsedLabel.text = storageUsedText
-            storageUsedLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.info : UIColor.mnz_blue(for: traitCollection)
+            storageUsedLabel.textColor = TokenColors.Text.info
         }
         
         if let transferText = data.transferText, transferLabel != nil {
             transferLabel.text = transferText
-            transferLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.success : .systemGreen
+            transferLabel.textColor = TokenColors.Text.success
         }
         
         if let transferUsedText = data.transferUsedText, transferUsedLabel != nil {
             transferUsedLabel.text = transferUsedText
-            transferUsedLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.success : .systemGreen
+            transferUsedLabel.textColor = TokenColors.Text.success
         }
     }
     
@@ -76,7 +75,7 @@ extension MyAccountHallTableViewCell {
     @objc func setupCell() {
         backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
 
-        if UIColor.isDesignTokenEnabled() && iconImageView != nil {
+        if iconImageView != nil {
             iconImageView.tintColor = TokenColors.Icon.primary
         }
         
@@ -89,14 +88,14 @@ extension MyAccountHallTableViewCell {
         }
         
         if pendingView != nil {
-            pendingView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : UIColor.mnz_red(for: traitCollection)
-            pendingLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_badgeTextColor()
+            pendingView.backgroundColor = TokenColors.Components.interactive
+            pendingLabel.textColor = TokenColors.Text.onColor
             layoutPendingView()
         }
         
         if promoView != nil {
-            promoView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationSuccess : UIColor.mnz_turquoise(for: traitCollection)
-            promoLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.success : UIColor.mnz_whiteFFFFFF()
+            promoView.backgroundColor = TokenColors.Notifications.notificationSuccess
+            promoLabel.textColor = TokenColors.Text.success
             promoView.layer.cornerRadius = 4.0
         }
     }

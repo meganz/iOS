@@ -41,18 +41,10 @@ struct ReportIssueView: View {
                         )
                         .padding(.bottom, 38)
                     }
-                }.background(
-                    isDesignTokenEnabled
-                    ? TokenColors.Background.page.swiftUI 
-                    : Color.backgroundRegularPrimaryElevated
-                )
+                }.background(TokenColors.Background.page.swiftUI)
             }
             
-            .background(
-                isDesignTokenEnabled
-                ? TokenColors.Background.surface1.swiftUI
-                : UIColor.navigationBg.swiftUI
-            )
+            .background(TokenColors.Background.surface1.swiftUI)
             .blur(radius: viewModel.isUploadingLog ? 1 : 0)
             .allowsHitTesting(viewModel.isUploadingLog ? false : true)
             .task {
@@ -100,14 +92,14 @@ struct ReportIssueView: View {
             rightNavigationBarButton
         }, center: {
             NavigationTitleView(title: Strings.Localizable.Help.ReportIssue.title)
-        }, backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.navigationBg.swiftUI)
+        }, backgroundColor: TokenColors.Background.surface1.swiftUI)
     }
     
     private var leftNavigationButton: some View {
         Button(Strings.Localizable.cancel) {
             viewModel.showReportIssueActionSheetIfNeeded()
         }
-        .accentColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
+        .accentColor(TokenColors.Text.primary.swiftUI)
         .actionSheet(isPresented: $viewModel.showingReportIssueActionSheet) {
             ActionSheet(title: Text(""), buttons: [
                 .destructive(Text(Strings.Localizable.Help.ReportIssue.discardReport)) {
@@ -128,7 +120,7 @@ struct ReportIssueView: View {
                 await viewModel.createTicket()
             }
         }
-        .accentColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
+        .accentColor(TokenColors.Text.primary.swiftUI)
         .font(.body.bold())
         .disabled(viewModel.shouldDisableSendButton)
     }

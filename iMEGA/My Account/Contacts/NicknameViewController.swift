@@ -143,27 +143,16 @@ class NicknameViewController: UIViewController {
     
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        if UIColor.isDesignTokenEnabled() {
-            nicknameView.backgroundColor = TokenColors.Background.page
-            nicknameLabel.textColor = TokenColors.Text.secondary
-            nicknameTopSeparatorView.backgroundColor = TokenColors.Border.strong
-            nicknameBottomSeparatorView.backgroundColor = TokenColors.Border.strong
-            
-            removeNicknameButton.backgroundColor = TokenColors.Background.page
-            removeNicknameButton.setTitleColor(TokenColors.Text.error, for: .normal)
-            removeNicknameButtonTopSeparatorView.backgroundColor = TokenColors.Border.strong
-            removeNicknameButtonBottomSeparatorView.backgroundColor = TokenColors.Border.strong
-        } else {
-            nicknameView.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-            nicknameLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-            nicknameTopSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-            nicknameBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-            
-            removeNicknameButton.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-            removeNicknameButton.setTitleColor(UIColor.mnz_red(for: traitCollection), for: .normal)
-            removeNicknameButtonTopSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-            removeNicknameButtonBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        }
+        
+        nicknameView.backgroundColor = TokenColors.Background.page
+        nicknameLabel.textColor = TokenColors.Text.secondary
+        nicknameTopSeparatorView.backgroundColor = TokenColors.Border.strong
+        nicknameBottomSeparatorView.backgroundColor = TokenColors.Border.strong
+        
+        removeNicknameButton.backgroundColor = TokenColors.Background.page
+        removeNicknameButton.setTitleColor(TokenColors.Text.error, for: .normal)
+        removeNicknameButtonTopSeparatorView.backgroundColor = TokenColors.Border.strong
+        removeNicknameButtonBottomSeparatorView.backgroundColor = TokenColors.Border.strong
     }
 }
 

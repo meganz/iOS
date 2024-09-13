@@ -59,9 +59,7 @@
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
 
-    if (UIColor.isDesignTokenEnabled) {
-        self.twoFactorAuthenticationLabel.textColor = UIColor.mnz_primaryTextColor;
-    }
+    self.twoFactorAuthenticationLabel.textColor = UIColor.mnz_primaryTextColor;
 
     [self.tableView reloadData];
 }
@@ -101,7 +99,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-    if ([view isKindOfClass:[UITableViewHeaderFooterView class]] && UIColor.isDesignTokenEnabled) {
+    if ([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
         UITableViewHeaderFooterView *footerView = (UITableViewHeaderFooterView *)view;
         footerView.textLabel.textColor = UIColor.mnz_secondaryTextColor;
     }

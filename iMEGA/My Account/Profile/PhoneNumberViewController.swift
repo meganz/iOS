@@ -66,21 +66,15 @@ class PhoneNumberViewController: UITableViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        
-        if UIColor.isDesignTokenEnabled() {
-            tableView.backgroundColor = TokenColors.Background.page
-            tableView.separatorColor = TokenColors.Border.strong
-            phoneNumberTextLabel.textColor = TokenColors.Text.secondary
-            countrycodeLabel.textColor = TokenColors.Text.secondary
-            phoneNumberLabel.textColor = TokenColors.Text.primary
-            modifyNumberLabel.textColor = TokenColors.Text.primary
-            removeNumberLabel.textColor = TokenColors.Text.error
-            phoneNumberImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
-            phoneNumberImageView.tintColor = TokenColors.Icon.secondary
-        } else {
-            tableView.backgroundColor = .mnz_secondaryBackgroundElevated(traitCollection)
-            tableView.separatorColor = .mnz_separator(for: traitCollection)
-        }
+        tableView.backgroundColor = TokenColors.Background.page
+        tableView.separatorColor = TokenColors.Border.strong
+        phoneNumberTextLabel.textColor = TokenColors.Text.secondary
+        countrycodeLabel.textColor = TokenColors.Text.secondary
+        phoneNumberLabel.textColor = TokenColors.Text.primary
+        modifyNumberLabel.textColor = TokenColors.Text.primary
+        removeNumberLabel.textColor = TokenColors.Text.error
+        phoneNumberImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
+        phoneNumberImageView.tintColor = TokenColors.Icon.secondary
         
         tableView.reloadData()
     }

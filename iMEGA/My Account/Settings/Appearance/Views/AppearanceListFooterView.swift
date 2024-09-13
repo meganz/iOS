@@ -10,12 +10,10 @@ struct AppearanceListFooterWithLinkView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(message)
-                .foregroundColor(
-                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
-                )
+                .foregroundColor(TokenColors.Text.primary.swiftUI)
             Link(destination: linkUrl) {
                 Text(linkMessage)
-                    .foregroundColor(MEGAAppColor.View.turquoise_link.color)
+                    .foregroundStyle(MEGAAppColor.View.turquoise_link.color)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

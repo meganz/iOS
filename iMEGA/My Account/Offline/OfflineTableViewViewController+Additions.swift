@@ -3,9 +3,9 @@ import UIKit
 
 extension OfflineTableViewViewController {
     @objc func configureDeleteContextMenu(_ contextMenu: UIContextualAction) -> UIContextualAction {
-        let tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+        let tintColor = TokenColors.Text.onColor
         contextMenu.image = UIImage(resource: .delete).withTintColor(tintColor)
-        contextMenu.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .systemRed
+        contextMenu.backgroundColor = TokenColors.Support.error
         return contextMenu
     }
 }

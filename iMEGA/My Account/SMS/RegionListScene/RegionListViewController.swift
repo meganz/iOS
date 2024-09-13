@@ -91,13 +91,7 @@ final class RegionListViewController: UIViewController, ViewType {
         updateAppearance()
     }
     
-    private func updateAppearance() {
-        guard UIColor.isDesignTokenEnabled() else {
-            tableView.sectionIndexColor = UIColor.mnz_turquoise(for: traitCollection)
-            tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
-            return
-        }
-        
+    private func updateAppearance() {        
         tableView.backgroundColor = TokenColors.Background.surface1
         tableView.sectionIndexColor = TokenColors.Text.primary
         tableView.separatorColor = TokenColors.Border.strong

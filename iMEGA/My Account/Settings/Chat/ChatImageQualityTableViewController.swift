@@ -43,9 +43,7 @@ class ChatImageQualityTableViewController: UITableViewController {
         let currentSeletedQuality = UserDefaults.standard.integer(forKey: "chatImageQuality")
         
         let imageView = UIImageView(image: UIImage.turquoiseCheckmark)
-        if UIColor.isDesignTokenEnabled() {
-            imageView.tintColor = TokenColors.Support.success
-        }
+        imageView.tintColor = TokenColors.Support.success
         
         cell.accessoryView = imageView
         cell.accessoryView?.isHidden = currentSeletedQuality != indexPath.row

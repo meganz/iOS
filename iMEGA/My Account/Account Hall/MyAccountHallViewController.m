@@ -122,15 +122,10 @@
     
     UIColor *primaryTextColor = [UIColor cellTitleColorFor:self.traitCollection];
     
-    if (UIColor.isDesignTokenEnabled) {
-        self.nameLabel.textColor = primaryTextColor;
-        self.addPhoneNumberTitle.textColor = primaryTextColor;
-        self.addPhoneNumberDescription.textColor = primaryTextColor;
-        self.qrCodeImageView.image = [UIImage imageNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
-    } else {
-        // qrCodeIcon should be deleted on assets when design token is permanently applied. It is only used here.
-        self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
-    }
+    self.nameLabel.textColor = primaryTextColor;
+    self.addPhoneNumberTitle.textColor = primaryTextColor;
+    self.addPhoneNumberDescription.textColor = primaryTextColor;
+    self.qrCodeImageView.image = [UIImage imageNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
     
     if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] ||
         [MEGASdk.shared isAccountType:MEGAAccountTypeProFlexi]) {
