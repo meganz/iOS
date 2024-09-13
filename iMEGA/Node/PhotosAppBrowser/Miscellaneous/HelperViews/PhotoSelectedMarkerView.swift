@@ -15,14 +15,6 @@ final class PhotoSelectedMarkerView: SingleTapView {
         layer.fillColor = UIColor.clear.cgColor
         layer.lineWidth = 1.65
 
-        // The design token version doesn't have a shadow
-        if !UIColor.isDesignTokenEnabled() {
-            layer.shadowColor = UIColor.black000000.cgColor
-            layer.shadowRadius = 1
-            layer.shadowOpacity = 0.3
-            layer.shadowOffset = CGSize(width: -2, height: 2)
-        }
-
         return layer
     }()
     
@@ -31,16 +23,11 @@ final class PhotoSelectedMarkerView: SingleTapView {
         let layer = CAShapeLayer()
         createPath(circleLayer: layer, insetValue: innerCircleInsetValue)
 
-        if UIColor.isDesignTokenEnabled() {
-            layer.fillColor = TokenColors.Support.success.cgColor
-        } else {
-            layer.fillColor = UIColor.green4AA588.cgColor
-        }
+        layer.fillColor = TokenColors.Support.success.cgColor
 
         return layer
     }()
 
-    // Center label: if the design token FF is enabled, it's the checkmark image, otherwise, it's a text label
     private lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -68,12 +55,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
     var selected: Bool = false {
         didSet {
             innerCircle.isHidden = !selected
-
-            if UIColor.isDesignTokenEnabled() {
-                imageView.isHidden = !selected
-            } else {
-                label.isHidden = !selected
-            }
+            imageView.isHidden = !selected
         }
     }
     
@@ -107,7 +89,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
             comparedTo: previousTraitCollection
         )
 
-        if hasDifferentColorAppearance && UIColor.isDesignTokenEnabled() {
+        if hasDifferentColorAppearance {
             innerCircle.fillColor = TokenColors.Support.success.cgColor
         }
     }
@@ -117,13 +99,9 @@ final class PhotoSelectedMarkerView: SingleTapView {
     private func configureLayers() {
         layer.addSublayer(outerCircle)
         layer.addSublayer(innerCircle)
-
-        if UIColor.isDesignTokenEnabled() {
-            addSubview(imageView)
-            setupImageViewConstraints()
-        } else {
-            addSubview(label)
-        }
+        addSubview(imageView)
+        
+        setupImageViewConstraints()
     }
     
     private func createPath(circleLayer: CAShapeLayer, insetValue: CGFloat) {

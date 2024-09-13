@@ -41,14 +41,9 @@ final class SharedItemsTableViewCell: UITableViewCell {
     // Pragma mark: - Private
     
     func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            nameLabel.tintColor = TokenColors.Text.primary
-            infoLabel.textColor = TokenColors.Text.secondary
-            backgroundColor = TokenColors.Background.page
-            infoButton.tintColor = TokenColors.Icon.secondary
-        } else {
-            infoLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
-            backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.mnz_black000000() : UIColor.mnz_whiteFFFFFF()
-        }
+        nameLabel.tintColor = TokenColors.Text.primary
+        infoLabel.textColor = TokenColors.Text.secondary
+        backgroundColor = TokenColors.Background.page
+        infoButton.tintColor = TokenColors.Icon.secondary
     }
 }
