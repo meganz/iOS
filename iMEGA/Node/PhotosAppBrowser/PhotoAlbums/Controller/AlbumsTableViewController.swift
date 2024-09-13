@@ -60,6 +60,10 @@ final class AlbumsTableViewController: UITableViewController {
         if albums.numberOfAlbums() == 0 {
             showNoPhotosOrVideos()
         }
+        
+        albums.loadAlbums { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
