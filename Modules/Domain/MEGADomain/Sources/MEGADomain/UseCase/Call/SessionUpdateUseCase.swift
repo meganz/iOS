@@ -1,7 +1,7 @@
 import MEGASwift
 
 public protocol SessionUpdateUseCaseProtocol: Sendable {
-    func monitorOnSessionUpdate() -> AnyAsyncSequence<ChatSessionEntity>
+    func monitorOnSessionUpdate() -> AnyAsyncSequence<(ChatSessionEntity, CallEntity)>
 }
 
 public struct SessionUpdateUseCase<T: SessionUpdateRepositoryProtocol>: SessionUpdateUseCaseProtocol {
@@ -11,7 +11,7 @@ public struct SessionUpdateUseCase<T: SessionUpdateRepositoryProtocol>: SessionU
         self.repository = repository
     }
 
-    public func monitorOnSessionUpdate() -> AnyAsyncSequence<ChatSessionEntity> {
+    public func monitorOnSessionUpdate() -> AnyAsyncSequence<(ChatSessionEntity, CallEntity)> {
         repository.sessionUpdate
             .eraseToAnyAsyncSequence()
     }

@@ -1502,7 +1502,7 @@ extension MeetingParticipantsLayoutViewModel {
     func monitorOnSessionUpdate() {
         let sessionUpdates = sessionUpdateUseCase.monitorOnSessionUpdate()
         Task { [weak self] in
-            for await session in sessionUpdates {
+            for await (session, _) in sessionUpdates {
                 self?.onSessionUpdate(session)
             }
         }
