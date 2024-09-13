@@ -34,7 +34,6 @@
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
     [self refreshBottomConstraint];
-    [self refreshSnackBarViewBottomConstraint];
     [self updatePhoneImageBadgeFrame];
     [self.tabBar updateBadgeLayoutAt:TabTypeChat];
 }
@@ -49,7 +48,6 @@
                                              object:nil];
     [self.view setNeedsLayout];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
-    [self configureSnackBarPresenter];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -58,7 +56,6 @@
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
-    [self removeSnackBarPresenter];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

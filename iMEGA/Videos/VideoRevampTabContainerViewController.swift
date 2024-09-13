@@ -58,9 +58,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     private let videoToolbarViewModel: VideoToolbarViewModel
     
-    private var snackBarViewModel: SnackBarViewModel?
     private var showSnackBarSubscription: AnyCancellable?
-    private var snackBarContainer: UIView?
     
     init(
         viewModel: VideoRevampTabContainerViewModel,
@@ -102,16 +100,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         setupNavigationBar()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureSnackBarPresenter()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        removeSnackBarPresenter()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -496,9 +484,7 @@ extension VideoRevampTabContainerViewController: BrowserViewControllerDelegate {
     }
 }
 
-// MARK: - SnackBarPresenting
-
-extension VideoRevampTabContainerViewController: SnackBarPresenting {
+extension VideoRevampTabContainerViewController {
     
     private func listenToSnackBarPresentation() {
         viewModel.syncModel.$shouldShowSnackBar
@@ -506,60 +492,9 @@ extension VideoRevampTabContainerViewController: SnackBarPresenting {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
-                snackBarViewModel = makeSnackBarViewModel(message: viewModel.syncModel.snackBarMessage)
-                self.snackBarViewModel?.update(snackBar: SnackBar(message: viewModel.syncModel.snackBarMessage))
-                guard let snackBar = self.snackBarViewModel?.snackBar else { return }
-                SnackBarRouter.shared.present(snackBar: snackBar)
+                let snackBar = SnackBar(message: viewModel.syncModel.snackBarMessage)
+                showSnackBar(snackBar: snackBar)
             }
             .store(in: &cancellables)
-    }
-    
-    private func makeSnackBarViewModel(message: String) -> SnackBarViewModel {
-        showSnackBarSubscription?.cancel()
-        
-        let snackBar = SnackBar(message: message)
-        let viewModel = SnackBarViewModel(snackBar: snackBar)
-        
-        showSnackBarSubscription = viewModel.$isShowSnackBar
-            .filter { !$0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                snackBarViewModel = nil
-            }
-        return viewModel
-    }
-    
-    @MainActor
-    func layout(snackBarView: UIView?) {
-        snackBarContainer?.removeFromSuperview()
-        snackBarContainer = snackBarView
-        snackBarContainer?.backgroundColor = .clear
-        
-        guard let snackBarView else {
-            return
-        }
-        
-        snackBarView.translatesAutoresizingMaskIntoConstraints = false
-        let toolbarHeight = navigationController?.toolbar.frame.height ?? 0
-        let bottomOffset: CGFloat = view.safeAreaInsets.bottom
-        
-        [
-            snackBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            snackBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            snackBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(toolbarHeight + bottomOffset) * 0.25)
-        ].activate()
-    }
-    
-    func snackBarContainerView() -> UIView? {
-        snackBarContainer
-    }
-    
-    private func configureSnackBarPresenter() {
-        SnackBarRouter.shared.configurePresenter(self)
-    }
-    
-    private func removeSnackBarPresenter() {
-        SnackBarRouter.shared.removePresenter()
     }
 }

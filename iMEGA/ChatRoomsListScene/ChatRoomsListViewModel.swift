@@ -66,7 +66,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var myAvatarBarButton: UIBarButtonItem?
     @Published var isConnectedToNetwork: Bool
     @Published var isFirstMeetingsLoad: Bool
-    @Published var bottomViewHeight: CGFloat = 0
     
     @Published var displayChatRooms: [ChatRoomViewModel]?
     @Published var displayPastMeetings: [ChatRoomViewModel]?
