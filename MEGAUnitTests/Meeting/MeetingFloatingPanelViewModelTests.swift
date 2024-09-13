@@ -956,7 +956,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         
         func joinAllParticipants() {
             for session in callSessions {
-                sessionUpdateUseCase.sendSessionUpdate(session)
+                sessionUpdateUseCase.sendSessionUpdate((session, CallEntity()))
             }
         }
     }

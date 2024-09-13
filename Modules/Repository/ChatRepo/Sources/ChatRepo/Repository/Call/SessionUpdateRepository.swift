@@ -13,7 +13,7 @@ public struct SessionUpdateRepository: SessionUpdateRepositoryProtocol {
         self.sessionUpdateProvider = sessionUpdateProvider
     }
     
-    public var sessionUpdate: AnyAsyncSequence<ChatSessionEntity> {
+    public var sessionUpdate: AnyAsyncSequence<(ChatSessionEntity, CallEntity)> {
         sessionUpdateProvider.sessionUpdate
     }
 }

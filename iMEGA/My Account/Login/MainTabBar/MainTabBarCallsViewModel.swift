@@ -101,7 +101,7 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let callUseCase: any CallUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
-    private var callSessionUseCase: any CallSessionUseCaseProtocol
+    private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
     private let callManager: any CallManagerProtocol
@@ -109,7 +109,8 @@ class MainTabBarCallsViewModel: ViewModelType {
 
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
-    private(set) var callSessionUpdateSubscription: AnyCancellable?
+    private(set) var callSessionUpdateTask: Task<Void, Never>?
+
     // we cache this value here to be able to reload
     // waiting room alert when needed -> so do it also when waiting room users are not changed
     // but call count is changed -> this could result in change of state of "admit\admit all"
@@ -138,7 +139,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
-        callSessionUseCase: some CallSessionUseCaseProtocol,
+        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         handleUseCase: some MEGAHandleUseCaseProtocol,
         callManager: some CallManagerProtocol,
@@ -151,7 +152,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
-        self.callSessionUseCase = callSessionUseCase
+        self.sessionUpdateUseCase = sessionUpdateUseCase
         self.accountUseCase = accountUseCase
         self.handleUseCase = handleUseCase
         self.callManager = callManager
@@ -186,29 +187,34 @@ class MainTabBarCallsViewModel: ViewModelType {
     }
     
     private func configureCallSessionsListener(forCall call: CallEntity) {
-        guard callSessionUpdateSubscription == nil else { return }
-        callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
-            .sink { [weak self] session, call in
-                guard let self else { return }
-                switch session.changeType {
-                case .status:
-                    switch session.statusType {
-                    case .inProgress:
-                        if session.onRecording {
-                            manageOnRecordingSession(session: session, in: call)
-                        }
-                        stopOutgoingToneIfNeeded(for: call)
-                    case .destroyed:
-                        playCallEndedToneIfNeeded(for: call, with: session)
-                    default:
-                        break
-                    }
-                case .onRecording:
-                    manageOnRecordingSession(session: session, in: call)
-                default:
-                    break
-                }
+        guard callSessionUpdateTask == nil else { return }
+        let sessionUpdates = sessionUpdateUseCase.monitorOnSessionUpdate()
+        callSessionUpdateTask = Task { [weak self] in
+            for await (session, call) in sessionUpdates {
+                self?.onSessionUpdate(session, call)
             }
+        }
+    }
+    
+    private func onSessionUpdate(_ session: ChatSessionEntity, _ call: CallEntity) {
+        switch session.changeType {
+        case .status:
+            switch session.statusType {
+            case .inProgress:
+                if session.onRecording {
+                    manageOnRecordingSession(session: session, in: call)
+                }
+                stopOutgoingToneIfNeeded(for: call)
+            case .destroyed:
+                playCallEndedToneIfNeeded(for: call, with: session)
+            default:
+                break
+            }
+        case .onRecording:
+            manageOnRecordingSession(session: session, in: call)
+        default:
+            break
+        }
     }
     
     private func manageOnRecordingSession(session: ChatSessionEntity, in call: CallEntity) {
@@ -261,8 +267,8 @@ class MainTabBarCallsViewModel: ViewModelType {
     private func removeCallListeners() {
         callWaitingRoomUsersUpdateSubscription?.cancel()
         callWaitingRoomUsersUpdateSubscription = nil
-        callSessionUpdateSubscription?.cancel()
-        callSessionUpdateSubscription = nil
+        callSessionUpdateTask?.cancel()
+        callSessionUpdateTask = nil
     }
     
     private func onCallUpdate(_ call: CallEntity) {

@@ -6,15 +6,15 @@ public protocol SessionUpdateProviderProtocol: Sendable {
     /// Session updates from `MEGAChatCallDelegate` `onCallSessionUpdate` as an `AnyAsyncSequence`
     ///
     /// - Returns: `AnyAsyncSequence` that will call chatSdk.add on creation and chatSdk.remove onTermination of `AsyncStream`.
-    /// It will yield `ChatSessionEntity` item until sequence terminated
-    var sessionUpdate: AnyAsyncSequence<ChatSessionEntity> { get }
+    /// It will yield `ChatSessionEntity, CallEntity` item until sequence terminated
+    var sessionUpdate: AnyAsyncSequence<(ChatSessionEntity, CallEntity)> { get }
 }
 
 public struct SessionUpdateProvider: SessionUpdateProviderProtocol {
-    public var sessionUpdate: AnyAsyncSequence<ChatSessionEntity> {
+    public var sessionUpdate: AnyAsyncSequence<(ChatSessionEntity, CallEntity)> {
         AsyncStream { continuation in
             let delegate = SessionUpdateGlobalDelegate {
-                continuation.yield($0)
+                continuation.yield(($0, $1))
             }
             continuation.onTermination = { _ in
                 sdk.remove(delegate)
@@ -32,14 +32,15 @@ public struct SessionUpdateProvider: SessionUpdateProviderProtocol {
 }
 
 private final class SessionUpdateGlobalDelegate: NSObject, MEGAChatCallDelegate {
-    private let onSessionUpdate: (ChatSessionEntity) -> Void
+    private let onSessionUpdate: (ChatSessionEntity, CallEntity) -> Void
     
-    public init(onUpdate: @escaping (ChatSessionEntity) -> Void) {
+    public init(onUpdate: @escaping (ChatSessionEntity, CallEntity) -> Void) {
         self.onSessionUpdate = onUpdate
         super.init()
     }
 
     func onChatSessionUpdate(_ api: MEGAChatSdk, chatId: UInt64, callId: UInt64, session: MEGAChatSession) {
-        onSessionUpdate(session.toChatSessionEntity())
+        guard let call = api.chatCall(forCallId: callId) else { return }
+        onSessionUpdate(session.toChatSessionEntity(), call.toCallEntity())
     }
 }
