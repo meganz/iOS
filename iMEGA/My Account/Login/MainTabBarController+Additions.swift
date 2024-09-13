@@ -145,7 +145,7 @@ extension MainTabBarController {
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo),
-            callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
+            sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callManager: CallKitCallManager.shared, 

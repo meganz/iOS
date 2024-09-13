@@ -28,7 +28,7 @@ final class CallsCoordinatorTests: XCTestCase {
                 callUseCase: callUseCase,
                 chatRoomUseCase: chatRoomUseCase,
                 chatUseCase: MockChatUseCase(myUserHandle: 101),
-                callSessionUseCase: MockCallSessionUseCase(),
+                sessionUpdateUseCase: MockSessionUpdateUseCase(),
                 noUserJoinedUseCase: MockMeetingNoUserJoinedUseCase(),
                 captureDeviceUseCase: MockCaptureDeviceUseCase(),
                 callManager: callManager,

@@ -36,7 +36,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
 
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil
+            viewModel.callSessionUpdateTask != nil
         }
     }
     
@@ -44,22 +44,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
-        let callSessionUseCase = MockCallSessionUseCase()
-        
+        let sessionUpdateUseCase = MockSessionUpdateUseCase()
+
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            sessionUpdateUseCase: sessionUpdateUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil
+            viewModel.callSessionUpdateTask != nil
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(changeType: .onRecording, onRecording: true), CallEntity()))
+        sessionUpdateUseCase.sendSessionUpdate((ChatSessionEntity(changeType: .onRecording, onRecording: true), CallEntity()))
         
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
     }
@@ -68,22 +68,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
-        let callSessionUseCase = MockCallSessionUseCase()
+        let sessionUpdateUseCase = MockSessionUpdateUseCase()
 
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            sessionUpdateUseCase: sessionUpdateUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil
+            viewModel.callSessionUpdateTask != nil
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: true), CallEntity()))
+        sessionUpdateUseCase.sendSessionUpdate((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: true), CallEntity()))
         
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
     }
@@ -92,22 +92,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
-        let callSessionUseCase = MockCallSessionUseCase()
+        let sessionUpdateUseCase = MockSessionUpdateUseCase()
 
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            sessionUpdateUseCase: sessionUpdateUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil
+            viewModel.callSessionUpdateTask != nil
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: false), CallEntity()))
+        sessionUpdateUseCase.sendSessionUpdate((ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: false), CallEntity()))
         
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 0 }
     }
@@ -116,22 +116,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
-        let callSessionUseCase = MockCallSessionUseCase()
+        let sessionUpdateUseCase = MockSessionUpdateUseCase()
 
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            sessionUpdateUseCase: sessionUpdateUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
         evaluate {
-            viewModel.callSessionUpdateSubscription != nil
+            viewModel.callSessionUpdateTask != nil
         }
         
-        callSessionUseCase.callSessionUpdateSubject.send((ChatSessionEntity(changeType: .onRecording, onRecording: false), CallEntity()))
+        sessionUpdateUseCase.sendSessionUpdate((ChatSessionEntity(changeType: .onRecording, onRecording: false), CallEntity()))
         
         evaluate { self.router.showScreenRecordingNotification_calledTimes == 1 }
     }
@@ -400,7 +400,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         callUseCase: some CallUseCaseProtocol =  MockCallUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
-        callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
+        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol = MockSessionUpdateUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callManager: some CallManagerProtocol = MockCallManager(),
@@ -413,7 +413,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
-            callSessionUseCase: callSessionUseCase, 
+            sessionUpdateUseCase: sessionUpdateUseCase,
             accountUseCase: accountUseCase,
             handleUseCase: handleUseCase,
             callManager: callManager,

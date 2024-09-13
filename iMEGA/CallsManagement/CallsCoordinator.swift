@@ -12,7 +12,7 @@ protocol CallsCoordinatorFactoryProtocol {
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
-        callSessionUseCase: some CallSessionUseCaseProtocol,
+        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         callManager: some CallManagerProtocol,
@@ -28,7 +28,7 @@ protocol CallsCoordinatorFactoryProtocol {
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
-        callSessionUseCase: some CallSessionUseCaseProtocol,
+        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         callManager: some CallManagerProtocol,
@@ -41,7 +41,7 @@ protocol CallsCoordinatorFactoryProtocol {
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: chatUseCase,
-            callSessionUseCase: callSessionUseCase,
+            sessionUpdateUseCase: sessionUpdateUseCase,
             noUserJoinedUseCase: noUserJoinedUseCase,
             captureDeviceUseCase: captureDeviceUseCase,
             callManager: callManager,
@@ -76,7 +76,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private let callUseCase: any CallUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
-    private var callSessionUseCase: any CallSessionUseCaseProtocol
+    private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     
@@ -89,7 +89,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private let callUpdateFactory: CXCallUpdateFactory
     
     private var callUpdateSubscription: AnyCancellable?
-    private(set) var callSessionUpdateSubscription: AnyCancellable?
+    private var callSessionUpdateTask: Task<Void, Never>?
     
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
     
@@ -103,7 +103,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
-        callSessionUseCase: some CallSessionUseCaseProtocol,
+        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         callManager: some CallManagerProtocol,
@@ -116,7 +116,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
-        self.callSessionUseCase = callSessionUseCase
+        self.sessionUpdateUseCase = sessionUpdateUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.callManager = callManager
@@ -158,11 +158,12 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         }
     }
     
-    private func configureCallSessionsListener(forCall call: CallEntity) {
-        guard callSessionUpdateSubscription == nil else { return }
-        callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
-            .sink { [weak self] session, call in
-                guard let self else { return }
+    private func configureCallSessionsListener() {
+        guard callSessionUpdateTask == nil else { return }
+        let sessionUpdates = sessionUpdateUseCase.monitorOnSessionUpdate()
+        callSessionUpdateTask = Task { [weak self] in
+            guard let self else { return }
+            for await (session, call) in sessionUpdates {
                 switch session.changeType {
                 case .remoteAvFlags:
                     updateVideoForCall(call)
@@ -170,6 +171,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
                     break
                 }
             }
+        }
     }
     
     private func manageCallStatusChange(for call: CallEntity) {
@@ -182,7 +184,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
             updateCallTitle(call.chatId)
             reportCallStartedConnectingIfNeeded(call)
             callUseCase.enableAudioMonitor(forCall: call)
-            configureCallSessionsListener(forCall: call)
+            configureCallSessionsListener()
         case .inProgress:
             reportCallConnectedIfNeeded(call)
         case .terminatingUserParticipation:
@@ -241,8 +243,8 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
     
     private func removeCallListeners() {
-        callSessionUpdateSubscription?.cancel()
-        callSessionUpdateSubscription = nil
+        callSessionUpdateTask?.cancel()
+        callSessionUpdateTask = nil
     }
     
     private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {

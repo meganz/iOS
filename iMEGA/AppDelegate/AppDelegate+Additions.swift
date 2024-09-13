@@ -665,7 +665,7 @@ extension AppDelegate {
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
+            sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
             noUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             callManager: CallKitCallManager.shared,
