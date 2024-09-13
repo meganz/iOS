@@ -19,7 +19,7 @@ struct HeaderView: View {
                 Text(viewModel.titleComponents[2])
                     .font(.subheadline)
             }
-            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }
         .frame(maxWidth: .infinity)
     }

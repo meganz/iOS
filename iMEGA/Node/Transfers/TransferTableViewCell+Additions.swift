@@ -35,18 +35,10 @@ extension TransferTableViewCell {
     }
     
     @objc func transferInfoColor(for type: MEGATransferType) -> UIColor {
-        guard UIColor.isDesignTokenEnabled() else {
-            return type == .download ? UIColor.systemGreen : UIColor.mnz_blue(for: traitCollection)
-        }
-        return TokenColors.Text.secondary
+        TokenColors.Text.secondary
     }
     
     @objc func setTransferStateIcon(_ image: UIImage, color: UIColor) {
-        guard UIColor.isDesignTokenEnabled() else {
-            arrowImageView.image = image
-            return
-        }
-        
         arrowImageView.image = image.withRenderingMode(.alwaysTemplate)
         arrowImageView.tintColor = color
     }

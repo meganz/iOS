@@ -91,10 +91,10 @@ struct RenameViewModel: Sendable {
     
     func alertTextsColor(text: String) -> UIColor {
         if containsInvalidChars(text) || isDuplicated(text) || !isNewNameWithinMaxLength(text) {
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+            return TokenColors.Text.error 
         }
         
-        return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        return TokenColors.Text.primary
     }
     
     func isActionButtonEnabled(text: String) -> Bool {
