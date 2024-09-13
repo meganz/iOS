@@ -4,6 +4,7 @@ import FirebaseCrashlytics
 import Foundation
 import Intents
 import LogRepo
+import Chat
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
@@ -347,6 +348,16 @@ extension AppDelegate {
         MEGAChatSdk.setLogLevel(.max)
         MEGASdk.shared.add(Logger.shared())
         MEGAChatSdk.setLogObject(Logger.shared())
+        setupChatLogging()
+    }
+    
+    private func setupChatLogging() {
+        Chat.logFatal = { MEGALogFatal($0, $1, $2) }
+        Chat.logError = { MEGALogError($0, $1, $2) }
+        Chat.logWarning = { MEGALogWarning($0, $1, $2) }
+        Chat.logInfo = { MEGALogInfo($0, $1, $2) }
+        Chat.logDebug = { MEGALogDebug($0, $1, $2) }
+        Chat.logMax = { MEGALogMax($0, $1, $2) }
     }
     
     @objc func removeSDKLoggerWhenInitChatIfNeeded() {

@@ -2,9 +2,11 @@
 
 import PackageDescription
 
-let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]),
-                                .enableExperimentalFeature("ExistentialAny"),
-                                .enableExperimentalFeature("StrictConcurrency=targeted")]
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny"),
+    .enableExperimentalFeature("StrictConcurrency=targeted")
+]
 
 let package = Package(
     name: "MEGAPresentation",
@@ -53,7 +55,8 @@ let package = Package(
                            "MEGADomain",
                            "MEGASDKRepo",
                            .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
-                           .product(name: "MEGADomainMock", package: "MEGADomain")],
+                           .product(name: "MEGADomainMock", package: "MEGADomain")
+                          ],
             swiftSettings: settings)
     ]
 )

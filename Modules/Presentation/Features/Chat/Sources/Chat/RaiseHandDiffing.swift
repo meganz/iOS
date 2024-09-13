@@ -3,18 +3,36 @@ import MEGADomain
 /// Component that calculates what has changed for the raise hand structure
 /// we need to show or hide snack bar when state is changed
 /// WARNING: CallParticipantEntity is a class (most other entities are structs)
-enum RaiseHandDiffing {
+public enum RaiseHandDiffing {
     
-    struct Change: Equatable, Hashable {
-        var handle: HandleEntity
-        var raisedHand: Bool
-        var index: Int? // for own user there's no index as this user is not in the callParticipant array
+    public struct Change: Equatable, Hashable {
+        public init(
+            handle: HandleEntity,
+            raisedHand: Bool,
+            index: Int? = nil
+        ) {
+            self.handle = handle
+            self.raisedHand = raisedHand
+            self.index = index
+        }
+        
+        public var handle: HandleEntity
+        public var raisedHand: Bool
+        public var index: Int? // for own user there's no index as this user is not in the callParticipant array
     }
     
-    struct DiffResult: Equatable, Hashable {
+    public struct DiffResult: Equatable, Hashable {
+        public init(
+            changes: Set<RaiseHandDiffing.Change>,
+            shouldUpdateSnackBar: Bool
+        ) {
+            self.changes = changes
+            self.shouldUpdateSnackBar = shouldUpdateSnackBar
+        }
+        
         // we do not care about order of updates, so using set instead of array
         // makes testing easier as well as sets are easy to compare (order of adding does not matter)
-        var changes: Set<Change>
+        public var changes: Set<Change>
         
         /// A.   signals that there are new raised hands between raiseHandListBefore and raiseHandListAfter structures,
         ///    it will be false when there are changes but users only lowered hands.
@@ -24,14 +42,14 @@ enum RaiseHandDiffing {
         ///    3. remote user lowers hand (we SHOULD NOT show snack bar , there are changes but only some hands were lowered)
         ///
         ///  B. signals that local user changed raise hand state so that we know to nil out the state of snack bar
-        var shouldUpdateSnackBar: Bool
+        public var shouldUpdateSnackBar: Bool
         
         /// used to filter out only participants that raised hands in latest call update, as
         /// snack bar only should be show what's changed and not whole state of raised hands in the call
         /// from design:
         /// we show snack bar with such copy: "UserA and 1 other raised hand" :
         /// "If more than 1 participant raised their hands __at the same time__.
-        func hasRaisedHand(participantId: HandleEntity) -> Bool {
+        public func hasRaisedHand(participantId: HandleEntity) -> Bool {
             let matchingChange = changes.first { change in
                 change.handle == participantId
             }
@@ -49,7 +67,7 @@ enum RaiseHandDiffing {
     /// - reload UI (needs index)
     /// callers need to provide ordered list of handles and raise hand id list before and after mutation
     /// callParticipantHandles is used to get the indexes of call participant _after mutation_
-    static func applyingRaisedHands(
+    public static func applyingRaisedHands(
         // call participants array does not contain local user id, that's why it's added as last parameter
         // except when the same user is connecting to the same call from multiple clients, then
         // local user id can be present in the `raiseHandListBefore` or `raiseHandListAfter arrays [MEET-4188]
@@ -59,7 +77,7 @@ enum RaiseHandDiffing {
         localUserParticipantId: HandleEntity
     ) -> DiffResult {
         
-        MEGALogDebug("[RaiseHand] callParticipantHandles: \(callParticipantHandles), raiseHandListBefore \(raiseHandListBefore),  raiseHandListAfter \(raiseHandListAfter) ")
+        logDebug("[RaiseHand] callParticipantHandles: \(callParticipantHandles), raiseHandListBefore \(raiseHandListBefore),  raiseHandListAfter \(raiseHandListAfter) ")
         
         // here we cache the mapping of participant id to index for fast acceess
         var indexMapping = [HandleEntity: Int]()

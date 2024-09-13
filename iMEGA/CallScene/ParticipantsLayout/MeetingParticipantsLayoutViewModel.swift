@@ -1,6 +1,7 @@
 import Combine
 import CombineSchedulers
 import Foundation
+import Chat
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n

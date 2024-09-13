@@ -251,6 +251,13 @@
         "identifier" : "MEGAPhotosTests",
         "name" : "MEGAPhotosTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/Chat",
+        "identifier" : "ChatTests",
+        "name" : "ChatTests"
+      }
     }
   ],
   "version" : 1
