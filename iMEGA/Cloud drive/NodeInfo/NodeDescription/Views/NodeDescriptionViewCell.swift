@@ -4,6 +4,18 @@ import UIKit
 
 final class NodeDescriptionViewCell: UITableViewCell {
     private let textView: AutoGrowingTextView
+    
+    /// Biz logic requires us tracking user's tap on the `textView`.
+    /// Usually we can use `textViewDidBeginEditing` to check when the textView become active, but that doesn't satistfy the biz requirement
+    /// because `textViewDidBeginEditing` can be invoked by system events (e.g: It can be unfocused by an alert view and then get automatically re-focused when the alert dismisses).
+    /// For that reason we need to use a tap guesture to really detect user's tap and  activate the textView.
+    private lazy var textViewTapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(textViewTapped(_:)))
+        gesture.delegate = privateGestureDelegate
+        return gesture
+    }()
+    
+    private lazy var privateGestureDelegate = GestureRecognizerDelegate()
 
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
@@ -62,6 +74,7 @@ final class NodeDescriptionViewCell: UITableViewCell {
         backgroundColor = TokenColors.Background.page
         wrap(textView, inside: contentView)
         configure(textView: textView)
+        contentView.addGestureRecognizer(textViewTapGesture)
     }
 
     private func configure(textView: UITextView) {
@@ -100,6 +113,11 @@ final class NodeDescriptionViewCell: UITableViewCell {
         trailingConstraint?.constant = insets.right
         layoutIfNeeded()
     }
+    
+    @objc private func textViewTapped(_ sender: UITapGestureRecognizer) {
+        guard !textView.isFirstResponder else { return }
+        viewModel?.trackNodeInfoDescriptionEntered()
+    }
 }
 
 extension NodeDescriptionViewCell: UITextViewDelegate {
@@ -132,6 +150,7 @@ extension NodeDescriptionViewCell: UITextViewDelegate {
         let textViewText = textView.text ?? ""
         guard viewModel?.shouldEndEditing(for: text) == false else {
             textView.endEditing(true)
+            viewModel?.trackNodeInfoDescriptionConfirmed()
             viewModel?.saveDescription(textViewText)
             return false
         }
@@ -149,4 +168,13 @@ extension NodeDescriptionViewCell: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         viewModel?.descriptionUpdated(textView.text)
     }
+}
+
+private final class GestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
+  func gestureRecognizer(
+    _ gestureRecognizer: UIGestureRecognizer,
+    shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+  ) -> Bool {
+    true
+  }
 }

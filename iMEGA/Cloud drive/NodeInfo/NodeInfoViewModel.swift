@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGARepo
@@ -19,6 +20,7 @@ enum NodeInfoAction: ActionType {
     private let shareUseCase: (any ShareUseCaseProtocol)?
     private let nodeUseCase: any NodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let tracker: any AnalyticsTracking
 
     let shouldDisplayContactVerificationInfo: Bool
 
@@ -41,6 +43,7 @@ enum NodeInfoAction: ActionType {
         featureFlagProvider: some FeatureFlagProviderProtocol,
         isNodeUndecryptedFolder: Bool = false,
         shouldDisplayContactVerificationInfo: Bool = false,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         completion: (() -> Void)? = nil
     ) {
         self.shareUseCase = shareUseCase
@@ -48,6 +51,7 @@ enum NodeInfoAction: ActionType {
         self.node = node
         self.featureFlagProvider = featureFlagProvider
         self.isNodeUndecryptedFolder = isNodeUndecryptedFolder
+        self.tracker = tracker
         self.shouldDisplayContactVerificationInfo = shouldDisplayContactVerificationInfo
     }
     
@@ -55,6 +59,7 @@ enum NodeInfoAction: ActionType {
         switch action {
         case .viewDidLoad:
             loadNodeInfoLocationTask = Task { await loadNodeInfoLocationViewModel() }
+            tracker.trackAnalyticsEvent(with: NodeInfoScreenEvent())
         case .viewDidDisappear:
             loadNodeInfoLocationTask = nil
         }
@@ -90,6 +95,10 @@ enum NodeInfoAction: ActionType {
         } catch {
             SVProgressHUD.showError(withStatus: error.localizedDescription)
         }
+    }
+    
+    private func trackScreenView() {
+        tracker.trackAnalyticsEvent(with: NodeInfoScreenEvent())
     }
 
     func isContactVerified() -> Bool {

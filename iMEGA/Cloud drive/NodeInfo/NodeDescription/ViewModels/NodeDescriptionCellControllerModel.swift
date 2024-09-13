@@ -1,5 +1,7 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 
 @MainActor
 final class NodeDescriptionCellControllerModel {
@@ -32,6 +34,7 @@ final class NodeDescriptionCellControllerModel {
     }
 
     private let maxCharactersAllowed: Int
+    private let tracker: any AnalyticsTracking
     private let textViewEdgeInsets = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
     private let nodeUseCase: any NodeUseCaseProtocol
     private let backupUseCase: any BackupsUseCaseProtocol
@@ -121,6 +124,7 @@ final class NodeDescriptionCellControllerModel {
         backupUseCase: some BackupsUseCaseProtocol,
         nodeDescriptionUseCase: some NodeDescriptionUseCaseProtocol,
         maxCharactersAllowed: Int = 300,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         refreshUI: @escaping ((_ code: () -> Void) -> Void),
         descriptionSaved: @escaping (SavedState) -> Void
     ) {
@@ -129,6 +133,7 @@ final class NodeDescriptionCellControllerModel {
         self.backupUseCase = backupUseCase
         self.nodeDescriptionUseCase = nodeDescriptionUseCase
         self.maxCharactersAllowed = maxCharactersAllowed
+        self.tracker = tracker
         self.refreshUI = refreshUI
         self.descriptionSaved = descriptionSaved
         self.hasPendingChanges = { false }
@@ -195,6 +200,7 @@ final class NodeDescriptionCellControllerModel {
     private func saveDescriptionIfNeeded(_ description: String) async {
         guard let savedState = await savePendingChanges() else { return }
         descriptionSaved(savedState)
+        trackSaveResult(savedState: savedState)
     }
 
     private func updateFooterViewAndScrollIfNeeded(with text: String) {
@@ -226,5 +232,26 @@ final class NodeDescriptionCellControllerModel {
 
     private func hideCharacterCount() {
         footerViewModel.trailingText = nil
+    }
+    
+    private func trackSaveResult(savedState: SavedState) {
+        guard let event = savedState.analyticEvent else { return }
+        
+        tracker.trackAnalyticsEvent(with: event)
+    }
+}
+
+extension NodeDescriptionCellControllerModel.SavedState {
+    var analyticEvent: (any EventIdentifier)? {
+        switch self {
+        case .added:
+            NodeInfoDescriptionAddedMessageDisplayedEvent()
+        case .updated:
+            NodeInfoDescriptionUpdatedMessageDisplayedEvent()
+        case .removed:
+            NodeInfoDescriptionRemovedMessageDisplayedEvent()
+        case .error:
+            nil
+        }
     }
 }
