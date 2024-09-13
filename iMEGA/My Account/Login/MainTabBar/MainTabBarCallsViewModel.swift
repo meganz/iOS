@@ -1,6 +1,7 @@
 import CallKit
 import Combine
 import Intents
+import Chat
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n

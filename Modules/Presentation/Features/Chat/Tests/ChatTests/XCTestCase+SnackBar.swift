@@ -1,4 +1,3 @@
-@testable import MEGA
 import MEGASwiftUI
 import XCTest
 

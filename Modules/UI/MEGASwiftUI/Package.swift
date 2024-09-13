@@ -5,7 +5,8 @@ import PackageDescription
 let package = Package(
     name: "MEGASwiftUI",
     platforms: [
-        .macOS(.v10_15), .iOS(.v15)
+        .macOS(.v10_15),
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -17,15 +18,20 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../MEGAUI"),
-        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../Presentation/MEGAPresentation"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../Infrastracture/MEGATest")
     ],
     targets: [
         .target(
             name: "MEGASwiftUI",
-            dependencies: ["MEGAUI", "MEGAPresentation", "MEGAFoundation"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+            dependencies: [
+                "MEGAUI",
+                "MEGAPresentation",
+                "MEGAFoundation"
+            ],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+        ),
         .target(
             name: "MEGASwiftUIMock",
             dependencies: ["MEGASwiftUI", "MEGAFoundation"],

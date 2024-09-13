@@ -1,3 +1,4 @@
+import Chat
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation

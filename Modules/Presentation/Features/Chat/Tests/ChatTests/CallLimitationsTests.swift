@@ -1,5 +1,5 @@
 import Combine
-@testable import MEGA
+import Chat
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation

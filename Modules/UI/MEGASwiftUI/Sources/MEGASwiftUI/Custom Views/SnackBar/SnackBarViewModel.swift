@@ -12,7 +12,10 @@ public final class SnackBarViewModel: ObservableObject {
     private var displaySnackBarSubscription: AnyCancellable?
     private let willDismiss: WillDismissBlock?
     
-    public init(snackBar: SnackBar, willDismiss: WillDismissBlock?) {
+    public init(
+        snackBar: SnackBar,
+        willDismiss: WillDismissBlock?
+    ) {
         self.snackBar = snackBar
         self.willDismiss = willDismiss
         
