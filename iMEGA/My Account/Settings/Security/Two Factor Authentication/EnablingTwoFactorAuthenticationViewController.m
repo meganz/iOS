@@ -62,28 +62,15 @@
 
     NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", MEGASdk.shared.myEmail, self.seed];
 
-    if (UIColor.isDesignTokenEnabled) {
-        self.view.backgroundColor = [self defaultBackgroundColor];
+    self.view.backgroundColor = [self defaultBackgroundColor];
 
-        self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color: [self labelColor] backgroundColor:UIColor.clearColor];
+    self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color: [self labelColor] backgroundColor:UIColor.clearColor];
 
-        self.seedTextViewView.backgroundColor = [self defaultBackgroundColor];
-        self.seedTextViewView.layer.borderColor = [self separatorColor].CGColor;
+    self.seedTextViewView.backgroundColor = [self defaultBackgroundColor];
+    self.seedTextViewView.layer.borderColor = [self separatorColor].CGColor;
 
-        [self.openInButton mnz_setup:self.openInButtonStyle traitCollection:self.traitCollection];
-        [self.nextButton mnz_setup:self.nextButtonStyle traitCollection:self.traitCollection];
-    } else {
-        self.view.backgroundColor = UIColor.systemBackgroundColor;
-
-        self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.labelColor backgroundColor:UIColor.clearColor];
-
-        self.seedTextViewView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-
-        self.seedTextViewView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-
-        [self.openInButton mnz_setupPrimary:self.traitCollection];
-        [self.nextButton mnz_setupBasic:self.traitCollection titleColor:NULL];
-    }
+    [self.openInButton mnz_setup:self.openInButtonStyle traitCollection:self.traitCollection];
+    [self.nextButton mnz_setup:self.nextButtonStyle traitCollection:self.traitCollection];
 }
 
 - (void)setupFirstSectionLabelTextAndImage {

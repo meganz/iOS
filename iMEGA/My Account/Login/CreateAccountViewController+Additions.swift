@@ -26,21 +26,19 @@ extension CreateAccountViewController {
     }
     
     @objc func setUpCheckBoxButton() {
-        if UIColor.isDesignTokenEnabled() {
-            termsCheckboxButton.setImage(UIImage.checkBoxSelectedSemantic, for: .selected)
-            termsForLosingPasswordCheckboxButton.setImage(UIImage.checkBoxSelectedSemantic, for: .selected)
-        }
+        termsCheckboxButton.setImage(UIImage.checkBoxSelectedSemantic, for: .selected)
+        termsForLosingPasswordCheckboxButton.setImage(UIImage.checkBoxSelectedSemantic, for: .selected)
     }
     
     @objc func termPrimaryTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
+       TokenColors.Text.primary
     }
     
     @objc func termLinkTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: self.traitCollection)
+        TokenColors.Link.primary
     }
     
     @objc func passwordStrengthBackgroundColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+        TokenColors.Background.page
     }
 }

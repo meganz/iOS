@@ -207,7 +207,7 @@ extension MainTabBarController {
         let badgeValue = unreadChats > 0 ? unreadCountString : nil
         tabBar.setBadge(
             value: badgeValue,
-            color: UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : .red,
+            color: TokenColors.Components.interactive,
             at: TabType.chat.rawValue
         )
     }

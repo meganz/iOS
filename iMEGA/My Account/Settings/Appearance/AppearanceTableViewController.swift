@@ -80,26 +80,19 @@ class AppearanceTableViewController: UITableViewController {
         mediaDiscoveryViewLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscovery
         mediaDiscoverySubfolderLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscoverySubFolder
         hideRecentActivityLabel.text = Strings.Localizable.Settings.UserInterface.hideRecentActivity
-    
+        
         defaultIconLabel.text = Strings.Localizable.default
         dayIconLabel.text = Strings.Localizable.day.localizedCapitalized
         nightIconLabel.text = Strings.Localizable.night
         minimalIconLabel.text = Strings.Localizable.minimal
         
-        if UIColor.isDesignTokenEnabled() {
-            defaultIconLabel.textColor = TokenColors.Text.onColor
-            dayIconLabel.textColor = TokenColors.Text.onColor
-            nightIconLabel.textColor = TokenColors.Text.onColor
-            minimalIconLabel.textColor = TokenColors.Text.onColor
-        } else {
-            defaultIconLabel.textColor = UIColor.whiteFFFFFF
-            dayIconLabel.textColor = UIColor.whiteFFFFFF
-            nightIconLabel.textColor = UIColor.whiteFFFFFF
-            minimalIconLabel.textColor = UIColor.whiteFFFFFF
-        }
-
+        defaultIconLabel.textColor = TokenColors.Text.onColor
+        dayIconLabel.textColor = TokenColors.Text.onColor
+        nightIconLabel.textColor = TokenColors.Text.onColor
+        minimalIconLabel.textColor = TokenColors.Text.onColor
+        
         Task { await loadSettings() }
-
+        
         let alternateIconName = UIApplication.shared.alternateIconName
         selectIcon(with: alternateIconName)
         
@@ -132,13 +125,11 @@ class AppearanceTableViewController: UITableViewController {
     private func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
-
-        if UIColor.isDesignTokenEnabled() {
-            [defaultTabLabel, sortingAndViewModeLabel, sortingAndViewModeLabel, mediaDiscoveryViewLabel, mediaDiscoverySubfolderLabel, hideRecentActivityLabel, hiddenItemsViewLabel]
-                .forEach { $0?.textColor = UIColor.mnz_primaryTextColor() }
-            defaultTabDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
-        }
-
+        
+        [defaultTabLabel, sortingAndViewModeLabel, sortingAndViewModeLabel, mediaDiscoveryViewLabel, mediaDiscoverySubfolderLabel, hideRecentActivityLabel, hiddenItemsViewLabel]
+            .forEach { $0?.textColor = UIColor.mnz_primaryTextColor() }
+        defaultTabDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
+        
         tableView.reloadData()
     }
     
@@ -163,20 +154,12 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     private func markIcon(in view: UIView) {
-        if UIColor.isDesignTokenEnabled() {
-            view.layer.borderColor = TokenColors.Border.strongSelected.cgColor
-        } else {
-            view.layer.borderColor = UIColor.whiteFFFFFF.cgColor
-        }
+        view.layer.borderColor = TokenColors.Border.strongSelected.cgColor
     }
     
     private func changeLabelWeight(to label: UILabel) {
         label.font = UIFont.preferredFont(style: .caption1, weight: .bold)
-        if UIColor.isDesignTokenEnabled() {
-            label.textColor = TokenColors.Text.onColor
-        } else {
-            label.textColor = UIColor.whiteFFFFFF
-        }
+        label.textColor = TokenColors.Text.onColor
     }
     
     private func resetPreviousIcon(with name: String?) {
@@ -263,23 +246,18 @@ class AppearanceTableViewController: UITableViewController {
     private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
         guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
-
-        if UIColor.isDesignTokenEnabled() {
-            tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        guard
-            let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView,
-            UIColor.isDesignTokenEnabled()
-        else { return }
-
         tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
     }
-
+    
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView
+        else { return }
+        
+        tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-       titleForHeader(in: section)
+        titleForHeader(in: section)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -350,7 +328,7 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch AppearanceSection(rawValue: section) {
         case .hiddenItems:
-            .leastNonzeroMagnitude
+                .leastNonzeroMagnitude
         case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .none, .mediaDiscoverySubfolder:
             UITableView.automaticDimension
         }
@@ -364,12 +342,12 @@ class AppearanceTableViewController: UITableViewController {
         
         hostView.translatesAutoresizingMaskIntoConstraints = false
         hostView.backgroundColor = .clear
-    
+        
         let footerView = UITableViewHeaderFooterView()
         let contentView = footerView.contentView
         contentView.backgroundColor = .clear
         contentView.addSubview(hostView)
-
+        
         NSLayoutConstraint.activate([
             hostView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 18),
             contentView.rightAnchor.constraint(equalTo: hostView.rightAnchor, constant: 18),

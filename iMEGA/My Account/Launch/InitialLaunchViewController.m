@@ -45,7 +45,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor isDesignTokenEnabled] ? [UIColor pageBackgroundForTraitCollection:self.traitCollection] : UIColor.systemBackgroundColor;;
+    self.view.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     self.titleLabel.textColor = [UIColor primaryTextColor];
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];

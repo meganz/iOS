@@ -83,7 +83,6 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         isAdsEnabled: Bool,
         baseStorage: Int
     ) {
-        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
         let accountsConfig = AccountsConfig(
             onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
                 storageImage: .storage,
@@ -91,17 +90,17 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
                 backupImage: .backup,
                 megaImage: .mega,
                 onboardingHeaderImage: .onboardingHeader,
-                primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryText.color,
-                primaryGrayTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color,
-                secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.Account.upgradeAccountSecondaryText.color,
-                subMessageBackgroundColor: isDesignTokenEnabled ? TokenColors.Notifications.notificationSuccess.swiftUI : MEGAAppColor.Account.upgradeAccountSubMessageBackground.color,
-                headerForegroundSelectedColor: isDesignTokenEnabled ? TokenColors.Text.accent.swiftUI : MEGAAppColor.View.turquoise.color,
-                headerForegroundUnSelectedColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : MEGAAppColor.Account.planUnselectedTint.color,
-                headerBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : MEGAAppColor.Account.planHeaderBackground.color,
-                headerStrokeColor: isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : MEGAAppColor.Account.planBorderTint.color,
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : MEGAAppColor.Account.planBodyBackground.color,
-                currentPlanTagColor: isDesignTokenEnabled ? TokenColors.Notifications.notificationWarning.swiftUI : MEGAAppColor.Account.currentPlan.color,
-                recommendedPlanTagColor: isDesignTokenEnabled ? TokenColors.Notifications.notificationInfo.swiftUI : MEGAAppColor.Account.planRecommended.color
+                primaryTextColor: TokenColors.Text.primary.swiftUI,
+                primaryGrayTextColor: TokenColors.Text.primary.swiftUI,
+                secondaryTextColor: TokenColors.Text.secondary.swiftUI,
+                subMessageBackgroundColor: TokenColors.Notifications.notificationSuccess.swiftUI,
+                headerForegroundSelectedColor: TokenColors.Text.accent.swiftUI,
+                headerForegroundUnSelectedColor: TokenColors.Border.strong.swiftUI,
+                headerBackgroundColor: TokenColors.Background.surface1.swiftUI,
+                headerStrokeColor: TokenColors.Border.strong.swiftUI,
+                backgroundColor: TokenColors.Background.page.swiftUI,
+                currentPlanTagColor: TokenColors.Notifications.notificationWarning.swiftUI,
+                recommendedPlanTagColor: TokenColors.Notifications.notificationInfo.swiftUI
             )
         )
         

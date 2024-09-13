@@ -55,28 +55,14 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    if (UIColor.isDesignTokenEnabled) {
-        self.view.backgroundColor = [UIColor searchBarPageBackgroundColor];
-        self.titleLabel.textColor = [self primaryTextColor];
-        self.firstLabel.textColor = self.secondLabel.textColor = [self secondaryTextColor];
-        self.recoveryKeyView.backgroundColor = [UIColor searchBarSurface1BackgroundColor];
-        self.recoveryKeyView.layer.borderWidth = 0;
-        self.recoveryKeyTextField.textColor = [self primaryTextColor];
-        [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
-        [self.closeButton mnz_setupSecondary:self.traitCollection];  
-    } else {
-        self.view.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-        
-        self.firstLabel.textColor = self.secondLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-        
-        self.recoveryKeyView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-        self.recoveryKeyView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-        
-        self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
-        
-        [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
-        [self.closeButton mnz_setupBasic:self.traitCollection titleColor:NULL];
-    }
+    self.view.backgroundColor = [UIColor searchBarPageBackgroundColor];
+    self.titleLabel.textColor = [self primaryTextColor];
+    self.firstLabel.textColor = self.secondLabel.textColor = [self secondaryTextColor];
+    self.recoveryKeyView.backgroundColor = [UIColor searchBarSurface1BackgroundColor];
+    self.recoveryKeyView.layer.borderWidth = 0;
+    self.recoveryKeyTextField.textColor = [self primaryTextColor];
+    [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
+    [self.closeButton mnz_setupSecondary:self.traitCollection];  
 }
 
 - (void)showSaveYourRecoveryKeyAlert {

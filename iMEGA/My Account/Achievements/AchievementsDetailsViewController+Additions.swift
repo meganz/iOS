@@ -100,30 +100,18 @@ extension AchievementsDetailsViewController {
 
         if daysUntilExpiration == 0 {
             bonusExpiresIn = Strings.Localizable.expired
-            subtitleLabel?.textColor = warningTextColor
-            subtitleView?.layer.borderColor = warningBorderColor.cgColor
+            subtitleLabel?.textColor = TokenColors.Text.warning
+            subtitleView?.layer.borderColor = TokenColors.Support.warning.cgColor
         } else {
             bonusExpiresIn = Strings.Localizable.Account.Achievement.Complete.ValidBonusExpiry.Detail.subtitle(daysUntilExpiration)
-            subtitleView?.layer.borderColor = borderColor.cgColor
+            subtitleView?.layer.borderColor = TokenColors.Border.subtle.cgColor
         }
 
         subtitleLabel?.text = bonusExpiresIn
     }
 
     // MARK: - Token Colors
-
-    var warningTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.warning : UIColor.mnz_red(for: self.traitCollection)
-    }
-
-    var warningBorderColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Support.warning : UIColor.mnz_red(for: self.traitCollection)
-    }
-
-    var borderColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Border.subtle : UIColor(red: 0, green: 0, blue: 0, alpha: 0.14)
-    }
-
+    
     @objc var defaultBackgroundColor: UIColor {
         TokenColors.Background.page
     }

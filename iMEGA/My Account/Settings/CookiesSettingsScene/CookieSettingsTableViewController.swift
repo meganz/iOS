@@ -35,10 +35,6 @@ class CookieSettingsTableViewController: UITableViewController {
     
     private var footersArray: [String] = ["", "", "", "", "", ""]
     
-    private var isDesignTokenEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
-    }
-    
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,29 +169,23 @@ class CookieSettingsTableViewController: UITableViewController {
         
         saveBarButtonItem.tintColor = .mnz_primaryGray(for: traitCollection)
         
-        if isDesignTokenEnabled {
-            acceptCookiesLabel.textColor = TokenColors.Text.primary
-            acceptCookiesSwitch.onTintColor = TokenColors.Support.success
-            
-            essentialCookiesLabel.textColor = TokenColors.Text.primary
-            essentialCookiesDetailLabel.textColor = TokenColors.Text.secondary
-            
-            performanceAndAnalyticsCookiesLabel.textColor = TokenColors.Text.primary
-            performanceAndAnalyticsSwitch.onTintColor = TokenColors.Support.success
-            
-            advertisingCookiesLabel.textColor = TokenColors.Text.primary
-            advertisingCookiesSwitch.onTintColor = TokenColors.Support.success
-        } else {
-            essentialCookiesDetailLabel.textColor = UIColor.secondaryLabel
-        }
+        acceptCookiesLabel.textColor = TokenColors.Text.primary
+        acceptCookiesSwitch.onTintColor = TokenColors.Support.success
+        
+        essentialCookiesLabel.textColor = TokenColors.Text.primary
+        essentialCookiesDetailLabel.textColor = TokenColors.Text.secondary
+        
+        performanceAndAnalyticsCookiesLabel.textColor = TokenColors.Text.primary
+        performanceAndAnalyticsSwitch.onTintColor = TokenColors.Support.success
+        
+        advertisingCookiesLabel.textColor = TokenColors.Text.primary
+        advertisingCookiesSwitch.onTintColor = TokenColors.Support.success
         
         tableView.reloadData()
     }
     
     private func updateAppearanceForTableViewHeaderFooterView(_ view: UITableViewHeaderFooterView) {
-        if isDesignTokenEnabled {
-            view.textLabel?.textColor = TokenColors.Text.secondary
-        }
+        view.textLabel?.textColor = TokenColors.Text.secondary
     }
     
     // MARK: - UITableViewDelegate
