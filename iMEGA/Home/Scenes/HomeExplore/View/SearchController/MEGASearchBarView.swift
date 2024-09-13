@@ -53,10 +53,6 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     weak var delegate: (any MEGASearchBarViewDelegate)?
 
     weak var editingDelegate: (any MEGASearchBarViewEditingDelegate)?
-
-    private var isDesignTokenEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
-    }
     
     func setMenu(menu: UIMenu) {
         contextButton.menu = menu
@@ -67,13 +63,15 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         initialise()
-        setupView(with: traitCollection)
+        
+        setupViewForDesignToken()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         initialise()
-        setupView(with: traitCollection)
+        setupViewForDesignToken()
     }
 
     // MARK: - Privates
@@ -92,16 +90,11 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         }
 
         func initialise(searchField: UITextField) {
-            if isDesignTokenEnabled {
-                searchField.setLeftImage(UIImage.searchBarIconSemantic, tintColor: TokenColors.Text.placeholder)
-                searchField.attributedPlaceholder = NSAttributedString(
-                    string: HomeLocalisation.searchYourFiles.rawValue,
-                    attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
-                )
-            } else {
-                searchField.setLeftImage(UIImage.searchBarIcon)
-                searchField.placeholder = HomeLocalisation.searchYourFiles.rawValue
-            }
+            searchField.setLeftImage(UIImage.searchBarIconSemantic, tintColor: TokenColors.Text.placeholder)
+            searchField.attributedPlaceholder = NSAttributedString(
+                string: HomeLocalisation.searchYourFiles.rawValue,
+                attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
+            )
             searchField.returnKeyType = .search
             searchField.delegate = self
         }
@@ -119,14 +112,6 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         cancelButton.isHidden = true
         contextButton.isHidden = true
         delegate?.didFinishSearchSessionOnSearchController(self)
-    }
-
-    private func setupView(with trait: UITraitCollection) {
-        if isDesignTokenEnabled {
-            setupViewForDesignToken()
-        } else {
-            setupViewForLegacyColor(with: traitCollection)
-        }
     }
     
     private func setupViewForLegacyColor(with trait: UITraitCollection) {
@@ -175,7 +160,7 @@ extension MEGASearchBarView: TraitEnvironmentAware {
     }
 
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        setupView(with: currentTrait)
+        setupViewForDesignToken()
     }
 
     func contentSizeCategoryDidChange(to contentSizeCategory: UIContentSizeCategory) {}

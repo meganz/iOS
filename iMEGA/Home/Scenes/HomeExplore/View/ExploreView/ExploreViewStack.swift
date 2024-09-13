@@ -60,8 +60,8 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     }
     
     private func setupBackgroundColor(with trait: UITraitCollection) {
-        let defaultColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteF7F7F7
-        let darkColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black000000
+        let defaultColor = TokenColors.Background.page
+        let darkColor = TokenColors.Background.page
         
         switch trait.theme {
         case .dark:

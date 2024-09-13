@@ -21,12 +21,7 @@
 #pragma mark - Private
 
 - (void)setupWithTrait:(UITraitCollection *)trait {
-    if (UIColor.isDesignTokenEnabled) {
-        [self configureTokenColors];
-    } else {
-        self.contentView.backgroundColor = [UIColor mnz_Elevated:self.traitCollection];
-        self.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    }
+    [self configureTokenColors];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

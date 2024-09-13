@@ -48,9 +48,7 @@ final class ExplorerView: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.lineWidth = 4.0
         shapeLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 6.0).cgPath
-        shapeLayer.strokeColor = UIColor.isDesignTokenEnabled()
-        ? TokenColors.Background.page.cgColor
-        : UIColor.black000000.cgColor
+        shapeLayer.strokeColor = TokenColors.Background.page.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         return shapeLayer
     }()
