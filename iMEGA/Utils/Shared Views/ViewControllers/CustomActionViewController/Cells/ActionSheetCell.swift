@@ -20,7 +20,8 @@ class ActionSheetCell: UITableViewCell {
             // [MEET-3972] adjust and sync image tint to text color for iPad
             imageView?.tintColor = textLabel?.textColor
         } else {
-            imageView?.image = action.image
+            imageView?.image = action.image?.withRenderingMode(.alwaysTemplate)
+            imageView?.tintColor = TokenColors.Icon.secondary
         }
         // [MEET-3972] action item to toggle call layout is disabled
         // when user is sharing his/her screen
