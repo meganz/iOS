@@ -19,7 +19,6 @@ struct SearchResultMapper: Sendable {
     let mediaUseCase: any MediaUseCaseProtocol
     let nodeActions: NodeActions
     let hiddenNodesFeatureEnabled: Bool
-    let isDesignTokenEnabled: Bool
     
     func map(node: NodeEntity) -> SearchResult {
         .init(
@@ -163,7 +162,7 @@ struct SearchResultMapper: Sendable {
             return []
         }
 
-        let turquoiseBackgroundColor = isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color(.turquoise)
+        let turquoiseBackgroundColor = TokenColors.Support.success.swiftUI
 
         if nodeUseCase.isInRubbishBin(nodeHandle: node.handle) {
             if nodeUseCase.isRestorable(node: node),
@@ -181,7 +180,7 @@ struct SearchResultMapper: Sendable {
         } else {
             let shareLinkSwipeAction = SearchResultSwipeAction(
                 image: Image(.link),
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Support.warning.swiftUI : Color(.systemOrange),
+                backgroundColor: TokenColors.Support.warning.swiftUI,
                 action: {
                     nodeActions.shareOrManageLink([node])
                 }
@@ -198,7 +197,7 @@ struct SearchResultMapper: Sendable {
             if viewDisplayMode != .backup {
                 let moveToRubbishBinSwipeAction = SearchResultSwipeAction(
                     image: Image(.rubbishBin),
-                    backgroundColor: isDesignTokenEnabled ? TokenColors.Support.error.swiftUI : Color(.destructive),
+                    backgroundColor: TokenColors.Support.error.swiftUI,
                     action: {
                         nodeActions.moveToRubbishBin([node])
                     }

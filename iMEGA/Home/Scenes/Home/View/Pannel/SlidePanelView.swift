@@ -163,10 +163,8 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         handlerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan(_:))))
         titleView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan(_:))))
         
-        if UIColor.isDesignTokenEnabled() {
-            handlerView.backgroundColor = TokenColors.Background.page
-            titleView.backgroundColor = TokenColors.Background.page
-        }
+        handlerView.backgroundColor = TokenColors.Background.page
+        titleView.backgroundColor = TokenColors.Background.page
     }
     
     private func updateTabVisiblity(to tab: DisplayTab) {

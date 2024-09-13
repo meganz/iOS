@@ -54,8 +54,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
-        hiddenNodesFeatureEnabled: Bool,
-        isDesignTokenEnabled: Bool
+        hiddenNodesFeatureEnabled: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.filesSearchUseCase = filesSearchUseCase
@@ -75,8 +74,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             nodeUseCase: nodeUseCase,
             mediaUseCase: mediaUseCase, 
             nodeActions: nodeActions,
-            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-            isDesignTokenEnabled: isDesignTokenEnabled
+            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
         )
     }
     

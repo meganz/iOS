@@ -123,8 +123,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 ),
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
-                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-                isDesignTokenEnabled: true
+                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
             )
             
             testCase.trackForMemoryLeaks(on: sut, timeoutNanoseconds: 100_000_000, file: file, line: line)

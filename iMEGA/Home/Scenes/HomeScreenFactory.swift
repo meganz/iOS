@@ -309,8 +309,7 @@ final class HomeScreenFactory: NSObject {
             allChips: Self.allChips(),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
-            hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-            isDesignTokenEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+            hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
         )
     }
     private static func allChips() -> [SearchChipEntity] {

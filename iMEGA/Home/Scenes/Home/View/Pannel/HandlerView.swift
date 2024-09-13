@@ -3,29 +3,29 @@ import MEGAUIKit
 import UIKit
 
 final class HandlerView: UIView {
-
+    
     private var roundCornerShadowConfig: RoundCornerShadowConfiguration?
-
+    
     private var styler: Reader<UIView, CALayer>?
-
+    
     private var shadowCornerLayer: CALayer?
     
     private var indicatorView: SlideIndicatorView!
-
+    
     // MARK: - Initialization
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView(with: traitCollection)
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView(with: traitCollection)
     }
-
+    
     // MARK: - Privates
-
+    
     private func setupView(with trait: UITraitCollection) {
         let (backgroundColor, shadowColor) = themeColor(of: trait)
         
@@ -40,7 +40,7 @@ final class HandlerView: UIView {
             leadingAnchor.constraint(equalTo: slideIndicatorView.leadingAnchor),
             trailingAnchor.constraint(equalTo: slideIndicatorView.trailingAnchor)
         ])
-
+        
         let config = RoundCornerShadowConfiguration(
             backgroundColor: backgroundColor,
             corner: .init(
@@ -56,19 +56,17 @@ final class HandlerView: UIView {
         )
         styler = config.dropTopCornerShadowStyler()
     }
-
+    
     private func themeColor(of trait: UITraitCollection) -> (UIColor, UIColor) {
-        let lightBackgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black1C1C1E
-        let darkBackgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteFFFFFF
-        
         switch trait.userInterfaceStyle {
-        case .dark: return (lightBackgroundColor, MEGAAppColor.White._FFFFFF.uiColor)
-        case .light: return (darkBackgroundColor, .mnz_black1C1C1E())
-        default: return (darkBackgroundColor, .mnz_black1C1C1E())
+        case .dark: return (TokenColors.Background.page, UIColor.whiteFFFFFF)
+        case .light: return (TokenColors.Background.page, .mnz_black1C1C1E())
+        default: return (TokenColors.Background.page, .mnz_black1C1C1E())
         }
     }
-        // MARK: - UIView overrides
-
+    
+    // MARK: - UIView overrides
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         shadowCornerLayer?.removeFromSuperlayer()
@@ -80,12 +78,12 @@ final class HandlerView: UIView {
 // MARK: - TraitEnvironmentAware
 
 extension HandlerView: TraitEnvironmentAware {
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
     }
-
+    
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         setupView(with: currentTrait)
     }
