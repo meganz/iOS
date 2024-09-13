@@ -2,6 +2,8 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentation
+import MEGAPresentationMock
 import MEGATest
 import XCTest
 
@@ -236,6 +238,67 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
         ]
         XCTAssertEqual(outputStrings, expectedStrings)
     }
+    
+    func testAnalyticsTracking_whenDescriptionAdded_shouldTrackCorrectEvent() async {
+        let exp = expectation(description: "wait for description added")
+        
+        let tracker = MockTracker()
+        let sut = makeSUT(description: nil, tracker: tracker) { _ in
+            exp.fulfill()
+        }
+
+        sut.cellViewModel.descriptionUpdated("add")
+        sut.cellViewModel.saveDescription("add")
+        await fulfillment(of: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(tracker.trackedEventIdentifiers.map(\.eventName), ["NodeInfoDescriptionAddedMessageDisplayed"])
+    }
+    
+    func testAnalyticsTracking_whenDescriptionUpdated_shouldTrackCorrectEvent() async {
+        let exp = expectation(description: "wait for description added")
+        
+        let tracker = MockTracker()
+        let sut = makeSUT(description: "Intial", tracker: tracker) { _ in
+            exp.fulfill()
+        }
+
+        sut.cellViewModel.descriptionUpdated("Updated")
+        sut.cellViewModel.saveDescription("Updated")
+        await fulfillment(of: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(tracker.trackedEventIdentifiers.map(\.eventName), ["NodeInfoDescriptionUpdatedMessageDisplayed"])
+    }
+    
+    func testAnalyticsTracking_whenDescriptionRemoved_shouldTrackCorrectEvent() async {
+        let exp = expectation(description: "wait for description added")
+        
+        let tracker = MockTracker()
+        let sut = makeSUT(description: "Intial", tracker: tracker) { _ in
+            exp.fulfill()
+        }
+
+        sut.cellViewModel.descriptionUpdated("")
+        sut.cellViewModel.saveDescription("")
+        await fulfillment(of: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(tracker.trackedEventIdentifiers.map(\.eventName), ["NodeInfoDescriptionRemovedMessageDisplayed"])
+    }
+    
+    func testAnalyticsTracking_whenFailedToSaveDescription_shouldTrackCorrectEvent() async {
+        let exp = expectation(description: "wait for description added")
+        
+        let tracker = MockTracker()
+        let sut = makeSUT(description: "Intial", tracker: tracker, nodeDescriptionResult: .failure(CancellationError())
+        ) { _ in
+            exp.fulfill()
+        }
+
+        sut.cellViewModel.descriptionUpdated("")
+        sut.cellViewModel.saveDescription("")
+        await fulfillment(of: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(tracker.trackedEventIdentifiers.map(\.eventName), [])
+    }
 
     // MARK: - Helpers
 
@@ -246,6 +309,7 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
         isBackupsNode: Bool = false,
         isBackupsRootNode: Bool = false,
         maxCharactersAllowed: Int = 300,
+        tracker: some AnalyticsTracking = MockTracker(),
         nodeDescriptionResult: Result<NodeEntity, any Error> = .success(NodeEntity()),
         descriptionSaved: @escaping (NodeDescriptionCellControllerModel.SavedState) -> Void = { _ in },
         file: StaticString = #filePath,
@@ -265,6 +329,7 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
             backupUseCase: backupUseCase,
             nodeDescriptionUseCase: MockNodeDescriptionUseCase(result: nodeDescriptionResult),
             maxCharactersAllowed: maxCharactersAllowed,
+            tracker: tracker,
             refreshUI: { block in block() },
             descriptionSaved: descriptionSaved
         )
@@ -287,6 +352,7 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
         sut.cellViewModel.saveDescription(updatedDescription)
         await fulfillment(of: [exp], timeout: 1.0)
     }
+    
 }
 
 extension NodeAccessTypeEntity: CustomStringConvertible {

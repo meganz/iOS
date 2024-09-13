@@ -1,7 +1,11 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAL10n
+import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
+@MainActor
 final class NodeDescriptionCellViewModelTests: XCTestCase {
 
     func testInitState_whenSet_shouldMatchGivenParameters() {
@@ -27,8 +31,16 @@ final class NodeDescriptionCellViewModelTests: XCTestCase {
     }
 
     func testShouldChangeTextIn_whenExceedingCharacterLimit_shouldReturnFalse() {
-        let sut = makeSUT(maxCharactersAllowed: 10)
-        XCTAssertFalse(sut.shouldChangeTextIn(in: NSRange(location: 0, length: 0), currentText: "current", replacementText: "additionalText"))
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker, maxCharactersAllowed: 10)
+        
+        let result1 = sut.shouldChangeTextIn(in: NSRange(location: 0, length: 0), currentText: "current", replacementText: "additionalText") // will trigger tracking
+        let result2 = sut.shouldChangeTextIn(in: NSRange(location: 0, length: 0), currentText: "additional", replacementText: "additionalText") // won't trigger tracking
+        
+        XCTAssertFalse(result1)
+        XCTAssertFalse(result2)
+        
+        XCTAssertEqual(tracker.trackedEventIdentifiers.map(\.eventName), ["NodeInfoDescriptionCharacterLimit"])
     }
 
     func testTruncateAndReplaceText_whenWithinLimit_shouldReturnUpdatedText() {
@@ -148,10 +160,21 @@ final class NodeDescriptionCellViewModelTests: XCTestCase {
         let sut = makeSUT(descriptionProvider: { .init(content: nil) })
         XCTAssertTrue(sut.isPlaceholder)
     }
+    
+    func testTrackAnalyticsEvents_whenDescriptionIsEnteredAndConfirmed_shouldTrackCorrectEvents() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        
+        sut.trackNodeInfoDescriptionEntered()
+        sut.trackNodeInfoDescriptionConfirmed()
+        
+        XCTAssertEqual(tracker.trackedEventIdentifiers.map(\.eventName), ["NodeInfoDescriptionEntered", "NodeInfoDescriptionConfirmed"])
+    }
 
     // MARK: - Helpers
 
     private func makeSUT(
+        tracker: some AnalyticsTracking = MockTracker(),
         maxCharactersAllowed: Int = 300,
         editingDisabled: @escaping () -> Bool = { true },
         textViewEdgeInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
@@ -164,6 +187,7 @@ final class NodeDescriptionCellViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> NodeDescriptionCellViewModel {
         let sut = NodeDescriptionCellViewModel(
+            tracker: tracker,
             maxCharactersAllowed: maxCharactersAllowed,
             editingDisabled: editingDisabled,
             textViewEdgeInsets: textViewEdgeInsets, 
