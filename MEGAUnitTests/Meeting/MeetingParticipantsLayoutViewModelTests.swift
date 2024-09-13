@@ -1237,8 +1237,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     @MainActor func testCallUpdate_remoteUserLowHand() async throws {
         let harness = Harness()
 
-        harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 101, clientId: 1, changeType: .status))
-        harness.sessionUpdateUseCase.sendSessionUpdate(ChatSessionEntity(statusType: .inProgress, peerId: 102, clientId: 2, changeType: .status))
+        harness.sessionUpdateUseCase.sendSessionUpdate((ChatSessionEntity(statusType: .inProgress, peerId: 101, clientId: 1, changeType: .status), CallEntity()))
+        harness.sessionUpdateUseCase.sendSessionUpdate((ChatSessionEntity(statusType: .inProgress, peerId: 102, clientId: 2, changeType: .status), CallEntity()))
         
         harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .inProgress, changeType: .callRaiseHand, raiseHandsList: [101]))
 
