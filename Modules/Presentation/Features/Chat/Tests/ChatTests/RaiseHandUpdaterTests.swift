@@ -1,7 +1,7 @@
-@testable import MEGA
 import MEGADomain
 import MEGASwiftUI
 import XCTest
+import Chat
 
 final class RaiseHandUpdaterTests: XCTestCase {
     class Harness {
@@ -285,6 +285,26 @@ extension SnackBar? {
             layout: .horizontal,
             action: nil,
             colors: .default
+        )
+    }
+}
+
+extension CallParticipantEntity {
+    static var testParticipant: Self {
+        .testParticipant()
+    }
+    
+    static func testParticipant(
+        chatId: HandleEntity = 100,
+        participantId: HandleEntity = 100,
+        clientId: HandleEntity = 100
+    ) -> Self {
+        .init(
+            chatId: chatId,
+            participantId: participantId,
+            clientId: clientId,
+            isModerator: false,
+            canReceiveVideoHiRes: true
         )
     }
 }

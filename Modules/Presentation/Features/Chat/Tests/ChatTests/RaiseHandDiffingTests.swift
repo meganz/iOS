@@ -1,5 +1,5 @@
-@testable import MEGA
 import MEGADomain
+import Chat
 import XCTest
 
 final class RaiseHandDiffingTests: XCTestCase {

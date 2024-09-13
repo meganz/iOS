@@ -8,8 +8,8 @@ import MEGASwiftUI
 ///    a) local camera feed view
 ///    b) remote participant cells
 ///    c) snack bar
-struct RaiseHandUpdater {
-    init(
+public struct RaiseHandUpdater {
+    public init(
         snackBarFactory: some RaiseHandSnackBarProviding,
         updateLocalRaiseHand: @escaping (Bool) -> Void,
         stateUpdater: @escaping (Int, RaiseHandDiffing.Change) -> Void,
@@ -35,7 +35,7 @@ struct RaiseHandUpdater {
     /// shows SnackBarView with config or hides it when `snackBar` nil
     private var snackBarUpdater: (_ snackBar: SnackBar?) -> Void
     
-    func update(
+    public func update(
         /// this does __not__ contain local user
         callParticipants: [CallParticipantEntity],
         raiseHandListBefore: [HandleEntity],
@@ -72,8 +72,8 @@ struct RaiseHandUpdater {
             guard let index = change.index else { return }
             stateUpdater(index, change)
         }
-        
-        MEGALogDebug("[RaiseHand] raise hand changed \(diffed.changes.isNotEmpty) : \(raiseHandListAfter)")
+    
+        logDebug("[RaiseHand] raise hand changed \(diffed.changes.isNotEmpty) : \(raiseHandListAfter)")
         
         let localJustRaisedHand = (
             !raiseHandListBefore.contains(localUserHandle) &&

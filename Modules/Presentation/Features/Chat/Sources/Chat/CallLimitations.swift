@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 import MEGADomain
 import MEGAPresentation
 
@@ -19,7 +20,7 @@ import MEGAPresentation
 /// To respond to conditions above changing subscribe to limitsChangedPublisher so that
 /// UI can be dynamically reloaded.
 /// related story: [MEET-3421]
-class CallLimitations {
+public class CallLimitations {
     private let callUseCase: any CallUseCaseProtocol
     // users can be upgraded to moderator/host or degraded so we need to check
     // that dynamically via observing chat rooms own priviledge
@@ -29,7 +30,7 @@ class CallLimitations {
     
     /// will be sent whenever call has changed the callLimits.maxUsers property
     /// or user becomes or stops being a moderator/host
-    var limitsChangedPublisher: AnyPublisher<Void, Never> {
+    public var limitsChangedPublisher: AnyPublisher<Void, Never> {
         _limitsChanged.eraseToAnyPublisher()
     }
     
@@ -42,7 +43,7 @@ class CallLimitations {
     private var isMyselfModerator: Bool
     private let chatRoom: ChatRoomEntity
     
-    init(
+    public init(
         initialLimit: Int,
         chatRoom: ChatRoomEntity,
         callUseCase: some CallUseCaseProtocol,
@@ -94,7 +95,7 @@ class CallLimitations {
             let previousValue = isMyselfModerator
             isMyselfModerator = chatRoom.ownPrivilege == .moderator
             if isMyselfModerator != previousValue {
-                MEGALogDebug("[CallLimitations] did change privilege host: \(chatRoom.ownPrivilege == .moderator)")
+                logDebug("[CallLimitations] did change privilege host: \(chatRoom.ownPrivilege == .moderator)")
                 _limitsChanged.send()
             }
         }
@@ -108,7 +109,7 @@ class CallLimitations {
                 let previousLimit = limitOfFreeTierUsers
                 limitOfFreeTierUsers = call.callLimits.maxUsers
                 if previousLimit != limitOfFreeTierUsers {
-                    MEGALogDebug("[CallLimitations] status changed, did change limits to \(limitOfFreeTierUsers) from previous \(previousLimit)")
+                    logDebug("[CallLimitations] status changed, did change limits to \(limitOfFreeTierUsers) from previous \(previousLimit)")
                     _limitsChanged.send()
                 }
             }
@@ -116,11 +117,11 @@ class CallLimitations {
             let previousLimit = limitOfFreeTierUsers
             limitOfFreeTierUsers = call.callLimits.maxUsers
             if previousLimit != limitOfFreeTierUsers {
-                MEGALogDebug("[CallLimitations] did change limits to \(limitOfFreeTierUsers) from previous \(previousLimit)")
+                logDebug("[CallLimitations] did change limits to \(limitOfFreeTierUsers) from previous \(previousLimit)")
                 _limitsChanged.send()
             }
         case .callComposition:
-            MEGALogDebug("[CallLimitations] call composition changed)")
+            logDebug("[CallLimitations] call composition changed)")
             _limitsChanged.send()
         default:
             break
@@ -134,7 +135,7 @@ class CallLimitations {
         )
     }
     
-    func hasReachedInCallFreeUserParticipantLimit(callParticipantCount: Int) -> Bool {
+    public func hasReachedInCallFreeUserParticipantLimit(callParticipantCount: Int) -> Bool {
         return callLimitReached(callParticipantCount)
     }
     
@@ -160,7 +161,7 @@ class CallLimitations {
         )
     }
     
-    static func participantsNumberLimitationsEnabled(
+    public static func participantsNumberLimitationsEnabled(
         isMyselfModerator: Bool,
         currentLimit: Int
     ) -> Bool {
@@ -180,12 +181,12 @@ class CallLimitations {
     //   * make sure there's no implicit state used to make decision
     //   * can be safely called from the outside with the same set of parameters
     // It's crucial to keep this logic in sync to trigger it under the same conditions.
-    static func callParticipantsLimitReached(
+    public static func callParticipantsLimitReached(
         isMyselfModerator: Bool,
         currentLimit: Int,
         callParticipantCount: Int
     ) -> Bool {
-        MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), host: \(isMyselfModerator), limit: \(currentLimit)")
+        logDebug("[CallLimitations] check limits call participants \(callParticipantCount), host: \(isMyselfModerator), limit: \(currentLimit)")
         
         let shouldActuallyCheckLimits = participantsNumberLimitationsEnabled(
             isMyselfModerator: isMyselfModerator,
@@ -202,13 +203,13 @@ class CallLimitations {
     /// * selecting participants to add to a cal from the contact picker
     /// * disabling `Admit all` button in the floating panel in the call UI
     /// * disabling `Admit` and `Admit all` buttons in the alert view shown from `MainTabBarCallsViewModel` when users are joining waiting room
-    static func callParticipantsPlusAdditionalUsersLimitPassed(
+    public static func callParticipantsPlusAdditionalUsersLimitPassed(
         isMyselfModerator: Bool,
         currentLimit: Int,
         callParticipantCount: Int,
         additionalParticipantCount: Int
     ) -> Bool {
-        MEGALogDebug("[CallLimitations] check limits call participants \(callParticipantCount), host: \(isMyselfModerator), limit: \(currentLimit)")
+        logDebug("[CallLimitations] check limits call participants \(callParticipantCount), host: \(isMyselfModerator), limit: \(currentLimit)")
         
         let shouldActuallyCheckLimits = participantsNumberLimitationsEnabled(
             isMyselfModerator: isMyselfModerator,
@@ -220,7 +221,7 @@ class CallLimitations {
         return additionalParticipantCount + callParticipantCount > currentLimit
     }
     
-    func hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
+    public func hasReachedInCallPlusWaitingRoomFreeUserParticipantLimit(
         callParticipantCount: Int,
         callParticipantsInWaitingRoom: Int
     ) -> Bool {
@@ -233,12 +234,12 @@ class CallLimitations {
     /// * max user limit must not be -1
     /// * user has to have permission to invite (allowsNonHostToInvite)
     /// * sum of selected users and call participants must be greater than the limit
-    func contactPickerLimitChecker(
+    public func contactPickerLimitChecker(
         callParticipantCount: Int,
         selectedCount: Int,
         allowsNonHostToInvite: Bool
     ) -> Bool {
-        MEGALogDebug("[CallLimitations] contact picker limit checker participants = \(callParticipantCount), selected: \(selectedCount), allowsNonHostToInvite: \(allowsNonHostToInvite)")
+        logDebug("[CallLimitations] contact picker limit checker participants = \(callParticipantCount), selected: \(selectedCount), allowsNonHostToInvite: \(allowsNonHostToInvite)")
         return Self.callParticipantsLimitReached(
             isMyselfModerator: allowsNonHostToInvite,
             currentLimit: limitOfFreeTierUsers,
