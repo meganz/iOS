@@ -65,15 +65,41 @@ final class AlbumsTests: XCTestCase {
                 photoLibraryRegisterer: mockPhotoLibrary
             )
         }
+        
+        func loadAlbums(completion: @escaping () -> Void) {
+            sut.loadAlbums(completion: completion)
+        }
     }
     
     func testAlbums_ifPermissionAuthorized_loadsData() {
+        // given
+        let expectation = expectation(description: #function)
         let harness = Harness(.authorized)
+        
+        // when
+        harness.loadAlbums {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+        
+        // then
         XCTAssertTrue(harness.mockPhotoLibrary.fetchAssetsCallCount > 0)
     }
     
     func testAlbums_ifPermissionLimited_loadsData() {
+        // given
+        let expectation = expectation(description: #function)
         let harness = Harness(.limited)
+        
+        // when
+        harness.loadAlbums {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+        
+        // then
         XCTAssertTrue(harness.mockPhotoLibrary.fetchAssetsCallCount > 0)
     }
     
@@ -93,14 +119,36 @@ final class AlbumsTests: XCTestCase {
     }
     
     func testAlbums_whenCreatedAndAuthorized_registersForChanges() {
+        // given
+        let expectation = expectation(description: #function)
         let harness = Harness(.authorized)
+        
+        // when
+        harness.loadAlbums {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+        
+        // then
         XCTAssertEqual(harness.mockPhotoLibrary.registerCallCount, 1)
     }
     
     func testAlbums_whenDestroyedAndAuthorized_unregistersForChanges() {
+        // given
+        let expectation = expectation(description: #function)
         var harness: Harness? = Harness(.authorized)
         let mockPhotoLibrary = harness?.mockPhotoLibrary
-        harness = nil
+        
+        // when
+        harness?.loadAlbums {
+            harness = nil
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1)
+        
+        // then
         XCTAssertEqual(mockPhotoLibrary?.unregisterCallCount, 1)
     }
 }
