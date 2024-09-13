@@ -45,23 +45,11 @@ extension SharedItemsViewController: DZNEmptyDataSetSource {
                 }
             } else {
                 if incomingButton?.isSelected ?? false {
-                    if UIColor.isDesignTokenEnabled() {
-                        return UIImage.incomingEmptyState
-                    } else {
-                        return UIImage.incomingEmptyState.withRenderingMode(.alwaysOriginal)
-                    }
+                    return UIImage.incomingEmptyState
                 } else if outgoingButton?.isSelected ?? false {
-                    if UIColor.isDesignTokenEnabled() {
-                        return UIImage.outgoingEmptyState
-                    } else {
-                        return UIImage.outgoingEmptyState.withRenderingMode(.alwaysOriginal)
-                    }
+                    return UIImage.outgoingEmptyState
                 } else if linksButton?.isSelected ?? false {
-                    if UIColor.isDesignTokenEnabled() {
-                        return UIImage.linksEmptyState
-                    } else {
-                        return UIImage.linksEmptyState.withRenderingMode(.alwaysOriginal)
-                    }
+                    return UIImage.linksEmptyState
                 }
             }
         } else {

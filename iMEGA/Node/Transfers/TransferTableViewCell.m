@@ -43,12 +43,10 @@
     self.nameLabel.text = [MEGASdk.shared unescapeFsIncompatible:transfer.fileName destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
     
-    if (UIColor.isDesignTokenEnabled) {
-        self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
-        self.pauseButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-        self.progressView.progressTintColor = [UIColor mnz_green00A886];
-        self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-    }
+    self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+    self.pauseButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.progressView.progressTintColor = [UIColor mnz_green00A886];
+    self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
     float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     self.progressView.progress = percentage;
@@ -123,7 +121,7 @@
     }
     
     self.nameLabel.text = name;
-
+    
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.version = PHImageRequestOptionsVersionCurrent;
     options.networkAccessAllowed = YES;
@@ -183,7 +181,7 @@
         [self setTransferStateIcon:image color:[self transferStateOverQuotaIconColor]];
         
         self.infoLabel.text = LocalizedString(@"Transfer over quota", @"Label indicating transfer over quota");
-        self.infoLabel.textColor = UIColor.isDesignTokenEnabled ? [self transferStateOverQuotaTextColor] : UIColor.mnz_yellowFFCC00;
+        self.infoLabel.textColor = [self transferStateOverQuotaTextColor];
         
         self.pauseButton.hidden = self.cancelButton.hidden = NO;
         return;
@@ -218,7 +216,7 @@
             } else {
                 self.infoLabel.attributedText = [self transferInfoAttributedString];
             }
-
+            
             break;
         }
             
@@ -261,7 +259,7 @@
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
             self.pauseButton.hidden = self.cancelButton.hidden = YES;
-            }
+        }
             break;
             
         case MEGATransferStateCancelled: {
@@ -280,7 +278,7 @@
         case MEGATransferStateFailed: {
             [self setTransferStateIcon:UIImage.mnz_errorTransferImage color:[self transferStateErrorIconColor]];
             
-            UIColor *infoLabelTextColor = UIColor.isDesignTokenEnabled ? [self transferStateErrorTextColor] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+            UIColor *infoLabelTextColor = [self transferStateErrorTextColor];
             self.infoLabel.textColor = infoLabelTextColor;
             
             NSString *transferFailed = LocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
