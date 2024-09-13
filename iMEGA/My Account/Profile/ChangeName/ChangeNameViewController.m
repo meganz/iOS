@@ -73,16 +73,9 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    if (UIColor.isDesignTokenEnabled) {
-        self.view.backgroundColor = [self defaultBackgroundColor];
-        self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [self defaultBackgroundColor];
-        self.firstNameLabel.textColor = self.lastNameLabel.textColor = [self primaryTextcolor];
-    } else {
-        self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-        self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-        self.firstNameLabel.textColor = self.lastNameLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    }
-    
+    self.view.backgroundColor = [self defaultBackgroundColor];
+    self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [self defaultBackgroundColor];
+    self.firstNameLabel.textColor = self.lastNameLabel.textColor = [self primaryTextcolor];
     self.firstNameTopSeparatorView.backgroundColor = self.firstNameBottomSeparatorView.backgroundColor = self.lastNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 

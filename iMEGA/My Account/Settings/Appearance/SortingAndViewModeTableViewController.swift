@@ -72,14 +72,12 @@ class SortingAndViewModeTableViewController: UITableViewController {
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            sortingPreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
-            sortingPreferenceSameForAllLabel.textColor = UIColor.mnz_primaryTextColor()
-            sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
-            viewModePreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
-            viewModePreferenceListViewLabel.textColor = UIColor.mnz_primaryTextColor()
-            viewModePreferenceThumbnailViewLabel.textColor = UIColor.mnz_primaryTextColor()
-        }
+        sortingPreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
+        sortingPreferenceSameForAllLabel.textColor = UIColor.mnz_primaryTextColor()
+        sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
+        viewModePreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
+        viewModePreferenceListViewLabel.textColor = UIColor.mnz_primaryTextColor()
+        viewModePreferenceThumbnailViewLabel.textColor = UIColor.mnz_primaryTextColor()
 
         tableView.reloadData()
     }
@@ -166,9 +164,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     }
     
     private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
-        guard
-            let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView,
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView
         else { return }
 
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
@@ -176,9 +172,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        guard
-            let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView,
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView
         else { return }
 
         tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()

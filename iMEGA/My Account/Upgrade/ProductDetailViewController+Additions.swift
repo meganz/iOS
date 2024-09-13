@@ -6,7 +6,7 @@ extension ProductDetailViewController {
     
     // MARK: - Token colors
     @objc var whiteTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+        TokenColors.Text.onColor
     }
 
     @objc var defaultBackgroundColor: UIColor {

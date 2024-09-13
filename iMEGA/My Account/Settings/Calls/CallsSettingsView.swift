@@ -8,13 +8,7 @@ struct CallsSettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     private var backgroundView: some View {
-        if isDesignTokenEnabled {
-            TokenColors.Background.page.swiftUI.edgesIgnoringSafeArea([.horizontal, .bottom])
-        } else if colorScheme == .dark {
-            Color.black.edgesIgnoringSafeArea([.horizontal, .bottom])
-        } else {
-            Color(.whiteF7F7F7).edgesIgnoringSafeArea([.horizontal, .bottom])
-        }
+        TokenColors.Background.page.swiftUI.edgesIgnoringSafeArea([.horizontal, .bottom])
     }
     
     var body: some View {

@@ -85,7 +85,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
     
     private func showCheckCodeErrorMessage(_ message: String) {
         errorMessageLabel.text = message
-        errorMessageLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        errorMessageLabel.textColor = TokenColors.Text.error
         errorView.isHidden = false
     }
     
@@ -94,30 +94,22 @@ final class VerificationCodeViewController: UIViewController, ViewType {
         
         updateCodeFieldsAppearance()
         
-        if UIColor.isDesignTokenEnabled() {
-            verificationCodeSentToLabel.textColor = TokenColors.Text.primary
-            phoneNumberLabel.textColor = TokenColors.Text.primary
-            errorImageView.tintColor = TokenColors.Support.error
-            errorMessageLabel.textColor = TokenColors.Text.error
-            didnotReceiveCodeLabel.textColor = TokenColors.Text.primary
-            resendButton.tintColor = TokenColors.Link.primary
-        } else {
-            errorImageView.tintColor = UIColor.systemRed
-            errorMessageLabel.textColor = UIColor.systemRed
-            
-            didnotReceiveCodeLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
-            resendButton.tintColor = UIColor.mnz_turquoise(for: self.traitCollection)
-        }
+        verificationCodeSentToLabel.textColor = TokenColors.Text.primary
+        phoneNumberLabel.textColor = TokenColors.Text.primary
+        errorImageView.tintColor = TokenColors.Support.error
+        errorMessageLabel.textColor = TokenColors.Text.error
+        didnotReceiveCodeLabel.textColor = TokenColors.Text.primary
+        resendButton.tintColor = TokenColors.Link.primary
 
         confirmButton.mnz_setupPrimary(traitCollection)
     }
     
     private func updateCodeFieldsAppearance() {
-        let errorBorderColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error.cgColor : UIColor.systemRed.cgColor
+        let errorBorderColor = TokenColors.Support.error.cgColor
         
         verificationCodeFields.forEach {
-            $0.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
-            $0.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : .mnz_secondaryBackgroundElevated(traitCollection)
+            $0.textColor = TokenColors.Text.primary
+            $0.backgroundColor = TokenColors.Background.surface1
             $0.layer.cornerRadius = 4
             $0.layer.borderWidth = 0.5
             $0.layer.borderColor = errorView.isHidden ? UIColor.mnz_separator(for: traitCollection).cgColor : errorBorderColor

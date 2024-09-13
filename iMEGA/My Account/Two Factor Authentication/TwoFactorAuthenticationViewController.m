@@ -70,37 +70,24 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    if (UIColor.isDesignTokenEnabled) {
-        self.view.backgroundColor = [self defaultBackgroundColor];
+    self.view.backgroundColor = [self defaultBackgroundColor];
 
-        self.firstDigitContainerView.backgroundColor = [self defaultBackgroundColor];
-        self.secondDigitContainerView.backgroundColor = [self defaultBackgroundColor];
-        self.thirdDigitContainerView.backgroundColor = [self defaultBackgroundColor];
-        self.fourthDigitContainerView.backgroundColor = [self defaultBackgroundColor];
-        self.fifthDigitContainerView.backgroundColor = [self defaultBackgroundColor];
-        self.sixthDigitContainerView.backgroundColor = [self defaultBackgroundColor];
+    self.firstDigitContainerView.backgroundColor = [self defaultBackgroundColor];
+    self.secondDigitContainerView.backgroundColor = [self defaultBackgroundColor];
+    self.thirdDigitContainerView.backgroundColor = [self defaultBackgroundColor];
+    self.fourthDigitContainerView.backgroundColor = [self defaultBackgroundColor];
+    self.fifthDigitContainerView.backgroundColor = [self defaultBackgroundColor];
+    self.sixthDigitContainerView.backgroundColor = [self defaultBackgroundColor];
 
-        self.firstDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
-        self.secondDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
-        self.thirdDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
-        self.fourthDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
-        self.fifthDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
-        self.sixthDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
+    self.firstDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
+    self.secondDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
+    self.thirdDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
+    self.fourthDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
+    self.fifthDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
+    self.sixthDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
 
-        self.invalidCodeLabel.textColor = [self errorColor];
-        [self.lostYourAuthenticatorDeviceButton setTitleColor:[self labelColor] forState:UIControlStateNormal];
-
-    } else {
-        self.view.backgroundColor = UIColor.systemBackgroundColor;
-
-        self.firstDigitContainerView.backgroundColor = self.secondDigitContainerView.backgroundColor = self.thirdDigitContainerView.backgroundColor = self.fourthDigitContainerView.backgroundColor = self.fifthDigitContainerView.backgroundColor = self.sixthDigitContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-
-        self.firstDigitContainerView.layer.borderColor = self.secondDigitContainerView.layer.borderColor = self.thirdDigitContainerView.layer.borderColor = self.fourthDigitContainerView.layer.borderColor = self.fifthDigitContainerView.layer.borderColor = self.sixthDigitContainerView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-
-        self.invalidCodeLabel.textColor = UIColor.systemRedColor;
-
-        [self.lostYourAuthenticatorDeviceButton setTitleColor:UIColor.labelColor forState:UIControlStateNormal];
-    }
+    self.invalidCodeLabel.textColor = [self errorColor];
+    [self.lostYourAuthenticatorDeviceButton setTitleColor:[self labelColor] forState:UIControlStateNormal];
 }
 
 - (void)previousTextViewShouldBecomeFirstResponder:(UITextView *)textView {

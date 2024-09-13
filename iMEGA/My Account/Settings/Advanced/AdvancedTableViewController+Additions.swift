@@ -68,18 +68,14 @@ extension AdvancedTableViewController {
     open override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            headerFooterView.textLabel?.textColor = TokenColors.Text.secondary
-        }
+        headerFooterView.textLabel?.textColor = TokenColors.Text.secondary
     }
 
     @objc func configureLabelAppearance() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            savePhotosLabel.textColor = TokenColors.Text.primary
-            saveVideosLabel.textColor = TokenColors.Text.primary
-            saveMediaInGalleryLabel.textColor = TokenColors.Text.primary
-            dontUseHttpLabel.textColor = TokenColors.Text.primary
-        }
+        savePhotosLabel.textColor = TokenColors.Text.primary
+        saveVideosLabel.textColor = TokenColors.Text.primary
+        saveMediaInGalleryLabel.textColor = TokenColors.Text.primary
+        dontUseHttpLabel.textColor = TokenColors.Text.primary
     }
     
     @objc func hasSetIsSaveMediaCapturedToGalleryEnabled() -> Bool {

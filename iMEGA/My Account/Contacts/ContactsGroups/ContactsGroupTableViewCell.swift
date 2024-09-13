@@ -46,6 +46,6 @@ class ContactsGroupTableViewCell: UITableViewCell {
     }
     
     private func updateStyle(with trait: UITraitCollection) {
-        titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        titleLabel.textColor = TokenColors.Text.primary
     }
 }

@@ -176,10 +176,8 @@
 - (void)updateAppearance {
     self.navigationController.toolbarHidden = YES;
     
-    if (UIColor.isDesignTokenEnabled) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        self.termsAndPoliciesBarButtonItem.tintColor = [self primaryTextColor];
-    }
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+    self.termsAndPoliciesBarButtonItem.tintColor = [self primaryTextColor];
     
     self.view.backgroundColor = self.tableView.backgroundColor = [self defaultBackgroundColor];
     self.tableView.separatorColor = [self separatorColor];

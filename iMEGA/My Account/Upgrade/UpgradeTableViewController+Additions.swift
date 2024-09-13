@@ -64,7 +64,7 @@ extension UpgradeTableViewController {
         guard let products = MEGAPurchase.sharedInstance().products as? [SKProduct] else {
             return []
         }
-    
+        
         let availablePlans: [NSNumber] = products.map { product in
             var plan: MEGAAccountType
             if product.productIdentifier.contains("pro1") {
@@ -85,38 +85,38 @@ extension UpgradeTableViewController {
     // MARK: - Token colors
     
     @objc var whiteTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+        TokenColors.Text.onColor
     }
     
     @objc var primaryTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        TokenColors.Text.primary
     }
     
     @objc var secondaryTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_primaryGray(for: traitCollection)
+        TokenColors.Text.secondary
     }
     
     @objc var footerTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: traitCollection)
+        TokenColors.Text.secondary
     }
     
     @objc var defaultBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+        TokenColors.Background.page
     }
     
     @objc var headerBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_mainBars(for: traitCollection)
+        TokenColors.Background.page
     }
     
     @objc var currentPlanBackgroundColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        TokenColors.Background.page
     }
     
     @objc var separatorColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        TokenColors.Border.strong
     }
     
     @objc var linkColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: traitCollection)
+        TokenColors.Link.primary
     }
 }

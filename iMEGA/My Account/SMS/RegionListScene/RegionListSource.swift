@@ -9,11 +9,8 @@ extension RegionListSource {
     func cell(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "countryCell", for: indexPath)
         cell.textLabel?.text = country(at: indexPath).displayName
-        
-        if UIColor.isDesignTokenEnabled() {
-            cell.textLabel?.textColor = TokenColors.Text.primary
-            cell.backgroundColor = TokenColors.Background.page
-        }
+        cell.textLabel?.textColor = TokenColors.Text.primary
+        cell.backgroundColor = TokenColors.Background.page
 
         return cell
     }

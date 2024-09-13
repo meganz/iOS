@@ -17,9 +17,7 @@ struct UpgradeSectionHeaderView: View {
                 .bold()
             
             Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.currentPlan(currentPlanName))
-                .foregroundColor(
-                    isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.Gray._8E8E93.color
-                )
+                .foregroundColor(TokenColors.Text.secondary.swiftUI)
                 .font(.subheadline)
                 .bold()
                 .padding(.top, 1)

@@ -4,44 +4,29 @@ import MEGAL10n
 extension ContactTableViewCell {
     @objc func updateAppearance() {
         backgroundColor = UIColor.mnz_background()
-        if UIColor.isDesignTokenEnabled() {
-            nameLabel.textColor = TokenColors.Text.primary
-            shareLabel?.textColor = TokenColors.Text.secondary
-            permissionsLabel?.textColor = TokenColors.Text.primary
-            
-            contactDetailsButton?.tintColor = TokenColors.Icon.secondary
-            nameLabel.textColor = TokenColors.Text.primary
-            shareLabel?.textColor = TokenColors.Text.secondary
-            permissionsLabel?.textColor = TokenColors.Text.primary
-            
-            controlSwitch?.onTintColor = TokenColors.Support.success
-        } else {
-            nameLabel.textColor = UIColor.label
-            shareLabel?.textColor = UIColor.mnz_subtitles(for: traitCollection)
-            permissionsLabel?.textColor = UIColor.mnz_tertiaryGray(for: traitCollection)
-            
-            nameLabel.textColor = UIColor.label
-            shareLabel?.textColor = UIColor.mnz_subtitles(for: traitCollection)
-            permissionsLabel?.textColor = UIColor.mnz_tertiaryGray(for: traitCollection)
-        }
+        nameLabel.textColor = TokenColors.Text.primary
+        shareLabel?.textColor = TokenColors.Text.secondary
+        permissionsLabel?.textColor = TokenColors.Text.primary
+        
+        contactDetailsButton?.tintColor = TokenColors.Icon.secondary
+        nameLabel.textColor = TokenColors.Text.primary
+        shareLabel?.textColor = TokenColors.Text.secondary
+        permissionsLabel?.textColor = TokenColors.Text.primary
+        
+        controlSwitch?.onTintColor = TokenColors.Support.success
     }
     
     @objc func updateNewViewAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            contactNewLabel.textColor = TokenColors.Text.success
-            contactNewLabelView.backgroundColor = TokenColors.Notifications.notificationSuccess
-        } else {
-            contactNewLabel.textColor = UIColor.mnz_whiteFFFFFF()
-            contactNewLabelView.backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
-        }
+        contactNewLabel.textColor = TokenColors.Text.success
+        contactNewLabelView.backgroundColor = TokenColors.Notifications.notificationSuccess
     }
     
     @objc func onlineStatusBackgroundColor(_ status: MEGAChatStatus) -> UIColor {
         switch status {
-        case .online: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : UIColor.chatStatusOnline
-        case .offline: UIColor.isDesignTokenEnabled() ? TokenColors.Icon.disabled : UIColor.chatStatusOffline
-        case .away: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.yellow : UIColor.chatStatusAway
-        case .busy: UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : UIColor.chatStatusBusy
+        case .online: TokenColors.Indicator.green
+        case .offline: TokenColors.Icon.disabled
+        case .away: TokenColors.Indicator.yellow
+        case .busy: TokenColors.Indicator.pink
         default: .clear
         }
     }
@@ -52,13 +37,13 @@ extension ContactTableViewCell {
         switch option {
         case .newGroupChat:
             nameLabel.text = Strings.Localizable.newGroupChat
-            avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.groupChatToken : UIImage.createGroup
+            avatarImageView.image = UIImage.groupChatToken
         case .newMeeting:
             nameLabel.text = Strings.Localizable.Meetings.Create.newMeeting
-            avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.newMeetingToken : UIImage.newMeeting
+            avatarImageView.image =  UIImage.newMeetingToken
         case .joinMeeting:
             nameLabel.text = Strings.Localizable.Meetings.Link.LoggedInUser.joinButtonText
-            avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.joinMeetingToken : UIImage.joinMeeting
+            avatarImageView.image = UIImage.joinMeetingToken
         @unknown default: break
         }
         
@@ -66,12 +51,12 @@ extension ContactTableViewCell {
     }
     
     @objc func removePendingShareIconColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+        TokenColors.Support.error
     }
     
     @objc func prepareAddContactsCell() {
         permissionsImageView.isHidden = true
-        avatarImageView.image = UIColor.isDesignTokenEnabled() ? UIImage.inviteContactShare : UIImage.inviteToChat
+        avatarImageView.image = UIImage.inviteContactShare
         nameLabel.text = Strings.Localizable.addContactButton
         shareLabel.isHidden = true
     }

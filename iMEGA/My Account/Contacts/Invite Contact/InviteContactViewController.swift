@@ -84,38 +84,26 @@ class InviteContactViewController: UIViewController {
     }
     
     private func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            mainView.backgroundColor = TokenColors.Background.page
-            
-            disclosureIndicatorImageViews.forEach {
-                $0.image = UIImage.standardDisclosureIndicatorDesignToken
-            }
-            
-            separatorViews.forEach {
-                $0.backgroundColor = TokenColors.Border.strong
-            }
-            
-            let primaryTextColor = TokenColors.Text.primary
-            enterEmailLabel.textColor = primaryTextColor
-            scanQrCodeLabel.textColor = primaryTextColor
-            moreLabel.textColor = primaryTextColor
-            addFromContactsLabel.textColor = MFMessageComposeViewController.canSendText() ? primaryTextColor : TokenColors.Text.secondary
-            
-            addToContactImageView.image = UIImage.addFromContacts
-            enterEmailImageView.image = UIImage.enterUserEmail
-            scanQRImageView.image = UIImage.scanUserQRCode
-            moreImageView.image = UIImage.inviteContactMore
-
-        } else {
-            mainView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_secondaryBackground(for: traitCollection)
-            
-            let separatorColor = UIColor.mnz_separator(for: traitCollection)
-            addFromContactsSeparatorView.backgroundColor = separatorColor
-            enterEmailSeparatorView.backgroundColor = separatorColor
-            scanQrCodeSeparatorView.backgroundColor = separatorColor
-            
-            addFromContactsLabel.textColor = MFMessageComposeViewController.canSendText() ? .label : .mnz_secondaryGray(for: traitCollection)
+        mainView.backgroundColor = TokenColors.Background.page
+        
+        disclosureIndicatorImageViews.forEach {
+            $0.image = UIImage.standardDisclosureIndicatorDesignToken
         }
+        
+        separatorViews.forEach {
+            $0.backgroundColor = TokenColors.Border.strong
+        }
+        
+        let primaryTextColor = TokenColors.Text.primary
+        enterEmailLabel.textColor = primaryTextColor
+        scanQrCodeLabel.textColor = primaryTextColor
+        moreLabel.textColor = primaryTextColor
+        addFromContactsLabel.textColor = MFMessageComposeViewController.canSendText() ? primaryTextColor : TokenColors.Text.secondary
+        
+        addToContactImageView.image = UIImage.addFromContacts
+        enterEmailImageView.image = UIImage.enterUserEmail
+        scanQRImageView.image = UIImage.scanUserQRCode
+        moreImageView.image = UIImage.inviteContactMore
     }
 
     private func presentComposeControllerForPhoneNumbers(_ phoneNumbers: [String]) {

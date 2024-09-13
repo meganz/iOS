@@ -133,10 +133,7 @@
     self.selectMembershiptLabel.textColor = self.megaAccountType == MEGAAccountTypeLite ? [UIColor mnz_colorWithProLevel:_megaAccountType] : [UIColor mnz_redForTraitCollection:self.traitCollection];
     
     self.save17Label.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
-    
-    if (UIColor.isDesignTokenEnabled) {
-        self.view.backgroundColor = self.tableView.backgroundColor = [self defaultBackgroundColor];
-    }
+    self.view.backgroundColor = self.tableView.backgroundColor = [self defaultBackgroundColor];
 }
 
 - (void)presentProductUnavailableAlertController {
