@@ -4,7 +4,7 @@ import Video
 
 extension VideoConfig {
     
-    static func live(isDesignTokenEnabled: Bool) -> VideoConfig { VideoConfig(
+    static func live() -> VideoConfig { VideoConfig(
         videoListAssets: VideoConfig.VideoListAssets(
             noResultVideoImage: UIImage.noResultsVideoV2,
             checkmarkImage: UIImage.turquoiseCheckmark,
@@ -29,33 +29,33 @@ extension VideoConfig {
             )
         ),
         colorAssets: VideoConfig.ColorAssets(
-            primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary,
-            secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color.secondary,
-            primaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : Color.videoToolbarIconEnabled,
-            secondaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.secondary,
-            pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : UIColor.systemBackground.swiftUI,
-            whiteColor: isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : Color.white,
-            durationTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.white,
-            tabActiveIndicatorColor: isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F30C14.color,
-            tabInactiveIndicatorColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.clear,
-            tabInactiveTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.videosTabTitle.swiftUI,
-            addPlaylistButtonTextColor: isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : Color.white,
-            addPlaylistButtonBackgroundColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistAddButtonBackground,
-            toolbarBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
-            navigationBgColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
-            emptyFavoriteThumbnailBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface3.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnailBackground,
-            emptyFavoriteThumbnaillImageForegroundColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.videoPlaylistEmptyFavoriteThumbnaillImageForeground,
+            primaryTextColor: TokenColors.Text.primary.swiftUI,
+            secondaryTextColor: TokenColors.Text.secondary.swiftUI,
+            primaryIconColor: TokenColors.Icon.primary.swiftUI,
+            secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
+            pageBackgroundColor: TokenColors.Background.page.swiftUI,
+            whiteColor: TokenColors.Text.onColor.swiftUI,
+            durationTextColor: TokenColors.Text.primary.swiftUI,
+            tabActiveIndicatorColor: TokenColors.Button.brand.swiftUI,
+            tabInactiveIndicatorColor: TokenColors.Background.surface1.swiftUI,
+            tabInactiveTextColor: TokenColors.Text.primary.swiftUI,
+            addPlaylistButtonTextColor: TokenColors.Text.inverseAccent.swiftUI,
+            addPlaylistButtonBackgroundColor: TokenColors.Icon.accent.swiftUI,
+            toolbarBackgroundColor: TokenColors.Background.surface1.swiftUI,
+            navigationBgColor: TokenColors.Background.surface1.swiftUI,
+            emptyFavoriteThumbnailBackgroundColor: TokenColors.Background.surface3.swiftUI,
+            emptyFavoriteThumbnaillImageForegroundColor: TokenColors.Icon.secondary.swiftUI,
             videoThumbnailImageViewPlaceholderBackgroundColor: MEGAAppColor.Videos.videoThumbnailImageViewPlaceholderBackgroundColor.color,
             videoThumbnailDurationTextBackgroundColor: MEGAAppColor.Videos.videoThumbnailDurationTextBackgroundColor.color,
-            disabledColor: isDesignTokenEnabled ? TokenColors.Text.disabled.swiftUI : Color.videoToolbarIconDisabled,
-            checkmarkColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color.turquoise,
-            bottomSheetBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.backgroundRegularPrimaryElevated,
-            bottomSheetHeaderBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.backgroundRegularPrimaryElevated,
-            bottomSheetCellSelectedBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.backgroundRegularPrimaryElevated,
-            videoFilterChipActiveForegroundColor: isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : Color.white,
-            videoFilterChipInactiveForegroundColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.videoFilterChipInactiveForeground,
-            videoFilterChipActiveBackgroundColor: isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : Color.turquoise,
-            videoFilterChipInactiveBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color.videoFilterChipInactiveBackground
+            disabledColor: TokenColors.Text.disabled.swiftUI,
+            checkmarkColor: TokenColors.Support.success.swiftUI,
+            bottomSheetBackgroundColor: TokenColors.Background.surface1.swiftUI,
+            bottomSheetHeaderBackgroundColor: TokenColors.Background.surface1.swiftUI,
+            bottomSheetCellSelectedBackgroundColor: TokenColors.Background.surface1.swiftUI,
+            videoFilterChipActiveForegroundColor: TokenColors.Text.inverseAccent.swiftUI,
+            videoFilterChipInactiveForegroundColor: TokenColors.Text.primary.swiftUI,
+            videoFilterChipActiveBackgroundColor: TokenColors.Button.primary.swiftUI,
+            videoFilterChipInactiveBackgroundColor: TokenColors.Background.surface2.swiftUI
         ),
         toolbarAssets: VideoConfig.ToolbarAssets(
             offlineImage: UIImage.offline,
@@ -67,29 +67,29 @@ extension VideoConfig {
         recentlyWatchedAssets: RecentlyWatchedAssets(
             emptyView: .init(
                 color: .init(
-                    pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear,
-                    textColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary,
-                    iconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color.secondary
+                    pageBackgroundColor: TokenColors.Background.page.swiftUI,
+                    textColor: TokenColors.Text.primary.swiftUI,
+                    iconColor: TokenColors.Icon.secondary.swiftUI
                 ),
                 recentsEmptyStateImage: UIImage.recentlyWatchedVideosEmptyState
             ),
             listView: .init(
                 header: .init(
                     color: .init(
-                        primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary,
-                        pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear
+                        primaryTextColor: TokenColors.Text.primary.swiftUI,
+                        pageBackgroundColor: TokenColors.Background.page.swiftUI
                     )
                 ),
                 cell: .init(
                     color: .init(
-                        primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.black000000.swiftUI,
-                        secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.gray515151.swiftUI,
-                        secondaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.gray848484.swiftUI,
-                        durationTextColor: isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : Color.white,
-                        durationTextBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.blur.swiftUI : Color.black.opacity(0.2),
-                        pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear,
-                        progressBarActiveColor: isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : UIColor.redF30C14.swiftUI,
-                        progressBarBackgroundColor: isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : UIColor.gray949494.swiftUI
+                        primaryTextColor: TokenColors.Text.primary.swiftUI,
+                        secondaryTextColor: TokenColors.Text.secondary.swiftUI,
+                        secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
+                        durationTextColor: TokenColors.Button.primary.swiftUI,
+                        durationTextBackgroundColor: TokenColors.Background.blur.swiftUI,
+                        pageBackgroundColor: TokenColors.Background.page.swiftUI,
+                        progressBarActiveColor: TokenColors.Button.brand.swiftUI,
+                        progressBarBackgroundColor: TokenColors.Button.brand.swiftUI
                     )
                 )
             )
@@ -103,12 +103,12 @@ extension VideoConfig {
                     playButtonImage: UIImage(systemName: "play.fill")!
                 ),
                 color: .init(
-                    pageBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.mainBar,
-                    thumbnailBackgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : Color.videoPlaylistContentThumbnailBackground,
-                    primaryTextColor: isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.textForegroundPrimary.swiftUI,
-                    secondaryTextColor: isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.textForegroundSecondary.swiftUI,
-                    secondaryIconColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.gray848484.swiftUI,
-                    buttonTintColor: isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color.videoPlaylistContentButtonTint
+                    pageBackgroundColor: TokenColors.Background.surface1.swiftUI,
+                    thumbnailBackgroundColor: TokenColors.Background.surface2.swiftUI,
+                    primaryTextColor: TokenColors.Text.primary.swiftUI,
+                    secondaryTextColor: TokenColors.Text.secondary.swiftUI,
+                    secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
+                    buttonTintColor: TokenColors.Icon.accent.swiftUI
                 )
             ),
             favouritesEmptyStateImage: UIImage.favouritesEmptyState,

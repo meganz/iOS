@@ -7,13 +7,12 @@ import Video
 struct VideoRevampRouter: VideoRevampRouting {
     let explorerType: ExplorerTypeEntity
     let navigationController: UINavigationController?
-    let isDesignTokenEnabled: Bool
     
     private let syncModel = VideoRevampSyncModel()
     private let nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     private var videoConfig: VideoConfig {
-        .live(isDesignTokenEnabled: isDesignTokenEnabled)
+        .live()
     }
     
     func build() -> UIViewController {
@@ -67,8 +66,8 @@ struct VideoRevampRouter: VideoRevampRouting {
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
             nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: sdk)),
-            videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled),
-            router: self, 
+            videoConfig: .live(),
+            router: self,
             featureFlagProvider: DIContainer.featureFlagProvider
         )
         return viewController
@@ -196,7 +195,7 @@ struct VideoRevampRouter: VideoRevampRouting {
     }
     
     func openRecentlyWatchedVideos() {
-        let viewController = RecentlyWatchedVideosViewController(videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled))
+        let viewController = RecentlyWatchedVideosViewController(videoConfig: .live())
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)
     }

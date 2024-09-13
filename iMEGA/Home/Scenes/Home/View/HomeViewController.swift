@@ -430,8 +430,8 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     private func setupBackgroundColor(with trait: UITraitCollection) {
-        let defaultColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteF7F7F7
-        let darkColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black000000
+        let defaultColor = TokenColors.Background.page
+        let darkColor = TokenColors.Background.page
         
         switch trait.theme {
         case .dark:
@@ -500,14 +500,7 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
     private func updateNavigationBarBackgroundColor(_ color: UIColor) {
         guard let navigationBar = navigationController?.navigationBar else { return }
         
-        if UIColor.isDesignTokenEnabled() {
-            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
-            return
-        }
-        
-        navigationBar.standardAppearance.backgroundColor = color
-        navigationBar.scrollEdgeAppearance?.backgroundColor = color
-        navigationBar.isTranslucent = false
+        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
 
     func didUpdateAnimationProgress(
