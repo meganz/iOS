@@ -100,8 +100,6 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func updateViewAppearance() {
-        guard UIColor.isDesignTokenEnabled() else { return }
-        
         let backgroundColor = TokenColors.Background.page
         view.backgroundColor = backgroundColor
         tableView?.backgroundColor = backgroundColor

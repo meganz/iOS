@@ -22,9 +22,6 @@ final class PhotoGridViewCell: UICollectionViewCell {
         didSet {
             let isSelected = selectedIndex != nil
             markerView?.selected = isSelected
-            if !UIColor.isDesignTokenEnabled(), let index = selectedIndex {
-                markerView.text = "\(index + 1)"
-            }
         }
     }
     
