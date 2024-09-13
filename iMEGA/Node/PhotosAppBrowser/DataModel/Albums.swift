@@ -63,6 +63,8 @@ final class Albums: NSObject {
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         return fetchOptions
     }()
+    
+    private let loadAlbumsQueue = DispatchQueue(label: "nz.mega.PhotoAppBrowser.loadAlbums")
 
     // MARK: - Initializer.
     
@@ -76,7 +78,18 @@ final class Albums: NSObject {
         self.permissionHandler = permissionHandler
         self.photoLibrary = photoLibraryRegisterer
         super.init()
-        loadAlbums()
+    }
+    
+    /// Load albums in a background serial queue
+    /// - Parameter completion: callback after the loading finishes. It will be called on main thread
+    func loadAlbums(completion: @escaping () -> Void) {
+        loadAlbumsQueue.async { [weak self] in
+            guard let self else { return }
+            self.loadAlbums()
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
     }
     
     @available(*, unavailable)
