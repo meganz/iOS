@@ -35,7 +35,6 @@ final class VideoPlaylistContentViewController: UIViewController {
     
     private(set) var sharedUIState = VideoPlaylistContentSharedUIState()
     private var subscriptions = Set<AnyCancellable>()
-    private var snackBarViewModel: SnackBarViewModel?
     private var showSnackBarSubscription: AnyCancellable?
     
     private let videoSelection: VideoSelection
@@ -88,19 +87,9 @@ final class VideoPlaylistContentViewController: UIViewController {
         listenToDidFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureSnackBarPresenter()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         listenToSnackBarPresentation()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        removeSnackBarPresenter()
     }
     
     private func setupContentView() {
@@ -441,7 +430,7 @@ extension VideoPlaylistContentViewController: VideoPlaylistMenuDelegate {
 
 // MARK: - SnackBarPresenting
 
-extension VideoPlaylistContentViewController: SnackBarPresenting {
+extension VideoPlaylistContentViewController {
     
     private func listenToSnackBarPresentation() {
         sharedUIState.$shouldShowSnackBar
@@ -450,60 +439,9 @@ extension VideoPlaylistContentViewController: SnackBarPresenting {
             .sink { [weak self] _ in
                 guard let self else { return }
                 resetNavigationBar()
-                snackBarViewModel = makeSnackBarViewModel(message: sharedUIState.snackBarText)
-                self.snackBarViewModel?.update(snackBar: SnackBar(message: self.sharedUIState.snackBarText))
-                guard let snackBar = self.snackBarViewModel?.snackBar else { return }
-                SnackBarRouter.shared.present(snackBar: snackBar)
+                let snackBar = SnackBar(message: sharedUIState.snackBarText)
+                showSnackBar(snackBar: snackBar)
             }
             .store(in: &subscriptions)
-    }
-    
-    private func makeSnackBarViewModel(message: String) -> SnackBarViewModel {
-        showSnackBarSubscription?.cancel()
-        
-        let snackBar = SnackBar(message: message)
-        let viewModel = SnackBarViewModel(snackBar: snackBar)
-        
-        showSnackBarSubscription = viewModel.$isShowSnackBar
-            .filter { !$0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                snackBarViewModel = nil
-            }
-        return viewModel
-    }
-    
-    @MainActor
-    func layout(snackBarView: UIView?) {
-        snackBarContainer?.removeFromSuperview()
-        snackBarContainer = snackBarView
-        snackBarContainer?.backgroundColor = .clear
-        
-        guard let snackBarView else {
-            return
-        }
-        
-        snackBarView.translatesAutoresizingMaskIntoConstraints = false
-        let toolbarHeight = (navigationController?.toolbar.isHidden == true) ? 0 : (navigationController?.toolbar.frame.height ?? 0)
-        let bottomOffset: CGFloat = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0 > 0 ? 32 : 0
-        
-        [
-            snackBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            snackBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            snackBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -toolbarHeight - bottomOffset)
-        ].activate()
-    }
-    
-    func snackBarContainerView() -> UIView? {
-        snackBarContainer
-    }
-    
-    private func configureSnackBarPresenter() {
-        SnackBarRouter.shared.configurePresenter(self)
-    }
-    
-    private func removeSnackBarPresenter() {
-        SnackBarRouter.shared.removePresenter()
     }
 }

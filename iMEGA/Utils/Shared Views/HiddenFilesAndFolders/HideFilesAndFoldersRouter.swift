@@ -21,12 +21,13 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private let snackBarPresentation: SnackBarPresentation
     
     enum SnackBarPresentation {
-        case router(SnackBarRouter)
+        // [binh] todo: rename this router case
+        case router
         case observablePresenting(any SnackBarObservablePresenting)
         case none
     }
     
-    init(presenter: UIViewController?, snackBarPresentation: SnackBarPresentation = .none) {
+    init(presenter: UIViewController?, snackBarPresentation: SnackBarPresentation = .router) {
         self.presenter = presenter
         self.snackBarPresentation = snackBarPresentation
     }
@@ -93,8 +94,8 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         switch snackBarPresentation {
         case .observablePresenting(let presenter):
             presenter.show(snack: snackBar)
-        case .router(let router):
-            router.present(snackBar: snackBar)
+        case .router:
+            UIApplication.mnz_visibleViewController().showSnackBar(snackBar: snackBar)
         case .none:
             break
         }

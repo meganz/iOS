@@ -36,7 +36,6 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
-@property (nonatomic, strong, nullable) UIView *snackBarContainer;
 @property (strong, nonatomic) DefaultNodeAccessoryActionDelegate *defaultNodeAccessoryActionDelegate;
 
 - (void)reloadUI;

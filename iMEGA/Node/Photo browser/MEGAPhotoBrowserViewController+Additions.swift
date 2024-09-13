@@ -174,11 +174,12 @@ extension MEGAPhotoBrowserViewController {
                 default:
                     Task { @MainActor in
                         do {
-                            SnackBarRouter.shared.present(snackBar: SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(1)))
+                            self.showSnackBar(snackBar: SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(1)))
                             try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
                         } catch let error as SaveMediaToPhotosErrorEntity where error == .fileDownloadInProgress {
-                            SnackBarRouter.shared.dismissSnackBar(immediate: true)
-                            SnackBarRouter.shared.present(snackBar: SnackBar(message: error.localizedDescription))
+                            // Checking: no need this dismiss
+                            self.dismissSnackBar(immediate: true)
+                            self.showSnackBar(snackBar: SnackBar(message: error.localizedDescription))
                         } catch let error as SaveMediaToPhotosErrorEntity where error != .cancelled {
                             await SVProgressHUD.dismiss()
                             SVProgressHUD.show(
@@ -314,7 +315,7 @@ extension MEGAPhotoBrowserViewController {
         
         HideFilesAndFoldersRouter(
             presenter: self,
-            snackBarPresentation: .router(SnackBarRouter.shared))
+            snackBarPresentation: .router)
         .hideNodes([node.toNodeEntity()])
     }
         
@@ -579,5 +580,11 @@ extension MEGAPhotoBrowserViewController: AdsSlotViewControllerProtocol {
         } catch {
             return false
         }
+    }
+}
+
+extension MEGAPhotoBrowserViewController: SnackBarLayoutCustomizable {
+    var additionalSnackBarBottomInset: CGFloat {
+        toolbar?.bounds.height ?? 0
     }
 }

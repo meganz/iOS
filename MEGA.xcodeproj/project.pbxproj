@@ -271,7 +271,6 @@
 		258DC66D2C789604007B0025 /* NodeInfoLocationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */; };
 		2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */; };
 		2591C1382C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */; };
-		2592C2A22AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */; };
 		259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */; };
 		259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */; };
 		259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */; };
@@ -1309,7 +1308,6 @@
 		9422B9F02A41A331007AA5D1 /* PermissionAlertRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422B9EF2A41A331007AA5D1 /* PermissionAlertRouting.swift */; };
 		9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422B9F12A41A55C007AA5D1 /* MockPermissionAlertRouter.swift */; };
 		942578062824312800D1E17D /* SharedItemsViewController+EmptyStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */; };
-		9425DF662931329200AD3156 /* FolderLinkViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */; };
 		9426B67D283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9426B67C283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift */; };
 		94282D3928A3B06D00F794BA /* SharedItemsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */; };
 		94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */; };
@@ -1326,7 +1324,6 @@
 		94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */; };
 		943270612A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943270602A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift */; };
 		9433A72328DB7D720041F0DB /* ContactLinkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9433A72228DB7D720041F0DB /* ContactLinkCollectionViewCell.swift */; };
-		94361BB72A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */; };
 		943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943649D62A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift */; };
 		943649D92A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943649D72A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift */; };
 		943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB82A40872E00FA22EE /* DevicePermissionsHandlerObjC.swift */; };
@@ -1343,9 +1340,6 @@
 		943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
 		943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
-		943FF9EF292FA33E00B744C8 /* MainTabBarController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FF9EE292FA33E00B744C8 /* MainTabBarController+SnackBar.swift */; };
-		943FF9F1292FD74A00B744C8 /* SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */; };
-		943FF9F5292FEDA600B744C8 /* SnackBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */; };
 		944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */; };
 		9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */; };
 		9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */; };
@@ -1599,6 +1593,7 @@
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A559E16A2BE8C7C700374073 /* NSNotification+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */; };
 		A56274E02C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */; };
+		A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
 		A5A744AE2B9FF59100605E4C /* AccountRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */; };
@@ -1803,7 +1798,6 @@
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
 		B55EC7152A08A515000F19DA /* SendFeedbackViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */; };
-		B56185F92B5E83B800A10F4C /* CustomModalAlertViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56185F82B5E83B800A10F4C /* CustomModalAlertViewController+SnackBar.swift */; };
 		B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */; };
 		B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */; };
 		B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */; };
@@ -1844,7 +1838,6 @@
 		B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4CFC22C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift */; };
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
-		B5C640822B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */; };
 		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */; };
 		B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */; };
@@ -2331,7 +2324,6 @@
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
 		BF8CB0402C34F63900119979 /* NodeSensitivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CB03F2C34F63900119979 /* NodeSensitivityChecker.swift */; };
 		BF8DD11C2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */; };
-		BF8DD11F2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DD11E2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift */; };
 		BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */; };
 		BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */; };
@@ -3023,7 +3015,6 @@
 		258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoLocationViewModelTests.swift; sourceTree = "<group>"; };
 		2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActorTests.swift; sourceTree = "<group>"; };
 		2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActor.swift; sourceTree = "<group>"; };
-		2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+SnackBarPresenting.swift"; sourceTree = "<group>"; };
 		259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+AudioPlayerPresenterProtocol.swift"; sourceTree = "<group>"; };
 		2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
@@ -4103,7 +4094,6 @@
 		9422B9EF2A41A331007AA5D1 /* PermissionAlertRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouting.swift; sourceTree = "<group>"; };
 		9422B9F12A41A55C007AA5D1 /* MockPermissionAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPermissionAlertRouter.swift; sourceTree = "<group>"; };
 		942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+EmptyStates.swift"; sourceTree = "<group>"; };
-		9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		9426B67C283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallTableViewCell+Additions.swift"; sourceTree = "<group>"; };
@@ -4135,7 +4125,6 @@
 		9432293A1EDD88E3007DB542 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		943270602A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodeActionViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		9433A72228DB7D720041F0DB /* ContactLinkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkCollectionViewCell.swift; sourceTree = "<group>"; };
-		94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GetLinkViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		943649D62A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertModel+DevicePermissions.swift"; sourceTree = "<group>"; };
 		943649D72A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalModel+DevicePermissions.swift"; sourceTree = "<group>"; };
 		943649DD2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CustomModalModel+Equatable.swift"; sourceTree = "<group>"; };
@@ -4152,9 +4141,6 @@
 		943F8B1E1EF2704900AFD89F /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = iMEGA/Extensions/MEGAShare/ShareViewController.h; sourceTree = SOURCE_ROOT; };
 		943F8B241EF2708E00AFD89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAShare-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
-		943FF9EE292FA33E00B744C8 /* MainTabBarController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SnackBar.swift"; sourceTree = "<group>"; };
-		943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarPresenting.swift; sourceTree = "<group>"; };
-		943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarRouter.swift; sourceTree = "<group>"; };
 		944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertTypeModel.swift; sourceTree = "<group>"; };
 		9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertDataModel.swift; sourceTree = "<group>"; };
@@ -4396,6 +4382,7 @@
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Additions.swift"; sourceTree = "<group>"; };
 		A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInProgressTimeReporter.swift; sourceTree = "<group>"; };
+		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
 		A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountRepository+Additions.swift"; sourceTree = "<group>"; };
@@ -4602,7 +4589,6 @@
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
 		B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModelTests.swift; sourceTree = "<group>"; };
-		B56185F82B5E83B800A10F4C /* CustomModalAlertViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGAPurchase.swift; sourceTree = "<group>"; };
 		B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSKProduct.swift; sourceTree = "<group>"; };
 		B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPlanPurchaseRepositoryTests.swift; sourceTree = "<group>"; };
@@ -4644,7 +4630,6 @@
 		B5B4CFC22C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEncourageGuestUserToJoinMegaRouter.swift; sourceTree = "<group>"; };
 		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
-		B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CookieSettingsTableViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositoryTests.swift; sourceTree = "<group>"; };
 		B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModel.swift; sourceTree = "<group>"; };
 		B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewRouter.swift; sourceTree = "<group>"; };
@@ -5154,7 +5139,6 @@
 		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
 		BF8CB03F2C34F63900119979 /* NodeSensitivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSensitivityChecker.swift; sourceTree = "<group>"; };
 		BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoWrapperViewController.swift; sourceTree = "<group>"; };
-		BF8DD11E2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeInfoWrapperViewController+SnackBarPresenting.swift"; sourceTree = "<group>"; };
 		BF90C7A626040930006061F8 /* UserStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreRepository.swift; sourceTree = "<group>"; };
 		BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsView.swift; sourceTree = "<group>"; };
 		BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNDTurnOnOption.swift; sourceTree = "<group>"; };
@@ -7118,7 +7102,6 @@
 				836A783328E34E5B00B6849F /* MainTabBarController+Chat.swift */,
 				12397E262820C68400A30CCC /* MainTabBarController+PhotoAlbum.swift */,
 				B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */,
-				943FF9EE292FA33E00B744C8 /* MainTabBarController+SnackBar.swift */,
 				4152267C1A692ECC00EC7BB6 /* MainTabBarController.h */,
 				4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */,
 			);
@@ -7516,6 +7499,7 @@
 				83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */,
 				BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */,
 				BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */,
+				A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */,
 				2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */,
 			);
 			path = Categories;
@@ -7738,7 +7722,6 @@
 			children = (
 				5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */,
 				5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */,
-				B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */,
 				5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */,
 				5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */,
 			);
@@ -8033,7 +8016,6 @@
 				124667F4275DB82000C94335 /* Routers */,
 				2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */,
 				B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */,
-				B56185F82B5E83B800A10F4C /* CustomModalAlertViewController+SnackBar.swift */,
 				124667E9275DB81300C94335 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
@@ -8845,7 +8827,6 @@
 				77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */,
 				BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */,
 				B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */,
-				2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */,
 				77D9A56A2023547900B48470 /* MEGAPhotoBrowserViewController.h */,
 				77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */,
 				77D9A56D202355F800B48470 /* PhotoBrowser.storyboard */,
@@ -9222,7 +9203,6 @@
 				834EFDC124D9B373004BFECA /* Node.storyboard */,
 				834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */,
 				B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */,
-				BF8DD11E2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift */,
 				BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */,
 				94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */,
 				837B73AD24DD7EAA00321368 /* NodeVersionsViewController.h */,
@@ -9516,7 +9496,6 @@
 				0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */,
 				0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */,
 				0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */,
-				94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */,
 				837EE20E253DBABD0083D927 /* GetLinkViewController.swift */,
 				0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */,
 				2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */,
@@ -10290,7 +10269,6 @@
 				94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */,
 				943270602A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift */,
 				6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */,
-				9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */,
 				C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
@@ -10307,15 +10285,6 @@
 				E85044C51A6D84620064B675 /* FileLinkViewController.m */,
 			);
 			path = File;
-			sourceTree = "<group>";
-		};
-		9458610A2926963200866F03 /* Snackbar */ = {
-			isa = PBXGroup;
-			children = (
-				943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */,
-				943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */,
-			);
-			path = Snackbar;
 			sourceTree = "<group>";
 		};
 		9459229A2C3EA619004D6AEF /* Contacts */ = {
@@ -11520,7 +11489,6 @@
 				0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */,
 				948028382B6C272E002B4EB4 /* Info */,
 				B6730B0B2735F46D00A9CF5F /* Shared Controls */,
-				9458610A2926963200866F03 /* Snackbar */,
 				5D646600248909D5006030A5 /* Theme */,
 				5DE448E7248D159000EE00CB /* UIKit+Tools */,
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
@@ -14850,7 +14818,6 @@
 				9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */,
 				BFB076572B8EE91D00FE6962 /* ContextMenuWithButtonView.swift in Sources */,
 				5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */,
-				B5C640822B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift in Sources */,
 				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
 				5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */,
 				A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */,
@@ -14880,7 +14847,6 @@
 				124667FB275DB82000C94335 /* CustomModalAlertViewController+LaunchTab.swift in Sources */,
 				94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */,
 				B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */,
-				B56185F92B5E83B800A10F4C /* CustomModalAlertViewController+SnackBar.swift in Sources */,
 				124667FC275DB82000C94335 /* CustomModalAlertViewController+Storage.swift in Sources */,
 				B5CFA46E2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift in Sources */,
 				12466801275DB82000C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */,
@@ -15030,7 +14996,6 @@
 				94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */,
 				943270612A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */,
-				9425DF662931329200AD3156 /* FolderLinkViewController+SnackBar.swift in Sources */,
 				C472964426C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
 				5D646602248909F8006030A5 /* FontStyle.swift in Sources */,
@@ -15059,7 +15024,6 @@
 				0E3B1A482A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift in Sources */,
 				837DC7AA256D196400CA289E /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				0E2FEAA82A7B44AC00D237C6 /* GetLinkView.swift in Sources */,
-				94361BB72A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift in Sources */,
 				837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */,
 				0E3E07AD2A1EBEDF00A2A71B /* GetLinkViewModelType.swift in Sources */,
 				2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */,
@@ -15172,7 +15136,6 @@
 				836A783428E34E5B00B6849F /* MainTabBarController+Chat.swift in Sources */,
 				12397E272820C68400A30CCC /* MainTabBarController+PhotoAlbum.swift in Sources */,
 				B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */,
-				943FF9EF292FA33E00B744C8 /* MainTabBarController+SnackBar.swift in Sources */,
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				B69AF66828A1E5190022B094 /* ManageChatHistoryTableViewController.swift in Sources */,
 				B69AF66B28A1E5190022B094 /* ManageChatHistoryViewModel.swift in Sources */,
@@ -15305,7 +15268,6 @@
 				77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */,
 				BF49DEE72818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift in Sources */,
 				B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */,
-				2592C2A22AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift in Sources */,
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */,
 				5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */,
@@ -15465,7 +15427,6 @@
 				94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */,
 				834EFDBF24D9AF64004BFECA /* NodeInfoViewController.swift in Sources */,
 				B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */,
-				BF8DD11F2C7D718A00BE7DF0 /* NodeInfoWrapperViewController+SnackBarPresenting.swift in Sources */,
 				BF8DD11C2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
 				5D6092A6255D609F005FA3E4 /* NodeLabelActionUseCase.swift in Sources */,
@@ -15955,8 +15916,6 @@
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
 				B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */,
 				B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */,
-				943FF9F1292FD74A00B744C8 /* SnackBarPresenting.swift in Sources */,
-				943FF9F5292FEDA600B744C8 /* SnackBarRouter.swift in Sources */,
 				5B7273A1240D4F71005816AB /* SortingAndViewModeTableViewController.swift in Sources */,
 				5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */,
 				25F9329F2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift in Sources */,
@@ -16056,6 +16015,7 @@
 				5D31674724FCA8FD0032492F /* UIViewController+ErrorHandling.swift in Sources */,
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
 				BFAB114023CEA5C300BCE72D /* UIViewController+PhotoAlbumBrowserAdditions.swift in Sources */,
+				A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */,

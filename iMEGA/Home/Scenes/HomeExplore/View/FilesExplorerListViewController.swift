@@ -83,11 +83,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         
         audioPlayer(hidden: false)
     }
-    
-    override func updateContentView(_ height: CGFloat) {
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-    }
-    
+        
     private func configureExplorerToolbarButtons() {
         switch viewModel.getExplorerType() {
         case .favourites: configureFavouriteToolbarButtons()

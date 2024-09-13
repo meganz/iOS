@@ -115,11 +115,7 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     func showSelectButton(_ show: Bool) {
         containerViewController.showSelectButton(show)
     }
-    
-    func updateContentView(_ height: CGFloat) {
-        filesExplorerViewController?.updateContentView(height)
-    }
-    
+        
     func audioPlayer(hidden: Bool) {
         containerViewController.audioPlayer(hidden: hidden)
     }
