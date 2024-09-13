@@ -6,7 +6,7 @@ import MEGAL10n
 import MEGAPresentation
 import SwiftUI
 
-final class MeetingParticipantsLayoutViewController: UIViewController, ViewType, SnackBarPresenting {
+final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     
     private enum Constants {
         static let notificationMessageWhiteBackgroundColor = TokenColors.Background.inverse
@@ -98,12 +98,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        // we cannot put that in the viewWIll/DidDisappear as tit's called multiple times when floating
-        // drawer is shown
-        SnackBarRouter.shared.removePresenter()
-    }
-    
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,63 +121,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.dispatch(.onViewReady)
-        SnackBarRouter.shared.configurePresenter(self)
-    }
-    
-    var bottomSnackBarConstraint: NSLayoutConstraint?
-    var leadingSnackConstraint: NSLayoutConstraint?
-    var trailingSnackConstraint: NSLayoutConstraint?
-    
-    var _snackBarContainerView: UIView?
-    func snackBarContainerView() -> UIView? {
-        _snackBarContainerView
     }
     
     func shouldBeginShowingSnackBar() -> Bool {
         !viewModel.floatingPanelShown
-    }
-    
-    func layout(snackBarView: UIView?) {
-        _snackBarContainerView?.removeFromSuperview()
-        // when snack bar is dismissed, this is the actual bit of logic that dismisses
-        // as this method is called with snackBarView == nil
-        _snackBarContainerView = snackBarView
-        _snackBarContainerView?.backgroundColor = .clear
-        
-        guard let snackBarView else {
-            return
-        }
-        
-        snackBarView.translatesAutoresizingMaskIntoConstraints = false
-        let constants = SnackBarConstraintConstants(statusBarHidden: statusBarHidden)
-        let leadingSnackConstraint = snackBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: constants.leading)
-        let trailingSnackConstraint = snackBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: constants.trailing)
-        let bottomSnackBarConstraint = snackBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: constants.bottom)
-        
-        NSLayoutConstraint.activate([
-            leadingSnackConstraint,
-            trailingSnackConstraint,
-            bottomSnackBarConstraint
-        ])
-        
-        self.leadingSnackConstraint = leadingSnackConstraint
-        self.trailingSnackConstraint = trailingSnackConstraint
-        self.bottomSnackBarConstraint = bottomSnackBarConstraint
-    }
-    
-    // this is needed to accommodate rotation and showing/hiding of the floating drawer
-    // configureSpeakerView carries some custom constraints that are breaking the layout if this is not updated
-    func updateSnackBarConstraintsIfNeeded(animated: Bool, menusShown: Bool) {
-        let constants = SnackBarConstraintConstants(statusBarHidden: !menusShown)
-        leadingSnackConstraint?.constant = constants.leading
-        trailingSnackConstraint?.constant = constants.trailing
-        bottomSnackBarConstraint?.constant = constants.bottom
-        
-        if animated {
-            UIView.animate(withDuration: 0.33) {
-                self.view.setNeedsUpdateConstraints()
-            }
-        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
@@ -200,7 +141,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
                 )
             )
             viewModel.dispatch(.onOrientationChanged)
-            updateSnackBarConstraintsIfNeeded(animated: false, menusShown: !statusBarHidden)
         })
     }
     
@@ -375,11 +315,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
             // in portrait it's shown underneath anyway, in landscape it's looks very strange
             if let snackBar, !viewModel.floatingPanelShown {
                 MEGALogDebug("[RaiseHand] snack bar update non nil")
-                SnackBarRouter.shared.present(snackBar: snackBar)
-            } else {
+                showSnackBar(snackBar: snackBar)
+            } else { // Need to check, it seems that this `else` branch is not needed
                 // could be auto dismissed by that time as there's a timer inside SnackBarViewModel
                 MEGALogDebug("[RaiseHand] snack bar update is nil")
-                SnackBarRouter.shared.dismissSnackBar(immediate: false)
+                dismissSnackBar(immediate: false)
             }
         case .showEmptyCallShareOptionsView(let canInviteParticipants):
             addEmptyMeetingShareOptionsView(canInviteParticipants)
@@ -406,7 +346,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType,
         localUserView.updateOffsetWithNavigation(hidden: hidden)
         updateRecordingImageView(statusBarHidden: hidden)
         updateNavigationBarAppearance()
-        updateSnackBarConstraintsIfNeeded(animated: true, menusShown: !hidden)
+        refreshSnackBarBottomInset(animated: true)
     }
     
     func updateRecordingImageView(statusBarHidden: Bool) {
@@ -831,29 +771,14 @@ extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
     }
 }
 
-// Extracting re-used code for updating snack bar constraints specific to only this screen
-struct SnackBarConstraintConstants {
-    
-    let bottom: CGFloat
-    let leading: CGFloat
-    let trailing: CGFloat
-    
-    init(statusBarHidden: Bool) {
-        leading = Self.safeInsets.left
-        trailing = -Self.safeInsets.right
-        bottom = Self.bottomSnackBarConstant(statusBarHidden: statusBarHidden)
-    }
-    
-    private static var safeInsets: UIEdgeInsets {
-        UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
-    }
-    
-    private static func bottomSnackBarConstant(statusBarHidden: Bool) -> CGFloat {
+extension MeetingParticipantsLayoutViewController: SnackBarLayoutCustomizable {
+    var additionalSnackBarBottomInset: CGFloat {
         let snackBarDistanceFromBottomSafe: CGFloat = 20
-        if statusBarHidden {
-            return snackBarDistanceFromBottomSafe
+
+        return if statusBarHidden {
+            snackBarDistanceFromBottomSafe
         } else {
-            return -MeetingFloatingPanelViewController.Constants.viewShortFormHeight - snackBarDistanceFromBottomSafe
+            MeetingFloatingPanelViewController.Constants.viewShortFormHeight + snackBarDistanceFromBottomSafe
         }
     }
 }

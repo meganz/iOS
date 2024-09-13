@@ -61,10 +61,10 @@ final class ChatRoomsListViewController: UIViewController {
         view.addSubview(hostingView.view)
         hostingView.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hostingView.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             hostingView.view.topAnchor.constraint(equalTo: view.topAnchor),
-            hostingView.view.widthAnchor.constraint(equalTo: view.widthAnchor),
-            hostingView.view.heightAnchor.constraint(equalTo: view.heightAnchor)
+            hostingView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         hostingView.didMove(toParent: self)
@@ -139,6 +139,6 @@ final class ChatRoomsListViewController: UIViewController {
 
 extension ChatRoomsListViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
-        viewModel.bottomViewHeight = height
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
     }
 }

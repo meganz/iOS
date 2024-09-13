@@ -1,8 +1,6 @@
 extension CloudDriveViewController: AudioPlayerPresenterProtocol {
     
     func updateContentView(_ height: CGFloat) {
-        var adjustedSafeAreaInset = additionalSafeAreaInsets
-        adjustedSafeAreaInset.bottom = height
-        self.additionalSafeAreaInsets = adjustedSafeAreaInset
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
     }
 }

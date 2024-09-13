@@ -88,11 +88,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     override func endEditingMode() {
         delegate?.configureNavigationBarToDefault()
     }
-    
-    func updateContentView(_ height: CGFloat) {
-        fatalError("updateContentView(_:) needs to be implemented by the subclass ")
-    }
-    
+        
     func audioPlayer(hidden: Bool) {
         delegate?.audioPlayer(hidden: hidden)
     }
