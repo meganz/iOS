@@ -30,16 +30,6 @@ final class NodeInfoWrapperViewController: UIViewController {
         configureShowSavedDescriptionState()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureSnackBarPresenter()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        removeSnackBarPresenter()
-    }
-
     private func addNodeInfoAsChild() {
         addChild(nodeInfoViewController)
 
@@ -72,8 +62,13 @@ final class NodeInfoWrapperViewController: UIViewController {
     @objc private func dismissScreen() {
         if nodeInfoViewController.hasPendingNodeDescriptionChanges?() == true,
            let saveNodeDescriptionChanges = nodeInfoViewController.saveNodeDescriptionChanges {
-            showNodeDescriptionAlert(saveDescription: saveNodeDescriptionChanges) {
-                self.dismissView()
+            showNodeDescriptionAlert(saveDescription: saveNodeDescriptionChanges) { [weak self] completion in
+                guard let self, let completion else {
+                    self?.dismissView()
+                    return
+                }
+                
+                dismiss(animated: true) { completion() }
             }
         } else {
             dismissView()
@@ -95,13 +90,13 @@ final class NodeInfoWrapperViewController: UIViewController {
     private func configureShowSavedDescriptionState() {
         nodeInfoViewController.showSavedDescriptionState = { [weak self] savedState in
             guard let self else { return }
-            showSnackBar(with: savedState.localizedString)
+            self.showSnackBar(message: savedState.localizedString)
         }
     }
 
     private func showNodeDescriptionAlert(
         saveDescription: @escaping () async -> NodeDescriptionCellControllerModel.SavedState?,
-        close: @escaping () -> Void
+        close: @escaping ((() -> Void)?) -> Void
     ) {
         let alert = UIAlertController(
             title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.title,
@@ -111,7 +106,7 @@ final class NodeInfoWrapperViewController: UIViewController {
 
         alert.addAction(
             title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.discardButtonTitle,
-            handler: close
+            handler: { close(nil) }
         )
 
         alert.addAction(
@@ -121,18 +116,22 @@ final class NodeInfoWrapperViewController: UIViewController {
         alert.addAction(
             title: Strings.Localizable.CloudDrive.NodeInfo.NodeDescription.ClosePopup.saveAndCloseButtonTitle,
             style: .cancel,
-            handler: { [weak self] in
-                Task { @MainActor [weak self] in
-                    guard let savedState = await saveDescription(), let self else {
-                        close()
+            handler: {
+                Task { @MainActor in
+                    guard let savedState = await saveDescription() else {
+                        close(nil)
                         return
+                    }
+
+                    let completion = {
+                        UIApplication.mnz_visibleViewController().showSnackBar(message: savedState.localizedString)
                     }
 
                     switch savedState {
                     case .added, .removed, .updated:
-                        close()
+                        close(completion)
                     case .error:
-                        showSnackBar(with: savedState.localizedString)
+                        completion()
                     }
                 }
             }

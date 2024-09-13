@@ -32,7 +32,6 @@ class CookieSettingsTableViewController: UITableViewController {
     
     var router: CookieSettingsRouter!
     var viewModel: CookieSettingsViewModel!
-    var snackBarContainer: UIView?
     
     private var footersArray: [String] = ["", "", "", "", "", ""]
     
@@ -49,12 +48,6 @@ class CookieSettingsTableViewController: UITableViewController {
         }
         
         configView()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        removeSnackBarPresenter()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -90,7 +83,7 @@ class CookieSettingsTableViewController: UITableViewController {
             router.dismiss()
             
         case .showSnackBar(let message):
-            SnackBarRouter.shared.present(snackBar: SnackBar(message: message))
+            showSnackBar(snackBar: SnackBar(message: message))
             
         case .showResult(let resultCommand):
             executeCommand(resultCommand)
@@ -163,8 +156,6 @@ class CookieSettingsTableViewController: UITableViewController {
         }
 
         updateAppearance()
-        
-        configureSnackBarPresenter()
     }
     
     private func configToolbar() {

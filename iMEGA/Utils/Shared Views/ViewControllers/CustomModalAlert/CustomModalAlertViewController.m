@@ -113,16 +113,6 @@
     [self updateAppearance];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear: animated];
-    if (self.viewModel) [self.viewModel configureSnackBar];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (self.viewModel) [self.viewModel removeSnackBarConfig];
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     

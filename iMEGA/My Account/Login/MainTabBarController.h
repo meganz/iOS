@@ -18,9 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
-@property (nonatomic, strong, nullable) UIView *snackBarContainerView;
 @property (nonatomic, strong, nullable) NSLayoutConstraint *bottomViewBottomConstraint;
-@property (nonatomic, strong, nullable) NSLayoutConstraint *snackBarViewBottomConstraint;
 @property (nonatomic, strong, nullable) AudioPlayer *player;
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
 @property (nonatomic, strong, nullable) UIImageView *phoneBadgeImageView;

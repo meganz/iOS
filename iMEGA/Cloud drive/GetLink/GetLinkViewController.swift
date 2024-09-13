@@ -51,8 +51,6 @@ class GetLinkViewController: UIViewController {
     
     let flexibleBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     
-    var snackBarContainer: UIView?
-    
     private var getLinkVM = GetNodeLinkViewModel(shareUseCase: ShareUseCase(
         shareRepository: ShareRepository.newRepo,
         filesSearchRepository: FilesSearchRepository.newRepo,
@@ -89,8 +87,6 @@ class GetLinkViewController: UIViewController {
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         
         copyKeyBarButton.title = Strings.Localizable.copyKey
-        
-        configureSnackBarPresenter()
         
         if var getLinkViewModel {
             let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
@@ -143,8 +139,6 @@ class GetLinkViewController: UIViewController {
         if let getLinkViewModel {
             getLinkViewModel.dispatch(.onViewWillDisappear)
         }
-        
-        removeSnackBarPresenter()
         
         NotificationCenter.default.post(name: Notification.Name.MEGAShareCreated, object: nil)
     }
@@ -235,7 +229,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func showCopySuccessSnackBar(with message: String) {
-        SnackBarRouter.shared.present(snackBar: SnackBar(message: message))
+        showSnackBar(snackBar: SnackBar(message: message))
     }
     
     private func updateModel(forNode node: MEGANode) {

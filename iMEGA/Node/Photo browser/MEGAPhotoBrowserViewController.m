@@ -166,7 +166,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super viewWillAppear:animated];
     
     [MEGASdk.shared addMEGADelegate:self];
-    [self configureSnackBarPresenter];
     [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
     [TransfersWidgetViewController.sharedTransferViewController updateProgressViewWithBottomConstant:-120];
@@ -238,7 +237,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self removeSnackBarPresenter];
     [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 

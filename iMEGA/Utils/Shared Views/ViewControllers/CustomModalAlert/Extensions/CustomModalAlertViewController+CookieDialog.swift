@@ -92,22 +92,11 @@ extension CustomModalAlertViewController {
     
     private func makeCookieDialogViewModel() -> CustomModalAlertViewModel {
         let invalidLinkTapAction = {
-            SnackBarRouter.shared.present(snackBar: SnackBar(message: Strings.Localizable.somethingWentWrong))
-        }
-        
-        let configureSnackBarPresenter = { [weak self] in
-            guard let self else { return }
-            SnackBarRouter.shared.configurePresenter(self)
-        }
-        
-        let removeSnackBarPresenter = {
-            SnackBarRouter.shared.removePresenter()
+            self.showSnackBar(snackBar: SnackBar(message: Strings.Localizable.somethingWentWrong))
         }
         
         return CustomModalAlertViewModel(
             invalidLinkTapAction: invalidLinkTapAction,
-            configureSnackBarPresenter: configureSnackBarPresenter,
-            removeSnackBarPresenter: removeSnackBarPresenter,
             tracker: DIContainer.tracker,
             analyticsEvents: nil
         )

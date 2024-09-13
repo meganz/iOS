@@ -107,10 +107,6 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         return gridSource?.selectedNodes
     }
     
-    override func updateContentView(_ height: CGFloat) {
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-    }
-    
     private func addCollectionView() {
         view.wrap(collectionView)
     }
