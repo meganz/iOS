@@ -3,7 +3,7 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-protocol RaiseHandSnackBarProviding {
+public protocol RaiseHandSnackBarProviding {
     func snackBar(
         // this array should not contain local user's participantId
         // to properly handle scenario when the same user connect from different clients
@@ -14,7 +14,7 @@ protocol RaiseHandSnackBarProviding {
 
 ///  Creates a SnackBar instance for given Raise Hand scenario, taking into account
 ///  _only_ necessary variables, local hand state and number of other participant that raised hands
-struct RaiseHandSnackBarFactory: RaiseHandSnackBarProviding {
+public struct RaiseHandSnackBarFactory: RaiseHandSnackBarProviding {
     enum Scenario {
         case nobodyRaisedHand
         case onlyMe
@@ -23,10 +23,18 @@ struct RaiseHandSnackBarFactory: RaiseHandSnackBarProviding {
         case meAndOthers(count: Int) // count >= 0
     }
     
-    var viewRaisedHandsHandler: () -> Void
-    var lowerHandHandler: () -> Void
+    public var viewRaisedHandsHandler: () -> Void
+    public var lowerHandHandler: () -> Void
     
-    func snackBar(
+    public init(
+        viewRaisedHandsHandler: @escaping () -> Void,
+        lowerHandHandler: @escaping () -> Void
+    ) {
+        self.viewRaisedHandsHandler = viewRaisedHandsHandler
+        self.lowerHandHandler = lowerHandHandler
+    }
+    
+    public func snackBar(
         participantsThatJustRaisedHands: [CallParticipantEntity],
         localRaisedHand: Bool
     ) -> SnackBar? {
@@ -125,7 +133,7 @@ extension SnackBar {
     /// extracted factory to keep common parameters in sync:
     /// - layout
     /// - colors (slightly different, background is white solid always)
-    static func raiseHandSnackBar(
+    public static func raiseHandSnackBar(
         message: String,
         action: SnackBar.Action
     ) -> SnackBar? {
@@ -176,7 +184,8 @@ extension RaiseHandSnackBarFactory.Scenario {
             if let snackBar = $0.snackBar {
                 SnackBarView(
                     viewModel: SnackBarViewModel(
-                        snackBar: snackBar
+                        snackBar: snackBar,
+                        willDismiss: nil
                     )
                 )
             } else {

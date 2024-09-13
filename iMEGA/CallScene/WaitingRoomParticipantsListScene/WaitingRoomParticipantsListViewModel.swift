@@ -1,5 +1,6 @@
 import ChatRepo
 import Combine
+import Chat
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
