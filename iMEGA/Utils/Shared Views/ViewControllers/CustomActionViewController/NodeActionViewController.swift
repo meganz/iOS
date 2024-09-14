@@ -62,7 +62,7 @@ class NodeActionViewController: ActionSheetViewController {
     lazy var separatorLineView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : tableView.separatorColor
+        view.backgroundColor = TokenColors.Border.strong
         return view
     }()
     
@@ -301,14 +301,14 @@ class NodeActionViewController: ActionSheetViewController {
     override func updateAppearance() {
         super.updateAppearance()
         
-        headerView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface2 : UIColor.mnz_secondaryBackgroundElevated(traitCollection)
+        headerView?.backgroundColor = TokenColors.Background.surface2
         if nodes.count == 1, let node = nodes.first, node.isTakenDown() {
             titleLabel.attributedText = node.attributedTakenDownName()
-            titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
+            titleLabel.textColor = TokenColors.Text.error
         } else {
-            titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+            titleLabel.textColor = TokenColors.Text.primary
         }
-        subtitleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_subtitles(for: traitCollection)
+        subtitleLabel.textColor = TokenColors.Text.secondary
         separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
     

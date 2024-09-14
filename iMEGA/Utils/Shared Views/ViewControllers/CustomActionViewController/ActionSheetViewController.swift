@@ -143,15 +143,9 @@ class ActionSheetViewController: UIViewController {
     }
     
     func updateAppearance() {
-        if UIColor.isDesignTokenEnabled() {
-            tableView.backgroundColor = TokenColors.Background.surface1
-            titleLabel.textColor = TokenColors.Text.primary
-            indicator.backgroundColor = TokenColors.Border.strong
-        } else {
-            tableView.backgroundColor = .mnz_backgroundElevated(traitCollection)
-            titleLabel.textColor = UIColor.label
-            indicator.backgroundColor = UIColor.mnz_handlebar(for: traitCollection)
-        }
+        tableView.backgroundColor = TokenColors.Background.surface1
+        titleLabel.textColor = TokenColors.Text.primary
+        indicator.backgroundColor = TokenColors.Border.strong
     }
     
     func layoutViews(to size: CGSize) {

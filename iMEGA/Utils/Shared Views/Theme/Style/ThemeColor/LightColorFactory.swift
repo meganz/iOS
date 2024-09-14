@@ -5,20 +5,18 @@ struct LightColorThemeFactory: ColorFactory {
     
     func textColor(_ style: MEGAColor.Text) -> UIColor {
         switch style {
-        case .primary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.black000000
-        case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.gray999999
+        case .primary: return TokenColors.Text.primary
+        case .secondary: return TokenColors.Text.secondary
         case .tertiary: return MEGAAppColor.Gray._515151.uiColor
         case .quaternary: return MEGAAppColor.Gray._848484.uiColor
-        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.Red._FF3B30.uiColor
+        case .warning: return TokenColors.Text.primary
         }
     }
     
     func backgroundColor(_ style: MEGAColor.Background) -> UIColor {
         switch style {
-        case .primary: return UIColor.isDesignTokenEnabled() ? TokenColors.Background.page: UIColor.whiteFFFFFF
-        case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Background.page: UIColor.grayC4CCCC
-            
-        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationWarning : MEGAAppColor.Yellow._FFCC0003.uiColor
+        case .primary, .secondary: return TokenColors.Background.page
+        case .warning: return TokenColors.Notifications.notificationWarning
         case .enabled: return MEGAAppColor.Green._00A886.uiColor
         case .disabled: return MEGAAppColor.Gray._999999.uiColor
         case .highlighted: return MEGAAppColor.Green._00A88680.uiColor
@@ -30,15 +28,15 @@ struct LightColorThemeFactory: ColorFactory {
     
     func tintColor(_ style: MEGAColor.Tint) -> UIColor {
         switch style {
-        case .primary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.gray515151
-        case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.grayC4C4C4
+        case .primary: return TokenColors.Text.primary
+        case .secondary: return TokenColors.Text.secondary
         }
     }
     
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
         case .primary: return MEGAAppColor.Black._00000015.uiColor
-        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationWarning : MEGAAppColor.Yellow._FFCC00.uiColor
+        case .warning: return TokenColors.Notifications.notificationWarning
         }
     }
     

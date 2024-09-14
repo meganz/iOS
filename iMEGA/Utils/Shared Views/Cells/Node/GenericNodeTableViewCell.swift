@@ -92,7 +92,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
         } else {
             mainLabel.text = nodeModel.name
             mainLabel.textColor = .label
-            secondaryLabel.textColor = .mnz_subtitles(for: traitCollection)
+            secondaryLabel.textColor = .mnz_subtitles()
         }
         
         if nodeModel.isFile {

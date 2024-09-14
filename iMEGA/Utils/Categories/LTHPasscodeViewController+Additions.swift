@@ -2,8 +2,6 @@ import MEGADesignToken
 
 extension LTHPasscodeViewController {
     @objc func updateColorWithDesignToken() {
-        guard UIColor.isDesignTokenEnabled() else { return }
-
         // Backgrounds
         backgroundColor = TokenColors.Background.surface1
         passcodeBackgroundColor = .clear

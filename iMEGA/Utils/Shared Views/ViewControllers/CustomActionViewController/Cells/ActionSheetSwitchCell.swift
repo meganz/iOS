@@ -11,7 +11,7 @@ final class ActionSheetSwitchCell: UITableViewCell {
         
         if let detail = action.detail {
             detailLabel.text = detail
-            detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_gray848484()
+            detailLabel.textColor = TokenColors.Text.secondary
             detailLabel.isHidden = false
             detailLabel.alpha = 1.0
         } else {

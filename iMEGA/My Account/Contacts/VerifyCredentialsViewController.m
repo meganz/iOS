@@ -125,7 +125,7 @@
     
     self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.myCredentialsView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
-    self.userEmailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.userEmailLabel.textColor = [UIColor mnz_subtitles];
     
     self.myCredentialsSubView.backgroundColor = [UIColor mnz_tertiaryBackgroundElevated:self.traitCollection];
     self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;

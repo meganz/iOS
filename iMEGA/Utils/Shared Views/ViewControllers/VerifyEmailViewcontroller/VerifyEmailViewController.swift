@@ -61,7 +61,7 @@ class VerifyEmailViewController: UIViewController {
         hintButton.backgroundColor = .mnz_tertiaryBackgroundElevated(traitCollection)
         bottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         
-        hintLabel.textColor = UIColor .mnz_subtitles(for: traitCollection)
+        hintLabel.textColor = UIColor.mnz_subtitles()
     }
 
     func addGradientBackground() {

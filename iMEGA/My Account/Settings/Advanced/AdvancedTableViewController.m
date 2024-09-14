@@ -125,7 +125,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
     if ([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
         UITableViewHeaderFooterView *headerFooterView = (UITableViewHeaderFooterView *) view;
-        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitles];
     }
 }
 

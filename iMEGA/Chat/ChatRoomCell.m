@@ -74,9 +74,9 @@
 
 - (void)updateAppearance {
     self.backgroundColor = [UIColor mnz_background];
-    self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.chatLastMessage.textColor = [UIColor mnz_subtitles];
     
-    self.chatLastTime.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.chatLastTime.textColor = [UIColor mnz_subtitles];
     
     BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:LocalizedString(@"archived", @"Title of flag of archived chats.")];
     if (chatRoomsTypeArchived) {
@@ -89,13 +89,13 @@
     }
     self.unreadCount.textColor = UIColor.mnz_whiteFFFFFF;
     
-    self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.onCallDuration.textColor = [UIColor mnz_subtitles];
 }
 
 - (void)manageUnreadMessages:(NSInteger)unreadCount {
     if (unreadCount != 0) {
         self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        self.chatLastMessage.textColor = [UIColor mnz_subtitles];
         
         self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
         
@@ -192,13 +192,13 @@
             if (!self.timer.valid && call.status == MEGAChatCallStatusInProgress) {
                 self.initDuration = call.duration;
                 self.baseDate = [NSDate date];
-                self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+                self.onCallDuration.textColor = [UIColor mnz_subtitles];
                 [self updateDuration];
                 self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
             }
         }
-        self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        self.chatLastMessage.textColor = [UIColor mnz_subtitles];
     }
     
     [self updateUnreadCountChange:chatListItem.unreadCount];

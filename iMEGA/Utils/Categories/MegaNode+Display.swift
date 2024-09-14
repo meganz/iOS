@@ -11,7 +11,7 @@ extension MEGANode {
         let takedownImageAttachment = NSTextAttachment()
         let takeDownImage = UIImage(named: "isTakedown")
         
-        takedownImageAttachment.image = UIColor.isDesignTokenEnabled() ? takeDownImage?.withTintColorAsOriginal(.mnz_takenDownNodeIconColor()) : takeDownImage
+        takedownImageAttachment.image = takeDownImage?.withTintColorAsOriginal(.mnz_takenDownNodeIconColor())
         let takedownImageString = NSAttributedString(attachment: takedownImageAttachment)
         
         name.append(takedownImageString)

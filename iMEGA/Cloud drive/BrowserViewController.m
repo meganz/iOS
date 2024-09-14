@@ -712,7 +712,7 @@
     
     cell.node = node;
     
-    cell.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    cell.infoLabel.textColor = [UIColor mnz_subtitles];
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
             cell.infoLabel.text = [Helper sizeAndModificationDateForNode:node api:MEGASdk.shared];
@@ -743,7 +743,7 @@
     } else {
         cell.infoLabel.enabled = YES;
         cell.nameLabel.textColor = UIColor.labelColor;
-        cell.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        cell.subtitleLabel.textColor = [UIColor mnz_subtitles];
         cell.userInteractionEnabled = YES;
         cell.thumbnailImageView.alpha = 1.0;
     }

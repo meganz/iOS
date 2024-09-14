@@ -24,7 +24,7 @@ class ChatViewAttachmentCell: MessageContentCell {
     public lazy var detailLabel: MEGALabel = {
         let detailLabel = MEGALabel(frame: .zero)
         detailLabel.apply(style: .caption1)
-        detailLabel.textColor = UIColor.mnz_subtitles(for: UIScreen.main.traitCollection)
+        detailLabel.textColor = UIColor.mnz_subtitles()
         detailLabel.lineBreakMode = .byTruncatingMiddle
         return detailLabel
     }()

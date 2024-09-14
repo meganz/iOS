@@ -45,12 +45,8 @@ final class CameraUploadStatusImageViewModelTests: XCTestCase {
     }
     
     func testProgressLineColor_onStatus_colorShouldBeCorrect() {
-        let uploadingColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Support.info.swiftUI :
-            Color(.cameraUploadStatusUploading)
-        let completedColor = UIColor.isDesignTokenEnabled() ?
-            TokenColors.Support.success.swiftUI :
-            Color(.cameraUploadStatusCompleted)
+        let uploadingColor = TokenColors.Support.info.swiftUI
+        let completedColor = TokenColors.Support.success.swiftUI
         let expectations: [(CameraUploadStatus, Color)] = [
             (.turnedOff, .clear),
             (.checkPendingItemsToUpload, .clear),
