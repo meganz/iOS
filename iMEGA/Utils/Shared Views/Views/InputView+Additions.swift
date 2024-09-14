@@ -9,11 +9,7 @@ extension InputView {
         topLabel?.textColor = normalLabelColor()
         inputTextField?.textColor = normalTextColor()
         
-        if UIColor.isDesignTokenEnabled() {
-            backgroundColor = TokenColors.Background.page
-        } else {
-            backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        }
+        backgroundColor = TokenColors.Background.page
     }
     
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -24,24 +20,24 @@ extension InputView {
     }
     
     @objc func errorTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        TokenColors.Text.error
     }
     
     @objc func normalTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.label
+        TokenColors.Button.primary
     }
     
     @objc func normalLabelColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.mnz_secondaryGray(for: traitCollection)
+        TokenColors.Button.primary
     }
     
     // MARK: - Private
     
     private func separatorColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        TokenColors.Border.strong
     }
     
     private func iconTintColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : UIColor.mnz_secondaryGray(for: traitCollection)
+        TokenColors.Icon.secondary
     }
 }

@@ -9,18 +9,16 @@ extension UIColor {
     @objc class func color(
         withChatStatus status: MEGAChatStatus
     ) -> UIColor? {
-        var color: UIColor?
-        
-        switch status {
+        let color: UIColor? = switch status {
         case .offline:
-            color = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.disabled : mnz_primaryGray(for: UIScreen.main.traitCollection)
+            TokenColors.Icon.disabled
         case .away:
-            color = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.yellow : .systemOrange
+            TokenColors.Indicator.yellow
         case .online:
-            color = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : systemGreen
+            TokenColors.Indicator.green
         case .busy:
-            color = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : mnz_red(for: UIScreen.main.traitCollection)
-        default: break
+            TokenColors.Indicator.pink
+        default: nil
         }
         
         return color
@@ -128,15 +126,7 @@ extension UIColor {
     @objc class func mnz_navigationBarTitle(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            TokenColors.Text.primary
-        } else {
-            switch traitCollection.userInterfaceStyle {
-            case .unspecified, .light: UIColor.black000000
-            case .dark: UIColor.whiteFFFFFF
-            @unknown default: UIColor.black000000
-            }
-        }
+        TokenColors.Text.primary
     }
     
     @objc class func mnz_navigationBarTint(
@@ -172,19 +162,8 @@ extension UIColor {
         }
     }
     
-    @objc class func surfaceBackground(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : UIColor.whiteFFFFFF
-            
-        case .dark:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : UIColor.black2C2C2E
-            
-        @unknown default:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : UIColor.whiteFFFFFF
-        }
+    @objc class func surfaceBackground() -> UIColor {
+        TokenColors.Background.surface1
     }
     
     @objc class func searchBarSurface1BackgroundColor() -> UIColor {
@@ -478,20 +457,7 @@ extension UIColor {
     class func mnz_basicButton(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        guard !UIColor.isDesignTokenEnabled() else {
-            return TokenColors.Button.secondary
-        }
-        
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.White._FFFFFF.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Gray._363638.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
-        }
+        TokenColors.Button.secondary
     }
     
     @objc(
@@ -500,20 +466,7 @@ extension UIColor {
     class func mnz_separator(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        guard !UIColor.isDesignTokenEnabled() else {
-            return TokenColors.Border.strong
-        }
-        
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Gray._3C3C4330.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Gray._54545865.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.Gray._3C3C4330.uiColor
-        }
+        TokenColors.Border.strong
     }
     
     @objc(
@@ -550,31 +503,20 @@ extension UIColor {
         }
     }
     
-    @objc class func mnz_Elevated(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : MEGAAppColor.White._F7F7F7.uiColor
-            
-        case .dark:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : MEGAAppColor.Black._2C2C2E.uiColor
-            
-        @unknown default:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : MEGAAppColor.White._F7F7F7.uiColor
-        }
+    @objc class func mnz_Elevated() -> UIColor {
+        TokenColors.Background.surface1
     }
     
     @objc class func mnz_badgeTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+        TokenColors.Text.onColor
     }
     
     @objc class func mnz_secondaryLabelTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
+        TokenColors.Text.secondary
     }
     
     @objc class func mnz_defaultLabelTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        TokenColors.Text.primary
     }
     
     @objc class func supportInfoColor() -> UIColor {
@@ -588,11 +530,11 @@ extension UIColor {
     // MARK: - Chat Reactions
     
     @objc class func primaryTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        TokenColors.Text.primary
     }
     
     @objc class func secondaryTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
+        TokenColors.Text.secondary
     }
     
     class func mnz_emojiLabelSelectedState(
@@ -643,21 +585,8 @@ extension UIColor {
     
     // MARK: - Text
     
-    @objc(
-        mnz_subtitlesForTraitCollection:
-    )
-    class func mnz_subtitles(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            TokenColors.Text.secondary
-        } else {
-            switch traitCollection.userInterfaceStyle {
-            case .unspecified, .light: UIColor.black00000080
-            case .dark: UIColor.whiteFFFFFF80
-            @unknown default: UIColor.black00000080
-            }
-        }
+    @objc class func mnz_subtitles() -> UIColor {
+        TokenColors.Text.secondary
     }
     
     // MARK: - PRO account colors
@@ -672,11 +601,7 @@ extension UIColor {
     }
     
     @objc class func mnz_background() -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            TokenColors.Background.page
-        } else {
-            UIColor.systemBackground
-        }
+        TokenColors.Background.page
     }
     
     /**
@@ -956,21 +881,7 @@ extension UIColor {
     class func mnz_primaryGray(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        
-        guard !UIColor.isDesignTokenEnabled() else {
-            return TokenColors.Text.secondary
-        }
-        
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Gray._515151.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Gray._D1D1D1.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.Gray._515151.uiColor
-        }
+        TokenColors.Text.secondary
     }
     
     @objc(
@@ -1033,18 +944,7 @@ extension UIColor {
     class func mnz_blue(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            TokenColors.Text.info
-        } else {
-            switch traitCollection.userInterfaceStyle {
-            case .unspecified, .light:
-                MEGAAppColor.Blue._009AE0.uiColor
-            case .dark:
-                MEGAAppColor.Blue._059DE2.uiColor
-            @unknown default:
-                MEGAAppColor.White._FFFFFF.uiColor
-            }
-        }
+        TokenColors.Text.info
     }
     
     // MARK: Green
@@ -1109,15 +1009,7 @@ extension UIColor {
     class func mnz_errorRed(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            TokenColors.Text.error
-        } else {
-            switch traitCollection.userInterfaceStyle {
-            case .unspecified, .light: UIColor.redF30C14
-            case .dark: UIColor.redF7363D
-            @unknown default: UIColor.redF30C14
-            }
-        }
+        TokenColors.Text.error
     }
     
     @objc(
@@ -1209,22 +1101,14 @@ extension UIColor {
     }
     
     @objc class func mnz_takenDownNodeTextColor(for traitCollection: UITraitCollection) -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
+        TokenColors.Text.error
     }
     
     @objc class func whiteTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.white
+        TokenColors.Text.onColor
     }
     
     @objc class func succeedTextColor() -> UIColor {
         TokenColors.Text.success
-    }
-    
-    // MARK: - Feature Flag
-    
-    @objc class func isDesignTokenEnabled() -> Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(
-            for: .designToken
-        )
     }
 }

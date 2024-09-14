@@ -11,7 +11,7 @@ struct ShareAttachmentCellView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: geo.size.height * 0.80, height: geo.size.height * 0.80)
-
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 0) {
                         TextField("", text: $viewModel.fileName)
@@ -48,24 +48,14 @@ struct ShareAttachmentCellView: View {
     }
     
     var foregroundColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            Color(UIColor.label)
-        }
+        TokenColors.Text.primary.swiftUI
     }
     
     var foregroundColorFileExtension: Color {
-        isDesignTokenEnabled
-        ? TokenColors.Text.secondary.swiftUI
-        : Color(UIColor.gray8E8E93)
+        TokenColors.Text.secondary.swiftUI
     }
     
     var backgroundColor: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Background.page.swiftUI
-        } else {
-            Color(UIColor.cellBackground)
-        }
+        TokenColors.Background.page.swiftUI
     }
 }

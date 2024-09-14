@@ -52,7 +52,7 @@
         [self.toggleSecureButton setImage:image forState: UIControlStateNormal];
         [self setToggleSecureButtonTintColorWithIsActive:NO];
     } else {
-        UIImage *image = [[UIImage imageNamed:@"showHidePassword_active"] imageWithRenderingMode: [UIColor isDesignTokenEnabled] == YES ? UIImageRenderingModeAlwaysTemplate : UIImageRenderingModeAlwaysOriginal];
+        UIImage *image = [[UIImage imageNamed:@"showHidePassword_active"] imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
         [self.toggleSecureButton setImage:image forState: UIControlStateNormal];
         [self setToggleSecureButtonTintColorWithIsActive:YES];
     }

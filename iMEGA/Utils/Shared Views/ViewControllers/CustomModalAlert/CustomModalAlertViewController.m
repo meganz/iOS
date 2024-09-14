@@ -165,12 +165,7 @@
 #endif
     
     [self.firstButton mnz_setup:self.firstButtonStyle traitCollection:self.traitCollection];
-    
-    if (UIColor.isDesignTokenEnabled) {
-        [self.secondButton mnz_setupSecondary:self.traitCollection];
-    } else {
-        [self.secondButton mnz_setupDestructive:self.traitCollection];
-    }
+    [self.secondButton mnz_setupSecondary:self.traitCollection];
     
     [self.dismissButton mnz_setup:self.dismissButtonStyle traitCollection:self.traitCollection];
 }

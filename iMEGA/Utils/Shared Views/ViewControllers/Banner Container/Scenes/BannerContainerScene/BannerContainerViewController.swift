@@ -44,12 +44,7 @@ final class BannerContainerViewController: UIViewController {
         bannerMessageLabel.text = message
         bannerMessageLabel.textColor = textColor
         if let actionIcon = actionIcon {
-            if UIColor.isDesignTokenEnabled() {
-                bannerActionButton.tintColor = TokenColors.Icon.secondary
-            } else {
-                bannerActionButton.tintColor = traitCollection.theme == .light ? UIColor.yellowFFD60A : UIColor.yellow9D8319
-            }
-            
+            bannerActionButton.tintColor = TokenColors.Icon.secondary
             bannerActionButton.setImage(actionIcon, for: .normal)
         }
     }

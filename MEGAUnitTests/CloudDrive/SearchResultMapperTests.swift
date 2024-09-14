@@ -132,8 +132,7 @@ final class SearchResultMapperTests: XCTestCase {
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         nodeActions: NodeActions = .makeActions(sdk: MockSdk(), navigationController: .init()),
-        hiddenNodesFeatureEnabled: Bool = true,
-        isDesignTokenEnabled: Bool = true
+        hiddenNodesFeatureEnabled: Bool = true
     ) -> SUT {
         .init(
             sdk: sdk,

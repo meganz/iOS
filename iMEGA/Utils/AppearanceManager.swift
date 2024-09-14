@@ -43,21 +43,17 @@ class AppearanceManager: NSObject {
         
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.label
         
-        UITextField.appearance().tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.accent : UIColor.mnz_turquoise(for: traitCollection)
-        
-        if !UIColor.isDesignTokenEnabled() {
-            UITextView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
-        }
+        UITextField.appearance().tintColor = TokenColors.Icon.accent
         
         UIProgressView.appearance().backgroundColor = UIColor.clear
         UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UITableView.appearance().backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.systemBackground
+        UITableView.appearance().backgroundColor = TokenColors.Background.page
         UITableView.appearance().separatorColor = UIColor.mnz_separator(for: traitCollection)
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         UITableViewCell.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UICollectionView.appearance().backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.systemBackground
+        UICollectionView.appearance().backgroundColor = TokenColors.Background.page
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
         self.setupActivityIndicatorAppearance(traitCollection)
@@ -107,25 +103,19 @@ class AppearanceManager: NSObject {
     @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar,
                                           backgroundColorWhenDesignTokenEnable: UIColor,
                                           traitCollection: UITraitCollection) {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            
-            // In order to set the color for `searchBar.searchTextField.backgroundColor`, we need to set `searchBar.searchTextField.borderStyle = .none` otherwise the correct will display incorrectly
-            // and since `searchBar.searchTextField.borderStyle = .none` removes the default rounded corner, we need to re-set it.
-            searchBar.searchTextField.borderStyle = .none
-            searchBar.searchTextField.layer.cornerRadius = 10
-            searchBar.tintColor = TokenColors.Text.placeholder
-            searchBar.backgroundColor = backgroundColorWhenDesignTokenEnable
-            searchBar.searchTextField.backgroundColor = TokenColors.Background.surface2
-            searchBar.searchTextField.leftView?.tintColor = TokenColors.Text.placeholder
-            searchBar.searchTextField.textColor = TokenColors.Text.primary
-            searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
-                string: searchBar.placeholder ?? "",
-                attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
-            )
-        } else {
-            searchBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-            searchBar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        }
+        // In order to set the color for `searchBar.searchTextField.backgroundColor`, we need to set `searchBar.searchTextField.borderStyle = .none` otherwise the correct will display incorrectly
+        // and since `searchBar.searchTextField.borderStyle = .none` removes the default rounded corner, we need to re-set it.
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.layer.cornerRadius = 10
+        searchBar.tintColor = TokenColors.Text.placeholder
+        searchBar.backgroundColor = backgroundColorWhenDesignTokenEnable
+        searchBar.searchTextField.backgroundColor = TokenColors.Background.surface2
+        searchBar.searchTextField.leftView?.tintColor = TokenColors.Text.placeholder
+        searchBar.searchTextField.textColor = TokenColors.Text.primary
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
+            string: searchBar.placeholder ?? "",
+            attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
+        )
     }
     
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
@@ -165,14 +155,12 @@ class AppearanceManager: NSObject {
         }
     }
     
-    
     /// This method and `forceResetNavigationBar` were introduced
     /// to fix the issue of navigation bar's transparency
     /// in `CNContactPickerViewController`
     class func setTranslucentNavigationBar() {
         UINavigationBar.appearance().isTranslucent = true
     }
-    
     
     /// This is the associated method with `setTranslucentNavigationBar`
     /// which is used to reset the global navigation bar to the state
@@ -208,10 +196,7 @@ class AppearanceManager: NSObject {
         
         let barButtonItemAppearance = UIBarButtonItemAppearance()
         barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
-        // Mike: For `barButtonItemAppearance.disabled`, we only set it when `.designToken` is turned on. Otherwise the `disabled` state color will be handled by the OS.
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: false, for: traitCollection)]
-        }
+        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: false, for: traitCollection)]
         
         navigationBarAppearance.buttonAppearance = barButtonItemAppearance
         
@@ -240,14 +225,10 @@ class AppearanceManager: NSObject {
         toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         
         toolbarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_toolbarButtonTitle(isEnabled: true, for: traitCollection)]
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_toolbarButtonTitle(isEnabled: false, for: traitCollection)]
-        }
+        toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_toolbarButtonTitle(isEnabled: false, for: traitCollection)]
         
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            toolbarAppearance.shadowImage = nil
-            toolbarAppearance.shadowColor = UIColor.mnz_toolbarShadow(for: traitCollection)
-        }
+        toolbarAppearance.shadowImage = nil
+        toolbarAppearance.shadowColor = UIColor.mnz_toolbarShadow(for: traitCollection)
         
         return toolbarAppearance
     }

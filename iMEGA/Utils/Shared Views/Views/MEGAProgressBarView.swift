@@ -45,7 +45,7 @@ final class MEGAProgressBarView: UIView {
     }
 
     private func configureSublayers() {
-        progressLayer.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive.cgColor : UIColor.green00A886.cgColor
+        progressLayer.backgroundColor = TokenColors.Components.interactive.cgColor
         layer.addSublayer(progressLayer)
     }
 

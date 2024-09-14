@@ -29,7 +29,7 @@ final class MEGAVerticalButton: UIButton {
         guard badgeView == nil, let imageView else { return }
         
         let badgeView = UIView()
-        badgeView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : UIColor.mnz_redFF453A()
+        badgeView.backgroundColor = TokenColors.Components.interactive
         badgeView.clipsToBounds = true
         badgeView.layer.cornerRadius = 9
         badgeView.translatesAutoresizingMaskIntoConstraints = false

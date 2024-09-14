@@ -56,7 +56,7 @@ final class WaitingRoomViewController: UIViewController {
             subtitle: viewModel.createMeetingDate(),
             subtitleFont: UIFont.preferredFont(style: .caption1, weight: .regular),
             titleColor: UIColor.mnz_navigationBarTitle(for: navigationControllerTraitCollection),
-            subtitleColor: UIColor.mnz_subtitles(for: navigationControllerTraitCollection)
+            subtitleColor: UIColor.mnz_subtitles()
         )
         navigationItem.titleView?.sizeToFit()
     }

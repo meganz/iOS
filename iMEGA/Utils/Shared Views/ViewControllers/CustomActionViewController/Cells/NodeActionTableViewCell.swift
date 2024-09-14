@@ -31,9 +31,9 @@ final class NodeActionTableViewCell: ActionSheetCell {
     private func textColour(style: UIAlertAction.Style) -> UIColor {
         switch style {
         case .cancel, .destructive:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .mnz_red(for: traitCollection)
+            return TokenColors.Support.error
         default:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : .label
+            return TokenColors.Text.primary
         }
     }
 }

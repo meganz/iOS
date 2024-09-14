@@ -59,9 +59,7 @@ extension CustomModalAlertViewController {
             }
         }
         
-        if UIColor.isDesignTokenEnabled() {
-            dismissButtonStyle = MEGACustomButtonStyle.none.rawValue
-        }
+        dismissButtonStyle = MEGACustomButtonStyle.none.rawValue
         
         viewModel = .init(tracker: DIContainer.tracker,
                           analyticsEvents: .init(dialogDisplayedEventIdentifier: DIContainer.transferOverQuotaDialogEvent,
@@ -129,7 +127,7 @@ extension CustomModalAlertViewController {
             return attributedString
         }
         let urlRange = NSString(string: fullMessage).range(of: tappableString)
-        let foregroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.turquoise
+        let foregroundColor = TokenColors.Link.primary
         attributedString.addAttributes([.foregroundColor: foregroundColor, .link: urlLink], range: urlRange)
         
         return attributedString

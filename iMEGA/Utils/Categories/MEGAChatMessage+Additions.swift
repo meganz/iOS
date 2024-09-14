@@ -9,8 +9,8 @@ extension MEGAChatMessage {
         }
         
         if let user = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle(at: index)),
-            let nickname = user.nickname,
-            !nickname.isEmpty {
+           let nickname = user.nickname,
+           !nickname.isEmpty {
             return nickname
         }
         
@@ -101,10 +101,6 @@ extension MEGAChatMessage {
     }
     
     @objc func normalTextColor(isFromCurrentSender: Bool) -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            return isFromCurrentSender ? TokenColors.Text.inverse : TokenColors.Text.primary
-        } else {
-            return isFromCurrentSender ? UIColor.whiteFFFFFF : .label
-        }
+        isFromCurrentSender ? TokenColors.Text.inverse : TokenColors.Text.primary
     }
 }

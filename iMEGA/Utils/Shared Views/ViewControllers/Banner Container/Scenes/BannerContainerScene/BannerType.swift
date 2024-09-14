@@ -5,33 +5,32 @@ import MEGADesignToken
     
     var bgColor: UIColor {
         switch self {
-        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationWarning : UIColor.yellowFED429
+        case .warning: TokenColors.Notifications.notificationWarning
         }
     }
     
     var darkBgColor: UIColor {
         switch self {
-        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationWarning : UIColor.brown544B27
+        case .warning: TokenColors.Notifications.notificationWarning
         }
     }
     
     var textColor: UIColor {
         switch self {
-        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.yellow9D8319
+        case .warning: TokenColors.Text.primary
         }
     }
     
     var darkTextColor: UIColor {
         switch self {
-        case .warning: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.yellowF8D552
+        case .warning: TokenColors.Text.primary
         }
     }
     
     var actionIcon: UIImage? {
         switch self {
         case .warning: 
-            let image = UIImage.closeCircle
-            image.withRenderingMode(UIColor.isDesignTokenEnabled() ? .alwaysTemplate : .alwaysOriginal)
+            let image = UIImage.closeCircle.withRenderingMode(.alwaysTemplate)
             
             return image
         }

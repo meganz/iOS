@@ -19,7 +19,7 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
                     
                 }
             }
-            .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
+            .background(TokenColors.Background.page.swiftUI)
         }
         .onAppear {
             viewModel.onViewAppear()
@@ -48,7 +48,7 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
                     
                     Text(Strings.Localizable.Onboarding.HiddenFilesAndFolders.title)
                         .font(.headline)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                         .padding(.bottom, TokenSpacing._5)
                     
                     descriptionItemViews()
@@ -87,7 +87,7 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
                     
                     Button(action: dismissAction) {
                         Text(Strings.Localizable.notNow)
-                            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.gray848484.swiftUI)
+                            .foregroundStyle(TokenColors.Text.primary.swiftUI)
                             .font(.title3)
                             .frame(minHeight: 50)
                             .background(.clear)
@@ -119,15 +119,11 @@ private struct OnboardingNavigationBar<Content: View>: View {
     }
     
     var body: some View {
-        if isDesignTokenEnabled {
-            NavigationStackView {
-                content()
-                    .toolbar {
-                        dismissButton()
-                    }
-            }
-        } else {
-            clearNavigationBarView()
+        NavigationStackView {
+            content()
+                .toolbar {
+                    dismissButton()
+                }
         }
     }
     
@@ -166,11 +162,7 @@ private struct OnboardingNavigationBar<Content: View>: View {
     }
     
     private var toolbarItemText: Color {
-        if isDesignTokenEnabled {
-            TokenColors.Text.primary.swiftUI
-        } else {
-            colorScheme == .dark ? UIColor.grayD1D1D1.swiftUI : UIColor.gray515151.swiftUI
-        }
+        TokenColors.Text.primary.swiftUI
     }
 }
 
@@ -184,9 +176,7 @@ private struct OnboardingItemView: View {
             Image(image)
                 .resizable()
                 .renderingMode(.template)
-                .foregroundStyle(
-                    isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI :  UIColor.green00A886.swiftUI
-                )
+                .foregroundStyle(TokenColors.Icon.accent.swiftUI)
                 .scaledToFit()
                 .frame(width: 28, height: 28)
                 .padding(.leading, TokenSpacing._3)
@@ -195,12 +185,12 @@ private struct OnboardingItemView: View {
             VStack(alignment: .leading, spacing: TokenSpacing._1) {
                 Text(title)
                     .font(.subheadline.bold())
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Text(description)
                     .fixedSize(horizontal: false, vertical: true)
                     .font(.caption)
-                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
             .padding(.vertical, TokenSpacing._3)
             .padding(.trailing, TokenSpacing._3)
