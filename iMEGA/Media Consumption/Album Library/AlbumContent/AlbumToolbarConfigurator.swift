@@ -102,10 +102,8 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         ]
         barButtonItems.append(contentsOf: additionalBarButtonItems(for: albumType))
         
-        if featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            for barButtonItem in barButtonItems {
-                barButtonItem.tintColor = TokenColors.Icon.primary
-            }
+        for barButtonItem in barButtonItems {
+            barButtonItem.tintColor = TokenColors.Icon.primary
         }
         
         return enable(

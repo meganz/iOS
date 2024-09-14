@@ -17,33 +17,20 @@ extension OnboardingViewController {
         
         primaryButton?.mnz_setupPrimary(traitCollection)
         secondaryButton?.mnz_setupSecondary(traitCollection)
-        
-        if UIColor.isDesignTokenEnabled() {
-            tertiaryButton?.mnz_setupSecondary(traitCollection)
-        } else {
-            tertiaryButton?.setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: .normal)
-        }
+        tertiaryButton?.mnz_setupSecondary(traitCollection)
     }
     
     // MARK: - Private
     
     private func currentPageIndicatorColor() -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            TokenColors.Background.surface3
-        } else {
-            UIColor.mnz_turquoise(for: traitCollection)
-        }
+        TokenColors.Background.surface3
     }
     
     private func pageIndicatorColor() -> UIColor {
-        if UIColor.isDesignTokenEnabled() {
-            if traitCollection.userInterfaceStyle == .dark {
-                TokenColors.Background.surface1
-            } else {
-                TokenColors.Background.surface2
-            }
+        if traitCollection.userInterfaceStyle == .dark {
+            TokenColors.Background.surface1
         } else {
-            UIColor.mnz_tertiaryGray(for: traitCollection)
+            TokenColors.Background.surface2
         }
     }
 }

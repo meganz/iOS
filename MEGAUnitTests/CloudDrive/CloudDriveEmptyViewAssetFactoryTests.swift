@@ -116,8 +116,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
 
     private func makeSUT(
         tracker: some AnalyticsTracking = MockTracker(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
-        isDesignTokenEnabled: Bool = true
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase()
     ) -> SUT {
         .init(
             tracker: tracker,

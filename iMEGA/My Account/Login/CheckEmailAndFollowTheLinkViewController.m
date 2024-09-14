@@ -101,7 +101,7 @@
 - (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.checkYourEmailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.checkYourEmailLabel.textColor = [UIColor mnz_subtitles];
     
     [self.emailInputView updateAppearance];
     

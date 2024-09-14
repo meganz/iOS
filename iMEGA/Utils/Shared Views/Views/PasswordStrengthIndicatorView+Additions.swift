@@ -2,7 +2,7 @@ import MEGADesignToken
 
 extension PasswordStrengthIndicatorView {
     @objc func textColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
+        TokenColors.Text.secondary
     }
     
     @objc func strengthLabeColor(with type: PasswordStrength) -> UIColor {
@@ -10,38 +10,34 @@ extension PasswordStrengthIndicatorView {
         
         switch type {
         case .veryWeak:
-            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : UIColor.systemRed
+            labelColor = TokenColors.Indicator.pink
         case .weak:
-            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.orange : UIColor(red: 1.0, green: 165.0/255.0, blue: 0, alpha: 1.0)
-        case .medium:
-            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : UIColor.systemGreen
-        case .good:
-            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : UIColor.systemGreen
+            labelColor = TokenColors.Indicator.orange
+        case .medium, .good:
+            labelColor = TokenColors.Indicator.green
         case .strong:
-            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.blue : UIColor.mnz_blue(for: traitCollection)
+            labelColor = TokenColors.Indicator.blue
         @unknown default:
-            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.pink : UIColor.systemRed
+            labelColor = TokenColors.Indicator.pink
         }
         
         return labelColor
     }
     
     @objc func setStrengthImageViewTintColor(with type: PasswordStrength) {
-        if UIColor.isDesignTokenEnabled() {
-            switch type {
-            case .veryWeak:
-                imageView.renderImage(withColor: TokenColors.Indicator.pink)
-            case .weak:
-                imageView.renderImage(withColor: TokenColors.Indicator.orange)
-            case .medium:
-                imageView.renderImage(withColor: TokenColors.Indicator.green)
-            case .good:
-                imageView.renderImage(withColor: TokenColors.Indicator.green)
-            case .strong:
-                imageView.renderImage(withColor: TokenColors.Indicator.blue)
-            @unknown default:
-                imageView.renderImage(withColor: TokenColors.Indicator.pink)
-            }
+        switch type {
+        case .veryWeak:
+            imageView.renderImage(withColor: TokenColors.Indicator.pink)
+        case .weak:
+            imageView.renderImage(withColor: TokenColors.Indicator.orange)
+        case .medium:
+            imageView.renderImage(withColor: TokenColors.Indicator.green)
+        case .good:
+            imageView.renderImage(withColor: TokenColors.Indicator.green)
+        case .strong:
+            imageView.renderImage(withColor: TokenColors.Indicator.blue)
+        @unknown default:
+            imageView.renderImage(withColor: TokenColors.Indicator.pink)
         }
     }
 }

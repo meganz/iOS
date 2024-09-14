@@ -17,18 +17,7 @@ final class MEGASelectedButton: UIButton {
     
     func setRightTintColor() {
         imageView?.image?.withRenderingMode(.alwaysTemplate)
-        
-        if UIColor.isDesignTokenEnabled() {
-            tintColor = isSelected ? TokenColors.Components.interactive : TokenColors.Icon.primary
-        } else {
-            switch traitCollection.userInterfaceStyle {
-            case .dark:
-                tintColor = isSelected ? UIColor.green00A382 : UIColor.whiteFFFFFF
-            case .light:
-                tintColor = isSelected ? UIColor.green00A382 : UIColor.black000000
-            default: break
-            }
-        }
+        tintColor = isSelected ? TokenColors.Components.interactive : TokenColors.Icon.primary
     }
     
     private func registerForTraitChanges() {
@@ -60,18 +49,7 @@ class MEGAPlayerButton: UIButton {
     }
     
     private func setHighlightedBackgroundColor() {
-        if UIColor.isDesignTokenEnabled() {
-            backgroundColor = isHighlighted ? TokenColors.Background.surface1 : UIColor.clear
-        } else {
-            switch traitCollection.userInterfaceStyle {
-            case .dark:
-                backgroundColor = isHighlighted ? UIColor.gray333333 : UIColor.clear
-            case .light:
-                backgroundColor = isHighlighted ? UIColor.whiteEFEFEF : UIColor.clear
-            default:
-                break
-            }
-        }
+        backgroundColor = isHighlighted ? TokenColors.Background.surface1 : UIColor.clear
     }
     
     override func layoutSubviews() {

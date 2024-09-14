@@ -274,8 +274,6 @@ extension MEGAAVViewController {
     }
     
     @objc func configureViewColor() {
-        if UIColor.isDesignTokenEnabled() {
-            view.backgroundColor = TokenColors.Background.page
-        }
+        view.backgroundColor = TokenColors.Background.page
     }
 }

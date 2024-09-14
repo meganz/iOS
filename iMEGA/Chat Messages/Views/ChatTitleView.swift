@@ -90,7 +90,7 @@ class ChatTitleView: UIView {
         titleLabel.textColor = UIColor.mnz_navigationBarTitle(for: traitCollection)
         
         subtitleLabel.font = UIFont.systemFont(ofSize: 12)
-        subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
+        subtitleLabel.textColor = UIColor.mnz_subtitles()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

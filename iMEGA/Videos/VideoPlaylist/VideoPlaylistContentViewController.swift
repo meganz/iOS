@@ -198,9 +198,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
-        if UIColor.isDesignTokenEnabled() {
-            toolbar.items?.forEach { $0.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor) }
-        }
+        toolbar.items?.forEach { $0.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor) }
         toolbar.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
     }
     

@@ -23,7 +23,7 @@ class ContactLinkContentView: UIView {
     private func updateAppearance(with trait: UITraitCollection) {
         backgroundColor = .mnz_chatRichLinkContentBubble(trait)
         titleLabel.textColor = UIColor.label
-        descriptionLabel.textColor = UIColor.mnz_subtitles(for: trait)
+        descriptionLabel.textColor = UIColor.mnz_subtitles()
         imageView.layer.cornerRadius = imageView.frame.size.height / 2
         imageView.clipsToBounds = true
     }

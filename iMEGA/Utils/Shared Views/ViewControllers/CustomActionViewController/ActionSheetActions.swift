@@ -29,20 +29,20 @@ class BaseAction: NSObject {
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherObject = object as? BaseAction else { return false }
         return title == otherObject.title
-            && detail == otherObject.detail
-            && accessoryView == otherObject.accessoryView
-            && image == otherObject.image
-            && style == otherObject.style
-            && enabled == otherObject.enabled
-            && syncIconAndTextColor == otherObject.syncIconAndTextColor
-            && badgeModel == otherObject.badgeModel
+        && detail == otherObject.detail
+        && accessoryView == otherObject.accessoryView
+        && image == otherObject.image
+        && style == otherObject.style
+        && enabled == otherObject.enabled
+        && syncIconAndTextColor == otherObject.syncIconAndTextColor
+        && badgeModel == otherObject.badgeModel
     }
 }
 
 class ActionSheetAction: BaseAction {
     
     var actionHandler: () -> Void
-
+    
     @objc init(
         title: String?,
         detail: String?,
@@ -146,7 +146,7 @@ class ActionSheetSwitchAction: ActionSheetAction {
 class NodeAction: BaseAction {
     let type: MegaNodeActionType
     let showProTag: Bool
-
+    
     private init(title: String?,
                  detail: String? = nil,
                  accessoryView: UIView? = nil,
@@ -400,11 +400,11 @@ class Badge: NSObject {
 }
 
 extension Badge {
-   static var raiseHandFeature: Self {
-      .init(
-        title: Strings.Localizable.Chat.Call.ContextMenu.newFeature,
-        foregroundColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.inverse : UIColor.gray333333,
-        backgroundColor: UIColor.isDesignTokenEnabled() ? TokenColors.Text.info : UIColor.blue059DE2
-      )
-   }
+    static var raiseHandFeature: Self {
+        .init(
+            title: Strings.Localizable.Chat.Call.ContextMenu.newFeature,
+            foregroundColor: TokenColors.Text.inverse,
+            backgroundColor: TokenColors.Text.info
+        )
+    }
 }

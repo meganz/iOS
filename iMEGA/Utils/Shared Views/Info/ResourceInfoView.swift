@@ -8,10 +8,6 @@ struct ResourceInfoView: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: ResourceInfoViewModel
     
-    private var backgroundColor: Color {
-        isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             customNavigationBar
@@ -28,31 +24,31 @@ struct ResourceInfoView: View {
                 .frame(height: 156)
                 .frame(maxWidth: .infinity)
                 .listRowSeparator(.hidden)
-                .listRowBackground(backgroundColor)
+                .listRowBackground(TokenColors.Background.page.swiftUI)
                 
                 Text(viewModel.title)
                     .font(.callout)
                     .bold()
-                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .padding(.vertical, 2)
-                    .listRowBackground(backgroundColor)
+                    .listRowBackground(TokenColors.Background.page.swiftUI)
                 
                 Section(header: Text(Strings.Localizable.details)) {
                     DetailRow(
                         title: Strings.Localizable.totalSize,
                         detail: viewModel.totalSize,
-                        backgroundColor: backgroundColor
+                        backgroundColor: TokenColors.Background.page.swiftUI
                     )
                     DetailRow(
                         title: Strings.Localizable.contains,
                         detail: viewModel.contentDescription,
-                        backgroundColor: backgroundColor
+                        backgroundColor: TokenColors.Background.page.swiftUI
                     )
                     if viewModel.formattedDate.isNotEmpty {
                         DetailRow(
                             title: Strings.Localizable.added,
                             detail: viewModel.formattedDate,
-                            backgroundColor: backgroundColor
+                            backgroundColor: TokenColors.Background.page.swiftUI
                         )
                     }
                 }
@@ -67,7 +63,7 @@ struct ResourceInfoView: View {
             Text(Strings.Localizable.info)
                 .font(.headline)
                 .bold()
-                .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                .foregroundColor(TokenColors.Text.primary.swiftUI)
             
             HStack {
                 Spacer()
@@ -75,16 +71,12 @@ struct ResourceInfoView: View {
                     viewModel.dismiss()
                 } label: {
                     Text(Strings.Localizable.close)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 }
             }
         }
         .padding()
-        .background(isDesignTokenEnabled ?
-                    TokenColors.Background.surface1.swiftUI :
-                        colorScheme == .dark ? Color(UIColor(red: 0.173, green: 0.173, blue: 0.18, alpha: 1.0)) :
-                        Color(UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1.0))
-        )
+        .background(TokenColors.Background.surface1.swiftUI)
     }
 }
 
@@ -98,15 +90,11 @@ struct DetailRow: View {
             Text(title)
                 .font(.caption)
                 .fontWeight(.semibold)
-                .foregroundStyle(
-                    isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : UIColor.secondaryLabel.swiftUI
-                )
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             Spacer()
             Text(detail)
                 .font(.caption)
-                .foregroundStyle(
-                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.label.swiftUI
-                )
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }
         .listRowBackground(backgroundColor)
     }

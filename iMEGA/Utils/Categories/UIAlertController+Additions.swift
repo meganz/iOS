@@ -26,9 +26,8 @@ extension UIAlertController {
         let discardAction = UIAlertAction(title: Strings.Localizable.discardChanges, style: .destructive) { _ in
             action()
         }
-        if UIColor.isDesignTokenEnabled() {
-            discardAction.titleTextColor = TokenColors.Text.error
-        }
+        
+        discardAction.titleTextColor = TokenColors.Text.error
         
         alert.addAction(discardAction)
         alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
