@@ -34,7 +34,7 @@ public extension UIAlertController {
                     alert.title = errorItem.title.isEmpty ? viewModel.title : errorItem.title
                     if errorItem.description.isNotEmpty {
                         alert.message = errorItem.description
-                        textField.textColor = designTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+                        textField.textColor = TokenColors.Text.error
                     } else {
                         alert.message = viewModel.message
                     }

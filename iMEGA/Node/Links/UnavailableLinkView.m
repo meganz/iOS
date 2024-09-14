@@ -27,7 +27,7 @@
 - (void)updateAppearance {
     self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
-    self.firstTextLabel.textColor = self.secondTextLabel.textColor = self.thirdTextLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.firstTextLabel.textColor = self.secondTextLabel.textColor = self.thirdTextLabel.textColor = [UIColor mnz_subtitles];
 }
 
 - (void)showTerms {

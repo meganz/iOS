@@ -51,23 +51,11 @@ class ShareDestinationTableViewCell: UITableViewCell {
         }
     }
     
-    private var designTokenEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
-    }
-    
     private var dynamicBackgroundColor: UIColor {
-        if designTokenEnabled {
-            TokenColors.Background.page
-        } else {
-            UIColor.cellBackground
-        }
+        TokenColors.Background.page
     }
     
     private var textColor: UIColor {
-        if designTokenEnabled {
-            TokenColors.Text.primary
-        } else {
-            UIColor.label
-        }
+        TokenColors.Text.primary
     }
 }

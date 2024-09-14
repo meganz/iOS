@@ -27,13 +27,7 @@ extension CustomModalAlertViewController {
         detailAttributedTextWithLink = detailTextAttributedString(detail: type.description, cookiePolicyURLString: cookiePolicyURLString)
         
         firstButtonTitle = Strings.Localizable.Dialog.Cookies.accept
-        
-        if UIColor.isDesignTokenEnabled() {
-            secondButtonTitle = Strings.Localizable.General.cookieSettings
-        } else {
-            dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
-            dismissButtonTitle = Strings.Localizable.General.cookieSettings
-        }
+        secondButtonTitle = Strings.Localizable.General.cookieSettings
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
@@ -65,26 +59,14 @@ extension CustomModalAlertViewController {
             })
         }
         
-        if UIColor.isDesignTokenEnabled() {
-            secondCompletion = { [weak self] in
-                self?.dismiss(animated: true, completion: {
-                    if UIApplication.mnz_presentingViewController().presentedViewController == nil {
-                        CookieSettingsRouter(presenter: UIApplication.mnz_visibleViewController()).start()
-                    } else {
-                        CookieSettingsRouter(presenter: UIApplication.mnz_presentingViewController()).start()
-                    }
-                })
-            }
-        } else {
-            dismissCompletion = { [weak self] in
-                self?.dismiss(animated: true, completion: {
-                    if UIApplication.mnz_presentingViewController().presentedViewController == nil {
-                        CookieSettingsRouter(presenter: UIApplication.mnz_visibleViewController()).start()
-                    } else {
-                        CookieSettingsRouter(presenter: UIApplication.mnz_presentingViewController()).start()
-                    }
-                })
-            }
+        secondCompletion = { [weak self] in
+            self?.dismiss(animated: true, completion: {
+                if UIApplication.mnz_presentingViewController().presentedViewController == nil {
+                    CookieSettingsRouter(presenter: UIApplication.mnz_visibleViewController()).start()
+                } else {
+                    CookieSettingsRouter(presenter: UIApplication.mnz_presentingViewController()).start()
+                }
+            })
         }
         
         viewModel = makeCookieDialogViewModel()
@@ -112,7 +94,7 @@ extension CustomModalAlertViewController {
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         
-        let normalDetailTextForegroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.textForeground
+        let normalDetailTextForegroundColor = TokenColors.Text.secondary
         let detailTextAttributedString = NSMutableAttributedString(
             string: detailText,
             attributes: [
@@ -126,7 +108,7 @@ extension CustomModalAlertViewController {
             return detailTextAttributedString
         }
         
-        let foregroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.turquoise
+        let foregroundColor = TokenColors.Link.primary
         detailTextAttributedString.addAttributes(
             [.foregroundColor: foregroundColor, .link: urlLink],
             range: cookiePolicyRange

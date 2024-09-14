@@ -14,7 +14,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.detailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.detailLabel.textColor = [UIColor mnz_subtitles];
 }
 
 @end

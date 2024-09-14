@@ -11,11 +11,7 @@ extension PasswordView {
         topLabel.textColor = normalLabelColor()
         passwordTextField.textColor = normalTextColor()
         
-        if UIColor.isDesignTokenEnabled() {
-            backgroundColor = TokenColors.Background.page
-        } else {
-            backgroundColor = UIColor.mnz_tertiaryBackground(currentTraitCollection)
-        }
+        backgroundColor = TokenColors.Background.page
     }
     
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -26,32 +22,28 @@ extension PasswordView {
     }
     
     @objc func errorTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        TokenColors.Text.error
     }
     
     @objc func normalTextColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.label
+        TokenColors.Button.primary
     }
     
     @objc func normalLabelColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.mnz_secondaryGray(for: traitCollection)
+        TokenColors.Button.primary
     }
     
     @objc func setToggleSecureButtonTintColor(isActive: Bool) {
-        if UIColor.isDesignTokenEnabled() {
-            toggleSecureButton.tintColor = isActive ? TokenColors.Icon.primary : TokenColors.Icon.disabled
-        } else {
-            toggleSecureButton.tintColor = .systemGray
-        }
+        toggleSecureButton.tintColor = isActive ? TokenColors.Icon.primary : TokenColors.Icon.disabled
     }
     
     // MARK: - Private
     
     private func separatorColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        TokenColors.Border.strong
     }
     
     private func iconTintColor() -> UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : UIColor.mnz_secondaryGray(for: traitCollection)
+        TokenColors.Icon.secondary
     }
 }

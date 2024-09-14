@@ -131,7 +131,7 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.systemBackgroundColor;
     
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = [UIColor mnz_subtitles];
     
     [self.passwordView updateAppearance];
     
@@ -208,11 +208,10 @@
     [self.confirmButton setUserInteractionEnabled:NO];
     [self.confirmButton mnz_clearSetup];
     
-    UIColor *textColor = [UIColor isDesignTokenEnabled] ? [UIColor succeedTextColor] : UIColor.systemGreenColor;
+    UIColor *textColor = [UIColor succeedTextColor];
     [self.confirmButton setTitleColor:textColor forState:UIControlStateNormal];
     
-    NSString *imgName = [UIColor isDesignTokenEnabled] ? @"green_tick" : @"contact_request_accept";
-    [self.confirmButton setImage:[UIImage imageNamed: imgName] forState:UIControlStateNormal];
+    [self.confirmButton setImage:[UIImage imageNamed: @"green_tick"] forState:UIControlStateNormal];
     [self.confirmButton setTitle:LocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
     
     self.logoutButton.hidden = !self.isLoggingOut;

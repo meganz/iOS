@@ -161,21 +161,10 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupScrollView(_ scrollView: UIScrollView, with trait: UITraitCollection) {
         disableAdjustingContentInsets(for: contentScrollView)
-        
-        guard UIColor.isDesignTokenEnabled() else {
-            let backgroundStyler = trait.backgroundStyler(of: .primary)
-            backgroundStyler(scrollView)
-            return
-        }
         scrollView.backgroundColor = TokenColors.Background.page
     }
     
     private func setupContentView(_ contentView: UIView, with trait: UITraitCollection) {
-        guard UIColor.isDesignTokenEnabled() else {
-            let backgroundStyler = trait.backgroundStyler(of: .primary)
-            backgroundStyler(contentView)
-            return
-        }
         contentView.backgroundColor = TokenColors.Background.page
     }
 
@@ -185,57 +174,30 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupStorageFullLabel(_ label: UILabel, with trait: UITraitCollection) {
         storageFullLabel.text = Strings.Localizable.storageFull
-        
-        guard UIColor.isDesignTokenEnabled() else {
-            let alwyasBrightTextStyle = trait.alwaysBrightLabelStyler(of: .headline)
-            alwyasBrightTextStyle(storageFullLabel)
-            return
-        }
         storageFullLabel.textColor = TokenColors.Text.onColor
         storageFullLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
         titleLabel.text = overDiskQuotaAdvicer.titleMessage
-        
-        guard UIColor.isDesignTokenEnabled() else {
-            let style = traitCollection.styler(of: .headline)
-            style(titleLabel)
-            return
-        }
-        
         storageFullLabel.textColor = TokenColors.Text.primary
         storageFullLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     }
 
     private func setupMessageLabel(_ descriptionLabel: UILabel, withMessage message: NSAttributedString) {
         descriptionLabel.attributedText = message
-        
-        guard UIColor.isDesignTokenEnabled() else { return }
         descriptionLabel.textColor = TokenColors.Text.secondary
     }
 
     private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
         button.setTitle(Strings.Localizable.upgrade, for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
-        
-        guard UIColor.isDesignTokenEnabled() else {
-            let style = trait.styler(of: .primary)
-            style(button)
-            return
-        }
         button.mnz_setupPrimary(trait)
     }
 
     private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
         button.setTitle(Strings.Localizable.dismiss, for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
-        
-        guard UIColor.isDesignTokenEnabled() else {
-            let style = trait.styler(of: .secondary)
-            style(button)
-            return
-        }
         button.mnz_setupSecondary(trait)
     }
 
