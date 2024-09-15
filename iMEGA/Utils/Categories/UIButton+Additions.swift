@@ -80,7 +80,7 @@ extension UIButton {
     
     @objc func mnz_setupDelete(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_red(for: traitCollection)
-        setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: UIControl.State.normal)
+        setTitleColor(UIColor.whiteFFFFFF, for: UIControl.State.normal)
         
         setupLayer()
     }

@@ -29,7 +29,7 @@ struct KeyRotationView: View {
                     Spacer()
                     if isPublicChat {
                         Image(systemName: discolureIndicator)
-                            .foregroundColor(MEGAAppColor.Gray._8E8E93.color.opacity(Constants.disclosureOpacity))
+                            .foregroundColor(UIColor.gray8E8E93.swiftUI.opacity(Constants.disclosureOpacity))
                             .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
                     } else {                        Text(rightDetail)
                             .font(.footnote)

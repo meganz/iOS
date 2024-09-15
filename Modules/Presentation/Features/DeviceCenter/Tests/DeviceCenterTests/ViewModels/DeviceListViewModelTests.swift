@@ -356,7 +356,7 @@ final class DeviceListViewModelTests: XCTestCase {
     
     private let defaultDeviceListAssets = DeviceListAssets(title: "", currentDeviceTitle: "", otherDevicesTitle: "", deviceDefaultName: "")
     private let defaultEmptyStateAssets = EmptyStateAssets(image: "", title: "")
-    private let defaultSearchAssets = SearchAssets(placeHolder: "", cancelTitle: "", lightBGColor: .gray, darkBGColor: .black)
+    private let defaultSearchAssets = SearchAssets(placeHolder: "", cancelTitle: "", backgroundColor: .black)
     private let defaultActions = [
         ContextAction(type: .cameraUploads),
         ContextAction(type: .info),

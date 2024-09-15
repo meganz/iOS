@@ -26,7 +26,7 @@ extension UIColor {
     
     // MARK: - Switcher
     @objc class func switchOnTintColor() -> UIColor {
-        MEGAAppColor.View.turquoise.uiColor
+        TokenColors.Support.success
     }
     
     // MARK: - Background
@@ -36,12 +36,12 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         case .dark:
-            return MEGAAppColor.Black._2C2C2E.uiColor
+            return UIColor.black2C2C2E
             
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         }
     }
     
@@ -50,16 +50,7 @@ extension UIColor {
     @objc class func mnz_backgroundElevated(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Black._1C1C1E_pageBackground.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
-        }
+        TokenColors.Background.page
     }
     
     @objc class func mnz_secondaryBackgroundElevated(
@@ -67,21 +58,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E6E6E6.uiColor
-            } else {
-                return MEGAAppColor.White._F7F7F7.uiColor
-            }
+            return UIColor.whiteF7F7F7
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._3A3A3C.uiColor
-            } else {
-                return MEGAAppColor.Black._2C2C2E.uiColor
-            }
+            return UIColor.black2C2C2E
             
         @unknown default:
-            return MEGAAppColor.White._F7F7F7.uiColor
+            return UIColor.whiteF7F7F7
         }
     }
     
@@ -90,17 +73,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return mnz_gray545457()
-            } else {
-                return MEGAAppColor.Gray._3A3A3C.uiColor
-            }
+            return UIColor.gray3A3A3C
             
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         }
     }
     
@@ -111,16 +90,7 @@ extension UIColor {
     class func mnz_mainBars(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.White._F7F7F7.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Black._161616.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
-        }
+        TokenColors.Background.surface1
     }
     
     @objc class func mnz_navigationBarTitle(
@@ -150,16 +120,7 @@ extension UIColor {
     @objc class func mnz_cellBackground(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Black._2C2C2E_pageBackground.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
-        }
+        TokenColors.Background.page
     }
     
     @objc class func surfaceBackground() -> UIColor {
@@ -179,31 +140,13 @@ extension UIColor {
     @objc class func cellTitleColor(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Black._000000_text.uiColor
-            
-        case .dark:
-            return MEGAAppColor.White._FFFFFF_text.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.Black._000000_text.uiColor
-        }
+        TokenColors.Text.primary
     }
     
     class func cellAccessoryColor(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Gray._848484.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Gray._B5B5B5.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.Gray._848484.uiColor
-        }
+        TokenColors.Icon.secondary
     }
     
     // MARK: Icon tint color
@@ -234,16 +177,7 @@ extension UIColor {
     class func pageBackgroundColor(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Black._000000_pageBackground.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
-        }
+        TokenColors.Background.page
     }
     
     // MARK: Background grouped elevated
@@ -254,39 +188,7 @@ extension UIColor {
     class func mnz_secondaryBackground(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Black._1C1C1E_pageBackground.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
-        }
-    }
-    
-    @objc class func mnz_tertiaryBackgroundGroupedElevated(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E6E6E6.uiColor
-            } else {
-                return MEGAAppColor.White._F7F7F7.uiColor
-            }
-            
-        case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._545458.uiColor
-            } else {
-                return MEGAAppColor.Gray._3A3A3C.uiColor
-            }
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
-        }
+        TokenColors.Background.page
     }
     
     // MARK: Background miscellany
@@ -296,13 +198,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.mnz_redProIII()
+            return UIColor.proAccountRedProIII
             
         case .dark:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
             
         @unknown default:
-            return UIColor.mnz_redProIII()
+            return UIColor.proAccountRedProIII
         }
     }
     
@@ -311,14 +213,14 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.Black._00000060.uiColor
+            return UIColor.black00000060
         case .dark:
-            return MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(
+            return UIColor.whiteFFFFFF.withAlphaComponent(
                 0.15
             )
             
         @unknown default:
-            return MEGAAppColor.Black._00000060.uiColor
+            return UIColor.black00000060
         }
     }
     
@@ -327,11 +229,11 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         case .dark:
-            return mnz_black1C1C1E()
+            return  UIColor.black1C1C1E
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         }
     }
     
@@ -342,7 +244,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if selected {
-                return MEGAAppColor.Chat.chatReactionBubbleSelectedLight.uiColor
+                return UIColor.chatReactionBubbleSelectedLight
             } else {
                 return  UIColor.mnz_secondaryBackground(
                     for: traitCollection
@@ -351,7 +253,7 @@ extension UIColor {
             
         case .dark:
             if selected {
-                return MEGAAppColor.Chat.chatReactionBubbleSelectedDark.uiColor
+                return UIColor.chatReactionBubbleSelectedDark
             } else {
                 return  UIColor.mnz_secondaryBackground(
                     for: traitCollection
@@ -360,9 +262,9 @@ extension UIColor {
             
         @unknown default:
             if selected {
-                return MEGAAppColor.Chat.chatReactionBubbleSelectedLight.uiColor
+                return UIColor.chatReactionBubbleSelectedLight
             } else {
-                return MEGAAppColor.Chat.chatReactionBubbleUnselectedDefault.uiColor
+                return UIColor.chatReactionBubbleSelectedDark
             }
         }
     }
@@ -375,13 +277,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
             
         case .dark:
-            return MEGAAppColor.Black._1C1C1E.uiColor
+            return UIColor.black1C1C1E
             
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         }
     }
     
@@ -393,21 +295,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.White._F7F7F7.uiColor
-            } else {
-                return MEGAAppColor.White._FAFAFA.uiColor
-            }
+            return UIColor.whiteFAFAFA
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Black._2C2C2E.uiColor
-            } else {
-                return MEGAAppColor.Black._1C1C1E.uiColor
-            }
+            return UIColor.black1C1C1E
             
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         }
     }
     
@@ -418,16 +312,12 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.White._EEEEEE.uiColor
+            return UIColor.whiteEEEEEE
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._3F3F42.uiColor
-            } else {
-                return MEGAAppColor.Black._2C2C2E.uiColor
-            }
+            return UIColor.black2C2C2E
             
         @unknown default:
-            return MEGAAppColor.White._EEEEEE.uiColor
+            return UIColor.whiteEEEEEE
         }
     }
     
@@ -436,21 +326,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Green._007B62.uiColor
-            } else {
-                return MEGAAppColor.Green._009476.uiColor
-            }
+            return UIColor.green009476
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Green._00C29A.uiColor
-            } else {
-                return MEGAAppColor.Green._00A382.uiColor
-            }
+            return UIColor.green00A382
             
         @unknown default:
-            return MEGAAppColor.Green._009476.uiColor
+            return UIColor.green009476
         }
     }
     
@@ -477,29 +359,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._04040F.uiColor.withAlphaComponent(
-                    0.4
-                )
-            } else {
-                return MEGAAppColor.Gray._04040F.uiColor.withAlphaComponent(
-                    0.15
-                )
-            }
+            return UIColor.gray04040F.withAlphaComponent(0.15)
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._EBEBF5.uiColor.withAlphaComponent(
-                    0.6
-                )
-            } else {
-                return MEGAAppColor.Gray._EBEBF5.uiColor.withAlphaComponent(
-                    0.3
-                )
-            }
+            return UIColor.grayEBEBF5.withAlphaComponent(0.3)
             
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         }
     }
     
@@ -540,47 +406,13 @@ extension UIColor {
     class func mnz_emojiLabelSelectedState(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Green._007B62.uiColor
-            } else {
-                return UIColor.mnz_green00A886()
-            }
-            
-        case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Green._00C29A.uiColor
-            } else {
-                return MEGAAppColor.Green._00A382.uiColor
-            }
-            
-        @unknown default:
-            return UIColor.mnz_green00A886()
-        }
+        TokenColors.Support.success
     }
     
     class func mnz_emoji(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.White._F2F2F2.uiColor
-            } else {
-                return UIColor.mnz_whiteF7F7F7()
-            }
-            
-        case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._3F3F42.uiColor
-            } else {
-                return MEGAAppColor.Black._2C2C2E.uiColor
-            }
-            
-        @unknown default:
-            return UIColor.mnz_whiteF7F7F7()
-        }
+        TokenColors.Background.surface1
     }
     
     // MARK: - Text
@@ -597,7 +429,7 @@ extension UIColor {
      - Returns: The color associated with the PRO LITE trademark.
      */
     @objc class func mnz_proLITE() -> UIColor {
-        MEGAAppColor.Account.proAccountLite.uiColor
+        UIColor.proAccountLITE
     }
     
     @objc class func mnz_background() -> UIColor {
@@ -610,7 +442,7 @@ extension UIColor {
      - Returns: The color associated with the PRO I trademark.
      */
     @objc class func mnz_redProI() -> UIColor {
-        MEGAAppColor.Account.proAccountRedProI.uiColor
+        UIColor.proAccountRedProI
     }
     
     /**
@@ -619,7 +451,7 @@ extension UIColor {
      - Returns: The color associated with the PRO II trademark.
      */
     @objc class func mnz_redProII() -> UIColor {
-        MEGAAppColor.Account.proAccountRedProII.uiColor
+        UIColor.proAccountRedProII
     }
     
     /**
@@ -628,7 +460,7 @@ extension UIColor {
      - Returns: The color associated with the PRO III trademark.
      */
     @objc class func mnz_redProIII() -> UIColor {
-        MEGAAppColor.Account.proAccountRedProIII.uiColor
+        UIColor.proAccountRedProIII
     }
     
     @objc class func mnz_color(
@@ -703,20 +535,7 @@ extension UIColor {
     class func mnz_inputbarButtonImageTint(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return white
-            
-        case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E5E5E5.uiColor
-            } else {
-                return mnz_grayD1D1D1()
-            }
-            
-        @unknown default:
-            return white
-        }
+        TokenColors.Icon.secondary
     }
     
     // MARK: - Toolbar
@@ -726,12 +545,7 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._3D3D3D.uiColor
-            } else {
-                return mnz_gray515151()
-            }
-            
+            return mnz_gray515151()
         case .dark:
             return white
             
@@ -761,11 +575,7 @@ extension UIColor {
     class func mnz_toolbarShadow(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: MEGAAppColor.Black._000000_toolbarShadow.uiColor
-        case .dark: MEGAAppColor.White._FFFFFF_toolbarShadow.uiColor
-        @unknown default: MEGAAppColor.Black._000000_toolbarShadow.uiColor
-        }
+        TokenColors.Border.strong
     }
     
     // MARK: - Voice recording view
@@ -775,104 +585,70 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.White._FCFCFC.uiColor
+            return UIColor.whiteFCFCFC
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E5E5E5.uiColor
-            } else {
-                return mnz_black1C1C1E()
-            }
+            return UIColor.black1C1C1E
             
         @unknown default:
-            return MEGAAppColor.White._FCFCFC.uiColor
+            return UIColor.whiteFCFCFC
         }
     }
     
     class func mnz_voiceRecordingViewButtonBackground(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return mnz_gray515151()
-            
-        case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E5E5E5.uiColor
-            } else {
-                return mnz_black1C1C1E()
-            }
-            
-        @unknown default:
-            return mnz_gray515151()
-        }
+        TokenColors.Icon.secondary
     }
     
     class func emojiDescriptionTextColor(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(
-                0.6
-            )
-            
-        case .dark:
-            return white.withAlphaComponent(
-                0.6
-            )
-            
-        @unknown default:
-            return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(
-                0.6
-            )
-        }
+        TokenColors.Border.strong
     }
-    
-    // MARK: - Tints
     
     // MARK: Black
     
     @objc class func mnz_black1C1C1E() -> UIColor {
-        return MEGAAppColor.Black._1C1C1E.uiColor
+        UIColor.black1C1C1E
     }
     
     @objc class func mnz_black000000() -> UIColor {
-        return MEGAAppColor.Black._000000.uiColor
+        TokenColors.Text.primary
     }
     
     // MARK: Gray
     
     class func mnz_gray3C3C43() -> UIColor {
-        MEGAAppColor.Gray._3C3C43.uiColor
+        TokenColors.Border.strong
     }
     
     class func mnz_gray515151() -> UIColor {
-        MEGAAppColor.Gray._515151.uiColor
+        TokenColors.Icon.secondary
     }
     
     @objc class func mnz_gray545458() -> UIColor {
-        MEGAAppColor.Gray._545458.uiColor
+        TokenColors.Border.strong
     }
     
     class func mnz_gray545457() -> UIColor {
-        MEGAAppColor.Gray._545457.uiColor
+        UIColor.gray545457
     }
     
     class func mnz_gray848484() -> UIColor {
-        MEGAAppColor.Gray._848484.uiColor
+        TokenColors.Icon.secondary
     }
     
     class func mnz_grayB5B5B5() -> UIColor {
-        MEGAAppColor.Gray._B5B5B5.uiColor
+        TokenColors.Icon.secondary
     }
     
     class func mnz_grayD1D1D1() -> UIColor {
-        MEGAAppColor.Gray._D1D1D1.uiColor
+        TokenColors.Icon.secondary
     }
     
     @objc class func mnz_grayDBDBDB() -> UIColor {
-        MEGAAppColor.Gray._DBDBDB.uiColor
+        UIColor.grayDBDBDB
     }
     
     @objc(
@@ -890,24 +666,7 @@ extension UIColor {
     class func mnz_secondaryGray(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._676767.uiColor
-            } else {
-                return MEGAAppColor.Gray._848484.uiColor
-            }
-            
-        case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._C9C9C9.uiColor
-            } else {
-                return MEGAAppColor.Gray._B5B5B5.uiColor
-            }
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
-        }
+        TokenColors.Icon.secondary
     }
     
     @objc(
@@ -918,21 +677,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._949494.uiColor
-            } else {
-                return MEGAAppColor.Gray._BBBBBB.uiColor
-            }
+            return UIColor.grayBBBBBB
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._F4F4F4.uiColor
-            } else {
-                return MEGAAppColor.Gray._E2E2E2.uiColor
-            }
+            return UIColor.grayE2E2E2
             
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return UIColor.whiteFFFFFF
         }
     }
     
@@ -950,11 +701,11 @@ extension UIColor {
     // MARK: Green
     
     @objc class func mnz_green00A886() -> UIColor {
-        return MEGAAppColor.Green._00A886.uiColor
+        TokenColors.Support.success
     }
     
     @objc class func mnz_green00FF00() -> UIColor {
-        return MEGAAppColor.Green._00FF00.uiColor
+        UIColor.green0CFF00
     }
     
     @objc(
@@ -963,26 +714,17 @@ extension UIColor {
     class func mnz_turquoise(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Green._00A886.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Green._00C29A.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.Green._00A886.uiColor
-        }
+        TokenColors.Support.success
     }
     
     // MARK: Red
     
     class func mnz_redFF453A() -> UIColor {
-        MEGAAppColor.Red._FF453A.uiColor
+        UIColor.redFF453A
     }
     
     @objc class func mnz_redFF0000() -> UIColor {
-        MEGAAppColor.Red._FF0000.uiColor
+        UIColor.redFF0000
     }
     
     @objc(
@@ -991,16 +733,7 @@ extension UIColor {
     class func mnz_red(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Red._F30C14.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Red._F7363D.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
-        }
+        TokenColors.Button.brand
     }
     
     @objc(
@@ -1018,50 +751,41 @@ extension UIColor {
     class func mnz_badgeRed(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return MEGAAppColor.Red._F30C14_badge.uiColor
-            
-        case .dark:
-            return MEGAAppColor.Red._F7363D_badge.uiColor
-            
-        @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
-        }
+        TokenColors.Components.interactive
     }
     
     // MARK: White
     
     @objc class func mnz_whiteF7F7F7() -> UIColor {
-        return MEGAAppColor.White._F7F7F7.uiColor
+        TokenColors.Background.surface1
     }
     
     @objc class func mnz_whiteFFFFFF() -> UIColor {
-        return MEGAAppColor.White._FFFFFF.uiColor
+        UIColor.whiteFFFFFF
     }
     
     // MARK: Yellow
     
     class func mnz_yellowFED429() -> UIColor {
-        MEGAAppColor.Yellow._FED429.uiColor
+        UIColor.yellowFED429
     }
     
     class func mnz_yellow9D8319() -> UIColor {
-        MEGAAppColor.Yellow._9D8319.uiColor
+        UIColor.yellow9D8319
     }
     
     class func mnz_yellowF8D552() -> UIColor {
-        MEGAAppColor.Yellow._F8D552.uiColor
+        UIColor.yellowF8D552
     }
     
     @objc class func mnz_yellowFFCC00() -> UIColor {
-        MEGAAppColor.Yellow._FFCC00.uiColor
+        UIColor.yellowFFCC00
     }
     
     // MARK: Brown
     
     class func mnz_brown544b27() -> UIColor {
-        MEGAAppColor.Brown._544B27.uiColor
+        UIColor.brown544B27
     }
     
     // MARK: Private
@@ -1069,31 +793,23 @@ extension UIColor {
         isEnabled: Bool,
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: isEnabled ? MEGAAppColor.Gray._515151_barButtonTitle.uiColor : MEGAAppColor.Gray._515151_disabledBarButtonTitle.uiColor
-        case .dark: isEnabled ? MEGAAppColor.Gray._D1D1D1_barButtonTitle.uiColor : MEGAAppColor.Gray._D1D1D1_disabledBarButtonTitle.uiColor
-        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
-        }
+        isEnabled ? TokenColors.Text.primary: TokenColors.Text.disabled
     }
     
     private class func barTint(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: MEGAAppColor.Gray._515151_navigationBarTint.uiColor
-        case .dark: MEGAAppColor.Gray._D1D1D1_navigationBarTint.uiColor
-        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
-        }
+        TokenColors.Icon.primary
     }
     
     // MARK: Text color
     
     @objc class func mnz_primaryTextColor() -> UIColor {
-        MEGAAppColor.Text.primary.uiColor
+        TokenColors.Text.primary
     }
     
     @objc class func mnz_secondaryTextColor() -> UIColor {
-        MEGAAppColor.Text.secondary.uiColor
+        TokenColors.Text.secondary
     }
     
     @objc class func mnz_takenDownNodeIconColor() -> UIColor {

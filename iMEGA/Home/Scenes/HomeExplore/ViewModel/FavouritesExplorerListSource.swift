@@ -206,7 +206,7 @@ extension FavouritesExplorerListSource {
         let action = UIContextualAction(style: .normal, title: nil) { _, _, _ in completion() }
         
         action.image = image
-        action.image = action.image?.withTintColor(MEGAAppColor.White._FFFFFF.uiColor)
+        action.image = action.image?.withTintColor(UIColor.whiteFFFFFF)
         
         action.backgroundColor = backgroundColor
         return action

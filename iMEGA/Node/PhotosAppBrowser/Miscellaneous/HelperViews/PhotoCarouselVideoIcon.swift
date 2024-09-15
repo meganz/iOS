@@ -14,7 +14,7 @@ final class PhotoCarouselVideoIcon: SingleTapView {
     private lazy var playIconLayer: CALayer = {
         let playIconLayer = CAShapeLayer()
         playIconLayer.path = UIBezierPath.playIconPath.cgPath
-        playIconLayer.fillColor = MEGAAppColor.Gray._555555.uiColor.cgColor
+        playIconLayer.fillColor = UIColor.gray555555.cgColor
         playIconLayer.zPosition = 1
         return playIconLayer
     }()

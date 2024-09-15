@@ -7,8 +7,8 @@ struct LightColorThemeFactory: ColorFactory {
         switch style {
         case .primary: return TokenColors.Text.primary
         case .secondary: return TokenColors.Text.secondary
-        case .tertiary: return MEGAAppColor.Gray._515151.uiColor
-        case .quaternary: return MEGAAppColor.Gray._848484.uiColor
+        case .tertiary: return TokenColors.Icon.secondary
+        case .quaternary: return TokenColors.Icon.secondary
         case .warning: return TokenColors.Text.primary
         }
     }
@@ -17,12 +17,12 @@ struct LightColorThemeFactory: ColorFactory {
         switch style {
         case .primary, .secondary: return TokenColors.Background.page
         case .warning: return TokenColors.Notifications.notificationWarning
-        case .enabled: return MEGAAppColor.Green._00A886.uiColor
-        case .disabled: return MEGAAppColor.Gray._999999.uiColor
-        case .highlighted: return MEGAAppColor.Green._00A88680.uiColor
+        case .enabled: return TokenColors.Support.success
+        case .disabled: return UIColor.gray999999
+        case .highlighted: return UIColor.green00A88680
             
-        case .searchTextField: return MEGAAppColor.White._EFEFEF.uiColor
-        case .homeTopSide: return MEGAAppColor.White._F7F7F7.uiColor
+        case .searchTextField: return UIColor.whiteEFEFEF
+        case .homeTopSide: return TokenColors.Background.surface1
         }
     }
     
@@ -35,14 +35,14 @@ struct LightColorThemeFactory: ColorFactory {
     
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
-        case .primary: return MEGAAppColor.Black._00000015.uiColor
+        case .primary: return UIColor.black00000015
         case .warning: return TokenColors.Notifications.notificationWarning
         }
     }
     
     func shadowColor(_ style: MEGAColor.Shadow) -> UIColor {
         switch style {
-        case .primary: return MEGAAppColor.Black._000000.uiColor
+        case .primary: return TokenColors.Text.primary
         }
     }
     

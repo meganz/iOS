@@ -67,8 +67,8 @@ class VerifyEmailViewController: UIViewController {
     func addGradientBackground() {
         let gradient = CAGradientLayer()
         gradient.frame = warningGradientView.bounds
-        gradient.colors = [MEGAAppColor.SharedView.verifyEmailFirstGradient.uiColor.cgColor,
-                           MEGAAppColor.SharedView.verifyEmailSecondGradient.uiColor.cgColor]
+        gradient.colors = [UIColor.verifyEmailFirstGradient.cgColor,
+                           UIColor.verifyEmailSecondGradient.cgColor]
         gradient.locations = [0, 1]
         gradient.startPoint = CGPoint(x: 0.5, y: 0)
         gradient.endPoint = CGPoint(x: 0.5, y: 1)

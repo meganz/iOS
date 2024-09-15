@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAPermissions
 import UIKit
 
@@ -98,7 +99,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         
         let lifeFeedFadingView = UIView()
         lifeFeedFadingView.translatesAutoresizingMaskIntoConstraints = false
-        lifeFeedFadingView.backgroundColor = MEGAAppColor.Black._000000.uiColor
+        lifeFeedFadingView.backgroundColor = TokenColors.Text.primary
         mainView.insertSubview(lifeFeedFadingView, aboveSubview: liveFeedView)
         
         NSLayoutConstraint.activate([
