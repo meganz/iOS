@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -7,7 +8,7 @@ class PasteImagePreviewView: UIView {
     lazy var contentView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 4
-        view.layer.shadowColor = MEGAAppColor.Black._000000.uiColor.cgColor
+        view.layer.shadowColor = TokenColors.Text.primary.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 1)
         view.layer.shadowOpacity = 0.15
         return view
@@ -20,7 +21,7 @@ class PasteImagePreviewView: UIView {
         imageView.image = UIPasteboard.general.loadImage()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = MEGAAppColor.SharedView.pasteImageBorder.uiColor.cgColor
+        imageView.layer.borderColor = UIColor.pasteImageBorder.cgColor
         return imageView
     }()
     

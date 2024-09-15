@@ -62,8 +62,8 @@ class MegaAvatarView: UIView {
             avatarImageView.image = UIImage.init(forName: chatRoom.title?.uppercased(),
                                                  size: avatarImageView.frame.size,
                                                  backgroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
-                                                 backgroundGradientColor: MEGAAppColor.Gray._DBDBDB.uiColor,
-                                                 textColor: MEGAAppColor.White._FFFFFF.uiColor,
+                                                 backgroundGradientColor: UIColor.grayDBDBDB,
+                                                 textColor: UIColor.whiteFFFFFF,
                                                  font: font)
             configure(mode: .single)
         } else {

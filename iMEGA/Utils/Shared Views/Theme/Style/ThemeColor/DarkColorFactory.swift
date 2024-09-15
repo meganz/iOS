@@ -4,11 +4,8 @@ import MEGADesignToken
 struct DarkColorThemeFactory: ColorFactory {
     func textColor(_ style: MEGAColor.Text) -> UIColor {
         switch style {
-        case .primary: return TokenColors.Text.primary
-        case .secondary: return TokenColors.Text.secondary
-        case .tertiary: return MEGAAppColor.Gray._D1D1D1.uiColor
-        case .quaternary: return MEGAAppColor.Gray._B5B5B5.uiColor
-        case .warning: return TokenColors.Text.primary
+        case .primary, .warning: return TokenColors.Text.primary
+        case .secondary, .tertiary, .quaternary: return TokenColors.Text.secondary
         }
     }
     
@@ -16,11 +13,11 @@ struct DarkColorThemeFactory: ColorFactory {
         switch style {
         case .primary, .secondary: return TokenColors.Background.page
         case .warning: return TokenColors.Notifications.notificationWarning
-        case .enabled: return MEGAAppColor.White._FFD60008.uiColor
-        case .disabled: return MEGAAppColor.Gray._999999.uiColor
-        case .highlighted: return MEGAAppColor.Green._00A88680.uiColor
-        case .searchTextField: return MEGAAppColor.Black._29292C.uiColor
-        case .homeTopSide: return MEGAAppColor.Black._000000.uiColor
+        case .enabled: return UIColor.whiteFFD60008
+        case .disabled: return UIColor.gray999999
+        case .highlighted: return UIColor.green00A88680
+        case .searchTextField: return UIColor.black29292C
+        case .homeTopSide: return TokenColors.Text.primary
         }
     }
     
@@ -33,14 +30,14 @@ struct DarkColorThemeFactory: ColorFactory {
     
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
-        case .primary: return MEGAAppColor.Black._00000015.uiColor
+        case .primary: return UIColor.black00000015
         case .warning: return TokenColors.Notifications.notificationWarning
         }
     }
     
     func shadowColor(_ style: MEGAColor.Shadow) -> UIColor {
         switch style {
-        case .primary: return MEGAAppColor.Black._000000.uiColor
+        case .primary: return TokenColors.Text.primary
         }
     }
     

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -89,8 +90,9 @@ class AddToChatImageCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         cellType = .media
-        imageView.backgroundColor = MEGAAppColor.White._FFFFFF.uiColor
+        imageView.backgroundColor = TokenColors.Background.page
     }
     
     func toggleSelection() {

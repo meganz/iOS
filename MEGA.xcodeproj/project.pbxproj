@@ -176,8 +176,6 @@
 		1648E4AC2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
 		1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
-		168EF1192B620860008C9CB3 /* MEGAAppColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */; };
-		168EF11D2B620ABE008C9CB3 /* MEGAAppColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */; };
 		2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
@@ -247,7 +245,6 @@
 		24EF670C2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */; };
 		24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */; };
 		24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */; };
-		24F583B62B46E18C00AA0562 /* MEGAAppColor+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */; };
 		251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */; };
 		251B07BB2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */; };
 		2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */; };
@@ -771,7 +768,6 @@
 		6D01A3D12C097E3200089BA8 /* SharedItemsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */; };
 		6D1272B62B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
-		6D3D91DE2B4B59C500210D65 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
 		6D5A19B02A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */; };
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
@@ -784,16 +780,10 @@
 		6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D797BA72C6117CC004D95F4 /* PhotosBrowser in Frameworks */ = {isa = PBXBuildFile; productRef = 6D797BA62C6117CC004D95F4 /* PhotosBrowser */; };
-		6D86E81D2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D86E81C2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift */; };
-		6D8820702B1B1B5B00F0BE18 /* MEGAAppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */; };
-		6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */; };
-		6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */; };
-		6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */; };
 		6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */; };
 		6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */; };
 		6D98B0992C6318A600CF1558 /* PhotosBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D98B0982C6318A600CF1558 /* PhotosBrowserViewModelTests.swift */; };
 		6D9934B02C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9934AF2C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift */; };
-		6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DC1FCA22BAD11B40013E9BD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
@@ -810,7 +800,6 @@
 		6DF356B52BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF356B62BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF356B82BAD36370099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
-		6DF467A72B50ED5F0065CA76 /* MEGAAppColor+PSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */; };
 		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
 		7288C2C927F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */; };
@@ -1528,7 +1517,6 @@
 		9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */; };
 		995C81DF2C7C31AF00FDCCA6 /* LaunchViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
-		99620A052B44D65E00AE5ADF /* MEGAAppColor+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */; };
 		9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */; };
 		996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */; };
 		996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */; };
@@ -2912,7 +2900,6 @@
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
-		168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Components.swift"; sourceTree = "<group>"; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemDataSourceCommand.swift; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
@@ -2983,7 +2970,6 @@
 		24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerEventObserversLoadingLogicControllerTests.swift; sourceTree = "<group>"; };
 		24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonWaitingToPlayNilLogicControllerTests.swift; sourceTree = "<group>"; };
 		24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterTests.swift; sourceTree = "<group>"; };
-		24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Videos.swift"; sourceTree = "<group>"; };
 		251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ViewMode.swift"; sourceTree = "<group>"; };
 		251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomControlPositionTracker.swift; sourceTree = "<group>"; };
 		2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModel.swift; sourceTree = "<group>"; };
@@ -3587,15 +3573,10 @@
 		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModel.swift; sourceTree = "<group>"; };
 		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
-		6D86E81C2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+SharedItems.swift"; sourceTree = "<group>"; };
-		6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAppColor.swift; sourceTree = "<group>"; };
-		6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Chat.swift"; sourceTree = "<group>"; };
-		6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Photos.swift"; sourceTree = "<group>"; };
 		6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadAdvancedOptionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		6D93A46D2C5CB24D00529098 /* PhotosBrowser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PhotosBrowser; sourceTree = "<group>"; };
 		6D98B0982C6318A600CF1558 /* PhotosBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		6D9934AF2C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsViewController+PhotosBrowser.swift"; sourceTree = "<group>"; };
-		6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Account.swift"; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+Filter.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -3603,7 +3584,6 @@
 		6DD7B2352A776313007EBB20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModelTests.swift; sourceTree = "<group>"; };
 		6DEEA7B72C119596004641C9 /* MEGASDKErrorTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASDKErrorTypeTests.swift; sourceTree = "<group>"; };
-		6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+PSA.swift"; sourceTree = "<group>"; };
 		6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListRouting.swift; sourceTree = "<group>"; };
 		7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAReachabilityManager+Additions.swift"; sourceTree = "<group>"; };
 		7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HelpTableViewController+Feedback.swift"; sourceTree = "<group>"; };
@@ -7151,7 +7131,6 @@
 			isa = PBXGroup;
 			children = (
 				A8AA4F6D1ED4295800E7BA23 /* API */,
-				6D88206E2B1B1B4500F0BE18 /* AppColor */,
 				C4EB6DB72B4BF5FD007A94E3 /* AppExitHandler */,
 				940DB9122924D77F004E7349 /* AudioSession */,
 				9405E70C28A3AC43005A16D1 /* BackupNodesValidator */,
@@ -8644,21 +8623,6 @@
 				6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		6D88206E2B1B1B4500F0BE18 /* AppColor */ = {
-			isa = PBXGroup;
-			children = (
-				6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */,
-				6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */,
-				168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */,
-				6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */,
-				6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */,
-				6D86E81C2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift */,
-				24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */,
-				6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */,
-			);
-			path = AppColor;
 			sourceTree = "<group>";
 		};
 		6D98B0972C63189300CF1558 /* PhotosBrowser */ = {
@@ -15167,14 +15131,6 @@
 				BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
-				6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */,
-				6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */,
-				168EF1192B620860008C9CB3 /* MEGAAppColor+Components.swift in Sources */,
-				6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */,
-				6DF467A72B50ED5F0065CA76 /* MEGAAppColor+PSA.swift in Sources */,
-				6D86E81D2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift in Sources */,
-				24F583B62B46E18C00AA0562 /* MEGAAppColor+Videos.swift in Sources */,
-				6D8820702B1B1B5B00F0BE18 /* MEGAAppColor.swift in Sources */,
 				A85B7AC42A14F5C7002B1D6A /* MEGAApplication.swift in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				7764AAB3246EE18E00134C88 /* MegaAvatarView.swift in Sources */,
@@ -16255,10 +16211,6 @@
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
-				6D3D91DE2B4B59C500210D65 /* MEGAAppColor+Account.swift in Sources */,
-				99620A052B44D65E00AE5ADF /* MEGAAppColor+Chat.swift in Sources */,
-				168EF11D2B620ABE008C9CB3 /* MEGAAppColor+Components.swift in Sources */,
-				6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */,
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
 				77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */,

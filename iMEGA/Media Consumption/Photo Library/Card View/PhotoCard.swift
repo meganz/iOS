@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct PhotoCard<Content: View>: View {
@@ -32,7 +33,7 @@ struct PhotoCard<Content: View>: View {
                     }
                 }
             }
-            .background(Color(colorScheme == .dark ? UIColor.systemBackground : MEGAAppColor.White._F7F7F7.uiColor))
+            .background(TokenColors.Background.surface1.swiftUI)
         }
         .cornerRadius(12)
         .contentShape(Rectangle())

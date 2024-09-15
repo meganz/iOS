@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -41,23 +42,17 @@ struct AutoMediaDiscoveryBannerView: View {
             }
         } label: {
             Image(systemName: "xmark.circle.fill")
-                .foregroundColor(closeImageColor)
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
         }
         .padding(.trailing, Constants.defaultPadding)
     }
     
-    private var closeImageColor: Color {
-        Color(colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.uiColor :
-                MEGAAppColor.Gray._515151.uiColor)
-    }
-    
     private var bannerBackgroundColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._2C2C2E.color :  MEGAAppColor.White._FFFFFF.color
+        colorScheme == .dark ? UIColor.black2C2C2E.swiftUI :  UIColor.whiteFFFFFF.swiftUI
     }
     
     private var bannerBorderColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Gray._545458.color.opacity(Constants.bannerBorderOpacityDarkMode) :
-        MEGAAppColor.Gray._3C3C43.color.opacity(Constants.bannerBorderOpacityLightMode)
+        TokenColors.Border.strong.swiftUI.opacity(colorScheme == .dark ? Constants.bannerBorderOpacityDarkMode : Constants.bannerBorderOpacityLightMode)
     }
 }
 

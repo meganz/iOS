@@ -447,10 +447,10 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         let backgroundColor: UIColor
         switch trait.theme {
         case .light:
-            backgroundColor = constraintToTopPosition.isActive ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.White._F7F7F7.uiColor
+            backgroundColor = constraintToTopPosition.isActive ? UIColor.whiteFFFFFF : TokenColors.Background.surface1
             
         case .dark:
-            backgroundColor = constraintToTopPosition.isActive ? .mnz_black1C1C1E() : MEGAAppColor.Black._000000.uiColor
+            backgroundColor = constraintToTopPosition.isActive ? .mnz_black1C1C1E() :TokenColors.Text.primary
         }
         
         updateNavigationBarTitleColor(for: trait)
@@ -486,9 +486,9 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
     private func navigationBarTransitionColors(for trait: UITraitCollection) -> (UIColor, UIColor) {
         switch trait.userInterfaceStyle {
         case .dark:
-            return (.mnz_black1C1C1E(), MEGAAppColor.Black._000000.uiColor)
+            return (.mnz_black1C1C1E(), TokenColors.Text.primary)
         default:
-            return (MEGAAppColor.White._FFFFFF.uiColor, MEGAAppColor.White._F7F7F7.uiColor)
+            return (UIColor.whiteFFFFFF, TokenColors.Background.surface1)
         }
     }
     

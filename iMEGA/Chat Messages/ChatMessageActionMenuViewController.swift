@@ -294,7 +294,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             if emoji != "" {
                 let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 30) as Any])
                 emojiView.setAttributedTitle(attributedEmoji, for: .normal)
-                emojiView.backgroundColor = MEGAAppColor.White._F2F2F2.uiColor
+                emojiView.backgroundColor = UIColor.whiteF2F2F2
                 emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
             } else {
                 emojiView.setImage(UIImage(resource: .addReactionSmall), for: .normal)

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 
 extension InterfaceStyle {
     
@@ -39,33 +40,31 @@ extension ColorFactory {
     
     func independent(_ style: MEGAColor.Independent) -> UIColor {
         switch style {
-        case .bright: return MEGAAppColor.White._FFFFFF.uiColor
-        case .dark: return MEGAAppColor.Black._000000.uiColor
-        case .clear: return MEGAAppColor.White._FFFFFF00.uiColor
-        case .warning: return MEGAAppColor.Red._FF3B30.uiColor
+        case .bright: return UIColor.whiteFFFFFF
+        case .dark: return TokenColors.Text.primary
+        case .clear: return UIColor.whiteFFFFFF00
+        case .warning: return UIColor.redFF3B30
         }
     }
     
     func gradient(_ style: MEGAColor.Gradient) -> UIColor {
         switch style {
         case .exploreImagesStart:
-            return MEGAAppColor.Orange._F9B35F.uiColor
+            return UIColor.orangeF9B35F
         case .exploreImagesEnd:
-            return MEGAAppColor.Orange._E68F4D.uiColor
+            return UIColor.orangeE68F4D
         case .exploreDocumentsStart:
-            return MEGAAppColor.Blue._02A2FF.uiColor
+            return UIColor.blue02A2FF
         case .exploreDocumentsEnd:
-            return MEGAAppColor.Blue._0274CC.uiColor
-            
+            return UIColor.blue0274CC
         case .exploreAudioStart:
-            return MEGAAppColor.Blue._00ACBF.uiColor
+            return UIColor.blue00ACBF
         case .exploreAudioEnd:
-            return MEGAAppColor.Blue._0095A6.uiColor
-            
+            return UIColor.blue0095A6
         case .exploreVideoStart:
-            return MEGAAppColor.Red._F288C2.uiColor
+            return UIColor.redF288C2
         case .exploreVideoEnd:
-            return MEGAAppColor.Red._CA75D1.uiColor
+            return UIColor.redCA75D1
         }
     }
 }

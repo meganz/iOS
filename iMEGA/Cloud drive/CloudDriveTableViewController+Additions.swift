@@ -7,7 +7,7 @@ extension CloudDriveTableViewController {
         if MEGASdk.shared.isNode(inRubbish: node) {
             if let restoreNode = MEGASdk.shared.node(forHandle: node.restoreHandle),
                !MEGASdk.shared.isNode(inRubbish: restoreNode) {
-                let restoreAction = swipeAction(image: UIImage.restore.withTintColor(MEGAAppColor.White._FFFFFF.uiColor), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
+                let restoreAction = swipeAction(image: UIImage.restore.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
                     node.mnz_restore()
                     self?.setTableViewEditing(false, animated: true)
                 }
@@ -15,7 +15,7 @@ extension CloudDriveTableViewController {
                 return UISwipeActionsConfiguration(actions: [restoreAction])
             }
         } else {
-            let shareLinkAction = swipeAction(image: UIImage.link.withTintColor(MEGAAppColor.White._FFFFFF.uiColor), backgroundColor: UIColor.systemOrange) { [weak self] in
+            let shareLinkAction = swipeAction(image: UIImage.link.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.systemOrange) { [weak self] in
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
                                   nodes: [node]).start()
@@ -23,7 +23,7 @@ extension CloudDriveTableViewController {
                 self?.setTableViewEditing(false, animated: true)
             }
             
-            let downloadAction = swipeAction(image: UIImage.offline.withTintColor(MEGAAppColor.White._FFFFFF.uiColor), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
+            let downloadAction = swipeAction(image: UIImage.offline.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
                 guard let self else { return }
                 let nodeDownloadTransfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
                 
@@ -34,7 +34,7 @@ extension CloudDriveTableViewController {
             }
             
             if cloudDrive?.displayMode != .backup {
-                let rubbishBinAction = swipeAction(image: UIImage.rubbishBin.withTintColor(MEGAAppColor.White._FFFFFF.uiColor), backgroundColor: UIColor.mnz_red(for: traitCollection)) { [weak self] in
+                let rubbishBinAction = swipeAction(image: UIImage.rubbishBin.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.mnz_red(for: traitCollection)) { [weak self] in
                     self?.cloudDrive?.moveToRubbishBin(for: node)
                     self?.setTableViewEditing(false, animated: true)
                 }
