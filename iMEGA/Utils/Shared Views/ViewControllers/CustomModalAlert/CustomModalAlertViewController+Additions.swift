@@ -1,3 +1,5 @@
+import MEGADesignToken
+
 extension CustomModalAlertViewController {
     @objc func updateDetailAttributedTextWithLink(_ detail: NSAttributedString) {
         detailLabel?.isHidden = true
@@ -7,7 +9,7 @@ extension CustomModalAlertViewController {
     }
     
     @objc func mainViewShadowColor() -> UIColor {
-        MEGAAppColor.Black._000000.uiColor
+        TokenColors.Text.primary
     }
 }
 

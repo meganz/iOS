@@ -1,6 +1,7 @@
 import Accounts
 import Combine
 import MEGAAnalyticsiOS
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -242,8 +243,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return TextWithLinkDetails(fullText: fullTextWithoutFormatters,
                                    tappableText: tappableText,
                                    linkString: "https://mega.nz/pro",
-                                   textColor: MEGAAppColor.Account.upgradeAccountPrimaryText.color,
-                                   linkColor: MEGAAppColor.View.turquoise.color)
+                                   textColor: UIColor.upgradeAccountPrimaryText.swiftUI,
+                                   linkColor: TokenColors.Support.success.swiftUI)
     }
     
     func createAccountPlanViewModel(_ plan: PlanEntity) -> AccountPlanViewModel {

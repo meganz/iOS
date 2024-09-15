@@ -1,3 +1,5 @@
+import MEGADesignToken
+
 extension SharedItemsViewController {
     @objc func updateTabSelection() {
         self.selectorView?.backgroundColor = .mnz_mainBars(for: traitCollection)
@@ -14,14 +16,14 @@ extension SharedItemsViewController {
     }
     
     private func setSelectedTab(forTabButton button: UIButton, lineView: UIView) {
-        lineView.backgroundColor = MEGAAppColor.SharedItems.sharedItemsTabSelectedBackground.uiColor
-        button.tintColor = MEGAAppColor.SharedItems.sharedItemsTabSelectedIconTint.uiColor
-        button.setTitleColor(MEGAAppColor.SharedItems.sharedItemsTabSelectedText.uiColor, for: .selected)
+        lineView.backgroundColor = TokenColors.Button.brand
+        button.tintColor = TokenColors.Button.brand
+        button.setTitleColor(TokenColors.Button.brand, for: .selected)
     }
     
     private func setNormalTab(forTabButton button: UIButton, lineView: UIView) {
-        lineView.backgroundColor = MEGAAppColor.SharedItems.sharedItemsTabNormalBackground.uiColor
-        button.tintColor = MEGAAppColor.SharedItems.sharedItemsTabNormalIconTint.uiColor
-        button.setTitleColor(MEGAAppColor.SharedItems.sharedItemsTabNormalText.uiColor, for: .normal)
+        lineView.backgroundColor = TokenColors.Border.strong
+        button.tintColor = TokenColors.Icon.secondary
+        button.setTitleColor(TokenColors.Icon.secondary, for: .normal)
     }
 }

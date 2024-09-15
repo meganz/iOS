@@ -3,6 +3,7 @@ import Combine
 import DeviceCenterMocks
 import MEGADomain
 import MEGADomainMock
+import SwiftUI
 import XCTest
 
 final class BackupListViewModelTests: XCTestCase {
@@ -386,8 +387,7 @@ final class BackupListViewModelTests: XCTestCase {
             searchAssets: SearchAssets(
                 placeHolder: "",
                 cancelTitle: "", 
-                lightBGColor: .gray,
-                darkBGColor: .black
+                backgroundColor: Color(.systemBackground)
             ),
             backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
             deviceCenterActions: [

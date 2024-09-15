@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import MEGARepo
@@ -100,7 +101,7 @@ extension MyAvatarViewModel {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: MEGAChatSdk.shared.myFullname?.initialForAvatar() ?? "M",
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor,
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? TokenColors.Text.primary,
             size: CGSize(width: 28, height: 28)
         )
         

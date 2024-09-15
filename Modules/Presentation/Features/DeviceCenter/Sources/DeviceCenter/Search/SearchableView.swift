@@ -22,7 +22,7 @@ struct SearchableView<WrappedView: View>: View {
                 cancelTitle: searchAssets.cancelTitle
             )
             .padding(8)
-            .background(colorScheme == .dark ? searchAssets.darkBGColor : searchAssets.lightBGColor)
+            .background(searchAssets.backgroundColor)
             wrappedView
         }
         .background()

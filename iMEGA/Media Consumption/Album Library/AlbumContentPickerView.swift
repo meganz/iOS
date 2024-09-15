@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -11,7 +12,8 @@ struct AlbumContentPickerView: View {
     
     var body: some View {
         ZStack {
-            backgroundColor
+            TokenColors.Background.surface1.swiftUI
+            
             VStack(spacing: 0) {
                 navigationBar
                 
@@ -54,7 +56,7 @@ struct AlbumContentPickerView: View {
                 } label: {
                     Text(Strings.Localizable.cancel)
                         .font(.body)
-                        .foregroundColor(textColor)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                 }.padding(10)
                 
                 Text(viewModel.photoSourceLocationNavigationTitle)
@@ -67,7 +69,7 @@ struct AlbumContentPickerView: View {
                 } label: {
                     Text(Strings.Localizable.done)
                         .font(.body.bold())
-                        .foregroundColor(textColor.opacity(viewModel.isDoneButtonDisabled ? 0.5 : 1))
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI.opacity(viewModel.isDoneButtonDisabled ? 0.5 : 1))
                 }.padding(10)
                 .disabled(viewModel.isDoneButtonDisabled)
             }.padding(.bottom, 10)
@@ -85,20 +87,12 @@ struct AlbumContentPickerView: View {
                     } label: {
                         Text(Strings.Localizable.filter)
                             .font(.body)
-                            .foregroundColor(textColor)
+                            .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     }.padding(20)
                 }
             }
             .padding(.bottom, 20)
         }
-    }
-    
-    private var backgroundColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._F7F7F7.color
-    }
-    
-    private var textColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
     }
     
     private func dismiss() {

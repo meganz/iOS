@@ -10,7 +10,7 @@ struct SlideShowOptionCellView: View {
             if cellModel.type == .none {
                 Rectangle()
                     .frame(height: 24)
-                    .foregroundColor(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._F7F7F7.color)
+                    .foregroundStyle(TokenColors.Background.surface1.swiftUI)
             } else {
                 ZStack {
                     Toggle(isOn: $cellModel.isOn) {

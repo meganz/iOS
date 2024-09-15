@@ -13,7 +13,8 @@ struct SlideShowOptionDetailView: View {
     
     var body: some View {
         ZStack {
-            backgroundColor
+            TokenColors.Background.surface1.swiftUI
+            
             VStack(spacing: 0) {
                 navigationBar
                     .background(TokenColors.Background.surface1.swiftUI)
@@ -65,12 +66,5 @@ struct SlideShowOptionDetailView: View {
             }
         }
         .background(TokenColors.Background.page.swiftUI)
-    }
-    
-    private var backgroundColor: Color {
-        switch colorScheme {
-        case .dark: return MEGAAppColor.Black._1C1C1E.color
-        default: return MEGAAppColor.White._F7F7F7.color
-        }
     }
 }

@@ -67,8 +67,7 @@ final class BackupListsViewRouterTests: XCTestCase {
             searchAssets: SearchAssets(
                 placeHolder: "",
                 cancelTitle: "",
-                lightBGColor: .gray,
-                darkBGColor: .black
+                backgroundColor: Color(.systemBackground)
                 
             ),
             backupStatuses: [
