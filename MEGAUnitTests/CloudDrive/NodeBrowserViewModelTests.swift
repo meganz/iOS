@@ -87,11 +87,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 currentViewMode: defaultViewMode
             )
 
-            self.nodeUseCase = MockNodeDataUseCase(
-                nodes: [node],
-                monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode,
-                sensitivityChangesForNode: sensitivityChangesForNode
-            )
+            self.nodeUseCase = MockNodeDataUseCase(nodes: [node])
 
             sut = NodeBrowserViewModel(
                 viewMode: defaultViewMode,
@@ -141,7 +137,11 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 nodesUpdateListener: nodesUpdateListener, 
                 cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
-                nodeUseCase: nodeUseCase,
+                nodeUseCase: nodeUseCase, 
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(
+                    monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode,
+                    sensitivityChangesForNode: sensitivityChangesForNode
+                ),
                 viewModeSaver: { saver($0) },
                 storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },

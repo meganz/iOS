@@ -186,11 +186,4 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
     private func isInheritingSensitivityResult(for node: NodeEntity) -> Result<Bool, Error> {
         isInheritingSensitivityResults[node.handle] ?? isInheritingSensitivityResult
     }
-
-    public func mergeInheritedAndDirectSensitivityChanges(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        merge(
-            sensitivityChanges(for: node),
-            monitorInheritedSensitivity(for: node)
-        ).eraseToAnyAsyncThrowingSequence()
-    }
 }

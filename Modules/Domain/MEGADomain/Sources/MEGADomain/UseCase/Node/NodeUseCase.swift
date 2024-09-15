@@ -49,20 +49,6 @@ public protocol NodeUseCaseProtocol: Sendable {
     /// - Returns: An `AnyAsyncSequence<Bool>` indicating node sensitivity changes
     @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
     func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool>
-    /// Merges sensitivity changes due to node inheritance and the direct sensitivity changes of the node itself.
-    ///
-    /// This method combines two streams:
-    /// - `monitorInheritedSensitivity(for:)`: Monitors sensitivity changes that are inherited from parent nodes.
-    /// - `sensitivityChanges(for:)`: Monitors direct sensitivity changes of the node itself.
-    ///
-    /// The resulting stream emits `Bool` values indicating sensitivity changes, where `true` means the node is sensitive
-    /// and `false` means it is not. This method is useful for tracking both inherited and direct sensitivity changes
-    /// in a unified way.
-    ///
-    /// - Parameter node: The `NodeEntity` for which to monitor sensitivity changes.
-    /// - Returns: An `AnyAsyncThrowingSequence<Bool, any Error>` that emits sensitivity change events for the specified node.
-    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
-    func mergeInheritedAndDirectSensitivityChanges(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error>
 }
 
 // MARK: - Use case implementation -
@@ -194,15 +180,5 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
                 })?.isMarkedSensitive
             }
             .eraseToAnyAsyncSequence()
-    }
-
-    public func mergeInheritedAndDirectSensitivityChanges(
-        for node: NodeEntity
-    ) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        AsyncAlgorithms.merge(
-            sensitivityChanges(for: node),
-            monitorInheritedSensitivity(for: node)
-        )
-        .eraseToAnyAsyncThrowingSequence()
     }
 }
