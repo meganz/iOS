@@ -315,7 +315,8 @@ struct CloudDriveViewControllerFactory {
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodesUpdateListener: nodesUpdateListener, 
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
-            nodeUseCase: nodeUseCase,
+            nodeUseCase: nodeUseCase, 
+            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo),
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
