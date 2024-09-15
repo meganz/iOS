@@ -99,8 +99,4 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
     func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
-
-    func mergeInheritedAndDirectSensitivityChanges(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
-    }
 }

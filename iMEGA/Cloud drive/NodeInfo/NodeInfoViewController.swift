@@ -190,7 +190,7 @@ final class NodeInfoViewController: UITableViewController {
         // We reload all the sections in the tableview, except for the `description` section
         // because the built-in reloadSections will cause the sections to lose its first responder status
         // while in fact we need to keep the first responder as is.
-        guard tableView.numberOfSections > 0, let (controller, descSection) = nodeDescriptionCellControllerWithSection() else {
+        guard tableView.numberOfSections > 0, let (_, descSection) = nodeDescriptionCellControllerWithSection() else {
             tableView.reloadData()
             return
         }
