@@ -13,7 +13,7 @@ struct AppearanceListFooterWithLinkView: View {
                 .foregroundColor(TokenColors.Text.primary.swiftUI)
             Link(destination: linkUrl) {
                 Text(linkMessage)
-                    .foregroundStyle(MEGAAppColor.View.turquoise_link.color)
+                    .foregroundStyle(TokenColors.Link.primary.swiftUI)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

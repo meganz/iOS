@@ -83,9 +83,9 @@ class FileExplorerGridCell: UICollectionViewCell {
     private func setupAppearance(with trait: UITraitCollection) {
         switch trait.theme {
         case .dark:
-            thumbnailImageView.backgroundColor = MEGAAppColor.Black._1C1C1E.uiColor
+            thumbnailImageView.backgroundColor = UIColor.black1C1C1E
         default:
-            thumbnailImageView.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
+            thumbnailImageView.backgroundColor = TokenColors.Background.surface1
         }
         updateBorderColor()
     }

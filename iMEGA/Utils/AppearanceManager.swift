@@ -73,7 +73,7 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setShadowOffset(CGSize(width: 0, height: 1))
         SVProgressHUD.setShadowOpacity(0.15)
         SVProgressHUD.setShadowRadius(8)
-        SVProgressHUD.setShadowColor(MEGAAppColor.Black._000000.uiColor)
+        SVProgressHUD.setShadowColor(TokenColors.Text.primary)
         SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
         SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
@@ -207,7 +207,7 @@ class AppearanceManager: NSObject {
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
         UIActivityIndicatorView.appearance().style = .medium
-        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? MEGAAppColor.White._FFFFFF.uiColor : UIColor.mnz_primaryGray(for: traitCollection)
+        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : UIColor.mnz_primaryGray(for: traitCollection)
     }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {

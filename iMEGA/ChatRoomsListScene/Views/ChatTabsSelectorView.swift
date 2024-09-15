@@ -57,6 +57,6 @@ struct ChatTabsSelectorView: View {
             }
         }
         .frame(maxHeight: 44)
-        .background(colorScheme == .dark ? MEGAAppColor.Black._161616.color : MEGAAppColor.White._F7F7F7.color)
+        .background(TokenColors.Background.surface1.swiftUI)
     }
 }

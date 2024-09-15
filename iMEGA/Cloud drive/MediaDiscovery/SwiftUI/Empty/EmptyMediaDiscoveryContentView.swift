@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -40,12 +41,12 @@ struct EmptyMediaDiscoveryContentView: View {
             }, label: {
                 Text(Strings.Localizable.addFiles)
                     .font(.body.weight(.semibold))
-                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+                    .foregroundColor(UIColor.whiteFFFFFF.swiftUI)
                     .frame(width: 288, height: 50)
             })
-            .background(MEGAAppColor.View.turquoise.color)
+            .background(TokenColors.Support.success.swiftUI)
             .cornerRadius(8, corners: .allCorners)
-            .shadow(color: MEGAAppColor.Black._000000.color.opacity(0.15), radius: 3, x: 0, y: 1)
+            .shadow(color: TokenColors.Text.primary.swiftUI.opacity(0.15), radius: 3, x: 0, y: 1)
         }
         .padding(.bottom, 35)
     }

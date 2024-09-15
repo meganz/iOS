@@ -118,8 +118,8 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 target: self,
                 action: #selector(cancelButtonPressed(_:))
             )
-            let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
+            
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: TokenColors.Text.primary], for: .normal)
         } else {
             rightBarButtonItem.isEnabled = true
             navigationItem.rightBarButtonItem = photoLibraryContentViewModel.library.isEmpty ? nil : rightBarButtonItem

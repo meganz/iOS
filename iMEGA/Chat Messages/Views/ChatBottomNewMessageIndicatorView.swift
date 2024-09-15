@@ -11,12 +11,12 @@ class ChatBottomNewMessageIndicatorView: UIView {
         var config = UIButton.Configuration.plain()
         config.contentInsets = NSDirectionalEdgeInsets(top: 3, leading: 5, bottom: 3, trailing: 5)
         label.configuration = config
-        label.backgroundColor = MEGAAppColor.Gray._333333.uiColor.withAlphaComponent(0.9)
+        label.backgroundColor = UIColor.gray333333.withAlphaComponent(0.9)
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         label.layer.borderWidth = 1
         label.isUserInteractionEnabled = false
-        label.layer.borderColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
+        label.layer.borderColor = UIColor.whiteFFFFFF.cgColor
         return label
     }()
     

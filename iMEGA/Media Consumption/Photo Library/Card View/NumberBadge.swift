@@ -8,7 +8,7 @@ struct NumberBadge: View {
             .font(.system(size: 16))
             .fontWeight(.semibold)
             .padding(EdgeInsets(top: 5, leading: 8, bottom: 5, trailing: 8))
-            .background(MEGAAppColor.Photos.photoNumbersBackground.color)
+            .background(Color(.mediaConsumptionPhotoNumbersBackground))
             .clipShape(RoundedRectangle(cornerRadius: 13.5))
     }
 }

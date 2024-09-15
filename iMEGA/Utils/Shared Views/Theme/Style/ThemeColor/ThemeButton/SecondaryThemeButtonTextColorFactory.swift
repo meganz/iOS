@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 
 extension LightColorThemeFactory {
 
@@ -7,15 +8,15 @@ extension LightColorThemeFactory {
     struct LightSecondaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            return MEGAAppColor.Green._00A886.uiColor
+            TokenColors.Support.success
         }
 
         func disabledColor() -> UIColor {
-            return MEGAAppColor.Gray._999999.uiColor
+            UIColor.gray999999
         }
 
         func highlightedColor() -> UIColor {
-            return MEGAAppColor.Green._00A886.uiColor
+            TokenColors.Support.success
         }
     }
 
@@ -24,15 +25,15 @@ extension LightColorThemeFactory {
     struct LightSecondaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            return MEGAAppColor.White._FFFFFF.uiColor
+            UIColor.whiteFFFFFF
         }
 
         func disabledColor() -> UIColor {
-            return MEGAAppColor.White._FFFFFF.uiColor
+            UIColor.whiteFFFFFF
         }
 
         func highlightedColor() -> UIColor {
-            return MEGAAppColor.White._FFFFFF.uiColor
+            UIColor.whiteFFFFFF
         }
     }
 }
@@ -44,15 +45,15 @@ extension DarkColorThemeFactory {
     struct DarkSecondaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            return MEGAAppColor.Green._00C29A.uiColor
+            TokenColors.Support.success
         }
 
         func disabledColor() -> UIColor {
-            return MEGAAppColor.Gray._999999.uiColor
+            UIColor.gray999999
         }
 
         func highlightedColor() -> UIColor {
-            return MEGAAppColor.Green._00C29A4D.uiColor
+            UIColor.green00C29A4D
         }
     }
 
@@ -61,15 +62,15 @@ extension DarkColorThemeFactory {
     struct DarkSecondaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            return MEGAAppColor.Black._363638.uiColor
+            UIColor.black363638
         }
 
         func disabledColor() -> UIColor {
-            return MEGAAppColor.White._FFFFFF.uiColor
+            UIColor.whiteFFFFFF
         }
 
         func highlightedColor() -> UIColor {
-            return MEGAAppColor.Black._363638.uiColor
+            UIColor.whiteFFFFFF
         }
     }
 }

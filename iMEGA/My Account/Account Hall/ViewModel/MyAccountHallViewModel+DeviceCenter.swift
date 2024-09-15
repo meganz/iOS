@@ -1,4 +1,5 @@
 import DeviceCenter
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -72,8 +73,7 @@ extension MyAccountHallViewModel {
         return SearchAssets(
             placeHolder: Strings.Localizable.search,
             cancelTitle: Strings.Localizable.cancel,
-            lightBGColor: MEGAAppColor.White._F7F7F7.color,
-            darkBGColor: MEGAAppColor.Black._161616.color
+            backgroundColor: TokenColors.Background.surface1.swiftUI
         )
     }
     

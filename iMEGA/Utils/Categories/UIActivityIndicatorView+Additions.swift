@@ -4,7 +4,7 @@ extension UIActivityIndicatorView {
         var activityIndicatorView: UIActivityIndicatorView
         
         activityIndicatorView = UIActivityIndicatorView.init(style: .medium)
-        activityIndicatorView.color = (activityIndicatorView.traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? MEGAAppColor.White._FFFFFF.uiColor : UIColor.mnz_primaryGray(for: activityIndicatorView.traitCollection)
+        activityIndicatorView.color = (activityIndicatorView.traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : UIColor.mnz_primaryGray(for: activityIndicatorView.traitCollection)
         
         return activityIndicatorView
     }

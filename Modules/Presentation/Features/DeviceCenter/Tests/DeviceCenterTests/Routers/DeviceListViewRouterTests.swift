@@ -60,8 +60,7 @@ final class DeviceListViewRouterTests: XCTestCase {
             searchAssets: SearchAssets(
                 placeHolder: "",
                 cancelTitle: "",
-                lightBGColor: .gray,
-                darkBGColor: .black
+                backgroundColor: Color(.systemBackground)
             ),
             deviceCenterActions: [],
             deviceIconNames: [:]
