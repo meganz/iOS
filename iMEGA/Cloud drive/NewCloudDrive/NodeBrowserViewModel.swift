@@ -63,6 +63,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let nodeSourceUpdatesListener: any CloudDriveNodeSourceUpdatesListening
     private var nodesUpdateListener: any NodesUpdateListenerProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onOpenUserProfile: () -> Void
@@ -103,6 +104,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodesUpdateListener: some NodesUpdateListenerProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
         nodeUseCase: some NodeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -140,6 +142,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.nodesUpdateListener = nodesUpdateListener
         self.cloudDriveViewModeMonitoringService = cloudDriveViewModeMonitoringService
         self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.onNodeStructureChanged = onNodeStructureChanged
 
         $viewMode
@@ -271,7 +274,6 @@ class NodeBrowserViewModel: ObservableObject {
         node == nodeSource.parentNode
     }
 
-    @MainActor
     func updateContextMenu() async {
         guard let cloudDriveContextMenuFactory else { return }
         for await updatedContextMenuViewFactory in cloudDriveContextMenuFactory.makeNodeBrowserContextMenuViewFactory(
@@ -335,7 +337,7 @@ class NodeBrowserViewModel: ObservableObject {
             guard let parentNode = nodeSource.parentNode else { return }
 
             do {
-                for try await _ in nodeUseCase.mergeInheritedAndDirectSensitivityChanges(for: parentNode) {
+                for try await _ in sensitiveNodeUseCase.mergeInheritedAndDirectSensitivityChanges(for: parentNode) {
                     if let updatedNode = nodeUseCase.nodeForHandle(parentNode.handle) {
                         await refreshMenuWithUpdatedNodeSource(.node({ updatedNode }))
                         await refreshAndReloadResults()
@@ -352,7 +354,6 @@ class NodeBrowserViewModel: ObservableObject {
         nodeSensitivityChangesListenerTask = nil
     }
 
-    @MainActor
     private func refreshMenuWithUpdatedNodeSource(_ nodeSource: NodeSource) async {
         self.nodeSource = nodeSource
         await updateContextMenu()
