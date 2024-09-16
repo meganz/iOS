@@ -11,6 +11,7 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol, S
         monitor
             .networkPathStream
             .map { $0.networkStatus == .satisfied }
+            .removeDuplicates()
             .eraseToAnyAsyncSequence()
     }
     

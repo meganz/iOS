@@ -199,7 +199,7 @@ final class ReportIssueViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        await sut.monitorNetworkChanges()
+        sut.monitorNetworkChanges()
     }
     
     @MainActor
