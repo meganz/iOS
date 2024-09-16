@@ -22,6 +22,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private let videoPlaylistContentsUseCase: any VideoPlaylistContentsUseCaseProtocol
     let thumbnailLoader: any ThumbnailLoaderProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    let nodeUseCase: any NodeUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private weak var selectionDelegate: VideoPlaylistContentViewModelSelectionDelegate?
@@ -66,6 +67,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         syncModel: VideoRevampSyncModel
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
@@ -80,6 +82,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.nodeUseCase = nodeUseCase
         self.syncModel = syncModel
         
         assignVideoPlaylistRenameValidator()
@@ -145,7 +148,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         
         secondaryInformationViewType = videos.count == 0 ? .emptyPlaylist : .information
     }
-    
     
     private func handle(_ error: any Error) {
         guard let videoPlaylistError = error as? VideoPlaylistErrorEntity else {

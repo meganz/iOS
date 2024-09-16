@@ -24,6 +24,7 @@ final class VideoListViewModel: ObservableObject {
     
     let thumbnailLoader: any ThumbnailLoaderProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    let nodeUseCase: any NodeUseCaseProtocol
     
     private(set) var syncModel: VideoRevampSyncModel
     private(set) var selection: VideoSelection
@@ -70,11 +71,13 @@ final class VideoListViewModel: ObservableObject {
         selection: VideoSelection,
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.nodeUseCase = nodeUseCase
         self.syncModel = syncModel
         self.selection = selection
         

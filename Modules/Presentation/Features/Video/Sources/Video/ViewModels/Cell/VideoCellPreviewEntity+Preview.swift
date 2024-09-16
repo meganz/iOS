@@ -11,7 +11,8 @@ extension VideoCellPreviewEntity {
         size: "2.00 GB",
         isExported: false,
         label: nil,
-        hasThumbnail: true
+        hasThumbnail: true,
+        isDownloaded: true
     )
     
     static let favorite = VideoCellPreviewEntity(
@@ -22,7 +23,8 @@ extension VideoCellPreviewEntity {
         size: "2.00 GB",
         isExported: false,
         label: nil,
-        hasThumbnail: true
+        hasThumbnail: true,
+        isDownloaded: true
     )
     
     static let hasPublicLink = VideoCellPreviewEntity(
@@ -33,7 +35,8 @@ extension VideoCellPreviewEntity {
         size: "2.00 GB",
         isExported: true,
         label: nil,
-        hasThumbnail: true
+        hasThumbnail: true,
+        isDownloaded: true
     )
     
     static let hasLabel = VideoCellPreviewEntity(
@@ -44,7 +47,8 @@ extension VideoCellPreviewEntity {
         size: "2.00 GB",
         isExported: false,
         label: nil,
-        hasThumbnail: true
+        hasThumbnail: true,
+        isDownloaded: true
     )
     
     static func all(title: TitleType, hasThumbnail: Bool = true) -> VideoCellPreviewEntity { VideoCellPreviewEntity(
@@ -55,7 +59,8 @@ extension VideoCellPreviewEntity {
         size: "2.00 GB",
         isExported: true, 
         label: nil,
-        hasThumbnail: hasThumbnail
+        hasThumbnail: hasThumbnail,
+        isDownloaded: true
     ) }
     
     enum TitleType: String {

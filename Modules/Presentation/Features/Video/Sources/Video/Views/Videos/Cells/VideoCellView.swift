@@ -87,7 +87,8 @@ struct VideoCellViewContent: View {
             VideoCellTitleText(
                 videoConfig: videoConfig,
                 title: previewEntity.title,
-                labelImage: previewEntity.labelImage(source: videoConfig.rowAssets.labelAssets)
+                labelImage: previewEntity.labelImage(source: videoConfig.rowAssets.labelAssets),
+                downloadedImage: previewEntity.downloadedImage(source: videoConfig.rowAssets)
             )
             
             HStack(alignment: .center, spacing: 8) {
