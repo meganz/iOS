@@ -221,6 +221,42 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(actionsType, expectedActions, "Actions for another device than the current one, where the CU has never been activated are incorrect")
     }
     
+    func testNetworkConnectivity_whenNotReachable_updatesHasNetworkConnectionToFalse() async {
+        await verifyNetworkConnectivity(isConnected: false)
+    }
+
+    func testNetworkConnectivity_whenReachable_updatesHasNetworkConnectionToTrue() async {
+        await verifyNetworkConnectivity(isConnected: true)
+    }
+
+    @MainActor
+    private func verifyNetworkConnectivity(isConnected: Bool) async {
+        let networkUseCase = MockNetworkMonitorUseCase(
+            connected: isConnected,
+            connectionSequence: AsyncStream { continuation in
+                continuation.yield(isConnected)
+                continuation.finish()
+            }.eraseToAnyAsyncSequence()
+        )
+        
+        let sut = makeSUT(
+            selectedDevice: SelectedDevice(
+                id: mockCurrentDeviceId,
+                name: mockCurrentDeviceName,
+                backups: []
+            ),
+            networkMonitorUseCase: networkUseCase
+        )
+        
+        sut.updateInternetConnectionStatus()
+        
+        for await connectionStatus in networkUseCase.connectionSequence {
+            XCTAssertEqual(connectionStatus, networkUseCase.isConnected())
+            XCTAssertEqual(sut.hasNetworkConnection, connectionStatus)
+            return
+        }
+    }
+    
     private func backups() -> [BackupEntity] {
         var backup1 = BackupEntity(
             id: 1,
@@ -352,6 +388,7 @@ final class BackupListViewModelTests: XCTestCase {
         selectedDevice: SelectedDevice,
         deviceCenterUseCase: MockDeviceCenterUseCase = MockDeviceCenterUseCase(),
         updateInterval: UInt64 = 1,
+        networkMonitorUseCase: NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> BackupListViewModel {
@@ -359,7 +396,6 @@ final class BackupListViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1)
         let backupStatusEntities = backupStatusEntities()
         let backupTypeEntities = backupTypeEntities()
-        let networkMonitorUseCase = MockNetworkMonitorUseCase()
         let sut = BackupListViewModel(
             selectedDevice: selectedDevice,
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),

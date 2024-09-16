@@ -50,22 +50,32 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_networkNotReachable() async {
+    private func verifyNetworkConnectivity(isConnected: Bool) async {
         let networkUseCase = MockNetworkMonitorUseCase(
-            connected: false,
+            connected: isConnected,
             connectionSequence: AsyncStream { continuation in
-                continuation.yield(false)
+                continuation.yield(isConnected)
                 continuation.finish()
             }.eraseToAnyAsyncSequence()
         )
         
         let viewModel = makeChatRoomsListViewModel(networkMonitorUseCase: networkUseCase)
         
-        for await isConnected in networkUseCase.connectionSequence {
-            XCTAssertEqual(isConnected, networkUseCase.isConnected())
-            XCTAssertEqual(viewModel.isConnectedToNetwork, isConnected)
+        for await connectionStatus in networkUseCase.connectionSequence {
+            XCTAssertEqual(connectionStatus, networkUseCase.isConnected())
+            XCTAssertEqual(viewModel.isConnectedToNetwork, connectionStatus)
             return
         }
+    }
+    
+    @MainActor
+    func testNetworkConnectivity_whenNotReachable_updatesIsConnectedToFalse() async {
+        await verifyNetworkConnectivity(isConnected: false)
+    }
+
+    @MainActor
+    func testNetworkConnectivity_whenReachable_updatesIsConnectedToTrue() async {
+        await verifyNetworkConnectivity(isConnected: true)
     }
     
     @MainActor

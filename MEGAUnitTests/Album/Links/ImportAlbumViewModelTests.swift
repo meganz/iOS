@@ -774,7 +774,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testMonitorNetworkConnection_onConnectionChanges_updatesCorrectly() async throws {
+    func testMonitorNetworkConnection_onConnectionChanges_updatesCorrectly() throws {
         var results = [false, true, false, true]
         let connectionStream = makeConnectionMonitorStream(statuses: results)
         let monitorUseCase = MockNetworkMonitorUseCase(connectionSequence: connectionStream)
@@ -788,7 +788,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        await sut.monitorNetworkConnection()
+        sut.monitorNetworkConnection()
     }
     
     @MainActor
@@ -806,7 +806,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             .store(in: &subscriptions)
         
         await sut.loadPublicAlbum()
-        await sut.monitorNetworkConnection()
+        sut.monitorNetworkConnection()
     }
     
     @MainActor
@@ -826,7 +826,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             .store(in: &subscriptions)
         
         await sut.loadPublicAlbum()
-        await sut.monitorNetworkConnection()
+        sut.monitorNetworkConnection()
     }
     
     // MARK: - Private
