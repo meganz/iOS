@@ -2,16 +2,9 @@ import Foundation
 import MEGADomain
 
 extension AlbumContentViewController: PhotoLibraryProvider {
-    func hideNavigationEditBarButton(_ hide: Bool) {
-        configureRightBarButtons()
-    }
     
-    func showNavigationRightBarButton(_ show: Bool) {
-        if show {
-            configureRightBarButtons()
-        } else {
-            navigationItem.rightBarButtonItem = nil
-        }
+    func hideNavigationEditBarButton(_ hide: Bool) {
+        
     }
     
     func setupPhotoLibrarySubscriptions() {
