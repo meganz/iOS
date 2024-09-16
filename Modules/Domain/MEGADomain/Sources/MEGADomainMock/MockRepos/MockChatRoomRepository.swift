@@ -199,9 +199,6 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
         leaveChatRoom
     }
     
-    public func updateChatPrivilege(chatRoom: MEGADomain.ChatRoomEntity, userHandle: MEGADomain.HandleEntity, privilege: MEGADomain.ChatRoomPrivilegeEntity) {
-    }
-    
     public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
         switch updateChatPrivilegeResult {
         case .success(let privilege):
@@ -223,10 +220,6 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
     
     public func chatRoomMessageLoaded(forChatRoom chatRoom: MEGADomain.ChatRoomEntity) -> AnyPublisher<MEGADomain.ChatMessageEntity?, Never> {
         chatRoomMessageLoadedPublisher
-    }
-    
-    public func hasScheduledMeetingChange(_ change: MEGADomain.ChatMessageScheduledMeetingChangeType, for message: MEGADomain.ChatMessageEntity, inChatRoom chatRoom: MEGADomain.ChatRoomEntity) -> Bool {
-        hasScheduledMeetingChange
     }
     
     public func userEmail(for handle: MEGADomain.HandleEntity) async -> String? {
