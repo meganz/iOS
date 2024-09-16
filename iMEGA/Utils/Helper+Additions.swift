@@ -28,6 +28,10 @@ extension Helper {
     @objc static func removeLogsDirectory() {
         Logger.shared().removeLogsDirectory()
     }
+
+    @objc static func showStorageFullAlertView(requiredStorage: Int64) {
+        StorageFullModalAlertViewRouter(requiredStorage: requiredStorage).startIfNeeded()
+    }
 }
 
 // - MARK: Feature Flags

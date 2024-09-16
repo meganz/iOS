@@ -4,12 +4,8 @@ import MEGASwift
 import UIKit
 
 class StorageFullModalAlertViewController: CustomModalAlertViewController {
-    
-    private let limitedSpace = 100 * 1024 * 1024
-    private let duration = 2
-    
-    private var requiredStorage: Int64 = Int64(100 * 1024 * 1024)
-    
+    var storageViewModel: StorageFullModalAlertViewModel?
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: "CustomModalAlertViewController", bundle: nibBundleOrNil)
     }
@@ -28,7 +24,7 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
         viewTitle = Strings.Localizable.deviceStorageAlmostFull
         detail = Strings.Localizable.MEGANeedsAMinimumOf
             .FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery
-            .youCanAlsoManageWhatMEGAStoresOnYourDevice(String.memoryStyleString(fromByteCount: requiredStorage))
+            .youCanAlsoManageWhatMEGAStoresOnYourDevice(storageViewModel?.requiredStorageMemoryStyleString ?? "")
 
         firstButtonTitle = Strings.Localizable.manage
 
@@ -42,35 +38,10 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
         dismissButtonTitle = Strings.Localizable.notNow
 
         dismissCompletion = { [weak self] in
-            self?.dismiss(animated: true, completion: {
-                UserDefaults.standard.set(Date.now.timeIntervalSince1970, forKey: "MEGAStorageFullNotification")
-            })
-        }
-    }
-    
-    func show() {
-        show(requiredStorage: requiredStorage)
-    }
-    
-    @objc func show(requiredStorage: Int64) {
-        Task { @MainActor in
-            self.modalPresentationStyle = .overFullScreen
-            self.requiredStorage = requiredStorage
-            guard !UIApplication.mnz_visibleViewController().isKind(of: StorageFullModalAlertViewController.self) else {
-                return
+            guard let self else { return }
+            dismiss(animated: true) {
+                self.storageViewModel?.update(lastStoredDate: .now)
             }
-            UIApplication.mnz_visibleViewController().present(self, animated: true, completion: nil)
         }
-    }
-    
-    @objc func showStorageAlertIfNeeded() {
-        let storageDate = Date(timeIntervalSince1970: TimeInterval(UserDefaults.standard.double(forKey: "MEGAStorageFullNotification")))
-        
-        guard FileManager.default.mnz_fileSystemFreeSize < limitedSpace,
-              storageDate.daysEarlier(than: .now) > duration else {
-            return
-        }
-        
-        show()
     }
 }

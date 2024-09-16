@@ -572,3 +572,10 @@ extension CloudDriveViewController {
         router.showInformation(for: node)
     }
 }
+
+// MARK: - Storage Full Alert.
+extension CloudDriveViewController {
+    @objc func showStorageFullAlertIfNeeded() {
+        StorageFullModalAlertViewRouter().startIfNeeded()
+    }
+}
