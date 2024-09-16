@@ -12,7 +12,7 @@ extension NWPath.Status {
 }
 
 extension NetworkInterfaceType {
-    func toNetworkInterfaceType() -> NWInterface.InterfaceType  {
+    func toNetworkInterfaceType() -> NWInterface.InterfaceType {
         switch self {
         case .other: NWInterface.InterfaceType.other
         case .wifi: NWInterface.InterfaceType.wifi
@@ -35,4 +35,3 @@ extension NWInterface.InterfaceType {
         }
     }
 }
-

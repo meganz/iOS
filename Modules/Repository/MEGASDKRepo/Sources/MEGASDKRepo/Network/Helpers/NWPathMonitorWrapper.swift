@@ -17,8 +17,6 @@ public class NWPathMonitorWrapper: NetworkMonitor, @unchecked Sendable {
             self.monitor.pathUpdateHandler = { path in
                 continuation.yield(path)
             }
-            
-            self.start()
 
             continuation.onTermination = { @Sendable _ in
                 self.cancel()
@@ -36,6 +34,8 @@ public class NWPathMonitorWrapper: NetworkMonitor, @unchecked Sendable {
     ) {
         self.monitor = monitor
         self.queue = queue
+        
+        start()
     }
     
     public func start() {

@@ -12,6 +12,7 @@ final class ReportIssueViewModel: ObservableObject {
     private var sourceUrl: URL?
     private var detailsPlaceholder = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
     private (set) var reportAlertType: ReportIssueAlertTypeModel = .none
+    private var networkMonitorTask: Task<Void, Never>?
     
     var areLogsEnabled: Bool
     var shouldDisableSendButton: Bool {
@@ -51,6 +52,11 @@ final class ReportIssueViewModel: ObservableObject {
         self.supportUseCase = supportUseCase
         self.monitorUseCase = monitorUseCase
         self.accountUseCase = accountUseCase
+    }
+    
+    deinit {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
     }
     
     private func uploadLogFileIfNeeded() async {
@@ -197,9 +203,14 @@ final class ReportIssueViewModel: ObservableObject {
         }
     }
     
-    func monitorNetworkChanges() async {
-        for await isConnected in monitorUseCase.connectionSequence {
-            self.isConnected = isConnected
+    @MainActor
+    func monitorNetworkChanges() {
+        let connectionSequence = monitorUseCase.connectionSequence
+        
+        networkMonitorTask = Task { [weak self] in
+            for await isConnected in connectionSequence {
+                self?.isConnected = isConnected
+            }
         }
     }
 }
