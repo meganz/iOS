@@ -304,10 +304,6 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
         }
     }
     
-    public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
-        sdk.updateChatPermissions(chatRoom.chatId, userHandle: userHandle, privilege: privilege.toMEGAChatRoomPrivilege().rawValue)
-    }
-    
     public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
         try await withAsyncThrowingValue { completion in
             let delegate = ChatRequestDelegate { result in
@@ -338,14 +334,6 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
     
     public func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity {
         sdk.loadMessages(forChat: chat.chatId, count: count).toChatSourceEntity()
-    }
-    
-    public func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
-        guard let message = sdk.message(forChat: chatRoom.chatId, messageId: message.messageId), let megaChange = change.toMEGAScheduledMeetingChangeType() else {
-            return false
-        }
-        
-        return message.hasScheduledMeetingChange(for: megaChange)
     }
     
     public func userEmail(for handle: HandleEntity) async -> String? {
