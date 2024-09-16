@@ -105,7 +105,8 @@ struct VideoListView: View {
             router: router,
             viewType: .allVideos,
             thumbnailLoader: viewModel.thumbnailLoader,
-            sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase
+            sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
+            nodeUseCase: viewModel.nodeUseCase
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
     }
@@ -163,7 +164,8 @@ struct VideoListView: View {
             selection: VideoSelection(),
             fileSearchUseCase: Preview_FilesSearchUseCase(),
             thumbnailLoader: Preview_ThumbnailLoader(),
-            sensitiveNodeUseCase: Preview_SensitiveNodeUseCase()
+            sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
+            nodeUseCase: Preview_NodeUseCase()
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()

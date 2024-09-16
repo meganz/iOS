@@ -898,6 +898,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: MockNodeUseCase(),
             syncModel: syncModel
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

@@ -73,7 +73,8 @@ class VideoCellPreviewEntityTests: XCTestCase {
             size: "size",
             isExported: isExported,
             label: label,
-            hasThumbnail: true
+            hasThumbnail: true,
+            isDownloaded: true
         )
     }
     

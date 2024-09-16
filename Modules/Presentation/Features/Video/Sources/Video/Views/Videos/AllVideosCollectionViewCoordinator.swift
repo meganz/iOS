@@ -62,6 +62,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 nodeEntity: rowItem.node,
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
+                nodeUseCase: viewModel.nodeUseCase,
                 onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) },
                 onTapped: { [weak self] in self?.onTapCell(video: $0) }
             )

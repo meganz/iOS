@@ -22,12 +22,14 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
         router: some VideoRevampRouting,
         viewType: ViewType,
         thumbnailLoader: some ThumbnailLoaderProtocol,
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol
     ) {
         self.viewModel = AllVideosCollectionViewModel(
             videos: videos,
             thumbnailLoader: thumbnailLoader,
-            sensitiveNodeUseCase: sensitiveNodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase
         )
         self.videoConfig = videoConfig
         self.selection = selection

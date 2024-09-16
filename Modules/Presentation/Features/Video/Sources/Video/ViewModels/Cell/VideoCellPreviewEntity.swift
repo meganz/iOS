@@ -12,6 +12,7 @@ struct VideoCellPreviewEntity: Equatable {
     let isExported: Bool
     let label: NodeLabelTypeEntity?
     let hasThumbnail: Bool
+    let isDownloaded: Bool
     
     var shouldShowCircleImage: Bool {
         isExported
@@ -28,6 +29,7 @@ struct VideoCellPreviewEntity: Equatable {
         && lhs.size == rhs.size
         && lhs.isExported == rhs.isExported
         && lhs.label == rhs.label
+        && lhs.isDownloaded == rhs.isDownloaded
     }
 }
 
@@ -41,7 +43,8 @@ extension VideoCellPreviewEntity {
         size: "",
         isExported: false,
         label: nil,
-        hasThumbnail: true
+        hasThumbnail: true,
+        isDownloaded: true
     )
 }
 
@@ -58,5 +61,9 @@ extension VideoCellPreviewEntity {
         case .purple: labelAssets.purpleImage
         case .grey: labelAssets.greyImage
         }
+    }
+    
+    func downloadedImage(source rowAssets: VideoConfig.RowAssets) -> UIImage? {
+        isDownloaded ? rowAssets.downloadedImage : nil
     }
 }

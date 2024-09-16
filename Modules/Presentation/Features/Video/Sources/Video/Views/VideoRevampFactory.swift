@@ -46,6 +46,7 @@ public class VideoRevampFactory {
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
@@ -58,7 +59,8 @@ public class VideoRevampFactory {
             selection: videoSelection,
             fileSearchUseCase: fileSearchUseCase,
             thumbnailLoader: thumbnailLoader,
-            sensitiveNodeUseCase: sensitiveNodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase
         )
         let videoPlaylistViewModel = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,
@@ -106,6 +108,7 @@ public class VideoRevampFactory {
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
@@ -141,6 +144,7 @@ public class VideoRevampFactory {
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase,
             syncModel: syncModel
         )
         
