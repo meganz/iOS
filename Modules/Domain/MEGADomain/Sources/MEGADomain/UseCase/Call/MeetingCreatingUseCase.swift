@@ -1,9 +1,9 @@
 // MARK: - Use case protocol -
-public protocol MeetingCreatingUseCaseProtocol {
+public protocol MeetingCreatingUseCaseProtocol: Sendable {
     func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity
     func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func username() -> String
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void)
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void)
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func createChatLink(forChatId chatId: UInt64)
 }
@@ -47,7 +47,7 @@ public struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol, U: Us
         meetingCreatingRepo.checkChatLink(link: link, completion: completion)
     }
 
-    public func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void) {
+    public func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void) {
         meetingCreatingRepo.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: link, completion: completion, karereInitCompletion: karereInitCompletion)
     }
     
