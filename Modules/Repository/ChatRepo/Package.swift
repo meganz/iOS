@@ -22,7 +22,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../DataSource/MEGAChatSdk"),
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../Repository/MEGASDKRepo")
+        .package(path: "../../Repository/MEGASDKRepo"),
+        .package(path: "../../Infrastracture/MEGATest")
     ],
     targets: [
         .target(
@@ -44,6 +45,7 @@ let package = Package(
             dependencies: [
                 "ChatRepo",
                 "ChatRepoMock",
+                "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
             ],
             swiftSettings: settings

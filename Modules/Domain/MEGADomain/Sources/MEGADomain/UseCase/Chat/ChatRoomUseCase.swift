@@ -26,14 +26,12 @@ public protocol ChatRoomUseCaseProtocol: Sendable {
     mutating func waitingRoomValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
     func closeChatRoomPreview(chatRoom: ChatRoomEntity)
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
-    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
     func loadMessages(for chatRoom: ChatRoomEntity, count: Int) -> ChatSourceEntity
     func chatMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
     func closeChatRoom(_ chatRoom: ChatRoomEntity)
-    func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
     func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool
     func userEmail(for handle: HandleEntity) async -> String?
     func monitorOnChatConnectionStateUpdate() -> AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error>
@@ -165,10 +163,6 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         await chatRoomRepo.leaveChatRoom(chatRoom: chatRoom)
     }
     
-    public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
-        chatRoomRepo.updateChatPrivilege(chatRoom: chatRoom, userHandle: userHandle, privilege: privilege)
-    }
-    
     public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
         try await chatRoomRepo.updateChatPrivilege(chatRoom: chatRoom, userHandle: userHandle, privilege: privilege)
     }
@@ -197,10 +191,6 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         if chatRoomRepo.isChatRoomOpen(chatRoom) {
             chatRoomRepo.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
         }
-    }
-    
-    public func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
-        chatRoomRepo.hasScheduledMeetingChange(change, for: message, inChatRoom: chatRoom)
     }
     
     public func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool {

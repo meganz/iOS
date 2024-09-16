@@ -30,13 +30,11 @@ public protocol ChatRoomRepositoryProtocol: RepositoryProtocol, Sendable {
     func closeChatRoom(_ chatRoom: ChatRoomEntity, delegate: ChatRoomDelegateEntity)
     func closeChatRoomPreview(chatRoom: ChatRoomEntity)
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
-    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
     func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity
     func chatRoomMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
-    func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
     func userEmail(for handle: HandleEntity) async -> String?
     /// - Returns: `AnyAsyncSequence` that will yield `(ChatIdEntity, ChatConnectionStatus)` items until sequence terminated.
     var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> { get }
