@@ -92,6 +92,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         XCTAssert(audioSession.disableLoudSpeaker_calledTimes == 1)
     }
     
+    @MainActor
     func testAction_didTapCloseButton() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase()
@@ -114,6 +115,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         XCTAssert(router.dismiss_calledTimes == 1)
     }
     
+    @MainActor
     func testAction_joinChatCall() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
