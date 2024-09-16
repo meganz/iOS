@@ -20,6 +20,8 @@ public protocol AccountUpdatesProviderProtocol: Sendable {
     /// - Returns: `AnyAsyncSequence` that will call sdk.add on creation and sdk.remove onTermination of `AsyncStream`.
     /// It will yield `[ContactRequestEntity]` until sequence terminated
     var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> { get }
+    
+    var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> { get }
 }
 
 public struct AccountUpdatesProvider: AccountUpdatesProviderProtocol {
@@ -70,6 +72,20 @@ public struct AccountUpdatesProvider: AccountUpdatesProviderProtocol {
         }
         .eraseToAnyAsyncSequence()
     }
+    
+    public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> {
+        AsyncStream { continuation in
+            let delegate = AccountRequestDelegate(onStorageStatusEventUpdate: { storageStatus in
+                continuation.yield(storageStatus)
+            })
+            
+            continuation.onTermination = { _ in
+                sdk.remove(delegate as (any MEGAGlobalDelegate))
+            }
+            sdk.add(delegate as (any MEGAGlobalDelegate))
+        }
+        .eraseToAnyAsyncSequence()
+    }
 }
 
 // MARK: - AccountRequestDelegate
@@ -77,15 +93,18 @@ private final class AccountRequestDelegate: NSObject {
     private let onRequestFinish: (Result<AccountRequestEntity, any Error>) -> Void
     private let onUserAlertsUpdate: ([UserAlertEntity]) -> Void
     private let onContactRequestsUpdate: ([ContactRequestEntity]) -> Void
+    private let onStorageStatusEventUpdate: (StorageStatusEntity) -> Void
     
     init(
         onRequestFinish: @escaping (Result<AccountRequestEntity, any Error>) -> Void = {_ in },
         onUserAlertsUpdate: @escaping ([UserAlertEntity]) -> Void = {_ in },
-        onContactRequestsUpdate: @escaping ([ContactRequestEntity]) -> Void = {_ in }
+        onContactRequestsUpdate: @escaping ([ContactRequestEntity]) -> Void = {_ in },
+        onStorageStatusEventUpdate: @escaping (StorageStatusEntity) -> Void = {_ in }
     ) {
         self.onRequestFinish = onRequestFinish
         self.onUserAlertsUpdate = onUserAlertsUpdate
         self.onContactRequestsUpdate = onContactRequestsUpdate
+        self.onStorageStatusEventUpdate = onStorageStatusEventUpdate
         super.init()
     }
 }
@@ -107,5 +126,13 @@ extension AccountRequestDelegate: MEGAGlobalDelegate {
     
     public func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
         onContactRequestsUpdate(contactRequestList.toContactRequestEntities())
+    }
+    
+    public func onEvent(_ api: MEGASdk, event: MEGAEvent) {
+        let eventEntity = event.toEventEntity()
+        if eventEntity.isStorageCapacityEvent(),
+           let storageStatus = eventEntity.storageStatus {
+            onStorageStatusEventUpdate(storageStatus)
+        }
     }
 }

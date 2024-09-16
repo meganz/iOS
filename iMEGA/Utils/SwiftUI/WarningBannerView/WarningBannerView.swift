@@ -22,7 +22,7 @@ struct WarningBannerView: View {
     
     private var warningCloseButton: some View {
         Button {
-            viewModel.closeAction()
+            viewModel.onCloseButtonTapped()
         } label: {
             Image(viewModel.applyNewDesign ? .closeBannerButton : .closeCircle)
                 .padding(10)
@@ -61,7 +61,7 @@ struct WarningBannerView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
                 .onTapGesture {
-                    viewModel.tapAction()
+                    viewModel.onBannerTapped()
                 }
         }
     }
@@ -81,7 +81,7 @@ struct WarningBannerView: View {
             
             if let buttonTitle = viewModel.warningType.actionText {
                 Button {
-                    viewModel.closeAction()
+                    viewModel.onActionButtonTapped()
                 } label: {
                     Text(buttonTitle)
                         .font(.callout)

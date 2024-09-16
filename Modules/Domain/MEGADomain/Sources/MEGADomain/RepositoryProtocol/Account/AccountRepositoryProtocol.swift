@@ -16,6 +16,10 @@ public protocol AccountRepositoryProtocol: Sendable {
     var isSMSAllowed: Bool { get }
     var isAchievementsEnabled: Bool { get }
     func currentAccountPlan() async -> PlanEntity?
+    /// Retrieves the current storage status of the user's account.
+    /// - Returns: A `StorageStatusEntity` that provides the current status of the user's account storage.
+    /// This property reflects whether the user's storage is under quota, approaching quota, or over quota.
+    var currentStorageStatus: StorageStatusEntity { get }
 
     // User and session management
     func currentUser() async -> UserEntity?
@@ -45,7 +49,7 @@ public protocol AccountRepositoryProtocol: Sendable {
     /// that a user can only have 0 or 1 Pro plan at any given time. Therefore, this
     /// property will return either a value or nil if no Pro plan is found.
     var currentProPlan: AccountPlanEntity? { get }
-
+    
     /// Retrieves the current subscription that matches the currentProPlan.
     /// - Returns: AccountSubscriptionEntity value if there is an existing billed pro plan and its subscription data is available, otherwise, nil.
     func currentSubscription() -> AccountSubscriptionEntity?
@@ -66,6 +70,7 @@ public protocol AccountRepositoryProtocol: Sendable {
     var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> { get }
     var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> { get }
     var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> { get }
+    var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> { get }
     func multiFactorAuthCheck(email: String) async throws -> Bool
     
     // Node sizes
