@@ -121,8 +121,7 @@
     if (freeSpace < [nodeSizeNumber longLongValue]) {
 #ifdef MAIN_APP_TARGET
         dispatch_async(dispatch_get_main_queue(), ^{
-            StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
-            [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
+            [self showStorageFullAlertViewWithRequiredStorage:nodeSizeNumber.longLongValue];
         });
 #endif
         return NO;
