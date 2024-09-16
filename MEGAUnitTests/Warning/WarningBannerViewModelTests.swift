@@ -31,8 +31,18 @@ final class WarningBannerViewModelTests: XCTestCase {
             warningType: .limitedPhotoAccess,
             router: router
         )
-        sut.tapAction()
+        sut.onBannerTapped()
         XCTAssertEqual(router.goToSettings_calledTimes, 1)
+    }
+    
+    func testTapAction_fullStorageOverQuota_shouldCallGoToSettings() {
+        let router = MockWarningViewRouter()
+        let sut = makeSUT(
+            warningType: .fullStorageOverQuota,
+            router: router
+        )
+        sut.onActionButtonTapped()
+        XCTAssertEqual(router.presentUpgradeScreen_calledTimes, 1)
     }
     
     func testWarningType_contactsNotVerified_shouldReturnCorrectDescription() {
@@ -60,13 +70,5 @@ final class WarningBannerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.warningType.iconName, "fullStorageAlert")
         XCTAssertEqual(sut.warningType.actionText, Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.button)
         XCTAssertEqual(sut.warningType.severity, .critical)
-    }
-}
-
-final class MockWarningViewRouter: WarningBannerViewRouting {
-    var goToSettings_calledTimes = 0
-    
-    func goToSettings() {
-        goToSettings_calledTimes += 1
     }
 }

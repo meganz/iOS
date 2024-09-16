@@ -1,3 +1,5 @@
+import MEGASwift
+
 // MARK: - Use case protocol
 public protocol AccountStorageUseCaseProtocol: Sendable {
     /// Determines whether not the given sequence of nodes will  exceed the active users storage quota limit.
@@ -7,6 +9,19 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     
     ///  Refreshes the current account details, this needs to be called before using other operations to get most correct result.
     func refreshCurrentAccountDetails() async throws
+    
+    /// An asynchronous sequence that emits `StorageStatusEntity` updates.
+    /// Use this property to receive updates on the storage status of the account.
+    var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> { get }
+    
+    /// Retrieves the current storage status of the user's account.
+    ///
+    /// The storage status reflects the current usage of storage compared to the maximum available quota.
+    /// The value can indicate whether the user is under quota, nearing quota, or has exceeded their storage limit.
+    ///
+    /// - Returns: A `StorageStatusEntity` indicating the current state of the user's account storage.
+    /// It can return `.noStorageProblems`, `.almostFull`, or `.full` based on the storage usage.
+    var currentStorageStatus: StorageStatusEntity { get }
 }
 
 public struct AccountStorageUseCase<T: AccountRepositoryProtocol>: AccountStorageUseCaseProtocol {
@@ -30,5 +45,13 @@ public struct AccountStorageUseCase<T: AccountRepositoryProtocol>: AccountStorag
             .reduce(0, { result, value in result + (Int64(exactly: value.size) ?? 0) })
         
         return accountDetails.storageUsed + expectedNodesSize > accountDetails.storageMax
+    }
+    
+    public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> {
+        accountRepository.onStorageStatusUpdates
+    }
+    
+    public var currentStorageStatus: StorageStatusEntity {
+        accountRepository.currentStorageStatus
     }
 }

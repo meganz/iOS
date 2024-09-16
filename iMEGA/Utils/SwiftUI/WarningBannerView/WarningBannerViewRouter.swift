@@ -6,4 +6,8 @@ struct WarningBannerViewRouter: WarningBannerViewRouting {
         }
         UIApplication.shared.open(settingsUrl)
     }
+    
+    func presentUpgradeScreen() {
+        UpgradeAccountRouter().presentUpgradeTVC()
+    }
 }
