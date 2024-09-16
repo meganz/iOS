@@ -26,6 +26,7 @@ enum MeetingConfigurationType: Int {
     case join
 }
 
+@MainActor
 final class MeetingCreatingViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, type: MeetingConfigurationType, isMicrophoneEnabled: Bool)
@@ -260,10 +261,16 @@ final class MeetingCreatingViewModel: ViewModelType {
             guard let self else { return }
             switch $0 {
             case .success:
-                joinChatAndStartCall(chatId: chatId)
-                NotificationCenter.default.post(name: .accountDidLogin, object: nil)
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    joinChatAndStartCall(chatId: chatId)
+                    NotificationCenter.default.post(name: .accountDidLogin, object: nil)
+                }
             case .failure:
-                dismiss()
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    dismiss()
+                }
             }
         } karereInitCompletion: { }
     }
