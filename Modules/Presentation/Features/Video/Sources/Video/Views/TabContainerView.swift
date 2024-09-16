@@ -91,7 +91,8 @@ private func makeNullViewModel() -> VideoListViewModel {
         selection: VideoSelection(),
         fileSearchUseCase: Preview_FilesSearchUseCase(),
         thumbnailLoader: Preview_ThumbnailLoader(),
-        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase()
+        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
+        nodeUseCase: Preview_NodeUseCase()
     )
 }
 

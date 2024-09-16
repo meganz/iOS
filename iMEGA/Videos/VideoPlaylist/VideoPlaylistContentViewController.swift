@@ -17,6 +17,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let router: any VideoRevampRouting
     private let presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
     private let syncModel: VideoRevampSyncModel
@@ -49,6 +50,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videoPlaylistUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         router: some VideoRevampRouting,
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
@@ -65,6 +67,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.nodeIconUseCase = nodeIconUseCase
         self.videoPlaylistUseCase = videoPlaylistUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
+        self.nodeUseCase = nodeUseCase
         self.router = router
         self.presentationConfig = presentationConfig
         self.videoSelection = videoSelection
@@ -101,6 +104,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             nodeIconUseCase: nodeIconUseCase,
+            nodeUseCase: nodeUseCase,
             router: router,
             sharedUIState: sharedUIState,
             videoSelection: videoSelection,

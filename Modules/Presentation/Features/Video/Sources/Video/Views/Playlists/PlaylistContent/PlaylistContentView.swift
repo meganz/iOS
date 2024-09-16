@@ -31,6 +31,7 @@ struct PlaylistContentScreen: View {
             router: router,
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
+            nodeUseCase: viewModel.nodeUseCase,
             videoSelection: videoSelection,
             onTapAddButton: { viewModel.shouldShowVideoPlaylistPicker = true }
         )
@@ -106,6 +107,7 @@ struct PlaylistContentView: View {
     private let previewEntity: VideoPlaylistCellPreviewEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let videos: [NodeEntity]
     let router: any VideoRevampRouting
     @StateObject private var videoSelection: VideoSelection
@@ -118,6 +120,7 @@ struct PlaylistContentView: View {
         router: any VideoRevampRouting,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         videoSelection: @autoclosure @escaping () -> VideoSelection,
         onTapAddButton: @escaping () -> Void
     ) {
@@ -125,6 +128,7 @@ struct PlaylistContentView: View {
         self.previewEntity = previewEntity
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.nodeUseCase = nodeUseCase
         self.videos = videos
         self.router = router
         _videoSelection = StateObject(wrappedValue: videoSelection())
@@ -187,7 +191,8 @@ struct PlaylistContentView: View {
             router: router,
             viewType: .playlistContent,
             thumbnailLoader: thumbnailLoader,
-            sensitiveNodeUseCase: sensitiveNodeUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase
         )
     }
 }
@@ -209,6 +214,7 @@ struct PlaylistContentView: View {
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
+        nodeUseCase: Preview_NodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -229,6 +235,7 @@ struct PlaylistContentView: View {
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
+        nodeUseCase: Preview_NodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -250,6 +257,7 @@ struct PlaylistContentView: View {
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
+        nodeUseCase: Preview_NodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -270,6 +278,7 @@ struct PlaylistContentView: View {
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
+        nodeUseCase: Preview_NodeUseCase(),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
