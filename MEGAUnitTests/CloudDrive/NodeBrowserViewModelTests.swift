@@ -143,7 +143,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     sensitivityChangesForNode: sensitivityChangesForNode
                 ),
                 viewModeSaver: { saver($0) },
-                storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
+                storageFullModalAlertViewRouter: MockStorageFullModalAlertViewRouter(),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
                 onOpenUserProfile: {},
                 onUpdateSearchBarVisibility: { _ in },

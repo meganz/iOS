@@ -321,7 +321,7 @@ struct CloudDriveViewControllerFactory {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
             },
-            storageFullAlertViewModel: StorageFullAlertViewModel(router: StorageFullModalAlertViewController(nibName: nil, bundle: nil)),
+            storageFullModalAlertViewRouter: StorageFullModalAlertViewRouter(),
             titleBuilder: { isEditing, selectedNodesCount in
                 // The code below is needed due the fact that most of new code uses NodeEntity struct
                 // and for the code to be robust and reuse the title logic, title should be derived from

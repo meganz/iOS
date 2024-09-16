@@ -56,7 +56,7 @@ class NodeBrowserViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     let avatarViewModel: MyAvatarViewModel
     let noInternetViewModel: NoInternetViewModel
-    private let storageFullAlertViewModel: StorageFullAlertViewModel
+    private let storageFullModalAlertViewRouter: any StorageFullModalAlertViewRouting
 
     @Published var nodeSource: NodeSource
     
@@ -109,7 +109,7 @@ class NodeBrowserViewModel: ObservableObject {
         // - preference is saved if it's required
         // - context menu can be reconstructed
         viewModeSaver: @escaping (ViewModePreferenceEntity) -> Void,
-        storageFullAlertViewModel: StorageFullAlertViewModel,
+        storageFullModalAlertViewRouter: some StorageFullModalAlertViewRouting,
         titleBuilder: @escaping (Bool, Int) -> String,
         onOpenUserProfile: @escaping () -> Void,
         onUpdateSearchBarVisibility: @escaping (Bool) -> Void,
@@ -131,7 +131,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.sortOrder = sortOrderProvider()
         self.avatarViewModel = avatarViewModel
         self.noInternetViewModel = noInternetViewModel
-        self.storageFullAlertViewModel = storageFullAlertViewModel
+        self.storageFullModalAlertViewRouter = storageFullModalAlertViewRouter
         self.titleBuilder = titleBuilder
         self.onOpenUserProfile = onOpenUserProfile
         self.onUpdateSearchBarVisibility = onUpdateSearchBarVisibility
@@ -251,8 +251,8 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     func onLoadTask() async {
-        storageFullAlertViewModel.showStorageAlertIfNeeded()
         startObservingNodeSourceChanges()
+        storageFullModalAlertViewRouter.startIfNeeded()
     }
     
     func onViewAppear() {
