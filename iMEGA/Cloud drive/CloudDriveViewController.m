@@ -146,8 +146,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
     
-    StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
-    [warningVC showStorageAlertIfNeeded];
+    [self showStorageFullAlertIfNeeded];
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     
     self.searchController.hidesNavigationBarDuringPresentation = NO;

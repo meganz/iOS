@@ -1453,7 +1453,6 @@
 		94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */; };
 		94B09E622B84CC87007D6B84 /* ViewModeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4A2B84CC86007D6B84 /* ViewModeFactory.swift */; };
 		94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */; };
-		94B09E642B84CC87007D6B84 /* StorageFullAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4D2B84CC86007D6B84 /* StorageFullAlertViewModel.swift */; };
 		94B09E652B84CC87007D6B84 /* QuickActionsMenuDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4E2B84CC86007D6B84 /* QuickActionsMenuDelegateHandler.swift */; };
 		94B09E662B84CC87007D6B84 /* MediaContentDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E4F2B84CC86007D6B84 /* MediaContentDelegateHandler.swift */; };
 		94B09E672B84CC87007D6B84 /* RefreshMenuTriggering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E502B84CC86007D6B84 /* RefreshMenuTriggering.swift */; };
@@ -2122,6 +2121,12 @@
 		BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF017D972448077C00FB4DFD /* AudioWaveView.xib */; };
 		BF06E3DE243191B000B30FB7 /* ChatTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */; };
 		BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */; };
+		BF0730CE2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730CD2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift */; };
+		BF0730CF2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730CD2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift */; };
+		BF0730D22C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730D12C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift */; };
+		BF0730D32C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730D12C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift */; };
+		BF0730D92C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730D82C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift */; };
+		BF0730DC2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730DB2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift */; };
 		BF07C4D32C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF07C4D22C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift */; };
 		BF085C9929E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */; };
 		BF085C9B29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift */; };
@@ -2586,7 +2591,6 @@
 		C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */; };
 		C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
-		C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
 		C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */; };
 		C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */; };
@@ -4236,7 +4240,6 @@
 		94B09E492B84CC86007D6B84 /* CloudDriveContextMenuConfigFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuConfigFactory.swift; sourceTree = "<group>"; };
 		94B09E4A2B84CC86007D6B84 /* ViewModeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModeFactory.swift; sourceTree = "<group>"; };
 		94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveNavigationTitleBuilder.swift; sourceTree = "<group>"; };
-		94B09E4D2B84CC86007D6B84 /* StorageFullAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModel.swift; sourceTree = "<group>"; };
 		94B09E4E2B84CC86007D6B84 /* QuickActionsMenuDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickActionsMenuDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E4F2B84CC86007D6B84 /* MediaContentDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaContentDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E502B84CC86007D6B84 /* RefreshMenuTriggering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshMenuTriggering.swift; sourceTree = "<group>"; };
@@ -4960,6 +4963,10 @@
 		BF017D972448077C00FB4DFD /* AudioWaveView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioWaveView.xib; sourceTree = "<group>"; };
 		BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTitleView.xib; sourceTree = "<group>"; };
 		BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
+		BF0730CD2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewModel.swift; sourceTree = "<group>"; };
+		BF0730D12C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewRouter.swift; sourceTree = "<group>"; };
+		BF0730D82C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStorageFullModalAlertViewRouter.swift; sourceTree = "<group>"; };
+		BF0730DB2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewModelTests.swift; sourceTree = "<group>"; };
 		BF07C4D22C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellViewModelTests.swift; sourceTree = "<group>"; };
 		BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationPropertiesView.swift; sourceTree = "<group>"; };
 		BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFootnoteView.swift; sourceTree = "<group>"; };
@@ -5367,7 +5374,6 @@
 		C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveViewController.swift; sourceTree = "<group>"; };
 		C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadTransfersListener.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
-		C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModelTests.swift; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
 		C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
 		C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouter.swift; sourceTree = "<group>"; };
@@ -10414,7 +10420,6 @@
 				BF8CB03D2C34F61800119979 /* Node Sensitivity */,
 				C48CADAE2BB54C260005519B /* NodeBrowserConfig */,
 				C48CADB72BBAB1A40005519B /* NodeUpdates */,
-				94B09E4C2B84CC86007D6B84 /* StorageFullAlertViewModel */,
 				C4C0A0062C32B57700B9ECCB /* TransferListener */,
 				94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */,
 				94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */,
@@ -10439,14 +10444,6 @@
 				94B09E482B84CC86007D6B84 /* UploadAddMenuDelegateHandler.swift */,
 			);
 			path = NewCloudDrive;
-			sourceTree = "<group>";
-		};
-		94B09E4C2B84CC86007D6B84 /* StorageFullAlertViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				94B09E4D2B84CC86007D6B84 /* StorageFullAlertViewModel.swift */,
-			);
-			path = StorageFullAlertViewModel;
 			sourceTree = "<group>";
 		};
 		94B09E6C2B84D0B5007D6B84 /* NewNodeBrowser */ = {
@@ -10618,6 +10615,8 @@
 				83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */,
 				83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */,
 				2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */,
+				BF0730CD2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift */,
+				BF0730D12C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -13129,7 +13128,8 @@
 		C499E1DD2B7663FB00503353 /* StorageFullAlert */ = {
 			isa = PBXGroup;
 			children = (
-				C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */,
+				BF0730D82C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift */,
+				BF0730DB2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift */,
 			);
 			path = StorageFullAlert;
 			sourceTree = "<group>";
@@ -15868,8 +15868,9 @@
 				2591C1382C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
 				5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */,
-				94B09E642B84CC87007D6B84 /* StorageFullAlertViewModel.swift in Sources */,
 				2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */,
+				BF0730CE2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift in Sources */,
+				BF0730D22C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift in Sources */,
 				C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */,
 				C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */,
 				5D79B51F249849580070FECD /* String+MarkedString.swift in Sources */,
@@ -16321,6 +16322,8 @@
 				5B3B0D152684B24800479A68 /* ShareViewController.m in Sources */,
 				5B40B3AC2422ACB900B5FF13 /* SortingPreference.swift in Sources */,
 				2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */,
+				BF0730CF2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift in Sources */,
+				BF0730D32C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift in Sources */,
 				B695B60A264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				B695B604264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				B695B607264B43160050DF09 /* SVProgressHUD.m in Sources */,
@@ -16589,6 +16592,7 @@
 				BFCA570F2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift in Sources */,
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
+				BF0730D92C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */,
 				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
@@ -16703,7 +16707,7 @@
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				2434EC3D2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift in Sources */,
 				2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */,
-				C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */,
+				BF0730DC2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift in Sources */,
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
 				BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */,
