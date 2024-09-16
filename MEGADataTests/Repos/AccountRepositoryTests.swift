@@ -459,6 +459,49 @@ final class AccountRepositoryTests: XCTestCase {
         let usedStorage = try await sut.backupStorageUsed()
         XCTAssertEqual(usedStorage, expectedSize)
     }
+    
+    func testCurrentStorageStatus_whenNoAccountDetails_shouldReturnNoStorageProblems() {
+        let (sut, _) = makeSUT(accountDetailsEntity: nil)
+        
+        XCTAssertEqual(sut.currentStorageStatus, .noStorageProblems)
+    }
+
+    func testCurrentStorageStatus_whenStorageUsedBelow90Percent_shouldReturnNoStorageProblems() {
+        let accountDetails = AccountDetailsEntity.build(storageUsed: 400, storageMax: 1000)
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertEqual(sut.currentStorageStatus, .noStorageProblems)
+    }
+
+    func testCurrentStorageStatus_whenStorageUsedBetween90And100Percent_shouldReturnAlmostFull() {
+        let accountDetails = AccountDetailsEntity.build(storageUsed: 950, storageMax: 1000)
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertEqual(sut.currentStorageStatus, .almostFull)
+    }
+
+    func testCurrentStorageStatus_whenStorageUsedAt100Percent_shouldReturnFull() {
+        let accountDetails = AccountDetailsEntity.build(storageUsed: 1000, storageMax: 1000)
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+        
+        XCTAssertEqual(sut.currentStorageStatus, .full)
+    }
+    
+    func testOnStorageStatusUpdates_shouldEmitCorrectValues() async {
+        let expectedStatusUpdates: [StorageStatusEntity] = [.noStorageProblems, .almostFull, .full, .pendingChange, .paywall]
+        let asyncStream = makeAsyncStream(for: expectedStatusUpdates)
+        let (sut, _) = makeSUT(onStorageStatusUpdates: asyncStream)
+
+        var receivedStatusUpdates: [StorageStatusEntity] = []
+        var iterator = sut.onStorageStatusUpdates.makeAsyncIterator()
+
+        while let update = await iterator.next() {
+            receivedStatusUpdates.append(update)
+        }
+
+        XCTAssertEqual(receivedStatusUpdates, expectedStatusUpdates)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -487,7 +530,8 @@ final class AccountRepositoryTests: XCTestCase {
         requestResult: MockSdkRequestResult = .failure(MockError.failingError),
         accountRequestUpdate: Result<AccountRequestEntity, any Error> = .failure(MockError.failingError),
         userAlertsUpdates: [UserAlertEntity] = [],
-        contactRequestsUpdates: [ContactRequestEntity] = []
+        contactRequestsUpdates: [ContactRequestEntity] = [],
+        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) -> (AccountRepository, MockSdk) {
         let incomingNodes = MockNodeList(nodes: incomingNodes)
         let myChatFilesRootNodeAccess = nodeAccess(for: myChatFilesNodeHandle)
@@ -529,7 +573,8 @@ final class AccountRepositoryTests: XCTestCase {
         let accountUpdatesProvider = MockAccountUpdatesProvider(
             onAccountRequestFinish: SingleItemAsyncSequence(item: accountRequestUpdate).eraseToAnyAsyncSequence(),
             onUserAlertsUpdates: SingleItemAsyncSequence(item: userAlertsUpdates).eraseToAnyAsyncSequence(),
-            onContactRequestsUpdates: SingleItemAsyncSequence(item: contactRequestsUpdates).eraseToAnyAsyncSequence()
+            onContactRequestsUpdates: SingleItemAsyncSequence(item: contactRequestsUpdates).eraseToAnyAsyncSequence(),
+            onStorageStatusUpdates: onStorageStatusUpdates
         )
 
         return (AccountRepository(
@@ -561,5 +606,14 @@ final class AccountRepositoryTests: XCTestCase {
     
     private func randomAccountDetails() -> MockMEGAAccountDetails {
         MockMEGAAccountDetails(type: MEGAAccountType(rawValue: .random(in: 0...4)) ?? .free)
+    }
+    
+    private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
+        AsyncStream { continuation in
+            for update in updates {
+                continuation.yield(update)
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
     }
 }

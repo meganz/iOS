@@ -15,7 +15,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _isBilledProPlan: Bool
     private let _hasMultipleBilledProPlan: Bool
     private let accountType: AccountTypeEntity
-
+    
     // MARK: - Account Characteristics
     private let _currentAccountDetails: AccountDetailsEntity?
     private let _accountCreationDate: Date?
@@ -27,7 +27,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _plans: [PlanEntity]
     private let _currentProPlan: AccountPlanEntity?
     private let _currentSubscription: AccountSubscriptionEntity?
-
+    private let _currentStorageStatus: StorageStatusEntity
+    
     // MARK: - Result Handlers
     private let getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity>
     private let accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity>
@@ -39,18 +40,19 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     // MARK: - Management of Contacts and Alerts
     private let contactsRequestsCount: Int
     private let unseenUserAlertsCount: UInt
-
+    
     // MARK: - Account updates
     public let onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>>
     public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
     public let onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]>
+    public let onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
     
     // MARK: - Node Sizes
     public let rootStorage: Int64
     public let rubbishBinStorage: Int64
     public let incomingSharesStorage: Int64
     public let backupStorage: Int64
-
+    
     // MARK: - Initializer
     public init(
         currentUser: UserEntity? = nil,
@@ -85,10 +87,12 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         incomingSharesStorage: Int64 = 0,
         backupStorage: Int64 = 0,
         currentProPlan: AccountPlanEntity? = nil,
+        currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         currentSubscription: AccountSubscriptionEntity? = nil,
         onAccountRequestFinishUpdate: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -103,6 +107,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isAchievementsEnabled = isAchievementsEnabled
         _plans = plans
         _currentProPlan = currentProPlan
+        _currentStorageStatus = currentStorageStatus
         _currentSubscription = currentSubscription
         _accountCreationDate = accountCreationDate
         _isSmsAllowed = isSmsAllowed
@@ -126,26 +131,27 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.onAccountRequestFinish = onAccountRequestFinishUpdate
         self.onUserAlertsUpdates = onUserAlertsUpdates
         self.onContactRequestsUpdates = onContactRequestsUpdates
+        self.onStorageStatusUpdates = onStorageStatusUpdates
     }
-
+    
     // MARK: - AccountRepositoryProtocol Implementation
-
+    
     public var currentUserHandle: HandleEntity? {
         currentUser?.handle
     }
-
+    
     public func currentUser() async -> UserEntity? {
         currentUser
     }
-
+    
     public var myEmail: String? {
         _myEmail
     }
-
+    
     public func isLoggedIn() -> Bool {
         _isLoggedIn
     }
-
+    
     public var isMasterBusinessAccount: Bool {
         _isMasterBusinessAccount
     }
@@ -157,7 +163,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public func currentAccountPlan() async -> PlanEntity? {
         _plans.first { $0.type == _currentAccountDetails?.proLevel && $0.subscriptionCycle == _currentAccountDetails?.subscriptionCycle }
     }
-
+    
     public var isNewAccount: Bool {
         _isNewAccount
     }
@@ -184,6 +190,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func currentSubscription() -> AccountSubscriptionEntity? {
         _currentSubscription
+    }
+    
+    public var currentStorageStatus: StorageStatusEntity {
+        _currentStorageStatus
     }
     
     public var accountCreationDate: Date? {

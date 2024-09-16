@@ -1,235 +1,186 @@
 import MEGADomain
 import MEGASDKRepo
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class AccountUpdatesProviderTests: XCTestCase {
-    private var sdk: MockSdk!
-    private var sut: AccountUpdatesProvider!
-    
-    override func setUp() {
-        super.setUp()
-        sdk = MockSdk(shouldListGlobalDelegates: true)
-        sut = AccountUpdatesProvider(sdk: sdk)
+    private let error = MockError(errorType: .apiOk)
+    private func createUserAlertList(identifiers: [UInt]) -> MockUserAlertList {
+        MockUserAlertList(alerts: identifiers.map { MockUserAlert(identifier: $0) })
     }
-    
-    override func tearDown() {
-        sdk = nil
-        sut = nil
-        super.tearDown()
+    private func createRequest(handle: HandleEntity) -> MockRequest {
+        MockRequest(handle: handle)
     }
+    private let greenStorageEvent = MockEvent(
+        type: .storage,
+        number: EventEntity.StorageState.green.code
+    )
+    private let orangeStorageEvent = MockEvent(
+        type: .storage,
+        number: EventEntity.StorageState.orange.code
+    )
+    private let redStorageEvent = MockEvent(
+        type: .storage,
+        number: EventEntity.StorageState.red.code
+    )
     
-    // MARK: - onAccountRequestFinish
     func testAccountUpdates_onAccountRequestFinish_shouldAddRequestDelegateAndRemoveWhenTerminated() async {
-        let expectation = expectation(description: "Finish account request")
-        let task = startMonitoringRequestFinishUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnRequestFinish get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        XCTAssertTrue(sdk.hasRequestDelegate)
-        
-        sdk.simulateOnRequestFinish(MockRequest(handle: 1), error: MockError(errorType: .apiOk))
-        
-        task.cancel()
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        XCTAssertFalse(sdk.hasRequestDelegate)
+        await runTest(
+            startMonitoring: startMonitoringRequestFinishUpdates,
+            onTaskStart: { sdk in
+                XCTAssertTrue(sdk.hasRequestDelegate)
+            },
+            simulateEvents: { sdk in
+                sdk.simulateOnRequestFinish(self.createRequest(handle: 1), error: self.error)
+            },
+            onTaskCancel: { sdk in
+                XCTAssertFalse(sdk.hasRequestDelegate)
+            },
+            assertResults: { _ in }
+        )
     }
-    
+
     func testAccountUpdates_onAccountRequestFinish_whenNotTerminated_shouldYieldElements() async {
-        let expectation = expectation(description: "Finish account request")
-        let task = startMonitoringRequestFinishUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnRequestFinish get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        // Trigger new request results before terminating stream. Expected value count.
-        sdk.simulateOnRequestFinish(MockRequest(handle: 1), error: MockError(errorType: .apiOk))
-        sdk.simulateOnRequestFinish(MockRequest(handle: 2), error: MockError(errorType: .apiOk))
-        
-        task.cancel()
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        let requestValues = await task.value
-        
-        XCTAssertEqual(requestValues.count, 2)
+        await runTest(
+            startMonitoring: startMonitoringRequestFinishUpdates,
+            simulateEvents: { sdk in
+                sdk.simulateOnRequestFinish(self.createRequest(handle: 1), error: self.error)
+                sdk.simulateOnRequestFinish(self.createRequest(handle: 2), error: self.error)
+            },
+            assertResults: { values in
+                XCTAssertEqual(values.count, 2)
+            }
+        )
     }
-    
+
     func testAccountUpdates_onAccountRequestFinish_whenTerminated_shouldStopYieldingElements() async {
-        let expectation = expectation(description: "Finish account request")
-        let task = startMonitoringRequestFinishUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnRequestFinish get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        // Trigger new request results before terminating stream. Expected value count.
-        sdk.simulateOnRequestFinish(MockRequest(handle: 1), error: MockError(errorType: .apiOk))
-        sdk.simulateOnRequestFinish(MockRequest(handle: 2), error: MockError(errorType: .apiOk))
-        sdk.simulateOnRequestFinish(MockRequest(handle: 3), error: MockError(errorType: .apiOk))
-        
-        task.cancel()
-        
-        // This is necessary for the delegate to be removed before the below simulateOnRequestFinish get called.
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        
-        // Trigger new request results after terminating stream. Should not be received.
-        sdk.simulateOnRequestFinish(MockRequest(handle: 4), error: MockError(errorType: .apiOk))
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        let requestValues = await task.value
-        
-        XCTAssertEqual(requestValues.count, 3)
+        await runTest(
+            startMonitoring: startMonitoringRequestFinishUpdates,
+            simulateEvents: { sdk in
+                sdk.simulateOnRequestFinish(self.createRequest(handle: 1), error: self.error)
+                sdk.simulateOnRequestFinish(self.createRequest(handle: 2), error: self.error)
+                sdk.simulateOnRequestFinish(self.createRequest(handle: 3), error: self.error)
+            },
+            onTaskCancel: { sdk in
+                sdk.simulateOnRequestFinish(self.createRequest(handle: 4), error: MockError(errorType: .apiOk))
+            },
+            assertResults: { values in
+                XCTAssertEqual(values.count, 3)
+            }
+        )
     }
-    
-    // MARK: - onUserAlertsUpdates
-    
-    func testAccountUpdates_onUserAlertsUpdates_shouldAddRequestDelegateAndRemoveWhenTerminated() async {
-        let expectation = expectation(description: "Finish onUserAlertsUpdates")
-        let task = startMonitoringUserAlertsUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnUserAlertsUpdate get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        XCTAssertTrue(sdk.hasGlobalDelegate)
-        
-        sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 1), MockUserAlert(identifier: 2)]))
-        
-        task.cancel()
-        await fulfillment(of: [expectation], timeout: 1)
-        XCTAssertFalse(sdk.hasGlobalDelegate)
+
+    func testAccountUpdates_onUserAlertsUpdates_shouldAddGlobalDelegateAndRemoveWhenTerminated() async {
+        await runTest(
+            startMonitoring: startMonitoringUserAlertsUpdates,
+            onTaskStart: { sdk in
+                XCTAssertTrue(sdk.hasGlobalDelegate)
+            },
+            simulateEvents: { sdk in
+                sdk.simulateOnUserAlertsUpdate(self.createUserAlertList(identifiers: [1, 2]))
+            },
+            onTaskCancel: { sdk in
+                XCTAssertFalse(sdk.hasGlobalDelegate)
+            },
+            assertResults: { _ in }
+        )
     }
     
     func testAccountUpdates_onUserAlertsUpdates_whenNotTerminated_shouldYieldElements() async {
-        let expectation = expectation(description: "Finish onUserAlertsUpdates")
-        let task = startMonitoringUserAlertsUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnUserAlertsUpdate get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        // Trigger new alerts before terminating stream. Expected values from the last trigger.
-        sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 1), MockUserAlert(identifier: 2)]))
-        sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 3), MockUserAlert(identifier: 4)]))
-        sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 5), MockUserAlert(identifier: 6)]))
-        
-        task.cancel()
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        let values = await task.value
-        XCTAssertEqual(values.map(\.identifier), [5, 6])
+        await runTest(
+            startMonitoring: startMonitoringUserAlertsUpdates,
+            simulateEvents: { sdk in
+                // Trigger new alerts before terminating stream. Expected values from the last trigger.
+                sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 1), MockUserAlert(identifier: 2)]))
+                sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 3), MockUserAlert(identifier: 4)]))
+                sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 5), MockUserAlert(identifier: 6)]))
+            },
+            assertResults: { values in
+                XCTAssertEqual(values.map(\.identifier), [5, 6])
+            }
+        )
     }
-    
+
     func testAccountUpdates_onUserAlertsUpdates_whenTerminated_shouldStopYieldingElements() async {
-        let expectation = expectation(description: "Finish onUserAlertsUpdates")
-        let task = startMonitoringUserAlertsUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnUserAlertsUpdate get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        // Trigger new alerts before terminating stream. Expected values.
-        sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 1), MockUserAlert(identifier: 2)]))
-        
-        task.cancel()
-        
-        // This is necessary for the delegate to be removed before the below simulateOnUserAlertsUpdate get called.
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        
-        // Trigger new alerts after terminating stream. Should not be received.
-        sdk.simulateOnUserAlertsUpdate(MockUserAlertList(alerts: [MockUserAlert(identifier: 3), MockUserAlert(identifier: 4)]))
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        let values = await task.value
-        XCTAssertEqual(values.map(\.identifier), [1, 2])
+        await runTest(
+            startMonitoring: startMonitoringUserAlertsUpdates,
+            simulateEvents: { sdk in
+                sdk.simulateOnUserAlertsUpdate(self.createUserAlertList(identifiers: [1, 2]))
+            },
+            onTaskCancel: { sdk in
+                sdk.simulateOnUserAlertsUpdate(self.createUserAlertList(identifiers: [3, 4]))
+            },
+            assertResults: { values in
+                XCTAssertEqual(values.map(\.identifier), [1, 2])
+            }
+        )
     }
-    
-    // MARK: - onContactRequestsUpdate
-    func testAccountUpdates_onContactRequestsUpdates_shouldAddRequestDelegateAndRemoveWhenTerminated() async {
-        let expectation = expectation(description: "Finish onContactRequestsUpdate")
-        let task = startMonitoringContactRequestsUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnContactRequestsUpdate get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        XCTAssertTrue(sdk.hasGlobalDelegate)
-        
-        // Trigger new contact request before terminating stream. Expected values.
-        sdk.simulateOnContactRequestsUpdate(MockContactRequestList(
-            contactRequests: [MockContactRequest(targetEmail: "test1@test.com"),
-                              MockContactRequest(targetEmail: "test2@test.com")])
+
+    func testAccountUpdates_onStorageStatusUpdates_shouldAddGlobalDelegateAndRemoveWhenTerminated() async {
+        await runTest(
+            startMonitoring: startMonitoringStorageStatusUpdates,
+            onTaskStart: { sdk in
+                XCTAssertTrue(sdk.hasGlobalDelegate)
+            },
+            simulateEvents: { sdk in
+                sdk.simulateOnEvent(self.greenStorageEvent)
+            },
+            onTaskCancel: { sdk in
+                XCTAssertFalse(sdk.hasGlobalDelegate)
+            },
+            assertResults: { _ in }
         )
-        
-        task.cancel()
-        await fulfillment(of: [expectation], timeout: 1)
-        XCTAssertFalse(sdk.hasGlobalDelegate)
     }
-    
-    func testAccountUpdates_onContactRequestsUpdates_whenNotTerminated_shouldYieldElements() async {
-        let expectation = expectation(description: "Finish onContactRequestsUpdate")
-        let task = startMonitoringContactRequestsUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnUserAlertsUpdate get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        // Trigger new contact request before terminating stream. Expected values.
-        sdk.simulateOnContactRequestsUpdate(MockContactRequestList(
-            contactRequests: [MockContactRequest(targetEmail: "test1@test.com"),
-                              MockContactRequest(targetEmail: "test2@test.com")])
+
+    func testAccountUpdates_onStorageStatusUpdates_whenNotTerminated_shouldYieldElements() async {
+        await runTest(
+            startMonitoring: startMonitoringStorageStatusUpdates,
+            simulateEvents: { sdk in
+                sdk.simulateOnEvent(self.greenStorageEvent)
+                sdk.simulateOnEvent(self.orangeStorageEvent)
+                sdk.simulateOnEvent(self.redStorageEvent)
+            },
+            assertResults: { values in
+                XCTAssertEqual(values, [.noStorageProblems, .almostFull, .full])
+            }
         )
-        
-        task.cancel()
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        let values = await task.value
-        XCTAssertEqual(values.map(\.targetEmail), ["test1@test.com", "test2@test.com"])
     }
-    
-    func testAccountUpdates_onContactRequestsUpdate_whenTerminated_shouldStopYieldingElements() async {
-        let expectation = expectation(description: "Finish onContactRequestsUpdate")
-        let task = startMonitoringContactRequestsUpdates(expectation)
-        
-        // This is necessary for the delegate to be added before the below simulateOnUserAlertsUpdate get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        // Trigger new contact request before terminating stream. Expected values.
-        sdk.simulateOnContactRequestsUpdate(MockContactRequestList(
-            contactRequests: [MockContactRequest(targetEmail: "test1@test.com"),
-                              MockContactRequest(targetEmail: "test2@test.com")])
+
+    func testAccountUpdates_onStorageStatusUpdates_whenTerminated_shouldStopYieldingElements() async {
+        await runTest(
+            startMonitoring: startMonitoringStorageStatusUpdates,
+            simulateEvents: { sdk in
+                sdk.simulateOnEvent(self.greenStorageEvent)
+            },
+            onTaskCancel: { sdk in
+                sdk.simulateOnEvent(self.redStorageEvent)
+            },
+            assertResults: { values in
+                XCTAssertEqual(values, [.noStorageProblems])
+            }
         )
-        
-        task.cancel()
-        
-        // This is necessary for the delegate to be added before the below simulateOnContactRequestsUpdate get called.
-        try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        // Trigger new contact request after terminating stream. Should not be received.
-        sdk.simulateOnContactRequestsUpdate(MockContactRequestList(
-            contactRequests: [MockContactRequest(targetEmail: "test3@test.com")])
-        )
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        let values = await task.value
-        XCTAssertEqual(values.map(\.targetEmail), ["test1@test.com", "test2@test.com"])
     }
     
     // MARK: - Helpers
-    
-    private func startMonitoringRequestFinishUpdates(_ expectationToFulfill: XCTestExpectation) -> Task<[Result<AccountRequestEntity, any Error>], Never> {
-        Task { [sut] in
-            guard let sut else { return [] }
-            var results: [Result<AccountRequestEntity, any Error>] = []
-            for await requestResult in sut.onAccountRequestFinish {
-                results.append(requestResult)
-            }
-            expectationToFulfill.fulfill()
-            return results
-        }
+    private func makeSUT() -> (AccountUpdatesProvider, MockSdk) {
+        let sdk = MockSdk(shouldListGlobalDelegates: true)
+        let sut = AccountUpdatesProvider(sdk: sdk)
+        return (sut, sdk)
     }
-    
-    private func startMonitoringUserAlertsUpdates(_ expectationToFulfill: XCTestExpectation) -> Task<[UserAlertEntity], Never> {
-        Task { [sut] in
-            guard let sut else { return [] }
+
+    private func startMonitoringRequestFinishUpdates(
+        sut: AccountUpdatesProvider,
+        expectationToFulfill: XCTestExpectation
+    ) -> Task<[Result<AccountRequestEntity, any Error>], Never> {
+        startMonitoringUpdates(asyncSequence: sut.onAccountRequestFinish, expectationToFulfill: expectationToFulfill)
+    }
+
+    private func startMonitoringUserAlertsUpdates(
+        sut: AccountUpdatesProvider,
+        expectationToFulfill: XCTestExpectation
+    ) -> Task<[UserAlertEntity], Never> {
+        Task {
             var userAlerts: [UserAlertEntity] = []
             for await updatedAlerts in sut.onUserAlertsUpdates {
                 userAlerts = updatedAlerts
@@ -238,16 +189,75 @@ final class AccountUpdatesProviderTests: XCTestCase {
             return userAlerts
         }
     }
+
+    private func startMonitoringContactRequestsUpdates(
+        sut: AccountUpdatesProvider,
+        expectationToFulfill: XCTestExpectation
+    ) -> Task<[ContactRequestEntity], Never> {
+        startMonitoringUpdatesFromArray(asyncSequence: sut.onContactRequestsUpdates, expectationToFulfill: expectationToFulfill)
+    }
+
+    private func startMonitoringStorageStatusUpdates(
+        sut: AccountUpdatesProvider,
+        expectationToFulfill: XCTestExpectation
+    ) -> Task<[StorageStatusEntity], Never> {
+        startMonitoringUpdates(asyncSequence: sut.onStorageStatusUpdates, expectationToFulfill: expectationToFulfill)
+    }
+
+    private func runTest<T>(
+        startMonitoring: @escaping (AccountUpdatesProvider, XCTestExpectation) -> Task<[T], Never>,
+        onTaskStart: @escaping (MockSdk) -> Void = { _ in },
+        simulateEvents: @escaping (MockSdk) -> Void,
+        onTaskCancel: @escaping (MockSdk) -> Void = { _ in },
+        assertResults: @escaping ([T]) -> Void
+    ) async {
+        let (sut, sdk) = makeSUT()
+        let expectation = expectation(description: "Updates")
+        let task = startMonitoring(sut, expectation)
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        onTaskStart(sdk)
+
+        simulateEvents(sdk)
+        task.cancel()
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        onTaskCancel(sdk)
+
+        await fulfillment(of: [expectation], timeout: 1)
+
+        let values = await task.value
+
+        assertResults(values)
+    }
     
-    private func startMonitoringContactRequestsUpdates(_ expectationToFulfill: XCTestExpectation) -> Task<[ContactRequestEntity], Never> {
-        Task { [sut] in
-            guard let sut else { return [] }
-            var contactRequests: [ContactRequestEntity] = []
-            for await updatedAlerts in sut.onContactRequestsUpdates {
-                contactRequests = updatedAlerts
+    private func startMonitoringUpdates<T>(
+        asyncSequence: AnyAsyncSequence<T>,
+        expectationToFulfill: XCTestExpectation
+    ) -> Task<[T], Never> {
+        Task {
+            var results: [T] = []
+            for await result in asyncSequence {
+                results.append(result)
             }
             expectationToFulfill.fulfill()
-            return contactRequests
+            return results
+        }
+    }
+
+    private func startMonitoringUpdatesFromArray<T>(
+        asyncSequence: AnyAsyncSequence<[T]>,
+        expectationToFulfill: XCTestExpectation
+    ) -> Task<[T], Never> {
+        Task {
+            var results: [T] = []
+            for await resultArray in asyncSequence {
+                results.append(contentsOf: resultArray)
+            }
+            expectationToFulfill.fulfill()
+            return results
         }
     }
 }
