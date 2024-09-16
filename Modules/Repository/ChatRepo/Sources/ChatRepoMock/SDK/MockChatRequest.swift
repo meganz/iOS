@@ -5,13 +5,19 @@ public final class MockChatRequest: MEGAChatRequest {
     
     private let _chatHandle: UInt64
     private let _privilege: Int
+    private let _flag: Bool
+    private let _text: String?
     
     public init(
         chatHandle: UInt64 = 1,
-        privilege: Int = -2
+        privilege: Int = -2,
+        flag: Bool = false,
+        text: String? = nil
     ) {
         _chatHandle = chatHandle
         _privilege = privilege
+        _flag = flag
+        _text = text
         super.init()
     }
     
@@ -21,5 +27,13 @@ public final class MockChatRequest: MEGAChatRequest {
     
     public override var privilege: Int {
         _privilege
+    }
+    
+    public override var isFlag: Bool {
+        _flag
+    }
+    
+    public override var text: String? {
+        _text
     }
 }

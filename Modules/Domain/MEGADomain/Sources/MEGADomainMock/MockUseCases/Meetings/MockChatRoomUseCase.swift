@@ -211,10 +211,6 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
     
     public func closeChatRoom(_ chatRoom: ChatRoomEntity) {    }
     
-    public func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
-        change == chatMessageScheduledMeetingChange
-    }
-    
     public func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool {
         shouldOpenWaitRoom
     }
