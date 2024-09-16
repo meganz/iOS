@@ -18,6 +18,7 @@ extension VideoConfig {
             addPlaylistImage: UIImage.navigationbarAdd,
             rectangleVideoStackPlaylistImage: UIImage.rectangleVideoStack,
             favouritePlaylistThumbnailImage: UIImage.favouritePlaylistThumbnail,
+            downloadedImage: UIImage.downloaded,
             labelAssets: VideoConfig.RowAssets.LabelAssets(
                 redImage: UIImage.redSmall,
                 orangeImage: UIImage.orangeSmall,

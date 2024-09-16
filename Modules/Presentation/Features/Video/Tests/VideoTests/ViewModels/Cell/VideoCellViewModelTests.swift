@@ -11,12 +11,31 @@ import XCTest
 
 final class VideoCellViewModelTests: XCTestCase {
     
+    @MainActor func testInit_called_doesNotRequestNodeIsDownloaded() {
+        let node = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
+        let (_, nodeUseCase) = makeSUT(thumbnailLoader: MockThumbnailLoader(initialImage: nil), nodeEntity: node)
+        
+        XCTAssertEqual(nodeUseCase.invocations, [])
+    }
+    
+    @MainActor func testAttemptLoadThumbnail_whenCalled_requestNodeIsDownloaded() async throws {
+        let node = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
+        let imageURL = try makeImageURL()
+        let imageContainer = try XCTUnwrap(URLImageContainer(imageURL: imageURL, type: .thumbnail))
+        let thumbnailLoader = MockThumbnailLoader(loadImage: SingleItemAsyncSequence(item: imageContainer).eraseToAnyAsyncSequence())
+        let (sut, nodeUseCase) = makeSUT(thumbnailLoader: thumbnailLoader, nodeEntity: node)
+        
+        try await sut.attemptLoadThumbnail()
+        
+        XCTAssertEqual(nodeUseCase.invocations, [ .isDownloaded ])
+    }
+    
     @MainActor
     func testAttemptLoadThumbnail_whenNoThumbnailLoaded_deliverPlaceholderImage() async throws {
         let node = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
         
         let thumbnailLoader = MockThumbnailLoader(initialImage: nil)
-        let sut = makeSUT(thumbnailLoader: thumbnailLoader, nodeEntity: node)
+        let (sut, _) = makeSUT(thumbnailLoader: thumbnailLoader, nodeEntity: node)
         
         try await sut.attemptLoadThumbnail()
         
@@ -31,7 +50,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let imageContainer = try XCTUnwrap(URLImageContainer(imageURL: imageURL, type: .thumbnail))
 
         let thumbnailLoader = MockThumbnailLoader(loadImage: SingleItemAsyncSequence(item: imageContainer).eraseToAnyAsyncSequence())
-        let sut = makeSUT(thumbnailLoader: thumbnailLoader, nodeEntity: node)
+        let (sut, _) = makeSUT(thumbnailLoader: thumbnailLoader, nodeEntity: node)
         
         try await sut.attemptLoadThumbnail()
         
@@ -52,7 +71,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let nodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResult: .success(isInheritedSensitivity),
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
             nodeEntity: video,
@@ -88,7 +107,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let nodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
             nodeEntity: video,
@@ -118,7 +137,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let nodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
             nodeEntity: video,
@@ -149,7 +168,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let nodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
             nodeEntity: video,
@@ -173,7 +192,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let video = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
         let thumbnailLoader = MockThumbnailLoader()
         var tappedNodes = [NodeEntity]()
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             thumbnailLoader: thumbnailLoader,
             nodeEntity: video,
             onTapMoreOptions: { tappedNodes.append($0) }
@@ -190,7 +209,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let video = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
         let thumbnailLoader = MockThumbnailLoader()
         var tappedNodes = [NodeEntity]()
-        let sut = makeSUT(
+        let (sut, _) = makeSUT(
             thumbnailLoader: thumbnailLoader,
             nodeEntity: video,
             onTapped: { tappedNodes.append($0) }
@@ -206,24 +225,29 @@ final class VideoCellViewModelTests: XCTestCase {
     private func makeSUT(
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        nodeUseCase: MockNodeUseCase = MockNodeUseCase(),
         nodeEntity: NodeEntity,
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void = { _ in },
         onTapped: @escaping (_ node: NodeEntity) -> Void = { _ in },
         featureFlagHiddenNodes: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> VideoCellViewModel {
+    ) -> (
+        sut: VideoCellViewModel,
+        nodeUseCase: MockNodeUseCase
+    ) {
                 
         let sut = VideoCellViewModel(
             nodeEntity: nodeEntity,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]),
             onTapMoreOptions: onTapMoreOptions,
             onTapped: onTapped
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return sut
+        return (sut, nodeUseCase)
     }
     
     private func nodeEntity(name: String, handle: HandleEntity, hasThumbnail: Bool, isPublic: Bool = false, isShare: Bool = false, isFavorite: Bool, label: NodeLabelTypeEntity, size: UInt64, duration: Int) -> NodeEntity {

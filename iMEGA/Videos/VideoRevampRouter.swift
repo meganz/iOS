@@ -66,6 +66,11 @@ struct VideoRevampRouter: VideoRevampRouting {
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
             nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: sdk)),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: nodeRepository
+            ),
             videoConfig: .live(),
             router: self,
             featureFlagProvider: DIContainer.featureFlagProvider
@@ -157,6 +162,11 @@ struct VideoRevampRouter: VideoRevampRouting {
             thumbnailUseCase: thumbnailUseCase,
             videoPlaylistUseCase: videoPlaylistUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: nodeRepository
+            ), 
             router: self,
             presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(

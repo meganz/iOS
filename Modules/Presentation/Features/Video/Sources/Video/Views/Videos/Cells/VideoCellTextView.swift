@@ -7,11 +7,13 @@ struct VideoCellTitleText: View {
     let videoConfig: VideoConfig
     let title: String
     let labelImage: UIImage?
+    let downloadedImage: UIImage?
     
     var body: some View {
         VideoCellTitleTextRepresentable(
             text: title,
             labelImage: labelImage,
+            downloadedImage: downloadedImage,
             foregroundColor: UIColor(videoConfig.colorAssets.primaryTextColor),
             backgroundColor: UIColor(videoConfig.colorAssets.pageBackgroundColor)
         )
@@ -22,7 +24,8 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This a short text",
-        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!
+        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
+        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
     )
 }
 
@@ -30,7 +33,8 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
-        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!
+        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
+        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
     )
 }
 
@@ -38,7 +42,28 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
-        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!
+        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
+        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
+    )
+    .preferredColorScheme(.dark)
+}
+
+#Preview {
+    VideoCellTitleText(
+        videoConfig: .preview,
+        title: "This is text with label image",
+        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
+        downloadedImage: nil
+    )
+    .preferredColorScheme(.dark)
+}
+
+#Preview {
+    VideoCellTitleText(
+        videoConfig: .preview,
+        title: "This is text with downloaded image",
+        labelImage: nil,
+        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
     )
     .preferredColorScheme(.dark)
 }
@@ -51,17 +76,20 @@ struct VideoCellTitleText: View {
 private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
     private var text: String
     private var labelImage: UIImage?
+    private var downloadedImage: UIImage?
     private var foregroundColor: UIColor
     private var backgroundColor: UIColor
     
     init(
         text: String,
         labelImage: UIImage?,
+        downloadedImage: UIImage?,
         foregroundColor: UIColor,
         backgroundColor: UIColor
     ) {
         self.text = text
         self.labelImage = labelImage
+        self.downloadedImage = downloadedImage
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
     }
@@ -127,6 +155,11 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
         
         if let labelImage {
             let label = createImageAttachmentWithPadding(by: labelImage)
+            attributedTitle.append(label)
+        }
+        
+        if let downloadedImage {
+            let label = createImageAttachmentWithPadding(by: downloadedImage)
             attributedTitle.append(label)
         }
         

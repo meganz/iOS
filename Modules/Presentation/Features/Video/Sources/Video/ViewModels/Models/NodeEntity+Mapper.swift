@@ -5,7 +5,7 @@ import SwiftUI
 
 extension NodeEntity {
     
-    func toVideoCellPreviewEntity(thumbnailContainer: any ImageContaining) -> VideoCellPreviewEntity {
+    func toVideoCellPreviewEntity(thumbnailContainer: any ImageContaining, isDownloaded: Bool) -> VideoCellPreviewEntity {
         VideoCellPreviewEntity(
             isFavorite: isFavourite,
             imageContainer: thumbnailContainer,
@@ -14,7 +14,8 @@ extension NodeEntity {
             size: FileSizeFormatter.memoryStyleString(fromByteCount: Int64(size)),
             isExported: isExported,
             label: label,
-            hasThumbnail: hasThumbnail
+            hasThumbnail: hasThumbnail,
+            isDownloaded: isDownloaded
         )
     }
 }
