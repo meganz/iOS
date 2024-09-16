@@ -28,6 +28,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
     private var renamedAlbum: String?
+    private var networkMonitorTask: Task<Void, Never>?
     
     // Public State
     private(set) var importAlbumTask: Task<Void, Never>?
@@ -120,6 +121,8 @@ final class ImportAlbumViewModel: ObservableObject {
     
     deinit {
         publicCollectionUseCase.stopCollectionLinkPreview()
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
     }
     
     func onViewAppear() {
@@ -231,12 +234,17 @@ final class ImportAlbumViewModel: ObservableObject {
         showImportAlbumLocation.toggle()
     }
     
-    func monitorNetworkConnection() async {
-        for await isConnected in monitorUseCase.connectionSequence {
-            guard [AlbumPublicLinkStatus.loaded, .invalid].notContains(publicLinkStatus) else {
-                break
+    @MainActor
+    func monitorNetworkConnection() {
+        let connectionSequence = monitorUseCase.connectionSequence
+        
+        networkMonitorTask = Task { [weak self] in
+            for await isConnected in connectionSequence {
+                guard [AlbumPublicLinkStatus.loaded, .invalid].notContains(self?.publicLinkStatus) else {
+                    break
+                }
+                self?.isConnectedToNetworkUntilContentLoaded = isConnected
             }
-            isConnectedToNetworkUntilContentLoaded = isConnected
         }
     }
     
