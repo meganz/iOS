@@ -69,6 +69,11 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
         view.backgroundColor = TokenColors.Background.page
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.dispatch(.onViewWillAppear)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -76,7 +81,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
             endEditingMode()
         }
         
-        viewModel.cancelLoading()
+        viewModel.dispatch(.onViewWillDisappear)
     }
     
     // MARK: - Internal
@@ -143,8 +148,8 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
             buildNavigationBar()
         case .showDeleteAlbumAlert:
             showAlbumDeleteConfirmation()
-        case .rebuildContextMenu:
-            configureRightBarButtons()
+        case .configureRightBarButtons(let config, let canAddPhotos):
+            configureRightBarButtons(contextMenuConfiguration: config, canAddPhotosToAlbum: canAddPhotos)
         }
     }
     
@@ -158,7 +163,6 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
     
     private func configureBarButtons() {
         configureLeftBarButton()
-        configureRightBarButtons()
     }
     
     private func configureLeftBarButton() {

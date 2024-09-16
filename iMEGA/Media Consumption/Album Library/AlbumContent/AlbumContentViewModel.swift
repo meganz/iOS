@@ -8,6 +8,8 @@ import MEGASwiftUI
 
 enum AlbumContentAction: ActionType {
     case onViewReady
+    case onViewWillAppear
+    case onViewWillDisappear
     case changeSortOrder(SortOrderType)
     case changeFilter(FilterType)
     case showAlbumCoverPicker
@@ -19,8 +21,9 @@ enum AlbumContentAction: ActionType {
     case hideNodes
 }
 
+@MainActor
 final class AlbumContentViewModel: ViewModelType {
-    enum Command: CommandType, Equatable {
+    enum Command: CommandType {
         case startLoading
         case finishLoading
         case showAlbumPhotos(photos: [NodeEntity], sortOrder: SortOrderType)
@@ -28,8 +31,7 @@ final class AlbumContentViewModel: ViewModelType {
         case showResultMessage(MessageType)
         case updateNavigationTitle
         case showDeleteAlbumAlert
-        case rebuildContextMenu
-        
+        case configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?, canAddPhotosToAlbum: Bool)
         enum MessageType: Equatable {
             case success(String)
             case custom(UIImage, String)
@@ -43,24 +45,38 @@ final class AlbumContentViewModel: ViewModelType {
     private let router: any AlbumContentRouting
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     
+    private let albumContentDataProvider: any AlbumContentPhotoLibraryDataProviderProtocol
     private var loadingTask: Task<Void, Never>?
-    private var photos = [AlbumPhotoEntity]()
     private var subscriptions = Set<AnyCancellable>()
     private var selectedSortOrder: SortOrderType = .newest
     private var selectedFilter: FilterType = .allMedia
     private var addAdditionalPhotosTask: Task<Void, Never>?
     private var newAlbumPhotosToAdd: [NodeEntity]?
-    private var doesPhotoLibraryContainPhotos: Bool = false
+    private var photoLibraryContainsPhotos: Bool = true
     private var deletePhotosTask: Task<Void, Never>?
     private var deleteAlbumTask: Task<Void, Never>?
+    private(set) var setupSubscriptionTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private(set) var reloadAlbumTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private var showAlbumPhotosTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private var updateRightBarButtonsTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private var retrieveUserAlbumCover: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     
     private(set) var alertViewModel: TextFieldAlertViewModel
     
     var invokeCommand: ((Command) -> Void)?
     var isPhotoSelectionHidden = false
-    
-    var selectAlbumCoverTask: Task<Void, Never>?
     
     var albumName: String {
         album.name
@@ -77,7 +93,9 @@ final class AlbumContentViewModel: ViewModelType {
         router: some AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
     ) {
         self.album = album
         self.newAlbumPhotosToAdd = newAlbumPhotosToAdd
@@ -88,8 +106,9 @@ final class AlbumContentViewModel: ViewModelType {
         self.router = router
         self.alertViewModel = alertViewModel
         self.tracker = tracker
+        self.albumContentDataProvider = albumContentDataProvider
+        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         
-        setupSubscription()
         setupAlbumModification()
     }
     
@@ -98,11 +117,11 @@ final class AlbumContentViewModel: ViewModelType {
     func dispatch(_ action: AlbumContentAction) {
         switch action {
         case .onViewReady:
-            tracker.trackAnalyticsEvent(with: AlbumContentScreenEvent())
-            loadingTask = Task { @MainActor in
-                await addNewAlbumPhotosIfNeeded()
-                await loadNodes()
-            }
+            onViewReady()
+        case .onViewWillAppear where setupSubscriptionTask == nil:
+            setupAlbumMonitoring()
+        case .onViewWillDisappear:
+            cancelLoading()
         case .changeSortOrder(let sortOrder):
             updateSortOrder(sortOrder)
         case .changeFilter(let filter):
@@ -110,14 +129,15 @@ final class AlbumContentViewModel: ViewModelType {
         case .showAlbumCoverPicker:
             showAlbumCoverPicker()
         case .deletePhotos(let photos):
-            deletePhotosTask = Task { @MainActor in
+            deletePhotosTask = Task {
                 await deletePhotos(photos)
             }
         case .deleteAlbum:
             deleteAlbum()
         case .configureContextMenu(let isSelectHidden):
+            guard isPhotoSelectionHidden != isSelectHidden else { return }
             isPhotoSelectionHidden = isSelectHidden
-            invokeCommand?(.rebuildContextMenu)
+            updateRightBarButtons()
         case .shareLink:
             tracker.trackAnalyticsEvent(with: AlbumContentShareLinkMenuToolbarEvent())
             router.showShareLink(album: album)
@@ -125,6 +145,8 @@ final class AlbumContentViewModel: ViewModelType {
             removeSharedLink()
         case .hideNodes:
             tracker.trackAnalyticsEvent(with: AlbumContentHideNodeMenuItemEvent())
+        default:
+            break
         }
     }
     
@@ -146,30 +168,6 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
-    var canAddPhotosToAlbum: Bool {
-        album.type == .user && !doesPhotoLibraryContainPhotos
-    }
-    
-    var contextMenuConfiguration: CMConfigEntity? {
-        guard !(photos.isEmpty && isFavouriteAlbum) else { return nil }
-        
-        return CMConfigEntity(
-            menuType: .menu(type: .album),
-            sortType: selectedSortOrder.toSortOrderEntity(),
-            filterType: selectedFilter.toFilterEntity(),
-            albumType: album.type,
-            isFilterEnabled: isFilterEnabled,
-            isSelectHidden: isPhotoSelectionHidden,
-            isEmptyState: photos.isEmpty,
-            sharedLinkStatus: album.sharedLinkStatus
-        )
-    }
-    
-    func cancelLoading() {
-        loadingTask?.cancel()
-        addAdditionalPhotosTask?.cancel()
-    }
-    
     func showAlbumContentPicker() {
         router.showAlbumContentPicker(album: album, completion: { [weak self] _, albumPhotos in
             self?.addAdditionalPhotos(albumPhotos)
@@ -177,9 +175,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     func renameAlbum(with name: String) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            
+        Task {
             do {
                 let newName = try await albumModificationUseCase.rename(album: album.id, with: name)
                 onAlbumRenameSuccess(with: newName)
@@ -194,72 +190,56 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     // MARK: Private
-    private var isFilterEnabled: Bool {
-        guard photos.isNotEmpty,
-              album.type != .gif,
-              album.type != .raw else {
-            return false
-        }
-        switch selectedFilter {
-        case .images:
-            return photos.contains(where: { $0.photo.mediaType == .video })
-        case .videos:
-            return photos.contains(where: { $0.photo.mediaType == .image })
-        default:
-            return containsImageAndVideoPhotos
-        }
+    
+    private var canAddPhotosToAlbum: Bool {
+        album.type == .user && photoLibraryContainsPhotos
     }
     
-    private var containsImageAndVideoPhotos: Bool {
-        let containsImage = photos.contains(where: { $0.photo.mediaType == .image })
-        let containsVideo = photos.contains(where: { $0.photo.mediaType == .video })
-        return containsImage && containsVideo
-    }
-    
-    private var filteredPhotos: [AlbumPhotoEntity] {
-        switch selectedFilter {
-        case .images:
-            return photos.filter { $0.photo.mediaType == .image }
-        case .videos:
-            return photos.filter { $0.photo.mediaType == .video }
-        default:
-            return photos
+    private func onViewReady() {
+        tracker.trackAnalyticsEvent(with: AlbumContentScreenEvent())
+        invokeCommand?(.configureRightBarButtons(
+            contextMenuConfiguration: nil, canAddPhotosToAlbum: canAddPhotosToAlbum))
+        loadingTask = Task {
+            await addNewAlbumPhotosIfNeeded()
+            guard !Task.isCancelled else { return }
+            await loadNodes()
         }
     }
     
-    @MainActor
     private func loadNodes() async {
+        guard await !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
         do {
-            photos = try await albumContentsUseCase.photos(in: album)
-            doesPhotoLibraryContainPhotos = photos.isEmpty
+            let photos = try await albumContentsUseCase.photos(in: album)
+            guard !Task.isCancelled else { return }
+            await albumContentDataProvider.updatePhotos(photos)
+            guard !Task.isCancelled else { return }
+            photoLibraryContainsPhotos = photos.isNotEmpty
             if photos.isEmpty && album.type == .user {
-                doesPhotoLibraryContainPhotos = (try? await photoLibraryUseCase.media(for: [.allMedia, .allLocations], excludeSensitive: nil)
-                    .isEmpty) ?? true
+                photoLibraryContainsPhotos = (try? await photoLibraryUseCase.media(for: [.allMedia, .allLocations], excludeSensitive: nil)
+                    .isNotEmpty) ?? false
             }
-            shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
+            guard !Task.isCancelled else { return }
+            let shouldDismissAlbum = photos.isEmpty && (album.type == .raw || album.type == .gif)
+            await shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
     }
     
-    @MainActor
     private func addNewAlbumPhotosIfNeeded() async {
-        if let newAlbumPhotosToAdd {
-            showAlbumPhotos()
-            await addPhotos(newAlbumPhotosToAdd)
-            self.newAlbumPhotosToAdd = nil
-        }
+        guard let newAlbumPhotosToAdd else { return }
+        await addPhotos(newAlbumPhotosToAdd)
+        self.newAlbumPhotosToAdd = nil
     }
     
     private func addAdditionalPhotos(_ photos: [NodeEntity]) {
-        addAdditionalPhotosTask = Task { @MainActor in
+        addAdditionalPhotosTask = Task {
             await addPhotos(photos)
         }
     }
     
-    @MainActor
     private func addPhotos(_ photos: [NodeEntity]) async {
-        let photosToAdd = photos.filter { photo in !self.photos.contains(where: { photo == $0.photo }) }
+        let photosToAdd = await albumContentDataProvider.nodesToAddToAlbum(photos)
         guard photosToAdd.isNotEmpty else {
             return
         }
@@ -278,19 +258,36 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func showAlbumPhotos() {
-        if selectedFilter != .allMedia && !containsImageAndVideoPhotos {
+        showAlbumPhotosTask = Task {
+            await showAlbumPhotos()
+        }
+    }
+    
+    private func showAlbumPhotos() async {
+        let notContainImageAndVideo = await !albumContentDataProvider.containsImageAndVideo()
+        guard !Task.isCancelled else { return }
+        
+        if selectedFilter != .allMedia && notContainImageAndVideo {
             selectedFilter = .allMedia
         }
-        invokeCommand?(.showAlbumPhotos(photos: filteredPhotos.map { $0.photo }, sortOrder: selectedSortOrder))
-    }
-        
-    private var shouldDismissAlbum: Bool {
-        photos.isEmpty && (album.type == .raw || album.type == .gif)
+        await invokeCommand?(.showAlbumPhotos(photos: albumContentDataProvider.photos(for: selectedFilter), sortOrder: selectedSortOrder))
+        guard !Task.isCancelled else { return }
+        await updateRightBarButtons()
     }
     
     private func reloadAlbum() {
-        loadingTask = Task { @MainActor in
+        reloadAlbumTask = Task {
             await loadNodes()
+        }
+    }
+    
+    private func setupAlbumMonitoring() {
+        setupSubscriptionTask = Task {
+            if await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
+                // Add New Monitoring
+            } else {
+                setupSubscription()
+            }
         }
     }
     
@@ -335,7 +332,6 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
-    @MainActor
     private func onAlbumRenameSuccess(with newName: String) {
         album.name = newName
         invokeCommand?(.updateNavigationTitle)
@@ -363,14 +359,15 @@ final class AlbumContentViewModel: ViewModelType {
         })
     }
 
-    @MainActor
     private func deletePhotos(_ photos: [NodeEntity]) async {
-        let photosToDelete = self.photos.filter { albumPhoto in photos.contains(where: { albumPhoto.id == $0.handle }) }
+        let photosToDelete = await albumContentDataProvider.albumPhotosToDelete(from: photos)
         guard photosToDelete.isNotEmpty else {
             return
         }
         do {
             let result = try await albumModificationUseCase.deletePhotos(in: album.id, photos: photosToDelete)
+            guard !Task.isCancelled else { return }
+            
             if result.success > 0 {
                 let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(result.success))
                     .replacingOccurrences(of: "[A]", with: "\(albumName)")
@@ -382,8 +379,9 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func deleteAlbum() {
-        deleteAlbumTask = Task { @MainActor in
+        deleteAlbumTask = Task {
             let albumIds = await albumModificationUseCase.delete(albums: [album.id])
+            guard !Task.isCancelled else { return }
             
             if albumIds.first == album.id {
                 let successMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
@@ -406,26 +404,25 @@ final class AlbumContentViewModel: ViewModelType {
             invokeCommand?(.updateNavigationTitle)
         }
         if setEntity.changeTypes.contains(.cover) {
-            retriveNewUserAlbumCover(photoId: setEntity.coverId)
+            retrieveNewUserAlbumCover(photoId: setEntity.coverId)
         }
         if setEntity.changeTypes.contains(.exported) {
             album.sharedLinkStatus = .exported(setEntity.isExported)
-            invokeCommand?(.rebuildContextMenu)
+            updateRightBarButtons()
         }
     }
 
-    private func retriveNewUserAlbumCover(photoId: HandleEntity) {
-        Task { [weak self] in
-            guard let self else { return }
-            if let newCover = await albumContentsUseCase.userAlbumCoverPhoto(in: album, forPhotoId: photoId) {
-                album.coverNode = newCover
-            }
+    private func retrieveNewUserAlbumCover(photoId: HandleEntity) {
+        retrieveUserAlbumCover = Task {
+            guard let newCover = await albumContentsUseCase.userAlbumCoverPhoto(in: album, forPhotoId: photoId),
+                  !Task.isCancelled else { return }
+    
+            album.coverNode = newCover
         }
     }
     
     private func removeSharedLink() {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
+        Task {
             do {
                 try await shareCollectionUseCase.removeSharedLink(forAlbum: album)
                 invokeCommand?(.showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1))))
@@ -433,5 +430,57 @@ final class AlbumContentViewModel: ViewModelType {
                 MEGALogError("Error removing album link for album: \(album.id)")
             }
         }
+    }
+    
+    private func cancelLoading() {
+        loadingTask?.cancel()
+        addAdditionalPhotosTask?.cancel()
+        deletePhotosTask?.cancel()
+        deleteAlbumTask?.cancel()
+        setupSubscriptionTask = nil
+        showAlbumPhotosTask = nil
+        updateRightBarButtonsTask = nil
+        retrieveUserAlbumCover = nil
+        reloadAlbumTask = nil
+    }
+    
+    private func updateRightBarButtons() {
+        updateRightBarButtonsTask = Task {
+            await updateRightBarButtons()
+        }
+    }
+    
+    private func updateRightBarButtons() async {
+        let config = await makeConfigEntity()
+        guard !Task.isCancelled else { return }
+        
+        invokeCommand?(.configureRightBarButtons(contextMenuConfiguration: config, canAddPhotosToAlbum: canAddPhotosToAlbum))
+    }
+    
+    private func makeConfigEntity() async -> CMConfigEntity? {
+        let isPhotosEmpty = await albumContentDataProvider.isEmpty()
+        guard !(isPhotosEmpty && isFavouriteAlbum) else { return nil }
+        
+        guard !Task.isCancelled else { return nil }
+        let isFilterEnabled = await isFilterEnabled(isPhotosEmpty: isPhotosEmpty)
+        
+        return CMConfigEntity(
+            menuType: .menu(type: .album),
+            sortType: selectedSortOrder.toSortOrderEntity(),
+            filterType: selectedFilter.toFilterEntity(),
+            albumType: album.type,
+            isFilterEnabled: isFilterEnabled,
+            isSelectHidden: isPhotoSelectionHidden,
+            isEmptyState: isPhotosEmpty,
+            sharedLinkStatus: album.sharedLinkStatus
+        )
+    }
+    
+    private func isFilterEnabled(isPhotosEmpty: Bool) async -> Bool {
+        guard !isPhotosEmpty,
+              [AlbumEntityType.gif, .raw].notContains(album.type) else {
+            return false
+        }
+        return await albumContentDataProvider.isFilterEnabled(for: selectedFilter)
     }
 }

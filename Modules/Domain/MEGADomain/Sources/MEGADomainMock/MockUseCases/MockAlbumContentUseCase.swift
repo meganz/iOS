@@ -3,7 +3,18 @@ import Foundation
 import MEGADomain
 
 public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
-    public var photos: [AlbumPhotoEntity]
+    public actor State {
+        var photos: [AlbumPhotoEntity]
+        
+        init(photos: [AlbumPhotoEntity]) {
+            self.photos = photos
+        }
+        
+        public func update(photos: [AlbumPhotoEntity]) {
+            self.photos = photos
+        }
+    }
+    public let state: State
     private let albumReloadPublisher: AnyPublisher<Void, Never>
     private let albumUpdatedPublisher: AnyPublisher<SetEntity, Never>?
     private let userAlbumCoverPhoto: NodeEntity?
@@ -12,7 +23,7 @@ public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
                 albumReloadPublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
                 albumUpdatedPublisher: AnyPublisher<SetEntity, Never>? = nil,
                 userAlbumCoverPhoto: NodeEntity? = nil) {
-        self.photos = photos
+        state = State(photos: photos)
         self.albumReloadPublisher = albumReloadPublisher
         self.albumUpdatedPublisher = albumUpdatedPublisher
         self.userAlbumCoverPhoto = userAlbumCoverPhoto
@@ -23,11 +34,15 @@ public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
     }
     
     public func photos(in album: AlbumEntity) async throws -> [AlbumPhotoEntity] {
-        photos
+        await state.photos
     }
     
     public func userAlbumPhotos(by id: HandleEntity, showHidden: Bool) async -> [AlbumPhotoEntity] {
-        photos.filter { showHidden || !$0.photo.isMarkedSensitive }
+        if showHidden {
+            await state.photos
+        } else {
+            await state.photos.filter { !$0.photo.isMarkedSensitive }
+        }
     }
     
     public func userAlbumUpdatedPublisher(for album: AlbumEntity) -> AnyPublisher<SetEntity, Never>? {

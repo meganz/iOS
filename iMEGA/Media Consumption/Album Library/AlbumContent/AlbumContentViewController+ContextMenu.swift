@@ -15,16 +15,16 @@ extension AlbumContentViewController {
         )
     }
 
-    private func makeContextMenuBarButton() -> UIBarButtonItem? {
-        guard let contextMenuConfig = viewModel.contextMenuConfiguration,
-              let menu = contextMenuManager?.contextMenu(with: contextMenuConfig) else { return nil }
+    private func makeContextMenuBarButton(contextMenuConfiguration: CMConfigEntity?) -> UIBarButtonItem? {
+        guard let contextMenuConfiguration,
+              let menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration) else { return nil }
         
         let button = UIBarButtonItem(image: UIImage.moreNavigationBar, menu: menu)
         button.tintColor = TokenColors.Text.primary
         return button
     }
     
-    func configureRightBarButtons() {
+    func configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?, canAddPhotosToAlbum: Bool) {
         if isEditing {
             let cancelBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .cancel,
@@ -36,10 +36,10 @@ extension AlbumContentViewController {
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
         } else {
             var rightBarButtonItems = [UIBarButtonItem]()
-            if let contextMenuBarButton = makeContextMenuBarButton() {
+            if let contextMenuBarButton = makeContextMenuBarButton(contextMenuConfiguration: contextMenuConfiguration) {
                 rightBarButtonItems.append(contextMenuBarButton)
             }
-            if viewModel.canAddPhotosToAlbum {
+            if canAddPhotosToAlbum {
                 rightBarButtonItems.append(addToAlbumBarButtonItem)
             }
             guard navigationItem.rightBarButtonItems !~ rightBarButtonItems else {
