@@ -10,6 +10,9 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     private let backupsRootFolderNodeAccess: NodeAccessProtocol
     private let accountUpdatesProvider: any AccountUpdatesProviderProtocol
     
+    private let fullStorageLimit = 1.0
+    private let almostFullStorageLimit = 0.9
+    
     public init(
         sdk: MEGASdk = MEGASdk.sharedSdk,
         currentUserSource: CurrentUserSource = .shared,
@@ -72,6 +75,16 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         return availablePlans.first(where: {
             $0.type == currentAccountDetails?.proLevel && $0.subscriptionCycle == currentAccountDetails?.subscriptionCycle
         })
+    }
+    
+    public var currentStorageStatus: StorageStatusEntity {
+        guard let details = currentAccountDetails else { return .noStorageProblems }
+
+        let percentageUsed = Double(details.storageUsed) / Double(details.storageMax)
+
+        return percentageUsed >= fullStorageLimit ? .full :
+               percentageUsed >= almostFullStorageLimit ? .almostFull :
+               .noStorageProblems
     }
     
     public var currentProPlan: AccountPlanEntity? {
@@ -235,6 +248,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     
     public var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> {
         accountUpdatesProvider.onContactRequestsUpdates
+    }
+    
+    public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> {
+        accountUpdatesProvider.onStorageStatusUpdates
     }
     
     public func multiFactorAuthCheck(email: String) async throws -> Bool {

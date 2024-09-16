@@ -1,62 +1,74 @@
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import MEGATest
 import XCTest
 
 final class AccountStorageUseCaseTests: XCTestCase {
-
-    func testWillStorageQuotaExceed_IfUserHasAlreadyReachedQuota_shouldReturnTrue() {
-        
-        // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 1000, storageMax: 1000))
-        let sut = AccountStorageUseCase(accountRepository: accountRepository)
-        
-        // Act
+    func testWillStorageQuotaExceed_ifUserHasAlreadyReachedQuota_shouldReturnTrue() {
+        let sut = makeSUT(storageUsed: 1000)
         let result = sut.willStorageQuotaExceed(after: makeNodesToBeImported())
-        
-        // Assert
         XCTAssertTrue(result)
     }
     
-    func testWillStorageQuotaExceed_IfUserHasBelowQuotaAndImportWitllGoOverQouta_shouldReturnTrue() {
-        
-        // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 1000, storageMax: 1000))
-        let sut = AccountStorageUseCase(accountRepository: accountRepository)
-        
-        // Act
+    func testWillStorageQuotaExceed_ifUserHasBelowQuotaAndImportWillGoOverQuota_shouldReturnTrue() {
+        let sut = makeSUT(storageUsed: 1000)
         let result = sut.willStorageQuotaExceed(after: makeNodesToBeImported())
-        
-        // Assert
         XCTAssertTrue(result)
     }
     
-    func testWillStorageQuotaExceed_IfUserHasBelowQuotaAndImportWitllEqualQouta_shouldReturnFalse() {
-        // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 600, storageMax: 1000))
-        let sut = AccountStorageUseCase(accountRepository: accountRepository)
-        
-        // Act
+    func testWillStorageQuotaExceed_ifUserHasBelowQuotaAndImportWillEqualQuota_shouldReturnFalse() {
+        let sut = makeSUT(storageUsed: 600)
         let result = sut.willStorageQuotaExceed(after: makeNodesToBeImported())
-        
-        // Assert
         XCTAssertFalse(result)
     }
     
-    func testWillStorageQuotaExceed_IfUserHasBelowQuotaAndImportWitllEqualBelowQoutaLimit_shouldReturnFalse() {
-        // Arrange
-        let accountRepository = MockAccountRepository(currentAccountDetails: AccountDetailsEntity.build(storageUsed: 400, storageMax: 1000))
-        let sut = AccountStorageUseCase(accountRepository: accountRepository)
-                
-        // Act
+    func testWillStorageQuotaExceed_ifUserHasBelowQuotaAndImportWillBeBelowQuotaLimit_shouldReturnFalse() {
+        let sut = makeSUT(storageUsed: 400)
         let result = sut.willStorageQuotaExceed(after: makeNodesToBeImported())
-        
-        // Assert
         XCTAssertFalse(result)
     }
-}
+    
+    func testOnStorageStatusUpdates_whenStorageStatusIsUpdated_shouldEmitCorrectValues() async {
+        let expectedStatusUpdates: [StorageStatusEntity] = [.noStorageProblems, .almostFull, .full]
+        let sut = makeSUT(onStorageStatusUpdates: AsyncStream { continuation in
+            for status in expectedStatusUpdates {
+                continuation.yield(status)
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence())
 
-fileprivate extension AccountStorageUseCaseTests {
+        var receivedStatusUpdates: [StorageStatusEntity] = []
+        for await status in sut.onStorageStatusUpdates {
+            receivedStatusUpdates.append(status)
+        }
+
+        XCTAssertEqual(receivedStatusUpdates, expectedStatusUpdates)
+    }
+    
+    func testCurrentStorageStatus_whenRepositoryHasStatus_shouldReturnCorrectStorageStatus() {
+        let expectedStatus: StorageStatusEntity = .almostFull
+        let sut = makeSUT(currentStorageStatus: expectedStatus)
+        XCTAssertEqual(sut.currentStorageStatus, expectedStatus)
+    }
+    
+    // MARK: - Helpers
+    func makeSUT(
+        storageUsed: Int64 = 0,
+        storageMax: Int64 = 1000,
+        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        currentStorageStatus: StorageStatusEntity = .noStorageProblems
+    ) -> AccountStorageUseCase<MockAccountRepository> {
+        let accountRepository = MockAccountRepository(
+            currentAccountDetails: AccountDetailsEntity.build(
+                storageUsed: storageUsed,
+                storageMax: storageMax
+            ),
+            currentStorageStatus: currentStorageStatus,
+            onStorageStatusUpdates: onStorageStatusUpdates
+        )
+        return AccountStorageUseCase(accountRepository: accountRepository)
+    }
     
     func makeNodesToBeImported() -> [NodeEntity] {
         [

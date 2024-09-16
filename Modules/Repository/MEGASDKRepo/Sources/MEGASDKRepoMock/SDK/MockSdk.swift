@@ -837,6 +837,12 @@ public final class MockSdk: MEGASdk {
             $0.onContactRequestsUpdate?(self, contactRequestList: contactRequestList)
         }
     }
+    
+    public func simulateOnEvent(_ event: MEGAEvent) {
+        globalDelegates.forEach {
+            $0.onEvent?(self, event: event)
+        }
+    }
 }
 
 extension MockSdk {

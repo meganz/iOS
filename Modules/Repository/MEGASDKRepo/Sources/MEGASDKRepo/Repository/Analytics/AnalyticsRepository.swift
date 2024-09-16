@@ -17,7 +17,7 @@ public struct AnalyticsRepository: MEGADomain.AnalyticsRepositoryProtocol, MEGAA
         sdk.sendEvent(event.code, message: event.description, addJourneyId: false, viewId: nil)
     }
     
-    public func sendAnalyticsEvent(_ eventEntity: EventEntity) {
+    public func sendAnalyticsEvent(_ eventEntity: MEGAAnalyticsDomain.EventEntity) {
         sdk.sendEvent(eventEntity.id, message: eventEntity.message, addJourneyId: true, viewId: eventEntity.viewId)
     }
 }

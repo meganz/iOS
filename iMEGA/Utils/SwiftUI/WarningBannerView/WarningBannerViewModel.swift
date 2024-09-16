@@ -89,7 +89,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
         self.applyNewDesign = warningType == .fullStorageOverQuota
     }
     
-    func tapAction() {
+    func onBannerTapped() {
         switch warningType {
         case .limitedPhotoAccess:
             router?.goToSettings()
@@ -97,8 +97,16 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
         }
     }
     
-    func closeAction() {
+    func onCloseButtonTapped() {
         isHideWarningView = true
         hideWarningViewAction?()
+    }
+    
+    func onActionButtonTapped() {
+        switch warningType {
+        case .fullStorageOverQuota:
+            router?.presentUpgradeScreen()
+        default: break
+        }
     }
 }
