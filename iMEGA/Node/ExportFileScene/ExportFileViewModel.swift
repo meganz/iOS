@@ -9,12 +9,14 @@ enum ExportFileAction: ActionType {
     case exportFileFromMessageNode(MEGANode, HandleEntity, HandleEntity)
 }
 
+@MainActor
 protocol ExportFileViewRouting {
     func exportedFiles(urls: [URL])
     func showProgressView()
     func hideProgressView()
 }
 
+@MainActor
 final class ExportFileViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable { }
@@ -41,41 +43,70 @@ final class ExportFileViewModel: ViewModelType {
         router.showProgressView()
         switch action {
         case .exportFileFromNode(let node):
-            exportFileUseCase.export(node: node) { result in
-                if case let .success(url) = result {
-                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
-                    self.router.exportedFiles(urls: [url])
-                    self.router.hideProgressView()
-                }
+            Task {
+                await performExportFileFromNode(node)
             }
         case .exportFilesFromNodes(let nodes):
-            exportFileUseCase.export(nodes: nodes) { urls in
-                if urls.isNotEmpty {
-                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
-                    self.router.exportedFiles(urls: urls)
-                    self.router.hideProgressView()
-                } else {
-                    MEGALogError("Failed to export nodes")
-                }
+            Task {
+                await performExportFilesFromNodes(nodes)
             }
         case .exportFilesFromMessages(let messages, let chatId):
-            exportFileUseCase.export(messages: messages, chatId: chatId) { urls in
-                if urls.isNotEmpty {
-                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
-                    self.router.exportedFiles(urls: urls)
-                    self.router.hideProgressView()
-                } else {
-                    MEGALogError("Failed to export a non compatible message(s) type")
-                }
+            Task { 
+                await performExportFilesFromMessages(messages, chatId: chatId)
             }
         case .exportFileFromMessageNode(let node, let messageId, let chatId):
-            exportFileUseCase.exportNode(node.toNodeEntity(), messageId: messageId, chatId: chatId) { result in
-                if case let .success(url) = result {
-                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
-                    self.router.exportedFiles(urls: [url])
-                    self.router.hideProgressView()
-                }
+            Task {
+                await performExportFileFromMessageNode(node, messageId: messageId, chatId: chatId)
             }
+        }
+    }
+    
+    // MARK: - Private
+    private func performExportFileFromNode(_ node: NodeEntity) async {
+        do {
+            let url = try await exportFileUseCase.export(node: node)
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
+            router.exportedFiles(urls: [url])
+            router.hideProgressView()
+        } catch {
+            MEGALogError("Failed to export file from node")
+        }
+    }
+    
+    private func performExportFilesFromNodes(_ nodes: [NodeEntity]) async {
+        do {
+            let urls = try await exportFileUseCase.export(nodes: nodes)
+            if urls.isNotEmpty {
+                analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
+                router.exportedFiles(urls: urls)
+                router.hideProgressView()
+            } else {
+                MEGALogError("Failed to export nodes")
+            }
+        } catch {
+            MEGALogError("Failed to export nodes")
+        }
+    }
+    
+    private func performExportFilesFromMessages(_ messages: [ChatMessageEntity], chatId: HandleEntity) async {
+        let urls = await exportFileUseCase.export(messages: messages, chatId: chatId)
+        if urls.isNotEmpty {
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
+            router.exportedFiles(urls: urls)
+            router.hideProgressView()
+        } else {
+            MEGALogError("Failed to export nodes")
+        }
+    }
+    
+    private func performExportFileFromMessageNode(_ node: MEGANode, messageId: HandleEntity, chatId: HandleEntity) async {
+        do {
+            let url = try await exportFileUseCase.exportNode(node.toNodeEntity(), messageId: messageId, chatId: chatId)
+            self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
+            self.router.exportedFiles(urls: [url])
+            self.router.hideProgressView()
+        } catch {
+            MEGALogError("Failed to export file from a message node")
         }
     }
 }

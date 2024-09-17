@@ -1,4 +1,4 @@
-public struct ChatRichPreviewEntity {
+public struct ChatRichPreviewEntity: Sendable {
     public let text: String?
     public let title: String?
     public let previewDescription: String?

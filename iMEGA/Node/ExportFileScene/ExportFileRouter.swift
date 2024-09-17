@@ -5,6 +5,7 @@ import MEGARepo
 import MEGASDKRepo
 import UIKit
 
+@MainActor
 final class ExportFileRouter: ExportFileViewRouting {
     private weak var presenter: UIViewController?
     private let sender: Any?

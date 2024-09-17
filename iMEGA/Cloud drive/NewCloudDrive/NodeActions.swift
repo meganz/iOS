@@ -162,11 +162,13 @@ extension NodeActions {
                 }
             },
             exportFiles: { nodes, sender in
-                let router = ExportFileRouter(
-                    presenter: navigationController,
-                    sender: sender
-                )
-                router.export(nodes: nodes)
+                Task { @MainActor in
+                    let router = ExportFileRouter(
+                        presenter: navigationController,
+                        sender: sender
+                    )
+                    router.export(nodes: nodes)
+                }
             },
             browserAction: { action, nodes in
                 guard let localNC = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
@@ -237,14 +239,13 @@ extension NodeActions {
                 }
             },
             shareFolders: { nodes in
-                
-                let sharedItemsRouter = SharedItemsViewRouter()
-                let shareUseCase = ShareUseCase(
-                    shareRepository: ShareRepository.newRepo,
-                    filesSearchRepository: FilesSearchRepository.newRepo,
-                    nodeRepository: NodeRepository.newRepo)
-                
-                Task { @MainActor [shareUseCase] in
+                Task { @MainActor in
+                    let sharedItemsRouter = SharedItemsViewRouter()
+                    let shareUseCase = ShareUseCase(
+                        shareRepository: ShareRepository.newRepo,
+                        filesSearchRepository: FilesSearchRepository.newRepo,
+                        nodeRepository: NodeRepository.newRepo)
+                    
                     do {
                         _ = try await shareUseCase.createShareKeys(forNodes: nodes)
                         sharedItemsRouter.showShareFoldersContactView(withNodes: nodes)
@@ -264,10 +265,12 @@ extension NodeActions {
                 }
             },
             manageShare: { nodes in
-                // check multi node
-                guard let node = nodes.first else { return }
-                let nodeShareRouter = NodeShareRouter(viewController: navigationController)
-                nodeShareRouter.pushManageSharing(for: node, on: navigationController)
+                Task { @MainActor in
+                    // check multi node
+                    guard let node = nodes.first else { return }
+                    let nodeShareRouter = NodeShareRouter(viewController: navigationController)
+                    nodeShareRouter.pushManageSharing(for: node, on: navigationController)
+                }
             },
             
             showNodeVersions: { node in
