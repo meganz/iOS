@@ -2,18 +2,21 @@ import MEGADomain
 import MEGARepo
 import MEGASDKRepo
 
+@MainActor
 @objc protocol MyAvatarManagerProtocol {
     var myAvatarBarButton: UIBarButtonItem? { get }
     func setup()
     func refreshMyAvatar()
 }
 
+@MainActor
 @objc protocol MyAvatarPresenterProtocol: AnyObject {
     func configureMyAvatarManager()
     func refreshMyAvatar()
     func setupMyAvatar(barButton: UIBarButtonItem)
 }
 
+@MainActor
 @objc final class MyAvatarManager: NSObject, MyAvatarManagerProtocol {
     var myAvatarViewModel: (any MyAvatarViewModelType)?
     weak var navigationController: UINavigationController?

@@ -1,6 +1,7 @@
 import Combine
 import SwiftUI
 
+@MainActor
 final class MyAvatarIconViewModel<AvatarObserver: MyAvatarObserver>: ObservableObject {
     @Published var avatar: UIImage?
     @Published var text: String?
