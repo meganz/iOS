@@ -12,6 +12,136 @@ import XCTest
 final class VideoPlaylistContentViewModelTests: XCTestCase {
     
     // MARK: - onViewAppeared.monitorVideoPlaylistContent
+    
+    @MainActor
+    func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithFailedUpdates_showsCorrectViewStateTransition() async {
+        let allVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            setIdentifier: SetIdentifier(handle: 1),
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let videoPlaylistUpdatesStream = AsyncThrowingStream<VideoPlaylistEntity, any Error> { continuation in
+            continuation.yield(with: .failure(GenericErrorEntity()))
+        }.eraseToAnyAsyncThrowingSequence()
+        
+        let mockVideoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(
+            allVideos: allVideos,
+            monitorVideoPlaylistAsyncSequenceResult: videoPlaylistUpdatesStream,
+            monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
+        )
+        let (sut, _, _, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
+            thumbnailLoader: MockThumbnailLoader()
+        )
+        let exp = expectation(description: "subscribe to ViewState")
+        exp.expectedFulfillmentCount = 3
+        var receivedViewStates: [VideoPlaylistContentViewModel.ViewState] = []
+        let cancellable = sut.$viewState
+            .sink { viewState in
+                receivedViewStates.append(viewState)
+                exp.fulfill()
+            }
+        
+        // Act
+        trackTaskCancellation { await sut.onViewAppeared() }
+        await fulfillment(of: [exp], timeout: 0.2)
+        
+        // Assert
+        XCTAssertEqual(receivedViewStates, [ .partial, .loading, .error ])
+        cancellable.cancel()
+    }
+    
+    @MainActor
+    func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithSuccessfullNonEmptyUpdates_showsCorrectViewStateTransition() async {
+        // Arrange
+        let allVideos = [
+            NodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 60),
+            NodeEntity(name: "video 2", handle: 2, hasThumbnail: true)
+        ]
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            setIdentifier: SetIdentifier(handle: 1),
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let mockVideoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(
+            allVideos: allVideos,
+            monitorVideoPlaylistAsyncSequenceResult: SingleItemAsyncSequence(item: videoPlaylistEntity).eraseToAnyAsyncThrowingSequence(),
+            monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
+        )
+        let (sut, _, _, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
+            thumbnailLoader: MockThumbnailLoader()
+        )
+        let exp = expectation(description: "subscribe to ViewState")
+        exp.expectedFulfillmentCount = 3
+        var receivedViewStates: [VideoPlaylistContentViewModel.ViewState] = []
+        let cancellable = sut.$viewState
+            .sink { viewState in
+                receivedViewStates.append(viewState)
+                exp.fulfill()
+            }
+        
+        // Act
+        trackTaskCancellation { await sut.onViewAppeared() }
+        await fulfillment(of: [exp], timeout: 0.2)
+        
+        // Assert
+        XCTAssertEqual(receivedViewStates, [ .partial, .loading, .loaded ])
+        cancellable.cancel()
+    }
+    
+    @MainActor
+    func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithSuccessfullEmptyUpdates_showsCorrectViewStateTransition() async {
+        // Arrange
+        let allVideos: [NodeEntity] = []
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            setIdentifier: SetIdentifier(handle: 1),
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let mockVideoPlaylistContentsUseCase = MockVideoPlaylistContentUseCase(
+            allVideos: allVideos,
+            monitorVideoPlaylistAsyncSequenceResult: SingleItemAsyncSequence(item: videoPlaylistEntity).eraseToAnyAsyncThrowingSequence(),
+            monitorUserVideoPlaylistContentAsyncSequenceResult: [allVideos].async.eraseToAnyAsyncSequence()
+        )
+        let (sut, _, _, _, _, _, _, _, _) = makeSUT(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
+            thumbnailLoader: MockThumbnailLoader()
+        )
+        let exp = expectation(description: "subscribe to ViewState")
+        exp.expectedFulfillmentCount = 3
+        var receivedViewStates: [VideoPlaylistContentViewModel.ViewState] = []
+        let cancellable = sut.$viewState
+            .sink { viewState in
+                receivedViewStates.append(viewState)
+                exp.fulfill()
+            }
+        
+        // Act
+        trackTaskCancellation { await sut.onViewAppeared() }
+        await fulfillment(of: [exp], timeout: 0.2)
+        
+        // Assert
+        XCTAssertEqual(receivedViewStates, [ .partial, .loading, .empty ])
+        cancellable.cancel()
+    }
+    
     @MainActor
     func testOnViewAppeared_onMonitorVideoPlaylistContentTriggeredWithUpdates_reloadVideoPlaylistContentSuccessfully() async {
         let allVideos = [
@@ -77,20 +207,10 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             videoPlaylistContentsUseCase: mockVideoPlaylistContentsUseCase,
             thumbnailLoader: thumbnailLoader
         )
-        let exp = expectation(description: "Should show error")
-        var shouldShowError: Bool?
-        let cancellable = sut.$shouldShowError
-            .dropFirst()
-            .sink { value in
-                shouldShowError = value
-                exp.fulfill()
-            }
         
         await sut.onViewAppeared()
-        await fulfillment(of: [exp], timeout: 0.5)
         
-        XCTAssertTrue(shouldShowError == true, "Expect to show error when has any other error during reload")
-        cancellable.cancel()
+        XCTAssertEqual(sut.viewState, .error, "Expect to show error when has any other error during reload")
     }
     
     @MainActor
