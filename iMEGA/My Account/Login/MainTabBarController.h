@@ -34,8 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showFavouritesNodeWithHandle:(nullable NSString *)base64handle;
 - (void)showOfflineAndPresentFileWithHandle:(nullable NSString *)base64handle;
 - (void)showRecents;
-- (void)showUploadFile;
-- (void)showScanDocument;
 - (void)showAddContact;
 
 - (void)shouldUpdateProgressViewLocation;
