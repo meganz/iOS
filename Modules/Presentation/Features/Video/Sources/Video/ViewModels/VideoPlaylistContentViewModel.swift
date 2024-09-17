@@ -35,13 +35,22 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
     @Published var secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType = .emptyPlaylist
     @Published var shouldPopScreen = false
-    @Published var shouldShowError = false
     @Published var shouldShowRenamePlaylistAlert = false
     @Published var shouldShowDeletePlaylistAlert = false
     @Published var shouldShowDeleteVideosFromVideoPlaylistActionSheet = false
     private(set) var selectedVideos: [NodeEntity]?
     
     @Published var shouldShowVideoPlaylistPicker = false
+    
+    @Published private(set) var viewState: ViewState = .partial
+    
+    enum ViewState: Equatable {
+        case partial
+        case loading
+        case loaded
+        case empty
+        case error
+    }
     
     public private(set) var sharedUIState: VideoPlaylistContentSharedUIState
     
@@ -105,7 +114,11 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         sharedUIState.snackBarText = presentationConfig?.text ?? ""
     }
     
-    private func monitorUserVideoPlaylist() async {
+    func monitorUserVideoPlaylist() async {
+        if viewState == .partial {
+            viewState = .loading
+        }
+        
         do {
             let sortOrderChangedSequence = sortOrderPreferenceUseCase.monitorSortOrder(for: . videoPlaylistContent)
                 .compactMap {  [weak self] (sortOrder: SortOrderEntity) -> SortOrderEntity? in
@@ -131,6 +144,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
                 self.videos = await VideoPlaylistContentSorter.sort(videos, by: sortOrder)
                 self.sharedUIState.videosCount = videos.count
                 await loadThumbnails(for: self.videos)
+                viewState = videos.isEmpty ? .empty : .loaded
             }
         } catch {
             handle(error)
@@ -151,7 +165,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     private func handle(_ error: any Error) {
         guard let videoPlaylistError = error as? VideoPlaylistErrorEntity else {
-            shouldShowError = true
+            viewState = .error
             return
         }
         
@@ -162,7 +176,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
                 .replacingOccurrences(of: "[A]", with: videoPlaylistEntity.name)
             syncModel.shouldShowSnackBar = true
         default:
-            shouldShowError = true
+            viewState = .error
         }
     }
     

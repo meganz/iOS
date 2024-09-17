@@ -26,6 +26,7 @@ struct PlaylistContentScreen: View {
     var body: some View {
         PlaylistContentView(
             videoConfig: videoConfig,
+            viewState: viewModel.viewState,
             previewEntity: viewModel.headerPreviewEntity,
             videos: viewModel.videos,
             router: router,
@@ -104,6 +105,7 @@ struct PlaylistContentScreen: View {
 struct PlaylistContentView: View {
     
     private let videoConfig: VideoConfig
+    private let viewState: VideoPlaylistContentViewModel.ViewState
     private let previewEntity: VideoPlaylistCellPreviewEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
@@ -115,6 +117,7 @@ struct PlaylistContentView: View {
     
     init(
         videoConfig: VideoConfig,
+        viewState: VideoPlaylistContentViewModel.ViewState,
         previewEntity: VideoPlaylistCellPreviewEntity,
         videos: [NodeEntity],
         router: any VideoRevampRouting,
@@ -125,6 +128,7 @@ struct PlaylistContentView: View {
         onTapAddButton: @escaping () -> Void
     ) {
         self.videoConfig = videoConfig
+        self.viewState = viewState
         self.previewEntity = previewEntity
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
@@ -141,20 +145,31 @@ struct PlaylistContentView: View {
             if !videoSelection.editMode.isEditing {
                 PlaylistContentHeaderView(
                     videoConfig: videoConfig,
+                    viewState: viewState,
                     previewEntity: previewEntity,
                     onTapAddButton: onTapAddButton
                 )
             }
             
-            if previewEntity.thumbnail.type == .empty {
-                Spacer()
-                videoEmptyView()
-                Spacer()
-            } else {
-                listView()
-            }
+            content()
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
+    }
+    
+    @ViewBuilder
+    private func content() -> some View {
+        switch viewState {
+        case .partial, .loading, .error:
+            VStack {
+                EmptyView()
+            }
+            .frame(maxHeight: .infinity, alignment: .center)
+        case .loaded:
+            listView()
+        case .empty:
+            videoEmptyView()
+                .frame(maxHeight: .infinity, alignment: .center)
+        }
     }
     
     private func videoEmptyView() -> some View {
@@ -197,16 +212,16 @@ struct PlaylistContentView: View {
     }
 }
 
-// MARK: Preview
-
+// MARK: Preview - ViewState.partial
 #Preview {
     PlaylistContentView(
         videoConfig: .preview,
+        viewState: .partial,
         previewEntity: VideoPlaylistCellPreviewEntity(
             thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
-            count: "24 Videos",
-            duration: "3:05:20",
-            title: "Magic of Disney’s Animal Kingdom",
+            count: "",
+            duration: "",
+            title: "",
             isExported: false,
             type: .favourite
         ),
@@ -220,16 +235,19 @@ struct PlaylistContentView: View {
     )
 }
 
+// MARK: - Preview - ViewState.loading
+
 #Preview {
     PlaylistContentView(
         videoConfig: .preview,
+        viewState: .loading,
         previewEntity: VideoPlaylistCellPreviewEntity(
             thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
-            count: "24 Videos",
-            duration: "3:05:20",
-            title: "Magic of Disney’s Animal Kingdom",
+            count: "",
+            duration: "",
+            title: "",
             isExported: false,
-            type: .user
+            type: .favourite
         ),
         videos: [],
         router: Preview_VideoRevampRouter(),
@@ -242,13 +260,43 @@ struct PlaylistContentView: View {
     .preferredColorScheme(.dark)
 }
 
+// MARK: - Preview - ViewState.loaded
+
 #Preview {
     PlaylistContentView(
         videoConfig: .preview,
+        viewState: .loaded,
+        previewEntity: VideoPlaylistCellPreviewEntity(
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: [
+                ImageContainer(image: Image(systemName: "person"), type: .thumbnail)
+            ]),
+            count: "1 video",
+            duration: "3:05:20",
+            title: "Magic of Disney’s Animal Kingdom",
+            isExported: false,
+            type: .user
+        ),
+        videos: [ .preview ],
+        router: Preview_VideoRevampRouter(),
+        thumbnailLoader: Preview_ThumbnailLoader(),
+        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
+        nodeUseCase: Preview_NodeUseCase(),
+        videoSelection: VideoSelection(),
+        onTapAddButton: {}
+    )
+    .preferredColorScheme(.dark)
+}
+
+// MARK: - Preview - ViewState.empty
+
+#Preview {
+    PlaylistContentView(
+        videoConfig: .preview,
+        viewState: .empty,
         previewEntity: VideoPlaylistCellPreviewEntity(
             thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "",
-            duration: "",
+            duration: "empty playlist",
             title: "Favourites",
             isExported: false,
             type: .favourite
@@ -263,14 +311,17 @@ struct PlaylistContentView: View {
     )
 }
 
+// MARK: - Preview - ViewState.error
+
 #Preview {
     PlaylistContentView(
         videoConfig: .preview,
+        viewState: .error,
         previewEntity: VideoPlaylistCellPreviewEntity(
             thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
             count: "",
             duration: "",
-            title: "Magic of Disney’s Animal Kingdom",
+            title: "",
             isExported: false,
             type: .user
         ),
