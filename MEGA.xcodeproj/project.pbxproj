@@ -1101,7 +1101,6 @@
 		83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3C26B2AACC00C62304 /* EnterMeetingLinkControllerWrapper.swift */; };
 		83850A4026B2AACD00C62304 /* EnterMeetingLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3D26B2AACC00C62304 /* EnterMeetingLinkRouter.swift */; };
 		83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */; };
-		83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */; };
 		8387FC062C108363008EDDC4 /* MockCallControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387FC052C108363008EDDC4 /* MockCallControlsViewModel.swift */; };
 		8387FC082C108396008EDDC4 /* CallControlsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387FC072C108396008EDDC4 /* CallControlsViewModelProtocol.swift */; };
 		838B274B2BF21DC1005AD3F7 /* outgoingTone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */; };
@@ -3906,7 +3905,6 @@
 		83850A3C26B2AACC00C62304 /* EnterMeetingLinkControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkControllerWrapper.swift; sourceTree = "<group>"; };
 		83850A3D26B2AACC00C62304 /* EnterMeetingLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkRouter.swift; sourceTree = "<group>"; };
 		83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewModel.swift; sourceTree = "<group>"; };
-		83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAChatResultDelegate.swift; sourceTree = "<group>"; };
 		8387FC052C108363008EDDC4 /* MockCallControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallControlsViewModel.swift; sourceTree = "<group>"; };
 		8387FC072C108396008EDDC4 /* CallControlsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsViewModelProtocol.swift; sourceTree = "<group>"; };
 		838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = outgoingTone.wav; sourceTree = "<group>"; };
@@ -10580,7 +10578,6 @@
 				A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */,
 				A8B354D221354680002018A9 /* MEGAChatNotificationDelegate.h */,
 				A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */,
-				83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */,
 			);
 			name = Chat;
 			path = API/Chat;
@@ -15158,7 +15155,6 @@
 				BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */,
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */,
-				83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
