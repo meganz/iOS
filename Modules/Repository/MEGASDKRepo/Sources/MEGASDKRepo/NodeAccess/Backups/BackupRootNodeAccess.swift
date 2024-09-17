@@ -1,7 +1,7 @@
 import Foundation
 import MEGASdk
 
-final public class BackupRootNodeAccess: NodeAccess {
+final public class BackupRootNodeAccess: NodeAccess, @unchecked Sendable {
     @objc public static let shared = BackupRootNodeAccess(
         configuration:
             NodeAccessConfiguration(

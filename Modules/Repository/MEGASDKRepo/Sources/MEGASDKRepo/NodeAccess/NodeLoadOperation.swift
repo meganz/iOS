@@ -10,7 +10,7 @@ enum NodeLoadError: Error {
     case autoCreateIsNotEnabled
 }
 
-final class NodeLoadOperation: AsyncOperation, NodeLoadOperationProtocol {
+final class NodeLoadOperation: AsyncOperation, NodeLoadOperationProtocol, @unchecked Sendable {
     // MARK: - Private properties
     private let loadNodeRequest: (any MEGARequestDelegate) -> Void
     private let newNodeName: String?

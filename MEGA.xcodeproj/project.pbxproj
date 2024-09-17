@@ -18605,7 +18605,7 @@
 			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 3.6.6;
+				version = 3.8.0;
 			};
 		};
 		BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */ = {

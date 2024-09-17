@@ -1,7 +1,7 @@
 import ChatRepo
 import MEGAChatSdk
 
-public final class MockChatSDK: MEGAChatSdk {
+public final class MockChatSDK: MEGAChatSdk, @unchecked Sendable {
     private let chatRoom: MEGAChatRoom?
     private let hasChatOptionEnabled: Bool
     

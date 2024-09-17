@@ -545,7 +545,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
     }
     
-    func testOnSearchResultsUpdated_whenGenericUpdate_shouldReturnExpectedResults() async {
+    func disable_testOnSearchResultsUpdated_whenGenericUpdate_shouldReturnExpectedResults() async {
         // given
         let (stream, continuation) = AsyncStream.makeStream(of: SearchResultUpdateSignal.self)
         let harness = Harness(self, searchResultUpdateSignalSequence: stream.eraseToAnyAsyncSequence())

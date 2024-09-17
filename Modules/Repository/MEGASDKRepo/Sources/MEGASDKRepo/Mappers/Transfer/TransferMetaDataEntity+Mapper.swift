@@ -1,6 +1,6 @@
 import MEGADomain
 
-extension TransferMetaDataEntity: RawRepresentable {
+extension TransferMetaDataEntity: @retroactive RawRepresentable {
     public typealias RawValue = String
     
     public init?(rawValue: RawValue) {

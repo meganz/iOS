@@ -1,7 +1,7 @@
 import MEGASdk
 
 public final class MockError: MEGAError {
-    var megaErrorType: MEGAErrorType
+    let megaErrorType: MEGAErrorType
     private let _name: String
     private let _value: Int64
     
