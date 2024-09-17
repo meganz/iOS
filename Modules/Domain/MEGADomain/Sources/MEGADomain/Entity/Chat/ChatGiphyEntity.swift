@@ -1,4 +1,4 @@
-public struct ChatGiphyEntity {
+public struct ChatGiphyEntity: Sendable {
     public let mp4Src: String?
     public let webpSrc: String?
     public let mp4Size: Int
