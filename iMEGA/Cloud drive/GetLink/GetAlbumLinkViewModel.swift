@@ -117,9 +117,8 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     
     private func loadAlbumLink(continuation: Continuation) async {
         do { 
-            if let albumLink = try await shareCollectionUseCase.shareCollectionLink(album),
-               !Task.isCancelled {
-                await updateLink(albumLink)
+            if let albumLink = try await shareCollectionUseCase.shareCollectionLink(album), !Task.isCancelled {
+                updateLink(albumLink)
             }
         } catch {
             MEGALogError("Error sharing album link: \(error.localizedDescription)")
