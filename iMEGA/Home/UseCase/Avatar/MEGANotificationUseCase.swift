@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-protocol MEGANotificationUseCaseProtocol {
+protocol MEGANotificationUseCaseProtocol: Sendable {
 
     func relevantAndNotSeenAlerts() -> [UserAlertEntity]?
 
