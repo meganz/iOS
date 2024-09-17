@@ -12,9 +12,12 @@ public struct MockFavouriteItemsUseCase: FavouriteItemsUseCaseProtocol {
         stream.eraseToAnyAsyncSequence()
     }
 
-    private let (stream, continuation) = AsyncStream.makeStream(of: Events.self, bufferingPolicy: .unbounded)
+    private let stream: AsyncStream<Events>
+    private let continuation: AsyncStream<Events>.Continuation
     
-    public init() { }
+    public init() {
+        (stream, continuation) = AsyncStream.makeStream(of: Events.self, bufferingPolicy: .unbounded)
+    }
     
     public func insertFavouriteItem(_ item: FavouriteItemEntity) {
         

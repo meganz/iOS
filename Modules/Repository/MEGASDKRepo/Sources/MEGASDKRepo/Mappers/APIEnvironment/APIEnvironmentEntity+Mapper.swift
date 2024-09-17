@@ -1,6 +1,6 @@
 import MEGADomain
 
-extension APIEnvironmentEntity: RawRepresentable {
+extension APIEnvironmentEntity: @retroactive RawRepresentable {
     public typealias RawValue = String
     
     public init?(rawValue: String) {

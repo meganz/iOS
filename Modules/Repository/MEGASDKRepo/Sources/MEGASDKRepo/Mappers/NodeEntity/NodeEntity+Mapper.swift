@@ -114,6 +114,6 @@ fileprivate extension String {
     }
 }
 
-extension NodeEntity: FileExtensionGroupDataSource {
+extension NodeEntity: @retroactive FileExtensionGroupDataSource {
     public static var fileExtensionPath: KeyPath<Self, String> { \.name.pathExtension }
 }

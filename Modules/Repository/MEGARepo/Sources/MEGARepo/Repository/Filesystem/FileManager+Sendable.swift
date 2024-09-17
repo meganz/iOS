@@ -1,3 +1,3 @@
 import Foundation
 
-extension FileManager: @unchecked Sendable { }
+extension FileManager: @unchecked @retroactive Sendable { }
