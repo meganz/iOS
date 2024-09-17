@@ -1,7 +1,7 @@
 import Foundation
 import MEGASdk
 
-final public class MyChatFilesFolderNodeAccess: NodeAccess {
+final public class MyChatFilesFolderNodeAccess: NodeAccess, @unchecked Sendable {
     @objc public init(autoCreate: @autoclosure @escaping () -> Bool = false, nodeName: String) {
         super.init(
             configuration: NodeAccessConfiguration(

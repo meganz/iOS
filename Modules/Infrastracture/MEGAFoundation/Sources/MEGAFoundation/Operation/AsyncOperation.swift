@@ -6,7 +6,7 @@ import MEGASwift
 /// such `CameraUploadOperation`, `ImageExportOperation`, `MEGABackgroundTaskOperation` etc.
 /// The reason is Objective-C classes can not inherit Swift class
 /// We can remove `MEGAOperation` in the future when we migrate all mentioned Objective-C classes to Swift.
-open class AsyncOperation: Operation {
+open class AsyncOperation: Operation, @unchecked Sendable {
     @Atomic private var _executing = false {
         willSet {
             willChangeValue(forKey: "isExecuting")

@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASdk
 
-final public class CameraUploadNodeAccess: NodeAccess {
+final public class CameraUploadNodeAccess: NodeAccess, @unchecked Sendable {
     @objc public init(autoCreate: @autoclosure @escaping () -> Bool, nodeName: String) {
         super.init(
             configuration: NodeAccessConfiguration(

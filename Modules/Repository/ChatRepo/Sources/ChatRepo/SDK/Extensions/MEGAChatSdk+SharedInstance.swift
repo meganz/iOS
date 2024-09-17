@@ -10,4 +10,4 @@ public extension MEGAChatSdk {
     }()
 }
 
-extension MEGAChatSdk: @unchecked Sendable { }
+extension MEGAChatSdk: @retroactive @unchecked Sendable { }

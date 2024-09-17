@@ -13,7 +13,7 @@
     json_directory_path = File.dirname(json_path)
 
     FileUtils.mkdir_p(json_directory_path) unless Dir.exist?(json_directory_path)
-    sh "xcrun xcresulttool get --format json --path #{get_latest_xcresult_file} > #{json_path}"
+    sh "xcrun xcresulttool get --legacy --format json --path #{get_latest_xcresult_file} > #{json_path}"
 
     parse_warnings_and_post_to_mr(
       merge_request_url: merge_request_url,

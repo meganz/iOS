@@ -11,9 +11,12 @@ public struct MockRecentItemsUseCase: RecentItemsUseCaseProtocol {
         stream.eraseToAnyAsyncSequence()
     }
 
-    private let (stream, continuation) = AsyncStream.makeStream(of: Events.self, bufferingPolicy: .unbounded)
+    private let stream: AsyncStream<Events>
+    private let continuation: AsyncStream<Events>.Continuation
     
-    public init() { }
+    public init() {
+        (stream, continuation) = AsyncStream.makeStream(of: Events.self, bufferingPolicy: .unbounded)
+    }
     
     public func resetRecentItems(by items: [RecentItemEntity]) async throws {
         continuation.yield(.resetRecentItems(items))

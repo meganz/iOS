@@ -54,6 +54,8 @@ extension IntentHandler: INStartCallIntentHandling {
             return [.unsupported(forReason: .noContactFound)]
         case .authorized:
             return processResolutionInContacts(for: person)
+        case .limited:
+            return processResolutionInContacts(for: person)
         @unknown default:
             return [.unsupported(forReason: .noContactFound)]
         }
