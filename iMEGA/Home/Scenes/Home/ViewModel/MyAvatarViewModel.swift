@@ -5,6 +5,7 @@ import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 
+@MainActor
 protocol MyAvatarViewModelInputs {
 
     /// Tells view model that view is ready to display the account
@@ -13,6 +14,7 @@ protocol MyAvatarViewModelInputs {
     func viewIsAppearing()
 }
 
+@MainActor
 protocol MyAvatarViewModelOutputs {
 
     /// Stores user's avatar image once loaded.
@@ -22,6 +24,7 @@ protocol MyAvatarViewModelOutputs {
     var notificationNumber: String { get }
 }
 
+@MainActor
 protocol MyAvatarViewModelType {
 
     var inputs: any MyAvatarViewModelInputs { get }
@@ -31,6 +34,7 @@ protocol MyAvatarViewModelType {
     var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? { get set }
 }
 
+@MainActor
 final class MyAvatarViewModel: NSObject {
 
     // MARK: - MyAvatarViewModelType
@@ -143,7 +147,7 @@ extension MyAvatarViewModel {
             guard newUnreadCount != unreadNotificationCount else { return }
             unreadNotificationCount = newUnreadCount
             
-            await MainActor.run { notifyUpdate?(outputs) }
+            notifyUpdate?(outputs)
         }
     }
 }
@@ -184,10 +188,12 @@ extension MyAvatarViewModel: MyAvatarViewModelType {
 }
 
 // MARK: - MyAvatarUpdatesObserver
+@MainActor
 protocol MyAvatarUpdatesObserver {
     var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? { get set }
 }
 
+@MainActor
 protocol MyAvatarObserver: MyAvatarViewModelInputs & MyAvatarUpdatesObserver {}
 
 extension MyAvatarViewModel: MyAvatarObserver {}
