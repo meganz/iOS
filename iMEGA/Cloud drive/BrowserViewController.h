@@ -54,6 +54,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;
 
+@property (nonatomic, strong) UIViewController *shimmerViewController;
+
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
 - (void)updatePromptTitle;
 - (void)attachNodes;

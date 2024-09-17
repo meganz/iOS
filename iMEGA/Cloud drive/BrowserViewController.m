@@ -61,6 +61,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.shimmerViewController = self.browserActionSelectVideoPlaceholderView;
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -285,15 +286,18 @@
 
 - (void)reloadUI {
     self.isLoading = YES;
+    BOOL showShimmer = self.browserAction == BrowserActionSelectVideo && self.nodes.size == 0;
+    [self shouldShowShimmer:showShimmer];
     [self setParentNodeForBrowserAction];
     [self setNavigationBarTitle];
     __weak typeof(self) weakSelf = self;
     [self setNodesWithCompletion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.isLoading = NO;
+            [weakSelf shouldShowShimmer:NO];
             [weakSelf updateSearchBarVisibility];
             [weakSelf reloadToolbarItemsUI];
             [weakSelf.tableView reloadData];
-            weakSelf.isLoading = NO;
         });
     }];
 }
@@ -874,7 +878,7 @@
 
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
     if (self.browserAction == BrowserActionSelectVideo && self.isLoading) {
-        return [self browserActionSelectVideoPlaceholderView];
+        return [self transparentView];
     } else {
         EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
         [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
