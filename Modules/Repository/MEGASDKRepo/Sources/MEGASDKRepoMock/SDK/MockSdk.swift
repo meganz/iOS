@@ -3,7 +3,7 @@ import MEGASDKRepo
 
 public typealias MockSdkRequestResult = Result<MEGARequest, MEGAError>
 
-public final class MockSdk: MEGASdk {
+public final class MockSdk: MEGASdk, @unchecked Sendable {
     private var fileLinkNode: MEGANode?
     private var nodes: [MEGANode]
     private let rubbishNodes: [MEGANode]

@@ -3,14 +3,20 @@ import MEGASDKRepo
 import MEGASwift
 
 public struct MockSetAndElementUpdatesProvider: SetAndElementUpdatesProviderProtocol {
+    private let setUpdateStream: AsyncStream<[SetEntity]>
+    private let setUpdateContinuation: AsyncStream<[SetEntity]>.Continuation
+    private let setElementsUpdateStream: AsyncStream<[SetElementEntity]>
+    private let setElementsUpdateContinuation: AsyncStream<[SetElementEntity]>.Continuation
     
-    private let (setUpdateStream, setUpdateContinuation) = AsyncStream
-        .makeStream(of: [SetEntity].self, bufferingPolicy: .bufferingNewest(1))
-    
-    private let (setElementsUpdateStream, setElementsUpdateContinuation) = AsyncStream
-        .makeStream(of: [SetElementEntity].self, bufferingPolicy: .bufferingNewest(1))
-    
-    public init() { }
+    public init() {
+        let setUpdateStreamTupple = AsyncStream.makeStream(of: [SetEntity].self, bufferingPolicy: .bufferingNewest(1))
+        setUpdateStream = setUpdateStreamTupple.stream
+        setUpdateContinuation = setUpdateStreamTupple.continuation
+        
+        let setElementsUpdateStreamTupple = AsyncStream.makeStream(of: [SetElementEntity].self, bufferingPolicy: .bufferingNewest(1))
+        setElementsUpdateStream = setElementsUpdateStreamTupple.stream
+        setElementsUpdateContinuation = setElementsUpdateStreamTupple.continuation
+    }
     
     public func setUpdates(filteredBy: [SetTypeEntity]) -> AnyAsyncSequence<[SetEntity]> {
         setUpdateStream.eraseToAnyAsyncSequence()

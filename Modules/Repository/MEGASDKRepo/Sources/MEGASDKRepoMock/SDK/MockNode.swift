@@ -1,7 +1,7 @@
 import MEGASdk
 import MEGASDKRepo
 
-public final class MockNode: MEGANode {
+public final class MockNode: MEGANode, @unchecked Sendable {
     private let nodeType: MEGANodeType
     private let nodeName: String
     private let nodeParentHandle: MEGAHandle

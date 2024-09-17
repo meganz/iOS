@@ -1,7 +1,7 @@
 import MEGAFoundation
 import MEGASdk
 
-final class SearchWithFilterOperation: AsyncOperation {
+final class SearchWithFilterOperation: AsyncOperation, @unchecked Sendable {
     let sdk: MEGASdk
     let filter: MEGASearchFilter
     let page: MEGASearchPage?

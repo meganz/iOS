@@ -1,6 +1,6 @@
 import Foundation
 import MEGASdk
 
-extension MEGASdk: @unchecked Sendable { }
+extension MEGASdk: @unchecked @retroactive Sendable { }
 
-extension MEGANode: @unchecked Sendable { }
+extension MEGANode: @unchecked @retroactive Sendable { }

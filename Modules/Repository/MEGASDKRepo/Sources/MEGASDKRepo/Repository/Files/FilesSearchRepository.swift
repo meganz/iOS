@@ -104,7 +104,7 @@ extension FilesSearchRepository {
     
     private func search(with filter: SearchFilterEntity, page: SearchPageEntity? = nil) async throws -> NodeListEntity {
         let cancelToken = ThreadSafeCancelToken()
-        return try await withTaskCancellationHandler<NodeListEntity> {
+        return try await withTaskCancellationHandler {
             try await withAsyncThrowingValue { completion in
                 search(with: filter, page: page, cancelToken: cancelToken) { completion($0) }
             }

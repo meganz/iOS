@@ -2,7 +2,9 @@ import MEGADomain
 import MEGASwift
 
 public struct MockTransfersListenerRepository: TransfersListenerRepositoryProtocol {
-    private let (stream, continuation) = AsyncStream.makeStream(of: TransferEntity.self, bufferingPolicy: .bufferingNewest(1))
+    private let stream: AsyncStream<TransferEntity>
+    private let continuation: AsyncStream<TransferEntity>.Continuation
+    
     public var completedTransfers: AnyAsyncSequence<TransferEntity> {
         stream.eraseToAnyAsyncSequence()
     }
@@ -15,5 +17,7 @@ public struct MockTransfersListenerRepository: TransfersListenerRepositoryProtoc
         continuation.yield(transfer)
     }
     
-    public init() {}
+    public init() {
+        (stream, continuation) = AsyncStream.makeStream(of: TransferEntity.self, bufferingPolicy: .bufferingNewest(1))
+    }
 }

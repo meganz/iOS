@@ -1,6 +1,6 @@
 import MEGASdk
 
-public final class MockFolderSdk: MEGASdk {
+public final class MockFolderSdk: MEGASdk, @unchecked Sendable {
     public var apiURL: String?
     public var disablepkp: Bool?
     private var nodes: [MEGANode]
