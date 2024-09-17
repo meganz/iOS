@@ -23,7 +23,7 @@ public struct NodeDescriptionRepository: NodeDescriptionRepositoryProtocol {
                 switch result {
                 case .failure:
                     completion(.failure(NodeDescriptionErrorEntity.failed))
-                case .success(let request):
+                case .success:
                     completion(.init { try updatedNode(for: node) })
                 }
             })

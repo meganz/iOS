@@ -1,6 +1,7 @@
 import MEGADomain
 import UIKit
 
+@MainActor
 struct NodeShareRouter {
 
     private weak var viewController: UIViewController?

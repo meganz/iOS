@@ -1,5 +1,5 @@
-public struct ChatContainsMetaEntity {
-    public enum MetaType {
+public struct ChatContainsMetaEntity: Sendable {
+    public enum MetaType: Sendable {
         case invalid
         case richPreview
         case geolocation

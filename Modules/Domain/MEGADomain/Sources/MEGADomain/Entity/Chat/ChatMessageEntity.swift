@@ -1,13 +1,13 @@
 import Foundation
 
-public struct ChatMessageEntity {
-    public enum ChangeType {
+public struct ChatMessageEntity: Sendable {
+    public enum ChangeType: Sendable {
         case status
         case content
         case access
     }
     
-    public enum Reason {
+    public enum Reason: Sendable {
         case peersChanged
         case tooOld
         case generalReject
@@ -43,7 +43,7 @@ public struct ChatMessageEntity {
     public let containsMeta: ChatContainsMetaEntity?
     public let peers: [Peer]
     
-    public struct Peer {
+    public struct Peer: Sendable {
         public let handle: HandleEntity
         public let name: String?
         public let email: String?
