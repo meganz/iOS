@@ -7,11 +7,27 @@ import SwiftUI
 
 struct PlaylistContentHeaderView: View {
     let videoConfig: VideoConfig
+    let viewState: VideoPlaylistContentViewModel.ViewState
     let previewEntity: VideoPlaylistCellPreviewEntity
     let onTapAddButton: () -> Void
     
     var body: some View {
         HStack(alignment: .top) {
+            switch viewState {
+            case .partial, .loading, .error:
+                thumbnailPlaceholderView
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            case .loaded, .empty:
+                contentView
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+        .background(videoConfig.playlistContentAssets.headerView.color.pageBackgroundColor)
+    }
+    
+    private var contentView: some View {
+        Group {
             thumbnailView
             
             VStack(alignment: .leading, spacing: TokenSpacing._4) {
@@ -29,9 +45,22 @@ struct PlaylistContentHeaderView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-        .background(videoConfig.playlistContentAssets.headerView.color.pageBackgroundColor)
+    }
+    
+    @ViewBuilder
+    private var thumbnail: some View {
+        if [.partial, .loading].contains(viewState) {
+            thumbnailPlaceholderView
+        } else {
+            thumbnailView
+        }
+    }
+    
+    private var thumbnailPlaceholderView: some View {
+        Rectangle()
+            .cornerRadius(4, corners: .allCorners)
+            .foregroundStyle(TokenColors.Background.surface3.swiftUI)
+            .frame(width: 142, height: 80)
     }
     
     private var thumbnailView: some View {
@@ -120,26 +149,55 @@ struct PlaylistContentHeaderView: View {
     }
 }
 
-// MARK: - Helpers
+// MARK: - Preview partial & loading
 
 #Preview {
     Group {
         view(
+            viewState: .partial,
             imageContainers: [],
             isExported: false,
-            playlistType: .favourite
+            playlistType: .favourite,
+            playlistName: ""
         )
         
         view(
+            viewState: .loading,
             imageContainers: [],
             isExported: false,
-            playlistType: .user
+            playlistType: .user,
+            playlistName: ""
         )
     }
 }
 
+// MARK: - Preview empty
+
+#Preview {
+    Group {
+        view(
+            viewState: .empty,
+            imageContainers: [],
+            isExported: false,
+            playlistType: .favourite,
+            playlistName: "An empty favorite playlist header"
+        )
+        
+        view(
+            viewState: .empty,
+            imageContainers: [],
+            isExported: false,
+            playlistType: .user,
+            playlistName: "An empty user playlist header"
+        )
+    }
+}
+
+// MARK: - Preview loaded
+
 #Preview {
     view(
+        viewState: .loaded,
         imageContainers: [
             ImageContainer(image: sampleImage, type: .thumbnail),
             ImageContainer(image: sampleImage, type: .thumbnail),
@@ -147,12 +205,14 @@ struct PlaylistContentHeaderView: View {
             ImageContainer(image: sampleImage, type: .thumbnail)
         ],
         isExported: false,
-        playlistType: .favourite
+        playlistType: .favourite,
+        playlistName: "A non empty favorite video playlist"
     )
 }
 
 #Preview {
     view(
+        viewState: .loaded,
         imageContainers: [
             ImageContainer(image: sampleImage, type: .thumbnail),
             ImageContainer(image: sampleImage, type: .thumbnail),
@@ -165,19 +225,46 @@ struct PlaylistContentHeaderView: View {
     .preferredColorScheme(.dark)
 }
 
-private func view(imageContainers: [any ImageContaining], isExported: Bool, playlistType: VideoPlaylistEntityType) -> some View {
+private func view(
+    viewState: VideoPlaylistContentViewModel.ViewState,
+    imageContainers: [any ImageContaining],
+    isExported: Bool,
+    playlistType: VideoPlaylistEntityType,
+    playlistName: String = "A playlist name"
+) -> some View {
     PlaylistContentHeaderView(
         videoConfig: .preview,
+        viewState: viewState,
         previewEntity: VideoPlaylistCellPreviewEntity(
-            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
-            count: "24 Videos",
-            duration: "3:05:20",
-            title: "Magic of Disney’s Animal Kingdom",
+            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: imageContainers),
+            count: count(viewState: viewState, count: imageContainers.count),
+            duration: duration(viewState: viewState),
+            title: playlistName,
             isExported: isExported,
             type: playlistType
         ),
         onTapAddButton: {}
     )
+}
+
+private func count(viewState: VideoPlaylistContentViewModel.ViewState, count: Int) -> String {
+    switch viewState {
+    case .partial, .loading, .error:
+        ""
+    case .loaded:
+        "\(count) videos"
+    case .empty:
+        "empty playlist"
+    }
+}
+
+private func duration(viewState: VideoPlaylistContentViewModel.ViewState) -> String {
+    switch viewState {
+    case .partial, .loading, .error, .empty:
+        ""
+    case .loaded:
+        "3:05:20"
+    }
 }
 
 private var sampleImage: Image {
