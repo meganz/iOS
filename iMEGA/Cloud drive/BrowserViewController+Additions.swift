@@ -155,8 +155,40 @@ extension BrowserViewController {
         }
     }
     
-    @objc func browserActionSelectVideoPlaceholderView() -> UIView {
+    @objc func transparentView() -> UIView {
+        let transparentView = UIView(frame: view.frame)
+        transparentView.backgroundColor = .clear
+        return transparentView
+    }
+    
+    @objc func browserActionSelectVideoPlaceholderView() -> UIViewController {
         let view = BrowserVideoPickerPlaceholderView()
-        return UIHostingController(rootView: view).view
+        let controller = UIHostingController(rootView: view)
+        return controller
+    }
+    
+    @objc func shouldShowShimmer(_ isLoading: Bool) {
+        isLoading ? showShimmer() : hideShimmer()
+    }
+    
+    private func showShimmer() {
+        guard let shimmerViewController = shimmerViewController else { return }
+        addChild(shimmerViewController)
+        view.addSubview(shimmerViewController.view)
+        shimmerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            shimmerViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            shimmerViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            shimmerViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            shimmerViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        shimmerViewController.didMove(toParent: self)
+    }
+    
+    private func hideShimmer() {
+        guard let shimmerViewController else { return }
+        shimmerViewController.willMove(toParent: nil)
+        shimmerViewController.view.removeFromSuperview()
+        shimmerViewController.removeFromParent()
     }
 }
