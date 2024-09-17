@@ -1,4 +1,4 @@
-public struct ChatGeolocationEntity {
+public struct ChatGeolocationEntity: Sendable {
     public let longitude: Float
     public let latitude: Float
     public let image: String?

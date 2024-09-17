@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 final class SharedItemsViewRouter: NSObject {
     
     func showShareFoldersContactView(withNodes nodes: [NodeEntity]) {

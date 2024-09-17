@@ -6,6 +6,7 @@ import MEGASDKRepo
 
 @objc protocol TextFileEditable { }
 
+@MainActor
 final class TextEditorViewRouter: NSObject {
     private weak var navigationController: UINavigationController?
     private weak var baseViewController: UIViewController?

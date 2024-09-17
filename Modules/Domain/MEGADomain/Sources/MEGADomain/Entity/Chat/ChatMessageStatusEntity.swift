@@ -1,4 +1,4 @@
-public enum ChatMessageStatusEntity {
+public enum ChatMessageStatusEntity: Sendable {
     case unknown
     case sending
     case sendingManual

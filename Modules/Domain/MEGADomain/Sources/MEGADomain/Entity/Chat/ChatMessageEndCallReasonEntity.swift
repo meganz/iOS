@@ -1,4 +1,4 @@
-public enum ChatMessageEndCallReasonEntity {
+public enum ChatMessageEndCallReasonEntity: Sendable {
     case ended
     case rejected
     case noAnswer

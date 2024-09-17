@@ -324,7 +324,9 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     
     private func exportFile(nodes: [MEGANode], sender: Any) {
         guard let viewController = viewController else { return }
-        ExportFileRouter(presenter: viewController, sender: sender).export(nodes: nodes.toNodeEntities())
+        Task { @MainActor in
+            ExportFileRouter(presenter: viewController, sender: sender).export(nodes: nodes.toNodeEntities())
+        }
     }
     
     private func hide(nodes: [NodeEntity]) {

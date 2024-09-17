@@ -1,14 +1,15 @@
 import Foundation
 
 // MARK: - Use case protocol -
+
 public protocol ExportFileNodeUseCaseProtocol {
-    func export(node: NodeEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
-    func export(nodes: [NodeEntity], completion: @escaping ([URL]) -> Void)
+    func export(node: NodeEntity) async throws -> URL
+    func export(nodes: [NodeEntity]) async throws -> [URL]
 }
 
 public protocol ExportFileChatMessageUseCaseProtocol {
-    func export(messages: [ChatMessageEntity], chatId: HandleEntity, completion: @escaping ([URL]) -> Void)
-    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
+    func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> [URL]
+    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL
 }
 
 public typealias ExportFileUseCaseProtocol = ExportFileNodeUseCaseProtocol & ExportFileChatMessageUseCaseProtocol
@@ -24,7 +25,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
                                 Z: MEGAHandleRepositoryProtocol,
                                 M: MediaUseCaseProtocol,
                                 G: OfflineFileFetcherRepositoryProtocol,
-                                H: UserStoreRepositoryProtocol> {
+                                H: UserStoreRepositoryProtocol>: Sendable {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileCacheRepository: V
@@ -81,86 +82,73 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         return URL(fileURLWithPath: offlineFilesRepository.offlineURL?.path.append(pathComponent: offlinePath) ?? "")
     }
     
-    private func processDownloadThenShareResult(result: Result<TransferEntity, TransferErrorEntity>, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        switch result {
-        case .success(let transferEntity):
-            guard let path = transferEntity.path else { return }
-            let url = URL(fileURLWithPath: path)
-            completion(.success(url))
-            
-        case .failure:
-            completion(.failure(.downloadFailed))
-        }
+    private func importNodeToDownload(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL {
+        let node = try await importNodeRepository.importChatNode(node, messageId: messageId, chatId: chatId)
+        return try await downloadNode(node)
     }
-    
-    private func importNodeToDownload(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        importNodeRepository.importChatNode(node, messageId: messageId, chatId: chatId) { result in
-            switch result {
-            case .success(let node):
-                downloadNode(node, completion: completion)
-            case .failure(let error):
-                completion(.failure(error))
+
+    private func downloadNode(_ node: NodeEntity) async throws -> URL {
+        let url = mediaUseCase.isImage(node.name)
+            ? fileCacheRepository.cachedOriginalImageURL(for: node)
+            : fileCacheRepository.tempFileURL(for: node)
+        do {
+            let transferEntity = try await downloadFileRepository.download(nodeHandle: node.handle, to: url, metaData: .exportFile)
+            guard let path = transferEntity.path else {
+                throw ExportFileErrorEntity.downloadFailed
             }
-        }
-    }
-    
-    private func downloadNode(_ node: NodeEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        let url = mediaUseCase.isImage(node.name) ? fileCacheRepository.cachedOriginalImageURL(for: node) : fileCacheRepository.tempFileURL(for: node)
-        downloadFileRepository.download(nodeHandle: node.handle, to: url, metaData: .exportFile) { result in
-            processDownloadThenShareResult(result: result, completion: completion)
+            return URL(fileURLWithPath: path)
+        } catch {
+            throw ExportFileErrorEntity.downloadFailed
         }
     }
 }
 
 // MARK: - ExportFileNodeUseCaseProtocol implementation -
 extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
-    public func export(node: NodeEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    public func export(node: NodeEntity) async throws -> URL {
         if let nodeUrl = nodeUrl(node) {
-            completion(.success(nodeUrl))
+            return nodeUrl
         } else {
-            downloadNode(node, completion: completion)
+            return try await downloadNode(node)
         }
     }
     
-    public func export(nodes: [NodeEntity], completion: @escaping ([URL]) -> Void) {
+    public func export(nodes: [NodeEntity]) async throws -> [URL] {
         var urlsArray = [URL]()
-        let myGroup = DispatchGroup()
-        
-        for node in nodes {
-            myGroup.enter()
-            
-            export(node: node) { result in
-                switch result {
-                case .success(let url):
-                    urlsArray.append(url)
-                case .failure(let error):
-                    print("Failed to export node with error: \(error)")
+        return await withTaskGroup(of: URL?.self) { group in
+            for node in nodes {
+                group.addTask {
+                    do {
+                        return try await export(node: node)
+                    } catch {
+                        print("Failed to export node with error: \(error)")
+                        return nil
+                    }
                 }
-                myGroup.leave()
             }
-        }
-        
-        myGroup.notify(queue: .main) {
-            completion(urlsArray)
+            
+            for await result in group.compacted() {
+                urlsArray.append(result)
+            }
+            return urlsArray
         }
     }
 }
 
 // MARK: - ExportFileChatMessageUseCaseProtocol implementation -
 extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
-    private func export(message: ChatMessageEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    private func export(message: ChatMessageEntity, chatId: HandleEntity) async throws -> URL {
         switch message.type {
         case .normal, .containsMeta:
             if let url = exportChatMessagesRepository.exportText(message: message) {
-                completion(.success(url))
+                return url
             } else {
-                completion(.failure(.failedToExportText))
+                throw ExportFileErrorEntity.failedToExportText
             }
             
         case .contact:
             guard let handle = message.peers.first?.handle, let base64Handle = megaHandleRepository.base64Handle(forUserHandle: handle) else {
-                completion(.failure(.failedToCreateContact))
-                return
+                throw ExportFileErrorEntity.failedToCreateContact
             }
             let avatarUrl = thumbnailRepository.generateCachingURL(for: base64Handle, type: .thumbnail)
             let contactAvatarImage = fileSystemRepository.fileExists(at: avatarUrl) ? avatarUrl.path : nil
@@ -172,52 +160,49 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
                 userFirstName: firstName,
                 userLastName: lastName
             ) {
-                completion(.success(contactUrl))
+                return contactUrl
             } else {
-                completion(.failure(.failedToCreateContact))
+                throw ExportFileErrorEntity.failedToCreateContact
             }
             
         case .attachment, .voiceClip:
             guard let node = message.nodes?.first else {
-                completion(.failure(.nonExportableMessage))
-                return
+                throw ExportFileErrorEntity.nonExportableMessage
             }
-            exportNode(node, messageId: message.messageId, chatId: chatId, completion: completion)
+            return try await exportNode(node, messageId: message.messageId, chatId: chatId)
             
         default:
             print("Failed to export a non compatible message type \(message.type)")
-            completion(.failure(.nonExportableMessage))
+            throw ExportFileErrorEntity.nonExportableMessage
         }
     }
     
-    public func export(messages: [ChatMessageEntity], chatId: HandleEntity, completion: @escaping ([URL]) -> Void) {
+    public func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> [URL] {
         var urlsArray = [URL]()
-        let myGroup = DispatchGroup()
-        
-        for message in messages {
-            myGroup.enter()
-            
-            export(message: message, chatId: chatId) { result in
-                switch result {
-                case .success(let url):
-                    urlsArray.append(url)
-                case .failure(let error):
-                    print("Failed to export a non compatible message type \(message.type) with error: \(error)")
+        return await withTaskGroup(of: URL?.self) { group in
+            for message in messages {
+                group.addTask {
+                    do {
+                        return try await export(message: message, chatId: chatId)
+                    } catch {
+                        print("Failed to export a non compatible message type \(message.type) with error: \(error)")
+                        return nil
+                    }
                 }
-                myGroup.leave()
             }
-        }
-        
-        myGroup.notify(queue: .main) {
-            completion(urlsArray)
+            
+            for await result in group.compacted() {
+                urlsArray.append(result)
+            }
+            return urlsArray
         }
     }
     
-    public func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    public func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL {
         if let nodeUrl = nodeUrl(node) {
-            completion(.success(nodeUrl))
+            return nodeUrl
         } else {
-            importNodeToDownload(node, messageId: messageId, chatId: chatId, completion: completion)
+            return try await importNodeToDownload(node, messageId: messageId, chatId: chatId)
         }
     }
 }
