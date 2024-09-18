@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class UserAvatarViewModel: ObservableObject {
     private let userId: MEGAHandle
     private let chatId: MEGAHandle
@@ -20,13 +21,14 @@ final class UserAvatarViewModel: ObservableObject {
     private var loadingChatRoomAvatarTask: Task<Void, Never>?
     private var loadingAvatarSubscription: AnyCancellable?
     
-    init(userId: MEGAHandle,
-         chatId: MEGAHandle,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         userImageUseCase: some UserImageUseCaseProtocol,
-         chatUseCase: any ChatUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol) {
+    nonisolated init(userId: MEGAHandle,
+                     chatId: MEGAHandle,
+                     chatRoomUseCase: any ChatRoomUseCaseProtocol,
+                     chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+                     userImageUseCase: some UserImageUseCaseProtocol,
+                     chatUseCase: any ChatUseCaseProtocol,
+                     accountUseCase: any AccountUseCaseProtocol
+    ) {
         self.userId = userId
         self.chatId = chatId
         self.chatRoomUseCase = chatRoomUseCase
@@ -75,7 +77,7 @@ final class UserAvatarViewModel: ObservableObject {
     
     private func fetchAvatar(isRightToLeftLanguage: Bool, forceDownload: Bool = false) async throws {
         if let avatar = try await createAvatar(withHandle: userId, isRightToLeftLanguage: isRightToLeftLanguage) {
-            await updatePrimaryAvatar(avatar)
+            updatePrimaryAvatar(avatar)
         }
         
         subscribeToAvatarUpdateNotification(forHandles: [userId])
@@ -86,10 +88,10 @@ final class UserAvatarViewModel: ObservableObject {
             throw UserImageLoadErrorEntity.unableToFetch
         }
 
-        await updatePrimaryAvatar(image)
+        updatePrimaryAvatar(image)
     }
     
-    private func createAvatar(withHandle handle: HandleEntity, isRightToLeftLanguage: Bool, size: CGSize = CGSize(width: 100, height: 100)) async throws -> UIImage? {
+    private nonisolated func createAvatar(withHandle handle: HandleEntity, isRightToLeftLanguage: Bool, size: CGSize = CGSize(width: 100, height: 100)) async throws -> UIImage? {
         let name = try await username(forUserHandle: handle, shouldUseMeText: false)
         
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
@@ -110,7 +112,7 @@ final class UserAvatarViewModel: ObservableObject {
             isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
-    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
+    private nonisolated func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
@@ -118,7 +120,7 @@ final class UserAvatarViewModel: ObservableObject {
         return try await userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: false)
     }
     
-    private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
+    private nonisolated func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
         if userHandle == accountUseCase.currentUserHandle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
@@ -128,7 +130,6 @@ final class UserAvatarViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     private func updatePrimaryAvatar(_ avatar: UIImage) {
         primaryAvatar = avatar
     }
