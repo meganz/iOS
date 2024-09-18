@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="您的帳戶已通過認證。請登入。";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已失效。您的帳戶可能已啟用，或您可能已取消註冊。";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已失效。您的帳戶可能已啟用，或您可能已經取消註冊。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="選擇檔案";
 /* Title for the action that allows you to move a file or folder */
 "move"="移動";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="已移動1個檔案";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="已移動%d個檔案";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="已移動1個資料夾";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="已移動%d個資料夾";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="已移動1個檔案和1個資料夾";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="已移動1個檔案和%d個資料夾";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="已移動%d個檔案和1個資料夾";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="已移動[A]個檔案與[B]個資料夾";
 /* List option shown on the details of a file or folder */
 "copy"="複製";
 /* Success message shown when you have copied 1 file */
@@ -977,7 +961,7 @@
 /*  */
 "howItWorksMain"="您的朋友需要在MEGA註冊一個免費帳戶，並[S]安裝至少一個MEGA用應用程式[/S] （MEGA桌面應用程式或MEGA行動應用程式）";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="您可以透過任何方式通知您的朋友。如果您在您的朋友使用該電子郵件地址註冊MEGA之前在此輸入了他們的電子郵件地址，您將會獲得獎金。";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="若您邀請的是曾使用過MEGA的用戶則無法得到獎勵，且您將不會收到相關通知。";
 /* Header of block with achievements bonuses. */
@@ -997,7 +981,7 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="註冊獎勵";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="您已經免費註冊而獲得%@儲存空間獎勵。";
+"account.achievement.registration.explanation.label"="您已收到%@儲存空間作為免費註冊獎勵。";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="推薦獎勵";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新的共享資料夾";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="您確定要中止註冊嗎？";
+"areYouSureYouWantToAbortTheRegistration"="您確定要停止註冊程序嗎？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="如果您拼錯您的電子郵件地址，請更正並點選「重新發送」。";
 /* A button to resend the email confirmation. */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="邀請";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="您的儲存空間已滿";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="立即升級";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="要繼續上傳資料，請立即升級以獲得更多儲存空間。";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="保護您的通話";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="您的會議、家庭通話和私人對話都受到我們的零知識加密的保護。\n[A]瞭解更多[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="立即開始會議";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="安排會議";

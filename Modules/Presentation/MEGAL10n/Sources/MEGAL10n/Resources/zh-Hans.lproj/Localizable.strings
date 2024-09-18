@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="您的帐户已激活。请登录。";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的确认链接已失效。您的帐户可能已被激活或您可能已取消注册。";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的确认链接已失效。您的帐户可能已被激活，或者您可能已经取消注册。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="链接无效";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -63,7 +63,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="You’ve been logged out of this device from another location";
+"loggedOutFromAnotherLocation"="您已从其它位置登出此设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA无法通过SSL进行安全连接。您可能正在使用受限制的公共网络。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="您需要同意您已了解忘记密码后的风险";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="This email address has already signed up for an account with MEGA";
+"emailAlreadyRegistered"="此电子邮件地址已注册MEGA帐户";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="正在等待电子邮件确认。";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -428,22 +428,6 @@
 "selectFiles"="选择文件";
 /* Title for the action that allows you to move a file or folder */
 "move"="移动";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="已移动1个文件";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="已移动%d个文件";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="已移动1个文件夹";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="已移动%d个文件夹";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="已移动1个文件和1个文件夹";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="已移动1个文件和%d 个文件夹";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="已移动%d个文件和1个文件夹";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="已移动[A]个文件与[B]个文件夹";
 /* List option shown on the details of a file or folder */
 "copy"="复制";
 /* Success message shown when you have copied 1 file */
@@ -975,9 +959,9 @@
 /*  */
 "howItWorks"="如何使用";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
+"howItWorksMain"="您的朋友需要在MEGA注册一个免费帐户，并[S]安装至少一个MEGA应用程序[/S]（MEGA桌面应用程序或者我们的MEGA移动应用程序）";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="您可以通过任何方式通知您的朋友。如果您在您的朋友使用该电子地址注册之前在此处输入了他们的电子邮件地址，您将会获得奖励。";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="若您邀请的是曾使用过MEGA的用户，则无法获得奖励，且您将不会收到相关通知。";
 /* Header of block with achievements bonuses. */
@@ -987,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@存储空间";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ GB[/B]存储空间";
+"account.storage.freePlan"="[B]%@GB[/B]存储空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="传输";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -997,7 +981,7 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="注册奖励";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="您已获得%@存储空间作为免费帐户注册奖励。";
+"account.achievement.registration.explanation.label"="您已经收到%@的存储空间作为您的免费注册奖励。";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="推荐奖励";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新共享文件夹";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="您确定要取消注册吗？";
+"areYouSureYouWantToAbortTheRegistration"="您确定要停止注册流程吗？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="如果您拼错了电子邮件地址，请更正并点按“重新发送”。";
 /* A button to resend the email confirmation. */
@@ -1659,7 +1643,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="云备份您的照片";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera uploads is an essential feature for any mobile device and we have got you covered. Sign up for an account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相机上传是任何移动设备的基本功能，我们已经为您提供这项服务。立即注册一个帐户。";
 /* Button which triggers the initial setup */
 "Setup MEGA"="设置MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -3111,7 +3095,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="由于多次侵犯版权的指控，您的MEGA帐户已被停用。这意味着您无法访问您的帐户或其中的数据。\n\n检查您的电子邮件收件箱，了解有关如何提交抗辩通知的更多信息。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to sign up for a new MEGA account.";
+"account.suspension.message.nonCopyright"="由于违反MEGA的服务条款，您的帐户已被终止。\n\n您将无法重新获得访问您存储数据的权限，也无权注册新的MEGA帐户。";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="打开MEGA应用程序并登录以继续。";
 /* Account Storage title label of used storage size */
@@ -3961,7 +3945,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterNewName"="输入新名称";
 /* Used in create video playlist popup system video playlist name validation */
-"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="不允许使用此播放列表名称";
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="输入一个不同的名称";
 /* Used in create video playlist popup user video playlist name validation */
@@ -4307,7 +4291,7 @@
 /* Title for empty chats tab */
 "chat.chats.emptyState.v2.title"="保持私密对话";
 /* Description for empty chats tab */
-"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
+"chat.chats.emptyState.v2.description"="您的所有消息、群聊和通话都受我们零知识加密的保护并保持私密。[A]了解更多[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="邀请朋友";
 /* Description in new chat screen empty screen mode when user has no contacts */
@@ -4315,21 +4299,21 @@
 /* Toast message shown to the user when the node description is added */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="已添加描述";
 /* Toast message shown to the user when the node description is removed */
-"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="已删除描述";
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="描述已更新";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="您是否要保存对描述所做的更改？";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="放弃修改";
 /* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="继续编辑";
 /* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Save and close";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="保存并关闭";
 /* Toast message shown to the user when the node description update failed. */
-"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="更新描述时发生错误，请重试";
 /* New chat page title */
 "chat.newChat.title"="新建聊天";
 /* Visual media search history section title */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="邀请";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="您的存储空间已满";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="立即升级";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="为了保持数据上传，请立即升级以获得更多存储空间。";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="保护您的通话";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="您的会议、家庭通话和私人对话都受到我们零知识加密的保护。\n[A]了解更多[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="立即发起会议";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="安排会议";

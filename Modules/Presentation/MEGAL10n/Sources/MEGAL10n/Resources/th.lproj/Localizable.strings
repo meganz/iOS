@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="บัญชีของคุณถูกเปิดใช้งานแล้ว กรุณาเข้าสู่ระบบ";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="ลิงก์ยืนยันของคุณใช้ไม่ได้อีกต่อไป บัญชีของคุณอาจถูกเปิดใช้งานหรือคุณอาจยกเลิกการลงทะเบียนแล้ว";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your signup.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="ลิงก์ไม่ถูกต้อง";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="เลือกไฟล์";
 /* Title for the action that allows you to move a file or folder */
 "move"="ย้าย";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 ไฟล์ที่ย้ายแล้ว";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d ไฟล์ที่ย้ายแล้ว";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 โฟลเดอร์ที่ย้ายแล้ว";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d โฟลเดอร์ถูกย้ายแล้ว";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 ไฟล์และ 1 โฟลเดอร์ถูกย้ายแล้ว";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 ไฟล์และ %d โฟลเดอร์ถูกย้ายแล้ว";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกย้ายแล้ว";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกย้ายแล้ว";
 /* List option shown on the details of a file or folder */
 "copy"="คัดลอก";
 /* Success message shown when you have copied 1 file */
@@ -987,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="พื้นที่เก็บข้อมูล %@";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]%@ GB[/B]";
+"account.storage.freePlan"="[B]%@ GB[/B] storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="ถ่ายโอน";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -995,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]จำกัด[/B]การถ่ายโอนข้อมูล";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="โบนัสการลงทะเบียน";
+"account.achievement.registration.title"="Signup bonus";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="คุณได้รับพื้นที่เก็บข้อมูล%@ เป็นโบนัสการลงทะเบียนฟรี";
+"account.achievement.registration.explanation.label"="You have received %@ storage space as your free signup bonus.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="โบนัสชวนเพื่อนสร้างรายได้";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="โฟลเดอร์ที่แชร์ใหม่";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="คุณแน่ใจว่าต้องการที่จะยกเลิกการลงทะเบียนนี้";
+"areYouSureYouWantToAbortTheRegistration"="Are you sure you want to stop the signup process?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="หากคุณสะกดที่อยู่อีเมลผิด ให้แก้ไขและแตะ “ส่งใหม่”";
 /* A button to resend the email confirmation. */
@@ -4319,7 +4303,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="อัปเดตคำอธิบายแล้ว";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="เชิญ";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="พื้นที่เก็บข้อมูลของคุณเต็มแล้ว";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="อัปเกรดตอนนี้";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="หากต้องการอัปโหลดข้อมูลต่อ กรุณาอัปเกรดทันทีเพื่อเพิ่มพื้นที่เก็บข้อมูล";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="ปกป้องการโทรของคุณ";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="Your meetings, family calls, and private conversations are protected by our zero-knowledge encryption. \n [A]Learn more[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="เริ่มการประชุมทันที";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="จัดกำหนดการประชุม";

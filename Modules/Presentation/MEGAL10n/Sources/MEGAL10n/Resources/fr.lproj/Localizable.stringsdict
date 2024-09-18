@@ -3314,24 +3314,6 @@
         <string>Votre appel gratuit se terminera dans %d minutes.</string>
       </dict>
     </dict>
-    <key>cameraUploads.albums.albumLink.sensitive.alert.message</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>videos.tab.playlist.snackbar.videoCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3384,6 +3366,24 @@
         <string>Jusqu’à %d jours</string>
         <key>other</key>
         <string>Jusqu’à %d jours</string>
+      </dict>
+    </dict>
+    <key>nodes.action.hideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hiddeItems@</string>
+      <key>hiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d élément caché</string>
+        <key>many</key>
+        <string>%d d’éléments cachés</string>
+        <key>other</key>
+        <string>%d éléments cachés</string>
       </dict>
     </dict>
   </dict>

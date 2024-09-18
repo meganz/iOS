@@ -12,10 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[A] and %d other raised their hands</string>
         <key>other</key>
-        <string>[A] and %d others raised their hands</string>
+        <string>[A] dan %d yang lain mengangkat tangan</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -28,10 +26,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>You and %d other raised your hands</string>
         <key>other</key>
-        <string>You and %d others raised your hands</string>
+        <string>Anda dan %d orang lain mengangkat tangan anda</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -2116,10 +2112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Message must be at least %d character</string>
         <key>other</key>
-        <string>Message must be at least %d characters</string>
+        <string>Pesan harus setidaknya %d karakter</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2524,10 +2518,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Attached %d file</string>
         <key>other</key>
-        <string>Attached %d files</string>
+        <string>Terlampir %d berkas</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2586,20 +2578,6 @@
         <string>Panggilan gratis anda akan berakhir dalam %d menit</string>
       </dict>
     </dict>
-    <key>cameraUploads.albums.albumLink.sensitive.alert.message</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>videos.tab.playlist.snackbar.videoCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2624,10 +2602,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Removed %d video from “[A]”</string>
         <key>other</key>
-        <string>Removed %d videos from “[A]”</string>
+        <string>Dihapus %d Vvdeo dari”[A]”</string>
       </dict>
     </dict>
     <key>rewind.for.pro.users.maximumDays</key>
@@ -2642,6 +2618,20 @@
         <string>d</string>
         <key>other</key>
         <string></string>
+      </dict>
+    </dict>
+    <key>nodes.action.hideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hiddeItems@</string>
+      <key>hiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d item disembunyikan</string>
       </dict>
     </dict>
   </dict>

@@ -428,22 +428,6 @@
 "selectFiles"="Выбрать файлы";
 /* Title for the action that allows you to move a file or folder */
 "move"="Переместить";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 файл перемещён";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="Перемещено файлов: %d";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 папка перемещена";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="папок перемещено: %d";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 файл и 1 папка перемещены";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 файл и %d папок(и) удалены";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d файлов и 1 папка перемещены";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="Перемещено файлов: [A] и папок: [B]";
 /* List option shown on the details of a file or folder */
 "copy"="Копировать";
 /* Success message shown when you have copied 1 file */
@@ -997,7 +981,7 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Бонус за регистрацию";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="Вы получили %@ на диске за регистрацию.";
+"account.achievement.registration.explanation.label"="За регистрацию вы получаете %@ на диске в качестве бонуса.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Бонусы за приглашения";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Пригласить";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Попробуйте поискать медиафайлы";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="Хранилище заполнено";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Улучшить";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Чтобы продолжить загрузку данных, улучшите аккаунт сейчас и получите больше места на диске.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="Защитите свои звонки";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="Ваши встречи, семейные звонки и личные разговоры защищены нашим шифрованием с нулевым разглашением. \n [A]Узнать больше[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="Начать встречу";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="Запланировать встречу";
