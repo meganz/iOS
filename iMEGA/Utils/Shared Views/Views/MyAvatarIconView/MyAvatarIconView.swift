@@ -11,6 +11,7 @@ struct MyAvatarIconView<AvatarObserver: MyAvatarObserver>: View {
             guard let viewModel else { return }
             viewModel.openUserProfile()
         }
+        .onAppear(perform: viewModel.onAppear)
     }
 }
 
