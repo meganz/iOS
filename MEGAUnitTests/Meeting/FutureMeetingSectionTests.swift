@@ -110,14 +110,14 @@ final class FutureMeetingSectionTests: XCTestCase {
         (1...count).map { _ in UInt64.random(in: UInt64.min...UInt64.max) }
     }
     
-    private func createFailureResult(withCount count: Int) -> [Result<String, Error>] {
+    private func createFailureResult(withCount count: Int) -> [Result<String, any Error>] {
         (1...count).map { _ in Result.failure(GenericErrorEntity()) }
     }
     
     @MainActor
     private func createFutureMeetingSection(
         withChatIds chatIds: [UInt64],
-        chatRoomUsersDescriptionResults: [Result<String, Error>],
+        chatRoomUsersDescriptionResults: [Result<String, any Error>],
         dateSetList: [(startDate: Date, endDate: Date)]
     ) -> FutureMeetingSection {
         let items = chatIds.enumerated().map { index, chatId in
@@ -133,7 +133,7 @@ final class FutureMeetingSectionTests: XCTestCase {
     @MainActor
     private func createFutureMeetingRoomViewModel(
         withChatId chatId: UInt64,
-        chatRoomUsersDescriptionResult: Result<String, Error>,
+        chatRoomUsersDescriptionResult: Result<String, any Error>,
         dateSet: (startDate: Date, endDate: Date)
     ) -> FutureMeetingRoomViewModel {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatId: chatId))

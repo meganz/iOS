@@ -93,7 +93,7 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     }
 
     func testEvaluateNodeSensitivity_whenInheritingSensitivityTrueOrFailed_shouldReturnNil() async {
-        let inheritSensitiveResults: [Result<Bool, Error>] = [.success(true), .failure(GenericErrorEntity())]
+        let inheritSensitiveResults: [Result<Bool, any Error>] = [.success(true), .failure(GenericErrorEntity())]
         for inheritSensitiveResult in inheritSensitiveResults {
             let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
             let node = NodeEntity(isFolder: true)

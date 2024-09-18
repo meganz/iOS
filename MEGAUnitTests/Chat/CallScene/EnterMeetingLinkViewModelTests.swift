@@ -37,10 +37,10 @@ final class EnterMeetingLinkViewModelTests: XCTestCase {
     ) -> (
         EnterMeetingLinkViewModel,
         MockEnterMeetingLinkRouter,
-        MEGALinkManagerProtocol.Type
+        any MEGALinkManagerProtocol.Type
     ) {
-        var mockRouter = MockEnterMeetingLinkRouter()
-        var mockLinkManager = MockLinkManager.self
+        let mockRouter = MockEnterMeetingLinkRouter()
+        let mockLinkManager = MockLinkManager.self
         let sut = EnterMeetingLinkViewModel(
             router: mockRouter,
             linkManager: mockLinkManager

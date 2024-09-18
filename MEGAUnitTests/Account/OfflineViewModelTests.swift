@@ -11,8 +11,8 @@ final class OfflineViewModelTests: XCTestCase {
     
     @MainActor
     private func makeOfflineViewModelVMSut(
-        transferUseCase: NodeTransferUseCaseProtocol = MockNodeTransferUseCase(),
-        offlineUseCase: OfflineUseCaseProtocol = MockOfflineUseCase(),
+        transferUseCase: some NodeTransferUseCaseProtocol = MockNodeTransferUseCase(),
+        offlineUseCase: some OfflineUseCaseProtocol = MockOfflineUseCase(),
         megaStore: MEGAStore = MockMEGAStore(),
         file: StaticString = #file,
         line: UInt = #line

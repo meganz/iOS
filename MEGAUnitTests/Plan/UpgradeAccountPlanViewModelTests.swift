@@ -767,7 +767,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     
     // MARK: - Helper
     func makeSUT(
-        subscriptionsUseCase: SubscriptionsUseCaseProtocol = MockSubscriptionsUseCase(requestResult: .failure(.generic)),
+        subscriptionsUseCase: some SubscriptionsUseCaseProtocol = MockSubscriptionsUseCase(requestResult: .failure(.generic)),
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],
@@ -818,7 +818,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             self.sut = sut
         }
         
-        func testBuyPlan(_ plan: PlanEntity, shouldTrack event: EventIdentifier) async {
+        func testBuyPlan(_ plan: PlanEntity, shouldTrack event: any EventIdentifier) async {
             await sut.setUpPlanTask?.value
             sut.setSelectedPlan(plan)
             

@@ -652,7 +652,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     @MainActor
     private func trackAnalyticsEventTest(
         action: MyAccountHallAction,
-        expectedEvent: EventIdentifier
+        expectedEvent: any EventIdentifier
     ) {
         let mockTracker = MockTracker()
         let (sut, _) = makeSUT(tracker: mockTracker)

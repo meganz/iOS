@@ -117,8 +117,8 @@ final class NodeInfoViewModelTests: XCTestCase {
 
     private func makeSUT(
         node: MockNode = MockNode(handle: 0),
-        shareUseCase: ShareUseCaseProtocol = MockShareUseCase(),
-        nodeUseCase: NodeUseCaseProtocol = MockNodeDataUseCase(),
+        shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #file,
         line: UInt = #line

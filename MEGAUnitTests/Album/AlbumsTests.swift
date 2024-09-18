@@ -8,12 +8,12 @@ final class AlbumsTests: XCTestCase {
     class MockPhotoLibrary: PhotoLibraryProviding {
         
         var registerCallCount = 0
-        func register(_ observer: PHPhotoLibraryChangeObserver) {
+        func register(_ observer: some PHPhotoLibraryChangeObserver) {
             registerCallCount += 1
         }
         
         var unregisterCallCount = 0
-        func unregisterChangeObserver(_ observer: PHPhotoLibraryChangeObserver) {
+        func unregisterChangeObserver(_ observer: some PHPhotoLibraryChangeObserver) {
             unregisterCallCount += 1
         }
         
