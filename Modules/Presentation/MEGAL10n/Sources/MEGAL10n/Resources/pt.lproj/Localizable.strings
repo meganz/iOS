@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="A sua conta está ativa. Por favor, faça login.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="O seu link de confirmação já não é válido. A sua conta pode já estar ativa, ou você pode ter cancelado o seu registro.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="O seu link de confirmação já não é válido. A sua conta pode já estar ativa, ou você pode ter cancelado o seu cadastro.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link inválido";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="Selecione os arquivos";
 /* Title for the action that allows you to move a file or folder */
 "move"="Mover";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 arquivo movido";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d arquivos movidos";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 arquivo movido";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d pastas movidas";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 arquivo e 1 pasta movidos";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 arquivo e %d pastas movidos";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d arquivos e 1 pasta movidos";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] arquivos e [B] pastas movidos";
 /* List option shown on the details of a file or folder */
 "copy"="Copiar";
 /* Success message shown when you have copied 1 file */
@@ -997,7 +981,7 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bônus de cadastro";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="Você recebeu %@ de espaço de armazenamento como bônus por criar uma conta.";
+"account.achievement.registration.explanation.label"="Você recebeu %@ de espaço de armazenamento como bônus por cadastrar uma conta.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bônus de indicação";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -2543,7 +2527,7 @@
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Mover esta pasta alterará o destino do backup, fazendo com que o backup seja desativado por motivos de segurança. É realmente isso o que você quer fazer? Os backups podem ser reativados com o aplicativo do MEGA para desktop.";
 /* Delete the default backup folder warning title. %@ is a folder */
-"dialog.delete.backup.folder.warning.title"="Mover “%@” à Lixeira";
+"dialog.delete.backup.folder.warning.title"="Mover “%@” para a Lixeira";
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="Você está a ponto de excluir a sua pasta de backup. Ao fazer isso, serão removidos todos os backups que você configurou. Você tem certeza de que quer fazer isso?";
 /* Delete the default backup folder warning message */
@@ -3019,7 +3003,7 @@
 /* Meetings end call dialog Stay on call button title */
 "meetings.endCallDialog.stayOnCallButtonTitle"="Permanecer na chamada";
 /* Meetings end call dialog button title */
-"meetings.endCallDialog.endCallNowButtonTitle"="Finalizar chamada agora";
+"meetings.endCallDialog.endCallNowButtonTitle"="Finalizar a chamada agora";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="A chamada será finalizada em %@";
 /* Text for the action of downloading an item to the offline section */
@@ -3877,7 +3861,7 @@
 /* Alert message for user confirmation that agrees on call screen recording */
 "calls.screenRecording.alert.message"="Ao permanecer na chamada, você dá permissão para ser gravado.";
 /* Alert button for user not accepting call screen recording and therefor leaving the call */
-"calls.screenRecording.alert.action.leave"="Deixar chamada";
+"calls.screenRecording.alert.action.leave"="Sair da chamada";
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.accept"="Entendi";
 /* Alert button for user accepting call screen recording */
@@ -4319,7 +4303,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Descrição atualizada";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Você quer salvar as alterações feitas na descrição?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Convidar";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="O armazenamento da sua conta está cheio";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Upgrade";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Para continuar fazendo o upload de dados, faça um upgrade para obter mais armazenamento.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="Proteja as suas chamadas";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="As suas reuniões, chamadas familiares e conversas privadas estão protegidas pela nossa criptografia de conhecimento zero. \n [A]Mais informações[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="Começar a reunião agora";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="Programar reunião";

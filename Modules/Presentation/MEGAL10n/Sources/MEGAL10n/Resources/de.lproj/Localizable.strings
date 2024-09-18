@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Ihr Account wurde aktiviert. Bitte melden Sie sich an.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Der Bestätigungslink ist nicht mehr gültig. Entweder haben Sie Ihren Account bereits aktiviert, oder die Registrierung wurde abgebrochen.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Ihr Bestätigungslink ist nicht mehr gültig. Möglicherweise ist Ihr Account bereits aktiviert oder Sie haben Ihre Registrierung abgebrochen.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ungültiger Link";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="Dateien auswählen";
 /* Title for the action that allows you to move a file or folder */
 "move"="Verschieben";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 Datei verschoben";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d Dateien verschoben";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 Ordner verschoben";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d Ordner verschoben";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 Datei und 1 Ordner verschoben";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 Datei und %d Ordner verschoben";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d Dateien und 1 Ordner verschoben";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] Dateien and [B] Ordner verschoben";
 /* List option shown on the details of a file or folder */
 "copy"="Kopieren";
 /* Success message shown when you have copied 1 file */
@@ -977,7 +961,7 @@
 /*  */
 "howItWorksMain"="Der eingeladene Benutzer muss einen kostenlosen MEGA-Account erstellen und [S]mindestens eine MEGA-App installieren[/S] (MEGA-Desktop-App oder eine MEGA-Mobil-App)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="Sie können den Eingeladenen auf jede beliebige Weise benachrichtigen. Sie erhalten den Bonus, wenn Sie die E-Mail-Adresse der eingeladenen Person hier eingegeben haben, bevor diese sich mit dieser Adresse registriert.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Sie erhalten keine Boni für die Einladung bestehender oder ehemaliger MEGA-Nutzer. Sie werden über einen aus diesem Grund nicht erhaltenen Bonus nicht gesondert informiert.";
 /* Header of block with achievements bonuses. */
@@ -987,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ Speicherplatz";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ GB[/B] Speicherplatz";
+"account.storage.freePlan"="[B]%@ GB[/B] Speicher";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Neue Ordnerfreigabe";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Sind Sie sicher, dass Sie die Registrierung abbrechen wollen?";
+"areYouSureYouWantToAbortTheRegistration"="Möchten Sie den Registrierungsvorgang wirklich abbrechen?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Wenn Sie sich bei der E-Mail-Adresse vertippt haben, korrigieren Sie diese und tippen Sie auf „Erneut senden“.";
 /* A button to resend the email confirmation. */
@@ -4307,7 +4291,7 @@
 /* Title for empty chats tab */
 "chat.chats.emptyState.v2.title"="Schützen Sie Ihre Unterhaltungen";
 /* Description for empty chats tab */
-"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
+"chat.chats.emptyState.v2.description"="Alle Ihre Nachrichten, Gruppenchats und Anrufe sind durch unsere Zero-Knowledge-Verschlüsselung geschützt und bleiben vertraulich. [A]Mehr erfahren[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="Einen Freund einladen";
 /* Description in new chat screen empty screen mode when user has no contacts */
@@ -4315,21 +4299,21 @@
 /* Toast message shown to the user when the node description is added */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Beschreibung hinzugefügt";
 /* Toast message shown to the user when the node description is removed */
-"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Beschreibung entfernt";
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Beschreibung aktualisiert";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Möchten Sie die Änderungen an der Beschreibung speichern?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="Änderungen verwerfen";
 /* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="Weiter bearbeiten";
 /* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Save and close";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Speichern und schließen";
 /* Toast message shown to the user when the node description update failed. */
-"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Fehler beim Ändern der Beschreibung, bitte erneut versuchen";
 /* New chat page title */
 "chat.newChat.title"="Neuer Chat";
 /* Visual media search history section title */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Einladen";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="Ihr Speicher ist voll";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Jetzt upgraden";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Um weitere Daten hochladen zu können, upgraden Sie Ihren Account jetzt, um mehr Speicherplatz zu erhalten.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="Schützen Sie Ihre Kommunikation";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="Ihre Meetings, Familiengespräche und privaten Unterhaltungen sind durch unsere Zero-Knowledge-Verschlüsselung geschützt. \n [A]Mehr erfahren[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="Meeting jetzt starten";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="Meeting planen";

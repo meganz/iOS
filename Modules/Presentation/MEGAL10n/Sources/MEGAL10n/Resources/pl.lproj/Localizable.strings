@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Twoje konto zostało aktywowane. Proszę się zalogować.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Twój link potwierdzający nie jest już ważny. Twoje konto może już być aktywne lub możesz anulować rejestrację.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Twój link potwierdzający nie jest już ważny. Twoje konto może być już aktywowane lub anulowałeś rejestrację.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Nieprawidłowy link";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="Wybierz pliki";
 /* Title for the action that allows you to move a file or folder */
 "move"="Przenieś";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 plik przeniesiony";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d plików przeniosione";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 katalog przeniesiony";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d katalogów przeniesionych";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 plik i 1 katalog przeniesiony";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 plik i %d katalogów przeniesionych";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d plików i 1 katalog przeniesiony";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="Przeniesiono [A] plików i [B] katalogów";
 /* List option shown on the details of a file or folder */
 "copy"="Skopiuj";
 /* Success message shown when you have copied 1 file */
@@ -977,7 +961,7 @@
 /*  */
 "howItWorksMain"="Twój znajomy musi założyć darmowe konto w MEGA i [S]Zainstaluj co najmniej jedną aplikację MEGA[/S] (albo Aplikacja MEGA Desktop, albo jedna z naszych aplikacji mobilnych MEGA)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="Możesz powiadomić znajomego dowolną metodą. Zdobędziesz bonus, jeśli wpisałeś tutaj adres email znajomego przed zarejestrowaniem się pod tym adresem.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Promocja darmowych limitów nie obejmuje sytuacji kiedy zapraszasz osoby, które już wcześniej posiadały konto na MEGA.";
 /* Header of block with achievements bonuses. */
@@ -987,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ pamięci";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ GB[/B] pamięci";
+"account.storage.freePlan"="[B]%@ GB[/B] pojemności";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Przesyłanie";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -995,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]Ograniczony[/B] transfer";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Rejestracja Bonusa";
+"account.achievement.registration.title"="Bonus za rejestrację";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="Otrzymałeś %@ przestrzeni dyskowej jako bonus za darmową rejestrację.";
+"account.achievement.registration.explanation.label"="Otrzymałeś %@ miejsce do przechowywania jako darmowy bonus rejestracyjny.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonus za polecenia";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nowy udostępniony katalog";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Czy na pewno chcesz przerwać proces rejestracji?";
+"areYouSureYouWantToAbortTheRegistration"="Czy na pewno chcesz zatrzymać proces rejestracji?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Jeśli błędnie wpisałeś swój adres email, popraw go i kliknij „Wyślij ponownie”.";
 /* A button to resend the email confirmation. */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Zaproszenie";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="Pamięć jest pełna";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Zmień teraz";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Aby kontynuować przesyłanie danych, zaktualizuj teraz, aby uzyskać więcej miejsca.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="Chroń swoje połączenia";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="Twoje spotkania, rozmowy rodzinne i prywatne rozmowy są chronione przez nasze szyfrowanie z zerową wiedzą. \n [A]Dowiedz się więcej[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="Rozpocznij spotkanie teraz";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="Zaplanuj spotkanie";
