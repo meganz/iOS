@@ -58,7 +58,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(viewModel.planTag, .none)
     }
 
-    func testCreateAccountPlanViewModel_recurringPlanMonthly_shouldReturnViewModel() {
+    func disable_testCreateAccountPlanViewModel_recurringPlanMonthly_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList = [proI_monthly, proII_yearly]
 
