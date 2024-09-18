@@ -425,7 +425,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
     
     private func trackAnalyticsEventTest(
         action: MainTabBarCallsAction,
-        expectedEvent: EventIdentifier
+        expectedEvent: some EventIdentifier
     ) {
         let mockTracker = MockTracker()
         let sut = makeMainTabBarCallsViewModel(tracker: mockTracker)

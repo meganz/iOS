@@ -66,7 +66,7 @@ final class ResourceInfoViewModelTests: XCTestCase {
         name: String = "",
         totalSize: UInt64 = 0,
         added: Date? = nil,
-        dateFormatting: DateFormatting? = nil,
+        dateFormatting: (any DateFormatting)? = nil,
         files: Int = 0,
         folders: Int = 0,
         file: StaticString = #file,

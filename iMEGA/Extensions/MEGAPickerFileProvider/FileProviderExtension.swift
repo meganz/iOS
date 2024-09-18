@@ -70,7 +70,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         return FileProviderItem(node: node)
     }
     
-    override func enumerator(for containerItemIdentifier: NSFileProviderItemIdentifier) throws -> NSFileProviderEnumerator {
+    override func enumerator(for containerItemIdentifier: NSFileProviderItemIdentifier) throws -> any NSFileProviderEnumerator {
         guard credentialUseCase.hasSession() else {
             throw NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue)
         }
@@ -154,7 +154,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         guard let parentNode = node(for: parentItemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
-
+        
         let node = try await nodeActionUseCase.createFolder(name: directoryName, parent: parentNode)
         return FileProviderItem(node: node)
     }
@@ -234,32 +234,32 @@ final class FileProviderExtension: NSFileProviderExtension {
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
-
+        
         let fileProviderItem = FileProviderItem(node: node)
-
+        
         fileProviderItem.favoriteRank = favoriteRank
-
+        
         return fileProviderItem
     }
-
+    
     override func setTagData(_ tagData: Data?, forItemIdentifier itemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
         guard let node = node(for: itemIdentifier) else {
             throw NSFileProviderError(.noSuchItem)
         }
-
+        
         let fileProviderItem = FileProviderItem(node: node)
-
+        
         fileProviderItem.tagData = tagData
-
+        
         return fileProviderItem
     }
-
+    
     // MARK: - Accessing thumbnails
     
     override func fetchThumbnails(for itemIdentifiers: [NSFileProviderItemIdentifier],
                                   requestedSize size: CGSize,
-                                  perThumbnailCompletionHandler: @escaping (NSFileProviderItemIdentifier, Data?, Error?) -> Void,
-                                  completionHandler: @escaping (Error?) -> Void) -> Progress {
+                                  perThumbnailCompletionHandler: @escaping (NSFileProviderItemIdentifier, Data?, (any Error)?) -> Void,
+                                  completionHandler: @escaping ((any Error)?) -> Void) -> Progress {
         
         let progress = Progress(totalUnitCount: Int64(itemIdentifiers.count))
         
@@ -271,7 +271,7 @@ final class FileProviderExtension: NSFileProviderExtension {
             }
             
             Task {
-                var error: Error?
+                var error: (any Error)?
                 var data: Data?
                 do {
                     let thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)

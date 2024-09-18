@@ -605,7 +605,7 @@ class CloudDriveViewModelTests: XCTestCase {
     
     private func trackAnalyticsEventTest(
         action: CloudDriveAction,
-        expectedEvent: EventIdentifier,
+        expectedEvent: some EventIdentifier,
         file: StaticString = #file, 
         line: UInt = #line
     ) {

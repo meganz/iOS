@@ -153,7 +153,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
     
     private func trackAnalyticsEventTest(
         action: UploadAddActionEntity,
-        expectedEvents: [EventIdentifier]
+        expectedEvents: [any EventIdentifier]
     ) {
         let mockTracker = MockTracker()
         let sut = makeSUT(

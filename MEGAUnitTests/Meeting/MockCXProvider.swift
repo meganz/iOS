@@ -4,10 +4,10 @@ class MockCXProvider: CXProvider {
     override init(configuration: CXProviderConfiguration) {
         super.init(configuration: configuration)
     }
-    override func setDelegate(_ delegate: CXProviderDelegate?, queue: dispatch_queue_t?) { /* not used */ }
+    override func setDelegate(_ delegate: (any CXProviderDelegate)?, queue: dispatch_queue_t?) { /* not used */ }
     
     var reportNewIncomingCalls = [UUID]()
-    override func reportNewIncomingCall(with UUID: UUID, update: CXCallUpdate, completion: @escaping (Error?) -> Void) {
+    override func reportNewIncomingCall(with UUID: UUID, update: CXCallUpdate, completion: @escaping ((any Error)?) -> Void) {
         reportNewIncomingCalls.append(UUID)
         completion(nil)
     }
