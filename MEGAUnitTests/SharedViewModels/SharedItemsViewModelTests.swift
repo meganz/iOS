@@ -90,10 +90,10 @@ final class SharedItemsViewModelTests: XCTestCase {
     
     @MainActor
     private func makeSUT(
-        shareUseCase: ShareUseCaseProtocol = MockShareUseCase(),
-        mediaUseCase: MediaUseCaseProtocol = MockMediaUseCase(),
-        saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
-        moveToRubbishBinViewModel: MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
+        shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
+        mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
+        saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
+        moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> SharedItemsViewModel {

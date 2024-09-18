@@ -690,7 +690,7 @@ final class AlbumListViewModelTests: XCTestCase {
             let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
                                          count: 0, type: .user, creationTime: try "2024-04-05T10:02:04Z".date)
             let userAlbums = [userAlbum1, userAlbum2]
-            let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+            let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], any Error>>(
                 item: .success(systemAlbums)).eraseToAnyAsyncSequence()
             let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums).eraseToAnyAsyncSequence()
             
@@ -749,7 +749,7 @@ final class AlbumListViewModelTests: XCTestCase {
     
     @MainActor
     func testMonitorAlbums_failedToRetrieveSystemAlbums_shouldStillLoadUserAlbums() {
-        let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+        let systemAsyncSequence = SingleItemAsyncSequence<Result<[AlbumEntity], any Error>>(
             item: .failure(GenericErrorEntity())).eraseToAnyAsyncSequence()
         let userAlbums =  [AlbumEntity(id: 4, name: "Album 1", count: 0, type: .user)]
         let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums)

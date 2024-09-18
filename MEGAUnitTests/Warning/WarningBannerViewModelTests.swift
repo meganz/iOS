@@ -6,7 +6,7 @@ final class WarningBannerViewModelTests: XCTestCase {
     private func makeSUT(
         warningType: WarningBannerType,
         isShowCloseButton: Bool = false,
-        router: WarningBannerViewRouting = MockWarningViewRouter()
+        router: some WarningBannerViewRouting = MockWarningViewRouter()
     ) -> WarningBannerViewModel {
         WarningBannerViewModel(
             warningType: warningType,

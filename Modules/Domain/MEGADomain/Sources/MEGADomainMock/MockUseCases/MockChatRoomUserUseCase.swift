@@ -4,7 +4,7 @@ import MEGADomain
 public struct MockChatRoomUserUseCase: ChatRoomUserUseCaseProtocol {
     private let userFullNamesResult: Result<[String], Error>
     private let userDisplayNameForPeerResult: Result<String, Error>
-    private let userDisplayNamesForPeersResult: Result<[(HandleEntity, String)], Error>
+    private let userDisplayNamesForPeersResult: Result<[(HandleEntity, String)], any Error>
     private let userNickNames: [HandleEntity: String]
     private let userEmails: [HandleEntity: String]
     private let contactEmail: String?

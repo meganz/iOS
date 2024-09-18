@@ -28,7 +28,7 @@ final class QASettingsViewModelTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(
-        appDistributionResult: Result<AppDistributionReleaseEntity?, Error> = .failure(NSError()),
+        appDistributionResult: Result<AppDistributionReleaseEntity?, any Error> = .failure(NSError()),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: QASettingsViewModel, router: MockRouter, appDistributionUseCase: MockAppDistributionUseCase) {
@@ -50,7 +50,7 @@ final class QASettingsViewModelTests: XCTestCase {
             showAlertCallCount += 1
         }
         
-        func showAlert(withError error: Error) {
+        func showAlert(withError error: any Error) {
             showErrorAlertCallCount += 1
         }
         

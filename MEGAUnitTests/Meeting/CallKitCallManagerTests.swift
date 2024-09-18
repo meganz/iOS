@@ -22,18 +22,18 @@ final class CallKitCallManagerTests: XCTestCase {
     class MockCallController: CallControlling {
         var requestedTransactions: [CXTransaction] = []
         var errorToReturn: (any Error)?
-        func request(_ transaction: CXTransaction, completion: @escaping ((Error)?) -> Void) {
+        func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void) {
             requestedTransactions.append(transaction)
             completion(errorToReturn)
         }
         
         func request(_ transaction: CXTransaction) async throws { /* not used */ }
         
-        func requestTransaction(with actions: [CXAction], completion: @escaping ((Error)?) -> Void) { /* not used */ }
+        func requestTransaction(with actions: [CXAction], completion: @escaping ((any Error)?) -> Void) { /* not used */ }
         
         func requestTransaction(with actions: [CXAction]) async throws { /* not used */ }
         
-        func requestTransaction(with action: CXAction, completion: @escaping ((Error)?) -> Void) { /* not used */ }
+        func requestTransaction(with action: CXAction, completion: @escaping ((any Error)?) -> Void) { /* not used */ }
         
         func requestTransaction(with action: CXAction) async throws { /* not used */ }
         

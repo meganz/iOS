@@ -14,7 +14,7 @@ final class DocumentActionViewController: FPUIActionExtensionViewController {
         messageLabel?.text = Strings.Localizable.openMEGAAndSignInToContinue
     }
     
-    override func prepare(forError error: Error) {
+    override func prepare(forError error: any Error) {
         let nsError = error as NSError
         if nsError.userInfo[PickerConstant.passcodeEnabled] != nil {
             titleLabel?.text = Strings.Localizable.Picker.Disable.Passcode.title
