@@ -3,9 +3,10 @@ import MEGAL10n
 import MEGASDKRepo
 import UIKit
 
+@MainActor
 protocol CreateNewFolderAlertRouting {
     func start() async -> NodeEntity?
-    func showNodeAlreadyExistsError()
+    func showNodeAlreadyExistsError() async
 }
 
 struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
@@ -30,8 +31,8 @@ struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
             nodeUseCase: nodeUseCase
         )
 
-        let alert = await makeAlert(with: viewModel)
-        await present(alert: alert)
+        let alert = makeAlert(with: viewModel)
+        present(alert: alert)
         return await viewModel.waitUntilFinished()
     }
 
@@ -41,12 +42,10 @@ struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
 
     // MARK: - Private methods.
 
-    @MainActor
     private func present(alert: UIAlertController) {
         navigationController.present(alert, animated: true)
     }
 
-    @MainActor
     private func makeAlert(with viewModel: CreateNewFolderAlertViewModel) -> UIAlertController {
         let createFolderAlert = UIAlertController(
             title: Strings.Localizable.newFolder, message: nil, preferredStyle: .alert
