@@ -2946,22 +2946,6 @@
         <string>Uw gratis gesprek eindigt over%d minuten</string>
       </dict>
     </dict>
-    <key>cameraUploads.albums.albumLink.sensitive.alert.message</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>videos.tab.playlist.snackbar.videoCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3008,6 +2992,22 @@
         <string>Tot %d dag</string>
         <key>other</key>
         <string>Tot %d dagen</string>
+      </dict>
+    </dict>
+    <key>nodes.action.hideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hiddeItems@</string>
+      <key>hiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item verborgen</string>
+        <key>other</key>
+        <string>%d  items verborgen</string>
       </dict>
     </dict>
   </dict>

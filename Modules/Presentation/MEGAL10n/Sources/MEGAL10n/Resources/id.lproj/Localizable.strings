@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Akun anda telah diaktifasi. Silahkan masuk akun anda.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Link konfirmasi anda tidak lagi valid. Akun anda mungkin sudah diaktifkan atau anda mungkin telah membatalkan pendaftaran anda.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Tautan konfirmasi anda tidak lagi valid. Akun anda mungkin sudah diaktifkan atau anda mungkin telah membatalkan pendaftaran anda.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link salah";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="Pilih file";
 /* Title for the action that allows you to move a file or folder */
 "move"="Pindahkan";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 file dipindahkan";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d file dipindahkan";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 folder dipindahkan";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d folder dipindahkan";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 file dan 1 folder dipindahkan";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 file dan %d folder dipindahkan";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d file dan 1 folder dipindahkan";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] file dan [B] folder dipindahkan";
 /* List option shown on the details of a file or folder */
 "copy"="Salin";
 /* Success message shown when you have copied 1 file */
@@ -553,7 +537,7 @@
 /* Alert message presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.message.single"="Ada item tersembunyi di album ini. Berbagi album berarti bahwa item tersembunyi terlihat oleh orang-orang yang anda bagikan. Item masih akan disembunyikan di drive Cloud anda.";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="There are hidden items in one or more of these albums. Sharing the albums will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Ada item tersembunyi di satu atau lebih album ini. Berbagi album berarti bahwa item tersembunyi terlihat oleh orang-orang yang anda bagikan. Item masih akan disembunyikan di drive Cloud anda.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -975,9 +959,9 @@
 /*  */
 "howItWorks"="Cara kerja";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
+"howItWorksMain"="Teman anda perlu mendaftar untuk akun gratis di MEGA dan [S]instal setidaknya satu aplikasi MEGA[/S] (baik Aplikasi MEGA Desktop atau salah satu Aplikasi Seluler MEGA kami)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="Anda dapat memberi tahu teman anda melalui metode apa pun. Anda akan mendapatkan bonus jika anda telah memasukkan alamat email teman anda di sini sebelum mereka mendaftar dengan alamat itu.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Anda tidak akan menerima kredit untuk mengundang seseorang yang telah menggunakan MEGA sebelumnya dan anda tidak akan dikabari tentang penolakkan tersebut.";
 /* Header of block with achievements bonuses. */
@@ -995,7 +979,7 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="Transfer [B]Terbatas[/B] ";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Bonus Pendaftaran";
+"account.achievement.registration.title"="Bonus pendaftaran";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Anda telah menerima %@ ruang penyimpanan sebagai bonus pendaftaran gratis anda.";
 /* Cell title shown on the achievements view for referral achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Folder bersama baru";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Apakah anda yakin ingin membatalkan pendaftaran?";
+"areYouSureYouWantToAbortTheRegistration"="Apakah anda yakin ingin menghentikan proses pendaftaran?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Jika anda salah mengeja alamat email anda, perbaiki dan ketuk “Kirim Ulang”.";
 /* A button to resend the email confirmation. */
@@ -2915,9 +2899,9 @@
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="Buang Laporan";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Your feedback helps us improve MEGA. Please clearly describe the issue you’ve experienced. The more details you provide, the easier it will be for us to resolve.";
+"help.reportIssue.describe"="Umpan balik anda membantu kami meningkatkan MEGA. Tolong jelaskan dengan jelas masalah yang anda alami. Semakin banyak detail yang anda berikan, semakin mudah bagi kami untuk menyelesaikannya.";
 /* Label to indicate that users' input has not reached the required minimum characters */
-"help.reportIssue.minCharacterNotReach.error"="Description must be at least 10 characters";
+"help.reportIssue.minCharacterNotReach.error"="Deskripsi harus minimal 10 karakter";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
 "help.reportIssue.sendLogFile"="Kirim Log File";
 /* Title to indicate that the bug report is being uploaded to our support team. */
@@ -2937,7 +2921,7 @@
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Masalah ini tidak akan dilaporkan jika anda membatalkan pengunggahan.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Describe the issue with at least 10 characters";
+"help.reportIssue.describeIssue.placeholder"="Jelaskan masalah dengan setidaknya 10 karakter";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Tidak dapat terhubung ke internet. Periksa koneksi anda dan coba lagi.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
@@ -3111,7 +3095,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Akun MEGA anda telah ditangguhkan karena dugaan berulang pelanggaran hak cipta. Ini berarti anda tidak dapat mengakses akun atau data anda di dalamnya.\n\nPeriksa kotak masuk email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan balasan.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to sign up for a new MEGA account.";
+"account.suspension.message.nonCopyright"="Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.\n\nAnda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftar akun MEGA baru.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Buka aplikasi MEGA dan masuk untuk melanjutkan.";
 /* Account Storage title label of used storage size */
@@ -3683,9 +3667,9 @@
 /* Title of the dialog for sharing a folder containing sensitive items */
 "shareFolder.sensitive.alert.title"="Item tersembunyi";
 /* Message of the dialog for sharing a folder containing sensitive items */
-"shareFolder.sensitive.alert.message.single"="There are hidden items in this folder. Sharing the folder will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+"shareFolder.sensitive.alert.message.single"="Ada item tersembunyi di folder ini. Berbagi folder berarti bahwa item tersembunyi terlihat oleh orang-orang yang anda bagikan. Item masih akan disembunyikan di drive Cloud anda.";
 /* Message of the dialog for sharing folders containing sensitive items */
-"shareFolder.sensitive.alert.message.multi"="There are hidden items in one or more of these folders. Sharing the folders will mean that the hidden items are visible to those you share with. The items will still be hidden in your Cloud drive.";
+"shareFolder.sensitive.alert.message.multi"="Ada item tersembunyi di satu atau lebih folder ini. Berbagi folder berarti bahwa item tersembunyi terlihat oleh orang-orang yang anda bagikan. Item masih akan disembunyikan di drive Cloud anda.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Ganti nama album";
 /* Rename public album alert message */
@@ -3813,7 +3797,7 @@
 /* Empty screen copy when Presentations filter is selected on the home screen search */
 "home.search.empty.no-presentations"="Tidak ada presentasi";
 /* Empty screen copy when Spreadsheets filter is selected on the home/cloudDrive screen search */
-"home.search.empty.no-spreadsheets"="No spreadsheets";
+"home.search.empty.no-spreadsheets"="Tidak ada spreadsheet";
 /* Empty screen copy when Archives filter is selected on the home screen search */
 "home.search.empty.no-archives"="Tidak ada arsip";
 /* A title label for waiting room participants list view. */
@@ -3933,17 +3917,17 @@
 /* Videos: videos filter title for duration */
 "videos.tab.all.filter.duration.title.duration"="Durasi";
 /* Videos: videos filter option for all duration */
-"videos.tab.all.filter.duration.option.allDurations"="All durations";
+"videos.tab.all.filter.duration.option.allDurations"="Semua durasi";
 /* Videos: videos filter option for less than 10 seconds */
-"videos.tab.all.filter.duration.option.lessThan10Seconds"="Less than 10 seconds";
+"videos.tab.all.filter.duration.option.lessThan10Seconds"="Kurang dari 10 detik";
 /* Videos: videos filter option for between 10 and 60 seconds */
-"videos.tab.all.filter.duration.option.between10And60Seconds"="Between 10 and 60 seconds";
+"videos.tab.all.filter.duration.option.between10And60Seconds"="Antara 10 dan 60 detik";
 /* Videos: videos filter option for between 1 and 4 minutes */
-"videos.tab.all.filter.duration.option.between1And4Minutes"="Between 1 and 4 minutes";
+"videos.tab.all.filter.duration.option.between1And4Minutes"="Antara 1 dan 4 menit";
 /* Videos: videos filter option for between 4 and 20 minutes */
-"videos.tab.all.filter.duration.option.between4And20Minutes"="Between 4 and 20 minutes";
+"videos.tab.all.filter.duration.option.between4And20Minutes"="Antara 4 dan 20 menit";
 /* Videos: videos filter option for more than 20 minutes */
-"videos.tab.all.filter.duration.option.moreThan20Minutes"="More than 20 minutes";
+"videos.tab.all.filter.duration.option.moreThan20Minutes"="Lebih dari 20 menit";
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="Tidak ada daftar putar yang ditemukan";
 /* Videos: video playlist add new playlist button text description */
@@ -3961,7 +3945,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterNewName"="Masukkan nama baru";
 /* Used in create video playlist popup system video playlist name validation */
-"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="Nama playlist ini tidak diperbolehkan";
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="Masukkan nama yang berbeda";
 /* Used in create video playlist popup user video playlist name validation */
@@ -3971,13 +3955,13 @@
 /* Used in video playlist content to delete playlist */
 "videos.tab.playlist.playlistContent.menu.deletePlaylist"="Hapus daftar putar";
 /* Used in video playlist content action sheet when about to remove videos from playlist */
-"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Remove from playlist?";
+"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist"="Hapus dari playlist?";
 /* Used for adding videos to video playlist add toolbar button */
 "videos.tab.playlist.browser.button.add"="Tambah";
 /* Used for adding videos to video playlist add button in video playlist content */
 "videos.tab.playlist.content.header.button.title.add"="Tambah";
 /* Videos: video playlist rename alert title */
-"videos.tab.playlist.content.alert.title.rename"="Rename playlist";
+"videos.tab.playlist.content.alert.title.rename"="Ubah nama playlist";
 /* Videos: video playlist rename alert subtitle */
 "videos.tab.playlist.content.alert.subtitle.enterTheNewName"="Masukkan nama baru";
 /* Videos: video playlist rename alert button title */
@@ -3985,15 +3969,15 @@
 /* Videos: video playlist rename error message */
 "videos.tab.playlist.content.snackbar.renamingFailed"="Mengganti nama gagal";
 /* Videos: video playlist delete playlist alert title */
-"videos.tab.playlist.content.alert.title.deletePlaylist"="Delete playlist?";
+"videos.tab.playlist.content.alert.title.deletePlaylist"="Hapus playlist?";
 /* Videos: video playlist delete playlist alert subtitle */
-"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Playlist will be deleted but its contents will stay in your Timeline.";
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Playlist akan dihapus tetapi isinya akan tetap berada di Timeline anda.";
 /* Videos: video playlist delete playlist snack bar message */
-"videos.tab.playlist.content.snackbar.playlistNameDeleted"="“[A]” deleted";
+"videos.tab.playlist.content.snackbar.playlistNameDeleted"="”[A]” dihapus";
 /* Videos: video playlist remove video from video playlist */
-"videos.tab.playlist.content.removeFromPlaylist"="Remove from playlist";
+"videos.tab.playlist.content.removeFromPlaylist"="Hapus dari playlist";
 /* Recently watched videos page title */
-"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+"videos.recentlyWatched.navigationBarTitle"="Baru-baru ini ditonton";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Tidak ada aktivitas terbaru";
 /* Calls: Floating panel participants empty list waiting room state */
@@ -4131,7 +4115,7 @@
 /* Rewind fro free users */
 "rewind.for.free.users"="Hingga 30 hari (hanya lihat)";
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
-"rewind.for.pro.users"="Up to %d days";
+"rewind.for.pro.users"="Hingga %d hari";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
@@ -4211,13 +4195,13 @@
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Masuk ke akun MEGA anda.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Click the main menu.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Klik menu utama.";
 /* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Click <b>Settings</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. Klik <b>Pengaturan</b>.";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Click <b>Plan</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. Klik <b>Paket</b>.";
 /* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Click <b>Cancel subscription</b>.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Klik <b>Batalkan langganan</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Pada perangkat seluler";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
@@ -4229,9 +4213,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Ketuk <b>Batalkan langganan</b>.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We’re sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="Kami menyesal melihat anda pergi! Bisakah anda memberi tahu kami mengapa anda membatalkan langganan anda?";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="Langganan anda akan segera dibatalkan dan anda akan dipindahkan ke akun MEGA gratis ketika paket anda saat ini berakhir. Catatan: Membatalkan langganan tidak akan menghapus akun anda.";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Saya membutuhkan paket ini untuk sementara dan tidak lagi menggunakannya";
 /* Cancel subscription survey reason with id 2 */
@@ -4253,7 +4237,7 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="Saya tidak ingin berlangganan atau penagihan otomatis";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="Saya mengizinkan MEGA untuk menghubungi saya untuk membicarakan topik ini lebih lanjut";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="Jangan batalkan";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
@@ -4263,15 +4247,15 @@
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Item tersembunyi";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.single"="This item is set to hidden. Once you share the item, anyone with the link will be able to see it. It will still be hidden in your Cloud drive.";
+"getNodeLink.sensitive.alert.message.single"="Item ini diatur ke tersembunyi. Setelah anda membagikan item, siapa pun yang memiliki tautan akan dapat melihatnya. Itu masih akan disembunyikan di drive Cloud anda.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.multi"="One or more of these items is set to hidden. Once you share the hidden items, anyone with the link will be able to see them. The items will still be hidden in your Cloud drive.";
+"getNodeLink.sensitive.alert.message.multi"="Satu atau lebih item ini diatur ke tersembunyi. Setelah anda membagikan item tersembunyi, siapa pun yang memiliki tautan akan dapat melihatnya. Item masih akan disembunyikan di drive Cloud anda.";
 /* Title of the Show last seen option in the chat settings */
 "settings.calls.status.showLastSeen.title"="Tampilkan yang terakhir terlihat";
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="Anda mengangkat tangan";
 /* Snack bar message shown when another participant raises hand in the call */
-"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ raised their hand";
+"chat.call.raise-hand.snack-bar.other-person-raised-hand"="%@ mengangkat tangan mereka";
 /* Action title to lower hand, shown on Snack bar local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.lower-hand"="Turunkan tangan";
 /* Action title to view participant list, shown on Snack bar, when another participant raises hand in the call */
@@ -4285,9 +4269,9 @@
 /* Text displayed in the description field when no description is present, in read-write mode. */
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="Tambah deskripsi";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
-"call.meeting.empty.shareOptionsDialog.title"="Share this link or invite participants to join you";
+"call.meeting.empty.shareOptionsDialog.title"="Bagikan tautan ini atau undang peserta untuk bergabung dengan anda";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
-"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Share this link to invite others";
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Bagikan tautan ini untuk mengundang orang lain";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="Bagikan Tautan Rapat";
 /* Title for copy link button in Empty meeting share options dialog */
@@ -4305,31 +4289,31 @@
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Batal";
 /* Title for empty chats tab */
-"chat.chats.emptyState.v2.title"="Keep conversations private";
+"chat.chats.emptyState.v2.title"="Jaga percakapan tetap pribadi";
 /* Description for empty chats tab */
-"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
+"chat.chats.emptyState.v2.description"="Semua pesan, obrolan grup, dan panggilan anda dilindungi oleh enkripsi tanpa-pengetahuan kami dan tetap pribadi. [A]Pelajari selengkapnya[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="Undang teman";
 /* Description in new chat screen empty screen mode when user has no contacts */
-"chat.newChat.emptyState.description"="With top-notch security and verification codes, reach out without fear of scams, data mining, or information theft";
+"chat.newChat.emptyState.description"="Dengan kode keamanan dan verifikasi terbaik, hubungi tanpa takut penipuan, penambangan data, atau pencurian informasi";
 /* Toast message shown to the user when the node description is added */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Deskripsi ditambahkan";
 /* Toast message shown to the user when the node description is removed */
-"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Deskripsi dihapus";
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Deskripsi diperbarui";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Apakah anda ingin menyimpan perubahan yang anda buat pada deskripsi?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="Membuang perubahan";
 /* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="Terus ubah";
 /* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Save and close";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Simpan dan tutup";
 /* Toast message shown to the user when the node description update failed. */
-"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Gagal saat memperbarui deskripsi, coba lagi";
 /* New chat page title */
 "chat.newChat.title"="Obrolan baru";
 /* Visual media search history section title */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Undang";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="Penyimpanan anda penuh";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Tingkatkan sekarang";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Untuk terus mengupload data, tingkatkan versi sekarang untuk mendapatkan lebih banyak penyimpanan.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="Lindungi panggilan anda";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="Rapat, panggilan keluarga, dan percakapan pribadi anda dilindungi oleh enkripsi tanpa-pengetahuan kami. \n [A]Pelajari lebih lanjut[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="Mulai rapat sekarang";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="Jadwalkan pertemuan";

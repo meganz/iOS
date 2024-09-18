@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="تم تفعيل حسابك بالفعل. يُرجى تسجيل الدخول.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="رابط التأكيد خاصتك لم يعد صالحاً. قد يكون حسابك مفعلاً مسبقاً أو قد تكون قد ألغيت تسجيل حسابك.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="رابط التأكيد الخاص بك لم يعد صالحًا. ربما تم تفعيل حسابك بالفعل أو ربما قمت بإلغاء اشتراكك.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="رابط غير صالح";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="حدد الملفات";
 /* Title for the action that allows you to move a file or folder */
 "move"="نقل";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="تم نقل 1 ملف";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="تم نقل %d ملف";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="تم نقل 1 مجلد";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="تم نقل %d مجلد";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="تم نقل 1 ملف و 1 مجلد";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="تم نقل 1 ملف و %d مجلد";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="تم نقل %d ملف و 1 مجلد";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="تم نقل [A] ملف و [B] مجلد";
 /* List option shown on the details of a file or folder */
 "copy"="نسخ";
 /* Success message shown when you have copied 1 file */
@@ -987,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ مساحة تخزين";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ غيغابايت[/B] من مساحة تخزين";
+"account.storage.freePlan"="[B]%@ غيغابايت[/B]من مساحة التخزين";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="تراسل المعطيات";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -995,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="حجم تراسل معطيات [B]محدود[/B]";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="مكافآت التسجيل";
+"account.achievement.registration.title"="مكافأة الاشتراك";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="لقد تلقيت %@ من مساحة تخزين كمكافأة تسجيل مجانية.";
+"account.achievement.registration.explanation.label"="لقد استلمت %@ من مساحة التخزين كمكافأة تسجيل مجانية.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="مكافآت الإحالة";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="مجلد مشارك جديد";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="هل أنت متأكد أنك تريد إلغاء التسجيل؟";
+"areYouSureYouWantToAbortTheRegistration"="هل تريد بالتأكيد إيقاف عملية التسجيل؟";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="إذا أخطأت في كتابة عنوان بريدك الإلكتروني، فقم بتصحيحه وانقر على «إعادة الإرسال».";
 /* A button to resend the email confirmation. */
@@ -4319,7 +4303,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="تم تحديث الوصف";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="هل تريد حفظ التغييرات التي أجريتها على الوصف؟";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="ادعو";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="مساحة التخزين الخاصة بك ممتلئة";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="رق حسابك الآن";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="لمواصلة ترفيع البيانات، قم بالترقية الآن للحصول على المزيد من مساحة التخزين.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="قم بحماية مكالماتك";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="تتم حماية اجتماعاتك ومكالماتك العائلية ومحادثاتك الخاصة من خلال تشفير المعرفة الصفرية الخاص بنا. \n [A]اعرف المزيد[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="ابدأ الاجتماع الآن";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="الاجتماع المجدول";

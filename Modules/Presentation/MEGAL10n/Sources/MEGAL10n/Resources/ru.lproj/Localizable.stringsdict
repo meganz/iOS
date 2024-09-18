@@ -3682,26 +3682,6 @@
         <string>Ваш бесплатный звонок завершится через %d минуты</string>
       </dict>
     </dict>
-    <key>cameraUploads.albums.albumLink.sensitive.alert.message</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>videos.tab.playlist.snackbar.videoCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3760,6 +3740,26 @@
         <string>До %d дней</string>
         <key>other</key>
         <string>До %d дня</string>
+      </dict>
+    </dict>
+    <key>nodes.action.hideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hiddeItems@</string>
+      <key>hiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d элемент скрыт</string>
+        <key>few</key>
+        <string>%d элемента скрыто</string>
+        <key>many</key>
+        <string>%d элементов скрыто</string>
+        <key>other</key>
+        <string>%d элемента скрыто</string>
       </dict>
     </dict>
   </dict>

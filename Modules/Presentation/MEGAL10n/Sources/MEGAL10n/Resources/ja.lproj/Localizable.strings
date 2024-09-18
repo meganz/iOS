@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="あなたのアカウントは有効になっています。ログインしてください。";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="あなたの確認リンクはもう有効ではありません。あなたのアカウントは既に有効になっているか、登録をキャンセルしたかもしれません。";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="確認リンクは無効になりました。あなたのアカウントはすでに有効になっているか、サインアップをキャンセルしている可能性があります。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="リンク無効";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="ファイルを選択";
 /* Title for the action that allows you to move a file or folder */
 "move"="移動";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1個のファイル移動しました";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d個のファイルを移動しました";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1個のフォルダを移動しました";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d個の移動しました";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1個のファイルと1個のフォルダを移動しました";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1個のファイルと%d個のフォルダを移動しました";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d個のファイルと1個のフォルダを移動しました";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A]個のファイルと[B]個のフォルダを移動しました";
 /* List option shown on the details of a file or folder */
 "copy"="コピー";
 /* Success message shown when you have copied 1 file */
@@ -995,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]限定された[/B]転送";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="ご登録ボーナス";
+"account.achievement.registration.title"="サインアップボーナス";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="あなたは無料登録ボーナスとして%@のストレージスペースを受け取りました。";
+"account.achievement.registration.explanation.label"="無料サインアップボーナスとして%@のストレージスペースを受け取りました。";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="紹介ボーナス";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新しい共有フォルダ";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="登録を中止してもよろしいですか？";
+"areYouSureYouWantToAbortTheRegistration"="サインアッププロセスを停止してもよろしいですか？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="メールアドレスのスペルを間違った場合、それを修正して「再送信」をタップしてください。";
 /* A button to resend the email confirmation. */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="招待";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="ストレージがいっぱいです";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="今すぐアップグレード";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="データのアップロードを続けるには、今すぐアップグレードしてストレージを増やしてください。";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="通話を保護";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="ミーティング、家族との通話、プライベートな会話は、ゼロ知識暗号化によって保護されます。\n[A]詳細[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="今すぐミーティングを開始";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="ミーティングをスケジュール";
