@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="계정이 활성화되었습니다. 로그인 하세요.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 계정이 이미 활성화되었거나 가입을 취소했을 수 있습니다.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your signup.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="파일 선택";
 /* Title for the action that allows you to move a file or folder */
 "move"="이동";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="파일 1개 이동됨";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="파일 %d개 이동됨";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="폴더 1개 이동됨";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="폴더 %d개 이동됨";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="파일 1개와 폴더 1개 이동됨";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="파일 1개와 폴더 %d개 이동됨";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="파일 %d개와 폴더 1개 이동됨";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="파일 [A]개와 폴더 [B]개 이동됨";
 /* List option shown on the details of a file or folder */
 "copy"="복사";
 /* Success message shown when you have copied 1 file */
@@ -987,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ 저장소";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@GB[/B]의 저장소";
+"account.storage.freePlan"="[B]%@ GB[/B] storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="전송";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -995,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]제한된[/B] 전송";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="가입 보너스";
+"account.achievement.registration.title"="Signup bonus";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="무료 가입 보너스로 %@의 저장 공간을 받았습니다.";
+"account.achievement.registration.explanation.label"="You have received %@ storage space as your free signup bonus.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="추천 보너스";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="새 공유된 폴더";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="가입을 취소하시겠습니까?";
+"areYouSureYouWantToAbortTheRegistration"="Are you sure you want to stop the signup process?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="당신의 이메일 주소를 잘못 입력하였다면, 수정하고 “재발송”을 탭하세요.";
 /* A button to resend the email confirmation. */
@@ -4207,7 +4191,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="컴퓨터에서";
 /* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 웹 브라우저에서 www.mega.nz 에 방문합니다.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 웹 브라우저에서 www.mega.nz에 방문합니다.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. MEGA 계정에 로그인합니다.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4319,7 +4303,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="설명 수정됨";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Confirm close?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="초대";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="저장소가 가득 찼습니다";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="지금 업그레이드";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="데이터를 계속 업로드 하려면, 지금 업그레이드 하여 더 많은 저장소를 받아야 합니다.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="Protect your calls";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="Your meetings, family calls, and private conversations are protected by our zero-knowledge encryption. \n [A]Learn more[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="지금 회의 시작";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="회의 예약";

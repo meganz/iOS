@@ -4418,30 +4418,6 @@
         <string>ستنتهي مكالمتك المجانية في %d دقيقة</string>
       </dict>
     </dict>
-    <key>cameraUploads.albums.albumLink.sensitive.alert.message</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>zero</key>
-        <string></string>
-        <key>one</key>
-        <string></string>
-        <key>two</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>videos.tab.playlist.snackbar.videoCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -4512,6 +4488,30 @@
         <string></string>
         <key>other</key>
         <string></string>
+      </dict>
+    </dict>
+    <key>nodes.action.hideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hiddeItems@</string>
+      <key>hiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d عنصر مخفي</string>
+        <key>one</key>
+        <string>%d عنصر مخفي</string>
+        <key>two</key>
+        <string>%d عنصرين مخفيين</string>
+        <key>few</key>
+        <string>%d عناصر مخفية</string>
+        <key>many</key>
+        <string>%d عنصر مخفي</string>
+        <key>other</key>
+        <string>%d عنصر مخفي</string>
       </dict>
     </dict>
   </dict>

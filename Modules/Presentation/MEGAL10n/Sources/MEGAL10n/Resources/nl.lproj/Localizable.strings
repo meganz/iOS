@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Uw account is geactiveerd. Log in.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Uw bevestigingslink is niet langer geldig. Uw account kan al geactiveerd zijn of u kunt uw registratie geannuleerd hebben.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Uw bevestigingslink is niet langer geldig. Uw account is mogelijk al geactiveerd of u heeft uw aanmelding geannuleerd.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ongeldige link";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -428,22 +428,6 @@
 "selectFiles"="Selecteer bestanden";
 /* Title for the action that allows you to move a file or folder */
 "move"="Verplaatsen";
-/* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 bestand verplaatst";
-/* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d bestanden verplaatst";
-/* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 map verplaatst";
-/* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d mappen verplaatst";
-/* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 bestand en 1 map verplaatst";
-/* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 bestand en %d mappen gewijzigd";
-/* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d bestanden en 1 map verplaatst";
-/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] bestanden en [B] mappen verplaatst";
 /* List option shown on the details of a file or folder */
 "copy"="Kopiëren";
 /* Success message shown when you have copied 1 file */
@@ -977,7 +961,7 @@
 /*  */
 "howItWorksMain"="Uw vriend moet zich aanmelden voor een gratis account op MEGA en [S]installeer minstens één MEGA-applicatie[/S] (ofwel de MEGA Desktop Applicatie of een van onze MEGA Mobile Applicaties)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="U kunt uw vriend op elke manier op de hoogte stellen. U verdient de bonus als u hier het e-mailadres van uw vriend hebt ingevoerd voordat ze zich met dat adres hebben aangemeld.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="U ontvangt geen tegoed voor het uitnodigen van iemand die MEGA voorheen gebruikt heeft en deze weigering wordt niet gemeld.";
 /* Header of block with achievements bonuses. */
@@ -995,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]Gelimiteerde[/B] Overdracht";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Registratiebonus";
+"account.achievement.registration.title"="Inschrijfbonus";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="U heeft %@ opslagruimte ontvangen als uw gratis registratie bonus.";
+"account.achievement.registration.explanation.label"="U ontvangt %@ opslagruimte als gratis aanmeldingsbonus.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Verwijzingsbonussen";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1339,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nieuw gedeelde map";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Weet u zeker dat u de registratie wilt afbreken?";
+"areYouSureYouWantToAbortTheRegistration"="Weet u zeker dat u het aanmeldingsproces wilt stoppen?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Als u uw e-mailadres verkeerd hebt gespeld, corrigeer het dan en tik op „Opnieuw vesturen”.";
 /* A button to resend the email confirmation. */
@@ -4337,4 +4321,18 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Uitnodigen";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for any media files.";
+"photos.searchHistory.empty.description"="Try searching for media files";
+/* Banner title shown when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.title"="Uw opslag is vol";
+/* Button title to upgrade when storage is full */
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Nu upgraden";
+/* Banner description shown when storage is full, prompting the user to upgrade */
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Upgrade nu om meer opslagruimte te krijgen om gegevens te blijven uploaden.";
+/* Title of meetings screen empty view */
+"chat.meetings.emptyState.v2.title"="Bescherm uw gesprekken";
+/* Description of meetings screen empty view */
+"chat.meetings.emptyState.v2.description"="Uw vergaderingen, familiegesprekken en privégesprekken worden beschermd door onze zero-knowledge codering. \n [A]Meer informatie[/A]";
+/* Button title to start new meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.startMeetingNow"="Vergadering nu beginnen";
+/* Button title to schedule a meeting on meetings screen when empty */
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="Plan vergadering";
