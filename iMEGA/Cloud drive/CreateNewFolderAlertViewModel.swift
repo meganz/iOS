@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class CreateNewFolderAlertViewModel {
     struct AlertProperties: Equatable {
         let title: String
@@ -88,8 +89,7 @@ final class CreateNewFolderAlertViewModel {
         continuation = nil
     }
 
-    @MainActor
-    private func showNodeAlreadyExistsError() {
-        router.showNodeAlreadyExistsError()
+    private func showNodeAlreadyExistsError() async {
+        await router.showNodeAlreadyExistsError()
     }
 }
