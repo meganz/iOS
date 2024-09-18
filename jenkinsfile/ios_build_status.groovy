@@ -69,7 +69,7 @@ def postConsoleLog(message) {
 }
 
 pipeline {
-    agent { label 'mac-jenkins-slave-ios-xcode-16-beta' }
+    agent { label 'mac-jenkins-slave-ios' }
     options {
         timeout(time: 45, unit: 'MINUTES') 
         gitLabConnection('GitLabConnection')
