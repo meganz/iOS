@@ -26,6 +26,9 @@ final class MyAvatarIconViewModel<AvatarObserver: MyAvatarObserver>: ObservableO
         }
 
         avatarObserver.viewIsReady()
+    }
+
+    func onAppear() {
         avatarObserver.viewIsAppearing()
     }
 
