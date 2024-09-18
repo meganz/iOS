@@ -1,4 +1,4 @@
-public protocol NodesRemovedUseCaseProtocol {
+public protocol NodesRemovedUseCaseProtocol: Sendable {
     /// Removes the cached files (thumbnail, preview and original image saved when opening a node) associated with the nodes that have been removed.
     func removeCachedFiles() async
 }
