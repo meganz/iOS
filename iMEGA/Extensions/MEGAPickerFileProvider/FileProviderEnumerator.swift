@@ -20,7 +20,8 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
         MEGALogDebug("[Picker] invalidate")
     }
 
-    func enumerateItems(for observer: NSFileProviderEnumerationObserver, startingAt page: NSFileProviderPage) {
+    func enumerateItems(for observer: any NSFileProviderEnumerationObserver,
+                        startingAt page: NSFileProviderPage) {
         Task {
             do {
                 if MEGASdk.shared.isLoggedIn() == 0 {

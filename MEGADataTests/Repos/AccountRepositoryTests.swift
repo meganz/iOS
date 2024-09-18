@@ -586,7 +586,7 @@ final class AccountRepositoryTests: XCTestCase {
         ), mockSdk)
     }
     
-    private func nodeAccess(for nodeHandle: UInt64) -> NodeAccessProtocol {
+    private func nodeAccess(for nodeHandle: UInt64) -> any NodeAccessProtocol {
         MockNodeAccess(
            result: nodeHandle > 0 ?
                .success(MockNode(handle: nodeHandle)) :

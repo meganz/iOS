@@ -99,14 +99,14 @@ final class CreateNewFolderAlertViewModelTests: XCTestCase {
     private func makeSUT(
         router: some CreateNewFolderAlertRouting = MockCreateNewFolderAlertRouter(),
         parentNode: NodeEntity = .init(),
-        nodeUseCase: NodeUseCaseProtocol = MockNodeDataUseCase()
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase()
     ) -> SUT {
         SUT(router: router, parentNode: parentNode, nodeUseCase: nodeUseCase)
     }
 
     private func assertWaitUntilFinished(
         router: some CreateNewFolderAlertRouting = MockCreateNewFolderAlertRouter(),
-        nodeUseCase: NodeUseCaseProtocol = MockNodeDataUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         expectedResult: NodeEntity? = nil,
         folderName: String? = nil,
         file: StaticString = #filePath,

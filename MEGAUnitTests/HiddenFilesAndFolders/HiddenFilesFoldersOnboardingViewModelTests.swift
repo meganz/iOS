@@ -7,7 +7,7 @@ import XCTest
 
 final class HiddenFilesFoldersOnboardingViewModelTests: XCTestCase {
     func testOnViewAppear_called_shouldTrackTheCorrectEvent() {
-        let screenEvents: [ScreenViewEventIdentifier] = [
+        let screenEvents: [any ScreenViewEventIdentifier] = [
             HideNodeOnboardingScreenEvent(),
             HideNodeUpgradeScreenEvent()]
         

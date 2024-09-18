@@ -100,7 +100,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let nodeNotSensitive = NodeEntity(handle: 1, isMarkedSensitive: false)
         let nodeInheritingSensitivity = NodeEntity(handle: 2, isMarkedSensitive: false)
         let nodes = [nodeNotSensitive, nodeInheritingSensitivity]
-        let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
+        let isInheritingSensitivityResults: [HandleEntity: Result<Bool, any Error>] = [
             nodeNotSensitive.handle: .success(false),
             nodeInheritingSensitivity.handle: .success(true)
         ]

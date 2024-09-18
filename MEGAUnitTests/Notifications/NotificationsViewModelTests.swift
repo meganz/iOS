@@ -194,7 +194,7 @@ final class NotificationsViewModelTests: XCTestCase {
         notifications: [NotificationEntity] = [],
         enabledNotifications: [NotificationIDEntity] = [],
         unreadNotificationIds: [NotificationIDEntity] = [],
-        imageLoader: ImageLoadingProtocol = ImageLoader(),
+        imageLoader: some ImageLoadingProtocol = ImageLoader(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (NotificationsViewModel, MockNotificationUseCase) {

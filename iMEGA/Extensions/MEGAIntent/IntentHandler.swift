@@ -17,7 +17,8 @@ final class IntentHandler: INExtension {
 }
 
 extension IntentHandler: SelectShortcutIntentHandling {
-    func provideShortcutOptionsCollection(for intent: SelectShortcutIntent, with completion: @escaping (INObjectCollection<IntentShortcut>?, Error?) -> Void) {
+    func provideShortcutOptionsCollection(for intent: SelectShortcutIntent,
+                                          with completion: @escaping (INObjectCollection<IntentShortcut>?, (any Error)?) -> Void) {
         let intentShortcuts = ShortcutDetail.availableShortcuts.map {
             IntentShortcut(identifier: $0.link, display: $0.title)
         }

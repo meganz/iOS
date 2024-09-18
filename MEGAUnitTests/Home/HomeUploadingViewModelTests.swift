@@ -10,7 +10,7 @@ import MEGATest
 import XCTest
 
 final class HomeUploadingViewModelTests: XCTestCase {
-    private func makeSUT(tracker: AnalyticsTracking = MockTracker()) -> HomeUploadingViewModel {
+    private func makeSUT(tracker: some AnalyticsTracking = MockTracker()) -> HomeUploadingViewModel {
         HomeUploadingViewModel(
             uploadFilesUseCase: UploadPhotoAssetsUseCase(
                 uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: .shareInstance())
@@ -25,7 +25,7 @@ final class HomeUploadingViewModelTests: XCTestCase {
     
     private func trackAnalyticsEventTest(
         action: UploadAddActionEntity,
-        expectedEvent: EventIdentifier
+        expectedEvent: some EventIdentifier
     ) {
         let mockTracker = MockTracker()
         let sut = makeSUT(tracker: mockTracker)

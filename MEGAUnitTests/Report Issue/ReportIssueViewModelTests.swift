@@ -18,7 +18,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         connectedViaWiFi: Bool = false,
         uploadFileResult: Result<Void, TransferErrorEntity>? = nil,
         uploadSupportFileResult: Result<TransferEntity, TransferErrorEntity>? = nil,
-        supportResult: Result<Void, Error> = .failure(GenericErrorEntity()),
+        supportResult: Result<Void, any Error> = .failure(GenericErrorEntity()),
         cancelTransferResult: Result<Void, TransferErrorEntity> = .failure(.generic),
         areLogsEnabled: Bool = false,
         sourceUrl: URL? = nil,
@@ -26,7 +26,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         file: StaticString = #file,
         line: UInt = #line
     ) -> (ReportIssueViewModel, MockReportIssueViewRouter) {
-        let router: ReportIssueViewRouting = MockReportIssueViewRouter()
+        let router: some ReportIssueViewRouting = MockReportIssueViewRouter()
         let monitorUseCase = MockNetworkMonitorUseCase(
             connected: connected,
             connectedViaWiFi: connectedViaWiFi,

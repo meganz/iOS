@@ -221,7 +221,7 @@ class CookieSettingsViewModelTests: XCTestCase {
         cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
         abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .baseline]),
-        mockRouter: CookieSettingsRouting = MockCookieSettingsRouter(),
+        mockRouter: some CookieSettingsRouting = MockCookieSettingsRouter(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CookieSettingsViewModel {
