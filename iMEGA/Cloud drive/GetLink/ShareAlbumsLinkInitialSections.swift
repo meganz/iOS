@@ -6,18 +6,18 @@ import MEGASDKRepo
 struct ShareAlbumsLinkInitialSections {
     private let albums: [AlbumEntity]
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
+    private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     
     init(albums: [AlbumEntity],
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
-         monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol,
+         monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
          albumCoverUseCase: any AlbumCoverUseCaseProtocol) {
         self.albums = albums
         self.thumbnailUseCase = thumbnailUseCase
-        self.monitorAlbumsUseCase = monitorAlbumsUseCase
+        self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.albumCoverUseCase = albumCoverUseCase
     }
@@ -29,7 +29,7 @@ struct ShareAlbumsLinkInitialSections {
                 GetLinkAlbumInfoCellViewModel(
                     album: $0,
                     thumbnailUseCase: thumbnailUseCase,
-                    monitorAlbumsUseCase: monitorAlbumsUseCase,
+                    monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                     contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                     albumCoverUseCase: albumCoverUseCase
                 ),

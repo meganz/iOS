@@ -363,13 +363,14 @@ final class AlbumCellViewModelTests: XCTestCase {
         ]
         let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
             .eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
+            monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
         
         let tracker = MockTracker()
         let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = makeAlbumCellViewModel(
             album: .init(id: albumId, type: .user),
-            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
             tracker: tracker,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
@@ -426,13 +427,14 @@ final class AlbumCellViewModelTests: XCTestCase {
             }
             let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
                 .eraseToAnyAsyncSequence()
-            let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+            let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
+                monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
             let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodesFeatureFlag])
             let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             let album = AlbumEntity(id: albumId, type: .user)
             
             let sut = makeAlbumCellViewModel(album: album,
-                                             monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                             monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                                              featureFlagProvider: featureFlagProvider,
                                              albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
             
@@ -451,8 +453,8 @@ final class AlbumCellViewModelTests: XCTestCase {
             task.cancel()
             subscription.cancel()
             
-            let monitorTypes = await monitorAlbumsUseCase.state.monitorTypes
-            XCTAssertEqual(monitorTypes,
+            let invocations = await monitorUserAlbumPhotosUseCase.state.invocations
+            XCTAssertEqual(invocations,
                            [.userAlbumPhotos(excludeSensitives: hiddenNodesFeatureFlag, includeSensitiveInherited: hiddenNodesFeatureFlag)])
         }
     }
@@ -471,7 +473,8 @@ final class AlbumCellViewModelTests: XCTestCase {
         let thumbnailLoader = MockThumbnailLoader(loadImages: [coverNode.handle: thumbnailAsyncSequence])
         let monitorUserAlbumPhotos = SingleItemAsyncSequence(item: albumPhotos)
             .eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
+            monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
         let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: coverNode)
         
         let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
@@ -479,7 +482,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: thumbnailLoader,
-            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
             albumCoverUseCase: albumCoverUseCase,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         let exp = expectation(description: "Should update thumbnail with latest photo")
@@ -502,14 +505,14 @@ final class AlbumCellViewModelTests: XCTestCase {
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
 
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+        let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
         let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: nil)
         let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         
         let sut = makeAlbumCellViewModel(album: album,
                                          thumbnailLoader: thumbnailLoader,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                                          albumCoverUseCase: albumCoverUseCase,
                                          albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
@@ -532,11 +535,12 @@ final class AlbumCellViewModelTests: XCTestCase {
         
         let monitorUserAlbumPhotos = SingleItemAsyncSequence<[AlbumPhotoEntity]>(item: [])
             .eraseToAnyAsyncSequence()
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
+        let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
+            monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
         let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         
         let sut = makeAlbumCellViewModel(album: album,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                                          albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         let exp = expectation(description: "Should not update thumbnail with latest photo")
@@ -557,12 +561,12 @@ final class AlbumCellViewModelTests: XCTestCase {
     func testMonitorAlbumPhotos_coverSetThenPhotosRemoved_shouldSetToPlaceholder() async {
         let album = AlbumEntity(id: 65, name: "User",
                                 coverNode: nil, count: 0, type: .user)
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+        let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
         let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         
         let sut = makeAlbumCellViewModel(album: album,
-                                         monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                         monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                                          albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         sut.thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         
@@ -728,7 +732,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     private func makeAlbumCellViewModel(
         album: AlbumEntity,
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
@@ -742,7 +746,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> AlbumCellViewModel {
         let sut = AlbumCellViewModel(thumbnailLoader: thumbnailLoader,
-                                     monitorAlbumsUseCase: monitorAlbumsUseCase,
+                                     monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                                      nodeUseCase: nodeUseCase,
                                      sensitiveNodeUseCase: sensitiveNodeUseCase,
                                      contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,

@@ -19,7 +19,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let nodeRepository = NodeRepository.newRepo
         let vm = AlbumCellViewModel(
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
-            monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
+            monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
@@ -105,6 +105,15 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             photosRepository: PhotosRepository.sharedRepo,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo))
+    }
+    
+    private func makeMonitorUserAlbumPhotosUseCase() -> some MonitorUserAlbumPhotosUseCaseProtocol {
+        MonitorUserAlbumPhotosUseCase(
+            userAlbumRepository: UserAlbumCacheRepository.newRepo,
+            photosRepository: PhotosRepository.sharedRepo,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo)
+        )
     }
     
     private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {

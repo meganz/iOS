@@ -34,7 +34,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
         let initialSections = ShareAlbumLinkInitialSections(
             album: album,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
+            monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
             contentConsumptionUserAttributeUseCase: makeContentConsumptionUserAttributeUseCase(),
             albumCoverUseCase: makeAlbumCoverUseCase())
         return GetAlbumLinkViewModel(
@@ -49,7 +49,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
         let initialSections = ShareAlbumsLinkInitialSections(
             albums: albums,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
+            monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
             contentConsumptionUserAttributeUseCase: makeContentConsumptionUserAttributeUseCase(),
             albumCoverUseCase: makeAlbumCoverUseCase())
         return GetAlbumsLinkViewModel(
@@ -66,23 +66,12 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             nodeRepository: NodeRepository.newRepo)
     }
     
-    private func makeMonitorAlbumsUseCase() -> some MonitorAlbumsUseCaseProtocol {
-        MonitorAlbumsUseCase(
-            monitorPhotosUseCase: MonitorPhotosUseCase(
-                photosRepository: PhotosRepository.sharedRepo,
-                photoLibraryUseCase: PhotoLibraryUseCase(
-                    photosRepository: PhotoLibraryRepository(
-                        cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
-                    searchRepository: FilesSearchRepository.newRepo,
-                    contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                    hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
-                sensitiveNodeUseCase: SensitiveNodeUseCase(
-                    nodeRepository: NodeRepository.newRepo)),
-            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
+    private func makeMonitorUserAlbumPhotosUseCase() -> some MonitorUserAlbumPhotosUseCaseProtocol {
+        MonitorUserAlbumPhotosUseCase(
             userAlbumRepository: UserAlbumCacheRepository.newRepo,
             photosRepository: PhotosRepository.sharedRepo,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo)
+            nodeRepository: NodeRepository.newRepo)
         )
     }
     

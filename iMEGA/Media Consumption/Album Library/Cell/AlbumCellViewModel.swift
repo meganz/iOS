@@ -37,7 +37,7 @@ final class AlbumCellViewModel: ObservableObject {
     @Binding var selectedAlbum: AlbumEntity?
     
     private let thumbnailLoader: any ThumbnailLoaderProtocol
-    private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
+    private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
@@ -55,7 +55,7 @@ final class AlbumCellViewModel: ObservableObject {
     
     init(
         thumbnailLoader: some ThumbnailLoaderProtocol,
-        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
+        monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
@@ -68,7 +68,7 @@ final class AlbumCellViewModel: ObservableObject {
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
     ) {
         self.thumbnailLoader = thumbnailLoader
-        self.monitorAlbumsUseCase = monitorAlbumsUseCase
+        self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
@@ -121,9 +121,9 @@ final class AlbumCellViewModel: ObservableObject {
         guard await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled(),
               album.type == .user else { return }
         
-        for await albumPhotos in await monitorAlbumsUseCase.monitorUserAlbumPhotos(for: album,
-                                                                                   excludeSensitives: excludeSensitives(),
-                                                                                   includeSensitiveInherited: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)) {
+        for await albumPhotos in await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
+            for: album, excludeSensitives: excludeSensitives(), includeSensitiveInherited: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)) {
+            
             numberOfNodes = albumPhotos.count
             await loadAlbumCover(from: albumPhotos)
             albumMetaData = await albumPhotos.makeAlbumMetaData()

@@ -71,7 +71,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             let userAlbumPhotosAsyncSequence = SingleItemAsyncSequence(item: albumPhotos)
             let thumbnailURL = try makeImageURL()
             let thumbnailEntity = ThumbnailEntity(url: thumbnailURL, type: .thumbnail)
-            let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
                 monitorUserAlbumPhotosAsyncSequence: userAlbumPhotosAsyncSequence.eraseToAnyAsyncSequence())
             let ccUserAttributesUseCase = MockContentConsumptionUserAttributeUseCase(
                 sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: !excludeSensitives))
@@ -80,7 +80,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                 album: album,
                 thumbnailUseCase: MockThumbnailUseCase(
                     loadThumbnailResult: .success(thumbnailEntity)),
-                monitorAlbumsUseCase: monitorAlbumsUseCase,
+                monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                 contentConsumptionUserAttributeUseCase: ccUserAttributesUseCase,
                 albumCoverUseCase: MockAlbumCoverUseCase(albumCover: coverNode),
                 featureFlagProvider: MockFeatureFlagProvider(
@@ -94,8 +94,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             ])
             
             await sut.loadingTask?.value
-            let messages = await monitorAlbumsUseCase.state.monitorTypes
-            XCTAssertEqual(messages, [.userAlbumPhotos(
+            let invocations = await monitorUserAlbumPhotosUseCase.state.invocations
+            XCTAssertEqual(invocations, [.userAlbumPhotos(
                 excludeSensitives: excludeSensitives, includeSensitiveInherited: false)])
         }
     }
@@ -104,12 +104,12 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
     func testDispatchOnViewReady_photosLoaded_shouldSetCountAndPlaceholder() async throws {
         let albumName = "Test"
         let album = AlbumEntity(id: 5, name: albumName, type: .user)
-        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+        let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
         let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = makeSUT(
             album: album,
-            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         
         await test(viewModel: sut, action: .onViewReady, expectedCommands: [
@@ -134,7 +134,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
     private func makeSUT(
         album: AlbumEntity = AlbumEntity(id: 1, type: .user),
         thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
-        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         featureFlagProvider: any FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
@@ -145,7 +145,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         let sut = GetLinkAlbumInfoCellViewModel(
             album: album,
             thumbnailUseCase: thumbnailUseCase,
-            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             albumCoverUseCase: albumCoverUseCase,
             featureFlagProvider: featureFlagProvider,

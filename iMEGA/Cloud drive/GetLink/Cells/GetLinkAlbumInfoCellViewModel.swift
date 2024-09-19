@@ -22,7 +22,7 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     
     private let album: AlbumEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
+    private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -34,14 +34,14 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     
     init(album: AlbumEntity,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
-         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
+         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol,
          albumCoverUseCase: some AlbumCoverUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
         self.album = album
         self.thumbnailUseCase = thumbnailUseCase
-        self.monitorAlbumsUseCase = monitorAlbumsUseCase
+        self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.albumCoverUseCase = albumCoverUseCase
         self.featureFlagProvider = featureFlagProvider
@@ -101,7 +101,7 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     
     private func albumPhotoAsyncSequence() async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
         let excludeSensitives = await excludeSensitives()
-        return await monitorAlbumsUseCase.monitorUserAlbumPhotos(
+        return await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
             for: album, excludeSensitives: excludeSensitives, includeSensitiveInherited: false)
     }
     
