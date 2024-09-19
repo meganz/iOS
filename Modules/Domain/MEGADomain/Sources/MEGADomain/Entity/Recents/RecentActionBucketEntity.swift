@@ -1,6 +1,6 @@
 import Foundation
 
-public struct RecentActionBucketEntity {
+public struct RecentActionBucketEntity: Sendable {
     
     public let date: Date
     public let userEmail: String?

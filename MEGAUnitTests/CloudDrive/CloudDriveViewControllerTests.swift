@@ -463,36 +463,40 @@ final class CloudDriveViewControllerTests: XCTestCase {
         XCTAssertTrue(nodeUpdateRepository.shouldProcessOnNodesUpdateCalled)
     }
     
-    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeCloudDrive_shouldNotCallSdk() {
+    @MainActor
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeCloudDrive_shouldNotCallSdk() async {
         let sut = makeSUT(nodes: [], displayMode: .cloudDrive)
         let sdk = MockSdk()
-        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        await sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
         
         XCTAssertFalse(sdk.getRecentActionsAsyncCalled)
     }
     
-    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallFails_shouldNotUpdateUI() {
+    @MainActor
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallFails_shouldNotUpdateUI() async {
         let sdk = MockSdk(requestResult: .failure(MockError()))
         let sut = makeSUT(nodes: [], displayMode: .recents, recentActionsBucket: MockRecentActionBucket())
         sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
-        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        await sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
         
         XCTAssertTrue(sdk.getRecentActionsAsyncCalled)
         XCTAssertEqual(sut.collectionView().messages, [])
     }
     
-    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallSucceedsWithNoNewUpdates_shouldNotUpdateUI() {
+    @MainActor
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallSucceedsWithNoNewUpdates_shouldNotUpdateUI() async {
         let sdk = MockSdk(requestResult: .success(MockRequest(handle: 0, recentActionsBuckets: [])))
         
         let sut = makeSUT(nodes: [], displayMode: .recents, recentActionsBucket: MockRecentActionBucket())
         sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
-        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        await sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
         
         XCTAssertTrue(sdk.getRecentActionsAsyncCalled)
         XCTAssertEqual(sut.collectionView().messages, [])
     }
     
-    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallSucceedsWithNoNewUpdates_shouldUpdateUI() {
+    @MainActor
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallSucceedsWithNoNewUpdates_shouldUpdateUI() async {
         
         let originalBucket = MockRecentActionBucket.init(parentHandle: 1, nodeList: MockNodeList(nodes: [MockNode(handle: 100), MockNode(handle: 200)]))
         let responseBucket = MockRecentActionBucket.init(parentHandle: 1, nodeList: MockNodeList(nodes: [MockNode(handle: 200)]))
@@ -510,10 +514,10 @@ final class CloudDriveViewControllerTests: XCTestCase {
                 exp.fulfill()
             }
         
-        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        await sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
         
         XCTAssertTrue(sdk.getRecentActionsAsyncCalled)
-        wait(for: [exp], timeout: 1.0)
+        await fulfillment(of: [exp], timeout: 1)
         subscription.cancel()
     }
     
