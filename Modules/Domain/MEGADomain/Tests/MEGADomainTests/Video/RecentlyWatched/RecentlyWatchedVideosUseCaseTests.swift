@@ -51,11 +51,12 @@ final class RecentlyWatchedVideosUseCaseTests: XCTestCase {
     }
     
     func testLoadVideos_whenCalledSuccessfully_deliversSingleItems() async throws {
+        let video = nodeEntity(handle: 1)
         let singleItems: [RecentlyWatchedVideoEntity] = [
             RecentlyWatchedVideoEntity(
                 video: nodeEntity(handle: 1),
                 lastWatchedDate: nil,
-                lastWatchedTimestamp: Date()
+                mediaDestination: MediaDestinationEntity(fingerprint: video.fingerprint, destination: 1, timescale: 1)
             )
         ]
         let (sut, _) = makeSUT(
@@ -68,16 +69,18 @@ final class RecentlyWatchedVideosUseCaseTests: XCTestCase {
     }
     
     func testLoadVideos_whenCalledSuccessfully_deliversMoreThanOneItems() async throws {
+        let video1 = nodeEntity(handle: 1)
+        let video2 = nodeEntity(handle: 2)
         let items: [RecentlyWatchedVideoEntity] = [
             RecentlyWatchedVideoEntity(
                 video: nodeEntity(handle: 1),
                 lastWatchedDate: nil,
-                lastWatchedTimestamp: Date()
+                mediaDestination: MediaDestinationEntity(fingerprint: video1.fingerprint, destination: 1, timescale: 1)
             ),
             RecentlyWatchedVideoEntity(
                 video: nodeEntity(handle: 2),
                 lastWatchedDate: nil,
-                lastWatchedTimestamp: Date()
+                mediaDestination: MediaDestinationEntity(fingerprint: video2.fingerprint, destination: 1, timescale: 1)
             )
         ]
         let (sut, _) = makeSUT(
@@ -129,10 +132,11 @@ final class RecentlyWatchedVideosUseCaseTests: XCTestCase {
         let (sut, recentlyWatchedVideosRepository) = makeSUT(
             recentlyWatchedVideosRepository: MockRecentlyWatchedVideosRepository()
         )
+        let video = nodeEntity(handle: 1)
         let recentlyWatchedVideoEntity = RecentlyWatchedVideoEntity(
-            video: nodeEntity(handle: 1),
-            lastWatchedDate: nil,
-            lastWatchedTimestamp: Date()
+            video: video,
+            lastWatchedDate: Date.now,
+            mediaDestination: MediaDestinationEntity(fingerprint: video.fingerprint, destination: 1, timescale: 1)
         )
         
         try? sut.saveVideo(recentlyWatchedVideo: recentlyWatchedVideoEntity)
@@ -144,10 +148,11 @@ final class RecentlyWatchedVideosUseCaseTests: XCTestCase {
         let (sut, _) = makeSUT(
             recentlyWatchedVideosRepository: MockRecentlyWatchedVideosRepository(saveVideoResult: .failure(GenericErrorEntity()))
         )
+        let video = nodeEntity(handle: 1)
         let recentlyWatchedVideoEntity = RecentlyWatchedVideoEntity(
-            video: nodeEntity(handle: 1),
-            lastWatchedDate: nil,
-            lastWatchedTimestamp: Date()
+            video: video,
+            lastWatchedDate: Date.now,
+            mediaDestination: MediaDestinationEntity(fingerprint: video.fingerprint, destination: 1, timescale: 1)
         )
         
         var receivedError: Error?
@@ -165,10 +170,11 @@ final class RecentlyWatchedVideosUseCaseTests: XCTestCase {
         let (sut, _) = makeSUT(
             recentlyWatchedVideosRepository: MockRecentlyWatchedVideosRepository(saveVideoResult: .success(()))
         )
+        let video = nodeEntity(handle: 1)
         let recentlyWatchedVideoEntity = RecentlyWatchedVideoEntity(
-            video: nodeEntity(handle: 1),
-            lastWatchedDate: nil,
-            lastWatchedTimestamp: Date()
+            video: video,
+            lastWatchedDate: Date.now,
+            mediaDestination: MediaDestinationEntity(fingerprint: video.fingerprint, destination: 1, timescale: 1)
         )
         
         try sut.saveVideo(recentlyWatchedVideo: recentlyWatchedVideoEntity)
