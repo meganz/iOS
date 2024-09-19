@@ -121,14 +121,14 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundElevated];
     
-    self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separator];
     self.myCredentialsView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
     self.userEmailLabel.textColor = [UIColor mnz_subtitles];
     
     self.myCredentialsSubView.backgroundColor = [UIColor mnz_tertiaryBackgroundElevated:self.traitCollection];
-    self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
+    self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separator].CGColor;
 
     [self setLabelColors];
     [self updateVerifyOrResetButton];

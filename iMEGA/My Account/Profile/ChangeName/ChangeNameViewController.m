@@ -76,7 +76,7 @@
     self.view.backgroundColor = [self defaultBackgroundColor];
     self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [self defaultBackgroundColor];
     self.firstNameLabel.textColor = self.lastNameLabel.textColor = [self primaryTextcolor];
-    self.firstNameTopSeparatorView.backgroundColor = self.firstNameBottomSeparatorView.backgroundColor = self.lastNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.firstNameTopSeparatorView.backgroundColor = self.firstNameBottomSeparatorView.backgroundColor = self.lastNameBottomSeparatorView.backgroundColor = [UIColor mnz_separator];
 }
 
 #pragma mark - IBActions

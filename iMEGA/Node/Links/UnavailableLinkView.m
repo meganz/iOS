@@ -25,7 +25,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    self.backgroundColor = [UIColor mnz_backgroundElevated];
     
     self.firstTextLabel.textColor = self.secondTextLabel.textColor = self.thirdTextLabel.textColor = [UIColor mnz_subtitles];
 }

@@ -54,7 +54,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
@@ -63,7 +63,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_backgroundElevated];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

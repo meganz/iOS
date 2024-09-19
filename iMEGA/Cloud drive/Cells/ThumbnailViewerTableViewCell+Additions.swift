@@ -4,8 +4,8 @@ import MEGASDKRepo
 
 extension ThumbnailViewerTableViewCell {
     @objc func updateAppearance(with traitCollection: UITraitCollection) {
-        backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
-        thumbnailViewerCollectionView?.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        backgroundColor = UIColor.mnz_backgroundElevated()
+        thumbnailViewerCollectionView?.backgroundColor = UIColor.mnz_backgroundElevated()
         addedByLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
         timeLabel?.textColor = UIColor.mnz_subtitles()
         infoLabel?.textColor = UIColor.mnz_subtitles()

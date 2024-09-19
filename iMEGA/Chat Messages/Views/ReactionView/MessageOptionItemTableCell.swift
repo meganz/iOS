@@ -39,8 +39,8 @@ class MessageOptionItemTableCell: UITableViewCell {
     }
     
     private func updateAppearance() {
-        seperatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        contentView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        seperatorView.backgroundColor = UIColor.mnz_separator()
+        contentView.backgroundColor = UIColor.mnz_backgroundElevated()
     }
     
 }

@@ -35,7 +35,7 @@
 #pragma mark - Private
 
 - (void)setupCell {
-    self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    self.backgroundColor = [UIColor mnz_backgroundElevated];
     
     self.productNameLabel.textColor = UIColor.mnz_whiteFFFFFF;
 }

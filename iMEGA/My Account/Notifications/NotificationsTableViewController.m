@@ -45,7 +45,7 @@
     self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separator];
     
     [self setupViewModelForCommandHandling];
 }
@@ -85,7 +85,7 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+        self.tableView.separatorColor = [UIColor mnz_separator];
         [self.tableView reloadData];
     }
 }

@@ -42,7 +42,7 @@ class ContactsGroupTableViewCell: UITableViewCell {
         
         backAvatarImage.mnz_setImage(forUserHandle: viewModel.backAvatarHandle)
         frontAvatarImage.mnz_setImage(forUserHandle: viewModel.frontAvatarHandle)
-        frontAvatarImage.borderColor = .mnz_backgroundElevated(traitCollection)
+        frontAvatarImage.borderColor = .mnz_backgroundElevated()
     }
     
     private func updateStyle(with trait: UITraitCollection) {

@@ -61,7 +61,7 @@ class SetLinkPasswordViewController: UIViewController {
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         encryptButton.setTitleColor(TokenColors.Text.primary, for: .normal)
-        separators.forEach { $0.backgroundColor = UIColor.mnz_separator(for: traitCollection) }
+        separators.forEach { $0.backgroundColor = UIColor.mnz_separator() }
         backgrounds.forEach {
             $0.backgroundColor = TokenColors.Background.page
         }

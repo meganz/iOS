@@ -73,7 +73,7 @@ extension MyAccountHallTableViewCell {
     }
     
     @objc func setupCell() {
-        backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        backgroundColor = UIColor.mnz_backgroundElevated()
 
         if iconImageView != nil {
             iconImageView.tintColor = TokenColors.Icon.primary

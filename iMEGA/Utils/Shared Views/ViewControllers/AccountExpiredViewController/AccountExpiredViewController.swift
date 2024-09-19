@@ -81,7 +81,7 @@ class AccountExpiredViewController: UIViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        view.backgroundColor = UIColor.mnz_backgroundElevated()
         
         detailLabel.textColor = .mnz_subtitles()
         dismissButton.mnz_setupCancel(traitCollection)

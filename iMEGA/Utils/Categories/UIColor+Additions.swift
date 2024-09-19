@@ -47,9 +47,7 @@ extension UIColor {
     
     // MARK: Background elevated
     
-    @objc class func mnz_backgroundElevated(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
+    @objc class func mnz_backgroundElevated() -> UIColor {
         TokenColors.Background.page
     }
     
@@ -342,12 +340,7 @@ extension UIColor {
         TokenColors.Button.secondary
     }
     
-    @objc(
-        mnz_separatorForTraitCollection:
-    )
-    class func mnz_separator(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
+    @objc class func mnz_separator() -> UIColor {
         TokenColors.Border.strong
     }
     

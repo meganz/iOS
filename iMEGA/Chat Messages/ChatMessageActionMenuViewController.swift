@@ -140,7 +140,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     override func updateAppearance() {
         super.updateAppearance()
         
-        separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        separatorLineView.backgroundColor = UIColor.mnz_separator()
         emojiViews.forEach { (view) in
             view.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
         }

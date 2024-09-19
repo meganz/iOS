@@ -7,7 +7,7 @@ final class DefaultTabTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Strings.Localizable.defaultTab
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator()
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
     }
 
@@ -30,7 +30,7 @@ final class DefaultTabTableViewController: UITableViewController {
             cell.textLabel?.textColor = UIColor.mnz_primaryTextColor()
         }
         cell.accessoryView = UIImageView(image: UIImage.turquoiseCheckmark)
-        cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        cell.backgroundColor = UIColor.mnz_backgroundElevated()
         cell.accessoryView?.isHidden = TabManager.getPreferenceTab().tabType.rawValue != indexPath.row
         
         return cell

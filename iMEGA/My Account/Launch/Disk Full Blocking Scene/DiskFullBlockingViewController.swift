@@ -132,7 +132,7 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
 
 extension DiskFullBlockingViewController: TraitEnvironmentAware {
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        view.backgroundColor = UIColor.mnz_backgroundElevated(currentTrait)
+        view.backgroundColor = UIColor.mnz_backgroundElevated()
         manageButton.mnz_setupPrimary(currentTrait)
     }
 }
