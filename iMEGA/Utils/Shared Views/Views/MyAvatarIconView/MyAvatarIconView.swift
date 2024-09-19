@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MyAvatarIconView<AvatarObserver: MyAvatarObserver>: View {
-    @ObservedObject var viewModel: MyAvatarIconViewModel<AvatarObserver>
+    @StateObject var viewModel: MyAvatarIconViewModel<AvatarObserver>
 
     var body: some View {
         BadgeButtonSwfitUIWrapper(
