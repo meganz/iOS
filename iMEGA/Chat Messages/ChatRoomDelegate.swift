@@ -4,7 +4,8 @@ import MEGADomain
 import MEGAL10n
 import MessageKit
 
-class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate {
+@MainActor
+final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate {
     // MARK: - Properties
     
     private var transfers: [ChatMessage] = []
@@ -35,22 +36,20 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     
     // MARK: - MEGAChatRequestDelegate
     
-    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
+    nonisolated func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         switch error.type {
         case .MEGAChatErrorTooMany:
             switch ReactionErrorType(rawValue: Int(request.number)) {
             case .user:
                 let title = Strings.Localizable.youHaveReachedTheMaximumLimitOfDReactions(MEGAMaxReactionsPerMessagePerUser)
-                let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                let cancel = UIAlertAction(title: Strings.Localizable.ok, style: .cancel)
-                alertController.addAction(cancel)
-                chatViewController?.present(viewController: alertController)
+                Task {
+                    await presentAlertController(title: title)
+                }
             case .message:
                 let title = String(format: Strings.Localizable.thisMessageHasReachedTheMaximumLimitOfDReactions(MEGAMaxReactionsPerMessage))
-                let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-                let cancel = UIAlertAction(title: Strings.Localizable.ok, style: .cancel)
-                alertController.addAction(cancel)
-                chatViewController?.present(viewController: alertController)
+                Task {
+                    await presentAlertController(title: title)
+                }
             default:
                 break
             }
@@ -62,179 +61,189 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     
     // MARK: - MEGAChatRoomDelegate methods
     
-    func onReactionUpdate(_: MEGAChatSdk, messageId: UInt64, reaction _: String, count _: Int) {
-        guard let index = messages.firstIndex(where: { (message) -> Bool in
-            guard let message = message as? ChatMessage else {
-                return false
-            }
-            
-            return messageId == message.message.messageId
-        }),
-              let numberOfSections = chatViewController?.messagesCollectionView.numberOfSections,
-              numberOfSections > index else {
-            return
-        }
-        UIView.performWithoutAnimation {
-            chatViewController?.messagesCollectionView.performBatchUpdates({
-                chatViewController?.messagesCollectionView.reloadSections([index])
-            }, completion: { _ in
-                if index == self.messages.count - 1 {
-                    self.chatViewController?.scrollToBottom()
+    nonisolated func onReactionUpdate(_: MEGAChatSdk, messageId: UInt64, reaction _: String, count _: Int) {
+        Task { @MainActor in
+            guard let index = messages.firstIndex(where: { (message) -> Bool in
+                guard let message = message as? ChatMessage else {
+                    return false
                 }
-            })
-        }
-    }
-    
-    func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
-        MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
-        
-        chatViewController?.update(chatRoom: chat)
-        chatRoom = chat
-        
-        switch chat.changes {
-        case .participants:
-            if UIApplication.mnz_visibleViewController() == chatViewController {
-                chatViewController?.reloadInputViews()
-            }
-        case .userTyping:
-            guard !(chatViewController?.isEditing ?? false) else {
+                
+                return messageId == message.message.messageId
+            }),
+                  let numberOfSections = chatViewController?.messagesCollectionView.numberOfSections,
+                  numberOfSections > index else {
                 return
             }
-            
-            if chat.userTypingHandle != api.myUserHandle {
-                if let timer = whoIsTyping[chat.userTypingHandle] {
-                    timer.invalidate()
-                }
-                
-                let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] _ in
-                    guard let `self` = self else {
-                        return
+            UIView.performWithoutAnimation {
+                chatViewController?.messagesCollectionView.performBatchUpdates({
+                    chatViewController?.messagesCollectionView.reloadSections([index])
+                }, completion: { _ in
+                    if index == self.messages.count - 1 {
+                        self.chatViewController?.scrollToBottom()
                     }
-                    
-                    self.removeTypingIndicator(forHandle: chat.userTypingHandle)
-                }
-                
-                whoIsTyping[chat.userTypingHandle] = timer
-                updateTypingIndicator()
+                })
             }
-        case .userStopTyping:
-            if chat.userTypingHandle != api.myUserHandle {
-                removeTypingIndicator(forHandle: chat.userTypingHandle)
-            }
-            
-        case .closed:
-            hasChatRoomClosed = true
-            if chatRoom.isPreview {
-                api.closeChatPreview(chat.chatId)
-                chatViewController?.reloadInputViews()
-                chatViewController?.updateJoinView()
-                SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
-            } else {
-                let chatRoomRepository = ChatRoomRepository.newRepo
-                guard let chatRoom = chatRoomRepository.chatRoom(forChatId: chat.chatId) else { return }
-                chatRoomRepository.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
-                chatViewController?.navigationController?.popViewController(animated: true)
-            }
-        case .updatePreviewers:
-            chatViewController?.previewerView.isHidden = chatRoom.previewersCount == 0
-            chatViewController?.previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
-            chatViewController?.updateJoinView()
-        default:
-            break
         }
     }
     
-    func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
-        guard include(message: message) else { return }
-        
-        if let chatMessage = message {
-            if !chatMessage.isDeleted {
-                if supportedMessage(chatMessage) && !isDuplicateMessage(chatMessage) {
-                    if chatMessage.status == .sending || chatMessage.status == .sendingManual {
-                        historyMessages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
-                    } else {
-                        historyMessages.insert(ChatMessage(message: chatMessage, chatRoom: chatRoom), at: 0)
-                    }
-                }
-            }
+    nonisolated func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
+        Task { @MainActor in
+            MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
             
-            if chatMessage.userHandle != api.myUserHandle, let chatViewController = chatViewController, !chatViewController.previewMode {
-                api.setMessageSeenForChat(chatRoom.chatId, messageId: chatMessage.messageId)
-            }
-        } else {
-            awaitingLoad = false
-            if chatMessages.isEmpty {
-                loadingState = false
-                
-                chatMessages = historyMessages
-                historyMessages.removeAll()
-                
-                if chatRoom.unreadCount > 0,
-                   chatMessages.count >= chatRoom.unreadCount,
-                   let lastMessageId = (chatMessages.last as? ChatMessage)?.message.messageId, let chatViewController = chatViewController {
-                    chatMessages.insert(ChatNotificationMessage(type: .unreadMessage(chatRoom.unreadCount)),
-                                        at: chatMessages.count - chatRoom.unreadCount)
-                    if !chatViewController.previewMode {
-                        MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
-                    }
-                    
-                    chatViewController.messagesCollectionView.reloadData()
-                    // 1 because the "unread text" notification cell should be shown as well.
-                    let scrollingIndexPath = IndexPath(item: 0, section: chatMessages.count - chatRoom.unreadCount - 1)
-                    chatViewController.messagesCollectionView.scrollToItem(at: scrollingIndexPath,
-                                                                           at: .top,
-                                                                           animated: false)
-                    
+            chatViewController?.update(chatRoom: chat)
+            chatRoom = chat
+            
+            switch chat.changes {
+            case .participants:
+                if UIApplication.mnz_visibleViewController() == chatViewController {
+                    chatViewController?.reloadInputViews()
+                }
+            case .userTyping:
+                guard !(chatViewController?.isEditing ?? false) else {
                     return
                 }
                 
-                chatViewController?.messagesCollectionView.reloadData()
-                chatViewController?.scrollToBottom(animated: false)
+                if chat.userTypingHandle != api.myUserHandle {
+                    if let timer = whoIsTyping[chat.userTypingHandle] {
+                        timer.invalidate()
+                    }
+                    
+                    let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] _ in
+                        guard let self else { return }
+                        Task { @MainActor in
+                            self.removeTypingIndicator(forHandle: chat.userTypingHandle)
+                        }
+
+                    }
+                    
+                    whoIsTyping[chat.userTypingHandle] = timer
+                    updateTypingIndicator()
+                }
+            case .userStopTyping:
+                if chat.userTypingHandle != api.myUserHandle {
+                    removeTypingIndicator(forHandle: chat.userTypingHandle)
+                }
+                
+            case .closed:
+                hasChatRoomClosed = true
+                if chatRoom.isPreview {
+                    api.closeChatPreview(chat.chatId)
+                    chatViewController?.reloadInputViews()
+                    chatViewController?.updateJoinView()
+                    SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
+                } else {
+                    let chatRoomRepository = ChatRoomRepository.newRepo
+                    guard let chatRoom = chatRoomRepository.chatRoom(forChatId: chat.chatId) else { return }
+                    chatRoomRepository.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
+                    chatViewController?.navigationController?.popViewController(animated: true)
+                }
+            case .updatePreviewers:
+                chatViewController?.previewerView.isHidden = chatRoom.previewersCount == 0
+                chatViewController?.previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
+                chatViewController?.updateJoinView()
+            default:
+                break
+            }
+        }
+    }
+    
+    nonisolated func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
+        Task { @MainActor in
+            guard include(message: message) else { return }
+            
+            if let chatMessage = message {
+                if !chatMessage.isDeleted {
+                    if supportedMessage(chatMessage) && !isDuplicateMessage(chatMessage) {
+                        if chatMessage.status == .sending || chatMessage.status == .sendingManual {
+                            historyMessages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
+                        } else {
+                            historyMessages.insert(ChatMessage(message: chatMessage, chatRoom: chatRoom), at: 0)
+                        }
+                    }
+                }
+                
+                if chatMessage.userHandle != api.myUserHandle, let chatViewController = chatViewController, !chatViewController.previewMode {
+                    api.setMessageSeenForChat(chatRoom.chatId, messageId: chatMessage.messageId)
+                }
+            } else {
+                awaitingLoad = false
+                if chatMessages.isEmpty {
+                    loadingState = false
+                    
+                    chatMessages = historyMessages
+                    historyMessages.removeAll()
+                    
+                    if chatRoom.unreadCount > 0,
+                       chatMessages.count >= chatRoom.unreadCount,
+                       let lastMessageId = (chatMessages.last as? ChatMessage)?.message.messageId, let chatViewController = chatViewController {
+                        chatMessages.insert(ChatNotificationMessage(type: .unreadMessage(chatRoom.unreadCount)),
+                                            at: chatMessages.count - chatRoom.unreadCount)
+                        if !chatViewController.previewMode {
+                            MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
+                        }
+                        
+                        chatViewController.messagesCollectionView.reloadData()
+                        // 1 because the "unread text" notification cell should be shown as well.
+                        let scrollingIndexPath = IndexPath(item: 0, section: chatMessages.count - chatRoom.unreadCount - 1)
+                        chatViewController.messagesCollectionView.scrollToItem(at: scrollingIndexPath,
+                                                                               at: .top,
+                                                                               animated: false)
+                        
+                        return
+                    }
+                    
+                    chatViewController?.messagesCollectionView.reloadData()
+                    chatViewController?.scrollToBottom(animated: false)
+                    return
+                }
+                
+                chatMessages = historyMessages + chatMessages
+                historyMessages.removeAll()
+                
+                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+                chatViewController?.showOrHideJumpToBottom()
+                loadingState = false
+            }
+        }
+    }
+    
+    nonisolated func onMessageReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
+        Task { @MainActor in
+            MEGALogInfo("ChatRoomDelegate: onMessageReceived \(message)")
+            guard include(message: message) else { return }
+            
+            guard supportedMessage(message) else {
+                MEGALogError("ChatRoomDelegate: onMessageReceived - message not supported")
                 return
             }
             
-            chatMessages = historyMessages + chatMessages
-            historyMessages.removeAll()
+            if UIApplication.shared.applicationState == .active,
+               UIApplication.mnz_visibleViewController() == chatViewController,
+               let chatViewController = chatViewController,
+               !chatViewController.previewMode {
+                MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
+            } else if let chatRoom = api.chatRoom(forChatId: chatRoom.chatId) {
+                self.chatRoom = chatRoom
+            }
             
-            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-            chatViewController?.showOrHideJumpToBottom()
-            loadingState = false
+            if message.type == .truncate {
+                chatMessages.removeAll()
+                updateUnreadMessagesLabel(unreads: 0)
+                chatViewController?.messagesCollectionView.reloadData()
+            }
+            insertMessage(message)
         }
     }
     
-    func onMessageReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
-        MEGALogInfo("ChatRoomDelegate: onMessageReceived \(message)")
-        guard include(message: message) else { return }
-        
-        guard supportedMessage(message) else {
-            MEGALogError("ChatRoomDelegate: onMessageReceived - message not supported")
-            return
+    nonisolated func onMessageUpdate(_: MEGAChatSdk, message: MEGAChatMessage) {
+        Task { @MainActor in
+            MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
+            message.chatId = chatRoom.chatId
+            handleStatusChanged(message)
+            handleContentChanged(message)
+            
+            chatViewController?.messagesCollectionView.reloadEmptyDataSet()
         }
-        
-        if UIApplication.shared.applicationState == .active,
-           UIApplication.mnz_visibleViewController() == chatViewController,
-           let chatViewController = chatViewController,
-           !chatViewController.previewMode {
-            MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
-        } else if let chatRoom = api.chatRoom(forChatId: chatRoom.chatId) {
-            self.chatRoom = chatRoom
-        }
-        
-        if message.type == .truncate {
-            chatMessages.removeAll()
-            updateUnreadMessagesLabel(unreads: 0)
-            chatViewController?.messagesCollectionView.reloadData()
-        }
-        insertMessage(message)
-    }
-    
-    func onMessageUpdate(_: MEGAChatSdk, message: MEGAChatMessage) {
-        MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
-        message.chatId = chatRoom.chatId
-        handleStatusChanged(message)
-        handleContentChanged(message)
-        
-        chatViewController?.messagesCollectionView.reloadEmptyDataSet()
     }
     
     private func handleStatusChanged(_ message: MEGAChatMessage) {
@@ -371,7 +380,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
     }
     
-    func onHistoryReloaded(_: MEGAChatSdk, chat _: MEGAChatRoom) {
+    nonisolated func onHistoryReloaded(_: MEGAChatSdk, chat _: MEGAChatRoom) {
         MEGALogInfo("ChatRoomDelegate: onHistoryReloaded")
     }
     
@@ -431,14 +440,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             MEGASdk.shared.add(self)
             MEGAChatSdk.shared.add(self)
             
-            await reloadTransferData()
+            reloadTransferData()
             
             do {
                 try ChatRoomRepository.newRepo.openChatRoom(chatId: chatRoom.chatId, delegate: self)
                 isChatRoomOpen = true
                 loadingState = true
                 
-                await reloadEmptyDataSet()
+                reloadEmptyDataSet()
                 
                 loadMessages()
             } catch {
@@ -589,7 +598,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
     }
     
-    @MainActor
     private func reloadTransferData() {
         let allTransfers = MEGASdk.shared.transfers.toTransfers()
         guard allTransfers.isNotEmpty else {
@@ -712,7 +720,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
     }
     
-    @MainActor
     private func reloadEmptyDataSet() {
         chatViewController?.messagesCollectionView.reloadEmptyDataSet()
     }
@@ -722,6 +729,13 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             return lastMessageId == message.messageId
         }
         return false
+    }
+    
+    private func presentAlertController(title: String) {
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: Strings.Localizable.ok, style: .cancel)
+        alertController.addAction(cancel)
+        chatViewController?.present(viewController: alertController)
     }
 }
 
