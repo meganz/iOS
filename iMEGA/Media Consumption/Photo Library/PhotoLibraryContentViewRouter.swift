@@ -34,7 +34,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             viewModel: PhotoYearCardViewModel(
                 photoByYear: photoByYear,
                 thumbnailLoader: makeThumbnailLoader(),
-                nodeUseCase: makeNodeUseCase()
+                nodeUseCase: makeNodeUseCase(),
+                sensitiveNodeUseCase: makeSensitiveNodeUseCase()
             )
         )
     }
@@ -45,6 +46,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
                 photoByMonth: photoByMonth,
                 thumbnailLoader: makeThumbnailLoader(),
                 nodeUseCase: makeNodeUseCase(),
+                sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
                 featureFlagProvider: featureFlagProvider
             )
         )
@@ -56,6 +58,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
                 photoByDay: photoByDay,
                 thumbnailLoader: makeThumbnailLoader(), 
                 nodeUseCase: makeNodeUseCase(),
+                sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
                 featureFlagProvider: featureFlagProvider
             )
         )
@@ -111,6 +114,11 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
           nodeDataRepository: NodeDataRepository.newRepo,
           nodeValidationRepository: NodeValidationRepository.newRepo,
           nodeRepository: NodeRepository.newRepo)
+    }
+    
+    private func makeSensitiveNodeUseCase() -> some SensitiveNodeUseCaseProtocol {
+        let nodeRepository = NodeRepository.newRepo
+        return SensitiveNodeUseCase(nodeRepository: nodeRepository)
     }
 }
 
