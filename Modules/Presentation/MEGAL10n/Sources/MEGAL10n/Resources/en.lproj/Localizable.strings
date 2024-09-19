@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="Allow non-hosts to add participants";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Add description";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA can see your meeting name and description, but we keep them private";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
 /* Schedule meeting description error */
