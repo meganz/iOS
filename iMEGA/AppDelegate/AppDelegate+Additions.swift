@@ -1,10 +1,10 @@
+import Chat
 import ChatRepo
 import Combine
 import FirebaseCrashlytics
 import Foundation
 import Intents
 import LogRepo
-import Chat
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
@@ -525,16 +525,11 @@ extension AppDelegate {
     }
     
     private func waitUntilChatStatusComesOnline(forChatId chatId: HandleEntity) async throws {
-        let chatStateListener = ChatStateListener(chatId: chatId, connectionState: .online)
-        chatStateListener.addListener()
-        
-        do {
-            try await chatStateListener.connectionStateReached()
-            chatStateListener.removeListener()
-        } catch {
-            chatStateListener.removeListener()
-            throw error
-        }
+        let chatConnectionProvider = ChatConnectionStateUpdateProvider(sdk: .sharedChatSdk)
+  
+        _ = await chatConnectionProvider
+            .updates
+            .first { @Sendable in $0 == chatId && $1 == .online }
     }
     
     private var permissionAlertRouter: some PermissionAlertRouting {
