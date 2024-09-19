@@ -3,7 +3,7 @@ import MEGAFoundation
 import MEGAL10n
 import MEGASwift
 
-extension MEGAChatRoom {
+extension MEGAChatRoom: @unchecked @retroactive Sendable {
     var onlineStatus: MEGAChatStatus? {
         guard !isGroup else {
             return nil

@@ -1,7 +1,7 @@
 import MEGADesignToken
 import MEGAL10n
 
-extension MEGAChatMessage {
+extension MEGAChatMessage: @unchecked @retroactive Sendable {
     
     @objc(contactNameAtIndex:) func contactName(at index: UInt) -> String? {
         guard usersCount > 0 else {
