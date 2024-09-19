@@ -1,6 +1,6 @@
+import Chat
 import ChatRepo
 import Combine
-import Chat
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -68,6 +68,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var callParticipantsNotInCall = [CallParticipantEntity]()
     private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
     private var seeWaitingRoomListNotificationTask: Task<Void, Never>?
+
     private let presentUpgradeFlow: (AccountDetailsEntity) -> Void
     // store state of the fact that user dismissed upsell banner
     // shown to non-organizer host when there's more than max number of meeting participant
@@ -329,7 +330,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func subscribeToSeeWaitingRoomListNotification() {
         seeWaitingRoomListNotificationTask = Task { [weak self, notificationCenter] in
-            for await _ in notificationCenter.notifications(named: .seeWaitingRoomListEvent) {
+            let sequence = notificationCenter
+                .notifications(named: .seeWaitingRoomListEvent)
+                .map { _ in () }
+            for await _ in sequence {
                 self?.selectParticipantsListTab(.waitingRoom)
                 self?.invokeCommand?(.transitionToLongForm)
             }
