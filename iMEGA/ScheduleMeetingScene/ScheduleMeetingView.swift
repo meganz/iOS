@@ -27,6 +27,8 @@ struct ScheduleMeetingView: View {
                     ScheduleMeetingCreationNameView(viewModel: viewModel, appearFocused: viewModel.meetingName.isEmpty)
                     if viewModel.meetingNameTooLong {
                         ErrorView(error: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.lenghtError)
+                    } else {
+                        ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.titleUnencrypted)
                     }
                     ScheduleMeetingCreationPropertiesView(viewModel: viewModel)
                     ScheduleMeetingCreationInvitationView(viewModel: viewModel)
