@@ -1,5 +1,5 @@
 import AsyncAlgorithms
-import Combine
+@preconcurrency import Combine
 import Foundation
 import MEGADomain
 import MEGAPresentation
@@ -7,10 +7,12 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     @Published var thumbnailContainer: any ImageContaining
@@ -18,10 +20,12 @@ class PhotoCardViewModel: ObservableObject {
     init(coverPhoto: NodeEntity?,
          thumbnailLoader: some ThumbnailLoaderProtocol,
          nodeUseCase: some NodeUseCaseProtocol,
+         sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.coverPhoto = coverPhoto
         self.thumbnailLoader = thumbnailLoader
         self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.featureFlagProvider = featureFlagProvider
         
         thumbnailContainer = if let photo = coverPhoto {
@@ -52,12 +56,11 @@ class PhotoCardViewModel: ObservableObject {
         }
     }
         
-    @MainActor
     func monitorInheritedSensitivityChanges() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               let coverPhoto,
               !coverPhoto.isMarkedSensitive,
-              await $thumbnailContainer.values.contains(where: { $0.type != .placeholder }) else {
+              await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else {
             return
         }
         
@@ -72,7 +75,7 @@ class PhotoCardViewModel: ObservableObject {
     
     /// Monitor photo node and inherited sensitivity changes
     /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
-    @MainActor
+    
     func monitorPhotoSensitivityChanges() async {
         guard
             featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
@@ -80,7 +83,7 @@ class PhotoCardViewModel: ObservableObject {
             return
         }
         // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
-        _ = await $thumbnailContainer.values.contains(where: { $0.type != .placeholder })
+        _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })
         
         do {
             for try await isSensitive in photoSensitivityChanges(for: coverPhoto) {
@@ -94,10 +97,9 @@ class PhotoCardViewModel: ObservableObject {
     // MARK: - Private
     private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
         guard !isShowingThumbnail(container) else { return }
-        await updateThumbnailContainer(container)
+        updateThumbnailContainer(container)
     }
     
-    @MainActor
     private func updateThumbnailContainer(_ container: any ImageContaining) {
         thumbnailContainer = container
     }
@@ -110,10 +112,10 @@ class PhotoCardViewModel: ObservableObject {
     /// - Parameters:
     ///   - photo: Photo NodeEntity to monitor
     private func monitorInheritedSensitivity(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        nodeUseCase
+        sensitiveNodeUseCase
             .monitorInheritedSensitivity(for: photo)
             .prepend { [weak self] in
-                try await self?.nodeUseCase.isInheritingSensitivity(node: photo) ?? false
+                try await self?.sensitiveNodeUseCase.isInheritingSensitivity(node: photo) ?? false
             }
             .eraseToAnyAsyncThrowingSequence()
     }
@@ -130,7 +132,7 @@ class PhotoCardViewModel: ObservableObject {
         let node = nodeUseCase.nodeForHandle(photo.handle) ?? photo
             
         return combineLatest(
-            nodeUseCase.sensitivityChanges(for: node).prepend(node.isMarkedSensitive),
+            sensitiveNodeUseCase.sensitivityChanges(for: node).prepend(node.isMarkedSensitive),
             monitorInheritedSensitivity(for: node)
         )
         .map { isPhotoSensitive, isInheritingSensitive in
