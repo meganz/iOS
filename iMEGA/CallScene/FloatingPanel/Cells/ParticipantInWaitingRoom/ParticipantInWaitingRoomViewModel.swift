@@ -77,7 +77,6 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType, CommonParticipantV
         }
     }
     
-    @MainActor
     func updateAvatar(image: UIImage) {
         invokeCommand?(.updateAvatarImage(image: image))
     }
