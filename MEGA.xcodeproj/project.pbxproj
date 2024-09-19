@@ -2416,8 +2416,6 @@
 		BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */; };
 		BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */; };
 		BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */; };
-		BFBFFD672A046E9200E4EB23 /* ChatStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */; };
-		BFBFFD682A046ED600E4EB23 /* ChatStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */; };
 		BFC060F328A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */; };
 		BFC060F628A0C2FE00BA2AD7 /* ParticipantsAddingViewFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC060F528A0C2FE00BA2AD7 /* ParticipantsAddingViewFactoryTests.swift */; };
 		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
@@ -5214,7 +5212,6 @@
 		BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRulesEntityTests.swift; sourceTree = "<group>"; };
 		BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingMonthlyRecurrenceFootnoteView.swift; sourceTree = "<group>"; };
-		BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStateListener.swift; sourceTree = "<group>"; };
 		BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsAddingViewFactory.swift; sourceTree = "<group>"; };
 		BFC060F528A0C2FE00BA2AD7 /* ParticipantsAddingViewFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsAddingViewFactoryTests.swift; sourceTree = "<group>"; };
 		BFC1794F24491073004F35AB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -7560,7 +7557,6 @@
 				BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */,
 				419A02731DACE848000B9DC9 /* ChatRoomCell.h */,
 				419A02741DACE848000B9DC9 /* ChatRoomCell.m */,
-				BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */,
 				BF99A41B24B2AC1B0035A183 /* ChatUploader.swift */,
 				E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */,
 				E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */,
@@ -14660,7 +14656,6 @@
 				9D3563CC28B54DE900CB3365 /* ChatSettingsViewRouter.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
-				BFBFFD672A046E9200E4EB23 /* ChatStateListener.swift in Sources */,
 				9956B7672B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift in Sources */,
 				8350800028CF85EF000A89FC /* ChatStatusTableViewController+Additions.swift in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
@@ -16042,7 +16037,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B60C7B2F2A29CD5500AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
-				BFBFFD682A046ED600E4EB23 /* ChatStateListener.swift in Sources */,
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
 				A8F1D1082A5ECB15000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
