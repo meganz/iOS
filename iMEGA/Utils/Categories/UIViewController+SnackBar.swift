@@ -37,24 +37,6 @@ extension UIViewController {
     }
 }
 
-extension SnackBarViewModel {
-    convenience init(snackBar: SnackBar, presenter: UIViewController? = nil) {
-        self.init(snackBar: snackBar, willDismiss: {
-            if let presenter {
-                presenter.dismissSnackBar(immediate: false)
-            } else {
-                UIApplication.mnz_visibleViewController().dismissSnackBar(immediate: false)
-            }
-        })
-    }
-}
-
-protocol SnackBarObservablePresenting where Self: ObservableObject {
-    
-    @MainActor
-    func show(snack: SnackBar)
-}
-
 // MARK: - Privates
 extension UIViewController {
     private struct Constants {
@@ -95,15 +77,24 @@ extension UIViewController {
     }
     
     private func buildSnackBarView(with snackBar: SnackBar) -> UIView {
-        let willDismiss = { [weak self] in
+        let removeSnackBar = { [weak self] in
             guard let snackBarView = self?.currentSnackBarView else { return }
             self?.dismissSnackBarView(snackBarView)
         }
         
-        let viewModel = SnackBarViewModel(snackBar: snackBar, willDismiss: willDismiss)
-        let view = SnackBarView(viewModel: viewModel)
-        let viewController = UIHostingController(rootView: view)
-        return viewController.view
+        let snackBarBinding: Binding<SnackBar?> = Binding(
+            get: { snackBar },
+            set: { newValue in
+                if newValue == nil {
+                    removeSnackBar()
+                }
+            })
+            
+        return UIHostingController(
+            rootView: SnackBarView(
+                snackBar: snackBarBinding
+            )
+        ).view
     }
     
     private func buildSnackBarView(message: String, action: SnackBar.Action? = nil) -> UIView {

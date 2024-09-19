@@ -17,7 +17,7 @@ struct UpgradeAccountPlanView: View {
     var body: some View {
         ZStack {
             planView()
-            snackBarView()
+                .snackBar($viewModel.snackBar)
         }
         .onLoad {
             viewModel.onLoad()
@@ -119,17 +119,7 @@ struct UpgradeAccountPlanView: View {
             }
         }
     }
-    
-    private func snackBarView() -> some View {
-        VStack {
-            Spacer()
-            
-            if viewModel.isShowSnackBar {
-                SnackBarView(viewModel: viewModel.snackBarViewModel())
-            }
-        }
-    }
-    
+        
     private func dismiss() {
         presentationMode.wrappedValue.dismiss()
     }

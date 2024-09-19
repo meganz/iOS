@@ -18,18 +18,9 @@ protocol HideFilesAndFoldersRouting {
 final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private weak var presenter: UIViewController?
     private weak var onboardingViewController: UIViewController?
-    private let snackBarPresentation: SnackBarPresentation
     
-    enum SnackBarPresentation {
-        // [binh] todo: rename this router case
-        case router
-        case observablePresenting(any SnackBarObservablePresenting)
-        case none
-    }
-    
-    init(presenter: UIViewController?, snackBarPresentation: SnackBarPresentation = .router) {
+    init(presenter: UIViewController?) {
         self.presenter = presenter
-        self.snackBarPresentation = snackBarPresentation
     }
     
     func hideNodes(_ nodes: [NodeEntity]) {
@@ -91,14 +82,7 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     @MainActor
     func showItemsHiddenSuccessfully(count: Int) {
         let snackBar = SnackBar(message: Strings.Localizable.Nodes.Action.hideItems(count))
-        switch snackBarPresentation {
-        case .observablePresenting(let presenter):
-            presenter.show(snack: snackBar)
-        case .router:
-            UIApplication.mnz_visibleViewController().showSnackBar(snackBar: snackBar)
-        case .none:
-            break
-        }
+        UIApplication.mnz_visibleViewController().showSnackBar(snackBar: snackBar)
     }
     
     @MainActor

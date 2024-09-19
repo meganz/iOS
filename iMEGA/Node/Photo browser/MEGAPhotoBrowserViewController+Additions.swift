@@ -314,8 +314,7 @@ extension MEGAPhotoBrowserViewController {
         viewModel.trackHideNodeMenuEvent()
         
         HideFilesAndFoldersRouter(
-            presenter: self,
-            snackBarPresentation: .router)
+            presenter: self)
         .hideNodes([node.toNodeEntity()])
     }
         

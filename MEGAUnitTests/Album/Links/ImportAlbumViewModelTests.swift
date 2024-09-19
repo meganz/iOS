@@ -442,7 +442,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.importAlbumTask?.value
         await fulfillment(of: [exp], timeout: 1.0)
         
-        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+        XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName)))
     }
     
@@ -463,7 +463,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
         await sut.importAlbumTask?.value
         
-        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+        XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumFailedToSaveToCloudDrive(albumName)))
     }
     
@@ -505,7 +505,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         XCTAssertEqual(Set(importPublicAlbumUseCase.photosToImport ?? []),
                        Set(selectedPhotos))
-        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+        XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.filesSaveToCloudDrive(selectedPhotos.count)))
     }
     
@@ -549,7 +549,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
         await sut.importAlbumTask?.value
         
-        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+        XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(newAlbumName)))
     }
     
@@ -665,7 +665,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(transferWidgetResponder.updateProgressViewCalled, 1)
         XCTAssertEqual(transferWidgetResponder.showWidgetIfNeededCalled, 1)
 
-        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+        XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
     
@@ -697,7 +697,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
         XCTAssertEqual(transferWidgetResponder.updateProgressViewCalled, 1)
         XCTAssertEqual(transferWidgetResponder.showWidgetIfNeededCalled, 1)
-        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+        XCTAssertEqual(sut.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
     
@@ -729,7 +729,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         // Assert
         XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 0)
         XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 0)
-        XCTAssertNil(sut.snackBarViewModel?.snackBar)
+        XCTAssertNil(sut.snackBar)
         XCTAssertTrue(sut.showPhotoPermissionAlert)
     }
     
