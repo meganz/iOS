@@ -82,7 +82,7 @@ struct AlbumCell: View {
     AlbumCell(
         viewModel: AlbumCellViewModel(
             thumbnailLoader: Preview_ThumbnailLoader(),
-            monitorAlbumsUseCase: Preview_MonitorAlbumsUseCase(),
+            monitorUserAlbumPhotosUseCase: Preview_MonitorUserAlbumPhotosUseCase(),
             nodeUseCase: Preview_NodeUseCase(),
             sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
             contentConsumptionUserAttributeUseCase: Preview_ContentConsumptionUserAttributeUseCase(),
