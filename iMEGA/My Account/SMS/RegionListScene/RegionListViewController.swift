@@ -53,7 +53,7 @@ final class RegionListViewController: UIViewController, ViewType {
         viewModel.dispatch(.onViewReady)
         
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                traitCollection: traitCollection)
     }
 
@@ -71,7 +71,7 @@ final class RegionListViewController: UIViewController, ViewType {
                 AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
             }
             AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                                   backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                                   backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                    traitCollection: traitCollection)
             
             updateAppearance()

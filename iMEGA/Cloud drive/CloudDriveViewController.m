@@ -158,7 +158,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self configureWarningBanner];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                             traitCollection:self.traitCollection];
 }
 
@@ -236,7 +236,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                                 traitCollection:self.traitCollection];
         
         [self reloadList];

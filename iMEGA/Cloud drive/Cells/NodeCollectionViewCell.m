@@ -49,7 +49,7 @@ static NSString *kFileSize = @"kFileSize";
         
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node attributedTakenDownName];
-        self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColorFor: self.traitCollection];
+        self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColor];
     } else {
         self.nameLabel.textColor = [UIColor primaryTextColor];
         self.nameLabel.text = node.name;

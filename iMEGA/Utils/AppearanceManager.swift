@@ -34,7 +34,7 @@ class AppearanceManager: NSObject {
         
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        UISearchBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        UISearchBar.appearance().backgroundColor = .surface1Background()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.systemBackground
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
@@ -131,7 +131,7 @@ class AppearanceManager: NSObject {
     
     @objc class func setupTabbar(_ tabBar: UITabBar, traitCollection: UITraitCollection) {
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        appearance.backgroundColor = .surface1Background()
         
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
@@ -185,7 +185,7 @@ class AppearanceManager: NSObject {
     private class func makeNavigationBarAppearance(_ traitCollection: UITraitCollection) -> UINavigationBarAppearance {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
-        navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        navigationBarAppearance.backgroundColor = .surface1Background()
         navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
         
         navigationBarAppearance.shadowImage = nil
@@ -195,12 +195,12 @@ class AppearanceManager: NSObject {
         navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
         
         let barButtonItemAppearance = UIBarButtonItemAppearance()
-        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
-        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: false, for: traitCollection)]
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: true)]
+        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: false)]
         
         navigationBarAppearance.buttonAppearance = barButtonItemAppearance
         
-        navigationBarAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
+        navigationBarAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: true)]
         
         return navigationBarAppearance
     }
@@ -222,10 +222,10 @@ class AppearanceManager: NSObject {
         let toolbarAppearance = UIToolbarAppearance()
         
         toolbarAppearance.configureWithDefaultBackground()
-        toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        toolbarAppearance.backgroundColor = .surface1Background()
         
-        toolbarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_toolbarButtonTitle(isEnabled: true, for: traitCollection)]
-        toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_toolbarButtonTitle(isEnabled: false, for: traitCollection)]
+        toolbarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: true)]
+        toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: false)]
         
         toolbarAppearance.shadowImage = nil
         toolbarAppearance.shadowColor = UIColor.mnz_toolbarShadow(for: traitCollection)

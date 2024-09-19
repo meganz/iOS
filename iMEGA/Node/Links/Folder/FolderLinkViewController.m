@@ -124,7 +124,7 @@
     [MEGASdk.shared addMEGATransferDelegate:self];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                             traitCollection:self.traitCollection];
 }
 
@@ -184,7 +184,7 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                                 traitCollection:self.traitCollection];
         [AppearanceManager setupAppearance: self.traitCollection];
         

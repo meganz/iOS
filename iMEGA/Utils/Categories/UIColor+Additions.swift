@@ -82,14 +82,6 @@ extension UIColor {
     }
     
     // MARK: - Main Bar
-    @objc(
-        mnz_mainBarsForTraitCollection:
-    )
-    class func mnz_mainBars(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Background.surface1
-    }
     
     @objc class func mnz_navigationBarTitle(
         for traitCollection: UITraitCollection
@@ -105,27 +97,13 @@ extension UIColor {
         )
     }
     
-    class func mnz_navigationBarButtonTitle(
-        isEnabled: Bool,
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        barButtonTitle(
-            isEnabled: isEnabled,
-            for: traitCollection
-        )
-    }
-    
     @objc class func mnz_cellBackground(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
         TokenColors.Background.page
     }
     
-    @objc class func surfaceBackground() -> UIColor {
-        TokenColors.Background.surface1
-    }
-    
-    @objc class func searchBarSurface1BackgroundColor() -> UIColor {
+    @objc class func surface1Background() -> UIColor {
         TokenColors.Background.surface1
     }
     
@@ -555,14 +533,8 @@ extension UIColor {
         )
     }
     
-    class func mnz_toolbarButtonTitle(
-        isEnabled: Bool,
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        barButtonTitle(
-            isEnabled: isEnabled,
-            for: traitCollection
-        )
+    class func barButtonTitleColor(isEnabled: Bool) -> UIColor {
+        isEnabled ? TokenColors.Text.primary: TokenColors.Text.disabled
     }
     
     class func mnz_toolbarShadow(
@@ -782,12 +754,6 @@ extension UIColor {
     }
     
     // MARK: Private
-    private class func barButtonTitle(
-        isEnabled: Bool,
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        isEnabled ? TokenColors.Text.primary: TokenColors.Text.disabled
-    }
     
     private class func barTint(
         for traitCollection: UITraitCollection
@@ -809,7 +775,7 @@ extension UIColor {
         TokenColors.Support.error
     }
     
-    @objc class func mnz_takenDownNodeTextColor(for traitCollection: UITraitCollection) -> UIColor {
+    @objc class func mnz_takenDownNodeTextColor() -> UIColor {
         TokenColors.Text.error
     }
     

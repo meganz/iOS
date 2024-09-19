@@ -145,7 +145,7 @@
     }
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                             traitCollection:self.traitCollection];
 }
 
@@ -209,7 +209,7 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar
-           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                                 traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
@@ -689,7 +689,7 @@
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+            [self.toolbar setBackgroundColor:[UIColor surface1Background]];
             
             NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             
@@ -704,7 +704,7 @@
         } else if (self.navigationController.isToolbarHidden) {
             self.navigationController.topViewController.toolbarItems = self.toolbar.items;
             [self.navigationController setToolbarHidden:NO animated:animated];
-            [self.navigationController.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+            [self.navigationController.toolbar setBackgroundColor:[UIColor surface1Background]];
         }
         for (ContactTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];

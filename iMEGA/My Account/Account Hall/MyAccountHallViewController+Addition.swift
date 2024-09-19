@@ -33,7 +33,7 @@ extension MyAccountHallViewController {
     }
     
     @objc func setupNavigationBarColor(with trait: UITraitCollection) {
-        let color =  UIColor.mnz_mainBars(for: trait)
+        let color =  UIColor.surface1Background()
         
         navigationController?.navigationBar.standardAppearance.backgroundColor = color
         navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = color

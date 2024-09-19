@@ -23,7 +23,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     private var slideShowTimer = Timer()
     
     private var backgroundColor: UIColor {
-        UIColor.mnz_mainBars(for: traitCollection)
+        UIColor.surface1Background()
     }
     
     override func viewDidLoad() {
@@ -105,8 +105,8 @@ final class SlideShowViewController: UIViewController, ViewType {
     private func setNavigationAndToolbarColor() {
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
         AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
-        bottomBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        statusBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        bottomBarBackground.backgroundColor = UIColor.surface1Background()
+        statusBarBackground.backgroundColor = UIColor.surface1Background()
     }
     
     private func adjustHeightOfTopAndBottomView() {

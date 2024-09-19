@@ -92,7 +92,7 @@
 
 - (void)updateAppearance {
     self.view.backgroundColor = self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection: self.traitCollection];
-    self.unlockedBonusesView.backgroundColor = [UIColor surfaceBackground];
+    self.unlockedBonusesView.backgroundColor = [UIColor surface1Background];
     self.inviteYourFriendsTitleLabel.textColor = [UIColor mnz_primaryTextColor];
     self.unlockedBonusesLabel.textColor = [UIColor primaryTextColor];
     self.storageQuotaLabel.textColor = [UIColor secondaryTextColor];

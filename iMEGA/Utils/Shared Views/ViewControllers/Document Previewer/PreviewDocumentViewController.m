@@ -152,7 +152,7 @@
         [self.imageView setImage:[NodeAssetsManager.shared imageFor:self.filePath.pathExtension]];
     }
     
-    [self.navigationController.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+    [self.navigationController.toolbar setBackgroundColor:[UIColor surface1Background]];
 }
 
 - (void)loadPreview {
