@@ -671,8 +671,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         await sut.setUpPlanTask?.value
         sut.setSelectedPlan(.proI_monthly)
         
-        XCTAssertTrue(sut.isShowSnackBar)
-        XCTAssertEqual(sut.snackBarType, .currentRecurringPlanSelected)
+        XCTAssertEqual(sut.snackBar?.message, PlanSelectionSnackBarType.currentRecurringPlanSelected.title)
     }
     
     func testSnackBar_selectedCurrentOneTimeAccount_shouldNotShowSnackBar() async {
@@ -683,32 +682,9 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         await sut.setUpPlanTask?.value
         sut.setSelectedPlan(.proI_monthly)
         
-        XCTAssertFalse(sut.isShowSnackBar)
-        XCTAssertEqual(sut.snackBarType, .none)
+        XCTAssertNil(sut.snackBar)
     }
-    
-    func testSnackBarType_isShowSnackBarSetToFalse_shouldBeNone() async {
-        let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
-        let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
-        let (sut, _) = makeSUT(accountDetails: details, planList: planList)
         
-        await sut.setUpPlanTask?.value
-        sut.setSelectedPlan(.proI_monthly)
-        XCTAssertTrue(sut.isShowSnackBar)
-        
-        let exp = expectation(description: "Set snackBarViewModel snackBarViewModel to false")
-        let snackBarViewModel = sut.snackBarViewModel()
-        snackBarViewModel.$isShowSnackBar
-            .dropFirst()
-            .sink { _ in
-                exp.fulfill()
-            }.store(in: &subscriptions)
-
-        snackBarViewModel.isShowSnackBar = false
-        await fulfillment(of: [exp], timeout: 0.5)
-        XCTAssertEqual(sut.snackBarType, .none)
-    }
-    
     // MARK: - Ads
     @MainActor
     func testSetupExternalAds_adsEnabledAndExternalAdsDisabled_shouldBeFalse() async {

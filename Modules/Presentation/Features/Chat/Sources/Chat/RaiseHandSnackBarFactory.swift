@@ -183,10 +183,7 @@ extension RaiseHandSnackBarFactory.Scenario {
         ForEach(RaiseHandSnackBarFactory.Scenario.allCases) {
             if let snackBar = $0.snackBar {
                 SnackBarView(
-                    viewModel: SnackBarViewModel(
-                        snackBar: snackBar,
-                        willDismiss: nil
-                    )
+                    snackBar: .constant(snackBar)
                 )
             } else {
                 Text("Empty for `.nobodyRaisedHand` scenario")

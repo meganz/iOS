@@ -1,29 +1,91 @@
-import Foundation
+import Combine
+import MEGADesignToken
 import SwiftUI
 
 public struct SnackBarView: View {
     
-    enum Implementation {
-        case viewModel(SnackBarViewModel)
-        case snackBar(SnackBar)
-    }
+    @Binding private var snackBar: SnackBar?
+    private let displayDuration: TimeInterval
+    @State private var restartAutoHideSubject = PassthroughSubject<Void, Never>()
     
-    private let implementation: Implementation
-    
-    public init(viewModel: SnackBarViewModel) {
-        implementation = .viewModel(viewModel)
-    }
-    
-    public init(snackBar: SnackBar) {
-        implementation = .snackBar(snackBar)
+    public init(snackBar: Binding<SnackBar?>,
+                displayDuration: TimeInterval = 4) {
+        self._snackBar = snackBar
+        self.displayDuration = displayDuration
     }
     
     public var body: some View {
-        switch implementation {
-        case .viewModel(let viewModel):
-            SnackBarViewModelContainerView(viewModel: viewModel)
-        case .snackBar(let snackBar):
-            SnackBarItemView(snackBar: snackBar)
+        VStack {
+            if let snackBar {
+                SnackBarItemView(snackBar: snackBar)
+                    .throwingTask {
+                        await restartAutoHideSubject
+                            .prepend(()) // Kick start the timer
+                            .debounce(for: .seconds(displayDuration), scheduler: DispatchQueue.main)
+                            .values
+                            .first(where: { _ in true })
+                        
+                        self.snackBar = nil
+                    }
+                    .onChange(of: snackBar) { _ in
+                        restartAutoHideSubject.send(())
+                    }
+            }
         }
+        .opacity(snackBar != nil ? 1 : 0)
+        .animation(.easeInOut(duration: 0.5), value: snackBar)
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    VStack {
+        SnackBarView(
+            snackBar: .constant(
+                SnackBar(
+                    message: "Your hand is raised",
+                    layout: .crisscross,
+                    action: .init(
+                        title: "Lower hand",
+                        handler: {}
+                    ),
+                    colors: .default
+                )
+            )
+        )
+        SnackBarView(
+            snackBar: .constant(
+                SnackBar(
+                    message: "Your hand is raised",
+                    layout: .horizontal,
+                    action: .init(
+                        title: "Lower hand",
+                        handler: {}
+                    ),
+                    colors: .raiseHand
+                )
+            )
+        )
+        SnackBarView(
+            snackBar: .constant(
+                SnackBar(
+                    message: "Message",
+                    layout: .crisscross,
+                    action: nil,
+                    colors: .default
+                )
+            )
+        )
+        SnackBarView(
+            snackBar: .constant(
+                SnackBar(
+                    message: "Message",
+                    layout: .horizontal,
+                    action: nil,
+                    colors: .default
+                )
+            )
+        )
     }
 }

@@ -31,7 +31,6 @@ struct TimelineView: View {
             onFilterUpdate: onFilterUpdate)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(alignment: .top, content: cameraUploadBannerStatusView)
-        .snackBar($timelineViewModel.snackBar)
     }
     
     @ViewBuilder
