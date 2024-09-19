@@ -12,7 +12,7 @@ public protocol MonitorPhotosUseCaseProtocol: Sendable {
     func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
 }
 
-private typealias NodeEntityFilter = ((NodeEntity) -> Bool)
+private typealias NodeEntityFilter = (@Sendable (NodeEntity) -> Bool)
 
 public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     private let photosRepository: any PhotosRepositoryProtocol
@@ -64,6 +64,9 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         }
         if let mediaNodeFilter = makeMediaNodeFilter(filterOptions: filterOptions) {
             filters.append(mediaNodeFilter)
+        }
+        if filterOptions.contains(.favourites) {
+            filters.append { $0.isFavourite }
         }
         return filters
     }

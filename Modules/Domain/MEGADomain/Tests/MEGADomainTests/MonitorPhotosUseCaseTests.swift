@@ -198,6 +198,21 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         XCTAssertEqual(folderUpdatePhotos, [thumbnailPhoto])
     }
     
+    func testMonitorPhotos_favourites_shouldApplyFiltersAndReturnOnlyFavourites() async throws {
+        let favouritePhoto = NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true, isFavourite: true)
+        let photos = [favouritePhoto,
+                      NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: false, isFavourite: false)]
+        let photosRepository = MockPhotosRepository(photos: photos)
+        let sut = makeSUT(
+            photosRepository: photosRepository)
+        
+        let options: PhotosFilterOptionsEntity = [.allLocations, .allMedia, .favourites]
+        var iterator = await sut.monitorPhotos(filterOptions: options).makeAsyncIterator()
+        
+        let initialPhotos = try await iterator.next()?.get()
+        XCTAssertEqual(initialPhotos, [favouritePhoto])
+    }
+    
     // MARK: Private
     
     private func makeSUT(
