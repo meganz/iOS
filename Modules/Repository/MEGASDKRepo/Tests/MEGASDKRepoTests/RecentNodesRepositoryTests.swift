@@ -25,7 +25,7 @@ final class RecentNodesRepositoryTests: XCTestCase {
         )
         
         let sut = RecentNodesRepository(sdk: sdk)
-        let recentActionBuckets = try await sut.recentActionBuckets()
+        let recentActionBuckets = try await sut.recentActionBuckets(excludeSensitive: false)
         
         XCTAssertEqual(recentActionBuckets.count, allRecentActionsBuckets.count)
     }
@@ -35,7 +35,7 @@ final class RecentNodesRepositoryTests: XCTestCase {
         let sut = RecentNodesRepository(sdk: sdk)
         
         do {
-            _ = try await sut.recentActionBuckets()
+            _ = try await sut.recentActionBuckets(excludeSensitive: false)
             XCTFail("Should have thrown error")
         } catch {
             XCTAssertTrue(error is GenericErrorEntity)

@@ -368,7 +368,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 
                 strongSelf.wasSelectingFavoriteUnfavoriteNodeActionOption = false;
             } else if (strongSelf.displayMode == DisplayModeRecents) {
-                [strongSelf reloadRecentActionBucketAfterNodeUpdatesUsing:MEGASdk.shared];
+                [strongSelf reloadRecentActionBucketAfterNodeUpdatesUsing:MEGASdk.shared
+                                                        completionHandler:^{ }];
             } else {
                 [strongSelf reloadData];
             }

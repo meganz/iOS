@@ -19,9 +19,9 @@ public struct RecentNodesRepository: RecentNodesRepositoryProtocol {
         self.sdk = sdk
     }
     
-    public func recentActionBuckets(limitCount: Int = Constants.maxRecommendedNodes) async throws -> [RecentActionBucketEntity] {
+    public func recentActionBuckets(limitCount: Int = Constants.maxRecommendedNodes, excludeSensitive: Bool) async throws -> [RecentActionBucketEntity] {
         try await withAsyncThrowingValue(in: { completion in
-            sdk.getRecentActionsAsync(sinceDays: Constants.maxRecommendedDays, maxNodes: limitCount, delegate: RequestDelegate { result in
+            sdk.getRecentActionsAsync(sinceDays: Constants.maxRecommendedDays, maxNodes: limitCount, excludeSensitives: excludeSensitive, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
                     completion(.success(request.recentActionsBuckets?.compactMap { RecentActionBucketEntity(with: $0) } ?? []))

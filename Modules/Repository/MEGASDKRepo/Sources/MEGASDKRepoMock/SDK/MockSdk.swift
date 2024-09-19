@@ -752,7 +752,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         processRequestResult(delegate: delegate)
     }
     // MARK: - Recent Actions
-    public override func getRecentActionsAsync(sinceDays days: Int, maxNodes: Int, delegate: MEGARequestDelegate) {
+    public override func getRecentActionsAsync(sinceDays days: Int, maxNodes: Int, excludeSensitives: Bool, delegate: MEGARequestDelegate) {
         getRecentActionsAsyncCalled = true
         processRequestResult(delegate: delegate)
     }

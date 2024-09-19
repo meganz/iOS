@@ -129,8 +129,10 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
         
         for (changeType, expectedResult) in expectedScenario {
             let recentItemsUseCase = MockRecentItemsUseCase()
+            let recentNodesUseCase = MockRecentNodesUseCase()
             let sut = sut(
-                recentItemsUseCase: recentItemsUseCase
+                recentItemsUseCase: recentItemsUseCase,
+                recentNodesUseCase: recentNodesUseCase
             )
             
             await sut.startWidgetManager()
@@ -155,6 +157,10 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
                 sut.updateWidgetContent(with: MockNodeList(nodes: mockNodes))
                 await fulfillment(of: [expectation], timeout: 1)
                 task.cancel()
+                
+                XCTAssertEqual(
+                    recentNodesUseCase.invocations,
+                    [.recentActionBuckets(limit: 8, excludeSensitive: true)])
             }
             
             let notExpectingResultScenario = { [weak self] (changeType: MEGANodeChangeType, recentItemsUseCase: MockRecentItemsUseCase) in

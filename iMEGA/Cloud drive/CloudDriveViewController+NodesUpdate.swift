@@ -37,12 +37,14 @@ extension CloudDriveViewController {
         return nodeUpdateRepository.shouldProcessOnNodesUpdate(parentNode: parentNodeEntity, childNodes: childNodes.toNodeEntities(), updatedNodes: nodeList.toNodeEntities())
     }
     
-    /// To be called to update the recent bucket contents after receiveing node updates from SDK
-    @objc func reloadRecentActionBucketAfterNodeUpdates(using sdk: MEGASdk) {
+    /// To be called to update the recent bucket contents after receiving node updates from SDK
+    @objc func reloadRecentActionBucketAfterNodeUpdates(using sdk: MEGASdk) async {
         guard displayMode == .recents else { return }
         
+        let excludeSensitives = await viewModel.shouldExcludeSensitiveItems()
+        
         // This follows the logic of `RecentsViegwController.getRecentActions`
-        sdk.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, delegate: RequestDelegate { [weak self] result in
+        sdk.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, excludeSensitives: excludeSensitives, delegate: RequestDelegate { [weak self] result in
             guard let self, let recentActionBucket else { return }
             var updatedBucket: MEGARecentActionBucket?
             if case let .success(request) = result {

@@ -1,4 +1,6 @@
 import MEGADesignToken
+import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 extension RecentsViewController {
@@ -22,15 +24,7 @@ extension RecentsViewController {
     }
     
     @objc func getRecentActions() {
-        MEGASdk.shared.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, delegate: RequestDelegate { [weak self] result in
-            if case let .success(request) = result,
-               let recentActionsBuckets = request.recentActionsBuckets {
-                self?.recentActionBucketArray = recentActionsBuckets
-                self?.getRecentActionsActivityIndicatorView?.stopAnimating()
-                self?.tableView?.isHidden = false
-                self?.tableView?.reloadData()
-            }
-        })
+        Task { await getRecentActions() }
     }
     
     @objc func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
@@ -63,5 +57,29 @@ extension RecentsViewController {
     @objc func configureTokenColors() {
         tableView?.backgroundColor = TokenColors.Background.page
         tableView?.separatorColor = TokenColors.Border.strong
+    }
+    
+    private func getRecentActions() async {
+        let excludeSensitives = await shouldExcludeSensitive()
+        
+        MEGASdk.shared.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, excludeSensitives: excludeSensitives, delegate: RequestDelegate { @MainActor [weak self] result in
+            if case let .success(request) = result,
+               let recentActionsBuckets = request.recentActionsBuckets {
+                self?.recentActionBucketArray = recentActionsBuckets
+                self?.getRecentActionsActivityIndicatorView?.stopAnimating()
+                self?.tableView?.isHidden = false
+                self?.tableView?.reloadData()
+            }
+        })
+    }
+    
+    private func shouldExcludeSensitive() async -> Bool {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+            return false
+        }
+        
+        return await !ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+            .fetchSensitiveAttribute()
+            .showHiddenNodes
     }
 }

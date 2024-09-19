@@ -35,7 +35,10 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
     
     override init() {
         self.recentItemsUseCase = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance()))
-        self.recentNodesUseCase = RecentNodesUseCase(repo: RecentNodesRepository.newRepo)
+        self.recentNodesUseCase = RecentNodesUseCase(
+            recentNodesRepository: RecentNodesRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         self.favouriteItemsUseCase = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
         self.favouriteNodesUseCase = FavouriteNodesUseCase(
             repo: FavouriteNodesRepository.newRepo,
@@ -48,7 +51,10 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
 
     init(
         recentItemsUseCase: some RecentItemsUseCaseProtocol = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance())),
-        recentNodesUseCase: some RecentNodesUseCaseProtocol = RecentNodesUseCase(repo: RecentNodesRepository.newRepo),
+        recentNodesUseCase: some RecentNodesUseCaseProtocol = RecentNodesUseCase(
+            recentNodesRepository: RecentNodesRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
         favouriteItemsUseCase: some FavouriteItemsUseCaseProtocol = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance())),
         favouriteNodesUseCase: some FavouriteNodesUseCaseProtocol = FavouriteNodesUseCase(
             repo: FavouriteNodesRepository.newRepo,
@@ -207,7 +213,7 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
 
     private func createRecentItemsData() async {
         do {
-            let recentActions = try await recentNodesUseCase.recentActionBuckets(limitCount: MEGAQuickAccessWidgetMaxDisplayItems)
+            let recentActions = try await recentNodesUseCase.recentActionBuckets(limitCount: MEGAQuickAccessWidgetMaxDisplayItems, excludeSensitive: true)
             try Task.checkCancellation()
             var recentItems = [RecentItemEntity]()
             recentActions.forEach { (bucket) in

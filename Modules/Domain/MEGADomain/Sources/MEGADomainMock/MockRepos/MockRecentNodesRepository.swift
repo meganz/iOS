@@ -1,6 +1,8 @@
 import MEGADomain
+import MEGASwift
 
 public struct MockRecentNodesRepository: RecentNodesRepositoryProtocol {
+    
     public static var newRepo: MockRecentNodesRepository {
         MockRecentNodesRepository()
     }
@@ -9,6 +11,12 @@ public struct MockRecentNodesRepository: RecentNodesRepositoryProtocol {
     
     private let allRecentActionBucketList: [RecentActionBucketEntity]
     
+    public enum Invocation: Sendable, Equatable {
+        case recentActionBuckets(limit: Int, excludeSensitive: Bool)
+    }
+    
+    @Atomic public var invocations: [Invocation] = []
+
     public init(
         allRecentActionBucketList: [RecentActionBucketEntity] = [],
         requestResult: Result<Void, GenericErrorEntity> = .failure(GenericErrorEntity())
@@ -19,6 +27,16 @@ public struct MockRecentNodesRepository: RecentNodesRepositoryProtocol {
     
     public func recentActionBuckets(limitCount: Int) async throws -> [RecentActionBucketEntity] {
         switch requestResult {
+        case .success: Array(allRecentActionBucketList.prefix(limitCount))
+        case .failure(let error): throw error
+        }
+    }
+    
+    public func recentActionBuckets(limitCount: Int, excludeSensitive: Bool) async throws -> [RecentActionBucketEntity] {
+        $invocations.mutate {
+            $0.append(.recentActionBuckets(limit: limitCount, excludeSensitive: excludeSensitive))
+        }
+        return switch requestResult {
         case .success: Array(allRecentActionBucketList.prefix(limitCount))
         case .failure(let error): throw error
         }
