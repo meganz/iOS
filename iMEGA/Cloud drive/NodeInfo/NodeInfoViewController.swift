@@ -514,6 +514,7 @@ final class NodeInfoViewController: UITableViewController {
             nodeDescriptionUseCase: NodeDescriptionUseCase(
                 repository: NodeDescriptionRepository.newRepo
             ),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             maxCharactersAllowed: 300,
             refreshUI: { [weak self] code in
                 guard let self else { return }

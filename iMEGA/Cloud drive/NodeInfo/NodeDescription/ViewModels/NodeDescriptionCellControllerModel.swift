@@ -39,6 +39,7 @@ final class NodeDescriptionCellControllerModel {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let backupUseCase: any BackupsUseCaseProtocol
     private let nodeDescriptionUseCase: any NodeDescriptionUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let refreshUI: ((_ code: () -> Void) -> Void)
     let descriptionSaved: (SavedState) -> Void
 
@@ -123,6 +124,7 @@ final class NodeDescriptionCellControllerModel {
         nodeUseCase: some NodeUseCaseProtocol,
         backupUseCase: some BackupsUseCaseProtocol,
         nodeDescriptionUseCase: some NodeDescriptionUseCaseProtocol,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         maxCharactersAllowed: Int = 300,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         refreshUI: @escaping ((_ code: () -> Void) -> Void),
@@ -132,6 +134,7 @@ final class NodeDescriptionCellControllerModel {
         self.nodeUseCase = nodeUseCase
         self.backupUseCase = backupUseCase
         self.nodeDescriptionUseCase = nodeDescriptionUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.maxCharactersAllowed = maxCharactersAllowed
         self.tracker = tracker
         self.refreshUI = refreshUI
@@ -168,6 +171,8 @@ final class NodeDescriptionCellControllerModel {
     }
 
     private func update(descriptionString: String) async -> SavedState {
+        guard networkMonitorUseCase.isConnected() else { return .error }
+        
         do {
             let updatedDescriptionString = descriptionString.isEmpty ? nil : descriptionString
             let savedStatus = detectSavedState(for: updatedDescriptionString)
