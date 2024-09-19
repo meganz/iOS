@@ -129,7 +129,14 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
         let result = await sut.savePendingChanges()
         XCTAssertEqual(result, .removed)
     }
-    
+
+    func testSavePendingChanges_whenNotConnectedToNetwork_shouldReturnError() async {
+        let sut = makeSUT(description: "description", isConnectedToNetwork: false)
+        sut.cellViewModel.descriptionUpdated("")
+        let result = await sut.savePendingChanges()
+        XCTAssertEqual(result, .error)
+    }
+
     func testFooterViewModel_whenDescriptionUpdated_withReadOnlyAccess_shouldShowLeadingTextAndHideTrailingTextAndNotScrollToCell() {
         let sut = makeSUT(description: "", accessType: .read, maxCharactersAllowed: 20)
         var scrollToCellTriggered = false
@@ -308,6 +315,7 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
         isNodeInRubbishBin: Bool = false,
         isBackupsNode: Bool = false,
         isBackupsRootNode: Bool = false,
+        isConnectedToNetwork: Bool = true,
         maxCharactersAllowed: Int = 300,
         tracker: some AnalyticsTracking = MockTracker(),
         nodeDescriptionResult: Result<NodeEntity, any Error> = .success(NodeEntity()),
@@ -328,6 +336,7 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             backupUseCase: backupUseCase,
             nodeDescriptionUseCase: MockNodeDescriptionUseCase(result: nodeDescriptionResult),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: isConnectedToNetwork),
             maxCharactersAllowed: maxCharactersAllowed,
             tracker: tracker,
             refreshUI: { block in block() },
