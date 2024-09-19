@@ -155,7 +155,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
     }
     
-    [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+    [self.toolbar setBackgroundColor:[UIColor surface1Background]];
     
     self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     
@@ -362,7 +362,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)updateAppearance {
-    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor surface1Background];
     
     [self reloadTitleWithCompletionHandler:^{}];
     

@@ -291,7 +291,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             navigationItem.searchController = searchController
         }
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                traitCollection: traitCollection)
     }
     
@@ -472,7 +472,7 @@ extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                traitCollection: traitCollection)
     }
 }

@@ -58,7 +58,7 @@
     self.view.backgroundColor = [UIColor searchBarPageBackgroundColor];
     self.titleLabel.textColor = [self primaryTextColor];
     self.firstLabel.textColor = self.secondLabel.textColor = [self secondaryTextColor];
-    self.recoveryKeyView.backgroundColor = [UIColor searchBarSurface1BackgroundColor];
+    self.recoveryKeyView.backgroundColor = [UIColor surface1Background];
     self.recoveryKeyView.layer.borderWidth = 0;
     self.recoveryKeyTextField.textColor = [self primaryTextColor];
     [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];

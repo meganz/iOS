@@ -43,7 +43,7 @@ class EmojiCarousalView: UIView {
     
     private func updateAppearance() {
         descriptionLabel.textColor = UIColor.emojiDescriptionTextColor(traitCollection)
-        descriptionLabelBackgroundView.backgroundColor = UIColor.surfaceBackground()
+        descriptionLabelBackgroundView.backgroundColor = UIColor.surface1Background()
         handlebarView.backgroundColor = UIColor.mnz_handlebar(for: traitCollection)
         backgroundColor = UIColor.mnz_backgroundElevated()
     }

@@ -90,7 +90,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         
         if let searchBar = self.wrapper?.searchController.searchBar {
             AppearanceManager.forceSearchBarUpdate(searchBar,
-                                                   backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                                   backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                    traitCollection: self.traitCollection)
         }
     }
@@ -125,7 +125,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             }
             if let searchBar = self.wrapper?.searchController.searchBar {
                 AppearanceManager.forceSearchBarUpdate(searchBar, 
-                                                       backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                                       backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                        traitCollection: self.traitCollection)
             }
         }

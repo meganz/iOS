@@ -87,7 +87,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                             traitCollection:self.traitCollection];
 }
 
@@ -167,7 +167,7 @@ static NSString *kisDirectory = @"kisDirectory";
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                                 traitCollection:self.traitCollection];
         if (self.flavor == HomeScreen) {
             self.view.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
@@ -752,7 +752,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+            [self.toolbar setBackgroundColor:[UIColor surface1Background]];
             
             NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             

@@ -158,7 +158,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             if isVisualMediaSearchFeatureEnabled {
                 AppearanceManager.forceSearchBarUpdate(
                     searchController.searchBar,
-                    backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                    backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                     traitCollection: traitCollection)
             }
         }

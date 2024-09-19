@@ -115,7 +115,7 @@
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     self.tableView.separatorColor = [UIColor mnz_separator];
     
-    self.profileView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    self.profileView.backgroundColor = [UIColor surface1Background];
     self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separator];
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated];
@@ -131,7 +131,7 @@
         [MEGASdk.shared isAccountType:MEGAAccountTypeProFlexi]) {
         self.accountTypeLabel.textColor = [UIColor mnz_subtitles];
         
-        self.tableFooterContainerView.backgroundColor = [UIColor surfaceBackground];
+        self.tableFooterContainerView.backgroundColor = [UIColor surface1Background];
         self.tableFooterLabel.textColor = primaryTextColor;
     }
     

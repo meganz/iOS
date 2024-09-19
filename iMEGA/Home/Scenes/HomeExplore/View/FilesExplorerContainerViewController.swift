@@ -208,7 +208,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
             navigationItem.searchController = searchController
         }
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                traitCollection: traitCollection)
     }
 }
@@ -233,7 +233,7 @@ extension FilesExplorerContainerViewController: TraitEnvironmentAware {
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                traitCollection: traitCollection)
     }
 }

@@ -219,7 +219,7 @@
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+            [self.toolbar setBackgroundColor:[UIColor surface1Background]];
             
             NSLayoutAnchor *bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
             

@@ -127,7 +127,7 @@
         [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor searchBarSurface1BackgroundColor]
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                                 traitCollection:self.traitCollection];
         
         [self updateAppearance];

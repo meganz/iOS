@@ -31,7 +31,7 @@ class ContactsGroupsViewController: UIViewController {
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                               backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                traitCollection: traitCollection)
         
         updateAppearance()
@@ -44,7 +44,7 @@ class ContactsGroupsViewController: UIViewController {
         
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                                   backgroundColorWhenDesignTokenEnable: UIColor.searchBarSurface1BackgroundColor(),
+                                                   backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                    traitCollection: traitCollection)
             
             updateAppearance()
