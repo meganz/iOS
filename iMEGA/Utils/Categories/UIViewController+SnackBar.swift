@@ -1,14 +1,6 @@
 import MEGASwiftUI
 import SwiftUI
 
-/// snackBarViewLookUp is used to store the latest current snack bar view added to the current view controller.
-/// There's only one snack bar at a time for a view controller, the returned view can be used to find and remove the current snack bar before adding the new one.
-private var snackBarViewLookUp: [String: UIView] = [:]
-
-/// bottomConstraintLookUp is used to store the bottomAnchor constraint of the latest current snack bar view added to the current view controller.
-/// The returned constraint can be used to update constant value when needed.
-private var bottomConstraintLookUp: [String: NSLayoutConstraint] = [:]
-
 protocol SnackBarLayoutCustomizable {
     /// Specify the bottom inset of the snack bar to its super view. If not implemented, default to the bottomAnchor view controller's view safeAreaLayoutGuide.
     var additionalSnackBarBottomInset: CGFloat { get }
@@ -65,16 +57,22 @@ protocol SnackBarObservablePresenting where Self: ObservableObject {
 
 // MARK: - Privates
 extension UIViewController {
-    private var snackBarViewContainerID: String {
-        String(describing: self)
+    private struct Constants {
+        static let snackBarConstraintIdentifier = "nz.mega.UIViewController.SnackBar.bottomConstraintKey"
+        static let snackBarViewTag = 10001
     }
-    
+
     private var currentSnackBarView: UIView? {
-        snackBarViewLookUp[snackBarViewContainerID]
+        view.viewWithTag(Constants.snackBarViewTag)
     }
-    
+
     fileprivate func updateSnackBarBottomInset(_ bottomInset: CGFloat, animated: Bool) {
-        guard let constraint = bottomConstraintLookUp[snackBarViewContainerID] else { return }
+        guard let constraint = currentSnackBarView?.superview?.constraints.first(
+            where: { $0.identifier == Constants.snackBarConstraintIdentifier }
+        ) else {
+            return
+        }
+
         guard animated else {
             constraint.constant = bottomInset
             return
@@ -133,8 +131,8 @@ extension UIViewController {
         }
          
         let bottomConstraint = snackBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomInset)
-        bottomConstraintLookUp[snackBarViewContainerID] = bottomConstraint
-        
+        bottomConstraint.identifier = Constants.snackBarConstraintIdentifier
+
         // leading and trailing should be contrainted to window safeAreaLayoutGuide
         // the reason is: the view may not be within safe area (as intentionally, e.g MeetingParticipantsLayoutViewController)
         // but we want to make sure the snackbar to be always within safe area.
@@ -163,26 +161,20 @@ extension UIViewController {
     
     private func dismissSnackBarView(_ snackBarView: UIView, immediate: Bool = false) {
         if immediate {
-            removeSnackBarView(snackBarView)
+            snackBarView.removeFromSuperview()
             return
         }
         
-        animateRemovingSnackBarView(snackBarView) { [weak self] in
-            self?.removeSnackBarView(snackBarView)
+        animateRemovingSnackBarView(snackBarView) {
+            snackBarView.removeFromSuperview()
         }
-    }
-    
-    private func removeSnackBarView(_ snackBarView: UIView) {
-        snackBarView.removeFromSuperview()
-        snackBarViewLookUp[snackBarViewContainerID] = nil
-        bottomConstraintLookUp[snackBarViewContainerID] = nil
     }
     
     private func addSnackBarView(_ snackBarView: UIView) {
         view.addSubview(snackBarView)
-        snackBarViewLookUp[snackBarViewContainerID] = snackBarView
         snackBarView.backgroundColor = .clear
-        
+        snackBarView.tag = Constants.snackBarViewTag
+
         layout(snackBarView: snackBarView)
     }
 }
