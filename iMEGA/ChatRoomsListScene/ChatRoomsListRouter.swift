@@ -5,6 +5,7 @@ import MEGAPermissions
 import MEGARepo
 import MEGASDKRepo
 
+@MainActor
 final class ChatRoomsListRouter: ChatRoomsListRouting {
     private(set) weak var navigationController: UINavigationController?
     private weak var chatRoomsListViewController: ChatRoomsListViewController?
@@ -15,7 +16,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         self.tabBarController = tabBarController
     }
     
-    @MainActor
     func build() -> UIViewController {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let permissionHandler = DevicePermissionsHandler.makeHandler()
@@ -74,7 +74,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         ).start()
     }
     
-    @MainActor
     func presentScheduleMeeting() {
         guard let navigationController else { return }
         let viewConfiguration = ScheduleMeetingNewViewConfiguration(
@@ -213,7 +212,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         MeetingInfoRouter(presenter: navigationController, scheduledMeeting: scheduledMeeting).start()
     }
     
-    @MainActor
     func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity) {
         guard let navigationController else {
             return
@@ -260,7 +258,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         SVProgressHUD.showSuccess(withStatus: message)
     }
     
-    @MainActor
     func edit(scheduledMeeting: ScheduledMeetingEntity) {
         guard let navigationController else { return }
         let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(

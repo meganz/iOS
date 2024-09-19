@@ -82,6 +82,7 @@ final class ActiveCallViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func activeCallViewTapped() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
         router.openCallView(for: call, in: chatRoom)

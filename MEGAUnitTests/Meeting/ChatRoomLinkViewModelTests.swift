@@ -11,6 +11,7 @@ import XCTest
 final class ChatRoomLinkViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
 
+    @MainActor
     func testIsMeetingLinkOn_onReceiveMeetingLinkNoneNil_meetingLinkShouldBeOn() {
         let chatLinkUseCase = MockChatLinkUseCase(link: "Meeting link")
         
@@ -29,6 +30,7 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isMeetingLinkOn)
     }
     
+    @MainActor
     func testIsMeetingLinkOn_onReceiveMeetingLinkNil_meetingLinkShouldBeOff() {
         let chatLinkUseCase = MockChatLinkUseCase(link: nil)
 
@@ -47,6 +49,7 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isMeetingLinkOn)
     }
 
+    @MainActor
     func testShareMeetingLinkTapped_onShareLinkTapped_shouldTrackEvent() {
         let tracker = MockTracker()
         let sut = makeChatRoomLinkViewModel(tracker: tracker)
@@ -63,6 +66,7 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
     
     // MARK: - Private
 
+    @MainActor
     private func makeChatRoomLinkViewModel(
         router: some MeetingInfoRouting = MockMeetingInfoRouter(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
@@ -100,6 +104,8 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
     var editMeeting_calledTimes = 0
     var editMeetingPublisher = PassthroughSubject<ScheduledMeetingEntity, Never>()
     var didUpdatePeerPermissionResult: ChatRoomParticipantPrivilege?
+    
+    nonisolated init() {}
     
     func showSharedFiles(for chatRoom: MEGADomain.ChatRoomEntity) {
         showSharedFiles_calledTimes += 1

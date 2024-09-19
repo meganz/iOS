@@ -8,6 +8,7 @@ import XCTest
 final class ActiveCallViewModelTests: XCTestCase {
     var subscription: AnyCancellable?
     
+    @MainActor
     func testAction_joinCallViewTapped() {
         let router = MockChatRoomsListRouter()
         let call = CallEntity()

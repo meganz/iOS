@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 protocol ChatRoomsListRouting {
     var navigationController: UINavigationController? { get }
     func presentStartConversation()

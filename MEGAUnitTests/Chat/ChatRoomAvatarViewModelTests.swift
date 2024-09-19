@@ -6,6 +6,7 @@ import MEGATest
 import XCTest
 
 final class ChatRoomAvatarViewModelTests: XCTestCase {
+    @MainActor
     func testLoadAvatar_forOneToOneChat_shouldUpdateOneAvatarAndMatch() async {
         let chatRoom = ChatRoomEntity(chatType: .oneToOne)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
@@ -30,6 +31,7 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
     
+    @MainActor
     func testLoadAvatar_forOnePeerChat_shouldUpdateOneAvatarAndMatch() async {
         let peer = ChatRoomEntity.Peer(handle: 200, privilege: .standard)
         let chatRoom = ChatRoomEntity(peerCount: 1, chatType: .group, peers: [peer])
@@ -56,6 +58,7 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
     
+    @MainActor
     func testLoadAvatar_forTwoPeerChat_shouldUpdateTwoAvatarAndMatch() async {
         let peer1 = ChatRoomEntity.Peer(handle: 201, privilege: .standard)
         let peer2 = ChatRoomEntity.Peer(handle: 202, privilege: .standard)
@@ -85,6 +88,7 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
     
     // MARK: - Private
     
+    @MainActor
     private func makeChatRoomAvatarViewModel(
         title: String = "Test",
         peerHandle: HandleEntity = 1,

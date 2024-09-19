@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAPresentation
 import SwiftUI
 
+@MainActor
 protocol MeetingInfoRouting {
     func showSharedFiles(for chatRoom: ChatRoomEntity)
     func showManageChatHistory(for chatRoom: ChatRoomEntity)
@@ -25,6 +26,7 @@ protocol MeetingInfoRouting {
     func edit(meeting: ScheduledMeetingEntity) -> AnyPublisher<ScheduledMeetingEntity, Never>
 }
 
+@MainActor
 final class MeetingInfoViewModel: ObservableObject {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
@@ -244,7 +246,6 @@ final class MeetingInfoViewModel: ObservableObject {
 
 extension MeetingInfoViewModel {
     // MARK: - Open Invite
-    @MainActor
     func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) async {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
               enabled != chatRoom.isOpenInviteEnabled else {
@@ -261,7 +262,6 @@ extension MeetingInfoViewModel {
     }
     
     // MARK: - Waiting Room
-    @MainActor
     func waitingRoomValueChanged(to enabled: Bool) async {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
               enabled != chatRoom.isWaitingRoomEnabled else {
