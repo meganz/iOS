@@ -8,9 +8,9 @@ final class VisualMediaSearchHistoryCacheRepositoryTests: XCTestCase {
         let entry = SearchTextHistoryEntryEntity(id: UUID(), query: "query", searchDate: Date())
         let sut = makeSUT()
         
-        await sut.addSearchHistory(entry: entry)
+        await sut.add(entry: entry)
         
-        let historyItems = await sut.searchQueryHistory()
+        let historyItems = await sut.history()
         XCTAssertEqual(historyItems, [entry])
     }
     
@@ -18,14 +18,14 @@ final class VisualMediaSearchHistoryCacheRepositoryTests: XCTestCase {
         let entry = SearchTextHistoryEntryEntity(id: UUID(), query: "query", searchDate: Date())
         let sut = makeSUT()
         
-        await sut.addSearchHistory(entry: entry)
+        await sut.add(entry: entry)
         
-        let historyItemsAfterAdd = await sut.searchQueryHistory()
+        let historyItemsAfterAdd = await sut.history()
         XCTAssertEqual(historyItemsAfterAdd, [entry])
         
-        await sut.deleteSearchHistory(entry: entry)
+        await sut.delete(entry: entry)
         
-        let historyItems = await sut.searchQueryHistory()
+        let historyItems = await sut.history()
         XCTAssertTrue(historyItems.isEmpty)
     }
 
