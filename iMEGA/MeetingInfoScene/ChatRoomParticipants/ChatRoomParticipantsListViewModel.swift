@@ -57,6 +57,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         listenToWaitingRoomUsersAllowUpdate()
     }
     
+    @MainActor
     func addParticipantTapped() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         

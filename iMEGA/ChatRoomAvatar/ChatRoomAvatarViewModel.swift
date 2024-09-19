@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class ChatRoomAvatarViewModel: ObservableObject {
     private let title: String
     private let peerHandle: HandleEntity
@@ -122,7 +123,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         try await updateAvatar(primary: emptyGroupAvatar, secondary: nil)
     }
     
-    private func createOnePeerAvatar(forceDownload: Bool) async throws {
+    private nonisolated func createOnePeerAvatar(forceDownload: Bool) async throws {
         let primaryUserHandle = chatRoom.peers[0].handle
         
         if let localPrimaryAvatar = try await createAvatar(withHandle: primaryUserHandle) {
@@ -135,7 +136,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
     }
     
-    private func createTwoOrMorePeerAvatar(forceDownload: Bool) async throws {
+    private nonisolated func createTwoOrMorePeerAvatar(forceDownload: Bool) async throws {
         let primaryUserHandle = chatRoom.peers[0].handle
         let secondaryUserHandle = chatRoom.peers[1].handle
         
@@ -150,7 +151,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         try await updateAvatar(primary: primaryImage, secondary: secondaryImage)
     }
     
-    private func createOneToOneAvatar(forceDownload: Bool) async throws {
+    private nonisolated func createOneToOneAvatar(forceDownload: Bool) async throws {
         if let defaultAvatar = try await createAvatar(withHandle: peerHandle) {
             try await updateAvatar(primary: defaultAvatar, secondary: nil)
         }
@@ -195,7 +196,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         )
     }
     
-    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
+    private nonisolated func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
         guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: handle) else {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
@@ -206,7 +207,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         )
     }
     
-    private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
+    private nonisolated func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
         if userHandle == accountUseCase.currentUserHandle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
@@ -215,8 +216,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
     }
     
-    @MainActor
-    private func updateAvatar(primary: UIImage?, secondary: UIImage?) throws {
+    private func updateAvatar(primary: UIImage?, secondary: UIImage?) async throws {
         try Task.checkCancellation()
         
         let newChatRoomAvatar = ChatListItemAvatarEntity(
@@ -224,11 +224,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             secondaryAvatarData: secondary?.pngData()
         )
         chatListItemAvatar = newChatRoomAvatar
-        Task {
-            await chatListItemCacheUseCase.setAvatar(
-                newChatRoomAvatar,
-                for: chatRoom
-            )
-        }
+        
+        await chatListItemCacheUseCase.setAvatar(newChatRoomAvatar, for: chatRoom)
     }
 }

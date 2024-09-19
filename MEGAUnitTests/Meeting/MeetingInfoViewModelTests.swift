@@ -10,6 +10,7 @@ import XCTest
 final class MeetingInfoViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOn_shouldBeTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -20,6 +21,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOn_shouldBeFalse() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -31,6 +33,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenNotModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOn_shouldBeFalse() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .standard, isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -41,6 +44,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenModeratorAndNotWaitingRoomOnAndAllowNonHostToAddParticipantsOn_shouldBeFalse() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: false, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -51,6 +55,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenModeratorAndWaitingRoomOnAndNotAllowNonHostToAddParticipantsOn_shouldBeFalse() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: false)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -61,6 +66,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenModeratorAndWaitingRoomOffThenOnAndAllowNonHostToAddParticipantsOn_shouldBeFalseThenTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: false)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, waitingRoomEnabled: true)
@@ -77,6 +83,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOffThenOn_shouldBeFalseThenTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: false, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, allowNonHostToAddParticipantsEnabled: true)
@@ -93,6 +100,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndModeratorAndWaitingRoomOffThenOnAndAllowNonHostToAddParticipantsOn_shouldBeFalseThenTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: false)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, waitingRoomEnabled: true)
@@ -110,6 +118,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOffThenOn_shouldBeFalseThenTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: false, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, allowNonHostToAddParticipantsEnabled: true)
@@ -191,6 +200,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testMonitorChatListItemUpdate_onChatRoomPeersChange_shouldUpdateChatRoomAvatarViewModel() async {
         let participantsUpdatedSubject = PassthroughSubject<ChatRoomEntity, Never>()
         let chatRoomUseCase = MockChatRoomUseCase(
@@ -229,7 +239,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
         )
         participantsUpdatedSubject.send(newChatRoomEntity)
         
-        evaluate {
+        await evaluateAsync {
             sut.chatRoomAvatarViewModel?.chatListItemAvatar != beforeChatListItemAvatar
         }
     }

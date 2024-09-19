@@ -89,6 +89,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
         ShareChatLinkOption.allCases
     }
     
+    @MainActor
     func shareOptionTapped(_ shareOption: ShareChatLinkOption) {
         guard let meetingLink else { return }
         switch shareOption {

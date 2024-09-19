@@ -628,6 +628,8 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     
     var navigationController: UINavigationController?
     
+    nonisolated init() {}
+    
     func presentStartConversation() {
         presentStartConversation_calledTimes += 1
     }

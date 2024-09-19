@@ -104,6 +104,7 @@ final class ChatRoomParticipantViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testChatParticipantTapped_onDidUpdatePariticipantPrivilegeInDetailScreen_shouldUpdateParticipantPrivilege() {
         let router = MockMeetingInfoRouter()
         router.didUpdatePeerPermissionResult = .readOnly
