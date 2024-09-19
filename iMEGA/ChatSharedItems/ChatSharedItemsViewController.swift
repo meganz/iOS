@@ -170,7 +170,7 @@ class ChatSharedItemsViewController: UIViewController {
     func updateAppearance() {
         view.backgroundColor = UIColor.systemBackground
         
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator()
         
         tableView.reloadData()
     }

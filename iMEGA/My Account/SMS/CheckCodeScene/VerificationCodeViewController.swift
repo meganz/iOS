@@ -90,7 +90,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
     }
     
     private func updateAppearance() {
-        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+        view.backgroundColor = .mnz_backgroundElevated()
         
         updateCodeFieldsAppearance()
         
@@ -112,7 +112,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
             $0.backgroundColor = TokenColors.Background.surface1
             $0.layer.cornerRadius = 4
             $0.layer.borderWidth = 0.5
-            $0.layer.borderColor = errorView.isHidden ? UIColor.mnz_separator(for: traitCollection).cgColor : errorBorderColor
+            $0.layer.borderColor = errorView.isHidden ? UIColor.mnz_separator().cgColor : errorBorderColor
         }
     }
 

@@ -113,12 +113,12 @@
     self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separator];
     
     self.profileView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separator];
     
-    self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated];
     
     UIColor *primaryTextColor = [UIColor cellTitleColorFor:self.traitCollection];
     

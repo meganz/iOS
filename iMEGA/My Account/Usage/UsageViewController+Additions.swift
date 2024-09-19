@@ -52,7 +52,7 @@ extension UsageViewController {
         usagePageControl?.currentPageIndicatorTintColor = UIColor.mnz_turquoise(for: traitCollection)
         usagePageControl?.pageIndicatorTintColor = UIColor.mnz_secondaryGray(for: traitCollection)
 
-        let separatorColor = UIColor.mnz_separator(for: traitCollection)
+        let separatorColor = UIColor.mnz_separator()
         [usageBottomSeparatorView, cloudDriveBottomSeparatorView, backupsBottomSeparatorView, rubbishBinBottomSeparatorView, incomingSharesBottomSeparatorView].forEach { view in
             view?.backgroundColor = separatorColor
         }

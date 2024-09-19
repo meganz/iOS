@@ -187,7 +187,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     private func updateAppearance() {
         tableView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
-        tableView.separatorColor = .mnz_separator(for: traitCollection)
+        tableView.separatorColor = .mnz_separator()
     }
     
     // MARK: - Table view data source

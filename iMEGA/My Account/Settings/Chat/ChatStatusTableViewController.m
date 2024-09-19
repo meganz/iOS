@@ -105,7 +105,7 @@
     self.statusPersistenceSwitch.tintColor = [self switchTintColor];
     self.lastActiveSwitch.tintColor = [self switchTintColor];
     
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separator];
     
     [self.tableView reloadData];
 }
@@ -288,7 +288,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_backgroundElevated];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

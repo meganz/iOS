@@ -45,7 +45,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     // MARK: - Private
     
     func updateAppearance() {
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator()
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         
         tableView.reloadData()

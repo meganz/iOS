@@ -123,7 +123,7 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     private func updateAppearance() {
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator()
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         
         [defaultTabLabel, sortingAndViewModeLabel, sortingAndViewModeLabel, mediaDiscoveryViewLabel, mediaDiscoverySubfolderLabel, hideRecentActivityLabel, hiddenItemsViewLabel]
@@ -236,7 +236,7 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        cell.backgroundColor = UIColor.mnz_backgroundElevated()
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

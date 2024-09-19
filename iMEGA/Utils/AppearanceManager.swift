@@ -49,7 +49,7 @@ class AppearanceManager: NSObject {
         UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
         UITableView.appearance().backgroundColor = TokenColors.Background.page
-        UITableView.appearance().separatorColor = UIColor.mnz_separator(for: traitCollection)
+        UITableView.appearance().separatorColor = UIColor.mnz_separator()
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         UITableViewCell.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         

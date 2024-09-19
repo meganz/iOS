@@ -49,7 +49,7 @@ class ContactsTableViewHeader: UIView {
         groupsLabel.textColor = TokenColors.Text.primary
         requestsDetailLabel.textColor = TokenColors.Text.secondary
         
-        requestsSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        requestsSeparatorView.backgroundColor = UIColor.mnz_separator()
         
         requestsImageView.image = UIImage.contactRequests.imageFlippedForRightToLeftLayoutDirection()
         groupsImageView.image = UIImage.contactGroups.imageFlippedForRightToLeftLayoutDirection()

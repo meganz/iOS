@@ -62,7 +62,7 @@
 
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.systemBackgroundColor;
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separator];
 }
 
 - (void)setStorageQuotaRewardsForCell:(AchievementsTableViewCell *)cell withAwardId:(NSInteger)awardId {

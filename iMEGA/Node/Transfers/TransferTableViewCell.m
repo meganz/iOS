@@ -46,7 +46,7 @@
     self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
     self.pauseButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     self.progressView.progressTintColor = [UIColor mnz_green00A886];
-    self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    self.backgroundColor = [UIColor mnz_backgroundElevated];
     
     float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     self.progressView.progress = percentage;
@@ -76,7 +76,7 @@
     
     [self configureCellWithTransferState:transfer.state];
     
-    self.separatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
+    self.separatorView.layer.borderColor = [UIColor mnz_separator].CGColor;
     self.separatorView.layer.borderWidth = 0.5;
 }
 

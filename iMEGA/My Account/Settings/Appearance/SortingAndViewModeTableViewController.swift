@@ -69,7 +69,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     private func updateAppearance() {
         sortingPreferenceSameForAllDetailLabel.textColor = UIColor.secondaryLabel
         
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator()
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
 
         sortingPreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
@@ -156,7 +156,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        cell.backgroundColor = UIColor.mnz_backgroundElevated()
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

@@ -96,7 +96,7 @@
 - (void)updateAppearance {
     self.requirePasscodeDetailLabel.textColor = UIColor.secondaryLabelColor;
     
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
 
     self.turnOnOffPasscodeLabel.textColor = UIColor.mnz_primaryTextColor;
@@ -161,7 +161,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_backgroundElevated];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

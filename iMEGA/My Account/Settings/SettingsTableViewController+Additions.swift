@@ -34,7 +34,7 @@ extension SettingsTableViewController {
     }
     
     open override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_backgroundElevated(self.traitCollection)
+        cell.backgroundColor = UIColor.mnz_backgroundElevated()
     }
     
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

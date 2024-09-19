@@ -863,7 +863,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell;
-    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_backgroundElevated];
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionDonotDisturb:
@@ -895,7 +895,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             
         case ContactDetailsSectionSharedFolders: {
             SharedItemsTableViewCell *cell = [self cellForSharedFoldersWithIndexPath:indexPath];
-            cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+            cell.backgroundColor = [UIColor mnz_backgroundElevated];
             cell.delegate = self;
             return cell;
         }
