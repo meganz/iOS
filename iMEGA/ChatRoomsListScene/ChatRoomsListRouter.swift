@@ -238,6 +238,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController?.pushViewController(archivedChatRoomsViewController, animated: true)
     }
     
+    @MainActor 
     func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity) {
         guard let navigationController else {
             return

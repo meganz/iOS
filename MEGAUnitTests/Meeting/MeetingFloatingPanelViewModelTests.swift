@@ -995,15 +995,13 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var showMuteError_calledTimes = 0
     var showHangOrEndCallDialog_calledTimes = 0
     var triggerInviteParticipantsFromContainer_calledTimes = 0
-    
-    nonisolated init() {
-        
-    }
-    
+
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
     }
     
+    nonisolated init() {}
+
     func dismiss() {
         dismiss_calledTimes += 1
     }

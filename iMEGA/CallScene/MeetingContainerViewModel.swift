@@ -52,6 +52,7 @@ class ParticipantLayoutUpdateChannel {
     var layoutSwitchingEnabled: (() -> Bool)?
 }
 
+@MainActor
 final class MeetingContainerViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
     }
@@ -468,10 +469,5 @@ final class MeetingContainerViewModel: ViewModelType {
                 self.dispatch(.showJoinMegaScreen)
             })
         }
-    }
-    
-    deinit {
-        cancelMuteMicrophoneSubscription()
-        cancelNoUserJoinedSubscription()
     }
 }

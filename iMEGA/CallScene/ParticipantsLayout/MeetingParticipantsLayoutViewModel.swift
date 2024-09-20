@@ -1,7 +1,7 @@
-import Combine
+import Chat
+@preconcurrency import Combine
 import CombineSchedulers
 import Foundation
-import Chat
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -62,6 +62,7 @@ private enum CallViewModelConstant {
     static let callEndCountDownTimerDuration: TimeInterval = 120
 }
 
+@MainActor
 final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, subtitle: String, isUserAGuest: Bool, isOneToOne: Bool)
@@ -127,8 +128,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
     
-    private var timer: Timer?
-    private var callWillEndTimer: Timer?
+    private var callTimerTask: Task<Void, Never>?
+    private var callWillEndTimerTask: Task<Void, Never>?
     private var callWillEndCountDown: Double = 0
     
     private(set) var callParticipants = [CallParticipantEntity]() {
@@ -187,6 +188,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let timerSequence: any TimerSequenceProtocol
     
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
     private var callsSoundNotificationPreference: Bool
@@ -242,6 +244,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol,
         callManager: some CallManagerProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        timerSequence: some TimerSequenceProtocol,
         chatRoom: ChatRoomEntity,
         call: CallEntity,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
@@ -266,6 +269,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.chatRoomUpdateUseCase = chatRoomUpdateUseCase
         self.callManager = callManager
         self.featureFlagProvider = featureFlagProvider
+        self.timerSequence = timerSequence
         self.chatRoom = chatRoom
         self.call = call
         self.layoutUpdateChannel = layoutUpdateChannel
@@ -287,24 +291,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.layoutUpdateChannel.updateLayout = { [weak self] in
             guard let self else { return  }
             updateLayout(to: $0)
-        }
-    }
-    
-    deinit {
-        cancelReconnecting1on1Subscription()
-        avatarRefetchTasks?.forEach { $0.cancel() }
-        callWillEndTimer?.invalidate()
-    }
-    
-    private func initTimerIfNeeded(with duration: Int) {
-        if timer == nil {
-            let callDurationInfo = CallDurationInfo(initDuration: duration, baseDate: Date())
-            let timer = Timer(timeInterval: 1, repeats: true, block: { [weak self] _ in
-                let duration = Int(Date().timeIntervalSince1970) - Int(callDurationInfo.baseDate.timeIntervalSince1970) + callDurationInfo.initDuration
-                self?.invokeCommand?(.updateDuration(TimeInterval(duration).timeString))
-            })
-            RunLoop.main.add(timer, forMode: .common)
-            self.timer = timer
         }
     }
     
@@ -613,8 +599,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .tapOnOptionsMenuButton(let presenter, let sender):
             containerViewModel?.dispatch(.showOptionsMenu(presenter: presenter, sender: sender, isMyselfModerator: chatRoom.ownPrivilege == .moderator))
         case .tapOnBackButton:
-            timer?.invalidate()
-            callWillEndTimer?.invalidate()
+            callTimerTask?.cancel()
+            callWillEndTimerTask?.cancel()
             remoteVideoUseCase.disableAllRemoteVideos()
             containerViewModel?.dispatch(.tapOnBackButton)
         case .showRenameChatAlert:
@@ -1277,23 +1263,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         startCallWillEndTimer()
     }
     
-    private func startCallWillEndTimer() {
-        callWillEndTimer?.invalidate()
-        callWillEndTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
-            guard let self else { return }
-            callWillEndCountDown -= 1
-            guard callWillEndCountDown >= 0 else { return }
-            invokeCommand?(.updateCallWillEnd(TimeInterval(callWillEndCountDown).timeString))
-        })
-    }
-    
-    private func showCallWillEndNotificationIfNeeded() {
-        if call.callWillEndTimestamp > 0 {
-            let timeToEndCall = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
-            showCallWillEndNotification(timeToEndCall: timeToEndCall)
-        }
-    }
-    
     // MARK: Invite participants
     
     private func showEmptyCallShareOptionsViewIfNeeded() {
@@ -1315,6 +1284,46 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.removeEmptyCallShareOptionsView)
             invokeCommand?(.updateBarButtons)
         }
+    }
+    
+    // MARK: Timers
+    private func initTimerIfNeeded(with duration: Int) {
+        guard callTimerTask == nil else { return }
+        let callDurationInfo = CallDurationInfo(initDuration: duration, baseDate: Date())
+        let callTimer = timerSequence.timerSequenceWithInterval(1.0)
+        callTimerTask = Task { [weak self] in
+            for await time in callTimer {
+                let duration = Int(Date().timeIntervalSince1970) - Int(callDurationInfo.baseDate.timeIntervalSince1970) + callDurationInfo.initDuration
+                self?.updateDuration(duration)
+            }
+        }
+    }
+    
+    private func updateDuration(_ duration: Int) {
+        invokeCommand?(.updateDuration(TimeInterval(duration).timeString))
+    }
+    
+    private func showCallWillEndNotificationIfNeeded() {
+        if call.callWillEndTimestamp > 0 {
+            let timeToEndCall = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
+            showCallWillEndNotification(timeToEndCall: timeToEndCall)
+        }
+    }
+    
+    private func startCallWillEndTimer() {
+        callWillEndTimerTask?.cancel()
+        let callWillEndTimer = timerSequence.timerSequenceWithInterval(1.0)
+        callWillEndTimerTask = Task { [weak self] in
+            for await time in callWillEndTimer {
+                self?.updateCallWillEnd()
+            }
+        }
+    }
+    
+    private func updateCallWillEnd() {
+        callWillEndCountDown -= 1
+        guard callWillEndCountDown >= 0 else { return }
+        invokeCommand?(.updateCallWillEnd(TimeInterval(callWillEndCountDown).timeString))
     }
 }
 
@@ -1383,8 +1392,8 @@ extension MeetingParticipantsLayoutViewModel {
     }
     
     private func callTerminated(_ call: CallEntity) {
-        timer?.invalidate()
-        callWillEndTimer?.invalidate()
+        callTimerTask?.cancel()
+        callWillEndTimerTask?.cancel()
         if reconnecting {
             tonePlayer.play(tone: .callEnded)
             containerViewModel?.dispatch(.dismissCall(completion: {

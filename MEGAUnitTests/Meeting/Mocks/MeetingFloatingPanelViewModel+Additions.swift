@@ -34,10 +34,11 @@ struct MockMeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderCo
     }
 }
 
+@MainActor
 extension MeetingFloatingPanelViewModel {
     static func make(
         router: some MeetingFloatingPanelRouting = MockMeetingFloatingPanelRouter(),
-        containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
+        containerViewModel: MeetingContainerViewModel? = nil,
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
@@ -51,7 +52,7 @@ extension MeetingFloatingPanelViewModel {
     ) -> MeetingFloatingPanelViewModel {
         .init(
             router: router,
-            containerViewModel: containerViewModel,
+            containerViewModel: containerViewModel ?? MeetingContainerViewModel(),
             chatRoom: chatRoom,
             callUseCase: callUseCase, 
             callUpdateUseCase: callUpdateUseCase,
