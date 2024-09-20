@@ -16,6 +16,7 @@ final class WaitingRoomParticipantsListRouter: WaitingRoomParticipantsListRoutin
         self.call = call
     }
     
+    @MainActor
     func build() -> UIViewController {
         let viewModel = WaitingRoomParticipantsListViewModel(
             router: self,
@@ -30,6 +31,7 @@ final class WaitingRoomParticipantsListRouter: WaitingRoomParticipantsListRoutin
         return hostingController
     }
     
+    @MainActor
     func start() {
         presenter.present(build(), animated: true)
     }

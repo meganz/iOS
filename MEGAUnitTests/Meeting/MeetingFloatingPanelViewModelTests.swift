@@ -73,6 +73,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     
     // will migrate eventually all places we create SUT to use this method as any change in parameters of view model
     // forces us to adjust parameters in 50 places right now, clearly not sustainable
+    @MainActor
     func makeSUT(
         chatType: ChatRoomEntity.ChatType = .meeting
     ) -> MeetingFloatingPanelViewModel {
@@ -470,6 +471,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
     
+    @MainActor
     func testAction_inviteParticipants_reAddParticipantScenario() {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
@@ -526,6 +528,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled() {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
@@ -558,6 +561,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
+    @MainActor
     func testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled() {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
@@ -756,6 +760,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.allowUsersJoinCall_CalledTimes == 1)
     }
     
+    @MainActor
     func testAction_muteParticipant_muteSuccess() {
         let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -779,6 +784,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_muteParticipant_muteError() {
         
         let harness = Harness(
@@ -861,7 +867,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
     
-    final class Harness: Sendable {
+    @MainActor final class Harness {
         let sut: MeetingFloatingPanelViewModel
                 
         let callSessions = [
@@ -879,7 +885,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
 
         init(
             router: MockMeetingFloatingPanelRouter = .init(),
-            containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
+            containerViewModel: MeetingContainerViewModel? = nil,
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
             callUseCase: MockCallUseCase = .init(),
             callUpdateUseCase: MockCallUpdateUseCase = MockCallUpdateUseCase(),
@@ -901,7 +907,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             
             self.sut = .init(
                 router: router,
-                containerViewModel: containerViewModel,
+                containerViewModel: containerViewModel ?? MeetingContainerViewModel(),
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
                 callUpdateUseCase: callUpdateUseCase,
@@ -918,6 +924,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             )
         }
         
+        @MainActor
         static func withMonitorCallAndSessionUpdates() -> Harness {
             let harness = Harness()
             harness.sut.monitorOnCallUpdate()
@@ -925,6 +932,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             return harness
         }
         
+        @MainActor
         static func withMonitorChatRoomAndSessionUpdates() -> Harness {
             let harness = Harness()
             harness.sut.monitorOnChatRoomUpdate()
@@ -932,12 +940,14 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             return harness
         }
         
+        @MainActor
         static func withMonitorOnChatRoomUpdates() -> Harness {
             let harness = Harness()
             harness.sut.monitorOnChatRoomUpdate()
             return harness
         }
         
+        @MainActor
         static func withMonitorOnSessionUpdates() -> Harness {
             let harness = Harness()
             harness.sut.monitorOnSessionUpdate()
@@ -968,6 +978,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     }
 }
 
+@MainActor
 final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     var videoPermissionError_calledTimes = 0
@@ -984,7 +995,11 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var showMuteError_calledTimes = 0
     var showHangOrEndCallDialog_calledTimes = 0
     var triggerInviteParticipantsFromContainer_calledTimes = 0
-
+    
+    nonisolated init() {
+        
+    }
+    
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
     }

@@ -5,6 +5,7 @@ import MEGAPresentationMock
 import XCTest
 
 final class WaitingRoomParticipantsListViewModelTests: XCTestCase {
+    @MainActor
     func testAction_admitAllTappedAndParticipantsInWaitingRoom_allowUsersShouldBeCalled() {
         let router = MockWaitingRoomParticipantsListRouter()
         let call = CallEntity(waitingRoom: WaitingRoomEntity(sessionClientIds: [100, 101]))
@@ -21,6 +22,7 @@ final class WaitingRoomParticipantsListViewModelTests: XCTestCase {
         XCTAssertTrue(router.dismiss_calledTimes == 1)
     }
     
+    @MainActor
     func testAction_admitAllTappedAndNoParticipantsInWaitingRoom_allowUsersShouldNotBeCalled() {
         let router = MockWaitingRoomParticipantsListRouter()
         let callUseCase = MockCallUseCase()
@@ -36,6 +38,7 @@ final class WaitingRoomParticipantsListViewModelTests: XCTestCase {
         XCTAssertTrue(router.dismiss_calledTimes == 0)
     }
     
+    @MainActor
     func testAction_closeTapped_dismissShouldBeCalled() {
         let router = MockWaitingRoomParticipantsListRouter()
         let viewModel = WaitingRoomParticipantsListViewModel(

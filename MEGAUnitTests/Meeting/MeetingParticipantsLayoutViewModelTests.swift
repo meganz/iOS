@@ -738,6 +738,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssert(harness.callManager.endCall_CalledTimes == 0)
     }
     
+    @MainActor
     func testAction_participantAdded_downloadAvatar() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
