@@ -7,6 +7,7 @@ import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
 
+@MainActor
 protocol MeetingContainerRouting: AnyObject, Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)
     func dismiss(animated: Bool, completion: (() -> Void)?)

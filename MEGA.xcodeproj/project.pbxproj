@@ -972,6 +972,8 @@
 		8346CA6F283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */; };
 		8348A8D82901902B00B66463 /* ActiveCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348A8D72901902B00B66463 /* ActiveCallViewModel.swift */; };
 		8348A8DA2901909400B66463 /* ChatRoomActiveCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */; };
+		834B518E2C9D8ADC002E46FB /* TimerSequenceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834B518D2C9D8ADC002E46FB /* TimerSequenceFactory.swift */; };
+		834B51932C9D91E8002E46FB /* MockTimerSequenceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834B51912C9D91E5002E46FB /* MockTimerSequenceFactory.swift */; };
 		834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */; };
 		834D865C2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
 		834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
@@ -3777,6 +3779,8 @@
 		8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCollisionRouterOCWrapper.swift; sourceTree = "<group>"; };
 		8348A8D72901902B00B66463 /* ActiveCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModel.swift; sourceTree = "<group>"; };
 		8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomActiveCallView.swift; sourceTree = "<group>"; };
+		834B518D2C9D8ADC002E46FB /* TimerSequenceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSequenceFactory.swift; sourceTree = "<group>"; };
+		834B51912C9D91E5002E46FB /* MockTimerSequenceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTimerSequenceFactory.swift; sourceTree = "<group>"; };
 		834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveChatButtonView.swift; sourceTree = "<group>"; };
 		834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyToAllView.swift; sourceTree = "<group>"; };
 		834D867E29197E8800CECEC0 /* ChatRoomAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarView.swift; sourceTree = "<group>"; };
@@ -8203,6 +8207,7 @@
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 				5D33D671250DBA0B00D74666 /* CGSize.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
+				834B51912C9D91E5002E46FB /* MockTimerSequenceFactory.swift */,
 				25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */,
 			);
 			path = Mocks;
@@ -9982,6 +9987,7 @@
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
 				BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */,
 				83F388E92C245B33000AF96F /* RaiseHandBadgeStore.swift */,
+				834B518D2C9D8ADC002E46FB /* TimerSequenceFactory.swift */,
 			);
 			path = CallScene;
 			sourceTree = "<group>";
@@ -15898,6 +15904,7 @@
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
 				25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */,
 				25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */,
+				834B518E2C9D8ADC002E46FB /* TimerSequenceFactory.swift in Sources */,
 				8358A6E82925460800EE197C /* ToggleView.swift in Sources */,
 				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */,
@@ -16589,6 +16596,7 @@
 				BF0730D92C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */,
+				834B51932C9D91E8002E46FB /* MockTimerSequenceFactory.swift in Sources */,
 				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
 				947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */,
 				C4A016C02B67630F00492185 /* MockUpgradeAccountRouter.swift in Sources */,

@@ -9,7 +9,7 @@ import MEGAPresentationMock
 
 final class MeetingContainerViewModelTests: XCTestCase {
     
-    class Harness {
+    @MainActor final class Harness {
         
         var sut: MeetingContainerViewModel
         let callUseCase: MockCallUseCase
@@ -279,7 +279,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.router.showMutedMessage_calledTimes == 1)
     }
     
-    func testSfuProtocolErrorReceived_shouldShowUpdateAppAlert() {
+    @MainActor func testSfuProtocolErrorReceived_shouldShowUpdateAppAlert() {
         let harness = Harness(
             callUseCase: MockCallUseCase(call: .connecting)
         )
@@ -289,7 +289,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    func testUsersLimitErrorReceived_loggedUser_shouldShowFreeAccountLimitAlert() {
+    @MainActor func testUsersLimitErrorReceived_loggedUser_shouldShowFreeAccountLimitAlert() {
         let harness = Harness(callUseCase: MockCallUseCase(call: .connecting))
         harness.callUseCase.callUpdateSubject.send(.callUsersLimit)
         evaluate {
@@ -297,7 +297,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    func testUsersLimitErrorReceived_isGuestUser_shouldShowFreeAccountLimitAlertAndTrackEvent() {
+    @MainActor func testUsersLimitErrorReceived_isGuestUser_shouldShowFreeAccountLimitAlertAndTrackEvent() {
         
         let harness = Harness(
             callUseCase: MockCallUseCase(call: .connecting),
@@ -316,7 +316,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    func testTooManyParticipantsErrorReceived_shouldDismissCall() {
+    @MainActor func testTooManyParticipantsErrorReceived_shouldDismissCall() {
         let harness = Harness(
             callUseCase: MockCallUseCase(call: CallEntity(status: .connecting, changeType: .status, numberOfParticipants: 1, participants: [100]))
         )
@@ -339,7 +339,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.showCallWillEndAlert_calledTimes, 1)
     }
     
-    func testCallUpdate_callDestroyedUserIsCaller_shouldShowUpgradeToPro() {
+    @MainActor func testCallUpdate_callDestroyedUserIsCaller_shouldShowUpgradeToPro() {
 
         let harness = Harness(
             accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
@@ -352,7 +352,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    func testCallUpdate_callDestroyedUserIsNotCaller_shouldNotShowUpgradeToPro() {
+    @MainActor func testCallUpdate_callDestroyedUserIsNotCaller_shouldNotShowUpgradeToPro() {
         let harness = Harness()
         harness.callUseCase.callUpdateSubject.send(.callTerminatedDueToLimits)
         
@@ -362,8 +362,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    @MainActor
-    func testAction_copyLinkTappedLinkAvailable_pasteboardShouldContainLink() async {
+    @MainActor func testAction_copyLinkTappedLinkAvailable_pasteboardShouldContainLink() async {
         let harness = Harness(
             chatRoom: ChatRoomEntity(chatType: .meeting),
             chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
@@ -380,8 +379,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.showLinkCopied_calledTimes, 1)
     }
     
-    @MainActor
-    func testAction_copyLinkTappedLinkNotAvailable_pasteboardShouldNotContainLink() async {
+    @MainActor func testAction_copyLinkTappedLinkNotAvailable_pasteboardShouldNotContainLink() async {
         let harness = Harness()
         
         await test(
@@ -395,8 +393,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.showLinkCopied_calledTimes, 0)
     }
     
-    @MainActor
-    func testAction_sendLinkToChatTappedLinkAvailable_shouldCallRouterWithLink() async {
+    @MainActor func testAction_sendLinkToChatTappedLinkAvailable_shouldCallRouterWithLink() async {
         let harness = Harness(
             chatRoom: ChatRoomEntity(chatType: .meeting),
             chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
@@ -413,8 +410,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.sendLinkToChat_calledTimes, 1)
     }
     
-    @MainActor
-    func testAction_sendLinkToChatTappedLinkNotAvailable_shouldNotCallRouterWithLink() async {
+    @MainActor func testAction_sendLinkToChatTappedLinkNotAvailable_shouldNotCallRouterWithLink() async {
         let harness = Harness()
         
         await test(

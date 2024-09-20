@@ -67,6 +67,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
             chatRoomUpdateUseCase: ChatRoomUpdateUseCase(repository: ChatRoomUpdateRepository(chatRoomUpdateProvider: ChatRoomUpdateProvider(sdk: .sharedChatSdk, chatId: chatRoom.chatId))),
             callManager: CallKitCallManager.shared,
+            timerSequence: TimerSequenceFactory(),
             chatRoom: chatRoom,
             call: call,
             layoutUpdateChannel: layoutUpdateChannel,

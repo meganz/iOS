@@ -2,7 +2,7 @@
 import MEGADomain
 import XCTest
 
-final class MockMeetingContainerRouter: MeetingContainerRouting {
+@MainActor final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     var floatingPanelShown: Bool = false
     
@@ -34,6 +34,8 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var sendLinkToChat_calledTimes = 0
     var showLinkCopied_calledTimes = 0
     
+    nonisolated init() {}
+
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
     }
