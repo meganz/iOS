@@ -6,6 +6,25 @@ import MEGADomain
 
 extension SharedItemsViewController: UISearchBarDelegate {
     
+    @objc func updateSearchResults(searchString: String, showsHUD: Bool = true) {
+        if searchController.isActive {
+            if searchString.count < kMinimumLettersToStartTheSearch {
+                searchNodeUseCaseOCWrapper?.cancelSearch()
+                cancelSearchTask()
+                loadDefaultSharedItems()
+            } else {
+                if searchNodeUseCaseOCWrapper == nil {
+                    searchNodeUseCaseOCWrapper = SearchNodeUseCaseOCWrapper()
+                }
+                
+                search(by: searchString, showsHUD: showsHUD)
+            }
+        } else {
+            searchNodeUseCaseOCWrapper?.cancelSearch()
+        }
+        reloadUI()
+    }
+    
     @objc func loadDefaultSharedItems() {
         if incomingButton?.isSelected ?? false {
             searchUnverifiedNodes(key: "")
@@ -22,9 +41,11 @@ extension SharedItemsViewController: UISearchBarDelegate {
         tableView?.reloadData()
     }
     
-    func evaluateSearchResult(searchText: String, sortType: MEGASortOrderType, asyncSearchClosure: @escaping (String, MEGASortOrderType) async throws -> [MEGANode]?) async {
+    func evaluateSearchResult(searchText: String, sortType: MEGASortOrderType, showsHUD: Bool, asyncSearchClosure: @escaping (String, MEGASortOrderType) async throws -> [MEGANode]?) async {
         do {
-            SVProgressHUD.show()
+            if showsHUD {
+                SVProgressHUD.show()
+            }
             if let nodes = try await asyncSearchClosure(searchText, sortType) {
                 if Task.isCancelled { return }
                 if let mutableNodeArray = (nodes as NSArray).mutableCopy() as? NSMutableArray {
@@ -34,15 +55,19 @@ extension SharedItemsViewController: UISearchBarDelegate {
                 if Task.isCancelled { return }
                 searchNodesArray.removeAllObjects()
             }
-            await SVProgressHUD.dismiss()
+            if showsHUD {
+                await SVProgressHUD.dismiss()
+            }
         } catch {
             if Task.isCancelled { return }
-            SVProgressHUD.showError(withStatus: error.localizedDescription)
+            if showsHUD {
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
         }
         self.tableView?.reloadData()
     }
 
-    @objc func search(by searchText: String) {
+    @objc func search(by searchText: String, showsHUD: Bool) {
         guard let searchNodeUseCaseOCWrapper else { return }
         if searchTask == nil {
             searchTask = .init()
@@ -52,13 +77,13 @@ extension SharedItemsViewController: UISearchBarDelegate {
         searchTask?.task = Task { @MainActor in
             if incomingButton?.isSelected ?? false {
                 searchUnverifiedNodes(key: searchText)
-                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnInShares)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnInShares)
             } else if outgoingButton?.isSelected ?? false {
                 searchUnverifiedNodes(key: searchText)
-                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnOutShares)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnOutShares)
             } else if linksButton?.isSelected ?? false {
                 searchUnverifiedNodesArray.removeAllObjects()
-                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnPublicLinks)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnPublicLinks)
             }
         }
     }

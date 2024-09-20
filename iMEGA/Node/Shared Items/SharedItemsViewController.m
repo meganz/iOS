@@ -1092,26 +1092,7 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
-    if (searchController.isActive) {
-        if (self.searchController.searchBar.text.length < kMinimumLettersToStartTheSearch) {
-            if (self.searchNodeUseCaseOCWrapper != nil) {
-                [self.searchNodeUseCaseOCWrapper cancelSearch];
-            }
-            [self cancelSearchTask];
-            [self loadDefaultSharedItems];
-        } else {
-            if (self.searchNodeUseCaseOCWrapper == nil) {
-                self.searchNodeUseCaseOCWrapper = SearchNodeUseCaseOCWrapper.alloc.init;
-            }
-
-            [self searchBy:searchString];
-        }
-    } else {
-        if (self.searchNodeUseCaseOCWrapper != nil) {
-            [self.searchNodeUseCaseOCWrapper cancelSearch];
-        }
-        [self reloadUI];
-    }
+    [self updateSearchResultsWithSearchString:searchString showsHUD:YES];
 }
 
 #pragma mark - UISearchControllerDelegate
@@ -1127,7 +1108,10 @@
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     NSInteger itemSelected;
     NSArray *nodesToCheckArray;
-    if (self.incomingButton.selected) {
+  
+    if (self.searchController.isActive) {
+        [self updateSearchResultsWithSearchString: self.searchController.searchBar.text showsHUD:NO];
+    } else if (self.incomingButton.selected) {
         itemSelected = 0;
         nodesToCheckArray = self.incomingNodesMutableArray;
     } else if (self.outgoingButton.selected) {
