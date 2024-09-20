@@ -31,6 +31,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case transitionToLongForm
 }
 
+@MainActor
 final class MeetingFloatingPanelViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(canInviteParticipants: Bool,

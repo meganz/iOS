@@ -9,6 +9,7 @@ protocol WaitingRoomParticipantsListRouting {
     func dismiss()
 }
 
+@MainActor
 final class WaitingRoomParticipantsListViewModel: ObservableObject {
     private let router: any WaitingRoomParticipantsListRouting
     private var call: CallEntity
@@ -134,10 +135,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
         }
         
         checkParticipantsPlusWaitingRoomLimit()
-        
-        Task {
-            await filterWaitingRoomParticipants()
-        }
+        filterWaitingRoomParticipants()
     }
     
     private func configureLimitationsObserver(for call: CallEntity) {

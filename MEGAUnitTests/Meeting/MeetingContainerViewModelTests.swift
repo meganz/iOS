@@ -362,6 +362,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testAction_copyLinkTappedLinkAvailable_pasteboardShouldContainLink() async {
         let harness = Harness(
             chatRoom: ChatRoomEntity(chatType: .meeting),
@@ -379,6 +380,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.showLinkCopied_calledTimes, 1)
     }
     
+    @MainActor
     func testAction_copyLinkTappedLinkNotAvailable_pasteboardShouldNotContainLink() async {
         let harness = Harness()
         
@@ -393,6 +395,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.showLinkCopied_calledTimes, 0)
     }
     
+    @MainActor
     func testAction_sendLinkToChatTappedLinkAvailable_shouldCallRouterWithLink() async {
         let harness = Harness(
             chatRoom: ChatRoomEntity(chatType: .meeting),
@@ -410,6 +413,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(harness.router.sendLinkToChat_calledTimes, 1)
     }
     
+    @MainActor
     func testAction_sendLinkToChatTappedLinkNotAvailable_shouldNotCallRouterWithLink() async {
         let harness = Harness()
         
