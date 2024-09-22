@@ -9,6 +9,7 @@ extension RecentsViewController {
             let config = PhotosBrowserConfiguration(displayMode: .recents)
             let photoBrowserViewModel = PhotosBrowserViewModel(config: config)
             let photosBrowserViewController = PhotosBrowserViewController(viewModel: photoBrowserViewModel)
+            photosBrowserViewController.modalPresentationStyle = .overFullScreen
             
             return photosBrowserViewController
         } else {

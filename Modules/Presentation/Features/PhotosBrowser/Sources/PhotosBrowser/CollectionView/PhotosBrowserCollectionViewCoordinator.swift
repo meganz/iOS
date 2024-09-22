@@ -14,9 +14,11 @@ final class PhotosBrowserCollectionViewCoordinator: NSObject {
     private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Int>?
     private var collectionView: UICollectionView?
     private let representer: PhotosBrowserCollectionViewRepresenter
+    private let layoutChangesMonitor: PhotosBrowserCollectionViewLayoutChangesMonitor
     
     init(_ representer: PhotosBrowserCollectionViewRepresenter) {
         self.representer = representer
+        self.layoutChangesMonitor = PhotosBrowserCollectionViewLayoutChangesMonitor(representer)
         
         super.init()
     }
@@ -33,6 +35,8 @@ final class PhotosBrowserCollectionViewCoordinator: NSObject {
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
+        
+        layoutChangesMonitor.configure(collectionView: collectionView)
         
         collectionView.dataSource = dataSource
     }
