@@ -1,11 +1,7 @@
 import MEGASwiftUI
 import SwiftUI
 
-public struct ChipViewModel: Identifiable, Equatable {
-    public static func == (lhs: ChipViewModel, rhs: ChipViewModel) -> Bool {
-        lhs.id == rhs.id && lhs.selected == rhs.selected
-    }
-
+public struct ChipViewModel: Identifiable {
     public let id: String
     let pill: PillViewModel
     let subchipsPickerTitle: String?
