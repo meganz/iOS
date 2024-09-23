@@ -71,4 +71,14 @@ final class WarningBannerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.warningType.actionText, Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.button)
         XCTAssertEqual(sut.warningType.severity, .critical)
     }
+    
+    func testWarningType_almostFullStorageOverQuota_shouldReturnCorrectValues() {
+        let sut = makeSUT(warningType: .almostFullStorageOverQuota)
+        
+        XCTAssertEqual(sut.warningType.description, Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.description)
+        XCTAssertEqual(sut.warningType.title, Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.title)
+        XCTAssertEqual(sut.warningType.iconName, "almostFullStorageAlert")
+        XCTAssertEqual(sut.warningType.actionText, Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.button)
+        XCTAssertEqual(sut.warningType.severity, .warning)
+    }
 }
