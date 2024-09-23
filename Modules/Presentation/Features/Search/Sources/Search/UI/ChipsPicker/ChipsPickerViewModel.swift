@@ -27,7 +27,9 @@ final class ChipsPickerViewModel {
 
     // We should display bottom separator for each chips except the last one
     func shouldDisplayBottomSeparator(for chip: ChipViewModel) -> Bool {
-        guard let index = chips.firstIndex(of: chip) else { return false }
+        guard let index = chips.firstIndex(where: { $0.id == chip.id }) else {
+            return false
+        }
         return index < chips.count - 1
     }
 
