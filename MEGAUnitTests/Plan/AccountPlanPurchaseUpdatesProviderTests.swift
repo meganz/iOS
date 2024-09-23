@@ -60,7 +60,7 @@ final class AccountPlanPurchaseUpdatesProviderTests: XCTestCase {
         let expectation = expectation(description: "Finish purchase plan request")
         let task = startMonitoringPurchaseUpdates(expectation)
         
-        // This is necessary for the delegate to be added before the below simulateOnRequestFinish get called.
+        // This is necessary for the delegate to be added before the below simulatePurchase get called.
         try? await Task.sleep(nanoseconds: 100_000_000)
         
         // Trigger new request results before terminating stream. Expected value count.
@@ -172,7 +172,7 @@ final class AccountPlanPurchaseUpdatesProviderTests: XCTestCase {
         let expectation = expectation(description: "Finish restore subscription request")
         let task = startMonitoringRestoreUpdates(expectation)
         
-        // This is necessary for the delegate to be added before the below simulateOnRequestFinish get called.
+        // This is necessary for the delegate to be added before the below simulateRestore get called.
         try? await Task.sleep(nanoseconds: 100_000_000)
         
         // Trigger new request results before terminating stream. Expected value count.
@@ -181,6 +181,9 @@ final class AccountPlanPurchaseUpdatesProviderTests: XCTestCase {
         purchase.simulateRestore(status: randomRestoreResult())
         
         task.cancel()
+        
+        // This is necessary for the delegate to be removed before the below simulateRestore get called.
+        try? await Task.sleep(nanoseconds: 100_000_000)
         
         // Trigger new request results after terminating stream. Should not be received.
         purchase.simulateRestore(status: .success)
