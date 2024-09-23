@@ -11,3 +11,9 @@ public struct AccountPlanErrorEntity: Error {
         self.errorMessage = errorMessage
     }
 }
+
+extension AccountPlanErrorEntity: Equatable {
+    public static func == (lhs: AccountPlanErrorEntity, rhs: AccountPlanErrorEntity) -> Bool {
+        lhs.errorCode == rhs.errorCode && lhs.errorMessage == rhs.errorMessage
+    }
+}

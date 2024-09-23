@@ -52,6 +52,9 @@ public struct OnboardingWithViewProPlansView: View {
         .task {
             await viewModel.setUpLowestProPlan()
         }
+        .onAppear {
+            viewModel.setUpSubscription()
+        }
     }
     
     private func dismiss() {

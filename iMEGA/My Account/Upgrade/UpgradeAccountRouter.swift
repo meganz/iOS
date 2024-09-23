@@ -5,7 +5,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 
-protocol UpgradeAccountRouting {
+protocol UpgradeAccountRouting: Sendable {
     func presentUpgradeTVC()
 }
 
