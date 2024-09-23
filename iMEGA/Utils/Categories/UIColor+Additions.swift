@@ -474,9 +474,7 @@ extension UIColor {
             proLevelColor = .proAccountLITE
             
         case MEGAAccountType.proI, MEGAAccountType.proII, MEGAAccountType.proIII:
-            proLevelColor = UIColor.mnz_red(
-                for: traitCollection
-            )
+            proLevelColor = UIColor.mnz_red()
             
         default:
             proLevelColor = nil
@@ -489,9 +487,7 @@ extension UIColor {
     class func mnz_inputbarButtonBackground(
         _ traitCollection: UITraitCollection
     ) -> UIColor? {
-        let primaryGray = mnz_primaryGray(
-            for: traitCollection
-        )
+        let primaryGray = mnz_primaryGray()
         return (
             traitCollection.userInterfaceStyle == .dark
         )
@@ -616,21 +612,11 @@ extension UIColor {
         UIColor.grayDBDBDB
     }
     
-    @objc(
-        mnz_primaryGrayForTraitCollection:
-    )
-    class func mnz_primaryGray(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
+    @objc class func mnz_primaryGray() -> UIColor {
         TokenColors.Text.secondary
     }
     
-    @objc(
-        mnz_secondaryGrayForTraitCollection:
-    )
-    class func mnz_secondaryGray(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
+    @objc class func mnz_secondaryGray() -> UIColor {
         TokenColors.Icon.secondary
     }
     
@@ -692,30 +678,15 @@ extension UIColor {
         UIColor.redFF0000
     }
     
-    @objc(
-        mnz_redForTraitCollection:
-    )
-    class func mnz_red(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
+    @objc class func mnz_red() -> UIColor {
         TokenColors.Button.brand
     }
     
-    @objc(
-        mnz_errorRedForTraitCollection:
-    )
-    class func mnz_errorRed(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
+    @objc class func mnz_errorRed() -> UIColor {
         TokenColors.Text.error
     }
-    
-    @objc(
-        mnz_badgeRedForTraitCollection:
-    )
-    class func mnz_badgeRed(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
+
+    class func mnz_badgeRed() -> UIColor {
         TokenColors.Components.interactive
     }
     

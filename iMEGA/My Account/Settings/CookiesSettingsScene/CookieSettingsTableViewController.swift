@@ -167,7 +167,7 @@ class CookieSettingsTableViewController: UITableViewController {
         tableView.backgroundColor = .mnz_secondaryBackground(for: traitCollection)
         tableView.separatorColor = .mnz_separator()
         
-        saveBarButtonItem.tintColor = .mnz_primaryGray(for: traitCollection)
+        saveBarButtonItem.tintColor = .mnz_primaryGray()
         
         acceptCookiesLabel.textColor = TokenColors.Text.primary
         acceptCookiesSwitch.onTintColor = TokenColors.Support.success

@@ -51,7 +51,7 @@
 
 - (void)presentSafariViewControllerWithLURL:(NSURL *)url {
     SFSafariViewController *safariViewController = [SFSafariViewController.alloc initWithURL:url];
-    safariViewController.preferredControlTintColor = [UIColor mnz_primaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
+    safariViewController.preferredControlTintColor = [UIColor mnz_primaryGray];
     [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
 }
 

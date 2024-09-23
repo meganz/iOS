@@ -93,7 +93,7 @@
         self.emailInputView.inputTextField.textColor = UIColor.systemRedColor;
     } else {
         self.emailInputView.topLabel.text = LocalizedString(@"emailPlaceholder", @"");
-        self.emailInputView.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+        self.emailInputView.topLabel.textColor = [UIColor mnz_secondaryGray];
         self.emailInputView.inputTextField.textColor = UIColor.labelColor;
     }
 }
@@ -105,7 +105,7 @@
     
     [self.emailInputView updateAppearance];
     
-    self.misspelledLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.misspelledLabel.textColor = [UIColor mnz_secondaryGray];
     
     [self.resendButton mnz_setupPrimary:self.traitCollection];
     [self.cancelButton mnz_setupCancel:self.traitCollection];

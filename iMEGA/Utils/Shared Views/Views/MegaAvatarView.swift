@@ -61,7 +61,7 @@ class MegaAvatarView: UIView {
             let font = UIFont.systemFont(ofSize: avatarImageView.frame.size.width / CGFloat(2.0))
             avatarImageView.image = UIImage.init(forName: chatRoom.title?.uppercased(),
                                                  size: avatarImageView.frame.size,
-                                                 backgroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
+                                                 backgroundColor: UIColor.mnz_secondaryGray(),
                                                  backgroundGradientColor: UIColor.grayDBDBDB,
                                                  textColor: UIColor.whiteFFFFFF,
                                                  font: font)

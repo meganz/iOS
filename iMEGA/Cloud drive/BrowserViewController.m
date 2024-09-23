@@ -741,7 +741,7 @@
     if (node.isTakenDown) {
         cell.infoLabel.enabled = node.isFolder;
         cell.nameLabel.attributedText = [node attributedTakenDownName];
-        cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        cell.nameLabel.textColor = [UIColor mnz_red];
         cell.userInteractionEnabled = node.isFolder;
         cell.thumbnailImageView.alpha = node.isFolder ? 1.0 : 0.5;
     } else {

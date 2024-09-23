@@ -33,7 +33,7 @@ class AppearanceManager: NSObject {
         setupNavigationBarAppearance(traitCollection)
         
         UISearchBar.appearance().isTranslucent = false
-        UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray()
         UISearchBar.appearance().backgroundColor = .surface1Background()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.systemBackground
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
@@ -76,8 +76,8 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setShadowColor(TokenColors.Text.primary)
         SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
-        SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
-        SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray(for: traitCollection))
+        SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray())
+        SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray())
         SVProgressHUD.setBackgroundColor(UIColor.mnz_secondaryBackground(for: traitCollection))
         SVProgressHUD.setHapticsEnabled(true)
         
@@ -133,20 +133,20 @@ class AppearanceManager: NSObject {
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .surface1Background()
         
-        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray()
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed(for: traitCollection)]
-        appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
-        appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+        appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray()
         appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed(for: traitCollection)]
-        appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
+        appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
-        appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
+        appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray()
         appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed(for: traitCollection)]
-        appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
+        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
+        appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
         tabBar.standardAppearance = appearance
         
@@ -207,7 +207,7 @@ class AppearanceManager: NSObject {
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
         UIActivityIndicatorView.appearance().style = .medium
-        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : UIColor.mnz_primaryGray(for: traitCollection)
+        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : UIColor.mnz_primaryGray()
     }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {

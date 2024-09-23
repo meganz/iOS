@@ -121,29 +121,29 @@
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
             typeLabel.text = LocalizedString(@"Payment info", @"The header of a notification related to payments");
-            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_red];
             break;
             
         case MEGAUserAlertTypePaymentReminder:
             typeLabel.text = LocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.");
-            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_red];
             break;
             
         case MEGAUserAlertTypeTakedown:
             typeLabel.text = LocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.");
-            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_red];
             break;
             
         case MEGAUserAlertTypeTakedownReinstated:
             typeLabel.text = LocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.");
-            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_red];
             break;
             
         case MEGAUserAlertTypeScheduledMeetingNew:
         case MEGAUserAlertTypeScheduledMeetingUpdated:
         case MEGAUserAlertTypeScheduledMeetingDeleted:
             typeLabel.text = LocalizedString(@"inapp.notifications.meetings.header", @"The header of a notification that is related to scheduled meetings");
-            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_red];
             break;
             
         default:
@@ -453,7 +453,7 @@
     }
     [self configureHeadingLabel:cell.headingLabel forAlert:userAlert];
     [self configureContentLabel:cell.contentLabel forAlert:userAlert indexPath:indexPath];
-    cell.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    cell.dateLabel.textColor = [UIColor mnz_primaryGray];
     cell.dateLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[userAlert timestampAtIndex:0]]];
     
     return cell;

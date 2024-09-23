@@ -113,7 +113,7 @@
     
     NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:inviteIndexPath];
     cell.daysLeftTrailingLabel.text = [self awardDaysLeftMessage:awardExpirationdDate.daysUntil];
-    cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_red] : [UIColor mnz_primaryGray];
     
     return cell;
 }

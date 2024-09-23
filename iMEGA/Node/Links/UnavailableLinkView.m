@@ -47,7 +47,7 @@
     NSString *termsString = [text substringWithRange:range];
     text = text.mnz_removeWebclientFormatters;
     NSMutableAttributedString *attributedText = [NSMutableAttributedString.alloc initWithString:text];
-    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_redForTraitCollection:self.traitCollection] range:[text rangeOfString:termsString]];
+    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_red] range:[text rangeOfString:termsString]];
     return attributedText;
 }
 

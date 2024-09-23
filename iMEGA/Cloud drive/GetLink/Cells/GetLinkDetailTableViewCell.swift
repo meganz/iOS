@@ -33,7 +33,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
     
     func configureRemovePasswordCell() {
         nameLabel.text = Strings.Localizable.removePassword
-        nameLabel.textColor = UIColor.mnz_red(for: traitCollection)
+        nameLabel.textColor = UIColor.mnz_red()
         proImageView.isHidden = true
         detailLabel.isHidden = true
         activityIndicatorContainerView.isHidden = true

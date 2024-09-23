@@ -34,7 +34,7 @@ extension CloudDriveTableViewController {
             }
             
             if cloudDrive?.displayMode != .backup {
-                let rubbishBinAction = swipeAction(image: UIImage.rubbishBin.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.mnz_red(for: traitCollection)) { [weak self] in
+                let rubbishBinAction = swipeAction(image: UIImage.rubbishBin.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.mnz_red()) { [weak self] in
                     self?.cloudDrive?.moveToRubbishBin(for: node)
                     self?.setTableViewEditing(false, animated: true)
                 }

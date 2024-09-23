@@ -36,7 +36,7 @@ extension UsageViewController {
         usageStorageView?.backgroundColor = UIColor.systemBackground
 
         let primaryTextColor = UIColor.mnz_primaryTextColor()
-        let secondaryTextColor = UIColor.mnz_secondaryGray(for: traitCollection)
+        let secondaryTextColor = UIColor.mnz_secondaryGray()
 
         [cloudDriveLabel, backupsLabel, rubbishBinLabel, incomingSharesLabel].forEach { label in
             label?.textColor = primaryTextColor
@@ -46,11 +46,11 @@ extension UsageViewController {
             label?.textColor = secondaryTextColor
         }
 
-        pieChartSecondaryLabel?.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+        pieChartSecondaryLabel?.textColor = UIColor.mnz_primaryGray()
         pieChartTertiaryLabel?.textColor = secondaryTextColor
 
         usagePageControl?.currentPageIndicatorTintColor = UIColor.mnz_turquoise(for: traitCollection)
-        usagePageControl?.pageIndicatorTintColor = UIColor.mnz_secondaryGray(for: traitCollection)
+        usagePageControl?.pageIndicatorTintColor = UIColor.mnz_secondaryGray()
 
         let separatorColor = UIColor.mnz_separator()
         [usageBottomSeparatorView, cloudDriveBottomSeparatorView, backupsBottomSeparatorView, rubbishBinBottomSeparatorView, incomingSharesBottomSeparatorView].forEach { view in

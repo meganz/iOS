@@ -84,7 +84,7 @@
     self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.mnz_secondaryTextColor;
     self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryTextColor;
 
-    self.closeOtherSessionsLabel.textColor = [UIColor mnz_errorRedForTraitCollection:self.traitCollection];
+    self.closeOtherSessionsLabel.textColor = [UIColor mnz_errorRed];
 }
 
 - (void)twoFactorAuthenticationStatus {

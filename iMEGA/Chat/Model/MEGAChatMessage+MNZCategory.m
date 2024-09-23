@@ -254,7 +254,7 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
                 [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[text rangeOfString:fullNameReceiveAction]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:LocalizedString(@"Encrypted Key Rotation", @"")]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMediumFootnote range:[text rangeOfString:keyRotationExplanation]];
-                [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_secondaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection] range:[text rangeOfString:keyRotationExplanation]];
+                [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_secondaryGray] range:[text rangeOfString:keyRotationExplanation]];
                 
                 self.attributedText = mutableAttributedString;
                 break;
