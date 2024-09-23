@@ -11,6 +11,7 @@ public protocol AccountRepositoryProtocol: Sendable {
     // Account characteristics
     var accountCreationDate: Date? { get }
     var currentAccountDetails: AccountDetailsEntity? { get }
+    var shouldRefreshAccountDetails: Bool { get }
     var bandwidthOverquotaDelay: Int64 { get }
     var isMasterBusinessAccount: Bool { get }
     var isSMSAllowed: Bool { get }

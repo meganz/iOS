@@ -41,9 +41,19 @@ extension MainTabBarController {
     }
     
     private func makeCloudDriveViewController() -> UIViewController? {
-        let config = NodeBrowserConfig(displayMode: .cloudDrive, showsAvatar: true, adsConfiguratorProvider: {
-            UIApplication.mainTabBarRootViewController() as? MainTabBarController
-        })
+        let config = NodeBrowserConfig(
+            displayMode: .cloudDrive,
+            showsAvatar: true,
+            adsConfiguratorProvider: {
+                UIApplication.mainTabBarRootViewController() as? MainTabBarController
+            },
+            storageQuotaStatusProvider: {
+                guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .fullStorageOverQuotaBanner) else { return .noStorageProblems }
+                let accountStorageUseCase = AccountStorageUseCase(accountRepository: AccountRepository.newRepo)
+                return accountStorageUseCase.currentStorageStatus
+            }
+        )
+        
         return CloudDriveViewControllerFactory
             .make()
             .build(

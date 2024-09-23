@@ -317,6 +317,7 @@ struct CloudDriveViewControllerFactory {
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
             nodeUseCase: nodeUseCase, 
             sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(accountRepository: AccountRepository.newRepo),
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -711,23 +712,28 @@ struct CloudDriveViewControllerFactory {
         config: NodeBrowserConfig
     ) -> WarningBannerViewModel? {
         guard case let .node(parentNodeProvider) = nodeSource,
-              config.isFromUnverifiedContactSharedFolder == true || config.warningViewModel != nil
+              config.isFromUnverifiedContactSharedFolder == true ||
+              config.warningViewModel != nil ||
+              config.storageQuotaStatusProvider() == .full
         else {
             return nil
         }
         
         if config.isFromUnverifiedContactSharedFolder == true {
             return makeWarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
-        } else if let warningViewModel = config.warningViewModel {
-            return makeWarningViewModel(warningType: .backupStatusError(warningViewModel.warningType.description))
         }
         
-        return nil
+        if let warningViewModel = config.warningViewModel {
+            return warningViewModel
+        }
+        
+        return makeWarningViewModel(warningType: .fullStorageOverQuota)
     }
     
     private func makeOverriddenConfigIfNeeded(
         nodeSource: NodeSource,
-        config: NodeBrowserConfig
+        config: NodeBrowserConfig,
+        isFullSOQBannerEnabled: @escaping () -> Bool = { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .fullStorageOverQuotaBanner) }
     ) -> NodeBrowserConfig {
         
         switch nodeSource {
@@ -750,6 +756,19 @@ struct CloudDriveViewControllerFactory {
                 
                 return preferences[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
             }
+            
+            // The Storage over quota banners should only be shown in the Cloud Drive.
+            // The condition checks if the current view is not from a shared item.
+            // If `isFromSharedItem` is `nil` or `false`, it means the current item is part of the Cloud Drive,
+            // and thus, the storage over-quota banners should be displayed if applicable.
+            if overriddenConfig.isFromSharedItem != true {
+                overriddenConfig.storageQuotaStatusProvider = {
+                    guard isFullSOQBannerEnabled() else { return .noStorageProblems }
+                    let accountStorageUseCase = AccountStorageUseCase(accountRepository: AccountRepository.newRepo)
+                    return accountStorageUseCase.currentStorageStatus
+                }
+            }
+            
             return overriddenConfig
         case .recentActionBucket:
             return config

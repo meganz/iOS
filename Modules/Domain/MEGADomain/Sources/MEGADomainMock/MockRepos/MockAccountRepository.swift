@@ -28,6 +28,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _currentProPlan: AccountPlanEntity?
     private let _currentSubscription: AccountSubscriptionEntity?
     private let _currentStorageStatus: StorageStatusEntity
+    private let _shouldRefreshAccountDetails: Bool
     
     // MARK: - Result Handlers
     private let getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity>
@@ -67,6 +68,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         isBilledProPlan: Bool = false,
         hasMultipleBilledProPlan: Bool = false,
         isAchievementsEnabled: Bool = false,
+        shouldRefreshAccountDetails: Bool = false,
         plans: [PlanEntity] = [],
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
@@ -105,6 +107,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isBilledProPlan = isBilledProPlan
         _hasMultipleBilledProPlan = hasMultipleBilledProPlan
         _isAchievementsEnabled = isAchievementsEnabled
+        _shouldRefreshAccountDetails = shouldRefreshAccountDetails
         _plans = plans
         _currentProPlan = currentProPlan
         _currentStorageStatus = currentStorageStatus
@@ -182,6 +185,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func hasMultipleBilledProPlans() -> Bool {
         _hasMultipleBilledProPlan
+    }
+    
+    public var shouldRefreshAccountDetails: Bool {
+        _shouldRefreshAccountDetails
     }
     
     public var currentProPlan: AccountPlanEntity? {

@@ -10,8 +10,14 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     ///  Refreshes the current account details, this needs to be called before using other operations to get most correct result.
     func refreshCurrentAccountDetails() async throws
     
-    /// An asynchronous sequence that emits `StorageStatusEntity` updates.
+    /// An asynchronous sequence that emits `StorageStatusEntity` updates from multiple sources.
+    /// This property emits storage status updates from both the regular storage status updates stream
+    /// and the account details request finish storage updates stream.
+    ///
     /// Use this property to receive updates on the storage status of the account.
+    /// It will emit values as soon as either of the following occurs:
+    /// - A new storage status update is available from the account's storage status.
+    /// - The account details request finishes and provides storage status updates.
     var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> { get }
     
     /// Retrieves the current storage status of the user's account.
@@ -22,6 +28,8 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     /// - Returns: A `StorageStatusEntity` indicating the current state of the user's account storage.
     /// It can return `.noStorageProblems`, `.almostFull`, or `.full` based on the storage usage.
     var currentStorageStatus: StorageStatusEntity { get }
+    
+    var shouldRefreshAccountDetails: Bool { get }
 }
 
 public struct AccountStorageUseCase<T: AccountRepositoryProtocol>: AccountStorageUseCaseProtocol {
@@ -53,5 +61,9 @@ public struct AccountStorageUseCase<T: AccountRepositoryProtocol>: AccountStorag
     
     public var currentStorageStatus: StorageStatusEntity {
         accountRepository.currentStorageStatus
+    }
+    
+    public var shouldRefreshAccountDetails: Bool {
+        accountRepository.shouldRefreshAccountDetails
     }
 }

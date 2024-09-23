@@ -1,3 +1,6 @@
+import MEGADomain
+import MEGAPresentation
+import MEGASDKRepo
 
 struct NodeBrowserConfig {
     var displayMode: DisplayMode?
@@ -16,6 +19,10 @@ struct NodeBrowserConfig {
     /// The AdsVisibilityConfigurating can be access via `UIApplication.mainTabBarRootViewController())` which
     /// might not be available at the time this config is created so we need to use closure to refer to it at a later time.
     var adsConfiguratorProvider: () -> (any AdsVisibilityConfigurating)? = { nil }
+    
+    /// Closure to determine if full storage over quota information should be shown
+    var storageQuotaStatusProvider: () -> StorageStatusEntity = { .noStorageProblems }
+    
     static var `default`: Self {
         .init()
     }

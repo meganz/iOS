@@ -39,7 +39,7 @@ struct NodeBrowserView: View {
     
     private var content: some View {
         VStack {
-            if let warningViewModel = viewModel.warningViewModel {
+            if let warningViewModel = viewModel.currentBannerViewModel {
                 WarningBannerView(viewModel: warningViewModel)
             }
             if let mediaDiscoveryViewModel = viewModel.viewModeAwareMediaDiscoveryViewModel {
