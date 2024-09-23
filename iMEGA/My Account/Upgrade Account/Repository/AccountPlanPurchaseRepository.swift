@@ -1,57 +1,24 @@
-@preconcurrency import Combine
 import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 import MEGASwift
 
 final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseRepositoryProtocol, Sendable {
-
     static var newRepo: AccountPlanPurchaseRepository {
-        AccountPlanPurchaseRepository(purchase: MEGAPurchase.sharedInstance(), sdk: MEGASdk.shared)
+        AccountPlanPurchaseRepository(
+            purchase: MEGAPurchase.sharedInstance(),
+            purchaseUpdatesProvider: AccountPlanPurchaseUpdatesProvider(purchase: MEGAPurchase.sharedInstance()))
     }
     
     private let purchase: MEGAPurchase
-    private let sdk: MEGASdk
+    private let purchaseUpdatesProvider: any AccountPlanPurchaseUpdatesProviderProtocol
     
-    private let successfulRestoreSourcePublisher = PassthroughSubject<Void, Never>()
-    var successfulRestorePublisher: AnyPublisher<Void, Never> {
-        successfulRestoreSourcePublisher.eraseToAnyPublisher()
-    }
-    
-    private let incompleteRestoreSourcePublisher = PassthroughSubject<Void, Never>()
-    var incompleteRestorePublisher: AnyPublisher<Void, Never> {
-        incompleteRestoreSourcePublisher.eraseToAnyPublisher()
-    }
-    
-    private let failedRestoreSourcePublisher = PassthroughSubject<AccountPlanErrorEntity, Never>()
-    var failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> {
-        failedRestoreSourcePublisher.eraseToAnyPublisher()
-    }
-    
-    private let purchasePlanResultSourcePublisher = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
-    var purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
-        purchasePlanResultSourcePublisher.eraseToAnyPublisher()
-    }
-    
-    init(purchase: MEGAPurchase, sdk: MEGASdk) {
+    init(
+        purchase: MEGAPurchase,
+        purchaseUpdatesProvider: some AccountPlanPurchaseUpdatesProviderProtocol
+    ) {
         self.purchase = purchase
-        self.sdk = sdk
-    }
-    
-    func registerRestoreDelegate() async {
-        purchase.restoreDelegateMutableArray.add(self)
-    }
-    
-    func deRegisterRestoreDelegate() async {
-        purchase.restoreDelegateMutableArray.remove(self)
-    }
-    
-    func registerPurchaseDelegate() async {
-        purchase.purchaseDelegateMutableArray.add(self)
-    }
-    
-    func deRegisterPurchaseDelegate() async {
-        purchase.purchaseDelegateMutableArray.remove(self)
+        self.purchaseUpdatesProvider = purchaseUpdatesProvider
     }
 
     func restorePurchase() {
@@ -65,6 +32,14 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
             return
         }
         purchase.purchaseProduct(productPlan)
+    }
+    
+    var restorePurchaseUpdates: AnyAsyncSequence<RestorePurchaseStateEntity> {
+        purchaseUpdatesProvider.restorePurchaseUpdates
+    }
+    
+    var purchasePlanResultUpdates: AnyAsyncSequence<Result<Void, AccountPlanErrorEntity>> {
+        purchaseUpdatesProvider.purchasePlanResultUpdates
     }
     
     func accountPlanProducts() async -> [PlanEntity] {
@@ -94,33 +69,5 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
     private func transferGB(atProductIndex index: Int) -> Int {
         guard let pricing = purchase.pricing else { return 0 }
         return pricing.transferGB(atProductIndex: index)
-    }
-}
-
-// MARK: - MEGARequestDelegate
-extension AccountPlanPurchaseRepository: MEGARestoreDelegate {
-    func successfulRestore(_ megaPurchase: MEGAPurchase?) {
-        successfulRestoreSourcePublisher.send()
-    }
-    
-    func incompleteRestore() {
-        incompleteRestoreSourcePublisher.send()
-    }
-    
-    func failedRestore(_ errorCode: Int, message errorMessage: String!) {
-        let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: errorMessage)
-        failedRestoreSourcePublisher.send(error)
-    }
-}
-
-// MARK: - MEGAPurchaseDelegate
-extension AccountPlanPurchaseRepository: MEGAPurchaseDelegate {
-    func successfulPurchase(_ megaPurchase: MEGAPurchase?) {
-        purchasePlanResultSourcePublisher.send(.success)
-    }
-    
-    func failedPurchase(_ errorCode: Int, message errorMessage: String?) {
-        let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: errorMessage)
-        purchasePlanResultSourcePublisher.send(.failure(error))
     }
 }

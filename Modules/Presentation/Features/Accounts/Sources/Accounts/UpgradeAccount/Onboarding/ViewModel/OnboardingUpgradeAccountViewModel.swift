@@ -26,6 +26,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     
     // Variant A only
     private let viewProPlanAction: () -> Void
+    let notificationCenter: NotificationCenter
     
     // Variant B only
     @Published var selectedCycleTab: SubscriptionCycleEntity = .yearly
@@ -34,7 +35,6 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private var planList: [PlanEntity] = []
     private(set) var recommendedPlanType: AccountTypeEntity?
     
-    private(set) var registerDelegateTask: Task<Void, Never>?
     private(set) var purchasePlanTask: Task<Void, Never>?
     private(set) var alertType: UpgradeAccountPlanAlertType?
     
@@ -52,7 +52,8 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         isAdsEnabled: Bool,
         baseStorage: Int,
         viewProPlanAction: @escaping () -> Void,
-        router: OnboardingUpgradeAccountRouting
+        router: OnboardingUpgradeAccountRouting,
+        notificationCenter: NotificationCenter = NotificationCenter.default
     ) {
         self.purchaseUseCase = purchaseUseCase
         self.accountUseCase = accountUseCase
@@ -61,87 +62,44 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         self.baseStorage = baseStorage
         self.viewProPlanAction = viewProPlanAction
         self.router = router
-        
-        registerDelegates()
+        self.notificationCenter = notificationCenter
     }
     
-    deinit {
-        deRegisterDelegates()
-        registerDelegateTask?.cancel()
+    public func cancelPurchaseTask() {
         purchasePlanTask?.cancel()
-        registerDelegateTask = nil
-        purchasePlanTask = nil
     }
     
-    private func registerDelegates() {
-        registerDelegateTask = Task {
-            await purchaseUseCase.registerRestoreDelegate()
-            await purchaseUseCase.registerPurchaseDelegate()
-            setupSubscriptions()
-        }
-    }
-    
-    private func deRegisterDelegates() {
-        Task { [weak self] in
-            await self?.purchaseUseCase.deRegisterRestoreDelegate()
-            await self?.purchaseUseCase.deRegisterPurchaseDelegate()
-        }
-    }
+    @MainActor
+    public func startPurchaseUpdatesMonitoring() async throws {
+        for await result in purchaseUseCase.purchasePlanResultUpdates {
+            try Task.checkCancellation()
+            
+            switch result {
+            case .success:
+                postAccountDidPurchasedPlanNotification()
+                try await Task.sleep(nanoseconds: 1_000_000_000)
 
-    private func setupSubscriptions() {
-        NotificationCenter.default
-            .publisher(for: .dismissOnboardingProPlanDialog)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self else { return }
+                setLoading(false)
                 shouldDismiss = true
+            case .failure(let error):
+                setLoading(false)
+                guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
+                setAlertType(.purchase(.failed))
             }
-            .store(in: &subscriptions)
-        
-        purchaseUseCase.successfulRestorePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                guard let self else { return }
-                setAlertType(.restore(.success))
+        }
+    }
+    
+    @MainActor
+    public func startRestoreUpdatesMonitoring() async throws {
+        for await result in purchaseUseCase.restorePurchaseUpdates {
+            try Task.checkCancellation()
+            
+            switch result {
+            case .success: setAlertType(.restore(.success))
+            case .incomplete: setAlertType(.restore(.incomplete))
+            case .failed: setAlertType(.restore(.failed))
             }
-            .store(in: &subscriptions)
-        
-        purchaseUseCase.incompleteRestorePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                guard let self else { return }
-                setAlertType(.restore(.incomplete))
-            }
-            .store(in: &subscriptions)
-        
-        purchaseUseCase.failedRestorePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                setAlertType(.restore(.failed))
-            }
-            .store(in: &subscriptions)
-        
-        purchaseUseCase.purchasePlanResultPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                isLoading = false
-                
-                switch result {
-                case .success:
-                    postAccountDidPurchasedPlanNotification()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                        guard let self else { return }
-                        shouldDismiss = true
-                    }
-                case .failure(let error):
-                    guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
-                    setAlertType(.purchase(.failed))
-                }
-            }
-            .store(in: &subscriptions)
+        }
     }
     
     private func postAccountDidPurchasedPlanNotification() {
@@ -168,6 +126,16 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     }
    
     // MARK: - Variant A with View Pro Plans
+    func setUpSubscription() {
+        notificationCenter
+            .publisher(for: .dismissOnboardingProPlanDialog)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                shouldDismiss = true
+            }
+            .store(in: &subscriptions)
+    }
     
     @MainActor
     public func setUpLowestProPlan() async {
@@ -316,14 +284,14 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         purchasePlanTask = Task { [weak self] in
             guard let self else { return }
             
-            await startLoading()
+            await setLoading(true)
             await purchaseUseCase.purchasePlan(selectedPlan)
         }
     }
     
     @MainActor
-    private func startLoading() {
-        isLoading = true
+    private func setLoading(_ shouldLoad: Bool) {
+        isLoading = shouldLoad
     }
     
     // MARK: - Helper

@@ -19,6 +19,7 @@ enum UpgradeAccountPlanViewType {
     case onboarding, upgrade
 }
 
+@MainActor
 final class UpgradeAccountPlanViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private let accountUseCase: any AccountUseCaseProtocol
@@ -53,8 +54,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         didSet { toggleBuyButton() }
     }
     
-    private(set) var registerDelegateTask: Task<Void, Never>?
-    private(set) var setUpPlanTask: Task<Void, Never>?
     private(set) var buyPlanTask: Task<Void, Never>?
     private(set) var cancelActivePlanAndBuyNewPlanTask: Task<Void, Never>?
     
@@ -76,111 +75,68 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.tracker = tracker
         self.viewType = viewType
         self.router = router
-        registerDelegates()
-        setupPlans()
     }
     
     deinit {
-        deRegisterDelegates()
-        registerDelegateTask?.cancel()
-        setUpPlanTask?.cancel()
         buyPlanTask?.cancel()
         cancelActivePlanAndBuyNewPlanTask?.cancel()
-        registerDelegateTask = nil
-        setUpPlanTask = nil
         buyPlanTask = nil
         cancelActivePlanAndBuyNewPlanTask = nil
     }
     
     // MARK: - Setup
-    @MainActor
     func setUpExternalAds() async {
         let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
         let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
         isExternalAdsActive = isAdsEnabled && isExternalAdsEnabled
     }
     
-    private func registerDelegates() {
-        guard registerDelegateTask == nil else { return }
-        registerDelegateTask = Task {
-            await purchaseUseCase.registerRestoreDelegate()
-            await purchaseUseCase.registerPurchaseDelegate()
-            setupSubscriptions()
-        }
-    }
-    
-    private func deRegisterDelegates() {
-        Task.detached { [weak self] in
-            await self?.purchaseUseCase.deRegisterRestoreDelegate()
-            await self?.purchaseUseCase.deRegisterPurchaseDelegate()
-        }
-    }
-    
-    private func setupSubscriptions() {
-        purchaseUseCase.successfulRestorePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                guard let self else { return }
-                setAlertType(.restore(.success))
-            }
-            .store(in: &subscriptions)
-        
-        purchaseUseCase.incompleteRestorePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                guard let self else { return }
-                setAlertType(.restore(.incomplete))
-            }
-            .store(in: &subscriptions)
-        
-        purchaseUseCase.failedRestorePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                setAlertType(.restore(.failed))
-            }
-            .store(in: &subscriptions)
-        
-        purchaseUseCase.purchasePlanResultPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                isLoading = false
+    func startPurchaseUpdatesMonitoring() async throws {
+        for await result in purchaseUseCase.purchasePlanResultUpdates {
+            try Task.checkCancellation()
+            isLoading = false
+            
+            switch result {
+            case .success:
+                tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
+                postAccountDidPurchasedPlanNotification()
+                postRefreshAccountDetailsNotification()
                 
-                switch result {
-                case .success:
-                    tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
-                    postAccountDidPurchasedPlanNotification()
-                    postRefreshAccountDetailsNotification()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                        guard let self else { return }
-                        postDismissOnboardingProPlanDialog()
-                        isDismiss = true
-                    }
-                case .failure(let error):
-                    tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
-                    guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
-                    setAlertType(.purchase(.failed))
-                }
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                postDismissOnboardingProPlanDialog()
+                isDismiss = true
+            case .failure(let error):
+                tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
+                guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
+                setAlertType(.purchase(.failed))
             }
-            .store(in: &subscriptions)
+        }
     }
     
-    private func setupPlans() {
-        setUpPlanTask = Task {
-            planList = await purchaseUseCase.accountPlanProducts()
+    func startRestoreUpdatesMonitoring() async throws {
+        for await result in purchaseUseCase.restorePurchaseUpdates {
+            try Task.checkCancellation()
             
-            if viewType == .upgrade {
-                setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
-            } else {
-                let lowestPlan = planList.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
-                setRecommendedPlan(basedOnPlan: lowestPlan.type)
+            switch result {
+            case .success: setAlertType(.restore(.success))
+            case .incomplete: setAlertType(.restore(.incomplete))
+            case .failed: setAlertType(.restore(.failed))
             }
-            
-            await setDefaultPlanCycleTab()
-            await setCurrentPlan(type: accountDetails.proLevel)
         }
+    }
+
+    func setupPlans() async {
+        planList = await purchaseUseCase.accountPlanProducts()
+        
+        if viewType == .upgrade {
+            setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
+        } else {
+            let lowestPlan = planList.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
+            setRecommendedPlan(basedOnPlan: lowestPlan.type)
+        }
+        
+        setDefaultPlanCycleTab()
+        setCurrentPlan(type: accountDetails.proLevel)
     }
     
     private func toggleBuyButton() {
@@ -191,12 +147,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         isShowBuyButton = isSelectionEnabled(forPlan: currentSelectedPlan)
     }
     
-    @MainActor
     private func setDefaultPlanCycleTab() {
         selectedCycleTab = accountDetails.subscriptionCycle == .monthly ? .monthly : .yearly
     }
     
-    @MainActor
     private func setCurrentPlan(type: AccountTypeEntity) {
         guard type != .free else {
             currentPlan = PlanEntity(type: .free, name: AccountTypeEntity.free.toAccountTypeDisplayName())
@@ -354,7 +308,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return currentPlan != plan
     }
     
-    @MainActor
     private func startLoading() {
         isLoading = true
     }
@@ -398,7 +351,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             do {
                 try validateActiveSubscriptions()
                 
-                await startLoading()
+                startLoading()
                 await purchaseUseCase.purchasePlan(currentSelectedPlan)
                 trackEventBuyPlan(currentSelectedPlan)
             } catch {
@@ -406,7 +359,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                     fatalError("[Upgrade Account] Error \(error) is not supported.")
                 }
                 
-                await handleActiveSubscription(type: error)
+                handleActiveSubscription(type: error)
             }
         }
     }
@@ -424,7 +377,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func handleActiveSubscription(type: ActiveSubscriptionError) {
         guard type == .haveCancellablePlan else {
             setAlertType(.activeSubscription(type, primaryButtonAction: nil))

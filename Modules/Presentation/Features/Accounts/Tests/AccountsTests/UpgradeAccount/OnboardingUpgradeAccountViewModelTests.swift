@@ -1,15 +1,25 @@
 @testable import Accounts
 import AccountsMock
+import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASDKRepoMock
 import MEGATest
 import XCTest
 
 final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
+    private var subscriptions = Set<AnyCancellable>()
+    
+    override func tearDown() {
+        subscriptions.removeAll()
+        super.tearDown()
+    }
+    
+    // MARK: - Init
     private let freePlan = PlanEntity(type: .free, name: "Free")
     private let proI_monthly = PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly)
     private let proI_yearly = PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly)
@@ -25,8 +35,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
                         expectedLowestPlan,
                         PlanEntity(type: .proIII, subscriptionCycle: .monthly, price: 3)]
         
-        let (sut, _) = makeSUT(planList: planList)
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(planList: planList)
         await sut.setUpLowestProPlan()
         
         XCTAssertEqual(sut.lowestProPlan, expectedLowestPlan)
@@ -44,8 +53,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
                                                    storage: "\(expectedPlanStorage) \(expectedPlanStorageUnit)",
                                                    formattedPrice: "$4.99")
         
-        let (sut, _) = makeSUT(planList: [expectedLowestPlan])
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(planList: [expectedLowestPlan])
         await sut.setUpLowestProPlan()
         
         XCTAssertEqual(sut.storageContentMessage, expectedStorageMessage)
@@ -53,9 +61,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     
     func testViewProPlans_onButtonTapped_shouldTrackEvent() async {
         let tracker = MockTracker()
-        let (sut, _) = makeSUT(tracker: tracker)
-        
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(tracker: tracker)
         
         sut.showProPlanView()
         
@@ -68,11 +74,28 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     }
     
     func testInit_withEmptyPlanList_shouldSetDefaults() async {
-        let (sut, _) = makeSUT()
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT()
         await sut.setUpLowestProPlan()
         XCTAssertEqual(sut.lowestProPlan, PlanEntity(), "Expected default empty lowest plan")
         XCTAssertEqual(sut.selectedCycleTab, .yearly, "Expected default cycle tab to be yearly")
+    }
+    
+    func testSetUpSubscription_notificationCenterDidReceivedDismissOnboardingProPlanDialog_shouldDismissView() {
+        let notificationCenter = NotificationCenter()
+        let sut = makeSUT(notificationCenter: notificationCenter)
+        
+        let exp = expectation(description: "Dismiss view")
+        sut.$shouldDismiss
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.setUpSubscription()
+        notificationCenter.post(name: .dismissOnboardingProPlanDialog, object: nil)
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertTrue(sut.shouldDismiss)
     }
     
     func testSetupPlans_shouldFetchPlansAndSetDefaults() async {
@@ -81,9 +104,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
             PlanEntity(type: .proI, price: 1),
             PlanEntity(type: .proIII, price: 3)
         ]
-        let (sut, _) = makeSUT(planList: planList)
-        
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(planList: planList)
 
         await sut.setupPlans()
 
@@ -97,45 +118,26 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     }
     
     func testSelectedCycleTab_freeAccount_defaultShouldBeYearly() async {
-        let (sut, _) = makeSUT()
-        
-        await awaitRegisterDelegateTask(in: sut)
-        
-        await sut.registerDelegateTask?.value
+        let sut = makeSUT()
         
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
     }
     
-    func testViewModelInit_registersDelegates() async {
-        let (sut, mockPurchaseUseCase) = makeSUT()
-        
-        await awaitRegisterDelegateTask(in: sut)
-        
-        await sut.setupPlans()
-        
-        XCTAssertEqual(mockPurchaseUseCase.registerRestoreDelegateCalled, 1, "registerRestoreDelegate should be called once during initialization")
-        XCTAssertEqual(mockPurchaseUseCase.registerPurchaseDelegateCalled, 1, "registerPurchaseDelegate should be called once during initialization")
-    }
-    
     func testIsAdsEnabled_withAdsEnabled_shouldBeTrue() async {
-        let (sut, _) = makeSUT(isAdsEnabled: true)
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(isAdsEnabled: true)
         
         XCTAssertTrue(sut.isAdsEnabled)
     }
     
     func testIsAdsEnabled_withAdsDisabled_shouldBefalse() async {
-        let (sut, _) = makeSUT(isAdsEnabled: false)
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(isAdsEnabled: false)
         
         XCTAssertFalse(sut.isAdsEnabled)
     }
     
     // MARK: - Plan list
     private func testFilteredPlanList(planList: [PlanEntity], expectedPlans: [PlanEntity], forCycle cycle: SubscriptionCycleEntity) async {
-        let (sut, _) = makeSUT(planList: planList)
-        
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(planList: planList)
         
         await sut.setupPlans()
         sut.selectedCycleTab = cycle
@@ -161,10 +163,9 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     // MARK: - Restore
     
     private func testRestorePurchaseAlert(shouldShowAlertFor status: UpgradeAccountPlanAlertType.AlertStatus) async throws {
-        let (sut, _) = makeSUT()
-        sut.setAlertType(.restore(status))
+        let sut = makeSUT()
         
-        await awaitRegisterDelegateTask(in: sut)
+        sut.setAlertType(.restore(status))
         
         let newAlertType = try XCTUnwrap(sut.alertType)
         guard case .restore(let resultStatus) = newAlertType else {
@@ -188,10 +189,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     }
 
     func testRestorePurchaseAlert_setNilAlertType_shouldNotShowAnyAlert() async {
-        let (sut, _) = makeSUT()
+        let sut = makeSUT()
         sut.setAlertType(nil)
-        
-        await awaitRegisterDelegateTask(in: sut)
         
         XCTAssertNil(sut.alertType)
         XCTAssertFalse(sut.isAlertPresented)
@@ -201,8 +200,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     
     func testPurchasePlan_shouldCallPurchasePlan() async {
         let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
-        let (sut, mockUseCase) = makeSUT(planList: planList)
-        await awaitRegisterDelegateTask(in: sut)
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = makeSUT(purchaseUseCase: mockUseCase, planList: planList)
         
         await sut.setupPlans()
         sut.setSelectedPlan(proI_monthly)
@@ -214,8 +213,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     
     func testPurchasePlan_selectedFreePlan_shouldDismiss() async {
         let planList = [freePlan, proI_monthly, proII_monthly, proI_yearly, proII_yearly]
-        let (sut, _) = makeSUT(planList: planList)
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(planList: planList)
         
         await sut.setupPlans()
         sut.setSelectedPlan(freePlan)
@@ -224,31 +222,132 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         await sut.purchasePlanTask?.value
         XCTAssertTrue(sut.shouldDismiss)
     }
+
+    // MARK: - Purchase updates
+    func testStartPurchaseUpdatesMonitoring_purchasePlanResultUpdates_whenSuccessful_shouldHandleRequest() async throws {
+        let (stream, continuation) = AsyncStream<Result<Void, AccountPlanErrorEntity>>.makeStream()
+        let mockUsecase = MockAccountPlanPurchaseUseCase(purchasePlanResultUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(purchaseUseCase: mockUsecase)
+        
+        trackTaskCancellation { try await sut.startPurchaseUpdatesMonitoring() }
+        
+        let loadingExp = expectation(description: "Stop loading")
+        sut.$isLoading
+            .dropFirst()
+            .sink { isLoading in
+                XCTAssertFalse(isLoading)
+                loadingExp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let dismissExp = expectation(description: "Dismiss view")
+        sut.$shouldDismiss
+            .dropFirst()
+            .sink { shouldDismiss in
+                XCTAssertTrue(shouldDismiss)
+                dismissExp.fulfill()
+            }.store(in: &subscriptions)
+        
+        continuation.yield(.success)
+        continuation.finish()
+        
+        await fulfillment(of: [loadingExp, dismissExp], timeout: 1.5)
+    }
     
-    func testPurchasePlanAlert_failedPurchase_shouldShowAlertForFailedPurchase() async throws {
-        let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
-        let (sut, _) = makeSUT(planList: planList)
-        await awaitRegisterDelegateTask(in: sut)
+    private func assertFailedPurchasePlanResultUpdate_shouldHandleRequest(error: AccountPlanErrorEntity) async throws -> UpgradeAccountPlanAlertType? {
+        let (stream, continuation) = AsyncStream<Result<Void, AccountPlanErrorEntity>>.makeStream()
+        let mockUsecase = MockAccountPlanPurchaseUseCase(purchasePlanResultUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(purchaseUseCase: mockUsecase)
         
-        await sut.setupPlans()
-        sut.setAlertType(UpgradeAccountPlanAlertType.purchase(.failed))
+        trackTaskCancellation { try await sut.startPurchaseUpdatesMonitoring() }
         
-        let newAlertType = try XCTUnwrap(sut.alertType)
+        let isPaymentCancelled = error.errorCode == 2
+        let exp = expectation(description: "Present error alert")
+        exp.isInverted = isPaymentCancelled
+        sut.$isAlertPresented
+            .filter { $0 }
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        continuation.yield(.failure(error))
+        continuation.finish()
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        XCTAssertEqual(sut.isAlertPresented, !isPaymentCancelled)
+        
+        return sut.alertType
+    }
+    
+    func testStartPurchaseUpdatesMonitoring_purchasePlanResultUpdates_whenFailedAndNotCancelled_shouldHandleRequest() async throws {
+        let alertTypeResult = try await assertFailedPurchasePlanResultUpdate_shouldHandleRequest(
+            error: .init(errorCode: randomAccountPlanPurchaseErrorCode(excludingCancelError: true), errorMessage: nil)
+        )
+        
+        let newAlertType = try XCTUnwrap(alertTypeResult)
         guard case .purchase(let status) = newAlertType else {
             XCTFail("Alert type mismatched the newly set type - Purchase failed")
             return
         }
         XCTAssertEqual(status, .failed)
-        XCTAssertTrue(sut.isAlertPresented)
     }
     
+    func testStartPurchaseUpdatesMonitoring_purchasePlanResultUpdates_whenFailedAndCancelled_shouldHandleRequest() async throws {
+        let paymentCancelledErrorCode = 2
+        let alertTypeResult = try await assertFailedPurchasePlanResultUpdate_shouldHandleRequest(
+            error: .init(errorCode: paymentCancelledErrorCode, errorMessage: nil)
+        )
+        
+        XCTAssertNil(alertTypeResult)
+    }
+    
+    private func assertRestorePurchaseUpdates_shouldShowAlert(restoreUpdate: RestorePurchaseStateEntity) async throws -> UpgradeAccountPlanAlertType.AlertStatus {
+        let (stream, continuation) = AsyncStream<RestorePurchaseStateEntity>.makeStream()
+        let mockUsecase = MockAccountPlanPurchaseUseCase(restorePurchaseUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(purchaseUseCase: mockUsecase)
+        
+        trackTaskCancellation { try await sut.startRestoreUpdatesMonitoring() }
+        
+        let exp = expectation(description: "Present alert")
+        sut.$isAlertPresented
+            .filter { $0 }
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        continuation.yield(restoreUpdate)
+        continuation.finish()
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        XCTAssertTrue(sut.isAlertPresented)
+        
+        let newAlertType = try XCTUnwrap(sut.alertType)
+        guard case .restore(let status) = newAlertType else {
+            XCTFail("Alert type mismatched the newly set type - Restore type")
+            throw MockError()
+        }
+        return status
+    }
+    
+    func testStartPurchaseUpdatesMonitoring_restorePurchaseUpdates_whenSuccessful_shouldShowAlert() async throws {
+        let alertStatusResult = try await assertRestorePurchaseUpdates_shouldShowAlert(restoreUpdate: .success)
+        XCTAssertEqual(alertStatusResult, .success)
+    }
+    
+    func testStartPurchaseUpdatesMonitoring_restorePurchaseUpdates_whenIncomplete_shouldShowAlert() async throws {
+        let alertStatusResult = try await assertRestorePurchaseUpdates_shouldShowAlert(restoreUpdate: .incomplete)
+        XCTAssertEqual(alertStatusResult, .incomplete)
+    }
+    
+    func testStartPurchaseUpdatesMonitoring_restorePurchaseUpdates_whenFailed_shouldShowAlert() async throws {
+        let alertStatusResult = try await assertRestorePurchaseUpdates_shouldShowAlert(restoreUpdate: .failed(.random))
+        XCTAssertEqual(alertStatusResult, .failed)
+    }
+
     // MARK: - Event Tracking
     
     func testTrackProIIICardDisplayedEvent_onMultipleCalls_shouldTrackEventOnce() async {
         let tracker = MockTracker()
-        let (sut, _) = makeSUT(tracker: tracker)
-        
-        await awaitRegisterDelegateTask(in: sut)
+        let sut = makeSUT(tracker: tracker)
 
         sut.trackProIIICardDisplayedEvent()
         sut.trackProIIICardDisplayedEvent() // Second call to see if it tracks again
@@ -264,10 +363,8 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         line: UInt = #line
     ) async {
         let tracker = MockTracker()
-        let (sut, _) = makeSUT(tracker: tracker)
+        let sut = makeSUT(tracker: tracker)
         sut.setSelectedPlan(PlanEntity(type: planType))
-        
-        await sut.registerDelegateTask?.value
 
         sut.purchaseSelectedPlan()
 
@@ -303,15 +400,17 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     // MARK: - Helper
 
     private func makeSUT(
+        purchaseUseCase: AccountPlanPurchaseUseCaseProtocol? = nil,
         planList: [PlanEntity] = [],
         tracker: AnalyticsTracking = MockTracker(),
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         isAdsEnabled: Bool = false,
         baseStorage: Int = 20,
+        notificationCenter: NotificationCenter = NotificationCenter(),
         file: StaticString = #file,
         line: UInt = #line
-    ) -> (OnboardingUpgradeAccountViewModel, MockAccountPlanPurchaseUseCase) {
-        let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+    ) -> OnboardingUpgradeAccountViewModel {
+        let mockPurchaseUseCase = purchaseUseCase ?? MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let router = MockOnboardingUpgradeAccountRouter()
         let sut = OnboardingUpgradeAccountViewModel(
@@ -321,14 +420,23 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
             isAdsEnabled: isAdsEnabled,
             baseStorage: baseStorage,
             viewProPlanAction: {},
-            router: router
+            router: router,
+            notificationCenter: notificationCenter
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, mockPurchaseUseCase)
+        return sut
     }
     
-    private func awaitRegisterDelegateTask(in viewModel: OnboardingUpgradeAccountViewModel) async {
-        XCTAssertNotNil(viewModel.registerDelegateTask, "Expected registerDelegateTask to be initialized.")
-        await viewModel.registerDelegateTask?.value
+    private func randomAccountPlanPurchaseErrorCode(excludingCancelError: Bool = false) -> Int {
+        var storePurchaseErrorCodes = [0, // unknown
+                                       1, // client invalid
+                                       2, // payment cancelled
+                                       3, // payment invalid
+                                       4] // payment not allowed
+        
+        if excludingCancelError {
+            storePurchaseErrorCodes.remove(object: 2)
+        }
+        return storePurchaseErrorCodes.randomElement() ?? 0
     }
 }
