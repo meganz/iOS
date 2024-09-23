@@ -7,7 +7,7 @@ public enum SearchResultUpdateSignal: Sendable, Equatable {
 }
 
 /// Main interface used to execute searches
-public protocol SearchResultsProviding {
+public protocol SearchResultsProviding: Sendable {
 
     /// Get the most updated results from data source according to a queryRequest
     func refreshedSearchResults(queryRequest: SearchQuery) async throws -> SearchResultsEntity?

@@ -14,7 +14,7 @@ import Search
 }
 
 /// abstraction into a search results
-final class HomeSearchResultsProvider: SearchResultsProviding {
+final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendable {
     private let filesSearchUseCase: any FilesSearchUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
@@ -24,14 +24,15 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
 
     // We only initially fetch the node list when the user triggers search
     // Concrete nodes are then loaded one by one in the pagination
-    private var nodeList: NodeListEntity?
+    @Atomic private var nodeList: NodeListEntity?
     
     /// Keeps track of how many SearchResult were returned to client's through search queries.
     /// This value plays an important role in pagination and node updates logic: When user query "loadMore" or there are node updates, we use this value incombination with `nodeList` to perform the needed computation.
-    private var filledItemsCount = 0
-    private var pageSize = 100
-    private var loadMorePagesOffset = 20
-    private var availableChips: [SearchChipEntity]
+    @Atomic private var filledItemsCount = 0
+    @Atomic private var pageSize = 100
+    @Atomic private var loadMorePagesOffset = 20
+    @Atomic private var subscriptions = Set<AnyCancellable>()
+
     private let hiddenNodesFeatureEnabled: Bool
     
     // The node from which we want start searching from,
@@ -39,8 +40,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let parentNodeProvider: () -> NodeEntity?
     private let mapper: SearchResultMapper
     private let notificationCenter: NotificationCenter
-    private var subscriptions = Set<AnyCancellable>()
-    
+    private let availableChips: [SearchChipEntity]
+
     init(
         parentNodeProvider: @escaping () -> NodeEntity?,
         filesSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -94,7 +95,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         // E.g: Initially a folder doesn't contain any children, when user add children to this folder we'll want the
         // refreshed results to contains the newly added node instead of the old zero `filledItemsCount`
         let numOfNodesToReturn = min(filledItemsCount != 0 ? filledItemsCount : pageSize, newNodesCount)
-        filledItemsCount = numOfNodesToReturn
+        $filledItemsCount.mutate { $0 = numOfNodesToReturn }
         
         var results: [SearchResult] = []
         
@@ -102,7 +103,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             results += (0..<numOfNodesToReturn).compactMap { refreshedNodeList.nodeAt($0) }.map(mapNodeToSearchResult)
         }
         
-        nodeList = refreshedNodeList
+        $nodeList.mutate { $0 = refreshedNodeList }
         
         return SearchResultsEntity(
             results: results,
@@ -131,9 +132,10 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     func searchInitially(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
 
         // Initially, no item is filled yet
-        filledItemsCount = 0
+        $filledItemsCount.mutate { $0 = 0 }
 
-        self.nodeList = try await nodeListEntity(from: queryRequest)
+        let newNodeList = try await nodeListEntity(from: queryRequest)
+        $nodeList.mutate { $0 = newNodeList }
 
         return switch queryRequest {
         case .initial:
@@ -255,7 +257,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             }
         }
         
-        filledItemsCount = nextPageLastIndex + 1
+        $filledItemsCount.mutate { $0 = nextPageLastIndex + 1 }
 
         return .init(
             results: results,
