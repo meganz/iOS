@@ -130,9 +130,9 @@
     
     self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = [self whiteTextColor];
     
-    self.selectMembershiptLabel.textColor = self.megaAccountType == MEGAAccountTypeLite ? [UIColor mnz_colorWithProLevel:_megaAccountType] : [UIColor mnz_redForTraitCollection:self.traitCollection];
+    self.selectMembershiptLabel.textColor = self.megaAccountType == MEGAAccountTypeLite ? [UIColor mnz_colorWithProLevel:_megaAccountType] : [UIColor mnz_red];
     
-    self.save17Label.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+    self.save17Label.textColor = [UIColor mnz_red];
     self.view.backgroundColor = self.tableView.backgroundColor = [self defaultBackgroundColor];
 }
 

@@ -70,9 +70,9 @@
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.downloadBarButtonItem.title = LocalizedString(@"downloadToOffline", @"List option shown on the details of a file or folder");
-    [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
+    [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_red]} forState:UIControlStateNormal];
     self.importBarButtonItem.title = LocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
-    [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
+    [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_red]} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     NSString *myUserHandleString = [NSString stringWithFormat:@"%llu", [MEGAChatSdk.shared myUserHandle]];

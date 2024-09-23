@@ -1469,7 +1469,7 @@
                     cell.nameLabel.text = chatListItem.title;
                     cell.shareLabel.text = [chatRoom participantsNamesWithMe:YES];
                     cell.onlineStatusView.backgroundColor = nil;
-                    cell.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+                    cell.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGray] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
                     cell.verifiedImageView.hidden = YES;
                 } else {
                     uint64_t peerHandle = chatListItem.peerHandle;

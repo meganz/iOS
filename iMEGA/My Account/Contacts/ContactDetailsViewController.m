@@ -288,7 +288,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         cell.nameLabel.textColor = [self redTextColor];
     } else { //Add contact
         cell.avatarImageView.image = [UIImage imageNamed:@"navigationbar_add"];
-        cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        cell.avatarImageView.tintColor = [UIColor mnz_primaryGray];
         cell.nameLabel.text = LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     }
     
@@ -342,7 +342,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForAddParticipantAsContactWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"navigationbar_add"];
-    cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    cell.avatarImageView.tintColor = [UIColor mnz_primaryGray];
     cell.nameLabel.text = LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
     
@@ -381,7 +381,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
     cell.avatarImageView.tintColor = [self redIconColor];
     cell.nameLabel.text = LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
-    cell.nameLabel.textColor = [UIColor mnz_errorRedForTraitCollection:(self.traitCollection)];
+    cell.nameLabel.textColor = [UIColor mnz_errorRed];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;

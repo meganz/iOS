@@ -62,7 +62,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : UIColor.labelColor};
     
     NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", H264Format] attributes:formatAttributes];
-    [H264AttributedString appendAttributedString:[NSAttributedString.alloc initWithString:LocalizedString(@"(Recommended)", @"") attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
+    [H264AttributedString appendAttributedString:[NSAttributedString.alloc initWithString:LocalizedString(@"(Recommended)", @"") attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGray]}]];
     self.H264Label.attributedText = H264AttributedString;
     self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:HEVCFormat attributes:formatAttributes];
 }

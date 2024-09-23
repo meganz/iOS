@@ -73,13 +73,13 @@ extension UIButton {
     
     @objc func mnz_setupDestructive(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_basicButton(for: traitCollection)
-        setTitleColor(UIColor.mnz_red(for: traitCollection), for: UIControl.State.normal)
+        setTitleColor(UIColor.mnz_red(), for: UIControl.State.normal)
         
         setupLayer()
     }
     
     @objc func mnz_setupDelete(_ traitCollection: UITraitCollection) {
-        backgroundColor = UIColor.mnz_red(for: traitCollection)
+        backgroundColor = UIColor.mnz_red()
         setTitleColor(UIColor.whiteFFFFFF, for: UIControl.State.normal)
         
         setupLayer()
@@ -87,7 +87,7 @@ extension UIButton {
     
     @objc func mnz_setupCancel(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.clear
-        setTitleColor(UIColor.mnz_secondaryGray(for: traitCollection), for: UIControl.State.normal)
+        setTitleColor(UIColor.mnz_secondaryGray(), for: UIControl.State.normal)
     }
     
     @objc func mnz_clearSetup() {

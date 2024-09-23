@@ -265,7 +265,7 @@
             [self setStorageQuotaRewardsForCell:cell forIndex:index.integerValue];
             NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
             cell.subtitleLabel.text = [self achievementSubtitleWithRemainingDays:awardExpirationdDate.daysUntil];
-            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_errorRedForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitles];
+            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_errorRed] : [UIColor mnz_subtitles];
         } else {
             NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
             

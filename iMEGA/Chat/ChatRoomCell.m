@@ -85,7 +85,7 @@
     } else {
         self.unreadCount.hidden = NO;
         self.unreadView.hidden = NO;
-        self.unreadView.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+        self.unreadView.backgroundColor = [UIColor mnz_red];
     }
     self.unreadCount.textColor = UIColor.mnz_whiteFFFFFF;
     
@@ -109,9 +109,9 @@
         }
     } else {
         self.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-        self.chatLastMessage.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        self.chatLastMessage.textColor = [UIColor mnz_primaryGray];
         self.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-        self.chatLastTime.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        self.chatLastTime.textColor = [UIColor mnz_primaryGray];
         
         self.unreadView.hidden = YES;
         self.unreadCount.text = nil;

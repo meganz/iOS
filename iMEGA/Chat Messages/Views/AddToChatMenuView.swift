@@ -50,7 +50,7 @@ class AddToChatMenuView: UIView {
     
     private func updateAppearance() {
         imageBackgroundView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
-        label.textColor = .mnz_secondaryGray(for: traitCollection)
+        label.textColor = .mnz_secondaryGray()
     }
 
 }

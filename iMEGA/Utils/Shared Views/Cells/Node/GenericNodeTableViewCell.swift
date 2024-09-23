@@ -88,7 +88,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
         
         if nodeModel.isTakenDown {
             mainLabel.attributedText = attributedTakenDownNameWithHeight(nodeModel: nodeModel, height: mainLabel.font.capHeight)
-            mainLabel.textColor = .mnz_red(for: traitCollection)
+            mainLabel.textColor = .mnz_red()
         } else {
             mainLabel.text = nodeModel.name
             mainLabel.textColor = .label
