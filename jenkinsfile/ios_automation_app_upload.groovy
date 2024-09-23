@@ -15,6 +15,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
         gitlabCommitStatus(name: 'Jenkins')
+        ansiColor('xterm')
     }
     post { 
         cleanup {
