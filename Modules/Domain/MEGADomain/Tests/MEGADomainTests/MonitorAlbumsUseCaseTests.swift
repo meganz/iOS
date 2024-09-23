@@ -147,8 +147,6 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
                                             isMarkedSensitive: true, modificationTime: try "2024-05-01T20:01:04Z".date)
         let gifCover = NodeEntity(name: "gif.gif", handle: 5, hasThumbnail: true,
                                   modificationTime: try "2024-03-10T22:05:04Z".date)
-        let gifInheritedSensitive = NodeEntity(name: "gif.gif", handle: 57, hasThumbnail: true,
-                                               modificationTime: try "2024-03-10T22:05:04Z".date)
         let rawCover = NodeEntity(name: "raw.raw", handle: 2, hasThumbnail: true,
                                   modificationTime: try "2024-03-11T20:01:04Z".date)
         let rawSensitive = NodeEntity(name: "raw.raw", handle: 9, hasThumbnail: true,
@@ -158,14 +156,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             favouriteSensitive,
             rawCover,
             rawSensitive,
-            gifCover,
-            gifInheritedSensitive
-        ]
-        let inheritedSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
-            favouriteCover.handle: .success(false),
-            gifCover.handle: .success(false),
-            gifInheritedSensitive.handle: .success(true),
-            rawCover.handle: .success(false)
+            gifCover
         ]
         
         let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
@@ -173,11 +164,9 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
         let mediaUseCase = MockMediaUseCase(rawImageFiles: [rawCover.name, rawSensitive.name],
-                                            gifImageFiles: [gifCover.name, gifInheritedSensitive.name])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
+                                            gifImageFiles: [gifCover.name])
         let sut = makeSUT(monitorPhotosUseCase: monitorPhotosUseCase,
-                          mediaUseCase: mediaUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase)
+                          mediaUseCase: mediaUseCase)
         
         var albumsSequence = await sut.monitorSystemAlbums(excludeSensitives: true)
             .makeAsyncIterator()
@@ -284,39 +273,27 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
     func testMonitorUserAlbumsExcludeSensitives_coverMarkedHidden_shouldNotAlbumsWithHiddenCovers() async {
         let setCoverElementId = HandleEntity(6)
         let setCoverMarkedSensitiveElementId = HandleEntity(7)
-        let setCoverInheritedSensitiveElementId = HandleEntity(8)
         let setCover = SetEntity(handle: 1, coverId: setCoverElementId, setType: .album)
         let setCoverMarkedSensitive = SetEntity(handle: 2, coverId: setCoverMarkedSensitiveElementId, setType: .album)
-        let setCoverInheritedSensitive = SetEntity(handle: 3, coverId: setCoverInheritedSensitiveElementId, setType: .album)
         let albumSets = [
             setCover,
-            setCoverMarkedSensitive,
-            setCoverInheritedSensitive
+            setCoverMarkedSensitive
         ]
         let cover = NodeEntity(name: "file.jpg", handle: 1, hasThumbnail: true, isMarkedSensitive: false)
         let coverSensitive = NodeEntity(name: "file 2.jpg", handle: 2, hasThumbnail: true,
                                         isMarkedSensitive: true)
-        let coverInheritedSensitive = NodeEntity(name: "gif.gif", handle: 3, hasThumbnail: true)
         
         let albumElementIds: [HandleEntity: [AlbumPhotoIdEntity]] = [
             setCover.handle: [AlbumPhotoIdEntity(
                 albumId: setCover.handle, albumPhotoId: setCoverElementId, nodeId: cover.handle)],
             setCoverMarkedSensitive.handle: [AlbumPhotoIdEntity(
-                albumId: setCoverMarkedSensitive.handle, albumPhotoId: setCoverMarkedSensitiveElementId, nodeId: coverSensitive.handle)],
-            setCoverInheritedSensitive.handle: [AlbumPhotoIdEntity(
-                albumId: setCoverInheritedSensitive.handle, albumPhotoId: setCoverInheritedSensitiveElementId, nodeId: coverInheritedSensitive.handle)]
-        ]
-        let inheritedSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
-            cover.handle: .success(false),
-            coverInheritedSensitive.handle: .success(true)
+                albumId: setCoverMarkedSensitive.handle, albumPhotoId: setCoverMarkedSensitiveElementId, nodeId: coverSensitive.handle)]
         ]
         let userAlbumRepository = MockUserAlbumRepository(albums: albumSets,
                                                           albumElementIds: albumElementIds)
-        let photosRepository = MockPhotosRepository(photos: [cover, coverSensitive, coverInheritedSensitive])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
+        let photosRepository = MockPhotosRepository(photos: [cover, coverSensitive])
         let sut = makeSUT(userAlbumRepository: userAlbumRepository,
-                          photosRepository: photosRepository,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase)
+                          photosRepository: photosRepository)
         
         var albumsSequence = await sut.monitorUserAlbums(excludeSensitives: true)
             .makeAsyncIterator()

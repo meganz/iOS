@@ -7,7 +7,7 @@ import XCTest
 
 final class PhotosRepositoryTests: XCTestCase {
     
-    func testAllPhotos_photoSourceEmpty_shouldRetrievePhotosThroughSearch() async throws {
+    func testAllPhotos_monitoringStopped_shouldRetrievePhotosThroughSearch() async throws {
         let expectedPhotos = [MockNode(handle: 45),
                               MockNode(handle: 65)]
         let localSource = MockPhotoLocalSource()
@@ -19,9 +19,47 @@ final class PhotosRepositoryTests: XCTestCase {
                           photoLocalSource: localSource,
                           photosRepositoryTaskManager: photosRepositoryTaskManager)
         
-        let photos = try await sut.allPhotos()
+        let photos = try await sut.allPhotos(excludeSensitive: false)
+        
         XCTAssertEqual(Set(photos), Set(expectedPhotos.toNodeEntities()))
         XCTAssertEqual(sdk.searchWithFilterCallCount, 2)
+    }
+    
+    func testAllPhotos_monitoringDidNotStopPhotoSourceEmpty_shouldRetrievePhotosThroughSearch() async throws {
+        let expectedPhotos = [NodeEntity(handle: 45),
+                              NodeEntity(handle: 65)]
+        let localSource = MockPhotoLocalSource()
+        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(
+            didMonitoringTaskStop: false,
+            loadPhotosResult: .success(expectedPhotos))
+        
+        let sut = makeSUT(photoLocalSource: localSource,
+                          photosRepositoryTaskManager: photosRepositoryTaskManager)
+        
+        let photos = try await sut.allPhotos(excludeSensitive: false)
+        
+        XCTAssertEqual(Set(photos), Set(expectedPhotos))
+    }
+    
+    func testAllPhotosExludeSensitive_photoSourceEmpty_shouldRetrievePhotosAndReturnNonSensitive() async throws {
+        let nonSensitivePhoto = NodeEntity(handle: 43, isMarkedSensitive: false)
+        let inheritSensitivePhoto = NodeEntity(handle: 543, isMarkedSensitive: true)
+        let allPhotos = [
+            nonSensitivePhoto,
+            NodeEntity(handle: 57, isMarkedSensitive: true),
+            inheritSensitivePhoto
+        ]
+        let localSource = MockPhotoLocalSource()
+        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(
+            didMonitoringTaskStop: false,
+            loadPhotosResult: .success(allPhotos))
+        
+        let sut = makeSUT(photoLocalSource: localSource,
+                          photosRepositoryTaskManager: photosRepositoryTaskManager)
+        
+        let photos = try await sut.allPhotos(excludeSensitive: true)
+        
+        XCTAssertEqual(photos, [nonSensitivePhoto])
     }
     
     func testAllPhotos_photoSourceContainsPhotos_shouldRetrievePhotos() async throws {
@@ -33,40 +71,56 @@ final class PhotosRepositoryTests: XCTestCase {
         let sut = makeSUT(photoLocalSource: photoLocalSource,
                           photosRepositoryTaskManager: photosRepositoryTaskManager)
         
-        let photos = try await sut.allPhotos()
+        let photos = try await sut.allPhotos(excludeSensitive: false)
+        
         XCTAssertEqual(Set(photos), Set(expectedPhotos))
+    }
+    
+    func testAllPhotosExludingSensitives_photoSourceContainsSensitivePhotos_shouldRetrunNonSensitivePhotos() async throws {
+        let nonSensitivePhoto = NodeEntity(handle: 43, isMarkedSensitive: false)
+        let inheritSensitivePhoto = MockNode(handle: 543, isMarkedSensitive: true)
+        let allPhotos = [
+            nonSensitivePhoto,
+            NodeEntity(handle: 57, isMarkedSensitive: true),
+            inheritSensitivePhoto.toNodeEntity()
+        ]
+        let sdk = MockSdk(
+            nodes: [inheritSensitivePhoto],
+            nodesInheritingSensitivity: [inheritSensitivePhoto.handle: true])
+        let photoLocalSource = MockPhotoLocalSource(photos: allPhotos)
+        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(didMonitoringTaskStop: false)
+        let sut = makeSUT(
+            sdk: sdk,
+            photoLocalSource: photoLocalSource,
+            photosRepositoryTaskManager: photosRepositoryTaskManager)
+        
+        let photos = try await sut.allPhotos(excludeSensitive: true)
+        
+        XCTAssertEqual(photos, [nonSensitivePhoto])
     }
     
     func testPhotoForHandle_photoSourceDontContainPhoto_shouldRetrieveAndSetPhoto() async {
         let handle = HandleEntity(5)
-        let expectedNode = MockNode(handle: handle)
-        let sdk = MockSdk(nodes: [expectedNode])
+        let expectedNode = NodeEntity(handle: handle, isMarkedSensitive: false)
         let photoLocalSource = MockPhotoLocalSource()
-        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(didMonitoringTaskStop: false)
-        let sut = makeSUT(sdk: sdk,
-                          photoLocalSource: photoLocalSource,
+        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(
+            didMonitoringTaskStop: false,
+            loadPhotosResult: .success([expectedNode]))
+        let sut = makeSUT(photoLocalSource: photoLocalSource,
                           photosRepositoryTaskManager: photosRepositoryTaskManager)
         
-        let photo = await sut.photo(forHandle: handle)
+        let photo = await sut.photo(forHandle: handle, excludeSensitive: false)
         
-        XCTAssertEqual(photo, expectedNode.toNodeEntity())
-        let photoSourcePhotos = await photoLocalSource.photos
-        XCTAssertEqual(photoSourcePhotos, [expectedNode.toNodeEntity()])
+        XCTAssertEqual(photo, expectedNode)
     }
     
     func testPhotoForHandle_SDKCantGetNode_shouldReturnNil() async {
-        let sut = makeSUT()
+        let photoLocalSource = MockPhotoLocalSource()
+        let photosRepositoryTaskManager = MockPhotosRepositoryTaskManager(didMonitoringTaskStop: false)
+        let sut = makeSUT(photoLocalSource: photoLocalSource,
+                          photosRepositoryTaskManager: photosRepositoryTaskManager)
         
-        let photo = await sut.photo(forHandle: 6)
-        
-        XCTAssertNil(photo)
-    }
-    
-    func testPhotoForHandle_nodeInRubbish_shouldReturnNil() async {
-        let sdk = MockSdk(rubbishNodes: [MockNode(handle: 6)])
-        let sut = makeSUT(sdk: sdk)
-        
-        let photo = await sut.photo(forHandle: 6)
+        let photo = await sut.photo(forHandle: 6, excludeSensitive: false)
         
         XCTAssertNil(photo)
     }
@@ -80,9 +134,43 @@ final class PhotosRepositoryTests: XCTestCase {
         let sut = makeSUT(photoLocalSource: photoLocalSource,
                           photosRepositoryTaskManager: MockPhotosRepositoryTaskManager(didMonitoringTaskStop: false))
         
-        let photo = await sut.photo(forHandle: handle)
+        let photo = await sut.photo(forHandle: handle, excludeSensitive: false)
         
         XCTAssertEqual(photo, expectedNode)
+    }
+    
+    func testPhotoForHandleExcludeSensitive_photoSourceContainsSensitivePhoto_shouldReturnNil() async {
+        let handle = HandleEntity(5)
+        let expectedNode = NodeEntity(handle: handle, isMarkedSensitive: true)
+        let photoLocalSource = MockPhotoLocalSource(photos: [expectedNode,
+                                                             NodeEntity(handle: 7)])
+        
+        let sut = makeSUT(photoLocalSource: photoLocalSource,
+                          photosRepositoryTaskManager: MockPhotosRepositoryTaskManager(
+                            didMonitoringTaskStop: false))
+        
+        let photo = await sut.photo(forHandle: handle, excludeSensitive: true)
+        
+        XCTAssertNil(photo)
+    }
+    
+    func testPhotoForHandleExcludeSensitive_photoSourceContainsInheritedSensitivePhoto_shouldReturnNil() async {
+        let handle = HandleEntity(5)
+        let expectedNode = NodeEntity(handle: handle, isMarkedSensitive: true)
+        let photoLocalSource = MockPhotoLocalSource(photos: [expectedNode,
+                                                             NodeEntity(handle: 7)])
+        let sdk = MockSdk(
+            nodes: [MockNode(handle: handle)],
+            nodesInheritingSensitivity: [handle: true])
+        let sut = makeSUT(
+            sdk: sdk,
+            photoLocalSource: photoLocalSource,
+            photosRepositoryTaskManager: MockPhotosRepositoryTaskManager(
+                didMonitoringTaskStop: false))
+        
+        let photo = await sut.photo(forHandle: handle, excludeSensitive: true)
+        
+        XCTAssertNil(photo)
     }
     
     func testPhotosUpdate_onPhotoUpdateYield_shouldYieldTheUpdatedPhotos() async {
@@ -112,7 +200,7 @@ final class PhotosRepositoryTests: XCTestCase {
             photoLocalSource: photoLocalSource,
             photosRepositoryTaskManager: photosRepositoryTaskManager)
         
-        let result = try await sut.allPhotos()
+        let result = try await sut.allPhotos(excludeSensitive: false)
         
         XCTAssertEqual(Set(result), Set(expectedPhotos))
         
@@ -131,7 +219,7 @@ final class PhotosRepositoryTests: XCTestCase {
             photoLocalSource: photoLocalSource,
             photosRepositoryTaskManager: photosRepositoryTaskManager)
         
-        let result = try await sut.allPhotos()
+        let result = try await sut.allPhotos(excludeSensitive: false)
         XCTAssertEqual(Set(result), Set(expectedPhotos))
         
         let wasForcedCleared = await photoLocalSource.wasForcedCleared

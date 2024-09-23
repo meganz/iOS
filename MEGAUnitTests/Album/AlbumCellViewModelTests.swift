@@ -455,7 +455,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             
             let invocations = await monitorUserAlbumPhotosUseCase.state.invocations
             XCTAssertEqual(invocations,
-                           [.userAlbumPhotos(excludeSensitives: hiddenNodesFeatureFlag, includeSensitiveInherited: hiddenNodesFeatureFlag)])
+                           [.userAlbumPhotos(excludeSensitives: hiddenNodesFeatureFlag)])
         }
     }
     

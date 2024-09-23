@@ -8,6 +8,7 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     private let sdk: MEGASdk
     private let photoLocalSource: any PhotoLocalSourceProtocol
     private let photosRepositoryTaskManager: any PhotosRepositoryTaskManagerProtocol
+    private let queue = DispatchQueue(label: "nz.mega.MEGASDKRepo.PhotosRepository")
     
     public init(sdk: MEGASdk,
                 photoLocalSource: some PhotoLocalSourceProtocol,
@@ -23,30 +24,33 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
         return await photosRepositoryTaskManager.photosUpdatedAsyncSequence
     }
     
-    public func allPhotos() async throws -> [NodeEntity] {
+    public func allPhotos(excludeSensitive: Bool) async throws -> [NodeEntity] {
         await updatePhotoBackgroundMonitoring()
         
         let photosFromSource = await photoLocalSource.photos
         try Task.checkCancellation()
         if photosFromSource.isNotEmpty {
-            return photosFromSource
+            return await filterPhotos(
+                photosFromSource, excludeSensitive: excludeSensitive)
         }
-        return try await loadAllPhotos()
+        let allPhotos = try await loadAllPhotos()
+        return await filterPhotos(
+            allPhotos, excludeSensitive: excludeSensitive)
     }
     
-    public func photo(forHandle handle: HandleEntity) async -> NodeEntity? {
+    public func photo(forHandle handle: HandleEntity, excludeSensitive: Bool) async -> NodeEntity? {
         await updatePhotoBackgroundMonitoring()
         
-        if let photoFromSource = await photoLocalSource.photo(forHandle: handle) {
-            return photoFromSource
+        return if let photoFromSource = await photoLocalSource.photo(forHandle: handle) {
+            if await shouldShowPhoto(photoFromSource, excludeSensitives: excludeSensitive) {
+                photoFromSource
+            } else {
+                nil
+            }
+        } else {
+            try? await allPhotos(excludeSensitive: excludeSensitive)
+                .first(where: { $0.handle == handle })
         }
-        guard let photo = sdk.node(forHandle: handle),
-              !sdk.isNode(inRubbish: photo) else {
-            return nil
-        }
-        let photoEntity = photo.toNodeEntity()
-        await photoLocalSource.setPhotos([photoEntity])
-        return photoEntity
     }
     
     // MARK: Private
@@ -67,7 +71,7 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     }
     
     private func searchAllMedia(formatType: NodeFormatEntity) async throws -> [NodeEntity] {
-        let cancelToken = MEGACancelToken()
+        let cancelToken = ThreadSafeCancelToken()
         return try await withTaskCancellationHandler {
             try await withAsyncThrowingValue { completion in
                 let filter: SearchFilterEntity = .recursive(
@@ -80,14 +84,12 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
                 let nodeList = sdk.search(with: filter.toMEGASearchFilter(),
                                           orderType: .defaultDesc,
                                           page: nil,
-                                          cancelToken: cancelToken)
+                                          cancelToken: cancelToken.value)
                 
                 completion(.success(nodeList.toNodeEntities()))
             }
         } onCancel: {
-            if !cancelToken.isCancelled {
-                cancelToken.cancel()
-            }
+           cancelToken.cancel()
         }
     }
     
@@ -125,5 +127,47 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     
     private func didMonitoringTaskStop() async -> Bool {
         await photosRepositoryTaskManager.didMonitoringTaskStop()
+    }
+    
+    // MARK: Sensitive filtering
+    
+    private func filterPhotos(_ nodes: [NodeEntity], excludeSensitive: Bool) async -> [NodeEntity] {
+        if excludeSensitive {
+            await nodes
+                .async
+                .filter { await shouldShowPhoto($0) }
+                .reduce(into: [NodeEntity]()) { $0.append($1) }
+        } else {
+            nodes
+        }
+    }
+    
+    private func shouldShowPhoto(_ node: NodeEntity, excludeSensitives: Bool) async -> Bool {
+        if !excludeSensitives {
+            true
+        } else {
+            await shouldShowPhoto(node)
+        }
+    }
+    
+    private func shouldShowPhoto(_ node: NodeEntity) async -> Bool {
+        if node.isMarkedSensitive {
+            false
+        } else {
+            await withAsyncValue(in: { completion in
+                isInheritingSensitivity(
+                    node: node, completion: { completion(.success(!$0)) })
+            })
+        }
+    }
+    
+    private func isInheritingSensitivity(node: NodeEntity, completion: @escaping (Bool) -> Void) {
+        queue.async {
+            if let megaNode = sdk.node(forHandle: node.handle) {
+                completion(sdk.isNodeInheritingSensitivity(megaNode))
+            } else {
+                completion(false)
+            }
+        }
     }
 }

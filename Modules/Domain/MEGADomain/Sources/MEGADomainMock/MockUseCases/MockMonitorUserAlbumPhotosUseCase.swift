@@ -4,7 +4,7 @@ import MEGASwift
 public struct MockMonitorUserAlbumPhotosUseCase: MonitorUserAlbumPhotosUseCaseProtocol {
     public actor State {
         public enum Invocation: Hashable, Sendable {
-            case userAlbumPhotos(excludeSensitives: Bool, includeSensitiveInherited: Bool)
+            case userAlbumPhotos(excludeSensitives: Bool)
         }
         public var invocations = [Invocation]()
         
@@ -21,12 +21,11 @@ public struct MockMonitorUserAlbumPhotosUseCase: MonitorUserAlbumPhotosUseCasePr
         self.monitorUserAlbumPhotosAsyncSequence = monitorUserAlbumPhotosAsyncSequence
     }
     
-    public func monitorUserAlbumPhotos(for album: AlbumEntity,
-                                       excludeSensitives: Bool,
-                                       includeSensitiveInherited: Bool) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
-        await state.addInvocation(.userAlbumPhotos(
-            excludeSensitives: excludeSensitives, includeSensitiveInherited: includeSensitiveInherited))
+    public func monitorUserAlbumPhotos(
+        for album: AlbumEntity,
+        excludeSensitives: Bool
+    ) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
+        await state.addInvocation(.userAlbumPhotos(excludeSensitives: excludeSensitives))
         return monitorUserAlbumPhotosAsyncSequence
     }
-    
 }

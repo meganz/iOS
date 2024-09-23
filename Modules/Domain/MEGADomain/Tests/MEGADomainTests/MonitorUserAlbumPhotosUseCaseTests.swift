@@ -8,9 +8,9 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
     func testMonitorUserAlbumPhotos_onSystemAlbum_shouldYieldNothing() async {
         let sut = makeSUT()
         
-        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: 1, type: .gif),
-                                                                   excludeSensitives: false,
-                                                                   includeSensitiveInherited: false)
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(
+            for: AlbumEntity(id: 1, type: .gif),
+            excludeSensitives: false)
             .makeAsyncIterator()
         
         let albumPhotos = await albumPhotosSequence.next()
@@ -32,9 +32,9 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
         let sut = makeSUT(userAlbumRepository: userRepository,
                           photosRepository: photosRepository)
         
-        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
-                                                                   excludeSensitives: false,
-                                                                   includeSensitiveInherited: false)
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(
+            for: AlbumEntity(id: albumId, type: .user),
+            excludeSensitives: false)
             .makeAsyncIterator()
         
         let albumPhotos = await albumPhotosSequence.next()
@@ -66,8 +66,9 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
         let sut = makeSUT(userAlbumRepository: userRepository,
                           photosRepository: photosRepository)
         
-        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
-                                                                   excludeSensitives: false, includeSensitiveInherited: false)
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(
+            for: AlbumEntity(id: albumId, type: .user),
+            excludeSensitives: false)
             .makeAsyncIterator()
         
         let initialPhotos = await albumPhotosSequence.next()
@@ -110,8 +111,9 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
         let sut = makeSUT(userAlbumRepository: userAlbumRepository,
                           photosRepository: photosRepository)
         
-        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
-                                                                   excludeSensitives: false, includeSensitiveInherited: false)
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(
+            for: AlbumEntity(id: albumId, type: .user),
+            excludeSensitives: false)
             .makeAsyncIterator()
         
         let initialUserAlbumPhotos = await albumPhotosSequence.next()
@@ -136,8 +138,9 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
         
         let sut = makeSUT(userAlbumRepository: userRepository)
         
-        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
-                                                                   excludeSensitives: false, includeSensitiveInherited: false)
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(
+            for: AlbumEntity(id: albumId, type: .user),
+            excludeSensitives: false)
             .makeAsyncIterator()
         
         let initialPhotos = await albumPhotosSequence.next()
@@ -152,51 +155,39 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
         XCTAssertTrue(firstSetUpdateResult?.isEmpty == true)
     }
     
-    func testMonitorUserAlbumPhotosExcludeSensitivesWithIncludeSensitiveInherited_containsSensitivePhotos_shouldNotYieldSensitivePhotos() async throws {
-        for includeSensitiveInherited in [true, false] {
-            let albumId = HandleEntity(5)
-            let albumNormalElementId = HandleEntity(98)
-            let albumSensitiveElementId = HandleEntity(543)
-            let albumInheritedElementId = HandleEntity(54)
-            let normal = NodeEntity(name: "file.jpg", handle: 1, hasThumbnail: true, isMarkedSensitive: false)
-            let sensitive = NodeEntity(name: "file 2.jpg", handle: 2, hasThumbnail: true,
-                                       isMarkedSensitive: true)
-            let inheritedSensitive = NodeEntity(name: "gif.gif", handle: 3, hasThumbnail: true, isMarkedSensitive: false)
-            let albumElementIds = [
-                AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: albumNormalElementId, nodeId: normal.handle),
-                AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: albumSensitiveElementId, nodeId: sensitive.handle),
-                AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: albumInheritedElementId, nodeId: inheritedSensitive.handle)
-            ]
-            let inheritedSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
-                normal.handle: .success(false),
-                inheritedSensitive.handle: .success(true)
-            ]
-            
-            let userRepository = MockUserAlbumRepository(albumElementIds: [albumId: albumElementIds])
-            let photos = [normal, sensitive, inheritedSensitive]
-            let photosRepository = MockPhotosRepository(photos: photos)
-            let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: inheritedSensitivityResults)
-            let sut = makeSUT(userAlbumRepository: userRepository,
-                              photosRepository: photosRepository,
-                              sensitiveNodeUseCase: sensitiveNodeUseCase)
-            
-            var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
-                                                                       excludeSensitives: true,
-                                                                       includeSensitiveInherited: includeSensitiveInherited)
-                .makeAsyncIterator()
-            
-            let albumPhotos = await albumPhotosSequence.next()
-            
-            let expected = [AlbumPhotoEntity(photo: normal,
-                                             albumPhotoId: albumNormalElementId,
-                                             isSensitiveInherited: includeSensitiveInherited ? false : nil)
-            ]
-            
-            XCTAssertEqual(try XCTUnwrap(albumPhotos), expected)
-        }
+    func testMonitorUserAlbumPhotosExcludeSensitives_containsSensitivePhotos_shouldNotYieldSensitivePhotos() async throws {
+        let albumId = HandleEntity(5)
+        let albumNormalElementId = HandleEntity(98)
+        let albumSensitiveElementId = HandleEntity(543)
+        let normal = NodeEntity(name: "file.jpg", handle: 1, hasThumbnail: true, isMarkedSensitive: false)
+        let sensitive = NodeEntity(name: "file 2.jpg", handle: 2, hasThumbnail: true,
+                                   isMarkedSensitive: true)
+        let albumElementIds = [
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: albumNormalElementId, nodeId: normal.handle),
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: albumSensitiveElementId, nodeId: sensitive.handle)
+        ]
+        let userRepository = MockUserAlbumRepository(albumElementIds: [albumId: albumElementIds])
+        let photos = [normal, sensitive]
+        let photosRepository = MockPhotosRepository(photos: photos)
+        let sut = makeSUT(userAlbumRepository: userRepository,
+                          photosRepository: photosRepository)
+        
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(
+            for: AlbumEntity(id: albumId, type: .user),
+            excludeSensitives: true)
+            .makeAsyncIterator()
+        
+        let albumPhotos = await albumPhotosSequence.next()
+        
+        let expected = [AlbumPhotoEntity(
+            photo: normal,
+            albumPhotoId: albumNormalElementId)
+        ]
+        
+        XCTAssertEqual(try XCTUnwrap(albumPhotos), expected)
     }
     
-    func testMonitorUserAlbumPhotosExcludeSensitivesIncludeInherited_containsSensitivePhotos_shouldYieldSesitivePhotosWithInherited() async throws {
+    func testMonitorUserAlbumPhotosExcludeSensitives_containsSensitivePhotos_shouldYieldSesitivePhotosWithInherited() async throws {
         let albumId = HandleEntity(5)
         let albumNormalElementId = HandleEntity(98)
         let albumSensitiveElementId = HandleEntity(543)
@@ -224,15 +215,17 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
                           photosRepository: photosRepository,
                           sensitiveNodeUseCase: sensitiveNodeUseCase)
         
-        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user),
-                                                                   excludeSensitives: false,
-                                                                   includeSensitiveInherited: true)
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(
+            for: AlbumEntity(id: albumId, type: .user),
+            excludeSensitives: false)
             .makeAsyncIterator()
         
         let albumPhotos = await albumPhotosSequence.next()
-        let expected = Set([AlbumPhotoEntity(photo: normal, albumPhotoId: albumNormalElementId, isSensitiveInherited: false),
-                            AlbumPhotoEntity(photo: sensitive, albumPhotoId: albumSensitiveElementId, isSensitiveInherited: true),
-                            AlbumPhotoEntity(photo: inheritedSensitive, albumPhotoId: albumInheritedElementId, isSensitiveInherited: true)])
+        let expected = Set([
+            AlbumPhotoEntity(photo: normal, albumPhotoId: albumNormalElementId),
+            AlbumPhotoEntity(photo: sensitive, albumPhotoId: albumSensitiveElementId),
+            AlbumPhotoEntity(photo: inheritedSensitive, albumPhotoId: albumInheritedElementId)
+        ])
         XCTAssertEqual(Set(try XCTUnwrap(albumPhotos)), expected)
     }
     

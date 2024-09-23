@@ -49,6 +49,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private let _enabledNotificationIdList: MEGAIntegerList?
     private var _lastReadNotificationId: Int32
     private var _isNodeInheritingSensitivity: Bool
+    private let nodesInheritingSensitivity: [MEGAHandle: Bool]
     private var _hasVersionsForNode: Bool
     private let setUserAttributeTypeMegaSetError: (MEGAUserAttribute) -> MEGAErrorType
     private let _outgoingContactRequests: MEGAContactRequestList
@@ -153,6 +154,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
                 enabledNotificationIdList: MEGAIntegerList? = nil,
                 lastReadNotificationId: Int32 = 0,
                 isNodeInheritingSensitivity: Bool = false,
+                nodesInheritingSensitivity: [MEGAHandle: Bool] = [:],
                 hasVersionsForNode: Bool = false,
                 setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk },
                 outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList(),
@@ -209,6 +211,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         _enabledNotificationIdList = enabledNotificationIdList
         _lastReadNotificationId = lastReadNotificationId
         _isNodeInheritingSensitivity = isNodeInheritingSensitivity
+        self.nodesInheritingSensitivity = nodesInheritingSensitivity
         _hasVersionsForNode = hasVersionsForNode
         self.setUserAttributeTypeMegaSetError = setUserAttributeTypeMegaSetError
         _outgoingContactRequests = outgoingContactRequests
@@ -417,7 +420,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     }
     
     public override func isNodeInheritingSensitivity(_ node: MEGANode) -> Bool {
-        _isNodeInheritingSensitivity
+        nodesInheritingSensitivity[node.handle] ?? _isNodeInheritingSensitivity
     }
     
     // MARK: - Sets
