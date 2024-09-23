@@ -67,29 +67,39 @@ final class OfflineViewModel: NSObject, ViewModelType {
     /// Removes the specified offline items.
     /// - Parameter items: An array of URLs representing the offline items to be removed.
     private func removeOfflineItems(_ items: [URL]) {
-        items.forEach { url in
-            Task {
-                do {
-                    try await offlineUseCase.removeItem(at: url)
-                    removeLogFromSharedSandboxIfNeeded(path: url.path)
-                    
-                    let relativePath = offlineUseCase.relativePathToDocumentsDirectory(for: url)
-                    if url.hasDirectoryPath {
-                        megaStore.deleteOfflineAppearancePreference(path: relativePath)
+        Task {
+            await withTaskGroup(of: Void.self) { [weak self] group in
+                for url in items {
+                    group.addTask {
+                        do {
+                            try await self?.offlineUseCase.removeItem(at: url)
+                            await self?.removeLogFromSharedSandboxIfNeeded(path: url.path)
+                            
+                            guard let relativePath = self?.offlineUseCase.relativePathToDocumentsDirectory(for: url) else { return }
+                            if url.hasDirectoryPath {
+                                await MainActor.run {
+                                    self?.megaStore.deleteOfflineAppearancePreference(path: relativePath)
+                                }
+                            }
+                            await MainActor.run {
+                                if let offlineNode = self?.megaStore.fetchOfflineNode(withPath: relativePath) {
+                                    self?.megaStore.remove(offlineNode)
+                                }
+                            }
+                        } catch {
+                            MEGALogError("Remove item at \(url) failed with \(error)")
+                        }
                     }
-                    
-                    if let offlineNode = megaStore.fetchOfflineNode(withPath: relativePath) {
-                        megaStore.remove(offlineNode)
-                    }
-                } catch {
-                    MEGALogError("Remote item at \(url) failed with \(error)")
                 }
+                
+                await group.waitForAll()
+                
+                self?.invokeCommand?(.reloadUI)
+                QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAOfflineQuickAccessWidget)
             }
         }
-        invokeCommand?(.reloadUI)
-        QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAOfflineQuickAccessWidget)
     }
-    
+
     private func removeLogFromSharedSandboxIfNeeded(path: String) {
         removeLogFromSharedSandbox(path: path, extensionLogName: documentProviderLog)
         removeLogFromSharedSandbox(path: path, extensionLogName: fileProviderLog)
