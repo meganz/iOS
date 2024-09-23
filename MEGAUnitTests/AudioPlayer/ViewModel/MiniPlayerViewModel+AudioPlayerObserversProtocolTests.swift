@@ -232,33 +232,56 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         assertThatAudioDidStartPlayingItemDoesNotDoAnything(playbackContinuationUseCase: playbackContinuationUseCase, playerHandler: playerHandler)
     }
     
-    @MainActor func testAudioDidStartPlayingItem_whenPlaybackStatusIsResumeSession_resumesPlayback() {
+    @MainActor func testAudioDidStartPlayingItem_whenPlaybackStatusIsResumeSession_resumesPlayback() async {
+        // given
+        let expectation = expectation(description: #function)
+        
         let node = MockNode(handle: 1, fingerprint: anyString())
         let itemToPlayWithFingerprint = AudioPlayerItem(name: anyString(), url: anyUrl(), node: node)
         let expectedPlaybackTime: TimeInterval = .infinity
+        
         let (sut, _, playerHandler) = makeSUT(
             playbackContinuationUseCase: MockPlaybackContinuationUseCase(status: .resumeSession(playbackTime: expectedPlaybackTime))
         )
+        playerHandler.onPlayerResumePlaybackCompletion = {
+            expectation.fulfill()
+        }
+
         var receivedCommands = [MiniPlayerViewModel.Command]()
         sut.invokeCommand = { receivedCommands.append($0) }
-        
+
+        // when
         sut.audioDidStartPlayingItem(itemToPlayWithFingerprint)
         
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        // then
         XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [ expectedPlaybackTime ])
     }
     
-    @MainActor func testAudioDidStartPlayingItem_whenPlaybackStatusIsDisplayDialog_resumesPlayback() {
+    @MainActor func testAudioDidStartPlayingItem_whenPlaybackStatusIsDisplayDialog_resumesPlayback() async {
+        // given
+        let expectation = expectation(description: #function)
+        
         let node = MockNode(handle: 1, fingerprint: anyString())
         let itemToPlayWithFingerprint = AudioPlayerItem(name: anyString(), url: anyUrl(), node: node)
         let expectedPlaybackTime: TimeInterval = .infinity
         let (sut, playbackContinuationUseCase, playerHandler) = makeSUT(
             playbackContinuationUseCase: MockPlaybackContinuationUseCase(status: .displayDialog(playbackTime: expectedPlaybackTime))
         )
+        playerHandler.onPlayerResumePlaybackCompletion = {
+            expectation.fulfill()
+        }
+        
         var receivedCommands = [MiniPlayerViewModel.Command]()
         sut.invokeCommand = { receivedCommands.append($0) }
         
+        // when
         sut.audioDidStartPlayingItem(itemToPlayWithFingerprint)
         
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        // then
         XCTAssertEqual(playbackContinuationUseCase.setPreference_Calls, [ .resumePreviousSession ])
         XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [ expectedPlaybackTime ])
     }

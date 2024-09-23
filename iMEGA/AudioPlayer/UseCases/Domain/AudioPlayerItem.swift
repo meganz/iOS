@@ -73,12 +73,3 @@ final class AudioPlayerItem: AVPlayerItem {
         }
     }
 }
-
-extension AudioPlayerItem {
-    static func == (lhs: AudioPlayerItem, rhs: AudioPlayerItem) -> Bool {
-        guard let lhsNode = lhs.node?.handle, let rhsNode = rhs.node?.handle else {
-            return lhs.url == rhs.url
-        }
-        return lhsNode == rhsNode
-    }
-}

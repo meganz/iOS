@@ -40,6 +40,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var onAddPlayerListenerCompletion: (() -> Void)?
     var onRefreshCurrentItemStateCompletion: (() -> Void)?
     var onPlayerResumePlaybackCompletion: (() -> Void)?
+    var mockPlayerCurrentItem: AudioPlayerItem = AudioPlayerItem.mockItem
     
     private var _isPlayerDefined = false
     
@@ -152,7 +153,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         changePlayerRate_calledTimes += 1
     }
     
-    func playerCurrentItem() -> AudioPlayerItem? { AudioPlayerItem.mockItem }
+    func playerCurrentItem() -> AudioPlayerItem? { mockPlayerCurrentItem }
     func playerCurrentItemTime() -> TimeInterval { 0.0 }
     func playerQueueItems() -> [AudioPlayerItem]? { nil }
     func playerPlaylistItems() -> [AudioPlayerItem]? { nil}

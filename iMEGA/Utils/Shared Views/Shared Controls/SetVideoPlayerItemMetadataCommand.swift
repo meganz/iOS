@@ -1,6 +1,7 @@
 import MEGASDKRepo
 import MEGASwift
 
+@MainActor
 struct SetVideoPlayerItemMetadataCommand {
     
     private let playerItem: AVPlayerItem
@@ -57,7 +58,7 @@ struct SetVideoPlayerItemMetadataCommand {
     }
     
     private func getThumbnailMetadataItem(node: MEGANode) async -> UIImage? {
-        await withAsyncValue { result in
+        await withAsyncValue { @Sendable result in
             guard node.hasThumbnail() else {
                 result(.success(nodeAssetManager.icon(for: node)))
                 return

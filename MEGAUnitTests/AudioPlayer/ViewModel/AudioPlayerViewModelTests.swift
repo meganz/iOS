@@ -146,7 +146,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     @MainActor
     func testAudioStartPlayingWithDisplayDialogStatus_shouldNotDisplayDialog_whenAppIsNotActive() async {
-        let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
+        let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
         onlineSUT.checkAppIsActive = { false }
         playbackUseCase._status = .displayDialog(playbackTime: 1234.0)
 
@@ -182,11 +182,18 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAudioPlaybackContinuation_resumeSession() {
+    func testAudioPlaybackContinuation_resumeSession() async {
+        let expectation = expectation(description: #function)
         let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
         playbackUseCase._status = .resumeSession(playbackTime: 1234.0)
         
+        playerHandler.onPlayerResumePlaybackCompletion = {
+            expectation.fulfill()
+        }
+        
         onlineSUT.audioDidStartPlayingItem(testItem)
+        
+        await fulfillment(of: [expectation], timeout: 1)
         
         XCTAssertEqual(
             playerHandler.playerResumePlayback_Calls,

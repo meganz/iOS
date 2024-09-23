@@ -325,7 +325,7 @@ final class AudioPlayerViewModel: ViewModelType {
             let children = configEntity.isFolderLink
                 ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle)
                 : nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-            let currentTrack = children.first(where: { $0.node?.handle == node.handle })
+            let currentTrack = await children.async.first(where: { await $0.node?.handle == node.handle })
         else {
             return nil
         }
@@ -334,14 +334,14 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     // MARK: - Offline Files Initialize
-    private nonisolated func initialize(with offlineFilePaths: [String]) async {
+    private func initialize(with offlineFilePaths: [String]) async {
         guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
               let currentFilePath = configEntity.fileLink,
               let currentTrack = files.first(where: { $0.url.path == currentFilePath ||
                                                 $0.url.absoluteString == currentFilePath }) else {
-            await invoke(command: .configureOfflinePlayer)
-            await reloadNodeInfoWithCurrentItem()
-            await dismiss()
+            invoke(command: .configureOfflinePlayer)
+            reloadNodeInfoWithCurrentItem()
+            dismiss()
             return
         }
         await initialize(tracks: files, currentTrack: currentTrack)
@@ -572,32 +572,31 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     nonisolated func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {
-        guard let item, let fingerprint = item.node?.toNodeEntity().fingerprint else {
-            return
-        }
-        
-        switch playbackContinuationUseCase.status(for: fingerprint) {
-        case .displayDialog(let playbackTime):
-            let itemName = item.name
-            Task {
-                await shouldDisplayPlaybackContinuationDialog(
-                    fileName: itemName,
+        Task { @MainActor in
+            guard let item, let fingerprint = item.node?.toNodeEntity().fingerprint else {
+                return
+            }
+            
+            switch playbackContinuationUseCase.status(for: fingerprint) {
+            case .displayDialog(let playbackTime):
+                shouldDisplayPlaybackContinuationDialog(
+                    fileName: item.name,
                     playbackTime: playbackTime
                 )
+            case .resumeSession(let playbackTime):
+                configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+            case .startFromBeginning:
+                configEntity.playerHandler.playerResumePlayback(from: 0)
             }
-        case .resumeSession(let playbackTime):
-            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
-        case .startFromBeginning:
-            configEntity.playerHandler.playerResumePlayback(from: 0)
         }
     }
     
-    nonisolated private func shouldDisplayPlaybackContinuationDialog(
+    private func shouldDisplayPlaybackContinuationDialog(
         fileName: String,
         playbackTime: TimeInterval
-    ) async {
-        if await checkAppIsActive() {
-            await invoke(
+    ) {
+        if checkAppIsActive() {
+            invoke(
                 command: .displayPlaybackContinuationDialog(
                     fileName: fileName,
                     playbackTime: playbackTime

@@ -23,7 +23,9 @@ final class MiniPlayerViewModelTests: XCTestCase {
 
     @MainActor
     func testDispatch_onViewDidLoadWhenPlayerAlreadyInitialized_configuresPlayerProperly() {
+        let mockCurrentPlayerItem = AudioPlayerItem.mockItem
         let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT()
+        mockPlayerHandler.mockPlayerCurrentItem = mockCurrentPlayerItem
         var receivedCommands = [MiniPlayerViewModel.Command]()
         viewModel.invokeCommand = { receivedCommands.append($0) }
         
@@ -31,7 +33,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         
         XCTAssertEqual(receivedCommands, [
             .showLoading(false),
-            .initTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, loopMode: false)
+            .initTracks(currentItem: mockCurrentPlayerItem, queue: nil, loopMode: false)
         ])
         XCTAssertEqual(mockPlayerHandler.addPlayerListener_calledTimes, 1)
         XCTAssertEqual(mockPlayerHandler.refreshCurrentItemState_calledTimes, 1)
@@ -56,7 +58,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
     
     @MainActor
     func testDispatch_onViewDidLoadWhenPlayerShouldInitialized_preparePlayerOfflineInitializeTracks() {
-        let (viewModel, mockRouter, mockPlayerHandler, _, _, _) = makeSUT(playerType: .offline, shouldInitializePlayer: true, relatedFileLinks: ["/examples/mp3/SoundHelix-Song-1.mp3"])
+        let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT(playerType: .offline, shouldInitializePlayer: true, relatedFileLinks: ["/examples/mp3/SoundHelix-Song-1.mp3"])
         
         let expectation = XCTestExpectation(description: #function)
         expectation.expectedFulfillmentCount = 4
@@ -179,17 +181,29 @@ final class MiniPlayerViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAudioDidStartPlayingItem_shouldResumePlayback_whenStatusNotStartFromBeginning() {
+    func testAudioDidStartPlayingItem_shouldResumePlayback_whenStatusNotStartFromBeginning() async {
         func assert(
             whenContinuationStatus continuationStatus: PlaybackContinuationStatusEntity,
             expectedPlayerResumePlaybackCalls: [TimeInterval],
             line: UInt = #line
-        ) {
+        ) async {
+            // given
+            let expectation = expectation(description: #function)
+            expectation.isInverted = expectedPlayerResumePlaybackCalls.isEmpty
+            
             let (viewModel, _, mockPlayerHandler, mockPlaybackContinuationUseCase, _, _) = makeSUT()
             mockPlaybackContinuationUseCase._status = continuationStatus
             
+            mockPlayerHandler.onPlayerResumePlaybackCompletion = {
+                expectation.fulfill()
+            }
+            
+            // when
             viewModel.audioDidStartPlayingItem(testItem)
             
+            await fulfillment(of: [expectation], timeout: 1)
+            
+            // then
             XCTAssertEqual(
                 mockPlayerHandler.playerResumePlayback_Calls,
                 expectedPlayerResumePlaybackCalls,
@@ -197,15 +211,16 @@ final class MiniPlayerViewModelTests: XCTestCase {
             )
         }
         
-        assert(
+        await assert(
             whenContinuationStatus: .startFromBeginning,
             expectedPlayerResumePlaybackCalls: []
         )
-        assert(
+        await assert(
             whenContinuationStatus: .displayDialog(playbackTime: 1234.0),
             expectedPlayerResumePlaybackCalls: [1234.0]
         )
-        assert(
+        
+        await assert(
             whenContinuationStatus: .resumeSession(playbackTime: 3456.0),
             expectedPlayerResumePlaybackCalls: [3456.0]
         )
@@ -342,7 +357,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
     
 }
 
-extension MiniPlayerViewModel.Command: CustomStringConvertible {
+extension MiniPlayerViewModel.Command: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
         case .showLoading(let isLoading):
