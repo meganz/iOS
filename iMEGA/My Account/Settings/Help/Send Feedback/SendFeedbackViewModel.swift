@@ -3,10 +3,11 @@ import MEGAL10n
 import MEGASDKRepo
 import MEGASwift
 
+@MainActor
 final class SendFeedbackViewModel: NSObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let bundle: Bundle
-    private let device: UIDevice
+    private let device: UIDevice?
     private let locale: NSLocale
     private let timeZone: TimeZone
     private var accountDetails: AccountDetailsEntity?
@@ -14,12 +15,12 @@ final class SendFeedbackViewModel: NSObject {
     
     init(accountUseCase: any AccountUseCaseProtocol,
          bundle: Bundle = .main,
-         device: UIDevice = .current,
+         device: UIDevice? = nil,
          locale: NSLocale = NSLocale.current as NSLocale,
          timeZone: TimeZone = NSTimeZone.local) {
         self.accountUseCase = accountUseCase
         self.bundle = bundle
-        self.device = device
+        self.device = device ?? .current
         self.locale = locale
         self.timeZone = timeZone
     }
@@ -56,12 +57,12 @@ final class SendFeedbackViewModel: NSObject {
         let infoDictionary = bundle.infoDictionary
         let appName = infoDictionary?["CFBundleName"] as? String
         let shortAppVersion = infoDictionary?["CFBundleShortVersionString"] as? String
-        let systemVersion = device.systemVersion
+        let systemVersion = device?.systemVersion ?? ""
         let languageArray = bundle.preferredLocalizations
         let language = locale.displayName(forKey: .identifier, value: languageArray.first ?? "")
         let proLevel = accountDetails?.proLevel.toAccountTypeDisplayName()
         let connectionStatusMessage = MEGAReachabilityManager.statusConnectionMessage()
-        let deviceName = device.deviceName()
+        let deviceName = device?.deviceName()
         
         var body = Strings.Localizable.pleaseWriteYourFeedback
         
