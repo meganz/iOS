@@ -41,6 +41,8 @@ final class TextEditorViewController: UIViewController {
     }
     
     private func setupTextView() {
+        view.backgroundColor = UIColor.mnz_backgroundElevated()
+        textView.backgroundColor = UIColor.mnz_backgroundElevated()
         view.addSubview(textView)
         
         NSLayoutConstraint.activate([
