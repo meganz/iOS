@@ -911,19 +911,19 @@ class HomeSearchResultsProviderTests: XCTestCase {
     }
 }
 
-extension SearchConfig.EmptyViewAssets: Equatable {
+extension SearchConfig.EmptyViewAssets: @retroactive Equatable {
     public static func == (lhs: Search.SearchConfig.EmptyViewAssets, rhs: Search.SearchConfig.EmptyViewAssets) -> Bool {
         lhs.title == rhs.title && lhs.actions == rhs.actions
     }
 }
 
-extension SearchConfig.EmptyViewAssets.Action: Equatable {
+extension SearchConfig.EmptyViewAssets.Action: @retroactive Equatable {
     public static func == (lhs: SearchConfig.EmptyViewAssets.Action, rhs: SearchConfig.EmptyViewAssets.Action) -> Bool {
         lhs.title == rhs.title && lhs.menu == rhs.menu
     }
 }
 
-extension SearchConfig.EmptyViewAssets.MenuOption: Equatable {
+extension SearchConfig.EmptyViewAssets.MenuOption: @retroactive Equatable {
     public static func == (
         lhs: SearchConfig.EmptyViewAssets.MenuOption, rhs: SearchConfig.EmptyViewAssets.MenuOption
     ) -> Bool {

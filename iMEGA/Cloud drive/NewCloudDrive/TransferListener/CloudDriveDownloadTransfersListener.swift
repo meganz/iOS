@@ -2,7 +2,7 @@ import MEGADomain
 import MEGARepo
 import MEGASwift
 
-protocol DownloadTransfersListening {
+protocol DownloadTransfersListening: Sendable {
     var downloadedNodes: AnyAsyncSequence<NodeEntity> { get }
 }
 
