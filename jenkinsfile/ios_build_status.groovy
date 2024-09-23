@@ -74,6 +74,7 @@ pipeline {
         timeout(time: 45, unit: 'MINUTES') 
         gitLabConnection('GitLabConnection')
         gitlabCommitStatus(name: 'Jenkins')
+        ansiColor('xterm')
     }
     environment {
         // This environment variable is required to check if the unit test step was reached or not. This is required to avoid running the parse_and_upload_build_warnings_and_errors lane if the unit test step was not reached.

@@ -13,6 +13,7 @@ pipeline {
     options {
         timeout(time: 3, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
+        ansiColor('xterm')
     }
     environment {
         APP_STORE_CONNECT_KEY_ID = credentials('APP_STORE_CONNECT_KEY_ID')
