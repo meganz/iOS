@@ -171,7 +171,6 @@
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
-    [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isAnswerCallErrorPresented"];
 
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdk.shared setLanguageCode:languageCode];
