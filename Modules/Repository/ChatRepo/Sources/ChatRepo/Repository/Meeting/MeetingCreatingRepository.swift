@@ -4,7 +4,7 @@ import MEGADomain
 import MEGASDKRepo
 import MEGASwift
 
-public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol, Sendable {
+public final class MeetingCreatingRepository: NSObject, MeetingCreatingRepositoryProtocol, Sendable {
     
     public static var newRepo: MeetingCreatingRepository {
         MeetingCreatingRepository(
@@ -28,16 +28,12 @@ public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, Meetin
         self.chatConnectionStateUpdateProvider = chatConnectionStateUpdateProvider
     }
     
-    public func username() -> String {
+    public var username: String {
         chatSdk.userFullnameFromCache(byUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? 0) ?? ""
     }
     
-    public func userEmail() -> String? {
+    public var userEmail: String? {
         sdk.myEmail
-    }
-    
-    public func createChatLink(forChatId chatId: UInt64) {
-        chatSdk.createChatLink(chatId)
     }
     
     public func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity {
@@ -66,139 +62,158 @@ public final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, Meetin
         }
     }
     
-    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        let delegate = ChatRequestDelegate { [weak self] result in
-            switch result {
-            case .success(let request):
-                guard let self, let megaChatRoom = chatSdk.chatRoom(forChatId: request.chatHandle) else {
-                    completion(.failure(.generic))
-                    return
+    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64) async throws -> ChatRoomEntity {
+        try await withAsyncThrowingValue { continuation in
+            let delegate = ChatRequestDelegate { [weak self] result in
+                switch result {
+                case .success(let request):
+                    guard let self,
+                            let megaChatRoom = chatSdk.chatRoom(forChatId: request.chatHandle) else {
+                        continuation(.failure(GenericErrorEntity()))
+                        return
+                    }
+                    
+                    let chatRoom = megaChatRoom.toChatRoomEntity()
+                    continuation(.success(chatRoom))
+                case .failure:
+                    continuation(.failure(GenericErrorEntity()))
                 }
-                
-                let chatRoom = megaChatRoom.toChatRoomEntity()
-                completion(.success(chatRoom))
-            case .failure:
-                completion(.failure(.generic))
             }
-        }
-        
-        if let megaChatRoom = chatSdk.chatRoom(forChatId: chatId),
-           !megaChatRoom.isPreview,
-           !megaChatRoom.isActive {
-            chatSdk.autorejoinPublicChat(chatId, publicHandle: userHandle, delegate: delegate)
-        } else {
-            chatSdk.autojoinPublicChat(chatId, delegate: delegate)
+            
+            if let megaChatRoom = chatSdk.chatRoom(forChatId: chatId),
+               !megaChatRoom.isPreview,
+               !megaChatRoom.isActive {
+                chatSdk.autorejoinPublicChat(chatId, publicHandle: userHandle, delegate: delegate)
+            } else {
+                chatSdk.autojoinPublicChat(chatId, delegate: delegate)
+            }
         }
     }
     
-    public func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        guard let url = URL(string: link) else {
-            completion(.failure(.generic))
-            return
-        }
-        
-        chatSdk.checkChatLink(url, delegate: ChatRequestDelegate { [weak self] result in
-            guard let self else {
-                completion(.failure(.generic))
+    public func checkChatLink(link: String) async throws -> ChatRoomEntity {
+        try await withAsyncThrowingValue { continuation in
+            guard let url = URL(string: link) else {
+                continuation(.failure(GenericErrorEntity()))
                 return
             }
-            switch result {
-            case .success(let request):
-                guard let chatroom = chatSdk.chatRoom(forChatId: request.chatHandle) else {
-                    completion(.failure(.generic))
+            
+            chatSdk.checkChatLink(url, delegate: ChatRequestDelegate { [weak self] result in
+                guard let self else {
+                    continuation(.failure(GenericErrorEntity()))
                     return
                 }
-                
-                completion(.success(chatroom.toChatRoomEntity()))
-            case .failure:
-                completion(.failure(.generic))
-            }
-        })
+                switch result {
+                case .success(let request):
+                    guard let chatroom = chatSdk.chatRoom(forChatId: request.chatHandle) else {
+                        continuation(.failure(GenericErrorEntity()))
+                        return
+                    }
+                    
+                    continuation(.success(chatroom.toChatRoomEntity()))
+                case .failure:
+                    continuation(.failure(GenericErrorEntity()))
+                }
+            })
+        }
     }
     
     public func createEphemeralAccountAndJoinChat(
         firstName: String,
         lastName: String,
         link: String,
-        completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void,
-        karereInitCompletion: @escaping () -> Void
-    ) {
-        chatSdk.logout(with: ChatRequestDelegate { [weak self] result in
-            guard let self else {
-                completion(.failure(GenericErrorEntity()))
-                return
-            }
-            switch result {
-            case .success:
-                chatSdk.initKarere(withSid: nil)
+        karereInitCompletion: (() -> Void)? = nil
+    ) async throws {
+        do {
+            try await logoutFromChat()
+            chatSdk.initKarere(withSid: nil)
+            if let karereInitCompletion {
                 karereInitCompletion()
-                sdk.createEphemeralAccountPlusPlus(withFirstname: firstName, lastname: lastName, delegate: RequestDelegate { [weak self] result in
-                    guard let self else {
-                        completion(.failure(GenericErrorEntity()))
-                        return
-                    }
-                    switch result {
-                    case .failure:
-                        completion(.failure(GenericErrorEntity()))
-                    case .success(let request):
-                        if request.paramType == AccountActionType.resumeEphemeralPlusPlus.rawValue {
-                            sdk.fetchNodes(with: RequestDelegate { [weak self] result in
-                                switch result {
-                                case .success:
-                                    self?.connectToChat(link: link, completion: completion)
-                                case .failure:
-                                    completion(.failure(GenericErrorEntity()))
-                                }
-                            })
-                        } else {
-                            connectToChat(link: link, completion: completion)
-                        }
-                    }
-                })
-            case .failure:
-                completion(.failure(GenericErrorEntity()))
             }
-        })
-    }
-    
-    private func connectToChat(link: String, completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void) {
-        guard let url = URL(string: link) else {
-            completion(.failure(GenericErrorEntity()))
-            return
+            
+            let request = try await createEphemeralAccount(firstName: firstName, lastName: lastName)
+            
+            if request.paramType == AccountActionType.resumeEphemeralPlusPlus.rawValue {
+                try Task.checkCancellation()
+                try await fetchNodes()
+            }
+            
+            try Task.checkCancellation()
+            try await connectToChat(link: link)
+            
+        } catch {
+            throw GenericErrorEntity()
         }
-        
-        chatSdk.openChatPreview(url, delegate: ChatRequestDelegate { [weak self] result in
-            guard let self else {
-                completion(.failure(GenericErrorEntity()))
-                return
-            }
-            switch result {
-            case .success(let chatRequest):
-                Task { [weak self] in
-                    guard let self else { return }
-                    await handleChatConnection(
-                        chatRequest: chatRequest,
-                        completion: completion
-                    )
-                }
-            case .failure:
-                completion(.failure(GenericErrorEntity()))
-            }
-        })
     }
     
-    private func handleChatConnection(
-        chatRequest: MEGAChatRequest,
-        completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void
-    ) async {
+    // MARK: - Private
+
+    private func logoutFromChat() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            chatSdk.logout(with: ChatRequestDelegate { result in
+                switch result {
+                case .success:
+                    continuation.resume()
+                case .failure:
+                    continuation.resume(throwing: GenericErrorEntity())
+                }
+            })
+        }
+    }
+
+    private func createEphemeralAccount(firstName: String, lastName: String) async throws -> MEGARequest {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.createEphemeralAccountPlusPlus(withFirstname: firstName, lastname: lastName, delegate: RequestDelegate { result in
+                switch result {
+                case .failure:
+                    continuation.resume(throwing: GenericErrorEntity())
+                case .success(let request):
+                    continuation.resume(returning: request)
+                }
+            })
+        }
+    }
+
+    private func fetchNodes() async throws {
+        try await withAsyncThrowingValue { completion in
+            sdk.fetchNodes(with: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure:
+                    completion(.failure(GenericErrorEntity()))
+                }
+            })
+        }
+    }
+
+    private func connectToChat(link: String) async throws {
+        guard let url = URL(string: link) else {
+            throw GenericErrorEntity()
+        }
+
+        let chatRequest = try await openChatPreview(url: url)
+        try await handleChatConnection(chatRequest: chatRequest)
+    }
+
+    private func openChatPreview(url: URL) async throws -> MEGAChatRequest {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.openChatPreview(url, delegate: ChatRequestDelegate { result in
+                switch result {
+                case .success(let chatRequest):
+                    completion(.success(chatRequest))
+                case .failure:
+                    completion(.failure(GenericErrorEntity()))
+                }
+            })
+        }
+    }
+
+    private func handleChatConnection(chatRequest: MEGAChatRequest) async throws {
         let chatHandle = chatRequest.chatHandle
         _ = await chatConnectionStateUpdateProvider
             .updates
             .first { $0 == chatHandle && $1 == .online }
-        guard !Task.isCancelled else {
-            completion(.failure(GenericErrorEntity()))
-            return
-        }
-        completion(.success)
+
+        try Task.checkCancellation()
     }
 }

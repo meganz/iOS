@@ -148,9 +148,11 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         }
     }
     
-    @MainActor func testDidTapStartMeetingButton_forGuestJoin_shouldTrackEvent() {
+    @MainActor func testDidTapStartMeetingButton_forGuestJoin_shouldTrackEvent() async {
         let chatRoom = ChatRoomEntity(chatId: 1, title: "Test Meeting")
-        let meetingCreatingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(chatRoom))
+        let meetingCreatingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success(()),
+                                                                joinCallCompletion: .success(chatRoom),
+                                                                checkChatLinkCompletion: .success(chatRoom))
         let tracker = MockTracker()
         let sut = MeetingCreatingViewModel(
             type: .guestJoin,
@@ -160,16 +162,22 @@ final class MeetingCreatingViewModelTests: XCTestCase {
             userHandle: 0
         )
         
-        test(viewModel: sut,
-             actions: [.onViewReady, .didTapStartMeetingButton],
-             expectedCommands: [
-                .loadingStartMeeting,
-                .loadingEndMeeting,
-                .configView(title: "Test Meeting", type: .guestJoin, isMicrophoneEnabled: false),
-                .loadingStartMeeting
-             ]
+        await test(viewModel: sut,
+                   actions: [.onViewReady],
+                   expectedCommands: [
+                    .loadingStartMeeting,
+                    .loadingEndMeeting,
+                    .configView(title: "Test Meeting", type: .guestJoin, isMicrophoneEnabled: false)
+                   ],
+                   expectationValidation: ==
         )
-                
+        
+        await test(viewModel: sut,
+                   actions: [.didTapStartMeetingButton],
+                   expectedCommands: [.loadingStartMeeting],
+                   expectationValidation: ==
+        )
+        
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [

@@ -11,6 +11,7 @@ import XCTest
 final class WaitingRoomViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
 
+    @MainActor
     func testMeetingTitle_onLoadWaitingRoom_shouldMatch() {
         let meetingTitle = "Test Meeting"
         let scheduledMeeting = ScheduledMeetingEntity(title: meetingTitle)
@@ -19,6 +20,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.meetingTitle, meetingTitle)
     }
     
+    @MainActor
     func testMeetingDate_givenMeetingStartAndEndDate_shouldMatch() throws {
         let startDate = try XCTUnwrap(sampleDate(from: "21/09/2023 10:30"))
         let endDate = try XCTUnwrap(sampleDate(from: "21/09/2023 10:45"))
@@ -28,23 +30,27 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.createMeetingDate(locale: Locale(identifier: "en_GB")), "Thu, 21 Sep ·10:30-10:45")
     }
     
+    @MainActor
     func testViewState_onLoadWaitingRoomAndIsGuest_shouldBeGuestJoinState() {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(accountUseCase: accountUseCase)
         XCTAssertEqual(sut.viewState, .guestUserSetup)
     }
     
+    @MainActor
     func testViewState_onLoadWaitingRoomAndIsNotGuestAndMeetingNotStart_shouldBeWaitForHostToStartState() {
         let callUseCase = MockCallUseCase(call: nil)
         let sut = WaitingRoomViewModel(callUseCase: callUseCase)
         XCTAssertEqual(sut.viewState, .waitForHostToStart)
     }
     
+    @MainActor
     func testViewState_onLoadWaitingRoomAndIsNotGuestAndMeetingDidStart_shouldBeWaitForHostToStartState() {
         let sut = WaitingRoomViewModel()
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
     }
     
+    @MainActor
     func testViewState_onMeetingNotStartTransitsToMeetingDidStart_shouldChangeFromWaitForHostToStartToWaitForHostToLetIn() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let callEntity = CallEntity(status: .connecting, chatId: 100)
@@ -62,6 +68,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testViewState_onMeetingDidStartTransitsToMeetingNotStart_shouldChangeFromWaitForHostToLetInToWaitForHostToStart() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let chatUseCase = MockChatUseCase(isActiveWaitingRoom: true)
@@ -79,6 +86,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSpeakerButton_onTapSpeakerButton_shouldDisableSpeakerButton() {
         let audioSessionUseCase = MockAudioSessionUseCase()
         let sut = WaitingRoomViewModel(audioSessionUseCase: audioSessionUseCase)
@@ -88,6 +96,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(audioSessionUseCase.disableLoudSpeaker_calledTimes, 1)
     }
     
+    @MainActor
     func testCalculateVideoSize_portraitMode_shouldMatch() {
         let screenHeight = 424.0
         let screenWidth = 236.0
@@ -99,6 +108,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(videoSize, calculateVideoSize(by: screenHeight, isLandscape: false))
     }
     
+    @MainActor
     func testCalculateVideoSize_landscapeMode_shouldMatch() {
         let screenHeight = 236.0
         let screenWidth = 424.0
@@ -110,6 +120,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(videoSize, calculateVideoSize(by: screenHeight, isLandscape: true))
     }
     
+    @MainActor
     func testCalculateBottomPanelHeight_portraitModeAndGuestJoin_shouldMatch() {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(accountUseCase: accountUseCase)
@@ -117,12 +128,14 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 142.0)
     }
     
+    @MainActor
     func testCalculateBottomPanelHeight_portraitModeAndWaitForHostToLetIn_shouldMatch() {
         let sut = WaitingRoomViewModel()
         
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 100.0)
     }
     
+    @MainActor
     func testCalculateBottomPanelHeight_landscapeModeAndGuestJoin_shouldMatch() {
         let screenHeight = 236.0
         let screenWidth = 424.0
@@ -133,6 +146,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 142.0)
     }
     
+    @MainActor
     func testCalculateBottomPanelHeight_landscapeModeAndWaitForHostToLetIn_shouldMatch() {
         let screenHeight = 236.0
         let screenWidth = 424.0
@@ -142,6 +156,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 8.0)
     }
     
+    @MainActor
     func testShowWaitingRoomMessage_whenGuestLogin_shouldNotShow() {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(accountUseCase: accountUseCase)
@@ -149,6 +164,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertFalse(sut.showWaitingRoomMessage)
     }
     
+    @MainActor
     func testShowWaitingRoomMessage_whenWaitForHostToStart_shouldShow() {
         let chatUseCase = MockChatUseCase(isActiveWaitingRoom: false)
         let sut = WaitingRoomViewModel(chatUseCase: chatUseCase)
@@ -156,6 +172,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showWaitingRoomMessage)
     }
     
+    @MainActor
     func testShowWaitingRoomMessage_whenWaitForHostToLetIn_shouldShow() {
         let chatUseCase = MockChatUseCase(isActiveWaitingRoom: true)
         let sut = WaitingRoomViewModel(chatUseCase: chatUseCase)
@@ -163,6 +180,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showWaitingRoomMessage)
     }
     
+    @MainActor
     func testWaitingRoomMessage_whenWaitForHostToStart_shouldMatch() {
         let callUseCase = MockCallUseCase(call: nil)
         let sut = WaitingRoomViewModel(callUseCase: callUseCase)
@@ -170,12 +188,14 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.waitingRoomMessage, Strings.Localizable.Meetings.WaitingRoom.Message.waitForHostToStartTheMeeting)
     }
     
+    @MainActor
     func testWaitingRoomMessage_whenWaitForHostToLetIn_shouldMatch() {
         let sut = WaitingRoomViewModel()
         
         XCTAssertEqual(sut.waitingRoomMessage, Strings.Localizable.Meetings.WaitingRoom.Message.waitForHostToLetYouIn)
     }
     
+    @MainActor
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingDidStart_shoudBecomeWaitForHostToLetIn() {
         let callUseCase = MockCallUseCase(call: CallEntity(), answerCallCompletion: .success(CallEntity()))
         let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
@@ -199,6 +219,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingNotStart_shoudBecomeWaitForHostToStart() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
         let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
@@ -217,6 +238,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatFail_shoudDismiss() {
         let router = MockWaitingRoomViewRouter()
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
@@ -239,6 +261,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testUserAvatar_onLoadWaitingRoomAndIsNotGuest_shouldShowAvatar() {
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
         let userImageUseCase = MockUserImageUseCase(fetchAvatarResult: .success("image"))
@@ -249,6 +272,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testUserAvatar_onLoadWaitingRoomAndIsGuest_shouldNotShowAvatar() {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
@@ -262,6 +286,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testUserAvatar_onLoadWaitingRoomAndIsGuestAndJoinsTheChat_shouldShowAvatar() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
         let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
@@ -284,6 +309,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCheckChatLink_whenUserPrivilegeIsRemovedAndJoinChatCallSuccess_shoudBecomeWaitForHostToStart() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
         let meetingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .removed)))
@@ -296,6 +322,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCheckChatLink_whenUserPrivilegeIsReadOnlyAndJoinChatCallSuccess_shoudBecomeWaitForHostToStart() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
         let meetingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .readOnly)))
@@ -310,6 +337,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     // MARK: - Router related tests
     
+    @MainActor
     func testLeaveButton_didTapLeaveButton_shouldPresentLeaveAlert() {
         let router = MockWaitingRoomViewRouter()
         let sut = WaitingRoomViewModel(router: router)
@@ -319,6 +347,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(router.showLeaveAlert_calledTimes, 1)
     }
     
+    @MainActor
     func testMeetingInfoButton_didTapMeetingInfoButton_shouldPresentMeetingInfo() {
         let router = MockWaitingRoomViewRouter()
         let sut = WaitingRoomViewModel(router: router)
@@ -328,6 +357,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(router.showMeetingInfo_calledTimes, 1)
     }
     
+    @MainActor
     func testShowHostDenyAlert_onHostDeny_shouldShowDenyAlert() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let router = MockWaitingRoomViewRouter()
@@ -345,6 +375,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShowHostDidNotRespondAlert_onTimeout_shouldHostDidNotRespondAlert() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let router = MockWaitingRoomViewRouter()
@@ -362,6 +393,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testGoToCallUI_onHostAllowToJoinAndChangeTypeIsWaitingRoomAllow_shouldOpenCallUI() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let router = MockWaitingRoomViewRouter()
@@ -380,6 +412,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testGoToCallUI_onHostAllowToJoinAndCallStatusIsInProgress_shouldOpenCallUI() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let router = MockWaitingRoomViewRouter()
@@ -398,6 +431,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testUpdateSpeakerInfo_forCurrentPortBuiltInReceiver_shouldNotEnabledSpeaker() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(currentSelectedAudioPort: .builtInReceiver, onAudioSessionRouteChangeSubject: onAudioSessionRouteChangeSubject)
@@ -410,6 +444,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testUpdateSpeakerInfo_forCurrentPortBuiltInSpeaker_shouldEnabledSpeaker() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(currentSelectedAudioPort: .builtInSpeaker, onAudioSessionRouteChangeSubject: onAudioSessionRouteChangeSubject)
@@ -422,6 +457,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testUpdateSpeakerInfo_forCurrentPortOtherAndBluetoothAudioRouteAvailable_shouldEnabledSpeaker() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(
@@ -438,6 +474,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testUpdateSpeakerInfo_forCurrentPortOtherAndBluetoothAudioRouteNotAvailable_shouldNotEnabledSpeaker() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(
@@ -454,6 +491,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSpeakerOnIcon_forSelectedPortHeadphones_shouldBeSpeakerOnIcon() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(
@@ -470,6 +508,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSpeakerOnIcon_forSelectedPortBuiltInSpeaker_shouldBeSpeakerOnIcon() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(
@@ -486,6 +525,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSpeakerOnIcon_forSelectedPortOhterAndBluetoothAudioRouteAvailable_shouldBeSpeakerOnBluetoothIcon() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(
@@ -502,6 +542,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSpeakerOnIcon_forSelectedPortOhterAndBluetoothAudioRouteNotAvailable_shouldBeSpeakerOnIcon() {
         let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
         let audioSessionUseCase = MockAudioSessionUseCase(
@@ -518,6 +559,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testTapJoinAction_onGuestUserSetup_shouldTrackerEvent() {
         let tracker = MockTracker()
         let accountUseCase = MockAccountUseCase(isGuest: true)
@@ -533,6 +575,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testShowHostDidNotRespondAlert_onTimeout_shouldTrackerEvent() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let callEntity = CallEntity(status: .waitingRoom, chatId: 100, termCodeType: .waitingRoomTimeout)

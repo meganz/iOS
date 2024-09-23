@@ -7,8 +7,6 @@ public final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     private let joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
     private let checkChatLinkCompletion: Result<ChatRoomEntity, CallErrorEntity>
     
-    private var createChatLink_calledTimes = 0
-    
     public init(userName: String = "Test Name",
                 createMeetingResult: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
                 createEphemeralAccountCompletion: Result<Void, GenericErrorEntity> = .failure(GenericErrorEntity()),
@@ -23,31 +21,27 @@ public final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     }
     
     public func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity {
-        switch createMeetingResult {
-        case .success(let chatRoom):
-            return chatRoom
-        case .failure(let error):
-            throw error
-        }
+        try createMeetingResult.get()
     }
     
-    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        completion(joinCallCompletion)
+    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64) async throws -> ChatRoomEntity {
+        try joinCallCompletion.get()
     }
     
-    public func username() -> String {
+    public var username: String {
         userName
     }
     
-    public func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        completion(checkChatLinkCompletion)
+    public func checkChatLink(link: String) async throws -> ChatRoomEntity {
+        try checkChatLinkCompletion.get()
     }
     
-    public func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void) {
-        completion(createEphemeralAccountCompletion)
-    }
-    
-    public func createChatLink(forChatId chatId: UInt64) {
-        createChatLink_calledTimes += 1
+    public func createEphemeralAccountAndJoinChat(
+        firstName: String,
+        lastName: String,
+        link: String,
+        karereInitCompletion: (() -> Void)?
+    ) async throws {
+        try createEphemeralAccountCompletion.get()
     }
 }
