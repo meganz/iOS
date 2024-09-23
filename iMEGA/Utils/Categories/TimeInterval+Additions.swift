@@ -14,7 +14,9 @@ extension TimeInterval {
         if Calendar.current.isDateInTomorrow(date) {
             return Strings.Localizable.notificationsWillBeSilencedUntilTomorrow(time)
         } else {
-            return Strings.Localizable.notificationsWillBeSilencedUntil(time)
+            let hour = Calendar.current.component(.hour, from: date)
+            return Strings.Localizable.Chat.Info.Notifications.mutedUntilTime(hour)
+                .replacingOccurrences(of: "[Time]", with: time)
         }
     }
 }
