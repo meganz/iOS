@@ -4,6 +4,7 @@ import XCTest
 
 final class SetVideoPlayerItemMetadataCommandTests: XCTestCase {
 
+    @MainActor
     func testExecute_whenCalled_shouldSetVideoPlayerNeededMetadataOnly() async {
         let anyURL = URL(string: "www.any-url.com")!
         let mockPlayerItem = AVPlayerItem(url: anyURL)

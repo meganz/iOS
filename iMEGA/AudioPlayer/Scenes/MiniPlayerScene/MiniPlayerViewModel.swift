@@ -132,9 +132,9 @@ final class MiniPlayerViewModel: ViewModelType {
         router.dismiss()
     }
     
-    private nonisolated func preparePlayerForOfflinePlayerType() async {
+    private func preparePlayerForOfflinePlayerType() async {
         guard let offlineFilePaths = configEntity.relatedFiles else {
-            await dismiss()
+            dismiss()
             return
         }
         
@@ -146,13 +146,13 @@ final class MiniPlayerViewModel: ViewModelType {
             await initialize(with: offlineFilePaths)
             return
         }
-        await configurePlayer()
+        configurePlayer()
         configEntity.playerHandler.resetCurrentItem()
     }
     
-    private nonisolated func preparePlayerForNonOfflinePlayerType() async {
+    private func preparePlayerForNonOfflinePlayerType() async {
         guard let node = configEntity.node else {
-            await dismiss()
+            dismiss()
             return
         }
         
@@ -167,7 +167,7 @@ final class MiniPlayerViewModel: ViewModelType {
             await initialize(with: node)
             return
         }
-        await configurePlayer()
+        configurePlayer()
         configEntity.playerHandler.resetCurrentItem()
     }
     
@@ -199,7 +199,7 @@ final class MiniPlayerViewModel: ViewModelType {
         } else {
             guard let children = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
+                  let currentTrack = await children.async.first(where: { await $0.node?.handle == node.handle }) else {
                 
                 guard let track = streamingInfoUseCase?.info(from: node) else {
                     await dismiss()
@@ -220,7 +220,7 @@ final class MiniPlayerViewModel: ViewModelType {
         guard
             let files = offlineInfoUseCase?.info(from: offlineFilePaths),
             let currentFilePath = configEntity.fileLink,
-            let currentTrack = files.first(where: { $0.url.path == currentFilePath })
+            let currentTrack = await files.async.first(where: { await $0.url.path == currentFilePath })
         else {
             await dismiss()
             return
@@ -244,7 +244,7 @@ final class MiniPlayerViewModel: ViewModelType {
         return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
     }
     
-    private nonisolated func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) async {
+    private func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) async {
         switch configEntity.playerType {
         case .default:
             if let currentNode = configEntity.playerHandler.playerCurrentItem()?.node {
@@ -358,17 +358,19 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     nonisolated func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {
-        guard let item, let fingerprint = item.node?.toNodeEntity().fingerprint else {
-            return
-        }
-        
-        switch playbackContinuationUseCase.status(for: fingerprint) {
-        case .displayDialog(let playbackTime):
-            playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
-            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
-        case .resumeSession(let playbackTime):
-            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
-        case .startFromBeginning: break
+        Task { @MainActor in
+            guard let item, let fingerprint = item.node?.toNodeEntity().fingerprint else {
+                return
+            }
+            
+            switch playbackContinuationUseCase.status(for: fingerprint) {
+            case .displayDialog(let playbackTime):
+                playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
+                configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+            case .resumeSession(let playbackTime):
+                configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+            case .startFromBeginning: break
+            }
         }
     }
 }

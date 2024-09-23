@@ -1,3 +1,4 @@
+@preconcurrency import AVFoundation
 import Foundation
 
 enum MetadataLoadError: Error {
@@ -25,6 +26,7 @@ extension AudioPlayer: AudioPlayerMetadataLoaderProtocol {
         })
     }
     
+    @MainActor
     func loadACurrentItemArtworkIfNeeded() async {
         guard let currentItem = currentItem(), currentItem.artwork == nil else { return }
         let asset = currentItem.asset
@@ -43,7 +45,7 @@ extension AudioPlayer: AudioPlayerMetadataLoaderProtocol {
     }
 }
 
-final class AudioPlayerMetadataOperation: MEGAOperation {
+final class AudioPlayerMetadataOperation: MEGAOperation, @unchecked Sendable {
     private let item: AudioPlayerItem
     private let completion: (Result<Void, any Error>) -> Void
     

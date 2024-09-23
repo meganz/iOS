@@ -65,7 +65,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     }
     
     private func reloadCurrentThumbnail() {
-        Task {
+        Task { @MainActor in
             await loadACurrentItemArtworkIfNeeded()
             notify([aboutCurrentThumbnail])
             refreshNowPlayingInfo()
