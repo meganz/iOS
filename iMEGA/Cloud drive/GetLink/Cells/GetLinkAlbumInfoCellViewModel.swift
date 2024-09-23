@@ -102,7 +102,7 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     private func albumPhotoAsyncSequence() async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
         let excludeSensitives = await excludeSensitives()
         return await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
-            for: album, excludeSensitives: excludeSensitives, includeSensitiveInherited: false)
+            for: album, excludeSensitives: excludeSensitives)
     }
     
     private func excludeSensitives() async -> Bool {

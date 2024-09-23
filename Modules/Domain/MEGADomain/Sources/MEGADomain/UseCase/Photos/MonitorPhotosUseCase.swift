@@ -7,9 +7,14 @@ public protocol MonitorPhotosUseCaseProtocol: Sendable {
     /// The async sequence will immediately return photos and photos with updates when required.
     /// The async sequence is infinite and will require cancellation
     ///
-    /// - Parameter filterOptions: filter options to apply on photos
+    /// - Parameters:
+    ///  - filterOptions: filter options to apply on photos
+    ///  - excludeSensitive: Determines if sensitive nodes should be excluded
     /// - Throws: `CancellationError`
-    func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
+    func monitorPhotos(
+        filterOptions: PhotosFilterOptionsEntity,
+        excludeSensitive: Bool
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
 }
 
 private typealias NodeEntityFilter = (@Sendable (NodeEntity) -> Bool)
@@ -27,23 +32,30 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
     
-    public func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+    public func monitorPhotos(
+        filterOptions: PhotosFilterOptionsEntity,
+        excludeSensitive: Bool)
+    async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
         let filters = await makeNodeFilters(filterOptions)
         guard filters.isNotEmpty else {
-            return await monitorPhotos()
+            return await monitorPhotos(excludeSensitive: excludeSensitive)
         }
-        return await monitorPhotos(nodeEntityFilter: { node in filters.allSatisfy({ $0(node)}) })
+        return await monitorPhotos(nodeEntityFilter: { node in filters.allSatisfy({ $0(node)}) },
+                                   excludeSensitive: excludeSensitive)
     }
     
     // MARK: - Private
     
-    private func monitorPhotos(nodeEntityFilter predicate: NodeEntityFilter? = nil) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+    private func monitorPhotos(
+        nodeEntityFilter predicate: NodeEntityFilter? = nil,
+        excludeSensitive: Bool
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
         let monitorAll = await updatePhotos()
             .map {
-                await allPhotos()
+                await allPhotos(excludeSensitive: excludeSensitive)
             }
             .prepend {
-                await allPhotos()
+                await allPhotos(excludeSensitive: excludeSensitive)
             }
         
         guard let predicate else {
@@ -98,9 +110,9 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         return nil
     }
     
-    private func allPhotos() async -> Result<[NodeEntity], Error> {
+    private func allPhotos(excludeSensitive: Bool) async -> Result<[NodeEntity], Error> {
         do {
-            let photos = try await photosRepository.allPhotos()
+            let photos = try await photosRepository.allPhotos(excludeSensitive: excludeSensitive)
             return .success(photos)
         } catch {
             return .failure(error)

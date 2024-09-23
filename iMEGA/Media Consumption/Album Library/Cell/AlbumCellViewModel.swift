@@ -122,7 +122,7 @@ final class AlbumCellViewModel: ObservableObject {
               album.type == .user else { return }
         
         for await albumPhotos in await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
-            for: album, excludeSensitives: excludeSensitives(), includeSensitiveInherited: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)) {
+            for: album, excludeSensitives: excludeSensitives()) {
             
             numberOfNodes = albumPhotos.count
             await loadAlbumCover(from: albumPhotos)

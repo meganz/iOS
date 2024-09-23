@@ -96,7 +96,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             await sut.loadingTask?.value
             let invocations = await monitorUserAlbumPhotosUseCase.state.invocations
             XCTAssertEqual(invocations, [.userAlbumPhotos(
-                excludeSensitives: excludeSensitives, includeSensitiveInherited: false)])
+                excludeSensitives: excludeSensitives)])
         }
     }
     

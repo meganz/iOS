@@ -13,18 +13,16 @@ public actor MockPhotosRepository: PhotosRepositoryProtocol {
                 photos: [NodeEntity] = [],
                 allPhotosCallOrderResult: [Result<[NodeEntity], Error>] = []
     ) {
-        
         self.photosUpdated = photosUpdated
         self.photos = photos
         self.allPhotosCallOrderResult = allPhotosCallOrderResult
     }
     
-    public func allPhotos() async throws -> [NodeEntity] {
-        guard allPhotosCallOrderResult.isNotEmpty else {
-            return photos
-        }
-        return try await withCheckedThrowingContinuation {
-            $0.resume(with: allPhotosCallOrderResult.removeFirst())
+    public func allPhotos(excludeSensitive: Bool) async throws -> [NodeEntity] {
+        if let nextResult = try await nextResult(excludeSensitive: excludeSensitive) {
+            nextResult
+        } else {
+            filterPhotos(photos, excludeSensitive: excludeSensitive)
         }
     }
     
@@ -32,7 +30,36 @@ public actor MockPhotosRepository: PhotosRepositoryProtocol {
         photosUpdated
     }
     
-    public func photo(forHandle handle: HandleEntity) async -> NodeEntity? {
-        photos.first(where: { $0.handle == handle })
+    public func photo(forHandle handle: HandleEntity, excludeSensitive: Bool) async -> NodeEntity? {
+        let photo = photos.first(where: { $0.handle == handle })
+        if excludeSensitive && photo?.isMarkedSensitive == true {
+            return nil
+        } else {
+            return photo
+        }
+    }
+    
+    // MARK: Private
+    
+    private func nextResult(excludeSensitive: Bool) async throws -> [NodeEntity]? {
+        guard allPhotosCallOrderResult.isNotEmpty else  { return nil }
+        
+        return try await withCheckedThrowingContinuation {
+            let result = allPhotosCallOrderResult.removeFirst()
+            let returnValue = if excludeSensitive {
+                result.map { $0.filter { !$0.isMarkedSensitive } }
+            } else {
+                result
+            }
+            $0.resume(with: returnValue)
+        }
+    }
+    
+    private func filterPhotos(_ photos: [NodeEntity], excludeSensitive: Bool) -> [NodeEntity] {
+        return if excludeSensitive {
+            photos.filter { !$0.isMarkedSensitive }
+        } else {
+            photos
+        }
     }
 }

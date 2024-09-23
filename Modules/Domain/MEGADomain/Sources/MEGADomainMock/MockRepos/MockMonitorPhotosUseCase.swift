@@ -1,9 +1,11 @@
 import MEGADomain
 import MEGASwift
 
+private typealias NodeEntityFilter = (@Sendable (NodeEntity) -> Bool)
+
 public struct MockMonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     public enum Invocation: Sendable, Equatable {
-        case monitorPhotos(filterOptions: PhotosFilterOptionsEntity)
+        case monitorPhotos(filterOptions: PhotosFilterOptionsEntity, excludeSensitive: Bool)
     }
     private actor State {
         var invocations: [Invocation] = []
@@ -19,17 +21,35 @@ public struct MockMonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         self.monitorPhotosAsyncSequence = monitorPhotosAsyncSequence
     }
     
-    public func monitorPhotos(filterOptions: PhotosFilterOptionsEntity) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
-        await state.addInvocation(.monitorPhotos(filterOptions: filterOptions))
+    public func monitorPhotos(
+        filterOptions: PhotosFilterOptionsEntity,
+        excludeSensitive: Bool
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+        await state.addInvocation(
+            .monitorPhotos(filterOptions: filterOptions, excludeSensitive: excludeSensitive))
         
-        return if filterOptions.contains(.favourites) {
+        let filters = makeFilters(filterOptions: filterOptions, excludeSensitive: excludeSensitive)
+        
+        return if filters.isEmpty {
             monitorPhotosAsyncSequence
-                .map {
-                    $0.map { $0.filter(\.isFavourite) }
-                }.eraseToAnyAsyncSequence()
         } else {
-            monitorPhotosAsyncSequence
+            monitorPhotosAsyncSequence.map {
+                $0.map { $0.filter { node in filters.allSatisfy { $0(node) } } }
+            }
+            .eraseToAnyAsyncSequence()
         }
+    }
+    
+    private func makeFilters(filterOptions: PhotosFilterOptionsEntity,
+                             excludeSensitive: Bool) -> [NodeEntityFilter] {
+        var filters = [NodeEntityFilter]()
+        if filterOptions.contains(.favourites) {
+            filters.append({ $0.isFavourite })
+        }
+        if excludeSensitive {
+            filters.append({ !$0.isMarkedSensitive })
+        }
+        return filters
     }
 }
 extension MockMonitorPhotosUseCase {

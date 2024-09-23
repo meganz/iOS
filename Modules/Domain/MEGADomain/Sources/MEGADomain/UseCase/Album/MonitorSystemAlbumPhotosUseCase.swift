@@ -6,8 +6,9 @@ public protocol MonitorSystemAlbumPhotosUseCaseProtocol: Sendable {
     /// The async sequence will immediately return album photos
     /// - Parameters:
     ///   - albumType: The album type photos to monitor.
+    ///  - excludeSensitive: Determines if sensitive nodes should be excluded
     /// - Returns: An asynchronous sequence of results, where each result contains an array of `NodeEntity` objects or an error.
-    func monitorPhotos(for albumType: AlbumEntityType) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
+    func monitorPhotos(for albumType: AlbumEntityType, excludeSensitive: Bool) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
 }
 
 public struct MonitorSystemAlbumPhotosUseCase: MonitorSystemAlbumPhotosUseCaseProtocol {
@@ -20,7 +21,7 @@ public struct MonitorSystemAlbumPhotosUseCase: MonitorSystemAlbumPhotosUseCasePr
         self.mediaUseCase = mediaUseCase
     }
     
-    public func monitorPhotos(for albumType: AlbumEntityType) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+    public func monitorPhotos(for albumType: AlbumEntityType, excludeSensitive: Bool) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
         guard albumType != .user else {
             return SingleItemAsyncSequence(item: .failure(AlbumErrorEntity.invalidType))
                 .eraseToAnyAsyncSequence()
@@ -29,7 +30,7 @@ public struct MonitorSystemAlbumPhotosUseCase: MonitorSystemAlbumPhotosUseCasePr
         if albumType == .favourite {
             filterOptions.insert(.favourites)
         }
-        return await monitorPhotosUseCase.monitorPhotos(filterOptions: filterOptions)
+        return await monitorPhotosUseCase.monitorPhotos(filterOptions: filterOptions, excludeSensitive: excludeSensitive)
             .map {
                 $0.map { makeSystemAlbum(for: albumType, photos: $0) }
             }
