@@ -17,6 +17,7 @@ protocol WaitingRoomViewRouting: Routing {
     func openCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool)
 }
 
+@MainActor
 final class WaitingRoomViewModel: ObservableObject {
     private let scheduledMeeting: ScheduledMeetingEntity
     private let router: any WaitingRoomViewRouting
@@ -222,7 +223,9 @@ final class WaitingRoomViewModel: ObservableObject {
         guard viewState == .guestUserSetup else { return }
         tracker.trackAnalyticsEvent(with: ScheduledMeetingJoinGuestButtonEvent())
         viewState = .guestUserJoining
-        createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName)
+        Task {
+            await createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName)
+        }
     }
     
     func calculateVideoSize() -> CGSize {
@@ -256,7 +259,9 @@ final class WaitingRoomViewModel: ObservableObject {
         } else {
             if let chatLink {
                 viewState = .loggedInUserJoining
-                checkChatLink(chatLink)
+                Task {
+                    await checkChatLink(chatLink)
+                }
             } else {
                 viewState = .waitForHostToStart
             }
@@ -453,58 +458,50 @@ final class WaitingRoomViewModel: ObservableObject {
         callManager.endCall(in: chatRoom, endForAll: false)
     }
     
-    private func createEphemeralAccountAndJoinChat(firstName: String, lastName: String) {
+    private func createEphemeralAccountAndJoinChat(firstName: String, lastName: String) async {
         guard let chatLink else { return }
-        meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: chatLink) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                joinChatCall()
-                NotificationCenter.default.post(name: .accountDidLogin, object: nil)
-            case .failure:
-                viewState = .guestUserSetup
-            }
-        } karereInitCompletion: { [weak self] in
-            guard let self else { return }
-            selectFrontCameraIfNeeded()
-            if isVideoEnabled {
-                enableLocalVideo(enabled: true)
-            }
+        do {
+            try await meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: chatLink, karereInitCompletion: { [weak self] in
+                guard let self else { return }
+                selectFrontCameraIfNeeded()
+                if isVideoEnabled {
+                    enableLocalVideo(enabled: true)
+                }
+            })
+            await self.joinChatCall()
+            NotificationCenter.default.post(name: .accountDidLogin, object: nil)
+        } catch {
+            viewState = .guestUserSetup
         }
     }
     
-    private func checkChatLink(_ chatLink: String) {
-        meetingUseCase.checkChatLink(link: chatLink) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let chatRoom):
-                if chatRoom.ownPrivilege == .removed || chatRoom.ownPrivilege == .readOnly {
-                    joinChatCall()
-                } else {
-                    viewState = .waitForHostToStart
-                }
-            case .failure:
-                dismiss()
+    private func checkChatLink(_ chatLink: String) async {
+        do {
+            let chatRoom = try await meetingUseCase.checkChatLink(link: chatLink)
+            if chatRoom.ownPrivilege == .removed || chatRoom.ownPrivilege == .readOnly {
+                await joinChatCall()
+            } else {
+                viewState = .waitForHostToStart
             }
+        } catch {
+            dismiss()
         }
     }
     
-    private func joinChatCall() {
-        Task { @MainActor in
-            do {
-                _ = try await waitingRoomUseCase.joinChat(forChatId: chatId, userHandle: requestUserHandle)
-                if accountUseCase.isGuest {
-                    fetchUserAvatar()
-                }
-                // There is a delay for a call to update its status after joining a meeting
-                // We can't check whether the meeting is started or not immediately after joining a meeting
-                // So the wait is used here to wait for the call's update
-                // Note that if the call is updated faster than the wait, it will do the logic without the wait
-                try await Task.sleep(nanoseconds: 500_000_000)
-                updateCallStatus()
-            } catch {
-                dismiss()
+    private func joinChatCall() async {
+        do {
+            _ = try await waitingRoomUseCase.joinChat(forChatId: chatId, userHandle: requestUserHandle)
+            if accountUseCase.isGuest {
+                fetchUserAvatar()
             }
+            // There is a delay for a call to update its status after joining a meeting
+            // We can't check whether the meeting is started or not immediately after joining a meeting
+            // So the wait is used here to wait for the call's update
+            // Note that if the call is updated faster than the wait, it will do the logic without the wait
+            try await Task.sleep(nanoseconds: 500_000_000)
+            updateCallStatus()
+        } catch {
+            dismiss()
         }
     }
     

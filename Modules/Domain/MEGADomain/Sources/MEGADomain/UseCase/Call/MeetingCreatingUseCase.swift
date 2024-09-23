@@ -1,11 +1,15 @@
 // MARK: - Use case protocol -
 public protocol MeetingCreatingUseCaseProtocol: Sendable {
     func createMeeting(_ startCall: CreateMeetingNowEntity) async throws -> ChatRoomEntity
-    func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
-    func username() -> String
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void)
-    func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
-    func createChatLink(forChatId chatId: UInt64)
+    func joinChat(forChatId chatId: UInt64, userHandle: UInt64) async throws -> ChatRoomEntity
+    var username: String { get }
+    func createEphemeralAccountAndJoinChat(
+        firstName: String,
+        lastName: String,
+        link: String,
+        karereInitCompletion: (() -> Void)?
+    ) async throws
+    func checkChatLink(link: String) async throws -> ChatRoomEntity
 }
 
 // MARK: - Use case implementation -
@@ -26,29 +30,36 @@ public struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol, U: Us
         try await meetingCreatingRepo.createMeeting(startCall)
     }
     
-    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        meetingCreatingRepo.joinChat(forChatId: chatId, userHandle: userHandle, completion: completion)
+    public func joinChat(forChatId chatId: UInt64, userHandle: UInt64) async throws -> ChatRoomEntity {
+        try await meetingCreatingRepo.joinChat(forChatId: chatId, userHandle: userHandle)
     }
     
-    public func username() -> String {
-        if let email = meetingCreatingRepo.userEmail(),
+    public var username: String {
+        if let email = meetingCreatingRepo.userEmail,
            let userName = userStoreRepo.userDisplayName(forEmail: email),
            userName.isNotEmpty {
             return userName
         }
-        return meetingCreatingRepo.username()
+        return meetingCreatingRepo.username
     }
     
-    public func createChatLink(forChatId chatId: UInt64) {
-        meetingCreatingRepo.createChatLink(forChatId: chatId)
-    }
-    
-    public func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        meetingCreatingRepo.checkChatLink(link: link, completion: completion)
+    public func checkChatLink(link: String) async throws -> ChatRoomEntity {
+        try await meetingCreatingRepo.checkChatLink(link: link)
     }
 
-    public func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping @Sendable (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void) {
-        meetingCreatingRepo.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: link, completion: completion, karereInitCompletion: karereInitCompletion)
+    public func createEphemeralAccountAndJoinChat(
+        firstName: String,
+        lastName: String,
+        link: String,
+        karereInitCompletion: (() -> Void)? = nil
+    ) async throws {
+        try await meetingCreatingRepo
+            .createEphemeralAccountAndJoinChat(
+                firstName: firstName,
+                lastName: lastName,
+                link: link,
+                karereInitCompletion: karereInitCompletion
+            )
     }
     
 }

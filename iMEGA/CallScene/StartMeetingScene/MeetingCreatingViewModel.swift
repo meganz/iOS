@@ -81,7 +81,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     private var defaultMeetingName: String {
-        Strings.Localizable.Meetings.CreateMeeting.defaultMeetingName(meetingUseCase.username())
+        Strings.Localizable.Meetings.CreateMeeting.defaultMeetingName(meetingUseCase.username)
     }
     
     // MARK: - Init
@@ -153,7 +153,9 @@ final class MeetingCreatingViewModel: ViewModelType {
             switch type {
             case .join, .guestJoin:
                 guard let link else { return }
-                checkChatLink(link: link)
+                Task {
+                    await checkChatLink(link: link)
+                }
             case .start:
                 meetingName = defaultMeetingName
                 invokeCommand?(
@@ -192,10 +194,14 @@ final class MeetingCreatingViewModel: ViewModelType {
                 startChatCall()
             case .join:
                 guard let chatId else { return }
-                joinChatAndStartCall(chatId: chatId)
+                Task {
+                    await joinChatAndStartCall(chatId: chatId)
+                }
             case .guestJoin:
                 guard let chatId else { return }
-                createEphemeralAccountAndJoinChat(chatId: chatId)
+                Task {
+                    await createEphemeralAccountAndJoinChat(chatId: chatId)
+                }
             }
             invokeCommand?(.loadingStartMeeting)
         case .didTapCloseButton:
@@ -220,7 +226,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             
             let avatarHandler = UserAvatarHandler(
                 userImageUseCase: userImageUseCase,
-                initials: meetingUseCase.username().initialForAvatar(),
+                initials: meetingUseCase.username.initialForAvatar(),
                 avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
             )
             
@@ -254,36 +260,25 @@ final class MeetingCreatingViewModel: ViewModelType {
         }
     }
     
-    private func createEphemeralAccountAndJoinChat(chatId: UInt64) {
+    private func createEphemeralAccountAndJoinChat(chatId: UInt64) async {
         guard let link else { return }
         tracker.trackAnalyticsEvent(with: ScheduledMeetingJoinGuestButtonEvent())
-        meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: link) { [weak self] in
-            guard let self else { return }
-            switch $0 {
-            case .success:
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    joinChatAndStartCall(chatId: chatId)
-                    NotificationCenter.default.post(name: .accountDidLogin, object: nil)
-                }
-            case .failure:
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    dismiss()
-                }
-            }
-        } karereInitCompletion: { }
+        do {
+            try await meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: link, karereInitCompletion: nil)
+            
+            await joinChatAndStartCall(chatId: chatId)
+            NotificationCenter.default.post(name: .accountDidLogin, object: nil)
+        } catch {
+            dismiss()
+        }
     }
     
-    private func joinChatAndStartCall(chatId: UInt64) {
-        meetingUseCase.joinChat(forChatId: chatId, userHandle: userHandle) { [weak self] in
-            guard let self else { return }
-            switch $0 {
-            case .success(let chatRoom):
-                startCall(inChatRoom: chatRoom)
-            case .failure:
-                self.dismiss()
-            }
+    private func joinChatAndStartCall(chatId: UInt64) async {
+        do {
+            let chatRoom = try await meetingUseCase.joinChat(forChatId: chatId, userHandle: userHandle)
+            startCall(inChatRoom: chatRoom)
+        } catch {
+            dismiss()
         }
     }
     
@@ -342,25 +337,21 @@ final class MeetingCreatingViewModel: ViewModelType {
         }
     }
     
-    private func checkChatLink(link: String) {
+    private func checkChatLink(link: String) async {
         invokeCommand?(.loadingStartMeeting)
         
-        meetingUseCase.checkChatLink(link: link) { [weak self] in
-            guard let self else { return }
-            self.invokeCommand?(.loadingEndMeeting)
-
-            switch $0 {
-            case .success(let chatRoom):
-                self.invokeCommand?(
-                    .configView(
-                        title: chatRoom.title ?? "",
-                        type: self.type,
-                        isMicrophoneEnabled: self.isMicrophoneEnabled)
-                )
-                self.chatId = chatRoom.chatId
-            case .failure:
-                self.dismiss()
-            }
+        do {
+            let chatRoom = try await meetingUseCase.checkChatLink(link: link)
+            invokeCommand?(.loadingEndMeeting)
+            invokeCommand?(
+                .configView(
+                    title: chatRoom.title ?? "",
+                    type: self.type,
+                    isMicrophoneEnabled: self.isMicrophoneEnabled)
+            )
+            chatId = chatRoom.chatId
+        } catch {
+            dismiss()
         }
     }
     
