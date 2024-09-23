@@ -87,6 +87,7 @@
     self.sixthDigitContainerView.layer.borderColor = [self separatorColor].CGColor;
 
     self.invalidCodeLabel.textColor = [self errorColor];
+    self.invalidCodeImageView.tintColor = [self errorColor];
     [self.lostYourAuthenticatorDeviceButton setTitleColor:[self labelColor] forState:UIControlStateNormal];
 }
 
