@@ -3,6 +3,7 @@ import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 import MEGASwift
 import MEGAUIKit
 import Search
@@ -60,12 +61,15 @@ class NodeBrowserViewModelTests: XCTestCase {
             defaultViewMode: ViewModePreferenceEntity = .list,
             defaultLayout: PageLayout = .list,
             node: NodeEntity,
+            config: NodeBrowserConfig = .default,
+            mockAccountStorageUseCase: MockAccountStorageUseCase = MockAccountStorageUseCase(),
             updateTransferWidgetHandler: @escaping () -> Void = {},
             sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity = { .defaultAsc },
             onNodeStructureChanged: @escaping () -> Void = {},
             monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence()
                 .eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+            sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+            isFullSOQBannerEnabled: @escaping () -> Bool = { true }
         ) {
             let nodeSource = NodeSource.node { node }
             let expectedNodes = [
@@ -104,7 +108,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     layout: defaultLayout,
                     showLoadingPlaceholderDelay: 0,
                     searchInputDebounceDelay: 0,
-                    keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
+                    keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
                     viewDisplayMode: .unknown
                 ),
                 mediaDiscoveryViewModel: .init(
@@ -120,7 +124,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 warningViewModel: nil,
                 upgradeEncouragementViewModel: nil,
                 adsVisibilityViewModel: nil,
-                config: .default,
+                config: config, // Pass the modified config here
                 nodeSource: nodeSource,
                 avatarViewModel: MyAvatarViewModel(
                     megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
@@ -135,13 +139,14 @@ class NodeBrowserViewModelTests: XCTestCase {
                     originalNodeSource: .testNode,
                     nodeUpdatesListener: nodesUpdateListener
                 ),
-                nodesUpdateListener: nodesUpdateListener, 
-                cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
-                nodeUseCase: nodeUseCase, 
+                nodesUpdateListener: nodesUpdateListener,
+                cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
+                nodeUseCase: nodeUseCase,
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                     monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode,
                     sensitivityChangesForNode: sensitivityChangesForNode
                 ),
+                accountStorageUseCase: mockAccountStorageUseCase, // Inject the mock here
                 viewModeSaver: { saver($0) },
                 storageFullModalAlertViewRouter: MockStorageFullModalAlertViewRouter(),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
@@ -150,8 +155,9 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onBack: {},
                 onEditingChanged: { _ in },
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
-                sortOrderProvider: sortOrderProvider, 
-                onNodeStructureChanged: onNodeStructureChanged
+                sortOrderProvider: sortOrderProvider,
+                onNodeStructureChanged: onNodeStructureChanged,
+                isFullSOQBannerEnabled: isFullSOQBannerEnabled
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -475,7 +481,47 @@ class NodeBrowserViewModelTests: XCTestCase {
             updatedSensitivityState: true
         )
     }
+    
+    @MainActor
+    func testMonitorStorageStatusUpdates_withCustomConfig_shouldUpdateCurrentBanner() async {
+        let expectedStatusUpdate: StorageStatusEntity = .full
+        let asyncStream = makeAsyncStream(for: [])
 
+        let mockAccountStorageUseCase = MockAccountStorageUseCase(
+            onStorageStatusUpdates: asyncStream,
+            currentStorageStatus: .full
+        )
+        
+        var config = NodeBrowserConfig.default
+        config.warningViewModel = WarningBannerViewModel(warningType: .fullStorageOverQuota)
+
+        let harness = Harness(node: .init(), config: config, mockAccountStorageUseCase: mockAccountStorageUseCase)
+        
+        harness.sut.onViewAppear()
+        
+        let expectation = XCTestExpectation(description: "Wait for all status updates")
+        
+        Task {
+            for await status in asyncStream {
+                XCTAssertTrue(status == expectedStatusUpdate)
+            }
+            expectation.fulfill()
+        }
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
+    }
+    
+    private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
+        AsyncStream { continuation in
+            for update in updates {
+                continuation.yield(update)
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+    }
+    
     @MainActor
     private func assertListenToNodeSensitivityChangesWhenSensitivityChangesForNode(
         initialSensitivityState: Bool,

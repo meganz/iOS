@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import Search
 import SwiftUI
@@ -29,7 +30,17 @@ class NodeBrowserViewModel: ObservableObject {
     // on the view mode state and the injected instance.
     // Making actual property private removes logic of checking this from the view, allows to cover this by tests with high confidence
     private let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
-    let warningViewModel: WarningBannerViewModel?
+    
+    private let isFullSOQBannerEnabled: () -> Bool
+    // The banner passed during initialisation (can be nil)
+    private let warningViewModel: WarningBannerViewModel?
+    // The temporary banner (e.g., storage-related banner)
+    private var temporaryBannerViewModel: WarningBannerViewModel?
+    // Computed property to determine the current banner to display
+    var currentBannerViewModel: WarningBannerViewModel? {
+        temporaryBannerViewModel ?? warningViewModel
+    }
+    
     var mediaContentDelegate: MediaContentDelegateHandler?
     private let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
     private let adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?
@@ -63,6 +74,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let nodeSourceUpdatesListener: any CloudDriveNodeSourceUpdatesListening
     private var nodesUpdateListener: any NodesUpdateListenerProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
@@ -80,6 +92,8 @@ class NodeBrowserViewModel: ObservableObject {
             viewModeMonitoringTask?.cancel()
         }
     }
+    private var accountStorageMonitoringTask: Task<Void, Never>?
+    private var refreshAccountDetailsTask: Task<Void, Never>?
     
     var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
         didSet {
@@ -105,6 +119,7 @@ class NodeBrowserViewModel: ObservableObject {
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -117,7 +132,10 @@ class NodeBrowserViewModel: ObservableObject {
         onEditingChanged: @escaping (Bool) -> Void,
         updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
-        onNodeStructureChanged: @escaping () -> Void
+        onNodeStructureChanged: @escaping () -> Void,
+        isFullSOQBannerEnabled: @escaping () -> Bool = {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .fullStorageOverQuotaBanner)
+        }
     ) {
         self.viewMode = viewMode
         self.searchResultsViewModel = searchResultsViewModel
@@ -143,7 +161,9 @@ class NodeBrowserViewModel: ObservableObject {
         self.cloudDriveViewModeMonitoringService = cloudDriveViewModeMonitoringService
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.accountStorageUseCase = accountStorageUseCase
         self.onNodeStructureChanged = onNodeStructureChanged
+        self.isFullSOQBannerEnabled = isFullSOQBannerEnabled
 
         $viewMode
             .removeDuplicates()
@@ -237,10 +257,17 @@ class NodeBrowserViewModel: ObservableObject {
 
         addNodesUpdateHandler()
         subscribeToViewModePreferenceChangeNotification()
+        monitorStorageStatusUpdates()
     }
     
     deinit {
         viewModeMonitoringTask?.cancel()
+        accountStorageMonitoringTask?.cancel()
+        refreshAccountDetailsTask?.cancel()
+        
+        viewModeMonitoringTask = nil
+        accountStorageMonitoringTask = nil
+        refreshAccountDetailsTask = nil
     }
 
     var viewModeAwareMediaDiscoveryViewModel: MediaDiscoveryContentViewModel? {
@@ -262,6 +289,7 @@ class NodeBrowserViewModel: ObservableObject {
         updateSortOrderIfNeeded()
         nodeSourceUpdatesListener.startListening()
         listenToNodeSensitivityChanges()
+        refreshStorageStatus()
     }
     
     func onViewDisappear() {
@@ -467,6 +495,65 @@ class NodeBrowserViewModel: ObservableObject {
                 self?.changeViewMode(updatedViewMode)
             }
         }
+    }
+    
+    private func monitorStorageStatusUpdates() {
+        guard isFullSOQBannerEnabled(), config.isFromSharedItem != true else { return }
+        
+        let onStorageStatusUpdateSequence = accountStorageUseCase.onStorageStatusUpdates
+        
+        accountStorageMonitoringTask = Task { [weak self] in
+            for await status in onStorageStatusUpdateSequence {
+                self?.updateTemporaryBanner(status: status)
+            }
+        }
+    }
+    
+    @MainActor
+    func updateTemporaryBanner(status: StorageStatusEntity) {
+        switch status {
+        case .full:
+            if temporaryBannerViewModel?.warningType != .fullStorageOverQuota {
+                temporaryBannerViewModel = WarningBannerViewModel(
+                    warningType: .fullStorageOverQuota,
+                    router: WarningBannerViewRouter()
+                )
+            }
+        default:
+            resetTemporaryBanner()
+        }
+        objectWillChange.send()
+    }
+    
+    func refreshStorageStatus() {
+        guard isFullSOQBannerEnabled(), config.isFromSharedItem != true else {
+            if !isFullSOQBannerEnabled() {
+                resetTemporaryBanner()
+                objectWillChange.send()
+            }
+            return
+        }
+        
+        if accountStorageUseCase.shouldRefreshAccountDetails {
+            refreshAccountDetails()
+        }
+        updateTemporaryBanner(status: accountStorageUseCase.currentStorageStatus)
+    }
+    
+    private func refreshAccountDetails() {
+        refreshAccountDetailsTask = Task { [weak self] in
+            try? await self?.accountStorageUseCase.refreshCurrentAccountDetails()
+            
+            NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: false)
+           
+            if let currentStorageStatus = self?.accountStorageUseCase.currentStorageStatus {
+                self?.updateTemporaryBanner(status: currentStorageStatus)
+            }
+        }
+    }
+    
+    private func resetTemporaryBanner() {
+        temporaryBannerViewModel = nil
     }
 }
 

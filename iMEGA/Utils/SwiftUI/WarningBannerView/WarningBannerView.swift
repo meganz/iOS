@@ -59,7 +59,7 @@ struct WarningBannerView: View {
                 .foregroundStyle(bannerTextColor)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
+                .padding(viewModel.applyNewDesign ? EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5) : EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
                 .onTapGesture {
                     viewModel.onBannerTapped()
                 }
@@ -67,27 +67,34 @@ struct WarningBannerView: View {
     }
     
     private func newBannerContent() -> some View {
-        VStack(alignment: .leading) {
-            if let title = viewModel.warningType.title {
-                Text(title)
-                    .font(.headline)
-                    .foregroundStyle(bannerTextColor)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
+        HStack(alignment: .top) {
+            if let iconName = viewModel.warningType.iconName {
+                Image(iconName)
+                    .padding(.leading, 5)
             }
             
-            bannerDescriptionContent()
-            
-            if let buttonTitle = viewModel.warningType.actionText {
-                Button {
-                    viewModel.onActionButtonTapped()
-                } label: {
-                    Text(buttonTitle)
-                        .font(.callout)
-                        .foregroundColor(.blue)
-                        .underline()
+            VStack(alignment: .leading) {
+                if let title = viewModel.warningType.title {
+                    Text(title)
+                        .font(.headline)
+                        .foregroundStyle(bannerTextColor)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
+                }
+                
+                bannerDescriptionContent()
+                
+                if let buttonTitle = viewModel.warningType.actionText {
+                    Button {
+                        viewModel.onActionButtonTapped()
+                    } label: {
+                        Text(buttonTitle)
+                            .font(.callout)
+                            .underline()
+                            .foregroundStyle(TokenColors.Link.primary.swiftUI)
+                            .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
+                    }
                 }
             }
         }

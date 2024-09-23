@@ -53,6 +53,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         currentUserSource.accountDetails
     }
     
+    public var shouldRefreshAccountDetails: Bool {
+        currentUserSource.shouldRefreshAccountDetails
+    }
+    
     public var bandwidthOverquotaDelay: Int64 {
         sdk.bandwidthOverquotaDelay
     }
@@ -251,7 +255,29 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
     
     public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> {
-        accountUpdatesProvider.onStorageStatusUpdates
+        AsyncStream { continuation in
+            Task {
+                for await storageStatus in accountUpdatesProvider.onStorageStatusUpdates {
+                    continuation.yield(storageStatus)
+                }
+            }
+            
+            Task {
+                for await storageStatus in storageStatusFromAccountDetailsUpdates {
+                    continuation.yield(storageStatus)
+                }
+            }
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
+    private var storageStatusFromAccountDetailsUpdates: AnyAsyncSequence<StorageStatusEntity> {
+        accountUpdatesProvider.onAccountRequestFinish
+            .compactMap { result in
+                guard case .success(let request) = result, request.type == .accountDetails else { return nil }
+                return self.currentStorageStatus
+            }
+            .eraseToAnyAsyncSequence()
     }
     
     public func multiFactorAuthCheck(email: String) async throws -> Bool {

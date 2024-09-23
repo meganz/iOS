@@ -7,11 +7,13 @@ public struct MockAccountStorageUseCase: AccountStorageUseCaseProtocol {
     public init(
         willStorageQuotaExceed: Bool = false,
         onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        currentStorageStatus: StorageStatusEntity = .noStorageProblems
+        currentStorageStatus: StorageStatusEntity = .noStorageProblems,
+        shouldRefreshAccountDetails: Bool = false
     ) {
         self.willStorageQuotaExceed = willStorageQuotaExceed
         self.onStorageStatusUpdates = onStorageStatusUpdates
         self.currentStorageStatus = currentStorageStatus
+        self.shouldRefreshAccountDetails = shouldRefreshAccountDetails
     }
     
     public func refreshCurrentAccountDetails() async throws { }
@@ -23,4 +25,6 @@ public struct MockAccountStorageUseCase: AccountStorageUseCaseProtocol {
     public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
     
     public var currentStorageStatus: StorageStatusEntity
+    
+    public var shouldRefreshAccountDetails: Bool
 }
