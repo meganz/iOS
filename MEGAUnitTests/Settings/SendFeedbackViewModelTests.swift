@@ -5,6 +5,7 @@ import XCTest
 
 final class SendFeedbackViewModelTests: XCTestCase {
 
+    @MainActor
     func test_getFeedback_notEmpty() async {
         let currentUser = UserEntity(email: "test@mega.co.nz")
         let mockUseCase = MockAccountUseCase(currentUser: currentUser)
@@ -17,6 +18,7 @@ final class SendFeedbackViewModelTests: XCTestCase {
         XCTAssertFalse(feedbackEntity.logsFileName.isEmpty)
     }
     
+    @MainActor
     func test_getFeedback_correctRecipient() async {
         let mockUseCase = MockAccountUseCase()
         let sut = SendFeedbackViewModel(accountUseCase: mockUseCase)
@@ -25,6 +27,7 @@ final class SendFeedbackViewModelTests: XCTestCase {
         XCTAssertEqual(feedbackEntity.toEmail, "iosfeedback@mega.nz")
     }
     
+    @MainActor
     func test_getFeedback_correctSubject() async {
         let mockUseCase = MockAccountUseCase()
         let sut = SendFeedbackViewModel(accountUseCase: mockUseCase)
