@@ -110,7 +110,8 @@ struct WarningBannerView: View {
             (.contactsNotVerified, false),
             (.contactNotVerifiedSharedFolder("Folder 1"), false),
             (.backupStatusError("Folder in MEGA can’t be located as it’s been moved or deleted, or you might not have access."), false),
-            (.fullStorageOverQuota, false)
+            (.fullStorageOverQuota, false),
+            (.almostFullStorageOverQuota, true)
         ]
        
         ForEach(0..<warningData.count, id: \.self) { index in

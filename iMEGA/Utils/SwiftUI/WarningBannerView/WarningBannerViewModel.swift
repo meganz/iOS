@@ -8,6 +8,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     case contactNotVerifiedSharedFolder(String)
     case backupStatusError(String)
     case fullStorageOverQuota
+    case almostFullStorageOverQuota
     
     /// The `Severity` enum defines the levels of severity for warnings or alerts displayed in the app.
     ///
@@ -22,6 +23,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     var title: String? {
         switch self {
         case .fullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.title
+        case .almostFullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.title
         default: nil
         }
     }
@@ -29,6 +31,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     var iconName: String? {
         switch self {
         case .fullStorageOverQuota: "fullStorageAlert"
+        case .almostFullStorageOverQuota: "almostFullStorageAlert"
         default: nil
         }
     }
@@ -36,6 +39,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     var actionText: String? {
         switch self {
         case .fullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.button
+        case .almostFullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.button
         default: nil
         }
     }
@@ -61,6 +65,8 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
             return errorMessage
         case .fullStorageOverQuota:
             return Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.description
+        case .almostFullStorageOverQuota:
+            return Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.description
         }
     }
 }
