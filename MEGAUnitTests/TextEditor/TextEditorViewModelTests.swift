@@ -1012,6 +1012,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.exportFile_calledTimes, 1)
     }
     
+    @MainActor
     func testAction_HideNode() {
         let textFile = TextFile(fileName: "testAction_hideNode")
         let mockRouter = MockTextEditorViewRouter()
@@ -1032,6 +1033,7 @@ final class TextEditorViewModelTests: XCTestCase {
         assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorHideNodeMenuItemEvent()])
     }
     
+    @MainActor
     func testAction_UnhideNode() {
         let textFile = TextFile(fileName: "testAction_hideNode")
         let mockRouter = MockTextEditorViewRouter()
@@ -1061,12 +1063,13 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.unhideNode_calledTimes, 1)
     }
     
+    @MainActor
     private func sut(
         nodeEntity: NodeEntity = NodeEntity(handle: 123, isFile: true),
         parentHandle: HandleEntity? = nil,
         textFile: TextFile = TextFile(fileName: "testAction_hideNode"),
         textEditorMode: TextEditorMode = .view,
-        router: MockTextEditorViewRouter = MockTextEditorViewRouter(),
+        router: MockTextEditorViewRouter? = nil,
         uploadFileUseCase: MockUploadFileUseCase = MockUploadFileUseCase(),
         downloadNodeUseCase: MockDownloadNodeUseCase = MockDownloadNodeUseCase(),
         nodeUseCase: MockNodeDataUseCase = MockNodeDataUseCase(),
@@ -1076,7 +1079,7 @@ final class TextEditorViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> TextEditorViewModel {
         let sut = TextEditorViewModel(
-            router: router,
+            router: router ?? MockTextEditorViewRouter(),
             textFile: textFile,
             textEditorMode: textEditorMode,
             uploadFileUseCase: uploadFileUseCase,
