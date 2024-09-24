@@ -1,4 +1,4 @@
-public enum PhotosBrowserDisplayMode {
+public enum PhotosBrowserDisplayMode: CaseIterable {
     case cloudDrive
     case rubbishBin
     case sharedItem
