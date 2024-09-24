@@ -226,6 +226,7 @@ final class NodeDescriptionCellControllerModel {
     private func updateSavePendingChanges(with text: String) {
         savePendingChanges = { [weak self] in
             guard let self, hasPendingChanges() else { return nil }
+            cellViewModel.dismissKeyboard?()
             return await update(descriptionString: text)
         }
     }

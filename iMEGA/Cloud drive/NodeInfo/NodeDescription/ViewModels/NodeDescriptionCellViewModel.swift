@@ -18,6 +18,7 @@ final class NodeDescriptionCellViewModel {
     private let tracker: any AnalyticsTracking
     
     var onUpdate: (() -> Void)?
+    var dismissKeyboard: (() -> Void)?
 
     init(
         tracker: some AnalyticsTracking = DIContainer.tracker,

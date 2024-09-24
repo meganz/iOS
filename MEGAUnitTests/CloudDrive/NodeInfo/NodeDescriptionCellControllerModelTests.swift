@@ -137,6 +137,29 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
         XCTAssertEqual(result, .error)
     }
 
+    func testSavePendingChanges_containsUnsavedChanges_shouldDismissKeyboard() async {
+        let sut = makeSUT(description: "description")
+        sut.cellViewModel.descriptionUpdated("updated description")
+        let exp = expectation(description: "wait for keyboard to dismiss")
+        sut.cellViewModel.dismissKeyboard = {
+            exp.fulfill()
+        }
+        let result = await sut.savePendingChanges()
+        await fulfillment(of: [exp], timeout: 1)
+        XCTAssertEqual(result, .updated)
+    }
+
+    func testSavePendingChanges_withNoChanges_shouldNotDismissKeyboard() async {
+        let sut = makeSUT(description: "description")
+        let exp = expectation(description: "wait for keyboard to dismiss")
+        exp.isInverted = true
+        sut.cellViewModel.dismissKeyboard = {
+            exp.fulfill()
+        }
+        let result = await sut.savePendingChanges()
+        await fulfillment(of: [exp], timeout: 1)
+    }
+
     func testFooterViewModel_whenDescriptionUpdated_withReadOnlyAccess_shouldShowLeadingTextAndHideTrailingTextAndNotScrollToCell() {
         let sut = makeSUT(description: "", accessType: .read, maxCharactersAllowed: 20)
         var scrollToCellTriggered = false
