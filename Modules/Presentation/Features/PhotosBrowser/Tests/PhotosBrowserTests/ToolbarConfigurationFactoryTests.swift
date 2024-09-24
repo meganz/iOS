@@ -1,42 +1,18 @@
-@testable import PhotosBrowser
+@testable @preconcurrency import PhotosBrowser
 
-import MEGAPresentation
+@preconcurrency import MEGAPresentation
 import MEGATest
-import XCTest
+import Testing
 
-final class ToolbarConfigurationFactoryTests: XCTestCase {
-
-    func testToolbarConfig_cloudDriveDisplayMode_shouldReturnCloudDriveToolbarConfigurationStrategy() {
-        // Given
-        let displayMode: PhotosBrowserDisplayMode = .cloudDrive
-        
-        // When
-        let config = ToolbarConfigurationFactory.configuration(on: displayMode)
-        
-        // Then
-        XCTAssertTrue(config is CloudDriveToolbarConfigurationStrategy, "Expected CloudDriveToolbarConfigurationStrategy but got \(type(of: config))")
-    }
+struct ToolbarConfigurationFactoryTests {
     
-    func testToolbarConfig_chatAttachmentDisplayMode_shouldReturnChatAttachmentConfigurationStrategy() {
-        // Given
-        let displayMode: PhotosBrowserDisplayMode = .chatAttachment
-        
-        // When
+    @Test("New Photos Browser Bottom Tool Bar Configuration Tests", arguments: [
+        PhotosBrowserDisplayMode.cloudDrive: CloudDriveToolbarConfigurationStrategy.self,
+        PhotosBrowserDisplayMode.chatAttachment: ChatAttachmenToolbarConfigurationStrategy.self,
+        PhotosBrowserDisplayMode.fileLink: CloudDriveToolbarConfigurationStrategy.self
+    ])
+    func testNavigationConfig(with displayMode: PhotosBrowserDisplayMode, strategy: ToolbarConfigurationStrategy.Type) {
         let config = ToolbarConfigurationFactory.configuration(on: displayMode)
-        
-        // Then
-        XCTAssertTrue(config is ChatAttachmenToolbarConfigurationStrategy, "Expected ChatAttachmenToolbarConfigurationStrategy but got \(type(of: config))")
-    }
-    
-    // This will be changed when supporting file link mode
-    func testToolbarConfig_fileLinkDisplayMode_shouldReturnCloudDriveToolbarConfigurationStrategy() {
-        // Given
-        let displayMode: PhotosBrowserDisplayMode = .fileLink
-        
-        // When
-        let config = ToolbarConfigurationFactory.configuration(on: displayMode)
-        
-        // Then
-        XCTAssertTrue(config is CloudDriveToolbarConfigurationStrategy, "Expected CloudDriveToolbarConfigurationStrategy but got \(type(of: config))")
+        #expect(type(of: config) == strategy)
     }
 }

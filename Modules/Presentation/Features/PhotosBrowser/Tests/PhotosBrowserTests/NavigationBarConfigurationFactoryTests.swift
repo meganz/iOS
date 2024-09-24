@@ -1,42 +1,18 @@
-@testable import PhotosBrowser
+@testable @preconcurrency import PhotosBrowser
 
-import MEGAPresentation
+@preconcurrency import MEGAPresentation
 import MEGATest
-import XCTest
+import Testing
 
-final class NavigationBarConfigurationFactoryTests: XCTestCase {
-
-    func testNavConfig_cloudDriveDisplayMode_shouldReturnCloudDriveNavigationBarConfigurationStrategy() {
-        // Given
-        let displayMode: PhotosBrowserDisplayMode = .cloudDrive
-        
-        // When
-        let config = NavigationBarConfigurationFactory.configuration(on: displayMode)
-        
-        // Then
-        XCTAssertTrue(config is CloudDriveNavigationBarConfigurationStrategy, "Expected CloudDriveNavigationBarConfigurationStrategy but got \(type(of: config))")
-    }
+struct NavigationBarConfigurationFactoryTests {
     
-    func testNavConfig_chatAttachmentDisplayMode_shouldReturnChatAttachmentNavigationBarConfigurationStrategy() {
-        // Given
-        let displayMode: PhotosBrowserDisplayMode = .chatAttachment
-        
-        // When
+    @Test("New Photos Browser Navigation Bar Configuration Tests", arguments: [
+        PhotosBrowserDisplayMode.cloudDrive: CloudDriveNavigationBarConfigurationStrategy.self,
+        PhotosBrowserDisplayMode.chatAttachment: ChatAttachmentNavigationBarConfigurationStrategy.self,
+        PhotosBrowserDisplayMode.fileLink: CloudDriveNavigationBarConfigurationStrategy.self
+    ])
+    func testNavigationConfig(with displayMode: PhotosBrowserDisplayMode, strategy: NavigationBarConfigurationStrategy.Type) {
         let config = NavigationBarConfigurationFactory.configuration(on: displayMode)
-        
-        // Then
-        XCTAssertTrue(config is ChatAttachmentNavigationBarConfigurationStrategy, "Expected ChatAttachmentNavigationBarConfigurationStrategy but got \(type(of: config))")
-    }
-    
-    // This will be changed when supporting file link mode
-    func testNavConfig_fileLinkDisplayMode_shouldReturnCloudDriveNavigationBarConfigurationStrategy() {
-        // Given
-        let displayMode: PhotosBrowserDisplayMode = .fileLink
-        
-        // When
-        let config = NavigationBarConfigurationFactory.configuration(on: displayMode)
-        
-        // Then
-        XCTAssertTrue(config is CloudDriveNavigationBarConfigurationStrategy, "Expected CloudDriveNavigationBarConfigurationStrategy but got \(type(of: config))")
+        #expect(type(of: config) == strategy)
     }
 }
