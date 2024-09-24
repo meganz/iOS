@@ -1,6 +1,6 @@
 import MEGASwift
 
-public protocol NetworkMonitorUseCaseProtocol {
+public protocol NetworkMonitorUseCaseProtocol: Sendable {
     /// Infinite `AnyAsyncSequence` returning results from network path monitoring.
     ///
     /// The stream will not finish and the task will need to be cancelled.

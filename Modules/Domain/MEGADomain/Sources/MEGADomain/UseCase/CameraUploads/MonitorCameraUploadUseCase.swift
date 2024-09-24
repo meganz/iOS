@@ -8,7 +8,7 @@ public enum CameraUploadPausedReason {
 }
 
 /// UseCase that provides information relating to the current active status of the CameraUploads in the application.
-public protocol MonitorCameraUploadUseCaseProtocol {
+public protocol MonitorCameraUploadUseCaseProtocol: Sendable {
     
     ///  AsyncSequence that fires off CameraUploadStatsEntity relating to the status of active camera uploads occurring in the application.
     ///   A new stats update should be triggered when uploads have had a state change. This includes completions, failures or paused
