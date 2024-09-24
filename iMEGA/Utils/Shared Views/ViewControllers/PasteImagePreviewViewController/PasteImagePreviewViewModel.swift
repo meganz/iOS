@@ -9,7 +9,6 @@ enum PasteImagePreviewAction: ActionType {
 
 protocol PasteImagePreviewRouting: Routing {
     func dismiss()
-
 }
 
 final class PasteImagePreviewViewModel: ViewModelType {
@@ -19,14 +18,20 @@ final class PasteImagePreviewViewModel: ViewModelType {
     // MARK: - Private properties
     private let router: any PasteImagePreviewRouting
     private let chatRoom: MEGAChatRoom
+    private let chatUploader: any ChatUploaderProtocol
     
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: some PasteImagePreviewRouting, chatRoom: MEGAChatRoom) {
+    init(
+        router: some PasteImagePreviewRouting,
+        chatRoom: MEGAChatRoom,
+        chatUploader: some ChatUploaderProtocol = ChatUploader.sharedInstance
+    ) {
         self.router = router
         self.chatRoom = chatRoom
+        self.chatUploader = chatUploader
     }
     
     // MARK: - Dispatch action
@@ -44,6 +49,6 @@ final class PasteImagePreviewViewModel: ViewModelType {
         guard let image = UIPasteboard.general.loadImage() else {
             return
         }
-        ChatUploader.sharedInstance.upload(image: image, chatRoomId: chatRoom.chatId)
+        chatUploader.upload(image: image, chatRoomId: chatRoom.chatId)
     }
 }

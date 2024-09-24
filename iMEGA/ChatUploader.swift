@@ -1,7 +1,19 @@
 import ChatRepo
 import MEGASDKRepo
 
-final class ChatUploader: NSObject {
+protocol ChatUploaderProtocol {
+    func upload(image: UIImage, chatRoomId: UInt64)
+    func upload(
+        filepath: String,
+        appData: String,
+        chatRoomId: UInt64,
+        parentNode: MEGANode,
+        isSourceTemporary: Bool,
+        delegate: MEGAStartUploadTransferDelegate
+    )
+}
+
+final class ChatUploader: NSObject, ChatUploaderProtocol {
     static let sharedInstance = ChatUploader()
     
     private let store = MEGAStore.shareInstance()
