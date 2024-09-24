@@ -116,4 +116,16 @@ public final class MockChatSDK: MEGAChatSdk, @unchecked Sendable {
     public override func queryChatLink(_ chatId: UInt64, delegate: any MEGAChatRequestDelegate) {
         delegate.onChatRequestFinish?(self, request: chatRequest, error: MockChatError(chatErrorType: chatError))
     }
+    
+    public override func createMeeting(withTitle title: String, speakRequest: Bool, waitingRoom: Bool, openInvite: Bool, queueType: ListenerQueueType, delegate: any MEGAChatRequestDelegate) {
+        delegate.onChatRequestFinish?(self, request: chatRequest, error: MockChatError(chatErrorType: chatError))
+    }
+    
+    public override func checkChatLink(_ link: URL, delegate: any MEGAChatRequestDelegate) {
+        delegate.onChatRequestFinish?(self, request: chatRequest, error: MockChatError(chatErrorType: chatError))
+    }
+    
+    public override func logout(with delegate: any MEGAChatRequestDelegate) {        
+        delegate.onChatRequestFinish?(self, request: chatRequest, error: MockChatError(chatErrorType: chatError))
+    }
 }
