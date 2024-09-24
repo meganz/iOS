@@ -2,12 +2,12 @@ import Foundation
 
 // MARK: - Use case protocol -
 
-public protocol ExportFileNodeUseCaseProtocol {
+public protocol ExportFileNodeUseCaseProtocol: Sendable {
     func export(node: NodeEntity) async throws -> URL
     func export(nodes: [NodeEntity]) async throws -> [URL]
 }
 
-public protocol ExportFileChatMessageUseCaseProtocol {
+public protocol ExportFileChatMessageUseCaseProtocol: Sendable {
     func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> [URL]
     func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL
 }
