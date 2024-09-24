@@ -78,7 +78,7 @@ struct AdsWebView: UIViewRepresentable {
             decidePolicyFor navigationAction: WKNavigationAction
         ) async -> WKNavigationActionPolicy {
             guard let url = navigationAction.request.url,
-                  let currentDomain = await viewModel.urlHost(url: webView.url),
+                  let currentDomain = viewModel.urlHost(url: webView.url),
                   let targetDomain = viewModel.urlHost(url: url) else {
                 return .cancel
             }
@@ -90,7 +90,7 @@ struct AdsWebView: UIViewRepresentable {
                 return .allow
             }
             
-            guard await UIApplication.shared.canOpenURL(url) else {
+            guard UIApplication.shared.canOpenURL(url) else {
                 return .cancel
             }
             
