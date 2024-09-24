@@ -135,6 +135,7 @@ final class AccountUpdatesProviderTests: XCTestCase {
 
     func testAccountUpdates_onStorageStatusUpdates_whenNotTerminated_shouldYieldElements() async {
         await runTest(
+            areSOQBannersEnabled: true,
             startMonitoring: startMonitoringStorageStatusUpdates,
             simulateEvents: { sdk in
                 sdk.simulateOnEvent(self.greenStorageEvent)
@@ -149,6 +150,7 @@ final class AccountUpdatesProviderTests: XCTestCase {
 
     func testAccountUpdates_onStorageStatusUpdates_whenTerminated_shouldStopYieldingElements() async {
         await runTest(
+            areSOQBannersEnabled: true,
             startMonitoring: startMonitoringStorageStatusUpdates,
             simulateEvents: { sdk in
                 sdk.simulateOnEvent(self.greenStorageEvent)
@@ -163,9 +165,12 @@ final class AccountUpdatesProviderTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT() -> (AccountUpdatesProvider, MockSdk) {
+    private func makeSUT(areSOQBannersEnabled: Bool = false) -> (AccountUpdatesProvider, MockSdk) {
         let sdk = MockSdk(shouldListGlobalDelegates: true)
-        let sut = AccountUpdatesProvider(sdk: sdk)
+        let sut = AccountUpdatesProvider(
+            sdk: sdk,
+            areSOQBannersEnabled: areSOQBannersEnabled
+        )
         return (sut, sdk)
     }
 
@@ -201,17 +206,21 @@ final class AccountUpdatesProviderTests: XCTestCase {
         sut: AccountUpdatesProvider,
         expectationToFulfill: XCTestExpectation
     ) -> Task<[StorageStatusEntity], Never> {
-        startMonitoringUpdates(asyncSequence: sut.onStorageStatusUpdates, expectationToFulfill: expectationToFulfill)
+        startMonitoringUpdates(
+            asyncSequence: sut.onStorageStatusUpdates,
+            expectationToFulfill: expectationToFulfill
+        )
     }
 
     private func runTest<T>(
+        areSOQBannersEnabled: Bool = false,
         startMonitoring: @escaping (AccountUpdatesProvider, XCTestExpectation) -> Task<[T], Never>,
         onTaskStart: @escaping (MockSdk) -> Void = { _ in },
         simulateEvents: @escaping (MockSdk) -> Void,
         onTaskCancel: @escaping (MockSdk) -> Void = { _ in },
         assertResults: @escaping ([T]) -> Void
     ) async {
-        let (sut, sdk) = makeSUT()
+        let (sut, sdk) = makeSUT(areSOQBannersEnabled: areSOQBannersEnabled)
         let expectation = expectation(description: "Updates")
         let task = startMonitoring(sut, expectation)
 
