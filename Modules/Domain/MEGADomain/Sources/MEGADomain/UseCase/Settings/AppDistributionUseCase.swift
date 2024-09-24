@@ -1,4 +1,4 @@
-public protocol AppDistributionUseCaseProtocol {
+public protocol AppDistributionUseCaseProtocol: Sendable {
     func checkForUpdate() async throws -> AppDistributionReleaseEntity?
 }
 

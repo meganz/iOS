@@ -2,6 +2,7 @@ import MEGADomain
 import MEGAL10n
 import SwiftUI
 
+@MainActor
 final class QASettingsViewModel {
     private enum Constants {
         static let newVersionAvailableAlertTitle = "New Version Available"
@@ -28,7 +29,7 @@ final class QASettingsViewModel {
     // MARK: - Check for Update
     @discardableResult
     func checkForUpdate() -> Task<Void, Never>? {
-        checkForUpdateTask = Task { @MainActor in
+        checkForUpdateTask = Task {
             do {
                 if let releaseEntity = try await appDistributionUseCase.checkForUpdate() {
                     show(release: releaseEntity)
