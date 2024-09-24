@@ -18,7 +18,7 @@ public final class MeetingCreatingRepository: NSObject, MeetingCreatingRepositor
     private let sdk: MEGASdk
     private let chatConnectionStateUpdateProvider: any ChatConnectionStateUpdateProviderProtocol
     
-    init(
+    public init(
         chatSdk: MEGAChatSdk,
         sdk: MEGASdk,
         chatConnectionStateUpdateProvider: some ChatConnectionStateUpdateProviderProtocol

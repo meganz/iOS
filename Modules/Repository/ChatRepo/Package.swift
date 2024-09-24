@@ -46,7 +46,8 @@ let package = Package(
                 "ChatRepo",
                 "ChatRepoMock",
                 "MEGATest",
-                .product(name: "MEGADomainMock", package: "MEGADomain")
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGASDKRepoMock", package: "MEGASDKRepo")
             ],
             swiftSettings: settings
         )
