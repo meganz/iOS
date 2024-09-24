@@ -27,6 +27,7 @@ enum TextEditorViewAction: ActionType {
     case load
 }
 
+@MainActor
 protocol TextEditorViewRouting: Routing {
     func chooseParentNode(completion: @escaping (HandleEntity) -> Void)
     func dismissTextEditorVC()
