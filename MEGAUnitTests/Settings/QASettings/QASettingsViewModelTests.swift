@@ -6,7 +6,7 @@ import XCTest
 
 final class QASettingsViewModelTests: XCTestCase {
     
-    func testCheckForUpdate_whenAppDistributionError_showErrorAlert() async {
+    @MainActor func testCheckForUpdate_whenAppDistributionError_showErrorAlert() async {
         let (sut, router, _) = makeSUT(appDistributionResult: .failure(NSError()))
         
         let task = sut.checkForUpdate()
@@ -15,7 +15,7 @@ final class QASettingsViewModelTests: XCTestCase {
         XCTAssertEqual(router.showErrorAlertCallCount, 1)
     }
     
-    func testCheckForUpdate_whenNoNewRelease_doesNotShowAlert() async {
+    @MainActor func testCheckForUpdate_whenNoNewRelease_doesNotShowAlert() async {
         let (sut, router, _) = makeSUT(appDistributionResult: .success(nil))
         
         let task = sut.checkForUpdate()
@@ -27,7 +27,7 @@ final class QASettingsViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(
+    @MainActor private func makeSUT(
         appDistributionResult: Result<AppDistributionReleaseEntity?, any Error> = .failure(NSError()),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -53,7 +53,6 @@ final class QASettingsViewModelTests: XCTestCase {
         func showAlert(withError error: any Error) {
             showErrorAlertCallCount += 1
         }
-        
     }
 
 }
