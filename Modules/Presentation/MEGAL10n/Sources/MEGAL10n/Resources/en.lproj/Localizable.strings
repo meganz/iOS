@@ -4344,3 +4344,23 @@
 "chat.meetings.emptyState.v2.button.startMeetingNow"="Start meeting now";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="Schedule meeting";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="The power of privacy in your pocket";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="The power of privacy in the palm of your hands";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="End-to-end encrypted cloud solutions";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="Your secure cloud storage space";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="Your space to chat freely";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="Your space for encrypted meetings";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="Your space to share & collaborate with anyone";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="Your space to upload & sync your photos and videos";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="Move to MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="Join the millions of people and businesses who trust MEGA to store and protect their data.";
