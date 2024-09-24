@@ -30,6 +30,9 @@ final class NodeDescriptionViewCell: UITableViewCell {
                 self?.updateUI()
             }
             self.updateUI()
+            viewModel?.dismissKeyboard = { [weak textView] in
+                textView?.resignFirstResponder()
+            }
         }
     }
 
