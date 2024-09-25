@@ -26,11 +26,11 @@ public protocol AccountUpdatesProviderProtocol: Sendable {
 
 public struct AccountUpdatesProvider: AccountUpdatesProviderProtocol {
     private let sdk: MEGASdk
-    private let areSOQBannersEnabled: Bool
+    private let areSOQBannersEnabled: @Sendable () -> Bool
     
     public init(
         sdk: MEGASdk,
-        areSOQBannersEnabled: Bool = false
+        areSOQBannersEnabled: @escaping @Sendable () -> Bool = { false }
     ) {
         self.sdk = sdk
         self.areSOQBannersEnabled = areSOQBannersEnabled
@@ -97,14 +97,14 @@ public struct AccountUpdatesProvider: AccountUpdatesProviderProtocol {
 
 // MARK: - AccountRequestDelegate
 private final class AccountRequestDelegate: NSObject {
-    private let areSOQBannersEnabled: Bool
+    private let areSOQBannersEnabled: () -> Bool
     private let onRequestFinish: (Result<AccountRequestEntity, any Error>) -> Void
     private let onUserAlertsUpdate: ([UserAlertEntity]) -> Void
     private let onContactRequestsUpdate: ([ContactRequestEntity]) -> Void
     private let onStorageStatusEventUpdate: (StorageStatusEntity) -> Void
     
     init(
-        areSOQBannersEnabled: Bool = false,
+        areSOQBannersEnabled: @escaping () -> Bool = { false },
         onRequestFinish: @escaping (Result<AccountRequestEntity, any Error>) -> Void = {_ in },
         onUserAlertsUpdate: @escaping ([UserAlertEntity]) -> Void = {_ in },
         onContactRequestsUpdate: @escaping ([ContactRequestEntity]) -> Void = {_ in },
@@ -139,7 +139,7 @@ extension AccountRequestDelegate: MEGAGlobalDelegate {
     }
     
     public func onEvent(_ api: MEGASdk, event: MEGAEvent) {
-        if areSOQBannersEnabled {
+        if areSOQBannersEnabled() {
             let eventEntity = event.toEventEntity()
             if eventEntity.isStorageCapacityEvent(),
                let storageStatus = eventEntity.storageStatus {

@@ -169,7 +169,7 @@ final class AccountUpdatesProviderTests: XCTestCase {
         let sdk = MockSdk(shouldListGlobalDelegates: true)
         let sut = AccountUpdatesProvider(
             sdk: sdk,
-            areSOQBannersEnabled: areSOQBannersEnabled
+            areSOQBannersEnabled: { areSOQBannersEnabled }
         )
         return (sut, sdk)
     }
