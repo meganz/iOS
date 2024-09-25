@@ -33,6 +33,7 @@ public protocol ChatRoomRepositoryProtocol: RepositoryProtocol, Sendable {
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
+    func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) async throws
     func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity
     func chatRoomMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
     func userEmail(for handle: HandleEntity) async -> String?

@@ -88,6 +88,33 @@ extension ContactDetailsViewController {
     @objc var primaryIconColor: UIColor {
         TokenColors.Icon.primary
     }
+    
+    @objc func removeParticipantFromGroup() {
+        guard !isUserActionInProgress else { return }
+        userActionInProgress(true)
+        Task {
+            do {
+                let chatRoomRepository = ChatRoomRepository.newRepo
+                try await chatRoomRepository.remove(fromChat: groupChatRoom.toChatRoomEntity(), userId: userHandle)
+                navigationController?.popViewController(animated: true) { [weak self] in
+                    self?.userActionInProgress(false)
+                }
+            } catch {
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                userActionInProgress(false)
+            }
+        }
+    }
+    
+    private func userActionInProgress(_ inProgress: Bool) {
+        if inProgress {
+            isUserActionInProgress = true
+            SVProgressHUD.show()
+        } else {
+            isUserActionInProgress = false
+            SVProgressHUD.dismiss()
+        }
+    }
 }
 
 extension ContactDetailsViewController: PushNotificationControlProtocol {

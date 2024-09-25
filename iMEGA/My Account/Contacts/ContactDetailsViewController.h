@@ -26,5 +26,6 @@ typedef NS_ENUM (NSInteger, ContactDetailsMode) {
 @property (nonatomic) uint64_t userHandle;
 @property (nonatomic) MEGAChatRoom *groupChatRoom; // Used to change contacts permissions or remove as participant in the group chat
 @property (nonatomic, copy) void (^didUpdatePeerPermission)(MEGAChatRoomPrivilege peerPrivilege);
+@property (assign, nonatomic, getter=isUserActionInProgress) BOOL userActionInProgress;
 
 @end
