@@ -42,34 +42,30 @@ final class UsageViewModel: ViewModelType {
         }
     }
     
-    @MainActor
     private func loadDetails(commandType: UsageViewModel.Command) {
-        invokeCommand?(commandType)
+        Task {
+            invokeCommand?(commandType)
+        }
     }
     
     private func loadStorageDetails() {
-        Task {
-            await loadDetails(
-                commandType: .loadedStorage(
-                    used: accountUseCase.currentAccountDetails?.storageUsed ?? 0,
-                    max: accountUseCase.currentAccountDetails?.storageMax ?? 0
-                )
+        loadDetails(
+            commandType: .loadedStorage(
+                used: accountUseCase.currentAccountDetails?.storageUsed ?? 0,
+                max: accountUseCase.currentAccountDetails?.storageMax ?? 0
             )
-        }
+        )
     }
     
     private func loadTransferDetails() {
-        Task {
-            await loadDetails(
-                commandType: .loadedTransfer(
-                    used: accountUseCase.currentAccountDetails?.transferUsed ?? 0,
-                    max: accountUseCase.currentAccountDetails?.transferMax ?? 0
-                )
+        loadDetails(
+            commandType: .loadedTransfer(
+                used: accountUseCase.currentAccountDetails?.transferUsed ?? 0,
+                max: accountUseCase.currentAccountDetails?.transferMax ?? 0
             )
-        }
+        )
     }
     
-    @MainActor
     private func updateStorageUsedAsync(for type: StorageType, storageUsedAsync: @escaping () async throws -> Int64) async {
         invokeCommand?(.startLoading(type))
         do {
@@ -80,11 +76,12 @@ final class UsageViewModel: ViewModelType {
         }
     }
     
-    @MainActor
-    private func updateStorageUsed(for type: StorageType, storageUsedFunction: () -> Int64) {
-        invokeCommand?(.startLoading(type))
-        let storageSize = storageUsedFunction()
-        invokeCommand?(.loaded(type, storageSize))
+    private func updateStorageUsed(for type: StorageType, storageUsedFunction: @escaping () -> Int64) {
+        Task {
+            invokeCommand?(.startLoading(type))
+            let storageSize = storageUsedFunction()
+            invokeCommand?(.loaded(type, storageSize))
+        }
     }
     
     private func updateBackupNodeStorageUsed() {
@@ -97,30 +94,24 @@ final class UsageViewModel: ViewModelType {
     }
     
     private func updateRootNodeStorageUsed() {
-        Task {
-            await updateStorageUsed(
-                for: .cloud,
-                storageUsedFunction: accountUseCase.rootStorageUsed
-            )
-        }
+        updateStorageUsed(
+            for: .cloud,
+            storageUsedFunction: accountUseCase.rootStorageUsed
+        )
     }
 
     private func updateRubbishBinStorageUsed() {
-        Task {
-            await updateStorageUsed(
-                for: .rubbishBin,
-                storageUsedFunction: accountUseCase.rubbishBinStorageUsed
-            )
-        }
+        updateStorageUsed(
+            for: .rubbishBin,
+            storageUsedFunction: accountUseCase.rubbishBinStorageUsed
+        )
     }
 
     private func updateIncomingSharesStorageUsed() {
-        Task {
-            await updateStorageUsed(
-                for: .incomingShares,
-                storageUsedFunction: accountUseCase.incomingSharesStorageUsed
-            )
-        }
+        updateStorageUsed(
+            for: .incomingShares,
+            storageUsedFunction: accountUseCase.incomingSharesStorageUsed
+        )
     }
     
     var isBusinessAccount: Bool {
