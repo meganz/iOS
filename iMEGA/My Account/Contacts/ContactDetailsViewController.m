@@ -446,18 +446,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self presentViewController:permissionsActionSheet animated:YES completion:nil];
 }
 
-- (void)removeParticipantFromGroup {
-    ChatRequestDelegate *delegate = [ChatRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-        if (error.type) {
-            [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
-        } else {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }];
-    
-    [MEGAChatSdk.shared removeFromChat:self.groupChatRoom.chatId userHandle:self.userHandle delegate:delegate];
-}
-
 - (void)addParticipantToContact {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];

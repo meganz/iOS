@@ -332,6 +332,19 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
         sdk.remove(fromChat: chat.chatId, userHandle: userId)
     }
     
+    public func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            sdk.remove(fromChat: chat.chatId, userHandle: userId, delegate: ChatRequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        }
+    }
+    
     public func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity {
         sdk.loadMessages(forChat: chat.chatId, count: count).toChatSourceEntity()
     }

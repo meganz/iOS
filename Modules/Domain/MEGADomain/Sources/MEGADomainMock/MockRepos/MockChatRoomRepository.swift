@@ -214,6 +214,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
     public func remove(fromChat chat: MEGADomain.ChatRoomEntity, userId: MEGADomain.HandleEntity) {
     }
     
+    public func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) async throws { }
+
     public func loadMessages(forChat chat: MEGADomain.ChatRoomEntity, count: Int) -> MEGADomain.ChatSourceEntity {
         loadMessages
     }
