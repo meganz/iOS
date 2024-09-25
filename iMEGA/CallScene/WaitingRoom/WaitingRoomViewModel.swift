@@ -27,7 +27,6 @@ final class WaitingRoomViewModel: ObservableObject {
     private let callManager: any CallManagerProtocol
     private let meetingUseCase: any MeetingCreatingUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
-    private let waitingRoomUseCase: any WaitingRoomUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let userImageUseCase: any UserImageUseCaseProtocol
@@ -99,7 +98,6 @@ final class WaitingRoomViewModel: ObservableObject {
          callManager: some CallManagerProtocol,
          meetingUseCase: some MeetingCreatingUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
-         waitingRoomUseCase: some WaitingRoomUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          userImageUseCase: some UserImageUseCaseProtocol,
@@ -119,7 +117,6 @@ final class WaitingRoomViewModel: ObservableObject {
         self.callManager = callManager
         self.meetingUseCase = meetingUseCase
         self.authUseCase = authUseCase
-        self.waitingRoomUseCase = waitingRoomUseCase
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.userImageUseCase = userImageUseCase
@@ -380,7 +377,7 @@ final class WaitingRoomViewModel: ObservableObject {
         
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
-            initials: waitingRoomUseCase.userName().initialForAvatar(),
+            initials: meetingUseCase.username.initialForAvatar(),
             avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
         )
         
@@ -490,7 +487,7 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private func joinChatCall() async {
         do {
-            _ = try await waitingRoomUseCase.joinChat(forChatId: chatId, userHandle: requestUserHandle)
+            _ = try await meetingUseCase.joinChat(forChatId: chatId, userHandle: requestUserHandle)
             if accountUseCase.isGuest {
                 fetchUserAvatar()
             }

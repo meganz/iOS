@@ -198,7 +198,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     @MainActor
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingDidStart_shoudBecomeWaitForHostToLetIn() {
         let callUseCase = MockCallUseCase(call: CallEntity(), answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
+        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success, joinCallCompletion: .success(ChatRoomEntity()))
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let callManager = MockCallManager()
@@ -222,7 +222,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     @MainActor
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingNotStart_shoudBecomeWaitForHostToStart() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
+        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success, joinCallCompletion: .success(ChatRoomEntity()))
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(callUseCase: callUseCase,
                                        meetingUseCase: meetingUseCase,
@@ -243,12 +243,10 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let router = MockWaitingRoomViewRouter()
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
         let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
-        let waitingRoomUseCase = MockWaitingRoomUseCase(joinChatResult: .failure(.generic))
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(router: router,
                                        callUseCase: callUseCase,
                                        meetingUseCase: meetingUseCase,
-                                       waitingRoomUseCase: waitingRoomUseCase,
                                        accountUseCase: accountUseCase,
                                        chatLink: "Test chatLink")
         
@@ -289,7 +287,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     @MainActor
     func testUserAvatar_onLoadWaitingRoomAndIsGuestAndJoinsTheChat_shouldShowAvatar() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
+        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success, joinCallCompletion: .success(ChatRoomEntity()))
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
         let userImageUseCase = MockUserImageUseCase(fetchAvatarResult: .success("image"))
@@ -312,7 +310,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     @MainActor
     func testCheckChatLink_whenUserPrivilegeIsRemovedAndJoinChatCallSuccess_shoudBecomeWaitForHostToStart() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .removed)))
+        let meetingUseCase = MockMeetingCreatingUseCase(joinCallCompletion: .success(ChatRoomEntity()), checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .removed)))
         let sut = WaitingRoomViewModel(callUseCase: callUseCase,
                                        meetingUseCase: meetingUseCase,
                                        chatLink: "Test chatLink")
@@ -325,7 +323,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     @MainActor
     func testCheckChatLink_whenUserPrivilegeIsReadOnlyAndJoinChatCallSuccess_shoudBecomeWaitForHostToStart() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .readOnly)))
+        let meetingUseCase = MockMeetingCreatingUseCase(joinCallCompletion: .success(ChatRoomEntity()), checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .readOnly)))
         let sut = WaitingRoomViewModel(callUseCase: callUseCase,
                                        meetingUseCase: meetingUseCase,
                                        chatLink: "Test chatLink")

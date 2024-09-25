@@ -54,7 +54,6 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
                 userStoreRepo: UserStoreRepository.newRepo
             ),
             authUseCase: AuthUseCase(repo: AuthRepository.newRepo, credentialRepo: CredentialRepository.newRepo),
-            waitingRoomUseCase: WaitingRoomUseCase(waitingRoomRepo: WaitingRoomRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             userImageUseCase: userImageUseCase,
