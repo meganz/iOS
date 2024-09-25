@@ -1111,6 +1111,7 @@
   
     if (self.searchController.isActive) {
         [self updateSearchResultsWithSearchString: self.searchController.searchBar.text showsHUD:NO];
+        return;
     } else if (self.incomingButton.selected) {
         itemSelected = 0;
         nodesToCheckArray = self.incomingNodesMutableArray;
