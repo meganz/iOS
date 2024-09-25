@@ -44,7 +44,8 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
                 }
                 let expectation = expectation(description: "Expecting event to occur for changeType (\(changeType)")
 
-                let task = await expectationTaskStarted {
+                let task = await expectationTaskStarted { taskStartedExpectation in
+                    taskStartedExpectation.fulfill()
                     for await events in favouriteItemsUseCase.eventsStream {
                         XCTAssertEqual(events, .createFavouriteItems([]))
                         expectation.fulfill()
@@ -63,7 +64,8 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
                 }
                 let expectation = expectation(description: "Not expecting any events to occur for changeType (\(changeType)")
                 expectation.isInverted = true
-                let task = await expectationTaskStarted {
+                let task = await expectationTaskStarted { taskStartedExpectation in
+                    taskStartedExpectation.fulfill()
                     for await _ in favouriteItemsUseCase.eventsStream {
                         expectation.fulfill()
                         break
@@ -147,7 +149,8 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
                     return
                 }
                 let expectation = expectation(description: "Expecting event to occur for changeType (\(changeType)")
-                let task = await expectationTaskStarted {
+                let task = await expectationTaskStarted { taskStartedExpectation in
+                    taskStartedExpectation.fulfill()
                     for await events in recentItemsUseCase.eventsStream {
                         XCTAssertEqual(events, .resetRecentItems([]))
                         expectation.fulfill()
@@ -170,7 +173,8 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
                 }
                 let expectation = expectation(description: "Not expecting any events to occur for changeType (\(changeType)")
                 expectation.isInverted = true
-                let task = await expectationTaskStarted {
+                let task = await expectationTaskStarted { taskStartedExpectation in
+                    taskStartedExpectation.fulfill()
                     for await _ in recentItemsUseCase.eventsStream {
                         expectation.fulfill()
                         break

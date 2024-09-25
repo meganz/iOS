@@ -360,6 +360,12 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     }
 }
 
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    if ([self shouldReloadOnUserUpdateWithUserList:userList]) {
+        [self debounce:@selector(getRecentActions) delay:RecentsViewReloadTimeDelay];
+    }
+}
+
 #pragma mark - AudioPlayerPresenterProtocol
 
 - (void)updateContentView:(CGFloat)height {

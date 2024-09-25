@@ -23,6 +23,12 @@ extension RecentsViewController {
         self.present(navigationController, animated: true)
     }
     
+    @objc func shouldReloadOnUserUpdate(userList: MEGAUserList) -> Bool {
+        userList
+            .toUserEntities()
+            .contains(where: { $0.changes.contains(.CCPrefs) })
+    }
+    
     @objc func getRecentActions() {
         Task { await getRecentActions() }
     }
