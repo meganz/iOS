@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 
+@MainActor
 final class ChatRoomNotificationsViewModel: ObservableObject {
     private var chatRoom: ChatRoomEntity
     lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)

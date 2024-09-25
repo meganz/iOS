@@ -21,7 +21,7 @@ extension FutureMeetingRoomViewModel {
         callManager: some CallManagerProtocol = MockCallManager(),
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         tracker: some AnalyticsTracking = MockTracker(),
-        chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
+        chatNotificationControl: ChatNotificationControl? = nil,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         chatListItemAvatar: ChatListItemAvatarEntity? = nil,
         callInProgressTimeReporter: some CallInProgressTimeReporting = MockCallInProgressTimeReporter(),
@@ -43,7 +43,7 @@ extension FutureMeetingRoomViewModel {
             callManager: callManager,
             permissionAlertRouter: permissionAlertRouter,
             tracker: tracker,
-            chatNotificationControl: chatNotificationControl,
+            chatNotificationControl: chatNotificationControl ?? ChatNotificationControl(delegate: MockPushNotificationControl()),
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             chatListItemAvatar: chatListItemAvatar,
             callInProgressTimeReporter: callInProgressTimeReporter
