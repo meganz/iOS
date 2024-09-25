@@ -35,12 +35,11 @@ public extension XCTestCase {
         }
     }
     
-    func expectationTaskStarted(timeout: TimeInterval = 0.5, task: @escaping @Sendable() async -> Void) async -> Task<Void, Never> {
+    func expectationTaskStarted(timeout: TimeInterval = 0.5, task: @escaping @Sendable(XCTestExpectation) async -> Void) async -> Task<Void, Never> {
         let taskStartExpectation = expectation(description: "Expected task to start")
         
         let startedTask = Task {
-            taskStartExpectation.fulfill()
-            await task()
+            await task(taskStartExpectation)
         }
         
         await fulfillment(of: [taskStartExpectation], timeout: timeout)

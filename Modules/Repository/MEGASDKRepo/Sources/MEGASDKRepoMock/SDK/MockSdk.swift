@@ -841,6 +841,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         }
     }
     
+    public func simulateOnUserUpdate(_ userList: MEGAUserList) {
+        globalDelegates.forEach { $0.onUsersUpdate?(self, userList: userList) }
+    }
+    
     public func simulateOnEvent(_ event: MEGAEvent) {
         globalDelegates.forEach {
             $0.onEvent?(self, event: event)

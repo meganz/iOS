@@ -51,7 +51,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <MEGANavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, TextFileEditable>
+@interface CloudDriveViewController () <MEGANavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, TextFileEditable>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
@@ -78,6 +78,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)awakeFromNib{
     [super awakeFromNib];
     [self makeDefaultViewModeStoreCreator];
+}
+
+- (void)dealloc {
+    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
 }
 
 - (void)viewDidLoad {
@@ -160,6 +164,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
        backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                             traitCollection:self.traitCollection];
+    [MEGASdk.shared addMEGAGlobalDelegateAsync:self queueType:ListenerQueueTypeMain];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -172,7 +177,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self observeViewModeNotification];
     
-    [MEGASdk.shared addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self updateSensitivitySettingOnNextSearch];
@@ -203,7 +207,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSNotification.didFallbackToMakingOfflineForMediaNode object:nil];
-    [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

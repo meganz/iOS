@@ -46,6 +46,8 @@ public struct UserEntity: Sendable, Equatable {
         public static let backupFolder = ChangeTypeEntity(rawValue: 1 << 27)
         public static let cookieSetting = ChangeTypeEntity(rawValue: 1 << 28)
         public static let NoCallKit = ChangeTypeEntity(rawValue: 1 << 29)
+        public static let AppPrefs = ChangeTypeEntity(rawValue: 1 << 30)
+        public static let CCPrefs = ChangeTypeEntity(rawValue: 1 << 31)
     }
     
     public enum ChangeSource: Sendable {
