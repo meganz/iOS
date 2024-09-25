@@ -105,6 +105,11 @@ final class VideoRevampTabContainerViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resetsTraitOverridesIfNeeded()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         subscribeToCurrentTabChanged()

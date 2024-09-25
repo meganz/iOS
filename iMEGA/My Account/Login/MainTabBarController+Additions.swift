@@ -244,12 +244,6 @@ extension MainTabBarController {
             await scanRouter.start()
         }
     }
-    
-    @objc func forceTabBarPositionToBottomIfNeeded() {
-        if #available(iOS 18.0, *), UIDevice.current.userInterfaceIdiom == .pad {
-            traitOverrides.horizontalSizeClass = .compact
-        }
-    }
 }
 
 // MARK: - UITabBarControllerDelegate
