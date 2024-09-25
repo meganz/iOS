@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -76,6 +77,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let tracker: any AnalyticsTracking
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onOpenUserProfile: () -> Void
@@ -120,6 +122,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
         // - context menu can be reconstructed
@@ -162,6 +165,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.accountStorageUseCase = accountStorageUseCase
+        self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
         self.isFullSOQBannerEnabled = isFullSOQBannerEnabled
 
@@ -283,6 +287,7 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     func onViewAppear() {
+        trackScreenViewEvent()
         encourageUpgradeIfNeeded()
         configureAdsVisibility()
         configureTransferWidgetVisibility()
@@ -314,6 +319,10 @@ class NodeBrowserViewModel: ObservableObject {
         }
     }
 
+    private func trackScreenViewEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveScreenEvent())
+    }
+    
     private func startObservingNodeSourceChanges() {
         nodeSourceUpdatesListener.nodeSourcePublisher
             .receive(on: DispatchQueue.main)
