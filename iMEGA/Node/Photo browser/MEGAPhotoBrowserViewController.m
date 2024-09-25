@@ -369,7 +369,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.view.backgroundColor = [self backgroundColor];
 }
 
-- (CGFloat)maximumZoomScaleWith:(MEGANode *)node zoomableView:(UIScrollView *)zoomableView imageView:(UIView *)imageView {
+- (CGFloat)maximumZoomScaleForNode:(MEGANode *)node {
     return ([FileExtensionGroupOCWrapper verifyIsImage:node.name]) ? FLT_MAX : 1.0f;
 }
 
@@ -506,7 +506,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     if (isImageNode && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
         UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
-        
+        __weak typeof(self) weakSelf = self;
         [imageView sd_setImageWithURL:[NSURL fileURLWithPath: temporaryImagePath]
                      placeholderImage:placeHolderImage
                             completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
@@ -518,7 +518,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 [imageView setImage:placeHolderImage];
             }
             
-            [self startLiveTextAnalysisFor:imageView in:index];
+            [weakSelf resizeImageView:imageView];
+            [weakSelf startLiveTextAnalysisFor:imageView in:index];
         }];
     } else {
         BOOL loadOriginalWithMobileData = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
@@ -527,6 +528,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
         if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
             imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+            [self resizeImageView:imageView];
         } else if (node.hasPreview) {
             if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData)) {
                 if (node.size.longLongValue > MinSizeToRequestThePreview) {
@@ -539,6 +541,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
                 imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                [self resizeImageView:imageView];
                 [self startLiveTextAnalysisFor:imageView in:index];
             } else if (node.hasThumbnail && !isImageNode) {
                 [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeThumbnail];
@@ -554,7 +557,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     NSNumber* cachedZoomValue = [_imageViewsZoomCache objectForKey:@(index)];
     [zoomableView setZoomScale: (cachedZoomValue != nil ? [cachedZoomValue floatValue] : 1.0f)];
-    zoomableView.maximumZoomScale = [self maximumZoomScaleWith:node zoomableView:zoomableView imageView:imageView];
+    if (imageView.image != nil) {
+        zoomableView.maximumZoomScale = [self maximumZoomScaleForNode:node];
+    }
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
     doubleTap.numberOfTapsRequired = 2;
@@ -596,6 +601,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
             UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             zoomableView.minimumZoomScale = 1.0f;
+            zoomableView.maximumZoomScale = 1.0f; // Disable zoom until image is set
             zoomableView.contentSize = imageView.bounds.size;
             zoomableView.delegate = self;
             zoomableView.showsHorizontalScrollIndicator = NO;
@@ -621,17 +627,18 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode addIndicators:(BOOL)shouldAddIndicators {
     [self removeActivityIndicatorsFromView:imageView];
     
+    __weak typeof(self) weakSelf = self;
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
         [UIView transitionWithView:imageView
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
             imageView.image = [UIImage imageWithContentsOfFile:request.file];
-            [self resizeImageView:imageView];
-        }
-                        completion:nil];
-        [self removeActivityIndicatorsFromView:imageView];
-        [self startLiveTextAnalysisFor:imageView in:index];
+            [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
+            [weakSelf resizeImageView:imageView];
+        } completion:nil];
+        [weakSelf removeActivityIndicatorsFromView:imageView];
+        [weakSelf startLiveTextAnalysisFor:imageView in:index];
     };
     
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
@@ -641,27 +648,27 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                         animations:^{
             
             imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
-            [self resizeImageView:imageView];
+            [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
+            [weakSelf resizeImageView:imageView];
 
-            if (self.dataProvider.currentIndex == index) {
-                self.pieChartView.alpha = 0.0f;
-                [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
+            if (weakSelf.dataProvider.currentIndex == index) {
+                weakSelf.pieChartView.alpha = 0.0f;
+                [weakSelf activateSlideShowButtonWithBarButtonItem:[weakSelf slideshowButton]];
             }
-        }
-                        completion:nil];
+        } completion:nil];
         
         [self removeActivityIndicatorsFromView:imageView];
         [self startLiveTextAnalysisFor:imageView in:index];
     };
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
-        if (self.dataProvider.currentIndex == index) {
-            self.transferProgress = (double)transfer.transferredBytes / (double)transfer.totalBytes;
-            [self.pieChartView reloadData];
-            [self hideSlideShowButtonWithBarButtonItem:[self slideshowButton]];
-            if (self.pieChartView.alpha < 1.0f) {
+        if (weakSelf.dataProvider.currentIndex == index) {
+            weakSelf.transferProgress = (double)transfer.transferredBytes / (double)transfer.totalBytes;
+            [weakSelf.pieChartView reloadData];
+            [weakSelf hideSlideShowButtonWithBarButtonItem:[weakSelf slideshowButton]];
+            if (weakSelf.pieChartView.alpha < 1.0f) {
                 [UIView animateWithDuration:0.2 animations:^{
-                    self.pieChartView.alpha = 1.0f;
+                    weakSelf.pieChartView.alpha = 1.0f;
                 }];
             }
         }
@@ -710,6 +717,14 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode {
     [self setupNode:node forImageView:imageView inIndex:index withMode:mode addIndicators:true];
+}
+
+- (void)setMaximumZoomScaleOnScrollableImageView:(UIImageView *)imageView node:(MEGANode *)node {
+    if (![imageView.superview isKindOfClass:UIScrollView.class]) {
+        return;
+    }
+    UIScrollView *scrollView = (UIScrollView *)imageView.superview;
+    scrollView.maximumZoomScale = [self maximumZoomScaleForNode:node];
 }
 
 - (UIActivityIndicatorView *)addActivityIndicatorToView:(UIView *)view {
