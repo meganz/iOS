@@ -307,13 +307,19 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func subscribeToVideoSelection() {
-        viewModel.videoSelection.$videos
-            .map { $0.isNotEmpty }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasSelectedItem in
+        Publishers.CombineLatest(
+            viewModel.videoSelection.$editMode.map(\.isEditing),
+            viewModel.videoSelection.$videos.map(\.isNotEmpty)
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (isEditing, hasSelectedItem) in
+            if isEditing {
                 self?.videoToolbarViewModel.isDisabled = !hasSelectedItem
+            } else {
+                self?.videoToolbarViewModel.isDisabled = true
             }
-            .store(in: &cancellables)
+        }
+        .store(in: &cancellables)
     }
     
     @objc private func downloadAction(_ sender: UIBarButtonItem) {
