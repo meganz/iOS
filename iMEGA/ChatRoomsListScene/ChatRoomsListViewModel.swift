@@ -906,46 +906,56 @@ final class ChatRoomsListViewModel: ObservableObject {
 // MARK: - ChatMenuDelegate
 extension ChatRoomsListViewModel: ChatMenuDelegate {
     
-    func chatStatusMenu(didSelect action: ChatStatusEntity) {
-        changeChatStatus(to: action)
-    }
-    
-    func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption) {
-        globalDNDNotificationControl.turnOnDND(dndTurnOnOption: option) { [weak self] in
-            self?.refreshContextMenu()
+    nonisolated func chatStatusMenu(didSelect action: ChatStatusEntity) {
+        Task { @MainActor in
+            changeChatStatus(to: action)
         }
     }
     
-    func chatDisableDoNotDisturb() {
-        guard globalDNDNotificationControl.isGlobalDNDEnabled else {
-            return
-        }
-        
-        globalDNDNotificationControl.turnOffDND { [weak self] in
-            self?.refreshContextMenu()
+    nonisolated func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption) {
+        Task { @MainActor in
+            globalDNDNotificationControl.turnOnDND(dndTurnOnOption: option) { [weak self] in
+                self?.refreshContextMenu()
+            }
         }
     }
     
-    func archivedChatsTapped() {
-        router.showArchivedChatRooms()
+    nonisolated func chatDisableDoNotDisturb() {
+        Task { @MainActor in
+            guard globalDNDNotificationControl.isGlobalDNDEnabled else {
+                return
+            }
+            
+            globalDNDNotificationControl.turnOffDND { [weak self] in
+                self?.refreshContextMenu()
+            }
+        }
+    }
+    
+    nonisolated func archivedChatsTapped() {
+        Task { @MainActor in
+            router.showArchivedChatRooms()
+        }
     }
 }
 
 // MARK: - MeetingContextMenuDelegate
 extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
-    func meetingContextMenu(didSelect action: MeetingActionEntity) {
-        if chatUseCase.existsActiveCall() {
-            router.presentMeetingAlreadyExists()
-            return
-        }
-        
-        switch action {
-        case .startMeeting:
-            startMeeting()
-        case .joinMeeting:
-            joinMeeting()
-        case .scheduleMeeting:
-            scheduleMeeting()
+    nonisolated func meetingContextMenu(didSelect action: MeetingActionEntity) {
+        Task { @MainActor in
+            if chatUseCase.existsActiveCall() {
+                router.presentMeetingAlreadyExists()
+                return
+            }
+            
+            switch action {
+            case .startMeeting:
+                startMeeting()
+            case .joinMeeting:
+                joinMeeting()
+            case .scheduleMeeting:
+                scheduleMeeting()
+            }
         }
     }
 }

@@ -371,11 +371,18 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     @MainActor
     func testArchivedChatsTapped_underTheChatListTab_shouldShowArchivedChatRooms() {
+        // given
+        let expectation = expectation(description: #function)
         let router = MockChatRoomsListRouter()
+        router.showArchivedChatRoomsCompletion = { expectation.fulfill() }
         let sut = makeChatRoomsListViewModel(router: router)
         
+        // when
         sut.archivedChatsTapped()
         
+        wait(for: [expectation], timeout: 1)
+        
+        // then
         XCTAssertEqual(router.showArchivedChatRooms_calledTimes, 1)
     }
     
@@ -626,6 +633,8 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var showSuccessMessage_calledTimes = 0
     var editMeeting_calledTimes = 0
     
+    var showArchivedChatRoomsCompletion: (() -> Void)?
+    
     var navigationController: UINavigationController?
     
     nonisolated init() {}
@@ -692,6 +701,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     
     func showArchivedChatRooms() {
         showArchivedChatRooms_calledTimes += 1
+        showArchivedChatRoomsCompletion?()
     }
     
     func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?) {

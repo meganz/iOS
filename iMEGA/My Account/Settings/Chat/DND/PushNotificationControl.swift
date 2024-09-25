@@ -3,6 +3,7 @@ import MEGAL10n
 import UIKit
 
 /// A protocol to manage PushNotifications based on user preferences
+@MainActor
 @objc protocol PushNotificationControlProtocol {
     /// Func to show an alert controler to choose the mute notifications time. Used from UISwitchs in UIViewControllers, not needed for UIMenu in context menus.
     @objc optional func presentAlertController(_ alert: UIAlertController)
@@ -19,6 +20,7 @@ protocol DNDTurnOnAlertControllerAction {
     func action(for dndTurnOnOption: DNDTurnOnOption, identifier: ChatIdEntity?) -> (((UIAlertAction) -> Void)?)
 }
 
+@MainActor
 class PushNotificationControl: NSObject, MEGARequestDelegate {
     // MARK: - Constants and Variables
     
@@ -54,7 +56,14 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
     }
     
     // MARK: - MEGARequestDelegate
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+    nonisolated func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        Task { @MainActor in
+            handleOnRequestFinish(request: request, error: error)
+        }
+    }
+    
+    // MARK: - Privates
+    private func handleOnRequestFinish(request: MEGARequest, error: MEGAError) {
         if (request.type == .MEGARequestTypeGetAttrUser || request.type == .MEGARequestTypeSetAttrUser) && request.paramType == MEGAUserAttribute.pushSettings.rawValue {
             if error.type == .apiENoent {
                 self.pushNotificationSettings = MEGAPushNotificationSettings()
