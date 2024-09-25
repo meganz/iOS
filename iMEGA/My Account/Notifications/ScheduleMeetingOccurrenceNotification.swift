@@ -1,18 +1,19 @@
 import ChatRepo
 import MEGADomain
 import MEGAL10n
+import MEGASwift
 
-final class ScheduleMeetingOccurrenceNotification: NSObject {
+final class ScheduleMeetingOccurrenceNotification: NSObject, @unchecked Sendable {
     // MARK: - Properties.
 
     let alert: MEGAUserAlert
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
-    private(set) var message: NSAttributedString?
-    private(set) var isMessageLoaded = false
-    private let createAttributedStringForBoldTags: (String) -> NSAttributedString?
-    private let alternateMessage: () -> NSAttributedString?
+    private let createAttributedStringForBoldTags: (String) -> AttributedString?
+    private let alternateMessage: () -> AttributedString?
     
+    @Atomic var message: AttributedString?
+    @Atomic var isMessageLoaded = false
     // MARK: - Initializer.
     
     init(
@@ -23,8 +24,8 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
         chatRoomUseCase: some ChatRoomUseCaseProtocol = ChatRoomUseCase(
             chatRoomRepo: ChatRoomRepository.newRepo
         ),
-        createAttributedStringForBoldTags: @escaping (String) -> NSAttributedString?,
-        alternateMessage: @escaping () -> NSAttributedString?
+        createAttributedStringForBoldTags: @escaping (String) -> AttributedString?,
+        alternateMessage: @escaping () -> AttributedString?
     ) {
         self.alert = alert
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
@@ -36,8 +37,14 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
     // MARK: - Interface methods.
     
     func loadMessage() async throws {
-        defer { isMessageLoaded = true }
-        
+        defer { $isMessageLoaded.mutate { $0 = true } }
+        let newMessage = try await getMessage()
+        $message.mutate { $0 = newMessage }
+    }
+    
+    // MARK: - Private methods.
+    
+    private func getMessage() async throws -> AttributedString? {
         guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeeting(
             for: alert.scheduledMeetingId,
             chatId: alert.nodeHandle
@@ -47,7 +54,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
         
         if alert.type == .scheduledMeetingUpdated {
             if alert.hasScheduledMeetingChangeType(.cancelled) {
-                message = createAttributedStringForBoldTags(
+                return createAttributedStringForBoldTags(
                     occurrenceCancelledMessage(
                         withStartDate: scheduledMeeting.startDate,
                         endDate: scheduledMeeting.endDate
@@ -55,7 +62,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
                 )
             } else if alert.hasScheduledMeetingChangeType(.startDate)
                         || alert.hasScheduledMeetingChangeType(.endDate) {
-                message = createAttributedStringForBoldTags(
+                return createAttributedStringForBoldTags(
                     occurrenceUpdatedMessage(
                         withStartDate: scheduledMeeting.startDate,
                         endDate: scheduledMeeting.endDate
@@ -63,7 +70,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
                 )
             }
         } else if alert.type == .scheduledMeetingNew {
-            message = createAttributedStringForBoldTags(
+            return createAttributedStringForBoldTags(
                 occurrenceUpdatedMessage(
                     withStartDate: scheduledMeeting.startDate,
                     endDate: scheduledMeeting.endDate
@@ -78,14 +85,14 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
                 && $0.overrides == alert.number(at: 0)
             }).first {
                 if occurrence.cancelled {
-                    message = createAttributedStringForBoldTags(
+                    return createAttributedStringForBoldTags(
                         occurrenceCancelledMessage(
                             withStartDate: occurrence.startDate,
                             endDate: occurrence.endDate
                         )
                     )
                 } else {
-                    message = createAttributedStringForBoldTags(
+                    return createAttributedStringForBoldTags(
                         occurrenceUpdatedMessage(
                             withStartDate: occurrence.startDate,
                             endDate: occurrence.endDate
@@ -93,19 +100,18 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
                     )
                 }
             } else if scheduledMeeting.cancelled {
-                message = createAttributedStringForBoldTags(
+                return createAttributedStringForBoldTags(
                     occurrenceCancelledMessage(
                         withStartDate: scheduledMeeting.startDate,
                         endDate: scheduledMeeting.endDate
                     )
                 )
             } else {
-                message = alternateMessage()
+                return alternateMessage()
             }
         }
+        return nil
     }
-    
-    // MARK: - Private methods.
     
     private func occurrenceCancelledMessage(withStartDate startDate: Date, endDate: Date) -> String {
         occurrenceMessage(
