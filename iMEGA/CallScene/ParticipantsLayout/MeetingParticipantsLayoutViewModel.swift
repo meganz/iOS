@@ -1292,7 +1292,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         let callDurationInfo = CallDurationInfo(initDuration: duration, baseDate: Date())
         let callTimer = timerSequence.timerSequenceWithInterval(1.0)
         callTimerTask = Task { [weak self] in
-            for await time in callTimer {
+            for await _ in callTimer {
                 let duration = Int(Date().timeIntervalSince1970) - Int(callDurationInfo.baseDate.timeIntervalSince1970) + callDurationInfo.initDuration
                 self?.updateDuration(duration)
             }
@@ -1314,7 +1314,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callWillEndTimerTask?.cancel()
         let callWillEndTimer = timerSequence.timerSequenceWithInterval(1.0)
         callWillEndTimerTask = Task { [weak self] in
-            for await time in callWillEndTimer {
+            for await _ in callWillEndTimer {
                 self?.updateCallWillEnd()
             }
         }
@@ -1753,31 +1753,37 @@ extension MeetingParticipantsLayoutViewModel {
 // MARK: - CallLocalVideoCallbacksUseCaseProtocol
 
 extension MeetingParticipantsLayoutViewModel: CallLocalVideoCallbacksUseCaseProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data) {
-        invokeCommand?(.localVideoFrame(width, height, buffer))
-        
-        if switchingCamera {
-            switchingCamera = false
-            invokeCommand?(.updatedCameraPosition)
+    nonisolated func localVideoFrameData(width: Int, height: Int, buffer: Data) {
+        Task { @MainActor in
+            invokeCommand?(.localVideoFrame(width, height, buffer))
+            
+            if switchingCamera {
+                switchingCamera = false
+                invokeCommand?(.updatedCameraPosition)
+            }
         }
     }
     
-    func localVideoChangedCameraPosition() {
-        switchingCamera = true
-        invokeCommand?(.updateCameraPositionTo(position: isBackCameraSelected() ? .back : .front))
+    nonisolated func localVideoChangedCameraPosition() {
+        Task { @MainActor in
+            switchingCamera = true
+            invokeCommand?(.updateCameraPositionTo(position: isBackCameraSelected() ? .back : .front))
+        }
     }
 }
 
 // MARK: - CallRemoteVideoListenerUseCaseProtocol
 
 extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProtocol {
-    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data, isHiRes: Bool) {
-        for participant in callParticipants where participant.clientId == clientId {
-            if participant.videoDataDelegate == nil {
-                guard let index = index(for: participant) else { return }
-                invokeCommand?(.reloadParticipantAt(index, callParticipants))
+    nonisolated func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data, isHiRes: Bool) {
+        Task { @MainActor in
+            for participant in callParticipants where participant.clientId == clientId {
+                if participant.videoDataDelegate == nil {
+                    guard let index = index(for: participant) else { return }
+                    invokeCommand?(.reloadParticipantAt(index, callParticipants))
+                }
+                participant.remoteVideoFrame(width: width, height: height, buffer: buffer, isHiRes: isHiRes)
             }
-            participant.remoteVideoFrame(width: width, height: height, buffer: buffer, isHiRes: isHiRes)
         }
     }
 }
