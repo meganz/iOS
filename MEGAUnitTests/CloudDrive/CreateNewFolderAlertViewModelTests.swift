@@ -1,4 +1,3 @@
-import ConcurrencyExtras
 @testable import MEGA
 import MEGADesignToken
 import MEGADomain
@@ -126,25 +125,22 @@ final class CreateNewFolderAlertViewModelTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
-        await withMainSerialExecutor {
-            let sut = makeSUT(router: router, nodeUseCase: nodeUseCase)
+        let sut = makeSUT(router: router, nodeUseCase: nodeUseCase)
 
-            let waitUntilFinishedTask = Task {
-                await sut.waitUntilFinished()
-            }
-
-            let cancelActionTask = Task {
-                await Task.yield()
-                if let folderName {
-                    sut.createButtonTapped(withFolderName: folderName)
-                } else {
-                    sut.cancelAction()
-                }
-            }
-
-            let(result, _) = await (waitUntilFinishedTask.value, cancelActionTask.value)
-            XCTAssertEqual(result, expectedResult, file: file, line: line)
+        let waitUntilFinishedTask = Task {
+            await sut.waitUntilFinished()
         }
+
+        Task {
+            if let folderName {
+                sut.createButtonTapped(withFolderName: folderName)
+            } else {
+                sut.cancelAction()
+            }
+        }
+
+        let result = await waitUntilFinishedTask.value
+        XCTAssertEqual(result, expectedResult, file: file, line: line)
     }
 
     @MainActor
