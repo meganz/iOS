@@ -44,6 +44,7 @@ final class AlbumContentViewModel: ViewModelType {
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let router: any AlbumContentRouting
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
+    private let monitorAlbumPhotosUseCase: any MonitorAlbumPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     
@@ -86,10 +87,11 @@ final class AlbumContentViewModel: ViewModelType {
     
     init(
         album: AlbumEntity,
-        albumContentsUseCase: any AlbumContentsUseCaseProtocol,
-        albumModificationUseCase: any AlbumModificationUseCaseProtocol,
-        photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
-        shareCollectionUseCase: any ShareCollectionUseCaseProtocol,
+        albumContentsUseCase: some AlbumContentsUseCaseProtocol,
+        albumModificationUseCase: some AlbumModificationUseCaseProtocol,
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
+        monitorAlbumPhotosUseCase: some MonitorAlbumPhotosUseCaseProtocol,
         router: some AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,
@@ -103,6 +105,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumModificationUseCase = albumModificationUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
         self.shareCollectionUseCase = shareCollectionUseCase
+        self.monitorAlbumPhotosUseCase = monitorAlbumPhotosUseCase
         self.router = router
         self.alertViewModel = alertViewModel
         self.tracker = tracker
@@ -211,19 +214,34 @@ final class AlbumContentViewModel: ViewModelType {
         do {
             let photos = try await albumContentsUseCase.photos(in: album)
             guard !Task.isCancelled else { return }
-            await albumContentDataProvider.updatePhotos(photos)
-            guard !Task.isCancelled else { return }
-            photoLibraryContainsPhotos = photos.isNotEmpty
-            if photos.isEmpty && album.type == .user {
-                photoLibraryContainsPhotos = (try? await photoLibraryUseCase.media(for: [.allMedia, .allLocations], excludeSensitive: nil)
-                    .isNotEmpty) ?? false
-            }
-            guard !Task.isCancelled else { return }
-            let shouldDismissAlbum = photos.isEmpty && (album.type == .raw || album.type == .gif)
-            await shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
+            await updateAlbumPhotos(photos)
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
+    }
+    
+    private func monitorAlbumPhotos() async {
+        for await albumPhotosResult in await monitorAlbumPhotosUseCase.monitorPhotos(for: album) {
+            switch albumPhotosResult {
+            case .success(let albumPhotos):
+                await updateAlbumPhotos(albumPhotos)
+            case .failure(let error):
+                MEGALogError("[\(type(of: self))]: Error getting photos for album id \(album.id) error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func updateAlbumPhotos(_ photos: [AlbumPhotoEntity]) async {
+        await albumContentDataProvider.updatePhotos(photos)
+        guard !Task.isCancelled else { return }
+        photoLibraryContainsPhotos = photos.isNotEmpty
+        if photos.isEmpty && album.type == .user {
+            photoLibraryContainsPhotos = (try? await photoLibraryUseCase.media(for: [.allMedia, .allLocations], excludeSensitive: nil)
+                .isNotEmpty) ?? false
+        }
+        guard !Task.isCancelled else { return }
+        let shouldDismissAlbum = photos.isEmpty && [AlbumEntityType.raw, .gif].contains(album.type)
+        await shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
     }
     
     private func addNewAlbumPhotosIfNeeded() async {
@@ -284,7 +302,7 @@ final class AlbumContentViewModel: ViewModelType {
     private func setupAlbumMonitoring() {
         setupSubscriptionTask = Task {
             if await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
-                // Add New Monitoring
+                await monitorAlbumPhotos()
             } else {
                 setupSubscription()
             }

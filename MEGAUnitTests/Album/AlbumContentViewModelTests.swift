@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASwift
 import MEGASwiftUI
 import MEGATest
 import XCTest
@@ -922,6 +923,75 @@ final class AlbumContentViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
+    func testDispatchViewAppear_monitorAlbumPhotosYieldPhotos_shouldUpdatePhotos() async {
+        let photoNodes = [
+            NodeEntity(handle: 65),
+            NodeEntity(handle: 89)
+        ]
+        let albumPhotos = photoNodes.toAlbumPhotoEntities()
+        let monitorPhotosAsyncSequence = SingleItemAsyncSequence(
+            item: Result<[AlbumPhotoEntity], any Error>.success(albumPhotos))
+        let monitorAlbumPhotosUseCase = MockMonitorAlbumPhotosUseCase(
+            monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
+        let sut = makeAlbumContentViewModel(
+            album: albumEntity,
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
+            albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+        
+        let configuration = makeContextConfiguration(albumType: albumEntity.type)
+        await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
+            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
+            .showAlbumPhotos(photos: photoNodes, sortOrder: .newest),
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+        ], timeout: 1.0, expectationValidation: ==)
+    }
+    
+    @MainActor
+    func testDispatchViewAppear_monitorAlbumPhotosYieldEmpty_shouldDismiss() async {
+        let monitorPhotosAsyncSequence = SingleItemAsyncSequence(
+            item: Result<[AlbumPhotoEntity], any Error>.success([]))
+        let monitorAlbumPhotosUseCase = MockMonitorAlbumPhotosUseCase(
+            monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
+        let sut = makeAlbumContentViewModel(
+            album: albumEntity,
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
+            albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+        
+        let configuration = makeContextConfiguration(albumType: albumEntity.type)
+        await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
+            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
+            .dismissAlbum
+        ], timeout: 1.0, expectationValidation: ==)
+    }
+    
+    @MainActor
+    func testDispatchViewAppear_monitorAlbumPhotosYieldEmptyPhotoLibrayContainsPhotos_shouldShowAddToAlbum() async {
+        let album = AlbumEntity(id: 1, type: .user)
+        let monitorPhotosAsyncSequence = SingleItemAsyncSequence(
+            item: Result<[AlbumPhotoEntity], any Error>.success([]))
+        let monitorAlbumPhotosUseCase = MockMonitorAlbumPhotosUseCase(
+            monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
+        let photoLibraryUseCase = MockPhotoLibraryUseCase(
+            allPhotos: [NodeEntity(name: "photo 1.jpg", handle: 1)])
+        let sut = makeAlbumContentViewModel(
+            album: album,
+            photoLibraryUseCase: photoLibraryUseCase,
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
+            albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+        
+        let configuration = makeContextConfiguration(
+            albumType: album.type,
+            isEmptyState: true
+        )
+        
+        await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
+            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
+            .showAlbumPhotos(photos: [], sortOrder: .newest),
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+        ], timeout: 1.0, expectationValidation: ==)
+    }
+    
     // MARK: - Helpers
     
     @MainActor
@@ -931,6 +1001,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
         shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
+        monitorAlbumPhotosUseCase: some MonitorAlbumPhotosUseCaseProtocol = MockMonitorAlbumPhotosUseCase(),
         router: some AlbumContentRouting = MockAlbumContentRouting(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel? = nil,
@@ -942,6 +1013,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                               albumModificationUseCase: albumModificationUseCase,
                               photoLibraryUseCase: photoLibraryUseCase,
                               shareCollectionUseCase: shareCollectionUseCase,
+                              monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
                               router: router,
                               newAlbumPhotosToAdd: newAlbumPhotosToAdd,
                               alertViewModel: alertViewModel ?? makeAlertViewModel(),

@@ -70,6 +70,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                 userAlbumRepository: UserAlbumRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo
             ),
+            monitorAlbumPhotosUseCase: makeMonitorAlbumPhotosUseCase(),
             router: self,
             newAlbumPhotosToAdd: newAlbumPhotos,
             alertViewModel: alertViewModel)
@@ -167,5 +168,34 @@ struct AlbumContentRouter: AlbumContentRouting {
                             searchRepository: FilesSearchRepository.newRepo,
                             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
                             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+    }
+    
+    private func makeMonitorAlbumPhotosUseCase() -> some MonitorAlbumPhotosUseCaseProtocol {
+        let sensitiveNodeUseCase =  SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo)
+        let photosRepository = PhotosRepository.sharedRepo
+        let monitorPhotosUseCase = MonitorPhotosUseCase(
+            photosRepository: photosRepository,
+            photoLibraryUseCase: makePhotoLibraryUseCase(),
+            sensitiveNodeUseCase: sensitiveNodeUseCase
+        )
+        let monitorSystemAlbumPhotosUseCase = MonitorSystemAlbumPhotosUseCase(
+            monitorPhotosUseCase: monitorPhotosUseCase,
+            mediaUseCase: MediaUseCase(
+                fileSearchRepo: FilesSearchRepository.newRepo)
+        )
+        let monitorUserAlbumPhotosUseCase = MonitorUserAlbumPhotosUseCase(
+            userAlbumRepository: UserAlbumCacheRepository.newRepo,
+            photosRepository: photosRepository,
+            sensitiveNodeUseCase: sensitiveNodeUseCase
+        )
+        
+        return MonitorAlbumPhotosUseCase(
+            monitorSystemAlbumPhotosUseCase: monitorSystemAlbumPhotosUseCase,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+        )
     }
 }

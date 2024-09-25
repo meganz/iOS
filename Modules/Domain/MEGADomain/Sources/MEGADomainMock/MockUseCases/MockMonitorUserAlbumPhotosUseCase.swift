@@ -2,18 +2,11 @@ import MEGADomain
 import MEGASwift
 
 public struct MockMonitorUserAlbumPhotosUseCase: MonitorUserAlbumPhotosUseCaseProtocol {
-    public actor State {
-        public enum Invocation: Hashable, Sendable {
-            case userAlbumPhotos(excludeSensitives: Bool)
-        }
-        public var invocations = [Invocation]()
-        
-        func addInvocation(_ newValue: Invocation) {
-            invocations.append(newValue)
-        }
-    }
-    public let state = State()
     private let monitorUserAlbumPhotosAsyncSequence: AnyAsyncSequence<[AlbumPhotoEntity]>
+    public enum Invocation: Hashable, Sendable {
+        case userAlbumPhotos(excludeSensitives: Bool)
+    }
+    @Atomic public var invocations: [Invocation] = []
     
     public init(
         monitorUserAlbumPhotosAsyncSequence: AnyAsyncSequence<[AlbumPhotoEntity]> = EmptyAsyncSequence<[AlbumPhotoEntity]>().eraseToAnyAsyncSequence()
@@ -25,7 +18,9 @@ public struct MockMonitorUserAlbumPhotosUseCase: MonitorUserAlbumPhotosUseCasePr
         for album: AlbumEntity,
         excludeSensitives: Bool
     ) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
-        await state.addInvocation(.userAlbumPhotos(excludeSensitives: excludeSensitives))
+        $invocations.mutate {
+            $0.append(.userAlbumPhotos(excludeSensitives: excludeSensitives))
+        }
         return monitorUserAlbumPhotosAsyncSequence
     }
 }
