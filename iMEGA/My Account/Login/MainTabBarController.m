@@ -24,7 +24,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self forceTabBarPositionToBottomIfNeeded];
     [self loadTabViewControllers];
     [MEGAChatSdk.shared addChatDelegate:self];
     [MEGASdk.shared addMEGAGlobalDelegate:self];
@@ -51,6 +50,7 @@
                                              object:nil];
     [self.view setNeedsLayout];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self forceTabBarPositionToBottomIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
