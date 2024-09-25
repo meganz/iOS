@@ -45,4 +45,8 @@ extension AttributedString {
         
         return attributedString
     }
+    
+    public func toNSAttributedString() -> NSAttributedString {
+        NSAttributedString(self)
+    }
 }

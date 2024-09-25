@@ -8,4 +8,10 @@ extension NSAttributedString {
         
         return NSAttributedString(attachment: textAttachment)
     }
+    
+    /// A helper method to convert ObjectiveC's `NSAttributedString` to Swift's `AttributedString` struct.
+    /// - Returns: An instance of `AttributedString`
+    public func toSwiftAttributedString() -> AttributedString {
+        return AttributedString(self)
+    }
 }

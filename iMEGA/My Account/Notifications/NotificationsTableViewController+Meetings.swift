@@ -2,11 +2,11 @@ import ChatRepo
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
+import MEGAUI
 
 extension NotificationsTableViewController {
     
     // MARK: - Interface methods
-    
     @objc func contentForNewScheduledMeeting(withAlert alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
         guard let scheduledMeeting = scheduledMeeting(
             withScheduleMeetingId: alert.scheduledMeetingId,
@@ -144,7 +144,7 @@ extension NotificationsTableViewController {
     private func occurrenceContent(for alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
         if let notification = scheduleMeetingOccurrenceNotificationList.filter({ $0.alert.identifier == alert.identifier }).first {
             if let message = notification.message {
-                return message
+                return message.toNSAttributedString()
             } else if notification.isMessageLoaded {
                 MEGALogError("Unable to load message for alert with title \(notification.alert.title ?? "")")
                 return nil
@@ -161,10 +161,10 @@ extension NotificationsTableViewController {
         } else {
             let notification = ScheduleMeetingOccurrenceNotification(alert: alert) { [weak self] message in
                 guard let self else { return nil }
-                return createAttributedStringForBoldTags(content: message)
+                return createAttributedStringForBoldTags(content: message)?.toSwiftAttributedString()
             } alternateMessage: { [weak self] in
                 guard let self else { return nil }
-                return alternativeMessage(for: alert, indexPath: indexPath)
+                return alternativeMessage(for: alert, indexPath: indexPath)?.toSwiftAttributedString()
             }
             
             scheduleMeetingOccurrenceNotificationList.append(notification)
