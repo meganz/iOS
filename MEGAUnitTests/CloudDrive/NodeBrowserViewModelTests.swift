@@ -1,9 +1,11 @@
 import Combine
 import ConcurrencyExtras
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
+import MEGAPresentationMock
 import MEGASwift
 import MEGAUIKit
 import Search
@@ -53,6 +55,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         let nodesUpdateListener: any NodesUpdateListenerProtocol
         let cloudDriveViewModeMonitoringService: MockCloudDriveViewModeMonitoringService
         let nodeUseCase: MockNodeDataUseCase
+        let tracker = MockTracker()
 
         init(
             // this may appear strange but view mode is a "bigger" enum that has mediaDiscovery/list/thumbnail
@@ -147,6 +150,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     sensitivityChangesForNode: sensitivityChangesForNode
                 ),
                 accountStorageUseCase: mockAccountStorageUseCase, // Inject the mock here
+                tracker: tracker,
                 viewModeSaver: { saver($0) },
                 storageFullModalAlertViewRouter: MockStorageFullModalAlertViewRouter(),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
@@ -162,6 +166,15 @@ class NodeBrowserViewModelTests: XCTestCase {
             
             saver = { self.savedViewModes.append($0) }
         }
+    }
+    
+    @MainActor
+    func testOnViewAppear_shouldTrackCloudDriveScreenEvent() {
+        let harness = Harness(node: .init())
+        harness.sut.onViewAppear()
+        XCTAssertTrue(
+            harness.tracker.trackedEventIdentifiers.contains(where: { $0.eventName == CloudDriveScreenEvent().eventName })
+        )
     }
     
     @MainActor

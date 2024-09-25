@@ -1,17 +1,22 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAL10n
+import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 final class WarningBannerViewModelTests: XCTestCase {
     private func makeSUT(
         warningType: WarningBannerType,
         isShowCloseButton: Bool = false,
-        router: some WarningBannerViewRouting = MockWarningViewRouter()
+        router: some WarningBannerViewRouting = MockWarningViewRouter(),
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> WarningBannerViewModel {
         WarningBannerViewModel(
             warningType: warningType,
             router: router,
-            isShowCloseButton: isShowCloseButton
+            isShowCloseButton: isShowCloseButton,
+            tracker: tracker
         )
     }
     
@@ -80,5 +85,27 @@ final class WarningBannerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.warningType.iconName, "almostFullStorageAlert")
         XCTAssertEqual(sut.warningType.actionText, Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.button)
         XCTAssertEqual(sut.warningType.severity, .warning)
+    }
+    
+    func testOnViewAppear_whenWarningTypeIsFullStorageOverQuota_shouldTrackFullStorageOverQuotaBannerDisplayedEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(warningType: .fullStorageOverQuota, tracker: tracker)
+        
+        sut.onViewAppear()
+        
+        XCTAssertTrue(
+            tracker.trackedEventIdentifiers.contains(where: { $0.eventName == FullStorageOverQuotaBannerDisplayedEvent().eventName })
+        )
+    }
+    
+    func testTapAction_whenWarningTypeIsFullStorageOverQuota_shouldTrackFullStorageOverQuotaBannerUpgradeButtonPressedEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(warningType: .fullStorageOverQuota, tracker: tracker)
+        
+        sut.onActionButtonTapped()
+        
+        XCTAssertTrue(
+            tracker.trackedEventIdentifiers.contains(where: { $0.eventName == FullStorageOverQuotaBannerUpgradeButtonPressedEvent().eventName })
+        )
     }
 }

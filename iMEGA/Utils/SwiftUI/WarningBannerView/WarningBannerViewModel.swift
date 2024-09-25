@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAL10n
 import MEGAPresentation
 
@@ -77,6 +78,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     let isShowCloseButton: Bool
     var hideWarningViewAction: (() -> Void)?
     var onHeightChange: ((CGFloat) -> Void)?
+    private let tracker: any AnalyticsTracking
     @Published var isHideWarningView: Bool = false
     
     let applyNewDesign: Bool
@@ -85,14 +87,24 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
          router: (any WarningBannerViewRouting)? = nil,
          isShowCloseButton: Bool = false,
          hideWarningViewAction: (() -> Void)? = nil,
-         onHeightChange: ((CGFloat) -> Void)? = nil) {
+         onHeightChange: ((CGFloat) -> Void)? = nil,
+         tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.warningType = warningType
         self.router = router
         self.isShowCloseButton = isShowCloseButton
         self.hideWarningViewAction = hideWarningViewAction
         self.onHeightChange = onHeightChange
+        self.tracker = tracker
         
         self.applyNewDesign = warningType == .fullStorageOverQuota
+    }
+    
+    func onViewAppear() {
+        switch warningType {
+        case .fullStorageOverQuota:
+            tracker.trackAnalyticsEvent(with: FullStorageOverQuotaBannerDisplayedEvent())
+        default: break
+        }
     }
     
     func onBannerTapped() {
@@ -111,6 +123,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     func onActionButtonTapped() {
         switch warningType {
         case .fullStorageOverQuota:
+            tracker.trackAnalyticsEvent(with: FullStorageOverQuotaBannerUpgradeButtonPressedEvent())
             router?.presentUpgradeScreen()
         default: break
         }

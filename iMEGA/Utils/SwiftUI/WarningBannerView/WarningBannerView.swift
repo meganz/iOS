@@ -99,6 +99,7 @@ struct WarningBannerView: View {
             }
         }
         .padding(.vertical, 8)
+        .onAppear { viewModel.onViewAppear() }
     }
 }
 
