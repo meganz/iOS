@@ -453,8 +453,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             task.cancel()
             subscription.cancel()
             
-            let invocations = await monitorUserAlbumPhotosUseCase.state.invocations
-            XCTAssertEqual(invocations,
+            XCTAssertEqual(monitorUserAlbumPhotosUseCase.invocations,
                            [.userAlbumPhotos(excludeSensitives: hiddenNodesFeatureFlag)])
         }
     }
