@@ -27,33 +27,56 @@ import UIKit
     }
     
     func updateBadgeLayout(at index: Int) {
-        guard let badgeToUpdate = badge(at: index),
-              let tabBarItems = items else {
+        guard let badgeToUpdate = badge(at: index), items != nil else {
             return
         }
 
-        let badgeWidth = badgeToUpdate.frame.width
         let badgeHeight = badgeToUpdate.frame.height
 
-        let itemPosition = CGFloat(index + 1)
-        let itemWidth = (frame.width - safeAreaInsets.left - safeAreaInsets.right) / CGFloat(tabBarItems.count)
         let itemHeight = frame.height - safeAreaInsets.bottom
 
         let isIPhone = UIDevice.current.userInterfaceIdiom == .phone
         let isLandScape = UIDevice.current.orientation.isLandscape || UIScreen.main.bounds.width > UIScreen.main.bounds.height
         let isIPhoneLandscape = isIPhone && isLandScape
         
-        var x = safeAreaInsets.left + (itemWidth * itemPosition) - (0.5 * itemWidth) + badgeWidth / 2 + (isIPhone ? 8.0 : -16)
-        let y = (0.5 * itemHeight) - badgeHeight / 2 + (isIPhoneLandscape ? 2.0 : -4.0)
+        let isRightToLeftLayout = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
         
-        if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {
-            x = frame.width - x
-        }
+        // Used to shift the badge to the left or right side of the icon
+        // based on the layout direction
+        let badgeLayoutDirectionFactor: Int = isRightToLeftLayout ? -1 : 1
+                
+        let barItemFrame = frameForTabBarItem(at: index)
+        let barIconSize = sizeForTabBarIcon(at: index)
+        
+        // Adjustment to the spacing between the icon and the badge on iPhone landscape mode
+        let spaceFromBarButtonIcon = isIPhoneLandscape ? barIconSize.width * 0.75 : barIconSize.width / 2
+        
+        let x = (barItemFrame.origin.x + barItemFrame.width / 2) + (spaceFromBarButtonIcon * CGFloat(badgeLayoutDirectionFactor))
+        
+        let y = (0.5 * itemHeight) - badgeHeight / 2 + (isIPhoneLandscape ? 2.0 : -4.0)
         
         badgeToUpdate.center = CGPoint(
             x: x,
             y: y
         )
+    }
+    
+    private var tabBarButtons: [UIControl] {
+        return subviews.compactMap { $0 as? UIControl }
+    }
+    
+    private func frameForTabBarItem(at index: Int) -> CGRect {
+        return tabBarButtons[safe: index]?.frame ?? .zero
+    }
+    
+    private func sizeForTabBarIcon(at index: Int) -> CGSize {
+        guard let tabBarButton = tabBarButtons[safe: index] else { return .zero }
+        
+        for imageView in tabBarButton.subviews where imageView is UIImageView {
+            return imageView.bounds.size
+        }
+            
+        return .zero
     }
     
     private func badge(at index: Int) -> TabBarBadge? {

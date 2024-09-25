@@ -36,6 +36,8 @@
     [self.tabBar invalidateIntrinsicContentSize];
     [self refreshBottomConstraint];
     [self updatePhoneImageBadgeFrame];
+    [self.tabBar setNeedsLayout];
+    [self.tabBar layoutIfNeeded];
     [self.tabBar updateBadgeLayoutAt:TabTypeChat];
 }
 
