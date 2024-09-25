@@ -742,7 +742,25 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
 extension ChatRoomDelegate: MEGATransferDelegate {
     // MARK: - MEGATransferDelegate methods
     
-    func onTransferStart(_: MEGASdk, transfer: MEGATransfer) {
+    nonisolated func onTransferStart(_: MEGASdk, transfer: MEGATransfer) {
+        Task { @MainActor in
+            handleOnTransferStart(transfer)
+        }
+    }
+    
+    nonisolated func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
+        Task { @MainActor in
+            handleOnTransferFinish(transfer)
+        }
+    }
+    
+    nonisolated func onTransferUpdate(_: MEGASdk, transfer: MEGATransfer) {
+        Task { @MainActor in
+            handleOnTransferUpdate(transfer)
+        }
+    }
+    
+    private func handleOnTransferStart(_ transfer: MEGATransfer) {
         guard let appData = transfer.appData else {
             return
         }
@@ -769,7 +787,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
         }
     }
     
-    func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
+    private func handleOnTransferFinish(_ transfer: MEGATransfer) {
         guard let appData = transfer.appData else {
             return
         }
@@ -802,7 +820,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
         }
     }
     
-    func onTransferUpdate(_: MEGASdk, transfer: MEGATransfer) {
+    private func handleOnTransferUpdate(_ transfer: MEGATransfer) {
         guard let appData = transfer.appData else {
             return
         }
@@ -817,5 +835,4 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             }
         }
     }
-    
 }
