@@ -1080,10 +1080,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         harness.sut.tappedParticipant(secondParticipant)
         
         XCTAssertEqual(harness.sut.callParticipants.count, 3)
-        XCTAssertEqual(harness.sut.callParticipants[0], firstParticipant)
+        XCTAssertEqual(harness.sut.callParticipants[0].participantId, firstParticipant.participantId)
         XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
         XCTAssertEqual(harness.sut.callParticipants[1], firstParticipant)
         XCTAssertFalse(harness.sut.callParticipants[1].isScreenShareCell)
+        XCTAssertEqual(harness.sut.callParticipants[2], secondParticipant)
     }
     
     @MainActor func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndIsSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantBeforePresenterView() {
@@ -1096,7 +1097,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         harness.sut.tappedParticipant(secondParticipant)
         
         XCTAssertEqual(harness.sut.callParticipants.count, 3)
-        XCTAssertEqual(harness.sut.callParticipants[1], firstParticipant)
+        XCTAssertEqual(harness.sut.callParticipants[0], secondParticipant)
         XCTAssertTrue(harness.sut.callParticipants[1].isScreenShareCell)
         XCTAssertEqual(harness.sut.callParticipants[2], firstParticipant)
         XCTAssertFalse(harness.sut.callParticipants[2].isScreenShareCell)
@@ -1148,13 +1149,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         harness.sut.tappedParticipant(secondParticipant)
         
         XCTAssertEqual(harness.sut.speakerParticipant, secondParticipant)
-        XCTAssertEqual(harness.sut.callParticipants[0], firstParticipant)
+        XCTAssertEqual(harness.sut.callParticipants[0].participantId, firstParticipant.participantId)
+        XCTAssertEqual(harness.sut.callParticipants[1], firstParticipant)
         XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
         
         harness.sut.tappedParticipant(thirdParticipant)
         
         XCTAssertEqual(harness.sut.speakerParticipant, thirdParticipant)
-        XCTAssertEqual(harness.sut.callParticipants[0], firstParticipant)
+        XCTAssertEqual(harness.sut.callParticipants[0].participantId, firstParticipant.participantId)
+        XCTAssertEqual(harness.sut.callParticipants[1], firstParticipant)
         XCTAssertTrue(harness.sut.callParticipants[0].isScreenShareCell)
     }
     
