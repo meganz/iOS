@@ -352,6 +352,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     @MainActor
     func testListenSearchTextChange_whenEmitsNewValueOnSuccess_showsVideos() async {
+        // Arrange
         let videoNodes = [
             anyNode(id: 1, mediaType: .video),
             anyNode(id: 2, mediaType: .video)
@@ -367,14 +368,26 @@ final class VideoListViewModelTests: XCTestCase {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase()
         )
-        
         trackTaskCancellation { await sut.onViewAppear() }
+        
+        // Act
         syncModel.searchText = "any search text"
+        
+        var receivedViewState: [VideoListViewModel.ViewState] = []
+        let viewStateExp = expectation(description: "ViewState expectation")
+        viewStateExp.expectedFulfillmentCount = 3
+        let viewStateCancellable = sut.$viewState
+            .sink { viewState in
+                receivedViewState.append(viewState)
+                viewStateExp.fulfill()
+            }
+        await fulfillment(of: [viewStateExp], timeout: 1.0)
+        viewStateCancellable.cancel()
+        
         let exp = expectation(description: "search message found")
         let cancellation = await photoLibraryUseCase.$messages
             .first { $0 == [ .media ] }
             .sink { _ in exp.fulfill() }
-        
         await fulfillment(of: [exp], timeout: 1.0)
         cancellation.cancel()
         
@@ -389,7 +402,8 @@ final class VideoListViewModelTests: XCTestCase {
             .store(in: &cancellables)
         await fulfillment(of: [videosExp], timeout: 1.0)
         
-        XCTAssertEqual(sut.viewState, .loaded, "Should not show error when success search")
+        // Assert
+        XCTAssertEqual(receivedViewState, [ .partial, .loading, .loaded ], "Should not show error when success search")
         XCTAssertTrue(capturedValues.isNotEmpty)
         cancellables = []
     }
