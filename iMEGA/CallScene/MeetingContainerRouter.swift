@@ -517,7 +517,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func hideSnackBar() {
-        presenter?.dismissSnackBar(immediate: false)
+        baseViewController?.topViewController?.dismissSnackBar()
     }
     
     var floatingPanelShown: Bool {

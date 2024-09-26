@@ -178,7 +178,6 @@ extension MEGAPhotoBrowserViewController {
                             try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
                         } catch let error as SaveMediaToPhotosErrorEntity where error == .fileDownloadInProgress {
                             // Checking: no need this dismiss
-                            self.dismissSnackBar(immediate: true)
                             self.showSnackBar(snackBar: SnackBar(message: error.localizedDescription))
                         } catch let error as SaveMediaToPhotosErrorEntity where error != .cancelled {
                             await SVProgressHUD.dismiss()

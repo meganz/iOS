@@ -319,7 +319,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             } else { // Need to check, it seems that this `else` branch is not needed
                 // could be auto dismissed by that time as there's a timer inside SnackBarViewModel
                 MEGALogDebug("[RaiseHand] snack bar update is nil")
-                dismissSnackBar(immediate: false)
+                dismissSnackBar()
             }
         case .showEmptyCallShareOptionsView(let canInviteParticipants):
             addEmptyMeetingShareOptionsView(canInviteParticipants)
