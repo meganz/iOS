@@ -121,9 +121,11 @@ public final class CallParticipantEntity {
 extension CallParticipantEntity: Equatable {
     public static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
         guard lhs.clientId != .invalid && rhs.clientId != .invalid else {
+            // Participant is not in call so clientId does not exists, for 'Not in Call' tab
             return lhs.participantId == rhs.participantId
         }
-        return lhs.participantId == rhs.participantId && lhs.clientId == rhs.clientId
+        // Participant is in call, for 'In call' and 'Waiting room' tabs
+        return lhs.participantId == rhs.participantId && lhs.clientId == rhs.clientId && lhs.isScreenShareCell == rhs.isScreenShareCell
     }
 }
 
@@ -131,5 +133,6 @@ extension CallParticipantEntity: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(participantId)
         hasher.combine(clientId)
+        hasher.combine(isScreenShareCell)
     }
 }
