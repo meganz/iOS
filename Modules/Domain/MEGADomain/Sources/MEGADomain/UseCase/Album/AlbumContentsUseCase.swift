@@ -90,7 +90,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
             return nil
         }
         return userAlbumRepo.setsUpdatedPublisher
-            .compactMap { $0.first(where: { $0.id == album.id }) }
+            .compactMap { $0.first(where: { $0.id == album.setIdentifier }) }
             .eraseToAnyPublisher()
     }
     

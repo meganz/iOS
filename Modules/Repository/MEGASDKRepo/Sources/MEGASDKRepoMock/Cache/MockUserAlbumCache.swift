@@ -29,7 +29,7 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     }
     
     public func setAlbum(_ set: SetEntity) {
-        _albums[set.id] = set
+        _albums[set.id.handle] = set
     }
     
     public func album(forHandle handle: HandleEntity) -> SetEntity? {

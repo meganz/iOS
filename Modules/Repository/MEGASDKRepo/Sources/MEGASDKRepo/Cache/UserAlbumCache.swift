@@ -51,7 +51,7 @@ public actor UserAlbumCache: UserAlbumCacheProtocol {
     
     public func setAlbums(_ albums: [SetEntity]) {
         albums.forEach { album in
-            albumCache[album.id] = album
+            albumCache[album.id.handle] = album
         }
     }
     
@@ -86,8 +86,8 @@ public actor UserAlbumCache: UserAlbumCacheProtocol {
     
     public func remove(albums: [SetEntity]) {
         albums.forEach {
-            albumCache[$0.id] = nil
-            albumElementIdsCache[$0.id] = nil
+            albumCache[$0.id.handle] = nil
+            albumElementIdsCache[$0.id.handle] = nil
         }
     }
     
