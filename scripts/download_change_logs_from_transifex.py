@@ -126,9 +126,12 @@ def releaseNotesPath(locale):
 
 # writes text to a file.
 def writeToFile(filename, text):
-    f = open(filename, "w")
-    f.write(text)
-    f.close()           
+    directory = os.path.dirname(filename)
+    # check if the directory exists, if not, create it
+    if not os.path.exists(directory) and directory != '':
+        os.makedirs(directory)
+    with open(filename, "w") as f:
+        f.write(text)          
 
 def updateChangeLogs(searchText, languageURL, languageFolders):
     changeLogsText = fetchChangeLogsText(languageURL)
@@ -147,7 +150,7 @@ if periodCount > 1:
     searchText = searchText.rsplit(".", periodCount - 1)[0]
 
 languagesInformation = [
-    { "name": "English", "transifixCode": "l:en", "fastlaneMetadataFolders": ["en-US"] },
+    { "name": "English", "transifixCode": "l:en", "fastlaneMetadataFolders": ["en-US", "en-UK"] },
     { "name": "Spanish", "transifixCode": "l:es", "fastlaneMetadataFolders": ["es-ES", "es-MX"] },
     { "name": "Arabic", "transifixCode": "l:ar", "fastlaneMetadataFolders": ["ar-SA"] },
     { "name": "French", "transifixCode": "l:fr", "fastlaneMetadataFolders": ["fr-CA", "fr-FR"] },
