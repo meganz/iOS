@@ -19,13 +19,17 @@ public struct SnackBarView: View {
             if let snackBar {
                 SnackBarItemView(snackBar: snackBar)
                     .throwingTask {
-                        await restartAutoHideSubject
+                        for await _ in restartAutoHideSubject
                             .prepend(()) // Kick start the timer
                             .debounce(for: .seconds(displayDuration), scheduler: DispatchQueue.main)
-                            .values
-                            .first(where: { _ in true })
+                            .values {
+                            self.snackBar = nil
+                        }
                         
-                        self.snackBar = nil
+                        // Clear snackBar, if users move away from screen before timer dispatches. So they don't see the snack again
+                        if self.snackBar != nil {
+                            self.snackBar = nil
+                        }
                     }
                     .onChange(of: snackBar) { _ in
                         restartAutoHideSubject.send(())
