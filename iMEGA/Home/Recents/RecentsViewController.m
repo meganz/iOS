@@ -37,7 +37,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateAppearanceWithTrait:self.traitCollection];
+    [self configureTokenColors];
     
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     self.tableView.bounces = false;
@@ -69,22 +69,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     RecentsPreferenceManager.delegate = nil;
 
     [MEGASdk.shared removeMEGADelegateAsync:self];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearanceWithTrait:self.traitCollection];
-        
-        [self.tableView reloadData];
-    }
-}
-
-#pragma mark - Private
-
-- (void)updateAppearanceWithTrait:(UITraitCollection *)currentTraitCollection {
-    [self configureTokenColors];
 }
 
 #pragma mark - Actions
