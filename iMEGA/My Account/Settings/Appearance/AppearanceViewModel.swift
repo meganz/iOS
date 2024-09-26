@@ -61,8 +61,7 @@ class AppearanceViewModel {
             guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
                 return false
             }
-            return [.free, .none]
-                .notContains(accountUseCase.currentAccountDetails?.proLevel)
+            return accountUseCase.hasValidProOrUnexpiredBusinessAccount()
         case .none:
             return false
         case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .mediaDiscoverySubfolder:
