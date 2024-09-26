@@ -31,7 +31,7 @@ public struct ImportPublicAlbumUseCase<T: SaveCollectionToFolderUseCaseProtocol,
         try Task.checkCancellation()
         let album = try await userAlbumRepository.createAlbum(name)
         try Task.checkCancellation()
-        _ = try await userAlbumRepository.addPhotosToAlbum(by: album.id,
+        _ = try await userAlbumRepository.addPhotosToAlbum(by: album.id.handle,
                                                            nodes: copiedNodes)
     }
 }

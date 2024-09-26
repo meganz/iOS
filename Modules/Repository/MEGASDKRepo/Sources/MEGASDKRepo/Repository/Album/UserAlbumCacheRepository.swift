@@ -198,8 +198,8 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
             userAlbums.forEach { album in
                 group.addTask {
                     let albumElementIds = await self.userAlbumRepository.albumElementIds(
-                        by: album.id, includeElementsInRubbishBin: false)
-                    await self.userAlbumCache.setAlbumElementIds(forAlbumId: album.id, elementIds: albumElementIds)
+                        by: album.id.handle, includeElementsInRubbishBin: false)
+                    await self.userAlbumCache.setAlbumElementIds(forAlbumId: album.id.handle, elementIds: albumElementIds)
                 }
             }
         }
