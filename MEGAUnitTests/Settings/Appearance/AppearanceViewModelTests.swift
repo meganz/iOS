@@ -6,12 +6,14 @@ import MEGAPresentationMock
 import XCTest
 
 final class AppearanceViewModelTests: XCTestCase {
+    @MainActor
     func testAutoMediaDiscoverySetting_noPreferenceSet_shouldDefaultToTrue() async {
         let sut = makeSUT()
         let result = await sut.fetchSettingValue(for: .autoMediaDiscoverySetting)
         XCTAssertTrue(result)
     }
     
+    @MainActor
     func testAutoMediaDiscoverySetting_preferenceSet_shouldSetToValue() async {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: false])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -19,6 +21,7 @@ final class AppearanceViewModelTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
+    @MainActor
     func testFetchSettingValue_expectSetValue() async {
         let useCase = MockContentConsumptionUserAttributeUseCase(
             sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
@@ -27,6 +30,7 @@ final class AppearanceViewModelTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
+    @MainActor
     func testAutoMediaDiscoverySetting_onValueChange_shouldChangePreference() throws {
         let preferenceUseCase = MockPreferenceUseCase(dict: [:])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -37,12 +41,14 @@ final class AppearanceViewModelTests: XCTestCase {
         XCTAssertFalse(changedPreference)
     }
     
+    @MainActor
     func testMediaDiscoveryShouldIncludeSubfolderSetting_noPreferenceSet_shouldDefaultToTrue() async {
         let sut = makeSUT()
         let result = await sut.fetchSettingValue(for: .mediaDiscoveryShouldIncludeSubfolderSetting)
         XCTAssertTrue(result)
     }
     
+    @MainActor
     func testMediaDiscoveryShouldIncludeSubfolderSetting_preferenceSet_shouldSetToValue() async {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.mediaDiscoveryShouldIncludeSubfolderMedia: false])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -67,9 +73,9 @@ final class AppearanceViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaDiscoveryHelpLink, URL(string: "https://help.mega.io/files-folders/view-move/media-discovery-view-gallery"))
     }
     
-    func testIsAppearanceSectionVisible_ForFreeUserAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
+    func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .free)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -88,9 +94,9 @@ final class AppearanceViewModelTests: XCTestCase {
         }
     }
     
-    func testIsAppearanceSectionVisible_ForFreeUserAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
+    func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .free)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -109,9 +115,9 @@ final class AppearanceViewModelTests: XCTestCase {
         }
     }
     
-    func testIsAppearanceSectionVisible_ForPaidUserAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
+    func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .lite)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -130,9 +136,9 @@ final class AppearanceViewModelTests: XCTestCase {
         }
     }
     
-    func testIsAppearanceSectionVisible_ForPaidUserAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
+    func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: .lite)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
