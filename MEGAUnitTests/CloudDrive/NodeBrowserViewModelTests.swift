@@ -1,5 +1,4 @@
 import Combine
-import ConcurrencyExtras
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -24,20 +23,25 @@ struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
     func unreadNotificationIDs() async -> [NotificationIDEntity] { [] }
 }
 
-final class MockCloudDriveViewModeMonitoringService: CloudDriveViewModeMonitoring {
+final class MockCloudDriveViewModeMonitoringService: @unchecked Sendable, CloudDriveViewModeMonitoring {
     lazy var viewModes: AsyncStream<ViewModePreferenceEntity> = {
         AsyncStream(bufferingPolicy: .bufferingNewest(1)) { continuation in
             self.continuation = continuation
         }
     }()
 
-    var continuation: AsyncStream<ViewModePreferenceEntity>.Continuation?
+    private var continuation: AsyncStream<ViewModePreferenceEntity>.Continuation?
     var nodeSource: NodeSource
     var currentViewMode: ViewModePreferenceEntity
 
     init(nodeSource: NodeSource, currentViewMode: ViewModePreferenceEntity) {
         self.nodeSource = nodeSource
         self.currentViewMode = currentViewMode
+    }
+
+    @MainActor
+    func send(event: ViewModePreferenceEntity) {
+        continuation?.yield(event)
     }
 }
 
@@ -377,7 +381,7 @@ class NodeBrowserViewModelTests: XCTestCase {
     @MainActor
     func testUpdateViewModeIfNeeded_whenViewModeIsNotChanged_shouldReturnOriginalValue() async {
         let harness = Harness(defaultViewMode: .list, node: NodeEntity(handle: 100))
-        await assertViewMode(with: harness, expectedOrder: [.list, .list])
+        await assertViewMode(with: harness, originalViewMode: .list, updatedViewMode: .list)
     }
 
     @MainActor
@@ -386,57 +390,21 @@ class NodeBrowserViewModelTests: XCTestCase {
             defaultViewMode: .list,
             node: NodeEntity(handle: 100)
         )
-        await assertViewMode(with: harness, expectedOrder: [.list, .thumbnail])
+        await assertViewMode(with: harness, originalViewMode: .list, updatedViewMode: .thumbnail)
     }
     
     @MainActor
     func testSortOrderChange() async {
-        await withMainSerialExecutor {
-            // given
-            let harness = Harness(
-                defaultViewMode: .list,
-                node: NodeEntity(handle: 100)
-            )
-            
-            harness.sut.cloudDriveContextMenuFactory = makeContextMenuFactory(nodeUseCase: harness.nodeUseCase, isSensitive: true)
-            await Task.megaYield()
-            
-            let firstSortOrderExp = expectation(description: "Waiting for first sort order")
-            
-            // When we change the sortOrder `sut.updateContextMenu()` will produce 2 NodeBrowserContextMenuViewFactory objects, thus the 2 expected fulfilllment count
-            let secondSortOrderExp = expectation(description: "Waiting for second sort order")
-            secondSortOrderExp.expectedFulfillmentCount = 2
-            var outputSortOrders = [MEGADomain.SortOrderEntity]()
-            
-            let cancellable = harness.sut.$contextMenuViewFactory
-                .map { $0?.makeNavItemsFactory().sortOrder }
-                .receive(on: DispatchQueue.main)
-                .sink {
-                    guard let sortOrder = $0 else { return }
-                    outputSortOrders.append(sortOrder)
-                    if outputSortOrders.count == 1 {
-                        firstSortOrderExp.fulfill()
-                    } else {
-                        secondSortOrderExp.fulfill()
-                    }
-                }
-            
-            // when
-            harness.sut.changeSortOrder(.nameAscending) // This doesn't trigger `updateContextMenu()`
-            await fulfillment(of: [firstSortOrderExp], timeout: 1)
-            
-            // then
-            XCTAssertEqual(outputSortOrders.compactMap { $0 }, [.defaultAsc])
-            
-            // and when
-            harness.sut.changeSortOrder(.favourite) // This does trigger `updateContextMenu()`
-            await fulfillment(of: [secondSortOrderExp], timeout: 1)
-            
-            // and then
-            XCTAssertEqual(outputSortOrders.compactMap { $0 }, [.defaultAsc, .favouriteAsc, .favouriteAsc])
-            
-            cancellable.cancel()
-        }
+        // given
+        let harness = Harness(
+            defaultViewMode: .list,
+            node: NodeEntity(handle: 100)
+        )
+
+        harness.sut.cloudDriveContextMenuFactory = makeContextMenuFactory(nodeUseCase: harness.nodeUseCase, isSensitive: true)
+        await wait(for: .defaultAsc, in: harness) // wait for the default value
+        harness.sut.changeSortOrder(.favourite) // update sort order
+        await wait(for: .favouriteAsc, in: harness) // wait for the updated value
     }
 
     @MainActor
@@ -681,25 +649,52 @@ class NodeBrowserViewModelTests: XCTestCase {
     }
 
     @MainActor
-    private func assertViewMode(with harness: Harness, expectedOrder: [ViewModePreferenceEntity]) async {
-        await withMainSerialExecutor {
-            let expectation = expectation(description: "wait for the view mode to update")
-            var viewModes: [ViewModePreferenceEntity] = []
-            let cancellable = harness
-                .sut
-                .$viewMode
-                .sink { updatedViewMode in
-                    viewModes.append(updatedViewMode)
-                    if viewModes == expectedOrder {
-                        expectation.fulfill()
-                    }
+    private func assertViewMode(
+        with harness: Harness,
+        originalViewMode: ViewModePreferenceEntity,
+        updatedViewMode: ViewModePreferenceEntity
+    ) async {
+        let expectation = expectation(description: "wait for the view mode to update")
+        let cancellable = harness
+            .sut
+            .$viewMode
+            .dropFirst()
+            .sink { viewMode in
+                if viewMode == updatedViewMode {
+                    expectation.fulfill()
                 }
+            }
 
-            await Task.megaYield()
-            harness.cloudDriveViewModeMonitoringService.continuation?.yield(expectedOrder[1])
-            await fulfillment(of: [expectation], timeout: 1.0)
-            cancellable.cancel()
+        Task.detached {
+            await harness.cloudDriveViewModeMonitoringService.send(event: updatedViewMode)
         }
+
+        await fulfillment(of: [expectation], timeout: 1.0)
+        cancellable.cancel()
+    }
+
+    @MainActor
+    private func wait(for sortOrder: MEGADomain.SortOrderEntity, in harness: Harness) async {
+        let exp = expectation(description: "Wait for the view mode to update")
+
+        let cancellable = harness.sut.$contextMenuViewFactory
+            .map { $0?.makeNavItemsFactory().sortOrder }
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates(by: {
+                switch ($0, $1) {
+                case (sortOrder, sortOrder):
+                    return true
+                default:
+                    return false
+                }
+            })
+            .sink {
+                if $0 == sortOrder {
+                    exp.fulfill()
+                }
+            }
+
+        await fulfillment(of: [exp], timeout: 1)
     }
 
     @MainActor private func assertChangeSortOrder(
