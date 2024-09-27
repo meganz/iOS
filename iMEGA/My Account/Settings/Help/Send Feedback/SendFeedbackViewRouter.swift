@@ -51,7 +51,7 @@ final class SendFeedbackViewRouter: Routing {
             return nil
         }
         
-        return URL(string: "mailto:?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        return URL(string: "mailto:\(to)?subject=\(subjectEncoded)&body=\(bodyEncoded)")
     }
     
     private func createReportIssueAlertController(_ mailComposeVC: MFMailComposeViewController) -> UIViewController {
