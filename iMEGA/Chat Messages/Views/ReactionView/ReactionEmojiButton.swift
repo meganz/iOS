@@ -55,16 +55,6 @@ class ReactionEmojiButton: UIButton {
         backgroundColor = TokenColors.Button.secondary
     }
     
-    private func updateAppearance () {
-        configure()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        updateAppearance()
-    }
-    
     @objc func longPress(_ tapGesture: UITapGestureRecognizer) {
 
         buttonLongPress?(emoji, self)

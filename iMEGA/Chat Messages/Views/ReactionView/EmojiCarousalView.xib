@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -37,7 +38,7 @@
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DLa-JL-b2e">
                             <rect key="frame" x="0.0" y="16" width="578" height="44"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="12" minimumInteritemSpacing="0.0" id="lAc-c3-8JT">
                                 <size key="itemSize" width="60" height="44"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -63,7 +64,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="DLa-JL-b2e" secondAttribute="bottom" id="5wb-7Z-Om1"/>
                         <constraint firstAttribute="trailing" secondItem="DLa-JL-b2e" secondAttribute="trailing" id="Eyi-V0-EXy"/>
@@ -74,7 +75,8 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="6Qq-bH-adw"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="6Ka-nl-kHw" firstAttribute="trailing" secondItem="6Qq-bH-adw" secondAttribute="trailing" id="0TK-qN-vG3"/>
                 <constraint firstItem="CpA-uK-cdK" firstAttribute="trailing" secondItem="6Qq-bH-adw" secondAttribute="trailing" id="0hy-2I-AtP"/>
@@ -87,14 +89,19 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="6Qq-bH-adw"/>
             <connections>
                 <outlet property="collectionView" destination="DLa-JL-b2e" id="yqr-4m-XCe"/>
                 <outlet property="descriptionLabel" destination="Q87-Mb-nam" id="A8K-Rj-9tZ"/>
                 <outlet property="descriptionLabelBackgroundView" destination="CpA-uK-cdK" id="x8i-oN-zef"/>
                 <outlet property="handlebarView" destination="kcc-vs-KhG" id="tSE-R6-POp"/>
+                <outlet property="view" destination="6Ka-nl-kHw" id="vSc-FO-3gO"/>
             </connections>
             <point key="canvasLocation" x="-301.44927536231887" y="110.49107142857143"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
