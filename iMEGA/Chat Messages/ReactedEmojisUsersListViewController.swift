@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import PanModal
 
@@ -56,7 +57,7 @@ class ReactedEmojisUsersListViewController: UIViewController {
         
         preferredContentSize = CGSize(width: 400, height: 600)
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = TokenColors.Background.surface1
         
         addHeaderView(emojiList: emojiList)
         let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatRoom.chatId, messageId: messageId)

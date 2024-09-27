@@ -1,3 +1,5 @@
+import MEGADesignToken
+
 protocol MessageOptionItemTableCellDelegate: AnyObject {
     func setImageView(_ imageView: UIImageView, forIndex index: Int)
     func setLabel(_ label: UILabel, forIndex index: Int)
@@ -22,7 +24,7 @@ class MessageOptionItemTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateAppearance()
+        configureColors()
     }
     
     override func prepareForReuse() {
@@ -30,17 +32,9 @@ class MessageOptionItemTableCell: UITableViewCell {
         index = -1
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-    
-    private func updateAppearance() {
-        seperatorView.backgroundColor = UIColor.mnz_separator()
-        contentView.backgroundColor = UIColor.mnz_backgroundElevated()
+    private func configureColors() {
+        seperatorView.backgroundColor = TokenColors.Border.strong
+        contentView.backgroundColor = TokenColors.Background.surface1
     }
     
 }

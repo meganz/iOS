@@ -15,13 +15,13 @@ class EmojiReactionCollectionCell: UICollectionViewCell {
             }
             
             selectedMarkerView.isHidden = !isSelected
-            updateAppearance()
+            configureColors()
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateAppearance()
+        configureColors()
     }
     
     override func prepareForReuse() {
@@ -29,17 +29,9 @@ class EmojiReactionCollectionCell: UICollectionViewCell {
         selectedMarkerView.isHidden = true
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-        
-    private func updateAppearance() {
-        let color = isSelected ? TokenColors.Button.secondary : UIColor.label
+    private func configureColors() {
+        let color = isSelected ? TokenColors.Text.primary : TokenColors.Text.secondary
         numberOfUsersReactedLabel.textColor = color
-        selectedMarkerView.backgroundColor = color
+        selectedMarkerView.backgroundColor = TokenColors.Background.surface3
     }
 }

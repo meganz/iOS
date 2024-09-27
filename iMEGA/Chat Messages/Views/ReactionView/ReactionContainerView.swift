@@ -87,21 +87,16 @@ class ReactionContainerView: UIView {
         super.init(frame: .zero)
         addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
         addSubview(rootFlexContainer)
-        updateAppearance()
+        configureColors()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    private func updateAppearance() {
+    private func configureColors() {
         addMoreView.backgroundColor = TokenColors.Button.secondary
         addMoreView.layer.borderColor = TokenColors.Border.strong.cgColor
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        updateAppearance()
     }
     
     func emojiSelected(_ userhandles: MEGAHandleList) -> Bool {

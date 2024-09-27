@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 protocol EmojiCarousalViewDelegate: AnyObject {
@@ -12,6 +13,7 @@ class EmojiCarousalView: UIView {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var descriptionLabelBackgroundView: UIView!
+    @IBOutlet weak var view: UIView!
     
     weak var delegate: (any EmojiCarousalViewDelegate)?
     
@@ -19,16 +21,8 @@ class EmojiCarousalView: UIView {
         super.awakeFromNib()
         collectionView.register(EmojiReactionCollectionCell.nib,
                                 forCellWithReuseIdentifier: EmojiReactionCollectionCell.reuseIdentifier)
-        updateAppearance()
+        configureColors()
         handlebarView.isHidden = UIDevice.current.iPadDevice
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     func updateDescription(text: String?) {
@@ -41,11 +35,13 @@ class EmojiCarousalView: UIView {
                                   scrollPosition: .centeredHorizontally)
     }
     
-    private func updateAppearance() {
-        descriptionLabel.textColor = UIColor.emojiDescriptionTextColor(traitCollection)
-        descriptionLabelBackgroundView.backgroundColor = UIColor.surface1Background()
-        handlebarView.backgroundColor = UIColor.mnz_handlebar(for: traitCollection)
-        backgroundColor = UIColor.mnz_backgroundElevated()
+    private func configureColors() {
+        descriptionLabel.textColor = TokenColors.Text.secondary
+        descriptionLabelBackgroundView.backgroundColor = TokenColors.Background.surface1
+        handlebarView.backgroundColor = TokenColors.Border.strong
+        backgroundColor = TokenColors.Background.surface1
+        collectionView.backgroundColor = TokenColors.Background.surface1
+        view.backgroundColor = TokenColors.Background.surface1
     }
 }
 

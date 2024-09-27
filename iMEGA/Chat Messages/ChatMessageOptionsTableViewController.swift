@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 protocol ChatMessageOptionsTableViewControllerDataSource: AnyObject {
@@ -33,6 +34,7 @@ class ChatMessageOptionsTableViewController: UITableViewController {
         tableView.register(MessageOptionItemTableCell.nib,
                            forCellReuseIdentifier: MessageOptionItemTableCell.reuseIdentifier)
         tableView.rowHeight = 60.0
+        tableView.backgroundColor = TokenColors.Background.surface1
     }
 
     // MARK: - Table view data source
