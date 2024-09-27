@@ -355,6 +355,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         return participantToUpdate
     }
     
+    // Returns the participant that belongs to a mocked shareScreen participant
+    private func participantToUpdateFromScreenShareParticipant(_ participant: CallParticipantEntity) -> CallParticipantEntity? {
+        guard let participantToUpdate = callParticipants.first(where: {$0.participantId == participant.participantId && $0.clientId == participant.clientId && !$0.isScreenShareCell}) else {
+            MEGALogError("Error getting participant updated from screen share participant")
+            return nil
+        }
+        return participantToUpdate
+    }
+    
     private func updateSpeakerMicIfNeeded(_ participant: CallParticipantEntity) {
         guard isParticipantCurrentSpeakerParticipant(participant) else {
             return
@@ -935,7 +944,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func assignSpeakerParticipant(_ participant: CallParticipantEntity) {
-        guard let newSpeakerParticipant = participantToUpdate(from: participant) else { return }
+        guard let newSpeakerParticipant = participant.isScreenShareCell ? participantToUpdateFromScreenShareParticipant(participant) : participantToUpdate(from: participant) else { return }
         isSpeakerParticipantPinned = true
         speakerParticipant?.isSpeakerPinned = false
         newSpeakerParticipant.isSpeakerPinned = true
