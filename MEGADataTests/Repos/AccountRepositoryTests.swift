@@ -488,24 +488,22 @@ final class AccountRepositoryTests: XCTestCase {
     }
     
     func testOnStorageStatusUpdates_whenReceivingUpdates_shouldEmitCorrectValues() async throws {
-        let expectedStatusUpdates: [StorageStatusEntity] = [.noStorageProblems, .almostFull, .full, .pendingChange, .paywall]
+        let expectedStatusUpdates: [StorageStatusEntity] = [.almostFull, .full, .pendingChange, .paywall]
         let asyncStream = makeAsyncStream(for: expectedStatusUpdates)
         let (sut, _) = makeSUT(onStorageStatusUpdates: asyncStream)
         let expectation = XCTestExpectation(description: "Wait for all status updates")
         var receivedStatusUpdates: [StorageStatusEntity] = []
         
         Task {
-            var iterator = sut.onStorageStatusUpdates.makeAsyncIterator()
-            while let update = await iterator.next() {
-                receivedStatusUpdates.append(update)
+            for await status in sut.onStorageStatusUpdates {
+                receivedStatusUpdates.append(status)
                 if receivedStatusUpdates.count == expectedStatusUpdates.count {
                     expectation.fulfill()
                 }
             }
-            expectation.fulfill()
         }
         
-        await fulfillment(of: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         XCTAssertEqual(receivedStatusUpdates, expectedStatusUpdates)
     }
     

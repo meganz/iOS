@@ -255,29 +255,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
     
     public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> {
-        AsyncStream { continuation in
-            Task {
-                for await storageStatus in accountUpdatesProvider.onStorageStatusUpdates {
-                    continuation.yield(storageStatus)
-                }
-            }
-            
-            Task {
-                for await storageStatus in storageStatusFromAccountDetailsUpdates {
-                    continuation.yield(storageStatus)
-                }
-            }
-        }
-        .eraseToAnyAsyncSequence()
-    }
-    
-    private var storageStatusFromAccountDetailsUpdates: AnyAsyncSequence<StorageStatusEntity> {
-        accountUpdatesProvider.onAccountRequestFinish
-            .compactMap { result in
-                guard case .success(let request) = result, request.type == .accountDetails else { return nil }
-                return self.currentStorageStatus
-            }
-            .eraseToAnyAsyncSequence()
+        accountUpdatesProvider.onStorageStatusUpdates
     }
     
     public func multiFactorAuthCheck(email: String) async throws -> Bool {

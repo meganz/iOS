@@ -75,28 +75,27 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
 @objc final class WarningBannerViewModel: NSObject, ObservableObject {
     let warningType: WarningBannerType
     let router: (any WarningBannerViewRouting)?
-    let isShowCloseButton: Bool
-    var hideWarningViewAction: (() -> Void)?
+    let shouldShowCloseButton: Bool
+    var closeButtonAction: (() -> Void)?
     var onHeightChange: ((CGFloat) -> Void)?
     private let tracker: any AnalyticsTracking
-    @Published var isHideWarningView: Bool = false
     
     let applyNewDesign: Bool
     
     init(warningType: WarningBannerType,
          router: (any WarningBannerViewRouting)? = nil,
-         isShowCloseButton: Bool = false,
-         hideWarningViewAction: (() -> Void)? = nil,
+         shouldShowCloseButton: Bool = false,
+         closeButtonAction: (() -> Void)? = nil,
          onHeightChange: ((CGFloat) -> Void)? = nil,
          tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.warningType = warningType
         self.router = router
-        self.isShowCloseButton = isShowCloseButton
-        self.hideWarningViewAction = hideWarningViewAction
+        self.shouldShowCloseButton = shouldShowCloseButton
+        self.closeButtonAction = closeButtonAction
         self.onHeightChange = onHeightChange
         self.tracker = tracker
         
-        self.applyNewDesign = warningType == .fullStorageOverQuota
+        self.applyNewDesign = warningType == .fullStorageOverQuota || warningType == .almostFullStorageOverQuota
     }
     
     func onViewAppear() {
@@ -116,8 +115,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     }
     
     func onCloseButtonTapped() {
-        isHideWarningView = true
-        hideWarningViewAction?()
+        closeButtonAction?()
     }
     
     func onActionButtonTapped() {

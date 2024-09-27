@@ -76,7 +76,10 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
                 shareCollectionRepository: shareAlbumRepository),
             albumNameUseCase: AlbumNameUseCase(
                 userAlbumRepository: UserAlbumRepository.newRepo),
-            accountStorageUseCase: AccountStorageUseCase(accountRepository: AccountRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
             importPublicAlbumUseCase: importAlbumUseCase,
             accountUseCase: AccountUseCase(
                 repository: AccountRepository.newRepo),
@@ -91,7 +94,8 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
             tracker: DIContainer.tracker,
-            monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo))
+            monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+        )
         
         let viewController = UIHostingController(rootView: ImportAlbumView(
             viewModel: vm))
