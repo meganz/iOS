@@ -1,3 +1,4 @@
+import Foundation
 import MEGASwift
 
 // MARK: - Use case protocol
@@ -9,6 +10,8 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     
     ///  Refreshes the current account details, this needs to be called before using other operations to get most correct result.
     func refreshCurrentAccountDetails() async throws
+    
+    func updateLastStorageBannerDismissDate()
     
     /// An asynchronous sequence that emits `StorageStatusEntity` updates from multiple sources.
     /// This property emits storage status updates from both the regular storage status updates stream
@@ -30,18 +33,31 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     var currentStorageStatus: StorageStatusEntity { get }
     
     var shouldRefreshAccountDetails: Bool { get }
+    var shouldShowStorageBanner: Bool { get }
 }
 
-public struct AccountStorageUseCase<T: AccountRepositoryProtocol>: AccountStorageUseCaseProtocol {
+public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
+    private let accountRepository: any AccountRepositoryProtocol
+    private let storageBannerDismissDuration: TimeInterval = 24 * 60 * 60 // 24 hours in seconds
     
-    private let accountRepository: T
+    @PreferenceWrapper(key: .lastStorageBannerDismissedDate, defaultValue: nil)
+    private var lastStorageBannerDismissedDate: Date?
     
-    public init(accountRepository: T) {
+    public init(
+        accountRepository: some AccountRepositoryProtocol,
+        preferenceUseCase: some PreferenceUseCaseProtocol
+    ) {
         self.accountRepository = accountRepository
+        
+        $lastStorageBannerDismissedDate.useCase = preferenceUseCase
     }
     
     public func refreshCurrentAccountDetails() async throws {
         _ = try await accountRepository.refreshCurrentAccountDetails()
+    }
+    
+    public func updateLastStorageBannerDismissDate() {
+        lastStorageBannerDismissedDate = Date()
     }
     
     public func willStorageQuotaExceed(after nodes: some Sequence<NodeEntity>) -> Bool {
@@ -65,5 +81,12 @@ public struct AccountStorageUseCase<T: AccountRepositoryProtocol>: AccountStorag
     
     public var shouldRefreshAccountDetails: Bool {
         accountRepository.shouldRefreshAccountDetails
+    }
+    
+    public var shouldShowStorageBanner: Bool {
+        guard let lastStorageBannerDismissedDate else {
+            return true
+        }
+        return Date().timeIntervalSince(lastStorageBannerDismissedDate) > storageBannerDismissDuration
     }
 }

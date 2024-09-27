@@ -10,14 +10,28 @@ final class WarningBannerViewModelTests: XCTestCase {
         warningType: WarningBannerType,
         isShowCloseButton: Bool = false,
         router: some WarningBannerViewRouting = MockWarningViewRouter(),
-        tracker: some AnalyticsTracking = MockTracker()
+        tracker: some AnalyticsTracking = MockTracker(),
+        closeButtonAction: (() -> Void)? = nil,
+        onHeightChange: ((CGFloat) -> Void)? = nil
     ) -> WarningBannerViewModel {
         WarningBannerViewModel(
             warningType: warningType,
             router: router,
-            isShowCloseButton: isShowCloseButton,
+            shouldShowCloseButton: isShowCloseButton,
+            closeButtonAction: closeButtonAction,
+            onHeightChange: onHeightChange,
             tracker: tracker
         )
+    }
+    
+    private var randomNoActionWarningBannerType: WarningBannerType {
+        [
+            .noInternetConnection,
+            .limitedPhotoAccess,
+            .contactsNotVerified,
+            .contactNotVerifiedSharedFolder("Test Folder"),
+            .backupStatusError("Backup failed")
+        ].randomElement()!
     }
     
     func testWarningType_noInternetConnection_shouldReturnCorrectDescription() {
@@ -107,5 +121,90 @@ final class WarningBannerViewModelTests: XCTestCase {
         XCTAssertTrue(
             tracker.trackedEventIdentifiers.contains(where: { $0.eventName == FullStorageOverQuotaBannerUpgradeButtonPressedEvent().eventName })
         )
+    }
+    
+    func testWarningType_whenCloseButtonEnabled_shouldShowCloseButton() {
+        let randomWarningType = WarningBannerType.random()
+        let sut = makeSUT(
+            warningType: randomWarningType,
+            isShowCloseButton: true
+        )
+        XCTAssertTrue(sut.shouldShowCloseButton, "The close button should be visible for warning type \(randomWarningType)")
+    }
+    
+    func testCloseButtonAction_shouldCallCloseButtonAction() {
+        var actionCalled = false
+        let sut = makeSUT(warningType: .noInternetConnection) {
+            actionCalled = true
+        }
+        sut.onCloseButtonTapped()
+        XCTAssertTrue(actionCalled)
+    }
+    
+    func testHeightChangeCallback_shouldInvokeOnHeightChangeClosure() {
+        var heightChangeCalled = false
+        let sut = makeSUT(
+            warningType: .noInternetConnection,
+            onHeightChange: { _ in
+            heightChangeCalled = true
+        })
+        sut.onHeightChange?(100.0)
+        XCTAssertTrue(heightChangeCalled)
+    }
+    
+    func testApplyNewDesign_whenAlmostFullStorageOverQuota_shouldBeTrue() {
+        let sut = makeSUT(warningType: .almostFullStorageOverQuota)
+        XCTAssertTrue(sut.applyNewDesign)
+    }
+    
+    func testApplyNewDesign_whenFullStorageOverQuota_shouldBeTrue() {
+        let sut = makeSUT(warningType: .fullStorageOverQuota)
+        XCTAssertTrue(sut.applyNewDesign)
+    }
+
+    func testApplyNewDesign_whenOtherWarningTypes_shouldBeFalse() {
+        let sut = makeSUT(warningType: .noInternetConnection)
+        XCTAssertFalse(sut.applyNewDesign)
+    }
+
+    func testActionButtonTapped_whenWarningTypeHasNoAction_shouldNotTriggerRouterAction() {
+        let router = MockWarningViewRouter()
+        let sut = makeSUT(
+            warningType: randomNoActionWarningBannerType,
+            router: router
+        )
+        sut.onActionButtonTapped()
+        
+        XCTAssertEqual(router.presentUpgradeScreen_calledTimes, 0)
+        XCTAssertEqual(router.goToSettings_calledTimes, 0)
+    }
+
+    func testActionButtonTapped_whenWarningTypeHasNoAction_shouldNotTrackAnalytics() {
+        let tracker = MockTracker()
+        let sut = makeSUT(
+            warningType: .contactsNotVerified,
+            tracker: tracker
+        )
+        sut.onActionButtonTapped()
+        
+        XCTAssertTrue(tracker.trackedEventIdentifiers.isEmpty)
+    }
+}
+
+private extension WarningBannerType {
+    static var allCases: [WarningBannerType] {
+        [
+            .noInternetConnection,
+            .limitedPhotoAccess,
+            .contactsNotVerified,
+            .contactNotVerifiedSharedFolder("Test Folder"),
+            .backupStatusError("Backup failed"),
+            .fullStorageOverQuota,
+            .almostFullStorageOverQuota
+        ]
+    }
+    
+    static func random() -> WarningBannerType {
+        allCases.randomElement()!
     }
 }

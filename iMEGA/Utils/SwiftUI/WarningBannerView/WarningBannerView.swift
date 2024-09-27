@@ -33,13 +33,12 @@ struct WarningBannerView: View {
         HStack(alignment: .top) {
             content()
             
-            if viewModel.isShowCloseButton {
+            if viewModel.shouldShowCloseButton {
                 Spacer()
                 warningCloseButton
             }
         }
         .padding(5.0)
-        .opacity(viewModel.isHideWarningView ? 0 : 1)
         .background(
             GeometryReader { geometry in
                 bannerBgColor
@@ -121,7 +120,7 @@ struct WarningBannerView: View {
                 viewModel:
                     WarningBannerViewModel(
                     warningType: warningType,
-                    isShowCloseButton: showCloseButton
+                    shouldShowCloseButton: showCloseButton
                 )
             )
         }

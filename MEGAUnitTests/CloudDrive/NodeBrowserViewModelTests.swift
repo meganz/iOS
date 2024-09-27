@@ -72,7 +72,9 @@ class NodeBrowserViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence()
                 .eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-            isFullSOQBannerEnabled: @escaping () -> Bool = { true }
+            isFullSOQBannerEnabled: @escaping () -> Bool = { true },
+            isAlmostFullSOQBannerEnabled: @escaping () -> Bool = { true },
+            tempWarningBannerViewModel: WarningBannerViewModel? = nil
         ) {
             let nodeSource = NodeSource.node { node }
             let expectedNodes = [
@@ -125,6 +127,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase()
                 ),
                 warningViewModel: nil,
+                temporaryWarningViewModel: tempWarningBannerViewModel,
                 upgradeEncouragementViewModel: nil,
                 adsVisibilityViewModel: nil,
                 config: config, // Pass the modified config here
@@ -161,7 +164,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,
                 onNodeStructureChanged: onNodeStructureChanged,
-                isFullSOQBannerEnabled: isFullSOQBannerEnabled
+                isFullSOQBannerEnabled: isFullSOQBannerEnabled,
+                isAlmostFullSOQBannerEnabled: isAlmostFullSOQBannerEnabled
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -524,6 +528,90 @@ class NodeBrowserViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1.0)
         
         XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
+    }
+    
+    @MainActor
+    func testMonitorStorageStatusUpdates_withDefaultConfig_shouldUpdateCurrentBanner() async {
+        let mockAccountStorageUseCase = MockAccountStorageUseCase(
+            onStorageStatusUpdates: makeAsyncStream(for: []),
+            currentStorageStatus: .full
+        )
+        let tempWarningBannerVM = WarningBannerViewModel(warningType: .fullStorageOverQuota)
+        
+        let harness = Harness(
+            node: .init(),
+            config: NodeBrowserConfig.default,
+            mockAccountStorageUseCase: mockAccountStorageUseCase,
+            tempWarningBannerViewModel: tempWarningBannerVM
+        )
+        
+        harness.sut.onViewAppear()
+    
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, tempWarningBannerVM.warningType)
+    }
+    
+    @MainActor
+    private func makeHarness(
+        shouldShowStorageBanner: Bool = true,
+        isFromSharedItem: Bool = false,
+        currentStatus: StorageStatusEntity = .noStorageProblems
+    ) -> (Harness, MockAccountStorageUseCase) {
+        let mockAccountStorageUseCase = MockAccountStorageUseCase(shouldShowStorageBanner: shouldShowStorageBanner)
+        var config = NodeBrowserConfig.default
+        config.isFromSharedItem = isFromSharedItem
+        return (
+            Harness(
+                node: .init(),
+                config: config,
+                mockAccountStorageUseCase: mockAccountStorageUseCase
+            ), mockAccountStorageUseCase
+        )
+    }
+    
+    @MainActor
+    func testUpdateTemporaryBanner_whenStorageStatusTransitions_shouldDisplayCorrectBannersOrRemoveThem() async {
+        let (harness, _) = makeHarness()
+        
+        harness.sut.updateTemporaryBanner(status: .almostFull)
+        
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .almostFullStorageOverQuota)
+        
+        harness.sut.updateTemporaryBanner(status: .full)
+        
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
+        
+        harness.sut.updateTemporaryBanner(status: .noStorageProblems)
+        
+        XCTAssertNil(harness.sut.currentBannerViewModel)
+    }
+    
+    @MainActor
+    func testRefreshStorageStatus_whenStorageStatusChanges_shouldUpdateBannerVisibility() async {
+        let (harness, mockAccountStorageUseCase) = makeHarness()
+        
+        mockAccountStorageUseCase._currentStorageStatus = .almostFull
+        harness.sut.refreshStorageStatus()
+        
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .almostFullStorageOverQuota)
+        
+        mockAccountStorageUseCase._currentStorageStatus = .full
+        harness.sut.refreshStorageStatus()
+        
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
+        
+        mockAccountStorageUseCase._currentStorageStatus = .noStorageProblems
+        harness.sut.refreshStorageStatus()
+        
+        XCTAssertNil(harness.sut.currentBannerViewModel)
+    }
+    
+    @MainActor
+    func testRefreshStorageStatus_withSharedItemConfig_shouldNotDisplayBanner() {
+        let (harness, _) = makeHarness(currentStatus: .full)
+        
+        harness.sut.refreshStorageStatus()
+        
+        XCTAssertNil(harness.sut.currentBannerViewModel, "No banner should be shown for shared items.")
     }
     
     private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
