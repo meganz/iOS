@@ -188,17 +188,14 @@ private final class SnackBarHostingController: UIHostingController<SnackBarHosti
     }
         
     func layoutConstraints(bottomInset: CGFloat, constrained toView: UIView) {
-        guard let window = view.window else { return }
-
+        guard view.window != nil else { return }
+        
         view.translatesAutoresizingMaskIntoConstraints = false
     
         let bottomConstraint = view.bottomAnchor.constraint(equalTo: toView.safeAreaLayoutGuide.bottomAnchor, constant: -bottomInset)
 
-        // leading and trailing should be constrained to window safeAreaLayoutGuide
-        // the reason is: the view may not be within safe area (as intentionally, e.g MeetingParticipantsLayoutViewController)
-        // but we want to make sure the snackBar to be always within safe area.
-        [view.leadingAnchor.constraint(equalTo: window.safeAreaLayoutGuide.leadingAnchor),
-         view.trailingAnchor.constraint(equalTo: window.safeAreaLayoutGuide.trailingAnchor),
+        [view.leadingAnchor.constraint(equalTo: snackBarViewLeadingAnchor(toView: toView)),
+         view.trailingAnchor.constraint(equalTo: snackBarViewTrailingAnchor(toView: toView)),
          bottomConstraint
         ].activate()
         
@@ -211,6 +208,30 @@ private final class SnackBarHostingController: UIHostingController<SnackBarHosti
     
     func hide() {
         snackMessageHandler?.hide()
+    }
+    
+    private func snackBarViewLeadingAnchor(toView: UIView) -> NSLayoutXAxisAnchor {
+        /// The leadingAnchor of the snackbar.
+        /// In most cases, it is the leadingAnchor of safeAreaLayoutGuide of the view.
+        /// In cases where the view is intentionally not constrained to the safe area (e.g., MeetingParticipantsLayoutViewController),
+        /// it is the leadingAnchor of the view's window
+        if let window = toView.window, window.safeAreaInsets.left > toView.safeAreaInsets.left {
+            window.safeAreaLayoutGuide.leadingAnchor
+        } else {
+            toView.safeAreaLayoutGuide.leadingAnchor
+        }
+    }
+    
+    private func snackBarViewTrailingAnchor(toView: UIView) -> NSLayoutXAxisAnchor {
+        /// The trailingAnchor of the snackbar.
+        /// In most cases, it is the trailingAnchor of safeAreaLayoutGuide of the view.
+        /// In cases where the view is intentionally not constrained to the safe area (e.g., MeetingParticipantsLayoutViewController),
+        /// it is the trailingAnchor of the view's window
+        if let window = toView.window, window.safeAreaInsets.right > toView.safeAreaInsets.right {
+            window.safeAreaLayoutGuide.trailingAnchor
+        } else {
+            toView.safeAreaLayoutGuide.trailingAnchor
+        }
     }
     
     private func autoDismissOnNoSnacks(in snackMessageHandler: SnackMessageHandler) {
