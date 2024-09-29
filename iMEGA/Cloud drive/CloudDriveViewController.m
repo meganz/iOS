@@ -80,10 +80,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self makeDefaultViewModeStoreCreator];
 }
 
-- (void)dealloc {
-    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpInvokeCommands];
@@ -164,7 +160,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
        backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                             traitCollection:self.traitCollection];
-    [MEGASdk.shared addMEGAGlobalDelegateAsync:self queueType:ListenerQueueTypeMain];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -200,6 +195,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self encourageToUpgrade];
     
     [AudioPlayerManager.shared addDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegateAsync:self queueType:ListenerQueueTypeMain];
+    
+    [self fetchDataIfRequired];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -207,6 +205,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSNotification.didFallbackToMakingOfflineForMediaNode object:nil];
+    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -348,6 +347,17 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 #pragma mark - Private
+
+-(void)fetchDataIfRequired {
+    switch (self.displayMode) {
+        case DisplayModeRecents:
+            [self reloadRecentActionBucketAfterNodeUpdatesUsing:MEGASdk.shared
+                                              completionHandler:^{ }];
+            break;
+        default:
+            break;
+    }
+}
 
 - (void)reloadUI {
     __weak typeof(self) weakSelf = self;
