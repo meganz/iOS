@@ -18682,8 +18682,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-concurrency-extras.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
+				kind = exactVersion;
+				version = 1.1.0;
 			};
 		};
 		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */ = {
