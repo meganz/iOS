@@ -5,6 +5,23 @@ import SwiftUI
 
 final class VideoCellViewModel: ObservableObject {
     
+    /// Represents the different display modes for a cell view.
+    enum Mode {
+        /// Plain mode: Displays rows in the default style without any additional editing indicators.
+        case plain
+        
+        /// Selection mode: Displays a checkmark indicator on the rows, allowing the user to select multiple items.
+        case selection
+        
+        /// Reorder mode: Shows a grabber icon on the rows, allowing the user to drag and reorder items.
+        case reorder
+    }
+    
+    enum ViewContext {
+        case allVideos
+        case playlistContent
+    }
+    
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
@@ -16,7 +33,12 @@ final class VideoCellViewModel: ObservableObject {
     @Published var previewEntity: VideoCellPreviewEntity
     @Published var isSelected = false
     
+    @Published var mode: VideoCellViewModel.Mode
+    private(set) var viewContext: VideoCellViewModel.ViewContext
+    
     init(
+        mode: VideoCellViewModel.Mode,
+        viewContext: VideoCellViewModel.ViewContext,
         nodeEntity: NodeEntity,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
@@ -25,6 +47,8 @@ final class VideoCellViewModel: ObservableObject {
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void,
         onTapped: @escaping (_ node: NodeEntity) -> Void
     ) {
+        self.mode = mode
+        self.viewContext = viewContext
         self.nodeEntity = nodeEntity
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase

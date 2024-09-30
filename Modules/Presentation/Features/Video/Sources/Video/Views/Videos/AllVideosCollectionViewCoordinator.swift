@@ -57,8 +57,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             guard let self else { return }
             
             let viewModel = representer.viewModel
+            guard let viewContext = viewContext() else { return }
             
             let cellViewModel = VideoCellViewModel(
+                mode: .plain,
+                viewContext: viewContext,
                 nodeEntity: rowItem.node,
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
@@ -75,6 +78,14 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         
         return DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+        }
+    }
+    
+    private func viewContext() -> VideoCellViewModel.ViewContext? {
+        switch representer.viewType {
+        case .allVideos: .allVideos
+        case .playlistContent: .playlistContent
+        case .playlists: nil
         }
     }
     
