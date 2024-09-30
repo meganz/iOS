@@ -9,6 +9,8 @@ class MockHideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private(set) var showItemsHiddenSuccessfullyCounts = [Int]()
     private(set) var dismissCompletion: (() -> Void)?
     
+    nonisolated init() {}
+    
     func hideNodes(_ nodes: [NodeEntity]) {
         self.nodes = nodes
     }

@@ -6,6 +6,7 @@ import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 protocol HideFilesAndFoldersRouting {
     func hideNodes(_ nodes: [NodeEntity])
     func showSeeUpgradePlansOnboarding()
@@ -15,6 +16,7 @@ protocol HideFilesAndFoldersRouting {
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?)
 }
 
+@MainActor
 final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private weak var presenter: UIViewController?
     private weak var onboardingViewController: UIViewController?
@@ -24,13 +26,12 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     }
     
     func hideNodes(_ nodes: [NodeEntity]) {
-        Task { @MainActor in
+        Task {
             let viewModel = makeViewModel(nodes: nodes)
             await viewModel.hide()
         }
     }
     
-    @MainActor
     func showSeeUpgradePlansOnboarding() {
         let viewModel = HiddenFilesFoldersOnboardingViewModel(
             showPrimaryButtonOnly: false,
@@ -47,7 +48,6 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         )
     }
     
-    @MainActor
     func showFirstTimeOnboarding(nodes: [NodeEntity]) {
         let viewModel = HiddenFilesFoldersOnboardingViewModel(
             showPrimaryButtonOnly: false,
@@ -66,7 +66,6 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         )
     }
     
-    @MainActor
     func showOnboardingInfo() {
         let viewModel = HiddenFilesFoldersOnboardingViewModel(
             showPrimaryButtonOnly: true,
@@ -79,18 +78,15 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         )
     }
     
-    @MainActor
     func showItemsHiddenSuccessfully(count: Int) {
         let snackBar = SnackBar(message: Strings.Localizable.Nodes.Action.hideItems(count))
         UIApplication.mnz_visibleViewController().showSnackBar(snackBar: snackBar)
     }
     
-    @MainActor
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?) {
         onboardingViewController?.dismiss(animated: true, completion: completion)
     }
     
-    @MainActor
     private func showHiddenFilesAndFoldersOnboarding(
         primaryButtonViewModel: some HiddenFilesOnboardingPrimaryButtonViewModelProtocol,
         viewModel: HiddenFilesFoldersOnboardingViewModel
@@ -105,7 +101,6 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
                            animated: true)
     }
     
-    @MainActor
     private func makeViewModel(nodes: [NodeEntity]) -> HideFilesAndFoldersViewModel {
         HideFilesAndFoldersViewModel(
             nodes: nodes,
