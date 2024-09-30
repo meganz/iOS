@@ -60,7 +60,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published private(set) var selectionNavigationTitle: String = ""
     @Published private(set) var isToolbarButtonsDisabled = true
     @Published private(set) var showLoading = false
-    @Published private(set) var snackBarViewModel: SnackBarViewModel?
+    @Published var snackBar: SnackBar?
     @Published private(set) var isShareLinkButtonDisabled = true
     @Published private(set) var isConnectedToNetworkUntilContentLoaded = true
     
@@ -282,24 +282,7 @@ final class ImportAlbumViewModel: ObservableObject {
         publicLinkStatus = .invalid
         publicLinkWithDecryptionKey = nil
     }
-    
-    private func makeSnackBarViewModel(message: String) -> SnackBarViewModel {
         
-        showSnackBarSubscription?.cancel()
-        
-        let snackBar = SnackBar(message: message)
-        let viewModel = SnackBarViewModel(snackBar: snackBar)
-        
-        showSnackBarSubscription = viewModel.$isShowSnackBar
-            .filter { !$0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                snackBarViewModel = nil
-            }
-        return viewModel
-    }
-    
     // MARK: Subscriptions
     
     private func subscribeToSelection() {
@@ -436,12 +419,7 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     private func showSnackBar(message: String) {
-        guard let snackBarViewModel else {
-            snackBarViewModel = makeSnackBarViewModel(message: message)
-            return
-        }
-        
-        snackBarViewModel.update(snackBar: SnackBar(message: message))
+        snackBar = .init(message: message)
     }
     
     private func toggleLoading() {

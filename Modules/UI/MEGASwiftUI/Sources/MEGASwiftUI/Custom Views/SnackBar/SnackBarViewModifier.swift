@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import SwiftUI
 
@@ -18,55 +17,19 @@ struct SnackBarViewModifier: ViewModifier {
     
     @Binding var snackBar: SnackBar?
     let displayDuration: TimeInterval
-    
-    @State private var initialAppearance = false
-    @State private var restartAutoHideSubject = PassthroughSubject<Void, Never>()
-    
+        
     public func body(content: Content) -> some View {
         content
             .overlay(alignment: .bottom) {
-                VStack {
-                    if initialAppearance, let snackBar {
-                        SnackBarItemView(snackBar: snackBar)
-                            .throwingTask {
-                                
-                                defer { self.snackBar = nil }
-                                
-                                for await _ in restartAutoHideSubject
-                                    .prepend(()) // Kick start the timer
-                                    .debounce(for: .seconds(displayDuration), scheduler: DispatchQueue.main)
-                                    .values {
-                                    
-                                    try Task.checkCancellation()
-                                    
-                                    self.snackBar = nil
-                                }
-                            }
-                            .onChange(of: snackBar) { _ in
-                                restartAutoHideSubject.send(())
-                            }
-                    }
-                }
-                .opacity(snackBar != nil ? 1 : 0)
-                .animation(.easeInOut(duration: 0.5), value: snackBar)
-                .onAppear {
-                    if snackBar != nil {
-                        // Delay the animation transition
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            initialAppearance = true
-                        }
-                    } else {
-                        initialAppearance = true
-                    }
-                }
+                SnackBarView(
+                    snackBar: $snackBar,
+                    displayDuration: displayDuration)
             }
     }
 }
 
 #Preview {
-    VStack {
-        
-    }
+    VStack { }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     .snackBar(.constant(SnackBar(message: "MEGA has Arrived")))
 }

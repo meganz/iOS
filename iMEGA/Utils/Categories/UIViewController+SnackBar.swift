@@ -1,3 +1,4 @@
+import Combine
 import MEGASwiftUI
 import SwiftUI
 
@@ -34,47 +35,37 @@ extension UIViewController {
     /// Note: There's only one snack bar at a time for a view controller. The current showing snack bar, if any, will be removed before showing the new one
     /// - Parameter snackBar: a SnackBar model to be used for showing snack bar
     func showSnackBar(snackBar: SnackBar) {
-        showSnackBarView(with: snackBar)
+        showSnackBarView(snackBar)
     }
     
     /// Dismiss current showing snack bar, if any.
-    /// - Parameter immediate: Specify if dismiss is animated. Default is true.
-    func dismissSnackBar(immediate: Bool = true) {
-        guard let currentSnackBarView else { return }
-        dismissSnackBarView(currentSnackBarView, immediate: immediate)
+    func dismissSnackBar() {
+        dismissCurrentSnackBar()
     }
-}
-
-extension SnackBarViewModel {
-    convenience init(snackBar: SnackBar, presenter: UIViewController? = nil) {
-        self.init(snackBar: snackBar, willDismiss: {
-            if let presenter {
-                presenter.dismissSnackBar(immediate: false)
-            } else {
-                UIApplication.mnz_visibleViewController().dismissSnackBar(immediate: false)
-            }
-        })
-    }
-}
-
-protocol SnackBarObservablePresenting where Self: ObservableObject {
-    
-    @MainActor
-    func show(snack: SnackBar)
 }
 
 // MARK: - Privates
 extension UIViewController {
-    private var snackBarViewContainerID: String {
-        String(describing: self)
-    }
     
-    private var currentSnackBarView: UIView? {
-        snackBarViewLookUp[snackBarViewContainerID]
+    private var currentSnackBarHosting: SnackBarHostingController? {
+        children
+            .lazy
+            .compactMap {
+                guard
+                    let controller = $0 as? SnackBarHostingController,
+                    !controller.isBeingDismissed else {
+                    return nil
+                }
+                return controller
+            }
+            .first
     }
     
     fileprivate func updateSnackBarBottomInset(_ bottomInset: CGFloat, animated: Bool) {
-        guard let constraint = bottomConstraintLookUp[snackBarViewContainerID] else { return }
+        guard let constraint = currentSnackBarHosting?.bottomConstraint else {
+            return
+        }
+
         guard animated else {
             constraint.constant = bottomInset
             return
@@ -86,62 +77,44 @@ extension UIViewController {
         }
     }
     
-    fileprivate func showSnackBarView(with snackBar: SnackBar) {
-        let snackBarView = buildSnackBarView(with: snackBar)
-        showSnackBarView(snackBarView)
-    }
-    
     fileprivate func showSnackBarView(with message: String, action: SnackBar.Action? = nil) {
-        let snackBarView = buildSnackBarView(message: message, action: action)
-        showSnackBarView(snackBarView)
+        showSnackBarView(SnackBar(message: message, action: action))
+    }
+            
+    private func showSnackBarView(_ snackBar: SnackBar) {
+        MEGALogInfo("[\(type(of: self))] Show SnackBar message: \(snackBar.message)")
+        if let currentSnackBarHosting {
+            // Push new snack message to existing view
+            currentSnackBarHosting.send(snackBar: snackBar)
+        } else {
+            // Create and present new snackBar view
+            buildSnackBarContainer(with: snackBar)
+        }
     }
     
-    private func buildSnackBarView(with snackBar: SnackBar) -> UIView {
-        let willDismiss = { [weak self] in
-            guard let snackBarView = self?.currentSnackBarView else { return }
-            self?.dismissSnackBarView(snackBarView)
-        }
+    private func buildSnackBarContainer(with snackBar: SnackBar) {
+        let snackBarContainer = SnackBarHostingController(snackBar: snackBar)
+        addSnackBarContainer(snackBarContainer)
+        animateShowingSnackBarView(snackBarContainer.view)
+    }
+     
+    private func addSnackBarContainer(_ controller: SnackBarHostingController) {
+        view.addSubview(controller.view)
+        addChild(controller)
+        controller.didMove(toParent: self)
+
+        layout(controller: controller)
+    }
+    
+    private func layout(controller: SnackBarHostingController) {
         
-        let viewModel = SnackBarViewModel(snackBar: snackBar, willDismiss: willDismiss)
-        let view = SnackBarView(viewModel: viewModel)
-        let viewController = UIHostingController(rootView: view)
-        return viewController.view
-    }
-    
-    private func buildSnackBarView(message: String, action: SnackBar.Action? = nil) -> UIView {
-        let snackBar = SnackBar(message: message, action: action)
-        return buildSnackBarView(with: snackBar)
-    }
-    
-    private func showSnackBarView(_ snackBarView: UIView) {
-        // clear previous snack bar before showing the new one
-        if let currentSnackBarView {
-            dismissSnackBarView(currentSnackBarView, immediate: true)
-        }
-        addSnackBarView(snackBarView)
-        animateShowingSnackBarView(snackBarView)
-    }
-    
-    private func layout(snackBarView: UIView) {
-        guard let window = view.window else { return }
-        snackBarView.translatesAutoresizingMaskIntoConstraints = false
-    
         let bottomInset: CGFloat = if let snackBarLayoutCustomizable = self as? (any SnackBarLayoutCustomizable) {
             snackBarLayoutCustomizable.additionalSnackBarBottomInset
         } else {
             0
         }
          
-        let bottomConstraint = snackBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomInset)
-        bottomConstraintLookUp[snackBarViewContainerID] = bottomConstraint
-        
-        // leading and trailing should be contrainted to window safeAreaLayoutGuide
-        // the reason is: the view may not be within safe area (as intentionally, e.g MeetingParticipantsLayoutViewController)
-        // but we want to make sure the snackbar to be always within safe area.
-        [snackBarView.leadingAnchor.constraint(equalTo: window.safeAreaLayoutGuide.leadingAnchor),
-         snackBarView.trailingAnchor.constraint(equalTo: window.safeAreaLayoutGuide.trailingAnchor),
-         bottomConstraint
-        ].activate()
+        controller.layoutConstraints(bottomInset: bottomInset, constrained: view)
     }
     
     private func animateShowingSnackBarView(_ snackBarView: UIView) {
@@ -153,36 +126,134 @@ extension UIViewController {
         }
     }
     
-    private func animateRemovingSnackBarView(_ snackBarView: UIView, completion: @escaping () -> Void) {
-        UIView.animate(withDuration: 0.5, animations: {
-            snackBarView.alpha = 0.0
-        }, completion: { _ in
-            completion()
-        })
+    private func dismissCurrentSnackBar() {
+        currentSnackBarHosting?.hide()
     }
+}
+
+// MARK: SwiftUI Container and Hosting Controller
+private struct SnackBarHostingView: View {
     
-    private func dismissSnackBarView(_ snackBarView: UIView, immediate: Bool = false) {
-        if immediate {
-            removeSnackBarView(snackBarView)
-            return
+    @StateObject var snackMessageHandler: SnackBarHostingController.SnackMessageHandler
+    
+    var body: some View {
+        SnackBarView(snackBar: $snackMessageHandler.snackBar)
+    }
+}
+
+private final class SnackBarHostingController: UIHostingController<SnackBarHostingView> {
+    
+    /// Manage the storing and handling of SnackBar messages for a view
+    final class SnackMessageHandler: ObservableObject {
+        
+        @Published var snackBar: SnackBar?
+        
+        init(snackBar: SnackBar?) {
+            self.snackBar = snackBar
         }
         
-        animateRemovingSnackBarView(snackBarView) { [weak self] in
-            self?.removeSnackBarView(snackBarView)
+        func send(snackBar: SnackBar) {
+            self.snackBar = snackBar
+        }
+        
+        func hide() {
+            snackBar = nil
         }
     }
     
-    private func removeSnackBarView(_ snackBarView: UIView) {
-        snackBarView.removeFromSuperview()
-        snackBarViewLookUp[snackBarViewContainerID] = nil
-        bottomConstraintLookUp[snackBarViewContainerID] = nil
+    private lazy var dismissAnimator = {
+        
+        let animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) { [weak self] in
+            self?.view.alpha = 0.0
+        }
+    
+        animator.addCompletion { [weak self] _ in
+            guard let self = self else { return }
+            self.willMove(toParent: nil)
+            self.view.removeFromSuperview()
+            self.removeFromParent()
+        }
+        return animator
+    }()
+    
+    private(set) var bottomConstraint: NSLayoutConstraint?
+    private var snackMessageHandler: SnackMessageHandler?
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    convenience init(snackBar: SnackBar) {
+        let snackMessageHandler = SnackMessageHandler(snackBar: snackBar)
+        self.init(rootView: SnackBarHostingView(snackMessageHandler: snackMessageHandler))
+        self.snackMessageHandler = snackMessageHandler
+        
+        autoDismissOnNoSnacks(in: snackMessageHandler)
     }
     
-    private func addSnackBarView(_ snackBarView: UIView) {
-        view.addSubview(snackBarView)
-        snackBarViewLookUp[snackBarViewContainerID] = snackBarView
-        snackBarView.backgroundColor = .clear
+    override var isBeingDismissed: Bool { dismissAnimator.state != .inactive }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear
+    }
         
-        layout(snackBarView: snackBarView)
+    func layoutConstraints(bottomInset: CGFloat, constrained toView: UIView) {
+        guard view.window != nil else { return }
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+    
+        let bottomConstraint = view.bottomAnchor.constraint(equalTo: toView.safeAreaLayoutGuide.bottomAnchor, constant: -bottomInset)
+
+        [view.leadingAnchor.constraint(equalTo: snackBarViewLeadingAnchor(toView: toView)),
+         view.trailingAnchor.constraint(equalTo: snackBarViewTrailingAnchor(toView: toView)),
+         bottomConstraint
+        ].activate()
+        
+        self.bottomConstraint = bottomConstraint
+    }
+        
+    func send(snackBar: SnackBar) {
+        snackMessageHandler?.send(snackBar: snackBar)
+    }
+    
+    func hide() {
+        snackMessageHandler?.hide()
+    }
+    
+    private func snackBarViewLeadingAnchor(toView: UIView) -> NSLayoutXAxisAnchor {
+        /// The leadingAnchor of the snackbar.
+        /// In most cases, it is the leadingAnchor of safeAreaLayoutGuide of the view.
+        /// In cases where the view is intentionally not constrained to the safe area (e.g., MeetingParticipantsLayoutViewController),
+        /// it is the leadingAnchor of the view's window
+        if let window = toView.window, window.safeAreaInsets.left > toView.safeAreaInsets.left {
+            window.safeAreaLayoutGuide.leadingAnchor
+        } else {
+            toView.safeAreaLayoutGuide.leadingAnchor
+        }
+    }
+    
+    private func snackBarViewTrailingAnchor(toView: UIView) -> NSLayoutXAxisAnchor {
+        /// The trailingAnchor of the snackbar.
+        /// In most cases, it is the trailingAnchor of safeAreaLayoutGuide of the view.
+        /// In cases where the view is intentionally not constrained to the safe area (e.g., MeetingParticipantsLayoutViewController),
+        /// it is the trailingAnchor of the view's window
+        if let window = toView.window, window.safeAreaInsets.right > toView.safeAreaInsets.right {
+            window.safeAreaLayoutGuide.trailingAnchor
+        } else {
+            toView.safeAreaLayoutGuide.trailingAnchor
+        }
+    }
+    
+    private func autoDismissOnNoSnacks(in snackMessageHandler: SnackMessageHandler) {
+        snackMessageHandler
+            .$snackBar
+            .first { $0 == nil } // Lets hide & remove once we have receive a nil snack
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                guard let self,
+                      !isBeingDismissed else {
+                    return
+                }
+                dismissAnimator.startAnimation()
+            })
+            .store(in: &subscriptions)
     }
 }
