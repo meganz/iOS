@@ -122,6 +122,11 @@
     [self refreshMyAvatar];
     
     [self setBackBarButton];
+
+    // Update the search results when the search controller is active and the keyboard isn't shown.
+    if (self.searchController.isActive) {
+        [self updateSearchResultsForSearchController:self.searchController];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
