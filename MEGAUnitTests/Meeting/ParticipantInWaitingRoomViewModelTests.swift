@@ -41,7 +41,7 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(admitParticipantHandler_calledTimes, 0)
     }
     
-    private func makeSUT() -> ParticipantInWaitingRoomViewModel {
+    @MainActor private func makeSUT() -> ParticipantInWaitingRoomViewModel {
         ParticipantInWaitingRoomViewModel(
             participant: participant,
             userImageUseCase: userImageUseCase,

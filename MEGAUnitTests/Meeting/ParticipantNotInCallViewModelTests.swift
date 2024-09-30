@@ -62,7 +62,7 @@ final class ParticipantNotInCallViewModelTests: XCTestCase {
     
     // MARK: - Private
     
-    private func makeParticipantNotInCallViewModel(
+    @MainActor private func makeParticipantNotInCallViewModel(
         participant: CallParticipantEntity = CallParticipantEntity(),
         userImageUseCase: MockUserImageUseCase = MockUserImageUseCase(),
         accountUseCase: MockAccountUseCase = MockAccountUseCase(),
