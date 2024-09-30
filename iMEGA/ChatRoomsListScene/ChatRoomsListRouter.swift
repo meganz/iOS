@@ -81,15 +81,26 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )
-        ScheduleMeetingRouter(presenter: navigationController, viewConfiguration: viewConfiguration).start()
+        ScheduleMeetingRouter(
+            presenter: navigationController,
+            viewConfiguration: viewConfiguration,
+            shareLinkRouter: ShareLinkDialogRouter(
+                presenter: navigationController
+            )
+        ).start()
     }
     
     func presentWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity) {
         WaitingRoomViewRouter(presenter: chatRoomsListViewController, scheduledMeeting: scheduledMeeting).start()
     }
+    
+    func chatRoomFor(_ chatId: ChatIdEntity) -> ChatRoomEntity? {
+        ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
+            .chatRoom(forChatId: chatId)
+    }
         
     func showDetails(forChatId chatId: HandleEntity) {
-        guard let navigationController, let chatRoom = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo).chatRoom(forChatId: chatId) else { return }
+        guard let navigationController, let chatRoom = chatRoomFor(chatId) else { return }
         ChatContentRouter(
             chatRoom: chatRoom,
             presenter: navigationController
@@ -268,6 +279,10 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )
-        ScheduleMeetingRouter(presenter: navigationController, viewConfiguration: viewConfiguration).start()
+        ScheduleMeetingRouter(
+            presenter: navigationController,
+            viewConfiguration: viewConfiguration,
+            shareLinkRouter: ShareLinkDialogRouter(presenter: navigationController)
+        ).start()
     }
 }

@@ -4364,3 +4364,11 @@
 "appstore.screenshot9"="Move to MEGA";
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="Join the millions of people and businesses who trust MEGA to store and protect their data.";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="Anyone with this link can join the meeting and view the meeting chat.";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Send link to chat";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="Share link";

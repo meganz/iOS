@@ -168,4 +168,8 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
             rules: meeting.rules ?? .init(frequency: .invalid)
         )
     }
+    
+    var trackingEvents: ScheduleMeetingViewModel.TrackingEvents {
+        .editMeeting
+    }
 }

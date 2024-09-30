@@ -12,8 +12,10 @@ struct ScheduledMeetingDateBuilder {
     private let scheduledMeeting: ScheduledMeetingEntity
     private var chatRoom: ChatRoomEntity?
 
-    init(scheduledMeeting: ScheduledMeetingEntity,
-         chatRoom: ChatRoomEntity?) {
+    init(
+        scheduledMeeting: ScheduledMeetingEntity,
+        chatRoom: ChatRoomEntity?
+    ) {
         self.scheduledMeeting = scheduledMeeting
         self.chatRoom = chatRoom
     }

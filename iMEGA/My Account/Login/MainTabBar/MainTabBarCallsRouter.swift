@@ -197,7 +197,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     }
     
     func showUpgradeToProDialog(_ account: AccountDetailsEntity) {
-        let dialogView = SimpleDialogView.upgradePlanDialog { [weak self] in
+        let dialogConfig = SimpleDialogConfigFactory.upgradePlanDialog { [weak self] in
             guard let self else { return }
             tracker.trackAnalyticsEvent(with: MaxCallDurationReachedModalEvent())
             baseViewController.dismiss(animated: true) { [weak self] in
@@ -205,6 +205,8 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
                 UpgradeAccountPlanRouter(presenter: baseViewController, accountDetails: account).start()
             }
         }
+        
+        let dialogView = SimpleDialogView(dialogConfig: dialogConfig)
         
         if let presentedViewController = baseViewController.presentedViewController {
             presentedViewController.dismiss(animated: true, completion: { [weak self] in

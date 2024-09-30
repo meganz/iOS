@@ -147,7 +147,11 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )
         
-        let router = ScheduleMeetingRouter(presenter: presenter, viewConfiguration: viewConfiguration)
+        let router = ScheduleMeetingRouter(
+            presenter: presenter,
+            viewConfiguration: viewConfiguration,
+            shareLinkRouter: ShareLinkDialogRouter(presenter: presenter)
+        )
         router.start()
         return router.onMeetingUpdate()
     }

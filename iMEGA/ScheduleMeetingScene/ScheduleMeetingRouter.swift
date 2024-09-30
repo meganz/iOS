@@ -1,7 +1,31 @@
+import ChatRepo
 import Combine
 import MEGADomain
 import MEGASDKRepo
 import SwiftUI
+
+/// hosts all parameters need to present and execute action on share link modal [MEET-3644]
+struct ShareLinkRequestData: Sendable {
+    var chatId: ChatIdEntity
+    var title: String
+    var subtitle: String
+    var username: String
+}
+
+@MainActor
+protocol ScheduleMeetingRouting {
+    func showSpinner()
+    func hideSpinner()
+    func dismiss(animated: Bool) async
+    func showSuccess(message: String)
+    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
+    func updated(occurrence: ScheduledMeetingOccurrenceEntity)
+    func updated(meeting: ScheduledMeetingEntity)
+    func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
+    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
+    func showEndRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
+    func showUpgradeAccount(_ account: AccountDetailsEntity)
+}
 
 @MainActor
 final class ScheduleMeetingRouter {
@@ -10,13 +34,15 @@ final class ScheduleMeetingRouter {
     private let viewConfiguration: any ScheduleMeetingViewConfigurable
     private var occurrenceUpdatePromise: Future<ScheduledMeetingOccurrenceEntity, Never>.Promise?
     private var meetingUpdatePromise: Future<ScheduledMeetingEntity, Never>.Promise?
-
+    private let shareLinkRouter: any ShareLinkDialogRouting
     init(
         presenter: UINavigationController,
-        viewConfiguration: any ScheduleMeetingViewConfigurable
+        viewConfiguration: any ScheduleMeetingViewConfigurable,
+        shareLinkRouter: some ShareLinkDialogRouting
     ) {
         self.presenter = presenter
         self.viewConfiguration = viewConfiguration
+        self.shareLinkRouter = shareLinkRouter
     }
     
     func onOccurrenceUpdate() -> AnyPublisher<ScheduledMeetingOccurrenceEntity, Never> {
@@ -38,7 +64,10 @@ final class ScheduleMeetingRouter {
             router: self,
             viewConfiguration: viewConfiguration,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo)
+            remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            shareLinkHandler: shareLinkHandler
         )
 
         let viewController = ScheduleMeetingViewController(viewModel: viewModel)
@@ -49,12 +78,17 @@ final class ScheduleMeetingRouter {
         return navigation
     }
     
+    func shareLinkHandler(data: ShareLinkRequestData) {
+        shareLinkRouter.showShareLinkDialog(data)
+    }
+    
     func start() {
         presenter.present(build(), animated: true)
     }
 }
 
 extension ScheduleMeetingRouter: ScheduleMeetingRouting {
+
     func showSpinner() {
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()

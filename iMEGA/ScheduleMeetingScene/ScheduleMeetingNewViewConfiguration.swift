@@ -89,4 +89,8 @@ final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable
         
         return chatRoom
     }
+    
+    var trackingEvents: ScheduleMeetingViewModel.TrackingEvents {
+        .newMeeting
+    }
 }

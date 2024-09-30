@@ -36,10 +36,12 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
                 accountUseCase: accountUseCase,
                 preferenceUseCase: preferenceUseCase,
                 remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
-                tracker: tracker
+                tracker: tracker,
+                chatRoomUseCase: MockChatRoomUseCase(),
+                chatUseCase: MockChatUseCase(),
+                shareLinkHandler: { _ in }
             )
         }
-        
     }
     
     @MainActor
@@ -539,7 +541,11 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     @MainActor
     func testSubmitButtonTapped_withShowMessageForOccurrenceCompletion_shouldMatch() async {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(
-            completion: .showMessageForOccurrence(message: "", occurrence: ScheduledMeetingOccurrenceEntity())
+            completion: .showMessageForOccurrence(
+                message: "",
+                occurrence: ScheduledMeetingOccurrenceEntity(),
+                parent: ScheduledMeetingEntity()
+            )
         )
         let harness = Harness(viewConfiguration: viewConfiguration)
         await harness.sut.submitButtonTapped()
@@ -703,7 +709,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: harness.tracker.trackedEventIdentifiers,
             with: [
-                ScheduledMeetingSettingEnableMeetingLinkButtonEvent()
+                MockScheduleMeetingViewConfiguration.Event(eventName: "meetingLinkEnabled")
             ]
         )
     }

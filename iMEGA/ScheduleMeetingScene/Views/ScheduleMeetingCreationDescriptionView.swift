@@ -4,7 +4,6 @@ import SwiftUI
 
 struct ScheduleMeetingCreationDescriptionView: View {
     @ObservedObject var viewModel: ScheduleMeetingViewModel
-    @Environment(\.colorScheme) private var colorScheme
     @Binding var isBottomViewInFocus: Bool
 
     var body: some View {

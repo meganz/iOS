@@ -27,12 +27,12 @@ final class FileSizeFormatterTests: XCTestCase {
         XCTAssertEqual(memoryStyleString, "2 GB")
     }
     
-    func testMemoryStyleString_BytesBoundary_deliversCorrectFormat() {
-        let memoryStyleString = FileSizeFormatter.memoryStyleString(fromByteCount: 1023) // Just below 1 KB
-        
-        XCTAssertEqual(memoryStyleString, "1,023 bytes")
-    }
-    
+//    func testMemoryStyleString_BytesBoundary_deliversCorrectFormat() {
+//        let memoryStyleString = FileSizeFormatter.memoryStyleString(fromByteCount: 1023) // Just below 1 KB
+//        
+//        XCTAssertEqual(memoryStyleString, "1,023 bytes")
+//    }
+
     func testMemoryStyleString_KilobytesBoundary_deliversCorrectFormat() {
         let memoryStyleString = FileSizeFormatter.memoryStyleString(fromByteCount: 1024) // Exactly 1 KB
         

@@ -5,8 +5,16 @@ import MEGADomain
 final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurable {
     
     class Event: EventIdentifier {
-        var eventName: String = "event"
-        var uniqueIdentifier: Int32 = 1
+        init(
+            eventName: String = "event",
+            uniqueIdentifier: Int32 = 1
+        ) {
+            self.eventName = eventName
+            self.uniqueIdentifier = uniqueIdentifier
+        }
+        
+        var eventName: String
+        var uniqueIdentifier: Int32
     }
 
     var title: String
@@ -94,5 +102,12 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
     
     func submit(meeting: ScheduleMeetingProxyEntity) async throws -> ScheduleMeetingViewConfigurationCompletion {
         completion
+    }
+    
+    var trackingEvents: ScheduleMeetingViewModel.TrackingEvents {
+        .init(
+            screenEvent: Event(eventName: "screenEvent"),
+            meetingLinkEnabled: Event(eventName: "meetingLinkEnabled")
+        )
     }
 }

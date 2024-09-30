@@ -4,7 +4,6 @@ import SwiftUI
 
 struct ScheduleMeetingCreationPropertiesView: View {
     @ObservedObject var viewModel: ScheduleMeetingViewModel
-    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack(spacing: 0) {

@@ -1,25 +1,11 @@
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAssets
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
 import MEGAPresentation
 import SwiftUI
-
-@MainActor
-protocol ScheduleMeetingRouting {
-    func showSpinner()
-    func hideSpinner()
-    func dismiss(animated: Bool) async
-    func showSuccess(message: String)
-    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
-    func updated(occurrence: ScheduledMeetingOccurrenceEntity)
-    func updated(meeting: ScheduledMeetingEntity)
-    func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
-    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
-    func showEndRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
-    func showUpgradeAccount(_ account: AccountDetailsEntity)
-}
 
 @MainActor
 final class ScheduleMeetingViewModel: ObservableObject {
@@ -132,20 +118,28 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
     private var chatMonetisationEnabled = false
     private var subscriptions = Set<AnyCancellable>()
-
+    private let shareLinkHandler: (ShareLinkRequestData) -> Void
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
     init(
         router: some ScheduleMeetingRouting,
         viewConfiguration: some ScheduleMeetingViewConfigurable,
         accountUseCase: some AccountUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        shareLinkHandler: @escaping (ShareLinkRequestData) -> Void
     ) {
         self.router = router
+        self.chatRoomUseCase = chatRoomUseCase
+        self.chatUseCase = chatUseCase
         self.viewConfiguration = viewConfiguration
         self.accountUseCase = accountUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.tracker = tracker
+        self.shareLinkHandler = shareLinkHandler
         self.meetingName = viewConfiguration.meetingName
         self.meetingDescription = viewConfiguration.meetingDescription
         self.startDate = viewConfiguration.startDate
@@ -168,6 +162,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         await loadAndCacheFeatureFlagValue()
         updateRightBarButtonState()
         showLimitDurationViewIfNeeded()
+        tracker.trackAnalyticsEvent(with: viewConfiguration.trackingEvents.screenEvent)
     }
     
     func loadAndCacheFeatureFlagValue() async {
@@ -186,7 +181,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
             let completion = try await viewConfiguration.submit(meeting: scheduleMeetingProxy)
             hideSpinner()
             await dismiss()
-            handle(completion: completion)
+            handle(completion: completion, linkEnabled: meetingLinkEnabled)
         } catch {
             MEGALogError("Unable to submit with error \(error)")
             hideSpinner()
@@ -277,7 +272,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     func onMeetingLinkEnabledChange(_ enabled: Bool) {
         guard enabled else { return }
-        tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingEnableMeetingLinkButtonEvent())
+        tracker.trackAnalyticsEvent(with: viewConfiguration.trackingEvents.meetingLinkEnabled)
     }
     
     func onCalendarInviteEnabledChange(_ enabled: Bool) {
@@ -326,18 +321,47 @@ final class ScheduleMeetingViewModel: ObservableObject {
         router.updated(meeting: meeting)
     }
     
-    private func handle(completion: ScheduleMeetingViewConfigurationCompletion) {
+    private func handle(
+        completion: ScheduleMeetingViewConfigurationCompletion,
+        linkEnabled: Bool
+    ) {
         switch completion {
         case .showMessageForScheduleMeeting(let message, let scheduledMeeting):
+            if meetingLinkEnabled {
+                showModalShareLinkDialog(scheduledMeeting)
+            }
             updated(meeting: scheduledMeeting)
             showSuccess(message: message)
-        case .showMessageForOccurrence(let message, let occurrence):
+        case .showMessageForOccurrence(let message, let occurrence, let parent):
+            if meetingLinkEnabled {
+                showModalShareLinkDialog(parent)
+            }
             updated(occurrence: occurrence)
             showSuccess(message: message)
         case .showMessageAndNavigateToInfo(let message, let scheduledMeeting):
-            showMeetingInfo(for: scheduledMeeting)
+            if meetingLinkEnabled {
+                showModalShareLinkDialog(scheduledMeeting)
+            } else {
+                showMeetingInfo(for: scheduledMeeting)
+            }
             showSuccess(message: message)
         }
+    }
+    
+    private func showModalShareLinkDialog(_ scheduledMeeting: ScheduledMeetingEntity) {
+        let subtitle = ScheduledMeetingDateBuilder(
+            scheduledMeeting: scheduledMeeting,
+            chatRoom: chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
+        ).buildDateDescriptionString()
+        
+        shareLinkHandler(
+            .init(
+                chatId: scheduledMeeting.chatId,
+                title: scheduledMeeting.title,
+                subtitle: subtitle,
+                username: chatUseCase.myFullName() ?? ""
+            )
+        )
     }
     
     private func makeScheduleMeetingProxyEntity() -> ScheduleMeetingProxyEntity {
