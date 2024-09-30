@@ -204,6 +204,8 @@ final class MockMeetingCreateRouter: MeetingCreatingViewRouting {
     var showVideoPermissionError_calledTimes = 0
     var showAudioPermissionError_calledTimes = 0
     
+    nonisolated init() {}
+    
     func dismiss(completion: (() -> Void)?) {
         dismiss_calledTimes += 1
     }

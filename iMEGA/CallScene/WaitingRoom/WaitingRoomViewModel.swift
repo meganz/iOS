@@ -460,9 +460,11 @@ final class WaitingRoomViewModel: ObservableObject {
         do {
             try await meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: chatLink, karereInitCompletion: { [weak self] in
                 guard let self else { return }
-                selectFrontCameraIfNeeded()
-                if isVideoEnabled {
-                    enableLocalVideo(enabled: true)
+                Task { @MainActor in
+                    self.selectFrontCameraIfNeeded()
+                    if self.isVideoEnabled {
+                        self.enableLocalVideo(enabled: true)
+                    }
                 }
             })
             await self.joinChatCall()
@@ -513,10 +515,12 @@ final class WaitingRoomViewModel: ObservableObject {
 // MARK: - CallLocalVideoCallbacksUseCaseProtocol
 
 extension WaitingRoomViewModel: CallLocalVideoCallbacksUseCaseProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data) {
-        videoImage = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
+    nonisolated func localVideoFrameData(width: Int, height: Int, buffer: Data) {
+        Task { @MainActor in
+            videoImage = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
+        }
     }
     
-    func localVideoChangedCameraPosition() {
+    nonisolated func localVideoChangedCameraPosition() {
     }
 }

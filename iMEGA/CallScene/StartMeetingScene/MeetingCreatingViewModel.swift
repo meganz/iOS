@@ -410,11 +410,15 @@ final class MeetingCreatingViewModel: ViewModelType {
 }
 
 extension MeetingCreatingViewModel: CallLocalVideoCallbacksUseCaseProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data) {
-        invokeCommand?(.localVideoFrame(width: width, height: height, buffer: buffer))
+     nonisolated func localVideoFrameData(width: Int, height: Int, buffer: Data) {
+         Task { @MainActor in
+             invokeCommand?(.localVideoFrame(width: width, height: height, buffer: buffer))
+         }
     }
     
-    func localVideoChangedCameraPosition() {
-        invokeCommand?(.updateCameraPosition(position: isBackCameraSelected() ? .back : .front))
+    nonisolated func localVideoChangedCameraPosition() {
+        Task { @MainActor in
+            invokeCommand?(.updateCameraPosition(position: isBackCameraSelected() ? .back : .front))
+        }
     }
 }

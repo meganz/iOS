@@ -7,7 +7,7 @@ public protocol MeetingCreatingUseCaseProtocol: Sendable {
         firstName: String,
         lastName: String,
         link: String,
-        karereInitCompletion: (() -> Void)?
+        karereInitCompletion: (@Sendable () -> Void)?
     ) async throws
     func checkChatLink(link: String) async throws -> ChatRoomEntity
 }
@@ -51,7 +51,7 @@ public struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol, U: Us
         firstName: String,
         lastName: String,
         link: String,
-        karereInitCompletion: (() -> Void)? = nil
+        karereInitCompletion: (@Sendable () -> Void)? = nil
     ) async throws {
         try await meetingCreatingRepo
             .createEphemeralAccountAndJoinChat(
