@@ -100,15 +100,14 @@ final class ChatRoomLinkViewModel: ObservableObject {
             router.showLinkCopied()
         case .share:
             guard let url = URL(string: meetingLink) else { return }
-            let metadataItemSource = ChatLinkPresentationItemSource(
-                title: scheduledMeeting.title + "\n" + subtitle,
-                subject: Strings.Localizable.Meetings.Info.ShareMeetingLink.subject,
-                message: Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
-                Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(scheduledMeeting.title) + "\n" +
-                Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(subtitle) + "\n" +
-                Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(meetingLink),
+            
+            let metadataItemSource = ChatLinkPresentationItemSourceFactory.makeItemSource(
+                title: scheduledMeeting.title,
+                subtitle: subtitle,
+                username: chatUseCase.myFullName() ?? "",
                 url: url
             )
+            
             router.showShareMeetingLinkActivity(
                 meetingLink,
                 metadataItemSource: metadataItemSource

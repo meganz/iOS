@@ -4,12 +4,12 @@ import SwiftUI
 
 struct ScheduleMeetingView: View {
     @Environment(\.colorScheme) private var colorScheme
-
+    
     @ObservedObject var viewModel: ScheduleMeetingViewModel
     @Namespace var bottomViewID
     
     @State private var isBottomViewInFocus = false
-
+    
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.showWaitingRoomWarningBanner {

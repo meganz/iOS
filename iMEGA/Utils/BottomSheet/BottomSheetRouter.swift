@@ -20,6 +20,7 @@ final class BottomSheetRouter<Content>: Routing where Content: View {
                     return context.maximumDetentValue * 0.5
                 }
             ]
+            hostingController.sheetPresentationController?.detents = [.medium()]
         } else {
             hostingController.sheetPresentationController?.detents = [.medium()]
         }

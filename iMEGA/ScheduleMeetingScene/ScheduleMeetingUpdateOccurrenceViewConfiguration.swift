@@ -46,7 +46,8 @@ final class ScheduleMeetingUpdateOccurrenceViewConfiguration: ScheduleMeetingUpd
         _ = try await scheduledMeetingUseCase.updateOccurrence(occurrence, meeting: scheduledMeeting)
         return .showMessageForOccurrence(
             message: Strings.Localizable.Meetings.ScheduleMeeting.Occurrence.UpdateSuccessfull.popupMessage,
-            occurrence: occurrence
+            occurrence: occurrence,
+            parent: scheduledMeeting
         )
     }
     
@@ -60,5 +61,9 @@ final class ScheduleMeetingUpdateOccurrenceViewConfiguration: ScheduleMeetingUpd
             startDate: meeting.startDate,
             endDate: meeting.endDate
         )
+    }
+    
+    override var trackingEvents: ScheduleMeetingViewModel.TrackingEvents {
+        .editOccurence
     }
 }

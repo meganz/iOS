@@ -90,7 +90,10 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
         
         let router = ScheduleMeetingRouter(
             presenter: presenter,
-            viewConfiguration: viewConfiguration
+            viewConfiguration: viewConfiguration,
+            shareLinkRouter: ShareLinkDialogRouter(
+                presenter: presenter
+            )
         )
         router.start()
         return router.onOccurrenceUpdate()

@@ -1477,6 +1477,8 @@
 		94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */; };
 		94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
+		94C2203F2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2203E2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift */; };
+		94C220412CA2FFB900B16650 /* TrackingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C220402CA2FFB900B16650 /* TrackingEvents.swift */; };
 		94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */; };
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
@@ -1501,6 +1503,8 @@
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
 		94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */; };
 		94F80C8F2C80BC050068901C /* TaggableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F80C8E2C80BC050068901C /* TaggableTextView.swift */; };
+		94F92EAE2CAAA25F00966A0F /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = B5866BB42CA539E4009E0A1E /* GoogleMobileAds */; };
+		94F92EB82CAAD6DE00966A0F /* ShareLinkDialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F92EB72CAAD6DE00966A0F /* ShareLinkDialogRouter.swift */; };
 		94FABD152ADE95A9003E8894 /* CameraUploadsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */; };
 		94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */; };
 		94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */; };
@@ -4265,6 +4269,8 @@
 		94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarUIHostingController.swift; sourceTree = "<group>"; };
 		94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStore.swift; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
+		94C2203E2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSourceFactory.swift; sourceTree = "<group>"; };
+		94C220402CA2FFB900B16650 /* TrackingEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingEvents.swift; sourceTree = "<group>"; };
 		94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListViewController+Additions.swift"; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
 		94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
@@ -4289,6 +4295,7 @@
 		94F568BD2A56E412005CE9F2 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		94F568C12A56E7A6005CE9F2 /* DeviceCenter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceCenter; sourceTree = "<group>"; };
 		94F80C8E2C80BC050068901C /* TaggableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaggableTextView.swift; sourceTree = "<group>"; };
+		94F92EB72CAAD6DE00966A0F /* ShareLinkDialogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkDialogRouter.swift; sourceTree = "<group>"; };
 		94F991472AB45ED500C7CC18 /* SearchConfig+Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchConfig+Home.swift"; sourceTree = "<group>"; };
 		94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraUploadsRepository.swift; sourceTree = "<group>"; };
 		94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+ResultProperties.swift"; sourceTree = "<group>"; };
@@ -5514,7 +5521,7 @@
 				A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */,
 				A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */,
 				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
-				B5866BB52CA539E4009E0A1E /* GoogleMobileAds in Frameworks */,
+				94F92EAE2CAAA25F00966A0F /* GoogleMobileAds in Frameworks */,
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
@@ -6942,14 +6949,6 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
-		41136FB91E1692650031C516 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Views;
-			path = Chat/Views;
-			sourceTree = "<group>";
-		};
 		4147C2CE1B4EE8A400A37044 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -7554,7 +7553,6 @@
 				83669E952987F9A1003E8F74 /* ScheduledMeetingOccurrencesScene */,
 				83DBDDD229D2DA4B00CF433B /* ScheduleMeetingScene */,
 				83A66D202C590E4100047F24 /* SendTo */,
-				41136FB91E1692650031C516 /* Views */,
 				94E7180A283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift */,
 				415E69081DABCDF90043B75F /* ArchivedChatRoomsViewController.h */,
 				415E69091DABCDF90043B75F /* ArchivedChatRoomsViewController.m */,
@@ -9350,6 +9348,7 @@
 		836826B3292F7C9300A0AB5F /* ChatRoomLink */ = {
 			isa = PBXGroup;
 			children = (
+				94C2203E2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift */,
 				8375BE95294CA712006339C0 /* ChatRoomLinkNonHostView.swift */,
 				836826B4292F7CBB00A0AB5F /* ChatRoomLinkView.swift */,
 				836826B6292F7DC500A0AB5F /* ChatRoomLinkViewModel.swift */,
@@ -9758,6 +9757,7 @@
 			children = (
 				8348A8D62901900200B66463 /* ActiveCall */,
 				836BCF1628ED937D00515E18 /* Data Model */,
+				94F92EB62CAAD6C300966A0F /* ShareLink */,
 				8342CB0928EB3DE00078D35F /* Views */,
 				BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */,
 				83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */,
@@ -9905,6 +9905,7 @@
 				BFA1EEE22A4CF02600435A0F /* ScheduleMeetingViewConfigurable.swift */,
 				83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */,
 				83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */,
+				94C220402CA2FFB900B16650 /* TrackingEvents.swift */,
 				BF2675DA2A32A3F300736759 /* WeekDaysInformation.swift */,
 				9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */,
 			);
@@ -10498,6 +10499,14 @@
 				94EFD0AF2B0E66C2009247FF /* MyAccountHallRouter.swift */,
 			);
 			path = Router;
+			sourceTree = "<group>";
+		};
+		94F92EB62CAAD6C300966A0F /* ShareLink */ = {
+			isa = PBXGroup;
+			children = (
+				94F92EB72CAAD6DE00966A0F /* ShareLinkDialogRouter.swift */,
+			);
+			path = ShareLink;
 			sourceTree = "<group>";
 		};
 		9911BA892A8B209F00B88F28 /* WaitingRoom */ = {
@@ -14628,6 +14637,7 @@
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */,
 				838CC2652B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift in Sources */,
+				94C2203F2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift in Sources */,
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
 				2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */,
@@ -15836,6 +15846,7 @@
 				B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */,
 				B5CC2AA52995F15200A966A0 /* SharedItemsViewRouter.swift in Sources */,
 				32473EEB2A1E16F60020012C /* SharedLinkView.swift in Sources */,
+				94F92EB82CAAD6DE00966A0F /* ShareLinkDialogRouter.swift in Sources */,
 				83B944782C5B95A700F8D6B6 /* ShareLinkOptions.swift in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
@@ -15924,6 +15935,7 @@
 				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */,
 				947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */,
+				94C220412CA2FFB900B16650 /* TrackingEvents.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */,
 				BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */,

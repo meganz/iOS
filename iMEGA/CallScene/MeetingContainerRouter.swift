@@ -352,7 +352,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func showUpgradeToProDialog(_ account: AccountDetailsEntity) {
         guard let presenter else { return }
         let tracker = tracker // get strong instance
-        let dialogView = SimpleDialogView.upgradePlanDialog {
+        let dialogConfig = SimpleDialogConfigFactory.upgradePlanDialog {
             tracker.trackAnalyticsEvent(with: MaxCallDurationReachedModalEvent())
             presenter.dismiss(animated: true) {
                 UpgradeAccountPlanRouter(presenter: presenter, accountDetails: account).start()
@@ -360,7 +360,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         }
 
         presenter.dismiss(animated: true) {
-            BottomSheetRouter(presenter: presenter, content: dialogView).start()
+            BottomSheetRouter(
+                presenter: presenter,
+                content: SimpleDialogView(dialogConfig: dialogConfig)
+            ).start()
         }
     }
     

@@ -1,12 +1,52 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SimpleDialogConfig {
+struct SimpleDialogConfig: Identifiable {
+    
+    struct ButtonModel: Identifiable {
+        enum Theme {
+            case primary
+            case secondary
+        }
+        enum Action {
+            case action((UIView) -> Void)
+            case asyncAction((UIView) async -> Void)
+        }
+        
+        var id: String {
+            title
+        }
+        
+        var title: String
+        var theme: Theme
+        var action: Action
+    }
+    init(
+        imageResource: ImageResource,
+        title: String,
+        titleStyle: TitleStyle = .small,
+        message: String,
+        buttons: [ButtonModel]
+    ) {
+        self.imageResource = imageResource
+        self.title = title
+        self.titleStyle = titleStyle
+        self.message = message
+        self.buttons = buttons
+    }
+    
+    enum TitleStyle {
+        case large
+        case small
+    }
+    var id: String {
+        title + message + buttons.map(\.id).joined(separator: ",")
+    }
     let imageResource: ImageResource
     let title: String
+    let titleStyle: TitleStyle
     let message: String
-    let buttonTitle: String
-    let buttonAction: () -> Void
+    let buttons: [ButtonModel]
 }
 
 /// This view is intended to show a dialog to the user.
@@ -25,39 +65,123 @@ struct SimpleDialogView: View {
             Image(dialogConfig.imageResource)
                 .resizable()
                 .frame(width: 90, height: 90)
-            Text(dialogConfig.title)
-                .font(.callout)
+            titleView
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Text(dialogConfig.message)
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-            Button {
-                dialogConfig.buttonAction()
-            } label: {
-                Text(dialogConfig.buttonTitle)
-                    .frame(maxWidth: 288)
-                    .frame(height: 50)
-                    .background(TokenColors.Icon.accent.swiftUI)
-                    .foregroundStyle(TokenColors.Text.inverseAccent.swiftUI)
-                    .cornerRadius(10)
-                    .font(.headline)
+            ForEach(dialogConfig.buttons) { buttonModel in
+                DialogButtonWrapper(
+                    title: buttonModel.title,
+                    theme: buttonModel.theme,
+                    action: buttonModel.action
+                )
+                .frame(height: 50)
             }
         }
         .padding(30)
-        .background(TokenColors.Background.page.swiftUI)
+    }
+    
+    var titleView: Text {
+        switch dialogConfig.titleStyle {
+        case .large:
+            Text(dialogConfig.title)
+                .font(.headline)
+        case .small:
+            Text(dialogConfig.title)
+                .font(.callout)
+        }
     }
 }
 
-#Preview {
+/// We are using a UIKit wrapped button to be able to present an iPad popover with correct source view
+struct DialogButtonWrapper: UIViewRepresentable {
+    
+    let title: String
+    var theme: SimpleDialogConfig.ButtonModel.Theme
+    var action: SimpleDialogConfig.ButtonModel.Action
+    
+    func makeUIView(context: Self.Context) -> UIButton {
+        let uiButton = UIButton()
+        uiButton.setTitle(title, for: .normal)
+        context.coordinator.uiButton = uiButton
+        context.coordinator.addTarget()
+        context.coordinator.action = action
+        uiButton.layer.cornerRadius = 10
+        uiButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        
+        switch theme {
+        case .primary:
+            uiButton.backgroundColor = TokenColors.Button.primary
+            uiButton.setTitleColor(TokenColors.Text.inverse, for: UIControl.State.normal)
+        case .secondary:
+            uiButton.backgroundColor = TokenColors.Button.secondary
+            uiButton.setTitleColor(TokenColors.Text.accent, for: UIControl.State.normal)
+        }
+        
+        return uiButton
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    func updateUIView(_ uiView: UIButton, context: Self.Context) {}
+    
+    class Coordinator: NSObject {
+        var parent: DialogButtonWrapper
+        var uiButton = UIButton()
+        var action: SimpleDialogConfig.ButtonModel.Action = .action({ _ in })
+        
+        init(_ uiView: DialogButtonWrapper) {
+            self.parent = uiView
+        }
+        
+        func addTarget() {
+            uiButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+            uiButton.addTarget(self, action: #selector(alphaHalf), for: .touchDown)
+            uiButton.addTarget(self, action: #selector(alphaOne), for: .touchCancel)
+            uiButton.addTarget(self, action: #selector(alphaOne), for: .touchUpOutside)
+            uiButton.addTarget(self, action: #selector(alphaOne), for: .touchUpInside)
+        }
+        
+        @objc func alphaHalf() {
+            uiButton.alpha = 0.5
+        }
+        
+        @objc func alphaOne() {
+            uiButton.alpha = 1.0
+        }
+        
+        @objc func tapped() {
+            switch action {
+            case .action(let action):
+                action(uiButton)
+            case .asyncAction(let asyncAction):
+                Task { @MainActor in
+                    await asyncAction(uiButton)
+                }
+            }
+        }
+    }
+}
+
+ #Preview {
     let dialogConfig = SimpleDialogConfig(
         imageResource: .upgradeToProPlan,
         title: "Dialog title",
         message: "Fancy dialog message",
-        buttonTitle: "Button action title"
-    ) { }
+        buttons: [
+            .init(
+                title: "Button action title",
+                theme: .primary,
+                action: .action({_ in })
+            )
+        ]
+    )
     
-    return VStack {
+    VStack {
         SimpleDialogView(dialogConfig: dialogConfig)
             .colorScheme(.light)
         

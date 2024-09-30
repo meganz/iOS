@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGAAnalyticsiOS
 import MEGADomain
 
@@ -6,10 +7,43 @@ enum ScheduleMeetingViewConfigurationType {
     case edit
 }
 
-enum ScheduleMeetingViewConfigurationCompletion {
+enum ScheduleMeetingViewConfigurationCompletion: Sendable {
     case showMessageForScheduleMeeting(message: String, scheduledMeeting: ScheduledMeetingEntity)
-    case showMessageForOccurrence(message: String, occurrence: ScheduledMeetingOccurrenceEntity)
+    case showMessageForOccurrence(message: String, occurrence: ScheduledMeetingOccurrenceEntity, parent: ScheduledMeetingEntity)
     case showMessageAndNavigateToInfo(message: String, scheduledMeeting: ScheduledMeetingEntity)
+    
+    var scheduledMeetingEntity: ScheduledMeetingEntity? {
+        switch self {
+        case .showMessageForScheduleMeeting(message: _, scheduledMeeting: let scheduledMeeting):
+            scheduledMeeting
+        case .showMessageForOccurrence(message: _, occurrence: _, parent: let parent):
+            parent
+        case .showMessageAndNavigateToInfo(message: _, scheduledMeeting: let scheduledMeeting):
+            scheduledMeeting
+        }
+    }
+    
+    var chatId: ChatIdEntity {
+        switch self {
+        case .showMessageForScheduleMeeting(message: _, scheduledMeeting: let scheduledMeeting):
+            scheduledMeeting.chatId
+        case .showMessageForOccurrence(message: _, occurrence: _, parent: let parent):
+            parent.chatId
+        case .showMessageAndNavigateToInfo(message: _, scheduledMeeting: let scheduledMeeting):
+            scheduledMeeting.chatId
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .showMessageForScheduleMeeting(message: _, scheduledMeeting: let scheduledMeeting):
+            scheduledMeeting.title
+        case .showMessageForOccurrence(message: _, occurrence: _, parent: let parent):
+            parent.title
+        case .showMessageAndNavigateToInfo(message: _, scheduledMeeting: let scheduledMeeting):
+            scheduledMeeting.title
+        }
+    }
 }
 
 protocol ScheduleMeetingViewConfigurable: Sendable {
@@ -41,4 +75,5 @@ protocol ScheduleMeetingViewConfigurable: Sendable {
     // event to be sent when user taps Upgrade button , different for various mode of presentations of
     // schedule meeting view [MEET-4025]
     var upgradeButtonTappedEvent: any EventIdentifier { get }
+    var trackingEvents: ScheduleMeetingViewModel.TrackingEvents { get }
 }
