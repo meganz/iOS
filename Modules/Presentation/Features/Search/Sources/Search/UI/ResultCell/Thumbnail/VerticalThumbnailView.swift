@@ -256,7 +256,6 @@ struct VerticalThumbnailView: View {
         selectionEnabled: .constant(false)
     )
     .frame(width: 173, height: 214)
-    .previewDisplayName("Video")
 }
 
 #Preview("Preview") {
@@ -282,7 +281,6 @@ struct VerticalThumbnailView: View {
         selectionEnabled: .constant(false)
     )
     .frame(width: 173, height: 214)
-    .previewDisplayName("Preview")
 }
 
 #Preview("Icon") {
@@ -308,5 +306,4 @@ struct VerticalThumbnailView: View {
         selectionEnabled: .constant(false)
     )
     .frame(width: 173, height: 214)
-    .previewDisplayName("Icon")
 }
