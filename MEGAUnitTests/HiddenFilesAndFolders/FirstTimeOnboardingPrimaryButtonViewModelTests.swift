@@ -10,6 +10,7 @@ import XCTest
 
 final class FirstTimeOnboardingPrimaryButtonViewModelTests: XCTestCase {
 
+    @MainActor
     func testButtonTitle_init_isCorrect() throws {
         let sut = makeSUT()
         
@@ -42,6 +43,7 @@ final class FirstTimeOnboardingPrimaryButtonViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func makeSUT(
         nodes: [NodeEntity] = [],
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),

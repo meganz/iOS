@@ -299,7 +299,9 @@ extension NodeActions {
                 )
             },
             hide: { nodes in
-                HideFilesAndFoldersRouter(presenter: navigationController).hideNodes(nodes)
+                Task { @MainActor in
+                    HideFilesAndFoldersRouter(presenter: navigationController).hideNodes(nodes)
+                }
             },
             unhide: { nodes in
                 let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)

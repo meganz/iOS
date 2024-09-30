@@ -13,6 +13,7 @@ final class HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests: XCTestCase
         XCTAssertEqual(sut.buttonTitle, Strings.Localizable.seePlans)
     }
     
+    @MainActor
     func testButtonAction_init_dismissViewAndRouteToAccountOnDismissCompletion() async {
         let hideFilesAndFoldersRouter = MockHideFilesAndFoldersRouter()
         let upgradeAccountRouter = MockUpgradeAccountRouter()

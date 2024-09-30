@@ -331,8 +331,9 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     
     private func hide(nodes: [NodeEntity]) {
         guard let viewController = viewController else { return }
-        HideFilesAndFoldersRouter(presenter: viewController)
-            .hideNodes(nodes)
+        Task { @MainActor in
+            HideFilesAndFoldersRouter(presenter: viewController).hideNodes(nodes)
+        }
     }
     
     private func unhide(nodes: [NodeEntity]) {
