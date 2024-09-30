@@ -634,6 +634,8 @@ final class MockWaitingRoomViewRouter: WaitingRoomViewRouting {
     var showHostDidNotRespondAlert_calledTimes = 0
     var openCallUI_calledTimes = 0
     
+    nonisolated init() {}
+    
     func dismiss(completion: (() -> Void)?) {
         dismiss_calledTimes += 1
     }
