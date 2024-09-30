@@ -189,8 +189,6 @@
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
 		241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */; };
-		242FB9AE2C99732F00E0D11E /* UIImage+LabelImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FB9AD2C99732F00E0D11E /* UIImage+LabelImages.swift */; };
-		242FB9B22C997F2400E0D11E /* UIImage+LabelImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FB9AD2C99732F00E0D11E /* UIImage+LabelImages.swift */; };
 		2434EC372C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2434EC362C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift */; };
 		2434EC3D2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2434EC3C2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift */; };
 		24352DE42ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */; };
@@ -2928,7 +2926,6 @@
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
 		241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampRouter.swift; sourceTree = "<group>"; };
-		242FB9AD2C99732F00E0D11E /* UIImage+LabelImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+LabelImages.swift"; sourceTree = "<group>"; };
 		2434EC362C61BA810052D2F0 /* SortOrderType+VideoPlaylistMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SortOrderType+VideoPlaylistMapper.swift"; sourceTree = "<group>"; };
 		2434EC3C2C61C14B0052D2F0 /* SortOrderType_VideoPlaylistMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrderType_VideoPlaylistMapperTests.swift; sourceTree = "<group>"; };
 		24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVideoPlayerItemMetadataCommand.swift; sourceTree = "<group>"; };
@@ -8578,7 +8575,6 @@
 			isa = PBXGroup;
 			children = (
 				5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */,
-				242FB9AD2C99732F00E0D11E /* UIImage+LabelImages.swift */,
 			);
 			path = "UIKit+Tools";
 			sourceTree = "<group>";
@@ -15960,7 +15956,6 @@
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				B65D17D7289A233C00D5AD33 /* UIImage+Doc.swift in Sources */,
-				242FB9AE2C99732F00E0D11E /* UIImage+LabelImages.swift in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				C489EBE52B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */,
@@ -16358,7 +16353,6 @@
 				5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
-				242FB9B22C997F2400E0D11E /* UIImage+LabelImages.swift in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				C489EBEA2B550A3700EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */,
