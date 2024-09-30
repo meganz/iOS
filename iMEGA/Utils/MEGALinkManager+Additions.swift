@@ -263,7 +263,6 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
      @objc class func presentViewControllerWithAds(_ containerController: UIViewController, adsSlotViewController: UIViewController, presentationStyle: UIModalPresentationStyle = .automatic) {
          guard let adsSlotViewController = adsSlotViewController as? (any AdsSlotViewControllerProtocol) else { return }
          AdsSlotRouter(
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             adsSlotViewController: adsSlotViewController,
             contentView: AdsViewWrapper(viewController: containerController),
             presenter: UIApplication.mnz_visibleViewController(),

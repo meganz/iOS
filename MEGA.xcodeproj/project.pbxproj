@@ -1805,6 +1805,7 @@
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B584FA702C2D1D5300E56305 /* EnabledTwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B584FA6F2C2D1D5300E56305 /* EnabledTwoFactorAuthenticationViewController+Additions.swift */; };
+		B5866BB92CA566BA009E0A1E /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = B5866BB82CA566BA009E0A1E /* GoogleMobileAds */; };
 		B58723D42BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58723D32BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
 		B590F8BF2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B590F8BE2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift */; };
@@ -5516,6 +5517,7 @@
 				A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */,
 				A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */,
 				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
+				B5866BB52CA539E4009E0A1E /* GoogleMobileAds in Frameworks */,
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
@@ -5623,6 +5625,7 @@
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
+				B5866BB92CA566BA009E0A1E /* GoogleMobileAds in Frameworks */,
 				BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */,
 				A812CB3D2A4B0FBE00F99382 /* MEGAChatSdk in Frameworks */,
 				6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */,
@@ -13545,6 +13548,7 @@
 				6D797BA62C6117CC004D95F4 /* PhotosBrowser */,
 				0E119ACB2C7C3CBC0091BF06 /* MEGAPhotos */,
 				9444FA8B2C94672B005C240B /* Chat */,
+				B5866BB42CA539E4009E0A1E /* GoogleMobileAds */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -13693,6 +13697,7 @@
 				BF67F7F92AB4172100AC127E /* LogRepo */,
 				B5D58D572AC67D0D004ECD36 /* Accounts */,
 				6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */,
+				B5866BB82CA566BA009E0A1E /* GoogleMobileAds */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -13916,6 +13921,7 @@
 				BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */,
 				0E12F20F2BBFA8950087D853 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				9462D4B62C2049810049B3CA /* XCRemoteSwiftPackageReference "combine-schedulers" */,
+				B5866BB32CA539E4009E0A1E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -17055,6 +17061,7 @@
 					MAIN_APP_TARGET,
 					"FLEXLAYOUT_SWIFT_PACKAGE=1",
 				);
+				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -17116,6 +17123,7 @@
 					MAIN_APP_TARGET,
 					"FLEXLAYOUT_SWIFT_PACKAGE=1",
 				);
+				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -18121,6 +18129,7 @@
 					MAIN_APP_TARGET,
 					"FLEXLAYOUT_SWIFT_PACKAGE=1",
 				);
+				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -18606,6 +18615,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		B5866BB32CA539E4009E0A1E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.10.0;
+			};
+		};
 		BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/SAMKeychain.git";
@@ -18978,6 +18995,16 @@
 		B51616482B83361900C6E842 /* Notifications */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Notifications;
+		};
+		B5866BB42CA539E4009E0A1E /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5866BB32CA539E4009E0A1E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		B5866BB82CA566BA009E0A1E /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5866BB32CA539E4009E0A1E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		B5D58D542AC67C89004ECD36 /* Accounts */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -24,7 +24,8 @@ let package = Package(
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../MEGAAssets"),
         .package(path: "../MEGAUI"),
-        .package(path: "../Settings")
+        .package(path: "../Settings"),
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "11.10.0")
     ],
     targets: [
         .target(
@@ -50,7 +51,8 @@ let package = Package(
                            "MEGATest",
                            .product(name: "MEGAPresentationMock", package: "MEGAPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
-                           .product(name: "MEGASDKRepoMock", package: "MEGASDKRepo")]
+                           .product(name: "MEGASDKRepoMock", package: "MEGASDKRepo"),
+                           .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")]
         )
     ]
 )

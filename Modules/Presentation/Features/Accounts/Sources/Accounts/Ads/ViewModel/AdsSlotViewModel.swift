@@ -4,92 +4,74 @@ import MEGAPresentation
 import MEGASwift
 import SwiftUI
 
+typealias AdMobUnitID = String
+
 final public class AdsSlotViewModel: ObservableObject {
-    private var adsUseCase: any AdsUseCaseProtocol
-    private var accountUseCase: any AccountUseCaseProtocol
     private var abTestProvider: any ABTestProviderProtocol
     private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
-    private var adsSlotConfig: AdsSlotConfig?
-    private var isAdsEnabled: Bool = false
+    private(set) var adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     
-    @Published var adsUrl: URL?
+    private(set) var adsSlotConfig: AdsSlotConfig?
     @Published var displayAds: Bool = false
-    private(set) var closedAds: Set<AdsSlotEntity> = []
-    
-    private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
-    private(set) var hideAdsForUpgradedAccountTask: Task<Void, Never>?
-    private(set) var loadNewAdsTask: Task<Void, Never>?
-    
     private var subscriptions = Set<AnyCancellable>()
     
+    @Published var isExternalAdsEnabled: Bool = false
+    let refreshAdsSourcePublisher = PassthroughSubject<Void, Never>()
+    public var refreshAdsPublisher: AnyPublisher<Void, Never> {
+        refreshAdsSourcePublisher.eraseToAnyPublisher()
+    }
+    
+    /// In the future, adMob will have multiple unit ids per adSlot
+    let adMobUnitID: AdMobUnitID = "ca-app-pub-3940256099942544/2435281174"
+
     public init(
-        adsUseCase: some AdsUseCaseProtocol,
-        accountUseCase: some AccountUseCaseProtocol,
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
-        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
+        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared
     ) {
-        self.adsUseCase = adsUseCase
-        self.accountUseCase = accountUseCase
         self.adsSlotChangeStream = adsSlotChangeStream
         self.abTestProvider = abTestProvider
+        self.adMobConsentManager = adMobConsentManager
     }
-    
-    deinit {
-        monitorAdsSlotChangesTask?.cancel()
-        monitorAdsSlotChangesTask = nil
-        hideAdsForUpgradedAccountTask?.cancel()
-        hideAdsForUpgradedAccountTask = nil
-        loadNewAdsTask?.cancel()
-        loadNewAdsTask = nil
-    }
-    
+
     // MARK: Setup
+    @MainActor
     func setupSubscriptions() {
         NotificationCenter.default
             .publisher(for: .accountDidPurchasedPlan)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
-                hideAdsForUpgradedAccount()
+                updateAdsSlot()
             }
             .store(in: &subscriptions)
     }
-    
-    // MARK: Upgraded Account notif
-    private func hideAdsForUpgradedAccount() {
-        hideAdsForUpgradedAccountTask = Task { [weak self] in
-            guard let self else { return }
-            await updateAdsSlot(nil)
-        }
+
+    func initializeGoogleAds() async {
+        guard isExternalAdsEnabled else { return }
+        
+        try? await adMobConsentManager.gatherConsent()
+        await adMobConsentManager.initializeGoogleMobileAdsSDK()
     }
 
     // MARK: AB Test
+    @MainActor
     func setupABTestVariant() async {
-        isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
+        isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
     }
     
-    // MARK: Ads
-    func monitorAdsSlotChanges() {
-        guard monitorAdsSlotChangesTask == nil else { return }
-        
-        monitorAdsSlotChangesTask = Task { [weak self] in
-            guard let self else { return }
-            for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
-                await updateAdsSlot(newAdsSlotConfig)
-            }
+    // MARK: Ads Slot changes
+    func monitorAdsSlotChanges() async {
+        for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
+            await updateAdsSlot(newAdsSlotConfig)
         }
     }
     
-    func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig?) async {
-        guard isAdsEnabled else {
+    @MainActor
+    func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig? = nil) {
+        guard isExternalAdsEnabled else {
             adsSlotConfig = nil
-            await configureAds(url: nil)
-            return
-        }
-
-        if let newAdsSlot = newAdsSlotConfig?.adsSlot, closedAds.contains(newAdsSlot) {
-            self.adsSlotConfig = nil
-            await displayAds(false)
+            displayAds = false
             return
         }
         
@@ -99,77 +81,24 @@ final public class AdsSlotViewModel: ObservableObject {
         
         if let adsSlotConfig,
            let newAdsSlotConfig,
-            adsSlotConfig.adsSlot == newAdsSlotConfig.adsSlot {
+           adsSlotConfig.adsSlot == newAdsSlotConfig.adsSlot {
             self.adsSlotConfig = newAdsSlotConfig
-            await displayAds(newAdsSlotConfig.displayAds && adsUrl != nil)
+            displayAds = newAdsSlotConfig.displayAds
         } else {
             adsSlotConfig = newAdsSlotConfig
             loadNewAds()
         }
     }
     
+    @MainActor
     private func loadNewAds() {
-        loadNewAdsTask?.cancel()
-        
-        loadNewAdsTask = Task { [weak self] in
-            guard let self = self else { return }
-            guard let adsSlotConfig, isAdsEnabled else {
-                await configureAds(url: nil)
-                return
-            }
-            
-            do {
-                let adsSlot = adsSlotConfig.adsSlot
-                let adsResult = try await adsUseCase.fetchAds(adsFlag: .defaultAds,
-                                                              adUnits: [adsSlot],
-                                                              publicHandle: .invalidHandle)
-                guard let adsValue = adsResult[adsSlot.rawValue] else {
-                    await configureAds(url: nil)
-                    return
-                }
-                
-                let adsURLString = await appendAdCookieStatusToURL(url: adsValue)
-                
-                await configureAds(url: URL(string: adsURLString), shouldDisplayAds: adsSlotConfig.displayAds)
-            } catch {
-                await configureAds(url: nil)
-            }
-        }
-    }
-    
-    func appendAdCookieStatusToURL(url: String) async -> String {
-        let isAdsCookieEnabled = await adsSlotConfig?.isAdsCookieEnabled()
-        let adCookieParameter = isAdsCookieEnabled == true ? "1" : "0"
-        // Considering the scenario where the first parameter is added using a ? instead of an &
-        let separator = url.contains("?") ? "&" : "?"
-        return url + separator + "ac=" + adCookieParameter
-    }
-    
-    func didTapAdsContent() async {
-        guard accountUseCase.isNewAccount else {
-            // For existing users, new ads will be loaded for the current ads slot
-            loadNewAds()
+        guard let adsSlotConfig, isExternalAdsEnabled else {
+            displayAds = false
             return
         }
-    
-        // For new users, the ads will not show again on this ads slot
-        guard let adsSlotConfig else { return }
-        closedAds.insert(adsSlotConfig.adsSlot)
-
-        self.adsSlotConfig = nil
-        await displayAds(false)
-    }
-    
-    @MainActor
-    private func configureAds(url: URL?, shouldDisplayAds: Bool = false) {
-        guard !Task.isCancelled else { return }
-        adsUrl = url
-        displayAds(shouldDisplayAds)
-    }
-    
-    @MainActor
-    private func displayAds(_ shouldDisplayAds: Bool) {
-        guard !Task.isCancelled else { return }
-        displayAds = shouldDisplayAds
+        
+        refreshAdsSourcePublisher.send()
+        
+        displayAds = adsSlotConfig.displayAds
     }
 }

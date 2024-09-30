@@ -7,7 +7,6 @@ public struct AdsSlotRouter<T: View> {
     private weak var presenter: UIViewController?
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
     private let contentView: T
-    private let accountUseCase: any AccountUseCaseProtocol
     private let presentationStyle: UIModalPresentationStyle
     
     private class HostingController<S: View>: UIHostingController<AdsSlotView<S>> {
@@ -31,23 +30,19 @@ public struct AdsSlotRouter<T: View> {
     }
     
     public init(
-        accountUseCase: some AccountUseCaseProtocol,
         adsSlotViewController: some AdsSlotViewControllerProtocol,
         contentView: T,
         presenter: UIViewController? = nil,
         presentationStyle: UIModalPresentationStyle = .automatic
     ) {
         self.adsSlotViewController = adsSlotViewController
-        self.accountUseCase = accountUseCase
         self.contentView = contentView
         self.presenter = presenter
         self.presentationStyle = presentationStyle
     }
     
     public func build(onViewFirstAppeared: (() -> Void)? = nil) -> UIViewController {
-        let viewModel = AdsSlotViewModel(adsUseCase: AdsUseCase(repository: AdsRepository.newRepo),
-                                         accountUseCase: accountUseCase,
-                                         adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: adsSlotViewController))
+        let viewModel = AdsSlotViewModel(adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: adsSlotViewController))
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
         let adsViewController = HostingController(
             rootView: adsSlotView,
