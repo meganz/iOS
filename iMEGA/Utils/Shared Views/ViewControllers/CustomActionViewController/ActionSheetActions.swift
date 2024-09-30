@@ -153,7 +153,9 @@ class NodeAction: BaseAction {
                  image: UIImage? = nil,
                  style: UIAlertAction.Style = .default,
                  type: MegaNodeActionType,
-                 showProTag: Bool = false) {
+                 showProTag: Bool = false,
+                 syncIconAndTextColor: Bool = false
+    ) {
         self.type = type
         self.showProTag = showProTag
         super.init()
@@ -162,6 +164,7 @@ class NodeAction: BaseAction {
         self.accessoryView = accessoryView
         self.image = image
         self.style = style
+        self.syncIconAndTextColor = syncIconAndTextColor
     }
 }
 
@@ -225,7 +228,7 @@ extension NodeAction {
     }
     
     class func removeVideoFromVideoPlaylistAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.Videos.Tab.Playlist.Content.removeFromPlaylist, image: UIImage.hudMinus, type: .removeVideoFromVideoPlaylist)
+        NodeAction(title: Strings.Localizable.Videos.Tab.Playlist.Content.removeFromPlaylist, image: UIImage.hudMinus, type: .removeVideoFromVideoPlaylist, syncIconAndTextColor: true)
     }
     
     class func moveVideoInVideoPlaylistContentToRubbishBinAction() -> NodeAction {
