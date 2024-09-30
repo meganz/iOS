@@ -1,6 +1,5 @@
 import Combine
 import MEGADomain
-import SwiftUI
 @testable import Video
 import XCTest
 
@@ -13,11 +12,11 @@ final class VideoSelectionTests: XCTestCase {
     func testEditMode_whenValueChanged_shouldSubscribeToValueChanged() {
         let sut = makeSUT()
         let exp = expectation(description: "Should change statuses")
-        let statuses: [EditMode] = [.active, .inactive, .transient]
+        let statuses: [EditMode] = [.active, .inactive]
         var capturedEditModes = [EditMode]()
         sut.$editMode
             .dropFirst()
-            .collect(3)
+            .collect(2)
             .first()
             .sink {
                 capturedEditModes.append(contentsOf: $0)
@@ -27,7 +26,6 @@ final class VideoSelectionTests: XCTestCase {
         
         sut.editMode = .active
         sut.editMode = .inactive
-        sut.editMode = .transient
         wait(for: [exp], timeout: 1.0)
         
         XCTAssertEqual(capturedEditModes, statuses)

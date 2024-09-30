@@ -60,6 +60,7 @@ public struct VideoConfig: Equatable {
         public let addPlaylistImage: UIImage
         public let rectangleVideoStackPlaylistImage: UIImage
         public let favouritePlaylistThumbnailImage: UIImage
+        public let grabberIconImage: UIImage
         public let downloadedImage: UIImage
         public let labelAssets: LabelAssets
         
@@ -71,6 +72,7 @@ public struct VideoConfig: Equatable {
         ///   - moreImage: Image for more icon
         ///   - rectangleVideoStackPlaylistImage: Image for playlist icon
         ///   - favouritePlaylistThumbnailImage: Image for favorite playlist center icon
+        ///   - grabberIconImage: image for grab icon
         ///   - downloadedImage: Image for downloaded icon
         ///   - labelAssets: Assets for labels
         public init(
@@ -81,6 +83,7 @@ public struct VideoConfig: Equatable {
             addPlaylistImage: UIImage,
             rectangleVideoStackPlaylistImage: UIImage,
             favouritePlaylistThumbnailImage: UIImage,
+            grabberIconImage: UIImage,
             downloadedImage: UIImage,
             labelAssets: LabelAssets
         ) {
@@ -91,6 +94,7 @@ public struct VideoConfig: Equatable {
             self.addPlaylistImage = addPlaylistImage
             self.rectangleVideoStackPlaylistImage = rectangleVideoStackPlaylistImage
             self.favouritePlaylistThumbnailImage = favouritePlaylistThumbnailImage
+            self.grabberIconImage = grabberIconImage
             self.downloadedImage = downloadedImage
             self.labelAssets = labelAssets
         }

@@ -238,6 +238,8 @@ final class VideoCellViewModelTests: XCTestCase {
     ) {
                 
         let sut = VideoCellViewModel(
+            mode: .plain,
+            viewContext: .allVideos,
             nodeEntity: nodeEntity,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,

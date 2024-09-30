@@ -15,6 +15,8 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
         let node = anyNode(id: 1)
         let selection = VideoSelection()
         let cellViewModel = VideoCellViewModel(
+            mode: .plain,
+            viewContext: .allVideos,
             nodeEntity: node,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
@@ -48,6 +50,8 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
         let node = anyNode(id: 1)
         let selection = VideoSelection()
         let cellViewModel = VideoCellViewModel(
+            mode: .plain,
+            viewContext: .allVideos,
             nodeEntity: node,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),

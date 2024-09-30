@@ -22,57 +22,63 @@ struct VideoCellView: View {
     }
     
     var body: some View {
-        Button {
-            if selection.editMode.isEditing {
-                onTappedCheckMark()
-            } else {
-                viewModel.onCellTapped()
-            }
-        } label: {
-            VideoCellViewContent(
-                previewEntity: viewModel.previewEntity,
-                videoConfig: videoConfig,
-                editMode: $selection.editMode,
-                isSelected: $viewModel.isSelected,
-                onTappedMoreOptions: viewModel.onTappedMoreOptions
-            )
-            .contentShape(Rectangle())
-            .throwingTask { try await viewModel.attemptLoadThumbnail() }
-            .task { await viewModel.monitorInheritedSensitivityChanges() }
+        VideoCellViewContent(
+            mode: viewModel.mode,
+            previewEntity: viewModel.previewEntity,
+            videoConfig: videoConfig,
+            isSelected: $viewModel.isSelected,
+            onTappedCheckMark: onTappedCheckMark,
+            onTappedCell: onTappedCell,
+            onTappedMoreOptions: viewModel.onTappedMoreOptions
+        )
+        .throwingTask { try await viewModel.attemptLoadThumbnail() }
+        .task { await viewModel.monitorInheritedSensitivityChanges() }
+    }
+    
+    private func onTappedCell() {
+        if selection.editMode.isEditing {
+            onTappedCheckMark()
+        } else {
+            viewModel.onCellTapped()
         }
-        .buttonStyle(NoHighlightButtonStyle())
     }
 }
 
 struct VideoCellViewContent: View {
     @Environment(\.colorScheme) var colorScheme
+    let mode: VideoCellViewModel.Mode
     let previewEntity: VideoCellPreviewEntity
     let videoConfig: VideoConfig
-    let editMode: Binding<EditMode>
     let isSelected: Binding<Bool>
+    let onTappedCheckMark: () -> Void
+    let onTappedCell: () -> Void
     let onTappedMoreOptions: () -> Void
     
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             
-            if editMode.wrappedValue.isEditing {
-                checkMarkView
-                    .padding(.leading, 10)
+            leftControlView
+            
+            Button {
+                onTappedCell()
+            } label: {
+                HStack(alignment: .center, spacing: 8) {
+                    leadingContent
+                        .frame(width: 142, height: 80)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                    
+                    centerContent
+                        .padding(0)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    
+                    if mode != .selection {
+                        trailingContent
+                            .frame(width: 24, height: 24)
+                    }
+                }
+                .contentShape(Rectangle())
             }
-            
-            leadingContent
-                .frame(width: 142, height: 80)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
-            
-            centerContent
-                .padding(0)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            
-            if !editMode.wrappedValue.isEditing {
-                trailingContent
-                    .frame(width: 24, height: 24)
-            }
-            
+            .buttonStyle(NoHighlightButtonStyle())
         }
         .frame(maxWidth: .infinity, idealHeight: 80, alignment: .leading)
     }
@@ -124,10 +130,33 @@ struct VideoCellViewContent: View {
     }
     
     private var checkMarkView: some View {
-        CheckMarkView(
-            markedSelected: isSelected.wrappedValue,
-            foregroundColor: isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI
-        )
+        Button {
+            onTappedCheckMark()
+        } label: {
+            CheckMarkView(
+                markedSelected: isSelected.wrappedValue,
+                foregroundColor: isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI
+            )
+        }
+    }
+    
+    private var dragIndicatorView: some View {
+        Image(uiImage: videoConfig.rowAssets.grabberIconImage.withRenderingMode(.alwaysTemplate))
+            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+            .padding(.leading, 10)
+    }
+    
+    @ViewBuilder
+    private var leftControlView: some View {
+        switch mode {
+        case .selection:
+            checkMarkView
+                .padding(.leading, 10)
+        case .reorder:
+            dragIndicatorView
+        default:
+            EmptyView()
+        }
     }
 }
 
@@ -136,66 +165,92 @@ struct VideoCellViewContent: View {
 #Preview {
     Group {
         VideoCellViewContent(
+            mode: .plain,
             previewEntity: .standard,
             videoConfig: .preview,
-            editMode: .constant(.inactive),
             isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
         
         VideoCellViewContent(
+            mode: .plain,
             previewEntity: .favorite,
             videoConfig: .preview,
-            editMode: .constant(.active),
             isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
         
         VideoCellViewContent(
+            mode: .selection,
             previewEntity: .hasPublicLink,
             videoConfig: .preview,
-            editMode: .constant(.active),
             isSelected: .constant(true),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
         
         VideoCellViewContent(
+            mode: .reorder,
+            previewEntity: .hasPublicLink,
+            videoConfig: .preview,
+            isSelected: .constant(true),
+            onTappedCheckMark: {},
+            onTappedCell: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            mode: .plain,
             previewEntity: .hasLabel,
             videoConfig: .preview,
-            editMode: .constant(.inactive),
             isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
         
         VideoCellViewContent(
+            mode: .plain,
             previewEntity: .all(title: .short),
             videoConfig: .preview,
-            editMode: .constant(.inactive),
             isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
         
         VideoCellViewContent(
+            mode: .plain,
             previewEntity: .all(title: .medium),
             videoConfig: .preview,
-            editMode: .constant(.inactive),
             isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
         
         VideoCellViewContent(
+            mode: .plain,
             previewEntity: .all(title: .long),
             videoConfig: .preview,
-            editMode: .constant(.inactive),
             isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
         
         VideoCellViewContent(
+            mode: .plain,
             previewEntity: .placeholder,
             videoConfig: .preview,
-            editMode: .constant(.inactive),
             isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedCell: {},
             onTappedMoreOptions: {}
         )
     }

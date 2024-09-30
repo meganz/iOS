@@ -20,6 +20,7 @@ extension VideoConfig {
             addPlaylistImage: MEGAAssetsImageProvider.image(named: "navigationbar_add")!,
             rectangleVideoStackPlaylistImage: MEGAAssetsImageProvider.image(named: "rectangleVideoStack")!,
             favouritePlaylistThumbnailImage: MEGAAssetsImageProvider.image(named: "FavouritePlaylistThumbnail")!,
+            grabberIconImage: MEGAAssetsImageProvider.image(named: "grabberIcon")!,
             downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!,
             labelAssets: VideoConfig.RowAssets.LabelAssets(
                 redImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
