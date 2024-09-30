@@ -86,7 +86,6 @@ extension PreviewContent {
         selectionEnabled: .constant(false)
     )
     .frame(width: 173, height: 214)
-    .previewDisplayName("Folder")
 }
 
 #Preview("File") {
@@ -111,5 +110,4 @@ extension PreviewContent {
         selectionEnabled: .constant(false)
     )
     .frame(width: 173, height: 214)
-    .previewDisplayName("File")
 }
