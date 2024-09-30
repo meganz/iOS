@@ -9,6 +9,7 @@ enum ParticipantNoInWaitingRoomViewAction: ActionType {
     case denyButtonTapped
 }
 
+@MainActor
 final class ParticipantInWaitingRoomViewModel: ViewModelType, CommonParticipantViewModel {
     
     enum Command: CommandType, Equatable {

@@ -8,6 +8,7 @@ enum ParticipantNotInCallViewAction: ActionType {
     case onCallButtonTapped
 }
 
+@MainActor
 final class ParticipantNotInCallViewModel: ViewModelType, CommonParticipantViewModel {
     enum Command: CommandType, Equatable {
         case configView(ParticipantNotInCallState, ChatStatusEntity)
@@ -112,7 +113,6 @@ final class ParticipantNotInCallViewModel: ViewModelType, CommonParticipantViewM
             .store(in: &subscriptions)
     }
     
-    @MainActor
     func updateAvatar(image: UIImage) {
         invokeCommand?(.updateAvatarImage(image: image))
     }

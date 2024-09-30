@@ -8,6 +8,7 @@ enum MeetingParticipantViewAction: ActionType {
     case contextMenuTapped(button: UIButton)
 }
 
+@MainActor
 final class MeetingParticipantViewModel: ViewModelType, CommonParticipantViewModel {
     enum Command: CommandType, Equatable {
         case configView(isModerator: Bool, isMicMuted: Bool, isVideoOn: Bool, shouldHideContextMenu: Bool, raisedHand: Bool)
@@ -95,7 +96,6 @@ final class MeetingParticipantViewModel: ViewModelType, CommonParticipantViewMod
         }
     }
     
-    @MainActor
     func updateAvatar(image: UIImage) {
         invokeCommand?(.updateAvatarImage(image: image))
     }
