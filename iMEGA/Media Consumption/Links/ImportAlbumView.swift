@@ -36,6 +36,7 @@ struct ImportAlbumView: View {
                 
                 if viewModel.isConnectedToNetworkUntilContentLoaded {
                     content()
+                        .snackBar($viewModel.snackBar)
                 } else {
                     ContentUnavailableView {
                         Image(.noInternetEmptyState)
@@ -47,11 +48,6 @@ struct ImportAlbumView: View {
                 }
                 
                 bottomToolbar
-                    .overlay(
-                        GeometryReader { geometry in
-                            snackBar(toolbarGeometry: geometry)
-                        },
-                        alignment: .top)
             }
             .task {
                 await viewModel.monitorNetworkConnection()
@@ -231,14 +227,6 @@ struct ImportAlbumView: View {
                                isDisabled: viewModel.isShareLinkButtonDisabled,
                                action: viewModel.shareLinkTapped)
             .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
-        }
-    }
-    
-    @ViewBuilder
-    private func snackBar(toolbarGeometry: GeometryProxy) -> some View {
-        if let snackBarViewModel = viewModel.snackBarViewModel {
-            SnackBarView(viewModel: snackBarViewModel)
-                .offset(y: -(Constants.snackBarVerticalOffSet + toolbarGeometry.size.height))
         }
     }
 }

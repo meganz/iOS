@@ -39,10 +39,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         }
     }
     
-    @Published var isShowSnackBar = false
-    private(set) var snackBarType: PlanSelectionSnackBarType = .none
-    private var showSnackBarSubscription: AnyCancellable?
-    
+    @Published var snackBar: SnackBar?
     @Published var isDismiss = false
     @Published var isLoading = false
     @Published private(set) var currentPlan: PlanEntity?
@@ -275,24 +272,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     func showSnackBar(for type: PlanSelectionSnackBarType) {
-        guard snackBarType != type || !isShowSnackBar else { return }
-        snackBarType = type
-        isShowSnackBar = true
-    }
-    
-    func snackBarViewModel() -> SnackBarViewModel {
-        let snackBar = SnackBar(message: snackBarType.title)
-        let viewModel = SnackBarViewModel(snackBar: snackBar)
-
-        showSnackBarSubscription = viewModel.$isShowSnackBar
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isShow in
-                guard let self else { return }
-                if isShow { snackBarType = .none }
-                isShowSnackBar = isShow
-            }
-        
-        return viewModel
+        snackBar = .init(message: type.title)
     }
     
     func didTap(_ target: UpgradeAccountPlanTarget) {
