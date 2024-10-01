@@ -80,13 +80,16 @@ final class CallKitProviderDelegateTests: XCTestCase {
     class Harness {
         let callManager = MockCallManager()
         let cxProvider: MockCXProvider
-        let callCoordinator = MockCallsCoordinator()
+        let callCoordinator: MockCallsCoordinator
         let sut: CallKitProviderDelegate
-        init(setupCallManager: Bool = true) {
+        init(setupCallManager: Bool = true,
+             callCoordinator: MockCallsCoordinator? = nil
+        ) {
             let cxProvider = MockCXProvider(configuration: .init())
+            self.callCoordinator = callCoordinator ?? MockCallsCoordinator()
             self.cxProvider = cxProvider
             sut = CallKitProviderDelegate(
-                callCoordinator: callCoordinator,
+                callCoordinator: self.callCoordinator,
                 callManager: callManager,
                 cxProviderFactory: {
                     cxProvider
@@ -105,6 +108,7 @@ final class CallKitProviderDelegateTests: XCTestCase {
         XCTAssertEqual(harness.callManager.removeAllCalls_CalledTimes, 1)
     }
     
+    @MainActor
     func test_performStartAction_callCoordinatorSucceeds_callStartCallInManager() async {
         await withMainSerialExecutor {
             let harness = Harness()

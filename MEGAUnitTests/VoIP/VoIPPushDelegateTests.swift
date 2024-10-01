@@ -54,6 +54,7 @@ final class VoIPPushDelegateTests: XCTestCase {
             return voIpTokenUseCase.registerVoIPDeviceToken_CalledTimes > 0
         }
         
+        @MainActor
         func receiveIncomingPushDidReportIncomingCall(_ payload: MockPushPayload) -> Bool {
             sut.pushRegistry(PKPushRegistry(queue: nil), didReceiveIncomingPushWith: payload, for: .voIP, completion: { })
             return callsCoordinator.reportIncomingCall_CalledTimes > 0
@@ -104,19 +105,26 @@ final class VoIPPushDelegateTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_didReceiveIncomingPushWithPayload_isMegaCallAndHasChatId_shouldReportIncomingCall() {
+        let expectation = self.expectation(description: "didReportIncomingCall")
+        let harness = Harness(handle: 1234567890)
         let payload = MockPushPayload(
             mockDictionary: [
                 "megatype": 4,
                 "megadata": ["chatid": "chatIdB664Handle"]
             ]
         )
-        XCTAssertTrue(
-            Harness(handle: 1234567890)
-                .receiveIncomingPushDidReportIncomingCall(payload)
-        )
+        
+        harness.callsCoordinator.reportIncomingCallExpectationClosure = {
+            expectation.fulfill()
+        }
+        _ = harness.receiveIncomingPushDidReportIncomingCall(payload)
+        wait(for: [expectation], timeout: 0.5)
+        XCTAssertTrue(harness.callsCoordinator.reportIncomingCall_CalledTimes > 0)
     }
     
+    @MainActor
     func test_didReceiveIncomingPushWithPayload_isNotMegaCall_shouldNotReportIncomingCall() {
         let payload = MockPushPayload(
             mockDictionary: [
@@ -130,6 +138,7 @@ final class VoIPPushDelegateTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_didReceiveIncomingPushWithPayload_isMegaCallNoChatId_shouldNotReportIncomingCall() {
         let payload = MockPushPayload(
             mockDictionary: [

@@ -3,7 +3,8 @@ import MEGADomain
 /// Define methods to coordinate call actions from CallManagerProtocol
 /// When manager triggers an action and it is performed by a provider (CallKit basically, but simulator should manage it in different way),
 ///  the coordinator implementation will execute the corresponding event in the ChatSDK (start, mute, end call...)
-protocol CallsCoordinatorProtocol: AnyObject, Sendable {
+@MainActor
+protocol CallsCoordinatorProtocol: AnyObject {
     func startCall(_ callActionSync: CallActionSync) async -> Bool
     func answerCall(_ callActionSync: CallActionSync) async -> Bool
     func endCall(_ callActionSync: CallActionSync) async -> Bool

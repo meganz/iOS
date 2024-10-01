@@ -16,7 +16,10 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     var configureWebRTCAudioSession_CalledTimes = 0
     
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
+    var reportIncomingCallExpectationClosure: (() -> Void)?
 
+    nonisolated init() { }
+    
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         startCall_CalledTimes += 1
         return startCallResult_ToReturn
@@ -39,6 +42,7 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol {
     
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
         reportIncomingCall_CalledTimes += 1
+        reportIncomingCallExpectationClosure?()
     }
     
     func reportEndCall(_ call: CallEntity) {
