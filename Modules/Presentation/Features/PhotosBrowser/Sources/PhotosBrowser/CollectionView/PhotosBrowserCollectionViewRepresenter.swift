@@ -23,8 +23,6 @@ struct PhotosBrowserCollectionViewRepresenter: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UICollectionView, context: Context) {
-        guard let dataSource = context.coordinator.dataSource else { return }
-        
-        dataSource.apply(context.coordinator.snapshot(), animatingDifferences: true)
+        context.coordinator.updateUI(with: viewModel.mediaAssets)
     }
 }

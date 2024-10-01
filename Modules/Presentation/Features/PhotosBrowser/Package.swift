@@ -18,6 +18,7 @@ let package = Package(
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../MEGAPresentation"),
         .package(path: "../../../Presentation/MEGAAssets"),
+        .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
@@ -27,6 +28,7 @@ let package = Package(
             name: "PhotosBrowser",
             dependencies: ["MEGADomain",
                            "MEGAAssets",
+                           "MEGAL10n",
                            "MEGAPresentation",
                            "MEGASwiftUI",
                            "MEGADesignToken"],

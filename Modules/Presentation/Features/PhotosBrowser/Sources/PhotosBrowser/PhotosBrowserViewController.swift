@@ -75,13 +75,15 @@ public final class PhotosBrowserViewController: UIViewController {
         ])
         
         let config = NavigationBarConfigurationFactory.configuration(on: viewModel.config.displayMode)
-        config.configure(navigationItem: navigationItem, in: self)
+        config.configure(navigationItem: navigationItem,
+                         with: viewModel.config.library,
+                         in: self)
         
         navigationBar.items = [navigationItem]
     }
     
     private func configPhotosBrowserCollectionView() {
-        let content = PhotosBrowserCollectionView(viewModel: PhotosBrowserCollectionViewModel())
+        let content = PhotosBrowserCollectionView(viewModel: PhotosBrowserCollectionViewModel(library: viewModel.config.library))
         let host = UIHostingController(rootView: content)
         addChild(host)
         
