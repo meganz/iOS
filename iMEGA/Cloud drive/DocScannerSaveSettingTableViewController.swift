@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -88,6 +89,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateAppearance()
         title = Strings.Localizable.saveSettings
         
         currentFileName = originalFileName

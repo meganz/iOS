@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -14,9 +15,14 @@ class DocScannerDetailTableCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = TokenColors.Background.page
+        textLabel?.textColor = TokenColors.Text.primary
+        detailTextLabel?.textColor = TokenColors.Text.secondary
+    }
+    
     private func configure() {
-        backgroundColor = .mnz_backgroundElevated()
-        detailTextLabel?.textColor = UIColor.secondaryLabel
         
         switch cellType {
         case .fileType:

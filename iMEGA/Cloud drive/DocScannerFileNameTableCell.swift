@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import UIKit
 
@@ -23,9 +24,13 @@ class DocScannerFileNameTableCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = TokenColors.Background.page
+        filenameTextField.textColor = TokenColors.Text.primary
+    }
+    
     func configure(filename: String, fileType: String?) {
-        backgroundColor = .mnz_backgroundElevated()
-        
         self.originalFilename = filename
         self.currentFilename = filename
         fileImageView.image = NodeAssetsManager.shared.image(for: fileType ?? "")
