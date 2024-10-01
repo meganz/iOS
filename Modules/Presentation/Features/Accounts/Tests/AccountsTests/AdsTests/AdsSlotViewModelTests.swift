@@ -137,7 +137,6 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.setupABTestVariant()
         await sut.initializeGoogleAds()
         
-        XCTAssertEqual(adMobConsentManager.gatherConsentCalledCount, expectedCallCount, file: file, line: line)
         XCTAssertEqual(adMobConsentManager.initializeGoogleMobileAdsSDKCalledCount, expectedCallCount, file: file, line: line)
     }
     

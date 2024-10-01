@@ -61,15 +61,8 @@ class CookieSettingsTableViewController: UITableViewController {
     func executeCommand(_ command: CookieSettingsViewModel.Command) {
         switch command {
         case .configCookieSettings(let cookiesBitmap):
-            guard viewModel.isExternalAdsActive else {
-                performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
-                acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn
-                return
-            }
-            
             performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
-            advertisingCookiesSwitch.setOn(cookiesBitmap.contains(.ads), animated: false)
-            acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn && advertisingCookiesSwitch.isOn
+            acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn
             
         case .updateFooters(let array):
             footersArray = array
@@ -77,6 +70,7 @@ class CookieSettingsTableViewController: UITableViewController {
             
         case .cookieSettingsSaved:
             router.dismiss()
+            router.showAdMobConsentIfNeeded()
             
         case .showSnackBar(let message):
             showSnackBar(snackBar: SnackBar(message: message))
@@ -106,10 +100,6 @@ class CookieSettingsTableViewController: UITableViewController {
         viewModel.dispatch(.acceptCookiesSwitchValueChanged(sender.isOn))
         
         performanceAndAnalyticsSwitch.setOn(sender.isOn, animated: true)
-        
-        if viewModel.isExternalAdsActive {
-            advertisingCookiesSwitch.setOn(sender.isOn, animated: true)
-        }
     }
     
     @IBAction func performanceAndAnalyticsSwitchValueChanged(_ sender: UISwitch) {
@@ -147,10 +137,6 @@ class CookieSettingsTableViewController: UITableViewController {
         
         viewModel.dispatch(.configView)
         
-        if viewModel.isExternalAdsActive {
-            advertisingCookiesLabel.text = Strings.Localizable.Settings.Cookies.advertisingCookies
-        }
-
         updateAppearance()
     }
     
@@ -203,19 +189,16 @@ class CookieSettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case CookieSettingsSection.acceptCookies.rawValue:
-            return viewModel.isExternalAdsActive ? "" : footersArray[CookieSettingsSection.acceptCookies.rawValue]
+            footersArray[CookieSettingsSection.acceptCookies.rawValue]
             
         case CookieSettingsSection.essentialCookies.rawValue:
-            return footersArray[CookieSettingsSection.essentialCookies.rawValue]
+            footersArray[CookieSettingsSection.essentialCookies.rawValue]
             
         case CookieSettingsSection.performanceAndAnalyticsCookies.rawValue:
-            return footersArray[CookieSettingsSection.performanceAndAnalyticsCookies.rawValue]
-            
-        case CookieSettingsSection.advertisingCookies.rawValue:
-            return viewModel.isExternalAdsActive ? footersArray[CookieSettingsSection.advertisingCookies.rawValue] : ""
+            footersArray[CookieSettingsSection.performanceAndAnalyticsCookies.rawValue]
             
         default:
-            return ""
+            ""
         }
     }
     

@@ -14,4 +14,13 @@ extension AppDelegate {
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
         ).build(onViewFirstAppeared: onViewFirstAppeared)
     }
+    
+    func showAdMobConsentIfNeeded(isFromCookieDialog: Bool = false) async {
+        do {
+            try await GoogleMobileAdsConsentManager.shared.gatherConsent()
+            await GoogleMobileAdsConsentManager.shared.initializeGoogleMobileAdsSDK()
+        } catch {
+            MEGALogError("[AdMob] Google Ads consent manager \(isFromCookieDialog ? "with": "without") cookie dialog received error: \(error)")
+        }
+    }
 }

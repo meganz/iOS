@@ -1,3 +1,4 @@
+import Accounts
 import Foundation
 import MEGADomain
 import MEGAPresentation
@@ -17,9 +18,11 @@ enum CookieSettingsSource {
 final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
     private weak var navigationController: UINavigationController?
     private weak var presenter: UIViewController?
+    private let shouldShowAdMobConsent: Bool
     
-    @objc init(presenter: UIViewController?) {
+    @objc init(presenter: UIViewController?, shouldShowAdMobConsent: Bool = false) {
         self.presenter = presenter
+        self.shouldShowAdMobConsent = shouldShowAdMobConsent
     }
     
     func build() -> UIViewController {
@@ -59,5 +62,14 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
     
     func dismiss() {
         navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func showAdMobConsentIfNeeded() {
+        guard shouldShowAdMobConsent else { return }
+
+        Task { @MainActor in
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            await appDelegate.showAdMobConsentIfNeeded(isFromCookieDialog: true)
+        }
     }
 }

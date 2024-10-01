@@ -73,7 +73,6 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let cookieSettingsUseCase: any CookieSettingsUseCaseProtocol
     private let router: any CookieSettingsRouting
-    private var abTestProvider: any ABTestProviderProtocol
     
     var invokeCommand: ((Command) -> Void)?
     
@@ -81,7 +80,6 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     private var currentCookiesConfigArray: [Cookie] = .default
     private var cookieSettingsSet: Bool = true
     private(set) var numberOfSection: Int = 0
-    private(set) var isExternalAdsActive: Bool = false
     
     private(set) var configViewTask: Task<Void, Never>?
     private(set) var showCookiePolicyURLTask: Task<Void, Never>?
@@ -99,13 +97,11 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     init(
         accountUseCase: some AccountUseCaseProtocol,
         cookieSettingsUseCase: some CookieSettingsUseCaseProtocol,
-        router: some CookieSettingsRouting,
-        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
+        router: some CookieSettingsRouting
     ) {
         self.accountUseCase = accountUseCase
         self.cookieSettingsUseCase = cookieSettingsUseCase
         self.router = router
-        self.abTestProvider = abTestProvider
     }
     
     deinit {
@@ -119,7 +115,6 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         switch action {
         case .configView:
             configViewTask = Task {
-                await setUpExternalAds()
                 await cookieSettings()
                 setNumberOfSections()
                 setFooters()
@@ -132,7 +127,6 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue].value = isOn
             
         case .advertisingSwitchValueChanged(let isOn):
-            guard isExternalAdsActive else { return }
             cookiesConfigArray[CookiesBitPosition.advertising.rawValue].value = isOn
             
         case .showCookiePolicy:
@@ -143,31 +137,10 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         }
     }
     
-    // MARK: - Ads Cookie Flags
-    private func setUpExternalAds() async {
-        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
-        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
-        isExternalAdsActive = isAdsEnabled && isExternalAdsEnabled
-    }
-    
     // MARK: - Cookie policy
     private func showCookiePolicyURL() {
         guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return }
-        
-        guard isExternalAdsActive else {
-            self.router.didTap(on: .showCookiePolicy(url: cookiePolicyURL))
-            return
-        }
-        
-        showCookiePolicyURLTask = Task {
-            do {
-                let cookiePath = cookiePolicyURL.lastPathComponent
-                let sessionTransferURL = try await self.accountUseCase.sessionTransferURL(path: cookiePath)
-                self.router.didTap(on: .showCookiePolicy(url: sessionTransferURL))
-            } catch {
-                self.invokeCommand?(.showSnackBar(Strings.Localizable.somethingWentWrong))
-            }
-        }
+        self.router.didTap(on: .showCookiePolicy(url: cookiePolicyURL))
     }
     
     // MARK: - Private
@@ -176,7 +149,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         do {
             let bitmap = try await cookieSettingsUseCase.cookieSettings()
             
-            var cookiesBitmap = CookiesBitmap(rawValue: bitmap)
+            let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
             
             if cookiesBitmap != .essential {
                 for (setting, position) in cookieSettingToPosition where cookiesBitmap.contains(setting) {
@@ -184,14 +157,6 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
                 }
             }
             
-            // From Cookie Dialog with Ads
-            if isExternalAdsActive,
-               cookiesBitmap.contains(.ads),
-               !cookiesBitmap.contains(.adsCheckCookie) {
-                // Remove ads cookie value
-                cookiesConfigArray[CookiesBitPosition.advertising.rawValue].value = false
-                cookiesBitmap.remove(.ads)
-            }
             currentCookiesConfigArray = cookiesConfigArray
             
             invokeCommand?(.configCookieSettings(cookiesBitmap))
@@ -220,15 +185,11 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         footersArray.append(Strings.Localizable.Settings.Cookies.Essential.footer)
         footersArray.append(Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer)
         
-        if isExternalAdsActive {
-            footersArray.append(Strings.Localizable.Settings.Cookies.AdvertisingCookies.footer)
-        }
-        
         self.invokeCommand?(.updateFooters(footersArray))
     }
     
     private func setNumberOfSections() {
-        numberOfSection = isExternalAdsActive ? SectionType.externalAdsActive.numberOfSections : SectionType.externalAdsInactive.numberOfSections
+        numberOfSection = SectionType.externalAdsInactive.numberOfSections
     }
     
     private func save() {
@@ -244,10 +205,6 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
                 
                 for (setting, position) in cookieSettingToPosition where cookiesConfigArray[position.rawValue].value {
                     cookiesBitmap.insert(setting)
-                }
-                
-                if isExternalAdsActive {
-                    cookiesBitmap.insert(.adsCheckCookie)
                 }
                 
                 _ = try await cookieSettingsUseCase.setCookieSettings(with: cookiesBitmap.rawValue)
