@@ -4372,3 +4372,7 @@
 "chat.meetings.shareLink.sendToChat"="Send link to chat";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="Share link";
+/* Title for when adding items to a Sets*/
+"set.addTo"="Add to";
+/* Title for when adding items to a Album Sets*/
+"set.addTo.album"="Add to album";
