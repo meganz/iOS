@@ -1,6 +1,9 @@
 import MEGADesignToken
 import SwiftUI
 
+typealias AsyncViewAction = (UIView) async -> Void
+typealias ViewAction = (UIView) -> Void
+
 struct SimpleDialogConfig: Identifiable {
     
     struct ButtonModel: Identifiable {
@@ -9,8 +12,8 @@ struct SimpleDialogConfig: Identifiable {
             case secondary
         }
         enum Action {
-            case action((UIView) -> Void)
-            case asyncAction((UIView) async -> Void)
+            case action(ViewAction)
+            case asyncAction(AsyncViewAction)
         }
         
         var id: String {

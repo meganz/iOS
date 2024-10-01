@@ -398,7 +398,9 @@ final class MeetingContainerViewModel: ViewModelType {
             Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
             Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(chatRoom.title ?? "")
             if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
-                let meetingDate = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
+                let meetingDate = ScheduledMeetingDateBuilder(
+                    scheduledMeeting: scheduledMeeting
+                ).buildDateDescriptionString()
                 title = scheduledMeeting.title + "\n" + meetingDate
                 message += "\n" +
                 Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(meetingDate)

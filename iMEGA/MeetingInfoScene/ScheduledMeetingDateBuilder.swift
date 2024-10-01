@@ -9,16 +9,7 @@ struct ScheduledMeetingDateBuilder {
         case all
     }
     
-    private let scheduledMeeting: ScheduledMeetingEntity
-    private var chatRoom: ChatRoomEntity?
-
-    init(
-        scheduledMeeting: ScheduledMeetingEntity,
-        chatRoom: ChatRoomEntity?
-    ) {
-        self.scheduledMeeting = scheduledMeeting
-        self.chatRoom = chatRoom
-    }
+    let scheduledMeeting: ScheduledMeetingEntity
     
     func buildDateDescriptionString(
         removingFormatter formatter: Formatter = .all,
@@ -28,7 +19,13 @@ struct ScheduledMeetingDateBuilder {
         endTime: Date? = nil,
         locale: Locale = .autoupdatingCurrent
     ) -> String {
-        let description = descriptionString(locale: locale, startDate: startDate, endDate: endDate, startTime: startTime, endTime: endTime)
+        let description = descriptionString(
+            locale: locale,
+            startDate: startDate,
+            endDate: endDate,
+            startTime: startTime,
+            endTime: endTime
+        )
         
         switch formatter {
         case .first:

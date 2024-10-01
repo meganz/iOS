@@ -86,7 +86,9 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             }
             
             participantsLabel.text = scheduledMeeting.title
-            statusLabel.text = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom.toChatRoomEntity()).buildDateDescriptionString()
+            statusLabel.text = ScheduledMeetingDateBuilder(
+                scheduledMeeting: scheduledMeeting
+            ).buildDateDescriptionString()
         } else {
             statusView.isHidden = true
             statusLabel.isHidden = true

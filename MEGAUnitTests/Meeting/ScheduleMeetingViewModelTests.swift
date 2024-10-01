@@ -19,6 +19,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase
         let tracker = MockTracker()
         let sut: ScheduleMeetingViewModel
+        var shareLinkRequestData: ShareLinkRequestData?
         
         init(
             viewConfiguration: some ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
@@ -30,6 +31,9 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
             self.accountUseCase = accountUseCase
             self.preferenceUseCase = preferenceUseCase
             self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+            
+            var shareLinkHandler: (ShareLinkRequestData) -> Void = {_ in }
+            
             sut = .init(
                 router: router,
                 viewConfiguration: viewConfiguration,
@@ -37,10 +41,14 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
                 preferenceUseCase: preferenceUseCase,
                 remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
                 tracker: tracker,
-                chatRoomUseCase: MockChatRoomUseCase(),
-                chatUseCase: MockChatUseCase(),
-                shareLinkHandler: { _ in }
+                chatUseCase: MockChatUseCase(fullName: "full username"),
+                shareLinkHandler: { shareLinkHandler($0) },
+                shareLinkSubtitleBuilder: { "subtitle_for_\($0.chatId)" }
             )
+            
+            shareLinkHandler = { [weak self] data in
+                self?.shareLinkRequestData = data
+            }
         }
     }
     
@@ -839,6 +847,27 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         harness.sut.upgradePlansViewTapped()
         XCTAssertTrackedAnalyticsEventsEqual(harness.tracker.trackedEventIdentifiers, [MockScheduleMeetingViewConfiguration.Event()])
     }
+    @MainActor
+    func testCreateMeeting_MeetingLinkEnabled_ShareLinkDialogPresented() async {
+        let harness = Harness(viewConfiguration: mockNewMeetingConfig())
+        harness.sut.meetingLinkEnabled = true
+        await harness.sut.submitButtonTapped()
+        XCTAssertNotNil(harness.shareLinkRequestData)
+    }
+    @MainActor
+    func testCreateMeeting_MeetingLinkEnabled_ShareLinkDialogNotPresented() async {
+        let harness = Harness(viewConfiguration: mockNewMeetingConfig())
+        harness.sut.meetingLinkEnabled = false
+        await harness.sut.submitButtonTapped()
+        XCTAssertNil(harness.shareLinkRequestData)
+    }
+    @MainActor
+    func testCreateMeeting_MeetingLinkEnabled_ShareLinkDialogDataCorrect() async {
+        let harness = Harness(viewConfiguration: mockNewMeetingConfig())
+        harness.sut.meetingLinkEnabled = true
+        await harness.sut.submitButtonTapped()
+        XCTAssertEqual(harness.shareLinkRequestData, .mockShareLinkData)
+    }
     
     // MARK: - Private methods.
     
@@ -942,4 +971,35 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     func showUpgradeAccount(_ account: AccountDetailsEntity) {
         upgradeAccount_calledTimes += 1
     }
+}
+
+extension ScheduleMeetingViewConfigurationCompletion {
+    static func newMeeting(chatId: ChatIdEntity = 123) -> ScheduleMeetingViewConfigurationCompletion {
+        .showMessageForScheduleMeeting(
+            message: "message",
+            scheduledMeeting: ScheduledMeetingEntity(
+                chatId: chatId,
+                title: "meetingTitle"
+            )
+        )
+    }
+}
+
+extension ShareLinkRequestData {
+    static var mockShareLinkData: Self {
+        .init(
+            chatId: 123,
+            title: "meetingTitle",
+            subtitle: "subtitle_for_123",
+            username: "full username"
+        )
+    }
+}
+
+func mockNewMeetingConfig() -> MockScheduleMeetingViewConfiguration {
+    MockScheduleMeetingViewConfiguration(
+        startDate: Date(timeIntervalSince1970: 1727780977),
+        endDate: Date(timeIntervalSince1970: 1727780977),
+        completion: .newMeeting()
+    )
 }

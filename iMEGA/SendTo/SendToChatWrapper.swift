@@ -1,6 +1,21 @@
+protocol SendToChatPresenting {
+    func showSendToChat(presenter: UIViewController)
+}
+
+protocol SendToChatPresentingFactoryProtocol {
+    associatedtype SendToChat: SendToChatPresenting
+    func make(link: String) -> SendToChat
+}
+
+struct SendToChatPresentingFactory: SendToChatPresentingFactoryProtocol {
+    func make(link: String) -> some SendToChatPresenting {
+        SendToChatWrapper(link: link)
+    }
+}
+
 /// This class wrapper is intended to reuse the SendToChat functionality from different places in the app.
 /// It configures the interface style and listen for delegate events to dismiss the view controller when the user finishes the action.
-final class SendToChatWrapper: NSObject, Sendable {
+final class SendToChatWrapper: NSObject, Sendable, SendToChatPresenting {
     private let link: String
     private let interfaceStyle: UIUserInterfaceStyle?
     

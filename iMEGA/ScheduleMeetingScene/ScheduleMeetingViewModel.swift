@@ -110,6 +110,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     @Published private(set) var rules: ScheduledMeetingRulesEntity
+    
+    static func defaultShareLinkSubtitleBuilder() -> (_ scheduledMeeting: ScheduledMeetingEntity) -> String {
+        { ScheduledMeetingDateBuilder(scheduledMeeting: $0).buildDateDescriptionString() }
+    }
 
     private let router: any ScheduleMeetingRouting
     private let viewConfiguration: any ScheduleMeetingViewConfigurable
@@ -119,8 +123,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private var chatMonetisationEnabled = false
     private var subscriptions = Set<AnyCancellable>()
     private let shareLinkHandler: (ShareLinkRequestData) -> Void
-    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
+    private let shareLinkSubtitleBuilder: (ScheduledMeetingEntity) -> String
     init(
         router: some ScheduleMeetingRouting,
         viewConfiguration: some ScheduleMeetingViewConfigurable,
@@ -128,12 +132,11 @@ final class ScheduleMeetingViewModel: ObservableObject {
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
-        shareLinkHandler: @escaping (ShareLinkRequestData) -> Void
+        shareLinkHandler: @escaping (ShareLinkRequestData) -> Void,
+        shareLinkSubtitleBuilder: @escaping (ScheduledMeetingEntity) -> String
     ) {
         self.router = router
-        self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.viewConfiguration = viewConfiguration
         self.accountUseCase = accountUseCase
@@ -150,6 +153,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         self.meetingLinkEnabled = viewConfiguration.meetingLinkEnabled
         self.rules = viewConfiguration.rules
         self.participantHandleList = viewConfiguration.participantHandleList
+        self.shareLinkSubtitleBuilder = shareLinkSubtitleBuilder
         $waitingRoomWarningBannerDismissed.useCase = preferenceUseCase
         updateMeetingLinkToggle()
         initShowWarningBannerSubscription()
@@ -349,16 +353,11 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     private func showModalShareLinkDialog(_ scheduledMeeting: ScheduledMeetingEntity) {
-        let subtitle = ScheduledMeetingDateBuilder(
-            scheduledMeeting: scheduledMeeting,
-            chatRoom: chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
-        ).buildDateDescriptionString()
-        
         shareLinkHandler(
             .init(
                 chatId: scheduledMeeting.chatId,
                 title: scheduledMeeting.title,
-                subtitle: subtitle,
+                subtitle: shareLinkSubtitleBuilder(scheduledMeeting),
                 username: chatUseCase.myFullName() ?? ""
             )
         )

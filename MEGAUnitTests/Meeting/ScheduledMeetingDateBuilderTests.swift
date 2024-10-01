@@ -10,7 +10,7 @@ final class ScheduledMeetingDateBuilderTests: XCTestCase {
         let endDate = try XCTUnwrap(sampleDate(from: "22/06/2023 10:45"))
         let rules = ScheduledMeetingRulesEntity(frequency: .weekly, interval: 1, weekDayList: Array(1...7))
         let scheduleMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate, rules: rules)
-        let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting, chatRoom: ChatRoomEntity())
+        let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting)
         let description = builder.buildDateDescriptionString(removingFormatter: .all, locale: Locale(identifier: "en_GB"))
         
         XCTAssert(
@@ -24,7 +24,7 @@ final class ScheduledMeetingDateBuilderTests: XCTestCase {
         let endDate = try XCTUnwrap(sampleDate(from: "22/06/2023 10:45"))
         let rules = ScheduledMeetingRulesEntity(frequency: .weekly, interval: 2, weekDayList: Array(1...7))
         let scheduleMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate, rules: rules)
-        let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting, chatRoom: ChatRoomEntity())
+        let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting)
         let description = builder.buildDateDescriptionString(removingFormatter: .all, locale: Locale(identifier: "en_GB"))
         
         XCTAssert(
@@ -38,7 +38,7 @@ final class ScheduledMeetingDateBuilderTests: XCTestCase {
         let endDate = try XCTUnwrap(sampleDate(from: "22/06/2023 10:45"))
         let rules = ScheduledMeetingRulesEntity(frequency: .weekly, interval: 1, weekDayList: [4])
         let scheduleMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate, rules: rules)
-        let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting, chatRoom: ChatRoomEntity())
+        let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting)
         let description = builder.buildDateDescriptionString(removingFormatter: .all, locale: Locale(identifier: "en_GB"))
         
         XCTAssert(

@@ -5,7 +5,7 @@ import MEGASDKRepo
 import SwiftUI
 
 /// hosts all parameters need to present and execute action on share link modal [MEET-3644]
-struct ShareLinkRequestData: Sendable {
+struct ShareLinkRequestData: Sendable, Equatable {
     var chatId: ChatIdEntity
     var title: String
     var subtitle: String
@@ -65,9 +65,9 @@ final class ScheduleMeetingRouter {
             viewConfiguration: viewConfiguration,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo),
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            shareLinkHandler: shareLinkHandler
+            shareLinkHandler: shareLinkHandler,
+            shareLinkSubtitleBuilder: ScheduleMeetingViewModel.defaultShareLinkSubtitleBuilder()
         )
 
         let viewController = ScheduleMeetingViewController(viewModel: viewModel)
