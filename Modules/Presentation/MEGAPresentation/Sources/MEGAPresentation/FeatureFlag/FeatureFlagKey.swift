@@ -2,7 +2,6 @@ import MEGADomain
 
 public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case albumPhotoCache = "Album and Photo Cache"
-    case videoRevamp = "Video Revamp"
     case hiddenNodes =  "Hidden Nodes"
     case videoPlaylistSharing = "Video Playlist Sharing"
     case recentlyWatchedVideos = "Recently Watched Videos"

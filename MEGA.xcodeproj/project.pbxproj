@@ -1525,7 +1525,6 @@
 		9956B7672B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9956B7662B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift */; };
 		9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */; };
 		995C81DF2C7C31AF00FDCCA6 /* LaunchViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */; };
-		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
 		9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */; };
 		996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */; };
 		996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */; };
@@ -2356,11 +2355,7 @@
 		BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */ = {isa = PBXBuildFile; productRef = BFA275E627ED317600E15B92 /* SDAVAssetExportSession */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
 		BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */; };
-		BFAAF70F252E6D170053A9BF /* VideoExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF70E252E6D170053A9BF /* VideoExplorerListSource.swift */; };
-		BFAAF717252E85810053A9BF /* VideoExplorerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF715252E85810053A9BF /* VideoExplorerTableViewCell.swift */; };
-		BFAAF718252E85810053A9BF /* VideoExplorerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAAF716252E85810053A9BF /* VideoExplorerTableViewCell.xib */; };
 		BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */; };
-		BFAAF726252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF725252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift */; };
 		BFAB113823CEA5C300BCE72D /* PhotoGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */; };
 		BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */; };
 		BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */; };
@@ -2488,7 +2483,6 @@
 		BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */; };
 		BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */; };
 		BFE6907B25350E4900CD21F9 /* AudioExploreViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */; };
-		BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6908625350E6200CD21F9 /* VideoExplorerViewConfiguration.swift */; };
 		BFE6DBFC242DBA4A00E2E5B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */; };
 		BFE6DBFE2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */; };
 		BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6E553255259FE00050DCA /* SortOrderType.swift */; };
@@ -4314,7 +4308,6 @@
 		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
 		9956B7662B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatStatusEntity+Additions.swift"; sourceTree = "<group>"; };
 		9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekNumberInformation.swift; sourceTree = "<group>"; };
-		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		996309C52A78A61300382C38 /* SendToViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SendToViewController+Additions.swift"; sourceTree = "<group>"; };
 		9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPushNotificationControl.swift; sourceTree = "<group>"; };
 		996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -5160,11 +5153,7 @@
 		BFA1EEE92A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingNewViewConfiguration.swift; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
 		BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewModelTests.swift; sourceTree = "<group>"; };
-		BFAAF70E252E6D170053A9BF /* VideoExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerListSource.swift; sourceTree = "<group>"; };
-		BFAAF715252E85810053A9BF /* VideoExplorerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableViewCell.swift; sourceTree = "<group>"; };
-		BFAAF716252E85810053A9BF /* VideoExplorerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoExplorerTableViewCell.xib; sourceTree = "<group>"; };
 		BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerListSourceProtocol.swift; sourceTree = "<group>"; };
-		BFAAF725252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModel.swift; sourceTree = "<group>"; };
 		BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDelegate.swift; sourceTree = "<group>"; };
 		BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewFlowLayout.swift; sourceTree = "<group>"; };
 		BFAB111123CEA5C300BCE72D /* PhotoGridViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDataSource.swift; sourceTree = "<group>"; };
@@ -5286,7 +5275,6 @@
 		BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AboutTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioExploreViewConfiguration.swift; sourceTree = "<group>"; };
-		BFE6908625350E6200CD21F9 /* VideoExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+NavigationBar.swift"; sourceTree = "<group>"; };
 		BFE6E553255259FE00050DCA /* SortOrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrderType.swift; sourceTree = "<group>"; };
@@ -8287,8 +8275,6 @@
 			children = (
 				BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */,
 				BF5E33902558D2890055395E /* FileExplorerGridCell.xib */,
-				BFAAF715252E85810053A9BF /* VideoExplorerTableViewCell.swift */,
-				BFAAF716252E85810053A9BF /* VideoExplorerTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -8537,9 +8523,6 @@
 				BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */,
 				3258B90E298B787C0055E65C /* FilterType.swift */,
 				BFE6E553255259FE00050DCA /* SortOrderType.swift */,
-				BFAAF70E252E6D170053A9BF /* VideoExplorerListSource.swift */,
-				BFAAF725252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift */,
-				BFE6908625350E6200CD21F9 /* VideoExplorerViewConfiguration.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -10543,7 +10526,6 @@
 		9961E7242A282FBA004FB05F /* Videos */ = {
 			isa = PBXGroup;
 			children = (
-				9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */,
 			);
 			path = Videos;
 			sourceTree = "<group>";
@@ -14113,7 +14095,6 @@
 				5B92CEE72423E9F100FE1BCC /* UpgradeAccount.storyboard in Resources */,
 				5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */,
 				837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */,
-				BFAAF718252E85810053A9BF /* VideoExplorerTableViewCell.xib in Resources */,
 				BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */,
 				835CE8492AA886B200861544 /* waitingRoomEvent.wav in Resources */,
 			);
@@ -16024,10 +16005,6 @@
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				244CEFCF2B257AD000147302 /* VideoConfig+Live.swift in Sources */,
-				BFAAF70F252E6D170053A9BF /* VideoExplorerListSource.swift in Sources */,
-				BFAAF726252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift in Sources */,
-				BFAAF717252E85810053A9BF /* VideoExplorerTableViewCell.swift in Sources */,
-				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
 				2484574F2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */,
 				241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */,
@@ -16758,7 +16735,6 @@
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
 				A894E7A32B8F6396006AC2C5 /* UserAvatarHandlerTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
-				9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */,
 				24EDF71D2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift in Sources */,
 				244CEFC12B2319F400147302 /* VideoRevampTabContainerViewModelTests.swift in Sources */,
 				9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */,

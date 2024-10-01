@@ -50,14 +50,15 @@ final class FilesExplorerViewModel: ViewModelType {
     }
     
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private var viewConfiguration: any FilesExplorerViewConfiguration {
+    private var viewConfiguration: (any FilesExplorerViewConfiguration)? {
         switch explorerType {
         case .allDocs:
             return DocumentExplorerViewConfiguration()
         case .audio:
             return AudioExploreViewConfiguration()
         case .video:
-            return VideoExplorerViewConfiguration()
+            assert(false, "Invalid viewConfiguration for: \(explorerType)")
+            return nil
         case .favourites:
             return FavouritesExplorerViewConfiguration()
         }
@@ -148,6 +149,7 @@ final class FilesExplorerViewModel: ViewModelType {
     func dispatch(_ action: FilesExplorerAction) {
         switch action {
         case .onViewReady:
+            guard let viewConfiguration else { return }
             invokeCommand?(.setViewConfiguration(viewConfiguration))
             configureContextMenus()
             monitorTask = Task { await monitorNodeUpdates() }
