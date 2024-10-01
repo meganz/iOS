@@ -11,7 +11,7 @@ struct ToolbarConfigurationFactoryTests {
         PhotosBrowserDisplayMode.chatAttachment: ChatAttachmenToolbarConfigurationStrategy.self,
         PhotosBrowserDisplayMode.fileLink: CloudDriveToolbarConfigurationStrategy.self
     ])
-    func testNavigationConfig(with displayMode: PhotosBrowserDisplayMode, strategy: ToolbarConfigurationStrategy.Type) {
+    func bottomToolBarConfig(with displayMode: PhotosBrowserDisplayMode, strategy: ToolbarConfigurationStrategy.Type) {
         let config = ToolbarConfigurationFactory.configuration(on: displayMode)
         #expect(type(of: config) == strategy)
     }

@@ -1,13 +1,16 @@
+import MEGADesignToken
+import MEGADomain
 import SwiftUI
 
 struct PhotosBrowserImageCellContent: View {
-    let value: Int
+    @StateObject var viewModel: PhotosBrowserImageCellContentViewModel
     
     var body: some View {
         VStack {
-            Text("\(value)")
+            Text("\(viewModel.entity.name)")
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         }
-        .background(Color.red)
+        .background(TokenColors.Background.page.swiftUI)
     }
 }

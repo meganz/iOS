@@ -11,7 +11,7 @@ struct NavigationBarConfigurationFactoryTests {
         PhotosBrowserDisplayMode.chatAttachment: ChatAttachmentNavigationBarConfigurationStrategy.self,
         PhotosBrowserDisplayMode.fileLink: CloudDriveNavigationBarConfigurationStrategy.self
     ])
-    func testNavigationConfig(with displayMode: PhotosBrowserDisplayMode, strategy: NavigationBarConfigurationStrategy.Type) {
+    func navigationBarConfig(with displayMode: PhotosBrowserDisplayMode, strategy: NavigationBarConfigurationStrategy.Type) {
         let config = NavigationBarConfigurationFactory.configuration(on: displayMode)
         #expect(type(of: config) == strategy)
     }

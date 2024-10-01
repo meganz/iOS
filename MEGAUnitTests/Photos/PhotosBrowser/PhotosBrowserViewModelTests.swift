@@ -1,21 +1,23 @@
-import PhotosBrowser
-import XCTest
+@preconcurrency import PhotosBrowser
+import Testing
 
-final class PhotosBrowserViewModelTests: XCTestCase {
+struct PhotosBrowserViewModelTests {
     
-    func testAction_onViewReady_called() {
-        let sut = makeSUT()
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [.onViewReady])
-    }
-    
-    // Private: - Sut Creation
-    
-    private func makeSUT(file: StaticString = #filePath,
-                         line: UInt = #line) -> PhotosBrowserViewModel {
-        let sut = PhotosBrowserViewModel(config: PhotosBrowserConfiguration(displayMode: .cloudDrive))
+    @Test("onViewReady Command should be called with .onViewReady action")
+    func onViewReadyCommand() async {
+        var receivedCommand: PhotosBrowserViewModel.Command?
         
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        await confirmation("invokeCommand should be called with .onViewReady") { @MainActor confirm in
+            let sut = PhotosBrowserViewModel(config: PhotosBrowserConfiguration(displayMode: .cloudDrive,
+                                                                                library: .init(assets: [], currentIndex: 0)))
+            sut.invokeCommand = { command in
+                receivedCommand = command
+                confirm()
+            }
+            
+            sut.dispatch(.onViewReady)
+        }
         
-        return sut
+        #expect(receivedCommand == PhotosBrowserViewModel.Command.onViewReady)
     }
 }

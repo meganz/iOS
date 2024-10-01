@@ -1,5 +1,7 @@
 import UIKit
 
 protocol NavigationBarConfigurationStrategy {
-    func configure(navigationItem: UINavigationItem, in viewController: PhotosBrowserViewController)
+    func configure(navigationItem: UINavigationItem,
+                   with library: MediaLibrary,
+                   in viewController: PhotosBrowserViewController)
 }

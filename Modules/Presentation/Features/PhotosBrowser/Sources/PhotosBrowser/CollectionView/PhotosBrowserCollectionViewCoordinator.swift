@@ -7,14 +7,15 @@ final class PhotosBrowserCollectionViewCoordinator: NSObject {
         case main
     }
     
-    typealias DiffableDataSource = UICollectionViewDiffableDataSource<Section, Int>
-    typealias CellRegistration = UICollectionView.CellRegistration<PhotosBrowserImageCell, Int>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Int>
+    typealias DiffableDataSource = UICollectionViewDiffableDataSource<Section, PhotosBrowserLibraryEntity>
+    typealias CellRegistration = UICollectionView.CellRegistration<PhotosBrowserImageCell, PhotosBrowserLibraryEntity>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, PhotosBrowserLibraryEntity>
     
-    private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Int>?
+    private(set) var dataSource: UICollectionViewDiffableDataSource<Section, PhotosBrowserLibraryEntity>?
     private var collectionView: UICollectionView?
     private let representer: PhotosBrowserCollectionViewRepresenter
     private let layoutChangesMonitor: PhotosBrowserCollectionViewLayoutChangesMonitor
+    private var reloadSnapshotTask: Task<Void, Never>?
     
     init(_ representer: PhotosBrowserCollectionViewRepresenter) {
         self.representer = representer
@@ -23,17 +24,21 @@ final class PhotosBrowserCollectionViewCoordinator: NSObject {
         super.init()
     }
     
+    deinit {
+        reloadSnapshotTask?.cancel()
+    }
+    
     // MARK: - DataSouce & Snapshots
     
     func configureDataSource(for collectionView: UICollectionView) {
-        let cellRegistration = CellRegistration { [weak self] cell, _, item in
+        let cellRegistration = CellRegistration { [weak self] cell, _, entity in
             guard let self else { return }
             
-            configureCell(cell, with: item)
+            configureCell(cell, with: entity)
         }
         
-        dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+        dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, entity in
+            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: entity)
         }
         
         layoutChangesMonitor.configure(collectionView: collectionView)
@@ -41,29 +46,36 @@ final class PhotosBrowserCollectionViewCoordinator: NSObject {
         collectionView.dataSource = dataSource
     }
     
-    func snapshot() -> Snapshot {
-        var snapshot = Snapshot()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(representer.viewModel.sampleData, toSection: .main) // placeholder
-        
-        return snapshot
+    func updateUI(with assets: [PhotosBrowserLibraryEntity]) {
+        reloadSnapshotTask = Task {
+            await reloadData(with: assets)
+        }
     }
     
     // MARK: - Private
     
-    private func configureCell(_ cell: UICollectionViewCell, with item: Int) {
+    private func reloadData(with assets: [PhotosBrowserLibraryEntity]) async {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(assets, toSection: .main)
+        
+        guard !Task.isCancelled else { return }
+        await dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+    
+    private func configureCell(_ cell: UICollectionViewCell, with entity: PhotosBrowserLibraryEntity) {
         if #available(iOS 16.0, *) {
             cell.contentConfiguration = UIHostingConfiguration(content: {
-                PhotosBrowserImageCellContent(value: item)
+                PhotosBrowserImageCellContent(viewModel: PhotosBrowserImageCellContentViewModel(entity: entity))
             })
             .margins(.all, 0)
         } else {
-            configureCellBelowiOS16(cell: cell, with: item)
+            configureCellBelowiOS16(cell: cell, with: entity)
         }
     }
     
-    private func configureCellBelowiOS16(cell: UICollectionViewCell, with value: Int) {
-        let cellHostingController = UIHostingController(rootView: PhotosBrowserImageCellContent(value: value))
+    private func configureCellBelowiOS16(cell: UICollectionViewCell, with entity: PhotosBrowserLibraryEntity) {
+        let cellHostingController = UIHostingController(rootView: PhotosBrowserImageCellContent(viewModel: PhotosBrowserImageCellContentViewModel(entity: entity)))
         cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(cellHostingController.view)
         cell.contentView.wrap(cellHostingController.view)
