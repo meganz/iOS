@@ -13,6 +13,8 @@ final class AlbumsTableViewController: UITableViewController {
     private let completionBlock: AlbumsTableViewController.CompletionBlock
     var source: PhotoLibrarySelectionSource = .other
     
+    private let noPhotosOrVideosLabel = UILabel()
+    
     typealias CompletionBlock = ([PHAsset]) -> Void
     
     // MARK: - Initializers.
@@ -57,12 +59,14 @@ final class AlbumsTableViewController: UITableViewController {
         addRightCancelBarButtonItem()
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.albums)
         
-        if albums.numberOfAlbums() == 0 {
-            showNoPhotosOrVideos()
-        }
+        configureNoPhotosOrVideosLabel()
         
         albums.loadAlbums { [weak self] in
-            self?.tableView.reloadData()
+            guard let self else { return }
+            
+            tableView.reloadData()
+            
+            noPhotosOrVideosLabel.isHidden = !albums.isEmpty
         }
     }
     
@@ -87,17 +91,17 @@ final class AlbumsTableViewController: UITableViewController {
         navigationController?.pushViewController(gridViewController, animated: true)
     }
     
-    private func showNoPhotosOrVideos() {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.text = Strings.Localizable.noPhotosOrVideos
-        view.addSubview(label)
+    private func configureNoPhotosOrVideosLabel() {
+        noPhotosOrVideosLabel.textAlignment = .center
+        noPhotosOrVideosLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        noPhotosOrVideosLabel.text = Strings.Localizable.noPhotosOrVideos
+        noPhotosOrVideosLabel.isHidden = true
+        view.addSubview(noPhotosOrVideosLabel)
         
-        label.translatesAutoresizingMaskIntoConstraints = false
+        noPhotosOrVideosLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            noPhotosOrVideosLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noPhotosOrVideosLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
