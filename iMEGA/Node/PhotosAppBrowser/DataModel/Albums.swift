@@ -66,6 +66,10 @@ final class Albums: NSObject {
     
     private let loadAlbumsQueue = DispatchQueue(label: "nz.mega.PhotoAppBrowser.loadAlbums")
 
+    var isEmpty: Bool {
+        albums.isEmpty
+    }
+    
     // MARK: - Initializer.
     
     let permissionHandler: any DevicePermissionsHandling
