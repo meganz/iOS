@@ -6,10 +6,12 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
+@MainActor
 protocol CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
         scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
@@ -26,6 +28,7 @@ protocol CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
         scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
@@ -39,6 +42,7 @@ protocol CallsCoordinatorFactoryProtocol {
         CallsCoordinator(
             scheduler: scheduler,
             callUseCase: callUseCase,
+            callUpdateUseCase: callUpdateUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: chatUseCase,
             sessionUpdateUseCase: sessionUpdateUseCase,
@@ -72,8 +76,10 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
 }
 
+@MainActor
 @objc final class CallsCoordinator: NSObject {
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
     private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
@@ -88,7 +94,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private let uuidFactory: () -> UUID
     private let callUpdateFactory: CXCallUpdateFactory
     
-    private var callUpdateSubscription: AnyCancellable?
+    private var callUpdateTask: Task<Void, Never>?
     private var callSessionUpdateTask: Task<Void, Never>?
     
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
@@ -101,6 +107,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     init(
         scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
@@ -114,6 +121,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     ) {
         self.scheduler = scheduler
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.sessionUpdateUseCase = sessionUpdateUseCase
@@ -130,19 +138,25 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
             callCoordinator: self,
             callManager: callManager
         )
-        
+
         onCallUpdateListener()
         monitorOnChatConnectionStateUpdate()
+    }
+    
+    deinit {
+        callUpdateTask?.cancel()
     }
     
     // MARK: - Private
     
     private func onCallUpdateListener() {
-        callUpdateSubscription = callUseCase.onCallUpdate()
-            .receive(on: scheduler)
-            .sink { [weak self] call in
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        callUpdateTask?.cancel()
+        callUpdateTask = Task { [weak self] in
+            for await call in callUpdates {
                 self?.onCallUpdate(call)
             }
+        }
     }
     
     private func onCallUpdate(_ call: CallEntity) {
@@ -308,12 +322,10 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
     
     private func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
-        Task { @MainActor in
-            MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(),
-                                   chatRoom: chatRoom,
-                                   call: call,
-                                   isSpeakerEnabled: isSpeakerEnabled).start()
-        }
+        MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(),
+                               chatRoom: chatRoom,
+                               call: call,
+                               isSpeakerEnabled: isSpeakerEnabled).start()
     }
     
     private func isWaitingRoomOpened(inChatRoom chatRoom: ChatRoomEntity) -> Bool {
@@ -489,7 +501,7 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         sendAudioPlayerInterruptDidEndNotificationIfNeeded()
     }
     
-    @MainActor func disablePassCodeIfNeeded() {
+    func disablePassCodeIfNeeded() {
         if passcodeManager.shouldPresentPasscodeViewLater() {
             presentPasscodeLater = true
             passcodeManager.closePasscodeView()

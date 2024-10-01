@@ -62,16 +62,18 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         MEGALogDebug("[CallKit] Provider perform answer call action")
         guard let callManager,
-              let callActionSync = callManager.call(forUUID: action.callUUID)
+              callManager.call(forUUID: action.callUUID) != nil
         else {
-            if callsCoordinator?.incomingCallForUnknownChat != nil {
-                MEGALogDebug("[CallKit] Provider saving answer call action for a call in a new chat that is not ready yet. It will be answered when chatRoom connectionStatus becomes online")
-                callsCoordinator?.incomingCallForUnknownChat?.answeredCompletion = { [weak self] in
-                    self?.answerCall(forAction: action)
+            Task { @MainActor in
+                if callsCoordinator?.incomingCallForUnknownChat != nil {
+                    MEGALogDebug("[CallKit] Provider saving answer call action for a call in a new chat that is not ready yet. It will be answered when chatRoom connectionStatus becomes online")
+                    callsCoordinator?.incomingCallForUnknownChat?.answeredCompletion = { [weak self] in
+                        self?.answerCall(forAction: action)
+                    }
+                } else {
+                    MEGALogError("[CallKit] Provider fail to answer call because no chat found for incoming call")
+                    action.fail()
                 }
-            } else {
-                MEGALogError("[CallKit] Provider fail to answer call because no chat found for incoming call")
-                action.fail()
             }
             return
         }
@@ -85,7 +87,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
             action.fail()
             return
         }
-        Task {
+        Task { @MainActor in
             let success = await callsCoordinator.endCall(callActionSync)
             success ? action.fulfill() : action.fail()
         }
@@ -109,7 +111,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
             return
         }
         
-        Task {
+        Task { @MainActor in
             let success = await callsCoordinator.muteCall(callActionSync)
             success ? action.fulfill() : action.fail()
         }
@@ -121,7 +123,9 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
         MEGALogDebug("[CallKit] Provider did activate audio session")
-        callsCoordinator?.configureWebRTCAudioSession()
+        Task { @MainActor in
+            callsCoordinator?.configureWebRTCAudioSession()
+        }
     }
     
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {

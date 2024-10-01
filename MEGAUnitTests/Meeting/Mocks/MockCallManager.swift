@@ -27,6 +27,8 @@ final class MockCallManager: CallManagerProtocol {
     
     var expectationClosure: (() -> Void)?
     
+    var endCallExpectationClosure: (() -> Void)?
+    
     func startCall(with actionSync: CallActionSync) {
         startCall_CalledTimes += 1
     }
@@ -56,6 +58,7 @@ final class MockCallManager: CallManagerProtocol {
     
     func removeCall(withUUID uuid: UUID) {
         removeCall_CalledTimes += 1
+        endCallExpectationClosure?()
     }
     
     func removeAllCalls() {

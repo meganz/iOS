@@ -638,6 +638,7 @@ extension AppDelegate {
         let callsCoordinator = CallsCoordinatorFactory().makeCallsCoordinator(
             scheduler: .main,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
