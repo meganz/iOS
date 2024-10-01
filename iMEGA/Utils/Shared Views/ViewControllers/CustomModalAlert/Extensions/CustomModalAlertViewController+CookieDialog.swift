@@ -1,3 +1,4 @@
+import Accounts
 import Foundation
 import MEGADesignToken
 import MEGADomain
@@ -21,7 +22,11 @@ extension CustomModalAlertViewController {
         }
     }
     
-    func configureForCookieDialog(type: CookieDialogType, cookiePolicyURLString: String) {
+    func configureForCookieDialog(
+        type: CookieDialogType,
+        cookiePolicyURLString: String,
+        router: CustomModalAlertCookieDialogRouter
+    ) {
         image = UIImage.cookie
         viewTitle = Strings.Localizable.Dialog.Cookies.Title.manageCookies
         detailAttributedTextWithLink = detailTextAttributedString(detail: type.description, cookiePolicyURLString: cookiePolicyURLString)
@@ -30,46 +35,34 @@ extension CustomModalAlertViewController {
         secondButtonTitle = Strings.Localizable.General.cookieSettings
         
         firstCompletion = { [weak self] in
-            self?.dismiss(animated: true, completion: {
+            router.dismissView {
                 Task { @MainActor in
-                    do {
-                        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
-                        
-                        var cookieSettings = CookiesBitmap.all
-                        if type == .adsCookiePolicy {
-                            cookieSettings.insert(.adsCheckCookie)
-                        }
-                        
-                        _ = try await cookieSettingsUseCase.setCookieSettings(with: cookieSettings.rawValue)
-                        self?.dismiss(animated: true, completion: nil)
-                    } catch {
-                        guard let cookieSettingsError = error as? CookieSettingsErrorEntity else {
-                            SVProgressHUD.showError(withStatus: error.localizedDescription)
-                            return
-                        }
-                        switch cookieSettingsError {
-                        case .invalidBitmap:
-                            SVProgressHUD.showError(withStatus: error.localizedDescription)
-                            
-                        default:
-                            SVProgressHUD.showError(withStatus: error.localizedDescription)
-                        }
-                    }
+                    await self?.acceptCookies(router: router)
+                    await router.showAdMobConsentIfNeeded()
                 }
-            })
+            }
         }
         
-        secondCompletion = { [weak self] in
-            self?.dismiss(animated: true, completion: {
-                if UIApplication.mnz_presentingViewController().presentedViewController == nil {
-                    CookieSettingsRouter(presenter: UIApplication.mnz_visibleViewController()).start()
-                } else {
-                    CookieSettingsRouter(presenter: UIApplication.mnz_presentingViewController()).start()
-                }
-            })
+        secondCompletion = {
+            router.dismissView {
+                router.showCookieSettings()
+            }
         }
         
         viewModel = makeCookieDialogViewModel()
+    }
+    
+    private func acceptCookies(router: CustomModalAlertCookieDialogRouter) async {
+        do {
+            let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
+            
+            let cookieSettings = CookiesBitmap.all
+            
+            _ = try await cookieSettingsUseCase.setCookieSettings(with: cookieSettings.rawValue)
+            router.dismissView(completion: nil)
+        } catch {
+            SVProgressHUD.showError(withStatus: error.localizedDescription)
+        }
     }
     
     private func makeCookieDialogViewModel() -> CustomModalAlertViewModel {

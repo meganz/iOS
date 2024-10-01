@@ -1840,6 +1840,7 @@
 		B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D58D542AC67C89004ECD36 /* Accounts */; };
 		B5D58D582AC67D0D004ECD36 /* Accounts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D58D572AC67D0D004ECD36 /* Accounts */; };
 		B5D875372A04B501003F9380 /* SendFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */; };
+		B5D8A0E02CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D8A0DF2CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift */; };
 		B5D8DD8F2AC54DE200F1D18B /* MEGAPresentationMock in Frameworks */ = {isa = PBXBuildFile; productRef = B5D8DD8E2AC54DE200F1D18B /* MEGAPresentationMock */; };
 		B5E4EB432A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */; };
 		B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EBD729795A10009C5578 /* HomeViewModel.swift */; };
@@ -4620,6 +4621,7 @@
 		B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Transfer.swift"; sourceTree = "<group>"; };
 		B5D1A6352B7F13E0007447AB /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModel.swift; sourceTree = "<group>"; };
+		B5D8A0DF2CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertCookieDialogRouter.swift; sourceTree = "<group>"; };
 		B5E378A22B8334DA000C1DAD /* Notifications */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Notifications; sourceTree = "<group>"; };
 		B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReferralBonusesTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5E4EBD729795A10009C5578 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -5993,6 +5995,7 @@
 			isa = PBXGroup;
 			children = (
 				124667F5275DB82000C94335 /* CustomModalAlertContactsRouter.swift */,
+				B5D8A0DF2CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift */,
 				124667F7275DB82000C94335 /* CustomModalAlertRouter.swift */,
 				124667F6275DB82000C94335 /* CustomModalAlertStorageRouter.swift */,
 			);
@@ -14795,6 +14798,7 @@
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
 				12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */,
+				B5D8A0E02CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
 				2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */,

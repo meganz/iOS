@@ -47,8 +47,6 @@ final public class AdsSlotViewModel: ObservableObject {
 
     func initializeGoogleAds() async {
         guard isExternalAdsEnabled else { return }
-        
-        try? await adMobConsentManager.gatherConsent()
         await adMobConsentManager.initializeGoogleMobileAdsSDK()
     }
 

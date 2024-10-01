@@ -79,40 +79,29 @@ extension AppDelegate {
     @objc func showCookieDialogIfNeeded() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
         
-        if cookieSettingsUseCase.cookieBannerEnabled() {
-            Task { @MainActor in
+        Task { @MainActor in
+            if cookieSettingsUseCase.cookieBannerEnabled() {
                 do {
-                    // Cookie settings already set
-                    let bitmap = try await cookieSettingsUseCase.cookieSettings()
-                    
-                    // Check if new ads cookie is set
-                    guard await isExternalAdsActive() else { return }
-                    
-                    let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
-                    guard !cookiesBitmap.contains(.adsCheckCookie) else { return }
-                    
-                    // Ads cookie not yet set. Show manage cookies with ads policy.
-                    showCookieDialog(type: .adsCookiePolicy)
-                    
+                    // cookie settings already set
+                    _ = try await cookieSettingsUseCase.cookieSettings()
+                    // Try to gather consent for AdMob
+                    await showAdMobConsentIfNeeded()
                 } catch {
                     guard let error = error as? CookieSettingsErrorEntity else { return }
                     switch error {
-                    case .generic, .invalidBitmap: break
+                    case .generic, .invalidBitmap:
+                        // Try to gather consent for AdMob
+                        await showAdMobConsentIfNeeded()
                         
                     case .bitmapNotSet:
-                        let isExternalAdsActive = await isExternalAdsActive()
-                        showCookieDialog(type: isExternalAdsActive ? .adsCookiePolicy : .noAdsCookiePolicy)
+                        await showCookieDialog(type: .noAdsCookiePolicy)
                     }
                 }
+            } else {
+                // Try to gather consent for AdMob
+                await showAdMobConsentIfNeeded()
             }
         }
-    }
-    
-    private func isExternalAdsActive() async -> Bool {
-        let abTestProvider = DIContainer.abTestProvider
-        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
-        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
-        return isAdsEnabled && isExternalAdsEnabled
     }
     
     func openCallUIForInProgressCall(presenter: UIViewController, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
@@ -122,34 +111,14 @@ extension AppDelegate {
                                call: call.toCallEntity(),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
-        
-    private func showCookieDialog(type: CustomModalAlertViewController.CookieDialogType) {
-        guard shouldPresentModal else { return }
-
-        Task {
-            let cookiePolicyURL = await cookiePolicyURL(isExternalAds: type == .adsCookiePolicy)
-            
-            let cookieDialogView = CustomModalAlertViewController()
-            cookieDialogView.configureForCookieDialog(type: type, cookiePolicyURLString: cookiePolicyURL)
-            UIApplication.mnz_presentingViewController().present(cookieDialogView, animated: true, completion: nil)
-        }
-    }
     
-    private func cookiePolicyURL(isExternalAds: Bool) async -> String {
-        let invalidURLString = "invalid://urlLink"
-        guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return invalidURLString }
+    private func showCookieDialog(type: CustomModalAlertViewController.CookieDialogType) async {
+        guard shouldPresentModal else { return }
         
-        // If external Ads is not active, cookie policy will not require session
-        guard isExternalAds else { return cookiePolicyURL.absoluteString }
-        
-        // If external Ads is active, cookie policy will be directed to link with session
-        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        do {
-            let url = try await accountUseCase.sessionTransferURL(path: cookiePolicyURL.lastPathComponent)
-            return url.absoluteString
-        } catch {
-            return invalidURLString
-        }
+        CustomModalAlertCookieDialogRouter(
+            cookiePolicyURLString: "https://mega.nz/cookie",
+            presenter: UIApplication.mnz_presentingViewController()
+        ).start()
     }
 
     @objc func showLaunchTabDialogIfNeeded() {
