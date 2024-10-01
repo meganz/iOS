@@ -4,14 +4,14 @@ import SwiftUI
 
 struct AdMobBannerView: View {
     private let refreshAdsPublisher: AnyPublisher<Void, Never>
-    private let adMobUnitID: AdMobUnitID
+    private let adMob: AdMob
     
     init(
         refreshAdsPublisher: AnyPublisher<Void, Never>,
-        adMobUnitID: String
+        adMob: AdMob
     ) {
         self.refreshAdsPublisher = refreshAdsPublisher
-        self.adMobUnitID = adMobUnitID
+        self.adMob = adMob
     }
     
     var body: some View {
@@ -20,7 +20,7 @@ struct AdMobBannerView: View {
             
             AdMobBannerContentView(
                 adSize: adSize,
-                adMobUnitID: adMobUnitID,
+                adMob: adMob,
                 refreshAdsPublisher: refreshAdsPublisher
             )
             .frame(height: adSize.size.height)
@@ -30,16 +30,16 @@ struct AdMobBannerView: View {
 
 struct AdMobBannerContentView: UIViewRepresentable {
     private let refreshAdsPublisher: AnyPublisher<Void, Never>
-    private let adMobUnitID: AdMobUnitID
+    private let adMob: AdMob
     let adSize: GADAdSize
     
     init(
         adSize: GADAdSize,
-        adMobUnitID: AdMobUnitID,
+        adMob: AdMob,
         refreshAdsPublisher: AnyPublisher<Void, Never>
     ) {
         self.adSize = adSize
-        self.adMobUnitID = adMobUnitID
+        self.adMob = adMob
         self.refreshAdsPublisher = refreshAdsPublisher
     }
     
@@ -62,7 +62,7 @@ struct AdMobBannerContentView: UIViewRepresentable {
     final class AdMobBannerCoordinator: NSObject {
         private(set) lazy var bannerView: GADBannerView = {
             let banner = GADBannerView(adSize: parent.adSize)
-            banner.adUnitID = parent.adMobUnitID
+            banner.adUnitID = parent.adMob.unitID
             banner.load(GADRequest())
             return banner
         }()

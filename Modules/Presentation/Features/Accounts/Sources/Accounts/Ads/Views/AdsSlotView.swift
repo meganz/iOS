@@ -15,7 +15,7 @@ public struct AdsSlotView<T: View>: View {
             if verticalSizeClass != .compact && viewModel.isExternalAdsEnabled {
                 AdMobBannerView(
                     refreshAdsPublisher: viewModel.refreshAdsPublisher,
-                    adMobUnitID: viewModel.adMobUnitID
+                    adMob: viewModel.adMob
                 )
                 .transition(.opacity)
                 .frame(height: viewModel.displayAds ? 100 : 0)

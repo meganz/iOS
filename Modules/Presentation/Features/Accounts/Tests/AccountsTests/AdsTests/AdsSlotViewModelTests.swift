@@ -141,12 +141,37 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(adMobConsentManager.initializeGoogleMobileAdsSDKCalledCount, expectedCallCount, file: file, line: line)
     }
     
+    func testAdMob_withTestEnvironment_shouldUseTestUnitID() {
+        assertAdMob(
+            forEnvs: AppConfigurationEntity.allCases.filter({ $0 != .production }),
+            expectedAdMob: AdMob.test
+        )
+    }
+    
+    func testAdMob_withLiveEnvironment_shouldUseLiveUnitID() {
+        assertAdMob(
+            forEnvs: [.production],
+            expectedAdMob: AdMob.live
+        )
+    }
+    
+    private func assertAdMob(forEnvs envs: [AppConfigurationEntity], expectedAdMob: AdMob) {
+        let appEnvironmentUseCase = MockAppEnvironmentUseCase()
+        let sut = makeSUT(appEnvironmentUseCase: appEnvironmentUseCase)
+        
+        envs.forEach { env in
+            appEnvironmentUseCase.configuration = env
+            XCTAssertEqual(sut.adMob, expectedAdMob, "\(env) environment should use the \(expectedAdMob) unit id")
+        }
+    }
+    
     // MARK: Helper
     private func makeSUT(
         adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
         adsList: [String: String] = [:],
         abTestProvider: MockABTestProvider = MockABTestProvider(list: [.externalAds: .variantA]),
         adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
+        appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = MockAppEnvironmentUseCase(),
         isNewAccount: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -154,7 +179,8 @@ final class AdsSlotViewModelTests: XCTestCase {
         let sut = AdsSlotViewModel(
             adsSlotChangeStream: adsSlotChangeStream,
             abTestProvider: abTestProvider,
-            adMobConsentManager: adMobConsentManager
+            adMobConsentManager: adMobConsentManager,
+            appEnvironmentUseCase: appEnvironmentUseCase
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
