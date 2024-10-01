@@ -22,7 +22,7 @@ struct FilesExplorerRouter {
             return
         }
         
-        if explorerType == .video && featureFlagProvider.isFeatureFlagEnabled(for: .videoRevamp) {
+        if explorerType == .video {
             let router = VideoRevampRouter(explorerType: explorerType, navigationController: navigationController)
             router.start()
             return

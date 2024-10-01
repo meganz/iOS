@@ -49,7 +49,7 @@ private extension FilesExplorerViewModelTests {
         let sensitiveFilterOption = excludeSensitive ? SearchFilterEntity.SensitiveFilterOption.nonSensitiveOnly : .disabled
         
         return switch explorerType {
-        case .audio, .video, .allDocs:
+        case .audio, .allDocs:
             [
                 .init(searchText: searchText, searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, sensitiveFilterOption: sensitiveFilterOption, favouriteFilterOption: .disabled)
             ]
@@ -57,6 +57,8 @@ private extension FilesExplorerViewModelTests {
             [
                 .init(searchText: searchText, searchTargetLocation: .folderTarget(.rootNode), recursive: true, supportCancel: true, sortOrderType: .defaultDesc, formatType: nodeFormatType, sensitiveFilterOption: sensitiveFilterOption, favouriteFilterOption: .onlyFavourites)
             ]
+        default:
+            []
         }
     }
     
