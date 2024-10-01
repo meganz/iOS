@@ -6,7 +6,8 @@ import MEGAUIKit
 import SwiftUI
 import UIKit
 
-final class AlbumContentViewController: UIViewController, ViewType, TraitEnvironmentAware {
+final class AlbumContentViewController: UIViewController, ViewType {
+    
     let viewModel: AlbumContentViewModel
     
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
@@ -157,12 +158,11 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
     
     private func buildNavigationBar() {
         self.title = viewModel.albumName
-        
-        configureBarButtons()
     }
     
     private func configureBarButtons() {
         configureLeftBarButton()
+        viewModel.dispatch(.configureContextMenu(isSelectHidden: viewModel.isPhotoSelectionHidden))
     }
     
     private func configureLeftBarButton() {
@@ -226,19 +226,5 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
     
     @objc private func addToAlbumButtonPressed(_ barButtonItem: UIBarButtonItem) {
         viewModel.showAlbumContentPicker()
-    }
-    
-    // MARK: - TraitEnvironmentAware
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            configureBarButtons()
-        }
-    }
-
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
     }
 }
