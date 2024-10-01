@@ -4,12 +4,11 @@ import MEGAPresentation
 import MEGASwift
 import SwiftUI
 
-typealias AdMobUnitID = String
-
 final public class AdsSlotViewModel: ObservableObject {
-    private var abTestProvider: any ABTestProviderProtocol
-    private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
-    private(set) var adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
+    private let abTestProvider: any ABTestProviderProtocol
+    private let adsSlotChangeStream: any AdsSlotChangeStreamProtocol
+    private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
+    private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
     
     private(set) var adsSlotConfig: AdsSlotConfig?
     @Published var displayAds: Bool = false
@@ -21,17 +20,16 @@ final public class AdsSlotViewModel: ObservableObject {
         refreshAdsSourcePublisher.eraseToAnyPublisher()
     }
     
-    /// In the future, adMob will have multiple unit ids per adSlot
-    let adMobUnitID: AdMobUnitID = "ca-app-pub-3940256099942544/2435281174"
-
     public init(
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
-        adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared
+        adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
+        appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared
     ) {
         self.adsSlotChangeStream = adsSlotChangeStream
         self.abTestProvider = abTestProvider
         self.adMobConsentManager = adMobConsentManager
+        self.appEnvironmentUseCase = appEnvironmentUseCase
     }
 
     // MARK: Setup
@@ -100,5 +98,10 @@ final public class AdsSlotViewModel: ObservableObject {
         refreshAdsSourcePublisher.send()
         
         displayAds = adsSlotConfig.displayAds
+    }
+    
+    /// In the future, AdMob will have multiple unit ids per adSlot
+    public var adMob: AdMob {
+        appEnvironmentUseCase.configuration == .production ? AdMob.live : AdMob.test
     }
 }

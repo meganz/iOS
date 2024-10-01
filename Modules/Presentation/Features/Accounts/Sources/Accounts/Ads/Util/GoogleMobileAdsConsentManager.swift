@@ -20,6 +20,21 @@ public protocol MobileAdsProtocol {
     func startAds() async
 }
 
+/// AdMob contains all the unit ids for AdMob.
+/// `test` should be used on QA, Dev and Testflight builds
+/// `live` should only be used on production or live build
+public enum AdMob {
+    case test
+    case live
+    
+    var unitID: String {
+        switch self {
+        case .test: "ca-app-pub-3940256099942544/2435281174"
+        case .live: "ca-app-pub-2135147798858967/6621585063"
+        }
+    }
+}
+
 /// The Google Mobile Ads SDK provides the User Messaging Platform (Google's
 /// IAB Certified consent management platform) as one solution to capture
 /// consent for users in GDPR impacted countries.
