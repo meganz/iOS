@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -16,9 +17,13 @@ class DocScannerActionTableViewCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = TokenColors.Background.page
+        actionLabel.textColor = TokenColors.Text.primary
+    }
+    
     private func configure() {
-        backgroundColor = .mnz_backgroundElevated()
-        
         switch cellType {
         case .upload:
             actionImageView.image = UIImage.upload
