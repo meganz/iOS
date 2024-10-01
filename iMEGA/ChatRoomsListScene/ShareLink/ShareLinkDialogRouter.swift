@@ -37,26 +37,26 @@ final class ShareLinkDialogRouter: ShareLinkDialogRouting {
         }
     }
     
-    private var sendToChatWrapper: SendToChatWrapper?
     private weak var presenter: UIViewController?
     private let presentationHandler: PresentationHandler
     private let tracker: any AnalyticsTracking
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatLinkUseCase: any ChatLinkUseCaseProtocol
-    
+    private var sendToChatPresenter: (any SendToChatPresenting)?
     // presented modal dialog instance is retained here,
     // to be able to present activity on it
     // as given VC cannot present two children at once
     private var dialog: UIViewController?
     
     private let shareActivityFactory: ShareActivityFactory
-    
+    private let sendToChatPresentingFactory: any SendToChatPresentingFactoryProtocol
     init(
         presenter: UIViewController,
         presentationHandler: PresentationHandler? = nil,
         chatRoomUseCase: some ChatRoomUseCaseProtocol = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
         chatLinkUseCase: some ChatLinkUseCaseProtocol = ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
         tracker: some AnalyticsTracking = DIContainer.tracker,
+        sendToChatPresentingFactory: (any SendToChatPresentingFactoryProtocol)? = nil,
         shareActivityFactory: ShareActivityFactory? = nil
     ) {
         self.presenter = presenter
@@ -65,6 +65,7 @@ final class ShareLinkDialogRouter: ShareLinkDialogRouting {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.shareActivityFactory = shareActivityFactory ?? Self.defaultShareActivityFactory()
+        self.sendToChatPresentingFactory = sendToChatPresentingFactory ?? SendToChatPresentingFactory()
     }
     
     func showShareLinkDialog(_ data: ShareLinkRequestData) {
@@ -130,10 +131,12 @@ final class ShareLinkDialogRouter: ShareLinkDialogRouting {
     }
     
     private func sendLink(chatId: ChatIdEntity) async {
-        guard let link = await createLink(chatId: chatId) else { return }
-        let sendToChatWrapper = SendToChatWrapper(link: link.absoluteString)
-        self.sendToChatWrapper = sendToChatWrapper
-        guard let presenter else { return }
-        sendToChatWrapper.showSendToChat(presenter: presenter)
+        guard
+            let link = await createLink(chatId: chatId),
+            let presenter
+        else { return }
+        
+        sendToChatPresenter = sendToChatPresentingFactory.make(link: link.absoluteString)
+        sendToChatPresenter?.showSendToChat(presenter: presenter)
     }
 }

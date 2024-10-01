@@ -245,7 +245,7 @@ extension NotificationsTableViewController {
         
         guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
         
-        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoomEntity)
+        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting)
         return scheduledMeetingDateBuilder.buildDateDescriptionString(
             removingFormatter: formatter,
             startDate: startDate,

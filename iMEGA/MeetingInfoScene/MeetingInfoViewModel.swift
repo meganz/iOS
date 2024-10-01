@@ -99,7 +99,7 @@ final class MeetingInfoViewModel: ObservableObject {
     private func fetchInitialValues() {
         guard let chatRoom else { return }
         chatRoomAvatarViewModel = chatRoomAvatarViewModel(for: chatRoom)
-        subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
+        subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting).buildDateDescriptionString()
         isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
         isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
         isPublicChat = chatRoom.isPublicChat
@@ -335,7 +335,7 @@ extension MeetingInfoViewModel {
             .sink { [weak self] meeting in
                 guard let self else { return }
                 scheduledMeeting = meeting
-                subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: meeting, chatRoom: chatRoom).buildDateDescriptionString()
+                subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: meeting).buildDateDescriptionString()
             }
             .store(in: &subscriptions)
     }

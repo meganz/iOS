@@ -883,7 +883,7 @@
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
 		830C28E025E6900200E9B56E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28DF25E6900200E9B56E /* GridView.swift */; };
 		830F60F12BD16BE600A1DA60 /* MockCallsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */; };
-		831056332BB432D50094A872 /* SimpleDialogView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831056322BB432D50094A872 /* SimpleDialogView+Factory.swift */; };
+		831056332BB432D50094A872 /* SimpleDialogConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831056322BB432D50094A872 /* SimpleDialogConfigFactory.swift */; };
 		8310847F2C3C1648004E1E5F /* CallParticipantsSortingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310847E2C3C1648004E1E5F /* CallParticipantsSortingTests.swift */; };
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
@@ -1440,6 +1440,7 @@
 		94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */; };
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
 		94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */; };
+		94AFB6F42CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFB6F32CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift */; };
 		94B09E552B84CC87007D6B84 /* NodeActionsDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */; };
 		94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */; };
 		94B09E572B84CC87007D6B84 /* NodeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3F2B84CC86007D6B84 /* NodeActions.swift */; };
@@ -1493,6 +1494,7 @@
 		94D362772C761E2D0043621D /* NewChatEmptyButonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D362762C761E2D0043621D /* NewChatEmptyButonView.swift */; };
 		94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D4E9EA2C359F7100B07C3B /* MockCXProvider.swift */; };
 		94DC6A8B2C3DACB60069E604 /* ContactsGroupCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */; };
+		94DCA6C82CAADEBD00F28AA2 /* SimpleDialogConfigFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */; };
 		94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */; };
 		94E33C972C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E33C962C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift */; };
 		94E33C9A2C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */; };
@@ -3680,7 +3682,7 @@
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		830C28DF25E6900200E9B56E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		830F60F02BD16BE600A1DA60 /* MockCallsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallsCoordinator.swift; sourceTree = "<group>"; };
-		831056322BB432D50094A872 /* SimpleDialogView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SimpleDialogView+Factory.swift"; sourceTree = "<group>"; };
+		831056322BB432D50094A872 /* SimpleDialogConfigFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDialogConfigFactory.swift; sourceTree = "<group>"; };
 		8310847E2C3C1648004E1E5F /* CallParticipantsSortingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsSortingTests.swift; sourceTree = "<group>"; };
 		8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewController.swift; sourceTree = "<group>"; };
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
@@ -4229,6 +4231,7 @@
 		94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeUploadingViewModelTests.swift; sourceTree = "<group>"; };
 		94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTests.swift; sourceTree = "<group>"; };
 		94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManagementTableViewController+Additions.swift"; sourceTree = "<group>"; };
+		94AFB6F32CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkDialogRouterTests.swift; sourceTree = "<group>"; };
 		94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionsDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarActionFactory.swift; sourceTree = "<group>"; };
 		94B09E3F2B84CC86007D6B84 /* NodeActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActions.swift; sourceTree = "<group>"; };
@@ -4278,6 +4281,7 @@
 		94D362762C761E2D0043621D /* NewChatEmptyButonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatEmptyButonView.swift; sourceTree = "<group>"; };
 		94D4E9EA2C359F7100B07C3B /* MockCXProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCXProvider.swift; sourceTree = "<group>"; };
 		94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupCellViewModel.swift; sourceTree = "<group>"; };
+		94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDialogConfigFactoryTests.swift; sourceTree = "<group>"; };
 		94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Permissions.swift"; sourceTree = "<group>"; };
 		94E33C962C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewModelTests.swift; sourceTree = "<group>"; };
 		94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCreateTextFileAlertViewRouter.swift; sourceTree = "<group>"; };
@@ -9032,6 +9036,7 @@
 				8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */,
 				94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */,
 				B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */,
+				94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */,
 				A894E7A22B8F6396006AC2C5 /* UserAvatarHandlerTests.swift */,
 			);
 			path = Chat;
@@ -9639,7 +9644,7 @@
 		83A4DF452BAC563C0012FE25 /* SimpleDialog */ = {
 			isa = PBXGroup;
 			children = (
-				831056322BB432D50094A872 /* SimpleDialogView+Factory.swift */,
+				831056322BB432D50094A872 /* SimpleDialogConfigFactory.swift */,
 				83A4DF462BAC564C0012FE25 /* SimpleDialogView.swift */,
 			);
 			path = SimpleDialog;
@@ -12849,6 +12854,7 @@
 				838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */,
 				BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */,
 				83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */,
+				94AFB6F32CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift */,
 				8396E2A22ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift */,
 				8396E2A52ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift */,
 				99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */,
@@ -15836,7 +15842,7 @@
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */,
-				831056332BB432D50094A872 /* SimpleDialogView+Factory.swift in Sources */,
+				831056332BB432D50094A872 /* SimpleDialogConfigFactory.swift in Sources */,
 				83A4DF472BAC564C0012FE25 /* SimpleDialogView.swift in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				32A4350829C155FE00DB8581 /* SingleSelectionCheckmarkView.swift in Sources */,
@@ -16713,6 +16719,8 @@
 				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
 				249B71DA2ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift in Sources */,
 				6D01A3D12C097E3200089BA8 /* SharedItemsViewModelTests.swift in Sources */,
+				94AFB6F42CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift in Sources */,
+				94DCA6C82CAADEBD00F28AA2 /* SimpleDialogConfigFactoryTests.swift in Sources */,
 				3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */,
 				530C524C2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift in Sources */,
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,

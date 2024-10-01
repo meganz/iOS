@@ -19,8 +19,8 @@ struct SimpleDialogConfigFactory {
     }
     
     static func shareLinkDialog(
-        sendAction: @escaping (UIView) async -> Void,
-        shareAction: @escaping (UIView) async -> Void
+        sendAction: @escaping AsyncViewAction,
+        shareAction: @escaping AsyncViewAction
     ) -> SimpleDialogConfig {
         .init(
             imageResource: .shareLink,

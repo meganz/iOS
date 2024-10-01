@@ -146,7 +146,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject, @unchecked Sendable
         
         content += "\n"
         
-        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoomEntity)
+        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting)
         content += scheduledMeetingDateBuilder.buildDateDescriptionString()
         return content
     }
