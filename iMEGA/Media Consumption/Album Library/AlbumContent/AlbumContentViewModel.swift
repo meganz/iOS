@@ -138,7 +138,6 @@ final class AlbumContentViewModel: ViewModelType {
         case .deleteAlbum:
             deleteAlbum()
         case .configureContextMenu(let isSelectHidden):
-            guard isPhotoSelectionHidden != isSelectHidden else { return }
             isPhotoSelectionHidden = isSelectHidden
             updateRightBarButtons()
         case .shareLink:
