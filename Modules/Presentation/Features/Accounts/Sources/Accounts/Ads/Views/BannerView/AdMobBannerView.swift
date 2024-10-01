@@ -5,6 +5,7 @@ import SwiftUI
 struct AdMobBannerView: View {
     private let refreshAdsPublisher: AnyPublisher<Void, Never>
     private let adMob: AdMob
+    private let adSize = GADAdSizeBanner
     
     init(
         refreshAdsPublisher: AnyPublisher<Void, Never>,
@@ -15,16 +16,12 @@ struct AdMobBannerView: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            let adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(geometry.size.width)
-            
-            AdMobBannerContentView(
-                adSize: adSize,
-                adMob: adMob,
-                refreshAdsPublisher: refreshAdsPublisher
-            )
-            .frame(height: adSize.size.height)
-        }
+        AdMobBannerContentView(
+            adSize: adSize,
+            adMob: adMob,
+            refreshAdsPublisher: refreshAdsPublisher
+        )
+        .frame(height: adSize.size.height)
     }
 }
 
@@ -47,7 +44,14 @@ struct AdMobBannerContentView: UIViewRepresentable {
         // Wrapping in a UIView container insulates the GADBannerView from size
         // changes that impact the view returned from makeUIView.
         let view = UIView()
-        view.addSubview(context.coordinator.bannerView)
+        let bannerView = context.coordinator.bannerView
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        
+        NSLayoutConstraint.activate([
+            bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bannerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
         return view
     }
     
