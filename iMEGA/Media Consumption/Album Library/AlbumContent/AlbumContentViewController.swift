@@ -158,6 +158,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     
     private func buildNavigationBar() {
         self.title = viewModel.albumName
+        configureBarButtons()
     }
     
     private func configureBarButtons() {
