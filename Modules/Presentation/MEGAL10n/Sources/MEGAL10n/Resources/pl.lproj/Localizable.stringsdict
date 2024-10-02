@@ -3642,6 +3642,26 @@
         <string>%d uczestników</string>
       </dict>
     </dict>
+    <key>chat.info.notifications.mutedUntilTime</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Powiadomienia będą wyciszane do [Time]</string>
+        <key>few</key>
+        <string>Powiadomienia będą wyciszane do [Time]</string>
+        <key>many</key>
+        <string>Powiadomienia będą wyciszane do [Time]</string>
+        <key>other</key>
+        <string>Powiadomienia będą wyciszane do [Time]</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3760,6 +3780,22 @@
         <string>%d elementy ukryte</string>
         <key>other</key>
         <string>%d elementy ukryte</string>
+      </dict>
+    </dict>
+    <key>set.addTo.AddedToSet.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added to [A]</string>
+        <key>other</key>
+        <string>Added %d items to [A]</string>
       </dict>
     </dict>
   </dict>

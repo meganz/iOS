@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="Permettre aux non-hôtes d’ajouter des participants";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Ajoutez une description";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA peut voir le nom et la description de votre réunion, mais nous les gardons privés";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Saisir jusqu’à 30 caractères";
 /* Schedule meeting description error */
@@ -4328,6 +4330,12 @@
 "account.storage.banner.fullStorageOverQuotaBanner.button"="Surclasser le compte maintenant";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="Pour continuer à téléverser des données, surclassez votre compte maintenant pour obtenir plus d’espace de stockage.";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="Votre espace de stockage est saturé";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="Surclasser le compte maintenant";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="Pour continuer à téléverser des données, surclassez votre compte pour obtenir plus d’espace de stockage.";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="Protégez vos appels";
 /* Description of meetings screen empty view */
@@ -4336,3 +4344,35 @@
 "chat.meetings.emptyState.v2.button.startMeetingNow"="Commencer la réunion maintenant";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="Programmer une réunion";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="Le pouvoir de la confidentialité dans votre poche";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="Le pouvoir de la confidentialité dans la paume de vos mains";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="Solutions de nuage chiffrées de bout en bout";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="Votre espace de stockage nuagique sécurisé";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="Votre espace pour dialoguer en ligne en toute liberté";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="Votre espace pour les réunions chiffrées";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="Votre espace pour partager et collaborer avec n'importe qui";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="Votre espace pour télécharger et synchroniser vos photos et vidéos";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="Déplacez-vous vers MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="Rejoignez les millions de personnes et d'entreprises qui font confiance à MEGA pour le stockage et la protection de leurs données.";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Réunion confirmée : invitez d'autres personnes à y participer";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="Quiconque disposant de ce lien peut se joindre à la réunion et lire la conversation de la réunion.";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Envoyer un lien pour discuter";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="Partager le lien";
+/* Title for when adding items to a Sets */
+"set.addTo"="Add to";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="Ajouter à l’album";

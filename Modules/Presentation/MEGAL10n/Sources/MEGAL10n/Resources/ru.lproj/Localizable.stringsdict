@@ -3642,6 +3642,26 @@
         <string>%d участника</string>
       </dict>
     </dict>
+    <key>chat.info.notifications.mutedUntilTime</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Уведомления будут беззвучными до [Time]</string>
+        <key>few</key>
+        <string>Уведомления будут беззвучными до [Time]</string>
+        <key>many</key>
+        <string>Уведомления будут беззвучными до [Time]</string>
+        <key>other</key>
+        <string>Уведомления будут беззвучными до [Time]</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3760,6 +3780,26 @@
         <string>%d элементов скрыто</string>
         <key>other</key>
         <string>%d элемента скрыто</string>
+      </dict>
+    </dict>
+    <key>set.addTo.AddedToSet.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Добавлено в «[A]»</string>
+        <key>few</key>
+        <string>В «[A]» добавлено %d элемента</string>
+        <key>many</key>
+        <string>В «[A]» добавлено %d элементов</string>
+        <key>other</key>
+        <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
   </dict>

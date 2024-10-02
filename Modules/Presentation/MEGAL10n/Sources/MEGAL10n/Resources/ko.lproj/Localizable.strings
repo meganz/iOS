@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="계정이 활성화되었습니다. 로그인 하세요.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your signup.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 계정이 이미 활성화되었거나 가입을 취소했을 수 있습니다.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="암호 분실의 위험성을 이해하였다는 데에 동의해야 합니다";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="This email address has already signed up for an account with MEGA";
+"emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 가입되어 있습니다";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="이메일 확인 기다리는 중.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -959,9 +959,9 @@
 /*  */
 "howItWorks"="작동 원리";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
+"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 애플리케이션 중 하나를 설치[/S]해야 합니다 (데스크톱 앱이나 모바일 앱 중 하나)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구가 이메일을 이용하여 가입하기 전에 여기에 친구의 이메일 주소를 입력하면 보너스를 얻을 것입니다.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="MEGA를 이전에 사용했던 사람을 초대하는 것은 인정되지 않으며 이렇게 거부된 사항에 대해서 통보하지 않습니다.";
 /* Header of block with achievements bonuses. */
@@ -971,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ 저장소";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ GB[/B] storage";
+"account.storage.freePlan"="[B]%@GB[/B] 저장소";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="전송";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -979,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]제한된[/B] 전송";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Signup bonus";
+"account.achievement.registration.title"="가입 보너스";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="You have received %@ storage space as your free signup bonus.";
+"account.achievement.registration.explanation.label"="당신은 무료 가입 보너스로 저장 공간 %@를 받았습니다.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="추천 보너스";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1323,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="새 공유된 폴더";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Are you sure you want to stop the signup process?";
+"areYouSureYouWantToAbortTheRegistration"="가입 과정을 멈추시겠습니까?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="당신의 이메일 주소를 잘못 입력하였다면, 수정하고 “재발송”을 탭하세요.";
 /* A button to resend the email confirmation. */
@@ -1643,7 +1643,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="클라우드 속 당신의 사진";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera uploads is an essential feature for any mobile device and we have got you covered. Sign up for an account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="카메라 업로드는 어떠한 모바일 기기에서든 필요한 기능이며 우리는 이 기능이 준비되어 있습니다. 지금 가입하세요.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="MEGA 설정";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2899,9 +2899,9 @@
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="신고 취소";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Your feedback helps us improve MEGA. Please clearly describe the issue you’ve experienced. The more details you provide, the easier it will be for us to resolve.";
+"help.reportIssue.describe"="당신의 피드백이 MEGA의 개선을 돕습니다. 겪으신 문제를 명확히 설명해주세요. 자세히 설명할 수록, 우리가 문제를 해결하는 것이 쉬워집니다.";
 /* Label to indicate that users' input has not reached the required minimum characters */
-"help.reportIssue.minCharacterNotReach.error"="Description must be at least 10 characters";
+"help.reportIssue.minCharacterNotReach.error"="설명은 최소 10자이어야 합니다";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
 "help.reportIssue.sendLogFile"="로그 파일 전송";
 /* Title to indicate that the bug report is being uploaded to our support team. */
@@ -3095,7 +3095,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="당신의 MEGA 계정이 반복된 저작권 침해 혐의로 인해 정지 되었습니다. 이것은 당신의 계정이나 그 안의 데이터에 접근할 수 없다는 뜻입니다.\n\n이의 제기를 제출하는 방법에 대한 자세한 정보는 이메일 수신함을 확인하세요.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to sign up for a new MEGA account.";
+"account.suspension.message.nonCopyright"="당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.\n\n저장된 데이터에 대한 접근 또는 새 MEGA 계정에 가입하는 것이 금지됩니다.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="계속하려면 MEGA를 열고 로그인하세요.";
 /* Account Storage title label of used storage size */
@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="주최자가 아닌 사람이 참여자를 추가하는 것을 허용";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="설명 추가";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA는 회의 이름과 설명을 볼 수 있지만, 비밀로 유지합니다";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="30자 이하로 입력하세요";
 /* Schedule meeting description error */
@@ -3945,7 +3947,7 @@
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterNewName"="새 이름을 입력하세요";
 /* Used in create video playlist popup system video playlist name validation */
-"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="This playlist name is not allowed";
+"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="이 재생목록 이름은 허용되지 않습니다";
 /* Used in create video playlist popup video playlist name validation */
 "videos.tab.playlist.create.alert.enterDifferentName"="다른 이름을 입력하세요";
 /* Used in create video playlist popup user video playlist name validation */
@@ -3977,7 +3979,7 @@
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="재생목록에서 제거";
 /* Recently watched videos page title */
-"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+"videos.recentlyWatched.navigationBarTitle"="최근에 봄";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="최근 활동 없음";
 /* Calls: Floating panel participants empty list waiting room state */
@@ -4213,9 +4215,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. <b>구독 취소</b>를 탭합니다.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We’re sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="떠나시는 것을 보게 되어 안타깝습니다! 왜 구독을 취소하는지 알려주실 수 있나요?";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="당신의 구독은 즉시 취소되며 현재 요금제가 만료되면 무료 MEGA 계정으로 옮겨질 것입니다. 참고사항: 구독을 취소하는 것이 계정을 삭제하지는 않습니다.";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="이 요금제가 일시적으로 필요했고 더 이상 필요하지 않습니다";
 /* Cancel subscription survey reason with id 2 */
@@ -4237,7 +4239,7 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="구독 또는 자동 결제를 원하지 않습니다";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="MEGA가 이 주제에 대하여 나에게 연락하는 것을 허락합니다";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="취소하지 마세요";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
@@ -4269,9 +4271,9 @@
 /* Text displayed in the description field when no description is present, in read-write mode. */
 "cloudDrive.nodeInfo.nodeDescription.emptyText.readWrite"="설명 추가";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants */
-"call.meeting.empty.shareOptionsDialog.title"="Share this link or invite participants to join you";
+"call.meeting.empty.shareOptionsDialog.title"="이 링크를 공유하거나 참여자를 초대하여 함께 하세요";
 /* Title for Empty meeting share options dialog, to inform and ease users how to add participants when not allowed to invite new participants, just use link */
-"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="Share this link to invite others";
+"call.meeting.empty.shareOptionsDialog.notAllowedToInvite.title"="다른 사람들을 초대하려면 이 링크를 공유하세요";
 /* Title for share link button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.shareMeetingLink"="회의 링크 공유";
 /* Title for copy link button in Empty meeting share options dialog */
@@ -4289,31 +4291,31 @@
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="취소";
 /* Title for empty chats tab */
-"chat.chats.emptyState.v2.title"="Keep conversations private";
+"chat.chats.emptyState.v2.title"="대화를 비공개로 유지";
 /* Description for empty chats tab */
-"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
+"chat.chats.emptyState.v2.description"="당신의 모든 메시지, 단체 대화, 그리고 통화는 우리의 영지식 암호화로 보호되고 비공개로 유지됩니다. [A]더 알아보기[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="친구를 초대하세요";
 /* Description in new chat screen empty screen mode when user has no contacts */
-"chat.newChat.emptyState.description"="With top-notch security and verification codes, reach out without fear of scams, data mining, or information theft";
+"chat.newChat.emptyState.description"="최고 수준의 보안 및 인증 코드를 통하여, 사기, 데이터 마이닝 또는 정보 도난에 대한 두려움 없이 연락하세요";
 /* Toast message shown to the user when the node description is added */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="설명 추가됨";
 /* Toast message shown to the user when the node description is removed */
-"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="Description removed";
+"cloudDrive.nodeInfo.nodeDescription.savedState.descriptionRemoved"="설명 제거됨";
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="설명 수정됨";
 /* Title of the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="설명에 대한 변경사항을 저장하시겠습니까?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="변경 취소";
 /* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="계속 편집";
 /* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Save and close";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="저장하고 닫기";
 /* Toast message shown to the user when the node description update failed. */
-"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="설명 수정 중 오류, 다시 시도하세요";
 /* New chat page title */
 "chat.newChat.title"="새 대화";
 /* Visual media search history section title */
@@ -4328,11 +4330,49 @@
 "account.storage.banner.fullStorageOverQuotaBanner.button"="지금 업그레이드";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="데이터를 계속 업로드 하려면, 지금 업그레이드 하여 더 많은 저장소를 받아야 합니다.";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="저장소가 가득 찼습니다";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="지금 업그레이드";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="데이터를 계속 업로드 하려면, 업그레이드 하여 더 많은 저장소를 받아야 합니다.";
 /* Title of meetings screen empty view */
-"chat.meetings.emptyState.v2.title"="Protect your calls";
+"chat.meetings.emptyState.v2.title"="통화 보호";
 /* Description of meetings screen empty view */
-"chat.meetings.emptyState.v2.description"="Your meetings, family calls, and private conversations are protected by our zero-knowledge encryption. \n [A]Learn more[/A]";
+"chat.meetings.emptyState.v2.description"="당신의 회의, 가족 통화, 그리고 비공개 대화는 우리의 영지식 암호화로 보호됩니다. \n [A]더 알아보기[/A]";
 /* Button title to start new meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.startMeetingNow"="지금 회의 시작";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="회의 예약";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="주머니 속 개인 정보 보호의 힘";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="손 안의 개인 정보 보호의 힘";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="종단간 암호화 클라우드 솔루션";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="당신의 안전한 클라우드 저장 공간";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="편하게 대화할 수 있는 당신의 공간";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="암호화된 회의를 위한 당신의 공간";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="누구나와 공유하고 협업하는 당신의 공간";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="사진과 동영상을 업로드하고 동기화하는 당신의 공간";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="MEGA로 이동";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="데이터를 저장하고 보호하기 위해 MEGA를 믿는 수백만의 사람과 기업들에 참여하세요.";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Send link to chat";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="링크 공유";
+/* Title for when adding items to a Sets */
+"set.addTo"="Add to";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="사진첩에 추가";
