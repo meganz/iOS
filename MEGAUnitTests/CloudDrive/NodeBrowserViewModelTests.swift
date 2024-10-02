@@ -479,6 +479,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         
         var config = NodeBrowserConfig.default
         config.warningViewModel = WarningBannerViewModel(warningType: .fullStorageOverQuota)
+        config.displayMode = .cloudDrive
 
         let harness = Harness(node: .init(), config: config, mockAccountStorageUseCase: mockAccountStorageUseCase)
         
@@ -506,9 +507,12 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
         let tempWarningBannerVM = WarningBannerViewModel(warningType: .fullStorageOverQuota)
         
+        var config = NodeBrowserConfig.default
+        config.displayMode = .cloudDrive
+        
         let harness = Harness(
             node: .init(),
-            config: NodeBrowserConfig.default,
+            config: config,
             mockAccountStorageUseCase: mockAccountStorageUseCase,
             tempWarningBannerViewModel: tempWarningBannerVM
         )
@@ -522,11 +526,13 @@ class NodeBrowserViewModelTests: XCTestCase {
     private func makeHarness(
         shouldShowStorageBanner: Bool = true,
         isFromSharedItem: Bool = false,
-        currentStatus: StorageStatusEntity = .noStorageProblems
+        currentStatus: StorageStatusEntity = .noStorageProblems,
+        displayMode: DisplayMode? = nil
     ) -> (Harness, MockAccountStorageUseCase) {
         let mockAccountStorageUseCase = MockAccountStorageUseCase(shouldShowStorageBanner: shouldShowStorageBanner)
         var config = NodeBrowserConfig.default
         config.isFromSharedItem = isFromSharedItem
+        config.displayMode = displayMode
         return (
             Harness(
                 node: .init(),
@@ -555,7 +561,7 @@ class NodeBrowserViewModelTests: XCTestCase {
     
     @MainActor
     func testRefreshStorageStatus_whenStorageStatusChanges_shouldUpdateBannerVisibility() async {
-        let (harness, mockAccountStorageUseCase) = makeHarness()
+        let (harness, mockAccountStorageUseCase) = makeHarness(displayMode: .cloudDrive)
         
         mockAccountStorageUseCase._currentStorageStatus = .almostFull
         harness.sut.refreshStorageStatus()
@@ -580,6 +586,47 @@ class NodeBrowserViewModelTests: XCTestCase {
         harness.sut.refreshStorageStatus()
         
         XCTAssertNil(harness.sut.currentBannerViewModel, "No banner should be shown for shared items.")
+    }
+    
+    @MainActor
+    func testCurrentBannerViewModel_withCloudDriveDisplayMode_shouldDisplayBanner() async {
+        let (harness, mockAccountStorageUseCase) = makeHarness(displayMode: .cloudDrive)
+        
+        mockAccountStorageUseCase._currentStorageStatus = .almostFull
+        harness.sut.refreshStorageStatus()
+        
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .almostFullStorageOverQuota)
+    }
+    
+    @MainActor
+    func testCurrentBannerViewModel_withBackupDisplayMode_shouldDisplayBanner() async {
+        let (harness, mockAccountStorageUseCase) = makeHarness(displayMode: .cloudDrive)
+        
+        mockAccountStorageUseCase._currentStorageStatus = .full
+        harness.sut.refreshStorageStatus()
+        
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
+    }
+    
+    @MainActor
+    func testCurrentBannerViewModel_withNonCloudDriveDisplayModes_shouldNotDisplayBanner() async {
+        let nonCloudDriveDisplayModes: [DisplayMode] = [.rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .folderLink, .fileLink, .nodeInsideFolderLink, .recents, .publicLinkTransfers, .transfers, .transfersFailed, .chatAttachment, .chatSharedFiles, .previewDocument, .textEditor, .backup, .mediaDiscovery, .photosFavouriteAlbum, .photosAlbum, .photosTimeline, .previewPdfPage, .albumLink, .videoPlaylistContent
+        ]
+        
+        for displayMode in nonCloudDriveDisplayModes {
+            assertNoBannerIsDisplayed(for: displayMode)
+        }
+    }
+    
+    @MainActor
+    private func assertNoBannerIsDisplayed(for displayMode: DisplayMode) {
+        let (harness, _) = makeHarness(
+            shouldShowStorageBanner: true,
+            currentStatus: .almostFull,
+            displayMode: displayMode
+        )
+        harness.sut.onViewAppear()
+        XCTAssertNil(harness.sut.currentBannerViewModel, "No banner should be shown for \(displayMode).")
     }
     
     private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
