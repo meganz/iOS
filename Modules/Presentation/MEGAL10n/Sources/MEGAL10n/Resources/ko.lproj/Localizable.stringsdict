@@ -2112,10 +2112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Message must be at least %d character</string>
         <key>other</key>
-        <string>Message must be at least %d characters</string>
+        <string>메시지는 최소 %d자이어야 합니다</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2552,6 +2550,22 @@
         <string>참여자 %d명</string>
       </dict>
     </dict>
+    <key>chat.info.notifications.mutedUntilTime</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Notifications will be muted until [Time]</string>
+        <key>other</key>
+        <string>Notifications will be muted until [Time]</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2632,10 +2646,24 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d item hidden</string>
         <key>other</key>
-        <string>%d items hidden</string>
+        <string>%d개의 항목 숨겨짐</string>
+      </dict>
+    </dict>
+    <key>set.addTo.AddedToSet.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added to [A]</string>
+        <key>other</key>
+        <string>Added %d items to [A]</string>
       </dict>
     </dict>
   </dict>

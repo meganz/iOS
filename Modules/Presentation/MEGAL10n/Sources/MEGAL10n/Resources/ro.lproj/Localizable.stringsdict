@@ -3278,6 +3278,24 @@
         <string>%d de participanți</string>
       </dict>
     </dict>
+    <key>chat.info.notifications.mutedUntilTime</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Notificările vor fi dezactivate până [Time]</string>
+        <key>few</key>
+        <string>Notificările vor fi dezactivate până [Time]</string>
+        <key>other</key>
+        <string>Notificările vor fi dezactivate până [Time]</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3384,6 +3402,24 @@
         <string>%d elemente ascunse</string>
         <key>other</key>
         <string>%d de elemente ascunse</string>
+      </dict>
+    </dict>
+    <key>set.addTo.AddedToSet.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Adăugat la [A]</string>
+        <key>few</key>
+        <string>Adăugat %d elemente la [A]</string>
+        <key>other</key>
+        <string>Adăugat %d elemente la [A]</string>
       </dict>
     </dict>
   </dict>

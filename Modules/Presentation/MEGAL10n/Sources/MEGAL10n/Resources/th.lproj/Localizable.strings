@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="บัญชีของคุณถูกเปิดใช้งานแล้ว กรุณาเข้าสู่ระบบ";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your signup.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="ลิงก์ยืนยันของคุณไม่สามารถใช้งานได้อีกต่อไป บัญชีของคุณอาจถูกเปิดใช้งานแล้ว หรือคุณอาจยกเลิกการลงทะเบียนของคุณ";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="ลิงก์ไม่ถูกต้อง";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -961,7 +961,7 @@
 /*  */
 "howItWorksMain"="เพื่อนของคุณจำเป็นต้องลงทะเบียนบัญชี MEGA ฟรี และ[S]ติดตั้งแอปพลิเคชัน MEGA อย่างน้อย 1 ตัว[/S] (ไม่ว่าจะเป็น แอป MEGA บนคอมพิวเตอร์หรือแอป MEGA บนมือถือ)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="คุณสามารถแจ้งให้เพื่อนของคุณทราบได้ด้วยวิธีการใดก็ได้ คุณจะได้รับโบนัสหากคุณได้กรอกที่อยู่อีเมลเพื่อนคุณไว้ที่นี่ก่อนที่เพื่อนคุณจะลงทะเบียนด้วยที่อยู่อีเมลนั้น";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="คุณจะไม่ได้รับเครดิตในการเชิญบุคคลที่เคยใช้ MEGA มาก่อนและจะไม่ได้รับแจ้งเกี่ยวกับการปฏิเสธดังกล่าว";
 /* Header of block with achievements bonuses. */
@@ -971,7 +971,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="พื้นที่เก็บข้อมูล %@";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ GB[/B] storage";
+"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]%@ GB[/B]";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="ถ่ายโอน";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -979,9 +979,9 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]จำกัด[/B]การถ่ายโอนข้อมูล";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Signup bonus";
+"account.achievement.registration.title"="โบนัสการลงทะเบียน";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="You have received %@ storage space as your free signup bonus.";
+"account.achievement.registration.explanation.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ เป็นโบนัสการลงทะเบียนฟรี";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="โบนัสชวนเพื่อนสร้างรายได้";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1323,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="โฟลเดอร์ที่แชร์ใหม่";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Are you sure you want to stop the signup process?";
+"areYouSureYouWantToAbortTheRegistration"="คุณต้องการยกเลิกขั้นตอนการลงทะเบียนหรือไม่";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="หากคุณสะกดที่อยู่อีเมลผิด ให้แก้ไขและแตะ “ส่งใหม่”";
 /* A button to resend the email confirmation. */
@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="อนุญาตให้ผู้ที่ไม่ใช่ผู้จัดการประชุมเพิ่มผู้เข้าร่วมได้";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="เพิ่มคำอธิบาย";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA มองเห็นชื่อและรายละเอียดการประชุมของคุณ แต่เราเก็บข้อมูลเหล่านี้ไว้เป็นส่วนตัว";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="กรอกได้สูงสุด 30 ตัว";
 /* Schedule meeting description error */
@@ -4291,7 +4293,7 @@
 /* Title for empty chats tab */
 "chat.chats.emptyState.v2.title"="รักษาการสนทนาให้เป็นส่วนตัว";
 /* Description for empty chats tab */
-"chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
+"chat.chats.emptyState.v2.description"="ทุกข้อความ แชทกลุ่ม และสายโทรศัพท์ของคุณได้รับการปกป้องด้วยการเข้ารหัสแบบเวิธีซีโร่-นอว์เลจ ทำให้ข้อมูลของคุณเป็นส่วนตัวและปลอดภัย [A]เรียนรู้เพิ่มเติม[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="ชวนเพื่อนเลย";
 /* Description in new chat screen empty screen mode when user has no contacts */
@@ -4305,15 +4307,15 @@
 /* Title of the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Do you want to save changes you made to the description?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.message"="คุณต้องการบันทึกการเปลี่ยนแปลงที่คุณได้ทำกับคำอธิบายนี้หรือไม่";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.discardButtonTitle"="ยกเลิกการเปลี่ยนแปลง";
 /* Button title for the user to keep editing. This popup appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.keepEditingButtonTitle"="แก้ไขต่อ";
 /* Button title to save the node description changes and close the screen. This popup appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="Save and close";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.saveAndCloseButtonTitle"="บันทึกและปิด";
 /* Toast message shown to the user when the node description update failed. */
-"cloudDrive.nodeInfo.nodeDescription.savedState.error"="Error updating description, try again";
+"cloudDrive.nodeInfo.nodeDescription.savedState.error"="เกิดข้อผิดพลาดในการอัปเดตคำอธิบาย ลองใหม่อีกครั้ง";
 /* New chat page title */
 "chat.newChat.title"="แชทใหม่";
 /* Visual media search history section title */
@@ -4321,18 +4323,56 @@
 /* Title of the invite contact page */
 "inviteContact.title"="เชิญ";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="ลองค้นหาไฟล์สื่อ";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="พื้นที่เก็บข้อมูลของคุณเต็มแล้ว";
 /* Button title to upgrade when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.button"="อัปเกรดตอนนี้";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="หากต้องการอัปโหลดข้อมูลต่อ กรุณาอัปเกรดทันทีเพื่อเพิ่มพื้นที่เก็บข้อมูล";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="พื้นที่เก็บข้อมูลของคุณเต็มแล้ว";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="อัปเกรดตอนนี้";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="หากต้องการอัปโหลดข้อมูลต่อ กรุณาอัปเกรดเพื่อเพิ่มพื้นที่เก็บข้อมูล";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="ปกป้องการโทรของคุณ";
 /* Description of meetings screen empty view */
-"chat.meetings.emptyState.v2.description"="Your meetings, family calls, and private conversations are protected by our zero-knowledge encryption. \n [A]Learn more[/A]";
+"chat.meetings.emptyState.v2.description"="การประชุม การโทรหาครอบครัว และการสนทนาส่วนตัวของคุณได้รับการปกป้องด้วยการเข้ารหัสแบบวิธีซีโร่-นอว์เลจ \n[A]เรียนรู้เพิ่มเติม[/A]";
 /* Button title to start new meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.startMeetingNow"="เริ่มการประชุมทันที";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="จัดกำหนดการประชุม";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="พกพลังแห่งความเป็นส่วนตัวไว้ในอุปกรณ์ของคุณ";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="ความเป็นส่วนตัวที่คุณควบคุมได้อยู่ใกล้เพียงปลายนิ้ว";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="บริการคลาวด์ที่ปกป้องข้อมูลด้วยการเข้ารหัสแบบครบวงจร";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="พื้นที่เก็บข้อมูลที่พ่วงมาด้วยความปลอดภัยขั้นสูงสุด";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="สนุกกับการพูดคุยได้อย่างเต็มที่ ในพื้นที่ของคุณ";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="การประชุมที่สำคัญที่สุด ในพื้นที่ของคุณ";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="สร้างสรรค์ แชร์ และร่วมงานกับใครก็ได้ ในพื้นที่ของคุณ";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="อัปโหลด ซิงค์รูปภาพและวิดีโอได้ ในพื้นที่ของคุณ";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="ย้ายมาอยู่กับ MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="เข้าร่วมกับคนนับล้านและธุรกิจมากมายที่ไว้วางใจให้ MEGA ดูแลและปกป้องข้อมูลสำคัญของคุณ";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"=" ยืนยันการประชุมแล้ว: เชิญคนอื่นเข้าร่วม";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="ทุกคนที่มีลิงก์นี้สามารถเข้าร่วมการประชุมและดูแชทการประชุมได้";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="ส่งลิงก์ไปที่แชท";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="แชร์ลิงก์";
+/* Title for when adding items to a Sets */
+"set.addTo"="เพิ่มไปไว้ที่";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="เพิ่มเข้าอัลบั้ม";

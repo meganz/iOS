@@ -2550,6 +2550,20 @@
         <string>%d個與會者</string>
       </dict>
     </dict>
+    <key>chat.info.notifications.mutedUntilTime</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>通知將保持靜音，直到[Time]</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2630,10 +2644,22 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d item hidden</string>
         <key>other</key>
-        <string>%d items hidden</string>
+        <string>已隱藏%d個項目</string>
+      </dict>
+    </dict>
+    <key>set.addTo.AddedToSet.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>已新增%d個項目到[A]</string>
       </dict>
     </dict>
   </dict>

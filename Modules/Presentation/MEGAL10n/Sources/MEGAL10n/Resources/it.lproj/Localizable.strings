@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Il tuo account è già stato attivato. Per favore, effettua il login.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your signup.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Il tuo link di conferma non è più valido. Il tuo account potrebbe essere stato già attivato o potresti aver annullato la tua registrazione.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link non valido";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Devi essere d'accordo che capisci il pericolo della perdita della password";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="This email address has already signed up for an account with MEGA";
+"emailAlreadyRegistered"="Questo indirizzo e-mail è già utilizzato da un altro account MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="In attesa della conferma dell'email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -979,7 +979,7 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="Trasferimento [B]limitato[/B]";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Signup bonus";
+"account.achievement.registration.title"="Bonus di registrazione";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="You have received %@ storage space as your free signup bonus.";
 /* Cell title shown on the achievements view for referral achievement */
@@ -1323,7 +1323,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nuova cartella condivisa";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Are you sure you want to stop the signup process?";
+"areYouSureYouWantToAbortTheRegistration"="Vuoi veramente interrompere la procedura di registrazione?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Se hai digitato male il tuo indirizzo email, correggilo e tocca “Reinvia”.";
 /* A button to resend the email confirmation. */
@@ -1643,7 +1643,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Le tue foto nel Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera uploads is an essential feature for any mobile device and we have got you covered. Sign up for an account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="I Caricamenti da fotocamera sono una feature essenziale per qualsiasi dispositivo mobile e possiamo farlo per te. Registra un account adesso.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Imposta MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2921,7 +2921,7 @@
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Questo problema non verrà segnalato se annulli il suo upload.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Describe the issue with at least 10 characters";
+"help.reportIssue.describeIssue.placeholder"="Descrivi il problema con almeno 10 caratteri";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Impossibile connettersi ad Internet. Controlla la tua connessione e riprova.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="Permetti a chi non è host di aggiungere partecipanti";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Aggiungi descrizione";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA can see your meeting name and description, but we keep them private";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Inserisci fino a 30 caratteri";
 /* Schedule meeting description error */
@@ -3977,7 +3979,7 @@
 /* Videos: video playlist remove video from video playlist */
 "videos.tab.playlist.content.removeFromPlaylist"="Rimuovi dalla playlist";
 /* Recently watched videos page title */
-"videos.recentlyWatched.navigationBarTitle"="Recently watched";
+"videos.recentlyWatched.navigationBarTitle"="Guardati di recente";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Nessuna attività recente";
 /* Calls: Floating panel participants empty list waiting room state */
@@ -4213,9 +4215,9 @@
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. Toccare <b>Annulla abbonamento</b>.";
 /* Cancel subscription survey header title */
-"accounts.cancelSubscriptionSurvey.header.title"="We’re sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
+"accounts.cancelSubscriptionSurvey.header.title"="Ci dispiace che tu te ne vada! Puoi dirci perché stai annullando l'abbonamento?";
 /* Cancel subscription survey header subtitle */
-"accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+"accounts.cancelSubscriptionSurvey.header.subtitle"="L'abbonamento verrà annullato immediatamente e alla scadenza del piano attuale il tuo account diventerà un account MEGA gratuito. Nota: l'annullamento dell'abbonamento non comporta l'eliminazione dell'account.";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Avevo bisogno temporaneamente di questo piano e non lo utilizzo più";
 /* Cancel subscription survey reason with id 2 */
@@ -4237,7 +4239,7 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="Non voglio un abbonamento o la fatturazione automatica";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="I allow MEGA to contact me to talk about this topic further";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="Permetto a MEGA di contattarmi per parlare ulteriormente di questo argomento";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="Non annullare";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
@@ -4289,13 +4291,13 @@
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Annulla";
 /* Title for empty chats tab */
-"chat.chats.emptyState.v2.title"="Keep conversations private";
+"chat.chats.emptyState.v2.title"="Mantieni private le conversazioni";
 /* Description for empty chats tab */
 "chat.chats.emptyState.v2.description"="All your messages, group chats and calls are protected by our zero-knowledge encryption and remain private. [A]Learn more[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="Invita un amico";
 /* Description in new chat screen empty screen mode when user has no contacts */
-"chat.newChat.emptyState.description"="With top-notch security and verification codes, reach out without fear of scams, data mining, or information theft";
+"chat.newChat.emptyState.description"="Con codici di sicurezza e verifica di prim'ordine, contattaci senza timore di truffe, data mining o furto di informazioni";
 /* Toast message shown to the user when the node description is added */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Descrizione aggiunta";
 /* Toast message shown to the user when the node description is removed */
@@ -4328,11 +4330,49 @@
 "account.storage.banner.fullStorageOverQuotaBanner.button"="Effettua l'upgrade ora";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="Per continuare a caricare dati, effettua l'upgrade ora per ottenere più spazio di archiviazione.";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="Il tuo spazio di archiviazione è pieno";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="Effettua l'upgrade ora";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="Per continuare a caricare dati, effettua l'upgrade ora per ottenere più spazio di archiviazione.";
 /* Title of meetings screen empty view */
-"chat.meetings.emptyState.v2.title"="Protect your calls";
+"chat.meetings.emptyState.v2.title"="Proteggi le tue chiamate";
 /* Description of meetings screen empty view */
 "chat.meetings.emptyState.v2.description"="Your meetings, family calls, and private conversations are protected by our zero-knowledge encryption. \n [A]Learn more[/A]";
 /* Button title to start new meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.startMeetingNow"="Avvia un meeting ora";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="Programma meeting";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="Il potere della privacy nella tua tasca";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="Il potere della privacy nel palmo delle tue mani";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="Soluzioni cloud criptografate end-to-end";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="Il tuo spazio di archiviazione cloud sicuro";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="Il tuo spazio per chattare liberamente";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="Il tuo spazio per riunioni criptate";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="Il tuo spazio per condividere e collaborare con chiunque";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="Il tuo spazio per caricare e sincronizzare foto e video";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="Passa a MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="Unisciti ai milioni di persone e aziende che si affidano a MEGA per archiviare e proteggere i propri dati.";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="Chiunque con questo link può unirsi al meeting e vedere la chat.";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Send link to chat";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="Condividi link";
+/* Title for when adding items to a Sets */
+"set.addTo"="Add to";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="Aggiungi all'album";

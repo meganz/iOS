@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="Izinkan non-host untuk menambahkan peserta";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Tambah deskripsi";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA can see your meeting name and description, but we keep them private";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Masukan hingga 30 karakter";
 /* Schedule meeting description error */
@@ -4328,6 +4330,12 @@
 "account.storage.banner.fullStorageOverQuotaBanner.button"="Tingkatkan sekarang";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="Untuk terus mengupload data, tingkatkan versi sekarang untuk mendapatkan lebih banyak penyimpanan.";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="Penyimpanan anda penuh";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="Tingkatkan sekarang";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="Untuk terus mengupload data, tingkatkan versi untuk mendapatkan lebih banyak penyimpanan.";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="Lindungi panggilan anda";
 /* Description of meetings screen empty view */
@@ -4336,3 +4344,35 @@
 "chat.meetings.emptyState.v2.button.startMeetingNow"="Mulai rapat sekarang";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="Jadwalkan pertemuan";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="Kekuatan privasi di saku anda";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="Kekuatan privasi di telapak tangan anda";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="Solusi cloud terenkripsi ujung ke ujung";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="Ruang penyimpanan cloud anda yang aman";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="Ruang anda untuk mengobrol dengan bebas";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="Ruang anda untuk rapat terenkripsi";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="Ruang anda untuk berbagi & berkolaborasi dengan siapa pun";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="Ruang anda untuk mengunggah & menyinkronkan foto dan video anda";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="Pindah ke MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="Bergabunglah dengan jutaan orang dan bisnis yang mempercayai MEGA untuk menyimpan dan melindungi data mereka.";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="Siapa pun yang memiliki tautan ini dapat bergabung ke rapat dan melihat obrolan rapat.";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Send link to chat";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="Bagikan Tautan";
+/* Title for when adding items to a Sets */
+"set.addTo"="Add to";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="Tambahkan ke album";

@@ -2550,6 +2550,20 @@
         <string>%d thành viên</string>
       </dict>
     </dict>
+    <key>chat.info.notifications.mutedUntilTime</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Tất cả các thông báo sẽ tắt tiếng cho đến [Time]</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2632,6 +2646,20 @@
         <string>d</string>
         <key>other</key>
         <string>%d mục đã ẩn đi</string>
+      </dict>
+    </dict>
+    <key>set.addTo.AddedToSet.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Đã thêm %d mục vào [A]</string>
       </dict>
     </dict>
   </dict>

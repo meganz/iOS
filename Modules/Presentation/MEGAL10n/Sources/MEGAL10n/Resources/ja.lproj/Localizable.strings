@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="主催者以外が参加者を追加できるようにします";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="説明を追加";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGAはミーティングの名前と説明を見ることができますが、それらは非公開に保たれます";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="30 文字以下で入力してください";
 /* Schedule meeting description error */
@@ -4328,6 +4330,12 @@
 "account.storage.banner.fullStorageOverQuotaBanner.button"="今すぐアップグレード";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="データのアップロードを続けるには、今すぐアップグレードしてストレージを増やしてください。";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="ストレージがいっぱいです";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="今すぐアップグレード";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="データのアップロードを続けるには、アップグレードしてストレージを増やしてください。";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="通話を保護";
 /* Description of meetings screen empty view */
@@ -4336,3 +4344,35 @@
 "chat.meetings.emptyState.v2.button.startMeetingNow"="今すぐミーティングを開始";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="ミーティングをスケジュール";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="ポケットの中でもプライバシーを保護";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="手のひらでもプライバシーを保護";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="エンドツーエンドの暗号化クラウドソリューション";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="安全なクラウドストレージスペース";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="自由におしゃべりできるスペース";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="暗号化されたミーティングができるスペース";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="誰とでも共有してコラボできるスペース";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="写真や動画をアップロードして同期できるスペース";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="MEGAに移動";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="MEGAをご信頼いただき、データを保管して保護されている、何百万人もの人々や企業の皆様に加わってください。";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="ミーティングが確認されました：他の人を招待しましょう";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="このリンクを知っている人は誰でもミーティングに参加し、ミーティングチャットを表示できます。";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="チャットへのリンクを送信";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="リンクの共有";
+/* Title for when adding items to a Sets */
+"set.addTo"="追加先";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="アルバムに追加";

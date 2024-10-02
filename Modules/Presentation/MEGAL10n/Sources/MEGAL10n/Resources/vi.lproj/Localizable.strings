@@ -37,7 +37,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Tài khoản đã được kích hoạt rồi. Xin đăng nhập.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Đường liên[w]kết xác[w]nhận không còn hiệu[w]lực. Tài[w]khoản của bạn có thể đã được kích[w]hoạt rồi hoặc việc đăng[w]ký đã bị hủy.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Đường liên kết xác nhận không còn hiệu lực. Tài khoản của bạn có thể đã được kích hoạt rồi hoặc việc đăng ký đã bị hủy.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Đường liên kết không hợp lệ";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Bạn cần phải đồng ý rằng là đã hiểu được rủi ro sẽ xáy ra khi mất mật khẩu";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Địa[w]chỉ email này đã có đăng[w]ký tài[w]khoản với MEGA rồi";
+"emailAlreadyRegistered"="Địa chỉ email này đã có đăng ký một tài khoản với MEGA rồi";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Đang chờ việc xác nhận email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -1469,7 +1469,7 @@
 /* Title label of a node property. */
 "cloudDrive.info.node.location"="Vị trí";
 /* Title label of when there is no location info available. */
-"cloudDrive.info.node.noLocation"="Không có thông[w]tin vị[w]trí";
+"cloudDrive.info.node.noLocation"="Không có thông tin vị trí";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation) */
 "totalSize"="Tổng kích thước";
 /* Refers to the type of a file or folder. */
@@ -1643,7 +1643,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Hình ảnh của bạn ở trên mây";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng[w]tải camêra là tính[w]năng thiết[w]yếu cho mọi thiết[w]bị di[w]động, và MEGA có cung[w]cấp cho mọi người dùng. Tạo tài[w]khoản ngay.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng tải camêra là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp cho mọi người dùng. Tạo tài khoản ngay.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Thiếp lập MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="Cho phép các thành viên không chủ trì mời thêm người";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Thêm miêu tả";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA có thể xem tên và mô tả của cuộc họp của bạn, nhưng chúng tôi giữ mọi thứ ở chế độ riêng tư";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Nhập được tới 30 ký tự";
 /* Schedule meeting description error */
@@ -3909,7 +3911,7 @@
 /* Videos: videos filter option for all locations */
 "videos.tab.all.filter.location.option.allLocations"="Tất cả các vị trí";
 /* Videos: videos filter option for cloud drive */
-"videos.tab.all.filter.location.option.cloudDrive"="Ổ Mây";
+"videos.tab.all.filter.location.option.cloudDrive"="Ổ mây";
 /* Videos: videos filter option for Camera uploads */
 "videos.tab.all.filter.location.option.cameraUploads"="Đăng tải camêra";
 /* Videos: videos filter option for shared items */
@@ -4111,7 +4113,7 @@
 /* Transfer sharing title */
 "transfer.sharing.title"="Chia sẻ lượng truyền tải";
 /* Rewind feature title */
-"rewind.feature.title"="Hồi phục";
+"rewind.feature.title"="Tua lại";
 /* Rewind fro free users */
 "rewind.for.free.users"="Lên đến 30 ngày (chỉ được xem)";
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
@@ -4289,13 +4291,13 @@
 /* Title for a button to cancel share link */
 "call.shareOptions.cancel"="Hủy";
 /* Title for empty chats tab */
-"chat.chats.emptyState.v2.title"="Giữ các cuộc trò[w]chuyện được riêng[w]tư";
+"chat.chats.emptyState.v2.title"="Giữ các cuộc trò chuyện được riêng tư";
 /* Description for empty chats tab */
 "chat.chats.emptyState.v2.description"="Tất cả tin nhắn, trò chuyện nhóm và cuộc gọi của bạn đều được bảo vệ bằng mã hóa vô kiến thức và được giữ riêng tư. [A]Tìm hiểu thêm[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="Mời bạn bè";
 /* Description in new chat screen empty screen mode when user has no contacts */
-"chat.newChat.emptyState.description"="Sử[w]dụng mã xác[w]minh và cấp bảo[w]mật hàng đầu, tiếp[w]cận mà không sợ lừa[w]đảo, bị khai[w]thác dữ[w]liệu hoặc trộm[w]cắp thông[w]tin";
+"chat.newChat.emptyState.description"="Sử dụng mã xác minh và cấp bảo mật hàng đầu, tiếp cận mà không sợ lừa đảo, bị khai thác dữ liệu hoặc trộm cắp thông tin";
 /* Toast message shown to the user when the node description is added */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionAdded"="Mô tả đã được thêm";
 /* Toast message shown to the user when the node description is removed */
@@ -4321,13 +4323,19 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Mời";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Thử tìm kiếm các tệp tin tin đa phương tiện";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Không gian lưu trữ đã đầy";
 /* Button title to upgrade when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.button"="Nâng cấp ngay";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="Để tiếp tục tải thêm dữ liệu lên, hãy nâng cấp ngay để có thêm không gian lưu trữ.";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="Không gian lưu trữ đã đầy";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="Nâng cấp ngay";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="Để tiếp tục tải thêm dữ liệu lên, hãy nâng cấp để có thêm không gian lưu trữ.";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="Bảo vệ cuộc gọi của bạn";
 /* Description of meetings screen empty view */
@@ -4336,3 +4344,35 @@
 "chat.meetings.emptyState.v2.button.startMeetingNow"="Bắt đầu cuộc họp ngay";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="Đặt lịch cuộc họp";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="Mang theo sự an ninh mạnh mẽ trong túi của bạn";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="Mang theo sự an ninh mạnh mẽ trong tầm tay của bạn";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="Giải pháp điện toán đám mây được mã hóa đầu-cuối";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="Không gian lưu trữ đám mây an toàn của bạn";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="Không gian của bạn để trò chuyện tự do";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="Không gian của bạn cho các cuộc họp được mã hóa";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="Không gian của bạn để chia sẻ & cộng tác với bất kỳ ai";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="Không gian của bạn để tải lên & đồng bộ hóa ảnh và video của mình";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="Chuyển đến MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="Tham gia cùng hàng triệu người và doanh nghiệp tin dùng MEGA, để lưu trữ và bảo vệ dữ liệu giống như họ.";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Cuộc họp được xác nhận: Mời thêm người khác tham gia";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="Bất kỳ ai có đường liên kết này đều có thể tham gia cuộc họp và xem tin nhắn của cuộc họp.";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Gửi đường liên kết tới chat";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="Chia sẻ đường liên kết";
+/* Title for when adding items to a Sets */
+"set.addTo"="Thêm vào";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="Thêm vào album";

@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="السماح لغير المضيفين بإضافة مشاركين";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="إضافة وصف";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="يمكن لميغا MEGA رؤية اسم الاجتماع ووصفه لكننا نحافظ على خصوصيتهم";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="أدخل ما يصل إلى 30 محرفًا";
 /* Schedule meeting description error */
@@ -4328,6 +4330,12 @@
 "account.storage.banner.fullStorageOverQuotaBanner.button"="رق حسابك الآن";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="لمواصلة ترفيع البيانات، قم بالترقية الآن للحصول على المزيد من مساحة التخزين.";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="مساحة التخزين الخاصة بك ممتلئة";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="رق حسابك الآن";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="لمواصلة ترفيع البيانات، قم بالترقية للحصول على المزيد من مساحة التخزين.";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="قم بحماية مكالماتك";
 /* Description of meetings screen empty view */
@@ -4336,3 +4344,35 @@
 "chat.meetings.emptyState.v2.button.startMeetingNow"="ابدأ الاجتماع الآن";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="الاجتماع المجدول";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="قوة الخصوصية في جيبك";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="قوة الخصوصية بين يديك";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="حلول السحابة المشفرة من طرف إلى طرف";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="مساحة التخزين السحابية الآمنة";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="مساحتك الخاصة للمحادثة بحرية";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="مساحتك الخاصة للاجتماعات المشفرة";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="مساحتك الخاصة للمُشاركة والتعاون مع أي شخص";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="مساحتك الخاصة لترفيع ومزامنة الصور ومقاطع الفيديو";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="انتقل إلى ميغا MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="انضم إلى ملايين الأشخاص والشركات الذين يثقون في ميغا MEGA لتخزين بياناتهم وحمايتها.";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="يمكن لأي شخص لديه هذا الرابط الانضمام إلى الاجتماع و الاطلاع على محادثة الاجتماع.";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Send link to chat";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="مشاركة رابط";
+/* Title for when adding items to a Sets */
+"set.addTo"="Add to";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="إضافة إلى الألبوم";

@@ -3288,6 +3288,8 @@
 "meetings.scheduleMeeting.openInvite"="允许非主持人添加参与者";
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="添加说明";
+/* Schedule meeting title unencrypted disclaimer message */
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA可以看到您的会议名称和描述，但我们会将其保密";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="输入最多30 个字符（15个中文字）";
 /* Schedule meeting description error */
@@ -4328,6 +4330,12 @@
 "account.storage.banner.fullStorageOverQuotaBanner.button"="立即升级";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="为了保持数据上传，请立即升级以获得更多存储空间。";
+/* Banner title shown when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="您的存储空间已满";
+/* Button title to upgrade when storage is almost full */
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="立即升级";
+/* Banner description shown when storage is almost full, prompting the user to upgrade */
+"account.storage.banner.almostFullStorageOverQuotaBanner.description"="为了继续上传数据，请升级以获得更多存储空间。";
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="保护您的通话";
 /* Description of meetings screen empty view */
@@ -4336,3 +4344,35 @@
 "chat.meetings.emptyState.v2.button.startMeetingNow"="立即发起会议";
 /* Button title to schedule a meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.scheduleMeeting"="安排会议";
+/* App Store Screenshots string - Image 1 */
+"appstore.screenshot1"="您口袋里的隐私保护力量";
+/* App Store Screenshots string - Image 2 */
+"appstore.screenshot2"="您手掌中的隐私保护力量";
+/* App Store Screenshots string - Image 3 */
+"appstore.screenshot3"="端到端加密的云端解决方案";
+/* App Store Screenshots string - Image 4 */
+"appstore.screenshot4"="您的安全云端存储空间";
+/* App Store Screenshots string - Image 5 */
+"appstore.screenshot5"="您的自由聊天空间";
+/* App Store Screenshots string - Image 6 */
+"appstore.screenshot6"="您的加密会议空间";
+/* App Store Screenshots string - Image 7 */
+"appstore.screenshot7"="您与任何人的共享和协作空间";
+/* App Store Screenshots string - Image 8 */
+"appstore.screenshot8"="您照片和视频的上传&同步空间";
+/* App Store Screenshots string - Image 9 */
+"appstore.screenshot9"="转移到MEGA";
+/* App Store Screenshots string - Image 10 */
+"appstore.screenshot10"="加入数百万信任MEGA的个人和企业的行列，用以存储并保护数据。";
+/* Modal title when sharing a meeting link */
+"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+/* Modal description when sharing a meeting link */
+"chat.meetings.shareLink.description"="知道此链接的任何人都可以加入会议并查看会议聊天。";
+/* Button title to send to chat in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.sendToChat"="Send link to chat";
+/* Button title to share link in modal shown when sharing a meeting link */
+"chat.meetings.shareLink.shareLink"="分享链接";
+/* Title for when adding items to a Sets */
+"set.addTo"="Add to";
+/* Title for when adding items to a Album Sets */
+"set.addTo.album"="添加到相册";
