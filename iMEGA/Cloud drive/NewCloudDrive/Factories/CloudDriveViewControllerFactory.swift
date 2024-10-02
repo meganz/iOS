@@ -718,6 +718,8 @@ struct CloudDriveViewControllerFactory {
         _ nodeSource: NodeSource,
         config: NodeBrowserConfig
     ) -> WarningBannerViewModel? {
+        guard config.displayMode == .cloudDrive else { return nil }
+        
         let storageQuotaStatus = config.storageQuotaStatusProvider()
         let accountStorageUseCase = AccountStorageUseCase(
             accountRepository: AccountRepository.newRepo,

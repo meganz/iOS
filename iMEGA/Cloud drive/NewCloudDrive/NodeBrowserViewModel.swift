@@ -519,7 +519,10 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     private func monitorStorageStatusUpdates() {
-        guard isFullSOQBannerEnabled() || isAlmostFullSOQBannerEnabled(), config.isFromSharedItem != true else { return }
+        guard isFullSOQBannerEnabled() || isAlmostFullSOQBannerEnabled(),
+              config.isFromSharedItem != true,
+              let displayMode = config.displayMode,
+              displayMode == .cloudDrive else { return }
         
         let onStorageStatusUpdateSequence = accountStorageUseCase.onStorageStatusUpdates
         
@@ -564,7 +567,11 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     func refreshStorageStatus() {
-        guard isFullSOQBannerEnabled() || isAlmostFullSOQBannerEnabled(), config.isFromSharedItem != true else {
+        guard isFullSOQBannerEnabled() || isAlmostFullSOQBannerEnabled(),
+              config.isFromSharedItem != true,
+              let displayMode = config.displayMode,
+              displayMode == .cloudDrive else {
+            
             if !(isFullSOQBannerEnabled() && isAlmostFullSOQBannerEnabled()) {
                 resetTemporaryBanner()
                 objectWillChange.send()
