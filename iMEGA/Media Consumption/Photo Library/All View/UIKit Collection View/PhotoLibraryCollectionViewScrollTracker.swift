@@ -1,5 +1,6 @@
 import Combine
 
+@MainActor
 protocol PhotoLibraryCollectionViewScrolling: AnyObject {
     func scrollTo(_ position: PhotoScrollPosition)
     func position(at indexPath: IndexPath) -> PhotoScrollPosition?
