@@ -4,7 +4,7 @@ import MEGASdk
 extension MEGAAccountType {
     public func toAccountTypeEntity() -> AccountTypeEntity {
         switch self {
-        case .free:
+        case .free, .unknown:
             return .free
         case .proI:
             return .proI
