@@ -295,15 +295,17 @@ class AppearanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch AppearanceSection(rawValue: section) {
         case .launch:
-            return Strings.Localizable.configureDefaultLaunchSection
+            Strings.Localizable.configureDefaultLaunchSection
         case .layout:
-            return Strings.Localizable.configureSortingOrderAndTheDefaultViewListOrThumbnail
+            Strings.Localizable.configureSortingOrderAndTheDefaultViewListOrThumbnail
         case .mediaDiscoverySubfolder:
-            return Strings.Localizable.Settings.UserInterface.MediaDiscoverySubFolder.footer
+            Strings.Localizable.Settings.UserInterface.MediaDiscoverySubFolder.footer
         case .recents:
-            return Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
-        case .appIcon, .hiddenItems, .mediaDiscovery, .none:
-            return nil
+            Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
+        case .hiddenItems:
+            Strings.Localizable.Settings.UserInterface.HiddenItems.footer
+        case .appIcon, .mediaDiscovery, .none:
+            nil
         }
     }
     
@@ -327,9 +329,7 @@ class AppearanceTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch AppearanceSection(rawValue: section) {
-        case .hiddenItems:
-                .leastNonzeroMagnitude
-        case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .none, .mediaDiscoverySubfolder:
+        case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .none, .mediaDiscoverySubfolder, .hiddenItems:
             UITableView.automaticDimension
         }
     }
