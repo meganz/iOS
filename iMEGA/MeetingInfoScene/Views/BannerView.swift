@@ -87,7 +87,8 @@ struct BannerView: View {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     VStack {
         BannerView(
             config: .init(
@@ -146,5 +147,4 @@ struct BannerView: View {
         )
         .colorScheme(.light)
     }
-    .previewLayout(.sizeThatFits)
 }
