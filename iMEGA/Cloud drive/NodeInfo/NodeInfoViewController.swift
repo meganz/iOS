@@ -796,7 +796,8 @@ extension NodeInfoViewController {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        
+
+        header.titleLabel.attributedText = nil
         header.setPreferredBackgroundColor(TokenColors.Background.page)
         
         switch cachedSections[section] {
