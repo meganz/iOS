@@ -11,10 +11,10 @@ import UIKit
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     
-    init(shareUseCase: any ShareUseCaseProtocol,
-         mediaUseCase: any MediaUseCaseProtocol,
-         saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol,
-         moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
+    init(shareUseCase: some ShareUseCaseProtocol,
+         mediaUseCase: some MediaUseCaseProtocol,
+         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
+         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol
     ) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase

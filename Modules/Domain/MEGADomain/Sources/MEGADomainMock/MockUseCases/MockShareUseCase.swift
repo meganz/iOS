@@ -13,6 +13,9 @@ public final class MockShareUseCase: ShareUseCaseProtocol {
     public var createShareKeyFunctionHasBeenCalled = false
     public var createShareKeysErrorHappened = false
     
+    public var onCreateShareKeyCalled: (() -> Void)?
+    public var onCreateShareKeysErrorCalled: (() -> Void)?
+    
     public init(
         nodes: [NodeEntity] = [],
         shares: [ShareEntity] = [],
@@ -51,9 +54,12 @@ public final class MockShareUseCase: ShareUseCaseProtocol {
     
     public func createShareKeys(forNodes nodes: [NodeEntity]) async throws -> [HandleEntity] {
         createShareKeyFunctionHasBeenCalled = true
+        onCreateShareKeyCalled?()
         
         if let error = createShareKeysError {
             createShareKeysErrorHappened = true
+            onCreateShareKeysErrorCalled?()
+            
             throw error
         }
         
