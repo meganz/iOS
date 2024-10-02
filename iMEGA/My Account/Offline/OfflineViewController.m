@@ -84,8 +84,6 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     
-    self.offlineTableView.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
-    
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
        backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                             traitCollection:self.traitCollection];
@@ -279,10 +277,8 @@ static NSString *kisDirectory = @"kisDirectory";
     UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineTableView bannerMessage:LocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
     [self add:bannerContainerVC container:self.containerView animate:NO];
     
-    self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.offlineTableView.tableView.emptyDataSetDelegate = self;
     self.offlineTableView.tableView.emptyDataSetSource = self;
-    self.offlineTableView.tableView.separatorColor = [UIColor mnz_separator];
 
     if(self.flavor == HomeScreen) {
         self.offlineTableView.tableView.bounces = NO;
@@ -316,7 +312,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
     }
     
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
+    [NSNotificationCenter.defaultCenter postNotificationName:NSNotification.MEGAViewModePreferenceDidChange object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
 }
 
 - (BOOL)isListViewModeSelected {

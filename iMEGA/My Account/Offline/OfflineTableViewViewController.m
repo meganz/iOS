@@ -27,9 +27,7 @@ static NSString *kPath = @"kPath";
     [super viewDidLoad];
     
     //White background for the view behind the table view
-    self.tableView.backgroundView = UIView.alloc.init;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self updateAppearance: self.traitCollection];
 }
 
 #pragma mark - Public

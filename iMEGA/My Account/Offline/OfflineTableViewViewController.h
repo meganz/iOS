@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class OfflineViewController;
 @interface OfflineTableViewViewController : UIViewController
 
-@property (nonatomic, strong) OfflineViewController *offline;
+@property (nonatomic, weak) OfflineViewController *offline;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
