@@ -153,6 +153,7 @@ struct ThumbnailLayerView: View {
 }
 
 #Preview {
+    @MainActor
     func makeNullViewModel() -> VideoPlaylistCellViewModel {
         VideoPlaylistCellViewModel(
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
@@ -166,6 +167,7 @@ struct ThumbnailLayerView: View {
         )
     }
     
+    @MainActor
     func videoPlaylistEntity() -> VideoPlaylistEntity {
         VideoPlaylistEntity(
             setIdentifier: SetIdentifier(handle: 1),

@@ -3,6 +3,7 @@ import MEGAPresentation
 import SwiftUI
 import UIKit
 
+@MainActor
 final class VideoPlaylistsCollectionViewCoordinator {
     
     private enum Section {

@@ -22,10 +22,11 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - onViewAppeared
     
+    @MainActor
     func testOnViewAppear_whenLoad_loadThumbnailsFromThumbnailLoader() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         let allVideos = [ [nodeEntity(name: "video 1", handle: 1, hasThumbnail: true)] ].async.eraseToAnyAsyncSequence()
-        let (sut, videoPlaylistThumbnailLoader) = await makeSUT(
+        let (sut, videoPlaylistThumbnailLoader) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: allVideos)
         )
@@ -35,10 +36,11 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         XCTAssertEqual(videoPlaylistThumbnailLoader.loadThumbnailsCallCount, 1)
     }
     
+    @MainActor
     func testOnViewAppear_whenNoCachedThumbnailsThumbnailAndErrors_deliversPlaceholderImage() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         let videos = [ [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ] ].async.eraseToAnyAsyncSequence()
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: videos)
         )
@@ -51,11 +53,11 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testOnViewAppear_whenHasCachedThumbnailThumbnailAndErrors_deliversImage() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
-        let (_, _, imageURL) = imagePathData()
         let videos = [ [nodeEntity(name: "video 1", handle: 1, hasThumbnail: true)] ].async.eraseToAnyAsyncSequence()
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: videos)
         )
@@ -68,10 +70,11 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testOnViewAppear_whenSucessLoadThumbnail_useLoadedImage() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         let videos = [ [nodeEntity(name: "video 1", handle: 1, hasThumbnail: true)] ].async.eraseToAnyAsyncSequence()
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: videos)
         )
@@ -86,11 +89,12 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - onTappedMoreOptions
     
+    @MainActor
     func testOnTappedMoreOptions_whenCalled_triggerTap() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1)
         var tappedVideoPlaylists = [VideoPlaylistEntity]()
         let allVideos = [ [ nodeEntity(name: "video 1", handle: 1, hasThumbnail: true) ] ].async.eraseToAnyAsyncSequence()
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: allVideos),
             onTapMoreOptions: { tappedVideoPlaylists.append($0) }
@@ -103,13 +107,14 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - previewEntity
     
+    @MainActor
     func testPreviewEntity_whenOnViewAppeared_createsCorrectEntity() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, sharedLinkStatus: .exported(true), count: 2)
         let allVideos = [[
             nodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 30),
             nodeEntity(name: "video 2", handle: 2, hasThumbnail: true, duration: 30)
         ]].async.eraseToAnyAsyncSequence()
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: allVideos)
         )
@@ -121,9 +126,10 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - secondaryInformationViewType
     
+    @MainActor
     func testSecondaryInformationViewType_whenEntityCountZero_showEmptyPlaylistView() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: 0)
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist
         )
         
@@ -132,11 +138,12 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, .emptyPlaylist)
     }
     
+    @MainActor
     func testSecondaryInformationViewType_whenVideosCountNotZero_showInformationView() async {
         let nonZeroRandomCount = Int.random(in: 1...10000)
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: nonZeroRandomCount)
         let videos = [ (0...nonZeroRandomCount).map { nodeEntity(name: "video-\($0)", handle: SetHandleEntity($0), hasThumbnail: true) } ].async.eraseToAnyAsyncSequence()
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: videos)
         )
@@ -149,22 +156,24 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - isLoading
     
+    @MainActor
     func testIsLoading_whenInit_ShowsLoading() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, count: 0)
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist
         )
         
         XCTAssertTrue(sut.isLoading)
     }
     
+    @MainActor
     func testIsLoading_whenOnAppear_disableLoadingAfterDisplayablePropertiesAreSet() async {
         let videoPlaylist = videoPlaylistEntity(name: "name", handle: 1, sharedLinkStatus: .exported(true), count: 2)
         let allVideos = [[
             nodeEntity(name: "video 1", handle: 1, hasThumbnail: true, duration: 30),
             nodeEntity(name: "video 2", handle: 2, hasThumbnail: true, duration: 30)
         ]].async.eraseToAnyAsyncSequence()
-        let (sut, _) = await makeSUT(
+        let (sut, _) = makeSUT(
             videoPlaylistEntity: videoPlaylist,
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(monitorUserVideoPlaylistContentAsyncSequenceResult: allVideos)
         )
@@ -180,13 +189,14 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeSUT(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase = MockVideoPlaylistContentUseCase(),
         onTapMoreOptions: @escaping (_ node: VideoPlaylistEntity) -> Void = { _ in },
         file: StaticString = #filePath,
         line: UInt = #line
-    ) async -> (
+    ) -> (
         sut: VideoPlaylistCellViewModel,
         videoPlaylistThumbnailLoader: MockVideoPlaylistThumbnailLoader
     ) {
@@ -254,6 +264,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         try? FileManager.default.removeItem(atPath: testImagePath)
     }
     
+    @MainActor
     private func assertThatPreviewEntityCreatesCorrectly(
         on sut: VideoPlaylistCellViewModel,
         videoPlaylist: VideoPlaylistEntity,
