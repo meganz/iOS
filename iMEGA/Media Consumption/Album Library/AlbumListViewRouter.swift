@@ -6,6 +6,7 @@ import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 protocol AlbumListViewRouting {
     func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell
     func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
@@ -14,7 +15,6 @@ protocol AlbumListViewRouting {
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
-    @MainActor
     func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell {
         let nodeRepository = NodeRepository.newRepo
         let vm = AlbumCellViewModel(
@@ -39,7 +39,6 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return AlbumContainerWrapper(album: album, newAlbumPhotos: newAlbumPhotosToAdd, existingAlbumNames: existingAlbumNames)
     }
     
-    @MainActor
     func build() -> UIViewController {
         let filesSearchRepo = FilesSearchRepository.newRepo
         let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
