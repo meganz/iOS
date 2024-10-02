@@ -21,11 +21,11 @@ struct FutureMeetingSection {
 }
 
 extension FutureMeetingSection: Comparable {
-    static func == (lhs: FutureMeetingSection, rhs: FutureMeetingSection) -> Bool {
+    nonisolated static func == (lhs: FutureMeetingSection, rhs: FutureMeetingSection) -> Bool {
         lhs.date == rhs.date
     }
     
-    static func < (lhs: FutureMeetingSection, rhs: FutureMeetingSection) -> Bool {
+    nonisolated static func < (lhs: FutureMeetingSection, rhs: FutureMeetingSection) -> Bool {
         lhs.date < rhs.date
     }
 }
