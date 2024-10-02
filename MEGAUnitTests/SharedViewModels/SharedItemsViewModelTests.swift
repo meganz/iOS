@@ -7,89 +7,97 @@ import XCTest
 
 final class SharedItemsViewModelTests: XCTestCase {
     
+    @MainActor
     func testAreMediaNodes_withNodes_true() async {
         let mockMediaUseCase = MockMediaUseCase(isPlayableMediaFile: true)
-        let sut = await makeSUT(mediaUseCase: mockMediaUseCase)
+        let sut = makeSUT(mediaUseCase: mockMediaUseCase)
         
-        let result = await sut.areMediaNodes([MockNode(handle: 1)])
+        let result = sut.areMediaNodes([MockNode(handle: 1)])
         
         XCTAssertTrue(result)
     }
     
+    @MainActor
     func testAreMediaNodes_withEmptyNodes_false() async {
         let mockMediaUseCase = MockMediaUseCase(isPlayableMediaFile: true)
-        let sut = await makeSUT(mediaUseCase: mockMediaUseCase)
+        let sut = makeSUT(mediaUseCase: mockMediaUseCase)
         
-        let result = await sut.areMediaNodes([])
+        let result = sut.areMediaNodes([])
         
         XCTAssertFalse(result)
     }
     
+    @MainActor
     func testMoveToRubbishBin_called() async {
         let mockMediaUseCase = MockMoveToRubbishBinViewModel()
-        let sut = await makeSUT(moveToRubbishBinViewModel: mockMediaUseCase)
+        let sut = makeSUT(moveToRubbishBinViewModel: mockMediaUseCase)
         let node = MockNode(handle: 1)
         
-        await sut.moveNodeToRubbishBin(node)
+        sut.moveNodeToRubbishBin(node)
         
         XCTAssertTrue(mockMediaUseCase.calledNodes.count == 1)
         XCTAssertTrue(mockMediaUseCase.calledNodes.first?.handle == node.handle)
     }
     
+    @MainActor
     func testSaveNodesToPhotos_success() async {
         let mockMediaUseCase = MockMediaUseCase(isPlayableMediaFile: true)
         let mockSaveMediaToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success)
-        let sut = await makeSUT(mediaUseCase: mockMediaUseCase, saveMediaToPhotosUseCase: mockSaveMediaToPhotosUseCase)
+        let sut = makeSUT(mediaUseCase: mockMediaUseCase, saveMediaToPhotosUseCase: mockSaveMediaToPhotosUseCase)
         
         await sut.saveNodesToPhotos([MockNode(handle: 1)])
-    }
-    
-    func testSaveNodesToPhotos_withEmptyNodes_failure() async {
-        let sut = await makeSUT()
-        
-        await sut.saveNodesToPhotos([])
-    }
-    
-    func testSaveNodesToPhotos_withDownloadError_failure() async {
-        let mockMediaUseCase = MockMediaUseCase(isPlayableMediaFile: true)
-        let mockSaveMediaToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .failure(.downloadFailed))
-        let sut = await makeSUT(mediaUseCase: mockMediaUseCase, saveMediaToPhotosUseCase: mockSaveMediaToPhotosUseCase)
-        
-        await sut.saveNodesToPhotos([MockNode(handle: 1)])
-    }
-    
-    func testOpenSharedDialog_withNodes_success() async {
-        let mockShareUseCase = MockShareUseCase()
-        let sut = await makeSUT(shareUseCase: mockShareUseCase)
-        let expectation = expectation(description: "Task has started")
-        
-        Task {
-            await sut.openShareFolderDialog(forNodes: [MockNode(handle: 1)])
-            expectation.fulfill()
-        }
-        
-        await fulfillment(of: [expectation], timeout: 1.0)
-      
-        XCTAssertTrue(mockShareUseCase.createShareKeyFunctionHasBeenCalled)
-    }
-    
-    func testOpenSharedDialog_withNodeNotFoundError_failure() async {
-        let mockShareUseCase = MockShareUseCase(createShareKeysError: ShareErrorEntity.nodeNotFound)
-        let sut = await makeSUT(shareUseCase: mockShareUseCase)
-        let expectation = expectation(description: "Task has started")
-        
-        Task {
-            await sut.openShareFolderDialog(forNodes: [MockNode(handle: 1)])
-            expectation.fulfill()
-        }
-        
-        await fulfillment(of: [expectation], timeout: 1.0)
-      
-        XCTAssertTrue(mockShareUseCase.createShareKeysErrorHappened)
     }
     
     @MainActor
-    private func makeSUT(
+    func testSaveNodesToPhotos_withEmptyNodes_failure() async {
+        let sut = makeSUT()
+        await sut.saveNodesToPhotos([])
+    }
+    
+    @MainActor
+    func testSaveNodesToPhotos_withDownloadError_failure() async {
+        let mockMediaUseCase = MockMediaUseCase(isPlayableMediaFile: true)
+        let mockSaveMediaToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .failure(.downloadFailed))
+        let sut = makeSUT(mediaUseCase: mockMediaUseCase, saveMediaToPhotosUseCase: mockSaveMediaToPhotosUseCase)
+        
+        await sut.saveNodesToPhotos([MockNode(handle: 1)])
+    }
+    
+    @MainActor
+    func testOpenSharedDialog_withNodes_success() async {
+        let mockShareUseCase = MockShareUseCase()
+        let sut = makeSUT(shareUseCase: mockShareUseCase)
+        let expectation = expectation(description: "Task has started")
+        
+        mockShareUseCase.onCreateShareKeyCalled = {
+            expectation.fulfill()
+        }
+        
+        sut.openShareFolderDialog(forNodes: [MockNode(handle: 1)])
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertTrue(mockShareUseCase.createShareKeyFunctionHasBeenCalled)
+    }
+    
+    @MainActor
+    func testOpenSharedDialog_withNodeNotFoundError_failure() async {
+        let mockShareUseCase = MockShareUseCase(createShareKeysError: ShareErrorEntity.nodeNotFound)
+        let sut = makeSUT(shareUseCase: mockShareUseCase)
+        let expectation = expectation(description: "Task has started")
+        
+        mockShareUseCase.onCreateShareKeysErrorCalled = {
+            expectation.fulfill()
+        }
+        
+        sut.openShareFolderDialog(forNodes: [MockNode(handle: 1)])
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertTrue(mockShareUseCase.createShareKeysErrorHappened)
+    }
+    
+    @MainActor private func makeSUT(
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
