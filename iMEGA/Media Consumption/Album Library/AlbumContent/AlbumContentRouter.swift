@@ -6,6 +6,7 @@ import MEGASwiftUI
 import SwiftUI
 import UIKit
 
+@MainActor
 protocol AlbumContentRouting: Routing {
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void)
     func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void)
@@ -77,7 +78,6 @@ struct AlbumContentRouter: AlbumContentRouting {
         return AlbumContentViewController(viewModel: viewModel)
     }
     
-    @MainActor
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
         
         let photoLibraryRepository = PhotoLibraryRepository(
@@ -101,7 +101,6 @@ struct AlbumContentRouter: AlbumContentRouting {
                                       animated: true)
     }
     
-    @MainActor
     func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void) {
         let filesSearchRepo = FilesSearchRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
@@ -141,7 +140,6 @@ struct AlbumContentRouter: AlbumContentRouting {
         return AlbumCoverPickerPhotoCell(viewModel: vm)
     }
     
-    @MainActor
     func showShareLink(album: AlbumEntity) {
         let viewModel = EnforceCopyrightWarningViewModel(
             preferenceUseCase: PreferenceUseCase.default,
