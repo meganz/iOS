@@ -5,7 +5,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case hiddenNodes =  "Hidden Nodes"
     case videoPlaylistSharing = "Video Playlist Sharing"
     case recentlyWatchedVideos = "Recently Watched Videos"
-    case nodeDescription = "Node Description"
     case photosBrowser = "New Photos Browser"
     case visualMediaSearch = "Search Albums and Photos"
     case addVideosToVideoPlaylist = "Add videos to video playlist"

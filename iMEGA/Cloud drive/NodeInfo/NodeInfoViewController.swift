@@ -422,16 +422,14 @@ final class NodeInfoViewController: UITableViewController {
         sections.append(.info)
         sections.append(.details)
 
-        if viewModel.shouldShowNodeDescription {
-            let descriptionSection: NodeInfoTableViewSection
-            if let descriptionCellController {
-                descriptionSection = .description(descriptionCellController)
-            } else {
-                descriptionSection = makeNodeDescriptionSection()
-            }
-
-            sections.append(descriptionSection)
+        let descriptionSection: NodeInfoTableViewSection
+        if let descriptionCellController {
+            descriptionSection = .description(descriptionCellController)
+        } else {
+            descriptionSection = makeNodeDescriptionSection()
         }
+
+        sections.append(descriptionSection)
         
         if viewModel.nodeInfoLocationViewModel != nil {
             sections.append(.location)

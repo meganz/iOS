@@ -48,7 +48,6 @@ extension SharedItemsViewController {
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
-            featureFlagProvider: DIContainer.featureFlagProvider,
             isNodeUndecryptedFolder: isNodeUndecryptedFolder,
             shouldDisplayContactVerificationInfo: isContactVerificationEnabled() && incomingButton?.isSelected == true,
             completion: { [weak self] in

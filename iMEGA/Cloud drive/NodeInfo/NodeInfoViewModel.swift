@@ -19,17 +19,12 @@ enum NodeInfoAction: ActionType {
     private let router = SharedItemsViewRouter()
     private let shareUseCase: (any ShareUseCaseProtocol)?
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
 
     let shouldDisplayContactVerificationInfo: Bool
 
     var node: MEGANode
     var isNodeUndecryptedFolder: Bool
-
-    var shouldShowNodeDescription: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .nodeDescription)
-    }
     
     private(set) var nodeInfoLocationViewModel: NodeInfoLocationViewModel?
     private var loadNodeInfoLocationTask: Task<Void, Never>? {
@@ -40,7 +35,6 @@ enum NodeInfoAction: ActionType {
         withNode node: MEGANode,
         shareUseCase: (any ShareUseCaseProtocol)? = nil,
         nodeUseCase: some NodeUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol,
         isNodeUndecryptedFolder: Bool = false,
         shouldDisplayContactVerificationInfo: Bool = false,
         tracker: some AnalyticsTracking = DIContainer.tracker,
@@ -49,7 +43,6 @@ enum NodeInfoAction: ActionType {
         self.shareUseCase = shareUseCase
         self.nodeUseCase = nodeUseCase
         self.node = node
-        self.featureFlagProvider = featureFlagProvider
         self.isNodeUndecryptedFolder = isNodeUndecryptedFolder
         self.tracker = tracker
         self.shouldDisplayContactVerificationInfo = shouldDisplayContactVerificationInfo

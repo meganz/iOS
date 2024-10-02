@@ -11,8 +11,8 @@ extension PreviewDocumentViewController {
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo),
-            featureFlagProvider: DIContainer.featureFlagProvider)
+                nodeRepository: NodeRepository.newRepo)
+        )
     }
     
     @objc func downloadFileLink() {

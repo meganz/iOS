@@ -23,8 +23,8 @@ extension MEGAPhotoBrowserViewController {
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo),
-            featureFlagProvider: DIContainer.featureFlagProvider)
+                nodeRepository: NodeRepository.newRepo)
+        )
     }
     
     func subtitle(fromDate date: Date) -> String {
