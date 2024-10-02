@@ -188,6 +188,7 @@ final class VideoCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testOnTappedMoreOptions_whenCalled_triggerTap() async {
         let video = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
         let thumbnailLoader = MockThumbnailLoader()
@@ -205,6 +206,7 @@ final class VideoCellViewModelTests: XCTestCase {
     
     // MARK: - onCellTapped
     
+    @MainActor
     func testOnTappedCell_whenCalled_triggerTap() async {
         let video = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
         let thumbnailLoader = MockThumbnailLoader()
@@ -222,6 +224,7 @@ final class VideoCellViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeSUT(
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
@@ -271,6 +274,7 @@ final class VideoCellViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func thumbnailContainerUpdates(on sut: VideoCellViewModel, action: @escaping (any ImageContaining) -> Void) -> AnyCancellable {
         sut.$previewEntity
             .dropFirst()

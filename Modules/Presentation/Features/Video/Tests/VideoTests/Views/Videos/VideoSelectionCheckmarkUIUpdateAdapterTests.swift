@@ -11,6 +11,7 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
     
     // MARK: - onTappedCheckMark
     
+    @MainActor
     func testOnTappedCheckMark_whenNotEditingState_doesNotToggleSelection() {
         let node = anyNode(id: 1)
         let selection = VideoSelection()
@@ -46,6 +47,7 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
         XCTAssertFalse(receivedIsSelected)
     }
     
+    @MainActor
     func testOnTappedCheckMark_whenInEditingState_toggleSelection() {
         let node = anyNode(id: 1)
         let selection = VideoSelection()
