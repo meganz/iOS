@@ -4,6 +4,12 @@ import MEGAL10n
 import MEGASwift
 
 extension OfflineTableViewViewController {
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateAppearanceForTraitCollection(self.traitCollection)
+    }
+    
     @objc func tableView(_ tableView: UITableView,
                          contextMenuConfigurationForRowAt indexPath: IndexPath,
                          itemPath: String) -> UIContextMenuConfiguration? {
@@ -12,7 +18,7 @@ extension OfflineTableViewViewController {
         let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
             if isDirectory.boolValue {
                 let offlineVC = self.storyboard?.instantiateViewController(withIdentifier: "OfflineViewControllerID") as? OfflineViewController
-                offlineVC?.folderPathFromOffline = self.offline.folderPath(fromOffline: itemPath, folder: itemPath.lastPathComponent)
+                offlineVC?.folderPathFromOffline = self.offline?.folderPath(fromOffline: itemPath, folder: itemPath.lastPathComponent)
                 return offlineVC
             } else {
                 return nil
@@ -52,14 +58,8 @@ extension OfflineTableViewViewController {
     }
     @objc(updateAppearance:)
     func updateAppearanceForTraitCollection(_ traitCollection: UITraitCollection) {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            self.tableView?.backgroundColor = TokenColors.Background.page
-        case .dark:
-            self.tableView?.backgroundColor = TokenColors.Background.page
-        @unknown default:
-            self.tableView?.backgroundColor = TokenColors.Background.page
-        }
+        self.tableView?.backgroundColor = TokenColors.Background.page
+        self.tableView?.separatorColor = TokenColors.Border.strong
     }
     
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

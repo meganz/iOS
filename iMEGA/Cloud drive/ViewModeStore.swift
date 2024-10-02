@@ -1,4 +1,7 @@
 import MEGADomain
+@objc extension NSNotification {
+    static let MEGAViewModePreferenceDidChange = Notification.Name.MEGAViewModePreferenceDidChange
+}
 
 extension Notification.Name {
     static let MEGAViewModePreferenceDidChange = Notification.Name("MEGAViewModePreferenceDidChange")
