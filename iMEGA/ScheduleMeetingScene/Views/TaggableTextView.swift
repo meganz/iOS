@@ -53,5 +53,4 @@ struct TaggableText: View {
         .foregroundColor(.black)
         .colorScheme(.light)
     }
-    .previewLayout(.sizeThatFits)
 }

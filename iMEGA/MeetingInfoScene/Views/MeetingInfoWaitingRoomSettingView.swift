@@ -26,7 +26,8 @@ struct MeetingInfoWaitingRoomSettingView: View {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     struct Shim: View {
         @Environment(\.colorScheme) private var colorScheme
         
@@ -41,5 +42,4 @@ struct MeetingInfoWaitingRoomSettingView: View {
     }
     
     return Shim()
-        .previewLayout(.sizeThatFits)
 }

@@ -21,9 +21,9 @@ struct WaitingRoomUserAvatarView: View {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     WaitingRoomUserAvatarView(avatar: Image(Color.red, CGSize(width: 100, height: 100)))
         .padding(20)
         .background(Color(.black000000))
-        .previewLayout(.sizeThatFits)
 }

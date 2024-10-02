@@ -15,8 +15,8 @@ struct ScheduleMeetingCreationFootnoteView: View {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     ScheduleMeetingCreationFootnoteView(title: "Email a calendar invite to participants so they can add the meeting to their calendars.")
         .padding(20)
-        .previewLayout(.sizeThatFits)
 }

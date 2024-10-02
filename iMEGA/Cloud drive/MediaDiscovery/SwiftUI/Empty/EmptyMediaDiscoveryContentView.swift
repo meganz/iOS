@@ -72,10 +72,10 @@ private extension EmptyMediaDiscoveryContentMenuAction {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .defaultLayout) {
     EmptyMediaDiscoveryContentView(
         image: UIImage.folderEmptyState,
         title: Strings.Localizable.emptyFolder,
         menuActionHandler: { _ in })
-    .previewLayout(.device)
 }

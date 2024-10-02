@@ -56,7 +56,7 @@ struct AutoMediaDiscoveryBannerView: View {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     AutoMediaDiscoveryBannerView(showBanner: .constant(true))
-    .previewLayout(.sizeThatFits)
 }

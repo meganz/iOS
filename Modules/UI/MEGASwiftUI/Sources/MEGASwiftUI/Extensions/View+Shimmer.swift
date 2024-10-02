@@ -98,10 +98,10 @@ public extension View {
     }
     .padding()
     .shimmering()
-    .previewLayout(.sizeThatFits)
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     VStack(alignment: .leading) {
         Text("← Right-to-left layout direction").font(.body)
     }

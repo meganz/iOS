@@ -92,13 +92,13 @@ private struct MEGASliderView: UIViewRepresentable {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .fixedLayout(width: 300, height: 50)) {
     MEGASliderView()
-        .previewLayout(.fixed(width: 300, height: 50))
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .fixedLayout(width: 300, height: 50)) {
     MEGASliderView()
-        .previewLayout(.fixed(width: 300, height: 50))
         .preferredColorScheme(.dark)
 }

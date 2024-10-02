@@ -48,12 +48,12 @@ struct WaitingRoomControl: View {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     WaitingRoomControlsView(isVideoEnabled: .constant(false),
                             isMicrophoneMuted: .constant(true),
                             isSpeakerEnabled: .constant(true),
                             speakerOnIcon: .constant(.callControlSpeakerEnabled),
                             isBluetoothAudioRouteAvailable: .constant(false))
     .background(Color(.black000000))
-    .previewLayout(.sizeThatFits)
 }

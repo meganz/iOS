@@ -19,5 +19,4 @@ struct WaitingRoomMessageView: View {
     WaitingRoomMessageView(title: "Wait for host to let you in")
         .padding(20)
         .background(Color(.black000000))
-        .previewLayout(.sizeThatFits)
 }
