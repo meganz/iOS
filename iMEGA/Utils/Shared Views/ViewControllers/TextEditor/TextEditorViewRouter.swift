@@ -218,8 +218,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo),
-            featureFlagProvider: DIContainer.featureFlagProvider)
+                nodeRepository: NodeRepository.newRepo)
+        )
         let nodeInfoViewController = NodeInfoViewController.instantiate(withViewModel: viewModel, delegate: nil)
         baseViewController?.present(nodeInfoViewController, animated: true, completion: nil)
     }

@@ -15,8 +15,7 @@ final class NodeInfoViewControllerTests: XCTestCase {
         )
         let viewModel = NodeInfoViewModel(
             withNode: anyMegaNode,
-            nodeUseCase: MockNodeDataUseCase(),
-            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+            nodeUseCase: MockNodeDataUseCase()
         )
 
         let sut = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(
