@@ -3,6 +3,7 @@ import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 final class VideoPlaylistCellViewModel: ObservableObject {
     
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
@@ -30,14 +31,12 @@ final class VideoPlaylistCellViewModel: ObservableObject {
         self.previewEntity = .placeholder
     }
     
-    @MainActor
     func onViewAppear() async {
         for await videos in videoPlaylistContentUseCase.monitorUserVideoPlaylistContent(for: videoPlaylistEntity) {
             await loadThumbnails(for: videos)
         }
     }
     
-    @MainActor
     private func loadThumbnails(for videos: [NodeEntity]) async {
         let sortOrder = sortOrderPreferenceUseCase.sortOrder(for: .videoPlaylistContent)
         let sortedVideos = await VideoPlaylistContentSorter.sort(videos, by: sortOrder)
