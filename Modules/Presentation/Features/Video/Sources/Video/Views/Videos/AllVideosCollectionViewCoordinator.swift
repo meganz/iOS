@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 import SwiftUI
 
+@MainActor
 final class AllVideosCollectionViewCoordinator: NSObject {
     
     private enum Section {

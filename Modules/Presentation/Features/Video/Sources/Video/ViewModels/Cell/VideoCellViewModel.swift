@@ -1,8 +1,10 @@
+@preconcurrency import Combine
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
 import SwiftUI
 
+@MainActor
 final class VideoCellViewModel: ObservableObject {
     
     /// Represents the different display modes for a cell view.
@@ -64,7 +66,6 @@ final class VideoCellViewModel: ObservableObject {
         previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: cachedContainer, isDownloaded: false)
     }
     
-    @MainActor
     func attemptLoadThumbnail() async throws {
         
         guard let container: any ImageContaining = try await thumbnailLoader.loadImage(for: nodeEntity, type: .thumbnail) else {
@@ -74,12 +75,11 @@ final class VideoCellViewModel: ObservableObject {
         await updateThumbnailContainerIfNeeded(container)
     }
     
-    @MainActor
     func monitorInheritedSensitivityChanges() async {
         guard 
             featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               !nodeEntity.isMarkedSensitive,
-              await $previewEntity.values.contains(where: { $0.imageContainer.type != .placeholder }) else { return }
+            await $previewEntity.values.contains(where: { @Sendable in $0.imageContainer.type != .placeholder }) else { return }
         
         do {
             for try await isInheritingSensitivity in monitorInheritedSensitivity(for: nodeEntity, sensitiveNodeUseCase: sensitiveNodeUseCase) {
@@ -94,7 +94,6 @@ final class VideoCellViewModel: ObservableObject {
         onTapMoreOptions(nodeEntity)
     }
         
-    @MainActor
     private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
         guard !previewEntity.imageContainer.isEqual(container) else { return }
         previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: container, isDownloaded: nodeUseCase.isDownloaded(nodeHandle: nodeEntity.handle))

@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 
+@MainActor
 final class VideoSelectionCheckmarkUIUpdateAdapter {
     private let selection: VideoSelection
     private let viewModel: VideoCellViewModel
@@ -29,15 +30,20 @@ final class VideoSelectionCheckmarkUIUpdateAdapter {
     private func listenToCellState() {
         selection.$editMode.map(\.isEditing)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isEditing in
-                guard let self else { return }
-                if isEditing {
-                    viewModel.mode = .selection
-                } else {
-                    viewModel.mode = defaultMode()
+            .sink { @Sendable [weak self] isEditing in
+                Task { @MainActor in
+                    self?.updateMode(isEditing: isEditing)
                 }
             }
             .store(in: &subscriptions)
+    }
+    
+    private func updateMode(isEditing: Bool) {
+        if isEditing {
+            viewModel.mode = .selection
+        } else {
+            viewModel.mode = defaultMode()
+        }
     }
     
     private func defaultMode() -> VideoCellViewModel.Mode {
