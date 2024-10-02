@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Hidden items";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Show hidden items";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="All hidden items will be visible, but blurred to indicate their “hidden” status.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Media discovery view";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
