@@ -41,22 +41,3 @@ class FileCacheRepositoryTests: XCTestCase {
         XCTAssertEqual(sut.cachedOriginalImageURL(for: node), expectedTempFileURL)
     }
 }
-
-private class MockFileManager: FileManager {
-    private let tempURL: URL
-    private let containerURL: URL
-    
-    init(tempURL: URL, containerURL: URL) {
-        self.tempURL = tempURL
-        self.containerURL = containerURL
-        super.init()
-    }
-    
-    override var temporaryDirectory: URL {
-        tempURL
-    }
-    
-    override func containerURL(forSecurityApplicationGroupIdentifier groupIdentifier: String) -> URL? {
-        containerURL
-    }
-}

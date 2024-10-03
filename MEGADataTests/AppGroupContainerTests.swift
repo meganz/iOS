@@ -4,7 +4,7 @@ import XCTest
 
 class AppGroupContainerTests: XCTestCase {
     private let url = URL(string: "http://mega.nz")
-    private lazy var sut = AppGroupContainer(fileManager: mockFileManager(containerURL: url!))
+    private lazy var sut = AppGroupContainer(fileManager: MockFileManager(containerURL: url!))
     
     func testConatainerURL() throws {
         XCTAssertEqual(sut.url, try XCTUnwrap(url))
@@ -26,18 +26,5 @@ class AppGroupContainerTests: XCTestCase {
                 XCTAssertEqual(directoryURL, try XCTUnwrap(url?.appendingPathComponent("GroupSupport", isDirectory: true)))
             }
         }
-    }
-}
-
-private class mockFileManager: FileManager {
-    private let containerURL: URL
-    
-    init(containerURL: URL) {
-        self.containerURL = containerURL
-        super.init()
-    }
-    
-    override func containerURL(forSecurityApplicationGroupIdentifier groupIdentifier: String) -> URL? {
-        containerURL
     }
 }

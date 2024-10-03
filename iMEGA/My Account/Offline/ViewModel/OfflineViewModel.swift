@@ -18,6 +18,8 @@ final class OfflineViewModel: NSObject, ViewModelType {
     private let transferUseCase: any NodeTransferUseCaseProtocol
     private let offlineUseCase: any OfflineUseCaseProtocol
     private let megaStore: MEGAStore
+    private let fileManager: FileManager
+    private let documentsDirectoryPath: String?
     private var nodeDownloadMonitoringTask: Task<Void, any Error>? {
         didSet {
             oldValue?.cancel()
@@ -28,11 +30,15 @@ final class OfflineViewModel: NSObject, ViewModelType {
     init(
         transferUseCase: some NodeTransferUseCaseProtocol,
         offlineUseCase: some OfflineUseCaseProtocol,
-        megaStore: MEGAStore
+        megaStore: MEGAStore,
+        fileManager: FileManager = FileManager.default,
+        documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
     ) {
         self.transferUseCase = transferUseCase
         self.offlineUseCase = offlineUseCase
         self.megaStore = megaStore
+        self.fileManager = fileManager
+        self.documentsDirectoryPath = documentsDirectoryPath
     }
     
     // MARK: - Dispatch actions
@@ -108,12 +114,12 @@ final class OfflineViewModel: NSObject, ViewModelType {
     }
     
     private func removeLogFromSharedSandbox(path: String, extensionLogName: String) {
-        let logsPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder).path
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first?.appending("/")
+        let logsPath = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder).path
+        let documentsPath = documentsDirectoryPath?.appending("/")
         let extensionLogFile = documentsPath?.append(pathComponent: extensionLogName)
         if let logsPath, extensionLogFile == path {
             do {
-                try FileManager.default.removeItem(atPath: logsPath.append(pathComponent: extensionLogName))
+                try fileManager.removeItem(atPath: logsPath.append(pathComponent: extensionLogName))
             } catch {
                 MEGALogError("[File manager] remove item at path failed with error \(error)")
             }
