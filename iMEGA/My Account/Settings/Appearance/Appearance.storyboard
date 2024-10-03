@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -308,46 +308,39 @@
                             <tableViewSection headerTitle="Hidden items" id="vpV-dT-pVQ" userLabel="Hidden Items">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="gJh-xD-XBr">
-                                        <rect key="frame" x="0.0" y="302" width="375" height="48"/>
+                                        <rect key="frame" x="0.0" y="302" width="375" height="53.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="gJh-xD-XBr" id="Ev8-VS-YCa">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kqv-dV-oOV">
-                                                    <rect key="frame" x="310" y="8.5" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="571-wI-vVI"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="hiddenItemsViewValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="4gW-5U-zyu"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show hidden items" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78O-xt-vba">
-                                                    <rect key="frame" x="16" y="13.5" width="144.5" height="21"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="urx-wW-2bf">
+                                                    <rect key="frame" x="16" y="11" width="343" height="31.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show hidden items" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78O-xt-vba">
+                                                            <rect key="frame" x="0.0" y="0.0" width="294" height="31.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kqv-dV-oOV">
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="49" id="571-wI-vVI"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="hiddenItemsViewValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="4gW-5U-zyu"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Kqv-dV-oOV" firstAttribute="trailing" secondItem="Ev8-VS-YCa" secondAttribute="trailingMargin" id="1KF-JC-Lby"/>
-                                                <constraint firstItem="Kqv-dV-oOV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="78O-xt-vba" secondAttribute="trailing" constant="8" id="6uQ-Vg-3ws"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Kqv-dV-oOV" secondAttribute="trailing" id="En7-3E-HK6"/>
-                                                <constraint firstItem="78O-xt-vba" firstAttribute="trailing" secondItem="Ev8-VS-YCa" secondAttribute="trailingMargin" id="KOm-8D-ZkJ"/>
-                                                <constraint firstItem="78O-xt-vba" firstAttribute="leading" secondItem="Ev8-VS-YCa" secondAttribute="leadingMargin" id="OZk-Xe-w1N"/>
-                                                <constraint firstAttribute="bottom" secondItem="78O-xt-vba" secondAttribute="bottom" constant="13.5" id="S2y-z0-daI"/>
-                                                <constraint firstItem="78O-xt-vba" firstAttribute="leading" secondItem="Ev8-VS-YCa" secondAttribute="leadingMargin" constant="15" id="WWR-lD-wVo"/>
-                                                <constraint firstItem="Kqv-dV-oOV" firstAttribute="centerY" secondItem="Ev8-VS-YCa" secondAttribute="centerY" id="d3D-ha-3Fr"/>
-                                                <constraint firstItem="78O-xt-vba" firstAttribute="top" secondItem="Ev8-VS-YCa" secondAttribute="top" constant="13.5" id="qX8-40-Qu7"/>
+                                                <constraint firstItem="urx-wW-2bf" firstAttribute="top" secondItem="Ev8-VS-YCa" secondAttribute="topMargin" id="BTu-GL-wnY"/>
+                                                <constraint firstItem="urx-wW-2bf" firstAttribute="leading" secondItem="Ev8-VS-YCa" secondAttribute="leadingMargin" id="JB2-8G-Bhg"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="urx-wW-2bf" secondAttribute="bottom" id="cgS-tT-oud"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="urx-wW-2bf" secondAttribute="trailing" id="l0I-aZ-JSk"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="KOm-8D-ZkJ"/>
-                                                    <exclude reference="WWR-lD-wVo"/>
-                                                    <exclude reference="1KF-JC-Lby"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
@@ -358,46 +351,39 @@
 Learn more about media discovery.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="n0F-JB-RHz">
-                                        <rect key="frame" x="0.0" y="413" width="375" height="48"/>
+                                        <rect key="frame" x="0.0" y="418.5" width="375" height="53.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="n0F-JB-RHz" id="MIX-VZ-K1s">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Mbe-4j-LXy">
-                                                    <rect key="frame" x="310" y="8.5" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="2Rz-79-cyd"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="mediaDiscoveryViewValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="kbk-d4-TTU"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media discovery view" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxQ-tt-5Z4">
-                                                    <rect key="frame" x="16" y="13.5" width="163" height="21"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXp-JH-Drc">
+                                                    <rect key="frame" x="16" y="11" width="343" height="31.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media discovery view" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxQ-tt-5Z4">
+                                                            <rect key="frame" x="0.0" y="0.0" width="294" height="31.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Mbe-4j-LXy">
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="49" id="2Rz-79-cyd"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="mediaDiscoveryViewValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="kbk-d4-TTU"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Mbe-4j-LXy" firstAttribute="centerY" secondItem="MIX-VZ-K1s" secondAttribute="centerY" id="3h6-Pb-NRI"/>
-                                                <constraint firstItem="BxQ-tt-5Z4" firstAttribute="top" secondItem="MIX-VZ-K1s" secondAttribute="top" constant="13.5" id="4Jq-lk-CUU"/>
-                                                <constraint firstItem="BxQ-tt-5Z4" firstAttribute="trailing" secondItem="MIX-VZ-K1s" secondAttribute="trailingMargin" id="DvT-SY-2fJ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Mbe-4j-LXy" secondAttribute="trailing" id="JzX-5D-uGc"/>
-                                                <constraint firstItem="Mbe-4j-LXy" firstAttribute="trailing" secondItem="MIX-VZ-K1s" secondAttribute="trailingMargin" id="Zrs-W3-ql6"/>
-                                                <constraint firstItem="BxQ-tt-5Z4" firstAttribute="leading" secondItem="MIX-VZ-K1s" secondAttribute="leadingMargin" id="qKc-MD-lPt"/>
-                                                <constraint firstItem="BxQ-tt-5Z4" firstAttribute="leading" secondItem="MIX-VZ-K1s" secondAttribute="leadingMargin" constant="15" id="rBw-wU-U9z"/>
-                                                <constraint firstAttribute="bottom" secondItem="BxQ-tt-5Z4" secondAttribute="bottom" constant="13.5" id="t8J-lN-63i"/>
-                                                <constraint firstItem="Mbe-4j-LXy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BxQ-tt-5Z4" secondAttribute="trailing" constant="8" id="wHi-Fd-Vc0"/>
+                                                <constraint firstItem="LXp-JH-Drc" firstAttribute="leading" secondItem="MIX-VZ-K1s" secondAttribute="leadingMargin" id="73F-n4-ZpR"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="LXp-JH-Drc" secondAttribute="trailing" id="csM-Wa-V8Y"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="LXp-JH-Drc" secondAttribute="bottom" id="jyT-jo-4ii"/>
+                                                <constraint firstItem="LXp-JH-Drc" firstAttribute="top" secondItem="MIX-VZ-K1s" secondAttribute="topMargin" id="w7F-dE-Ozr"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="DvT-SY-2fJ"/>
-                                                    <exclude reference="rBw-wU-U9z"/>
-                                                    <exclude reference="Zrs-W3-ql6"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
@@ -406,46 +392,39 @@ Learn more about media discovery.</string>
                             <tableViewSection footerTitle="Images and videos from subfolders will also be included in the media discovery view when the main folder is in this view" id="jOt-3f-bw8">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="6ma-Ho-Ze5">
-                                        <rect key="frame" x="0.0" y="541" width="375" height="48"/>
+                                        <rect key="frame" x="0.0" y="552" width="375" height="53.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="6ma-Ho-Ze5" id="5y4-nb-zym">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-l0-Zwg">
-                                                    <rect key="frame" x="310" y="8.5" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="rjd-rJ-48y"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="mediaDiscoverySubfolderValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="kDJ-rw-kv0"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subfolder media discovery" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdV-sx-htU">
-                                                    <rect key="frame" x="16" y="13.5" width="202.5" height="21"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4d-gq-xCG">
+                                                    <rect key="frame" x="16" y="11" width="343" height="31.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subfolder media discovery" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdV-sx-htU">
+                                                            <rect key="frame" x="0.0" y="0.0" width="294" height="31.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-l0-Zwg">
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="49" id="rjd-rJ-48y"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="mediaDiscoverySubfolderValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="kDJ-rw-kv0"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="bdV-sx-htU" secondAttribute="bottom" constant="13.5" id="267-DA-8tr"/>
-                                                <constraint firstItem="MYF-l0-Zwg" firstAttribute="centerY" secondItem="5y4-nb-zym" secondAttribute="centerY" id="3pQ-6A-y38"/>
-                                                <constraint firstItem="MYF-l0-Zwg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bdV-sx-htU" secondAttribute="trailing" constant="8" id="8az-gw-gB0"/>
-                                                <constraint firstItem="bdV-sx-htU" firstAttribute="top" secondItem="5y4-nb-zym" secondAttribute="top" constant="13.5" id="FrX-BE-SHb"/>
-                                                <constraint firstItem="bdV-sx-htU" firstAttribute="leading" secondItem="5y4-nb-zym" secondAttribute="leadingMargin" id="Htg-Py-FuB"/>
-                                                <constraint firstItem="bdV-sx-htU" firstAttribute="leading" secondItem="5y4-nb-zym" secondAttribute="leadingMargin" constant="15" id="PRG-aC-Ygl"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="MYF-l0-Zwg" secondAttribute="trailing" id="lzU-dD-xY7"/>
-                                                <constraint firstItem="MYF-l0-Zwg" firstAttribute="trailing" secondItem="5y4-nb-zym" secondAttribute="trailingMargin" id="p2j-Kl-2Vm"/>
-                                                <constraint firstItem="bdV-sx-htU" firstAttribute="trailing" secondItem="5y4-nb-zym" secondAttribute="trailingMargin" id="tfr-MH-6w7"/>
+                                                <constraint firstItem="u4d-gq-xCG" firstAttribute="top" secondItem="5y4-nb-zym" secondAttribute="topMargin" id="690-Qe-GRh"/>
+                                                <constraint firstItem="u4d-gq-xCG" firstAttribute="leading" secondItem="5y4-nb-zym" secondAttribute="leadingMargin" id="JSZ-En-4Vy"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="u4d-gq-xCG" secondAttribute="trailing" id="UsY-IS-KCQ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="u4d-gq-xCG" secondAttribute="bottom" id="ebZ-7o-uBq"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="tfr-MH-6w7"/>
-                                                    <exclude reference="PRG-aC-Ygl"/>
-                                                    <exclude reference="p2j-Kl-2Vm"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
@@ -454,46 +433,39 @@ Learn more about media discovery.</string>
                             <tableViewSection headerTitle="Recents" footerTitle="Hide recent activity in Home section." id="bnu-wG-KmM">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="XCQ-DW-exr">
-                                        <rect key="frame" x="0.0" y="696.5" width="375" height="48"/>
+                                        <rect key="frame" x="0.0" y="713" width="375" height="53.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="XCQ-DW-exr" id="HZ5-Os-KZt">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RKX-2H-ckw">
-                                                    <rect key="frame" x="310" y="8.5" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="GO1-rD-PFM"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="hideRecentActivityValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="qHb-1l-oHb"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hide Recent Activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SvD-t3-Q6b">
-                                                    <rect key="frame" x="16" y="13.5" width="154" height="21"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ivw-vQ-0fg">
+                                                    <rect key="frame" x="16" y="11" width="343" height="31.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hide Recent Activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SvD-t3-Q6b">
+                                                            <rect key="frame" x="0.0" y="0.0" width="294" height="31.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RKX-2H-ckw">
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="49" id="GO1-rD-PFM"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="hideRecentActivityValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="qHb-1l-oHb"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="RKX-2H-ckw" firstAttribute="trailing" secondItem="HZ5-Os-KZt" secondAttribute="trailingMargin" id="Erk-Qr-69c"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="RKX-2H-ckw" secondAttribute="trailing" id="FKy-9L-paA"/>
-                                                <constraint firstItem="SvD-t3-Q6b" firstAttribute="trailing" secondItem="HZ5-Os-KZt" secondAttribute="trailingMargin" id="IQd-3E-3sX"/>
-                                                <constraint firstAttribute="bottom" secondItem="SvD-t3-Q6b" secondAttribute="bottom" constant="13.5" id="RC5-dc-Z5J"/>
-                                                <constraint firstItem="SvD-t3-Q6b" firstAttribute="top" secondItem="HZ5-Os-KZt" secondAttribute="top" constant="13.5" id="V8w-eM-wnF"/>
-                                                <constraint firstItem="RKX-2H-ckw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SvD-t3-Q6b" secondAttribute="trailing" constant="8" id="bzq-MD-KrG"/>
-                                                <constraint firstItem="RKX-2H-ckw" firstAttribute="centerY" secondItem="HZ5-Os-KZt" secondAttribute="centerY" id="gp5-fE-TeX"/>
-                                                <constraint firstItem="SvD-t3-Q6b" firstAttribute="leading" secondItem="HZ5-Os-KZt" secondAttribute="leadingMargin" constant="15" id="lI2-OP-Mmf"/>
-                                                <constraint firstItem="SvD-t3-Q6b" firstAttribute="leading" secondItem="HZ5-Os-KZt" secondAttribute="leadingMargin" id="tuE-I6-gFF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ivw-vQ-0fg" secondAttribute="trailing" id="DUP-v3-cxT"/>
+                                                <constraint firstItem="ivw-vQ-0fg" firstAttribute="top" secondItem="HZ5-Os-KZt" secondAttribute="topMargin" id="H6d-oM-Jht"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ivw-vQ-0fg" secondAttribute="bottom" id="mxE-uH-5rY"/>
+                                                <constraint firstItem="ivw-vQ-0fg" firstAttribute="leading" secondItem="HZ5-Os-KZt" secondAttribute="leadingMargin" id="oBd-lk-Xhz"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="IQd-3E-3sX"/>
-                                                    <exclude reference="lI2-OP-Mmf"/>
-                                                    <exclude reference="Erk-Qr-69c"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
@@ -502,17 +474,16 @@ Learn more about media discovery.</string>
                             <tableViewSection headerTitle="App Icon" id="lxy-35-dj1">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="DCF-pQ-waD" userLabel="Clear Rubbish Bin Table View Cell">
-                                        <rect key="frame" x="0.0" y="812.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="834.5" width="375" height="120.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DCF-pQ-waD" id="lrX-gC-dCR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="120.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="iconSelectorBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Wqf-kY-jsU">
-                                                    <rect key="frame" x="0.0" y="-4" width="375" height="124"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconSelectorBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Wqf-kY-jsU">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="120.5"/>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QMi-uZ-4di">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QMi-uZ-4di">
                                                     <rect key="frame" x="21" y="14.5" width="333" height="91.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xsZ-wr-12w">
@@ -549,8 +520,8 @@ Learn more about media discovery.</string>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdu-4e-JgB" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="15" y="76.5" width="42" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdu-4e-JgB" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                            <rect key="frame" x="15" y="76.5" width="42" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -593,8 +564,8 @@ Learn more about media discovery.</string>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9U9-co-lIS" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="111.5" y="76.5" width="23" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9U9-co-lIS" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                            <rect key="frame" x="112" y="76.5" width="22.5" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -637,8 +608,8 @@ Learn more about media discovery.</string>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Night" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Hs-pP-kB3" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="194" y="76.5" width="32" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Night" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Hs-pP-kB3" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                            <rect key="frame" x="194.5" y="76.5" width="31.5" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -681,8 +652,8 @@ Learn more about media discovery.</string>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Minimal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0lY-Pw-1xK" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="274.5" y="76.5" width="45" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minimal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0lY-Pw-1xK" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                            <rect key="frame" x="274.5" y="76.5" width="45" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -788,9 +759,13 @@ Learn more about media discovery.</string>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="QMi-uZ-4di" firstAttribute="centerX" secondItem="lrX-gC-dCR" secondAttribute="centerX" id="1cN-qg-rcb"/>
+                                                <constraint firstItem="Wqf-kY-jsU" firstAttribute="top" secondItem="lrX-gC-dCR" secondAttribute="top" id="9Nf-cM-vvf"/>
                                                 <constraint firstAttribute="bottom" secondItem="QMi-uZ-4di" secondAttribute="bottom" constant="14.5" id="AWz-7Y-dJz"/>
+                                                <constraint firstAttribute="bottom" secondItem="Wqf-kY-jsU" secondAttribute="bottom" id="KdL-19-sb7"/>
                                                 <constraint firstItem="QMi-uZ-4di" firstAttribute="centerY" secondItem="lrX-gC-dCR" secondAttribute="centerY" id="TdU-9E-EZ0"/>
+                                                <constraint firstAttribute="trailing" secondItem="Wqf-kY-jsU" secondAttribute="trailing" id="cGx-wg-atr"/>
                                                 <constraint firstItem="QMi-uZ-4di" firstAttribute="top" secondItem="lrX-gC-dCR" secondAttribute="top" constant="14.5" id="tHZ-KE-yCo"/>
+                                                <constraint firstItem="Wqf-kY-jsU" firstAttribute="leading" secondItem="lrX-gC-dCR" secondAttribute="leading" id="we4-Ho-Fll"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
@@ -837,20 +812,6 @@ Learn more about media discovery.</string>
             <point key="canvasLocation" x="-1226.4000000000001" y="-3086.4532019704434"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="0lY-Pw-1xK">
-            <size key="intrinsicContentSize" width="45" height="14.5"/>
-        </designable>
-        <designable name="1Hs-pP-kB3">
-            <size key="intrinsicContentSize" width="31.5" height="14.5"/>
-        </designable>
-        <designable name="9U9-co-lIS">
-            <size key="intrinsicContentSize" width="22.5" height="14.5"/>
-        </designable>
-        <designable name="pdu-4e-JgB">
-            <size key="intrinsicContentSize" width="42" height="14.5"/>
-        </designable>
-    </designables>
     <resources>
         <image name="altIconDay" width="60" height="60"/>
         <image name="altIconMinimal" width="60" height="60"/>
