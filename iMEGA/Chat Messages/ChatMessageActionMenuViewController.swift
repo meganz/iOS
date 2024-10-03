@@ -142,7 +142,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         
         separatorLineView.backgroundColor = UIColor.mnz_separator()
         emojiViews.forEach { (view) in
-            view.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
+            view.backgroundColor = UIColor.surface1Background()
         }
     }
     
@@ -298,7 +298,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
             } else {
                 emojiView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
-                emojiView.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
+                emojiView.backgroundColor = UIColor.surface1Background()
                 emojiView.imageView?.contentMode = .scaleAspectFit
                 emojiView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
             }

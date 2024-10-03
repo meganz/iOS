@@ -41,7 +41,7 @@ extension UIColor {
     static let cloudDriveVerticalThumbnailPreviewBackground = UIColor(
         dynamicProvider: {
             $0.userInterfaceStyle == .light
-            ? UIColor.mnz_whiteF7F7F7()
+            ? UIColor.surface1Background()
             : UIColor.mnz_black1C1C1E()
         }
     )
