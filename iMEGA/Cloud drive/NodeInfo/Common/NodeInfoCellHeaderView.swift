@@ -1,10 +1,16 @@
 import MEGADesignToken
 import SwiftUI
 
-struct NodeDescriptionHeaderView: View {
+struct NodeInfoCellHeaderView: View {
     @Environment(\.colorScheme) private var colorScheme
 
-    let title: String
+    private let title: String
+    private let topPadding: CGFloat
+
+    init(title: String, topPadding: CGFloat = 30) {
+        self.title = title
+        self.topPadding = topPadding
+    }
 
     var body: some View {
         VStack {
@@ -17,7 +23,7 @@ struct NodeDescriptionHeaderView: View {
             TokenColors.Border.strong.swiftUI
                 .frame(height: 0.5)
         }
-        .padding(.top, 30)
+        .padding(.top, topPadding)
         .background()
     }
 }

@@ -105,17 +105,38 @@ final class NodeInfoViewModelTests: XCTestCase {
         }
     }
 
+    func testShouldShowNodeTags_whenFeatureToggleIsOn_shouldReturnTrue() {
+        assertShouldShowNodeTags(whenFeatureToggleIsOn: true, shouldReturn: true)
+    }
+
+    func testShouldShowNodeTags_whenFeatureToggleIsOff_shouldReturnTrue() {
+        assertShouldShowNodeTags(whenFeatureToggleIsOn: false, shouldReturn: false)
+    }
+
+    private func assertShouldShowNodeTags(
+        whenFeatureToggleIsOn flag: Bool,
+        shouldReturn expectedResult: Bool,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.nodeTags: flag])
+        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        XCTAssertEqual(sut.shouldShowNodeTags, expectedResult, file: file, line: line)
+    }
+
     private func makeSUT(
         node: MockNode = MockNode(handle: 0),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #file,
         line: UInt = #line
     ) -> NodeInfoViewModel {
         let sut = NodeInfoViewModel(
             withNode: node,
             shareUseCase: shareUseCase,
-            nodeUseCase: nodeUseCase
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: featureFlagProvider
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

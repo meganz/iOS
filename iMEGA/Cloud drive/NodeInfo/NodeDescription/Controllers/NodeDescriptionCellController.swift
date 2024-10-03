@@ -85,7 +85,7 @@ extension NodeDescriptionCellController: UITableViewDataSource {
 
 extension NodeDescriptionCellController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        NodeDescriptionHeaderView(title: viewModel.header).toUIView()
+        NodeInfoCellHeaderView(title: viewModel.header).toUIView()
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

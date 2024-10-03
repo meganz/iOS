@@ -12,4 +12,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case almostFullStorageOverQuotaBanner = "Almost Full Storage Over Quota banner"
     case reorderVideosInVideoPlaylistContent = "Reorder videos in video playlist content"
     case addToAlbumAndPlaylists = "Add to Album and Playlists"
+    case nodeTags = "Node Tags"
 }

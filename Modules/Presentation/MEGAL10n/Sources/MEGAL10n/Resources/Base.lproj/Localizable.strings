@@ -4378,3 +4378,5 @@
 "set.addTo"="Add to";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Add to album";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Tags";

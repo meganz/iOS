@@ -11,6 +11,7 @@ enum NodeInfoTableViewSection {
     case details
     case location
     case description(NodeDescriptionCellController)
+    case tags(NodeTagsCellController)
     case link
     case versions
     case sharing
@@ -134,7 +135,8 @@ final class NodeInfoViewController: UITableViewController {
                                  forCellReuseIdentifier: "NodeInfoVerifyAccountTableViewCell")
         tableView.register(HostingTableViewCell<NodeInfoLocationView>.self, forCellReuseIdentifier: "NodeInfoLocationView")
         NodeDescriptionCellController.registerCell(for: tableView)
-        
+        NodeTagsCellController.registerCell(for: tableView)
+
         viewModel.dispatch(.viewDidLoad)
     }
 
@@ -430,7 +432,11 @@ final class NodeInfoViewController: UITableViewController {
         }
 
         sections.append(descriptionSection)
-        
+
+        if viewModel.shouldShowNodeTags {
+            sections.append(.tags(NodeTagsCellController()))
+        }
+
         if viewModel.nodeInfoLocationViewModel != nil {
             sections.append(.location)
         }
@@ -738,6 +744,8 @@ extension NodeInfoViewController {
             1
         case .description(let controller):
             controller.tableView(tableView, numberOfRowsInSection: section)
+        case .tags(let controller):
+            controller.tableView(tableView, numberOfRowsInSection: section)
         }
     }
     
@@ -773,6 +781,8 @@ extension NodeInfoViewController {
             return removeSharingCell(forIndexPath: indexPath)
         case .description(let controller):
             return controller.tableView(tableView, cellForRowAt: indexPath)
+        case .tags(let controller):
+            return controller.tableView(tableView, cellForRowAt: indexPath)
         }
     }
 }
@@ -782,6 +792,10 @@ extension NodeInfoViewController {
 extension NodeInfoViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if case .tags(let controller) = cachedSections[section] {
+            return controller.tableView(tableView, viewForHeaderInSection: section)
+        }
+        
         var topDistance: CGFloat = 30.0
         if case .description(let controller) = cachedSections[section] {
             return controller.tableView(tableView, viewForHeaderInSection: section)
@@ -823,6 +837,9 @@ extension NodeInfoViewController {
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if case .description(let controller) = cachedSections[section],
            let view = controller.tableView(tableView, viewForFooterInSection: section) {
+            return view
+        } else if case .tags(let controller) = cachedSections[section],
+             let view = controller.tableView(tableView, viewForFooterInSection: section) {
             return view
         }
 
@@ -869,6 +886,8 @@ extension NodeInfoViewController {
             }
         case .pendingSharing:
             showAlertForRemovingPendingShare(forIndexPat: indexPath)
+        case .tags(let controller):
+            controller.tableView(tableView, didSelectRowAt: indexPath)
         case .location, .info, .description:
             break
         }
