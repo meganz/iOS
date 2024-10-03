@@ -10,6 +10,13 @@ import XCTest
 final class ReportIssueViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     private let defaultTransferEntity = TransferEntity(fileName: "test.log")
+    private let emptyDetails = ""
+    private let placeholderDetails = "Describe the issue with at least 10 characters"
+    private let validDetails = "Some issue details"
+    private let defaultTitle = Strings.Localizable.Help.ReportIssue.Success.title
+    private let defaultMessage = Strings.Localizable.Help.ReportIssue.Success.message
+    private let defaultButtonTitle = Strings.Localizable.ok
+    private let defaultFileURL = URL(string: "file://testFile")!
     
     @MainActor
     private func makeSUT(
@@ -23,6 +30,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         areLogsEnabled: Bool = false,
         sourceUrl: URL? = nil,
         transfer: TransferEntity? = nil,
+        totalBytes: Int = 1,
         file: StaticString = #file,
         line: UInt = #line
     ) -> (ReportIssueViewModel, MockReportIssueViewRouter) {
@@ -36,7 +44,8 @@ final class ReportIssueViewModelTests: XCTestCase {
             uploadFileResult: uploadFileResult,
             uploadSupportFileResult: uploadSupportFileResult,
             cancelTransferResult: cancelTransferResult,
-            transfer: transfer
+            transfer: transfer,
+            totalBytes: totalBytes
         )
         let supportUseCase = MockSupportUseCase(createSupportTicketResult: supportResult)
         let accountUseCase = MockAccountUseCase()
@@ -63,184 +72,121 @@ final class ReportIssueViewModelTests: XCTestCase {
         file: StaticString = #file,
         line: UInt = #line
     ) {
-        XCTAssertEqual(
-            alertData.title,
-            title,
-            file: file,
-            line: line
-        )
-        XCTAssertEqual(
-            alertData.message,
-            message,
-            file: file,
-            line: line
-        )
-        XCTAssertEqual(
-            alertData.primaryButtonTitle,
-            buttonTitle,
-            file: file,
-            line: line
-        )
-    }
-    
-    private func defaultFileURL() -> URL {
-        do {
-            return try XCTUnwrap(URL(string: "file://testFile"))
-        } catch {
-            return URL(string: "")!
-        }
+        XCTAssertEqual(alertData.title, title, file: file, line: line)
+        XCTAssertEqual(alertData.message, message, file: file, line: line)
+        XCTAssertEqual(alertData.primaryButtonTitle, buttonTitle, file: file, line: line)
     }
 
     @MainActor
-    func testDismissReport_emptyDetails_dismissCalledOnce() async {
-        let (sut, router) = makeSUT()
-        
-        sut.details = ""
-        sut.dismissReport()
-        
-        XCTAssertEqual(router.dismiss_calledTimes, 1)
+    private func setDetailsAndAssert(
+        _ sut: ReportIssueViewModel,
+        details: String,
+        shouldDisableSendButton: Bool,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        sut.details = details
+        XCTAssertEqual(sut.shouldDisableSendButton, shouldDisableSendButton, file: file, line: line)
     }
-    
-    @MainActor
-    func testDismissReport_detailsSameAsPlaceholder_dismissCalledOnce() async {
-        let (sut, router) = makeSUT()
-        
-        sut.details = "Describe the issue with at least 10 characters"
-        sut.dismissReport()
-        
-        XCTAssertEqual(router.dismiss_calledTimes, 1)
-    }
-    
+
     @MainActor
     func testShouldDisableSendButton_detailsEmpty_isTrue() {
         let (sut, _) = makeSUT()
-        
-        sut.details = ""
-        
-        XCTAssertTrue(sut.shouldDisableSendButton)
+        setDetailsAndAssert(sut, details: emptyDetails, shouldDisableSendButton: true)
     }
-    
+
     @MainActor
     func testShouldDisableSendButton_detailsEqualToPlaceholder_isTrue() {
         let (sut, _) = makeSUT()
-        
-        sut.details = "Describe the issue with at least 10 characters"
-        
-        XCTAssertTrue(sut.shouldDisableSendButton)
+        setDetailsAndAssert(sut, details: placeholderDetails, shouldDisableSendButton: true)
     }
     
     @MainActor
-    func testShouldDisableSendButton_notConnected_isTrue() {
+    func testShouldDisableSendButton_networkDisconnected_isTrue() {
         let (sut, _) = makeSUT(connected: false)
-        
         XCTAssertTrue(sut.shouldDisableSendButton)
     }
     
     @MainActor
-    func testShouldShowUploadLogFileView_uploadingLogAndLogsEnabledAndToggleOn_isTrue() {
+    func testShouldDisableSendButton_allConditionsMet_isFalse() {
         let (sut, _) = makeSUT()
-        
+        sut.details = validDetails
+        sut.isConnected = true
+        XCTAssertFalse(sut.shouldDisableSendButton)
+    }
+
+    @MainActor
+    func testDismissReport_detailsEmpty_dismissCalledOnce() {
+        let (sut, router) = makeSUT()
+        sut.details = emptyDetails
+        sut.dismissReport()
+        XCTAssertEqual(router.dismiss_calledTimes, 1)
+    }
+    
+    @MainActor
+    func testDismissReport_detailsEqualToPlaceholder_dismissCalledOnce() {
+        let (sut, router) = makeSUT()
+        sut.details = placeholderDetails
+        sut.dismissReport()
+        XCTAssertEqual(router.dismiss_calledTimes, 1)
+    }
+
+    @MainActor
+    func testDismissReport_called_dismissCalledOnce() {
+        let (sut, router) = makeSUT()
+        sut.dismissReport()
+        XCTAssertEqual(router.dismiss_calledTimes, 1)
+    }
+    
+    @MainActor
+    func testShouldShowUploadLogFileView_conditionsMet_isTrue() {
+        let (sut, _) = makeSUT()
         sut.isUploadingLog = true
         sut.areLogsEnabled = true
         sut.isSendLogFileToggleOn = true
-        
         XCTAssertTrue(sut.shouldShowUploadLogFileView)
     }
-    
+
     @MainActor
-    func testShouldShowUploadLogFileView_uploadingLogAndLogsNotEnabled_isFalse() {
+    func testShouldShowUploadLogFileView_logsDisabled_isFalse() {
         let (sut, _) = makeSUT()
-        
         sut.isUploadingLog = true
         sut.areLogsEnabled = false
         sut.isSendLogFileToggleOn = true
-        
         XCTAssertFalse(sut.shouldShowUploadLogFileView)
     }
     
     @MainActor
     func testShouldShowUploadLogFileView_notUploadingLog_isFalse() {
         let (sut, _) = makeSUT()
-        
         sut.isUploadingLog = false
         sut.areLogsEnabled = true
         sut.isSendLogFileToggleOn = true
-        
         XCTAssertFalse(sut.shouldShowUploadLogFileView)
     }
     
     @MainActor
     func testShouldShowUploadLogFileView_sendLogFileToggleOff_isFalse() {
         let (sut, _) = makeSUT()
-        
         sut.isUploadingLog = true
         sut.areLogsEnabled = true
         sut.isSendLogFileToggleOn = false
-        
         XCTAssertFalse(sut.shouldShowUploadLogFileView)
     }
-    
+
     @MainActor
     func testMonitorNetworkChanges_connectionChanges_isConnectedUpdated() async {
         var results = [false, true, true, false]
         let stream = AsyncStream { continuation in
-            results.forEach {
-                continuation.yield($0)
-            }
+            results.forEach { continuation.yield($0) }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
         
         let (sut, _) = makeSUT(connectionSequence: stream)
-        
-        sut.$isConnected
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, results.removeFirst())
-            }
-            .store(in: &subscriptions)
-        
+        sut.$isConnected.dropFirst().sink {
+            XCTAssertEqual($0, results.removeFirst())
+        }.store(in: &subscriptions)
         sut.monitorNetworkChanges()
-    }
-    
-    @MainActor
-    func testShouldDisableSendButton_allConditionsMet_isFalse() {
-        let (sut, _) = makeSUT()
-        
-        sut.details = "Some issue details"
-        sut.isConnected = true
-        
-        XCTAssertFalse(sut.shouldDisableSendButton)
-    }
-
-    @MainActor
-    func testDismissReport_called_dismissCalledOnce() {
-        let (sut, router) = makeSUT()
-        
-        sut.dismissReport()
-        
-        XCTAssertEqual(router.dismiss_calledTimes, 1)
-    }
-
-    @MainActor
-    func testSetAreLogsEnabled_toggle_isUpdated() {
-        let (sut, _) = makeSUT()
-        
-        sut.areLogsEnabled = true
-        XCTAssertTrue(sut.areLogsEnabled)
-        
-        sut.areLogsEnabled = false
-        XCTAssertFalse(sut.areLogsEnabled)
-    }
-
-    @MainActor
-    func testSetIsSendLogFileToggleOn_toggle_isUpdated() {
-        let (sut, _) = makeSUT()
-        
-        sut.isSendLogFileToggleOn = true
-        XCTAssertTrue(sut.isSendLogFileToggleOn)
-        
-        sut.isSendLogFileToggleOn = false
-        XCTAssertFalse(sut.isSendLogFileToggleOn)
     }
     
     @MainActor
@@ -249,7 +195,7 @@ final class ReportIssueViewModelTests: XCTestCase {
             uploadSupportFileResult: .success(defaultTransferEntity),
             supportResult: .failure(ReportErrorEntity.tooManyRequest),
             areLogsEnabled: true,
-            sourceUrl: defaultFileURL(),
+            sourceUrl: defaultFileURL,
             transfer: defaultTransferEntity
         )
         
@@ -267,7 +213,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testUploadLogFileIfNeeded_sourceUrlNil_createsTicketWithoutUploading() async {
+    func testUploadLogFileIfNeeded_logsEnabled_sourceUrlNil_doesNotUploadFile() async {
         let (sut, _) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
             supportResult: .success,
@@ -282,9 +228,9 @@ final class ReportIssueViewModelTests: XCTestCase {
         
         assertAlertData(
             sut.reportIssueAlertData(),
-            title: Strings.Localizable.Help.ReportIssue.Success.title,
-            message: Strings.Localizable.Help.ReportIssue.Success.message,
-            buttonTitle: Strings.Localizable.ok
+            title: defaultTitle,
+            message: defaultMessage,
+            buttonTitle: defaultButtonTitle
         )
     }
     
@@ -294,7 +240,7 @@ final class ReportIssueViewModelTests: XCTestCase {
             uploadSupportFileResult: .success(defaultTransferEntity),
             supportResult: .success,
             areLogsEnabled: true,
-            sourceUrl: defaultFileURL(),
+            sourceUrl: defaultFileURL,
             transfer: defaultTransferEntity
         )
         
@@ -318,7 +264,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     }
    
     @MainActor
-    func testUploadLogFileIfNeeded_logsNotEnabled_doesNotUploadFile() async {
+    func testUploadLogFileIfNeeded_logsDisabled_doesNotUploadFile() async {
         let uploadFileResult: Result<Void, TransferErrorEntity> = .success
         let (sut, _) = makeSUT(uploadFileResult: uploadFileResult)
         
@@ -335,7 +281,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             uploadSupportFileResult: .failure(.generic),
             areLogsEnabled: true,
-            sourceUrl: defaultFileURL()
+            sourceUrl: defaultFileURL
         )
         
         let expectation = self.expectation(description: "Upload failure shows alert")
@@ -368,7 +314,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         let (sut, router) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
             cancelTransferResult: .success,
-            sourceUrl: defaultFileURL(),
+            sourceUrl: defaultFileURL,
             transfer: defaultTransferEntity
         )
         
@@ -390,13 +336,13 @@ final class ReportIssueViewModelTests: XCTestCase {
         
         await fulfillment(of: [createTicketExpectation], timeout: 3)
     }
-
+    
     @MainActor
-    func testCancelUploadReport_uploadInProgress_cancelFails() async throws {
+    func testCancelUploadReport_uploadFails_dismissCalledOnce() async throws {
         let (sut, router) = makeSUT(
             uploadSupportFileResult: .success(defaultTransferEntity),
             cancelTransferResult: .failure(.generic),
-            sourceUrl: defaultFileURL(),
+            sourceUrl: defaultFileURL,
             transfer: defaultTransferEntity
         )
         
@@ -436,7 +382,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     @MainActor
     func testShowReportIssueActionSheetIfNeeded_discardable_showsActionSheet() async {
         let (sut, _) = makeSUT()
-        sut.details = "Some issue details"
+        sut.details = validDetails
         
         sut.showReportIssueActionSheetIfNeeded()
         
@@ -446,7 +392,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     @MainActor
     func testShowReportIssueActionSheetIfNeeded_notDiscardable_dismissesReport() async {
         let (sut, router) = makeSUT()
-        sut.details = ""
+        sut.details = emptyDetails
         
         sut.showReportIssueActionSheetIfNeeded()
         
@@ -480,6 +426,66 @@ final class ReportIssueViewModelTests: XCTestCase {
         XCTAssertTrue(alertData.title.isEmpty)
         XCTAssertTrue(alertData.message.isEmpty)
         XCTAssertTrue(alertData.primaryButtonTitle.isEmpty)
+    }
+
+    @MainActor
+    func testIsReportDiscardable_detailsEmpty_isFalse() {
+        let (sut, _) = makeSUT()
+        
+        sut.details = emptyDetails
+        
+        XCTAssertFalse(sut.isReportDiscardable)
+    }
+
+    @MainActor
+    func testIsReportDiscardable_detailsEqualToPlaceholder_isFalse() {
+        let (sut, _) = makeSUT()
+        
+        sut.details = placeholderDetails
+        
+        XCTAssertFalse(sut.isReportDiscardable)
+    }
+
+    @MainActor
+    func testIsReportDiscardable_detailsNotEmptyAndNotPlaceholder_isTrue() {
+        let (sut, _) = makeSUT()
+        
+        sut.details = validDetails
+        
+        XCTAssertTrue(sut.isReportDiscardable)
+    }
+    
+    @MainActor
+    func testUploadSupportFile_progress_updatesProgress() async throws {
+        let transferEntity = TransferEntity(transferredBytes: 0, totalBytes: 4, fileName: "test.log")
+        let uploadSupportFileResult: Result<TransferEntity, TransferErrorEntity> = .success(transferEntity)
+        let (sut, _) = makeSUT(
+            uploadSupportFileResult: uploadSupportFileResult,
+            areLogsEnabled: true,
+            sourceUrl: defaultFileURL,
+            transfer: transferEntity,
+            totalBytes: 4
+        )
+        let exp = self.expectation(description: "Progress updated")
+        
+        var progressValues = [Float]()
+        
+        sut.$progress
+            .dropFirst()
+            .sink { progress in
+                progressValues.append(progress)
+                if progress == 1 {
+                    exp.fulfill()
+                }
+            }
+            .store(in: &subscriptions)
+        
+        await sut.createTicket()
+        
+        await fulfillment(of: [exp], timeout: 5)
+        XCTAssertEqual(sut.progress, 1)
+        XCTAssertEqual(progressValues.count, 4)
+        XCTAssertEqual(progressValues, [0.25, 0.5, 0.75, 1])
     }
 }
 

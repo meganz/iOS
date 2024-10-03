@@ -11,7 +11,7 @@ final class ReportIssueViewModel: ObservableObject {
     private var transfer: TransferEntity?
     private var sourceUrl: URL?
     private var detailsPlaceholder = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
-    private (set) var reportAlertType: ReportIssueAlertTypeModel = .none
+    private(set) var reportAlertType: ReportIssueAlertTypeModel = .none
     private var networkMonitorTask: Task<Void, Never>?
     
     var areLogsEnabled: Bool

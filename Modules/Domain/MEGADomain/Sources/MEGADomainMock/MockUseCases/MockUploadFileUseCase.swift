@@ -11,6 +11,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
     private let filename: String
     private let nodeEntity: NodeEntity?
     private let transferEntity: TransferEntity?
+    private let totalBytes: Int
     
     public init(
         duplicate: Bool = true,
@@ -20,7 +21,8 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         cancelTransferResult: Result<Void, TransferErrorEntity> = .failure(.generic),
         filename: String = "",
         nodeEntity: NodeEntity? = nil,
-        transfer: TransferEntity? = nil
+        transfer: TransferEntity? = nil,
+        totalBytes: Int = 1
     ) {
         self.duplicate = duplicate
         self.uploadFileResult = uploadFileResult
@@ -29,6 +31,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         self.filename = filename
         self.nodeEntity = nodeEntity
         self.transferEntity = transfer
+        self.totalBytes = totalBytes
         
         $newName.mutate { $0 = newName }
     }
@@ -54,8 +57,6 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         
         start(transferEntity)
         
-        let totalBytes: Int = 4
-        
         for i in 1...Int(totalBytes) {
             try await Task.sleep(nanoseconds: UInt64(100_000_000))
             progress(TransferEntity(type: transferEntity.type, transferredBytes: i, totalBytes: totalBytes, path: transferEntity.path))
@@ -74,26 +75,26 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
             throw TransferErrorEntity.generic
         }
         
-        let totalBytes: Int = 4
-        
         let stream = AsyncThrowingStream<FileUploadEvent, Error> { continuation in
-            // Simulate start event
-            continuation.yield(.start(transferEntity))
-            
-            // Simulate progress events
-            for i in 1...totalBytes {
-                Task {
-                    try await Task.sleep(nanoseconds: UInt64(100_000_000))
-                    continuation.yield(.progress(
-                        TransferEntity(type: transferEntity.type, transferredBytes: i, totalBytes: totalBytes, path: transferEntity.path)
-                    ))
+            Task {
+                continuation.yield(.start(transferEntity))
+                
+                for i in 1..<totalBytes {
+                    do {
+                        try await Task.sleep(nanoseconds: UInt64(100_000_000))
+                        continuation.yield(.progress(
+                            TransferEntity(type: transferEntity.type, transferredBytes: i, totalBytes: totalBytes, path: transferEntity.path)
+                        ))
+                    } catch {
+                        continuation.finish(throwing: error)
+                        return
+                    }
                 }
+                
+                let completionEntity = transferEntity
+                continuation.yield(.completion(completionEntity))
+                continuation.finish()
             }
-            
-            // Simulate completion event
-            let completionEntity = transferEntity
-            continuation.yield(.completion(completionEntity))
-            continuation.finish()
         }
         
         return stream.eraseToAnyAsyncSequence()
