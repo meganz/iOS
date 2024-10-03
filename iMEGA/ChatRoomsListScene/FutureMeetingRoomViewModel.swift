@@ -513,13 +513,13 @@ extension FutureMeetingRoomViewModel {
 }
 
 extension FutureMeetingRoomViewModel: Equatable {
-    static func == (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
+    nonisolated static func == (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
         lhs.scheduledMeeting.scheduledId == rhs.scheduledMeeting.scheduledId
     }
 }
 
 extension FutureMeetingRoomViewModel: Comparable {
-    static func < (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
+    nonisolated static func < (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
         let lhsDate = lhs.nextOccurrence?.startDate ?? lhs.scheduledMeeting.startDate
         let rhsDate = rhs.nextOccurrence?.startDate ?? rhs.scheduledMeeting.startDate
         return lhsDate < rhsDate
