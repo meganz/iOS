@@ -20,6 +20,7 @@ enum NodeInfoAction: ActionType {
     private let shareUseCase: (any ShareUseCaseProtocol)?
     private let nodeUseCase: any NodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     let shouldDisplayContactVerificationInfo: Bool
 
@@ -31,6 +32,10 @@ enum NodeInfoAction: ActionType {
         didSet { oldValue?.cancel() }
     }
 
+    var shouldShowNodeTags: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .nodeTags)
+    }
+
     init(
         withNode node: MEGANode,
         shareUseCase: (any ShareUseCaseProtocol)? = nil,
@@ -38,6 +43,7 @@ enum NodeInfoAction: ActionType {
         isNodeUndecryptedFolder: Bool = false,
         shouldDisplayContactVerificationInfo: Bool = false,
         tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         completion: (() -> Void)? = nil
     ) {
         self.shareUseCase = shareUseCase
@@ -45,6 +51,7 @@ enum NodeInfoAction: ActionType {
         self.node = node
         self.isNodeUndecryptedFolder = isNodeUndecryptedFolder
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         self.shouldDisplayContactVerificationInfo = shouldDisplayContactVerificationInfo
     }
     
