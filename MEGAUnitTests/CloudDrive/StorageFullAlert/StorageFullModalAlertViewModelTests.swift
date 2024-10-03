@@ -63,19 +63,6 @@ final class StorageFullModalAlertViewModelTests: XCTestCase {
     }
 }
 
-private final class MockFileManager: FileManager {
-    private let freeSize: UInt64
-
-    init(freeSize: UInt64 = 100) {
-        self.freeSize = freeSize
-        super.init()
-    }
-
-    override var mnz_fileSystemFreeSize: UInt64 {
-        freeSize
-    }
-}
-
 private final class MockUserDefaults: UserDefaults {
     var doubleValue: Double
 

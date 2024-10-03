@@ -63,46 +63,6 @@ final class ViewModeStoreTests: XCTestCase {
         func storedOfflineMode(for location: ViewModeLocation.Custom) -> ViewModePreferenceEntity? {
             megaStore.offlineViewModes[location.path]
         }
-        
-        class MockMEGAStore: MEGAStore {
-            lazy var inMemoryContainer: NSPersistentContainer = {
-                let description = NSPersistentStoreDescription()
-                description.url = URL(fileURLWithPath: "/dev/null")
-                let container = NSPersistentContainer(name: "MEGACD")
-                container.persistentStoreDescriptions = [description]
-                container.loadPersistentStores { _, error in
-                    if let error = error as NSError? {
-                        fatalError("Unresolved error \(error), \(error.userInfo)")
-                    }
-                }
-                return container
-            }()
-            var viewModes: [UInt64: ViewModePreferenceEntity] = [:]
-            @objc override func fetchCloudAppearancePreference(handle: UInt64) -> CloudAppearancePreference? {
-                let pref = NSEntityDescription.insertNewObject(forEntityName: "CloudAppearancePreference", into: inMemoryContainer.viewContext) as! CloudAppearancePreference
-                if let viewMode = viewModes[handle] {
-                    pref.viewMode = NSNumber(integerLiteral: viewMode.rawValue)
-                }
-                return pref
-            }
-            
-            var offlineViewModes: [String: ViewModePreferenceEntity] = [:]
-            @objc override func fetchOfflineAppearancePreference(path: String) -> OfflineAppearancePreference? {
-                
-                guard let viewMode = offlineViewModes[path] else {
-                    return nil
-                }
-                
-                let pref = NSEntityDescription.insertNewObject(forEntityName: "OfflineAppearancePreference", into: inMemoryContainer.viewContext) as! OfflineAppearancePreference
-                pref.viewMode = NSNumber(integerLiteral: viewMode.rawValue)
-                pref.localPath = path
-                return pref
-            }
-            
-            @objc override func insertOrUpdateOfflineViewMode(path: String, viewMode: Int) {
-                offlineViewModes[path] = ViewModePreferenceEntity(rawValue: viewMode)
-            }
-        }
     }
     
     func test_ReadViewMode_fromPreference_returnsList_ifNothingIsSaved() {

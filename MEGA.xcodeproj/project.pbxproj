@@ -1412,7 +1412,9 @@
 		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
+		948A0E962C9ED7A7004DDF55 /* MockMegaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948A0E952C9ED7A3004DDF55 /* MockMegaStore.swift */; };
 		948AE4A42C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */; };
+		948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948B29492CA1671D00428787 /* MockFileManager.swift */; };
 		948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */; };
 		948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */; };
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
@@ -1501,6 +1503,7 @@
 		94E7180B283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift */; };
 		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
 		94EC99BC2BEA37F10007E30C /* CallKitProviderDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */; };
+		94EF2DCE2CAD9FC00061071E /* OfflineFileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EF2DCD2CAD9FBD0061071E /* OfflineFileEntity.swift */; };
 		94EFD0B02B0E66C2009247FF /* MyAccountHallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EFD0AF2B0E66C2009247FF /* MyAccountHallRouter.swift */; };
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
 		94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */; };
@@ -4200,7 +4203,9 @@
 		9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
+		948A0E952C9ED7A3004DDF55 /* MockMegaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMegaStore.swift; sourceTree = "<group>"; };
 		948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactory.swift; sourceTree = "<group>"; };
+		948B29492CA1671D00428787 /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
 		948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcherTests.swift; sourceTree = "<group>"; };
 		948D92672B2373CE0020E894 /* DisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
@@ -4287,6 +4292,7 @@
 		94E7180A283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArchivedChatRoomsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+Additions.swift"; sourceTree = "<group>"; };
 		94EC99BB2BEA37F10007E30C /* CallKitProviderDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitProviderDelegateTests.swift; sourceTree = "<group>"; };
+		94EF2DCD2CAD9FBD0061071E /* OfflineFileEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileEntity.swift; sourceTree = "<group>"; };
 		94EFD0AF2B0E66C2009247FF /* MyAccountHallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallRouter.swift; sourceTree = "<group>"; };
 		94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsDetailsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -8196,6 +8202,7 @@
 			isa = PBXGroup;
 			children = (
 				5D33D66A250D9BC900D74666 /* Client */,
+				94EF2DCA2CAD9C4B0061071E /* Entity */,
 				5D52C748250C4F2800286A43 /* Functions */,
 				949704B52AB427A700B2CA3A /* Router */,
 				C4944FE62C339F5B00A2C082 /* Transfers */,
@@ -8206,6 +8213,8 @@
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 				5D33D671250DBA0B00D74666 /* CGSize.swift */,
 				94A144612C9DE58800C34A98 /* MockChatUploader.swift */,
+				948B29492CA1671D00428787 /* MockFileManager.swift */,
+				948A0E952C9ED7A3004DDF55 /* MockMegaStore.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				834B51912C9D91E5002E46FB /* MockTimerSequenceFactory.swift */,
 				25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */,
@@ -10480,6 +10489,14 @@
 				94D362702C761CFC0043621D /* NewChatEmptyView.swift */,
 			);
 			path = NewChatEmptyView;
+			sourceTree = "<group>";
+		};
+		94EF2DCA2CAD9C4B0061071E /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				94EF2DCD2CAD9FBD0061071E /* OfflineFileEntity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		94EFD0AE2B0E66A1009247FF /* Router */ = {
@@ -16579,11 +16596,13 @@
 				C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */,
 				B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */,
 				B569A2C52C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift in Sources */,
+				948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
+				948A0E962C9ED7A7004DDF55 /* MockMegaStore.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
 				A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */,
 				949CC15D2B0FD5230047D581 /* MockMyAccountHallRouter.swift in Sources */,
@@ -16641,6 +16660,7 @@
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
+				94EF2DCE2CAD9FC00061071E /* OfflineFileEntity.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
