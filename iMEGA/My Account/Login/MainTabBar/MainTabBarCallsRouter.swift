@@ -93,7 +93,6 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         SVProgressHUD.showSuccess(withStatus: message)
     }
     
-    @MainActor 
     func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity) {
         let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
         MeetingContainerRouter(
