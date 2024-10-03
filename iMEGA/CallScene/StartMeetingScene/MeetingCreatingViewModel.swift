@@ -59,6 +59,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callManager: any CallManagerProtocol
 
     private let tracker: any AnalyticsTracking
@@ -72,7 +73,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private var doesAllowNonHostToAddParticipants = true
     private var userHandle: UInt64
     
-    private var chatId: UInt64?
+    private var chatRoomFromLink: ChatRoomEntity?
     
     var appDidBecomeActiveSubscription: AnyCancellable?
     var appWillResignActiveSubscription: AnyCancellable?
@@ -98,6 +99,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
         callManager: some CallManagerProtocol,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         link: String?,
@@ -115,6 +117,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.megaHandleUseCase = megaHandleUseCase
         self.callUseCase = callUseCase
         self.callManager = callManager
+        self.chatRoomUseCase = chatRoomUseCase
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         self.link = link
@@ -189,21 +192,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             isSpeakerEnabled = !isSpeakerEnabled
             enableLoudSpeaker(enabled: isSpeakerEnabled)
         case .didTapStartMeetingButton:
-            switch type {
-            case .start:
-                startChatCall()
-            case .join:
-                guard let chatId else { return }
-                Task {
-                    await joinChatAndStartCall(chatId: chatId)
-                }
-            case .guestJoin:
-                guard let chatId else { return }
-                Task {
-                    await createEphemeralAccountAndJoinChat(chatId: chatId)
-                }
-            }
-            invokeCommand?(.loadingStartMeeting)
+            manageStartMeetingAction()
         case .didTapCloseButton:
             localVideoUseCase.releaseVideoDevice { _ in
                 self.dismiss()
@@ -235,6 +224,32 @@ final class MeetingCreatingViewModel: ViewModelType {
                 invokeCommand?(.updateAvatarImage(image))
             }
         }
+    }
+    
+    private func manageStartMeetingAction() {
+        switch type {
+        case .start:
+            startChatCall()
+        case .join:
+            guard let chatRoomFromLink else { return }
+            /// If user is already participating in the chat obtained from the link
+            /// (the link is not preview or user has not been removed),
+            /// it is not needed to do a join chat, just start the call.
+            if chatRoomFromLink.ownPrivilege.isUserInChat,
+               !chatRoomFromLink.isPreview {
+                startCall(inChatRoom: chatRoomFromLink)
+            } else {
+                Task {
+                    await joinChatAndStartCall(chatId: chatRoomFromLink.chatId)
+                }
+            }
+        case .guestJoin:
+            guard let chatRoomFromLink else { return }
+            Task {
+                await createEphemeralAccountAndJoinChat(chatId: chatRoomFromLink.chatId)
+            }
+        }
+        invokeCommand?(.loadingStartMeeting)
     }
     
     private func addRouteChangedListener() {
@@ -349,7 +364,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                     type: self.type,
                     isMicrophoneEnabled: self.isMicrophoneEnabled)
             )
-            chatId = chatRoom.chatId
+            chatRoomFromLink = chatRoom
         } catch {
             dismiss()
         }

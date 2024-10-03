@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentation
 import MEGAPresentationMock
 import MEGATest
 import XCTest
@@ -11,23 +12,12 @@ import XCTest
 final class MeetingCreatingViewModelTests: XCTestCase {
     @MainActor func testAction_onViewReady_createMeeting() {
         let router = MockMeetingCreateRouter()
-        let audioSession = MockAudioSessionUseCase()
-        
-        let viewModel = MeetingCreatingViewModel(
+        let sut = makeSUT(
             router: router,
-            type: .start,
-            meetingUseCase: MockMeetingCreatingUseCase(),
-            audioSessionUseCase: audioSession,
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            permissionHandler: makeMockDevicePermissions(),
-            userImageUseCase: MockUserImageUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            megaHandleUseCase: MockMEGAHandleUseCase(),
-            link: nil,
-            userHandle: 0
+            type: .start
         )
-        test(viewModel: viewModel,
+        
+        test(viewModel: sut,
              action: .onViewReady,
              expectedCommands: [
                 .configView(title: "Test Name’s meeting", type: .start, isMicrophoneEnabled: false)
@@ -37,27 +27,16 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     @MainActor func testAction_onViewReady_joinMeeting() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let useCase = MockMeetingCreatingUseCase(
-            checkChatLinkCompletion: .success(chatRoom)
-        )
-        let audioSession = MockAudioSessionUseCase()
-        
-        let viewModel = MeetingCreatingViewModel(
+        let sut = makeSUT(
             router: router,
             type: .join,
-            meetingUseCase: useCase,
-            audioSessionUseCase: audioSession,
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            permissionHandler: makeMockDevicePermissions(),
-            userImageUseCase: MockUserImageUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            megaHandleUseCase: MockMEGAHandleUseCase(),
-            link: "",
-            userHandle: 0
+            meetingUseCase: MockMeetingCreatingUseCase(
+                checkChatLinkCompletion: .success(chatRoom)
+            ),
+            link: "Test link"
         )
         
-        test(viewModel: viewModel,
+        test(viewModel: sut,
              action: .onViewReady,
              expectedCommands: [
                 .loadingStartMeeting,
@@ -68,24 +47,14 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     
     @MainActor func testAction_updateSpeakerButton() {
         let router = MockMeetingCreateRouter()
-        let useCase = MockMeetingCreatingUseCase()
         let audioSession = MockAudioSessionUseCase()
-        
-        let viewModel = MeetingCreatingViewModel(
+        let sut = makeSUT(
             router: router,
             type: .join,
-            meetingUseCase: useCase,
-            audioSessionUseCase: audioSession,
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            permissionHandler: makeMockDevicePermissions(),
-            userImageUseCase: MockUserImageUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            megaHandleUseCase: MockMEGAHandleUseCase(),
-            link: nil,
-            userHandle: 0
+            audioSessionUseCase: audioSession
         )
-        test(viewModel: viewModel,
+        
+        test(viewModel: sut,
              action: .didTapSpeakerButton,
              expectedCommands: [
              ])
@@ -95,71 +64,99 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     @MainActor
     func testAction_didTapCloseButton() {
         let router = MockMeetingCreateRouter()
-        let useCase = MockMeetingCreatingUseCase()
-        let viewModel = MeetingCreatingViewModel(
+        let sut = makeSUT(
             router: router,
-            type: .join,
-            meetingUseCase: useCase,
-            audioSessionUseCase: MockAudioSessionUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            permissionHandler: makeMockDevicePermissions(),
-            userImageUseCase: MockUserImageUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            megaHandleUseCase: MockMEGAHandleUseCase(),
-            link: nil,
-            userHandle: 0
+            type: .join
         )
         
-        viewModel.dispatch(.didTapCloseButton)
+        sut.dispatch(.didTapCloseButton)
         XCTAssert(router.dismiss_calledTimes == 1)
     }
     
     @MainActor
-    func testAction_joinChatCall() {
+    func testAction_didTapStartMeetingButton_userJoiningToNewChat_userShouldJoinChatDismissViewAndJoinActiveCall() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let meetingCreatingUseCase = MockMeetingCreatingUseCase(
-            createMeetingResult: .success(chatRoom)
-        )
-        let callUseCase = MockCallUseCase(callCompletion: .success(CallEntity()))
         let callManager = MockCallManager()
-        let viewModel = MeetingCreatingViewModel(
+        let sut = makeSUT(
             router: router,
-            type: .start,
-            meetingUseCase: meetingCreatingUseCase,
-            audioSessionUseCase: MockAudioSessionUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            permissionHandler: makeMockDevicePermissions(),
-            userImageUseCase: MockUserImageUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            megaHandleUseCase: MockMEGAHandleUseCase(),
-            callUseCase: callUseCase,
+            type: .join,
+            meetingUseCase: MockMeetingCreatingUseCase(
+                joinCallCompletion: .success(chatRoom),
+                checkChatLinkCompletion: .success(chatRoom)
+            ),
             callManager: callManager,
-            link: nil,
-            userHandle: 0
+            link: "https://mega-chat-link.com"
         )
         
-        viewModel.dispatch(.didTapStartMeetingButton)
+        test(viewModel: sut,
+              action: .onViewReady,
+              expectedCommands: [
+                 .loadingStartMeeting,
+                 .loadingEndMeeting,
+                 .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false)
+              ])
+         
+         test(viewModel: sut,
+              action: .didTapStartMeetingButton,
+              expectedCommands: [
+                 .loadingStartMeeting
+              ])
+                
+        evaluate {
+            router.dismiss_calledTimes == 1 &&
+            callManager.startCall_CalledTimes == 1
+        }
+    }
+    
+    @MainActor
+    func testAction_didTapStartMeetingButton_userJoiningChatAlreadyParticipating_viewShouldDismissAndJoinActiveCall() {
+        let router = MockMeetingCreateRouter()
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+        let callManager = MockCallManager()
+        let sut = makeSUT(
+            router: router,
+            type: .join,
+            meetingUseCase: MockMeetingCreatingUseCase(
+                checkChatLinkCompletion: .success(chatRoom)
+            ),
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: chatRoom),
+            callManager: callManager,
+            link: "https://mega-chat-link.com"
+        )
+        
+        test(viewModel: sut,
+             action: .onViewReady,
+             expectedCommands: [
+                .loadingStartMeeting,
+                .loadingEndMeeting,
+                .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false)
+             ])
+        
+        test(viewModel: sut,
+             action: .didTapStartMeetingButton,
+             expectedCommands: [
+                .loadingStartMeeting
+             ])
         
         evaluate {
-            router.dismiss_calledTimes == 1
+            router.dismiss_calledTimes == 1 &&
+            callManager.startCall_CalledTimes == 1
         }
     }
     
     @MainActor func testDidTapStartMeetingButton_forGuestJoin_shouldTrackEvent() async {
         let chatRoom = ChatRoomEntity(chatId: 1, title: "Test Meeting")
-        let meetingCreatingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success(()),
-                                                                joinCallCompletion: .success(chatRoom),
-                                                                checkChatLinkCompletion: .success(chatRoom))
         let tracker = MockTracker()
-        let sut = MeetingCreatingViewModel(
+        let sut = makeSUT(
             type: .guestJoin,
-            meetingUseCase: meetingCreatingUseCase,
+            meetingUseCase: MockMeetingCreatingUseCase(
+                createEphemeralAccountCompletion: .success(()),
+                joinCallCompletion: .success(chatRoom),
+                checkChatLinkCompletion: .success(chatRoom)
+            ),
             tracker: tracker,
-            link: "Test link",
-            userHandle: 0
+            link: "Test link"
         )
         
         await test(viewModel: sut,
@@ -188,11 +185,47 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     
     // MARK: - Private
     
-    private func makeMockDevicePermissions() -> MockDevicePermissionHandler {
-        .init(
+    @MainActor private func makeSUT(
+        router: some MeetingCreatingViewRouting = MockMeetingCreateRouter(),
+        type: MeetingConfigurationType = .guestJoin,
+        meetingUseCase: some MeetingCreatingUseCaseProtocol = MockMeetingCreatingUseCase(),
+        audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
+        localVideoUseCase: some CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
+        permissionHandler: some DevicePermissionsHandling =  MockDevicePermissionHandler(
             photoAuthorization: .authorized,
             audioAuthorized: false,
             videoAuthorized: false
+        ),
+        userImageUseCase: some UserImageUseCaseProtocol = MockUserImageUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        callManager: some CallManagerProtocol = MockCallManager(),
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        link: String? = nil,
+        userHandle: UInt64 = 0
+    ) -> MeetingCreatingViewModel {
+        MeetingCreatingViewModel(
+            router: router,
+            type: type,
+            meetingUseCase: meetingUseCase,
+            audioSessionUseCase: audioSessionUseCase,
+            localVideoUseCase: localVideoUseCase,
+            captureDeviceUseCase: captureDeviceUseCase,
+            permissionHandler: permissionHandler,
+            userImageUseCase: userImageUseCase,
+            accountUseCase: accountUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            callUseCase: callUseCase,
+            callManager: callManager,
+            chatRoomUseCase: chatRoomUseCase,
+            tracker: tracker,
+            featureFlagProvider: featureFlagProvider,
+            link: link,
+            userHandle: userHandle
         )
     }
 }
@@ -208,6 +241,7 @@ final class MockMeetingCreateRouter: MeetingCreatingViewRouting {
     
     func dismiss(completion: (() -> Void)?) {
         dismiss_calledTimes += 1
+        completion?()
     }
     
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
@@ -225,5 +259,4 @@ final class MockMeetingCreateRouter: MeetingCreatingViewRouting {
     func showAudioPermissionError() {
         showAudioPermissionError_calledTimes += 1
     }
-    
 }

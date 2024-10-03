@@ -1543,7 +1543,6 @@
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
 		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
-		99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */; };
 		99F9ABC02A7B428A0050B5E4 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
@@ -4327,7 +4326,6 @@
 		99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomControlsView.swift; sourceTree = "<group>"; };
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
-		99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingCreatingViewModel+Additions.swift"; sourceTree = "<group>"; };
 		99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
@@ -12474,7 +12472,6 @@
 				998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */,
 				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
 				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
-				99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */,
 				BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */,
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */,
@@ -16544,7 +16541,6 @@
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,
-				99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
 				94CC24BD2BA0434A002BEA9C /* MeetingFloatingPanelBannerFactoryTests.swift in Sources */,
 				94CC24B72B9F4918002BEA9C /* MeetingFloatingPanelHeaderConfigFactoryTests.swift in Sources */,
