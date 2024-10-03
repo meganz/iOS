@@ -72,12 +72,12 @@ class SortingAndViewModeTableViewController: UITableViewController {
         tableView.separatorColor = UIColor.mnz_separator()
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
 
-        sortingPreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
-        sortingPreferenceSameForAllLabel.textColor = UIColor.mnz_primaryTextColor()
+        sortingPreferencePerFolderLabel.textColor = UIColor.primaryTextColor()
+        sortingPreferenceSameForAllLabel.textColor = UIColor.primaryTextColor()
         sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
-        viewModePreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
-        viewModePreferenceListViewLabel.textColor = UIColor.mnz_primaryTextColor()
-        viewModePreferenceThumbnailViewLabel.textColor = UIColor.mnz_primaryTextColor()
+        viewModePreferencePerFolderLabel.textColor = UIColor.primaryTextColor()
+        viewModePreferenceListViewLabel.textColor = UIColor.primaryTextColor()
+        viewModePreferenceThumbnailViewLabel.textColor = UIColor.primaryTextColor()
 
         tableView.reloadData()
     }

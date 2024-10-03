@@ -83,12 +83,6 @@ extension UIColor {
     
     // MARK: - Main Bar
     
-    @objc class func mnz_navigationBarTitle(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Text.primary
-    }
-    
     @objc class func mnz_navigationBarTint(
         for traitCollection: UITraitCollection
     ) -> UIColor {
@@ -112,12 +106,6 @@ extension UIColor {
     }
     
     // MARK: Cell related colors
-    
-    @objc class func cellTitleColor(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Text.primary
-    }
     
     class func cellAccessoryColor(
         for traitCollection: UITraitCollection
@@ -348,10 +336,6 @@ extension UIColor {
         TokenColors.Text.secondary
     }
     
-    @objc class func mnz_defaultLabelTextColor() -> UIColor {
-        TokenColors.Text.primary
-    }
-    
     @objc class func supportInfoColor() -> UIColor {
         TokenColors.Support.info
     }
@@ -361,10 +345,6 @@ extension UIColor {
     }
     
     // MARK: - Chat Reactions
-    
-    @objc class func primaryTextColor() -> UIColor {
-        TokenColors.Text.primary
-    }
     
     @objc class func secondaryTextColor() -> UIColor {
         TokenColors.Text.secondary
@@ -564,10 +544,6 @@ extension UIColor {
         UIColor.black1C1C1E
     }
     
-    @objc class func mnz_black000000() -> UIColor {
-        TokenColors.Text.primary
-    }
-    
     // MARK: Gray
     
     class func mnz_gray3C3C43() -> UIColor {
@@ -720,7 +696,7 @@ extension UIColor {
     
     // MARK: Text color
     
-    @objc class func mnz_primaryTextColor() -> UIColor {
+    @objc class func primaryTextColor() -> UIColor {
         TokenColors.Text.primary
     }
     

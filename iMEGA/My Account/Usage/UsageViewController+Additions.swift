@@ -35,7 +35,7 @@ extension UsageViewController {
         pieChartView?.backgroundColor = UIColor.systemBackground
         usageStorageView?.backgroundColor = UIColor.systemBackground
 
-        let primaryTextColor = UIColor.mnz_primaryTextColor()
+        let primaryTextColor = UIColor.primaryTextColor()
         let secondaryTextColor = UIColor.mnz_secondaryGray()
 
         [cloudDriveLabel, backupsLabel, rubbishBinLabel, incomingSharesLabel].forEach { label in

@@ -6,7 +6,7 @@ extension ThumbnailViewerTableViewCell {
     @objc func updateAppearance(with traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_backgroundElevated()
         thumbnailViewerCollectionView?.backgroundColor = UIColor.mnz_backgroundElevated()
-        addedByLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
+        addedByLabel?.textColor = UIColor.primaryTextColor()
         timeLabel?.textColor = UIColor.mnz_subtitles()
         infoLabel?.textColor = UIColor.mnz_subtitles()
         indicatorImageView.tintColor = indicatorTintColor()

@@ -43,7 +43,7 @@
     self.nameLabel.text = [MEGASdk.shared unescapeFsIncompatible:transfer.fileName destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
     
-    self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+    self.nameLabel.textColor = [UIColor primaryTextColor];
     self.pauseButton.tintColor = [UIColor mnz_primaryGray];
     self.progressView.progressTintColor = [UIColor mnz_green00A886];
     self.backgroundColor = [UIColor mnz_backgroundElevated];

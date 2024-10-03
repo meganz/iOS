@@ -16,15 +16,15 @@ extension CameraUploadsTableViewController {
     
     @objc 
     func configLabelsTextColor() {
-        enableCameraUploadsLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        uploadVideosInfoLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        uploadVideosLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        targetFolderLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        heicLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        jpgLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        includeGPSTagsLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        useCellularConnectionLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        advancedLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
-        useCellularConnectionForVideosLabel.textColor = UIColor.cellTitleColor(for: traitCollection)
+        enableCameraUploadsLabel.textColor = UIColor.primaryTextColor()
+        uploadVideosInfoLabel.textColor = UIColor.primaryTextColor()
+        uploadVideosLabel.textColor = UIColor.primaryTextColor()
+        targetFolderLabel.textColor = UIColor.primaryTextColor()
+        heicLabel.textColor = UIColor.primaryTextColor()
+        jpgLabel.textColor = UIColor.primaryTextColor()
+        includeGPSTagsLabel.textColor = UIColor.primaryTextColor()
+        useCellularConnectionLabel.textColor = UIColor.primaryTextColor()
+        advancedLabel.textColor = UIColor.primaryTextColor()
+        useCellularConnectionForVideosLabel.textColor = UIColor.primaryTextColor()
     }
 }

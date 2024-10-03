@@ -80,7 +80,7 @@ extension MyAccountHallTableViewCell {
         }
         
         if sectionLabel != nil {
-            sectionLabel.textColor = UIColor.mnz_defaultLabelTextColor()
+            sectionLabel.textColor = UIColor.primaryTextColor()
         }
 
         if detailLabel != nil {

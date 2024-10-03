@@ -99,9 +99,9 @@
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
 
-    self.turnOnOffPasscodeLabel.textColor = UIColor.mnz_primaryTextColor;
-    self.changePasscodeLabel.textColor = UIColor.mnz_primaryTextColor;
-    self.requirePasscodeLabel.textColor = UIColor.mnz_primaryTextColor;
+    self.turnOnOffPasscodeLabel.textColor = UIColor.primaryTextColor;
+    self.changePasscodeLabel.textColor = UIColor.primaryTextColor;
+    self.requirePasscodeLabel.textColor = UIColor.primaryTextColor;
     self.requirePasscodeDetailLabel.textColor = UIColor.mnz_secondaryTextColor;
 
     [self.tableView reloadData];
