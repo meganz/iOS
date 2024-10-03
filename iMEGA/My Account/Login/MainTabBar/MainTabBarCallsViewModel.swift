@@ -1,13 +1,14 @@
 import CallKit
+import Chat
 import Combine
 import Intents
-import Chat
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 
+@MainActor
 protocol MainTabBarCallsRouting: AnyObject {
     func showOneUserWaitingRoomDialog(
         for username: String,

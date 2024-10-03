@@ -40,6 +40,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_onSessionUpdateRecordingStart_alertShouldBeShown() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
@@ -64,6 +65,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
     }
     
+    @MainActor
     func testJoinCall_onSessionInProgressIsRecording_alertShouldBeShown() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
@@ -88,6 +90,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
     }
     
+    @MainActor
     func testJoinCall_onSessionInProgressIsRecording_alertShouldNotBeShown() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
@@ -112,6 +115,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 0 }
     }
     
+    @MainActor
     func testCallUpdate_onSessionUpdateRecordingStop_recordingNotificationShouldBeShown() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
@@ -168,6 +172,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_oneUserOnWaitingRoomAndBeingModerator_showOneUserAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
@@ -192,6 +197,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_severalUsersOnWaitingAndRoomBeingModerator_showSeveralUsersAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let callUseCase = MockCallUseCase()
@@ -214,6 +220,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_noUsersOnWaitingRoomAndBeingModerator_dismissAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let callUseCase = MockCallUseCase()
@@ -236,6 +243,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_severalUsersOnWaitingAndRoomBeingModeratorAndCallChangeTypeWaitingRoomUsersAllow_shouldNotShowSeveralUsersAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let callUseCase = MockCallUseCase()
@@ -258,6 +266,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_oneUserOnWaitingRoomAndBeingModeratorAndCallChangeTypeWaitingRoomUsersAllow_shouldNotShowOneUserAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
@@ -282,6 +291,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_callDestroyedUserIsCallerAndCallUINotVisible_shouldShowUpgradeToProAndTrackEvents() {
         let callUseCase = MockCallUseCase()
         let mockTracker = MockTracker()
@@ -306,6 +316,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testCallUpdate_callDestroyedUserIsCallerAndCallUIVisible_shouldNotShowUpgradeToPro() {
         let callUseCase = MockCallUseCase()
 
@@ -323,6 +334,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_callDestroyedUserIsNotCaller_shouldNotShowUpgradeToPro() {
         let callUseCase = MockCallUseCase()
 
@@ -340,6 +352,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_callPlusWaitingRoomExceedLimit_AdmitButtonDisabled() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
@@ -456,6 +469,8 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var startCallUI_calledTimes = 0
     var shouldBlockAddingUsersToCall_received = [Bool]()
 
+    nonisolated init() { }
+    
     func showOneUserWaitingRoomDialog(
         for username: String,
         chatName: String,
