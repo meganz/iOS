@@ -45,7 +45,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
         return Event()
     }
     
-    init(
+    nonisolated init(
         title: String = "",
         type: ScheduleMeetingViewConfigurationType = .new,
         meetingName: String = "",
