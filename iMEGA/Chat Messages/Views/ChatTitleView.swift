@@ -87,7 +87,7 @@ class ChatTitleView: UIView {
     
     private func updateAppearance() {
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        titleLabel.textColor = UIColor.mnz_navigationBarTitle(for: traitCollection)
+        titleLabel.textColor = UIColor.primaryTextColor()
         
         subtitleLabel.font = UIFont.systemFont(ofSize: 12)
         subtitleLabel.textColor = UIColor.mnz_subtitles()

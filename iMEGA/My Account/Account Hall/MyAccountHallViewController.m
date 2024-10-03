@@ -120,7 +120,7 @@
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated];
     
-    UIColor *primaryTextColor = [UIColor cellTitleColorFor:self.traitCollection];
+    UIColor *primaryTextColor = [UIColor primaryTextColor];
     
     self.nameLabel.textColor = primaryTextColor;
     self.addPhoneNumberTitle.textColor = primaryTextColor;

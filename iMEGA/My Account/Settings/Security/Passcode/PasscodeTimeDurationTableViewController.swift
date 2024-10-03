@@ -59,7 +59,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseId, for: indexPath)
-        cell.textLabel?.textColor = UIColor.mnz_primaryTextColor()
+        cell.textLabel?.textColor = UIColor.primaryTextColor()
         cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         cell.textLabel?.text = passcodeDurationInfoArray[indexPath.row].title
 

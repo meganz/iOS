@@ -96,8 +96,8 @@ class AppearanceManager: NSObject {
     }
     
     @objc class func forceNavigationBarTitleUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
-        navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
-        navigationBar.scrollEdgeAppearance?.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
+        navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: UIColor.primaryTextColor()]
+        navigationBar.scrollEdgeAppearance?.titleTextAttributes = [.foregroundColor: UIColor.primaryTextColor()]
     }
     
     @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar,
@@ -186,7 +186,7 @@ class AppearanceManager: NSObject {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.backgroundColor = .surface1Background()
-        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
+        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.primaryTextColor()]
         
         navigationBarAppearance.shadowImage = nil
         navigationBarAppearance.shadowColor = nil

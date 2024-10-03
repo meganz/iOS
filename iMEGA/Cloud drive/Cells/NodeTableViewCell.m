@@ -100,7 +100,7 @@
         self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColor];
     } else {
         self.nameLabel.text = node.name;
-        self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+        self.nameLabel.textColor = [UIColor primaryTextColor];
         self.subtitleLabel.textColor = [UIColor mnz_subtitles];
     }
     

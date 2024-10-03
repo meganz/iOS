@@ -59,7 +59,7 @@
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
 
-    self.twoFactorAuthenticationLabel.textColor = UIColor.mnz_primaryTextColor;
+    self.twoFactorAuthenticationLabel.textColor = UIColor.primaryTextColor;
 
     [self.tableView reloadData];
 }

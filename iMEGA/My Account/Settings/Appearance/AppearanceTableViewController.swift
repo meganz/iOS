@@ -127,7 +127,7 @@ class AppearanceTableViewController: UITableViewController {
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         
         [defaultTabLabel, sortingAndViewModeLabel, sortingAndViewModeLabel, mediaDiscoveryViewLabel, mediaDiscoverySubfolderLabel, hideRecentActivityLabel, hiddenItemsViewLabel]
-            .forEach { $0?.textColor = UIColor.mnz_primaryTextColor() }
+            .forEach { $0?.textColor = UIColor.primaryTextColor() }
         defaultTabDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
         
         tableView.reloadData()

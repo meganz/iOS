@@ -8,9 +8,9 @@ extension VideoUploadsTableViewController {
     }
     
     @objc func configLabelsTextColor() {
-        uploadVideosLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
-        hevcLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
-        videoQualityLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
-        h264Label?.textColor = UIColor.cellTitleColor(for: traitCollection)
+        uploadVideosLabel?.textColor = UIColor.primaryTextColor()
+        hevcLabel?.textColor = UIColor.primaryTextColor()
+        videoQualityLabel?.textColor = UIColor.primaryTextColor()
+        h264Label?.textColor = UIColor.primaryTextColor()
     }
 }
