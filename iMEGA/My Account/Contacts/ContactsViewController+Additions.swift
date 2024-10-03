@@ -137,7 +137,24 @@ extension ContactsViewController {
         )
         let hostingVC = UIHostingController(rootView: view)
         hostingVC.view.backgroundColor = .clear
+        hostingVC.view.translatesAutoresizingMaskIntoConstraints = false
         return hostingVC.view
+    }
+    
+    @objc
+    func layoutFooter() {
+        guard let footerView = tableView.tableFooterView else { return }
+        let width = self.tableView.bounds.size.width
+        let size = footerView.systemLayoutSizeFitting(
+            CGSize(
+                width: width,
+                height: UIView.layoutFittingCompressedSize.height
+            )
+        )
+        if footerView.frame.size.height != size.height {
+            footerView.frame.size.height = size.height
+            tableView.tableFooterView = footerView
+        }
     }
     
     @objc
@@ -150,8 +167,10 @@ extension ContactsViewController {
                 }
                 if let newEmptyView = createNewEmptyView() {
                     self.createNewChatEmptyView = newEmptyView
-                    tableViewFooter.addSubview(newEmptyView)
-                    tableViewFooter.wrap(newEmptyView, excludeConstraints: [.bottom])
+                    let view = UIView()
+                    view.wrap(newEmptyView, excludeConstraints: [])
+                    tableView.tableFooterView = view
+                    layoutFooter()
                 }
             } else {
                 tableViewFooter.subviews.forEach {
