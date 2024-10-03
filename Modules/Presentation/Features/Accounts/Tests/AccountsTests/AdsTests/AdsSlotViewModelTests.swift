@@ -39,9 +39,9 @@ final class AdsSlotViewModelTests: XCTestCase {
     
     // MARK: - Ads slot
     func testUpdateAdsSlot_externalAdsDisabled_shouldHideAds() async {
-        let sut = makeSUT(abTestProvider: MockABTestProvider(list: [.externalAds: .baseline]))
+        let sut = makeSUT(isExternalAdsFlagEnabled: false)
         
-        await sut.setupABTestVariant()
+        await sut.setupAdsRemoteFlag()
         await sut.updateAdsSlot(randomAdsSlotConfig)
         
         XCTAssertNil(sut.adsSlotConfig)
@@ -90,8 +90,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         line: UInt = #line
     ) async {
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlots)
-        let sut = makeSUT(adsSlotChangeStream: stream,
-                          abTestProvider: MockABTestProvider(list: [.externalAds: .variantA]))
+        let sut = makeSUT(adsSlotChangeStream: stream, isExternalAdsFlagEnabled: true)
         
         // Set initial AdSlot
         await sut.updateAdsSlot(randomAdsSlotConfig)
@@ -106,7 +105,7 @@ final class AdsSlotViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        await sut.setupABTestVariant()
+        await sut.setupAdsRemoteFlag()
         await sut.monitorAdsSlotChanges()
         await fulfillment(of: [exp], timeout: 0.5)
         
@@ -115,26 +114,26 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     func testInitializeGoogleAds_externalAdsEnabled_shouldInitialize() async {
-        await assertInitializingGoogleAds(adsVariant: .variantA, expectedCallCount: 1)
+        await assertInitializingGoogleAds(isExternalAdsFlagEnabled: true, expectedCallCount: 1)
     }
     
     func testInitializeGoogleAds_externalAdsDisabled_shouldNotInitialize() async {
-        await assertInitializingGoogleAds(adsVariant: .baseline, expectedCallCount: 0)
+        await assertInitializingGoogleAds(isExternalAdsFlagEnabled: false, expectedCallCount: 0)
     }
     
     private func assertInitializingGoogleAds(
-        adsVariant: ABTestVariant,
+        isExternalAdsFlagEnabled: Bool,
         expectedCallCount: Int,
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
         let adMobConsentManager = MockGoogleMobileAdsConsentManager()
         let sut = makeSUT(
-            abTestProvider: MockABTestProvider(list: [.externalAds: adsVariant]),
+            isExternalAdsFlagEnabled: isExternalAdsFlagEnabled,
             adMobConsentManager: adMobConsentManager
         )
         
-        await sut.setupABTestVariant()
+        await sut.setupAdsRemoteFlag()
         await sut.initializeGoogleAds()
         
         XCTAssertEqual(adMobConsentManager.initializeGoogleMobileAdsSDKCalledCount, expectedCallCount, file: file, line: line)
@@ -168,7 +167,7 @@ final class AdsSlotViewModelTests: XCTestCase {
     private func makeSUT(
         adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
         adsList: [String: String] = [:],
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.externalAds: .variantA]),
+        isExternalAdsFlagEnabled: Bool = true,
         adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = MockAppEnvironmentUseCase(),
         isNewAccount: Bool = false,
@@ -177,7 +176,7 @@ final class AdsSlotViewModelTests: XCTestCase {
     ) -> AdsSlotViewModel {
         let sut = AdsSlotViewModel(
             adsSlotChangeStream: adsSlotChangeStream,
-            abTestProvider: abTestProvider,
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(valueToReturn: isExternalAdsFlagEnabled),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase
         )

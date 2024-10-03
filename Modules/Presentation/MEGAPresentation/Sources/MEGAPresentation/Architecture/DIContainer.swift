@@ -29,6 +29,12 @@ public enum DIContainer {
     public static var abTestProvider: some ABTestProviderProtocol {
         ABTestProvider()
     }
+    
+    public static var remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol {
+        RemoteFeatureFlagUseCase(
+            repository: RemoteFeatureFlagRepository.newRepo
+        )
+    }
 }
 
 // MARK: - Audio Playback Continuation

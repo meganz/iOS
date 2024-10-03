@@ -5,7 +5,7 @@ import MEGAPresentation
 
 final public class TermsAndPoliciesViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
-    private var abTestProvider: any ABTestProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let router: TermsAndPoliciesRouting
     
     let privacyUrl = URL(string: "https://mega.io/privacy") ?? URL(fileURLWithPath: "")
@@ -14,11 +14,11 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     
     public init(
         accountUseCase: some AccountUseCaseProtocol,
-        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         router: TermsAndPoliciesRouting
     ) {
         self.accountUseCase = accountUseCase
-        self.abTestProvider = abTestProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.router = router
     }
     
@@ -26,10 +26,9 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     @MainActor
     func setupCookiePolicyURL() async {
         guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return }
-        
-        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
-        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
-        guard isAdsEnabled && isExternalAdsEnabled else {
+
+        let isExternalAdsEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+        guard isExternalAdsEnabled else {
             cookieUrl = cookiePolicyURL
             return
         }

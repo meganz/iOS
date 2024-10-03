@@ -38,7 +38,7 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
             router: self
         )
         
-        var accountsConfigs = AccountsConfig(onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
+        let accountsConfigs = AccountsConfig(onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
             primaryTextColor: TokenColors.Text.primary.swiftUI,
             primaryGrayTextColor: TokenColors.Text.primary.swiftUI,
             secondaryTextColor: TokenColors.Text.secondary.swiftUI,
