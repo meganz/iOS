@@ -46,6 +46,7 @@ enum ScheduleMeetingViewConfigurationCompletion: Sendable {
     }
 }
 
+@MainActor
 protocol ScheduleMeetingViewConfigurable: Sendable {
     var title: String { get }
     var type: ScheduleMeetingViewConfigurationType { get }
