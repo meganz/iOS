@@ -18,14 +18,6 @@ final class PlaylistHeaderFooterView: UITableViewHeaderFooterView {
         updateAppearance()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-    
     func configure(title: String) {
         typeLabel.text = title
     }

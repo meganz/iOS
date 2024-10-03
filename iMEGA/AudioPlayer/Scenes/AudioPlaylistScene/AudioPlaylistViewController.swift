@@ -50,19 +50,6 @@ final class AudioPlaylistViewController: UIViewController {
         playlistDelegate = AudioPlaylistIndexedDelegate(delegate: self, traitCollection: traitCollection)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
-            }
-            
-            updateAppearance()
-            reloadData(items: [])
-        }
-    }
-    
     deinit {
         viewModel.dispatch(.deinit)
     }

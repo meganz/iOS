@@ -54,27 +54,6 @@ final class MiniPlayerViewController: UIViewController {
         progressBarView.setNeedsDisplay()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
-            }
-            
-            updateAppearance()
-            collectionView.reloadData()
-        }
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { _ in
-            self.updateAppearance()
-        })
-    }
-    
     deinit {
         viewModel.dispatch(.deinit)
     }
