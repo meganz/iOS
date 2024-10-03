@@ -4,7 +4,7 @@ import MEGASwift
 
 public struct UploadFileRepository: UploadFileRepositoryProtocol {
     private let sdk: MEGASdk
-    private let cancelToken = MEGACancelToken()
+    private let cancelToken = ThreadSafeCancelToken()
 
     public init(sdk: MEGASdk) {
         self.sdk = sdk
@@ -23,7 +23,7 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         }
 
         guard let completion else {
-            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken)
+            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken.value)
             return
         }
 
@@ -31,7 +31,7 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         transferDelegate.start = start
         transferDelegate.progress = update
 
-        sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken, delegate: transferDelegate)
+        sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken.value, delegate: transferDelegate)
     }
     
     public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {
@@ -80,8 +80,6 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
     }
     
     public func cancelUploadTransfers() {
-        if !cancelToken.isCancelled {
-            cancelToken.cancel()
-        }
+        cancelToken.cancel()
     }
 }
