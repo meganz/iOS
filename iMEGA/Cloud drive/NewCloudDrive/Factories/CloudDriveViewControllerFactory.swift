@@ -605,8 +605,6 @@ struct CloudDriveViewControllerFactory {
         )
 
         let cloudDriveViewModeMonitoringService = CloudDriveViewModeMonitoringService(
-            nodeSource: nodeSource,
-            currentViewMode: initialViewMode,
             viewModeProvider: viewModeAsyncProvider
         )
 

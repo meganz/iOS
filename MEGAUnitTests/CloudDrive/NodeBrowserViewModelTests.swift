@@ -9,6 +9,7 @@ import MEGASwift
 import MEGAUIKit
 import Search
 import SearchMock
+import SwiftUI
 import XCTest
 
 struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
@@ -24,24 +25,23 @@ struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
 }
 
 final class MockCloudDriveViewModeMonitoringService: @unchecked Sendable, CloudDriveViewModeMonitoring {
-    lazy var viewModes: AsyncStream<ViewModePreferenceEntity> = {
-        AsyncStream(bufferingPolicy: .bufferingNewest(1)) { continuation in
-            self.continuation = continuation
+    private var continuations: [AsyncStream<ViewModePreferenceEntity>.Continuation] = []
+    private(set) var count = 0
+
+    func updatedViewModes(
+        with nodeSource: NodeSource,
+        currentViewMode: ViewModePreferenceEntity
+    ) -> AnyAsyncSequence<ViewModePreferenceEntity> {
+        count += 1
+        return AsyncStream(bufferingPolicy: .bufferingNewest(1)) {
+            continuations.append($0)
         }
-    }()
-
-    private var continuation: AsyncStream<ViewModePreferenceEntity>.Continuation?
-    var nodeSource: NodeSource
-    var currentViewMode: ViewModePreferenceEntity
-
-    init(nodeSource: NodeSource, currentViewMode: ViewModePreferenceEntity) {
-        self.nodeSource = nodeSource
-        self.currentViewMode = currentViewMode
+        .eraseToAnyAsyncSequence()
     }
 
     @MainActor
     func send(event: ViewModePreferenceEntity) {
-        continuation?.yield(event)
+        continuations.forEach { $0.yield(event) }
     }
 }
 
@@ -95,11 +95,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             
             self.updateTransferWidgetHandler = updateTransferWidgetHandler
             self.nodesUpdateListener = MockSDKNodesUpdateListenerRepository.newRepo
-            self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService(
-                nodeSource: nodeSource,
-                currentViewMode: defaultViewMode
-            )
-
+            self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService()
             self.nodeUseCase = MockNodeDataUseCase(nodes: [node])
 
             sut = NodeBrowserViewModel(
@@ -421,6 +417,12 @@ class NodeBrowserViewModelTests: XCTestCase {
     func assertCloudDriveContextMenuFactory(withNodeAsSensitive isSensitive: Bool) async {
         let node = NodeEntity(handle: 100)
         let harness = Harness(node: node)
+
+        // Making sure that the async sequence is created
+        while harness.cloudDriveViewModeMonitoringService.count != 1 {
+            try? await Task.sleep(nanoseconds: 10_000_000)
+        }
+
         let exp = expectation(description: "wait for refresh menu to trigger")
 
         let cancellable = harness.sut.$contextMenuViewFactory.sink { updatedFactory in
@@ -628,7 +630,38 @@ class NodeBrowserViewModelTests: XCTestCase {
         harness.sut.onViewAppear()
         XCTAssertNil(harness.sut.currentBannerViewModel, "No banner should be shown for \(displayMode).")
     }
-    
+
+    @MainActor
+    func testUpdatedViewModesTask_whenUpdatedMultipleTimes_shouldCancelPreviouslyCreatedTasks() async {
+        let harness = Harness(node: .init())
+        harness.sut.viewMode = .thumbnail
+        harness.sut.viewMode = .list
+        harness.sut.viewMode = .thumbnail
+        harness.sut.viewMode = .list
+        harness.sut.viewMode = .thumbnail
+        harness.sut.viewMode = .list
+
+        // Making sure that the async sequence is created
+        while harness.cloudDriveViewModeMonitoringService.count != 7 {
+            try? await Task.sleep(nanoseconds: 10_000_000)
+        }
+
+        let expectation = expectation(description: "wait for view mode to be updated")
+        let cancellable = harness
+            .sut
+            .$viewMode
+            .dropFirst()
+            .sink { viewMode in
+                if viewMode == .thumbnail {
+                    expectation.fulfill()
+                }
+            }
+
+        harness.cloudDriveViewModeMonitoringService.send(event: .thumbnail)
+        await fulfillment(of: [expectation], timeout: 2.0)
+        cancellable.cancel()
+    }
+
     private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
         AsyncStream { continuation in
             for update in updates {
@@ -742,6 +775,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             }
 
         await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
     }
 
     @MainActor private func assertChangeSortOrder(
