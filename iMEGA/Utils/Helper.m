@@ -28,7 +28,6 @@
 #endif
 
 #import "NodeTableViewCell.h"
-#import "PhotoCollectionViewCell.h"
 
 @import LogRepo;
 @import MEGAL10nObjc;
@@ -400,9 +399,6 @@
         if ([cell isKindOfClass:[NodeTableViewCell class]]) {
             NodeTableViewCell *nodeTableViewCell = cell;
             [nodeTableViewCell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
-        } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
-            PhotoCollectionViewCell *photoCollectionViewCell = cell;
-            [photoCollectionViewCell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
         }
     }
 }
@@ -413,9 +409,6 @@
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         nodeTableViewCell.thumbnailPlayImageView.hidden = ![FileExtensionGroupOCWrapper verifyIsVideo:node.name];
-    } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
-        PhotoCollectionViewCell *photoCollectionViewCell = cell;
-        [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
     }
 }
 
