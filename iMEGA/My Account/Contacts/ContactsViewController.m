@@ -860,6 +860,11 @@
     }
 }
 
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    [self layoutFooter];
+}
+
 - (void)insertItemListSubviewWithCompletion:(void (^ __nullable)(void))completion {
     [UIView animateWithDuration:.25 animations:^{
         self.itemListViewHeightConstraint.constant = 110;
