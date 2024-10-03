@@ -637,26 +637,23 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
 
     // MARK: - Ads
-    @MainActor func testSetupExternalAds_adsEnabledAndExternalAdsDisabled_shouldBeFalse() async {
-        let sut = await makeSUT(
-            accountDetails: AccountDetailsEntity.build(proLevel: .free),
-            abTestProvider: MockABTestProvider(list: [.ads: .variantA, .externalAds: .baseline])
-        )
-        
-        await sut.setUpExternalAds()
-        
-        XCTAssertFalse(sut.isExternalAdsActive)
+    @MainActor func testSetupExternalAds_externalAdsEnabled_shouldBeTrue() async {
+        await assertSetupExternalAds(isExternalAdsFlagEnabled: true)
     }
     
-    @MainActor func testSetupExternalAds_adsEnabledAndExternalAdsEnabled_shouldBeTrue() async {
+    @MainActor func testSetupExternalAds_externalAdsDisabled_shouldBeFalse() async {
+        await assertSetupExternalAds(isExternalAdsFlagEnabled: false)
+    }
+    
+    @MainActor func assertSetupExternalAds(isExternalAdsFlagEnabled: Bool) async {
         let sut = await makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
-            abTestProvider: MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA])
+            isExternalAdsFlagEnabled: isExternalAdsFlagEnabled
         )
         
         await sut.setUpExternalAds()
         
-        XCTAssertTrue(sut.isExternalAdsActive)
+        XCTAssertEqual(sut.isExternalAdsActive, isExternalAdsFlagEnabled)
     }
     
     // - MARK: Track events
@@ -697,7 +694,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA]),
+        isExternalAdsFlagEnabled: Bool = true,
         tracker: MockTracker = MockTracker(),
         viewType: UpgradeAccountPlanViewType = .upgrade,
         file: StaticString = #file,
@@ -711,7 +708,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
-            abTestProvider: abTestProvider,
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(valueToReturn: isExternalAdsFlagEnabled),
             tracker: tracker,
             viewType: viewType,
             router: router

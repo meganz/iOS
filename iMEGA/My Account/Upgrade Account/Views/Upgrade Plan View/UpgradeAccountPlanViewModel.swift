@@ -25,7 +25,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
-    private var abTestProvider: any ABTestProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
     private var planList: [PlanEntity] = []
@@ -62,7 +62,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
-        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
         router: any UpgradeAccountPlanRouting
@@ -71,7 +71,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.purchaseUseCase = purchaseUseCase
         self.subscriptionsUseCase = subscriptionsUseCase
         self.accountDetails = accountDetails
-        self.abTestProvider = abTestProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.tracker = tracker
         self.viewType = viewType
         self.router = router
@@ -86,9 +86,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     // MARK: - Setup
     func setUpExternalAds() async {
-        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
-        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
-        isExternalAdsActive = isAdsEnabled && isExternalAdsEnabled
+        isExternalAdsActive = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
     }
     
     func startPurchaseUpdatesMonitoring() async throws {

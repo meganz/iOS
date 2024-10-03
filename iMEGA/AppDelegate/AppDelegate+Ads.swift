@@ -1,5 +1,6 @@
 import Accounts
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 
@@ -16,6 +17,7 @@ extension AppDelegate {
     }
     
     func showAdMobConsentIfNeeded(isFromCookieDialog: Bool = false) async {
+        guard await DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) else { return }
         do {
             try await GoogleMobileAdsConsentManager.shared.gatherConsent()
             await GoogleMobileAdsConsentManager.shared.initializeGoogleMobileAdsSDK()
