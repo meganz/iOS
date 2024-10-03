@@ -102,6 +102,8 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
         switch warningType {
         case .fullStorageOverQuota:
             tracker.trackAnalyticsEvent(with: FullStorageOverQuotaBannerDisplayedEvent())
+        case .almostFullStorageOverQuota:
+            tracker.trackAnalyticsEvent(with: AlmostFullStorageOverQuotaBannerDisplayedEvent())
         default: break
         }
     }
@@ -115,6 +117,12 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     }
     
     func onCloseButtonTapped() {
+        switch warningType {
+        case .almostFullStorageOverQuota:
+            tracker.trackAnalyticsEvent(with: AlmostFullStorageOverQuotaBannerCloseButtonPressedEvent())
+        default: break
+        }
+        
         closeButtonAction?()
     }
     
@@ -122,6 +130,9 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
         switch warningType {
         case .fullStorageOverQuota:
             tracker.trackAnalyticsEvent(with: FullStorageOverQuotaBannerUpgradeButtonPressedEvent())
+            router?.presentUpgradeScreen()
+        case .almostFullStorageOverQuota:
+            tracker.trackAnalyticsEvent(with: AlmostFullStorageOverQuotaBannerUpgradeButtonPressedEvent())
             router?.presentUpgradeScreen()
         default: break
         }
