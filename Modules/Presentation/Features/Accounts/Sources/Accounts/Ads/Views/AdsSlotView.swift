@@ -26,7 +26,7 @@ public struct AdsSlotView<T: View>: View {
             }
         }
         .task {
-            await viewModel.setupABTestVariant()
+            await viewModel.setupAdsRemoteFlag()
             await viewModel.initializeGoogleAds()
             await viewModel.monitorAdsSlotChanges()
         }
