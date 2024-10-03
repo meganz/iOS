@@ -15,7 +15,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/testCookie"))
         let sut = makeSUT(
             sessionTransferURLResult: .success(expectedURL),
-            abTestProvider: MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA])
+            isExternalAdsFlagEnabled: true
         )
         
         await sut.setupCookiePolicyURL()
@@ -26,7 +26,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
     func testSetupCookiePolicyURL_adsFlagEnabled_failedSessionTransferURL_shouldReturnDefaultURL() async throws {
         let sut = makeSUT(
             sessionTransferURLResult: .failure(.generic),
-            abTestProvider: MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA])
+            isExternalAdsFlagEnabled: true
         )
         
         await sut.setupCookiePolicyURL()
@@ -38,7 +38,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/testCookie"))
         let sut = makeSUT(
             sessionTransferURLResult: .success(expectedURL),
-            abTestProvider: MockABTestProvider(list: [.ads: .baseline])
+            isExternalAdsFlagEnabled: false
         )
         
         await sut.setupCookiePolicyURL()
@@ -49,7 +49,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
     // MARK: Helper
     private func makeSUT(
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .success(URL(fileURLWithPath: "")),
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA]),
+        isExternalAdsFlagEnabled: Bool = true,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> TermsAndPoliciesViewModel {
@@ -58,7 +58,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         let router = TermsAndPoliciesRouter(accountUseCase: accountUseCase)
         let sut = TermsAndPoliciesViewModel(
             accountUseCase: accountUseCase,
-            abTestProvider: abTestProvider,
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(valueToReturn: isExternalAdsFlagEnabled),
             router: router
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

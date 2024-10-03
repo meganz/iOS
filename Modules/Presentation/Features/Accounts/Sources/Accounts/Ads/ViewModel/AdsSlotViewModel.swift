@@ -5,7 +5,7 @@ import MEGASwift
 import SwiftUI
 
 final public class AdsSlotViewModel: ObservableObject {
-    private let abTestProvider: any ABTestProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let adsSlotChangeStream: any AdsSlotChangeStreamProtocol
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
@@ -22,12 +22,12 @@ final public class AdsSlotViewModel: ObservableObject {
     
     public init(
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
-        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared
     ) {
         self.adsSlotChangeStream = adsSlotChangeStream
-        self.abTestProvider = abTestProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
     }
@@ -50,10 +50,10 @@ final public class AdsSlotViewModel: ObservableObject {
         await adMobConsentManager.initializeGoogleMobileAdsSDK()
     }
 
-    // MARK: AB Test
+    // MARK: Remote Flag
     @MainActor
-    func setupABTestVariant() async {
-        isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
+    func setupAdsRemoteFlag() async {
+        isExternalAdsEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
     }
     
     // MARK: Ads Slot changes

@@ -14,9 +14,6 @@ public enum ABTestFlagKey: ABTestFlagName, CaseIterable, Sendable {
     // This flag is part of real experiment related to the advertisement feature to know whether user will see an ad or not
     case ads = "ads"
     
-    // This flag is part of real experiment related to the advertisement feature that will provide value if external ads is enabled for user.
-    case externalAds = "adse"
-    
     // This flag is part of real experiment related to the onboarding pro plan upselling dialog feature. Contains baseline, variantA and variantB group.
     case onboardingUpsellingDialog = "obusd"
 }
