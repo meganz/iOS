@@ -500,7 +500,6 @@
 		41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A72F1E1C22EA1600516603 /* LTHPasscodeViewController.bundle */; };
 		41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */; };
 		41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
-		41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
 		41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */; };
 		41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */; };
@@ -1286,7 +1285,6 @@
 		9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
 		9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A72F1E1C22EA1600516603 /* LTHPasscodeViewController.bundle */; };
 		9411355C1F01008400D33428 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
-		941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		941255522BED03C700058C0D /* CallKitCallManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941255512BED03C700058C0D /* CallKitCallManagerTests.swift */; };
@@ -3266,8 +3264,6 @@
 		41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityOptionsTableViewController.m; sourceTree = "<group>"; };
 		41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		41AB8EC01A7103B300E40A39 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
-		41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		41AC66461AB1D493003FE8DA /* AboutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTableViewController.h; sourceTree = "<group>"; };
 		41AC66471AB1D493003FE8DA /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
 		41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
@@ -7297,8 +7293,6 @@
 				0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */,
 				411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */,
 				411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */,
-				41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */,
-				41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */,
 				41BADDAE1A8E28FD008408B3 /* Photos.storyboard */,
 				122B956D287CC7AA00860FE1 /* PhotosFilterOptions.swift */,
 				41BADDB41A8E2E92008408B3 /* PhotosViewController.h */,
@@ -15554,7 +15548,6 @@
 				B677DC212787E38300EC30AC /* PhotoChronologicalCategory+Refresh.swift in Sources */,
 				B67507CF27694F120034F951 /* PhotoChronologicalCategory.swift in Sources */,
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
-				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				257F0B522AEEFB6400216F79 /* PhotoDateSection+Additions.swift in Sources */,
 				123AEFF627BEE20400E6A0A7 /* PhotoDateSection.swift in Sources */,
 				B6E5D24E274C2E8600C8AB96 /* PhotoDayCard.swift in Sources */,
@@ -16336,7 +16329,6 @@
 				B620C05E2845BB9A003CEEE7 /* PHAsset+CU.swift in Sources */,
 				B620C0662845BC37003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
-				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,

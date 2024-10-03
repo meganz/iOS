@@ -13,7 +13,6 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "UICollectionView+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "PhotoCollectionViewCell.h"
 #import "CameraUploadsTableViewController.h"
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
