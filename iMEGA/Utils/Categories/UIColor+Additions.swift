@@ -340,10 +340,6 @@ extension UIColor {
         }
     }
     
-    @objc class func mnz_Elevated() -> UIColor {
-        TokenColors.Background.surface1
-    }
-    
     @objc class func mnz_badgeTextColor() -> UIColor {
         TokenColors.Text.onColor
     }
@@ -378,12 +374,6 @@ extension UIColor {
         _ traitCollection: UITraitCollection
     ) -> UIColor {
         TokenColors.Support.success
-    }
-    
-    class func mnz_emoji(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Background.surface1
     }
     
     // MARK: - Text
@@ -691,10 +681,6 @@ extension UIColor {
     }
     
     // MARK: White
-    
-    @objc class func mnz_whiteF7F7F7() -> UIColor {
-        TokenColors.Background.surface1
-    }
     
     @objc class func mnz_whiteFFFFFF() -> UIColor {
         UIColor.whiteFFFFFF
