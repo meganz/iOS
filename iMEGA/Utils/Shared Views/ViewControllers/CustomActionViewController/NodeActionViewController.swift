@@ -13,6 +13,7 @@ import MEGASwift
     @objc optional func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any)
 }
 
+@MainActor
 @objc protocol NodeAccessoryActionDelegate {
     @objc optional func nodeAccessoryAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType)
 }

@@ -1,7 +1,6 @@
 import Foundation
 
 @objc final class DefaultNodeAccessoryActionDelegate: NSObject, NodeAccessoryActionDelegate {
-    @MainActor
     func nodeAccessoryAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType) {
         switch action {
         case .hide:
@@ -9,5 +8,9 @@ import Foundation
                 .showOnboardingInfo()
         default: break
         }
+    }
+    
+    nonisolated override init() {
+        super.init()
     }
 }
