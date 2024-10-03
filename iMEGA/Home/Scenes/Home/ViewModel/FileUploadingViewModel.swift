@@ -5,11 +5,13 @@ import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
 
+@MainActor
 protocol HomeUploadingViewModelInputs {
 
     func viewIsReady()
 }
 
+@MainActor
 protocol HomeUploadingViewModelOutputs {
 
     var state: HomeUploadingViewState { get }
@@ -19,6 +21,7 @@ protocol HomeUploadingViewModelOutputs {
     var contextMenu: UIMenu? { get }
 }
 
+@MainActor
 protocol HomeUploadingViewModelType {
 
     var inputs: any HomeUploadingViewModelInputs { get }
@@ -33,7 +36,6 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     
     // MARK: - HomeUploadingViewModelInputs
 
-    @MainActor
     func viewIsReady() {
         self.contextMenuManager = ContextMenuManager(
             uploadAddMenuDelegate: self,
@@ -44,7 +46,6 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         startMonitoringNetworkChanges()
     }
 
-    @MainActor
     private func startMonitoringNetworkChanges() {
         let connectionSequence = networkMonitorUseCase.connectionSequence
         

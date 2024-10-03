@@ -10,6 +10,7 @@ import MEGATest
 import XCTest
 
 final class HomeUploadingViewModelTests: XCTestCase {
+    @MainActor
     private func makeSUT(tracker: some AnalyticsTracking = MockTracker()) -> HomeUploadingViewModel {
         HomeUploadingViewModel(
             uploadFilesUseCase: UploadPhotoAssetsUseCase(
@@ -23,6 +24,7 @@ final class HomeUploadingViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func trackAnalyticsEventTest(
         action: UploadAddActionEntity,
         expectedEvent: some EventIdentifier
@@ -40,14 +42,6 @@ final class HomeUploadingViewModelTests: XCTestCase {
     
     @MainActor
     private func verifyNetworkConnectivity(isConnected: Bool) async {
-        let networkUseCase = MockNetworkMonitorUseCase(
-            connected: isConnected,
-            connectionSequence: AsyncStream { continuation in
-                continuation.yield(isConnected)
-                continuation.finish()
-            }.eraseToAnyAsyncSequence()
-        )
-        
         let sut = makeSUT()
         
         sut.notifyUpdate = { outputs in
@@ -55,6 +49,7 @@ final class HomeUploadingViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func test_didTapUploadFromPhotoAlbum_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .chooseFromPhotos,
@@ -62,6 +57,7 @@ final class HomeUploadingViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_didTapUploadFromImports_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .importFrom,
