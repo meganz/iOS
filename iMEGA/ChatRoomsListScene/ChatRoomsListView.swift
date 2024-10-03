@@ -27,6 +27,7 @@ struct ChatRoomsListView: View {
                 content()
             }
         }
+        .background()
         .onAppear {
             viewModel.loadChatRoomsIfNeeded()
         }
