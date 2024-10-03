@@ -15,7 +15,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        registerForTraitChanges()
+        configureViewsColor()
     }
     
     override func prepareForReuse() {
@@ -25,32 +25,8 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     }
     
     // MARK: - Private functions
-    private func style(with trait: UITraitCollection) {
-        configureViewsColor(trait: trait)
-    }
     
-    private func registerForTraitChanges() {
-        guard #available(iOS 17.0, *) else { return }
-        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { [weak self] (cell: PlaylistItemTableViewCell, previousTraitCollection: UITraitCollection) in
-            self?.handleTraitCollectionChange(previousTraitCollection, newestTraitCollection: cell.traitCollection)
-        })
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if #unavailable(iOS 17.0) {
-            guard let previousTraitCollection else { return }
-            handleTraitCollectionChange(previousTraitCollection, newestTraitCollection: traitCollection)
-        }
-    }
-    
-    private func handleTraitCollectionChange(_ previousTraitCollection: UITraitCollection, newestTraitCollection: UITraitCollection) {
-        if newestTraitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
-            configureViewsColor(trait: newestTraitCollection)
-        }
-    }
-    
-    private func configureViewsColor(trait: UITraitCollection) {
+    private func configureViewsColor() {
         titleLabel.textColor = TokenColors.Text.primary
         artistLabel.textColor = TokenColors.Text.secondary
         
@@ -88,7 +64,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     
     // MARK: - Internal functions
     func configure(item: AudioPlayerItem?) {
-        style(with: traitCollection)
+        configureViewsColor()
         
         self.item = item
         titleLabel.text = item?.name

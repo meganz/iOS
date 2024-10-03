@@ -82,27 +82,6 @@ final class AudioPlayerViewController: UIViewController {
         viewModel.dispatch(.viewDidDissapear)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let navController = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(navController.navigationBar, traitCollection: traitCollection)
-                AppearanceManager.forceToolbarUpdate(navController.toolbar, traitCollection: traitCollection)
-            }
-            style(with: traitCollection)
-        }
-    }
-    
-    override public func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            guard let `self` = self else { return }
-            self.style(with: self.traitCollection)
-        })
-    }
-    
     deinit {
         viewModel.dispatch(.deinit)
         removeDelegates()
@@ -321,7 +300,7 @@ final class AudioPlayerViewController: UIViewController {
     private func updateAppearance() {
         updateCloseButtonState()
         updateMoreButtonState()
-        style(with: traitCollection)
+        style()
         imageView.applyShadow(in: imageViewContainerView, alpha: 0.24, x: 0, y: 1.5, blur: 16, spread: 0)
         
         let playbackControlButtons = [ goBackwardButton, previousButton, playPauseButton, nextButton, goForwardButton ]
@@ -376,7 +355,7 @@ final class AudioPlayerViewController: UIViewController {
         view.backgroundColor = TokenColors.Background.page
     }
     
-    private func style(with trait: UITraitCollection) {
+    private func style() {
         titleLabel.textColor = TokenColors.Text.primary
         subtitleLabel.textColor = TokenColors.Text.secondary
         detailLabel.textColor = TokenColors.Text.secondary
