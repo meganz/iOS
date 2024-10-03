@@ -31,6 +31,7 @@ struct ScheduledMeetingOccurrencesView: View {
                         await viewModel.seeMoreTapped()
                     }
                 }
+                .background()
                 .listRowSeparator(.hidden)
             }
         }
@@ -53,7 +54,11 @@ struct ScheduledMeetingOccurrencesContentView: View {
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     var body: some View {
-        OccurrenceView(occurrence: occurrence, chatRoomAvatarViewModel: chatRoomAvatarViewModel)
-            .listRowSeparator(.hidden)
+        OccurrenceView(
+            occurrence: occurrence,
+            chatRoomAvatarViewModel: chatRoomAvatarViewModel
+        )
+        .background()
+        .listRowSeparator(.hidden)
     }
 }
