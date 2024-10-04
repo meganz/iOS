@@ -2243,9 +2243,6 @@
 		BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */; };
 		BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */; };
 		BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */; };
-		BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */; };
-		BF5E33922558D2890055395E /* FileExplorerGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF5E33902558D2890055395E /* FileExplorerGridCell.xib */; };
-		BF5E33A02558D3EB0055395E /* FileExplorerGridCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E339F2558D3EB0055395E /* FileExplorerGridCellViewModel.swift */; };
 		BF5E33AF2558D8330055395E /* FilesExplorerGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33AD2558D8330055395E /* FilesExplorerGridViewController.swift */; };
 		BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33BD2558D99C0055395E /* FilesExplorerContainerViewController.swift */; };
 		BF5E33FC2559E29B0055395E /* FilesExplorerContainerViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33FB2559E29B0055395E /* FilesExplorerContainerViewState.swift */; };
@@ -5068,9 +5065,6 @@
 		BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+SemanticColors.swift"; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
 		BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
-		BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExplorerGridCell.swift; sourceTree = "<group>"; };
-		BF5E33902558D2890055395E /* FileExplorerGridCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileExplorerGridCell.xib; sourceTree = "<group>"; };
-		BF5E339F2558D3EB0055395E /* FileExplorerGridCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExplorerGridCellViewModel.swift; sourceTree = "<group>"; };
 		BF5E33AD2558D8330055395E /* FilesExplorerGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerGridViewController.swift; sourceTree = "<group>"; };
 		BF5E33BD2558D99C0055395E /* FilesExplorerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerContainerViewController.swift; sourceTree = "<group>"; };
 		BF5E33FB2559E29B0055395E /* FilesExplorerContainerViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerContainerViewState.swift; sourceTree = "<group>"; };
@@ -8245,7 +8239,6 @@
 		5D570D0B2537E702006C5670 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5D570D0E2537E83C006C5670 /* Cells */,
 				BF5E34152559E39A0055395E /* ExplorerContainerState */,
 				5D62D89824D150590004301A /* ExploreView */,
 				5D9DE5B2254BE9C400FA69C8 /* SearchController */,
@@ -8284,15 +8277,6 @@
 				BFAFB142252AC6ED003ADFE3 /* FilesExplorerRouter.swift */,
 			);
 			path = Router;
-			sourceTree = "<group>";
-		};
-		5D570D0E2537E83C006C5670 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */,
-				BF5E33902558D2890055395E /* FileExplorerGridCell.xib */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		5D5BFC9D24BD6B4900845194 /* Home */ = {
@@ -8533,7 +8517,6 @@
 				B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */,
 				B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */,
 				B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */,
-				BF5E339F2558D3EB0055395E /* FileExplorerGridCellViewModel.swift */,
 				BF5E345E255A2E1A0055395E /* FilesExplorerGridSource.swift */,
 				BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */,
 				BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */,
@@ -14052,7 +14035,6 @@
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
-				BF5E33922558D2890055395E /* FileExplorerGridCell.xib in Resources */,
 				C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */,
 				A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */,
 				C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */,
@@ -14962,8 +14944,6 @@
 				B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */,
 				A8754A292A331B39007475C2 /* FileAttributeGenerator.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
-				BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */,
-				BF5E33A02558D3EB0055395E /* FileExplorerGridCellViewModel.swift in Sources */,
 				A8F1D1072A5ECB09000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
