@@ -165,6 +165,8 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private nonisolated func preparePlayer() async {
+        configEntity.playerHandler.addPlayer(listener: self)
+        
         if configEntity.playerType == .offline {
             guard let offlineFilePaths = configEntity.relatedFiles else {
                 await dismiss()
