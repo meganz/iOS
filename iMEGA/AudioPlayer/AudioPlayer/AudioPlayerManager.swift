@@ -112,11 +112,20 @@ import MEGASDKRepo
     }
     
     func addPlayer(listener: any AudioPlayerObserversProtocol) {
-        player?.add(listener: listener)
+        if !isPlayerListened(by: listener) {
+            player?.add(listener: listener)
+        }
     }
     
     func removePlayer(listener: any AudioPlayerObserversProtocol) {
         player?.remove(listener: listener)
+    }
+    
+    private func isPlayerListened(by listener: any AudioPlayerObserversProtocol) -> Bool {
+        guard let listeners = player?.listenerManager.listeners else {
+            return false
+        }
+        return listeners.contains { $0 === listener }
     }
     
     func addPlayer(tracks: [AudioPlayerItem]) {
