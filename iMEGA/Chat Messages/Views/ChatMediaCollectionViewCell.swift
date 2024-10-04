@@ -163,11 +163,13 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         
         if FileManager.default.fileExists(atPath: previewFilePath) || FileManager.default.fileExists(atPath: originalImagePath) {
             loadingIndicator.stopAnimating()
-            if let previewImage = UIImage(contentsOfFile: previewFilePath) ?? UIImage(contentsOfFile: originalImagePath),
-                (previewImage.size.width / previewImage.size.height).precised(2) != (messageContainerView.frame.width / messageContainerView.frame.height).precised(2),
-                messagesCollectionView.numberOfSections > indexPath.section {
-                imageView.image = nil
-                messagesCollectionView.reloadItems(at: [indexPath])
+            if #unavailable(iOS 18.0) {
+                if let previewImage = UIImage(contentsOfFile: previewFilePath) ?? UIImage(contentsOfFile: originalImagePath),
+                    (previewImage.size.width / previewImage.size.height).precised(2) != (messageContainerView.frame.width / messageContainerView.frame.height).precised(2),
+                    messagesCollectionView.numberOfSections > indexPath.section {
+                    imageView.image = nil
+                    messagesCollectionView.reloadItems(at: [indexPath])
+                }
             }
         } else {
             downloadGifIcon.isHidden = true
