@@ -44,7 +44,7 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
         )
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
         collectionView.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)
-        context.coordinator.configureDataSource(for: collectionView)
+        context.coordinator.configure(collectionView)
         return collectionView
     }
     

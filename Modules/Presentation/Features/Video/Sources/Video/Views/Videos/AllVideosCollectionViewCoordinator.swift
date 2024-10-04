@@ -48,9 +48,23 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         self.videoConfig = representer.videoConfig
     }
     
-    func configureDataSource(for collectionView: UICollectionView) {        
+    func configure(_ collectionView: UICollectionView) {
+        configureDataSource(for: collectionView)
+        
+        if viewContext() == .playlistContent {
+            configureDragDropInteraction(for: collectionView)
+        }
+    }
+    
+    private func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
         collectionView.dataSource = dataSource
+    }
+    
+    private func configureDragDropInteraction(for collectionView: UICollectionView) {
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+        collectionView.dragInteractionEnabled = true
     }
     
     private func makeDataSource(for collectionView: UICollectionView) -> DiffableDataSource {
@@ -165,4 +179,87 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     private func onTapMoreOptions(_ video: NodeEntity, sender: Any) {
         representer.router.openMoreOptions(for: video, sender: sender)
     }
+}
+
+// MARK: - Drag & Drop Extension
+
+extension AllVideosCollectionViewCoordinator: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+    
+    // MARK: - UICollectionViewDragDelegate
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        guard let rowItem = dataSource?.itemIdentifier(for: indexPath) else { return [] }
+        let itemProvider = NSItemProvider(object: rowItem.node.id.description as NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = rowItem
+        return [dragItem]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+        self.collectionView(collectionView, itemsForBeginning: session, at: indexPath)
+    }
+    
+    // MARK: - UICollectionViewDropDelegate
+    
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
+        
+        if coordinator.proposal.operation == .move {
+            reorderItems(coordinator: coordinator, destinationIndexPath: destinationIndexPath, collectionView: collectionView)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+    
+    private func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
+        let items = coordinator.items
+        guard let sourceIndexPath = items.first?.sourceIndexPath else { return }
+        
+        collectionView.performBatchUpdates {
+            guard let item = dataSource?.itemIdentifier(for: sourceIndexPath) else { return }
+            guard var snapshot = dataSource?.snapshot() else { return }
+            
+            snapshot.deleteItems([item])
+            
+            switch itemDragDirectionType(destination: destinationIndexPath, source: sourceIndexPath) {
+            case .none:
+                guard let dragItem = items.first?.dragItem else { return }
+                handleDrop(dragItem, toItemAt: destinationIndexPath, on: coordinator)
+                return
+            case .downward:
+                guard let afterItem = dataSource?.itemIdentifier(for: destinationIndexPath) else { return }
+                snapshot.insertItems([item], afterItem: afterItem)
+            case .upward:
+                guard let beforeItem = dataSource?.itemIdentifier(for: destinationIndexPath) else { return }
+                snapshot.insertItems([item], beforeItem: beforeItem)
+            }
+            
+            dataSource?.apply(snapshot, animatingDifferences: true)
+        }
+        
+        guard let dragItem = items.first?.dragItem else { return }
+        handleDrop(dragItem, toItemAt: destinationIndexPath, on: coordinator)
+    }
+    
+    private func itemDragDirectionType(destination destinationIndexPath: IndexPath, source sourceIndexPath: IndexPath) -> ItemDragDirectionType {
+        if destinationIndexPath == sourceIndexPath {
+            .none
+        } else if destinationIndexPath.row > sourceIndexPath.row {
+            .downward
+        } else {
+            .upward
+        }
+    }
+    
+    private func handleDrop(_ dragItem: UIDragItem, toItemAt indexPath: IndexPath, on coordinator: UICollectionViewDropCoordinator) {
+        coordinator.drop(dragItem, toItemAt: indexPath)
+    }
+}
+
+private enum ItemDragDirectionType {
+    case downward
+    case upward
+    case none
 }
