@@ -32,6 +32,7 @@ final class NodeActionBuilder {
     private var isHidden: Bool?
     private var hasValidProOrUnexpiredBusinessAccount: Bool = false
     private var isHiddenNodesFeatureEnabled: Bool = false
+    private var addToDestination: NodeActionAddToDestination = .none
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -175,6 +176,11 @@ final class NodeActionBuilder {
     
     func setIsHiddenNodesFeatureEnabled(_ isHiddenNodesFeatureEnabled: Bool) -> NodeActionBuilder {
         self.isHiddenNodesFeatureEnabled = isHiddenNodesFeatureEnabled
+        return self
+    }
+    
+    func setAddToDestination(_ destination: NodeActionAddToDestination) -> Self {
+        self.addToDestination = destination
         return self
     }
     
@@ -586,6 +592,8 @@ final class NodeActionBuilder {
             nodeActions.append(.moveAction())
         }
         
+        addToDestinationAction(actions: &nodeActions)
+        
         nodeActions.append(.copyAction())
         
         if !isBackupNode {
@@ -744,7 +752,9 @@ final class NodeActionBuilder {
             if let hiddenStateAction = hiddenStateAction() {
                 actions.append(hiddenStateAction)
             }
-            actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
+            actions.append(.moveAction())
+            addToDestinationAction(actions: &actions)
+            actions.append(contentsOf: [.copyAction(), .moveToRubbishBinAction()])
         }
         
         if linkedNodeCount > 0 {
@@ -855,5 +865,16 @@ final class NodeActionBuilder {
             hiddenStateAction(),
             .moveVideoInVideoPlaylistContentToRubbishBinAction()
         ].compactMap { $0 }
+    }
+    
+    private func addToDestinationAction(actions: inout [NodeAction]) {
+        switch addToDestination {
+        case .none:
+            break
+        case .albumsAndVideos:
+            actions.append(.addToAction())
+        case .albums:
+            actions.append(.addToAlbumAction())
+        }
     }
 }
