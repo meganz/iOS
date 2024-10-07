@@ -1,3 +1,3 @@
 import Foundation
 
-extension ByteCountFormatter: @unchecked Sendable { }
+extension ByteCountFormatter: @unchecked @retroactive Sendable { }
