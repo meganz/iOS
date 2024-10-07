@@ -72,7 +72,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         let nodeDetails: MockNodeDetailUseCase
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
-        let downloadTransfersListener: MockDownloadTransfersListener
+        let downloadedNodesListener: MockDownloadedNodesListener
         let contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase
         let sut: HomeSearchResultsProvider
         let nodes: [NodeEntity]
@@ -102,7 +102,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
 
             mediaUseCase = MockMediaUseCase()
             
-            downloadTransfersListener = MockDownloadTransfersListener()
+            downloadedNodesListener = MockDownloadedNodesListener()
              
             contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
                 sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)
@@ -114,7 +114,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
                 mediaUseCase: mediaUseCase,
-                downloadTransferListener: downloadTransfersListener,
+                downloadedNodesListener: downloadedNodesListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 allChips: SearchChipEntity.allChips(
@@ -764,7 +764,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         // when
         continuation.yield([.init(parentHandle: Harness.parentNodeHandle)]) // Trigger .generic signal
         try await Task.sleep(nanoseconds: 50_000_000)
-        harness.downloadTransfersListener.simulateDownloadedNode(nodes[1]) // Trigger .specific signal
+        harness.downloadedNodesListener.simulateDownloadedNode(nodes[1]) // Trigger .specific signal
         
         // then
         await fulfillment(of: [exp], timeout: 1.0)
@@ -781,31 +781,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
         }
         
         XCTAssertEqual(result.id, 2)
-    }
-    
-    func testSearchResultUpdateSignalSequence_onDidFallbackToMakingOfflineForMediaNodeNotification_shouldTriggerSpecificUpdate() async throws {
-        // given
-        let offlineNode = NodeEntity(handle: 65)
-        let harness = Harness(self)
-        
-        let exp = expectation(description: "wait for specific update signal")
-        
-        trackTaskCancellation {
-            for await nodeUpdatesSignal in harness.sut.searchResultUpdateSignalSequence() {
-                guard case .specific(let result) = nodeUpdatesSignal else {
-                    XCTFail("Expecting .specific update signal")
-                    return
-                }
-                XCTAssertEqual(result.id, offlineNode.handle)
-                exp.fulfill()
-            }
-        }
-        // Wait for sequence to setup
-        try await Task.sleep(nanoseconds: 100_000_000)
-        
-        NotificationCenter.default.post(name: .didFallbackToMakingOfflineForMediaNode, object: offlineNode)
-        
-        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testSearchResultUpdateSignalSequence_nodeUpdatePartOfResults_shouldTriggerGenericUpdateSignal() async throws {

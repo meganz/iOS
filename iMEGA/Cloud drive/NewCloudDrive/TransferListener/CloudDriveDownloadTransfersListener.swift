@@ -2,12 +2,8 @@ import MEGADomain
 import MEGARepo
 import MEGASwift
 
-protocol DownloadTransfersListening: Sendable {
-    var downloadedNodes: AnyAsyncSequence<NodeEntity> { get }
-}
-
 /// Dedicated listener object to listen to completed transfers via "Make available offline" action
-final class CloudDriveDownloadTransfersListener: NSObject, DownloadTransfersListening {
+final class CloudDriveDownloadTransfersListener: DownloadedNodesListening {
     
     var downloadedNodes: AnyAsyncSequence<NodeEntity> {
         transfersListenerUsecase.completedTransfers.compactMap(self.processTransfer)
@@ -25,7 +21,6 @@ final class CloudDriveDownloadTransfersListener: NSObject, DownloadTransfersList
         self.sdk = sdk
         self.transfersListenerUsecase = transfersListenerUsecase
         self.fileSystemRepo = fileSystemRepo
-        super.init()
     }
     
     func processTransfer(_ transfer: TransferEntity) -> NodeEntity? {

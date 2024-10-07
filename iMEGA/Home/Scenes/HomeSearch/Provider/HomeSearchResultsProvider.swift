@@ -18,7 +18,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     private let filesSearchUseCase: any FilesSearchUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
-    private let downloadTransferListener: any DownloadTransfersListening
+    private let downloadedNodesListener: any DownloadedNodesListening
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sdk: MEGASdk
 
@@ -39,7 +39,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     // root node can be nil in case when we start app in offline
     private let parentNodeProvider: () -> NodeEntity?
     private let mapper: SearchResultMapper
-    private let notificationCenter: NotificationCenter
     private let availableChips: [SearchChipEntity]
 
     init(
@@ -48,10 +47,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
-        downloadTransferListener: some DownloadTransfersListening,
+        downloadedNodesListener: some DownloadedNodesListening,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-        notificationCenter: NotificationCenter = .default,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
@@ -61,9 +59,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.filesSearchUseCase = filesSearchUseCase
         self.nodeUseCase = nodeUseCase
         self.mediaUseCase = mediaUseCase
-        self.downloadTransferListener = downloadTransferListener
+        self.downloadedNodesListener = downloadedNodesListener
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.notificationCenter = notificationCenter
         self.availableChips = allChips
         self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
@@ -290,14 +287,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     }
     
     private func specificNodeUpdateSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
-        let downloadedNodesSearchResultSequence = downloadTransferListener.downloadedNodes
-        
-        let offlineNodeUpdateSequence = notificationCenter
-            .publisher(for: .didFallbackToMakingOfflineForMediaNode)
-            .compactMap { $0.object as? NodeEntity }
-            .values
-        
-        return merge(downloadedNodesSearchResultSequence, offlineNodeUpdateSequence)
+        downloadedNodesListener.downloadedNodes
             .map { [mapper] in
             SearchResultUpdateSignal.specific(result: mapper.map(node: $0))
         }.eraseToAnyAsyncSequence()

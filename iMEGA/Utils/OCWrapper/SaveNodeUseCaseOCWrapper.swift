@@ -22,21 +22,27 @@ import MEGASDKRepo
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
         saveNodeUseCase.saveNode(from: transfer.toTransferEntity()) { result in
-            switch result {
-            case .success(let savedToPhotos):
-                let transferInventoryUseCase = TransferInventoryUseCase(
-                    transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
-                let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
-                if savedToPhotos, !anyPendingSavePhotosTransfer {
-                    SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
-                }
-            case .failure(let error):
-                switch error {
-                case .videoNotSaved, .imageNotSaved:
-                    SVProgressHUD.showError(withStatus: Strings.Localizable.couldNotSaveItem)
-                default:
-                    SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
-                }
+            Task { [weak self] in
+                await self?.handleSaveNodeResult(result)
+            }
+        }
+    }
+    
+    private nonisolated func handleSaveNodeResult(_ result: Result<Bool, SaveMediaToPhotosErrorEntity>) async {
+        switch result {
+        case .success(let savedToPhotos):
+            let transferInventoryUseCase = TransferInventoryUseCase(
+                transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
+            let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
+            if savedToPhotos, !anyPendingSavePhotosTransfer {
+                await SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
+            }
+        case .failure(let error):
+            switch error {
+            case .videoNotSaved, .imageNotSaved:
+                await SVProgressHUD.showError(withStatus: Strings.Localizable.couldNotSaveItem)
+            default:
+                await SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
             }
         }
     }

@@ -1,3 +1,3 @@
 @objc extension NSNotification {
-    static let didFallbackToMakingOfflineForMediaNode = Notification.Name.didFallbackToMakingOfflineForMediaNode
+    static let nodeSavedToOffline = Notification.Name.nodeSavedToOffline
 }
