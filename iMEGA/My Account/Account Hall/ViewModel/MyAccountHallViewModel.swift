@@ -75,7 +75,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     // MARK: Account Plan view
     @Published private(set) var currentPlanName: String = ""
-    @Published private(set) var isUpdatingAccountDetails: Bool = true
+    @Published var isUpdatingAccountDetails: Bool = false
     
     // MARK: - Init
     
@@ -246,8 +246,8 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .planList:
             await fetchPlanList()
         case .accountDetails:
-            let showActivityIndicator = accountDetails == nil
-            await fetchAccountDetails(showActivityIndicator: showActivityIndicator)
+            guard !isUpdatingAccountDetails && accountDetails == nil else { return }
+            await fetchAccountDetails()
         case .contentCounts:
             await fetchCounts()
         case .promos:
@@ -260,16 +260,16 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         configPlanDisplay()
     }
     
-    private func fetchAccountDetails(showActivityIndicator: Bool) async {
-        setIsUpdatingAccountDetails(showActivityIndicator)
+    private func fetchAccountDetails() async {
+        isUpdatingAccountDetails = true
         
         do {
             let accountDetails = try await myAccountHallUseCase.refreshCurrentAccountDetails()
             setAccountDetails(accountDetails)
-            setIsUpdatingAccountDetails(false)
+            isUpdatingAccountDetails = false
             configPlanDisplay()
         } catch {
-            setIsUpdatingAccountDetails(false)
+            isUpdatingAccountDetails = false
             MEGALogError("[Account Hall] Error loading account details. Error: \(error)")
         }
     }
@@ -302,11 +302,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     private func configPlanDisplay() {
         invokeCommand?(.configPlanDisplay)
     }
-    
-    private func setIsUpdatingAccountDetails(_ isUpdating: Bool) {
-        isUpdatingAccountDetails = isUpdating
-    }
-    
+
     // MARK: Subscriptions and Account updates
     private func startAccountUpdatesMonitoring() {
         onAccountRequestFinishUpdatesTask = Task { [weak self, myAccountHallUseCase] in
@@ -361,7 +357,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
                     guard let self else { return }
                     
                     guard let account else {
-                        await fetchAccountDetails(showActivityIndicator: true)
+                        await fetchAccountDetails()
                         return
                     }
                     

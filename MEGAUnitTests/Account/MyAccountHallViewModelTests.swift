@@ -13,7 +13,7 @@ import XCTest
 final class MyAccountHallViewModelTests: XCTestCase {
 
     @MainActor
-    func testAction_onViewAppear() {
+    func testOnViewAppear_shouldReloadUIContent() {
         let (sut, _) = makeSUT()
         test(viewModel: sut,
              actions: [MyAccountHallAction.reloadUI],
@@ -21,7 +21,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_loadPlanList() async {
+    func testLoadPlanList_shouldCallConfigPlanDisplay() async {
         let (sut, _) = makeSUT()
         
         var commands = [MyAccountHallViewModel.Command]()
@@ -36,7 +36,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_loadContentCounts() async {
+    func testLoadContentCounts_shouldReloadCounts() async {
         let (sut, _) = makeSUT()
         
         var commands = [MyAccountHallViewModel.Command]()
@@ -51,22 +51,47 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_loadAccountDetails() async {
+    func testLoadAccountDetails_withNoAccountDetailsAndIsUpdatingAccountDetailsFalse_shouldLoadAccountDetails() async {
+        await assertActionLoadAccountDetails(
+            currentAccountDetails: nil,
+            isUpdatingAccountDetails: false,
+            expectedCommands: [.configPlanDisplay]
+        )
+    }
+    
+    @MainActor
+    func testLoadAccountDetails_withCurrentAccountDetailsAndIsUpdatingAccountDetailsTrue_shouldNotLoadAccountDetails() async {
+        await assertActionLoadAccountDetails(
+            currentAccountDetails: AccountDetailsEntity.random,
+            isUpdatingAccountDetails: true,
+            expectedCommands: []
+        )
+    }
+    
+    @MainActor
+    private func assertActionLoadAccountDetails(
+        currentAccountDetails: AccountDetailsEntity?,
+        isUpdatingAccountDetails: Bool,
+        expectedCommands: [MyAccountHallViewModel.Command]
+    ) async {
         let (sut, _) = makeSUT()
-        
         var commands = [MyAccountHallViewModel.Command]()
         sut.invokeCommand = { viewCommand in
             commands.append(viewCommand)
         }
-
+        sut.$accountDetails.mutate { currentValue in
+            currentValue = currentAccountDetails
+        }
+        sut.isUpdatingAccountDetails = isUpdatingAccountDetails
+        
         sut.dispatch(.load(.accountDetails))
         await sut.loadContentTask?.value
         
-        XCTAssertEqual(commands, [.configPlanDisplay])
+        XCTAssertEqual(commands, expectedCommands)
     }
     
     @MainActor
-    func testAction_viewWillAppear_shouldStartAccountUpdatesMonitoring() {
+    func testViewWillAppear_shouldStartAccountUpdatesMonitoring() {
         let (sut, _) = makeSUT()
         
         var commands = [MyAccountHallViewModel.Command]()
@@ -83,7 +108,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_viewWillDisappear_shouldStopAccountUpdatesMonitoring() {
+    func testViewWillDisappear_shouldStopAccountUpdatesMonitoring() {
         let (sut, _) = makeSUT()
         
         var commands = [MyAccountHallViewModel.Command]()
@@ -187,7 +212,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAccountUpdatesMonitoring_OnUserAlertsUpdates_updateAlertCounts() {
+    func testAccountUpdatesMonitoring_onUserAlertsUpdates_shouldUpdateAlertCounts() {
         let (stream, continuation) = AsyncStream<[UserAlertEntity]>.makeStream()
         let (sut, _) = makeSUT(onUserAlertsUpdates: stream.eraseToAnyAsyncSequence())
         
@@ -215,7 +240,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAccountUpdatesMonitoring_onContactRequestsUpdates_updateContactRequestCounts() {
+    func testAccountUpdatesMonitoring_onContactRequestsUpdates_shouldUpdateContactRequestCounts() {
         let (stream, continuation) = AsyncStream<[ContactRequestEntity]>.makeStream()
         let (sut, _) = makeSUT(onContactRequestsUpdates: stream.eraseToAnyAsyncSequence())
         
@@ -279,7 +304,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAction_didTapUpgradeButton_showUpgradeView() {
+    func testDidTapUpgradeButton_shouldShowUpgradeView() {
         let (sut, _) = makeSUT()
         
         test(viewModel: sut, actions: [MyAccountHallAction.didTapUpgradeButton], expectedCommands: [])
@@ -471,7 +496,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func test_didTapMyAccountButton_tracksAnalyticsEvent() {
+    func testDidTapMyAccountButton_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapMyAccountButton,
             expectedEvent: MyAccountProfileNavigationItemEvent()
@@ -479,7 +504,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func test_didTapAccountHeader_tracksAnalyticsEvent() {
+    func testDidTapAccountHeader_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapAccountHeader,
             expectedEvent: AccountScreenHeaderTappedEvent()
@@ -487,7 +512,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func test_viewDidLoad_tracksAnalyticsEvent() {
+    func testViewDidLoad_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .viewDidLoad,
             expectedEvent: AccountScreenEvent()
@@ -495,7 +520,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func test_viewDidTapUpgradeButton_tracksAnalyticsEvent() {
+    func testViewDidTapUpgradeButton_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapUpgradeButton,
             expectedEvent: UpgradeMyAccountEvent()
@@ -511,7 +536,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.transferUsed, expectedTransferUsed)
     }
     
-    @MainActor func testTransferUsed_whenAccountDetailsNil_shouldReturnZero() {
+    @MainActor
+    func testTransferUsed_whenAccountDetailsNil_shouldReturnZero() {
         let (sut, _) = makeSUT(currentAccountDetails: nil)
         
         XCTAssertEqual(sut.transferUsed, 0)
