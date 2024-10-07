@@ -1,7 +1,7 @@
 import Network
 
 /// Represents the current status of a network path.
-public enum NetworkPathStatus {
+public enum NetworkPathStatus: Sendable {
     case satisfied
     case unsatisfied
     case requiresConnection

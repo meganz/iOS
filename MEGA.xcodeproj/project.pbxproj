@@ -1583,6 +1583,7 @@
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A559E16A2BE8C7C700374073 /* NSNotification+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */; };
 		A56274E02C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */; };
+		A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
@@ -16142,6 +16143,7 @@
 				83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */,
 				B6B1A27B28A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */,
+				A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */,
 				83E345A525B598A7006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				83655A5F259379C2001A0846 /* MEGAStore.m in Sources */,
 				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
