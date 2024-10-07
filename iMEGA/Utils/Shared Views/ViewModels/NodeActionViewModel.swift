@@ -3,6 +3,24 @@ import MEGADomain
 import MEGAPresentation
 import MEGASwift
 
+enum NodeActionAddToDestination {
+    case none
+    case albumsAndVideos
+    case albums
+    
+    var priority: Int {
+        switch self {
+        case .none: 0
+        case .albumsAndVideos: 1
+        case .albums: 2
+        }
+    }
+    
+    static func > (lhs: Self, rhs: Self) -> Bool {
+        lhs.priority > rhs.priority
+    }
+}
+
 struct NodeActionViewModel {
     private struct NodeSensitivity {
         let isMarkedSensitive: Bool
@@ -64,6 +82,47 @@ struct NodeActionViewModel {
         } else {
             (try? await sensitiveNodeUseCase.isInheritingSensitivity(node: node)) ?? false
         }
+    }
+    
+    /// Determine if nodes can navigate to be added to album/playlist, this only provides a valid destination if all nodes are visual media.
+    /// - Parameters:
+    ///   - nodes: Nodes to be added
+    ///   - displayMode: Source location of this request.
+    ///   - isFromSharedItem: Indicates if the nodes are from a shared item
+    /// - Returns: NodeActionAddToDestination which defines which action should be presented
+    func addToDestination(nodes: [NodeEntity], from displayMode: DisplayMode, isFromSharedItem: Bool) -> NodeActionAddToDestination {
+        
+        guard
+            featureFlagProvider.isFeatureFlagEnabled(for: .addToAlbumAndPlaylists),
+            isFromSharedItem == false,
+            [.photosTimeline, .cloudDrive].contains(displayMode),
+            nodes.isNotEmpty else {
+            return .none
+        }
+        
+        var finalDestination: NodeActionAddToDestination = .none
+        for node in nodes {
+            let fileExtensionGroup = node.fileExtensionGroup
+            guard node.isFile, fileExtensionGroup.isVisualMedia else {
+                // Escape, if we find a non-visual file node
+                return .none
+            }
+            
+            let nodeDestination: NodeActionAddToDestination = switch displayMode {
+            case .cloudDrive where fileExtensionGroup.isVideo:
+                .albumsAndVideos
+            case .cloudDrive, .photosTimeline:
+                .albums
+            default:
+                .none // We should never enter this, due to the earlier displayMode guard
+            }
+            
+            if nodeDestination > finalDestination {
+                finalDestination = nodeDestination
+            }
+        }
+        
+        return finalDestination
     }
     
     // MARK: - Private methods

@@ -140,6 +140,7 @@ class NodeActionViewController: ActionSheetViewController {
             let nodesCount = nodes.count
             let linkedNodeCount = nodes.publicLinkedNodes().count
             let containsDisputedFiles = nodes.filter { $0.isTakenDown() }.count > 0
+            let nodeEntities = nodes.toNodeEntities()
             let actions = NodeActionBuilder()
                 .setDisplayMode(displayMode)
                 .setIsTakedown(containsDisputedFiles)
@@ -151,8 +152,14 @@ class NodeActionViewController: ActionSheetViewController {
                 .setAreMediaFiles(areMediaFiles)
                 .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
                 .setIsHidden(await viewModel.isHidden(
-                    nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem, containsBackupNode: containsABackupNode))
+                    nodeEntities,
+                    isFromSharedItem: isFromSharedItem,
+                    containsBackupNode: containsABackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
+                .setAddToDestination(viewModel.addToDestination(
+                    nodes: nodeEntities,
+                    from: displayMode,
+                    isFromSharedItem: isFromSharedItem))
                 .multiselectBuild()
             
             update(actions: actions, sender: sender)
@@ -462,6 +469,10 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsHidden(await viewModel.isHidden(
                     nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem, containsBackupNode: isBackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
+                .setAddToDestination(viewModel.addToDestination(
+                    nodes: [node.toNodeEntity()],
+                    from: displayMode,
+                    isFromSharedItem: isFromSharedItem))
                 .build()
             
             update(actions: actions, sender: self.sender)

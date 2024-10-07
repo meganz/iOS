@@ -383,6 +383,20 @@ extension NodeAction {
         NodeAction(title: Strings.Localizable.General.MenuAction.Unhide.title,
                    image: UIImage.eyeOn, type: .unhide)
     }
+    
+    class func addToAction() -> NodeAction {
+        NodeAction(
+            title: Strings.Localizable.Set.addTo,
+            image: .addTo,
+            type: .addTo)
+    }
+    
+    class func addToAlbumAction() -> NodeAction {
+        NodeAction(
+            title: Strings.Localizable.Set.AddTo.album,
+            image: .addTo,
+            type: .addToAlbum)
+    }
 }
 
 // MARK: Badge
