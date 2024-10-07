@@ -2510,6 +2510,7 @@
 		C43817B92746925E00EA82A8 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* FontStyle.swift */; };
 		C4463BAF2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */; };
 		C44947762652A466004B4C8E /* BannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44947752652A466004B4C8E /* BannerType.swift */; };
+		C44BE4C92CAF629E00F18033 /* CloudDriveDownloadedNodesListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44BE4C82CAF629400F18033 /* CloudDriveDownloadedNodesListenerTests.swift */; };
 		C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */; };
 		C44CE0112590C66F00313719 /* AudioPlayer+EventObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */; };
 		C44CE01B2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */; };
@@ -2563,6 +2564,8 @@
 		C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */; };
 		C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */; };
 		C467AD5026A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
+		C46978572CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46978552CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift */; };
+		C469785E2CAE8DF1007AF546 /* CloudDriveDownloadTransfersListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469785C2CAE8DF1007AF546 /* CloudDriveDownloadTransfersListenerTests.swift */; };
 		C46D2A7C270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D2A7B270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift */; };
 		C46D2A80270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D2A7F270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift */; };
 		C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */; };
@@ -2592,7 +2595,7 @@
 		C48CADB02BB54C550005519B /* NodeBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */; };
 		C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */; };
 		C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */; };
-		C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */; };
+		C4944FE82C339F6800A2C082 /* MockDownloadedNodesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4944FE72C339F6800A2C082 /* MockDownloadedNodesListener.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
 		C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */; };
@@ -2614,8 +2617,7 @@
 		C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */; };
 		C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */; };
 		C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */; };
-		C4C0A0082C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0A0072C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift */; };
-		C4C0A00E2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0A00D2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift */; };
+		C4C0A0082C32B5AE00B9ECCB /* DownloadedNodesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0A0072C32B5AE00B9ECCB /* DownloadedNodesListener.swift */; };
 		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
 		C4C6A49827A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
 		C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
@@ -5299,6 +5301,7 @@
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
 		C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailViewerTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
+		C44BE4C82CAF629400F18033 /* CloudDriveDownloadedNodesListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadedNodesListenerTests.swift; sourceTree = "<group>"; };
 		C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+RemoteCommand.swift"; sourceTree = "<group>"; };
 		C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+EventObservers.swift"; sourceTree = "<group>"; };
 		C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+PlaybackEvents.swift"; sourceTree = "<group>"; };
@@ -5349,6 +5352,8 @@
 		C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketHeaderView.swift; sourceTree = "<group>"; };
 		C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASegmentedControl.swift; sourceTree = "<group>"; };
 		C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeComponentProtocol.swift; sourceTree = "<group>"; };
+		C46978552CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListener.swift; sourceTree = "<group>"; };
+		C469785C2CAE8DF1007AF546 /* CloudDriveDownloadTransfersListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListenerTests.swift; sourceTree = "<group>"; };
 		C46D2A7B270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkCollectionViewController+DynamicType.swift"; sourceTree = "<group>"; };
 		C46D2A7F270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeCollectionManager.swift; sourceTree = "<group>"; };
 		C46D4A7E26557AF900748BD3 /* MockBannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBannerContainerViewRouter.swift; sourceTree = "<group>"; };
@@ -5376,7 +5381,7 @@
 		C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserConfig.swift; sourceTree = "<group>"; };
 		C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveNodeSourceUpdatesListener.swift; sourceTree = "<group>"; };
 		C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveViewController.swift; sourceTree = "<group>"; };
-		C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadTransfersListener.swift; sourceTree = "<group>"; };
+		C4944FE72C339F6800A2C082 /* MockDownloadedNodesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadedNodesListener.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
 		C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
@@ -5398,8 +5403,7 @@
 		C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomNumberGeneratorTests.swift; sourceTree = "<group>"; };
 		C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuncCallRecorder.swift; sourceTree = "<group>"; };
 		C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
-		C4C0A0072C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListener.swift; sourceTree = "<group>"; };
-		C4C0A00D2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListenerTests.swift; sourceTree = "<group>"; };
+		C4C0A0072C32B5AE00B9ECCB /* DownloadedNodesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedNodesListener.swift; sourceTree = "<group>"; };
 		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C4C6A49527A4632600873165 /* MegaNode+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Display.swift"; sourceTree = "<group>"; };
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
@@ -5927,7 +5931,7 @@
 				25CF5EB42BDB7042005608F7 /* Cells */,
 				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
 				C48CADA92BB521130005519B /* DisplayModeProvider */,
-				C4C0A00B2C32C0ED00B9ECCB /* DownloadTransferListener */,
+				C44BE4C62CAF627A00F18033 /* DownloadedNodesListener */,
 				BFB529762C4A2CD1003034EF /* Factories */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
@@ -10407,11 +10411,12 @@
 			isa = PBXGroup;
 			children = (
 				C4F6385E2BA97F6200D0B6B7 /* AdsDisplayViewModel */,
+				C4C0A0062C32B57700B9ECCB /* DownloadedNodeListener */,
 				C48CADAD2BB549880005519B /* Factories */,
 				BF8CB03D2C34F61800119979 /* Node Sensitivity */,
 				C48CADAE2BB54C260005519B /* NodeBrowserConfig */,
 				C48CADB72BBAB1A40005519B /* NodeUpdates */,
-				C4C0A0062C32B57700B9ECCB /* TransferListener */,
+				C46978562CAE8D0F007AF546 /* TransferListener */,
 				94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */,
 				94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */,
 				94B09E462B84CC86007D6B84 /* CloudDriveNodeInsertionRouter.swift */,
@@ -12898,6 +12903,15 @@
 			path = QuickActions;
 			sourceTree = "<group>";
 		};
+		C44BE4C62CAF627A00F18033 /* DownloadedNodesListener */ = {
+			isa = PBXGroup;
+			children = (
+				C44BE4C82CAF629400F18033 /* CloudDriveDownloadedNodesListenerTests.swift */,
+				C469785C2CAE8DF1007AF546 /* CloudDriveDownloadTransfersListenerTests.swift */,
+			);
+			path = DownloadedNodesListener;
+			sourceTree = "<group>";
+		};
 		C44CDFA32590A08F00313719 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -13063,6 +13077,14 @@
 			path = DynamicType;
 			sourceTree = "<group>";
 		};
+		C46978562CAE8D0F007AF546 /* TransferListener */ = {
+			isa = PBXGroup;
+			children = (
+				C46978552CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift */,
+			);
+			path = TransferListener;
+			sourceTree = "<group>";
+		};
 		C46D4A7B26557AB900748BD3 /* BannerContainer */ = {
 			isa = PBXGroup;
 			children = (
@@ -13150,7 +13172,7 @@
 		C4944FE62C339F5B00A2C082 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
-				C4944FE72C339F6800A2C082 /* MockDownloadTransfersListener.swift */,
+				C4944FE72C339F6800A2C082 /* MockDownloadedNodesListener.swift */,
 			);
 			path = Transfers;
 			sourceTree = "<group>";
@@ -13246,20 +13268,12 @@
 			path = RandomNumberGenerator;
 			sourceTree = "<group>";
 		};
-		C4C0A0062C32B57700B9ECCB /* TransferListener */ = {
+		C4C0A0062C32B57700B9ECCB /* DownloadedNodeListener */ = {
 			isa = PBXGroup;
 			children = (
-				C4C0A0072C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift */,
+				C4C0A0072C32B5AE00B9ECCB /* DownloadedNodesListener.swift */,
 			);
-			path = TransferListener;
-			sourceTree = "<group>";
-		};
-		C4C0A00B2C32C0ED00B9ECCB /* DownloadTransferListener */ = {
-			isa = PBXGroup;
-			children = (
-				C4C0A00D2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift */,
-			);
-			path = DownloadTransferListener;
+			path = DownloadedNodeListener;
 			sourceTree = "<group>";
 		};
 		C4CBDD4E256EC8F800835CF5 /* Domain */ = {
@@ -14737,7 +14751,7 @@
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */,
 				BFB529742C4A2100003034EF /* CloudDriveContextMenuFactory.swift in Sources */,
-				C4C0A0082C32B5AE00B9ECCB /* CloudDriveDownloadTransfersListener.swift in Sources */,
+				C46978572CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift in Sources */,
 				BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */,
 				BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */,
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
@@ -14877,6 +14891,7 @@
 				2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
 				BF6DF8582B9191160043A589 /* DocumentPickerViewRouter.swift in Sources */,
+				C4C0A0082C32B5AE00B9ECCB /* DownloadedNodesListener.swift in Sources */,
 				837B179C2881848400A4D01B /* DownloadLinkRouter.swift in Sources */,
 				837B179E288184A100A4D01B /* DownloadLinkViewModel.swift in Sources */,
 				838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
@@ -16491,7 +16506,8 @@
 				BF4296642BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift in Sources */,
 				BFB529782C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift in Sources */,
 				C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */,
-				C4C0A00E2C32C0FC00B9ECCB /* CloudDriveDownloadTransfersListenerTests.swift in Sources */,
+				C44BE4C92CAF629E00F18033 /* CloudDriveDownloadedNodesListenerTests.swift in Sources */,
+				C469785E2CAE8DF1007AF546 /* CloudDriveDownloadTransfersListenerTests.swift in Sources */,
 				BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */,
 				94B85CA12B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift in Sources */,
 				C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */,
@@ -16593,7 +16609,7 @@
 				94A144622C9DE59100C34A98 /* MockChatUploader.swift in Sources */,
 				94E33C9A2C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift in Sources */,
 				94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */,
-				C4944FE82C339F6800A2C082 /* MockDownloadTransfersListener.swift in Sources */,
+				C4944FE82C339F6800A2C082 /* MockDownloadedNodesListener.swift in Sources */,
 				B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */,
 				B569A2C52C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift in Sources */,
 				948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */,

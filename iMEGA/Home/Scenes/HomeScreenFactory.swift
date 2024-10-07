@@ -151,8 +151,16 @@ final class HomeScreenFactory: NSObject {
         DIContainer.featureFlagProvider
     }
 
-    private func makeDownloadTransfersListener() -> some DownloadTransfersListening {
-        CloudDriveDownloadTransfersListener(sdk: sdk, transfersListenerUsecase: TransfersListenerUseCase(repo: TransfersListenerRepository.newRepo), fileSystemRepo: FileSystemRepository.newRepo)
+    private func makeDownloadedNodesListener() -> some DownloadedNodesListening {
+        CloudDriveDownloadedNodesListener(subListeners: [
+            CloudDriveDownloadTransfersListener(
+                sdk: sdk,
+                transfersListenerUsecase: TransfersListenerUseCase(repo: TransfersListenerRepository.newRepo),
+                fileSystemRepo: FileSystemRepository.newRepo
+            ),
+            NodesSavedToOfflineListener(notificationCenter: .default)
+        ]
+        )
     }
 
     func makeSearchResultViewController(
@@ -303,7 +311,7 @@ final class HomeScreenFactory: NSObject {
             nodeDetailUseCase: makeNodeDetailUseCase(),
             nodeUseCase: makeNodeUseCase(),
             mediaUseCase: makeMediaUseCase(),
-            downloadTransferListener: makeDownloadTransfersListener(),
+            downloadedNodesListener: makeDownloadedNodesListener(),
             nodeIconUsecase: makeNodeIconUsecase(),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             allChips: Self.allChips(),

@@ -2,9 +2,9 @@
 import MEGADomain
 import MEGASwift
 
-final class MockDownloadTransfersListener: DownloadTransfersListening {
+final class MockDownloadedNodesListener: DownloadedNodesListening {
     private let (stream, continuation) = AsyncStream
-        .makeStream(of: NodeEntity.self, bufferingPolicy: .bufferingNewest(1))
+        .makeStream(of: NodeEntity.self)
     
     var downloadedNodes: AnyAsyncSequence<NodeEntity> { stream.eraseToAnyAsyncSequence() }
     

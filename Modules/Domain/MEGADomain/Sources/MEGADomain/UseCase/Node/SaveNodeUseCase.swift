@@ -1,7 +1,7 @@
 import Foundation
 
 extension Notification.Name {
-    public static let didFallbackToMakingOfflineForMediaNode = Notification.Name("nz.mega.SaveNodeUseCase.didFallbackToMakingOfflineForMediaNode")
+    public static let nodeSavedToOffline = Notification.Name("nz.mega.SaveNodeUseCase.nodeSavedToOffline")
 }
 
 public protocol SaveNodeUseCaseProtocol {
@@ -80,7 +80,7 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
                 }
             }
         } else {
-            offlineFilesRepository.createOfflineFile(name: name, for: transfer.nodeHandle)
+            createOfflineFile(name: name, nodeHandle: transfer.nodeHandle)
             completion(.success(false))
         }
     }
@@ -102,7 +102,11 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
     private func moveFileToOffline(name: String, transferUrl: URL, nodeHandle: HandleEntity) {
         let offlineURL = fileCacheRepository.offlineFileURL(name: name)
         guard fileSystemRepository.moveFile(at: transferUrl, to: offlineURL) else { return }
+        createOfflineFile(name: name, nodeHandle: nodeHandle)
+    }
+    
+    private func createOfflineFile(name: String, nodeHandle: HandleEntity) {
         offlineFilesRepository.createOfflineFile(name: name, for: nodeHandle)
-        notificationCenter.post(name: .didFallbackToMakingOfflineForMediaNode, object: nodeRepository.nodeForHandle(nodeHandle))
+        notificationCenter.post(name: .nodeSavedToOffline, object: nodeRepository.nodeForHandle(nodeHandle))
     }
 }

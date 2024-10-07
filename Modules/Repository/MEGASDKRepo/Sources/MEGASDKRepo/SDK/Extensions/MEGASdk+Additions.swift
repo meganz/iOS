@@ -1,21 +1,23 @@
 import MEGASdk
 
 private let sdkDelegateQueue = DispatchQueue(label: "nz.mega.MEGASDKRepo.MEGASdkAdditions")
+private let sdkCompletedTransfersProcessingQueue = DispatchQueue(label: "nz.mega.MEGASDKRepo.completedTransfersProcessingQueue")
 
 public extension MEGASdk {
     /// Associates a `NSMutableArray` of completed transfers with every **instance** of `MEGASdk`
     private static var completedTransfers = [ObjectIdentifier: NSMutableArray]()
 
     @objc var completedTransfers: NSMutableArray {
-        let key = ObjectIdentifier(self)
-
-        if let completedTransfers = MEGASdk.completedTransfers[key] {
-            return completedTransfers
+        sdkCompletedTransfersProcessingQueue.sync {
+            privateCompletedTransfers
         }
-
-        let completedTransfers = NSMutableArray()
-        MEGASdk.completedTransfers[key] = completedTransfers
-        return completedTransfers
+    }
+    
+    @objc func addCompletedTransfer(_ transfer: MEGATransfer) {
+        sdkCompletedTransfersProcessingQueue.async {
+            let transfers = self.privateCompletedTransfers
+            transfers.add(transfer)
+        }
     }
 
     @objc static func currentUserHandle() -> NSNumber? {
@@ -64,5 +66,16 @@ public extension MEGASdk {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)
         }
+    }
+    
+    private var privateCompletedTransfers: NSMutableArray {
+        let key = ObjectIdentifier(self)
+        if let completedTransfers = MEGASdk.completedTransfers[key] {
+            return completedTransfers
+        }
+        
+        let completedTransfers = NSMutableArray()
+        MEGASdk.completedTransfers[key] = completedTransfers
+        return completedTransfers
     }
 }

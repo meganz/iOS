@@ -6,3 +6,5 @@ public extension MEGATransfer {
         TransferEntity(transfer: self)
     }
 }
+
+extension MEGATransfer: @retroactive @unchecked Sendable {}

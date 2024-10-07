@@ -434,23 +434,31 @@ extension ProgressIndicatorView: MEGATransferDelegate {
     }
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        if !transfer.isStreamingTransfer {
-            MEGASdk.shared.completedTransfers.add(transfer)
-        }
-        
-        if MEGASdk.shared.transfers.size == 0 {
-            MEGASdk.shared.resetTotalUploads()
-            MEGASdk.shared.resetTotalDownloads()
-        }
-        throttler.start { [weak self] in
-            guard let self else { return }
-            self.configureData()
+        Task {
+            await self.processTransferFinish(api, transfer: transfer, error: error)
         }
     }
     
     func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
         if error.type == .apiEOverQuota || error.type == .apiEgoingOverquota {
             overquota = true
+        }
+    }
+    
+    private nonisolated func processTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) async {
+        if !transfer.isStreamingTransfer {
+            api.addCompletedTransfer(transfer)
+        }
+        
+        if MEGASdk.shared.transfers.size == 0 {
+            MEGASdk.shared.resetTotalUploads()
+            MEGASdk.shared.resetTotalDownloads()
+        }
+        Task { @MainActor in
+            self.throttler.start { [weak self] in
+                guard let self else { return }
+                self.configureData()
+            }
         }
     }
 }
