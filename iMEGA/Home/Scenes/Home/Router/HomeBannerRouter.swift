@@ -1,6 +1,10 @@
 import Foundation
 
-final class HomeBannerRouter {
+protocol HomeBannerRouterProtocol {
+    func didTrigger(from source: HomeBannerRouter.BannerTarget)
+}
+
+final class HomeBannerRouter: HomeBannerRouterProtocol {
 
     weak var navigationController: UINavigationController?
 
@@ -19,7 +23,6 @@ final class HomeBannerRouter {
     // MARK: - Event Source
 
     enum BannerTarget {
-
         case universalLink(URL)
     }
 }

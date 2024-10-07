@@ -34,7 +34,7 @@ final class HomeBannerViewModel: HomeBannerViewModelType {
     
     // MARK: - Router
 
-    private var router: HomeBannerRouter
+    private var router: any HomeBannerRouterProtocol
 
     // MARK: - State
     
@@ -44,7 +44,10 @@ final class HomeBannerViewModel: HomeBannerViewModelType {
 
     private let userBannerUseCase: any UserBannerUseCaseProtocol
 
-    init(userBannerUseCase: some UserBannerUseCaseProtocol, router: HomeBannerRouter) {
+    init(
+        userBannerUseCase: some UserBannerUseCaseProtocol,
+        router: some HomeBannerRouterProtocol
+    ) {
         self.userBannerUseCase = userBannerUseCase
         self.router = router
     }

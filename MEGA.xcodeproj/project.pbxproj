@@ -1478,6 +1478,9 @@
 		94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */; };
 		94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
+		94BF69102CAFD3C40052F1D5 /* HomeBannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BF690F2CAFD3BC0052F1D5 /* HomeBannerViewModelTests.swift */; };
+		94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */; };
+		94BF69162CAFFA840052F1D5 /* MockUserBannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BF69152CAFFA800052F1D5 /* MockUserBannerUseCase.swift */; };
 		94C2203F2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2203E2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift */; };
 		94C220412CA2FFB900B16650 /* TrackingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C220402CA2FFB900B16650 /* TrackingEvents.swift */; };
 		94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */; };
@@ -4268,6 +4271,9 @@
 		94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarUIHostingController.swift; sourceTree = "<group>"; };
 		94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStore.swift; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
+		94BF690F2CAFD3BC0052F1D5 /* HomeBannerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBannerViewModelTests.swift; sourceTree = "<group>"; };
+		94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeBannerRouter.swift; sourceTree = "<group>"; };
+		94BF69152CAFFA800052F1D5 /* MockUserBannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserBannerUseCase.swift; sourceTree = "<group>"; };
 		94C2203E2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSourceFactory.swift; sourceTree = "<group>"; };
 		94C220402CA2FFB900B16650 /* TrackingEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingEvents.swift; sourceTree = "<group>"; };
 		94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -8584,6 +8590,7 @@
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				9961E7242A282FBA004FB05F /* Videos */,
 				534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */,
+				94BF690F2CAFD3BC0052F1D5 /* HomeBannerViewModelTests.swift */,
 				6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */,
 				94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */,
 				943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */,
@@ -10381,6 +10388,7 @@
 			isa = PBXGroup;
 			children = (
 				94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */,
+				94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */,
 				949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */,
 				94A1445F2C9DE50500C34A98 /* MockPasteImagePreviewRouter.swift */,
 				949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */,
@@ -12192,6 +12200,7 @@
 			children = (
 				24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */,
 				24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */,
+				94BF69152CAFFA800052F1D5 /* MockUserBannerUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -16563,6 +16572,7 @@
 				0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */,
 				0E5F5E832C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift in Sources */,
 				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
+				94BF69102CAFD3C40052F1D5 /* HomeBannerViewModelTests.swift in Sources */,
 				947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */,
 				6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */,
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
@@ -16616,6 +16626,7 @@
 				B569A2C52C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift in Sources */,
 				948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
+				94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */,
 				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,
@@ -16650,6 +16661,7 @@
 				947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */,
 				C4A016C02B67630F00492185 /* MockUpgradeAccountRouter.swift in Sources */,
 				C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */,
+				94BF69162CAFFA840052F1D5 /* MockUserBannerUseCase.swift in Sources */,
 				24EDF7212C1BF13A0065A26D /* MockVideoRevampRouter.swift in Sources */,
 				943BD8472C91CA5C00619F2B /* MockWarningViewRouter.swift in Sources */,
 				25484F782B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift in Sources */,
