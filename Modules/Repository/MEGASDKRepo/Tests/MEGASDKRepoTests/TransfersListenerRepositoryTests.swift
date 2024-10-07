@@ -15,7 +15,7 @@ final class TransfersListenerRepositoryTests: XCTestCase {
         }
     }
     
-    final class TestSdk: MEGASdk {
+    final class TestSdk: MEGASdk, @unchecked Sendable {
         var transferDelegates = [MEGATransferDelegate]()
         override func add(_ delegate: any MEGATransferDelegate, queueType: ListenerQueueType) {
             transferDelegates.append(delegate)

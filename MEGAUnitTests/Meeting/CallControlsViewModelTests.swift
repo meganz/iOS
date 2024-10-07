@@ -283,6 +283,8 @@ final class CallControlsViewModelTests: XCTestCase {
         
         // then
         XCTAssertTrue(micEnabled == true)
+        
+        subscription.cancel()
     }
     
     @MainActor
@@ -513,7 +515,7 @@ final class CallControlsViewModelTests: XCTestCase {
     }
 }
 
-class MockNotificationCenter: NotificationCenter {
+class MockNotificationCenter: NotificationCenter, @unchecked Sendable {
     func postAudioRouteChangeNotification() {
         post(name: .audioRouteChange, object: nil)
     }
@@ -544,4 +546,4 @@ extension CallEntity {
     }
 }
 
-extension ActionSheetAction: @unchecked Sendable {}
+extension ActionSheetAction: @unchecked @retroactive Sendable {}

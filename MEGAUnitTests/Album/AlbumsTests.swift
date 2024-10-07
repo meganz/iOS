@@ -33,13 +33,13 @@ final class AlbumsTests: XCTestCase {
             block(MockPHAssetCollection())
         }
         
-        class MockPHAssetCollection: PHAssetCollection {
+        class MockPHAssetCollection: PHAssetCollection, @unchecked Sendable {
             override var localizedTitle: String? {
                 "some non nil string"
             }
         }
         
-        class MockPHFetchResult: PHFetchResult<PHAsset> {
+        class MockPHFetchResult: PHFetchResult<PHAsset>, @unchecked Sendable {
             override var count: Int { 1 }
             
             override func object(at index: Int) -> PHAsset {

@@ -1,3 +1,4 @@
+@preconcurrency import Combine
 import MEGADomain
 import MEGASdk
 import MEGASDKRepo

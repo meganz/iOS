@@ -3,14 +3,16 @@
 #import "LinkOption.h"
 #import "URLType.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MEGALinkManager : NSObject
 
 #pragma mark - Utils to manage MEGA links
 
-@property (class, nonatomic) NSURL *linkURL;
-@property (class, nonatomic) NSURL *secondaryLinkURL;
+@property (class, nonatomic, nullable) NSURL *linkURL;
+@property (class, nonatomic, nullable) NSURL *secondaryLinkURL;
 @property (class, nonatomic) URLType urlType;
-@property (class, nonatomic) NSString *emailOfNewSignUpLink;
+@property (class, nonatomic, nullable) NSString *emailOfNewSignUpLink;
 
 + (void)resetLinkAndURLType;
 
@@ -34,7 +36,7 @@
 
 + (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder;
 
-+ (void)processLinkURL:(NSURL *)url;
++ (void)processLinkURL:( NSURL * _Nullable)url;
 
 + (void)showLinkNotValid;
 
@@ -49,3 +51,5 @@
 + (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink;
 
 @end
+
+NS_ASSUME_NONNULL_END

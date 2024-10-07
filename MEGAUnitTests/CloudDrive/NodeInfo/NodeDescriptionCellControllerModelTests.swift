@@ -156,7 +156,7 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
         sut.cellViewModel.dismissKeyboard = {
             exp.fulfill()
         }
-        let result = await sut.savePendingChanges()
+        _ = await sut.savePendingChanges()
         await fulfillment(of: [exp], timeout: 1)
     }
 
@@ -387,7 +387,7 @@ final class NodeDescriptionCellControllerModelTests: XCTestCase {
     
 }
 
-extension NodeAccessTypeEntity: CustomStringConvertible {
+extension NodeAccessTypeEntity: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
         case .owner: return "Owner"

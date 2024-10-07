@@ -1,6 +1,6 @@
 @testable import MEGA
 
-extension AlertModel: Equatable {
+extension AlertModel: @retroactive Equatable {
     public static func == (lhs: AlertModel, rhs: AlertModel) -> Bool {
         lhs.title == rhs.title &&
         lhs.message == rhs.message &&
@@ -8,7 +8,7 @@ extension AlertModel: Equatable {
     }
 }
 
-extension AlertModel.AlertAction: Equatable {
+extension AlertModel.AlertAction: @retroactive Equatable {
     public static func == (lhs: AlertModel.AlertAction, rhs: AlertModel.AlertAction) -> Bool {
         lhs.title == rhs.title &&
         lhs.style == rhs.style

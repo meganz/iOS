@@ -6,6 +6,7 @@ import MEGASDKRepoMock
 import XCTest
 
 class RenameViewModelTests: XCTestCase {
+    @MainActor
     func testRename_deviceRenamedSuccessfully() async {
         let (viewModel, router, _) = makeSUT(renameShouldThrowError: false)
         let newName = "NewDeviceName"
@@ -15,6 +16,7 @@ class RenameViewModelTests: XCTestCase {
         XCTAssertTrue(router.didFinishSuccessfullyCalled)
     }
     
+    @MainActor
     func testRename_deviceRenamedWithError() async {
         let (viewModel, router, _) = makeSUT(renameShouldThrowError: true)
         let newName = "NewDeviceName"
@@ -24,6 +26,7 @@ class RenameViewModelTests: XCTestCase {
         XCTAssertTrue(router.didFinishWithErrorCalled)
     }
     
+    @MainActor
     func testRename_deviceRenamedSuccessfullyAndThenWithError() async {
         let (viewModel, router, useCase) = makeSUT(renameShouldThrowError: false)
         let newName = "NewDeviceName"

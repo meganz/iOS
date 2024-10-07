@@ -1,7 +1,7 @@
 import MEGASwift
 import UIKit
 
-extension UIMenuElement: Matchable {
+extension UIMenuElement: @retroactive Matchable {
     public static func ~~ (lhs: UIMenuElement, rhs: UIMenuElement) -> Bool {
         
         if let leftAction = lhs as? UIAction, let rightAction = rhs as? UIAction {

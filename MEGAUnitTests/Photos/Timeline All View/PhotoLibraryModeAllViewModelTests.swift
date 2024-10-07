@@ -1,3 +1,4 @@
+@preconcurrency import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock

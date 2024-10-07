@@ -234,7 +234,6 @@ final class ImportAlbumViewModel: ObservableObject {
         showImportAlbumLocation.toggle()
     }
     
-    @MainActor
     func monitorNetworkConnection() {
         let connectionSequence = monitorUseCase.connectionSequence
         

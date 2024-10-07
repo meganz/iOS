@@ -55,7 +55,7 @@ public extension UIImage {
     }
 }
 
-extension UIImage: Matchable {
+extension UIImage: @retroactive Matchable {
     public static func ~~ (lhs: UIImage, rhs: UIImage) -> Bool {
         lhs.pngData() == rhs.pngData()
     }

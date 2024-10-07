@@ -1,7 +1,7 @@
 import MEGASwift
 import UIKit
 
-extension UIBarButtonItem: Matchable {
+extension UIBarButtonItem: @retroactive Matchable {
     
     public static func ~~ (lhs: UIBarButtonItem, rhs: UIBarButtonItem) -> Bool {
         var status = true

@@ -48,7 +48,7 @@ struct ReportIssueView: View {
             .blur(radius: viewModel.isUploadingLog ? 1 : 0)
             .allowsHitTesting(viewModel.isUploadingLog ? false : true)
             .task {
-                await viewModel.monitorNetworkChanges()
+                viewModel.monitorNetworkChanges()
             }
             
             if viewModel.shouldShowUploadLogFileView {

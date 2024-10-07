@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 
-extension AccountRepository: RepositoryProtocol {
+extension AccountRepository: @retroactive RepositoryProtocol {
     public static var newRepo: AccountRepository {
         AccountRepository(
             myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess.shared,

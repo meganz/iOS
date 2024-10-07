@@ -11,7 +11,7 @@ import UserNotifications
 
 @objc public protocol MEGALinkManagerProtocol: AnyObject {
     @objc static var adapterLinkURL: URL? { get set }
-    @objc static func processLinkURL(_ url: URL)
+    @objc static func processLinkURL(_ url: URL?)
 }
 
 extension MEGALinkManager: MEGALinkManagerProtocol {

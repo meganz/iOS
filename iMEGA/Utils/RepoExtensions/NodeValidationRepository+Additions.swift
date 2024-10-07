@@ -16,7 +16,7 @@ struct OfflineStoreBridge: OfflineStoreBridgeProtocol {
     }
 }
 
-extension NodeValidationRepository: RepositoryProtocol {
+extension NodeValidationRepository: @retroactive RepositoryProtocol {
     public static var newRepo: Self {
         NodeValidationRepository(
             sdk: .shared,

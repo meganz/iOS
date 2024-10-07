@@ -12,7 +12,7 @@ final class PhotosRepositoryTaskManagerTests: XCTestCase {
         let sut = makeSUT(photoLocalSource: localSource)
         let expected = [NodeEntity(handle: 43)]
         
-        let loadPhotos: () async throws -> [NodeEntity] = {
+        let loadPhotos: @Sendable () async throws -> [NodeEntity] = {
             return try await sut.loadAllPhotos {
                 try await Task.sleep(nanoseconds: 100_000_000)
                 return expected

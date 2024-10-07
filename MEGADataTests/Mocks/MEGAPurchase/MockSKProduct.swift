@@ -1,6 +1,6 @@
 import StoreKit
 
-final class MockSKProduct: SKProduct {
+final class MockSKProduct: SKProduct, @unchecked Sendable {
     convenience init(identifier: String, price: String, priceLocale: Locale) {
         self.init()
         self.setValue(identifier, forKey: "productIdentifier")

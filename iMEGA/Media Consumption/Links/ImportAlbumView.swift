@@ -50,7 +50,7 @@ struct ImportAlbumView: View {
                 bottomToolbar
             }
             .task {
-                await viewModel.monitorNetworkConnection()
+                viewModel.monitorNetworkConnection()
             }
         }
         .onAppear {

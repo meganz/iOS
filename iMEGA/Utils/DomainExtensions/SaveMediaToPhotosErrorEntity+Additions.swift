@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGAL10n
 
-extension SaveMediaToPhotosErrorEntity: LocalizedError {
+extension SaveMediaToPhotosErrorEntity: @retroactive LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .fileDownloadInProgress:

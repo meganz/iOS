@@ -2,7 +2,6 @@ import MEGADesignToken
 
 extension PasswordView {
     @objc func updateAppearance() {
-        let currentTraitCollection = self.traitCollection
         topSeparatorView.backgroundColor = separatorColor()
         bottomSeparatorView.backgroundColor = separatorColor()
         
