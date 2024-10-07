@@ -10,12 +10,31 @@ protocol PSAViewRouting: Routing {
 
 @objc
 final class PSAViewRouter: NSObject, PSAViewRouting {
-    
     private weak var tabBarController: UITabBarController?
     private weak var psaViewBottomConstraint: NSLayoutConstraint?
+    private var tabBarObservation: NSKeyValueObservation?
     
     @objc init(tabBarController: UITabBarController) {
         self.tabBarController = tabBarController
+        
+        super.init()
+        
+        tabBarObservation = tabBarController.tabBar.observe(\.frame, options: [.new]) { [weak self] _, change in
+            guard let self = self,
+                  let newHeight = change.newValue?.height,
+                  let bottomConstraint = self.psaViewBottomConstraint,
+                  let psaView = self.currentPSAView(),
+                  abs(bottomConstraint.constant) != newHeight else {
+                return
+            }
+            
+            bottomConstraint.constant = -newHeight
+            psaView.layoutIfNeeded()
+        }
+    }
+    
+    deinit {
+        tabBarObservation?.invalidate()
     }
     
     func start() {
@@ -28,15 +47,18 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         psaView.translatesAutoresizingMaskIntoConstraints = false
         psaView.leadingAnchor.constraint(equalTo: tabBarController.view.leadingAnchor).isActive = true
         psaView.trailingAnchor.constraint(equalTo: tabBarController.view.trailingAnchor).isActive = true
-        psaView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor).isActive = true
-        
-        self.hidePSAView(false)
+        psaViewBottomConstraint = psaView.bottomAnchor.constraint(
+            equalTo: tabBarController.view.bottomAnchor,
+            constant: -tabBarController.tabBar.bounds.size.height
+        )
+        psaViewBottomConstraint?.isActive = true
+        hidePSAView(false)
     }
-
+    
     func build() -> UIViewController {
         fatalError("PSA uses view instead of view controller")
     }
-
+    
     func currentPSAView() -> PSAView? {
         return tabBarController?.view.subviews.first { $0 is PSAView } as? PSAView
     }
@@ -61,7 +83,7 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
             }
         }
     }
-
+    
     // MARK: - PSAViewDelegate
     
     func openPSAURLString(_ urlString: String) {

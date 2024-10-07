@@ -18,16 +18,16 @@ final class PSAViewModel: NSObject, ViewModelType {
     
     @PreferenceWrapper(key: .lastPSARequestTimestamp, defaultValue: -1.0)
     private var lastPSARequestTimestampPreference: TimeInterval
-
+    
     enum Command: CommandType, Equatable {
         case configView(PSAEntity)
     }
     
     var invokeCommand: ((Command) -> Void)?
-        
+    
     init(router: some PSAViewRouting,
-         useCase: any PSAUseCaseProtocol,
-         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+         useCase: some PSAUseCaseProtocol,
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.router = router
         self.useCase = useCase
         super.init()
