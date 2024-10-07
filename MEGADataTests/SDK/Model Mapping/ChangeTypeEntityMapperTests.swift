@@ -101,6 +101,10 @@ final class ChangeTypeEntityMapperTests: XCTestCase {
                 XCTAssertEqual(entity, .cookieSetting)
             case .noCallKit:
                 XCTAssertEqual(entity, .NoCallKit)
+            case .appsPrefs:
+                XCTAssertEqual(entity, .AppPrefs)
+            case .ccPrefs:
+                XCTAssertEqual(entity, .CCPrefs)
             @unknown default:
                 XCTFail("Please map the new MEGAUserChangeType to UserEntity.ChangeTypeEntity")
             }

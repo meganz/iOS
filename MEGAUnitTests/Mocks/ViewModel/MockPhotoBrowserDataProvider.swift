@@ -4,7 +4,7 @@ import MEGADomain
 import MEGASDKRepo
 import MEGASDKRepoMock
 
-final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol {
+final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol, @unchecked Sendable {
     
     private var nodeEntities: [NodeEntity]?
     private var currentPhotoEntity: NodeEntity

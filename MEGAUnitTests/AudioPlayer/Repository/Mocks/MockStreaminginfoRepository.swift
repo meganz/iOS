@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGADomain
 
-class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
+class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unchecked Sendable {
     var result: Result<Void, NodeInfoError>
     
     private(set) var pathFromNodeCallCount = 0

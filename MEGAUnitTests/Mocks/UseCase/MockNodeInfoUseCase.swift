@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGADomain
 
-final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol {
+final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol, @unchecked Sendable {
     
     private(set) var folderLinkLogout_callTimes = 0
     

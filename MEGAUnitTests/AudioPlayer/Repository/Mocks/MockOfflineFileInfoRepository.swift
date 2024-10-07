@@ -1,6 +1,6 @@
 @testable import MEGA
 
-class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol {
+class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Sendable {
     var result: Result<Void, NodeInfoError>
     
     private(set) var localPathfromNodeCallCount = 0

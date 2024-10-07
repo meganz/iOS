@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASDKRepo
 
-extension SystemGeneratedNodeRepository: RepositoryProtocol {
+extension SystemGeneratedNodeRepository: @retroactive RepositoryProtocol {
     public static var newRepo: Self {
         SystemGeneratedNodeRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared,

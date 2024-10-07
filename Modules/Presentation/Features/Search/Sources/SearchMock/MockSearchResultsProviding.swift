@@ -1,7 +1,7 @@
 import MEGASwift
 import Search
 
-public class MockSearchResultsProviding: SearchResultsProviding {
+public class MockSearchResultsProviding: SearchResultsProviding, @unchecked Sendable {
     
     public var refreshedSearchResultsToReturn: Search.SearchResultsEntity?
     public func refreshedSearchResults(queryRequest: Search.SearchQuery) async throws -> Search.SearchResultsEntity? {

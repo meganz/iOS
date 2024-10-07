@@ -136,7 +136,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject, @unchecked Sendable
     ) -> String {
         var content = localizedString.replacingOccurrences(of: "[Email]", with: alert.email ?? "")
                 
-        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: alert.nodeHandle),
+        guard chatRoomUseCase.chatRoom(forChatId: alert.nodeHandle) != nil,
               let scheduledMeeting = scheduledMeetingUseCase.scheduledMeeting(
                 for: alert.scheduledMeetingId,
                 chatId: alert.nodeHandle

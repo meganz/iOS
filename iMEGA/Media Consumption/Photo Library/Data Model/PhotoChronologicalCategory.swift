@@ -53,6 +53,9 @@ struct PhotoByDay: PhotoChronologicalCategory {
     let contentList: [NodeEntity]
 }
 
+extension NodeEntity: @retroactive RefreshableWhenVisible {}
+extension NodeEntity: @retroactive Refreshable {}
+
 extension NodeEntity: PhotoChronologicalCategory {
     var categoryDate: Date {
         modificationTime

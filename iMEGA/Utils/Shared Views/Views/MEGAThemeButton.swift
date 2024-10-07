@@ -1,6 +1,6 @@
 import Foundation
 
-extension UIControl.State: Hashable {}
+extension UIControl.State: @retroactive Hashable {}
 
 protocol ButtonBackgroundStateAware {
 

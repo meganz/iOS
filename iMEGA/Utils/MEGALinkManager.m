@@ -56,19 +56,19 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 #pragma mark - Utils to manage MEGA links
 
-+ (NSURL *)linkURL {
++ (NSURL * _Nullable)linkURL {
     return linkURL;
 }
 
-+ (void)setLinkURL:(NSURL *)link {
++ (void)setLinkURL:(NSURL * _Nullable)link {
     linkURL = link;
 }
 
-+ (NSURL *)secondaryLinkURL {
++ (NSURL * _Nullable)secondaryLinkURL {
     return secondaryLinkURL;
 }
 
-+ (void)setSecondaryLinkURL:(NSURL *)secondaryLink {
++ (void)setSecondaryLinkURL:(NSURL * _Nullable)secondaryLink {
     secondaryLinkURL = secondaryLink;
 }
 
@@ -85,11 +85,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     MEGALinkManager.urlType = URLTypeDefault;
 }
 
-+ (NSString *)emailOfNewSignUpLink {
++ ( NSString * _Nullable)emailOfNewSignUpLink {
     return emailOfNewSignUpLink;
 }
 
-+ (void)setEmailOfNewSignUpLink:(NSString *)email {
++ (void)setEmailOfNewSignUpLink:(NSString * _Nullable)email {
     emailOfNewSignUpLink = email;
 }
 
@@ -259,7 +259,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     return [MEGASdk.shared buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
 }
 
-+ (void)processLinkURL:(NSURL *)url {
++ (void)processLinkURL:(NSURL * _Nullable)url {
     if (!url) {
         return;
     }

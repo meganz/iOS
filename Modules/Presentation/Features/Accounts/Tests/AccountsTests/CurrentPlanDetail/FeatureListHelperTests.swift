@@ -51,7 +51,7 @@ final class FeatureListHelperTests: XCTestCase {
         file: StaticString = #file,
         line: UInt = #line
     ) {
-        let (sut, features) = createSutAndFeatures(accountType: accountType)
+        let (_, features) = createSutAndFeatures(accountType: accountType)
         let rewindFeature = features.first { $0.type == .rewind }
 
         XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil", file: file, line: line)
@@ -61,7 +61,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldReturnCorrectFeatureCount() {
-        let (sut, features) = createSutAndFeatures()
+        let (_, features) = createSutAndFeatures()
         XCTAssertEqual(features.count, 9, "Expected 9 features but got \(features.count)")
     }
 
@@ -136,7 +136,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectCallsAndMeetingsDurationFeature() {
-        let (sut, features) = createSutAndFeatures()
+        let (_, features) = createSutAndFeatures()
         let callsAndMeetingsDurationFeature = features.first { $0.type == .callsAndMeetingsDuration }
 
         XCTAssertNotNil(callsAndMeetingsDurationFeature, "Calls and Meetings Duration feature should not be nil")
@@ -146,7 +146,7 @@ final class FeatureListHelperTests: XCTestCase {
     }
 
     func testCreateCurrentFeatures_shouldHaveCorrectCallsAndMeetingsParticipantsFeature() {
-        let (sut, features) = createSutAndFeatures()
+        let (_, features) = createSutAndFeatures()
         let callsAndMeetingsParticipantsFeature = features.first { $0.type == .callsAndMeetingsParticipants }
 
         XCTAssertNotNil(callsAndMeetingsParticipantsFeature, "Calls and Meetings Participants feature should not be nil")

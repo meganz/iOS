@@ -3,7 +3,7 @@ import Foundation
 import MEGADomain
 import Photos
 
-@objc final class RawPhotoUploadOperation: AssetResourceUploadOperation {
+@objc final class RawPhotoUploadOperation: AssetResourceUploadOperation, @unchecked Sendable {
     override func start() {
         super.start()
         

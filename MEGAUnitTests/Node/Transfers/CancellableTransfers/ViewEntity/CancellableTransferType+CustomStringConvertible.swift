@@ -1,6 +1,6 @@
 @testable import MEGA
 
-extension CancellableTransferType: CustomStringConvertible {
+extension CancellableTransferType: @retroactive CustomStringConvertible {
     
     public var description: String {
         switch self {

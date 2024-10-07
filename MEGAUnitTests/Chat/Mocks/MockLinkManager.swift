@@ -10,7 +10,7 @@ final class MockLinkManager: MEGALinkManagerProtocol {
         }
     }
     
-    static func processLinkURL(_ url: URL) {
+    static func processLinkURL(_ url: URL?) {
         // Do nothing
     }
 }

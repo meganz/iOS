@@ -243,7 +243,7 @@ extension NotificationsTableViewController {
     ) -> String? {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         
-        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
+        guard chatRoomUseCase.chatRoom(forChatId: chatId) != nil else { return nil }
         
         let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting)
         return scheduledMeetingDateBuilder.buildDateDescriptionString(

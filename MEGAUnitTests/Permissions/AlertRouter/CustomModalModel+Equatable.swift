@@ -1,6 +1,6 @@
 @testable import MEGA
 
-extension CustomModalModel: Equatable {
+extension CustomModalModel: @retroactive Equatable {
     public static func == (lhs: CustomModalModel, rhs: CustomModalModel) -> Bool {
         lhs.image.pngData() == rhs.image.pngData() &&
         lhs.viewTitle == rhs.viewTitle &&

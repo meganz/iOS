@@ -451,7 +451,7 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
     }
 }
 
-extension AlbumElementsResultEntity: Equatable {
+extension AlbumElementsResultEntity: @retroactive Equatable {
     public static func == (lhs: AlbumElementsResultEntity, rhs: AlbumElementsResultEntity) -> Bool {
         lhs.success == rhs.success && lhs.failure == rhs.failure
     }

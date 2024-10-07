@@ -1,4 +1,4 @@
-class SearchWithFilterOperation: Operation {
+class SearchWithFilterOperation: Operation, @unchecked Sendable {
     let sdk: MEGASdk
     let filter: MEGASearchFilter
     let page: MEGASearchPage?

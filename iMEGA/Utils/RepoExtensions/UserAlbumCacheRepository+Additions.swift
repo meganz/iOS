@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGASDKRepo
 
-extension UserAlbumCacheRepository: RepositoryProtocol {
+extension UserAlbumCacheRepository: @retroactive RepositoryProtocol {
     public static let newRepo: UserAlbumCacheRepository = {
         let userAlbumCache = UserAlbumCache.shared
         let userAlbumCacheRepositoryMonitors = UserAlbumCacheRepositoryMonitors(
@@ -11,7 +11,7 @@ extension UserAlbumCacheRepository: RepositoryProtocol {
             cacheInvalidationTrigger: .init(
             logoutNotificationName: .accountDidLogout,
             didReceiveMemoryWarningNotificationName: {
-                await UIApplication.didReceiveMemoryWarningNotification
+                UIApplication.didReceiveMemoryWarningNotification
             })
         )
         return UserAlbumCacheRepository(

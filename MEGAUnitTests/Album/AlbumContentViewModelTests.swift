@@ -734,7 +734,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let expectedVideos = [NodeEntity(name: "sample1.mp4", handle: 1, mediaType: .video)]
         let allPhotos = expectedImages + expectedVideos
         let albumReloadPublisher = PassthroughSubject<Void, Never>()
-        var albumContentsUseCase = MockAlbumContentUseCase(photos: allPhotos.toAlbumPhotoEntities(),
+        let albumContentsUseCase = MockAlbumContentUseCase(photos: allPhotos.toAlbumPhotoEntities(),
                                                            albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
         let sut = makeAlbumContentViewModel(
             album: album,
@@ -958,7 +958,6 @@ final class AlbumContentViewModelTests: XCTestCase {
             monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
             albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
         
-        let configuration = makeContextConfiguration(albumType: albumEntity.type)
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .dismissAlbum

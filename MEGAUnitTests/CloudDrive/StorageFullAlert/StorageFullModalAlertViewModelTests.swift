@@ -63,7 +63,7 @@ final class StorageFullModalAlertViewModelTests: XCTestCase {
     }
 }
 
-private final class MockUserDefaults: UserDefaults {
+private final class MockUserDefaults: UserDefaults, @unchecked Sendable {
     var doubleValue: Double
 
     init?(doubleValue: Double = 0.0) {

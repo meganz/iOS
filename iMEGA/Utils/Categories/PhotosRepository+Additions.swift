@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGASDKRepo
 
-extension PhotosRepository: SharedRepositoryProtocol {
+extension PhotosRepository: @retroactive SharedRepositoryProtocol {
     
     public static let sharedRepo = {
         let sdk = MEGASdk.sharedSdk
@@ -18,8 +18,8 @@ extension PhotosRepository: SharedRepositoryProtocol {
                     cacheInvalidationTrigger: .init(
                         logoutNotificationName: .accountDidLogout,
                         didReceiveMemoryWarningNotificationName: {
-                            await UIApplication.didReceiveMemoryWarningNotification
+                            UIApplication.didReceiveMemoryWarningNotification
                         })))
-            )
+        )
     }()
 }
