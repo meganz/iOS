@@ -17,22 +17,14 @@ struct MyAccountHallPlanView: View {
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 .frame(width: 24, height: 24)
-                .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 18))
+                .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 12))
             
             VStack(alignment: .leading, spacing: 0) {
                 Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
                     .font(.footnote)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 
-                ZStack {
-                    ProgressView()
-                        .opacity(viewModel.isUpdatingAccountDetails ? 1 : 0)
-                    
-                    Text(viewModel.currentPlanName)
-                        .font(.body)
-                        .foregroundStyle( TokenColors.Text.primary.swiftUI)
-                        .opacity(viewModel.isUpdatingAccountDetails ? 0 : 1)
-                }
+                currentPlanNameView()
             }
             
             Spacer()
@@ -53,5 +45,16 @@ struct MyAccountHallPlanView: View {
         }
         .background()
         .separatorView(offset: 55, color: separatorColor)
+    }
+    
+    @ViewBuilder
+    private func currentPlanNameView() -> some View {
+        if viewModel.isUpdatingAccountDetails {
+            ProgressView()
+        } else {
+            Text(viewModel.currentPlanName)
+                .font(.body)
+                .foregroundStyle( TokenColors.Text.primary.swiftUI)
+        }
     }
 }
