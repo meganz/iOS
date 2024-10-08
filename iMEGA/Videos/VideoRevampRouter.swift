@@ -2,6 +2,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASdk
 import MEGASDKRepo
+import SwiftUI
 import Video
 
 struct VideoRevampRouter: VideoRevampRouting {
@@ -208,5 +209,30 @@ struct VideoRevampRouter: VideoRevampRouting {
         let viewController = RecentlyWatchedVideosViewController(videoConfig: .live())
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func showShareLink(videoPlaylist: VideoPlaylistEntity) -> some View {
+        let viewModel = EnforceCopyrightWarningViewModel(
+            preferenceUseCase: PreferenceUseCase.default,
+            copyrightUseCase: CopyrightUseCase(
+                shareUseCase: ShareUseCase(
+                    shareRepository: ShareRepository.newRepo,
+                    filesSearchRepository: FilesSearchRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
+                )
+            )
+        )
+        return EnforceCopyrightWarningView(viewModel: viewModel) {
+            ShareEmptyView()
+                .ignoresSafeArea(edges: .bottom)
+                .navigationBarHidden(true)
+        }
+    }
+}
+
+struct ShareEmptyView: View {
+    var body: some View {
+        Text("TBD")
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }

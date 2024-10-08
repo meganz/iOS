@@ -8,6 +8,7 @@ public final class MockShareUseCase: ShareUseCaseProtocol {
     private let user: UserEntity?
     private let createShareKeysError: Error?
     private let containsSensitiveContent: [HandleEntity: Bool]
+    private let isAnyCollectionShared: Bool
     
     public var userFunctionHasBeenCalled = false
     public var createShareKeyFunctionHasBeenCalled = false
@@ -23,7 +24,8 @@ public final class MockShareUseCase: ShareUseCaseProtocol {
         areUserCredentialsVerified: Bool = false,
         user: UserEntity? = nil,
         createShareKeysError: Error? = nil,
-        containsSensitiveContent: [HandleEntity: Bool] = [:]
+        containsSensitiveContent: [HandleEntity: Bool] = [:],
+        isAnyCollectionShared: Bool = false
     ) {
         self.nodes = nodes
         self.shares = shares
@@ -32,6 +34,7 @@ public final class MockShareUseCase: ShareUseCaseProtocol {
         self.user = user
         self.createShareKeysError = createShareKeysError
         self.containsSensitiveContent = containsSensitiveContent
+        self.isAnyCollectionShared = isAnyCollectionShared
     }
     
     public func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
@@ -70,5 +73,9 @@ public final class MockShareUseCase: ShareUseCaseProtocol {
         nodes.contains { node in
             containsSensitiveContent[node.handle] ?? false
         }
+    }
+    
+    public func isAnyCollectionShared() async -> Bool {
+        isAnyCollectionShared
     }
 }

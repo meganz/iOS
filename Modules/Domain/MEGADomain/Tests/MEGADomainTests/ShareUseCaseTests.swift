@@ -101,6 +101,19 @@ final class ShareUseCaseTests: XCTestCase {
         XCTAssertTrue(result)
     }
     
+    // MARK: - isAnyCollectionShared
+    
+    func testIsAnyCollectionShared_whenCalled_callsRepository() async {
+        let shareRepository = MockShareRepository()
+        let sut = makeSUT(shareRepository: shareRepository)
+        
+        _ = await sut.isAnyCollectionShared()
+        
+        XCTAssertEqual(shareRepository.invocations, [ .isAnyCollectionShared ])
+    }
+    
+    // MARK: - Helpers
+    
     private func makeSUT(
         shareRepository: MockShareRepository = MockShareRepository(),
         filesSearchRepository: MockFilesSearchRepository = MockFilesSearchRepository(),

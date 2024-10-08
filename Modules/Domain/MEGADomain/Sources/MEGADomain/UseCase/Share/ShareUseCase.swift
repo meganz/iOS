@@ -9,6 +9,10 @@ public protocol ShareUseCaseProtocol: Sendable {
     /// - Parameter nodes: Sequence of NodeEntities to iterate over and determine if are sensitive or if its descendant nodes are sensitive
     /// - Returns: True, if any node contains descendant sensitive nodes, else false.
     func containsSensitiveContent(in nodes: some Sequence<NodeEntity>) async throws -> Bool
+    
+    /// Check if user has any collection type (Set) that is exported within user's account
+    /// - Returns: return `true` if user has collection type that is shared, return `false` if user does not have any shared collection.
+    func isAnyCollectionShared() async -> Bool
 }
 
 public struct ShareUseCase<T: ShareRepositoryProtocol, S: FilesSearchRepositoryProtocol, N: NodeRepositoryProtocol>: ShareUseCaseProtocol {
@@ -87,5 +91,9 @@ public struct ShareUseCase<T: ShareRepositoryProtocol, S: FilesSearchRepositoryP
             sortOrderType: .defaultAsc,
             formatType: .unknown,
             sensitiveFilterOption: .sensitiveOnly)).isNotEmpty
+    }
+    
+    public func isAnyCollectionShared() async -> Bool {
+        await shareRepository.isAnyCollectionShared()
     }
 }

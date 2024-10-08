@@ -19,8 +19,7 @@ struct GetLinkRouter: Routing {
             shareUseCase: ShareUseCase(
                 shareRepository: ShareRepository.newRepo,
                 filesSearchRepository: FilesSearchRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo),
-            userAlbumRepository: UserAlbumRepository.newRepo)
+                nodeRepository: NodeRepository.newRepo))
         let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
                                                          copyrightUseCase: copyrightUseCase)
         

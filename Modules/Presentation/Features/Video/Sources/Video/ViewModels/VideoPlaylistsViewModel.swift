@@ -42,7 +42,8 @@ final class VideoPlaylistsViewModel: ObservableObject {
     @Published var shouldShowRenamePlaylistAlert = false
     @Published var shouldShowDeletePlaylistAlert = false
     @Published private(set) var viewState: ViewState = .partial
-
+    
+    @Published var selectedVideoPlaylistEntityForShareLink: VideoPlaylistEntity?
     private(set) var selectedVideoPlaylistEntity: VideoPlaylistEntity?
     @Published var isSheetPresented = false
     
@@ -267,7 +268,9 @@ final class VideoPlaylistsViewModel: ObservableObject {
         case .rename:
             shouldShowRenamePlaylistAlert = true
         case .shareLink:
-            break
+            guard selectedVideoPlaylistEntity != nil else { return }
+            selectedVideoPlaylistEntityForShareLink = selectedVideoPlaylistEntity
+            selectedVideoPlaylistEntity = nil
         case .deletePlaylist:
             shouldShowDeletePlaylistAlert = true
         }

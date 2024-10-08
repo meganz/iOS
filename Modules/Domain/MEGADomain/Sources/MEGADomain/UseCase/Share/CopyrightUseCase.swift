@@ -7,22 +7,17 @@ public protocol CopyrightUseCaseProtocol: Sendable {
     func shouldAutoApprove() async -> Bool
 }
 
-public struct CopyrightUseCase<S: ShareUseCaseProtocol,
-                               U: UserAlbumRepositoryProtocol>: CopyrightUseCaseProtocol {
+public struct CopyrightUseCase<S: ShareUseCaseProtocol>: CopyrightUseCaseProtocol {
     private let shareUseCase: S
-    private let userAlbumRepository: U
     
-    public init(shareUseCase: S,
-                userAlbumRepository: U) {
+    public init(shareUseCase: S) {
         self.shareUseCase = shareUseCase
-        self.userAlbumRepository = userAlbumRepository
     }
     
     public func shouldAutoApprove() async -> Bool {
         if shareUseCase.allPublicLinks(sortBy: .none).isNotEmpty {
             return true
         }
-        return await userAlbumRepository.albums()
-            .contains(where: { $0.isExported })
+        return await shareUseCase.isAnyCollectionShared()
     }
 }
