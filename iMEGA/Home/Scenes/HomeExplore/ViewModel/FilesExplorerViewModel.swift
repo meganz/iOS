@@ -17,7 +17,6 @@ final class FilesExplorerViewModel: ViewModelType {
     
     enum Command: CommandType {
         case reloadNodes(nodes: [MEGANode], searchText: String?)
-        case onNodesUpdate([MEGANode])
         case reloadData
         case setViewConfiguration(any FilesExplorerViewConfiguration)
         case onTransferCompleted(MEGANode)
@@ -37,7 +36,6 @@ final class FilesExplorerViewModel: ViewModelType {
     private let router: FilesExplorerRouter
     private let useCase: any FilesSearchUseCaseProtocol
     private let nodeDownloadUpdatesUseCase: any NodeDownloadUpdatesUseCaseProtocol
-    private let nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let explorerType: ExplorerTypeEntity
@@ -83,7 +81,6 @@ final class FilesExplorerViewModel: ViewModelType {
                   router: FilesExplorerRouter,
                   useCase: some FilesSearchUseCaseProtocol,
                   nodeDownloadUpdatesUseCase: some NodeDownloadUpdatesUseCaseProtocol,
-                  nodeClipboardOperationUseCase: NodeClipboardOperationUseCase,
                   contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
                   createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
                   nodeProvider: some MEGANodeProviderProtocol,
@@ -91,23 +88,11 @@ final class FilesExplorerViewModel: ViewModelType {
         self.explorerType = explorerType
         self.router = router
         self.useCase = useCase
-        self.nodeClipboardOperationUseCase = nodeClipboardOperationUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.nodeDownloadUpdatesUseCase = nodeDownloadUpdatesUseCase
         self.nodeProvider = nodeProvider
         self.featureFlagProvider = featureFlagProvider
-                        
-        self.nodeClipboardOperationUseCase.onNodeMove { [weak self] node in
-            self?.invokeCommand?(.onNodesUpdate([node]))
-        }
-        
-        self.nodeClipboardOperationUseCase.onNodeCopy { [weak self] _ in
-            guard let self else { return }
-            self.debouncer.start {
-                self.invokeCommand?(.reloadData)
-            }
-        }
     }
     
     deinit {

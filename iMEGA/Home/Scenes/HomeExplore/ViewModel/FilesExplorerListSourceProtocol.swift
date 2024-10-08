@@ -22,7 +22,6 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
          explorerType: ExplorerTypeEntity,
          delegate: (any FilesExplorerListSourceDelegate)?)
     func reloadCell(withNode node: MEGANode)
-    func updateCells(forNodes nodes: [MEGANode])
     func onTransferCompleted(forNode node: MEGANode)
     func toggleSelection(at indexPath: IndexPath)
     func setEditingMode()
@@ -43,20 +42,6 @@ extension FilesExplorerListSourceProtocol {
     func reloadCell(withNode node: MEGANode) {
         if let cell = cell(forNode: node), let indexPath = tableView.indexPath(for: cell) {
             tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
-    func isAnyNodeBeingDisplayed(inNodes nodes: [MEGANode]) -> Bool {
-        guard let storedNodes = self.nodes else { return false }
-        return Set(nodes).intersection(Set(storedNodes)).isNotEmpty
-    }
-    
-    func updateCells(forNodes nodes: [MEGANode]) {
-        guard isAnyNodeBeingDisplayed(inNodes: nodes) else { return }
-        
-        nodes.forEach {
-            updateNode($0)
-            reloadCell(withNode: $0)
         }
     }
     
@@ -125,17 +110,5 @@ extension FilesExplorerListSourceProtocol {
         let nodeSet = Set(nodes ?? [])
         selectedNodes = selectedSet == nodeSet ? [] : nodes
         tableView.reloadData()
-    }
-    
-    private func updateNode(_ node: MEGANode) {
-        if let index = nodes?.firstIndex(of: node) {
-            // update the node in selected list as well
-            if let originalNode = nodes?[index],
-               let selectedIndex = selectedNodes?.firstIndex(of: originalNode) {
-                selectedNodes?[selectedIndex] = node
-            }
-            
-            nodes?[index] = node
-        }
     }
 }

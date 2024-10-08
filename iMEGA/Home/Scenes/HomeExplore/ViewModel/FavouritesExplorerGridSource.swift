@@ -131,13 +131,6 @@ final class FavouritesExplorerGridSource: NSObject {
         }
     }
     
-    func updateCells(forNodes nodes: [MEGANode]) {
-        nodes.forEach(reloadCell(withNode:))
-    }
-    
-    private func reloadCell(withNode node: MEGANode) {
-    }
-    
     func getNode(at indexPath: IndexPath) -> MEGANode? {
         switch indexPath.section {
         case FavouritesSection.files.rawValue: return fileNodes[safe: indexPath.row]

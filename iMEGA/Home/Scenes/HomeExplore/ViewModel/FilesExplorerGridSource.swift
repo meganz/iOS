@@ -81,10 +81,6 @@ final class FilesExplorerGridSource: NSObject {
         }
     }
     
-    func updateCells(forNodes nodes: [MEGANode]) {
-        nodes.forEach(reloadCell(withNode:))
-    }
-    
     private func reloadCell(withNode node: MEGANode) {
         guard let index = nodes?.firstIndex(of: node) else { return }
         

@@ -103,8 +103,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
                 explorerType: viewModel.getExplorerType(),
                 delegate: self
             )
-        case .onNodesUpdate(let updatedNodes):
-            listSource?.updateCells(forNodes: updatedNodes)
         case .reloadData:
             delegate?.updateSearchResults()
         case .setViewConfiguration(let configuration):
