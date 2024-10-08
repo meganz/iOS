@@ -434,7 +434,14 @@ final class NodeInfoViewController: UITableViewController {
         sections.append(descriptionSection)
 
         if viewModel.shouldShowNodeTags {
-            sections.append(.tags(NodeTagsCellController()))
+            sections.append(
+                .tags(
+                    NodeTagsCellController(
+                        controller: self,
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+                    )
+                )
+            )
         }
 
         if viewModel.nodeInfoLocationViewModel != nil {

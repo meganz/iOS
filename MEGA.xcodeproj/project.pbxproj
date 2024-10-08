@@ -2310,6 +2310,8 @@
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */; };
 		BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */; };
+		BF6C9BA02CB48408007FFE96 /* NodeTagsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C9B9F2CB48408007FFE96 /* NodeTagsCellView.swift */; };
+		BF6C9BA32CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C9BA22CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift */; };
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
 		BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */; };
 		BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */; };
@@ -2345,6 +2347,7 @@
 		BF8DD11C2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */; };
 		BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */; };
+		BF9366232CB47B9B001BD0CD /* NodeTagsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9366222CB47B89001BD0CD /* NodeTagsCellViewModel.swift */; };
 		BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */; };
 		BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */; };
 		BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E9123554021001C18E0 /* TimeInterval+Additions.swift */; };
@@ -5130,6 +5133,8 @@
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsViewModel.swift; sourceTree = "<group>"; };
 		BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsRouter.swift; sourceTree = "<group>"; };
+		BF6C9B9F2CB48408007FFE96 /* NodeTagsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsCellView.swift; sourceTree = "<group>"; };
+		BF6C9BA22CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsCellViewModelTests.swift; sourceTree = "<group>"; };
 		BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatViewAnimator.swift; sourceTree = "<group>"; };
 		BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatImageCell.swift; sourceTree = "<group>"; };
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
@@ -5164,6 +5169,7 @@
 		BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoWrapperViewController.swift; sourceTree = "<group>"; };
 		BF90C7A626040930006061F8 /* UserStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreRepository.swift; sourceTree = "<group>"; };
 		BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsView.swift; sourceTree = "<group>"; };
+		BF9366222CB47B89001BD0CD /* NodeTagsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsCellViewModel.swift; sourceTree = "<group>"; };
 		BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNDTurnOnOption.swift; sourceTree = "<group>"; };
 		BF943E9123554021001C18E0 /* TimeInterval+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Additions.swift"; sourceTree = "<group>"; };
 		BF943E9A23554181001C18E0 /* PushNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationControl.swift; sourceTree = "<group>"; };
@@ -6336,6 +6342,7 @@
 				BF07C4D22C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift */,
 				BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */,
 				245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */,
+				BF6C9BA22CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift */,
 			);
 			path = NodeInfo;
 			sourceTree = "<group>";
@@ -12565,6 +12572,22 @@
 			path = "Node Sensitivity";
 			sourceTree = "<group>";
 		};
+		BF93661E2CB47B28001BD0CD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BF6C9B9F2CB48408007FFE96 /* NodeTagsCellView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BF9366212CB47B7D001BD0CD /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BF9366222CB47B89001BD0CD /* NodeTagsCellViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		BF943EA32355441F001C18E0 /* DND */ = {
 			isa = PBXGroup;
 			children = (
@@ -12867,6 +12890,8 @@
 			isa = PBXGroup;
 			children = (
 				BFEE74CE2CAE22BF007FA672 /* Controllers */,
+				BF9366212CB47B7D001BD0CD /* ViewModels */,
+				BF93661E2CB47B28001BD0CD /* Views */,
 			);
 			path = NodeTags;
 			sourceTree = "<group>";
@@ -15506,6 +15531,8 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */,
 				BFEE74D02CAE22DE007FA672 /* NodeTagsCellController.swift in Sources */,
+				BF6C9BA02CB48408007FFE96 /* NodeTagsCellView.swift in Sources */,
+				BF9366232CB47B9B001BD0CD /* NodeTagsCellViewModel.swift in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
 				0EDE903E2BF6D21700D2F96E /* NodeUseCaseFactory.swift in Sources */,
@@ -16755,6 +16782,7 @@
 				6D01A3CA2C084F4400089BA8 /* NodeInfoViewModelTests.swift in Sources */,
 				BF5F118C2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift in Sources */,
 				25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */,
+				BF6C9BA32CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift in Sources */,
 				0EDE90422BF6D7E300D2F96E /* NodeUseCaseFactoryTests.swift in Sources */,
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
