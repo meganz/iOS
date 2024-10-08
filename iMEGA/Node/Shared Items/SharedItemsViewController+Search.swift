@@ -17,7 +17,9 @@ extension SharedItemsViewController: UISearchBarDelegate {
                     searchNodeUseCaseOCWrapper = SearchNodeUseCaseOCWrapper()
                 }
                 
-                search(by: searchString, showsHUD: showsHUD)
+                viewModel.searchDebouncer.start { [weak self] in
+                    self?.search(by: searchString, showsHUD: showsHUD)
+                }
             }
         } else {
             searchNodeUseCaseOCWrapper?.cancelSearch()

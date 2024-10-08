@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAFoundation
 import MEGASDKRepo
 import UIKit
 
@@ -10,6 +11,8 @@ import UIKit
     private let mediaUseCase: any MediaUseCaseProtocol
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
+    
+    let searchDebouncer = Debouncer(delay: 0.5)
     
     init(shareUseCase: some ShareUseCaseProtocol,
          mediaUseCase: some MediaUseCaseProtocol,
