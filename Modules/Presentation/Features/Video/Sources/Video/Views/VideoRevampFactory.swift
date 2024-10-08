@@ -86,7 +86,8 @@ public class VideoRevampFactory {
             thumbnailLoader: thumbnailLoader,
             featureFlagProvider: DIContainer.featureFlagProvider,
             contentProvider: VideoPlaylistsViewModelContentProvider(
-                videoPlaylistsUseCase: videoPlaylistUseCase)
+                videoPlaylistsUseCase: videoPlaylistUseCase
+            )
         )
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,

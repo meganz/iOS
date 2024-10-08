@@ -58,4 +58,8 @@ public struct ShareRepository: ShareRepositoryProtocol {
             }))
         }
     }
+    
+    public func isAnyCollectionShared() async -> Bool {
+        sdk.megaSets().contains(where: { $0.isExported() })
+    }
 }

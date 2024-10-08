@@ -14,8 +14,8 @@ final class CopyrightUseCaseTests: XCTestCase {
     }
     
     func testShouldAutoApprove_noPublicLinkSharedBeforeAlbumShared_shouldReturnTrue() async {
-        let userAlbumRepository = MockUserAlbumRepository(albums: [SetEntity(handle: 3, isExported: true)])
-        let sut = makeCopyrightUseCase(userAlbumRepository: userAlbumRepository)
+        let shareUseCase = MockShareUseCase(isAnyCollectionShared: true)
+        let sut = makeCopyrightUseCase(shareUseCase: shareUseCase)
         
         let shouldAutoApprove = await sut.shouldAutoApprove()
         
@@ -31,9 +31,7 @@ final class CopyrightUseCaseTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeCopyrightUseCase(shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
-                                      userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository()) -> some CopyrightUseCaseProtocol {
-        CopyrightUseCase(shareUseCase: shareUseCase,
-                         userAlbumRepository: userAlbumRepository)
+    private func makeCopyrightUseCase(shareUseCase: some ShareUseCaseProtocol = MockShareUseCase()) -> some CopyrightUseCaseProtocol {
+        CopyrightUseCase(shareUseCase: shareUseCase)
     }
 }

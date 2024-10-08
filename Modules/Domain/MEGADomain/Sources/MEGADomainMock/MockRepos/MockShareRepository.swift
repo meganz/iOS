@@ -1,13 +1,20 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-final public class MockShareRepository: ShareRepositoryProtocol {
+final public class MockShareRepository: ShareRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: MockShareRepository {
         MockShareRepository()
     }
     
     private let sharingUser: UserEntity?
     private let areUserCredentialsVerified: Bool
+    
+    public enum Invocation: Sendable, Equatable {
+        case isAnyCollectionShared
+    }
+    
+    @Atomic public var invocations: [Invocation] = []
     
     public init(sharingUser: UserEntity? = nil, areUserCredentialsVerified: Bool = false) {
         self.sharingUser = sharingUser
@@ -32,5 +39,10 @@ final public class MockShareRepository: ShareRepositoryProtocol {
     
     public func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {
         return node.handle
+    }
+    
+    public func isAnyCollectionShared() async -> Bool {
+        $invocations.mutate { $0.append(.isAnyCollectionShared) }
+        return false
     }
 }

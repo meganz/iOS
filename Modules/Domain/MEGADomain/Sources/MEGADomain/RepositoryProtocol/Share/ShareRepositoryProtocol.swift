@@ -6,4 +6,5 @@ public protocol ShareRepositoryProtocol: RepositoryProtocol, Sendable {
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity]
     func areCredentialsVerifed(of user: UserEntity) -> Bool
     func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity
+    func isAnyCollectionShared() async -> Bool
 }

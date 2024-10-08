@@ -1,4 +1,5 @@
 import MEGADomain
+import SwiftUI
 import UIKit
 
 struct Preview_VideoRevampRouter: VideoRevampRouting {
@@ -13,6 +14,8 @@ struct Preview_VideoRevampRouter: VideoRevampRouting {
     func popScreen() { }
     
     func openRecentlyWatchedVideos() { }
+    
+    func showShareLink(videoPlaylist: VideoPlaylistEntity) -> some View { EmptyView() }
     
     func build() -> UIViewController { UIViewController() }
     

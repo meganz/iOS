@@ -67,8 +67,11 @@ struct PlaylistView: View {
         .sheet(isPresented: $viewModel.isSheetPresented) {
             bottomView()
         }
+        .sheet(item: $viewModel.selectedVideoPlaylistEntityForShareLink) { playlist in
+            AnyView(router.showShareLink(videoPlaylist: playlist))
+        }
     }
-    
+        
     private var deleteVideoPlaylistAlertView: some View {
         HStack {
             Button(Strings.Localizable.cancel) { }
@@ -227,15 +230,16 @@ struct PlaylistView: View {
         viewModel: VideoPlaylistsViewModel(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(userVideoPlaylists: [.preview]),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
-            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(), 
+            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
-            renameVideoPlaylistAlertViewModel: .preview, 
+            renameVideoPlaylistAlertViewModel: .preview,
             thumbnailLoader: Preview_ThumbnailLoader(),
-            featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false), 
+            featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
             contentProvider: VideoPlaylistsViewModelContentProvider(
-                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase())
+                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase()
+            )
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()
@@ -247,7 +251,7 @@ struct PlaylistView: View {
         viewModel: VideoPlaylistsViewModel(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
-            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(), 
+            videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
@@ -255,7 +259,8 @@ struct PlaylistView: View {
             thumbnailLoader: Preview_ThumbnailLoader(),
             featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
             contentProvider: VideoPlaylistsViewModelContentProvider(
-                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase())
+                videoPlaylistsUseCase: Preview_VideoPlaylistUseCase()
+            )
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()

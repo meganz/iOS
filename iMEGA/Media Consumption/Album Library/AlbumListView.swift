@@ -98,8 +98,7 @@ struct AlbumListView: View {
                 shareUseCase: ShareUseCase(
                     shareRepository: ShareRepository.newRepo,
                     filesSearchRepository: FilesSearchRepository.newRepo,
-                    nodeRepository: NodeRepository.newRepo),
-                userAlbumRepository: UserAlbumRepository.newRepo)),
+                    nodeRepository: NodeRepository.newRepo))),
                                     termsAgreedView: {
             GetAlbumsLinksViewWrapper(albums: albums)
                 .ignoresSafeArea(edges: .bottom)

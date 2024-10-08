@@ -19,6 +19,9 @@ public protocol VideoRevampRouting: Routing {
     func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void)
     func popScreen()
     func openRecentlyWatchedVideos()
+    
+    associatedtype ShareLinkView: View
+    func showShareLink(videoPlaylist: VideoPlaylistEntity) -> ShareLinkView
 }
 
 extension VideoRevampRouting {

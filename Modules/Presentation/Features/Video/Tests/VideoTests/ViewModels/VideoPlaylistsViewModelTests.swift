@@ -416,6 +416,28 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowDeletePlaylistAlert)
     }
     
+    func testDidSelectActionSheetMenuAction_showShareLink_doesNotShowShareLinkWhenHasNoSelectedVideoPlaylist() {
+        let deletePlaylistPlaylistContextAction = ContextAction(type: .shareLink, icon: "any", title: "any")
+        let (sut, _, _, _) = makeSUT()
+        
+        sut.didSelectActionSheetMenuAction(deletePlaylistPlaylistContextAction)
+        
+        XCTAssertNil(sut.selectedVideoPlaylistEntityForShareLink)
+        XCTAssertNil(sut.selectedVideoPlaylistEntity)
+    }
+    
+    func testDidSelectActionSheetMenuAction_showShareLink_ShowShareLinkWhenHasSelectedVideoPlaylist() {
+        let deletePlaylistPlaylistContextAction = ContextAction(type: .shareLink, icon: "any", title: "any")
+        let (sut, _, _, _) = makeSUT()
+        let videoPlaylistToBeSelected = videoPlaylist(id: 1, creationTime: Date(), modificationTime: Date(), type: .user)
+        sut.didSelectMoreOptionForItem(videoPlaylistToBeSelected)
+        
+        sut.didSelectActionSheetMenuAction(deletePlaylistPlaylistContextAction)
+        
+        XCTAssertNotNil(sut.selectedVideoPlaylistEntityForShareLink)
+        XCTAssertNil(sut.selectedVideoPlaylistEntity)
+    }
+    
     // MARK: - renameVideoPlaylist
     
     func testRenameVideoPlaylist_emptyOrNil_doesNotRenameVideoPlaylist() async {
@@ -714,13 +736,13 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertNil(sut.selectedVideoPlaylistEntity, file: file, line: line)
     }
     
-    private func videoPlaylist(id: SetHandleEntity, creationTime: Date, modificationTime: Date) -> VideoPlaylistEntity {
+    private func videoPlaylist(id: SetHandleEntity, creationTime: Date, modificationTime: Date, type: VideoPlaylistEntityType = .favourite) -> VideoPlaylistEntity {
         VideoPlaylistEntity(
             setIdentifier: SetIdentifier(handle: id),
             name: "name-\(id)",
             coverNode: nil,
             count: 0,
-            type: .favourite,
+            type: type,
             creationTime: creationTime,
             modificationTime: modificationTime
         )
