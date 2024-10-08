@@ -204,7 +204,7 @@ struct CloudDriveViewControllerFactory {
     
     private func useNewCloudDrive(config: NodeBrowserConfig) -> Bool {
         // disable new Cloud Drive for recents as it's very different
-        // config with sections, the ticket to implement the needed behaviour: [FM-1691]
+        // config with sections, the ticket to implement the needed behaviour: [SAO-189]
         config.displayMode != .recents
     }
     
@@ -452,7 +452,12 @@ struct CloudDriveViewControllerFactory {
 
     private func open(node: NodeEntity) {
         Task { @MainActor in
-            router.didTapNode(nodeHandle: node.handle)
+            if node.isFolder {
+                /// Note: When we process [SAO-189], the value for `dipslayMode` when opening nodes from `recentActionBucket`  might be different than `.cloudDrive`.
+                router.didTapNode(nodeHandle: node.handle, allNodeHandles: nil, displayMode: .cloudDrive, isFromSharedItem: false, warningViewModel: nil)
+            } else {
+                router.didTapNode(nodeHandle: node.handle)
+            }
         }
     }
 
