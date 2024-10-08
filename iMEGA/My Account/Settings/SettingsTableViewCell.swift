@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
@@ -30,7 +31,7 @@ class SettingsTableViewCell: UITableViewCell {
         titleLabel.text = viewModel.title
         titleLabel.textAlignment = isDestructive ? .center : .left
         trailingIcon.isHidden = isDestructive
-        trailingIcon.tintColor = UIColor.cellAccessoryColor(for: traitCollection)
+        trailingIcon.tintColor = TokenColors.Icon.secondary
         displayValueLabel.text = viewModel.displayValue
         displayValueLabel.isHidden = viewModel.displayValue.isEmpty
         

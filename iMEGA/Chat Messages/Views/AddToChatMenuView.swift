@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -50,7 +51,7 @@ class AddToChatMenuView: UIView {
     
     private func updateAppearance() {
         imageBackgroundView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
-        label.textColor = .mnz_secondaryGray()
+        label.textColor = TokenColors.Icon.secondary
     }
 
 }

@@ -96,7 +96,7 @@
     
     NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", JPGFormat] attributes:formatAttributes];
     
-    [JPGAttributedString appendAttributedString:[NSAttributedString.alloc initWithString:LocalizedString(@"(Recommended)", @"") attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGray]}]];
+    [JPGAttributedString appendAttributedString:[NSAttributedString.alloc initWithString:LocalizedString(@"(Recommended)", @"") attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor iconSecondaryColor]}]];
     self.JPGLabel.attributedText = JPGAttributedString;
     
     self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:HEICFormat attributes:formatAttributes];

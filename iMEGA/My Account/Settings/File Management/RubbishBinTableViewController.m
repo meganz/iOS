@@ -91,7 +91,7 @@
     longerRetentionUpgradeToProText = longerRetentionUpgradeToProText.mnz_removeWebclientFormatters;
     NSRange semiboldAndGreenTextRange = [longerRetentionUpgradeToProText rangeOfString:semiboldAndGreenText];
 
-    UIColor *secondaryGrayColor = [UIColor mnz_secondaryGray];
+    UIColor *secondaryGrayColor = [UIColor iconSecondaryColor];
     NSMutableAttributedString *longerRetentionUpgradeToProMAS = [NSMutableAttributedString.alloc initWithString:longerRetentionUpgradeToProText attributes:@{NSForegroundColorAttributeName : secondaryGrayColor}];
     
     UIColor *turquoiseColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];

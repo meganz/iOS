@@ -149,7 +149,7 @@
     
     cell.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
     cell.storageQuotaRewardLabel.backgroundColor = [UIColor supportInfoColor];
-    cell.storageQuotaRewardLabel.textColor = [UIColor mnz_badgeTextColor];
+    cell.storageQuotaRewardLabel.textColor = [UIColor whiteTextColor];
     cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? LocalizedString(@"— GB", @"") : [NSString memoryStyleStringFromByteCount:classStorageReward];
 }
 
@@ -273,7 +273,7 @@
             
             cell.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
             cell.storageQuotaRewardLabel.backgroundColor = [UIColor supportInfoColor];
-            cell.storageQuotaRewardLabel.textColor = [UIColor mnz_badgeTextColor];
+            cell.storageQuotaRewardLabel.textColor = [UIColor whiteTextColor];
             
             cell.subtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.incomplete.subtitle", @""), storageString];
             cell.subtitleLabel.textColor = [UIColor mnz_subtitles];

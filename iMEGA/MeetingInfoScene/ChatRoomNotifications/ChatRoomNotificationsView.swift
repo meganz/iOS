@@ -1,9 +1,9 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
 struct ChatRoomNotificationsView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: ChatRoomNotificationsViewModel
     
     var body: some View {
@@ -15,7 +15,7 @@ struct ChatRoomNotificationsView: View {
             if !viewModel.isChatNotificationsOn {
                 Text(viewModel.remainingDNDTime())
                     .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? Color(UIColor.mnz_grayB5B5B5()) : Color(UIColor.mnz_gray848484()))
+                    .foregroundColor(TokenColors.Icon.secondary.swiftUI)
             }
         }
         .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {

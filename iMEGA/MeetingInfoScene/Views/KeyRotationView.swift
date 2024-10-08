@@ -3,7 +3,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct KeyRotationView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.layoutDirection) var layoutDirection
 
     let title: String
@@ -33,7 +32,7 @@ struct KeyRotationView: View {
                             .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
                     } else {                        Text(rightDetail)
                             .font(.footnote)
-                            .foregroundColor(colorScheme == .dark ? Color(UIColor.mnz_grayB5B5B5()) : Color(UIColor.mnz_gray848484()))
+                            .foregroundColor(TokenColors.Icon.secondary.swiftUI)
                     }
                 }
                 .padding(.horizontal)
