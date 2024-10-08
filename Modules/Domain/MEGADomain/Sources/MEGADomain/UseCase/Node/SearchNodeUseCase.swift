@@ -1,13 +1,12 @@
 import MEGAFoundation
 
-public protocol SearchNodeUseCaseProtocol {
+public protocol SearchNodeUseCaseProtocol: Sendable {
     func search(type: SearchNodeTypeEntity, text: String, sortType: SortOrderEntity) async throws -> [NodeEntity]
     func cancelSearch()
 }
 
 public struct SearchNodeUseCase<T: FilesSearchRepositoryProtocol>: SearchNodeUseCaseProtocol {
     private let filesSearchRepository: T
-    private var debouncer: Debouncer = Debouncer(delay: 0.5)
     
     public init(filesSearchRepository: T) {
         self.filesSearchRepository = filesSearchRepository
@@ -16,7 +15,6 @@ public struct SearchNodeUseCase<T: FilesSearchRepositoryProtocol>: SearchNodeUse
     public func search(type: SearchNodeTypeEntity, text: String, sortType: SortOrderEntity) async throws -> [NodeEntity] {
         cancelSearch()
         
-        try await debouncer.debounce()
         let folderTargetEntity: FolderTargetEntity = switch type {
         case .inShares:
             .inShare
@@ -36,7 +34,6 @@ public struct SearchNodeUseCase<T: FilesSearchRepositoryProtocol>: SearchNodeUse
     }
     
     public func cancelSearch() {
-        debouncer.cancel()
         filesSearchRepository.cancelSearch()
     }
 }

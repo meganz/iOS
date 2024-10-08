@@ -1,43 +1,29 @@
+@preconcurrency import Combine
 import Foundation
+import MEGASwift
 
-public final class Debouncer {
-    private let delay: TimeInterval
-    private let dispatchQueue: DispatchQueue
-    private let workQueue = DispatchQueue(label: "DebouncerWorkQueue")
-
-    private var dispatchWork: DispatchWorkItem?
-
+public final class Debouncer: NSObject, Sendable {
+    public typealias Action = () -> Void
+    private let subject = PassthroughSubject<Action, Never>()
+    private let scheduler = DispatchQueue(label: "nz.mega.MEGAFoundation.Debouncer.scheduler")
+    
+    private let cancellable = Atomic<AnyCancellable?>(wrappedValue: nil)
+    
     public init(delay: TimeInterval, dispatchQueue: DispatchQueue = .main) {
-        self.delay = delay
-        self.dispatchQueue = dispatchQueue
-    }
-
-    private func execute(_ action: @escaping () -> Void) {
-        let dispatchWork = DispatchWorkItem { action() }
-        self.dispatchWork = dispatchWork
-        dispatchQueue.asyncAfter(deadline: .now() + delay, execute: dispatchWork)
-    }
-
-    public func start(action: @escaping () -> Void) {
-        workQueue.async {
-            self.cancel()
-            self.execute(action)
+        super.init()
+        cancellable.mutate {
+            $0 = subject
+                .debounce(for: .seconds(delay), scheduler: scheduler)
+                .receive(on: dispatchQueue)
+                .sink { $0() }
         }
     }
     
-    public func debounce() async throws {
-        cancel()
-        
-        try await withUnsafeThrowingContinuation { continuation in
-            let workItem = DispatchWorkItem {
-                continuation.resume()
-            }
-            self.dispatchWork = workItem
-            dispatchQueue.asyncAfter(deadline: .now() + delay, execute: workItem)
-        }
+    public func start(action: @escaping Action) {
+        subject.send(action)
     }
 
     public func cancel() {
-        dispatchWork?.cancel()
+        cancellable.wrappedValue?.cancel()
     }
 }

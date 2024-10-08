@@ -39,35 +39,21 @@ final class DebouncerTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: defaultTimeOut)
     }
 
-    func testDebounceAsync_whenCalled_shouldWaitForSpecifiedDelay() async throws {
-        let debouncer = Debouncer(delay: defaultDelay)
-
-        let startTime = Date()
-        try await debouncer.debounce()
-        let endTime = Date()
-
-        let elapsed = endTime.timeIntervalSince(startTime)
-        XCTAssertGreaterThanOrEqual(elapsed, defaultDelay)
-    }
-
     func testMultipleStarts_whenCalledMultipleTimes_shouldOnlyExecuteLastAction() {
         let expectation = XCTestExpectation(description: "Only the last action should be called")
         let debouncer = Debouncer(delay: defaultDelay)
         var callCount = 0
-        let queue = DispatchQueue(label: "testQueue", attributes: .concurrent)
         
-        func performStartAction(with delay: TimeInterval) {
-            queue.asyncAfter(deadline: .now() + delay) {
-                debouncer.start {
-                    callCount += 1
-                    expectation.fulfill()
-                }
+        func performStartAction() {
+            debouncer.start {
+                callCount += 1
+                expectation.fulfill()
             }
         }
 
-        performStartAction(with: 0.0)
-        performStartAction(with: 0.02)
-        performStartAction(with: 0.04)
+        performStartAction()
+        performStartAction()
+        performStartAction()
 
         wait(for: [expectation], timeout: defaultTimeOut)
 
