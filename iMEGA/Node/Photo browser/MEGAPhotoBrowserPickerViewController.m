@@ -52,7 +52,7 @@
     [self.navigationItem.titleView sizeToFit];
     
     self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor surface1Background];
-    self.navigationBar.tintColor = [UIColor mnz_navigationBarTintFor:self.traitCollection];
+    self.navigationBar.tintColor = [UIColor barTint];
     self.view.backgroundColor = UIColor.systemBackgroundColor;
 }
 

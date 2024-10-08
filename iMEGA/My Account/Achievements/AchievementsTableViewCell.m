@@ -21,7 +21,7 @@
     self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     self.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
-    self.storageQuotaRewardLabel.textColor =  [UIColor mnz_badgeTextColor];
+    self.storageQuotaRewardLabel.textColor =  [UIColor whiteTextColor];
     self.titleLabel.textColor = [UIColor primaryTextColor];
     self.subtitleLabel.textColor = [UIColor secondaryTextColor];
 }

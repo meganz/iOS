@@ -42,7 +42,7 @@ extension UIColor {
         dynamicProvider: {
             $0.userInterfaceStyle == .light
             ? UIColor.surface1Background()
-            : UIColor.mnz_black1C1C1E()
+            : UIColor.black1C1C1E
         }
     )
     

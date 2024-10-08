@@ -87,7 +87,7 @@ extension UIButton {
     
     @objc func mnz_setupCancel(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.clear
-        setTitleColor(UIColor.mnz_secondaryGray(), for: UIControl.State.normal)
+        setTitleColor(TokenColors.Icon.secondary, for: UIControl.State.normal)
     }
     
     @objc func mnz_clearSetup() {

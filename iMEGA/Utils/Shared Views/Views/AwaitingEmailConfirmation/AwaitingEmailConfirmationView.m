@@ -26,7 +26,7 @@
     self.titleLabel.textColor = [UIColor primaryTextColor];
     self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
     [self.iconImageView.image imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
-    self.iconImageView.tintColor = [UIColor secondaryIconTintColorFor: self.traitCollection];
+    self.iconImageView.tintColor = [UIColor iconSecondaryColor];
 }
 
 @end

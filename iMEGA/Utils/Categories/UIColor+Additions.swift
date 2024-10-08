@@ -83,14 +83,6 @@ extension UIColor {
     
     // MARK: - Main Bar
     
-    @objc class func mnz_navigationBarTint(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        barTint(
-            for: traitCollection
-        )
-    }
-    
     @objc class func mnz_cellBackground(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
@@ -103,23 +95,6 @@ extension UIColor {
     
     @objc class func searchBarPageBackgroundColor() -> UIColor {
         TokenColors.Background.page
-    }
-    
-    // MARK: Cell related colors
-    
-    class func cellAccessoryColor(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Icon.secondary
-    }
-    
-    // MARK: Icon tint color
-    
-    @objc
-    class func secondaryIconTintColor(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Icon.secondary
     }
     
     // MARK: Background grouped
@@ -328,10 +303,6 @@ extension UIColor {
         }
     }
     
-    @objc class func mnz_badgeTextColor() -> UIColor {
-        TokenColors.Text.onColor
-    }
-    
     @objc class func mnz_secondaryLabelTextColor() -> UIColor {
         TokenColors.Text.secondary
     }
@@ -469,12 +440,6 @@ extension UIColor {
         )
     }
     
-    class func mnz_inputbarButtonImageTint(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Icon.secondary
-    }
-    
     // MARK: - Toolbar
     
     class func mnz_toolbarTextColor(
@@ -482,21 +447,17 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return mnz_gray515151()
+            return iconSecondaryColor()
         case .dark:
             return white
             
         @unknown default:
-            return mnz_gray515151()
+            return iconSecondaryColor()
         }
     }
     
-    @objc class func mnz_toolbarTint(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        barTint(
-            for: traitCollection
-        )
+    @objc class func barTint() -> UIColor {
+        TokenColors.Icon.primary
     }
     
     class func barButtonTitleColor(isEnabled: Bool) -> UIColor {
@@ -526,32 +487,10 @@ extension UIColor {
         }
     }
     
-    class func mnz_voiceRecordingViewButtonBackground(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Icon.secondary
-    }
-    
-    class func emojiDescriptionTextColor(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Border.strong
-    }
-    
-    // MARK: Black
-    
-    @objc class func mnz_black1C1C1E() -> UIColor {
-        UIColor.black1C1C1E
-    }
-    
     // MARK: Gray
     
     class func mnz_gray3C3C43() -> UIColor {
         TokenColors.Border.strong
-    }
-    
-    class func mnz_gray515151() -> UIColor {
-        TokenColors.Icon.secondary
     }
     
     @objc class func mnz_gray545458() -> UIColor {
@@ -562,18 +501,6 @@ extension UIColor {
         UIColor.gray545457
     }
     
-    class func mnz_gray848484() -> UIColor {
-        TokenColors.Icon.secondary
-    }
-    
-    class func mnz_grayB5B5B5() -> UIColor {
-        TokenColors.Icon.secondary
-    }
-    
-    class func mnz_grayD1D1D1() -> UIColor {
-        TokenColors.Icon.secondary
-    }
-    
     @objc class func mnz_grayDBDBDB() -> UIColor {
         UIColor.grayDBDBDB
     }
@@ -582,7 +509,7 @@ extension UIColor {
         TokenColors.Text.secondary
     }
     
-    @objc class func mnz_secondaryGray() -> UIColor {
+    @objc class func iconSecondaryColor() -> UIColor {
         TokenColors.Icon.secondary
     }
     
@@ -684,14 +611,6 @@ extension UIColor {
     
     class func mnz_brown544b27() -> UIColor {
         UIColor.brown544B27
-    }
-    
-    // MARK: Private
-    
-    private class func barTint(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Icon.primary
     }
     
     // MARK: Text color

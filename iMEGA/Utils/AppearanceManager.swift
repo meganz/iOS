@@ -87,7 +87,7 @@ class AppearanceManager: NSObject {
     }
     
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
-        navigationBar.tintColor = UIColor.mnz_navigationBarTint(for: traitCollection)
+        navigationBar.tintColor = UIColor.barTint()
         
         let navigationBarAppearance = makeNavigationBarAppearance(traitCollection)
         
@@ -125,7 +125,7 @@ class AppearanceManager: NSObject {
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
         for i in 0..<numberOfBarButtonItems {
             let barButtonItem = toolbar.items?[i]
-            barButtonItem?.tintColor = UIColor.mnz_toolbarTint(for: traitCollection)
+            barButtonItem?.tintColor = TokenColors.Icon.primary
         }
     }
     
@@ -173,7 +173,7 @@ class AppearanceManager: NSObject {
     // MARK: - Private
     
     private class func setupNavigationBarAppearance(_ traitCollection: UITraitCollection) {
-        UINavigationBar.appearance().tintColor = UIColor.mnz_navigationBarTint(for: traitCollection)
+        UINavigationBar.appearance().tintColor = UIColor.barTint()
         UINavigationBar.appearance().isTranslucent = false
         
         let navigationBarAppearance = makeNavigationBarAppearance(traitCollection)
@@ -215,7 +215,7 @@ class AppearanceManager: NSObject {
         
         UIToolbar.appearance().standardAppearance = toolbarAppearance
         UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
-        UIToolbar.appearance().tintColor = UIColor.mnz_toolbarTint(for: traitCollection)
+        UIToolbar.appearance().tintColor = TokenColors.Icon.primary
     }
     
     private class func makeUIToolbarAppearance(_ traitCollection: UITraitCollection) -> UIToolbarAppearance {
