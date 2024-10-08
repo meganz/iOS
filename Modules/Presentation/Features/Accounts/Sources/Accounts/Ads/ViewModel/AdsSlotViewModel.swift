@@ -33,14 +33,18 @@ final public class AdsSlotViewModel: ObservableObject {
     }
 
     // MARK: Setup
-    @MainActor
     func setupSubscriptions() {
         NotificationCenter.default
             .publisher(for: .accountDidPurchasedPlan)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                guard let self else { return }
-                updateAdsSlot()
+                guard let self, isExternalAdsEnabled else { return }
+                
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    isExternalAdsEnabled = false
+                    updateAdsSlot()
+                }
             }
             .store(in: &subscriptions)
     }
