@@ -1370,6 +1370,7 @@
 		9464E0E92C8A2C8700D139A9 /* WarningBannerViewRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464E0E42C8A2C8600D139A9 /* WarningBannerViewRouting.swift */; };
 		946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */; };
 		9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */; };
+		946AC10C2CAFC1B60020442F /* UpgradeAccountViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946AC10B2CAFC1A80020442F /* UpgradeAccountViewModelTests.swift */; };
 		946ACCC3299C0ADD00E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */; };
 		946ACCC5299C0B0000E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC4299C0B0000E6C0F5 /* MEGAPresentation */; };
 		946ACCC7299C0B3500E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC6299C0B3500E6C0F5 /* MEGAPresentation */; };
@@ -4174,6 +4175,7 @@
 		9464E0E42C8A2C8600D139A9 /* WarningBannerViewRouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningBannerViewRouting.swift; sourceTree = "<group>"; };
 		946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouterTests.swift; sourceTree = "<group>"; };
 		9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeEntityMappingTests.swift; sourceTree = "<group>"; };
+		946AC10B2CAFC1A80020442F /* UpgradeAccountViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountViewModelTests.swift; sourceTree = "<group>"; };
 		946ACCC1299C099900E6C0F5 /* MEGAPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPresentation; sourceTree = "<group>"; };
 		9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWarningViewRouter.swift; sourceTree = "<group>"; };
 		94712EEF2A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultsProvider.swift; sourceTree = "<group>"; };
@@ -10283,6 +10285,14 @@
 			path = WarningBannerView;
 			sourceTree = "<group>";
 		};
+		946AC10A2CAFC19A0020442F /* UpgradeAccount */ = {
+			isa = PBXGroup;
+			children = (
+				946AC10B2CAFC1A80020442F /* UpgradeAccountViewModelTests.swift */,
+			);
+			path = UpgradeAccount;
+			sourceTree = "<group>";
+		};
 		94712EEE2A9C8E3400B5F2C9 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
@@ -12163,6 +12173,7 @@
 			isa = PBXGroup;
 			children = (
 				9459229A2C3EA619004D6AEF /* Contacts */,
+				946AC10A2CAFC19A0020442F /* UpgradeAccount */,
 				940CE3CA2C255EC60083068E /* Usage */,
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
 				94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */,
@@ -16786,6 +16797,7 @@
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
+				946AC10C2CAFC1B60020442F /* UpgradeAccountViewModelTests.swift in Sources */,
 				C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */,
 				C4A016BA2B67338C00492185 /* UpgradeEncouragementViewModelTests.swift in Sources */,
 				94B09E6F2B84D0B6007D6B84 /* UploadAddMenuDelegateHandlerTests.swift in Sources */,
