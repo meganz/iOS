@@ -20,21 +20,48 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     // MARK: - Subscription
-    func testAccountDidPurchasedPlanNotif_purchasedAccountSuccess_shouldHideAds() async {
-        let sut = makeSUT()
-        await sut.setupSubscriptions()
+    func testAccountDidPurchasedPlanNotif_purchasedAccountSuccessAndExternalAdsIsEnabled_shouldHideAds() async {
+        await assertAccountDidPurchasedPlanNotif(isExternalAdsFlagEnabled: true)
+    }
+    
+    func testAccountDidPurchasedPlanNotif_purchasedAccountSuccessAndExternalAdsIsDisabled_shouldDoNothing() async {
+        await assertAccountDidPurchasedPlanNotif(isExternalAdsFlagEnabled: false)
+    }
+    
+    private func assertAccountDidPurchasedPlanNotif(
+        isExternalAdsFlagEnabled: Bool,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        let sut = makeSUT(isExternalAdsFlagEnabled: isExternalAdsFlagEnabled)
+        await sut.setupAdsRemoteFlag()
+        sut.setupSubscriptions()
         
-        let exp = expectation(description: "displayAds should emit the correct value")
+        let expectedAdsFlag = isExternalAdsFlagEnabled ? false : isExternalAdsFlagEnabled
+        
+        let isExternalAdsEnabledExp = expectation(description: "isExternalAdsEnabled should be \(expectedAdsFlag)")
+        isExternalAdsEnabledExp.isInverted = !isExternalAdsFlagEnabled
+        sut.$isExternalAdsEnabled
+            .dropFirst()
+            .sink { _ in
+                isExternalAdsEnabledExp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        let displayAdsExp = expectation(description: "displayAds should should be \(expectedAdsFlag)")
+        displayAdsExp.isInverted = !isExternalAdsFlagEnabled
         sut.$displayAds
             .dropFirst()
-            .sink { displayAds in
-                XCTAssertFalse(displayAds)
-                exp.fulfill()
+            .sink { _ in
+                displayAdsExp.fulfill()
             }
             .store(in: &subscriptions)
         
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
-        await fulfillment(of: [exp], timeout: 1.0)
+        await fulfillment(of: [isExternalAdsEnabledExp, displayAdsExp], timeout: 1.0)
+
+        XCTAssertEqual(sut.isExternalAdsEnabled, expectedAdsFlag, file: file, line: line)
+        XCTAssertEqual(sut.displayAds, expectedAdsFlag, file: file, line: line)
     }
     
     // MARK: - Ads slot
