@@ -1,20 +1,88 @@
 @testable import Accounts
 import MEGADomain
 import MEGAL10n
-import XCTest
+import Testing
 
-final class FeatureListHelperTests: XCTestCase {
-    private func randomAccountType() -> AccountTypeEntity {
-        do {
-            let randomAccountType = AccountTypeEntity.allCases.randomElement()
-            return try XCTUnwrap(randomAccountType, "Failed to get a random account type")
-        } catch {
-            XCTFail("Error unwrapping random account type: \(error)")
-            return .free
-        }
+@Suite("Feature List Helper Tests Suite - Verifies the feature list generation for various account types.")
+struct FeatureListHelperTestSuite {
+    
+    struct FeatureTestCase {
+        let type: FeatureType
+        let title: String
+        let freeText: String?
+        let proText: String?
+        let freeIconName: String?
+        let proIconName: String?
     }
     
-    private func makeSUT(
+    static func featureTestCases() -> [FeatureTestCase] {
+        let sut = makeSUT()
+        return [
+            FeatureTestCase(
+                type: .storage,
+                title: Strings.Localizable.storage,
+                freeText: Strings.Localizable.Storage.Limit.capacity(20),
+                proText: sut.currentPlan.storage,
+                freeIconName: nil,
+                proIconName: nil
+            ),
+            FeatureTestCase(
+                type: .transfer,
+                title: Strings.Localizable.transfer,
+                freeText: Strings.Localizable.Account.TransferQuota.FreePlan.limited,
+                proText: sut.currentPlan.transfer,
+                freeIconName: nil,
+                proIconName: nil
+            ),
+            FeatureTestCase(
+                type: .passwordProtectedLinks,
+                title: Strings.Localizable.Password.Protected.Links.title,
+                freeText: nil,
+                proText: nil,
+                freeIconName: sut.assets.unavailableImageName,
+                proIconName: sut.assets.availableImageName
+            ),
+            FeatureTestCase(
+                type: .linksWithExpiryDate,
+                title: Strings.Localizable.Links.With.Expiry.Dates.title,
+                freeText: nil,
+                proText: nil,
+                freeIconName: sut.assets.unavailableImageName,
+                proIconName: sut.assets.availableImageName
+            ),
+            FeatureTestCase(
+                type: .callsAndMeetingsDuration,
+                title: Strings.Localizable.CallAndMeeting.Duration.title,
+                freeText: Strings.Localizable.CallAndMeeting.Duration.For.Free.users,
+                proText: Strings.Localizable.CallAndMeeting.Duration.Unlimited.For.Pro.users,
+                freeIconName: nil,
+                proIconName: nil
+            ),
+            FeatureTestCase(
+                type: .callsAndMeetingsParticipants,
+                title: Strings.Localizable.CallAndMeeting.Participants.title,
+                freeText: Strings.Localizable.CallAndMeeting.Participants.For.Free.users,
+                proText: Strings.Localizable.CallAndMeeting.Participants.Unlimited.For.Pro.users,
+                freeIconName: nil,
+                proIconName: nil
+            ),
+            FeatureTestCase(
+                type: .vpn,
+                title: Strings.Localizable.Mega.Vpn.title,
+                freeText: nil,
+                proText: nil,
+                freeIconName: sut.assets.unavailableImageName,
+                proIconName: sut.assets.availableImageName
+            )
+        ]
+    }
+
+    // MARK: - Helpers
+    private static func randomAccountType() -> AccountTypeEntity {
+        AccountTypeEntity.allCases.randomElement() ?? .free
+    }
+    
+    private static func makeSUT(
         accountType: AccountTypeEntity = .proI,
         storageMax: Int64 = 1000000000,
         transferMax: Int64 = 500000000,
@@ -36,7 +104,7 @@ final class FeatureListHelperTests: XCTestCase {
         )
     }
     
-    private func createSutAndFeatures(
+    private static func createSutAndFeatures(
         accountType: AccountTypeEntity = .proI,
         baseStorage: Int = 20
     ) -> (FeatureListHelper, [FeatureDetails]) {
@@ -45,127 +113,80 @@ final class FeatureListHelperTests: XCTestCase {
         return (sut, features)
     }
     
-    private func verifyRewindFeature(
+    private static func verifyRewindFeature(
         for accountType: AccountTypeEntity,
-        expectedLimit: Int,
-        file: StaticString = #file,
-        line: UInt = #line
+        expectedLimit: Int
     ) {
         let (_, features) = createSutAndFeatures(accountType: accountType)
         let rewindFeature = features.first { $0.type == .rewind }
 
-        XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil", file: file, line: line)
-        XCTAssertEqual(rewindFeature?.title, Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch", file: file, line: line)
-        XCTAssertEqual(rewindFeature?.freeText, Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch", file: file, line: line)
-        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.users(expectedLimit), "Rewind feature pro text mismatch for \(accountType)", file: file, line: line)
+        #expect(rewindFeature != nil, "Rewind feature should not be nil")
+        #expect(rewindFeature?.title == Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch")
+        #expect(rewindFeature?.freeText == Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch")
+        #expect(rewindFeature?.proText == Strings.Localizable.Rewind.For.Pro.users(expectedLimit), "Rewind feature pro text mismatch for \(accountType)")
     }
-
-    func testCreateCurrentFeatures_shouldReturnCorrectFeatureCount() {
-        let (_, features) = createSutAndFeatures()
-        XCTAssertEqual(features.count, 9, "Expected 9 features but got \(features.count)")
+    
+    private static func verifyFeature(
+        features: [FeatureDetails],
+        featureType: FeatureType,
+        title: String,
+        freeText: String? = nil,
+        proText: String? = nil,
+        freeIconName: String? = nil,
+        proIconName: String? = nil
+    ) {
+        let feature = features.first { $0.type == featureType }
+        #expect(feature != nil, "\(featureType) feature should not be nil")
+        #expect(feature?.title == title, "\(featureType) feature title mismatch")
+        
+        if let freeText = freeText {
+            #expect(feature?.freeText == freeText, "\(featureType) free text mismatch")
+        }
+        
+        if let proText = proText {
+            #expect(feature?.proText == proText, "\(featureType) pro text mismatch")
+        }
+        
+        if let freeIconName = freeIconName {
+            #expect(feature?.freeIconName == freeIconName, "\(featureType) free icon name mismatch")
+        }
+        
+        if let proIconName = proIconName {
+            #expect(feature?.proIconName == proIconName, "\(featureType) pro icon name mismatch")
+        }
     }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectStorageFeature() {
-        let (sut, features) = createSutAndFeatures()
-        let storageFeature = features.first { $0.type == .storage }
-
-        XCTAssertNotNil(storageFeature, "Storage feature should not be nil")
-        XCTAssertEqual(storageFeature?.title, Strings.Localizable.storage, "Storage feature title mismatch")
-        XCTAssertEqual(storageFeature?.freeText, Strings.Localizable.Storage.Limit.capacity(20), "Storage feature free text mismatch")
-        XCTAssertEqual(storageFeature?.proText, sut.currentPlan.storage, "Storage feature pro text mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectTransferFeature() {
-        let (sut, features) = createSutAndFeatures()
-        let transferFeature = features.first { $0.type == .transfer }
-
-        XCTAssertNotNil(transferFeature, "Transfer feature should not be nil")
-        XCTAssertEqual(transferFeature?.title, Strings.Localizable.transfer, "Transfer feature title mismatch")
-        XCTAssertEqual(transferFeature?.freeText, Strings.Localizable.Account.TransferQuota.FreePlan.limited, "Transfer feature free text mismatch")
-        XCTAssertEqual(transferFeature?.proText, sut.currentPlan.transfer, "Transfer feature pro text mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectPasswordProtectedLinksFeature() {
-        let (sut, features) = createSutAndFeatures()
-        let passwordProtectedLinksFeature = features.first { $0.type == .passwordProtectedLinks }
-
-        XCTAssertNotNil(passwordProtectedLinksFeature, "Password Protected Links feature should not be nil")
-        XCTAssertEqual(passwordProtectedLinksFeature?.title, Strings.Localizable.Password.Protected.Links.title, "Password Protected Links feature title mismatch")
-        XCTAssertEqual(passwordProtectedLinksFeature?.freeIconName, sut.assets.unavailableImageName, "Password Protected Links feature free icon name mismatch")
-        XCTAssertEqual(passwordProtectedLinksFeature?.proIconName, sut.assets.availableImageName, "Password Protected Links feature pro icon name mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectLinksWithExpiryDateFeature() {
-        let (sut, features) = createSutAndFeatures()
-        let linksWithExpiryDateFeature = features.first { $0.type == .linksWithExpiryDate }
-
-        XCTAssertNotNil(linksWithExpiryDateFeature, "Links With Expiry Date feature should not be nil")
-        XCTAssertEqual(linksWithExpiryDateFeature?.title, Strings.Localizable.Links.With.Expiry.Dates.title, "Links With Expiry Date feature title mismatch")
-        XCTAssertEqual(linksWithExpiryDateFeature?.freeIconName, sut.assets.unavailableImageName, "Links With Expiry Date feature free icon name mismatch")
-        XCTAssertEqual(linksWithExpiryDateFeature?.proIconName, sut.assets.availableImageName, "Links With Expiry Date feature pro icon name mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectTransferSharingFeature() {
-        let (sut, features) = createSutAndFeatures()
-        let transferSharingFeature = features.first { $0.type == .transferSharing }
-
-        XCTAssertNotNil(transferSharingFeature, "Transfer Sharing feature should not be nil")
-        XCTAssertEqual(transferSharingFeature?.title, Strings.Localizable.Transfer.Sharing.title, "Transfer Sharing feature title mismatch")
-        XCTAssertEqual(transferSharingFeature?.freeIconName, sut.assets.unavailableImageName, "Transfer Sharing feature free icon name mismatch")
-        XCTAssertEqual(transferSharingFeature?.proIconName, sut.assets.availableImageName, "Transfer Sharing feature pro icon name mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectRewindFeature() {
-        let (sut, features) = createSutAndFeatures()
-        let rewindFeature = features.first { $0.type == .rewind }
-
-        XCTAssertNotNil(rewindFeature, "Rewind feature should not be nil")
-        XCTAssertEqual(rewindFeature?.title, Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch")
-        XCTAssertEqual(rewindFeature?.freeText, Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch")
-        XCTAssertEqual(rewindFeature?.proText, Strings.Localizable.Rewind.For.Pro.users(sut.rewindLimit), "Rewind feature pro text mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectVPNFeature() {
-        let (sut, features) = createSutAndFeatures()
-        let vpnFeature = features.first { $0.type == .vpn }
-
-        XCTAssertNotNil(vpnFeature, "VPN feature should not be nil")
-        XCTAssertEqual(vpnFeature?.title, Strings.Localizable.Mega.Vpn.title, "VPN feature title mismatch")
-        XCTAssertEqual(vpnFeature?.freeIconName, sut.assets.unavailableImageName, "VPN feature free icon name mismatch")
-        XCTAssertEqual(vpnFeature?.proIconName, sut.assets.availableImageName, "VPN feature pro icon name mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectCallsAndMeetingsDurationFeature() {
-        let (_, features) = createSutAndFeatures()
-        let callsAndMeetingsDurationFeature = features.first { $0.type == .callsAndMeetingsDuration }
-
-        XCTAssertNotNil(callsAndMeetingsDurationFeature, "Calls and Meetings Duration feature should not be nil")
-        XCTAssertEqual(callsAndMeetingsDurationFeature?.title, Strings.Localizable.CallAndMeeting.Duration.title, "Calls and Meetings Duration feature title mismatch")
-        XCTAssertEqual(callsAndMeetingsDurationFeature?.freeText, Strings.Localizable.CallAndMeeting.Duration.For.Free.users, "Calls and Meetings Duration feature free text mismatch")
-        XCTAssertEqual(callsAndMeetingsDurationFeature?.proText, Strings.Localizable.CallAndMeeting.Duration.Unlimited.For.Pro.users, "Calls and Meetings Duration feature pro text mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectCallsAndMeetingsParticipantsFeature() {
-        let (_, features) = createSutAndFeatures()
-        let callsAndMeetingsParticipantsFeature = features.first { $0.type == .callsAndMeetingsParticipants }
-
-        XCTAssertNotNil(callsAndMeetingsParticipantsFeature, "Calls and Meetings Participants feature should not be nil")
-        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.title, Strings.Localizable.CallAndMeeting.Participants.title, "Calls and Meetings Participants feature title mismatch")
-        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.freeText, Strings.Localizable.CallAndMeeting.Participants.For.Free.users, "Calls and Meetings Participants feature free text mismatch")
-        XCTAssertEqual(callsAndMeetingsParticipantsFeature?.proText, Strings.Localizable.CallAndMeeting.Participants.Unlimited.For.Pro.users, "Calls and Meetings Participants feature pro text mismatch")
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectRewindFeatureForLitePlan() {
-        verifyRewindFeature(
-            for: .lite,
-            expectedLimit: 90
-        )
-    }
-
-    func testCreateCurrentFeatures_shouldHaveCorrectRewindFeatureForProPlan() {
-        verifyRewindFeature(
-            for: .proI,
-            expectedLimit: 180
-        )
+    
+    // MARK: - Test Methods
+    
+    @Suite("Feature List Tests")
+    struct FeatureListTests {
+        
+        @Test("Should return correct feature count")
+        func featureCountIsCorrect() {
+            let (_, features) = createSutAndFeatures()
+            #expect(features.count == 9, "Expected 9 features but got \(features.count)")
+        }
+        
+        @Test("Should have correct feature details for each feature", arguments: featureTestCases())
+        func featureDetailsAreCorrect(for feature: FeatureTestCase) {
+            let (sut, features) = createSutAndFeatures()
+            verifyFeature(
+                features: features,
+                featureType: feature.type,
+                title: feature.title,
+                freeText: feature.freeText,
+                proText: feature.proText,
+                freeIconName: feature.freeIconName,
+                proIconName: feature.proIconName
+            )
+        }
+        
+        @Test("Should have correct rewind feature details for each plan", arguments: [(AccountTypeEntity.lite, 90), (AccountTypeEntity.proI, 180)])
+        func rewindFeatureIsCorrect(for accountType: AccountTypeEntity, expectedLimit: Int) {
+            verifyRewindFeature(
+                for: accountType,
+                expectedLimit: expectedLimit
+            )
+        }
     }
 }
