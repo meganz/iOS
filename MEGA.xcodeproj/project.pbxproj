@@ -1319,6 +1319,8 @@
 		943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943649DD2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift */; };
 		943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943649DE2A4D83DE006CE8B8 /* AlertModel+Equatable.swift */; };
 		9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */; };
+		9437CEC12CAFFE7F0051F947 /* QuickAccessWidgetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437CEC02CAFFE710051F947 /* QuickAccessWidgetViewModelTests.swift */; };
+		9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437CEC32CB0080D0051F947 /* MockOfflineFilesUseCase.swift */; };
 		94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */; };
 		9439F10D2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */; };
 		9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */; };
@@ -4119,6 +4121,8 @@
 		943649DE2A4D83DE006CE8B8 /* AlertModel+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertModel+Equatable.swift"; sourceTree = "<group>"; };
 		9437B93D1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAPasswordLinkRequestDelegate.h; path = API/Requests/MEGAPasswordLinkRequestDelegate.h; sourceTree = "<group>"; };
 		9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAPasswordLinkRequestDelegate.m; path = API/Requests/MEGAPasswordLinkRequestDelegate.m; sourceTree = "<group>"; };
+		9437CEC02CAFFE710051F947 /* QuickAccessWidgetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetViewModelTests.swift; sourceTree = "<group>"; };
+		9437CEC32CB0080D0051F947 /* MockOfflineFilesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOfflineFilesUseCase.swift; sourceTree = "<group>"; };
 		94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCloudDriveViewControllerFactory.swift; sourceTree = "<group>"; };
 		9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeFactoryTests.swift; sourceTree = "<group>"; };
@@ -8588,7 +8592,6 @@
 			children = (
 				2599D0C22BE202E8003DC13C /* FileExplorer */,
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
-				9961E7242A282FBA004FB05F /* Videos */,
 				534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */,
 				94BF690F2CAFD3BC0052F1D5 /* HomeBannerViewModelTests.swift */,
 				6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */,
@@ -8596,6 +8599,7 @@
 				943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */,
 				5D62093724ED1511004648A1 /* MEGANotificationUseCaseTests.swift */,
 				6DEEA7B72C119596004641C9 /* MEGASDKErrorTypeTests.swift */,
+				9437CEC02CAFFE710051F947 /* QuickAccessWidgetViewModelTests.swift */,
 				9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */,
 			);
 			path = Home;
@@ -10541,13 +10545,6 @@
 			path = ChatRoomAvatar;
 			sourceTree = "<group>";
 		};
-		9961E7242A282FBA004FB05F /* Videos */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Videos;
-			sourceTree = "<group>";
-		};
 		99E1A9272A383E9700974FC9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -12199,6 +12196,7 @@
 			isa = PBXGroup;
 			children = (
 				24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */,
+				9437CEC32CB0080D0051F947 /* MockOfflineFilesUseCase.swift */,
 				24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */,
 				94BF69152CAFFA800052F1D5 /* MockUserBannerUseCase.swift */,
 			);
@@ -16641,6 +16639,7 @@
 				24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */,
 				94B09E702B84D0B6007D6B84 /* MockNodeInsertionRouter.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
+				9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */,
 				8326E68C2BE50A5400481711 /* MockPasscodeManager.swift in Sources */,
 				94A144602C9DE50800C34A98 /* MockPasteImagePreviewRouter.swift in Sources */,
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
@@ -16734,6 +16733,7 @@
 				247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */,
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
+				9437CEC12CAFFE7F0051F947 /* QuickAccessWidgetViewModelTests.swift in Sources */,
 				83F388F32C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift in Sources */,
 				C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */,
 				24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */,
