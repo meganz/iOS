@@ -75,7 +75,6 @@ private extension FilesExplorerViewModelTests {
                 router: FilesExplorerRouter(navigationController: nil, explorerType: explorerType, featureFlagProvider: featureFlagProvider),
                 useCase: filesSearchUseCase,
                 filesDownloadUseCase: FilesDownloadUseCase(repo: .init(sdk: sdk)),
-                nodeClipboardOperationUseCase: NodeClipboardOperationUseCase(repo: .init(sdk: sdk)),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 createContextMenuUseCase: MockCreateContextMenuUseCase(),
                 nodeProvider: nodeProvider,

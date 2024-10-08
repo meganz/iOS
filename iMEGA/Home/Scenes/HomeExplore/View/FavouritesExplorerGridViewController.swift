@@ -137,8 +137,6 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
                 allowsMultipleSelection: gridSource?.allowsMultipleSelection ?? false,
                 selectedNodes: gridSource?.selectedNodes,
                 delegate: self)
-        case .onNodesUpdate(let updatedNodes):
-            gridSource?.updateCells(forNodes: updatedNodes)
         case .reloadData:
             delegate?.updateSearchResults()
         case .setViewConfiguration(let configuration):

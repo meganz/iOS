@@ -2493,8 +2493,6 @@
 		BFE6DBFC242DBA4A00E2E5B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */; };
 		BFE6DBFE2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */; };
 		BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6E553255259FE00050DCA /* SortOrderType.swift */; };
-		BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */; };
-		BFEAFF7C2565D57300646606 /* NodeClipboardOperationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */; };
 		BFEE74D02CAE22DE007FA672 /* NodeTagsCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEE74CF2CAE22D4007FA672 /* NodeTagsCellController.swift */; };
 		BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAC2887A0F400F8F9F1 /* QASettingsRouter.swift */; };
 		BFEF8CAF2887A10100F8F9F1 /* QASetttingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */; };
@@ -5294,8 +5292,6 @@
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+NavigationBar.swift"; sourceTree = "<group>"; };
 		BFE6E553255259FE00050DCA /* SortOrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrderType.swift; sourceTree = "<group>"; };
-		BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodeClipboardOperationRepository.swift; sourceTree = "<group>"; };
-		BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeClipboardOperationUseCase.swift; sourceTree = "<group>"; };
 		BFEE74CF2CAE22D4007FA672 /* NodeTagsCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsCellController.swift; sourceTree = "<group>"; };
 		BFEF8CAC2887A0F400F8F9F1 /* QASettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouter.swift; sourceTree = "<group>"; };
 		BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASetttingsViewModel.swift; sourceTree = "<group>"; };
@@ -8306,7 +8302,6 @@
 			children = (
 				94712EF72A9C9F4000B5F2C9 /* NodeDetails */,
 				5D1E3C182531F2BE00BD7A07 /* Search */,
-				BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */,
 				5D6092A5255D609F005FA3E4 /* NodeLabelActionUseCase.swift */,
 				B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */,
 			);
@@ -8541,7 +8536,6 @@
 			isa = PBXGroup;
 			children = (
 				5D94D70D2513690700B103EC /* Node */,
-				BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */,
 				BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */,
 				5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */,
 			);
@@ -15410,7 +15404,6 @@
 				94B09E592B84CC87007D6B84 /* NodeBrowserView.swift in Sources */,
 				94B09E6B2B84CC87007D6B84 /* NodeBrowserViewModel.swift in Sources */,
 				5B947A9A267A20CD00715B0C /* NodeCellViewModel.swift in Sources */,
-				BFEAFF7C2565D57300646606 /* NodeClipboardOperationUseCase.swift in Sources */,
 				B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */,
 				C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */,
 				83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */,
@@ -15827,7 +15820,6 @@
 				83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */,
 				5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */,
 				5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */,
-				BFEAFF722565D35400646606 /* SDKNodeClipboardOperationRepository.swift in Sources */,
 				BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */,
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
 				94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */,

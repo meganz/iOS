@@ -30,10 +30,8 @@ struct FilesExplorerRouter {
         
         let sdk = MEGASdk.shared
         let fileSearchRepo = FilesSearchRepository(sdk: sdk)
-        let clipboardOperationRepo = SDKNodeClipboardOperationRepository(sdk: sdk)
         let useCase = FilesSearchUseCase(repo: fileSearchRepo,
                                          nodeRepository: NodeRepository.newRepo)
-        let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: clipboardOperationRepo)
         let nodeDownloadUpdatesUseCase = NodeDownloadUpdatesUseCase(repo: NodeTransferRepository.newRepo(includesSharedFolder: false))
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         
@@ -42,7 +40,6 @@ struct FilesExplorerRouter {
             router: self,
             useCase: useCase,
             nodeDownloadUpdatesUseCase: nodeDownloadUpdatesUseCase,
-            nodeClipboardOperationUseCase: nodeClipboardOperationUseCase,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
             createContextMenuUseCase: createContextMenuUseCase,
