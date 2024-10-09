@@ -16,7 +16,7 @@ public func withAsyncThrowingValue<T>(in operation: (@escaping (Result<T, Error>
     }
 }
 
-public func withAsyncValue<T>(in operation: (@escaping (Result<T, Never>) -> Void) -> Void) async -> T {
+public func withAsyncValue<T>(in operation: (@Sendable @escaping (Result<T, Never>) -> Void) -> Void) async -> T {
     await withCheckedContinuation { continuation in
         operation { result in
             continuation.resume(with: result)

@@ -5,14 +5,14 @@ import MEGAL10n
 
 protocol RecentlyWatchedVideosSorterProtocol: Sendable {
     func sortVideosByDay(
-        videos: [RecentlyWatchedVideoEntity],
+        videos: [RecentlyOpenedNodeEntity],
         configuration: RecentlyWatchedVideosSectionDateConfiguration
     ) -> [RecentlyWatchedVideoSection]
 }
 
 extension RecentlyWatchedVideosSorterProtocol {
     func sortVideosByDay(
-        videos: [RecentlyWatchedVideoEntity],
+        videos: [RecentlyOpenedNodeEntity],
         configuration: RecentlyWatchedVideosSectionDateConfiguration = RecentlyWatchedVideosSectionDateConfiguration()
     ) -> [RecentlyWatchedVideoSection] {
         self.sortVideosByDay(videos: videos, configuration: configuration)
@@ -22,7 +22,7 @@ extension RecentlyWatchedVideosSorterProtocol {
 struct RecentlyWatchedVideosSorter: RecentlyWatchedVideosSorterProtocol {
     
     func sortVideosByDay(
-        videos: [RecentlyWatchedVideoEntity],
+        videos: [RecentlyOpenedNodeEntity],
         configuration: RecentlyWatchedVideosSectionDateConfiguration = RecentlyWatchedVideosSectionDateConfiguration()
     ) -> [RecentlyWatchedVideoSection] {
         let calendar = configuration.calendar
@@ -30,7 +30,7 @@ struct RecentlyWatchedVideosSorter: RecentlyWatchedVideosSorterProtocol {
         let yesterday = yesterdayDate(from: calendar)
         
         let groupedVideos = Dictionary(grouping: videos) { video in
-            let startOfDay = calendar.startOfDay(for: video.lastWatchedDate ?? Date())
+            let startOfDay = calendar.startOfDay(for: video.lastOpenedDate ?? Date())
             if startOfDay == today {
                 return today
             } else if startOfDay == yesterday {
@@ -58,7 +58,7 @@ struct RecentlyWatchedVideosSorter: RecentlyWatchedVideosSorterProtocol {
                 }
                 return RecentlyWatchedVideoSection(title: title, videos: videos)
             }
-            .sorted { $0.videos.first?.lastWatchedDate ?? Date.now > $1.videos.first?.lastWatchedDate ?? Date.now }
+            .sorted { $0.videos.first?.lastOpenedDate ?? Date.now > $1.videos.first?.lastOpenedDate ?? Date.now }
     }
     
     private func yesterdayDate(from calendar: Calendar) -> Date {

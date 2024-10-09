@@ -45,6 +45,11 @@
     if (self.storeURL) {
         storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:self.storeURL];
         [storeDescription setOption:NSFileProtectionCompleteUntilFirstUserAuthentication forKey:NSPersistentStoreFileProtectionKey];
+        
+        // CoreData lightweight migration
+        [storeDescription setOption:@(YES) forKey:NSMigratePersistentStoresAutomaticallyOption];
+        [storeDescription setOption:@(YES) forKey:NSInferMappingModelAutomaticallyOption];
+        
         container.persistentStoreDescriptions = @[storeDescription];
         
         if (shouldConfigFileProtection) {

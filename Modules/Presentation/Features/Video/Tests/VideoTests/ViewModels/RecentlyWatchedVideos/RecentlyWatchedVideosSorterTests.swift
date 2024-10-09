@@ -6,7 +6,7 @@ import XCTest
 final class RecentlyWatchedVideosSorterTests: XCTestCase {
     
     func testSortVideosByDay_withEmptyItems_returnsEmptySection() {
-        let videos: [RecentlyWatchedVideoEntity] = []
+        let videos: [RecentlyOpenedNodeEntity] = []
         let sortedSections = sortVideosByDay(videos: videos)
         
         XCTAssertTrue(sortedSections.isEmpty, "Expected no sections when input is empty")
@@ -67,13 +67,13 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func anyVideo(handle: Int, daysAgo: Int) -> RecentlyWatchedVideoEntity {
+    private func anyVideo(handle: Int, daysAgo: Int) -> RecentlyOpenedNodeEntity {
         let calendar = Calendar.current
         let date = calendar.date(byAdding: .day, value: -daysAgo, to: Date())!
-        return RecentlyWatchedVideoEntity(
-            video: NodeEntity(name: "video-\(handle).mp4", handle: HandleEntity(handle)),
-            lastWatchedDate: date,
-            mediaDestination: nil
+        return RecentlyOpenedNodeEntity(
+            node: NodeEntity(name: "video-\(handle).mp4", handle: HandleEntity(handle)),
+            lastOpenedDate: date,
+            mediaDestination: MediaDestinationEntity(fingerprint: "any-fingerprint", destination: 0, timescale: 0)
         )
     }
     
@@ -85,7 +85,7 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
         Strings.Localizable.yesterday
     }
     
-    private func sortVideosByDay(videos: [RecentlyWatchedVideoEntity]) -> [RecentlyWatchedVideoSection] {
+    private func sortVideosByDay(videos: [RecentlyOpenedNodeEntity]) -> [RecentlyWatchedVideoSection] {
         let sut = RecentlyWatchedVideosSorter()
         return sut.sortVideosByDay(videos: videos, configuration: testDateConfiguration())
     }

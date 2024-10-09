@@ -17,7 +17,7 @@ final class MockRecentlyWatchedVideosSorter: RecentlyWatchedVideosSorterProtocol
     }
     
     func sortVideosByDay(
-        videos: [RecentlyWatchedVideoEntity],
+        videos: [RecentlyOpenedNodeEntity],
         configuration: RecentlyWatchedVideosSectionDateConfiguration = RecentlyWatchedVideosSectionDateConfiguration()
     ) -> [RecentlyWatchedVideoSection] {
         $invocations.mutate { $0.append(.sortVideosByDay) }
