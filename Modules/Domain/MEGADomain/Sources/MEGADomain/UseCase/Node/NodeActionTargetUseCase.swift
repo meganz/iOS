@@ -6,7 +6,7 @@ public protocol NodeActionTargetUseCaseProtocol {
     func target(for action: BrowserActionEntity) -> HandleEntity?
 }
 
-public struct NodeActionTargetUseCase<T: NodeRepositoryProtocol, U: PreferenceUseCaseProtocol>: NodeActionTargetUseCaseProtocol {
+public struct NodeActionTargetUseCase<T: NodeRepositoryProtocol, U: PreferenceUseCaseProtocol>: NodeActionTargetUseCaseProtocol, Sendable {
     private let nodeRepo: T
     private let secondsInOneHour: TimeInterval = 3600
     
