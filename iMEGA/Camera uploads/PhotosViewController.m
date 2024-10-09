@@ -104,20 +104,6 @@
     } completion:nil];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        [self updateAppearance];
-        [self setupBarButtons];
-        
-        if ([self isTimelineActive]) {
-            [self setupNavigationBarButtons];
-        }
-    }
-}
-
 #pragma mark - config views
 - (void)configPhotoContainerView {
     self.photosCollectionView.emptyDataSetSource = self;
