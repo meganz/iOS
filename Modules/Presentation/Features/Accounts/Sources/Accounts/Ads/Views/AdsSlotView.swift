@@ -4,8 +4,8 @@ import MEGASwiftUI
 import SwiftUI
 
 /// AdsSlotView is a view that displays the main content of the app, with an optional banner ad positioned at the bottom of the screen.
-/// `shouldContainAds`: This checks whether ads should be displayed on a tab such as Home, Photos and Cloud Drive tab. Chat and Shared Item tab will not contain ads. It evaluates both the current verticalSizeClass and the state of ad enablement. VerticalSizeClass should be `.regular` only, applicable for both iPhone and iPad.
-/// `displayAds`: This determines if ads should be hidden. Even when shouldContainAds returns true, ads might still be hidden if the contentView is navigated to a screen where ads should not be displayed. For instance, when a user navigates to the "Account" page from the Home, Photos or Cloud drive tab, the ad will be hidden.
+/// `shouldHideAds`: This checks whether ads should be hidden on a tab such as Home, Photos and Cloud Drive tab. Chat and Shared Item tab will not contain ads. It evaluates both the current verticalSizeClass and the state of ad enablement. VerticalSizeClass should be `.regular` only, applicable for both iPhone and iPad.
+/// `displayAds`: This determines if ads should be hidden. Even when isExternalAdsEnabled returns true, ads might still be hidden if the contentView is navigated to a screen where ads should not be displayed. For instance, when a user navigates to the "Account" page from the Home, Photos or Cloud drive tab, the ad will be hidden.
 public struct AdsSlotView<T: View>: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject var viewModel: AdsSlotViewModel
@@ -15,14 +15,10 @@ public struct AdsSlotView<T: View>: View {
         VStack(spacing: 0) {
             contentView
             
-            if shouldContainAds {
-                AdMobBannerView(
-                    refreshAdsPublisher: viewModel.refreshAdsPublisher,
-                    adMob: viewModel.adMob
-                )
-                .transition(.opacity)
-                .frame(height: viewModel.displayAds ? 50 : 0)
-                .opacity(viewModel.displayAds ? 1 : 0)
+            if viewModel.isExternalAdsEnabled {
+                AdMobBannerView(adMob: viewModel.adMob)
+                    .frame(height: shouldHideAds ? 0 : 50)
+                    .opacity(shouldHideAds ? 0 : 1)
             }
         }
         .task {
@@ -34,10 +30,10 @@ public struct AdsSlotView<T: View>: View {
             viewModel.setupSubscriptions()
         }
         .ignoresSafeArea(.keyboard)
-        .ignoresSafeArea(edges: shouldContainAds && viewModel.displayAds ? [.top] : .all)
+        .ignoresSafeArea(edges: shouldHideAds || !viewModel.isExternalAdsEnabled ? .all : [.top])
     }
     
-    private var shouldContainAds: Bool {
-        verticalSizeClass != .compact && viewModel.isExternalAdsEnabled
+    private var shouldHideAds: Bool {
+        verticalSizeClass == .compact || !viewModel.displayAds
     }
 }

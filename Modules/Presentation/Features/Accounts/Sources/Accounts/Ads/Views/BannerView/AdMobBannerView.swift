@@ -1,43 +1,33 @@
-import Combine
 import GoogleMobileAds
 import SwiftUI
 
 struct AdMobBannerView: View {
-    private let refreshAdsPublisher: AnyPublisher<Void, Never>
     private let adMob: AdMob
     private let adSize = GADAdSizeBanner
     
-    init(
-        refreshAdsPublisher: AnyPublisher<Void, Never>,
-        adMob: AdMob
-    ) {
-        self.refreshAdsPublisher = refreshAdsPublisher
+    init(adMob: AdMob) {
         self.adMob = adMob
     }
     
     var body: some View {
         AdMobBannerContentView(
             adSize: adSize,
-            adMob: adMob,
-            refreshAdsPublisher: refreshAdsPublisher
+            adMob: adMob
         )
         .frame(height: adSize.size.height)
     }
 }
 
 struct AdMobBannerContentView: UIViewRepresentable {
-    private let refreshAdsPublisher: AnyPublisher<Void, Never>
     private let adMob: AdMob
     let adSize: GADAdSize
     
     init(
         adSize: GADAdSize,
-        adMob: AdMob,
-        refreshAdsPublisher: AnyPublisher<Void, Never>
+        adMob: AdMob
     ) {
         self.adSize = adSize
         self.adMob = adMob
-        self.refreshAdsPublisher = refreshAdsPublisher
     }
     
     func makeUIView(context: Context) -> some UIView {
@@ -60,7 +50,7 @@ struct AdMobBannerContentView: UIViewRepresentable {
     }
     
     func makeCoordinator() -> AdMobBannerCoordinator {
-        AdMobBannerCoordinator(self, refreshAdsPublisher: refreshAdsPublisher)
+        AdMobBannerCoordinator(self)
     }
     
     final class AdMobBannerCoordinator: NSObject {
@@ -72,31 +62,10 @@ struct AdMobBannerContentView: UIViewRepresentable {
         }()
         
         private let parent: AdMobBannerContentView
-        private let refreshAdsPublisher: AnyPublisher<Void, Never>
-        private var subscriptions = Set<AnyCancellable>()
         
-        init(
-            _ parent: AdMobBannerContentView,
-            refreshAdsPublisher: AnyPublisher<Void, Never>
-        ) {
+        init(_ parent: AdMobBannerContentView) {
             self.parent = parent
-            self.refreshAdsPublisher = refreshAdsPublisher
             super.init()
-            
-            setupSubscription()
-        }
-        
-        private func setupSubscription() {
-            refreshAdsPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.refreshAds()
-                }
-                .store(in: &subscriptions)
-        }
-        
-        private func refreshAds() {
-            bannerView.load(GADRequest())
         }
     }
 }
