@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -105,16 +104,16 @@
                                             <exclude reference="A7d-Zr-RdG"/>
                                             <exclude reference="DSR-UN-5E9"/>
                                             <exclude reference="L4O-GP-5IT"/>
-                                            <exclude reference="S9f-CN-JK1"/>
                                             <exclude reference="Wag-qY-PL8"/>
-                                            <exclude reference="b6E-sH-7nE"/>
                                             <exclude reference="gjK-v8-G8Z"/>
+                                            <exclude reference="b6E-sH-7nE"/>
+                                            <exclude reference="S9f-CN-JK1"/>
                                             <exclude reference="kzW-dh-xwk"/>
                                             <exclude reference="l6i-Kd-ChU"/>
+                                            <exclude reference="w27-BP-xxe"/>
                                             <exclude reference="6Dq-Qj-XMd"/>
                                             <exclude reference="7X9-O7-5z0"/>
                                             <exclude reference="uCb-2X-IhB"/>
-                                            <exclude reference="w27-BP-xxe"/>
                                             <exclude reference="yXR-Yd-bdy"/>
                                         </mask>
                                     </variation>
@@ -535,7 +534,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFj-Kh-Kdm" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFj-Kh-Kdm" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="79.666666666666686" y="380" width="255" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="255" id="QVA-0R-Ng7"/>
@@ -640,7 +639,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PwH-3o-Frw" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PwH-3o-Frw" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                         <rect key="frame" x="85" y="127.66666666666666" width="244" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="0bk-jp-4pz"/>
@@ -776,26 +775,6 @@
             <point key="canvasLocation" x="2136.8000000000002" y="1709.5952023988007"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="O5F-3C-wdv">
-            <size key="intrinsicContentSize" width="41.666666666666664" height="38.333333333333336"/>
-        </designable>
-        <designable name="PwH-3o-Frw">
-            <size key="intrinsicContentSize" width="44" height="33"/>
-        </designable>
-        <designable name="TUX-K6-rg5">
-            <size key="intrinsicContentSize" width="7.666666666666667" height="12"/>
-        </designable>
-        <designable name="efp-r8-2Fx">
-            <size key="intrinsicContentSize" width="101.33333333333333" height="20.333333333333332"/>
-        </designable>
-        <designable name="gaL-7e-CiB">
-            <size key="intrinsicContentSize" width="140.33333333333334" height="20.333333333333332"/>
-        </designable>
-        <designable name="kFj-Kh-Kdm">
-            <size key="intrinsicContentSize" width="155" height="33"/>
-        </designable>
-    </designables>
     <resources>
         <image name="achievementsCheck" width="32" height="32"/>
         <image name="inviteFriends" width="80" height="80"/>

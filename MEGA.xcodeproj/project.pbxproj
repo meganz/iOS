@@ -2560,7 +2560,7 @@
 		C46157B72538A48D00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
 		C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */; };
 		C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
-		C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463CCD426A5E03C00577271 /* MEGAButton.swift */; };
+		C463CCD526A5E03C00577271 /* MEGAButtonLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463CCD426A5E03C00577271 /* MEGAButtonLegacy.swift */; };
 		C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527D326526BBA00371270 /* BannerContainerViewController.swift */; };
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
@@ -5352,7 +5352,7 @@
 		C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAProgressBarView.swift; sourceTree = "<group>"; };
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
-		C463CCD426A5E03C00577271 /* MEGAButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAButton.swift; sourceTree = "<group>"; };
+		C463CCD426A5E03C00577271 /* MEGAButtonLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAButtonLegacy.swift; sourceTree = "<group>"; };
 		C46527D326526BBA00371270 /* BannerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewController.swift; sourceTree = "<group>"; };
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
@@ -7918,7 +7918,7 @@
 				777615B02175D88C00A7796D /* InputView.xib */,
 				7764AAB2246EE18E00134C88 /* MegaAvatarView.swift */,
 				7764AAB0246EE0B200134C88 /* MegaAvatarView.xib */,
-				C463CCD426A5E03C00577271 /* MEGAButton.swift */,
+				C463CCD426A5E03C00577271 /* MEGAButtonLegacy.swift */,
 				C4A5F0E7266E31DD001D783B /* MEGALabel.swift */,
 				C460DA3A263ACD17000ED9E4 /* MEGAProgressBarView.swift */,
 				C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */,
@@ -15209,7 +15209,7 @@
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
 				5DAC09D324CFC5B9001B6476 /* MEGABannerView.swift in Sources */,
-				C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */,
+				C463CCD526A5E03C00577271 /* MEGAButtonLegacy.swift in Sources */,
 				5DAC09D524CFCA16001B6476 /* MEGACarouselFlowLayout.swift in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,

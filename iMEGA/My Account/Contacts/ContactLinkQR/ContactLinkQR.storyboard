@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -100,7 +99,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7t-aZ-ziV" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7t-aZ-ziV" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                 <rect key="frame" x="16" y="449" width="288" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="afg-xo-jFM">
@@ -217,14 +216,6 @@
             <point key="canvasLocation" x="5951.4084507042253" y="-2229.375"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="A7t-aZ-ziV">
-            <size key="intrinsicContentSize" width="74" height="21"/>
-        </designable>
-        <designable name="D3t-9X-3oi">
-            <size key="intrinsicContentSize" width="131" height="31"/>
-        </designable>
-    </designables>
     <resources>
         <image name="backArrow" width="13" height="21"/>
         <image name="moreNavigationBar" width="28" height="28"/>

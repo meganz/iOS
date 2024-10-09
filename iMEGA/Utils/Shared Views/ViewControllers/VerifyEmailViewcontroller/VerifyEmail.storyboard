@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rav-a2-W4d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rav-a2-W4d">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -59,19 +58,19 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your account has been temporarily suspended for your safety." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBJ-Fw-i0r">
-                                        <rect key="frame" x="62" y="275.33333333333331" width="290" height="33.666666666666686"/>
+                                        <rect key="frame" x="62" y="275.33333333333331" width="290" height="40.333333333333314"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please verify your email and follow its steps to unlock your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ppm-ej-WVc" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="62" y="339" width="290" height="33.666666666666686"/>
+                                        <rect key="frame" x="62" y="345.66666666666669" width="290" height="40.333333333333314"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nK5-Ww-h37" userLabel="Bottom View">
-                                        <rect key="frame" x="0.0" y="402.66666666666669" width="414" height="45"/>
+                                        <rect key="frame" x="0.0" y="416" width="414" height="45"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tj-hW-0cs">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
@@ -80,7 +79,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="SH9-ty-DHZ"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tr2-K8-Gnq" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tr2-K8-Gnq" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="1" width="414" height="43"/>
                                                 <state key="normal" title="Why am I seeing this?">
                                                     <color key="titleColor" red="0.0" green="0.6588235294" blue="0.52549019610000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -116,8 +115,8 @@
                                             <constraint firstItem="Tr2-K8-Gnq" firstAttribute="top" secondItem="8tj-hW-0cs" secondAttribute="bottom" id="yZw-GI-sxZ"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="df8-dJ-avN" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="63" y="491.66666666666674" width="288" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="df8-dJ-avN" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
+                                        <rect key="frame" x="63" y="505" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="cio-2a-HHL"/>
                                             <constraint firstAttribute="width" constant="288" id="ifd-f6-iMX"/>
@@ -146,8 +145,8 @@
                                             <action selector="tapResendButton:" destination="Rav-a2-W4d" eventType="touchUpInside" id="zDM-RI-dfW"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JpX-4Y-xFk" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="63" y="557.66666666666663" width="288" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JpX-4Y-xFk" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
+                                        <rect key="frame" x="63" y="571" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="98i-fF-G6r"/>
                                             <constraint firstAttribute="height" constant="50" id="XCh-gy-xkr"/>
@@ -177,7 +176,7 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11A-mY-zvo">
-                                        <rect key="frame" x="179.33333333333334" y="461.33333333333331" width="55.333333333333343" height="14.333333333333314"/>
+                                        <rect key="frame" x="177.33333333333334" y="474.66666666666669" width="59.666666666666657" height="14.333333333333314"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -234,33 +233,16 @@
             <point key="canvasLocation" x="-23.188405797101453" y="87.723214285714278"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="4I6-Zf-6Y2">
-            <size key="intrinsicContentSize" width="134" height="20.333333333333332"/>
-        </designable>
-        <designable name="JpX-4Y-xFk">
-            <size key="intrinsicContentSize" width="56" height="33"/>
-        </designable>
-        <designable name="Ppm-ej-WVc">
-            <size key="intrinsicContentSize" width="409" height="15.666666666666666"/>
-        </designable>
-        <designable name="Tr2-K8-Gnq">
-            <size key="intrinsicContentSize" width="149" height="30"/>
-        </designable>
-        <designable name="df8-dJ-avN">
-            <size key="intrinsicContentSize" width="60" height="33"/>
-        </designable>
-    </designables>
     <resources>
         <image name="warning" width="146" height="122"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

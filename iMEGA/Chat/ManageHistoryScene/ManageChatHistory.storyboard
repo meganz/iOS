@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,20 +18,20 @@
                             <tableViewSection footerTitle="Automatically delete messages older than a certain amount of time." id="unh-OR-rey">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="eVz-UR-606">
-                                        <rect key="frame" x="0.0" y="17.5" width="414" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="17.5" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="eVz-UR-606" id="Tsv-ww-Uhx">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lfh-Xw-hlB">
-                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="8.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="historyRetentionSwitchValueChanged:" destination="U5G-Eg-fSa" eventType="valueChanged" id="nvP-h9-4ke"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History Retention" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDo-wQ-xnb">
-                                                    <rect key="frame" x="20" y="13.5" width="112" height="17.5"/>
+                                                    <rect key="frame" x="20" y="13.5" width="132" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -61,14 +60,14 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell hidden="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="J1V-mp-pCl">
-                                        <rect key="frame" x="0.0" y="62" width="414" height="40.5"/>
+                                        <rect key="frame" x="0.0" y="65.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J1V-mp-pCl" id="0wl-O9-gJd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="40.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lc-3k-BEa" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                    <rect key="frame" x="350" y="2" width="52" height="37"/>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lc-3k-BEa" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
+                                                    <rect key="frame" x="345" y="1.5" width="57" height="41"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                                     <state key="normal" title="Save"/>
@@ -81,7 +80,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 hour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKz-JB-gpc">
-                                                    <rect key="frame" x="187" y="11.5" width="40" height="17.5"/>
+                                                    <rect key="frame" x="183.5" y="11.5" width="47" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -99,7 +98,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell hidden="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="162" id="wed-Fa-eCd">
-                                        <rect key="frame" x="0.0" y="102.5" width="414" height="162"/>
+                                        <rect key="frame" x="0.0" y="109.5" width="414" height="162"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="wed-Fa-eCd" id="api-nS-5hs">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="162"/>
@@ -123,7 +122,7 @@
                             <tableViewSection footerTitle="Delete all messages and files shared in this conversation from both parties. This action is irreversible." id="Mir-4Q-TAo">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="WKa-Qn-3mM" style="IBUITableViewCellStyleDefault" id="AuO-yF-E4v">
-                                        <rect key="frame" x="0.0" y="322.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="335" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="AuO-yF-E4v" id="LOI-Uo-CWN">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -167,9 +166,4 @@
             <point key="canvasLocation" x="-1330" y="293"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="9Lc-3k-BEa">
-            <size key="intrinsicContentSize" width="52" height="37"/>
-        </designable>
-    </designables>
 </document>

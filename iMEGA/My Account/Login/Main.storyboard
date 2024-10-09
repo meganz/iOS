@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -64,7 +63,7 @@
             <objects>
                 <viewController storyboardIdentifier="LoginViewControllerID" id="y7g-EC-7mD" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HNb-vZ-9Rz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C2Y-Yd-Fhv">
@@ -119,7 +118,7 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="196" y="330" width="108" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="hjN-Kb-jeD"/>
@@ -134,7 +133,7 @@
                                                     <action selector="forgotPasswordTouchUpInside:" destination="y7g-EC-7mD" eventType="touchUpInside" id="0iO-Wq-K0q"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="513" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="M9c-MZ-MYw"/>
@@ -226,7 +225,7 @@
             <objects>
                 <viewController storyboardIdentifier="CreateAccountViewControllerID" id="iCg-Wh-kpi" customClass="CreateAccountViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AWH-xe-qAi">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lM5-va-TqA">
@@ -329,7 +328,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="58" y="464.5" width="224" height="27"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <userDefinedRuntimeAttributes>
@@ -365,7 +364,7 @@
                                                     <outletCollection property="gestureRecognizers" destination="ukt-vC-RZc" appends="YES" id="sX8-b4-iac"/>
                                                 </connections>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="607.5" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="HJ1-8d-saO"/>
@@ -551,7 +550,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="466" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="tQT-7u-kru"/>
@@ -567,7 +566,7 @@
                                             <action selector="confirmTouchUpInside:" destination="Q0l-3c-nfd" eventType="touchUpInside" id="nvt-q6-kIM"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="533" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="0Ya-eN-Z6a"/>
@@ -679,7 +678,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Pg-W1e" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Pg-W1e" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="397" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="gmy-wV-QdT"/>
@@ -695,7 +694,7 @@
                                             <action selector="resendTouchUpInside:" destination="lG1-F0-uSF" eventType="touchUpInside" id="ONB-p9-fJV"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-HK-PQg" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-HK-PQg" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="16" y="464" width="288" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Cancel"/>
@@ -780,59 +779,6 @@
             <point key="canvasLocation" x="1096" y="-1100"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="4Wd-CD-LZg">
-            <size key="intrinsicContentSize" width="55" height="33"/>
-        </designable>
-        <designable name="61x-Df-ghm">
-            <size key="intrinsicContentSize" width="280" height="55"/>
-        </designable>
-        <designable name="7hM-BK-Re1">
-            <size key="intrinsicContentSize" width="320" height="60"/>
-        </designable>
-        <designable name="Cud-y6-Xtd">
-            <size key="intrinsicContentSize" width="320" height="55"/>
-        </designable>
-        <designable name="DU4-vX-4QG">
-            <size key="intrinsicContentSize" width="280" height="55"/>
-        </designable>
-        <designable name="EcF-LZ-UjW">
-            <size key="intrinsicContentSize" width="44" height="33"/>
-        </designable>
-        <designable name="Klv-H8-jVM">
-            <size key="intrinsicContentSize" width="320" height="55"/>
-        </designable>
-        <designable name="L2c-lr-kWP">
-            <size key="intrinsicContentSize" width="320" height="55"/>
-        </designable>
-        <designable name="NEs-0T-7bT">
-            <size key="intrinsicContentSize" width="320" height="60"/>
-        </designable>
-        <designable name="UnQ-C2-8bb">
-            <size key="intrinsicContentSize" width="108" height="28"/>
-        </designable>
-        <designable name="WFG-hb-soU">
-            <size key="intrinsicContentSize" width="320" height="60"/>
-        </designable>
-        <designable name="bak-ZA-1ZU">
-            <size key="intrinsicContentSize" width="124" height="33"/>
-        </designable>
-        <designable name="fZ6-Pg-W1e">
-            <size key="intrinsicContentSize" width="60" height="33"/>
-        </designable>
-        <designable name="fqq-un-Bih">
-            <size key="intrinsicContentSize" width="30" height="27"/>
-        </designable>
-        <designable name="gCw-HK-PQg">
-            <size key="intrinsicContentSize" width="53" height="33"/>
-        </designable>
-        <designable name="hkb-3j-jnC">
-            <size key="intrinsicContentSize" width="320" height="55"/>
-        </designable>
-        <designable name="urs-kB-QJB">
-            <size key="intrinsicContentSize" width="133" height="33"/>
-        </designable>
-    </designables>
     <resources>
         <image name="checkBoxSelected" width="24" height="24"/>
         <image name="checkBoxUnselected" width="24" height="24"/>

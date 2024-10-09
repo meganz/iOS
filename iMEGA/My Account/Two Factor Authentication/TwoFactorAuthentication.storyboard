@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -250,7 +249,7 @@
                                     <constraint firstAttribute="trailing" secondItem="ROa-eg-XyC" secondAttribute="trailing" constant="5" id="oMp-Ly-h7Z"/>
                                 </constraints>
                             </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9PD-cE-xf4" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9PD-cE-xf4" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                 <rect key="frame" x="92" y="264" width="191" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Lost your authenticator device?"/>
@@ -332,7 +331,7 @@
                                             <constraint firstAttribute="height" constant="194" id="X70-En-TWf"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5t-8t-WXX" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5t-8t-WXX" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="43.5" y="455" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="VNF-Vg-zyy"/>
@@ -348,7 +347,7 @@
                                             <action selector="openInTouchUpInside:" destination="vmb-r3-kvN" eventType="touchUpInside" id="P4a-0j-wmA"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZPw-hy-opU" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZPw-hy-opU" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="43.5" y="521" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="TDw-eS-Bns"/>
@@ -513,7 +512,7 @@ opqr stuv wxyz</string>
             <objects>
                 <viewController storyboardIdentifier="EnabledTwoFactorAuthenticationViewControllerID" id="kdQ-Q4-Fte" userLabel="Enabled Two-Factor Authentication" customClass="EnabledTwoFactorAuthenticationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vWA-0n-dO3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GrC-8N-WOI">
@@ -594,7 +593,7 @@ Back up your recovery key.</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UG-fV-LZb" userLabel="Export Recovery Key Button" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UG-fV-LZb" userLabel="Export Recovery Key Button" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="43.5" y="467.5" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="FGd-uy-iUV"/>
@@ -610,7 +609,7 @@ Back up your recovery key.</string>
                                             <action selector="exportRecoveryKeyTouchUpInside:" destination="kdQ-Q4-Fte" eventType="touchUpInside" id="neU-3O-BRk"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSy-RT-s5a" userLabel="Close Button" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSy-RT-s5a" userLabel="Close Button" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                         <rect key="frame" x="43.5" y="533.5" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="2Ah-VI-okf"/>

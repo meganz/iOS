@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -105,7 +104,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="woc-LH-3yv">
                                     <rect key="frame" x="35" y="286.5" width="279" height="166"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVu-6u-5sa" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVu-6u-5sa" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="279" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="OQw-Cu-GeO"/>
@@ -121,7 +120,7 @@
                                                 <action selector="firstButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="Vkh-ao-cdF"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Tk-m3-ghO" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Tk-m3-ghO" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="58" width="279" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="cYk-e2-ssh"/>
@@ -138,7 +137,7 @@
                                                 <action selector="secondButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="46i-1F-qas"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dp-dd-BzY" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dp-dd-BzY" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="116" width="279" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="5OY-NV-ozf"/>
@@ -257,20 +256,6 @@
             <point key="canvasLocation" x="21.739130434782609" y="48.214285714285715"/>
         </view>
     </objects>
-    <designables>
-        <designable name="3Tk-m3-ghO">
-            <size key="intrinsicContentSize" width="61" height="33"/>
-        </designable>
-        <designable name="9dp-dd-BzY">
-            <size key="intrinsicContentSize" width="60" height="33"/>
-        </designable>
-        <designable name="RVu-6u-5sa">
-            <size key="intrinsicContentSize" width="36" height="33"/>
-        </designable>
-        <designable name="a7Y-Zm-Y3I">
-            <size key="intrinsicContentSize" width="77" height="19.5"/>
-        </designable>
-    </designables>
     <resources>
         <image name="upgradeSecurityClose" width="28" height="28"/>
         <systemColor name="labelColor">
