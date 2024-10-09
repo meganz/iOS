@@ -6,6 +6,7 @@ import MEGADomain
 struct CallActionSync: Sendable {
     let chatRoom: ChatRoomEntity
     var audioEnabled: Bool = true
+    var speakerEnabled: Bool = false
     var videoEnabled: Bool = false
     var notRinging: Bool = false
     var endForAll: Bool = false

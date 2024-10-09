@@ -122,35 +122,13 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.featureFlagProvider = featureFlagProvider
         self.link = link
         self.userHandle = userHandle
-        
-        appDidBecomeActiveSubscription = NotificationCenter.default
-            .publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                self.audioSessionUseCase.configureCallAudioSession()
-                self.addRouteChangedListener()
-                self.enableLoudSpeaker(enabled: self.isSpeakerEnabled)
-            }
-        
-        appWillResignActiveSubscription = NotificationCenter.default
-            .publisher(for: UIApplication.willResignActiveNotification)
-            .sink { [weak self] _ in
-                self?.removeRouteChangedListener()
-            }
     }
     
     // MARK: - Dispatch action
     func dispatch(_ action: MeetingCreatingViewAction) {
         switch action {
         case .onViewReady:
-            audioSessionUseCase.configureCallAudioSession()
-            addRouteChangedListener()
-            if audioSessionUseCase.isBluetoothAudioRouteAvailable {
-                isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
-                updateSpeakerInfo()
-            } else {
-                enableLoudSpeaker(enabled: isSpeakerEnabled)
-            }
+            updateSpeakerInfo()
             permissionHandler.requestAudioPermission()
             selectFrontCameraIfNeeded()
             switch type {
@@ -190,7 +168,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             }
         case .didTapSpeakerButton:
             isSpeakerEnabled = !isSpeakerEnabled
-            enableLoudSpeaker(enabled: isSpeakerEnabled)
+            updateSpeakerInfo()
         case .didTapStartMeetingButton:
             manageStartMeetingAction()
         case .didTapCloseButton:
@@ -252,29 +230,6 @@ final class MeetingCreatingViewModel: ViewModelType {
         invokeCommand?(.loadingStartMeeting)
     }
     
-    private func addRouteChangedListener() {
-        audioSessionUseCase.routeChanged { [weak self] routeChangedReason, _ in
-            guard let self else { return }
-            self.sessionRouteChanged(routeChangedReason: routeChangedReason)
-        }
-    }
-    
-    private func removeRouteChangedListener() {
-        audioSessionUseCase.routeChanged()
-    }
-    
-    private func enableLoudSpeaker(enabled: Bool) {
-        if enabled {
-            audioSessionUseCase.enableLoudSpeaker { [weak self] _ in
-                self?.updateSpeakerInfo()
-            }
-        } else {
-            audioSessionUseCase.disableLoudSpeaker { [weak self] _ in
-                self?.updateSpeakerInfo()
-            }
-        }
-    }
-    
     private func createEphemeralAccountAndJoinChat(chatId: UInt64) async {
         guard let link else { return }
         tracker.trackAnalyticsEvent(with: ScheduledMeetingJoinGuestButtonEvent())
@@ -325,6 +280,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 with: CallActionSync(
                     chatRoom: chatRoom,
                     audioEnabled: !self.isMicrophoneEnabled,
+                    speakerEnabled: isSpeakerEnabled,
                     videoEnabled: self.isVideoEnabled,
                     isJoiningActiveCall: true
                 )
@@ -408,19 +364,13 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func updateSpeakerInfo() {
-        let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
+        let currentSelectedPort: AudioPort = isSpeakerEnabled ? .builtInSpeaker : .builtInReceiver
         let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
-        isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
         MEGALogDebug("Create meeting: updating speaker info with selected port \(currentSelectedPort) bluetooth available \(isBluetoothAvailable)")
         invokeCommand?(
             .updatedAudioPortSelection(audioPort: currentSelectedPort,
                                        bluetoothAudioRouteAvailable: isBluetoothAvailable)
         )
-    }
-    
-    private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
-        MEGALogDebug("Create meeting: session route changed with \(routeChangedReason) , current port \(audioSessionUseCase.currentSelectedAudioPort)")
-        updateSpeakerInfo()
     }
 }
 

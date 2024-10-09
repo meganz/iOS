@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AudioSessionRepositoryProtocol {
+public protocol AudioSessionRepositoryProtocol: RepositoryProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
     var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)? { get set }

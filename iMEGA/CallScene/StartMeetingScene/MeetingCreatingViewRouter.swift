@@ -90,7 +90,6 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             presenter: viewControllerToPresent,
             chatRoom: chatRoom,
             call: call,
-            isSpeakerEnabled: isSpeakerEnabled,
             tracker: tracker
         ).start()
     }

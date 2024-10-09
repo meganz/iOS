@@ -94,12 +94,10 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     }
     
     func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity) {
-        let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
         MeetingContainerRouter(
             presenter: baseViewController,
             chatRoom: chatRoom,
             call: call,
-            isSpeakerEnabled: isSpeakerEnabled,
             selectWaitingRoomList: true,
             tracker: tracker
         )
@@ -227,7 +225,6 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
                 presenter: baseViewController,
                 chatRoom: chatRoom,
                 call: call,
-                isSpeakerEnabled: isSpeakerEnabled,
                 tracker: tracker
             ).start()
         }

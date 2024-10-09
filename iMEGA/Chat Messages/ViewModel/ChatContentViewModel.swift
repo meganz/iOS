@@ -223,15 +223,6 @@ final class ChatContentViewModel: ViewModelType {
         invokeCommand?(.enableAudioVideoButtons(enable))
     }
     
-    private func prepareAudioForCall() {
-        audioSessionUseCase.configureCallAudioSession()
-        if chatRoom.isMeeting {
-            audioSessionUseCase.enableLoudSpeaker()
-        } else {
-            audioSessionUseCase.disableLoudSpeaker()
-        }
-    }
-    
     private func stopTimer() {
         timer?.invalidate()
         timerSubscription?.cancel()
@@ -388,6 +379,7 @@ final class ChatContentViewModel: ViewModelType {
         callManager.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom,
+                speakerEnabled: chatRoom.isMeeting || withVideo,
                 videoEnabled: withVideo,
                 notRinging: notRinging,
                 isJoiningActiveCall: joining

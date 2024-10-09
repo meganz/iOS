@@ -505,6 +505,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         callManager.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom,
+                speakerEnabled: intent.callCapability == .videoCall,
                 videoEnabled: intent.callCapability == .videoCall,
                 isJoiningActiveCall: callUseCase.call(for: chatRoom.chatId) != nil
             )

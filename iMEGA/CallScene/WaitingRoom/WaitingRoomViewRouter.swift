@@ -151,7 +151,6 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
                 presenter: presenter,
                 chatRoom: chatRoom,
                 call: call,
-                isSpeakerEnabled: isSpeakerEnabled,
                 tracker: tracker
             )
             .start()

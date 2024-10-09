@@ -69,10 +69,6 @@ import XCTest
         showMeetingError_calledTimes += 1
     }
     
-    func enableSpeaker(_ enable: Bool) {
-        enableSpeaker_calledTimes += 1
-    }
-    
     func displayParticipantInMainView(_ participant: CallParticipantEntity) {
         displayParticipantInMainView_calledTimes += 1
     }

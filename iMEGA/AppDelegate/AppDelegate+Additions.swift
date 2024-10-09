@@ -104,12 +104,13 @@ extension AppDelegate {
         }
     }
     
-    func openCallUIForInProgressCall(presenter: UIViewController, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
+    func openCallUIForInProgressCall(presenter: UIViewController, chatRoom: ChatRoomEntity) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
-        MeetingContainerRouter(presenter: presenter,
-                               chatRoom: chatRoom,
-                               call: call.toCallEntity(),
-                               isSpeakerEnabled: isSpeakerEnabled).start()
+        MeetingContainerRouter(
+            presenter: presenter,
+            chatRoom: chatRoom,
+            call: call.toCallEntity()
+        ).start()
     }
     
     private func showCookieDialog(type: CustomModalAlertViewController.CookieDialogType) async {
@@ -438,7 +439,7 @@ extension AppDelegate {
             return
         }
         
-        openCallUIForInProgressCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, isSpeakerEnabled: AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker))
+        openCallUIForInProgressCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom)
     }
     
     @objc func registerCustomActionsForStartScheduledMeetingNotification() {
@@ -644,6 +645,7 @@ extension AppDelegate {
             sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
             noUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository.newRepo),
             callManager: CallKitCallManager.shared,
             passcodeManager: PasscodeManager(),
             uuidFactory: { UUID() },

@@ -86,6 +86,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         registerForAudioRouteChanges()
         checkRouteViewAvailability()
         listenToCallUpdates()
+        updateSpeakerIcon()
     }
     
     // MARK: - Public
