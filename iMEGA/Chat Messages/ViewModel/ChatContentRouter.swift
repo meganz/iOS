@@ -109,7 +109,6 @@ enum ChatContentRoutingStyle {
                 presenter: baseViewController,
                 chatRoom: chatRoom,
                 call: call,
-                isSpeakerEnabled: isSpeakerEnabled,
                 tracker: tracker
             ).start()
         }

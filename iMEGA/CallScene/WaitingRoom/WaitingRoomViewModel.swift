@@ -284,14 +284,6 @@ final class WaitingRoomViewModel: ObservableObject {
                 }
             }
         onCallUpdateSubscription?.store(in: &subscriptions)
-        
-        NotificationCenter.default
-            .publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                audioSessionUseCase.configureCallAudioSession()
-            }
-            .store(in: &subscriptions)
                 
         audioSessionUseCase
             .onAudioSessionRouteChange()
@@ -304,7 +296,6 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func fetchInitialValues() {
-        audioSessionUseCase.configureCallAudioSession()
         if audioSessionUseCase.isBluetoothAudioRouteAvailable {
             updateSpeakerInfo()
         } else {
@@ -443,6 +434,7 @@ final class WaitingRoomViewModel: ObservableObject {
             with: CallActionSync(
                 chatRoom: chatRoom,
                 audioEnabled: !isMicrophoneMuted,
+                speakerEnabled: isSpeakerEnabled,
                 videoEnabled: isVideoEnabled,
                 isJoiningActiveCall: true
             )

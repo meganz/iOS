@@ -17,6 +17,7 @@ protocol CallsCoordinatorFactoryProtocol {
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        audioSessionUseCase: some AudioSessionUseCaseProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
@@ -34,6 +35,7 @@ protocol CallsCoordinatorFactoryProtocol {
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        audioSessionUseCase: some AudioSessionUseCaseProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
@@ -48,6 +50,7 @@ protocol CallsCoordinatorFactoryProtocol {
             sessionUpdateUseCase: sessionUpdateUseCase,
             noUserJoinedUseCase: noUserJoinedUseCase,
             captureDeviceUseCase: captureDeviceUseCase,
+            audioSessionUseCase: audioSessionUseCase,
             callManager: callManager,
             passcodeManager: passcodeManager,
             uuidFactory: uuidFactory,
@@ -85,6 +88,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
+    private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     
     private let callManager: any CallManagerProtocol
     private var providerDelegate: (any CallKitProviderDelegateProtocol)?
@@ -113,6 +117,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        audioSessionUseCase: some AudioSessionUseCaseProtocol,
         callManager: some CallManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID,
@@ -127,6 +132,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         self.sessionUpdateUseCase = sessionUpdateUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
+        self.audioSessionUseCase = audioSessionUseCase
         self.callManager = callManager
         self.passcodeManager = passcodeManager
         self.uuidFactory = uuidFactory
@@ -321,11 +327,12 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
     }
     
-    private func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
-        MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(),
-                               chatRoom: chatRoom,
-                               call: call,
-                               isSpeakerEnabled: isSpeakerEnabled).start()
+    private func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity) {
+        MeetingContainerRouter(
+            presenter: UIApplication.mnz_presentingViewController(),
+            chatRoom: chatRoom,
+            call: call
+        ).start()
     }
     
     private func isWaitingRoomOpened(inChatRoom chatRoom: ChatRoomEntity) -> Bool {
@@ -363,7 +370,6 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
 
 extension CallsCoordinator: CallsCoordinatorProtocol {
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
-        let isSpeakerEnabled = callActionSync.videoEnabled || callActionSync.chatRoom.isMeeting
         do {
             let call = try await callUseCase.startCall(
                 for: callActionSync.chatRoom.chatId,
@@ -373,8 +379,11 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
                 localizedCameraName: localizedCameraName
             )
             noUserJoinedUseCase.start(timerDuration: 60*5, chatId: callActionSync.chatRoom.chatId)
+            if callActionSync.speakerEnabled {
+                audioSessionUseCase.enableLoudSpeaker(completion: nil)
+            }
             if !isWaitingRoomOpened(inChatRoom: callActionSync.chatRoom) {
-                startCallUI(chatRoom: callActionSync.chatRoom, call: call, isSpeakerEnabled: isSpeakerEnabled)
+                startCallUI(chatRoom: callActionSync.chatRoom, call: call)
             }
             return true
         } catch {
@@ -391,8 +400,11 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
                 enableAudio: callActionSync.audioEnabled,
                 localizedCameraName: localizedCameraName
             )
+            if callActionSync.speakerEnabled {
+                audioSessionUseCase.enableLoudSpeaker(completion: nil)
+            }
             if !isWaitingRoomOpened(inChatRoom: callActionSync.chatRoom) {
-                startCallUI(chatRoom: callActionSync.chatRoom, call: call, isSpeakerEnabled: callActionSync.chatRoom.isMeeting)
+                startCallUI(chatRoom: callActionSync.chatRoom, call: call)
             }
             return true
         } catch {

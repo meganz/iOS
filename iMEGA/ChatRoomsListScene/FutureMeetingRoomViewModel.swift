@@ -373,6 +373,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         callManager.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom,
+                speakerEnabled: chatRoom.isMeeting,
                 notRinging: notRinging,
                 isJoiningActiveCall: joining
             )

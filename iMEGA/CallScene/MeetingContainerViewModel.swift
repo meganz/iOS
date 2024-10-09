@@ -15,7 +15,6 @@ enum MeetingContainerAction: ActionType {
     case renameChat
     case dismissCall(completion: (() -> Void)?)
     case endGuestUserCall(completion: (() -> Void)?)
-    case speakerEnabled(_ enabled: Bool)
     case displayParticipantInMainView(_ participant: CallParticipantEntity)
     case didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     case didSwitchToGridView
@@ -177,8 +176,6 @@ final class MeetingContainerViewModel: ViewModelType {
                 guard let completion = completion else { return }
                 completion()
             }
-        case .speakerEnabled(let speakerEnabled):
-            router.enableSpeaker(speakerEnabled)
         case .displayParticipantInMainView(let participant):
             router.displayParticipantInMainView(participant)
         case .didDisplayParticipantInMainView(let participant):

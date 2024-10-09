@@ -2,6 +2,9 @@ import Combine
 import MEGADomain
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
+    
+    public static let newRepo = AudioSessionRepository(audioSession: .sharedInstance())
+    
     private let audioSession: AVAudioSession
     
     var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
@@ -29,7 +32,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         currentSelectedAudioPort
     }
     
-    init(audioSession: AVAudioSession) {
+    public init(audioSession: AVAudioSession) {
         self.audioSession = audioSession
         addObservers()
     }

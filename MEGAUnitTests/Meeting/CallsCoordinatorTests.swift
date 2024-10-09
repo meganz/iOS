@@ -15,6 +15,7 @@ final class CallsCoordinatorTests: XCTestCase {
         let chatRoomUseCase: MockChatRoomUseCase
         let callUseCase: MockCallUseCase
         let callUpdateUseCase: MockCallUpdateUseCase
+        let audioSessionUseCase: MockAudioSessionUseCase
         let callManager = MockCallManager()
         let callKitProviderDelegateFactory = MockCallKitProviderDelegateFactory()
         
@@ -27,6 +28,7 @@ final class CallsCoordinatorTests: XCTestCase {
             chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
             callUseCase = MockCallUseCase(call: call)
             callUpdateUseCase = MockCallUpdateUseCase()
+            audioSessionUseCase = MockAudioSessionUseCase()
             sut = CallsCoordinator(
                 scheduler: scheduler,
                 callUseCase: callUseCase,
@@ -36,6 +38,7 @@ final class CallsCoordinatorTests: XCTestCase {
                 sessionUpdateUseCase: MockSessionUpdateUseCase(),
                 noUserJoinedUseCase: MockMeetingNoUserJoinedUseCase(),
                 captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                audioSessionUseCase: audioSessionUseCase,
                 callManager: callManager,
                 passcodeManager: MockPasscodeManager(),
                 uuidFactory: { .testUUID },
@@ -135,11 +138,53 @@ final class CallsCoordinatorTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 0.5)
         XCTAssertEqual(harness.callManager.removeCall_CalledTimes, 1)
     }
+    
+    @MainActor
+    func testStartCall_withSpeakerEnabled_shouldCallEnableSpeaker() async throws {
+        let harness = Harness()
+        harness.callUseCase.callCompletion = .success(CallEntity())
+        
+        _ = await harness.sut.startCall(.speakerEnabled(true))
+        XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 1)
+    }
+    
+    @MainActor
+    func testAnswerCall_withSpeakerDisabled_shouldNotCallEnableSpeaker() async throws {
+        let harness = Harness()
+        harness.callUseCase.callCompletion = .success(CallEntity())
+        
+        _ = await harness.sut.answerCall(.speakerEnabled(false))
+        XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 0)
+    }
+    
+    @MainActor
+    func testAnswerCall_withSpeakerEnabled_shouldCallEnableSpeaker() async throws {
+        let harness = Harness()
+        harness.callUseCase.answerCallCompletion = .success(CallEntity())
+        
+        _ = await harness.sut.answerCall(.speakerEnabled(true))
+        XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 1)
+    }
+    
+    @MainActor
+    func testStartCall_withSpeakerDisabled_shouldNotCallEnableSpeaker() async throws {
+        let harness = Harness()
+        harness.callUseCase.answerCallCompletion = .success(CallEntity())
+        
+        _ = await harness.sut.startCall(.speakerEnabled(false))
+        XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 0)
+    }
 }
 
 extension ChatRoomEntity {
     static var testChatRoomEntity: Self {
         ChatRoomEntity(chatId: 123)
+    }
+}
+
+extension CallActionSync {
+    static func speakerEnabled(_ enabled: Bool) -> Self {
+        CallActionSync(chatRoom: .testChatRoomEntity, speakerEnabled: enabled)
     }
 }
 

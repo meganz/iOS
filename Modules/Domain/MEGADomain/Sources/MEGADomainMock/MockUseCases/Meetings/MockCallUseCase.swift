@@ -23,7 +23,7 @@ public final class MockCallUseCase: CallUseCaseProtocol, @unchecked Sendable {
 
     public var call: CallEntity?
     public var callCompletion: Result<CallEntity, CallErrorEntity>
-    var answerCallCompletion: Result<CallEntity, CallErrorEntity>
+    public var answerCallCompletion: Result<CallEntity, CallErrorEntity>
     
     var networkQuality: NetworkQuality = .bad
     public var chatRoom: ChatRoomEntity?

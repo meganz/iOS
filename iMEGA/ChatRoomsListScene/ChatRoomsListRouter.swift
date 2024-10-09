@@ -256,10 +256,11 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         }
         
         let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
-        MeetingContainerRouter(presenter: navigationController,
-                               chatRoom: chatRoom,
-                               call: call,
-                               isSpeakerEnabled: isSpeakerEnabled).start()
+        MeetingContainerRouter(
+            presenter: navigationController,
+            chatRoom: chatRoom,
+            call: call
+        ).start()
     }
     
     func showErrorMessage(_ message: String) {

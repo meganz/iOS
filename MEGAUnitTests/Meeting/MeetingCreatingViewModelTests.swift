@@ -20,6 +20,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         test(viewModel: sut,
              action: .onViewReady,
              expectedCommands: [
+                .updatedAudioPortSelection(audioPort: .builtInSpeaker, bluetoothAudioRouteAvailable: false),
                 .configView(title: "Test Name’s meeting", type: .start, isMicrophoneEnabled: false)
              ])
     }
@@ -39,6 +40,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         test(viewModel: sut,
              action: .onViewReady,
              expectedCommands: [
+                .updatedAudioPortSelection(audioPort: .builtInSpeaker, bluetoothAudioRouteAvailable: false),
                 .loadingStartMeeting,
                 .loadingEndMeeting,
                 .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false)
@@ -47,18 +49,16 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     
     @MainActor func testAction_updateSpeakerButton() {
         let router = MockMeetingCreateRouter()
-        let audioSession = MockAudioSessionUseCase()
         let sut = makeSUT(
             router: router,
-            type: .join,
-            audioSessionUseCase: audioSession
+            type: .join
         )
         
         test(viewModel: sut,
              action: .didTapSpeakerButton,
              expectedCommands: [
+                .updatedAudioPortSelection(audioPort: .builtInReceiver, bluetoothAudioRouteAvailable: false)
              ])
-        XCTAssert(audioSession.disableLoudSpeaker_calledTimes == 1)
     }
     
     @MainActor
@@ -90,19 +90,20 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         )
         
         test(viewModel: sut,
-              action: .onViewReady,
-              expectedCommands: [
-                 .loadingStartMeeting,
-                 .loadingEndMeeting,
-                 .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false)
-              ])
-         
-         test(viewModel: sut,
-              action: .didTapStartMeetingButton,
-              expectedCommands: [
-                 .loadingStartMeeting
-              ])
-                
+             action: .onViewReady,
+             expectedCommands: [
+                .updatedAudioPortSelection(audioPort: .builtInSpeaker, bluetoothAudioRouteAvailable: false),
+                .loadingStartMeeting,
+                .loadingEndMeeting,
+                .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false)
+             ])
+        
+        test(viewModel: sut,
+             action: .didTapStartMeetingButton,
+             expectedCommands: [
+                .loadingStartMeeting
+             ])
+        
         evaluate {
             router.dismiss_calledTimes == 1 &&
             callManager.startCall_CalledTimes == 1
@@ -128,6 +129,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         test(viewModel: sut,
              action: .onViewReady,
              expectedCommands: [
+                .updatedAudioPortSelection(audioPort: .builtInSpeaker, bluetoothAudioRouteAvailable: false),
                 .loadingStartMeeting,
                 .loadingEndMeeting,
                 .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false)
@@ -162,6 +164,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         await test(viewModel: sut,
                    actions: [.onViewReady],
                    expectedCommands: [
+                    .updatedAudioPortSelection(audioPort: .builtInSpeaker, bluetoothAudioRouteAvailable: false),
                     .loadingStartMeeting,
                     .loadingEndMeeting,
                     .configView(title: "Test Meeting", type: .guestJoin, isMicrophoneEnabled: false)

@@ -16,7 +16,6 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showShareChatLinkActivity(presenter: UIViewController?, sender: AnyObject, link: String, metadataItemSource: ChatLinkPresentationItemSource, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?)
     func renameChat()
     func showShareMeetingError()
-    func enableSpeaker(_ enable: Bool)
     func displayParticipantInMainView(_ participant: CallParticipantEntity)
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
@@ -48,7 +47,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private weak var presenter: UIViewController?
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
-    private var isSpeakerEnabled: Bool
     private var selectWaitingRoomList: Bool
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: (any MeetingFloatingPanelRouting)?
@@ -76,14 +74,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         presenter: UIViewController,
         chatRoom: ChatRoomEntity,
         call: CallEntity,
-        isSpeakerEnabled: Bool,
         selectWaitingRoomList: Bool = false,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
-        self.isSpeakerEnabled = isSpeakerEnabled
         self.selectWaitingRoomList = selectWaitingRoomList
         self.tracker = tracker
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
@@ -258,10 +254,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func didSwitchToGridView() {
         floatingPanelRouter?.didSwitchToGridView()
-    }
-    
-    func enableSpeaker(_ enable: Bool) {
-        isSpeakerEnabled = enable
     }
     
     func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)? = nil) {

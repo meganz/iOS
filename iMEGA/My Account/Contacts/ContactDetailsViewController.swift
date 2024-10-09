@@ -23,12 +23,10 @@ extension ContactDetailsViewController {
     
     @objc func joinMeeting(withChatRoom chatRoom: MEGAChatRoom) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
-        let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
         MeetingContainerRouter(
             presenter: self,
             chatRoom: chatRoom.toChatRoomEntity(),
-            call: call.toCallEntity(),
-            isSpeakerEnabled: isSpeakerEnabled
+            call: call.toCallEntity()
         ).start()
     }
     
@@ -52,6 +50,7 @@ extension ContactDetailsViewController {
         CallKitCallManager.shared.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom.toChatRoomEntity(),
+                speakerEnabled: videoEnabled,
                 videoEnabled: videoEnabled
             )
         )
