@@ -11,14 +11,10 @@ final public class AdsSlotViewModel: ObservableObject {
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
     
     private(set) var adsSlotConfig: AdsSlotConfig?
-    @Published var displayAds: Bool = false
     private var subscriptions = Set<AnyCancellable>()
     
     @Published var isExternalAdsEnabled: Bool = false
-    let refreshAdsSourcePublisher = PassthroughSubject<Void, Never>()
-    public var refreshAdsPublisher: AnyPublisher<Void, Never> {
-        refreshAdsSourcePublisher.eraseToAnyPublisher()
-    }
+    @Published var displayAds: Bool = false
     
     public init(
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
@@ -79,27 +75,8 @@ final public class AdsSlotViewModel: ObservableObject {
             return
         }
         
-        if let adsSlotConfig,
-           let newAdsSlotConfig,
-           adsSlotConfig.adsSlot == newAdsSlotConfig.adsSlot {
-            self.adsSlotConfig = newAdsSlotConfig
-            displayAds = newAdsSlotConfig.displayAds
-        } else {
-            adsSlotConfig = newAdsSlotConfig
-            loadNewAds()
-        }
-    }
-    
-    @MainActor
-    private func loadNewAds() {
-        guard let adsSlotConfig, isExternalAdsEnabled else {
-            displayAds = false
-            return
-        }
-        
-        refreshAdsSourcePublisher.send()
-        
-        displayAds = adsSlotConfig.displayAds
+        adsSlotConfig = newAdsSlotConfig
+        displayAds = newAdsSlotConfig?.displayAds ?? false
     }
     
     /// In the future, AdMob will have multiple unit ids per adSlot
