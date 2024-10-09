@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -72,7 +71,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nwo-Tw-k6R" userLabel="Button Stack View">
                                         <rect key="frame" x="0.0" y="48" width="288" height="194"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-cN-Wxd" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-cN-Wxd" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="288" id="e85-hf-Nd0"/>
@@ -88,7 +87,7 @@
                                                     <action selector="primaryButtonTapped:" destination="ULD-EF-zT0" eventType="touchUpInside" id="hVl-sQ-pIp"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZS-mp-L0Q" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZS-mp-L0Q" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="72" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="aMp-Cn-KsK"/>
@@ -104,7 +103,7 @@
                                                     <action selector="secondaryButtonTapped:" destination="ULD-EF-zT0" eventType="touchUpInside" id="dvb-3E-3Xz"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dI3-2b-Nn1" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dI3-2b-Nn1" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="144" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="288" id="PiG-p8-5zn"/>
@@ -153,15 +152,4 @@
             <point key="canvasLocation" x="25" y="70"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="Hj1-cN-Wxd">
-            <size key="intrinsicContentSize" width="54" height="33"/>
-        </designable>
-        <designable name="TZS-mp-L0Q">
-            <size key="intrinsicContentSize" width="54" height="33"/>
-        </designable>
-        <designable name="dI3-2b-Nn1">
-            <size key="intrinsicContentSize" width="54" height="33"/>
-        </designable>
-    </designables>
 </document>

@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-class MEGAButton: UIButton, DynamicTypeComponentProtocol {
+class MEGAButtonLegacy: UIButton, DynamicTypeComponentProtocol {
     @IBInspectable var textStyle: String?
     @IBInspectable var weight: String?
     @IBInspectable var selectedTextStyle: String?

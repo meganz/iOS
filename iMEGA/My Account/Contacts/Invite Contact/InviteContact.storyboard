@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -420,7 +419,7 @@
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="bLa-md-M4w"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhC-PG-pnt" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhC-PG-pnt" customClass="MEGAButtonLegacy" customModule="MEGA" customModuleProvider="target">
                                                 <rect key="frame" x="82" y="606" width="250" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="Avb-FE-vQM"/>
@@ -504,26 +503,6 @@
             <point key="canvasLocation" x="5180" y="-2229"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="2mm-gZ-cRE">
-            <size key="intrinsicContentSize" width="243.33333333333334" height="18"/>
-        </designable>
-        <designable name="519-yd-SK8">
-            <size key="intrinsicContentSize" width="130" height="18"/>
-        </designable>
-        <designable name="8qQ-kE-3bR">
-            <size key="intrinsicContentSize" width="79" height="18"/>
-        </designable>
-        <designable name="GhC-PG-pnt">
-            <size key="intrinsicContentSize" width="132" height="30"/>
-        </designable>
-        <designable name="Jha-lt-O7z">
-            <size key="intrinsicContentSize" width="49.666666666666664" height="18"/>
-        </designable>
-        <designable name="N4g-GF-xu4">
-            <size key="intrinsicContentSize" width="101" height="18"/>
-        </designable>
-    </designables>
     <resources>
         <image name="More" width="40" height="40"/>
         <image name="enter email" width="40" height="40"/>
