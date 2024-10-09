@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="23H124" minimumToolsVersion="Xcode 4.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AppearancePreference" representedClassName=".AppearancePreference" isAbstract="YES" syncable="YES">
+        <attribute name="sortType" optional="YES" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="viewMode" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="ChatDraft" representedClassName="MOChatDraft" syncable="YES">
+        <attribute name="chatId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ChatUploadTransfer" representedClassName=".ChatUploadTransfer" syncable="YES">
+        <attribute name="appData" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chatRoomId" attributeType="String" syncable="YES"/>
+        <attribute name="filepath" attributeType="String" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="nodeHandle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transferTag" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CloudAppearancePreference" representedClassName="CloudAppearancePreference" parentEntity="AppearancePreference" syncable="YES">
+        <attribute name="handle" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="MediaDestination" representedClassName="MOMediaDestination" syncable="YES">
+        <attribute name="destination" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="fingerprint" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="timescale" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="recentlyOpenedNode" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MORecentlyOpenedNode" inverseName="mediaDestination" inverseEntity="MORecentlyOpenedNode" syncable="YES"/>
+    </entity>
+    <entity name="MOMessage" representedClassName="MOMessage" syncable="YES">
+        <attribute name="chatId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="messageId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="MORecentlyOpenedNode" representedClassName=".MORecentlyOpenedNode" syncable="YES">
+        <attribute name="fingerprint" attributeType="String" syncable="YES"/>
+        <attribute name="lastOpenedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="mediaDestination" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MediaDestination" inverseName="recentlyOpenedNode" inverseEntity="MediaDestination" syncable="YES"/>
+    </entity>
+    <entity name="MOUploadTransfer" representedClassName="MOUploadTransfer" syncable="YES">
+        <attribute name="localIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentNodeHandle" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="OfflineAppearancePreference" representedClassName="OfflineAppearancePreference" parentEntity="AppearancePreference" syncable="YES">
+        <attribute name="localPath" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OfflineNode" representedClassName="MOOfflineNode" syncable="YES">
+        <attribute name="base64Handle" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="downloadedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="fingerprint" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="localPath" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="parentBase64Handle" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="QuickAccessWidgetFavouriteItem" representedClassName=".QuickAccessWidgetFavouriteItem" syncable="YES">
+        <attribute name="handle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="QuickAccessWidgetRecentItem" representedClassName=".QuickAccessWidgetRecentItem" syncable="YES">
+        <attribute name="handle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isUpdate" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="MOUser" syncable="YES">
+        <attribute name="base64userHandle" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="interactedwith" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+</model>

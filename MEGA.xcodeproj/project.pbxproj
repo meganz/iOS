@@ -211,7 +211,9 @@
 		246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */; };
 		246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */; };
 		246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */; };
+		247A64652C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247A64642C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift */; };
 		247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */; };
+		24828D8F2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24828D8E2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift */; };
 		2484574F2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2484574E2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift */; };
 		2486F1A92B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2486F1A82B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift */; };
 		2486F1AE2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2486F1AD2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift */; };
@@ -225,7 +227,16 @@
 		24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */; };
 		24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */; };
 		24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */; };
+		24B022D72C75C429008D262D /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D52C75C429008D262D /* MOMediaDestination+CoreDataClass.m */; };
+		24B022D82C75C429008D262D /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D52C75C429008D262D /* MOMediaDestination+CoreDataClass.m */; };
+		24B022D92C75C429008D262D /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D52C75C429008D262D /* MOMediaDestination+CoreDataClass.m */; };
+		24B022DA2C75C429008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D62C75C429008D262D /* MOMediaDestination+CoreDataProperties.m */; };
+		24B022DB2C75C429008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D62C75C429008D262D /* MOMediaDestination+CoreDataProperties.m */; };
+		24B022DC2C75C429008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D62C75C429008D262D /* MOMediaDestination+CoreDataProperties.m */; };
+		24B022DD2C75C5C1008D262D /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D52C75C429008D262D /* MOMediaDestination+CoreDataClass.m */; };
+		24B022DE2C75C5C7008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B022D62C75C429008D262D /* MOMediaDestination+CoreDataProperties.m */; };
 		24B101822C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B101812C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift */; };
+		24B162B82C71B86D00BEC72F /* MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B162B72C71B86D00BEC72F /* MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift */; };
 		24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */; };
 		24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
@@ -247,6 +258,14 @@
 		24EF670C2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */; };
 		24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */; };
 		24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */; };
+		24FCDB9B2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB9A2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift */; };
+		24FCDB9C2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB992CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift */; };
+		24FCDB9D2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB9A2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift */; };
+		24FCDB9E2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB992CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift */; };
+		24FCDB9F2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB9A2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift */; };
+		24FCDBA02CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB992CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift */; };
+		24FCDBA12CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB9A2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift */; };
+		24FCDBA22CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB992CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift */; };
 		251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */; };
 		251B07BB2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */; };
 		2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */; };
@@ -816,7 +835,6 @@
 		774941DD2410EA7F00FC5CB6 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
 		774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
-		774941E02410EAE000FC5CB6 /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
 		774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
 		774941E32410EAFB00FC5CB6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1437219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m */; };
@@ -919,10 +937,6 @@
 		832DEFEB2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */; };
 		832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */; };
 		832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */; };
-		832F19EB2091BA970067679E /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19E72091BA970067679E /* MOMediaDestination+CoreDataProperties.m */; };
-		832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
-		832F19EE2091BD8E0067679E /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19E72091BA970067679E /* MOMediaDestination+CoreDataProperties.m */; };
-		832F19F02091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
 		833003A424DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833003A324DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift */; };
 		833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833003A524DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift */; };
 		833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */; };
@@ -1011,11 +1025,9 @@
 		8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */; };
 		83655A5F259379C2001A0846 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
 		83655A682593847C001A0846 /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
-		83655A7125938492001A0846 /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19E72091BA970067679E /* MOMediaDestination+CoreDataProperties.m */; };
 		83655A7A25938495001A0846 /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
 		83655A8325938499001A0846 /* MOMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */; };
 		83655A8C25938546001A0846 /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
-		83655ABA2593854D001A0846 /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
 		83655AC32593855F001A0846 /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		83655ACC25938568001A0846 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
 		83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
@@ -2938,6 +2950,7 @@
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
 		24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentViewController.swift; sourceTree = "<group>"; };
 		243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterFactoryTests.swift; sourceTree = "<group>"; };
+		243AFAF82C71A684005CC22E /* MEGACD 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 7.xcdatamodel"; sourceTree = "<group>"; };
 		243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CancellableTransferType+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Additions.swift"; sourceTree = "<group>"; };
 		244CEFC02B2319F400147302 /* VideoRevampTabContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampTabContainerViewModelTests.swift; sourceTree = "<group>"; };
@@ -2953,7 +2966,9 @@
 		246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdvancedTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapterTests.swift; sourceTree = "<group>"; };
 		246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapter.swift; sourceTree = "<group>"; };
+		247A64642C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MORecentlyOpenedNode+Mapper.swift"; sourceTree = "<group>"; };
 		247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouterTests.swift; sourceTree = "<group>"; };
+		24828D8E2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOMediaDestination+Mapper.swift"; sourceTree = "<group>"; };
 		2484574E2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		2486F1A82B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampTabContainerViewController.swift; sourceTree = "<group>"; };
 		2486F1AD2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampTabContainerViewModel.swift; sourceTree = "<group>"; };
@@ -2968,7 +2983,12 @@
 		24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaylistShiftStrategyProtocol.swift; sourceTree = "<group>"; };
 		24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManager.swift; sourceTree = "<group>"; };
 		24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManagerTests.swift; sourceTree = "<group>"; };
+		24B022D32C75C428008D262D /* MOMediaDestination+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMediaDestination+CoreDataClass.h"; sourceTree = "<group>"; };
+		24B022D42C75C428008D262D /* MOMediaDestination+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMediaDestination+CoreDataProperties.h"; sourceTree = "<group>"; };
+		24B022D52C75C429008D262D /* MOMediaDestination+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMediaDestination+CoreDataClass.m"; sourceTree = "<group>"; };
+		24B022D62C75C429008D262D /* MOMediaDestination+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMediaDestination+CoreDataProperties.m"; sourceTree = "<group>"; };
 		24B101812C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyWatchedVideosViewController.swift; sourceTree = "<group>"; };
+		24B162B72C71B86D00BEC72F /* MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift"; sourceTree = "<group>"; };
 		24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferFactoryTests.swift; sourceTree = "<group>"; };
 		24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
@@ -2990,6 +3010,8 @@
 		24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerEventObserversLoadingLogicControllerTests.swift; sourceTree = "<group>"; };
 		24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonWaitingToPlayNilLogicControllerTests.swift; sourceTree = "<group>"; };
 		24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterTests.swift; sourceTree = "<group>"; };
+		24FCDB992CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MORecentlyOpenedNode+CoreDataClass.swift"; sourceTree = "<group>"; };
+		24FCDB9A2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MORecentlyOpenedNode+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ViewMode.swift"; sourceTree = "<group>"; };
 		251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomControlPositionTracker.swift; sourceTree = "<group>"; };
 		2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModel.swift; sourceTree = "<group>"; };
@@ -3729,10 +3751,6 @@
 		832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodePropertyTableViewCell.m; sourceTree = "<group>"; };
 		832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeTappablePropertyTableViewCell.h; sourceTree = "<group>"; };
 		832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeTappablePropertyTableViewCell.m; sourceTree = "<group>"; };
-		832F19E72091BA970067679E /* MOMediaDestination+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMediaDestination+CoreDataProperties.m"; sourceTree = "<group>"; };
-		832F19E82091BA970067679E /* MOMediaDestination+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMediaDestination+CoreDataClass.h"; sourceTree = "<group>"; };
-		832F19E92091BA970067679E /* MOMediaDestination+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMediaDestination+CoreDataProperties.h"; sourceTree = "<group>"; };
-		832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMediaDestination+CoreDataClass.m"; sourceTree = "<group>"; };
 		833003A324DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoDetailTableViewCell.swift; sourceTree = "<group>"; };
 		833003A524DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoActionTableViewCell.swift; sourceTree = "<group>"; };
 		833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInWaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
@@ -5847,6 +5865,7 @@
 		1200A0E5286E4E2F00791A60 /* Repos */ = {
 			isa = PBXGroup;
 			children = (
+				24ED90A12C71AF52002380A5 /* Videos */,
 				B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */,
 				B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */,
 				12B1E5792874FFEF00D23A58 /* AnalyticsRepositoryTests.swift */,
@@ -6341,6 +6360,13 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		24828D8A2C71D1BA00AADF18 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Videos;
+			sourceTree = "<group>";
+		};
 		2488EBC12A13B4F2005F910E /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -6419,6 +6445,13 @@
 				C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		24ED90A12C71AF52002380A5 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Videos;
 			sourceTree = "<group>";
 		};
 		24EF67042B35803E002F1380 /* AudioPlayerEventObservers */ = {
@@ -6965,6 +6998,7 @@
 				B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */,
 				B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */,
 				A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */,
+				24B162B72C71B86D00BEC72F /* MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift */,
 				B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */,
 				4147C2D21B4EE9BA00A37044 /* MEGAStore.h */,
 				4147C2D31B4EE9BA00A37044 /* MEGAStore.m */,
@@ -7518,16 +7552,20 @@
 				A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */,
 				A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */,
 				A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */,
-				832F19E82091BA970067679E /* MOMediaDestination+CoreDataClass.h */,
-				832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */,
-				832F19E92091BA970067679E /* MOMediaDestination+CoreDataProperties.h */,
-				832F19E72091BA970067679E /* MOMediaDestination+CoreDataProperties.m */,
+				24B022D32C75C428008D262D /* MOMediaDestination+CoreDataClass.h */,
+				24B022D52C75C429008D262D /* MOMediaDestination+CoreDataClass.m */,
+				24B022D42C75C428008D262D /* MOMediaDestination+CoreDataProperties.h */,
+				24B022D62C75C429008D262D /* MOMediaDestination+CoreDataProperties.m */,
+				24828D8E2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift */,
 				A8F0A1D62178A73300575C57 /* MOMessage+CoreDataClass.h */,
 				A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */,
 				A8F0A1D52178A73300575C57 /* MOMessage+CoreDataProperties.h */,
 				A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */,
 				41D1E0B91B58F0B800982830 /* MOOfflineNode.h */,
 				41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */,
+				24FCDB992CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift */,
+				24FCDB9A2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift */,
+				247A64642C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift */,
 				8361358D21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.h */,
 				8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */,
 				8361358C21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.h */,
@@ -11434,6 +11472,7 @@
 				0D7E5FA42634E1CE00C5CB2A /* Transfer */,
 				8396FBC525D6894D00EB50FD /* User */,
 				A84E92E126FB5F6300606AA7 /* Versions */,
+				24828D8A2C71D1BA00AADF18 /* Videos */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -15308,6 +15347,7 @@
 				5B51E2E324597CDA009379BA /* MEGAStore+MOUser.swift in Sources */,
 				5BE689AF2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
 				83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
+				24B162B82C71B86D00BEC72F /* MEGAStore+RecentlyOpenedNodesMEGAStoreProtocol.swift in Sources */,
 				B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */,
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
@@ -15347,14 +15387,18 @@
 				8387FC062C108363008EDDC4 /* MockCallControlsViewModel.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
-				832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
-				832F19EB2091BA970067679E /* MOMediaDestination+CoreDataProperties.m in Sources */,
+				24B022D72C75C429008D262D /* MOMediaDestination+CoreDataClass.m in Sources */,
+				24B022DA2C75C429008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */,
+				24828D8F2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift in Sources */,
 				A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				25A58FB52B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift in Sources */,
 				83FB1439219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				83FB143A219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
+				24FCDB9E2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */,
+				24FCDB9D2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */,
+				247A64652C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift in Sources */,
 				8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
@@ -16115,10 +16159,13 @@
 				9459CA892C6510B900458B67 /* MemoryUsage.swift in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
 				774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */,
-				774941E02410EAE000FC5CB6 /* MOMediaDestination+CoreDataClass.m in Sources */,
+				24B022DD2C75C5C1008D262D /* MOMediaDestination+CoreDataClass.m in Sources */,
+				24B022DE2C75C5C7008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */,
 				774941DD2410EA7F00FC5CB6 /* MOMessage+CoreDataClass.m in Sources */,
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
 				774941E32410EAFB00FC5CB6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
+				24FCDB9C2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */,
+				24FCDB9B2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */,
 				774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
 				A893322A24127B1B0088E588 /* MOUser.m in Sources */,
@@ -16159,11 +16206,13 @@
 				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
 				83655A8C25938546001A0846 /* MOChatDraft+CoreDataClass.m in Sources */,
 				83655A682593847C001A0846 /* MOChatDraft+CoreDataProperties.m in Sources */,
-				83655ABA2593854D001A0846 /* MOMediaDestination+CoreDataClass.m in Sources */,
-				83655A7125938492001A0846 /* MOMediaDestination+CoreDataProperties.m in Sources */,
+				24B022D92C75C429008D262D /* MOMediaDestination+CoreDataClass.m in Sources */,
+				24B022DC2C75C429008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */,
 				83655ACC25938568001A0846 /* MOMessage+CoreDataClass.m in Sources */,
 				83655A8325938499001A0846 /* MOMessage+CoreDataProperties.m in Sources */,
 				83655AE7259387F6001A0846 /* MOOfflineNode.m in Sources */,
+				24FCDBA22CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */,
+				24FCDBA12CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */,
 				83655AC32593855F001A0846 /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				83655A7A25938495001A0846 /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
@@ -16325,12 +16374,14 @@
 				A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				831D61A8218738EC0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				831D61AA218738F40038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
-				832F19F02091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
-				832F19EE2091BD8E0067679E /* MOMediaDestination+CoreDataProperties.m in Sources */,
+				24B022D82C75C429008D262D /* MOMediaDestination+CoreDataClass.m in Sources */,
+				24B022DB2C75C429008D262D /* MOMediaDestination+CoreDataProperties.m in Sources */,
 				A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				83BFB9A727D8E2CE001755B6 /* MOOfflineNode.m in Sources */,
+				24FCDBA02CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */,
+				24FCDB9F2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift in Sources */,
 				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				BF22BFBB268AF67400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
@@ -16999,7 +17050,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 16.0;
+				MARKETING_VERSION = 15.2.100;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -17063,7 +17114,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 16.0;
+				MARKETING_VERSION = 15.2.100;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -17521,6 +17572,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 15.2.100;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = co.nz.mega.SearchDemo;
@@ -17565,6 +17617,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 15.2.100;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = co.nz.mega.SearchDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -17607,6 +17660,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 15.2.100;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = co.nz.mega.SearchDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -18130,7 +18184,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 16.0;
+				MARKETING_VERSION = 15.2.100;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -19294,9 +19348,10 @@
 				BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */,
 				5B3740CC2421600B00BA75EA /* MEGACD 5.xcdatamodel */,
 				BF99A41A24B2AA500035A183 /* MEGACD 6.xcdatamodel */,
+				243AFAF82C71A684005CC22E /* MEGACD 7.xcdatamodel */,
 				4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */,
 			);
-			currentVersion = BF99A41A24B2AA500035A183 /* MEGACD 6.xcdatamodel */;
+			currentVersion = 243AFAF82C71A684005CC22E /* MEGACD 7.xcdatamodel */;
 			path = MEGACD.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

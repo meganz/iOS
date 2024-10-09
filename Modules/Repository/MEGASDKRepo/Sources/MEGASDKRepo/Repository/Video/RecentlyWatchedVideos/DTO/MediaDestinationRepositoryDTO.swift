@@ -1,4 +1,4 @@
-public struct MediaDestinationEntity: Sendable, Equatable {
+public struct MediaDestinationRepositoryDTO: Sendable, Equatable {
     public let fingerprint: String?
     public let destination: Int
     public let timescale: Int?

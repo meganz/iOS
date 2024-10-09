@@ -399,7 +399,7 @@
 
 #pragma mark - MOMediaDestination entity
 
-- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(NSNumber *)timescale {
+- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(nullable NSNumber *)timescale {
     if (self.managedObjectContext == nil) return;
     
     MOMediaDestination *moMediaDestination = [self fetchMediaDestinationWithFingerprint:fingerprint];

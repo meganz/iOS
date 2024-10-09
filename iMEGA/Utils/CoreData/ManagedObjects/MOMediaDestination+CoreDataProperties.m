@@ -6,8 +6,9 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"MediaDestination"];
 }
 
-@dynamic fingerprint;
 @dynamic destination;
+@dynamic fingerprint;
 @dynamic timescale;
+@dynamic recentlyWatchedVideo;
 
 @end

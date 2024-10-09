@@ -22,12 +22,12 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     @MainActor
     func testLoadRecentlyWatchedVideos_whenCalled_loadVideosThenSorted() async {
         let (sut, recentlyWatchedVideosUseCase, sorter) = makeSUT(
-            recentlyWatchedVideosUseCase: MockRecentlyWatchedVideosUseCase(loadVideosResult: .success([]))
+            recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success([]))
         )
         
         await sut.loadRecentlyWatchedVideos()
         
-        XCTAssertEqual(recentlyWatchedVideosUseCase.invocations, [ .loadVideos ])
+        XCTAssertEqual(recentlyWatchedVideosUseCase.invocations, [ .loadNodes ])
         XCTAssertEqual(sorter.invocations, [ .sortVideosByDay ])
     }
     
@@ -43,7 +43,7 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     @MainActor
     func testLoadRecentlyWatchedVideos_whenLoadedWithError_showsCorrectTransitionViewState() async {
         let (sut, _, _) = makeSUT(
-            recentlyWatchedVideosUseCase: MockRecentlyWatchedVideosUseCase(loadVideosResult: .failure(GenericErrorEntity()))
+            recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .failure(GenericErrorEntity()))
         )
         var receivedViewStates: [RecentlyWatchedVideosViewModel.ViewState] = []
         let exp = expectation(description: "subscribe on viewState")
@@ -65,7 +65,7 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     @MainActor
     func testLoadRecentlyWatchedVideos_whenLoadedSuccessfullyWithEmptyItems_showsCorrectTransitionViewState() async {
         let (sut, _, _) = makeSUT(
-            recentlyWatchedVideosUseCase: MockRecentlyWatchedVideosUseCase(loadVideosResult: .success([]))
+            recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success([]))
         )
         var receivedViewStates: [RecentlyWatchedVideosViewModel.ViewState] = []
         let exp = expectation(description: "subscribe on viewState")
@@ -90,7 +90,7 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
         let items = nonEmptyItems(count: itemCount)
         let sections = [ RecentlyWatchedVideoSection(title: "any section title", videos: items) ]
         let (sut, _, _) = makeSUT(
-            recentlyWatchedVideosUseCase: MockRecentlyWatchedVideosUseCase(loadVideosResult: .success(items)),
+            recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success(items)),
             recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter(sortVideosByDayResult: sections)
         )
         var receivedViewStates: [RecentlyWatchedVideosViewModel.ViewState] = []
@@ -113,24 +113,28 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     
     @MainActor
     private func makeSUT(
-        recentlyWatchedVideosUseCase: MockRecentlyWatchedVideosUseCase = MockRecentlyWatchedVideosUseCase(),
+        recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase = MockRecentlyOpenedNodesUseCase(),
         recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter = MockRecentlyWatchedVideosSorter()
     ) -> (
         sut: RecentlyWatchedVideosViewModel,
-        recentlyWatchedVideosUseCase: MockRecentlyWatchedVideosUseCase,
+        recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase,
         recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter
     ) {
         let sut = RecentlyWatchedVideosViewModel(
-            recentlyWatchedVideosUseCase: recentlyWatchedVideosUseCase,
+            recentlyOpenedNodesUseCase: recentlyWatchedVideosUseCase,
             recentlyWatchedVideosSorter: recentlyWatchedVideosSorter
         )
         return (sut, recentlyWatchedVideosUseCase, recentlyWatchedVideosSorter)
     }
     
-    private func nonEmptyItems(count: Int) -> [RecentlyWatchedVideoEntity] {
-        var items = [RecentlyWatchedVideoEntity]()
+    private func nonEmptyItems(count: Int) -> [RecentlyOpenedNodeEntity] {
+        var items = [RecentlyOpenedNodeEntity]()
         for index in 0..<count {
-            items.append(RecentlyWatchedVideoEntity(video: anyVideo(handle: index), lastWatchedDate: Date(), mediaDestination: nil))
+            items.append(RecentlyOpenedNodeEntity(
+                node: anyVideo(handle: index),
+                lastOpenedDate: Date(),
+                mediaDestination: MediaDestinationEntity(fingerprint: "any-fingerprint", destination: 0, timescale: 0)
+            ))
         }
         return items
     }
