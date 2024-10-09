@@ -24,16 +24,16 @@ extension PhotoLibraryUseCaseProtocol {
     }
 }
 
-public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepositoryProtocol, V: ContentConsumptionUserAttributeUseCaseProtocol>: PhotoLibraryUseCaseProtocol {
+public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepositoryProtocol, V: SensitiveDisplayPreferenceUseCaseProtocol>: PhotoLibraryUseCaseProtocol {
     private let photosRepository: T
     private let searchRepository: U
-    private let contentConsumptionUserAttributeUseCase: V
+    private let sensitiveDisplayPreferenceUseCase: V
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
     
-    public init(photosRepository: T, searchRepository: U, contentConsumptionUserAttributeUseCase: V, hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
+    public init(photosRepository: T, searchRepository: U, sensitiveDisplayPreferenceUseCase: V, hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
         self.photosRepository = photosRepository
         self.searchRepository = searchRepository
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
@@ -69,7 +69,7 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         }
         
         guard let override else {
-            return await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+            return await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         }
         return override
     }

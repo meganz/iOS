@@ -46,7 +46,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let userAlbumRepo = UserAlbumRepository.newRepo
         let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
         let photoLibraryUseCase = makePhotoLibraryUseCase()
-        let hiddenNodesFeatureFlagEnabled = { @Sendable in DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+        let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
@@ -59,13 +59,11 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                     mediaUseCase: mediaUseCase,
                     fileSearchRepo: filesSearchRepo,
                     userAlbumRepo: userAlbumRepo,
-                    contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                    sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                     photoLibraryUseCase: photoLibraryUseCase,
                     sensitiveNodeUseCase: SensitiveNodeUseCase(
-                        nodeRepository: NodeRepository.newRepo),
-                    hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
+                        nodeRepository: NodeRepository.newRepo)),
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             shareCollectionUseCase: ShareCollectionUseCase(
@@ -120,7 +118,16 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         return PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
                                    searchRepository: FilesSearchRepository.newRepo,
-                                   contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                                   sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
                                    hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+    }
+    
+    private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
+        SensitiveDisplayPreferenceUseCase(
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }

@@ -181,11 +181,16 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             let photoLibraryRepository = PhotoLibraryRepository(
                 cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
             let fileSearchRepository = FilesSearchRepository.newRepo
+            let hiddenNodesFeatureFlagEnabled = { @Sendable in DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
             let photoLibraryUseCase = PhotoLibraryUseCase(
                 photosRepository: photoLibraryRepository,
                 searchRepository: fileSearchRepository,
-                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+                sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                    contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                        repo: UserAttributeRepository.newRepo),
+                    hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
+                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled)
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
                 photoLibraryUseCase: photoLibraryUseCase,

@@ -31,24 +31,23 @@ struct AlbumContentRouter: AlbumContentRouting {
         let albumContentsUpdateRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let filesSearchRepo = FilesSearchRepository.newRepo
         let userAlbumRepo = UserAlbumRepository.newRepo
+        let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsUpdateRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: userAlbumRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             photoLibraryUseCase: makePhotoLibraryUseCase(),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+                nodeRepository: NodeRepository.newRepo)
         )
         let photoLibraryRepository = PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared
         )
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
                                                       searchRepository: FilesSearchRepository.newRepo,
-                                                      contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                                                        repo: UserAttributeRepository.newRepo),
+                                                      sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
                                                       hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         let alertViewModel = TextFieldAlertViewModel(textString: album.name,
@@ -86,7 +85,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         let fileSearchRepository = FilesSearchRepository.newRepo
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
                                                       searchRepository: fileSearchRepository,
-                                                      contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                                                      sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
                                                       hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         let viewModel = AlbumContentPickerViewModel(album: album,
@@ -109,11 +108,10 @@ struct AlbumContentRouter: AlbumContentRouting {
             mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: UserAlbumRepository.newRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             photoLibraryUseCase: makePhotoLibraryUseCase(),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+                nodeRepository: NodeRepository.newRepo)
         )
         
         let viewModel = AlbumCoverPickerViewModel(album: album,
@@ -163,7 +161,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
                             searchRepository: FilesSearchRepository.newRepo,
-                            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
                             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
     
@@ -194,5 +192,14 @@ struct AlbumContentRouter: AlbumContentRouting {
                 repo: UserAttributeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
+    }
+    
+    private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
+        SensitiveDisplayPreferenceUseCase(
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }

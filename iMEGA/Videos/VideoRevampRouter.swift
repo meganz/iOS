@@ -30,12 +30,13 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(
             repo: UserAttributeRepository.newRepo)
+        let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection(), syncModel: syncModel)
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let videoPlaylistUseCase = VideoPlaylistUseCase(
@@ -48,10 +49,8 @@ struct VideoRevampRouter: VideoRevampRouting {
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepo,
             nodeRepository: nodeRepository,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository)) {
-                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository))
         let videoPlaylistModificationUseCase = VideoPlaylistModificationUseCase(
             userVideoPlaylistsRepository: userVideoPlaylistsRepo
         )
@@ -123,13 +122,12 @@ struct VideoRevampRouter: VideoRevampRouting {
     func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig) {
         let userVideoPlaylistsRepo = UserVideoPlaylistsRepository.newRepo
         let fileSearchRepo = FilesSearchRepository.newRepo
-        let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(
-            repo: UserAttributeRepository.newRepo)
+        let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let nodeRepository = NodeRepository.newRepo
@@ -138,9 +136,8 @@ struct VideoRevampRouter: VideoRevampRouting {
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepo,
             nodeRepository: nodeRepository,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository)
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let videoSelection = VideoSelection()
@@ -227,6 +224,15 @@ struct VideoRevampRouter: VideoRevampRouting {
                 .ignoresSafeArea(edges: .bottom)
                 .navigationBarHidden(true)
         }
+    }
+    
+    private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
+        SensitiveDisplayPreferenceUseCase(
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }
 

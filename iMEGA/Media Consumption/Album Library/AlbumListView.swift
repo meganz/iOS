@@ -76,7 +76,12 @@ struct AlbumListView: View {
                 photosRepository: PhotoLibraryRepository(
                     cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
                 searchRepository: FilesSearchRepository.newRepo, 
-                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                    accountUseCase: AccountUseCase(
+                        repository: AccountRepository.newRepo),
+                    contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                        repo: UserAttributeRepository.newRepo),
+                    hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
             ),
             completion: { album, selectedPhotos in

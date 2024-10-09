@@ -37,11 +37,11 @@ public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
         await state.photos
     }
     
-    public func userAlbumPhotos(by id: HandleEntity, showHidden: Bool) async -> [AlbumPhotoEntity] {
-        if showHidden {
-            await state.photos
-        } else {
+    public func userAlbumPhotos(by id: HandleEntity, excludeSensitive: Bool) async -> [AlbumPhotoEntity] {
+        if excludeSensitive {
             await state.photos.filter { !$0.photo.isMarkedSensitive }
+        } else {
+            await state.photos
         }
     }
     

@@ -200,7 +200,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         XCTAssertEqual(albums.first?.sharedLinkStatus, .exported(expectedIsExported))
     }
     
-    func testUserAlbums_showHiddenItemsFalseAlbumCoverSet_shouldNotUseHiddenPhotoAsCoverAndCount() async {
+    func testUserAlbums_excludeSensitivesAlbumCoverSet_shouldNotUseHiddenPhotoAsCoverAndCount() async {
         let albumId = HandleEntity(65)
         let albumCoverId = HandleEntity(3)
         let album = SetEntity(handle: albumId, coverId: albumCoverId,
@@ -213,14 +213,13 @@ final class AlbumListUseCaseTests: XCTestCase {
         let userAlbumRepository = MockUserAlbumRepository(albums: [album],
                                                           albumElement: albumElement)
         let albumContentUseCase = MockAlbumContentUseCase(photos: albumPhotos)
-        let ccUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
-            sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
+        let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+            excludeSensitives: true)
         
         let sut = makeAlbumListUseCase(
             userAlbumRepository: userAlbumRepository,
             albumContentsUseCase: albumContentUseCase,
-            contentConsumptionUserAttributeUseCase: ccUserAttributeUseCase,
-            hiddenNodesFeatureFlagEnabled: { true })
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
         
         let albums = await sut.userAlbums()
         
@@ -249,14 +248,13 @@ final class AlbumListUseCaseTests: XCTestCase {
         
         let userAlbumRepository = MockUserAlbumRepository(albums: [album])
         let albumContentUseCase = MockAlbumContentUseCase(photos: albumPhotos)
-        let ccUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
-            sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
+        let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+            excludeSensitives: true)
         
         let sut = makeAlbumListUseCase(
             userAlbumRepository: userAlbumRepository,
             albumContentsUseCase: albumContentUseCase,
-            contentConsumptionUserAttributeUseCase: ccUserAttributeUseCase,
-            hiddenNodesFeatureFlagEnabled: { true })
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
         
         let albums = await sut.userAlbums()
         
@@ -390,16 +388,14 @@ final class AlbumListUseCaseTests: XCTestCase {
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
         albumContentsUpdateRepository: some AlbumContentsUpdateNotifierRepositoryProtocol = MockAlbumContentsUpdateNotifierRepository(),
         albumContentsUseCase: some AlbumContentsUseCaseProtocol = MockAlbumContentUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool = { false }
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase()
     ) -> some AlbumListUseCaseProtocol {
         AlbumListUseCase(photoLibraryUseCase: photoLibraryUseCase,
                          mediaUseCase: mediaUseCase,
                          userAlbumRepository: userAlbumRepository,
                          albumContentsUpdateRepository: albumContentsUpdateRepository,
                          albumContentsUseCase: albumContentsUseCase,
-                         contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                         hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled)
+                         sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
     }
     
     private func makeAlbumPhotos() throws -> [AlbumPhotoEntity] {
