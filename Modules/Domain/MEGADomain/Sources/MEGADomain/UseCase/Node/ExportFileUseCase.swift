@@ -1,7 +1,6 @@
 import Foundation
 
 // MARK: - Use case protocol -
-
 public protocol ExportFileNodeUseCaseProtocol: Sendable {
     func export(node: NodeEntity) async throws -> URL
     func export(nodes: [NodeEntity]) async throws -> [URL]
@@ -65,6 +64,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     }
     
     // MARK: - Private
+    @MainActor
     private func nodeUrl(_ node: NodeEntity) -> URL? {
         if let offlineUrl = offlineUrl(for: node.base64Handle) {
             return offlineUrl
@@ -106,7 +106,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
 // MARK: - ExportFileNodeUseCaseProtocol implementation -
 extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
     public func export(node: NodeEntity) async throws -> URL {
-        if let nodeUrl = nodeUrl(node) {
+        if let nodeUrl = await nodeUrl(node) {
             return nodeUrl
         } else {
             return try await downloadNode(node)
@@ -199,7 +199,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
     }
     
     public func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL {
-        if let nodeUrl = nodeUrl(node) {
+        if let nodeUrl = await nodeUrl(node) {
             return nodeUrl
         } else {
             return try await importNodeToDownload(node, messageId: messageId, chatId: chatId)
