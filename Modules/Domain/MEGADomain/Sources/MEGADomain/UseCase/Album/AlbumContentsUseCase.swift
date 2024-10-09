@@ -3,7 +3,7 @@ import Combine
 public protocol AlbumContentsUseCaseProtocol: Sendable {
     func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never>
     func photos(in album: AlbumEntity) async throws -> [AlbumPhotoEntity]
-    func userAlbumPhotos(by id: HandleEntity, showHidden: Bool) async -> [AlbumPhotoEntity]
+    func userAlbumPhotos(by id: HandleEntity, excludeSensitive: Bool) async -> [AlbumPhotoEntity]
     func userAlbumUpdatedPublisher(for album: AlbumEntity) -> AnyPublisher<SetEntity, Never>?
     func userAlbumCoverPhoto(in album: AlbumEntity, forPhotoId photoId: HandleEntity) async -> NodeEntity?
 }
@@ -13,27 +13,24 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     private let mediaUseCase: any MediaUseCaseProtocol
     private let fileSearchRepo: any FilesSearchRepositoryProtocol
     private let userAlbumRepo: any UserAlbumRepositoryProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
     
     public init(albumContentsRepo: any AlbumContentsUpdateNotifierRepositoryProtocol,
                 mediaUseCase: any MediaUseCaseProtocol,
                 fileSearchRepo: any FilesSearchRepositoryProtocol,
                 userAlbumRepo: any UserAlbumRepositoryProtocol,
-                contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+                sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
                 photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
-                sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-                hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
+                sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
         self.userAlbumRepo = userAlbumRepo
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     // MARK: Protocols
@@ -51,19 +48,19 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     }
     
     public func photos(in album: AlbumEntity) async throws -> [AlbumPhotoEntity] {
-        let showHiddenPhotos = await showHiddenPhotos()
+        let excludeSensitive = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         
         if album.systemAlbum {
             return try await systemAlbumPhotos(forAlbum: album,
-                                               showHiddenPhotos: showHiddenPhotos)
+                                               excludeSensitive: excludeSensitive)
             .map { AlbumPhotoEntity(photo: $0) }
         }
         return await userAlbumPhotos(by: album.id,
-                                     showHidden: showHiddenPhotos)
+                                     excludeSensitive: excludeSensitive)
     }
     
     public func userAlbumPhotos(by id: HandleEntity,
-                                showHidden: Bool) async -> [AlbumPhotoEntity] {
+                                excludeSensitive: Bool) async -> [AlbumPhotoEntity] {
         await withTaskGroup(of: AlbumPhotoEntity?.self) { group in
             let albumElementIds = await userAlbumRepo.albumElementIds(
                 by: id, includeElementsInRubbishBin: false)
@@ -71,7 +68,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
             albumElementIds.forEach { albumElementId in
                 group.addTask {
                     guard let photo = await photo(forNodeId: albumElementId.nodeId),
-                          await shouldShowPhoto(photo, showHidden: showHidden) else {
+                          await shouldShowPhoto(photo, excludeSensitive: excludeSensitive) else {
                         return nil
                     }
                     return AlbumPhotoEntity(photo: photo,
@@ -105,13 +102,13 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     // MARK: Private
     
-    private func systemAlbumPhotos(forAlbum album: AlbumEntity, showHiddenPhotos: Bool) async throws -> [NodeEntity] {
+    private func systemAlbumPhotos(forAlbum album: AlbumEntity, excludeSensitive: Bool) async throws -> [NodeEntity] {
         let photos = try await photoLibraryUseCase.media(for: [.allLocations, .images],
-                                                         excludeSensitive: !showHiddenPhotos)
+                                                         excludeSensitive: excludeSensitive)
         switch album.type {
         case .favourite:
             let videos = try await photoLibraryUseCase.media(for: [.allLocations, .videos],
-                                                             excludeSensitive: !showHiddenPhotos)
+                                                             excludeSensitive: excludeSensitive)
             return (photos + videos)
                 .filter { $0.hasThumbnail && $0.name.fileExtensionGroup.isVisualMedia && $0.isFavourite }
         case .raw:
@@ -131,16 +128,8 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         return photo
     }
     
-    private func showHiddenPhotos() async -> Bool {
-        guard hiddenNodesFeatureFlagEnabled() else { return true }
-        
-        return await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute()
-            .showHiddenNodes
-    }
-    
-    private func shouldShowPhoto(_ node: NodeEntity, showHidden: Bool) async -> Bool {
-        guard hiddenNodesFeatureFlagEnabled(),
-              !showHidden else {
+    private func shouldShowPhoto(_ node: NodeEntity, excludeSensitive: Bool) async -> Bool {
+        guard excludeSensitive else {
             return true
         }
         return if node.isMarkedSensitive {

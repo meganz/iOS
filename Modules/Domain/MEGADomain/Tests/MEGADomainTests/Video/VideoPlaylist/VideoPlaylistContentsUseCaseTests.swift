@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import Testing
 import XCTest
 
 final class VideoPlaylistContentsUseCaseTests: XCTestCase {
@@ -391,7 +392,6 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
     
     func testMonitorUserVideoPlaylistContent_whenFolderSensitivtyHasChanged_emitsUpdate() async {
         let videoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "user", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
-        let expectedResults = anyVideoPlaylistContents()
         let (sut, _, _, _) = makeSUT(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 folderSensitivityChanged: SingleItemAsyncSequence(item: ()).eraseToAnyAsyncSequence())
@@ -427,9 +427,8 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         nodeRepository: MockNodeRepository = MockNodeRepository(),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        sensitiveNodesUserAttributeEntity: SensitiveNodesUserAttributeEntity = .init(onboarded: false, showHiddenNodes: true),
-        sensitiveNodeUseCase: MockSensitiveNodeUseCase = .init(),
-        hiddenNodesFeatureFlagEnabled: Bool = false
+        excludeSensitives: Bool = false,
+        sensitiveNodeUseCase: MockSensitiveNodeUseCase = .init()
     ) -> (
         sut: VideoPlaylistContentsUseCase,
         userVideoPlaylistRepository: MockUserVideoPlaylistsRepository,
@@ -448,9 +447,8 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepository,
             nodeRepository: nodeRepository,
-            contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase( sensitiveNodesUserAttributeEntity: sensitiveNodesUserAttributeEntity),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled }
+            sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase(excludeSensitives: excludeSensitives),
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         return (sut, userVideoPlaylistRepository, photoLibraryUseCase, fileSearchRepository)
     }
@@ -507,4 +505,109 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
             SetElementEntity(handle: 1, ownerId: 1, order: 1, nodeId: 1, modificationTime: Date(), name: "name", changeTypes: .name)
         ]
     }
+}
+
+@Suite("Video Playlist Contents Use Case Tests")
+struct VideoPlaylistContentsUseCaseTestSuite {
+    
+    @Suite("userVideoPlaylistVideos for set handle")
+    struct UserVideoPlaylistVideos {
+        
+        @Suite("Exclude sensitives")
+        struct ExcludeSensitives {
+            @Test("User playlist videos should filter out sensitive videos",
+                  arguments: [
+                    ([SetElementEntity.mp4Element, .sensitiveMp4Element],
+                     [NodeEntity.mp4, .sensitiveMp4],
+                     [NodeEntity.mp4.handle: Result<Bool, Error>.success(false)],
+                     [VideoPlaylistVideoEntity(video: .mp4, videoPlaylistVideoId: SetElementEntity.mp4Element.handle)]
+                    ),
+                    ([SetElementEntity.mp4Element, .sensitiveMp4Element],
+                     [NodeEntity.mp4, .sensitiveMp4],
+                     [NodeEntity.mp4.handle: Result<Bool, Error>.success(true)],
+                     []
+                    )
+                  ])
+            func userPlaylistVideosExcludingSensitives(
+                videoPlaylistContents: [SetElementEntity],
+                videos: [NodeEntity],
+                isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>],
+                expectedPlaylistVideos: [VideoPlaylistVideoEntity]
+            ) async {
+                let sut = UserVideoPlaylistVideos.makeSUT(
+                    excludeSensitives: true,
+                    videoPlaylistContents: videoPlaylistContents,
+                    videos: videos,
+                    isInheritingSensitivityResults: isInheritingSensitivityResults)
+                
+                #expect(Set(await sut.userVideoPlaylistVideos(by: SetEntity.videoPlaylist.handle)) == Set(expectedPlaylistVideos))
+            }
+        }
+        
+        @Suite("Include sensitives")
+        struct IncludeSensitives {
+            @Test("User playlist videos should include sensitive videos")
+            func userPlaylistVideosIncludingSensitives() async {
+                let sut = UserVideoPlaylistVideos.makeSUT(
+                    excludeSensitives: false,
+                    videoPlaylistContents: [SetElementEntity.mp4Element, .sensitiveMp4Element],
+                    videos: [NodeEntity.mp4, .sensitiveMp4])
+                
+                let expectedResult = Set([VideoPlaylistVideoEntity(video: .mp4, videoPlaylistVideoId: SetElementEntity.mp4Element.handle),
+                                          VideoPlaylistVideoEntity(video: .sensitiveMp4, videoPlaylistVideoId: SetElementEntity.sensitiveMp4Element.handle)])
+                #expect(Set(await sut.userVideoPlaylistVideos(by: SetEntity.videoPlaylist.handle)) == expectedResult)
+            }
+        }
+        
+        private static func makeSUT(
+            excludeSensitives: Bool = false,
+            videoPlaylistContents: [SetElementEntity] = [],
+            videos: [NodeEntity] = [],
+            isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:]
+        ) -> VideoPlaylistContentsUseCase {
+            let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(
+                videoPlaylistContentResult: videoPlaylistContents
+            )
+            let fileSearchRepository = MockFilesSearchRepository(nodesForHandle: [1: videos])
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(excludeSensitives: excludeSensitives)
+            let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResults: isInheritingSensitivityResults)
+            return VideoPlaylistContentsUseCaseTestSuite
+                .makeSUT(
+                    userVideoPlaylistRepository: userVideoPlaylistRepository,
+                    fileSearchRepository: fileSearchRepository,
+                    sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                    sensitiveNodeUseCase: sensitiveNodeUseCase)
+        }
+    }
+    
+    private static func makeSUT(
+        userVideoPlaylistRepository: some UserVideoPlaylistsRepositoryProtocol = MockUserVideoPlaylistsRepository(),
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
+        fileSearchRepository: some FilesSearchRepositoryProtocol = MockFilesSearchRepository(),
+        nodeRepository: some NodeRepositoryProtocol = MockNodeRepository(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
+    ) -> VideoPlaylistContentsUseCase {
+        .init(
+            userVideoPlaylistRepository: userVideoPlaylistRepository,
+            photoLibraryUseCase: photoLibraryUseCase,
+            fileSearchRepository: fileSearchRepository,
+            nodeRepository: nodeRepository,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
+    }
+}
+
+private extension SetEntity {
+    static let videoPlaylist = SetEntity(handle: 56)
+}
+
+private extension SetElementEntity {
+    static let mp4Element = SetElementEntity(handle: 1, ownerId: SetEntity.videoPlaylist.handle, nodeId: NodeEntity.mp4.handle)
+    static let sensitiveMp4Element = SetElementEntity(handle: 2, ownerId: SetEntity.videoPlaylist.handle, nodeId: NodeEntity.sensitiveMp4.handle)
+}
+
+private extension NodeEntity {
+    static let mp4 = NodeEntity(name: "file.mp4", handle: 25, isMarkedSensitive: false)
+    static let sensitiveMp4 = NodeEntity(name: "file.mp4", handle: 27, isMarkedSensitive: true)
 }

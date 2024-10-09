@@ -118,12 +118,12 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let visibleNode = NodeEntity(name: "vis.jpg", handle: visibleNodeHandle, isMarkedSensitive: false)
         let hiddenInheritNode = NodeEntity(name: "hide_inherit.jpg", handle: inheritHiddenNodeHandle, isMarkedSensitive: false)
         
-        let allNodesExpectedResult = Set([
+        let allPhotos = Set([
             AlbumPhotoEntity(photo: visibleNode, albumPhotoId: albumPhotoId2.id),
             AlbumPhotoEntity(photo: hiddenNode, albumPhotoId: albumPhotoId1.id),
             AlbumPhotoEntity(photo: hiddenInheritNode, albumPhotoId: albumPhotoId3.id)
         ])
-        let onlyVisibleNodes = Set([
+        let nonSensitivePhotos = Set([
             AlbumPhotoEntity(photo: visibleNode, albumPhotoId: albumPhotoId2.id)
         ])
         let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
@@ -131,26 +131,25 @@ final class AlbumContentUseCaseTests: XCTestCase {
             inheritHiddenNodeHandle: .success(true)
         ]
     
-        let testCase = [(showHiddenNodes: true, expectedResult: allNodesExpectedResult),
-                        (showHiddenNodes: false, expectedResult: onlyVisibleNodes)]
+        let testCase = [(excludeSensitive: false, expectedResult: allPhotos),
+                        (excludeSensitive: true, expectedResult: nonSensitivePhotos)]
         
         let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2, albumPhotoId3]])
         let userAlbum = AlbumEntity(id: albumId, name: "", coverNode: nil, count: 0, type: .user)
         let fileSearchRepo = MockFilesSearchRepository(nodesForHandle: [1: [hiddenNode, visibleNode, hiddenInheritNode]])
-        for (showHiddenNodes, expectedResult) in testCase {
-            let ccUserAttributes = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: true,
-                                                         showHiddenNodes: showHiddenNodes))
+        for (excludeSensitive, expectedResult) in testCase {
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitive)
             let sut = makeSUT(
                 fileSearchRepo: fileSearchRepo,
                 userAlbumRepo: userAlbumRepo,
-                contentConsumptionUserAttributeUseCase: ccUserAttributes,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                    isInheritingSensitivityResults: isInheritingSensitivityResults),
-                hiddenNodesFeatureFlagEnabled: { true })
+                    isInheritingSensitivityResults: isInheritingSensitivityResults)
+            )
             
             let result = try await sut.photos(in: userAlbum)
-            XCTAssertEqual(Set(result), expectedResult, "Incorrect result for showHiddenNodes: \(showHiddenNodes)")
+            XCTAssertEqual(Set(result), expectedResult, "Incorrect result for excludeSensitive: \(excludeSensitive)")
         }
     }
     
@@ -206,44 +205,33 @@ final class AlbumContentUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func testUserAlbumPhotos_showHiddenItemsTrue_shouldReturnAllNodes() async {
-        let result = await withTaskGroup(of: Bool.self) { group in
-            [true, false].forEach { isHiddenNodesFeatureOn in
-                let albumId: HandleEntity = 5
-                let handle1 = HandleEntity(1)
-                let handle2 = HandleEntity(2)
-                
-                let albumPhotoId1 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 5, nodeId: handle1)
-                let albumPhotoId2 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 8, nodeId: handle2)
-                
-                let imageNode =  NodeEntity(name: "Test.jpg", handle: handle1)
-                let videoNode =   NodeEntity(name: "Test.mp4", handle: handle2)
-                let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
-                
-                let sut = makeSUT(
-                    fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [imageNode, videoNode]]),
-                    userAlbumRepo: userAlbumRepo,
-                    hiddenNodesFeatureFlagEnabled: { isHiddenNodesFeatureOn }
-                )
-                
-                let expectedResult: Set = [
-                    AlbumPhotoEntity(photo: imageNode, albumPhotoId: albumPhotoId1.id),
-                    AlbumPhotoEntity(photo: videoNode, albumPhotoId: albumPhotoId2.id)
-                ]
-                
-                group.addTask {
-                    let result = await sut.userAlbumPhotos(by: albumId, showHidden: true)
-                    return Set(result) == expectedResult
-                }
-            }
-            
-            return await group.allSatisfy { $0 }
-        }
+    func testUserAlbumPhotos_excludeSensitiveFalse_shouldReturnAllAlbumPhotos() async {
+        let albumId: HandleEntity = 5
+        let handle1 = HandleEntity(1)
+        let handle2 = HandleEntity(2)
         
-        XCTAssertTrue(result)
+        let albumPhotoId1 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 5, nodeId: handle1)
+        let albumPhotoId2 = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 8, nodeId: handle2)
+        
+        let imageNode =  NodeEntity(name: "Test.jpg", handle: handle1)
+        let videoNode =   NodeEntity(name: "Test.mp4", handle: handle2)
+        let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2]])
+        
+        let sut = makeSUT(
+            fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [imageNode, videoNode]]),
+            userAlbumRepo: userAlbumRepo
+        )
+        
+        let expectedResult: Set = [
+            AlbumPhotoEntity(photo: imageNode, albumPhotoId: albumPhotoId1.id),
+            AlbumPhotoEntity(photo: videoNode, albumPhotoId: albumPhotoId2.id)
+        ]
+        
+        let result = await sut.userAlbumPhotos(by: albumId, excludeSensitive: false)
+        XCTAssertEqual(Set(result), expectedResult)
     }
     
-    func testUserAlbumPhotos_showHiddenItemsFalse_shouldReturnAllNodesThatsNotMarkedSensitive() async {
+    func testUserAlbumPhotos_excludeSensitiveTrue_shouldReturnAllNodesThatsNotMarkedSensitive() async {
         let albumId: HandleEntity = 5
         let hiddenNodeHandle = HandleEntity(1)
         let visibleNodeHandle = HandleEntity(2)
@@ -267,11 +255,10 @@ final class AlbumContentUseCaseTests: XCTestCase {
             fileSearchRepo: MockFilesSearchRepository(nodesForHandle: [1: [hiddenNode, visibleNode, hiddenInheritNode]]),
             userAlbumRepo: userAlbumRepo,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isInheritingSensitivityResults: isInheritingSensitivityResults),
-            hiddenNodesFeatureFlagEnabled: { true }
+                isInheritingSensitivityResults: isInheritingSensitivityResults)
         )
         
-        let result = await sut.userAlbumPhotos(by: albumId, showHidden: false)
+        let result = await sut.userAlbumPhotos(by: albumId, excludeSensitive: true)
         
         XCTAssertEqual(result, [
             AlbumPhotoEntity(photo: visibleNode, albumPhotoId: albumPhotoId2.id)
@@ -368,18 +355,17 @@ final class AlbumContentUseCaseTests: XCTestCase {
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         fileSearchRepo: some FilesSearchRepositoryProtocol = MockFilesSearchRepository(),
         userAlbumRepo: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool = { false }
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> AlbumContentsUseCase {
         AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: mediaUseCase,
             fileSearchRepo: fileSearchRepo,
             userAlbumRepo: userAlbumRepo,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase, photoLibraryUseCase: photoLibraryUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled)
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            photoLibraryUseCase: photoLibraryUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
 }

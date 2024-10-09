@@ -30,26 +30,23 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let fileSearchRepository: any FilesSearchRepositoryProtocol
     private let nodeRepository: any NodeRepositoryProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
 
     public init(
         userVideoPlaylistRepository: some UserVideoPlaylistsRepositoryProtocol,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         fileSearchRepository: some FilesSearchRepositoryProtocol,
         nodeRepository: some NodeRepositoryProtocol,
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
     ) {
         self.userVideoPlaylistRepository = userVideoPlaylistRepository
         self.photoLibraryUseCase = photoLibraryUseCase
         self.fileSearchRepository = fileSearchRepository
         self.nodeRepository = nodeRepository
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     // MARK: - monitorVideoPlaylist
@@ -119,7 +116,7 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
     
     public func videos(in playlist: VideoPlaylistEntity) async throws -> [NodeEntity] {
         
-        let excludeSensitive = await shouldExcludeSensitive()
+        let excludeSensitive = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         
         return switch playlist.type {
         case .favourite:
@@ -135,7 +132,7 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
     // MARK: - userVideoPlaylistVideos
     
     public func userVideoPlaylistVideos(by id: HandleEntity) async -> [VideoPlaylistVideoEntity] {
-        let excludeSensitive = await shouldExcludeSensitive()
+        let excludeSensitive = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
 
         return await userVideoPlaylistVideos(by: id, excludeSensitive: excludeSensitive)
     }
@@ -159,14 +156,6 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
                 }
             }
         }
-    }
-    
-    private func shouldExcludeSensitive() async -> Bool {
-        guard hiddenNodesFeatureFlagEnabled() else {
-            return false
-        }
-        
-        return await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
     }
     
     private func video(from setElement: SetElementEntity, excludeSensitive: Bool) async -> VideoPlaylistVideoEntity? {

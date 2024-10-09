@@ -17,8 +17,7 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let albumContentsUpdateRepository: any AlbumContentsUpdateNotifierRepositoryProtocol
     private let albumContentsUseCase: any AlbumContentsUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     
     public var albumsUpdatedPublisher: AnyPublisher<Void, Never> {
         userAlbumUpdates
@@ -44,16 +43,14 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
         userAlbumRepository: some UserAlbumRepositoryProtocol,
         albumContentsUpdateRepository: some AlbumContentsUpdateNotifierRepositoryProtocol,
         albumContentsUseCase: some AlbumContentsUseCaseProtocol,
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol
     ) {
         self.photoLibraryUseCase = photoLibraryUseCase
         self.mediaUseCase = mediaUseCase
         self.userAlbumRepository = userAlbumRepository
         self.albumContentsUpdateRepository = albumContentsUpdateRepository
         self.albumContentsUseCase = albumContentsUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
     }
     
     public func systemAlbums() async throws -> [AlbumEntity] {
@@ -63,14 +60,14 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     
     public func userAlbums() async -> [AlbumEntity] {
         let albums = await userAlbumRepository.albums()
-        let showHiddenPhotos = await showHiddenPhotos()
+        let excludeSensitive = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         
         return await withTaskGroup(of: AlbumEntity.self,
                                    returning: [AlbumEntity].self) { group in
             albums.forEach { setEntity in
                 group.addTask {
                     let userAlbumContent = await albumContentsUseCase.userAlbumPhotos(by: setEntity.handle,
-                                                                                      showHidden: showHiddenPhotos)
+                                                                                      excludeSensitive: excludeSensitive)
                     let coverNode = await albumCoverNode(forAlbum: setEntity,
                                                          albumContent: userAlbumContent)
                     return AlbumEntity(id: setEntity.handle,
@@ -189,12 +186,5 @@ public struct AlbumListUseCase: AlbumListUseCaseProtocol {
         
         return AlbumMetaDataEntity(imageCount: counts.image,
                                    videoCount: counts.video)
-    }
-    
-    private func showHiddenPhotos() async -> Bool {
-        guard hiddenNodesFeatureFlagEnabled() else { return true }
-        
-        return await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute()
-            .showHiddenNodes
     }
 }
