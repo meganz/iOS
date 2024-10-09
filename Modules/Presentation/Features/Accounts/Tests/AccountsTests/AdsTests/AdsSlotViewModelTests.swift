@@ -75,7 +75,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertFalse(sut.displayAds)
     }
     
-    func testUpdateAdsSlot_externalAdsEnabled_receivedSameAdsSlot_withDifferentDisplayAdsValue_shouldHaveLatestDisplayAds() async {
+    func testUpdateAdsSlot_externalAdsEnabledAndReceivedSameAdsSlot_withDifferentDisplayAdsValue_shouldHaveLatestDisplayAds() async {
         let randomAdSlot = randomAdsSlotConfig
         let expectedConfig = AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)
         
@@ -84,35 +84,31 @@ final class AdsSlotViewModelTests: XCTestCase {
                 AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled),
                 expectedConfig
             ],
-            expectedLatestAdsSlotConfig: expectedConfig,
-            shouldRefreshAds: false
+            expectedLatestAdsSlotConfig: expectedConfig
         )
     }
     
-    func testUpdateAdsSlot_externalAdsEnabled_receivedSameAdsSlot_withSameDisplayAdsValue_shouldHaveTheSameDisplayAdsValue() async {
+    func testUpdateAdsSlot_externalAdsEnabledAndReceivedSameAdsSlot_withSameDisplayAdsValue_shouldHaveTheSameDisplayAdsValue() async {
         let randomAdSlot = randomAdsSlotConfig
         
         await assertUpdateAdsSlotShouldDisplayAds(
             adsSlots: [randomAdSlot, randomAdSlot],
-            expectedLatestAdsSlotConfig: randomAdSlot,
-            shouldRefreshAds: false
+            expectedLatestAdsSlotConfig: randomAdSlot
         )
     }
     
-    func testUpdateAdsSlot_externalAdsEnabled_receivedNewAdSlot_shouldDisplayAdsAndRefresh() async {
+    func testUpdateAdsSlot_externalAdsEnabledAndReceivedNewAdSlot_withSameDisplayAdsValues_shouldDisplayAds() async {
         let randomAdSlot = randomAdsSlotConfig
         
         await assertUpdateAdsSlotShouldDisplayAds(
             adsSlots: [randomAdSlot],
-            expectedLatestAdsSlotConfig: randomAdSlot,
-            shouldRefreshAds: true
+            expectedLatestAdsSlotConfig: randomAdSlot
         )
     }
     
     private func assertUpdateAdsSlotShouldDisplayAds(
         adsSlots: [AdsSlotConfig],
         expectedLatestAdsSlotConfig: AdsSlotConfig,
-        shouldRefreshAds: Bool,
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
@@ -122,19 +118,9 @@ final class AdsSlotViewModelTests: XCTestCase {
         // Set initial AdSlot
         await sut.updateAdsSlot(randomAdsSlotConfig)
         
-        // Refresh ads if needed
-        let exp = expectation(description: "Should refresh ads: \(shouldRefreshAds)")
-        exp.isInverted = !shouldRefreshAds
-        exp.expectedFulfillmentCount = adsSlots.count
-        sut.refreshAdsPublisher
-            .sink { _ in
-                exp.fulfill()
-            }
-            .store(in: &subscriptions)
-        
+        // Monitor Ads slot changes
         await sut.setupAdsRemoteFlag()
         await sut.monitorAdsSlotChanges()
-        await fulfillment(of: [exp], timeout: 0.5)
         
         XCTAssertEqual(sut.adsSlotConfig, expectedLatestAdsSlotConfig, file: file, line: line)
         XCTAssertEqual(sut.displayAds, expectedLatestAdsSlotConfig.displayAds, file: file, line: line)
