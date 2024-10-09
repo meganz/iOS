@@ -10,7 +10,7 @@ import MEGAUIKit
 import SwiftUI
 import UIKit
 
-final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmentAware {
+final class PhotoAlbumContainerViewController: UIViewController {
     var photoViewController: PhotosViewController?
     
     lazy var toolbar = UIToolbar()
@@ -144,30 +144,6 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
     
     func isTimelineActive() -> Bool {
         pageTabViewModel.selectedTab == .timeline
-    }
-    
-    // MARK: - TraitEnvironmentAware
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if pageTabViewModel.selectedTab == .album {
-                updateBarButtons()
-            }
-            if isVisualMediaSearchFeatureEnabled {
-                AppearanceManager.forceSearchBarUpdate(
-                    searchController.searchBar,
-                    backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                    traitCollection: traitCollection)
-            }
-        }
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        if pageTabViewModel.selectedTab == .album {
-            AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
-        }
     }
     
     // MARK: - Private
