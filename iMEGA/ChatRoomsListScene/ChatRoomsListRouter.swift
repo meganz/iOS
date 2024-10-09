@@ -255,7 +255,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             return
         }
         
-        let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
         MeetingContainerRouter(
             presenter: navigationController,
             chatRoom: chatRoom,

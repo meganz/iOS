@@ -28,8 +28,6 @@ struct VideoRevampRouter: VideoRevampRouting {
             sdk: sdk,
             setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: sdk)
         )
-        let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(
-            repo: UserAttributeRepository.newRepo)
         let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection(), syncModel: syncModel)
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)

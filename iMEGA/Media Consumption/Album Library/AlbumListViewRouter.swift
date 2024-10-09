@@ -44,7 +44,6 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let userAlbumRepo = UserAlbumRepository.newRepo
-        let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
         let photoLibraryUseCase = makePhotoLibraryUseCase()
         let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         
