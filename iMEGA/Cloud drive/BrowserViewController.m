@@ -372,49 +372,6 @@
     [self reloadUI];
 }
 
-- (NSString *)successMessageForCopyAction {
-    NSInteger files = 0;
-    NSInteger folders = 0;
-    for (MEGANode *n in self.selectedNodesArray) {
-        if ([n type] == MEGANodeTypeFolder) {
-            folders++;
-        } else {
-            files++;
-        }
-    }
-    
-    NSString *message;
-    if (files == 0) {
-        if (folders == 1) {
-            message = LocalizedString(@"copyFolderMessage", @"");
-        } else { //folders > 1
-            message = [NSString stringWithFormat:LocalizedString(@"copyFoldersMessage", @""), folders];
-        }
-    } else if (files == 1) {
-        if (folders == 0) {
-            message = LocalizedString(@"copyFileMessage", @"");
-        } else if (folders == 1) {
-            message = LocalizedString(@"copyFileFolderMessage", @"");
-        } else {
-            message = [NSString stringWithFormat:LocalizedString(@"copyFileFoldersMessage", @""), folders];
-        }
-    } else {
-        if (folders == 0) {
-            message = [NSString stringWithFormat:LocalizedString(@"copyFilesMessage", @""), files];
-        } else if (folders == 1) {
-            message = [NSString stringWithFormat:LocalizedString(@"copyFilesFolderMessage", @""), files];
-        } else {
-            message = LocalizedString(@"copyFilesFoldersMessage", @"");
-            NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
-            NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
-            message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-            message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-        }
-    }
-    
-    return message;
-}
-
 - (void)setToolbarItemsEnabled:(BOOL)boolValue {
     boolValue = boolValue && [MEGAReachabilityManager isReachable];
     
@@ -995,10 +952,7 @@
             if (self.remainingOperations == 0) {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 
-                if (self.browserAction == BrowserActionCopy) {
-                    NSString *message = [self successMessageForCopyAction];
-                    [SVProgressHUD showSuccessWithStatus:message];
-                } else if (self.browserAction == BrowserActionImport || self.browserAction == BrowserActionImportFromFolderLink) {
+                if (self.browserAction == BrowserActionImport || self.browserAction == BrowserActionImportFromFolderLink) {
                     if ((self.selectedNodesArray.count == 1) && [self.selectedNodesArray.firstObject isFile]) {
                         [SVProgressHUD showSuccessWithStatus:LocalizedString(@"fileImported", @"Message shown when a file has been imported")];
                     } else {
