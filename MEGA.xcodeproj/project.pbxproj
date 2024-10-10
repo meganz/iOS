@@ -821,6 +821,7 @@
 		6DF356B52BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF356B62BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF356B82BAD36370099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
+		6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 6DFE02972CB7338400703844 /* MEGAUIComponent */; };
 		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
 		7288C2C927F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */; };
@@ -3627,6 +3628,7 @@
 		6DD7B2352A776313007EBB20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModelTests.swift; sourceTree = "<group>"; };
 		6DEEA7B72C119596004641C9 /* MEGASDKErrorTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASDKErrorTypeTests.swift; sourceTree = "<group>"; };
+		6DFE02962CB7337600703844 /* MEGAUIComponent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAUIComponent; path = Modules/MEGASharedRepo/MEGAUIComponent; sourceTree = SOURCE_ROOT; };
 		6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListRouting.swift; sourceTree = "<group>"; };
 		7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAReachabilityManager+Additions.swift"; sourceTree = "<group>"; };
 		7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HelpTableViewController+Feedback.swift"; sourceTree = "<group>"; };
@@ -5570,6 +5572,7 @@
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
+				6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				B51616492B83361900C6E842 /* Notifications in Frameworks */,
@@ -12305,6 +12308,7 @@
 			children = (
 				B639953F2898CE9100EA88F1 /* MEGASwiftUI */,
 				B6826B662898F43900B2B8D0 /* MEGAUI */,
+				6DFE02962CB7337600703844 /* MEGAUIComponent */,
 				B65D17CB2899E07200D5AD33 /* MEGAUIKit */,
 			);
 			path = UI;
@@ -13638,6 +13642,7 @@
 				0E119ACB2C7C3CBC0091BF06 /* MEGAPhotos */,
 				9444FA8B2C94672B005C240B /* Chat */,
 				B5866BB42CA539E4009E0A1E /* GoogleMobileAds */,
+				6DFE02972CB7338400703844 /* MEGAUIComponent */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -18853,6 +18858,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */;
 			productName = MEGADesignToken;
+		};
+		6DFE02972CB7338400703844 /* MEGAUIComponent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAUIComponent;
 		};
 		940931FB2A56ED5F0093C169 /* DeviceCenter */ = {
 			isa = XCSwiftPackageProductDependency;
