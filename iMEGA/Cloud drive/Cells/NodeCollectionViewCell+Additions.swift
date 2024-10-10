@@ -22,10 +22,10 @@ extension NodeCollectionViewCell {
         NodeCollectionViewCellViewModel(
             node: node?.toNodeEntity(),
             isFromSharedItem: isFromSharedItem,
-            nodeUseCase: NodeUseCase(
-              nodeDataRepository: NodeDataRepository.newRepo,
-              nodeValidationRepository: NodeValidationRepository.newRepo,
-              nodeRepository: NodeRepository.newRepo),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo)),
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository(
                 sdk: sdk,
                 fileManager: .default,

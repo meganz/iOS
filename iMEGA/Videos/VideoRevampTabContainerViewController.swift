@@ -52,6 +52,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
 
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
@@ -71,6 +72,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol
@@ -84,6 +86,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.nodeIconUseCase = nodeIconUseCase
         self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.videoConfig = videoConfig
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
@@ -144,6 +147,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             nodeIconUseCase: nodeIconUseCase,
             nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             videoConfig: videoConfig,
             router: router
         )

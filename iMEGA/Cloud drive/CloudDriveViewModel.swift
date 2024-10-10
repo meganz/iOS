@@ -42,7 +42,6 @@ enum CloudDriveAction: ActionType {
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let nodeUseCase: any NodeUseCaseProtocol
     private let sdk: MEGASdk
 
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -66,7 +65,6 @@ enum CloudDriveAction: ActionType {
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-         nodeUseCase: some NodeUseCaseProtocol,
          tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol,
@@ -79,7 +77,6 @@ enum CloudDriveAction: ActionType {
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.accountUseCase = accountUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.nodeUseCase = nodeUseCase
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel

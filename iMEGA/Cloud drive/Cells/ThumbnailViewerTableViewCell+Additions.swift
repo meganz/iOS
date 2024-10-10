@@ -18,10 +18,10 @@ extension ThumbnailViewerTableViewCell {
     
     @objc func createViewModel(nodes: [MEGANode]) -> ThumbnailViewerTableViewCellViewModel {
         .init(nodes: nodes.toNodeEntities(),
-              nodeUseCase: NodeUseCase(
-                nodeDataRepository: NodeDataRepository.newRepo,
-                nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo), 
+              sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo)),
               nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared),
               thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo))
     }

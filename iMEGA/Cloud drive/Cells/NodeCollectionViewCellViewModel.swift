@@ -13,7 +13,7 @@ import MEGASwift
     
     private let node: NodeEntity?
     private let isFromSharedItem: Bool
-    private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -21,14 +21,14 @@ import MEGASwift
     
     init(node: NodeEntity?,
          isFromSharedItem: Bool,
-         nodeUseCase: some NodeUseCaseProtocol,
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
         self.node = node
         self.isFromSharedItem = isFromSharedItem
-        self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
         self.featureFlagProvider = featureFlagProvider
@@ -106,7 +106,7 @@ import MEGASwift
         }
         
         do {
-            isSensitive = try await nodeUseCase.isInheritingSensitivity(node: node)
+            isSensitive = try await sensitiveNodeUseCase.isInheritingSensitivity(node: node)
         } catch {
             MEGALogError("[\(type(of: self))] Error checking if node is inheriting sensitivity: \(error)")
         }

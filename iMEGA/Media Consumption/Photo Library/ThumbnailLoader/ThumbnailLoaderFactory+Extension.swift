@@ -12,7 +12,9 @@ extension ThumbnailLoaderFactory {
             makeThumbnailLoader(
                 config: .sensitive(
                     sensitiveNodeUseCase: SensitiveNodeUseCase(
-                        nodeRepository: NodeRepository.newRepo)),
+                        nodeRepository: NodeRepository.newRepo,
+                        accountUseCase: AccountUseCase(
+                            repository: AccountRepository.newRepo))),
                 thumbnailUseCase: makeThumbnailUseCase(mode: mode),
                 featureFlagProvider: featureFlagProvider)
         } else {

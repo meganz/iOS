@@ -42,13 +42,17 @@ struct VideoRevampRouter: VideoRevampRouting {
             userVideoPlaylistsRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase
         )
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(
+            nodeRepository: nodeRepository,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepo,
             nodeRepository: nodeRepository,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository))
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         let videoPlaylistModificationUseCase = VideoPlaylistModificationUseCase(
             userVideoPlaylistsRepository: userVideoPlaylistsRepo
         )
@@ -69,6 +73,7 @@ struct VideoRevampRouter: VideoRevampRouting {
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: nodeRepository
             ),
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             videoConfig: .live(),
             router: self,
             featureFlagProvider: DIContainer.featureFlagProvider
@@ -129,13 +134,17 @@ struct VideoRevampRouter: VideoRevampRouting {
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let nodeRepository = NodeRepository.newRepo
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(
+            nodeRepository: nodeRepository,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase,
             fileSearchRepository: fileSearchRepo,
             nodeRepository: nodeRepository,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository)
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let videoSelection = VideoSelection()
@@ -162,7 +171,8 @@ struct VideoRevampRouter: VideoRevampRouting {
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: nodeRepository
-            ), 
+            ),
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             router: self,
             presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(

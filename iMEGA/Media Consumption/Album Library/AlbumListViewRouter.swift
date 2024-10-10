@@ -24,7 +24,10 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
-            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: nodeRepository),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: nodeRepository,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
             albumCoverUseCase: AlbumCoverUseCase(nodeRepository: nodeRepository),
@@ -61,7 +64,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                     sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                     photoLibraryUseCase: photoLibraryUseCase,
                     sensitiveNodeUseCase: SensitiveNodeUseCase(
-                        nodeRepository: NodeRepository.newRepo)),
+                        nodeRepository: NodeRepository.newRepo,
+                        accountUseCase: AccountUseCase(
+                            repository: AccountRepository.newRepo))),
                 sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
@@ -90,17 +95,19 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     func start() {}
     
     private func makeMonitorAlbumsUseCase() -> MonitorAlbumsUseCase {
-        MonitorAlbumsUseCase(
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
+        return MonitorAlbumsUseCase(
             monitorPhotosUseCase: MonitorPhotosUseCase(
                 photosRepository: PhotosRepository.sharedRepo,
                 photoLibraryUseCase: makePhotoLibraryUseCase(),
-                sensitiveNodeUseCase: SensitiveNodeUseCase(
-                    nodeRepository: NodeRepository.newRepo)),
+                sensitiveNodeUseCase: sensitiveNodeUseCase),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             userAlbumRepository: UserAlbumCacheRepository.newRepo,
             photosRepository: PhotosRepository.sharedRepo,
-            sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo))
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
     
     private func makeMonitorUserAlbumPhotosUseCase() -> some MonitorUserAlbumPhotosUseCaseProtocol {
@@ -108,7 +115,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             userAlbumRepository: UserAlbumCacheRepository.newRepo,
             photosRepository: PhotosRepository.sharedRepo,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-            nodeRepository: NodeRepository.newRepo)
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo))
         )
     }
     

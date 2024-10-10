@@ -84,8 +84,8 @@ final class SearchResultMapperTests: XCTestCase {
     
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeParentIsSensitive_shouldReturnTrue() {
         // given
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(true))
-        let sut = makeSUT(nodeUseCase: nodeUseCase, hiddenNodesFeatureEnabled: true)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true))
+        let sut = makeSUT(sensitiveNodeUseCase: sensitiveNodeUseCase, hiddenNodesFeatureEnabled: true)
         
         // when
         let node = NodeEntity(isMarkedSensitive: false)
@@ -97,8 +97,8 @@ final class SearchResultMapperTests: XCTestCase {
     
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeParentIsNotSensitive_shouldReturnFalse() {
         // given
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .success(false))
-        let sut = makeSUT(nodeUseCase: nodeUseCase, hiddenNodesFeatureEnabled: true)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
+        let sut = makeSUT(sensitiveNodeUseCase: sensitiveNodeUseCase, hiddenNodesFeatureEnabled: true)
         
         // when
         let node = NodeEntity(isMarkedSensitive: false)
@@ -110,8 +110,8 @@ final class SearchResultMapperTests: XCTestCase {
     
     func test_isSensitive_whenIsInheritingSensitivityThrowError_shouldReturnFalse() {
         // given
-        let nodeUseCase = MockNodeDataUseCase(isInheritingSensitivityResult: .failure(GenericErrorEntity()))
-        let sut = makeSUT(nodeUseCase: nodeUseCase, hiddenNodesFeatureEnabled: true)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .failure(GenericErrorEntity()))
+        let sut = makeSUT(sensitiveNodeUseCase: sensitiveNodeUseCase, hiddenNodesFeatureEnabled: true)
         
         // when
         let node = NodeEntity(isMarkedSensitive: false)
@@ -130,6 +130,7 @@ final class SearchResultMapperTests: XCTestCase {
         nodeIconUsecase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
         nodeDetailUseCase: some NodeDetailUseCaseProtocol = MockNodeDetailUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         nodeActions: NodeActions = .makeActions(sdk: MockSdk(), navigationController: .init()),
         hiddenNodesFeatureEnabled: Bool = true
@@ -139,7 +140,8 @@ final class SearchResultMapperTests: XCTestCase {
             nodeIconUsecase: nodeIconUsecase,
             nodeDetailUseCase: nodeDetailUseCase,
             nodeUseCase: nodeUseCase,
-            mediaUseCase: mediaUseCase, 
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            mediaUseCase: mediaUseCase,
             nodeActions: nodeActions,
             hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
         )

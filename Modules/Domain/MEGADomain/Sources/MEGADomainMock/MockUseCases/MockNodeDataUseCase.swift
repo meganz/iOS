@@ -17,10 +17,6 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
     private let nodeListEntity: NodeListEntity?
     private let createFolderResult: Result<NodeEntity, NodeCreationErrorEntity>
     private let isNodeRestorable: Bool
-    private let isInheritingSensitivityResult: Result<Bool, Error>
-    private let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>]
-    private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
-    private let sensitivityChangesForNode: AnyAsyncSequence<Bool>
     private let _rootNode: NodeEntity?
     private let nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]>
 
@@ -41,10 +37,6 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
                 createFolderResult: Result<NodeEntity, NodeCreationErrorEntity> = .success(.init()),
                 isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false },
                 isNodeRestorable: Bool = false,
-                isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
-                isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:],
-                monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
-                sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
                 rootNode: NodeEntity? = nil,
                 nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
@@ -62,10 +54,6 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
         self.createFolderResult = createFolderResult
         self.isNodeInRubbishBin = isNodeInRubbishBin
         self.isNodeRestorable = isNodeRestorable
-        self.isInheritingSensitivityResult = isInheritingSensitivityResult
-        self.isInheritingSensitivityResults = isInheritingSensitivityResults
-        self.monitorInheritedSensitivityForNode = monitorInheritedSensitivityForNode
-        self.sensitivityChangesForNode = sensitivityChangesForNode
         self._rootNode = rootNode
         self.nodeUpdateAsyncSequence = nodeUpdateAsyncSequence
     }
@@ -156,34 +144,5 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         try createFolderResult.get()
-    }
-    
-    public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
-        try await withCheckedThrowingContinuation {
-            $0.resume(with: isInheritingSensitivityResult(for: node))
-        }
-    }
-    
-    public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
-        switch isInheritingSensitivityResult(for: node) {
-        case .success(let isSensitive):
-           isSensitive
-        case .failure(let error):
-            throw error
-        }
-    }
-    
-    public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        monitorInheritedSensitivityForNode
-    }
-    
-    public func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
-        sensitivityChangesForNode
-    }
-    
-    // MARK: - Private Helpers
-    
-    private func isInheritingSensitivityResult(for node: NodeEntity) -> Result<Bool, Error> {
-        isInheritingSensitivityResults[node.handle] ?? isInheritingSensitivityResult
     }
 }

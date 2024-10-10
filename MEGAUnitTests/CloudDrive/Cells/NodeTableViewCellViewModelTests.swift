@@ -40,7 +40,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlags: [.hiddenNodes: true]
             )
         
@@ -67,7 +67,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlags: [.hiddenNodes: false]
         )
         
@@ -95,7 +95,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlags: [.hiddenNodes: true]
             )
         
@@ -122,7 +122,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlags: [.hiddenNodes: false]
         )
 
@@ -151,7 +151,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlags: [.hiddenNodes: true]
             )
         
@@ -178,7 +178,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             let viewModel = sut(
                 nodes: [.init(handle: 1, isMarkedSensitive: true)],
                 shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
-                nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
                 featureFlags: [.hiddenNodes: true]
             )
             
@@ -205,7 +205,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
 
         let viewModel = sut(
             nodes: [node],
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             thumbnailUseCase: MockThumbnailUseCase(
                 loadThumbnailResult: .success(.init(url: imageUrl, type: .thumbnail))))
         
@@ -225,7 +225,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let nodeIconUseCase = MockNodeIconUsecase(stubbedIconData: imageData)
         let viewModel = sut(
             nodes: [node],
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             nodeIconUseCase: nodeIconUseCase)
         
         await viewModel.configureCell().value
@@ -244,7 +244,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             nodes: [node],
             shouldApplySensitiveBehaviour: true,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             nodeIconUseCase: nodeIconUseCase)
         
         await viewModel.configureCell().value
@@ -259,14 +259,14 @@ extension NodeTableViewCellViewModelTests {
     @MainActor
     func sut(nodes: [NodeEntity] = [],
              shouldApplySensitiveBehaviour: Bool = true,
-             nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+             sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
              thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
              featureFlags: [FeatureFlagKey: Bool] = [.hiddenNodes: false]) -> NodeTableViewCellViewModel {
         NodeTableViewCellViewModel(
             nodes: nodes,
             shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: featureFlags))

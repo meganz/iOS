@@ -27,7 +27,9 @@ class NodeActionViewController: ActionSheetViewController {
             systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
         ),
         sensitiveNodeUseCase: SensitiveNodeUseCase(
-            nodeRepository: NodeRepository.newRepo)
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
     )
     
     var sender: Any

@@ -15,7 +15,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -39,7 +39,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: false)
         
         await viewModel.configureCell().value
@@ -64,7 +64,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -88,7 +88,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlagHiddenNodes: false)
         
         await viewModel.configureCell().value
@@ -114,7 +114,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlagHiddenNodes: false)
         
         let taskFirstCall = viewModel.configureCell()
@@ -130,7 +130,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             thumbnailUseCase: MockThumbnailUseCase(
                 loadThumbnailResult: .success(.init(url: imageUrl, type: .thumbnail))))
         
@@ -150,7 +150,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let nodeIconUseCase = MockNodeIconUsecase(stubbedIconData: imageData)
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             nodeIconUseCase: nodeIconUseCase)
         
         await viewModel.configureCell().value
@@ -163,14 +163,14 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 extension ItemCollectionViewCellViewModelTests {
     @MainActor
     func sut(node: NodeEntity,
-             nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+             sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
              thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
              featureFlagHiddenNodes: Bool = false) -> ItemCollectionViewCellViewModel {
         ItemCollectionViewCellViewModel(
             node: node,
-            nodeUseCase: nodeUseCase, 
-            thumbnailUseCase: thumbnailUseCase, 
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
             featureFlagProvider: MockFeatureFlagProvider(
                 list: [.hiddenNodes: featureFlagHiddenNodes]))

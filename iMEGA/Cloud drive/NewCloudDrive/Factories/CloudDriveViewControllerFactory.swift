@@ -113,12 +113,16 @@ struct CloudDriveViewControllerFactory {
             sdk: sdk,
             navigationController: navController
         )
-        
+        let nodeRepository = NodeRepository.newRepo
         let nodeUseCase = homeFactory.makeNodeUseCase()
         let backupsUseCase = BackupsUseCase(
             backupsRepository: BackupsRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo
+            nodeRepository: nodeRepository
         )
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(
+            nodeRepository: nodeRepository,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
         
         let nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: navController,
@@ -168,7 +172,8 @@ struct CloudDriveViewControllerFactory {
                 nodeIconUsecase: NodeIconUseCase(nodeIconRepo: nodeAssetsManager),
                 nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
                 nodeUseCase: nodeUseCase,
-                mediaUseCase: homeFactory.makeMediaUseCase(), 
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
+                mediaUseCase: homeFactory.makeMediaUseCase(),
                 nodeActions: nodeActions,
                 hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
             ),
@@ -195,9 +200,7 @@ struct CloudDriveViewControllerFactory {
                 systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
                     systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
                 ),
-                sensitiveNodeUseCase: SensitiveNodeUseCase(
-                    nodeRepository: NodeRepository.newRepo
-                )
+                sensitiveNodeUseCase: sensitiveNodeUseCase
             )
         )
     }
@@ -320,7 +323,10 @@ struct CloudDriveViewControllerFactory {
             nodesUpdateListener: nodesUpdateListener, 
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
             nodeUseCase: nodeUseCase,
-            sensitiveNodeUseCase: SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo)),
             accountStorageUseCase: AccountStorageUseCase(
                 accountRepository: AccountRepository.newRepo,
                 preferenceUseCase: PreferenceUseCase.default

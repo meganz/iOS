@@ -13,7 +13,7 @@ import MEGASwift
     
     private let nodes: [NodeEntity]
     private let shouldApplySensitiveBehaviour: Bool
-    private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -21,7 +21,7 @@ import MEGASwift
     
     init(nodes: [NodeEntity],
          shouldApplySensitiveBehaviour: Bool,
-         nodeUseCase: some NodeUseCaseProtocol,
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
@@ -32,7 +32,7 @@ import MEGASwift
             nodes.first?.hasThumbnail ?? false
         ].allSatisfy { $0 }
         self.shouldApplySensitiveBehaviour = shouldApplySensitiveBehaviour
-        self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
         self.featureFlagProvider = featureFlagProvider
@@ -104,7 +104,7 @@ import MEGASwift
         }
         
         do {
-            await setIsSensitive(try nodeUseCase.isInheritingSensitivity(node: node))
+            await setIsSensitive(try sensitiveNodeUseCase.isInheritingSensitivity(node: node))
         } catch {
             MEGALogError("[\(type(of: self))] Error checking if node is inheriting sensitivity: \(error)")
         }

@@ -71,7 +71,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
                 photo: photo,
                 viewModel: viewModel, 
                 thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: representer.contentMode),
-                nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: representer.contentMode)
+                nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: representer.contentMode),
+                sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: representer.contentMode)
             )
             cell.viewModel = viewModel
             

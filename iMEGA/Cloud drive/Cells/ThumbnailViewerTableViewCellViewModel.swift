@@ -8,7 +8,7 @@ import MEGAPresentation
     private let thumbnailViewModels: [ItemCollectionViewCellViewModel]
     
     init(nodes: [NodeEntity],
-         nodeUseCase: some NodeUseCaseProtocol,
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
@@ -16,7 +16,7 @@ import MEGAPresentation
         self.thumbnailViewModels = nodes.map {
             ItemCollectionViewCellViewModel(
                 node: $0,
-                nodeUseCase: nodeUseCase,
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
                 thumbnailUseCase: thumbnailUseCase,
                 nodeIconUseCase: nodeIconUseCase,
                 featureFlagProvider: featureFlagProvider)

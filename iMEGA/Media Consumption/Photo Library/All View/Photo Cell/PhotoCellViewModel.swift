@@ -41,6 +41,7 @@ class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let nodeUseCase: (any NodeUseCaseProtocol)?
+    private let sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let selection: PhotoSelection
     private var subscriptions = Set<AnyCancellable>()
@@ -49,11 +50,13 @@ class PhotoCellViewModel: ObservableObject {
          viewModel: PhotoLibraryModeAllViewModel,
          thumbnailLoader: some ThumbnailLoaderProtocol,
          nodeUseCase: (any NodeUseCaseProtocol)?,
+         sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailLoader = thumbnailLoader
         self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.featureFlagProvider = featureFlagProvider
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
@@ -105,7 +108,7 @@ class PhotoCellViewModel: ObservableObject {
     
     func monitorInheritedSensitivityChanges() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-              nodeUseCase != nil,
+              sensitiveNodeUseCase != nil,
               !photo.isMarkedSensitive,
               await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else { return }
         
@@ -122,7 +125,8 @@ class PhotoCellViewModel: ObservableObject {
     /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
     func monitorPhotoSensitivityChanges() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-        nodeUseCase != nil else { return }
+              nodeUseCase != nil,
+              sensitiveNodeUseCase != nil else { return }
         // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
         _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })
         
@@ -221,11 +225,11 @@ class PhotoCellViewModel: ObservableObject {
     /// - Parameters:
     ///   - photo: Photo NodeEntity to monitor
     private func monitorInheritedSensitivity(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        guard let nodeUseCase else { return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence() }
+        guard let sensitiveNodeUseCase else { return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence() }
         
-        return nodeUseCase.monitorInheritedSensitivity(for: photo)
+        return sensitiveNodeUseCase.monitorInheritedSensitivity(for: photo)
             .prepend {
-                try await nodeUseCase.isInheritingSensitivity(node: photo)
+                try await sensitiveNodeUseCase.isInheritingSensitivity(node: photo)
             }
             .eraseToAnyAsyncThrowingSequence()
     }
@@ -235,7 +239,8 @@ class PhotoCellViewModel: ObservableObject {
     ///   - photo: Photo NodeEntity to monitor
     private func photoSensitivityChanges(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
         
-        guard let nodeUseCase else {
+        guard let nodeUseCase,
+              let sensitiveNodeUseCase else {
             return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
         }
         
@@ -246,7 +251,7 @@ class PhotoCellViewModel: ObservableObject {
         let node = nodeUseCase.nodeForHandle(photo.handle) ?? photo
         
         return combineLatest(
-            nodeUseCase.sensitivityChanges(for: node).prepend(node.isMarkedSensitive),
+            sensitiveNodeUseCase.sensitivityChanges(for: node).prepend(node.isMarkedSensitive),
             monitorInheritedSensitivity(for: node)
         )
         .map { isPhotoSensitive, isInheritingSensitive in
