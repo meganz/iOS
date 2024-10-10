@@ -144,14 +144,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         })
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateNavigationBarAppearance()
-        }
-    }
-    
     override var prefersStatusBarHidden: Bool {
         statusBarHidden
     }
@@ -162,7 +154,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
-                updateNavigationBarAppearance()
                 callCollectionView.reloadData()
                 viewModel.dispatch(.onViewReady)
             }
@@ -345,7 +336,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         
         localUserView.updateOffsetWithNavigation(hidden: hidden)
         updateRecordingImageView(statusBarHidden: hidden)
-        updateNavigationBarAppearance()
         refreshSnackBarBottomInset(animated: true)
     }
     
@@ -496,11 +486,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             return
         }
         viewModel.dispatch(.renameTitleDidChange(text))
-    }
-    
-    private func updateNavigationBarAppearance() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
     
     private func configureNavigationBar(

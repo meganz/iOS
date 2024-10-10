@@ -181,11 +181,6 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    private func forceDarkNavigationUI() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
-    }
-    
     private func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
         if isBluetoothRouteAvailable {
             speakerQuickActionView.addRoutingView()
@@ -337,17 +332,5 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             startMeetingButton.backgroundColor = TokenColors.Button.disabled
             startMeetingButton.setTitleColor(TokenColors.Text.disabled, for: UIControl.State.normal)
         }
-    }
-}
-
-extension MeetingCreatingViewController: TraitEnvironmentAware {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        forceDarkNavigationUI()
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
 }

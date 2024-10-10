@@ -77,22 +77,4 @@ final class WaitingRoomViewController: UIViewController {
             hostingView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-    
-    private func forceNavigationBarUpdate() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: navigationControllerTraitCollection)
-    }
-}
-
-// MARK: - TraitEnvironmentAware
-
-extension WaitingRoomViewController: TraitEnvironmentAware {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        forceNavigationBarUpdate()
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        forceNavigationBarUpdate()
-    }
 }
