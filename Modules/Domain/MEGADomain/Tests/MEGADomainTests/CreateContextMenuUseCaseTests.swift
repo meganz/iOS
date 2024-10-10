@@ -465,9 +465,9 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     }
     
     func testCreateContextMenu_Meeting() throws {
-        let cmMettingEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .meeting)))
+        let cmMeetingEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .meeting)))
         
-        let menuActions = decomposeMenuIntoActions(menu: cmMettingEntity)
+        let menuActions = decomposeMenuIntoActions(menu: cmMeetingEntity)
         menuActionsArray = [.meeting(actionType: .startMeeting),
                             .meeting(actionType: .joinMeeting)
         ]
@@ -476,10 +476,10 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     }
     
     func testCreateContextMenu_MyQR() throws {
-        let cmMettingEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .qr),
+        let cmMeetingEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .qr),
                                                                                isShareAvailable: true))
         
-        let menuActions = decomposeMenuIntoActions(menu: cmMettingEntity)
+        let menuActions = decomposeMenuIntoActions(menu: cmMeetingEntity)
         menuActionsArray = [.qr(actionType: .share),
                             .qr(actionType: .qrSettings),
                             .qr(actionType: .resetQR)

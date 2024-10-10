@@ -72,7 +72,9 @@ struct ScheduleMeetingView: View {
     private func discardChangesButtons() -> [ActionSheet.Button] {
         return [
             ActionSheet.Button.default(Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.confirm)) {
-                viewModel.discardChangesTap()
+                Task {
+                    await viewModel.discardChangesTap()
+                }
             },
             ActionSheet.Button.cancel(Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.cancel)) {
                 viewModel.keepEditingTap()

@@ -179,7 +179,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testDisplayFutureMeetings_containsScheduledMeetingWithNoOccurrence_shouldNotContainFutureMetting() throws {
+    func testDisplayFutureMeetings_containsScheduledMeetingWithNoOccurrence_shouldNotContainFutureMeeting() throws {
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let twoHourAgo = try XCTUnwrap(pastDate(bySubtractHours: 2))
         let oneHourAgo = try XCTUnwrap(pastDate(bySubtractHours: 1))
