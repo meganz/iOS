@@ -59,17 +59,3 @@ class GiphySelectionViewController: UIViewController {
         mainView.viewOrientationDidChange()
     }
 }
-
-extension GiphySelectionViewController: TraitEnvironmentAware {
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                                               traitCollection: currentTrait)
-    }
-}
