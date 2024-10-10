@@ -68,9 +68,7 @@ import PushKit
         
         if isVoIPPush(for: payload) {
             logger("[VoIPPushDelegate] correct type of payload")
-            Task { @MainActor in
-                callsCoordinator.reportIncomingCall(in: chatId, completion: completion)
-            }
+            callsCoordinator.reportIncomingCall(in: chatId, completion: completion)
         } else {
             logger("[VoIPPushDelegate] wrong type of payload")
         }

@@ -657,7 +657,8 @@ extension AppDelegate {
             voIpTokenUseCase: VoIPTokenUseCase(repo: VoIPTokenRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             logger: {
-                CrashlyticsLogger.log(category: .calls, $0)
+                CrashlyticsLogger.log($0)
+                MEGALogDebug($0)
             }
         )
     }
