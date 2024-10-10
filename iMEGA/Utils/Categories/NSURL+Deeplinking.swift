@@ -63,6 +63,7 @@ enum DeeplinkHostKey: String {
     case presentNode = "presentNode"
     // https://mega.nz/# + Base64Handle
     case handle
+    case vpn
 }
 
 enum DeeplinkSchemeKey: String {
@@ -70,6 +71,7 @@ enum DeeplinkSchemeKey: String {
     case mega = "mega"
     case http = "https"
     case appsettings = "app-settings"
+    case vpn = "megavpn"
 }
 
 extension NSURL {
@@ -85,6 +87,8 @@ extension NSURL {
             return parseUniversalLinkURL()
         case .appsettings:
             return .appSettings
+        case .vpn:
+            return .vpn
         case .none:
             return .default
         }
@@ -129,47 +133,48 @@ extension NSURL {
     }
     
     private func parseMEGASchemeURL() -> URLType {
- 
-        if host == DeeplinkHostKey.chatPeerOptions.rawValue {
+        switch host {
+        case DeeplinkHostKey.chatPeerOptions.rawValue:
             return .chatPeerOptionsLink
-        } else if host == DeeplinkHostKey.collection.rawValue {
+        case DeeplinkHostKey.collection.rawValue:
             return .collection
-        } else if host == DeeplinkHostKey.publicChat.rawValue {
+        case DeeplinkHostKey.publicChat.rawValue:
             return .publicChatLink
-        } else if host == DeeplinkHostKey.shortcutUpload.rawValue {
+        case DeeplinkHostKey.shortcutUpload.rawValue:
             DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetUploadFileButtonPressedEvent())
             return .uploadFile
-        } else if host == DeeplinkHostKey.shortcutScanDocument.rawValue {
+        case DeeplinkHostKey.shortcutScanDocument.rawValue:
             DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetScanDocumentButtonPressedEvent())
             return .scanDocument
-        } else if host == DeeplinkHostKey.shortcutStartConversation.rawValue {
+        case DeeplinkHostKey.shortcutStartConversation.rawValue:
             DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetStartConversationButtonPressedEvent())
             return .startConversation
-        } else if host == DeeplinkHostKey.shortcutAddContact.rawValue {
+        case DeeplinkHostKey.shortcutAddContact.rawValue:
             DIContainer.tracker.trackAnalyticsEvent(with: ShortcutWidgetAddContactButtonPressedEvent())
             return .addContact
-        } else if host == DeeplinkHostKey.shortcutRecent.rawValue {
+        case DeeplinkHostKey.shortcutRecent.rawValue:
             DIContainer.tracker.trackAnalyticsEvent(with: QuickAccessWidgetRecentsPressedEvent())
             return .showRecents
-        } else if host == DeeplinkHostKey.shortcutFavourites.rawValue {
+        case DeeplinkHostKey.shortcutFavourites.rawValue:
             DIContainer.tracker.trackAnalyticsEvent(with: QuickAccessWidgetFavouritesPressedEvent())
             guard let path = path, !path.isEmpty else { return .showFavourites }
             return .presentFavouritesNode
-        } else if host == DeeplinkHostKey.shortcutOffline.rawValue {
+        case DeeplinkHostKey.shortcutOffline.rawValue:
             DIContainer.tracker.trackAnalyticsEvent(with: QuickAccessWidgetOffilePressedEvent())
             guard let path = path, !path.isEmpty else { return .showOffline }
             return .presentOfflineFile
-        } else if host == DeeplinkHostKey.presentNode.rawValue {
+        case DeeplinkHostKey.presentNode.rawValue:
             return .presentNode
-        } else if host == DeeplinkHostKey.upgrade.rawValue {
+        case DeeplinkHostKey.upgrade.rawValue:
             return .upgrade
+        case DeeplinkHostKey.vpn.rawValue:
+            return .vpn
+        default:
+            if fragment != nil {
+                return parseFragmentType()
+            }
+            return .default
         }
-
-        if fragment != nil {
-            return parseFragmentType()
-        }
-        
-        return .default
     }
     
     private func parseUniversalLinkURL() -> URLType {

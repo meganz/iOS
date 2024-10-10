@@ -422,7 +422,6 @@
 		2FDDC6242630DE100060E02A /* EncourageGuestUserToJoinMegaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDDC6232630DE100060E02A /* EncourageGuestUserToJoinMegaViewModel.swift */; };
 		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
 		2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */; };
-		2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */; };
 		2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */; };
 		2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */; };
@@ -1305,6 +1304,7 @@
 		941255522BED03C700058C0D /* CallKitCallManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941255512BED03C700058C0D /* CallKitCallManagerTests.swift */; };
 		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
+		941A019A2CB44F250057C99D /* DeepLinkingTestsSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941A01992CB44F250057C99D /* DeepLinkingTestsSuite.swift */; };
 		9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422494128DB77A2009626E6 /* ContactLinkContentView.swift */; };
 		9422494428DB77B8009626E6 /* ContactLinkContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422494328DB77B8009626E6 /* ContactLinkContentView.xib */; };
 		9422636E2B445FF60010B667 /* DisplayModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422636D2B445FF60010B667 /* DisplayModeTests.swift */; };
@@ -3169,7 +3169,6 @@
 		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
 		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
 		2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModelTests.swift; sourceTree = "<group>"; };
-		2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepLinkingTests.m; sourceTree = "<group>"; };
 		2FF46AF624D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		2FF46AF724D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewController.swift; sourceTree = "<group>"; };
@@ -4098,6 +4097,7 @@
 		941255512BED03C700058C0D /* CallKitCallManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitCallManagerTests.swift; sourceTree = "<group>"; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
+		941A01992CB44F250057C99D /* DeepLinkingTestsSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingTestsSuite.swift; sourceTree = "<group>"; };
 		9422494128DB77A2009626E6 /* ContactLinkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkContentView.swift; sourceTree = "<group>"; };
 		9422494328DB77B8009626E6 /* ContactLinkContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactLinkContentView.xib; sourceTree = "<group>"; };
 		9422636D2B445FF60010B667 /* DisplayModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModeTests.swift; sourceTree = "<group>"; };
@@ -6813,7 +6813,7 @@
 		2FF3F9B3260AECA600015050 /* DeepLinking */ = {
 			isa = PBXGroup;
 			children = (
-				2FF3FA6A260C39A300015050 /* DeepLinkingTests.m */,
+				941A01992CB44F250057C99D /* DeepLinkingTestsSuite.swift */,
 			);
 			path = DeepLinking;
 			sourceTree = "<group>";
@@ -7215,6 +7215,7 @@
 				B51DD9CB28B5D3110094A979 /* LiveText */,
 				A841886827832C5900291F4C /* Logs */,
 				5D72206D24A1D93400910945 /* MarkedString */,
+				941A01902CB439520057C99D /* MEGALinks */,
 				A8C81E2A29841C9500C794E9 /* MEGASDK */,
 				8346CA6C283CD9F700462F50 /* NameCollision */,
 				7747B2D5208623550011814E /* Network */,
@@ -7241,9 +7242,6 @@
 				B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */,
 				B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */,
 				B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */,
-				837B179F288184F900A4D01B /* MEGALinkManager+Additions.swift */,
-				5B20B00B20E61DFB00511C0F /* MEGALinkManager.h */,
-				5B20B00920E61DDF00511C0F /* MEGALinkManager.m */,
 				A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */,
 				A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */,
 				947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */,
@@ -10178,6 +10176,16 @@
 				A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */,
 			);
 			path = Spotlight;
+			sourceTree = "<group>";
+		};
+		941A01902CB439520057C99D /* MEGALinks */ = {
+			isa = PBXGroup;
+			children = (
+				837B179F288184F900A4D01B /* MEGALinkManager+Additions.swift */,
+				5B20B00B20E61DFB00511C0F /* MEGALinkManager.h */,
+				5B20B00920E61DDF00511C0F /* MEGALinkManager.m */,
+			);
+			path = MEGALinks;
 			sourceTree = "<group>";
 		};
 		942254D71EDC02CB0074C51A /* Extensions */ = {
@@ -16593,7 +16601,7 @@
 				94E33C972C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift in Sources */,
 				0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
-				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
+				941A019A2CB44F250057C99D /* DeepLinkingTestsSuite.swift in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				9422636E2B445FF60010B667 /* DisplayModeTests.swift in Sources */,
 				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,

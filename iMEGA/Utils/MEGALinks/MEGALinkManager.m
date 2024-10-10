@@ -495,6 +495,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [delegate showUpgradeAccount];
             break;
         }
+        case URLTypeVpn:
+            [MEGALinkManager openVPNApp];
+            break;
         default:
             break;
     }
