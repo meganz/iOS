@@ -85,7 +85,7 @@ struct AlbumCell: View {
             monitorUserAlbumPhotosUseCase: Preview_MonitorUserAlbumPhotosUseCase(),
             nodeUseCase: Preview_NodeUseCase(),
             sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
-            contentConsumptionUserAttributeUseCase: Preview_ContentConsumptionUserAttributeUseCase(),
+            sensitiveDisplayPreferenceUseCase: Preview_SensitiveDisplayPreferenceUseCase(),
             albumCoverUseCase: Preview_AlbumCoverUseCase(),
             album: AlbumEntity(
                 id: 1, name: "Album name",

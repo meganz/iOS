@@ -35,7 +35,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             album: album,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
-            contentConsumptionUserAttributeUseCase: makeContentConsumptionUserAttributeUseCase(),
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             albumCoverUseCase: makeAlbumCoverUseCase())
         return GetAlbumLinkViewModel(
             album: album,
@@ -50,7 +50,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             albums: albums,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
-            contentConsumptionUserAttributeUseCase: makeContentConsumptionUserAttributeUseCase(),
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             albumCoverUseCase: makeAlbumCoverUseCase())
         return GetAlbumsLinkViewModel(
             albums: albums,
@@ -77,9 +77,12 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
         )
     }
     
-    private func makeContentConsumptionUserAttributeUseCase() -> some ContentConsumptionUserAttributeUseCaseProtocol {
-        ContentConsumptionUserAttributeUseCase(
-            repo: UserAttributeRepository.newRepo)
+    private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
+        SensitiveDisplayPreferenceUseCase(
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
     
     private func makeAlbumCoverUseCase() -> some AlbumCoverUseCaseProtocol {

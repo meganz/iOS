@@ -19,7 +19,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private let downloadedNodesListener: any DownloadedNodesListening
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let sdk: MEGASdk
 
     // We only initially fetch the node list when the user triggers search
@@ -50,7 +50,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         mediaUseCase: some MediaUseCaseProtocol,
         downloadedNodesListener: some DownloadedNodesListening,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
@@ -61,7 +61,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.nodeUseCase = nodeUseCase
         self.mediaUseCase = mediaUseCase
         self.downloadedNodesListener = downloadedNodesListener
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.availableChips = allChips
         self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
@@ -210,10 +210,10 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     }
     
     private func shouldExcludeSensitive() async -> Bool {
-        let showHiddenNodesSettingsEnabled = await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+        let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
 
         return hiddenNodesFeatureEnabled
-        && !showHiddenNodesSettingsEnabled
+        && excludeSensitives
         && !isNodeARubbishBinRootOrInRubbishBin()
     }
 

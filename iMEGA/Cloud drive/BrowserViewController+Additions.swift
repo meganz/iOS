@@ -1,6 +1,7 @@
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
 import MEGAUIKit
@@ -13,7 +14,11 @@ extension BrowserViewController {
             parentNode: parentNode,
             isChildBrowser: isChildBrowser,
             isSelectVideos: browserAction == .selectVideo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo))
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+            )
     }
     
     private

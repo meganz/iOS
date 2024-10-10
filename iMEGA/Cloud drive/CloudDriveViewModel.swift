@@ -41,7 +41,7 @@ enum CloudDriveAction: ActionType {
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let sdk: MEGASdk
 
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -64,7 +64,7 @@ enum CloudDriveAction: ActionType {
          preferenceUseCase: some PreferenceUseCaseProtocol,
          systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
-         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
          tracker: some AnalyticsTracking,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol,
@@ -76,7 +76,7 @@ enum CloudDriveAction: ActionType {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.accountUseCase = accountUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
@@ -125,15 +125,12 @@ enum CloudDriveAction: ActionType {
     }
     
     @objc func shouldExcludeSensitiveItems() async -> Bool {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
-            return false
-        }
         if let sensitiveSettingTask {
             return await sensitiveSettingTask.value
         }
         let sensitiveSettingTask = Task { [weak self] in
             guard let self else { return false }
-            return await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
+            return await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         }
         self.sensitiveSettingTask = sensitiveSettingTask
         return await sensitiveSettingTask.value

@@ -119,10 +119,11 @@ struct CloudDriveViewControllerFactory {
             backupsRepository: BackupsRepository.newRepo,
             nodeRepository: nodeRepository
         )
+        let accountUseCase = AccountUseCase(
+            repository: AccountRepository.newRepo)
         let sensitiveNodeUseCase = SensitiveNodeUseCase(
             nodeRepository: nodeRepository,
-            accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo))
+            accountUseCase: accountUseCase)
         
         let nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: navController,
@@ -196,7 +197,7 @@ struct CloudDriveViewControllerFactory {
             nodeActions: nodeActions,
             nodeSensitivityChecker: NodeSensitivityChecker(
                 featureFlagProvider: DIContainer.featureFlagProvider,
-                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                accountUseCase: accountUseCase,
                 systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
                     systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
                 ),
@@ -1024,8 +1025,12 @@ struct CloudDriveViewControllerFactory {
             isAutomaticallyShown: isShowingAutomatically,
             delegate: mediaContentDelegate,
             analyticsUseCase: mediaAnalyticsUseCase,
-            mediaDiscoveryUseCase: mediaDiscoveryUseCase, 
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         )
     }
     

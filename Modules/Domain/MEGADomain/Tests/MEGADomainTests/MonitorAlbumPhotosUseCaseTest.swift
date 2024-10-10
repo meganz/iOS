@@ -8,23 +8,15 @@ final class MonitorAlbumPhotosUseCaseTests: XCTestCase {
         let photos = [AlbumPhotoEntity(photo: .init(handle: 3)), AlbumPhotoEntity(photo: .init(handle: 7))]
         let monitorSystemAlbumPhotosUseCase = MockMonitorSystemAlbumPhotosUseCase()
         let sequence = SingleItemAsyncSequence(item: photos)
-        let testCases = [
-            (isHiddenEnabled: false, showHiddenNodes: false, excludeSensitives: false),
-            (isHiddenEnabled: false, showHiddenNodes: true, excludeSensitives: false),
-            (isHiddenEnabled: true, showHiddenNodes: false, excludeSensitives: true),
-            (isHiddenEnabled: true, showHiddenNodes: true, excludeSensitives: false)
-        ]
-       
-        for (isHiddenEnabled, showHiddenNodes, excludeSensitives) in testCases {
+        for excludeSensitives in [true, false] {
             let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
                 monitorUserAlbumPhotosAsyncSequence: sequence.eraseToAnyAsyncSequence())
-            let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes))
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitives)
             let sut = makeSUT(
                 monitorSystemAlbumPhotosUseCase: monitorSystemAlbumPhotosUseCase,
                 monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                hiddenNodesFeatureFlagEnabled: isHiddenEnabled)
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
             
             var iterator = await sut.monitorPhotos(for: AlbumEntity(id: 1, type: .user))
                 .makeAsyncIterator()
@@ -43,22 +35,21 @@ final class MonitorAlbumPhotosUseCaseTests: XCTestCase {
         let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase()
         let sequence = SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(item: .success(photos))
         let testCases = [
-            (albumType: AlbumEntityType.favourite, isHiddenEnabled: false, showHiddenNodes: false, excludeSensitives: false),
-            (albumType: AlbumEntityType.raw, isHiddenEnabled: false, showHiddenNodes: true, excludeSensitives: false),
-            (albumType: AlbumEntityType.gif, isHiddenEnabled: true, showHiddenNodes: false, excludeSensitives: true),
-            (albumType: AlbumEntityType.favourite, isHiddenEnabled: true, showHiddenNodes: true, excludeSensitives: false)
+            (albumType: AlbumEntityType.favourite, excludeSensitives: false),
+            (albumType: AlbumEntityType.raw, excludeSensitives: false),
+            (albumType: AlbumEntityType.gif, excludeSensitives: true),
+            (albumType: AlbumEntityType.favourite, excludeSensitives: false)
         ]
        
-        for (albumType, isHiddenEnabled, showHiddenNodes, excludeSensitives) in testCases {
+        for (albumType, excludeSensitives) in testCases {
             let monitorSystemAlbumPhotosUseCase = MockMonitorSystemAlbumPhotosUseCase(
                 monitorPhotosAsyncSequence: sequence.eraseToAnyAsyncSequence())
-            let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes))
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitives)
             let sut = makeSUT(
                 monitorSystemAlbumPhotosUseCase: monitorSystemAlbumPhotosUseCase,
                 monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                hiddenNodesFeatureFlagEnabled: isHiddenEnabled)
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
             
             var iterator = await sut.monitorPhotos(for: AlbumEntity(id: 1, type: albumType))
                 .makeAsyncIterator()
@@ -93,13 +84,11 @@ final class MonitorAlbumPhotosUseCaseTests: XCTestCase {
     private func makeSUT(
         monitorSystemAlbumPhotosUseCase: some MonitorSystemAlbumPhotosUseCaseProtocol = MockMonitorSystemAlbumPhotosUseCase(),
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        hiddenNodesFeatureFlagEnabled: Bool = false
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase()
     ) -> MonitorAlbumPhotosUseCase {
         MonitorAlbumPhotosUseCase(
             monitorSystemAlbumPhotosUseCase: monitorSystemAlbumPhotosUseCase,
             monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled })
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
     }
 }

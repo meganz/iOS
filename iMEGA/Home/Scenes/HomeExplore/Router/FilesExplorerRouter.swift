@@ -40,8 +40,12 @@ struct FilesExplorerRouter {
             router: self,
             useCase: useCase,
             nodeDownloadUpdatesUseCase: nodeDownloadUpdatesUseCase,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
             createContextMenuUseCase: createContextMenuUseCase,
             nodeProvider: DefaultMEGANodeProvider(sdk: .sharedSdk))
         let preference: FilesExplorerContainerViewController.ViewPreference = explorerType == .video ? .list : .both

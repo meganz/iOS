@@ -314,7 +314,7 @@ final class HomeScreenFactory: NSObject {
             mediaUseCase: makeMediaUseCase(),
             downloadedNodesListener: makeDownloadedNodesListener(),
             nodeIconUsecase: makeNodeIconUsecase(),
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             allChips: Self.allChips(),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
@@ -427,5 +427,14 @@ final class HomeScreenFactory: NSObject {
             nodeRepository: NodeRepository.newRepo,
             accountUseCase: AccountUseCase(
                 repository: AccountRepository.newRepo))
+    }
+    
+    func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
+        SensitiveDisplayPreferenceUseCase(
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }

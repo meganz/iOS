@@ -23,9 +23,8 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     private let album: AlbumEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     
     private(set) var loadingTask: Task<Void, Never>? {
@@ -35,16 +34,14 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     init(album: AlbumEntity,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
-         contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol,
+         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
          albumCoverUseCase: some AlbumCoverUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
         self.album = album
         self.thumbnailUseCase = thumbnailUseCase
         self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.albumCoverUseCase = albumCoverUseCase
-        self.featureFlagProvider = featureFlagProvider
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
     }
     
@@ -100,17 +97,9 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     }
     
     private func albumPhotoAsyncSequence() async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
-        let excludeSensitives = await excludeSensitives()
+        let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         return await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
             for: album, excludeSensitives: excludeSensitives)
-    }
-    
-    private func excludeSensitives() async -> Bool {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        } else {
-            false
-        }
     }
     
     private func updateLabels(photoCount: Int) {

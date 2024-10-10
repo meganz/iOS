@@ -50,8 +50,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     private var sortOrder: SortOrderType
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private lazy var pageStayTimeTracker = PageStayTimeTracker()
     private var subscriptions = Set<AnyCancellable>()
     private weak var delegate: (any MediaDiscoveryContentDelegate)?
@@ -65,9 +64,8 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
          delegate: (some MediaDiscoveryContentDelegate)?,
          analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
          mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
-         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: contentMode)
         photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(contentMode: contentMode)
@@ -76,9 +74,8 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         self.delegate = delegate
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.sortOrder = sortOrder
-        self.featureFlagProvider = featureFlagProvider
         $shouldIncludeSubfolderMedia.useCase = preferenceUseCase
         $autoMediaDiscoveryBannerDismissed.useCase = preferenceUseCase
         
@@ -211,9 +208,8 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     }
     
     private func shouldExcludeSensitiveItems() async -> Bool {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes), 
-            [.mediaDiscovery].contains(photoLibraryContentViewModel.contentMode) {
-            await contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes == false
+        if [.mediaDiscovery].contains(photoLibraryContentViewModel.contentMode) {
+            await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         } else {
             false
         }

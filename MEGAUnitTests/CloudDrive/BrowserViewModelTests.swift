@@ -63,22 +63,20 @@ final class BrowserViewModelTests: XCTestCase {
     }
     
     func testNodesForParent_showHiddenNodesLoaded_shouldUseCorrectSensitivityFilter() async {
-        for showHiddenNodes in [true, false] {
+        for exludeSensitives in [true, false] {
             let allNodes = [MockNode(handle: 65),
                             MockNode(handle: 654)]
-            let contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes))
             let sdk = MockSdk(nodes: allNodes)
             let sut = makeSUT(
                 parentNode: MockNode(handle: 5),
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                sdk: sdk,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase(
+                    excludeSensitives: exludeSensitives),
+                sdk: sdk)
             
             let nodes = await sut.nodesForParent()
             
             XCTAssertEqual(nodes.toNodeEntities(), allNodes.toNodeEntities())
-            XCTAssertEqual(sdk.searchQueryParameters?.sensitiveFilter, showHiddenNodes ? .disabled : .nonSensitiveOnly)
+            XCTAssertEqual(sdk.searchQueryParameters?.sensitiveFilter, exludeSensitives ? .nonSensitiveOnly : .disabled)
         }
     }
     
@@ -100,9 +98,8 @@ final class BrowserViewModelTests: XCTestCase {
         parentNode: MEGANode? = nil,
         isChildBrowser: Bool = false,
         isSelectVideos: Bool = false,
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         sdk: MEGASdk = MockSdk(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> BrowserViewModel {
@@ -110,9 +107,8 @@ final class BrowserViewModelTests: XCTestCase {
             parentNode: parentNode,
             isChildBrowser: isChildBrowser,
             isSelectVideos: isSelectVideos,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            sdk: sdk,
-            featureFlagProvider: featureFlagProvider)
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            sdk: sdk)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

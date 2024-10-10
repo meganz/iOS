@@ -38,7 +38,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
     @MainActor
     func testLoadPhotosExcludeSensitiveNodes_whenContentModeIsMediaDiscoveryAndShowHiddenNodesOff_shouldExcludeTrue() async {
         
-        for await showHiddenNodes in [false, true].async {
+        for await excludeSensitives in [false, true].async {
             
             // Arrange
             let expectedNodes = [
@@ -49,15 +49,14 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expectedNodes)
             let sut = makeSUT(
                 mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-                contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)),
-                featureFlagHiddenNodes: true)
+                sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase(excludeSensitives: excludeSensitives))
             
             // Act
             await sut.loadPhotos()
             
             // Assert
             let discoverWithExcludeSensitive = await mediaDiscoveryUseCase.state.discoverWithExcludeSensitive
-            XCTAssertEqual(discoverWithExcludeSensitive, !showHiddenNodes)
+            XCTAssertEqual(discoverWithExcludeSensitive, excludeSensitives)
         }
     }
     
@@ -469,9 +468,8 @@ extension MediaDiscoveryContentViewModelTests {
         delegate: some MediaDiscoveryContentDelegate = MockMediaDiscoveryContentDelegate(),
         analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol = MockMediaDiscoveryAnalyticsUseCase(),
         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol = MockMediaDiscoveryUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
-        featureFlagHiddenNodes: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line) -> MediaDiscoveryContentViewModel {
             let viewModel = MediaDiscoveryContentViewModel(
@@ -482,9 +480,8 @@ extension MediaDiscoveryContentViewModelTests {
                 delegate: delegate,
                 analyticsUseCase: analyticsUseCase,
                 mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                preferenceUseCase: preferenceUseCase,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                preferenceUseCase: preferenceUseCase)
             
             trackForMemoryLeaks(on: viewModel, file: file, line: line)
             

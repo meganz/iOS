@@ -58,12 +58,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
     
     @MainActor
     func testDispatchOnViewReady_photosCoverThumbnailLoaded_shouldSetAlbumCoverAndCount() async throws {
-        let testCases: [(isHiddenNodesOn: Bool, excludeSensitives: Bool)] = [
-            (isHiddenNodesOn: false, excludeSensitives: false),
-            (isHiddenNodesOn: true, excludeSensitives: false),
-            (isHiddenNodesOn: true, excludeSensitives: true)
-        ]
-        for (isHiddenNodesOn, excludeSensitives) in testCases {
+        for excludeSensitives in [true, false] {
             let albumName = "Test"
             let album = AlbumEntity(id: 5, name: albumName, type: .user)
             let coverNode = NodeEntity(handle: 4)
@@ -73,18 +68,16 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             let thumbnailEntity = ThumbnailEntity(url: thumbnailURL, type: .thumbnail)
             let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
                 monitorUserAlbumPhotosAsyncSequence: userAlbumPhotosAsyncSequence.eraseToAnyAsyncSequence())
-            let ccUserAttributesUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: !excludeSensitives))
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitives)
             let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             let sut = makeSUT(
                 album: album,
                 thumbnailUseCase: MockThumbnailUseCase(
                     loadThumbnailResult: .success(thumbnailEntity)),
                 monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-                contentConsumptionUserAttributeUseCase: ccUserAttributesUseCase,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                 albumCoverUseCase: MockAlbumCoverUseCase(albumCover: coverNode),
-                featureFlagProvider: MockFeatureFlagProvider(
-                    list: [.hiddenNodes: isHiddenNodesOn]),
                 albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
             
             await test(viewModel: sut, action: .onViewReady, expectedCommands: [
@@ -134,9 +127,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         album: AlbumEntity = AlbumEntity(id: 1, type: .user),
         thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
-        featureFlagProvider: any FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -145,9 +137,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             album: album,
             thumbnailUseCase: thumbnailUseCase,
             monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             albumCoverUseCase: albumCoverUseCase,
-            featureFlagProvider: featureFlagProvider,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

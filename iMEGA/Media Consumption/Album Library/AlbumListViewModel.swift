@@ -43,8 +43,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     
@@ -58,18 +57,16 @@ final class AlbumListViewModel: NSObject, ObservableObject {
          shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          tracker: some AnalyticsTracking,
          monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
-         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.shareCollectionUseCase = shareCollectionUseCase
         self.tracker = tracker
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
@@ -367,11 +364,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     private func newAlbumMonitoring() async {
-        let excludeSensitives = if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        } else {
-            false
-        }
+        let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         for await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(excludeSensitives: excludeSensitives),
                                                               await monitorUserAlbums(excludeSensitives: excludeSensitives)) {
             updateSelectBarButton(shouldShow: userAlbums.isNotEmpty)

@@ -43,8 +43,12 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
         self.favouriteNodesUseCase = FavouriteNodesUseCase(
             repo: FavouriteNodesRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }))
         self.widgetCentre = WidgetCenter.shared
         super.init()
     }
@@ -59,8 +63,12 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
         favouriteNodesUseCase: some FavouriteNodesUseCaseProtocol = FavouriteNodesUseCase(
             repo: FavouriteNodesRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })),
         widgetCentre: some WidgetCentreProtocol = WidgetCenter.shared
     ) {
         self.recentItemsUseCase = recentItemsUseCase

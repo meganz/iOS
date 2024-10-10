@@ -7,18 +7,18 @@ struct ShareAlbumLinkInitialSections {
     private let album: AlbumEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     
     init(album: AlbumEntity,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
-         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
          albumCoverUseCase: any AlbumCoverUseCaseProtocol) {
         self.album = album
         self.thumbnailUseCase = thumbnailUseCase
         self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.albumCoverUseCase = albumCoverUseCase
     }
     
@@ -30,7 +30,7 @@ struct ShareAlbumLinkInitialSections {
                     album: album,
                     thumbnailUseCase: thumbnailUseCase,
                     monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-                    contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                    sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                     albumCoverUseCase: albumCoverUseCase
                 )
             ]),
