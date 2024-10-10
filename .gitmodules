@@ -13,3 +13,6 @@
 [submodule "iosTransifex"]
 	path = iosTransifex
 	url = https://code.developers.mega.co.nz/mobile/ios/iosTransifex.git
+[submodule "Modules/MEGASharedRepo"]
+	path = Modules/MEGASharedRepo
+	url = https://code.developers.mega.co.nz/mobile/ios/MEGASharedRepo.git
