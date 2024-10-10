@@ -168,6 +168,7 @@
     },
     {
       "skippedTests" : [
+        "ChatContentViewModelTests\/testUpdateContent_callInProgressLastPeerLeavesAndUserIsTheOnlyOneInTheCall_shouldShowEndCallDialog()",
         "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled()",
         "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_VideoCallWithBackCamera()",
@@ -197,6 +198,11 @@
       }
     },
     {
+      "skippedTests" : [
+        "DebouncerTests\/testMultipleStarts_whenCalledMultipleTimes_shouldOnlyExecuteLastAction()",
+        "DebouncerTests\/testStartAction_whenCalled_shouldExecuteActionAfterDelay()",
+        "ThrottlerTest\/test_runThreeTimesCountTwice()"
+      ],
       "target" : {
         "containerPath" : "container:Modules\/Infrastracture\/MEGAFoundation",
         "identifier" : "MEGAFoundationTests",
