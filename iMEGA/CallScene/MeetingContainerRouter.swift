@@ -405,7 +405,19 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func notifyFloatingPanelInviteParticipants() {
-        floatingPanelRouter?.triggerInviteParticipantsFromContainer()
+        /// Floating panel is needed to present the 'invite participants' view.
+        /// If it is not visible, it must be shown prior triggering action.
+        if let floatingPanelRouter {
+            floatingPanelRouter.triggerInviteParticipantsFromContainer()
+        } else if let containerViewModel {
+            showFloatingPanel(
+                containerViewModel: containerViewModel,
+                completion: { [weak self] in
+                    self?.meetingParticipantsRouter?.showNavigation()
+                    self?.floatingPanelRouter?.triggerInviteParticipantsFromContainer()
+                }
+            )
+        }
     }
     
     func sendLinkToChat(_ link: String) {
