@@ -64,10 +64,10 @@ class ChatSharedItemsViewController: UIViewController {
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat.leastNormalMagnitude))
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.backgroundColor = TokenColors.Background.page
+        tableView.separatorColor = TokenColors.Border.strong
         
         MEGAChatSdk.shared.openNodeHistory(forChat: chatRoom.chatId, delegate: self)
         
-        updateAppearance()
         loadMoreFiles()
     }
     
@@ -77,13 +77,6 @@ class ChatSharedItemsViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(traitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
     // MARK: - Actions
     
     @IBAction func actionsTapped(_ sender: UIButton) {
@@ -166,14 +159,6 @@ class ChatSharedItemsViewController: UIViewController {
     }
     
     // MARK: - Private methods
-
-    func updateAppearance() {
-        view.backgroundColor = UIColor.systemBackground
-        
-        tableView.separatorColor = UIColor.mnz_separator()
-        
-        tableView.reloadData()
-    }
     
     private func selectedMessages() -> [MEGAChatMessage]? {
         guard let selectedMessagesIndexPaths = tableView.indexPathsForSelectedRows else {
