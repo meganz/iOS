@@ -139,6 +139,7 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
             "3g2": .video,
             "3gp": .video,
             "avi": .video,
+            "mkv": .video,
             "m4v": .video,
             "mov": .video,
             "mp4": .video,
