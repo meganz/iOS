@@ -211,8 +211,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
         showDiscardAlert = true
     }
     
-    func discardChangesTap() {
-        Task { await dismiss() }
+    func discardChangesTap() async {
+        await dismiss()
     }
     
     func keepEditingTap() {

@@ -326,10 +326,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true)
         
         let sut = Harness(viewConfiguration: viewConfiguration).sut
-        
-        evaluate {
-            sut.showWaitingRoomWarningBanner == true
-        }
+        XCTAssertTrue(sut.showWaitingRoomWarningBanner)
     }
     @MainActor
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalse() {
@@ -338,66 +335,47 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
             preferenceUseCase: .init(dict: [.waitingRoomWarningBannerDismissed: true])
         )
         
-        evaluate(isInverted: true) {
-            harness.sut.showWaitingRoomWarningBanner == true
-        }
+        XCTAssertFalse(harness.sut.showWaitingRoomWarningBanner)
     }
     @MainActor
     func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalse() {
-        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: true)
-        let sut = Harness(viewConfiguration: viewConfiguration).sut
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(
+            waitingRoomEnabled: false,
+            allowNonHostsToAddParticipantsEnabled: true
+        )
         
-        evaluate(isInverted: true) {
-            sut.showWaitingRoomWarningBanner == true
-        }
+        let sut = Harness(viewConfiguration: viewConfiguration).sut
+        XCTAssertFalse(sut.showWaitingRoomWarningBanner)
     }
     @MainActor
     func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsNotEnabled_shouldBeFalse() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: false)
         let sut = Harness(viewConfiguration: viewConfiguration).sut
         
-        evaluate(isInverted: true) {
-            sut.showWaitingRoomWarningBanner == true
-        }
+        XCTAssertFalse(sut.showWaitingRoomWarningBanner)
     }
     @MainActor
     func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsNotEnabled_shouldBeFalse() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: false)
         let sut = Harness(viewConfiguration: viewConfiguration).sut
         
-        evaluate(isInverted: true) {
-            sut.showWaitingRoomWarningBanner == true
-        }
+        XCTAssertFalse(sut.showWaitingRoomWarningBanner)
     }
     @MainActor
     func testShowWaitingRoomWarningBanner_givenWaitingRoomDisabledThenEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalseThenTrue() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: true)
         let sut = Harness(viewConfiguration: viewConfiguration).sut
-        
-        evaluate(isInverted: true) {
-            sut.showWaitingRoomWarningBanner == true
-        }
-        
+        XCTAssertFalse(sut.showWaitingRoomWarningBanner)
         sut.waitingRoomEnabled = true
-        
-        evaluate {
-            sut.showWaitingRoomWarningBanner == true
-        }
+        XCTAssertTrue(sut.showWaitingRoomWarningBanner)
     }
     @MainActor
     func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsDisabledThenEnabled_shouldBeFalseThenTrue() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: false)
         let sut = Harness(viewConfiguration: viewConfiguration).sut
-        
-        evaluate(isInverted: true) {
-            sut.showWaitingRoomWarningBanner == true
-        }
-        
+        XCTAssertFalse(sut.showWaitingRoomWarningBanner)
         sut.allowNonHostsToAddParticipantsEnabled = true
-        
-        evaluate {
-            sut.showWaitingRoomWarningBanner == true
-        }
+        XCTAssertTrue(sut.showWaitingRoomWarningBanner)
     }
     @MainActor
     func testMeetingNameTooLong_givenLongMeetingName_shouldBeTrue() {
@@ -538,13 +516,10 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testSubmitButtonTapped_withShowMessageCompletion_shouldMatch() async {
         let harness = Harness()
         await harness.sut.submitButtonTapped()
-        
-        evaluate {
-            harness.router.showSpinner_calledTimes == 1
-            && harness.router.hideSpinner_calledTimes == 1
-            && harness.router.dismiss_calledTimes == 1
-            && harness.router.showSuccessMessage_calledTimes == 1
-        }
+        XCTAssertEqual(harness.router.showSpinner_calledTimes, 1)
+        XCTAssertEqual(harness.router.hideSpinner_calledTimes, 1)
+        XCTAssertEqual(harness.router.dismiss_calledTimes, 1)
+        XCTAssertEqual(harness.router.showSuccessMessage_calledTimes, 1)
     }
     @MainActor
     func testSubmitButtonTapped_withShowMessageForOccurrenceCompletion_shouldMatch() async {
@@ -558,13 +533,11 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let harness = Harness(viewConfiguration: viewConfiguration)
         await harness.sut.submitButtonTapped()
         
-        evaluate {
-            harness.router.showSpinner_calledTimes == 1
-            && harness.router.hideSpinner_calledTimes == 1
-            && harness.router.dismiss_calledTimes == 1
-            && harness.router.showSuccessMessage_calledTimes == 1
-            && harness.router.updatedOccurrence_caledTimes == 1
-        }
+        XCTAssertEqual(harness.router.showSpinner_calledTimes, 1)
+        XCTAssertEqual(harness.router.hideSpinner_calledTimes, 1)
+        XCTAssertEqual(harness.router.dismiss_calledTimes, 1)
+        XCTAssertEqual(harness.router.showSuccessMessage_calledTimes, 1)
+        XCTAssertEqual(harness.router.updatedOccurrence_calledTimes, 1)
     }
     @MainActor
     func testSubmitButtonTapped_withShowMessageAndNavigateToInfoCompletion_shouldMatch() async {
@@ -573,13 +546,12 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         )
         let harness = Harness(viewConfiguration: viewConfiguration)
         await harness.sut.submitButtonTapped()
-        evaluate {
-            harness.router.showSpinner_calledTimes == 1
-            && harness.router.hideSpinner_calledTimes == 1
-            && harness.router.dismiss_calledTimes == 1
-            && harness.router.showSuccessMessage_calledTimes == 1
-            && harness.router.showMeetingInfo_calledTimes == 1
-        }
+        
+        XCTAssertEqual(harness.router.showSpinner_calledTimes, 1)
+        XCTAssertEqual(harness.router.hideSpinner_calledTimes, 1)
+        XCTAssertEqual(harness.router.dismiss_calledTimes, 1)
+        XCTAssertEqual(harness.router.showSuccessMessage_calledTimes, 1)
+        XCTAssertEqual(harness.router.showMeetingInfo_calledTimes, 1)
     }
     @MainActor
     func testStartsDidTap_givenThePickerNotShown_shouldMatch() {
@@ -620,9 +592,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let harness = Harness()
         harness.sut.meetingName = "Test"
         await harness.sut.cancelDidTap()
-        evaluate {
-            harness.router.dismiss_calledTimes == 1
-        }
+        XCTAssertEqual(harness.router.dismiss_calledTimes, 1)
     }
     @MainActor
     func testCancelDidTap_noDetailsUpdated_shouldMatch() async {
@@ -636,12 +606,10 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.showDiscardAlert)
     }
     @MainActor
-    func testDiscardChangesTap_onUserTap_shouldMatch() {
+    func testDiscardChangesTap_onUserTap_shouldMatch() async {
         let harness = Harness()
-        harness.sut.discardChangesTap()
-        evaluate {
-            harness.router.dismiss_calledTimes == 1
-        }
+        await harness.sut.discardChangesTap()
+        XCTAssertEqual(harness.router.dismiss_calledTimes, 1)
     }
     @MainActor
     func testKeepEditingTap_onUserTap_shouldMatch() {
@@ -915,12 +883,12 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     var hideSpinner_calledTimes = 0
     var dismiss_calledTimes = 0
     var showSuccessMessage_calledTimes = 0
-    var updatedOccurrence_caledTimes = 0
+    var updatedOccurrence_calledTimes = 0
     var showMeetingInfo_calledTimes = 0
     var discardChanges_calledTimes = 0
     var showAddParticipants_calledTimes = 0
-    var scheduleMettingRulesEntityPublisher = PassthroughSubject<ScheduledMeetingRulesEntity, Never>()
-    var endRecurrenceScheduleMettingRulesEntityPublisher = PassthroughSubject<ScheduledMeetingRulesEntity, Never>()
+    var scheduleMeetingRulesEntityPublisher = PassthroughSubject<ScheduledMeetingRulesEntity, Never>()
+    var endRecurrenceScheduleMeetingRulesEntityPublisher = PassthroughSubject<ScheduledMeetingRulesEntity, Never>()
     var updatedMeeting_calledTimes = 0
     var upgradeAccount_calledTimes = 0
     
@@ -941,7 +909,7 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     }
     
     func updated(occurrence: ScheduledMeetingOccurrenceEntity) {
-        updatedOccurrence_caledTimes += 1
+        updatedOccurrence_calledTimes += 1
     }
     
     func showMeetingInfo(for scheduledMeeting: MEGADomain.ScheduledMeetingEntity) {
@@ -957,11 +925,11 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     }
     
     func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
-        scheduleMettingRulesEntityPublisher.eraseToAnyPublisher()
+        scheduleMeetingRulesEntityPublisher.eraseToAnyPublisher()
     }
     
     func showEndRecurrenceOptionsView(rules: MEGADomain.ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<MEGADomain.ScheduledMeetingRulesEntity, Never>? {
-        endRecurrenceScheduleMettingRulesEntityPublisher.eraseToAnyPublisher()
+        endRecurrenceScheduleMeetingRulesEntityPublisher.eraseToAnyPublisher()
     }
     
     func updated(meeting: ScheduledMeetingEntity) {
