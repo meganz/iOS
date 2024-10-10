@@ -17,6 +17,7 @@ public struct AdsSlotView<T: View>: View {
             
             if viewModel.isExternalAdsEnabled {
                 AdMobBannerView(adMob: viewModel.adMob)
+                    .background()
                     .frame(height: shouldHideAds ? 0 : 50)
                     .opacity(shouldHideAds ? 0 : 1)
             }
