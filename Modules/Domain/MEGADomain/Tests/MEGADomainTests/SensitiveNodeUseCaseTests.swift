@@ -211,7 +211,7 @@ struct SensitiveNodeUseCaseSuite {
                 .sensitivityChanges(for: node)
                 .makeAsyncIterator()
                 
-            #expect(try await iterator.next() == nil)
+            #expect(await iterator.next() == nil)
         }
         
         @Test("inherited and direct sensitivity changes should always return nil for invalid account")

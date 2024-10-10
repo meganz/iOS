@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public final class MockPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol {
+public final class MockPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol, @unchecked Sendable {
     public var _status: PlaybackContinuationStatusEntity
     public private(set) var setPreference_Calls = [PlaybackContinuationPreferenceStatusEntity]()
     

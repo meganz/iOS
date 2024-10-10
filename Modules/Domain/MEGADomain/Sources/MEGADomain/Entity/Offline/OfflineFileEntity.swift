@@ -1,6 +1,6 @@
 import Foundation
 
-public struct OfflineFileEntity: Equatable {
+public struct OfflineFileEntity: Equatable, Sendable {
     public let base64Handle: String
     public let localPath: String
     let parentBase64Handle: String?

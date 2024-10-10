@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockPreferenceUseCase: PreferenceUseCaseProtocol {
+public final class MockPreferenceUseCase: PreferenceUseCaseProtocol, @unchecked Sendable {
     public var dict: [PreferenceKeyEntity: Any]
     
     public init(dict: [PreferenceKeyEntity: Any] = [:]) {

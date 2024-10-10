@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockNodeActionRepository: NodeActionRepositoryProtocol {
+public final class MockNodeActionRepository: NodeActionRepositoryProtocol, @unchecked Sendable {
     
     public static let newRepo = MockNodeActionRepository()
     private let createFolderResult: Result<NodeEntity, Error>

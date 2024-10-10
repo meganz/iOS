@@ -169,7 +169,7 @@ struct FeatureListHelperTestSuite {
         
         @Test("Should have correct feature details for each feature", arguments: featureTestCases())
         func featureDetailsAreCorrect(for feature: FeatureTestCase) {
-            let (sut, features) = createSutAndFeatures()
+            let (_, features) = createSutAndFeatures()
             verifyFeature(
                 features: features,
                 featureType: feature.type,

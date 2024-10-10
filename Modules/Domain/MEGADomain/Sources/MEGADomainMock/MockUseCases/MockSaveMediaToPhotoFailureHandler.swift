@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockSaveMediaToPhotoFailureHandler: SaveMediaToPhotoFailureHandling {
+public final class MockSaveMediaToPhotoFailureHandler: SaveMediaToPhotoFailureHandling, @unchecked Sendable {
     public var fallback_calledTimes = 0
     private let shouldFallback: Bool
     

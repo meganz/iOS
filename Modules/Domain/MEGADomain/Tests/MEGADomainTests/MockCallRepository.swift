@@ -2,7 +2,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 
-final class MockCallRepository: CallRepositoryProtocol {    
+final class MockCallRepository: CallRepositoryProtocol, @unchecked Sendable {    
     func call(for chatId: HandleEntity) -> CallEntity? {
         nil
     }

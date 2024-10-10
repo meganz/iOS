@@ -90,7 +90,8 @@ struct VideoPlaylistSecondaryInformationView: View {
     .preferredColorScheme(.dark)
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .landscapeLeft) {
     VideoPlaylistSecondaryInformationView(
         videoConfig: .preview,
         videosCount: "24 videos",
@@ -99,5 +100,4 @@ struct VideoPlaylistSecondaryInformationView: View {
         layoutIgnoringOrientation: false
     )
     .preferredColorScheme(.dark)
-    .previewInterfaceOrientation(.landscapeLeft)
 }

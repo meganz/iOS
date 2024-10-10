@@ -76,7 +76,7 @@ struct EnableCameraUploadsBannerButtonView: View {
         .preferredColorScheme(.dark)
 }
 
-#Preview("Landscape") {
+@available(iOS 17.0, *)
+#Preview("Landscape", traits: .landscapeLeft) {
     EnableCameraUploadsBannerButtonView()
-        .previewInterfaceOrientation(.landscapeLeft)
 }

@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockSubscriptionsUseCase: SubscriptionsUseCaseProtocol {
+public final class MockSubscriptionsUseCase: SubscriptionsUseCaseProtocol, @unchecked Sendable {
     private let requestResult: Result<Void, AccountErrorEntity>
     public var cancelSubscriptions_calledTimes = 0
     
