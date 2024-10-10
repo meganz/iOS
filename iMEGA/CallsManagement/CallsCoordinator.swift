@@ -6,7 +6,6 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
-@MainActor
 protocol CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
         scheduler: AnySchedulerOf<DispatchQueue>,
@@ -79,7 +78,6 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
 }
 
-@MainActor
 @objc final class CallsCoordinator: NSObject {
     private let callUseCase: any CallUseCaseProtocol
     private let callUpdateUseCase: any CallUpdateUseCaseProtocol
@@ -328,11 +326,13 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
     
     private func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity) {
-        MeetingContainerRouter(
-            presenter: UIApplication.mnz_presentingViewController(),
-            chatRoom: chatRoom,
-            call: call
-        ).start()
+        Task {
+            await MeetingContainerRouter(
+                presenter: UIApplication.mnz_presentingViewController(),
+                chatRoom: chatRoom,
+                call: call
+            ).start()
+        }
     }
     
     private func isWaitingRoomOpened(inChatRoom chatRoom: ChatRoomEntity) -> Bool {
@@ -475,11 +475,15 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         }
         
         providerDelegate?.provider.reportNewIncomingCall(with: incomingCallUUID, update: update) { [weak self] error in
-            guard error == nil else {
+            if let error {
+                CrashlyticsLogger.log("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
                 MEGALogError("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
-                return
+                if (error as NSError?)?.code == CXErrorCodeIncomingCallError.Code.filteredByDoNotDisturb.rawValue {
+                    MEGALogDebug("[CallKit] Do not disturb enabled")
+                }
+            } else {
+                self?.checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for: chatId)
             }
-            self?.checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for: chatId)
             completion()
         }
     }
