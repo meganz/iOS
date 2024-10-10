@@ -256,6 +256,11 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         url.mnz_presentSafariViewController()
         resetLinkAndURLType()
     }
+    
+    @MainActor
+    @objc class func openVPNApp() {
+        DeepLinkRouter(logHandler: { MEGALogDebug($0) }).openApp(for: .vpn)
+    }
 }
 
 // MARK: - Ads
