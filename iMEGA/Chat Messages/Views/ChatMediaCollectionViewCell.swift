@@ -56,7 +56,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.tintColor = UIColor.mnz_turquoise(for: progressView.traitCollection)
+        progressView.tintColor = TokenColors.Support.success
         progressView.trackTintColor = .clear
         return progressView
     }()

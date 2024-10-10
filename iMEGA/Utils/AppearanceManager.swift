@@ -39,19 +39,19 @@ class AppearanceManager: NSObject {
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
-        UISwitch.appearance().onTintColor = UIColor.mnz_turquoise(for: traitCollection)
+        UISwitch.appearance().onTintColor = TokenColors.Support.success
         
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.label
         
         UITextField.appearance().tintColor = TokenColors.Icon.accent
         
         UIProgressView.appearance().backgroundColor = UIColor.clear
-        UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
+        UIProgressView.appearance().tintColor = TokenColors.Support.success
         
         UITableView.appearance().backgroundColor = TokenColors.Background.page
         UITableView.appearance().separatorColor = UIColor.mnz_separator()
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
-        UITableViewCell.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
+        UITableViewCell.appearance().tintColor = TokenColors.Support.success
         
         UICollectionView.appearance().backgroundColor = TokenColors.Background.page
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)

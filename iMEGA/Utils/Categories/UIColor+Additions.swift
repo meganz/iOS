@@ -24,11 +24,6 @@ extension UIColor {
         return color
     }
     
-    // MARK: - Switcher
-    @objc class func switchOnTintColor() -> UIColor {
-        TokenColors.Support.success
-    }
-    
     // MARK: - Background
     
     @objc class func mnz_tertiaryBackground(
@@ -321,12 +316,6 @@ extension UIColor {
         TokenColors.Text.secondary
     }
     
-    class func mnz_emojiLabelSelectedState(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Support.success
-    }
-    
     // MARK: - Text
     
     @objc class func mnz_subtitles() -> UIColor {
@@ -531,45 +520,7 @@ extension UIColor {
         }
     }
     
-    // MARK: Blue
-    
-    @objc(
-        mnz_blueForTraitCollection:
-    )
-    class func mnz_blue(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Text.info
-    }
-    
-    // MARK: Green
-    
-    @objc class func mnz_green00A886() -> UIColor {
-        TokenColors.Support.success
-    }
-    
-    @objc class func mnz_green00FF00() -> UIColor {
-        UIColor.green0CFF00
-    }
-    
-    @objc(
-        mnz_turquoiseForTraitCollection:
-    )
-    class func mnz_turquoise(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Support.success
-    }
-    
     // MARK: Red
-    
-    class func mnz_redFF453A() -> UIColor {
-        UIColor.redFF453A
-    }
-    
-    @objc class func mnz_redFF0000() -> UIColor {
-        UIColor.redFF0000
-    }
     
     @objc class func mnz_red() -> UIColor {
         TokenColors.Button.brand
@@ -589,34 +540,14 @@ extension UIColor {
         UIColor.whiteFFFFFF
     }
     
-    // MARK: Yellow
-    
-    class func mnz_yellowFED429() -> UIColor {
-        UIColor.yellowFED429
-    }
-    
-    class func mnz_yellow9D8319() -> UIColor {
-        UIColor.yellow9D8319
-    }
-    
-    class func mnz_yellowF8D552() -> UIColor {
-        UIColor.yellowF8D552
-    }
-    
-    @objc class func mnz_yellowFFCC00() -> UIColor {
-        UIColor.yellowFFCC00
-    }
-    
-    // MARK: Brown
-    
-    class func mnz_brown544b27() -> UIColor {
-        UIColor.brown544B27
-    }
-    
     // MARK: Text color
     
     @objc class func primaryTextColor() -> UIColor {
         TokenColors.Text.primary
+    }
+    
+    @objc class func textInfoColor() -> UIColor {
+        TokenColors.Text.info
     }
     
     @objc class func mnz_secondaryTextColor() -> UIColor {

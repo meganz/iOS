@@ -104,13 +104,13 @@
 
 - (void)configUI {
     self.enableCameraUploadsSwitch.on = CameraUploadManager.isCameraUploadEnabled;
-    self.enableCameraUploadsSwitch.onTintColor = [UIColor switchOnTintColor];
+    self.enableCameraUploadsSwitch.onTintColor = [UIColor supportSuccessColor];
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
-    self.uploadVideosSwitch.onTintColor = [UIColor switchOnTintColor];
+    self.uploadVideosSwitch.onTintColor = [UIColor supportSuccessColor];
     
     self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? LocalizedString(@"on", @"") : LocalizedString(@"off", @"");
     self.includeGPSTagsSwitch.on = CameraUploadManager.includeGPSTags;
-    self.includeGPSTagsSwitch.onTintColor = [UIColor switchOnTintColor];
+    self.includeGPSTagsSwitch.onTintColor = [UIColor supportSuccessColor];
     
     [self configTargetFolder];
     [self configPhotoFormatUI];

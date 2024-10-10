@@ -107,7 +107,7 @@
         case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied:
             typeLabel.text = LocalizedString(@"contactsTitle", @"Title of the Contacts section");
-            typeLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+            typeLabel.textColor = [UIColor supportSuccessColor];
             break;
             
         case MEGAUserAlertTypeNewShare:

@@ -49,7 +49,7 @@ extension UsageViewController {
         pieChartSecondaryLabel?.textColor = UIColor.mnz_primaryGray()
         pieChartTertiaryLabel?.textColor = secondaryTextColor
 
-        usagePageControl?.currentPageIndicatorTintColor = UIColor.mnz_turquoise(for: traitCollection)
+        usagePageControl?.currentPageIndicatorTintColor = TokenColors.Support.success
         usagePageControl?.pageIndicatorTintColor = TokenColors.Icon.secondary
 
         let separatorColor = UIColor.mnz_separator()
@@ -57,7 +57,7 @@ extension UsageViewController {
             view?.backgroundColor = separatorColor
         }
         
-        usageSizeLabel?.textColor = UIColor.mnz_turquoise(for: traitCollection)
+        usageSizeLabel?.textColor = TokenColors.Support.success
     }
     
     @objc func colorForSlice(at index: Int) -> UIColor {

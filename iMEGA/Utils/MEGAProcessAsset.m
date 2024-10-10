@@ -756,7 +756,7 @@ static const float BPS_MEDIUM = 3000000.0f;
     CGRect rect = CGRectMake(margin, 72.0, self.alertController.view.frame.size.width - margin * 2.0 , 2.0);
     self.progressView = [[UIProgressView alloc] initWithFrame:rect];
     self.progressView.progress = 0.0;
-    self.progressView.tintColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
+    self.progressView.tintColor = [UIColor supportSuccessColor];
     [self.alertController.view addSubview:self.progressView];
 }
 

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 
 final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
@@ -154,7 +155,7 @@ extension FavouritesExplorerListSource {
             ) { [weak self] in
                 self?.moveToRubbishBin(node: nodeCell.node)
             }
-            let downloadAction = contextualAction(withImageName: UIImage.offline, backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
+            let downloadAction = contextualAction(withImageName: UIImage.offline, backgroundColor: TokenColors.Support.success) { [weak self] in
                 self?.download(node: node)
             }
             

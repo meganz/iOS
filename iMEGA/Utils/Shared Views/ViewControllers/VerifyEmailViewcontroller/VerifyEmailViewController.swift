@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASDKRepo
 import UIKit
@@ -57,7 +58,7 @@ class VerifyEmailViewController: UIViewController {
         resendButton.mnz_setupBasic(traitCollection)
 
         topSeparatorView.backgroundColor = UIColor.mnz_separator()
-        hintButton.setTitleColor(.mnz_turquoise(for: traitCollection), for: .normal)
+        hintButton.setTitleColor(TokenColors.Support.success, for: .normal)
         hintButton.backgroundColor = .mnz_tertiaryBackgroundElevated(traitCollection)
         bottomSeparatorView.backgroundColor = UIColor.mnz_separator()
         

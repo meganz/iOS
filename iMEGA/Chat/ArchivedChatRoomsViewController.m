@@ -459,7 +459,7 @@
         [MEGAChatSdk.shared archiveChat:chatListItem.chatId archive:NO];
     }];
     unarchiveAction.image = [UIImage imageNamed:@"unArchiveChat"];
-    unarchiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    unarchiveAction.backgroundColor = [UIColor supportSuccessColor];
     
     return [UISwipeActionsConfiguration configurationWithActions:@[unarchiveAction]];
 }

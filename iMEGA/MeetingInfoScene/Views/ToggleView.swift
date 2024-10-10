@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ToggleView: View {
@@ -22,7 +23,7 @@ struct ToggleView: View {
                     Text(text)
                         .opacity(enabled ? 1.0 : 0.3)
                 }
-                .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
+                .toggleStyle(SwitchToggleStyle(tint: TokenColors.Support.success.swiftUI))
                 .disabled(!enabled)
             }
             .padding(.horizontal)
