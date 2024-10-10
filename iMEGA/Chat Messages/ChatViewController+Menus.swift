@@ -157,32 +157,35 @@ extension ChatViewController {
     
     func saveToPhotos(_ messages: [ChatMessage]) {
         for chatMessage in messages {
-            guard let nodelist = chatMessage.message.nodeList else { return }
+            guard let nodelist = chatMessage.message.nodeList else { continue }
             if nodelist.size == 1,
-               var node = nodelist.node(at: 0),
+               let node = nodelist.node(at: 0),
                node.name?.fileExtensionGroup.isVisualMedia == true {
-                if chatRoom.isPreview,
-                   let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
-                    node = authorizedNode
-                }
-                
-                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
-                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-                TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                
-                Task(priority: .userInitiated) {
-                    do {
-                        try await saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId)
-                    } catch let error as SaveMediaToPhotosErrorEntity {
-                        if error != .cancelled {
-                            await SVProgressHUD.dismiss()
-                            SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
-                        }
-                    }
+                if chatRoom.isPreview, let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
+                    saveToPhotos(node: authorizedNode, chatMessage: chatMessage, chatRoom: chatRoom)
+                } else {
+                    saveToPhotos(node: node, chatMessage: chatMessage, chatRoom: chatRoom)
                 }
             } else {
                 MEGALogDebug("Wrong Message type to be saved to album")
+            }
+        }
+    }
+    
+    private func saveToPhotos(node: MEGANode, chatMessage: ChatMessage, chatRoom: MEGAChatRoom) {
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
+        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+        
+        Task(priority: .userInitiated) {
+            do {
+                try await saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId)
+            } catch let error as SaveMediaToPhotosErrorEntity {
+                if error != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
+                }
             }
         }
     }
