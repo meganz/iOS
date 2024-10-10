@@ -38,10 +38,6 @@ final class ScheduleMeetingViewController: UIViewController {
         navigationItem.leftBarButtonItem = cancelBarButtonItem
         setMenuCapableBackButtonWith(menuTitle: title)
         isModalInPresentation = true
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         
         createBarButtonItem.setTitleTextAttributes([.foregroundColor: TokenColors.Text.primary], for: .normal)
         cancelBarButtonItem.setTitleTextAttributes([.foregroundColor: TokenColors.Text.primary], for: .normal)
