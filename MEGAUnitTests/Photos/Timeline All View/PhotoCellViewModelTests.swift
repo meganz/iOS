@@ -757,13 +757,13 @@ final class PhotoCellViewModelTests: XCTestCase {
         let isInheritedSensitivityUpdate = true
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: isInheritedSensitivityUpdate)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResult: .success(isInheritedSensitivity),
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         let sut = makeSUT(
             photo: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
         )
         
@@ -794,12 +794,12 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
@@ -823,12 +823,12 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: !photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
@@ -856,12 +856,12 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
@@ -918,8 +918,8 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let (nodeSensitivityStream, nodeSensitivityContinuation) = AsyncStream.makeStream(of: Bool.self)
         let (inheritedStream, _) = AsyncThrowingStream.makeStream(of: Bool.self)
-        
-        let nodeUseCase = MockNodeDataUseCase(
+        let nodeUseCase = MockNodeDataUseCase(nodes: [photo])
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResult: .success(false),
             monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
@@ -927,6 +927,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         var expectedImageContainers = [
@@ -967,7 +968,8 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let (nodeSensitivityStream, _) = AsyncStream.makeStream(of: Bool.self)
         let (inheritedStream, inheritedContinuation) = AsyncThrowingStream.makeStream(of: Bool.self)
-        let nodeUseCase = MockNodeDataUseCase(
+        let nodeUseCase = MockNodeDataUseCase(nodes: [photo])
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResult: .success(false),
             monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
@@ -975,6 +977,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         var expectedImageContainers = [
@@ -1014,6 +1017,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         viewModel: PhotoLibraryModeAllViewModel? = nil,
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         nodeUseCase: (any NodeUseCaseProtocol)? = nil,
+        sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)? = nil,
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -1023,6 +1027,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             viewModel: viewModel ?? PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: featureFlagProvider)
         addTeardownBlock { [weak sut] in
             // Add sleep to give `@Published` properties used in infinite async sequences via `.values` time to cancel

@@ -13,14 +13,16 @@ final class AlbumCoverPickerPhotoCellViewModel: PhotoCellViewModel {
          photoSelection: AlbumCoverPickerPhotoSelection,
          viewModel: PhotoLibraryModeAllViewModel,
          thumbnailLoader: some ThumbnailLoaderProtocol,
-         nodeUseCase: some NodeUseCaseProtocol) {
+         nodeUseCase: some NodeUseCaseProtocol,
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol) {
         self.albumPhoto = albumPhoto
         self.photoSelection = photoSelection
         
         super.init(photo: albumPhoto.photo,
                    viewModel: viewModel,
                    thumbnailLoader: thumbnailLoader,
-                   nodeUseCase: nodeUseCase)
+                   nodeUseCase: nodeUseCase,
+                   sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         setupSubscription()
     }

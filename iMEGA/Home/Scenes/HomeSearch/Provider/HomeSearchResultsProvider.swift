@@ -46,6 +46,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         filesSearchUseCase: some FilesSearchUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         downloadedNodesListener: some DownloadedNodesListening,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
@@ -70,7 +71,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             nodeIconUsecase: nodeIconUsecase,
             nodeDetailUseCase: nodeDetailUseCase,
             nodeUseCase: nodeUseCase,
-            mediaUseCase: mediaUseCase, 
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            mediaUseCase: mediaUseCase,
             nodeActions: nodeActions,
             hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
         )

@@ -310,6 +310,7 @@ final class HomeScreenFactory: NSObject {
             filesSearchUseCase: makeFilesSearchUseCase(),
             nodeDetailUseCase: makeNodeDetailUseCase(),
             nodeUseCase: makeNodeUseCase(),
+            sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
             mediaUseCase: makeMediaUseCase(),
             downloadedNodesListener: makeDownloadedNodesListener(),
             nodeIconUsecase: makeNodeIconUsecase(),
@@ -419,5 +420,12 @@ final class HomeScreenFactory: NSObject {
             fileSearchRepo: FilesSearchRepository.newRepo,
             videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)
         )
+    }
+    
+    func makeSensitiveNodeUseCase() -> some SensitiveNodeUseCaseProtocol {
+        SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
     }
 }

@@ -80,7 +80,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: NodeEntity(handle: 1, isMarkedSensitive: true),
             isFromSharedItem: true,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -101,7 +101,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
     func testConfigureCell_whenFeatureFlagOnAndIsFromSharedItem_shouldSetIsSensitiveFalse() async {
         let viewModel = sut(
             node: nil,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -123,7 +123,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -145,7 +145,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: false)
         
         await viewModel.configureCell().value
@@ -168,7 +168,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -190,7 +190,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             featureFlagHiddenNodes: false)
 
         await viewModel.configureCell().value
@@ -215,7 +215,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
 
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             thumbnailUseCase: MockThumbnailUseCase(
                 loadThumbnailResult: .success(.init(url: imageUrl, type: .thumbnail))))
         
@@ -234,7 +234,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let nodeIconUseCase = MockNodeIconUsecase(stubbedIconData: imageData)
         let viewModel = sut(
             node: node,
-            nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             nodeIconUseCase: nodeIconUseCase)
         
         await viewModel.configureCell().value
@@ -248,14 +248,14 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
 extension NodeCollectionViewCellViewModelTests {
     private func sut(node: NodeEntity? = nil,
                      isFromSharedItem: Bool = false,
-                     nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+                     sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
                      nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
                      thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
                      featureFlagHiddenNodes: Bool = false) -> NodeCollectionViewCellViewModel {
         NodeCollectionViewCellViewModel(
             node: node,
             isFromSharedItem: isFromSharedItem,
-            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))

@@ -105,14 +105,9 @@ final class PhotoCardViewModelTests: XCTestCase {
             isInheritingSensitivityResult: .success(isInheritedSensitivity),
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
         )
-        let nodeUseCase = MockNodeDataUseCase(
-            isInheritingSensitivityResult: .success(isInheritedSensitivity),
-            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
-        )
         let sut = makeSUT(
             coverPhoto: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
         )
@@ -145,12 +140,15 @@ final class PhotoCardViewModelTests: XCTestCase {
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
         let nodeUseCase = MockNodeDataUseCase(
-            node: photo,
-            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+            node: photo)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
+        )
         
         let sut = makeSUT(coverPhoto: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
@@ -175,12 +173,15 @@ final class PhotoCardViewModelTests: XCTestCase {
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: !photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
         let nodeUseCase = MockNodeDataUseCase(
-            node: photo,
-            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+            node: photo)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
+        )
         
         let sut = makeSUT(coverPhoto: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
@@ -209,12 +210,15 @@ final class PhotoCardViewModelTests: XCTestCase {
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
         let nodeUseCase = MockNodeDataUseCase(
-            node: photo,
-            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
+            node: photo)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
+        )
         
         let sut = makeSUT(coverPhoto: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
@@ -244,10 +248,7 @@ final class PhotoCardViewModelTests: XCTestCase {
         let (inheritedStream, _) = AsyncThrowingStream.makeStream(of: Bool.self)
         
         let nodeUseCase = MockNodeDataUseCase(
-            node: photo,
-            isInheritingSensitivityResult: .success(false),
-            monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
+            node: photo)
         
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResult: .success(false),
@@ -300,10 +301,7 @@ final class PhotoCardViewModelTests: XCTestCase {
         let (nodeSensitivityStream, _) = AsyncStream.makeStream(of: Bool.self)
         let (inheritedStream, inheritedContinuation) = AsyncThrowingStream.makeStream(of: Bool.self)
         let nodeUseCase = MockNodeDataUseCase(
-            node: photo,
-            isInheritingSensitivityResult: .success(false),
-            monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
+            node: photo)
         
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isInheritingSensitivityResult: .success(false),

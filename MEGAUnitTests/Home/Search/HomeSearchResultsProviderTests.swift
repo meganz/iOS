@@ -113,6 +113,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 filesSearchUseCase: filesSearchUseCase,
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
                 mediaUseCase: mediaUseCase,
                 downloadedNodesListener: downloadedNodesListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),

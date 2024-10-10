@@ -39,24 +39,36 @@ public protocol SensitiveNodeUseCaseProtocol: Sendable {
     func folderSensitivityChanged() -> AnyAsyncSequence<Void>
 }
 
-public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol>: SensitiveNodeUseCaseProtocol {
+public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseProtocol>: SensitiveNodeUseCaseProtocol {
     
     private let nodeRepository: T
+    private let accountUseCase: U
     
-    public init(nodeRepository: T) {
+    public init(
+        nodeRepository: T,
+        accountUseCase: U
+    ) {
         self.nodeRepository = nodeRepository
+        self.accountUseCase = accountUseCase
     }
     
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
-        try await nodeRepository.isInheritingSensitivity(node: node)
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else { return false }
+        
+        return try await nodeRepository.isInheritingSensitivity(node: node)
     }
     
     public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
-        try nodeRepository.isInheritingSensitivity(node: node)
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else { return false }
+        
+        return try nodeRepository.isInheritingSensitivity(node: node)
     }
     
     public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        nodeRepository.nodeUpdates
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+            return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+        }
+        return nodeRepository.nodeUpdates
             .filter { $0.contains { $0.isFolder && $0.changeTypes.contains(.sensitive)} }
             .map { _ in
                 try await nodeRepository.isInheritingSensitivity(node: node)
@@ -66,7 +78,10 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol>: SensitiveNodeUseC
     }
     
     public func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
-        nodeRepository.nodeUpdates
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+            return EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        }
+        return nodeRepository.nodeUpdates
             .compactMap {
                 $0.first(where: {
                     $0.handle == node.handle && $0.changeTypes.contains(.sensitive)
@@ -78,7 +93,10 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol>: SensitiveNodeUseC
     public func mergeInheritedAndDirectSensitivityChanges(
         for node: NodeEntity
     ) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        AsyncAlgorithms.merge(
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+            return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+        }
+        return AsyncAlgorithms.merge(
             sensitivityChanges(for: node),
             monitorInheritedSensitivity(for: node)
         )
@@ -86,7 +104,10 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol>: SensitiveNodeUseC
     }
     
     public func folderSensitivityChanged() -> AnyAsyncSequence<Void> {
-        nodeRepository
+        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+            return EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        }
+        return nodeRepository
             .nodeUpdates
             .compactMap {
                 $0.first(where: { $0.isFolder && $0.changeTypes.contains(.sensitive) })

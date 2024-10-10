@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import Testing
 import XCTest
 
 final class SensitiveNodeUseCaseTests: XCTestCase {
@@ -8,7 +9,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
     func testIsInheritingSensitivity_validNode_shouldReturnCorrectSensitivityStatus() async throws {
         let expectedSensitiveStatus = true
 
-        let sut = makeSUT(isInheritingSensitivityResult: .success(expectedSensitiveStatus))
+        let sut = makeSUT(isInheritingSensitivityResult: .success(expectedSensitiveStatus),
+                          hasValidProOrUnexpiredBusinessAccount: true)
         
         let isSensitive = try await sut.isInheritingSensitivity(node: NodeEntity(handle: 1))
         
@@ -20,7 +22,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
         let nodeUpdateAsyncSequence = SingleItemAsyncSequence(item: nodeUpdates)
             .eraseToAnyAsyncSequence()
 
-        let sut = makeSUT(nodeUpdates: nodeUpdateAsyncSequence)
+        let sut = makeSUT(nodeUpdates: nodeUpdateAsyncSequence,
+                          hasValidProOrUnexpiredBusinessAccount: true)
         
         var iterator = sut.monitorInheritedSensitivity(for: NodeEntity(handle: 4))
             .makeAsyncIterator()
@@ -38,7 +41,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
 
         let sut = makeSUT(
             isInheritingSensitivityResult: .success(isInheritingSensitivity),
-            nodeUpdates: nodeUpdateAsyncSequence)
+            nodeUpdates: nodeUpdateAsyncSequence,
+            hasValidProOrUnexpiredBusinessAccount: true)
         
         var iterator = sut.monitorInheritedSensitivity(for: NodeEntity(handle: 4))
             .makeAsyncIterator()
@@ -56,7 +60,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
 
         let sut = makeSUT(
             isInheritingSensitivityResults: isInheritingSensitivityResults,
-            nodeUpdates: stream.eraseToAnyAsyncSequence())
+            nodeUpdates: stream.eraseToAnyAsyncSequence(),
+            hasValidProOrUnexpiredBusinessAccount: true)
         
         let startedExp = expectation(description: "Task started")
         let yieldedExp = expectation(description: "Task yielded")
@@ -85,7 +90,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
     func testSensitivityChanges_nodeUpdatesWithSensitivityChanges_shouldYieldValues() async throws {
         let nodeToMonitorHandle = HandleEntity(65)
         let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
-        let sut = makeSUT(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(nodeUpdates: stream.eraseToAnyAsyncSequence(),
+                          hasValidProOrUnexpiredBusinessAccount: true)
         
         let startedExp = expectation(description: "Task started")
         let yieldedExp = expectation(description: "Task yielded")
@@ -114,7 +120,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
     
     func testFolderSensitivityChanged_onFolderSensitivityChanged_shouldYield() async {
         let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
-        let sut = makeSUT(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(nodeUpdates: stream.eraseToAnyAsyncSequence(),
+                          hasValidProOrUnexpiredBusinessAccount: true)
         
         let startedExp = expectation(description: "Task started")
         let yieldedExp = expectation(description: "Task yielded")
@@ -145,8 +152,9 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
         children: [NodeEntity] = [],
         isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
         isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:],
-        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
-    ) -> SensitiveNodeUseCase<MockNodeRepository> {
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        hasValidProOrUnexpiredBusinessAccount: Bool = false
+    ) -> SensitiveNodeUseCase<MockNodeRepository, MockAccountUseCase> {
         let mockNodeRepository = MockNodeRepository(
             node: node,
             rubbishBinNode: nodeInRubbishBin,
@@ -157,6 +165,83 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
             nodeUpdates: nodeUpdates
         )
         return SensitiveNodeUseCase(
-            nodeRepository: mockNodeRepository)
+            nodeRepository: mockNodeRepository,
+            accountUseCase: MockAccountUseCase(
+                hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount))
+    }
+}
+
+@Suite("SensitiveNodeUseCaseTests")
+struct SensitiveNodeUseCaseSuite {
+    
+    @Suite("Invalid pro or expired business account")
+    struct InvalidAccount {
+        private let node = NodeEntity(handle: 43)
+        
+        @Test("Inherit sensitivity should always return false for invalid account",
+              arguments: [true, false])
+        func isInheritingSensitivity(isInheritingSensitivity: Bool) async throws {
+            let sut = InvalidAccount.makeSUT(
+                isInheritingSensitivityResult: .success(isInheritingSensitivity))
+            
+            #expect(try await sut.isInheritingSensitivity(node: node) == false)
+        }
+        
+        @Test("Inherit sensitivity (sync) should always return false for invalid account",
+              arguments: [true, false])
+        func inheritingSensitivity(isInheritingSensitivity: Bool) throws {
+            let sut = InvalidAccount.makeSUT(
+                isInheritingSensitivityResult: .success(isInheritingSensitivity))
+            
+            #expect(try sut.isInheritingSensitivity(node: node) == false)
+        }
+        
+        @Test("Monitor sensitivity should always return nil for invalid")
+        func monitorInheritedSensitivity() async throws {
+            var iterator = InvalidAccount.makeSUT()
+                .monitorInheritedSensitivity(for: node)
+                .makeAsyncIterator()
+                
+            #expect(try await iterator.next() == nil)
+        }
+        
+        @Test("Sensitivity changes should always return nil for invalid account")
+        func sensitivityChanges() async throws {
+            var iterator = InvalidAccount.makeSUT()
+                .sensitivityChanges(for: node)
+                .makeAsyncIterator()
+                
+            #expect(try await iterator.next() == nil)
+        }
+        
+        @Test("inherited and direct sensitivity changes should always return nil for invalid account")
+        func mergeInheritedAndDirectSensitivityChanges() async throws {
+            var iterator = InvalidAccount.makeSUT()
+                .mergeInheritedAndDirectSensitivityChanges(for: node)
+                .makeAsyncIterator()
+                
+            #expect(try await iterator.next() == nil)
+        }
+        
+        private static func makeSUT(
+            isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
+            nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        ) -> SensitiveNodeUseCase<MockNodeRepository, MockAccountUseCase> {
+            SensitiveNodeUseCaseSuite.makeSUT(
+                nodeRepository: MockNodeRepository(
+                    isInheritingSensitivityResult: isInheritingSensitivityResult,
+                    nodeUpdates: nodeUpdates),
+                accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false)
+            )
+        }
+    }
+    
+    private static func makeSUT(
+        nodeRepository: MockNodeRepository = MockNodeRepository(),
+        accountUseCase: MockAccountUseCase = MockAccountUseCase()
+    ) -> SensitiveNodeUseCase<MockNodeRepository, MockAccountUseCase> {
+        SensitiveNodeUseCase(
+            nodeRepository: nodeRepository,
+            accountUseCase: accountUseCase)
     }
 }

@@ -46,12 +46,12 @@ extension ThumbnailViewerTableViewCellViewModelTests {
     
     @MainActor
     func sut(nodes: [NodeEntity] = [],
-             nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+             sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
              featureFlagHiddenNodes: Bool = false) -> ThumbnailViewerTableViewCellViewModel {
         ThumbnailViewerTableViewCellViewModel(
             nodes: nodes,
-            nodeUseCase: nodeUseCase, 
-            nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: Data()), 
+            sensitiveNodeUseCase: sensitiveNodeUseCase, 
+            nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: Data()),
             thumbnailUseCase: MockThumbnailUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
     }

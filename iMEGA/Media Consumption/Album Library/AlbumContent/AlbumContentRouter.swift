@@ -40,7 +40,9 @@ struct AlbumContentRouter: AlbumContentRouting {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             photoLibraryUseCase: makePhotoLibraryUseCase(),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo)
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo))
         )
         let photoLibraryRepository = PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared
@@ -111,7 +113,9 @@ struct AlbumContentRouter: AlbumContentRouting {
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             photoLibraryUseCase: makePhotoLibraryUseCase(),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo)
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo))
         )
         
         let viewModel = AlbumCoverPickerViewModel(album: album,
@@ -123,7 +127,7 @@ struct AlbumContentRouter: AlbumContentRouting {
     }
     
     func albumCoverPickerPhotoCell(albumPhoto: AlbumPhotoEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
-        
+        let nodeRepository = NodeRepository.newRepo
         let vm = AlbumCoverPickerPhotoCellViewModel(
             albumPhoto: albumPhoto,
             photoSelection: photoSelection,
@@ -132,7 +136,11 @@ struct AlbumContentRouter: AlbumContentRouting {
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo)
+                nodeRepository: nodeRepository),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: nodeRepository,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo))
         )
         
         return AlbumCoverPickerPhotoCell(viewModel: vm)
@@ -167,7 +175,9 @@ struct AlbumContentRouter: AlbumContentRouting {
     
     private func makeMonitorAlbumPhotosUseCase() -> some MonitorAlbumPhotosUseCaseProtocol {
         let sensitiveNodeUseCase =  SensitiveNodeUseCase(
-            nodeRepository: NodeRepository.newRepo)
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
         let photosRepository = PhotosRepository.sharedRepo
         let monitorPhotosUseCase = MonitorPhotosUseCase(
             photosRepository: photosRepository,

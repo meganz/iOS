@@ -71,7 +71,9 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             userAlbumRepository: UserAlbumCacheRepository.newRepo,
             photosRepository: PhotosRepository.sharedRepo,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-            nodeRepository: NodeRepository.newRepo)
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo))
         )
     }
     

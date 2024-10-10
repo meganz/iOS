@@ -229,7 +229,6 @@ class CloudDriveViewModelTests: XCTestCase {
         let parentNode = MockNode(handle: 1, nodeType: .folder)
         let sut = makeSUT(parentNode: parentNode,
                           accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                          nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(true)),
                           featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
@@ -249,7 +248,6 @@ class CloudDriveViewModelTests: XCTestCase {
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
             let sut = makeSUT(parentNode: parentNode,
                               accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                              nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
                               featureFlagProvider: featureFlagProvider,
                               nodeSensitivityChecker: nodeSensitiveChecker)
 
@@ -342,7 +340,6 @@ class CloudDriveViewModelTests: XCTestCase {
         )
         let sut = makeSUT(parentNode: MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false),
                           accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                          nodeUseCase: MockNodeDataUseCase(isInheritingSensitivityResult: .success(false)),
                           featureFlagProvider: featureFlagProvider,
                           nodeSensitivityChecker: nodeSensitiveChecker)
 
@@ -570,7 +567,6 @@ class CloudDriveViewModelTests: XCTestCase {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
@@ -592,7 +588,6 @@ class CloudDriveViewModelTests: XCTestCase {
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             accountUseCase: accountUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            nodeUseCase: nodeUseCase,
             tracker: tracker,
             featureFlagProvider: featureFlagProvider,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel, 

@@ -71,6 +71,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
                 viewModel: viewModel,
                 thumbnailLoader: makeThumbnailLoader(),
                 nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: contentMode),
+                sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: contentMode),
                 featureFlagProvider: featureFlagProvider
             )
         )
@@ -117,8 +118,9 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     private func makeSensitiveNodeUseCase() -> some SensitiveNodeUseCaseProtocol {
-        let nodeRepository = NodeRepository.newRepo
-        return SensitiveNodeUseCase(nodeRepository: nodeRepository)
+        SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
     }
 }
 

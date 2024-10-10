@@ -25,30 +25,6 @@ public protocol NodeUseCaseProtocol: Sendable {
     func isRubbishBinRoot(node: NodeEntity) -> Bool
     func isRestorable(node: NodeEntity) -> Bool
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
-    
-    /// Ascertain if the node's ancestor is marked as sensitive
-    ///  - Parameters: node - the node to check
-    ///  - Returns: true if the node's ancestor is marked as sensitive
-    ///  - Throws: `NodeError.nodeNotFound` if the parent node cant be found
-    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
-    func isInheritingSensitivity(node: NodeEntity) async throws -> Bool
-    /// Ascertain if the node's ancestor is marked as sensitive
-    ///  - Parameters: node - the node to check
-    ///  - Returns: true if the node's ancestor is marked as sensitive
-    ///  - Throws: `NodeError.nodeNotFound` if the parent node cant be found
-    /// - Important: This could possibly block the calling thread, make sure not to call it on main thread.
-    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
-    func isInheritingSensitivity(node: NodeEntity) throws -> Bool
-    /// On a folder sensitivity change it will recalculate the inherited sensitivity of the ancestor of the node.
-    /// - Parameter node: The node check for inherited sensitivity changes
-    /// - Returns: An `AnyAsyncThrowingSequence<Bool>` indicating inherited sensitivity changes
-    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
-    func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error>
-    /// On node update it will yield the sensitivity changes of the node
-    /// - Parameter node: The node check for sensitive change types
-    /// - Returns: An `AnyAsyncSequence<Bool>` indicating node sensitivity changes
-    @available(*, deprecated, message: "Use SensitiveNodeUseCaseProtocol instead for all sensitive related code")
-    func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool>
 }
 
 // MARK: - Use case implementation -
@@ -152,33 +128,5 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         try await nodeRepository.createFolder(with: name, in: parent)
-    }
-    
-    public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
-        try await nodeRepository.isInheritingSensitivity(node: node)
-    }
-    
-    public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
-        try nodeRepository.isInheritingSensitivity(node: node)
-    }
-    
-    public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        nodeRepository.nodeUpdates
-            .filter { $0.contains { $0.isFolder && $0.changeTypes.contains(.sensitive)} }
-            .map { _ in
-                try await nodeRepository.isInheritingSensitivity(node: node)
-            }
-            .removeDuplicates()
-            .eraseToAnyAsyncThrowingSequence()
-    }
-    
-    public func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
-        nodeRepository.nodeUpdates
-            .compactMap {
-                $0.first(where: {
-                    $0.handle == node.handle && $0.changeTypes.contains(.sensitive)
-                })?.isMarkedSensitive
-            }
-            .eraseToAnyAsyncSequence()
     }
 }

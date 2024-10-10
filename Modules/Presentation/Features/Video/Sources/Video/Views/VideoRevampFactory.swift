@@ -47,11 +47,11 @@ public class VideoRevampFactory {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
         
-        let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
         let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase, nodeIconUseCase: nodeIconUseCase)
         let videoListViewModel = VideoListViewModel(
             syncModel: syncModel, 
@@ -110,6 +110,7 @@ public class VideoRevampFactory {
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
@@ -117,7 +118,6 @@ public class VideoRevampFactory {
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         syncModel: VideoRevampSyncModel
     ) -> UIViewController {
-        let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: NodeRepository.newRepo)
         let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase, nodeIconUseCase: nodeIconUseCase)
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,

@@ -1095,7 +1095,8 @@ private final class MockAlbumContentRouting: AlbumContentRouting {
                 photoSelection: AlbumCoverPickerPhotoSelection(),
                 viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
                 thumbnailLoader: MockThumbnailLoader(),
-                nodeUseCase: MockNodeDataUseCase()
+                nodeUseCase: MockNodeDataUseCase(),
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase()
             )
         )
     }

@@ -70,10 +70,9 @@ extension NodeTableViewCell {
     @objc func createViewModel(nodes: [MEGANode], shouldApplySensitiveBehaviour: Bool) -> NodeTableViewCellViewModel {
         .init(nodes: nodes.toNodeEntities(),
               shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
-              nodeUseCase: NodeUseCase(
-                nodeDataRepository: NodeDataRepository.newRepo,
-                nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo),
+              sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
               thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
               nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared))
     }

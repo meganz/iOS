@@ -16,6 +16,7 @@ struct SearchResultMapper: Sendable {
     let nodeIconUsecase: any NodeIconUsecaseProtocol
     let nodeDetailUseCase: any NodeDetailUseCaseProtocol
     let nodeUseCase: any NodeUseCaseProtocol
+    let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     let mediaUseCase: any MediaUseCaseProtocol
     let nodeActions: NodeActions
     let hiddenNodesFeatureEnabled: Bool
@@ -217,6 +218,6 @@ struct SearchResultMapper: Sendable {
         if node.isMarkedSensitive {
             return true
         }
-        return (try? nodeUseCase.isInheritingSensitivity(node: node)) ?? false
+        return (try? sensitiveNodeUseCase.isInheritingSensitivity(node: node)) ?? false
     }
 }

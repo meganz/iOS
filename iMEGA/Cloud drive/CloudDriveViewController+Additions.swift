@@ -49,17 +49,13 @@ extension CloudDriveViewController {
         let systemGeneratedNodeUseCase = SystemGeneratedNodeUseCase(
             systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
         )
-        let nodeUseCase = NodeUseCase(
-            nodeDataRepository: NodeDataRepository.newRepo,
-            nodeValidationRepository: NodeValidationRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo
-        )
         let nodeSensitivityChecker = NodeSensitivityChecker(
             featureFlagProvider: DIContainer.featureFlagProvider,
             accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo)
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: accountUseCase)
         )
         return CloudDriveViewModel(
             parentNode: parentNode,
@@ -75,7 +71,6 @@ extension CloudDriveViewController {
             accountUseCase: accountUseCase,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
-            nodeUseCase: nodeUseCase,
             tracker: DIContainer.tracker,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self), 
             nodeSensitivityChecker: nodeSensitivityChecker

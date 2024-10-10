@@ -102,33 +102,4 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         throw GenericErrorEntity()
     }
-    
-    public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
-        false
-    }
-    
-    public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
-        false
-    }
-    
-    public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        AsyncThrowingStream { continuation in
-            continuation.finish(throwing: GenericErrorEntity())
-        }
-        .eraseToAnyAsyncThrowingSequence()
-    }
-    
-    public func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
-        AsyncStream { continuation in
-            continuation.yield(with: .success(false))
-        }
-        .eraseToAnyAsyncSequence()
-    }
-    
-    public func mergeInheritedAndDirectSensitivityChanges(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        AsyncThrowingStream { continuation in
-            continuation.finish(throwing: GenericErrorEntity())
-        }
-        .eraseToAnyAsyncThrowingSequence()
-    }
 }
