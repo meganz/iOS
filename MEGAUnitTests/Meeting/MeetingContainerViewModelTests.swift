@@ -435,6 +435,24 @@ final class MeetingContainerViewModelTests: XCTestCase {
         
         XCTAssertEqual(harness.router.notifyFloatingPanelInviteParticipants_calledTimes, 1)
     }
+    
+    @MainActor func testAction_inviteParticipantsTappedWithFloatingPanelHidden_shouldNotifyRouter() {
+        let harness = Harness()
+        
+        test(
+            viewModel: harness.sut,
+            action: .changeMenuVisibility,
+            expectedCommands: []
+        )
+        
+        test(
+            viewModel: harness.sut,
+            action: .inviteParticipantsTapped,
+            expectedCommands: []
+        )
+        
+        XCTAssertEqual(harness.router.notifyFloatingPanelInviteParticipants_calledTimes, 1)
+    }
 }
 
 extension CallEntity {
