@@ -4,7 +4,7 @@ import XCTest
 final class StringFileExtensionGroupTests: XCTestCase {
     private static let emptyExtension = ""
     private static let imageExtensions = ["3fr", "arw", "bmp", "cr2", "crw", "ciff", "cur", "cs1", "dcr", "dng", "erf", "gif", "heic", "ico", "iiq", "j2c", "jp2", "jpf", "jpeg", "jpg", "k25", "kdc", "mef", "mos", "mrw", "nef", "nrw", "orf", "pbm", "pef", "pgm", "png", "pnm", "ppm", "psd", "raf", "raw", "rw2", "rwl", "sr2", "srf", "srw", "tga", "tif", "tiff", "webp", "x3f"]
-    private static let videoExtensions = ["3g2", "3gp", "avi", "m4v", "mov", "mp4", "mqv", "qt"]
+    private static let videoExtensions = ["3g2", "3gp", "avi", "mkv", "m4v", "mov", "mp4", "mqv", "qt"]
     private static let audioExtensions = ["aac", "ac3", "aif", "aiff", "au", "caf", "eac3", "ec3", "flac", "m4a", "mp3", "wav"]
     private static let textPathExtension = ["txt", "ans", "ascii", "log", "wpd", "json", "md", "org"]
     private static let webCodePathExtension = ["action", "adp", "ashx", "asmx", "asp", "aspx", "atom", "axd", "bml", "cer", "cfm", "cgi", "css", "dhtml", "do", "dtd", "eml", "htm", "html", "ihtml", "jhtml", "jsonld", "jsp", "jspx", "las", "lasso", "lassoapp", "markdown", "met", "metalink", "mht", "mhtml", "rhtml", "rna", "rnx", "se", "shtml", "stm", "wss", "yaws", "zhtml", "xml", "js", "jar", "java", "class", "php", "php3", "php4", "php5", "phtml", "inc", "pl", "py", "sql", "accdb", "db", "dbf", "mdb", "pdb", "c", "cpp", "h", "cs", "sh", "vb", "swift"]
