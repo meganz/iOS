@@ -1,8 +1,8 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 import MEGASwift
 
-public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, ObservableObject {
+public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, ObservableObject, @unchecked Sendable {
         
     public enum Message: Equatable {
         case searchLegacy

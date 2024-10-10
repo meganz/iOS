@@ -2,7 +2,7 @@ import Combine
 import MEGADomain
 import MEGASwift
 
-public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificationUseCaseProtocol {
+public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificationUseCaseProtocol, @unchecked Sendable {
     
     private let addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error>
     private let deleteVideoPlaylistResult: [VideoPlaylistEntity]

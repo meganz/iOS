@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public final class MockPreviousPlaybackSessionRepository: PreviousPlaybackSessionRepositoryProtocol {
+public final class MockPreviousPlaybackSessionRepository: PreviousPlaybackSessionRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: MockPreviousPlaybackSessionRepository { .init() }
     
     public var mockTimeIntervals: [String: TimeInterval]

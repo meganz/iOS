@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockSupportUseCase: SupportUseCaseProtocol {
+public final class MockSupportUseCase: SupportUseCaseProtocol, @unchecked Sendable {
     let createSupportTicketResult: Result<Void, Error>
     
     public var messages = [Message]()

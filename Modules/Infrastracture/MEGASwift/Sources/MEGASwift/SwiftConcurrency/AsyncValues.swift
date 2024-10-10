@@ -1,4 +1,4 @@
-public func withAsyncThrowingValue<T>(in operation: (@escaping (Result<T, Error>) -> Void) -> Void) async throws -> T {
+public func withAsyncThrowingValue<T>(in operation: (@Sendable @escaping (Result<T, Error>) -> Void) -> Void) async throws -> T {
     return try await withCheckedThrowingContinuation { continuation in
         guard Task.isCancelled == false else {
             continuation.resume(throwing: CancellationError())

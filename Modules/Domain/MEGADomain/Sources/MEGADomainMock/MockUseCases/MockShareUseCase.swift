@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockShareUseCase: ShareUseCaseProtocol {
+public final class MockShareUseCase: ShareUseCaseProtocol, @unchecked Sendable {
     private let nodes: [NodeEntity]
     private let shares: [ShareEntity]
     private let sharedNodeHandles: [HandleEntity]

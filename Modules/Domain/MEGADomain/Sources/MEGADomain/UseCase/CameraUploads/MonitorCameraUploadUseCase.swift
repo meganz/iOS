@@ -1,7 +1,7 @@
 import Foundation
 import MEGASwift
 
-public enum CameraUploadPausedReason {
+public enum CameraUploadPausedReason: Sendable {
     case notPaused
     case noWifi
     case noNetworkConnectivity

@@ -1,7 +1,7 @@
-import Combine
+@preconcurrency import Combine
 import MEGADomain
 
-public final class MockChatUseCase: ChatUseCaseProtocol {
+public final class MockChatUseCase: ChatUseCaseProtocol, @unchecked Sendable {
     public var userHandle: HandleEntity
     public var guestAccount: Bool
     public var fullName: String?

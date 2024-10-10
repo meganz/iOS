@@ -1,7 +1,7 @@
 import MEGASdk
 import MEGASDKRepo
 
-public final class MockTransfer: MEGATransfer {
+public final class MockTransfer: MEGATransfer, @unchecked Sendable {
     private let _type: MEGATransferType
     private let _nodeHandle: UInt64
     private let _parentHandle: UInt64

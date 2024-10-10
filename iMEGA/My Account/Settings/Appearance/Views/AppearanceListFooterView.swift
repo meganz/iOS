@@ -26,5 +26,4 @@ struct AppearanceListFooterWithLinkView: View {
         message: "Folders that contain only images and videos will open in media discovery view by default.",
         linkMessage: "Learn more about mega",
         linkUrl: URL(string: "https://www.mega.io")!)
-    .previewDevice(.none)
 }

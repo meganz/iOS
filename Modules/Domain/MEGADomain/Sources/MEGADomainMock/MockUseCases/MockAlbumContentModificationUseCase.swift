@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public final class MockAlbumModificationUseCase: AlbumModificationUseCaseProtocol {
+public final class MockAlbumModificationUseCase: AlbumModificationUseCaseProtocol, @unchecked Sendable {
     private var resultEntity = AlbumElementsResultEntity(success: 0, failure: 0)
     private let addPhotosResult: Result<AlbumElementsResultEntity, Error>
     public private(set) var addedPhotosToAlbum: [NodeEntity]?

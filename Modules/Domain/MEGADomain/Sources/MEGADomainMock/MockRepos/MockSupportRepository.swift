@@ -8,7 +8,7 @@ public struct MockSupportRepository: SupportRepositoryProtocol {
             messages.append(message)
         }
     }
-    public enum Message: Equatable {
+    public enum Message: Equatable, Sendable {
         case createSupportTicket(message: String)
     }
     
