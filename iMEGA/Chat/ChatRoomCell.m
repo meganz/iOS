@@ -87,7 +87,7 @@
         self.unreadView.hidden = NO;
         self.unreadView.backgroundColor = [UIColor mnz_red];
     }
-    self.unreadCount.textColor = UIColor.mnz_whiteFFFFFF;
+    self.unreadCount.textColor = [UIColor mnz_whiteFFFFFF];
     
     self.onCallDuration.textColor = [UIColor mnz_subtitles];
 }

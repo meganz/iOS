@@ -69,7 +69,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 
 - (void)configUI {
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
-    self.uploadVideosSwitch.onTintColor = [UIColor switchOnTintColor];
+    self.uploadVideosSwitch.onTintColor = [UIColor supportSuccessColor];
     
     [self configVideoFormatUI];
     [self configVideoQualityUI];

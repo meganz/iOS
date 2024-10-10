@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -23,7 +24,7 @@ struct ChatRoomLinkView: View {
                 } label: {
                     Text(Strings.Localizable.Meetings.Action.shareLink)
                         .padding(.horizontal)
-                        .foregroundColor(Color(UIColor.mnz_green00A886()))
+                        .foregroundStyle(TokenColors.Support.success.swiftUI)
                 }
                 Divider()
             }

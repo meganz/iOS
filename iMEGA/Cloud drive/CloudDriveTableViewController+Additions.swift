@@ -1,3 +1,5 @@
+import MEGADesignToken
+
 extension CloudDriveTableViewController {
     @objc func configureSwipeActionsForIndex(_ index: IndexPath) -> UISwipeActionsConfiguration {
         guard let node = self.cloudDrive?.node(at: index), MEGASdk.shared.accessLevel(for: node) == .accessOwner else {
@@ -7,7 +9,7 @@ extension CloudDriveTableViewController {
         if MEGASdk.shared.isNode(inRubbish: node) {
             if let restoreNode = MEGASdk.shared.node(forHandle: node.restoreHandle),
                !MEGASdk.shared.isNode(inRubbish: restoreNode) {
-                let restoreAction = swipeAction(image: UIImage.restore.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
+                let restoreAction = swipeAction(image: UIImage.restore.withTintColor(UIColor.whiteFFFFFF), backgroundColor: TokenColors.Support.success) { [weak self] in
                     node.mnz_restore()
                     self?.setTableViewEditing(false, animated: true)
                 }
@@ -23,7 +25,7 @@ extension CloudDriveTableViewController {
                 self?.setTableViewEditing(false, animated: true)
             }
             
-            let downloadAction = swipeAction(image: UIImage.offline.withTintColor(UIColor.whiteFFFFFF), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
+            let downloadAction = swipeAction(image: UIImage.offline.withTintColor(UIColor.whiteFFFFFF), backgroundColor: TokenColors.Support.success) { [weak self] in
                 guard let self else { return }
                 let nodeDownloadTransfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
                 

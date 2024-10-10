@@ -101,7 +101,7 @@
     self.inviteYourFriendsView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     self.unlockedBonusesTopSeparatorView.backgroundColor = self.unlockedBonusesBottomSeparatorView.backgroundColor = [UIColor mnz_separator];
-    self.unlockedStorageQuotaLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
+    self.unlockedStorageQuotaLabel.textColor = [UIColor textInfoColor];
 }
 
 - (NSMutableAttributedString *)textForUnlockedBonuses:(long long)quota {

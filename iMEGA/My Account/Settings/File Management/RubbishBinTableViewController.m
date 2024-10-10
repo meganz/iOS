@@ -94,7 +94,7 @@
     UIColor *secondaryGrayColor = [UIColor iconSecondaryColor];
     NSMutableAttributedString *longerRetentionUpgradeToProMAS = [NSMutableAttributedString.alloc initWithString:longerRetentionUpgradeToProText attributes:@{NSForegroundColorAttributeName : secondaryGrayColor}];
     
-    UIColor *turquoiseColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    UIColor *turquoiseColor = [UIColor supportSuccessColor];
     UIFont *semiboldFont = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightSemibold];
     [longerRetentionUpgradeToProMAS setAttributes:@{NSFontAttributeName : semiboldFont, NSForegroundColorAttributeName : turquoiseColor} range:semiboldAndGreenTextRange];
 
