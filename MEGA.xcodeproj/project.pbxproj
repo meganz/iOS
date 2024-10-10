@@ -1784,7 +1784,6 @@
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
 		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */; };
-		B55668812C97E79A006DE469 /* MockAccountPlanPurchaseUpdatesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55668802C97E79A006DE469 /* MockAccountPlanPurchaseUpdatesProvider.swift */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
@@ -1828,7 +1827,6 @@
 		B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */; };
 		B5B0E30627F1BCA700DB6146 /* WarningBannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningBannerViewModelTests.swift */; };
 		B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4CFC22C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift */; };
-		B5B51C992C9BBD1E00BC5E3D /* AccountPlanPurchaseUpdatesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B51C982C9BBD1E00BC5E3D /* AccountPlanPurchaseUpdatesProviderTests.swift */; };
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
 		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
@@ -1846,7 +1844,6 @@
 		B5D8DD8F2AC54DE200F1D18B /* MEGAPresentationMock in Frameworks */ = {isa = PBXBuildFile; productRef = B5D8DD8E2AC54DE200F1D18B /* MEGAPresentationMock */; };
 		B5E4EB432A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */; };
 		B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EBD729795A10009C5578 /* HomeViewModel.swift */; };
-		B5E568102C90203B000E7270 /* AccountPlanPurchaseUpdatesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E5680F2C90203B000E7270 /* AccountPlanPurchaseUpdatesProvider.swift */; };
 		B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */; };
 		B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */; };
 		B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
@@ -4571,7 +4568,6 @@
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerTests.swift; sourceTree = "<group>"; };
-		B55668802C97E79A006DE469 /* MockAccountPlanPurchaseUpdatesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAccountPlanPurchaseUpdatesProvider.swift; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
 		B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModelTests.swift; sourceTree = "<group>"; };
@@ -4614,7 +4610,6 @@
 		B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountViewModel.swift; sourceTree = "<group>"; };
 		B5B0E30527F1BCA700DB6146 /* WarningBannerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningBannerViewModelTests.swift; sourceTree = "<group>"; };
 		B5B4CFC22C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEncourageGuestUserToJoinMegaRouter.swift; sourceTree = "<group>"; };
-		B5B51C982C9BBD1E00BC5E3D /* AccountPlanPurchaseUpdatesProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountPlanPurchaseUpdatesProviderTests.swift; path = MEGAUnitTests/Plan/AccountPlanPurchaseUpdatesProviderTests.swift; sourceTree = SOURCE_ROOT; };
 		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositoryTests.swift; sourceTree = "<group>"; };
@@ -4629,7 +4624,6 @@
 		B5E378A22B8334DA000C1DAD /* Notifications */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Notifications; sourceTree = "<group>"; };
 		B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReferralBonusesTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5E4EBD729795A10009C5578 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		B5E5680F2C90203B000E7270 /* AccountPlanPurchaseUpdatesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPlanPurchaseUpdatesProvider.swift; sourceTree = "<group>"; };
 		B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Account.swift"; sourceTree = "<group>"; };
 		B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagView.swift; sourceTree = "<group>"; };
 		B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModel.swift; sourceTree = "<group>"; };
@@ -10961,7 +10955,6 @@
 			children = (
 				C4A016BB2B674DC100492185 /* Mocks */,
 				835F711D2C4A5D74000B359D /* Utils */,
-				B5B51C982C9BBD1E00BC5E3D /* AccountPlanPurchaseUpdatesProviderTests.swift */,
 				B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */,
 				B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */,
 				C4A016B92B67338C00492185 /* UpgradeEncouragementViewModelTests.swift */,
@@ -11144,7 +11137,6 @@
 			children = (
 				B5EF0A7329F0EDF900B166B1 /* MEGAPurchase */,
 				B5EF0A7529F0EE2000B166B1 /* AccountPlanPurchaseRepository.swift */,
-				B5E5680F2C90203B000E7270 /* AccountPlanPurchaseUpdatesProvider.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -13182,7 +13174,6 @@
 		C4A016BB2B674DC100492185 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				B55668802C97E79A006DE469 /* MockAccountPlanPurchaseUpdatesProvider.swift */,
 				C4A016BC2B674DE100492185 /* MockRandomNumberGenerator.swift */,
 				C4A016BF2B67630F00492185 /* MockUpgradeAccountRouter.swift */,
 				C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */,
@@ -14361,7 +14352,6 @@
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
-				B5E568102C90203B000E7270 /* AccountPlanPurchaseUpdatesProvider.swift in Sources */,
 				A5A744AE2B9FF59100605E4C /* AccountRepository+Additions.swift in Sources */,
 				94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
@@ -16394,7 +16384,6 @@
 			files = (
 				835F71222C4A5DDE000B359D /* AccountPlanEntity+Plans.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
-				B5B51C992C9BBD1E00BC5E3D /* AccountPlanPurchaseUpdatesProviderTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
@@ -16565,7 +16554,6 @@
 				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
-				B55668812C97E79A006DE469 /* MockAccountPlanPurchaseUpdatesProvider.swift in Sources */,
 				0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,

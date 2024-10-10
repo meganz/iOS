@@ -283,6 +283,7 @@
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
+    MEGALogDebug(@"[StoreKit] Restore failed with error %@", error);
     for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
         if ([restoreDelegate respondsToSelector:@selector(failedRestore:message:)]) {
             [restoreDelegate failedRestore:error.code message:error.localizedDescription];

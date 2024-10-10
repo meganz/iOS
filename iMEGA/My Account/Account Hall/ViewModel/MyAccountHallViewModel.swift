@@ -111,7 +111,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         switch action {
         case .viewDidLoad:
             trackAccountScreenEvent()
-            setupSubscriptions()
         case .viewWillAppear:
             startAccountUpdatesMonitoring()
         case .viewWillDisappear:

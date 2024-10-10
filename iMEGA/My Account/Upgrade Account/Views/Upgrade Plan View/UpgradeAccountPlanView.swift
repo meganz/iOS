@@ -94,11 +94,8 @@ struct UpgradeAccountPlanView: View {
         .clipped()
         .disabled(viewModel.isLoading)
         .task {
-            await viewModel.setupPlans()
             await viewModel.setUpExternalAds()
         }
-        .throwingTask { try await viewModel.startPurchaseUpdatesMonitoring() }
-        .throwingTask { try await viewModel.startRestoreUpdatesMonitoring() }
         .onChange(of: viewModel.isDismiss) { newValue in
             if newValue {
                 dismiss()

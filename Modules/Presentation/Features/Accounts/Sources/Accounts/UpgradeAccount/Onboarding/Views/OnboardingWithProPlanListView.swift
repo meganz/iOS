@@ -76,14 +76,8 @@ public struct OnboardingWithProPlanListView: View {
                 dismiss()
             }
         }
-        .disabled(viewModel.isLoading)
         .task {
             await viewModel.setupPlans()
-        }
-        .throwingTask { try await viewModel.startPurchaseUpdatesMonitoring() }
-        .throwingTask { try await viewModel.startRestoreUpdatesMonitoring() }
-        .onDisappear {
-            viewModel.cancelPurchaseTask()
         }
         .alert(isPresented: $viewModel.isAlertPresented) {
             if let alertType = viewModel.alertType,
