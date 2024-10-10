@@ -419,7 +419,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     @MainActor
     func testMonitorAlbumPhotos_onPhotosReturned_shouldUpdateNodeCount() async {
-        for await hiddenNodesFeatureFlag in [true, false].async {
+        for await excludeSensitives in [true, false].async {
             let albumId = HandleEntity(65)
             let albumPhotos = (1...15).map {
                 AlbumPhotoEntity(photo: NodeEntity(handle: $0),
@@ -429,13 +429,13 @@ final class AlbumCellViewModelTests: XCTestCase {
                 .eraseToAnyAsyncSequence()
             let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
                 monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodesFeatureFlag])
             let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             let album = AlbumEntity(id: albumId, type: .user)
             
             let sut = makeAlbumCellViewModel(album: album,
                                              monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-                                             featureFlagProvider: featureFlagProvider,
+                                             sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase(
+                                                excludeSensitives: excludeSensitives),
                                              albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
             
             let exp = expectation(description: "Should update count")
@@ -454,7 +454,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             subscription.cancel()
             
             XCTAssertEqual(monitorUserAlbumPhotosUseCase.invocations,
-                           [.userAlbumPhotos(excludeSensitives: hiddenNodesFeatureFlag)])
+                           [.userAlbumPhotos(excludeSensitives: excludeSensitives)])
         }
     }
     
@@ -734,7 +734,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
@@ -748,7 +748,7 @@ final class AlbumCellViewModelTests: XCTestCase {
                                      monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                                      nodeUseCase: nodeUseCase,
                                      sensitiveNodeUseCase: sensitiveNodeUseCase,
-                                     contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                                     sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                                      albumCoverUseCase: albumCoverUseCase,
                                      album: album,
                                      selection: selection,

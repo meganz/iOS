@@ -22,8 +22,12 @@ final class SpotlightIndexer: NSObject {
             favouritesUseCase: FavouriteNodesUseCase(
                 repo: FavouriteNodesRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo,
-                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
+                sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                    accountUseCase: AccountUseCase(
+                        repository: AccountRepository.newRepo),
+                    contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                        repo: UserAttributeRepository.newRepo),
+                    hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })),
             nodeAttributeUseCase: NodeAttributeUseCase(
                 repo: NodeAttributeRepository.newRepo),
             spotlightSearchableIndexUseCase: spotlightSearchableIndexUseCase

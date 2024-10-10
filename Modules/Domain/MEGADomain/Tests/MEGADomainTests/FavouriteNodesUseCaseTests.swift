@@ -60,7 +60,7 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
         XCTAssertEqual(result, [expectedResult])
     }
     
-    func testAllFavouriteNodesSearch_whenFeatureFlagIsOff_returnsAllNodesIncludingSensitive() async throws {
+    func testAllFavouriteNodesSearch_whenExcludeSensitiveNodesTrue_returnsNoSensitveNodes() async throws {
         let sensitiveNode = NodeEntity(handle: 2)
         let nodes: [NodeEntity: Result<Bool, Error>] = [
             .init(handle: 1): .success(false),
@@ -72,31 +72,8 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
             repo: MockFavouriteNodesRepository(result: .success(nodes.keys.map { $0 })),
             nodeRepository: MockNodeRepository(
                 isInheritingSensitivityResults: nodes),
-            contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false)),
-            hiddenNodesFeatureFlagEnabled: false
-        )
-        
-        let result = try await sut.allFavouriteNodes(searchString: nil)
-        
-        XCTAssertEqual(result, nodes.keys.map { $0 })
-    }
-    
-    func testAllFavouriteNodesSearch_whenShowHiddenNodesFalse_returnsNoSensitveNodes() async throws {
-        let sensitiveNode = NodeEntity(handle: 2)
-        let nodes: [NodeEntity: Result<Bool, Error>] = [
-            .init(handle: 1): .success(false),
-            sensitiveNode: .success(true),
-            .init(handle: 3): .success(false)
-        ]
-        
-        let sut = sut(
-            repo: MockFavouriteNodesRepository(result: .success(nodes.keys.map { $0 })),
-            nodeRepository: MockNodeRepository(
-                isInheritingSensitivityResults: nodes),
-            contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false)),
-            hiddenNodesFeatureFlagEnabled: true
+            sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: true)
         )
         
         let result = try await sut.allFavouriteNodes(searchString: nil)
@@ -104,7 +81,7 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
         XCTAssertEqual(result, nodes.keys.filter {$0 != sensitiveNode })
     }
     
-    func testAllFavouriteNodesSearch_whenShowHiddenNodesTrue_returnsAllNodesIncludingSensitive() async throws {
+    func testAllFavouriteNodesSearch_whenExcludeSensitiveNodesFalse_returnsAllNodesIncludingSensitive() async throws {
         let sensitiveNode = NodeEntity(handle: 2)
         let nodes: [NodeEntity: Result<Bool, Error>] = [
             .init(handle: 1): .success(false),
@@ -116,9 +93,8 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
             repo: MockFavouriteNodesRepository(result: .success(nodes.keys.map { $0 })),
             nodeRepository: MockNodeRepository(
                 isInheritingSensitivityResults: nodes),
-            contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: true)),
-            hiddenNodesFeatureFlagEnabled: true
+            sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: false)
         )
         
         let result = try await sut.allFavouriteNodes(searchString: nil)
@@ -132,12 +108,11 @@ extension FavouriteNodesUseCaseTests {
     private func sut(
         repo: some FavouriteNodesRepositoryProtocol = MockFavouriteNodesRepository(),
         nodeRepository: some NodeRepositoryProtocol = MockNodeRepository(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        hiddenNodesFeatureFlagEnabled: Bool = false) -> some FavouriteNodesUseCaseProtocol {
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase()
+    ) -> some FavouriteNodesUseCaseProtocol {
         FavouriteNodesUseCase(
             repo: repo,
             nodeRepository: nodeRepository,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled })
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
     }
 }

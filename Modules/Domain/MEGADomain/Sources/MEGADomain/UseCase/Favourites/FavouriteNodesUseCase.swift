@@ -18,22 +18,19 @@ public protocol FavouriteNodesUseCaseProtocol: Sendable {
     func allFavouriteNodes(searchString: String?, excludeSensitives: Bool, limit: Int) async throws -> [NodeEntity]
 }
 
-public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: NodeRepositoryProtocol, V: ContentConsumptionUserAttributeUseCaseProtocol>: FavouriteNodesUseCaseProtocol {
+public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: NodeRepositoryProtocol, V: SensitiveDisplayPreferenceUseCaseProtocol>: FavouriteNodesUseCaseProtocol {
     
     private let repo: T
     private let nodeRepository: U
-    private let contentConsumptionUserAttributeUseCase: V
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
+    private let sensitiveDisplayPreferenceUseCase: V
     
     public init(repo: T,
                 nodeRepository: U,
-                contentConsumptionUserAttributeUseCase: V,
-                hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
+                sensitiveDisplayPreferenceUseCase: V) {
         
         self.repo = repo
         self.nodeRepository = nodeRepository
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
     }
     
     public func allFavouriteNodes(searchString: String?) async throws -> [NodeEntity] {
@@ -81,10 +78,8 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: Node
     private func shouldExcludeSensitive(override: Bool?) async -> Bool {
         if let override {
             override
-        } else if hiddenNodesFeatureFlagEnabled() {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
         } else {
-            false
+            await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         }
     }
 }

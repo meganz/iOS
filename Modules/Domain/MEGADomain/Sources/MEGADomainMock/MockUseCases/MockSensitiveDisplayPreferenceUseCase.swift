@@ -1,10 +1,11 @@
 import MEGADomain
+import MEGASwift
 
 public struct MockSensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCaseProtocol {
-    private let excludeSensitives: Bool
+    @Atomic public var excludeSensitives: Bool = false
     
     public init(excludeSensitives: Bool = false) {
-        self.excludeSensitives = excludeSensitives
+        $excludeSensitives.mutate { $0 = excludeSensitives }
     }
     
     public func excludeSensitives() async -> Bool {

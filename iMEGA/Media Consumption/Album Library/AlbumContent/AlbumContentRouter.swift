@@ -198,9 +198,12 @@ struct AlbumContentRouter: AlbumContentRouting {
         return MonitorAlbumPhotosUseCase(
             monitorSystemAlbumPhotosUseCase: monitorSystemAlbumPhotosUseCase,
             monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         )
     }
     

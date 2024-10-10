@@ -375,30 +375,30 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testShouldExcludeSensitiveItems_called_shouldReturnInverseOfShowHiddenNodes() async {
-        for await showHiddenNodes in [true, false].async {
-            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes))
+        for await excludeSensitives in [true, false].async {
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitives)
             let sut = makeSUT(
-                contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
             
             let shouldExclude = await sut.shouldExcludeSensitiveItems()
-            XCTAssertEqual(shouldExclude, !showHiddenNodes)
+            XCTAssertEqual(shouldExclude, excludeSensitives)
         }
     }
     
     @MainActor
     func testDispatchAction_updateSensitivitySettingOnNextSearch_shouldRecalculateSensitiveSetting() async throws {
-        let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
-            sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
+        let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+            excludeSensitives: true)
         let sut = makeSUT(
-            contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let shouldExcludeFirstCall = await sut.shouldExcludeSensitiveItems()
         XCTAssertTrue(shouldExcludeFirstCall)
 
-        try await contentConsumptionUseCase.saveSensitiveSetting(showHiddenNodes: true)
+        sensitiveDisplayPreferenceUseCase.$excludeSensitives.mutate { $0 = false }
         sut.dispatch(.resetSensitivitySetting)
         
         let shouldExcludeSecondCall = await sut.shouldExcludeSensitiveItems()
@@ -477,17 +477,16 @@ class CloudDriveViewModelTests: XCTestCase {
         let expectedNodes = [MockNode(handle: 1), MockNode(handle: 3)]
         let sdk = MockSdk(nodes: expectedNodes)
         
-        let testCases = [(showHiddenNodes: false, expectedSensitiveFilter: MEGASearchFilterSensitiveOption.nonSensitiveOnly),
-                         (showHiddenNodes: true, expectedSensitiveFilter: MEGASearchFilterSensitiveOption.disabled)]
+        let testCases = [(showHiddenNodes: true, expectedSensitiveFilter: MEGASearchFilterSensitiveOption.nonSensitiveOnly),
+                         (showHiddenNodes: false, expectedSensitiveFilter: MEGASearchFilterSensitiveOption.disabled)]
         
-        for testCase in testCases {
-            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: testCase.showHiddenNodes))
+        for (excludeSensitives, expectedFilter) in testCases {
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitives)
             
             let parentNode = MockNode(handle: 89)
             let sut = makeSUT(parentNode: parentNode,
-                              contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
-                              featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
+                              sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                               sdk: sdk)
             
             let nodes = await sut.nodesForDisplayMode(.cloudDrive, sortOrder: .none)
@@ -495,7 +494,7 @@ class CloudDriveViewModelTests: XCTestCase {
             XCTAssertEqual(nodes?.toNodeArray(), expectedNodes)
             let searchQuery = sdk.searchQueryParameters
             XCTAssertEqual(searchQuery?.node.handle, parentNode.handle)
-            XCTAssertEqual(searchQuery?.sensitiveFilter, testCase.expectedSensitiveFilter)
+            XCTAssertEqual(searchQuery?.sensitiveFilter, expectedFilter)
         }
     }
     
@@ -566,7 +565,7 @@ class CloudDriveViewModelTests: XCTestCase {
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
@@ -587,7 +586,7 @@ class CloudDriveViewModelTests: XCTestCase {
             preferenceUseCase: preferenceUseCase, 
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             accountUseCase: accountUseCase,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             tracker: tracker,
             featureFlagProvider: featureFlagProvider,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel, 

@@ -124,7 +124,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     delegate: MockMediaDiscoveryContentDelegate(),
                     analyticsUseCase: MockMediaDiscoveryAnalyticsUseCase(),
                     mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-                    contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase()
+                    sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase()
                 ),
                 warningViewModel: nil,
                 temporaryWarningViewModel: tempWarningBannerViewModel,

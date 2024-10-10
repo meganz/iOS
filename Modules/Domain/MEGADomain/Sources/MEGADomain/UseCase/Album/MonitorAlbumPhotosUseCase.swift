@@ -15,25 +15,22 @@ public protocol MonitorAlbumPhotosUseCaseProtocol: Sendable {
 public struct MonitorAlbumPhotosUseCase: MonitorAlbumPhotosUseCaseProtocol {
     private let monitorSystemAlbumPhotosUseCase: any MonitorSystemAlbumPhotosUseCaseProtocol
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     
     public init(
         monitorSystemAlbumPhotosUseCase: some MonitorSystemAlbumPhotosUseCaseProtocol,
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol
     ) {
         self.monitorSystemAlbumPhotosUseCase = monitorSystemAlbumPhotosUseCase
         self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
     }
     
     public func monitorPhotos(
         for album: AlbumEntity
     ) async -> AnyAsyncSequence<Result<[AlbumPhotoEntity], any Error>> {
-        let shouldExcludeSensitive = await shouldExcludeSensitive()
+        let shouldExcludeSensitive = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         
         return switch album.type {
         case .user:
@@ -61,13 +58,5 @@ public struct MonitorAlbumPhotosUseCase: MonitorAlbumPhotosUseCaseProtocol {
             $0.map { $0.map { AlbumPhotoEntity(photo: $0) } }
         }
         .eraseToAnyAsyncSequence()
-    }
-    
-    private func shouldExcludeSensitive() async -> Bool {
-        if hiddenNodesFeatureFlagEnabled() {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        } else {
-            false
-        }
     }
 }

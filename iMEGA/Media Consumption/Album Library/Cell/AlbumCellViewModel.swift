@@ -40,7 +40,7 @@ final class AlbumCellViewModel: ObservableObject {
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -58,7 +58,7 @@ final class AlbumCellViewModel: ObservableObject {
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
@@ -71,7 +71,7 @@ final class AlbumCellViewModel: ObservableObject {
         self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.albumCoverUseCase = albumCoverUseCase
         self.album = album
         self.selection = selection
@@ -120,9 +120,9 @@ final class AlbumCellViewModel: ObservableObject {
     func monitorAlbumPhotos() async {
         guard await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled(),
               album.type == .user else { return }
-        
+        let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         for await albumPhotos in await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
-            for: album, excludeSensitives: excludeSensitives()) {
+            for: album, excludeSensitives: excludeSensitives) {
             
             numberOfNodes = albumPhotos.count
             await loadAlbumCover(from: albumPhotos)
@@ -188,14 +188,6 @@ final class AlbumCellViewModel: ObservableObject {
         guard let imageContainer,
               !thumbnailContainer.isEqual(imageContainer) else { return }
         thumbnailContainer = imageContainer
-    }
-    
-    private func excludeSensitives() async -> Bool {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        } else {
-            false
-        }
     }
     
     private func trackAnalytics() async {

@@ -37,7 +37,7 @@ final class FilesExplorerViewModel: ViewModelType {
     private let useCase: any FilesSearchUseCaseProtocol
     private let nodeDownloadUpdatesUseCase: any NodeDownloadUpdatesUseCaseProtocol
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let explorerType: ExplorerTypeEntity
     private var contextMenuManager: ContextMenuManager?
     private let nodeProvider: any MEGANodeProviderProtocol
@@ -81,7 +81,7 @@ final class FilesExplorerViewModel: ViewModelType {
                   router: FilesExplorerRouter,
                   useCase: some FilesSearchUseCaseProtocol,
                   nodeDownloadUpdatesUseCase: some NodeDownloadUpdatesUseCaseProtocol,
-                  contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+                  sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
                   createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
                   nodeProvider: some MEGANodeProviderProtocol,
                   featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
@@ -89,8 +89,8 @@ final class FilesExplorerViewModel: ViewModelType {
         self.router = router
         self.useCase = useCase
         self.createContextMenuUseCase = createContextMenuUseCase
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.nodeDownloadUpdatesUseCase = nodeDownloadUpdatesUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.nodeProvider = nodeProvider
         self.featureFlagProvider = featureFlagProvider
     }
@@ -176,14 +176,6 @@ final class FilesExplorerViewModel: ViewModelType {
         }
     }
     
-    private func shouldExcludeHiddenSensitive() async -> Bool {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        } else {
-            false
-        }
-    }
-    
     private func startSearch(text: String?, formatType: NodeFormatEntity, favouritesOnly: Bool = false) async throws -> [NodeEntity] {
         try await useCase.search(
             filter: .recursive(
@@ -192,7 +184,7 @@ final class FilesExplorerViewModel: ViewModelType {
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                 formatType: explorerType.toNodeFormatEntity(),
-                sensitiveFilterOption: await shouldExcludeHiddenSensitive() ? .nonSensitiveOnly : .disabled,
+                sensitiveFilterOption: await sensitiveDisplayPreferenceUseCase.excludeSensitives() ? .nonSensitiveOnly : .disabled,
                 favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled),
             cancelPreviousSearchIfNeeded: true)
     }

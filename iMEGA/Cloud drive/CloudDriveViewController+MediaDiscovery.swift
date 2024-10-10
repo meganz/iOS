@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 
@@ -54,8 +55,13 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
             isAutomaticallyShown: isShowingAutomatically,
             delegate: self,
             analyticsUseCase: analyticsUseCase,
-            mediaDiscoveryUseCase: mediaDiscoveryUseCase, 
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo))
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+            )
         
         let viewController = MediaDiscoveryContentViewController(viewModel: viewModel)
         

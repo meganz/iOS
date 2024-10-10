@@ -73,14 +73,14 @@ class HomeSearchResultsProviderTests: XCTestCase {
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
         let downloadedNodesListener: MockDownloadedNodesListener
-        let contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase
+        let sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase
         let sut: HomeSearchResultsProvider
         let nodes: [NodeEntity]
         
         init(
             _ testCase: XCTestCase,
             nodes: [NodeEntity] = [],
-            showHiddenNodes: Bool = false,
+            excludeSensitives: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             file: StaticString = #filePath,
@@ -103,10 +103,9 @@ class HomeSearchResultsProviderTests: XCTestCase {
             mediaUseCase = MockMediaUseCase()
             
             downloadedNodesListener = MockDownloadedNodesListener()
-             
-            contentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)
-            )
+            
+            sensitiveDisplayPreferenceUseCase =  MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitives)
             
             sut = HomeSearchResultsProvider(
                 parentNodeProvider: { NodeEntity(handle: Harness.parentNodeHandle) },
@@ -117,7 +116,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 mediaUseCase: mediaUseCase,
                 downloadedNodesListener: downloadedNodesListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                 allChips: SearchChipEntity.allChips(
                     currentDate: { .testDate },
                     calendar: .testCalendar
@@ -209,7 +208,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
     
     func testSearch_whenHiddenNodesFeatureEnabledAndShowHiddenNodesSettingIsOn_shouldNotExcludeHiddenNodes() async throws {
         // given
-        let harness = Harness(self, showHiddenNodes: true)
+        let harness = Harness(self, excludeSensitives: false)
         
         // when
         _ = await harness.sut.search(queryRequest: .initial)
@@ -222,7 +221,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
     
     func testSearch_whenHiddenNodesFeatureEnabledAndShowHiddenNodesSettingIsOff_shouldExcludeHiddenNodes() async throws {
         // given
-        let harness = Harness(self, showHiddenNodes: false)
+        let harness = Harness(self, excludeSensitives: true)
         
         // when
         _ = await harness.sut.search(queryRequest: .initial)
@@ -235,7 +234,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
     
     func testSearch_whenHiddenNodesFeatureNotEnabledAndShowHiddenNodesSettingIsOn_shouldNotExcludeHiddenNodes() async throws {
         // given
-        let harness = Harness(self, showHiddenNodes: true, hiddenNodesFeatureEnabled: false)
+        let harness = Harness(self, excludeSensitives: false, hiddenNodesFeatureEnabled: false)
         
         // when
         _ = await harness.sut.search(queryRequest: .initial)
@@ -328,7 +327,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
     func testSearch_modificationTimeFrame_shouldBeNilIfChipNotSelected() async throws {
         // given
         let query = SearchQuery.userSupplied(.query(chips: []))
-        let harness = Harness(self, showHiddenNodes: true, hiddenNodesFeatureEnabled: false)
+        let harness = Harness(self, excludeSensitives: false, hiddenNodesFeatureEnabled: false)
         
         // when
         _ = await harness.sut.search(queryRequest: query)
@@ -841,7 +840,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         line: UInt = #line
     ) async throws {
         // given
-        let harness = Harness(self, showHiddenNodes: enabled, hiddenNodesFeatureEnabled: true)
+        let harness = Harness(self, excludeSensitives: !enabled, hiddenNodesFeatureEnabled: true)
         harnessSetup(harness)
 
         // when

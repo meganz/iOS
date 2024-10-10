@@ -17,6 +17,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     
     func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell {
         let nodeRepository = NodeRepository.newRepo
+        let accountUseCase = AccountUseCase(
+            repository: AccountRepository.newRepo)
         let vm = AlbumCellViewModel(
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
             monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
@@ -26,10 +28,12 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 nodeRepository: NodeRepository.newRepo),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: nodeRepository,
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo)),
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
+                accountUseCase: accountUseCase),
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: accountUseCase,
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
             albumCoverUseCase: AlbumCoverUseCase(nodeRepository: nodeRepository),
             album: album,
             selection: selection,
@@ -77,7 +81,12 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             ),
             tracker: DIContainer.tracker,
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                     placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                     affirmativeButtonTitle: Strings.Localizable.createFolderButton,

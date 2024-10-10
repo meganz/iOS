@@ -672,11 +672,7 @@ final class AlbumListViewModelTests: XCTestCase {
     
     @MainActor
     func testMonitorAlbums_onCalled_shouldLoadSystemAndUserAlbumsAndSetShouldLoadToFalse() async throws {
-        let testCases = [(hiddenNodesFeature: false, showHiddenNodes: false, excludeSensitives: false),
-                         (hiddenNodesFeature: true, showHiddenNodes: false, excludeSensitives: true),
-                         (hiddenNodesFeature: true, showHiddenNodes: true, excludeSensitives: false)]
-        
-        for await (hiddenNodes, showHiddenNodes, excludeSensitives) in testCases.async {
+        for excludeSensitives in [true, false] {
             let favouriteAlbum = AlbumEntity(id: 1, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
                                              coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
             let gifAlbum = AlbumEntity(id: 2, name: Strings.Localizable.CameraUploads.Albums.Gif.title,
@@ -698,15 +694,13 @@ final class AlbumListViewModelTests: XCTestCase {
                 monitorSystemAlbumsSequence: systemAsyncSequence,
                 monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
             )
-            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
-                sensitiveNodesUserAttributeEntity: .init(onboarded: true, showHiddenNodes: showHiddenNodes))
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodes])
+            let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+                excludeSensitives: excludeSensitives)
             let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             
             let sut = albumListViewModel(
                 monitorAlbumsUseCase: monitorAlbumsUseCase,
-                contentConsumptionUserAttributeUseCase: contentConsumptionUseCase,
-                featureFlagProvider: featureFlagProvider,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                 albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
             
             var subscriptions = Set<AnyCancellable>()
@@ -851,8 +845,7 @@ final class AlbumListViewModelTests: XCTestCase {
         shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
     ) -> AlbumListViewModel {
@@ -862,10 +855,9 @@ final class AlbumListViewModelTests: XCTestCase {
             shareCollectionUseCase: shareCollectionUseCase,
             tracker: tracker,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             alertViewModel: alertViewModel(),
             photoAlbumContainerViewModel: photoAlbumContainerViewModel,
-            featureFlagProvider: featureFlagProvider,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider
         )
     }

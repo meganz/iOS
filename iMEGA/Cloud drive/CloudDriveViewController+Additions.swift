@@ -69,8 +69,11 @@ extension CloudDriveViewController {
             preferenceUseCase: preferenceUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             accountUseCase: accountUseCase,
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                accountUseCase: accountUseCase,
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
             tracker: DIContainer.tracker,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self), 
             nodeSensitivityChecker: nodeSensitivityChecker

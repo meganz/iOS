@@ -5,9 +5,8 @@ import MEGASDKRepo
 @objc final class BrowserViewModel: NSObject {
     private let isChildBrowser: Bool
     private let isSelectVideos: Bool
-    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let sdk: MEGASdk
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var parentNode: MEGANode?
     
     private var parentNodeHandle: MEGAHandle? {
@@ -23,15 +22,13 @@ import MEGASDKRepo
     init(parentNode: MEGANode?,
          isChildBrowser: Bool,
          isSelectVideos: Bool,
-         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-         sdk: MEGASdk = .shared,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+         sdk: MEGASdk = .shared) {
         self.parentNode = parentNode
         self.isChildBrowser = isChildBrowser
         self.isSelectVideos = isSelectVideos
-        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.sdk = sdk
-        self.featureFlagProvider = featureFlagProvider
     }
     
     func updateParentNode(_ node: MEGANode?) {
@@ -43,7 +40,7 @@ import MEGASDKRepo
             return MEGANodeList()
         }
         
-        let excludeSensitive = await shouldExcludeSensitiveItems()
+        let excludeSensitive = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         let filter = MEGASearchFilter(
             term: "",
             parentNodeHandle: parentNodeHandle,
@@ -74,13 +71,5 @@ import MEGASDKRepo
             }
         }
         return newNodeList
-    }
-    
-    private func shouldExcludeSensitiveItems() async -> Bool {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
-            await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
-        } else {
-            false
-        }
     }
 }
