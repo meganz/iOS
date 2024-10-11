@@ -426,7 +426,8 @@ final class HomeScreenFactory: NSObject {
         SensitiveNodeUseCase(
             nodeRepository: NodeRepository.newRepo,
             accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo))
+                repository: AccountRepository.newRepo)
+        )
     }
     
     func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {

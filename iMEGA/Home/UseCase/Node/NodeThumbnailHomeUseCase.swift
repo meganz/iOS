@@ -4,7 +4,7 @@ import MEGAL10n
 import MEGASwift
 import UIKit
 
-protocol NodeThumbnailHomeUseCaseProtocol {
+protocol NodeThumbnailHomeUseCaseProtocol: Sendable {
     func loadThumbnail(
         of nodeHandle: HandleEntity,
         completion: @escaping (UIImage?) -> Void
