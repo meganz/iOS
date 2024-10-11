@@ -1342,6 +1342,9 @@
 		9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */; };
 		943BD8472C91CA5C00619F2B /* MockWarningViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943BD8462C91CA5C00619F2B /* MockWarningViewRouter.swift */; };
 		943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */; };
+		943DBBC62CB93AF900B8B14C /* ExportFileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DBBC52CB93AEC00B8B14C /* ExportFileViewModelTests.swift */; };
+		943DBBC92CB94C5600B8B14C /* MockExportFileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */; };
+		943DBBCC2CB94C7F00B8B14C /* MockExportFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DBBCB2CB94C7D00B8B14C /* MockExportFileUseCase.swift */; };
 		943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */; };
 		943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
@@ -4154,6 +4157,9 @@
 		9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeFactoryTests.swift; sourceTree = "<group>"; };
 		943BD8462C91CA5C00619F2B /* MockWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWarningViewRouter.swift; sourceTree = "<group>"; };
 		943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		943DBBC52CB93AEC00B8B14C /* ExportFileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileViewModelTests.swift; sourceTree = "<group>"; };
+		943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExportFileViewRouter.swift; sourceTree = "<group>"; };
+		943DBBCB2CB94C7D00B8B14C /* MockExportFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExportFileUseCase.swift; sourceTree = "<group>"; };
 		943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuDataModel.swift; sourceTree = "<group>"; };
 		943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		943F8B1E1EF2704900AFD89F /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = iMEGA/Extensions/MEGAShare/ShareViewController.h; sourceTree = SOURCE_ROOT; };
@@ -10243,6 +10249,14 @@
 			path = MyAvatarIconView;
 			sourceTree = "<group>";
 		};
+		943DBBC42CB93AE400B8B14C /* ExportFile */ = {
+			isa = PBXGroup;
+			children = (
+				943DBBC52CB93AEC00B8B14C /* ExportFileViewModelTests.swift */,
+			);
+			path = ExportFile;
+			sourceTree = "<group>";
+		};
 		943F8B101EF26E9C00AFD89F /* MEGAShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -10457,6 +10471,7 @@
 			isa = PBXGroup;
 			children = (
 				94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */,
+				943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */,
 				94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */,
 				949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */,
 				94A1445F2C9DE50500C34A98 /* MockPasteImagePreviewRouter.swift */,
@@ -11333,6 +11348,7 @@
 				5BBC13E426CE64A30010115B /* Cells */,
 				2488EBC12A13B4F2005F910E /* Delegates */,
 				328984882A288FCC0049CD40 /* DomainExtensions */,
+				943DBBC42CB93AE400B8B14C /* ExportFile */,
 				C4B97D7E2B67924C00EBA9E5 /* FuncCallRecorder */,
 				C4B97D732B6781F900EBA9E5 /* RandomNumberGenerator */,
 				248A03182A79024700F183A2 /* Shared Views */,
@@ -12261,6 +12277,7 @@
 		B6FD6510268D7EA500988A17 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				943DBBCB2CB94C7D00B8B14C /* MockExportFileUseCase.swift */,
 				24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */,
 				9437CEC32CB0080D0051F947 /* MockOfflineFilesUseCase.swift */,
 				24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */,
@@ -16642,6 +16659,7 @@
 				B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */,
 				0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */,
 				B569A2C72C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift in Sources */,
+				943DBBC62CB93AF900B8B14C /* ExportFileViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
@@ -16719,6 +16737,8 @@
 				C4944FE82C339F6800A2C082 /* MockDownloadedNodesListener.swift in Sources */,
 				B5B4CFC32C3E7D0900783135 /* MockEncourageGuestUserToJoinMegaRouter.swift in Sources */,
 				B569A2C52C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift in Sources */,
+				943DBBCC2CB94C7F00B8B14C /* MockExportFileUseCase.swift in Sources */,
+				943DBBC92CB94C5600B8B14C /* MockExportFileViewRouter.swift in Sources */,
 				948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */,
