@@ -87,10 +87,6 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            setNavigationAndToolbarColor()
-        }
-
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
             adjustHeightOfTopAndBottomView()
         }
@@ -103,10 +99,8 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func setNavigationAndToolbarColor() {
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
-        AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
-        bottomBarBackground.backgroundColor = UIColor.surface1Background()
-        statusBarBackground.backgroundColor = UIColor.surface1Background()
+        bottomBarBackground.backgroundColor = TokenColors.Background.surface1
+        statusBarBackground.backgroundColor = TokenColors.Background.surface1
     }
     
     private func adjustHeightOfTopAndBottomView() {
