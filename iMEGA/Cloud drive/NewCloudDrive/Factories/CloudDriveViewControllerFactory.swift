@@ -173,7 +173,7 @@ struct CloudDriveViewControllerFactory {
                 nodeIconUsecase: NodeIconUseCase(nodeIconRepo: nodeAssetsManager),
                 nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
                 nodeUseCase: nodeUseCase,
-                sensitiveNodeUseCase: sensitiveNodeUseCase,
+                sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
                 mediaUseCase: homeFactory.makeMediaUseCase(),
                 nodeActions: nodeActions,
                 hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)

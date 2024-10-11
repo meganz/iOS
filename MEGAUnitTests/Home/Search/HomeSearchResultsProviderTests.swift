@@ -70,6 +70,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         static let parentNodeHandle: HandleEntity = 999
         let filesSearchUseCase: MockFilesSearchUseCase
         let nodeDetails: MockNodeDetailUseCase
+        let sensitiveNodeUseCase: MockSensitiveNodeUseCase
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
         let downloadedNodesListener: MockDownloadedNodesListener
@@ -99,7 +100,8 @@ class HomeSearchResultsProviderTests: XCTestCase {
             nodeDataUseCase = MockNodeDataUseCase(
                 rootNode: NodeEntity(handle: 1000),
                 nodeUpdateAsyncSequence: nodeUpdates)
-
+            sensitiveNodeUseCase = MockSensitiveNodeUseCase()
+            
             mediaUseCase = MockMediaUseCase()
             
             downloadedNodesListener = MockDownloadedNodesListener()
@@ -112,7 +114,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 filesSearchUseCase: filesSearchUseCase,
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
-                sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
                 mediaUseCase: mediaUseCase,
                 downloadedNodesListener: downloadedNodesListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),

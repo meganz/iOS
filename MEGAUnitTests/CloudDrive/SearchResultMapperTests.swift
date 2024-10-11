@@ -85,7 +85,10 @@ final class SearchResultMapperTests: XCTestCase {
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeParentIsSensitive_shouldReturnTrue() {
         // given
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true))
-        let sut = makeSUT(sensitiveNodeUseCase: sensitiveNodeUseCase, hiddenNodesFeatureEnabled: true)
+        let sut = makeSUT(
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            hiddenNodesFeatureEnabled: true
+        )
         
         // when
         let node = NodeEntity(isMarkedSensitive: false)

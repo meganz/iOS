@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-protocol NodeDetailUseCaseProtocol {
+protocol NodeDetailUseCaseProtocol: Sendable {
 
     func ownerFolder(of node: HandleEntity) -> NodeEntity?
 
@@ -13,9 +13,8 @@ protocol NodeDetailUseCaseProtocol {
 
 final class NodeDetailUseCase: NodeDetailUseCaseProtocol {
 
-    private var sdkNodeClient: SDKNodeClient
-
-    private var nodeThumbnailHomeUseCase: any NodeThumbnailHomeUseCaseProtocol
+    private let sdkNodeClient: SDKNodeClient
+    private let nodeThumbnailHomeUseCase: any NodeThumbnailHomeUseCaseProtocol
 
     init(
         sdkNodeClient: SDKNodeClient,
