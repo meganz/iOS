@@ -53,7 +53,7 @@
     self.firstNameLabel.text = LocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameLabel.text = LocalizedString(@"lastName", @"Hint text for the first name (Placeholder)");
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -62,17 +62,9 @@
     self.navigationController.presentationController.delegate = self;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.view.backgroundColor = [self defaultBackgroundColor];
     self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [self defaultBackgroundColor];
     self.firstNameLabel.textColor = self.lastNameLabel.textColor = [self primaryTextcolor];

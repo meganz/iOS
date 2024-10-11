@@ -49,11 +49,6 @@ final class ProfileTableViewDataSource {
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
-    func update(traitCollection: UITraitCollection) {
-        self.traitCollection = traitCollection
-        tableView?.reloadData()
-    }
-    
     func item(at indexPath: IndexPath) -> ProfileSectionRow? {
         dataSource?.itemIdentifier(for: indexPath)
     }

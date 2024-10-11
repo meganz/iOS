@@ -70,7 +70,7 @@ import UIKit
         MEGASdk.shared.add(self)
         MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.add(self)
         
-        updateAppearance()
+        setupColors()
         
         $offlineLogOutWarningDismissed.useCase = PreferenceUseCase.default
         
@@ -100,14 +100,6 @@ import UIKit
         if isMovingFromParent {
             MEGASdk.shared.remove(self)
             MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.remove(self)
-        }
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
         }
     }
     
@@ -161,8 +153,7 @@ import UIKit
     
     // MARK: - Private
     
-    private func updateAppearance() {
-        dataSource?.update(traitCollection: traitCollection)
+    private func setupColors() {
         let separatorColor = TokenColors.Border.strong
         
         tableView.backgroundColor = TokenColors.Background.page
