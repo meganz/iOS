@@ -498,6 +498,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         case URLTypeVpn:
             [MEGALinkManager openVPNApp];
             break;
+        case URLTypeCameraUploadsSettings:
+            if ([Helper hasSession_alertIfNot]) {
+                [MEGALinkManager navigateToCameraUploadsSettings];
+            }
         default:
             break;
     }

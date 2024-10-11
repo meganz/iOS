@@ -346,4 +346,15 @@ struct DeepLinkingTestSuite {
             assertDeepLinkType(urlString: url, expectedType: .vpn)
         }
     }
+    
+    // MARK: - Camera Uploads Settings Link Tests
+    @Suite("Camera Uploads Settings Link Tests - Verifies correct type is returned for Camera Uploads Settings URLs.")
+    struct CUSettingsLinkTests {
+        @Test("Camera Uploads Settings NSURL should return .cameraUploadsSettings", arguments: [
+            "mega://settings/camera"
+        ])
+        func cuSettingsLinkShouldReturnUpgradeLinkType(url: String) {
+            assertDeepLinkType(urlString: url, expectedType: .cameraUploadsSettings)
+        }
+    }
 }

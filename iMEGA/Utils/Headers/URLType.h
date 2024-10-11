@@ -38,5 +38,6 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeScheduleChatLink,
     URLTypeCollection,
     URLTypeUpgrade,
-    URLTypeVpn
+    URLTypeVpn,
+    URLTypeCameraUploadsSettings
 };

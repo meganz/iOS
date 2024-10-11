@@ -251,6 +251,15 @@ extension MainTabBarController {
             await scanRouter.start()
         }
     }
+    
+    @objc func showCameraUploadsSettings() {
+        guard let navController = children[safe: selectedIndex] as? MEGANavigationController else { return }
+        let cuSettingsRouter = CameraUploadsSettingsViewRouter(
+            presenter: navController,
+            closure: { }
+        )
+        DeepLinkRouter(appNavigator: cuSettingsRouter).navigate()
+    }
 }
 
 // MARK: - UITabBarControllerDelegate

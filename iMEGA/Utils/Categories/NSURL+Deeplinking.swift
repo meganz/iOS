@@ -25,6 +25,7 @@ enum DeeplinkPathKey: String {
     case termsOfService = "/terms"
     case collection = "/collection"
     case recovery = "/recovery" // whe tapping forgot password
+    case cameraUploadsSettings = "/camera"
 }
 
 enum DeeplinkFragmentKey: String {
@@ -64,6 +65,7 @@ enum DeeplinkHostKey: String {
     // https://mega.nz/# + Base64Handle
     case handle
     case vpn
+    case settings
 }
 
 enum DeeplinkSchemeKey: String {
@@ -76,7 +78,7 @@ enum DeeplinkSchemeKey: String {
 
 extension NSURL {
     @objc func mnz_type() -> URLType {
-        guard let scheme = scheme else { return .default }
+        guard let scheme else { return .default }
         
         switch DeeplinkSchemeKey(rawValue: scheme) {
         case .file:
@@ -95,41 +97,29 @@ extension NSURL {
     }
     
     private func parseFragmentType() -> URLType {
-        guard let fragment = fragment  else {
-            return .default
-        }
-        
-        if fragment.hasPrefix(DeeplinkFragmentKey.file.rawValue) {
-            return .fileLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.folder.rawValue) {
-            return .folderLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.confirmation.rawValue) {
-            return .confirmationLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.encrypted.rawValue) {
-            return .encryptedLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.newSignUp.rawValue) {
-            return .newSignUpLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.backup.rawValue) {
-            return .backupLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.incomingPendingContacts.rawValue) {
-            return .incomingPendingContactsLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.changeEmail.rawValue) {
-            return .changeEmailLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.cancelAccount.rawValue) {
-            return .cancelAccountLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.recover.rawValue) {
-            return .recoverLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.contact.rawValue) {
-            return .contactLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.openChatSection.rawValue) {
-            return .openChatSectionLink
-        } else if fragment.hasPrefix(DeeplinkFragmentKey.publicChat.rawValue) {
-            return .publicChatLink
-        } else if !fragment.isEmpty {
-            return .handleLink
+        guard let fragment else { return .default }
+
+        let fragmentKeyMap: [String: URLType] = [
+            DeeplinkFragmentKey.file.rawValue: .fileLink,
+            DeeplinkFragmentKey.folder.rawValue: .folderLink,
+            DeeplinkFragmentKey.confirmation.rawValue: .confirmationLink,
+            DeeplinkFragmentKey.encrypted.rawValue: .encryptedLink,
+            DeeplinkFragmentKey.newSignUp.rawValue: .newSignUpLink,
+            DeeplinkFragmentKey.backup.rawValue: .backupLink,
+            DeeplinkFragmentKey.incomingPendingContacts.rawValue: .incomingPendingContactsLink,
+            DeeplinkFragmentKey.changeEmail.rawValue: .changeEmailLink,
+            DeeplinkFragmentKey.cancelAccount.rawValue: .cancelAccountLink,
+            DeeplinkFragmentKey.recover.rawValue: .recoverLink,
+            DeeplinkFragmentKey.contact.rawValue: .contactLink,
+            DeeplinkFragmentKey.openChatSection.rawValue: .openChatSectionLink,
+            DeeplinkFragmentKey.publicChat.rawValue: .publicChatLink
+        ]
+
+        if let match = fragmentKeyMap.first(where: { fragment.hasPrefix($0.key) }) {
+            return match.value
         }
 
-        return .default
+        return fragment.isEmpty ? .default : .handleLink
     }
     
     private func parseMEGASchemeURL() -> URLType {
@@ -169,6 +159,9 @@ extension NSURL {
             return .upgrade
         case DeeplinkHostKey.vpn.rawValue:
             return .vpn
+        case DeeplinkHostKey.settings.rawValue:
+            guard let path, !path.isEmpty, path.hasPrefix(DeeplinkPathKey.cameraUploadsSettings.rawValue) else { return .default }
+            return .cameraUploadsSettings
         default:
             if fragment != nil {
                 return parseFragmentType()
