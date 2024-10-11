@@ -259,7 +259,18 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
     
     @MainActor
     @objc class func openVPNApp() {
-        DeepLinkRouter(logHandler: { MEGALogDebug($0) }).openApp(for: .vpn)
+        DeepLinkRouter(
+            appOpener: AppOpener(
+                app: .vpn,
+                logHandler: { MEGALogDebug($0) }
+            )
+        ).openApp()
+    }
+    
+    @MainActor
+    @objc class func navigateToCameraUploadsSettings() {
+        guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
+        mainTabBar.showCameraUploadsSettings()
     }
 }
 

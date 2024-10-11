@@ -9,28 +9,65 @@ extension UIApplication: URLOpening {}
 
 @MainActor
 protocol DeepLinkRoutable {
-    func openApp(for app: MEGAApp)
+    func openApp()
+    func navigate()
 }
 
-public struct DeepLinkRouter: DeepLinkRoutable {
-    private let appOpener: any URLOpening
-    private let logHandler: (String) -> Void
+public struct AppOpener {
+    private let opener: any URLOpening
+    private let app: MEGAApp
+    private let logHandler: ((String) -> Void)?
     
+    /// Initializes the AppOpener.
+    /// - Parameters:
+    ///   - opener: Handles opening external URLs.
+    ///   - app: The MEGAApp to open.
+    ///   - log: Optional handler to log errors or status messages.
     public init(
-        appOpener: some URLOpening = UIApplication.shared,
-        logHandler: @escaping (String) -> Void
+        opener: some URLOpening = UIApplication.shared,
+        app: MEGAApp,
+        logHandler: ((String) -> Void)? = nil
     ) {
-        self.appOpener = appOpener
+        self.opener = opener
+        self.app = app
         self.logHandler = logHandler
     }
     
-    public func openApp(for app: MEGAApp) {
-        if let appURL = URL(string: app.scheme), appOpener.canOpenURL(appURL) {
-            appOpener.open(appURL, options: [:], completionHandler: nil)
+    /// Attempts to open the external app or its App Store page.
+    public func openApp() {
+        if let appURL = URL(string: app.scheme), opener.canOpenURL(appURL) {
+            opener.open(appURL, options: [:], completionHandler: nil)
         } else if let appStoreURL = URL(string: app.appStoreURL) {
-            appOpener.open(appStoreURL, options: [:], completionHandler: nil)
+            opener.open(appStoreURL, options: [:], completionHandler: nil)
         } else {
-            logHandler("[DeepLink] Both app scheme and App Store URLs are unavailable for \(app).")
+            logHandler?("[DeepLink] Unable to open app or App Store for \(app).")
         }
+    }
+}
+
+public struct DeepLinkRouter: DeepLinkRoutable {
+    private let appNavigator: Routing?
+    private let appOpener: AppOpener?
+    
+    /// Initializes the DeepLinkRouter with handlers for internal and external navigation.
+    /// - Parameters:
+    ///   - appNavigator: Handles internal app navigation.
+    ///   - appOpener: Handles external app navigation.
+    public init(
+        appNavigator: Routing? = nil,
+        appOpener: AppOpener? = nil
+    ) {
+        self.appNavigator = appNavigator
+        self.appOpener = appOpener
+    }
+    
+    /// Opens the external app or App Store URL.
+    public func openApp() {
+        appOpener?.openApp()
+    }
+    
+    /// Navigates within the app.
+    public func navigate() {
+        appNavigator?.start()
     }
 }
