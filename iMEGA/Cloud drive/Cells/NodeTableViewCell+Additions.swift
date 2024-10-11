@@ -116,7 +116,7 @@ extension NodeTableViewCell {
         imageView.tintColor = TokenColors.Icon.secondary
     }
     
-    @objc func setCellBackgroundColor(with traitCollection: UITraitCollection) {
+    @objc func setCellBackgroundColor() {
         backgroundColor = TokenColors.Background.page
     }
 }
