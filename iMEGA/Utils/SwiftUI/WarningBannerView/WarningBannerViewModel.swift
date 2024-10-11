@@ -72,6 +72,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     }
 }
 
+@MainActor
 @objc final class WarningBannerViewModel: NSObject, ObservableObject {
     let warningType: WarningBannerType
     let router: (any WarningBannerViewRouting)?

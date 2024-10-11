@@ -1,4 +1,4 @@
-final class MockMEGAPurchase: MEGAPurchase {
+final class MockMEGAPurchase: MEGAPurchase, @unchecked Sendable {
     private(set) var restorePurchaseCalled = 0
     private(set) var purchasePlanCalled = 0
     

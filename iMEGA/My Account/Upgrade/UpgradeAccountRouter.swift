@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 
+@MainActor
 protocol UpgradeAccountRouting {
     func presentUpgradeTVC()
 }
@@ -19,28 +20,25 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     private let purchase: MEGAPurchase
     private let abTestProvider: any ABTestProviderProtocol
     
-    init(purchase: MEGAPurchase = MEGAPurchase.sharedInstance(),
-         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
+    nonisolated init(
+        purchase: MEGAPurchase = MEGAPurchase.sharedInstance(),
+        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
     ) {
         self.purchase = purchase
         self.abTestProvider = abTestProvider
     }
     
     func pushUpgradeTVC(navigationController: UINavigationController) {
-        Task { @MainActor in
-            await show {
-                let upgradeTVC = UpgradeAccountFactory().createUpgradeAccountTVC()
-                navigationController.pushViewController(upgradeTVC, animated: true)
-            }
+        show {
+            let upgradeTVC = UpgradeAccountFactory().createUpgradeAccountTVC()
+            navigationController.pushViewController(upgradeTVC, animated: true)
         }
     }
     
     func presentUpgradeTVC() {
-        Task { @MainActor in
-            await show {
-                let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountNC()
-                UIApplication.mnz_visibleViewController().present(upgradeAccountNC, animated: true)
-            }
+        show {
+            let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountNC()
+            UIApplication.mnz_visibleViewController().present(upgradeAccountNC, animated: true)
         }
     }
     
@@ -129,7 +127,7 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     }
     
     // MARK: Helpers
-    private func shouldPushUpgradeTVC() async throws -> Bool {
+    private func shouldPushUpgradeTVC() throws -> Bool {
         guard try shouldShowPlanPage() else {
             throw UpgradeAccountError.noProducts
         }
@@ -157,10 +155,9 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         }
     }
     
-    @MainActor
-    private func show(upgradeAccount: @escaping () -> Void) async {
+    private func show(upgradeAccount: @escaping () -> Void) {
         do {
-            guard try await shouldPushUpgradeTVC() else { return }
+            guard try shouldPushUpgradeTVC() else { return }
             upgradeAccount()
         } catch {
             handle(error: error)

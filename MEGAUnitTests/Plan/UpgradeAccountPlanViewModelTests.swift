@@ -12,6 +12,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Init
+    @MainActor
     func testInit_registerDelegates_shouldRegisterDelegates() async {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let (sut, mockUseCase) = makeSUT(
@@ -22,6 +23,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(mockUseCase.registerRestoreDelegateCalled == 1)
     }
     
+    @MainActor
     func testInit_setUpPlansForFreeAccount_shouldSetupPlanData() async {
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
         let (sut, _) = makeSUT(accountDetails: AccountDetailsEntity.build(proLevel: .free), planList: planList)
@@ -33,6 +35,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.recommendedPlanType, .proI)
     }
     
+    @MainActor
     func testInit_setUpPlansForProAccount_recurringMonthly_shouldSetupPlanData() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
@@ -45,6 +48,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.recommendedPlanType, .proII)
     }
     
+    @MainActor
     func testInit_setUpPlansForProAccount_recurringYearly_shouldSetupPlanData() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
@@ -57,6 +61,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.recommendedPlanType, .proII)
     }
     
+    @MainActor
     func testInit_setUpPlansForProAccount_oneTimePurchase_shouldSetupPlanData() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .none)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
@@ -70,6 +75,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Current plan
+    @MainActor
     func testCurrentPlanValue_freePlan_shouldBeFreePlan() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -86,6 +92,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentPlan, .freePlan)
     }
 
+    @MainActor
     func testCurrentPlanValue_freePlan_shouldNotBeNil() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -102,6 +109,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertNotEqual(sut.currentPlan, nil)
     }
     
+    @MainActor
     func testCurrentPlanName_shouldMatchCurrentPlanName() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -118,6 +126,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentPlanName, "Free")
     }
     
+    @MainActor
     func testCurrentPlanValue_shouldMatchCurrentPlan() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -134,6 +143,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentPlan, .proI_monthly)
     }
     
+    @MainActor
     func testCurrentPlanValue_notMatched_shouldBeFailed() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -152,6 +162,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Recommended plan
+    @MainActor
     func testRecommendedPlanTypeAndDefaultSelectedPlanType_withCurrentPlanFree_shouldBeProI() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         
@@ -168,6 +179,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, .proI)
     }
 
+    @MainActor
     func testRecommendedPlanTypeAndDefaultSelectedPlanType_withCurrentPlanLite_shouldBeProI() {
         let details = AccountDetailsEntity.build(proLevel: .lite)
         
@@ -184,6 +196,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, .proI)
     }
     
+    @MainActor
     func testRecommendedPlanTypeAndDefaultSelectedPlanType_withCurrentPlanProI_shouldBeProII() {
         let details = AccountDetailsEntity.build(proLevel: .proI)
         
@@ -200,6 +213,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, .proII)
     }
     
+    @MainActor
     func testRecommendedPlanTypeAndDefaultSelectedPlanType_withCurrentPlanProII_shouldBeProIII() {
         let details = AccountDetailsEntity.build(proLevel: .proII)
         
@@ -216,6 +230,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, .proIII)
     }
     
+    @MainActor
     func testRecommendedPlanTypeAndDefaultSelectedPlanType_withCurrentPlanProIII_shouldHaveNoRecommendedPlanType() {
         let details = AccountDetailsEntity.build(proLevel: .proIII)
         
@@ -232,6 +247,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertNil(sut.selectedPlanType)
     }
     
+    @MainActor
     func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProLite_shouldBeProI() async {
         let planList: [PlanEntity] = [.proLite_monthly, .proI_monthly, .proII_monthly, .proIII_monthly]
         let (sut, _) = makeSUT(
@@ -246,6 +262,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
     }
     
+    @MainActor
     func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProI_shouldBeProII() async {
         let planList: [PlanEntity] = [.proI_monthly, .proII_monthly, .proIII_monthly]
         let (sut, _) = makeSUT(
@@ -260,6 +277,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
     }
     
+    @MainActor
     func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProII_shouldBeProIII() async {
         let planList: [PlanEntity] = [.proII_monthly, .proIII_monthly]
         let (sut, _) = makeSUT(
@@ -274,6 +292,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
     }
     
+    @MainActor
     func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProIII_shouldHaveNoRecommendedPlan() async {
         let planList: [PlanEntity] = [.proIII_monthly]
         let (sut, _) = makeSUT(
@@ -289,6 +308,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Selected plan type
+    @MainActor
     func testSelectedPlanTypeName_shouldMatchSelectedPlanName() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -306,6 +326,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanName, PlanEntity.proI_monthly.name)
     }
     
+    @MainActor
     func testSelectedPlanType_freeAccount_shouldMatchSelectedPlanType() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -323,6 +344,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, PlanEntity.proI_monthly.type)
     }
 
+    @MainActor
     func testSelectedPlanType_recurringPlanAccount_selectCurrentPlan_shouldNotSelectPlanType() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -341,6 +363,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
 
     // MARK: - Selected term tab
+    @MainActor
     func testSelectedCycleTab_freeAccount_defaultShouldBeYearly() {
         let details = AccountDetailsEntity.build(proLevel: .free)
 
@@ -349,6 +372,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
     }
 
+    @MainActor
     func testSelectedCycleTab_oneTimePurchaseMonthly_defaultShouldBeYearly() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .none)
         let planList: [PlanEntity] = [.proI_monthly, .proII_yearly]
@@ -365,6 +389,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
     }
 
+    @MainActor
     func testSelectedCycleTab_oneTimePurchaseYearly_defaultShouldBeYearly() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .none)
         let planList: [PlanEntity] = [.proI_monthly, .proII_yearly]
@@ -381,6 +406,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
     }
 
+    @MainActor
     func testSelectedCycleTab_recurringPlanYearly_defaultShouldBeYearly() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList: [PlanEntity] = [.proI_monthly, .proII_yearly]
@@ -397,6 +423,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
     }
 
+    @MainActor
     func testSelectedCycleTab_recurringPlanMonthly_defaultShouldBeMonthly() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proII_yearly]
@@ -414,6 +441,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
 
     // MARK: - Buy button
+    @MainActor
     func testIsShowBuyButton_freeAccount_shouldBeTrue() {
         let details = AccountDetailsEntity.build(proLevel: .free, subscriptionCycle: .none)
         let planList: [PlanEntity] = [.proII_monthly, .proII_yearly]
@@ -431,6 +459,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isShowBuyButton)
     }
 
+    @MainActor
     func testIsShowBuyButton_selectedPlanTypeOnMonthly_thenSwitchedToYearlyTab_shouldBeTrue() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
@@ -449,6 +478,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isShowBuyButton)
     }
     
+    @MainActor
     func testIsShowBuyButton_selectedPlanTypeOnYearly_thenSwitchedToMonthlyTab_shouldBeTrue() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
@@ -467,6 +497,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isShowBuyButton)
     }
     
+    @MainActor
     func testIsShowBuyButtonWithRecurringPlanMonthly_selectSamePlanTypeOnYearlyTab_thenSwitchedToMonthlyTab_shouldToggleValue() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
@@ -482,6 +513,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isShowBuyButton)
     }
     
+    @MainActor
     func testIsShowBuyButtonWithRecurringPlanYearly_selectSamePlanTypeOnMonthlyTab_thenSwitchedToYearlyTab_shouldToggleValue() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
@@ -498,6 +530,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Plan list
+    @MainActor
     func testFilteredPlanList_monthly_shouldReturnMonthlyPlans() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proII_monthly, .proI_yearly, .proII_yearly]
@@ -515,6 +548,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filteredPlanList, [.proI_monthly, .proII_monthly])
     }
     
+    @MainActor
     func testFilteredPlanList_yearly_shouldReturnYearlyPlans() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proII_monthly, .proI_yearly, .proII_yearly]
@@ -533,6 +567,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Restore
+    @MainActor
     func testRestore_tappedRestoreButton_shouldCallRestorePlan() async {
         let (sut, mockUseCase) = makeSUT(accountDetails: AccountDetailsEntity.build(proLevel: .free))
         
@@ -540,6 +575,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(mockUseCase.restorePurchaseCalled == 1)
     }
     
+    @MainActor
     func testRestorePurchaseAlert_successRestore_shouldShowAlertForSuccessRestore() throws {
         let (sut, _) = makeSUT(accountDetails: AccountDetailsEntity.build(proLevel: .free))
         sut.setAlertType(UpgradeAccountPlanAlertType.restore(.success))
@@ -553,6 +589,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isAlertPresented)
     }
     
+    @MainActor
     func testRestorePurchaseAlert_incompleteRestore_shouldShowAlertForIncompleteRestore() throws {
         let (sut, _) = makeSUT(accountDetails: AccountDetailsEntity.build(proLevel: .free))
         
@@ -567,6 +604,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isAlertPresented)
     }
     
+    @MainActor
     func testRestorePurchaseAlert_failedRestore_shouldShowAlertForFailedRestore() throws {
         let (sut, _) = makeSUT(accountDetails: AccountDetailsEntity.build(proLevel: .free))
         
@@ -581,6 +619,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isAlertPresented)
     }
     
+    @MainActor
     func testRestorePurchaseAlert_setNilAlertType_shouldNotShowAnyAlert() {
         let (sut, _) = makeSUT(accountDetails: AccountDetailsEntity.build(proLevel: .free))
         
@@ -591,6 +630,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Validate active subscriptions
+    @MainActor
     func testPurchasePlan_validateActiveSubscriptions_haveActiveCancellableSubscription_shouldThrowHaveCancellablePlanError() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionStatus: .valid, subscriptionMethodId: cancellableSubscriptionMethod)
         let (sut, _) = makeSUT(accountDetails: details)
@@ -600,6 +640,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testPurchasePlan_validateActiveSubscriptions_haveActiveNonCancellableSubscription_shouldThrowHaveNonCancellablePlanError() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionStatus: .valid, subscriptionMethodId: nonCancellableSubscriptionMethod)
         let (sut, _) = makeSUT(accountDetails: details)
@@ -610,6 +651,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Cancel active subscription
+    @MainActor
     func testCancelActiveSubscription_shouldCancelSubscription_shouldSuccessValidateSubscription() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionStatus: .valid, subscriptionMethodId: cancellableSubscriptionMethod)
         let expectedAccountPlan = AccountDetailsEntity.build(proLevel: .proI, subscriptionStatus: .none, subscriptionMethodId: .balance)
@@ -631,6 +673,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Purchase
+    @MainActor
     func testPurchasePlan_shouldCallPurchasePlan() async {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList: [PlanEntity] = [.proI_monthly, .proII_monthly, .proI_yearly, .proII_yearly]
@@ -647,6 +690,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(mockUseCase.purchasePlanCalled == 1)
     }
     
+    @MainActor
     func testPurchasePlanAlert_failedPurchase_shouldShowAlertForFailedPurchase() async throws {
         let (sut, _) = makeSUT(accountDetails: AccountDetailsEntity.build(proLevel: .free))
         await sut.setUpPlanTask?.value
@@ -663,6 +707,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Snackbar
+    @MainActor
     func testSnackBar_selectedCurrentRecurringAccount_shouldShowSnackBar() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -674,6 +719,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.snackBar?.message, PlanSelectionSnackBarType.currentRecurringPlanSelected.title)
     }
     
+    @MainActor
     func testSnackBar_selectedCurrentOneTimeAccount_shouldNotShowSnackBar() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .none)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
@@ -706,37 +752,44 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // - MARK: Track events
+    @MainActor
     func testPurchasePlan_purchaseProI_shouldTrackEvent() async {
         let harness = Harness()
         await harness.testBuyPlan(.proI_yearly, shouldTrack: BuyProIEvent())
     }
     
+    @MainActor
     func testPurchasePlan_purchaseProII_shouldTrackEvent() async {
         let harness = Harness()
         await harness.testBuyPlan(.proII_yearly, shouldTrack: BuyProIIEvent())
     }
     
+    @MainActor
     func testPurchasePlan_purchaseProIII_shouldTrackEvent() async {
         let harness = Harness()
         await harness.testBuyPlan(.proIII_yearly, shouldTrack: BuyProIIIEvent())
     }
     
+    @MainActor
     func testPurchasePlan_purchaseProLite_shouldTrackEvent() async {
         let harness = Harness()
         await harness.testBuyPlan(.proLite_yearly, shouldTrack: BuyProLiteEvent())
     }
     
+    @MainActor
     func testCancel_tappedCancelButton_shouldTrackCancelUpgradeEvent() {
         let harness = Harness()
         harness.testCancelUpgrade()
     }
     
+    @MainActor
     func testViewLoad_shouldTrackScreenViewEvent() {
         let harness = Harness()
         harness.testViewOnLoad()
     }
     
     // MARK: - Helper
+    @MainActor
     func makeSUT(
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol = MockSubscriptionsUseCase(requestResult: .failure(.generic)),
         accountDetails: AccountDetailsEntity,
@@ -773,6 +826,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         return Array(nonCancellableMethod).randomElement() ?? .balance
     }
     
+    @MainActor
     class Harness {
         let sut: UpgradeAccountPlanViewModel
         let tracker = MockTracker()

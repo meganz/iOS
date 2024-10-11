@@ -15,6 +15,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     private let proIII_monthly = PlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .monthly)
     private let proIII_yearly = PlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .yearly)
     
+    @MainActor
     func testCreateAccountPlanViewModel_withSelectedPlanType_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proIII_monthly]
@@ -37,6 +38,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(viewModel.planTag, .none)
     }
 
+    @MainActor
     func testCreateAccountPlanViewModel_noSelectedPlan_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proII_yearly]
@@ -58,6 +60,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(viewModel.planTag, .none)
     }
 
+    @MainActor
     func disable_testCreateAccountPlanViewModel_recurringPlanMonthly_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList = [proI_monthly, proII_yearly]
@@ -84,6 +87,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
     }
 
+    @MainActor
     func testCreateAccountPlanViewModel_recurringPlanYearly_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList = [proI_monthly, proI_yearly]
@@ -110,6 +114,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.planTag, .currentPlan)
     }
 
+    @MainActor
     func testCreateAccountPlanViewModel_oneTimePlanPurchase_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .none)
         let planList = [proI_monthly, proI_yearly, proII_yearly]
@@ -136,6 +141,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.planTag, .currentPlan)
     }
     
+    @MainActor
     func testCreateAccountPlanViewModel_withRecommendedPlanType_onRecommendedPlan_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proI_yearly, proII_yearly]
@@ -162,6 +168,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.planTag, .recommended)
     }
     
+    @MainActor
     func testCreateAccountPlanViewModel_withRecommendedPlanType_onNotRecommendedPlan_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .free)
         let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
@@ -188,6 +195,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
     }
     
+    @MainActor
     func testCreateAccountPlanViewModel_withNoRecommendedPlanType_shouldReturnViewModel() {
         let details = AccountDetailsEntity.build(proLevel: .proIII)
         let planList = [proIII_monthly, proIII_yearly]
@@ -215,6 +223,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     }
     
     // MARK: - Helper
+    @MainActor
     private func makeSUT(
         accountDetails: AccountDetailsEntity,
         currentAccountDetails: AccountDetailsEntity? = nil,
@@ -232,9 +241,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
             viewType: viewType,
             router: MockUpgradeAccountPlanRouter()
         )
-        trackForMemoryLeaks(on: mockSubscriptionsUseCase)
-        trackForMemoryLeaks(on: mockPurchaseUseCase)
-        trackForMemoryLeaks(on: sut)
+        trackForMemoryLeaks(on: mockSubscriptionsUseCase, timeoutNanoseconds: 1_000_000_000)
+        trackForMemoryLeaks(on: mockPurchaseUseCase, timeoutNanoseconds: 1_000_000_000)
+        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000)
         return sut
     }
 }

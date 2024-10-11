@@ -1,4 +1,4 @@
-public protocol SubscriptionsUseCaseProtocol {
+public protocol SubscriptionsUseCaseProtocol: Sendable {
     /// Cancels credit card subscriptions with optional parameters for providing a reason, subscription ID, and contact preference.
     ///
     /// - Default Values:
