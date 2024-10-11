@@ -47,6 +47,8 @@ MEGADelegate
     if (!self.node.mnz_isInRubbishBin) {
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     }
+    
+    [self setupColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -67,24 +69,9 @@ MEGADelegate
     }
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        
-        [self updateAppearance];
-        
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
-        
-        [self.tableView reloadData];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColor {
     self.tableView.backgroundColor = [self defaultBackgroundColor];
 }
 

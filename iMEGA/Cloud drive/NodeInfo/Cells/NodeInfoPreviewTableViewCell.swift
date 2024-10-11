@@ -17,28 +17,15 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        updateAppearance()
-        registerForTraitChanges()
+        setupColors()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        guard #unavailable(iOS 17.0), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
-        updateAppearance()
-    }
-    
-    private func registerForTraitChanges() {
-        guard #available(iOS 17.0, *) else { return }
-        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
-            self.updateAppearance()
-        }
-    }
-    
-    private func updateAppearance() {
+    private func setupColors() {
         backgroundColor = TokenColors.Background.page
         nameLabel.textColor = TokenColors.Text.primary
         sizeLabel.textColor = TokenColors.Text.primary
-        shareButton.mnz_setupPrimary(traitCollection)
+        shareButton.backgroundColor = TokenColors.Button.primary
+        shareButton.setTitleColor(TokenColors.Text.inverse, for: UIControl.State.normal)
     }
     
     func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {

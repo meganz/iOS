@@ -138,6 +138,7 @@ final class NodeInfoViewController: UITableViewController {
         NodeTagsCellController.registerCell(for: tableView)
 
         viewModel.dispatch(.viewDidLoad)
+        setupColor()
     }
 
     deinit {
@@ -161,14 +162,6 @@ final class NodeInfoViewController: UITableViewController {
         super.viewDidDisappear(animated)
         removeKeyboardNotificationsFromDescriptionCell()
         viewModel.dispatch(.viewDidDisappear)
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-            reloadData()
-        }
     }
     
     private func executeCommand(_ command: NodeInfoViewModel.Command) {
@@ -202,7 +195,7 @@ final class NodeInfoViewController: UITableViewController {
     
     // MARK: - Private methods
 
-    private func updateAppearance() {
+    private func setupColor() {
         let backgroundColor = TokenColors.Background.page
         view.backgroundColor = backgroundColor
         tableView.backgroundColor = backgroundColor
