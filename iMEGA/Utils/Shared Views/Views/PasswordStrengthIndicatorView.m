@@ -37,7 +37,7 @@
     self.strengthLabel.textColor = [self textColor];
     [self.strengthLabel sizeToFit];
     
-    self.backgroundColor = self.customView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    self.backgroundColor = self.customView.backgroundColor = [UIColor pageBackgroundColor];
 }
 
 #pragma mark - Public

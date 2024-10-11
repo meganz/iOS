@@ -38,7 +38,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundElevated];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     [self.openButton mnz_setupPrimary:self.traitCollection];
 }

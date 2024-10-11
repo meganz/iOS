@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -81,7 +82,7 @@ class AccountExpiredViewController: UIViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_backgroundElevated()
+        view.backgroundColor = TokenColors.Background.page
         
         detailLabel.textColor = .mnz_subtitles()
         dismissButton.mnz_setupCancel(traitCollection)

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -70,7 +71,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         sortingPreferenceSameForAllDetailLabel.textColor = UIColor.secondaryLabel
         
         tableView.separatorColor = UIColor.mnz_separator()
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
 
         sortingPreferencePerFolderLabel.textColor = UIColor.primaryTextColor()
         sortingPreferenceSameForAllLabel.textColor = UIColor.primaryTextColor()
@@ -156,7 +157,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_backgroundElevated()
+        cell.backgroundColor = TokenColors.Background.page
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

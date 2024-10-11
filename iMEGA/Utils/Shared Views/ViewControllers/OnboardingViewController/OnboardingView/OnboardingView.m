@@ -47,7 +47,7 @@
         self.descriptionLabel.textColor = [UIColor mnz_subtitles];
         self.titleLabel.textColor = [UIColor primaryTextColor];
         
-        self.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+        self.backgroundColor = [UIColor pageBackgroundColor];
     }
 }
 
@@ -62,7 +62,7 @@
     self.titleLabel.textColor = [UIColor primaryTextColor];
     self.descriptionLabel.textColor = [UIColor mnz_subtitles];
     
-    self.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    self.backgroundColor = [UIColor pageBackgroundColor];
 }
 
 #pragma mark - Setters

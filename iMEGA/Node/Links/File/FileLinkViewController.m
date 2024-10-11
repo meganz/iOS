@@ -109,9 +109,9 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundElevated];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
-    self.mainView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    self.mainView.backgroundColor = [UIColor pageBackgroundColor];
     
     self.sizeLabel.textColor = [UIColor mnz_subtitles];
     

@@ -62,7 +62,7 @@ extension AdvancedTableViewController {
     // MARK: - UITableViewDelegate
 
     open override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .mnz_backgroundElevated()
+        cell.backgroundColor = TokenColors.Background.page
     }
 
     open override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {

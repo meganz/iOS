@@ -121,10 +121,10 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundElevated];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separator];
-    self.myCredentialsView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    self.myCredentialsView.backgroundColor = [UIColor pageBackgroundColor];
     self.userEmailLabel.textColor = [UIColor mnz_subtitles];
     
     self.myCredentialsSubView.backgroundColor = [UIColor mnz_tertiaryBackgroundElevated:self.traitCollection];

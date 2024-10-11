@@ -18,7 +18,7 @@
 #pragma mark - Private
 
 - (void)setupCell {
-    self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.backgroundColor = [UIColor pageBackgroundColor];
     
     self.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
     self.storageQuotaRewardLabel.textColor =  [UIColor whiteTextColor];

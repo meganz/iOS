@@ -78,7 +78,7 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
         SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray())
         SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray())
-        SVProgressHUD.setBackgroundColor(UIColor.mnz_secondaryBackground(for: traitCollection))
+        SVProgressHUD.setBackgroundColor(TokenColors.Background.page)
         SVProgressHUD.setHapticsEnabled(true)
         
         SVProgressHUD.setSuccessImage(UIImage.hudSuccess)

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAPresentation
 import MEGAUIKit
 import UIKit
@@ -132,7 +133,7 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
 
 extension DiskFullBlockingViewController: TraitEnvironmentAware {
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        view.backgroundColor = UIColor.mnz_backgroundElevated()
+        view.backgroundColor = TokenColors.Background.page
         manageButton.mnz_setupPrimary(currentTrait)
     }
 }

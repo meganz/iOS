@@ -90,7 +90,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
     }
     
     private func updateAppearance() {
-        view.backgroundColor = .mnz_backgroundElevated()
+        view.backgroundColor = TokenColors.Background.page
         
         updateCodeFieldsAppearance()
         

@@ -162,12 +162,12 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     }
     
     private func updateAppearance() {
-        view.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+        view.backgroundColor = TokenColors.Background.page
         
         let primaryTextColor = TokenColors.Text.primary
         let secondaryTextColor = TokenColors.Text.secondary
         let separatorColor = UIColor.mnz_separator()
-        let fieldBackgroundColor = UIColor.mnz_backgroundElevated()
+        let fieldBackgroundColor = TokenColors.Background.page
         
         titleLabel.textColor = primaryTextColor
         cancelButton.setTitleColor(primaryTextColor, for: .normal)

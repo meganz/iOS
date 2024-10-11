@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -31,7 +32,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.TwoMinutes, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.TwoMinutes.rawValue)))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.FiveMinutes, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.FiveMinutes.rawValue)))
         
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -46,7 +47,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     
     func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator()
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
         
         tableView.reloadData()
     }
@@ -77,7 +78,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        cell.backgroundColor = TokenColors.Background.page
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

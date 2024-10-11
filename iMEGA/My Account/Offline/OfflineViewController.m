@@ -168,7 +168,7 @@ static NSString *kisDirectory = @"kisDirectory";
            backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
                                 traitCollection:self.traitCollection];
         if (self.flavor == HomeScreen) {
-            self.view.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+            self.view.backgroundColor = [UIColor pageBackgroundColor];
         }
         
         [self reloadData];
@@ -521,7 +521,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)reloadData {
-    self.view.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.offlineTableView.tableView reloadData];

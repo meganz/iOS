@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAPermissions
 import UIKit
 
@@ -239,9 +240,9 @@ class AddToChatViewController: UIViewController {
     }
     
     private func updateAppearance() {
-        contentView.backgroundColor = UIColor.mnz_backgroundElevated()
+        contentView.backgroundColor = TokenColors.Background.page
         view.backgroundColor = UIDevice.current.iPadDevice ? contentView.backgroundColor : .clear
-        patchView.backgroundColor = UIColor.mnz_backgroundElevated()
+        patchView.backgroundColor = TokenColors.Background.page
         pageControl.pageIndicatorTintColor = .mnz_tertiaryGray(for: traitCollection)
         pageControl.currentPageIndicatorTintColor = .mnz_primaryGray()
     }

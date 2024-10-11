@@ -253,7 +253,7 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_backgroundElevated;
+    self.view.backgroundColor = UIColor.pageBackgroundColor;
     
     [self.openZipButton mnz_setupBasic:self.traitCollection titleColor:NULL];
 }

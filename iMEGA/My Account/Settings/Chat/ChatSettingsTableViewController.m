@@ -165,7 +165,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     self.statusRightDetailLabel.textColor = self.imageQualityRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.tableView.separatorColor = [UIColor mnz_separator];
-    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     
     [self.tableView reloadData];
 }
@@ -336,7 +336,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_backgroundElevated];
+    cell.backgroundColor = [UIColor pageBackgroundColor];
 
     if (indexPath.section == ChatSettingsSectionNotification) {
         switch (indexPath.row) {

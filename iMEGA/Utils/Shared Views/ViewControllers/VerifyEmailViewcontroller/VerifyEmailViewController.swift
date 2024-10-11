@@ -54,7 +54,7 @@ class VerifyEmailViewController: UIViewController {
     }
     
     func updateAppearance() {
-        view.backgroundColor = .mnz_backgroundElevated()
+        view.backgroundColor = TokenColors.Background.page
         resendButton.mnz_setupBasic(traitCollection)
 
         topSeparatorView.backgroundColor = UIColor.mnz_separator()

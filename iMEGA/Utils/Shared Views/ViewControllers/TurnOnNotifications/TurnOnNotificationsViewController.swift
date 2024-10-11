@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAPresentation
 import MEGAUIKit
 import UIKit
@@ -248,7 +249,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
 
 extension TurnOnNotificationsViewController: TraitEnvironmentAware {
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        view.backgroundColor = UIColor.mnz_backgroundElevated()
+        view.backgroundColor = TokenColors.Background.page
         openSettingsButton.mnz_setupPrimary(currentTrait)
         dismissButton.mnz_setupCancel(currentTrait)
     }

@@ -22,7 +22,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    self.backgroundColor = [UIColor pageBackgroundColor];
     self.titleLabel.textColor = [UIColor primaryTextColor];
     self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
     [self.iconImageView.image imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];

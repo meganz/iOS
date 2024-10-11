@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import UIKit
@@ -8,7 +9,7 @@ final class DefaultTabTableViewController: UITableViewController {
         super.viewDidLoad()
         title = Strings.Localizable.defaultTab
         tableView.separatorColor = UIColor.mnz_separator()
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
     }
 
     // MARK: - UITableViewDataSource
@@ -30,7 +31,7 @@ final class DefaultTabTableViewController: UITableViewController {
             cell.textLabel?.textColor = UIColor.primaryTextColor()
         }
         cell.accessoryView = UIImageView(image: UIImage.turquoiseCheckmark)
-        cell.backgroundColor = UIColor.mnz_backgroundElevated()
+        cell.backgroundColor = TokenColors.Background.page
         cell.accessoryView?.isHidden = TabManager.getPreferenceTab().tabType.rawValue != indexPath.row
         
         return cell

@@ -27,7 +27,7 @@ class ChatImageQualityTableViewController: UITableViewController {
     
     private func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator()
-        tableView.backgroundColor = UIColor.pageBackgroundColor(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
         
         tableView.reloadData()
     }
@@ -35,7 +35,7 @@ class ChatImageQualityTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_backgroundElevated()
+        cell.backgroundColor = TokenColors.Background.page
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
