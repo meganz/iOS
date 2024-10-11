@@ -13,24 +13,10 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        updateAppearance()
-        registerForTraitChanges()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        guard #unavailable(iOS 17.0), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
-        updateAppearance()
-    }
-    
-    private func registerForTraitChanges() {
-        guard #available(iOS 17.0, *) else { return }
-        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
-            self.updateAppearance()
-        }
+        setupColor()
     }
 
-    private func updateAppearance() {
+    private func setupColor() {
         backgroundColor = TokenColors.Background.page
     }
     
