@@ -182,7 +182,7 @@
     switch (index) {
         case 0: { //Storage / Transfer Quota consumed
             if (self.usagePageControl.currentPage == 0) {
-                valueForSlice = ((double)self.cloudDriveSize / (double)self.maxStorage);
+                valueForSlice = ((double)self.usedStorage / (double)self.maxStorage);
             } else {
                 valueForSlice = ((double)self.transferUsed / (double)self.transferMax);
             }
