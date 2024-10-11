@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGASDKRepo
 
+@MainActor
 final class UpgradeEncouragementViewModel {
     
     private enum Constants {

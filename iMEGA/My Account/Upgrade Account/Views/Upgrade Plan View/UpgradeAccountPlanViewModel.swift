@@ -19,6 +19,7 @@ enum UpgradeAccountPlanViewType {
     case onboarding, upgrade
 }
 
+@MainActor
 final class UpgradeAccountPlanViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private let accountUseCase: any AccountUseCaseProtocol
@@ -81,7 +82,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     deinit {
-        deRegisterDelegates()
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.deRegisterRestoreDelegate()
+            await purchaseUseCase.deRegisterPurchaseDelegate()
+        }
         registerDelegateTask?.cancel()
         setUpPlanTask?.cancel()
         buyPlanTask?.cancel()
@@ -93,7 +97,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     // MARK: - Setup
-    @MainActor
     func setUpExternalAds() async {
         isExternalAdsActive = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
     }
@@ -104,13 +107,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             await purchaseUseCase.registerRestoreDelegate()
             await purchaseUseCase.registerPurchaseDelegate()
             setupSubscriptions()
-        }
-    }
-    
-    private func deRegisterDelegates() {
-        Task.detached { [weak self] in
-            await self?.purchaseUseCase.deRegisterRestoreDelegate()
-            await self?.purchaseUseCase.deRegisterPurchaseDelegate()
         }
     }
     
@@ -176,8 +172,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 setRecommendedPlan(basedOnPlan: lowestPlan.type)
             }
             
-            await setDefaultPlanCycleTab()
-            await setCurrentPlan(type: accountDetails.proLevel)
+            setDefaultPlanCycleTab()
+            setCurrentPlan(type: accountDetails.proLevel)
         }
     }
     
@@ -189,12 +185,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         isShowBuyButton = isSelectionEnabled(forPlan: currentSelectedPlan)
     }
     
-    @MainActor
     private func setDefaultPlanCycleTab() {
         selectedCycleTab = accountDetails.subscriptionCycle == .monthly ? .monthly : .yearly
     }
     
-    @MainActor
     private func setCurrentPlan(type: AccountTypeEntity) {
         guard type != .free else {
             currentPlan = PlanEntity(type: .free, name: AccountTypeEntity.free.toAccountTypeDisplayName())
@@ -352,7 +346,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return currentPlan != plan
     }
     
-    @MainActor
     private func startLoading() {
         isLoading = true
     }
@@ -396,7 +389,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             do {
                 try validateActiveSubscriptions()
                 
-                await startLoading()
+                startLoading()
                 await purchaseUseCase.purchasePlan(currentSelectedPlan)
                 trackEventBuyPlan(currentSelectedPlan)
             } catch {
@@ -404,7 +397,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                     fatalError("[Upgrade Account] Error \(error) is not supported.")
                 }
                 
-                await handleActiveSubscription(type: error)
+                handleActiveSubscription(type: error)
             }
         }
     }
@@ -422,7 +415,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func handleActiveSubscription(type: ActiveSubscriptionError) {
         guard type == .haveCancellablePlan else {
             setAlertType(.activeSubscription(type, primaryButtonAction: nil))

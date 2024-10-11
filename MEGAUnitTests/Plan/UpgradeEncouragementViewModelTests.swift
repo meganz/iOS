@@ -28,6 +28,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         randomNumberGenerator = nil
     }
     
+    @MainActor
     func testEncourageUpgradeIfNeeded_whenAlreadyPresented_shouldNotTriggerRouter() {
         // given
         showTimeTracker.alreadyPresented = true
@@ -42,6 +43,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
     }
     
+    @MainActor
     func testEncourageUpgradeIfNeeded_whenIsProAccount_shouldNotTriggerRouter() {
         // given
         let accountUseCase = MockAccountUseCase(currentAccountDetails: MockMEGAAccountDetails.proAccounDetailsEntity)
@@ -55,6 +57,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
     }
     
+    @MainActor
     func testEncourageUpgradeIfNeeded_whenIsFreeAccount_createdLessThanThreeDays_shouldNotTriggerRouter() {
         // given
         let accountUseCase = MockAccountUseCase(accountCreationDate: Date().daysAgo(1), currentAccountDetails: MockMEGAAccountDetails.freeAccountDetailsEntity)
@@ -69,6 +72,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
     }
     
     // MARK: - From here, test functions are implicitly have inputs with free account and created more than 3 days
+    @MainActor
     func testEncourageUpgradeIfNeeded_randomNumberIsTwenty_shouldNotTriggerRouter() {
         // given
         let accountUseCase = MockAccountUseCase(accountCreationDate: Date().daysAgo(6), currentAccountDetails: MockMEGAAccountDetails.freeAccountDetailsEntity)
@@ -86,6 +90,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
     }
     
+    @MainActor
     func testEncourageUpgradeIfNeeded_randomNumberIsOne_lastEncourageUgradeLessThanOneWeek_shouldNotTriggerRouter() {
         // given
         let accountUseCase = MockAccountUseCase(accountCreationDate: Date().daysAgo(5), currentAccountDetails: MockMEGAAccountDetails.freeAccountDetailsEntity)
@@ -103,6 +108,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
     }
     
+    @MainActor
     func testEncourageUpgradeIfNeeded_randomNumberIsOne_lastEncourageUgradeDateIsNil_shouldTriggerRouter() {
         // given
         let accountUseCase = MockAccountUseCase(accountCreationDate: Date().daysAgo(5), currentAccountDetails: MockMEGAAccountDetails.freeAccountDetailsEntity)
@@ -121,6 +127,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         XCTAssertTrue(router.presentUpgradeTVCRecorder.called)
     }
     
+    @MainActor
     func testEncourageUpgradeIfNeeded_randomNumberIsOne_lastEncourageUgradeMoreThanOneWeek_shouldTriggerRouter() {
         // given
         let accountUseCase = MockAccountUseCase(accountCreationDate: Date().daysAgo(6), currentAccountDetails: MockMEGAAccountDetails.freeAccountDetailsEntity)
@@ -146,6 +153,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         XCTAssertEqual(router.presentUpgradeTVCRecorder.callCount, 1)
     }
     
+    @MainActor
     private func makeSUT(
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase()
