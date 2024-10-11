@@ -48,20 +48,13 @@ class SetLinkPasswordViewController: UIViewController {
         
         encryptButton.setTitle(Strings.Localizable.encrypt, for: .normal)
 
-        updateAppearance()
+        setupColors()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-    
-    private func updateAppearance() {
+    private func setupColors() {
         view.backgroundColor = TokenColors.Background.page
         encryptButton.setTitleColor(TokenColors.Text.primary, for: .normal)
-        separators.forEach { $0.backgroundColor = UIColor.mnz_separator() }
+        separators.forEach { $0.backgroundColor = TokenColors.Border.strong }
         backgrounds.forEach {
             $0.backgroundColor = TokenColors.Background.page
         }

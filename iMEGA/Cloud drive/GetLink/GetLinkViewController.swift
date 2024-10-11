@@ -102,7 +102,7 @@ class GetLinkViewController: UIViewController {
         }
         
         configureNavigation()
-        updateAppearance()
+        setupColors()
         tableView.sectionHeaderTopPadding = 0
     }
     
@@ -143,14 +143,6 @@ class GetLinkViewController: UIViewController {
         NotificationCenter.default.post(name: Notification.Name.MEGAShareCreated, object: nil)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-            tableView.reloadData()
-        }
-    }
-    
     // MARK: - Private
     
     private func configureNavigation() {
@@ -158,7 +150,7 @@ class GetLinkViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneBarButtonItem
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         tableView.backgroundColor = TokenColors.Background.page
         multilinkDescriptionStackView.backgroundColor = TokenColors.Background.page
     }
