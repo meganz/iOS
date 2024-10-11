@@ -142,7 +142,7 @@ class NicknameViewController: UIViewController {
     }
     
     private func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        view.backgroundColor = TokenColors.Background.page
         
         nicknameView.backgroundColor = TokenColors.Background.page
         nicknameLabel.textColor = TokenColors.Text.secondary

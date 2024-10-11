@@ -154,7 +154,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.mainView.backgroundColor = [UIColor mnz_backgroundElevated];
+    self.mainView.backgroundColor = [UIColor pageBackgroundColor];
     
     self.linkView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     

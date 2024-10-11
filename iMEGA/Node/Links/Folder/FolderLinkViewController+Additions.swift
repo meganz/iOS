@@ -2,6 +2,7 @@ import Accounts
 import ChatRepo
 import Combine
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -156,7 +157,7 @@ extension FolderLinkViewController {
     }
     
     @objc func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        view.backgroundColor = TokenColors.Background.page
         
         if let navController = navigationController {
             AppearanceManager.forceNavigationBarUpdate(navController.navigationBar, traitCollection: traitCollection)

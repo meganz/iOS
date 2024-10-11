@@ -201,7 +201,7 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     }
     
     private func updateAppearance() {
-        tableView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
         tableView.separatorColor = .mnz_separator()
         
         historyRetentionCustomLabel.textColor = TokenColors.Support.success
@@ -308,7 +308,7 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .mnz_backgroundElevated()
+        cell.backgroundColor = TokenColors.Background.page
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

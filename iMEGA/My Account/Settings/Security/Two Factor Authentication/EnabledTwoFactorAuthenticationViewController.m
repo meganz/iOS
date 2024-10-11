@@ -55,7 +55,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor searchBarPageBackgroundColor];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     self.titleLabel.textColor = [self primaryTextColor];
     self.firstLabel.textColor = self.secondLabel.textColor = [self secondaryTextColor];
     self.recoveryKeyView.backgroundColor = [UIColor surface1Background];

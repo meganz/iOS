@@ -71,7 +71,7 @@
 
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separator];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     
     self.versionNumberLabel.textColor = self.sdkVersionSHALabel.textColor = self.megachatSdkSHALabel.textColor = UIColor.secondaryLabelColor;
     
@@ -93,7 +93,7 @@
 #pragma mark - TableView Datasource and Delegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_backgroundElevated];
+    cell.backgroundColor = [UIColor pageBackgroundColor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

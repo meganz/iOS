@@ -111,7 +111,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     [self configLabelsTextColor];
     
     self.tableView.separatorColor = [UIColor mnz_separator];
-    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     
     [self.tableView reloadData];
 }
@@ -212,7 +212,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_backgroundElevated];
+    cell.backgroundColor = [UIColor pageBackgroundColor];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {

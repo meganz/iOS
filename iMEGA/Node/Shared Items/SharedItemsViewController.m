@@ -170,7 +170,7 @@
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor searchBarPageBackgroundColor]
+           backgroundColorWhenDesignTokenEnable:[UIColor pageBackgroundColor]
                                 traitCollection:self.traitCollection];
         
         [self updateAppearance];
@@ -190,7 +190,7 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor searchBarPageBackgroundColor]
+       backgroundColorWhenDesignTokenEnable:[UIColor pageBackgroundColor]
                             traitCollection:self.traitCollection];
     
     self.searchController.hidesNavigationBarDuringPresentation = NO;

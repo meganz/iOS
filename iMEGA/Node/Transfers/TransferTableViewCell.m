@@ -46,7 +46,7 @@
     self.nameLabel.textColor = [UIColor primaryTextColor];
     self.pauseButton.tintColor = [UIColor mnz_primaryGray];
     self.progressView.progressTintColor = [UIColor supportSuccessColor];
-    self.backgroundColor = [UIColor mnz_backgroundElevated];
+    self.backgroundColor = [UIColor pageBackgroundColor];
     
     float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     self.progressView.progress = percentage;

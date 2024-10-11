@@ -343,7 +343,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)updateAppearance {
     [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
     
-    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     [self.firstNameInputView updateAppearance];
     [self.lastNameInputView updateAppearance];

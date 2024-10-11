@@ -8,12 +8,12 @@ extension OnboardingViewController {
     }
     
     @objc func updateAppearance() {
-        view.backgroundColor = UIColor.pageBackgroundColor(for: traitCollection)
-        scrollView?.backgroundColor = UIColor.pageBackgroundColor(for: traitCollection)
+        view.backgroundColor = TokenColors.Background.page
+        scrollView?.backgroundColor = TokenColors.Background.page
         
         pageControl?.currentPageIndicatorTintColor = currentPageIndicatorColor()
         pageControl?.pageIndicatorTintColor = pageIndicatorColor()
-        pageControl?.backgroundColor = UIColor.pageBackgroundColor(for: traitCollection)
+        pageControl?.backgroundColor = TokenColors.Background.page
         
         primaryButton?.mnz_setupPrimary(traitCollection)
         secondaryButton?.mnz_setupSecondary(traitCollection)

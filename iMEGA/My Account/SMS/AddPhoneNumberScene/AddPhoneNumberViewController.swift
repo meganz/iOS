@@ -49,7 +49,7 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
     }
     
     private func updateAppearance() {
-        view.backgroundColor = .mnz_backgroundElevated()
+        view.backgroundColor = TokenColors.Background.page
         addPhoneNumberTitle.textColor = TokenColors.Text.primary
         descriptionLabel.textColor = TokenColors.Text.primary
         addPhoneNumberButton.mnz_setupPrimary(traitCollection)

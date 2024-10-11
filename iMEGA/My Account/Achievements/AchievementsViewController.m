@@ -91,14 +91,14 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection: self.traitCollection];
+    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     self.unlockedBonusesView.backgroundColor = [UIColor surface1Background];
     self.inviteYourFriendsTitleLabel.textColor = [UIColor primaryTextColor];
     self.unlockedBonusesLabel.textColor = [UIColor primaryTextColor];
     self.storageQuotaLabel.textColor = [UIColor secondaryTextColor];
     
     self.tableView.separatorColor = [UIColor mnz_separator];
-    self.inviteYourFriendsView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.inviteYourFriendsView.backgroundColor = [UIColor pageBackgroundColor];
     
     self.unlockedBonusesTopSeparatorView.backgroundColor = self.unlockedBonusesBottomSeparatorView.backgroundColor = [UIColor mnz_separator];
     self.unlockedStorageQuotaLabel.textColor = [UIColor textInfoColor];

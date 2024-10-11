@@ -110,15 +110,15 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     self.tableView.separatorColor = [UIColor mnz_separator];
     
     self.profileView.backgroundColor = [UIColor surface1Background];
     self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separator];
     
-    self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated];
+    self.addPhoneNumberView.backgroundColor = [UIColor pageBackgroundColor];
     
     UIColor *primaryTextColor = [UIColor primaryTextColor];
     

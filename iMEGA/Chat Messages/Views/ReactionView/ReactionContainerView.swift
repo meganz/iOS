@@ -26,7 +26,7 @@ class ReactionContainerView: UIView {
         addMoreView.layer.borderColor = TokenColors.Border.strong.cgColor
         addMoreView.layer.borderWidth = 1
         addMoreView.layer.cornerRadius = 12
-        addMoreView.backgroundColor = UIColor.mnz_secondaryBackground(for: addMoreView.traitCollection)
+        addMoreView.backgroundColor = UIColor.pageBackgroundColor()
 
         return addMoreView
     }()

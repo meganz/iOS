@@ -42,10 +42,6 @@ extension UIColor {
     
     // MARK: Background elevated
     
-    @objc class func mnz_backgroundElevated() -> UIColor {
-        TokenColors.Background.page
-    }
-    
     @objc class func mnz_secondaryBackgroundElevated(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
@@ -76,52 +72,13 @@ extension UIColor {
         }
     }
     
-    // MARK: - Main Bar
-    
-    @objc class func mnz_cellBackground(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Background.page
-    }
-    
+    // MARK: - Background Colors
+
     @objc class func surface1Background() -> UIColor {
         TokenColors.Background.surface1
     }
-    
-    @objc class func searchBarPageBackgroundColor() -> UIColor {
-        TokenColors.Background.page
-    }
-    
-    // MARK: Background grouped
-    
-    @objc(
-        mnz_backgroundGroupedForTraitCollection:
-    )
-    class func mnz_backgroundGrouped(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        pageBackgroundColor(
-            for: traitCollection
-        )
-    }
-    
-    @objc(
-        pageBackgroundForTraitCollection:
-    )
-    class func pageBackgroundColor(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Background.page
-    }
-    
-    // MARK: Background grouped elevated
-    
-    @objc(
-        mnz_secondaryBackgroundForTraitCollection:
-    )
-    class func mnz_secondaryBackground(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
+
+    @objc class func pageBackgroundColor() -> UIColor {
         TokenColors.Background.page
     }
     
@@ -180,18 +137,14 @@ extension UIColor {
             if selected {
                 return UIColor.chatReactionBubbleSelectedLight
             } else {
-                return  UIColor.mnz_secondaryBackground(
-                    for: traitCollection
-                )
+                return TokenColors.Background.page
             }
             
         case .dark:
             if selected {
                 return UIColor.chatReactionBubbleSelectedDark
             } else {
-                return  UIColor.mnz_secondaryBackground(
-                    for: traitCollection
-                )
+                return TokenColors.Background.page
             }
             
         @unknown default:
@@ -331,10 +284,6 @@ extension UIColor {
      */
     @objc class func mnz_proLITE() -> UIColor {
         UIColor.proAccountLITE
-    }
-    
-    @objc class func mnz_background() -> UIColor {
-        TokenColors.Background.page
     }
     
     /**
@@ -529,7 +478,7 @@ extension UIColor {
     @objc class func mnz_errorRed() -> UIColor {
         TokenColors.Text.error
     }
-
+    
     class func mnz_badgeRed() -> UIColor {
         TokenColors.Components.interactive
     }

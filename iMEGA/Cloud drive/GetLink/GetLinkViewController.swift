@@ -159,8 +159,8 @@ class GetLinkViewController: UIViewController {
     }
     
     private func updateAppearance() {
-        tableView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        multilinkDescriptionStackView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
+        multilinkDescriptionStackView.backgroundColor = TokenColors.Background.page
     }
     
     private func configureDecryptKeySeparate(isOn: Bool) {
@@ -980,7 +980,7 @@ extension GetLinkViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         
-        header.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
+        header.setPreferredBackgroundColor(TokenColors.Background.page)
         
         if getLinkViewModel != nil {
             updateHeaderViewForAlbum(forHeader: &header, forSection: section)
@@ -1007,7 +1007,7 @@ extension GetLinkViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         
-        footer.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
+        footer.setPreferredBackgroundColor(TokenColors.Background.page)
         
         if getLinkViewModel != nil {
             updateFooterViewForAlbum(forFooter: &footer, forSection: section)

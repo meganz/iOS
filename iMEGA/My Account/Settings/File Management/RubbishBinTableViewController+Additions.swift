@@ -8,7 +8,7 @@ extension RubbishBinTableViewController {
 
     @objc func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator()
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = TokenColors.Background.page
 
         rubbishBinCleaningSchedulerLabel.textColor = TokenColors.Text.primary
         removeFilesOlderThanLabel.textColor = TokenColors.Text.primary

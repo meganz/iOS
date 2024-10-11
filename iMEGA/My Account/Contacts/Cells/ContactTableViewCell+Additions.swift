@@ -3,7 +3,7 @@ import MEGAL10n
 
 extension ContactTableViewCell {
     @objc func updateAppearance() {
-        backgroundColor = UIColor.mnz_background()
+        backgroundColor = TokenColors.Background.page
         nameLabel.textColor = TokenColors.Text.primary
         shareLabel?.textColor = TokenColors.Text.secondary
         permissionsLabel?.textColor = TokenColors.Text.primary

@@ -171,7 +171,7 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     self.emailInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.emailInputView updateAppearance];

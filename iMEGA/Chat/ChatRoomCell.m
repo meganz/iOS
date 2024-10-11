@@ -73,7 +73,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.backgroundColor = [UIColor mnz_background];
+    self.backgroundColor = [UIColor pageBackgroundColor];
     self.chatLastMessage.textColor = [UIColor mnz_subtitles];
     
     self.chatLastTime.textColor = [UIColor mnz_subtitles];

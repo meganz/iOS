@@ -99,7 +99,7 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     self.checkYourEmailLabel.textColor = [UIColor mnz_subtitles];
     

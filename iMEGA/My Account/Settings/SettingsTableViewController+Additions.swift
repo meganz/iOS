@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 
 // MARK: UITableViewDelegate
@@ -34,7 +35,7 @@ extension SettingsTableViewController {
     }
     
     open override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_backgroundElevated()
+        cell.backgroundColor = TokenColors.Background.page
     }
     
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

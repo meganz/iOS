@@ -1430,7 +1430,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user;
     ContactTableViewCell *cell;
-    cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundElevated] : [UIColor mnz_tertiaryBackground:self.traitCollection];
+    cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor pageBackgroundColor] : [UIColor mnz_tertiaryBackground:self.traitCollection];
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
@@ -1530,7 +1530,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     static NSString *reuseIdentifier = @"GenericHeaderFooterViewID";
     GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
-    headerView.contentView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    headerView.contentView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor pageBackgroundColor] : [UIColor pageBackgroundColor];
 
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {

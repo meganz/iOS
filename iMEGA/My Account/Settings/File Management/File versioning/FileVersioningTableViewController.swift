@@ -122,7 +122,7 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
 
 extension FileVersioningTableViewController: TraitEnvironmentAware {
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: currentTrait)
+        tableView.backgroundColor = TokenColors.Background.page
         tableView.separatorColor = UIColor.mnz_separator()
 
         fileVersionsLabel.textColor = TokenColors.Text.primary
