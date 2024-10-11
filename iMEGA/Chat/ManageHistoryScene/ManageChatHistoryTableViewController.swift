@@ -74,18 +74,6 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
         configView()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
-            }
-            
-            updateAppearance()
-        }
-    }
-    
     // MARK: - Execute command
     func executeCommand(_ command: ManageChatHistoryViewModel.Command) {
         switch command {
@@ -197,18 +185,15 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
         
         clearAllChatHistoryLabel.text = viewModel.clearHistoryTitle
         
-        updateAppearance()
+        setupColors()
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         tableView.backgroundColor = TokenColors.Background.page
-        tableView.separatorColor = .mnz_separator()
-        
+        tableView.separatorColor = TokenColors.Border.strong
         historyRetentionCustomLabel.textColor = TokenColors.Support.success
         historyRetentionSaveButton.setTitleColor(TokenColors.Support.success, for: .normal)
         clearAllChatHistoryLabel.textColor = TokenColors.Text.error
-
-        tableView.reloadData()
     }
     
     private func configHistoryRetentionSection(_ historyRetentionOption: HistoryRetentionOption, _ historyRetentionValue: UInt) {
