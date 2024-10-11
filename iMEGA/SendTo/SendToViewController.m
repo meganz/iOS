@@ -125,21 +125,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                                traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
-    }
-}
-
 #pragma mark - Public
 - (NSUInteger)selectedChatCount {
     return self.selectedUsersMutableArray.count + self.selectedGroupChatsMutableArray.count;
