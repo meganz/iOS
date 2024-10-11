@@ -3,13 +3,13 @@ import MEGADomain
 import MEGASDKRepo
 
 extension ThumbnailViewerTableViewCell {
-    @objc func updateAppearance(with traitCollection: UITraitCollection) {
+    @objc func setupColors() {
         backgroundColor = TokenColors.Background.page
         thumbnailViewerCollectionView?.backgroundColor = TokenColors.Background.page
-        addedByLabel?.textColor = UIColor.primaryTextColor()
-        timeLabel?.textColor = UIColor.mnz_subtitles()
-        infoLabel?.textColor = UIColor.mnz_subtitles()
-        indicatorImageView.tintColor = indicatorTintColor()
+        addedByLabel?.textColor = TokenColors.Text.primary
+        timeLabel?.textColor = TokenColors.Text.secondary
+        infoLabel?.textColor = TokenColors.Text.secondary
+        indicatorImageView.tintColor = TokenColors.Icon.secondary
     }
     
     @objc func indicatorTintColor() -> UIColor {

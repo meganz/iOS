@@ -65,7 +65,7 @@
     self.node = node;
     [self bindWithViewModel:[self createViewModelWithNode:node shouldApplySensitiveBehaviour:shouldApplySensitiveBehaviour]];
 
-    [self updateWithTrait:self.traitCollection];
+    [self setupColors];
     
     self.downloadingArrowImageView.hidden = self.downloadProgressView.hidden = YES;
     
@@ -149,7 +149,7 @@
     self.cellFlavor = NodeTableViewCellFlavorRecentAction;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     [self bindWithViewModel:[self createViewModelWithNodes:nodesArray shouldApplySensitiveBehaviour:YES]];
-    [self updateWithTrait:[self traitCollection]];
+    [self setupColors];
     self.leadingConstraint.constant = 24;
     self.recentActionBucket = recentActionBucket;
     
@@ -200,21 +200,13 @@
     self.moreButtonAction(moreButton);
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateWithTrait:self.traitCollection];
-    }
-}
-
-- (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
+- (void)setupColors {
     [self configureMoreButtonUI];
     
     self.infoLabel.textColor = [UIColor mnz_subtitles];
     self.infoStringRightLabel.textColor = [UIColor mnz_subtitles];
     
-    [self setCellBackgroundColorWith:self.traitCollection];
+    [self setCellBackgroundColor];
    
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;

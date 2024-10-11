@@ -26,7 +26,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self updateAppearanceWith:self.traitCollection];
+    [self setupColors];
 }
 
 - (void)prepareForReuse {
@@ -154,14 +154,5 @@
 
     self.showNodeAction(photoBrowserVC);
 }
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearanceWith:self.traitCollection];
-    }
-}
-
 
 @end
