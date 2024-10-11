@@ -33,9 +33,9 @@ class AppearanceManager: NSObject {
         setupNavigationBarAppearance(traitCollection)
         
         UISearchBar.appearance().isTranslucent = false
-        UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray()
-        UISearchBar.appearance().backgroundColor = .surface1Background()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.systemBackground
+        UISearchBar.appearance().tintColor = TokenColors.Text.secondary
+        UISearchBar.appearance().backgroundColor = TokenColors.Background.surface1
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = TokenColors.Background.surface2
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
