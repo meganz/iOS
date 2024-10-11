@@ -122,7 +122,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     
     [self registerForKeyboardNotifications];
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -145,17 +145,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     switch (self.changeType) {

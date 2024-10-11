@@ -49,23 +49,12 @@ class PhoneNumberViewController: UITableViewController {
             phoneNumberLabel.text = verifiedPhone
         }
         
-        updateAppearance()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let navigationController {
-                AppearanceManager.forceNavigationBarUpdate(navigationController.navigationBar, traitCollection: traitCollection)
-            }
-            updateAppearance()
-        }
+        setupColors()
     }
     
     // MARK: - Private
     
-    private func updateAppearance() {
+    private func setupColors() {
         tableView.backgroundColor = TokenColors.Background.page
         tableView.separatorColor = TokenColors.Border.strong
         phoneNumberTextLabel.textColor = TokenColors.Text.secondary
@@ -75,8 +64,6 @@ class PhoneNumberViewController: UITableViewController {
         removeNumberLabel.textColor = TokenColors.Text.error
         phoneNumberImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
         phoneNumberImageView.tintColor = TokenColors.Icon.secondary
-        
-        tableView.reloadData()
     }
     
     private func showModifyPhoneAlert() {
