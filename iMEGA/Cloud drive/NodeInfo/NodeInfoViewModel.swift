@@ -21,6 +21,7 @@ enum NodeInfoAction: ActionType {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let backupUseCase: any BackupsUseCaseProtocol
 
     let shouldDisplayContactVerificationInfo: Bool
 
@@ -34,12 +35,16 @@ enum NodeInfoAction: ActionType {
 
     var shouldShowNodeTags: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .nodeTags)
+        && !nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
+        && !backupUseCase.isBackupNode(node.toNodeEntity())
+        && !isNodeAnIncomingShare(node.toNodeEntity())
     }
 
     init(
         withNode node: MEGANode,
         shareUseCase: (any ShareUseCaseProtocol)? = nil,
         nodeUseCase: some NodeUseCaseProtocol,
+        backupUseCase: some BackupsUseCaseProtocol,
         isNodeUndecryptedFolder: Bool = false,
         shouldDisplayContactVerificationInfo: Bool = false,
         tracker: some AnalyticsTracking = DIContainer.tracker,
@@ -48,6 +53,7 @@ enum NodeInfoAction: ActionType {
     ) {
         self.shareUseCase = shareUseCase
         self.nodeUseCase = nodeUseCase
+        self.backupUseCase = backupUseCase
         self.node = node
         self.isNodeUndecryptedFolder = isNodeUndecryptedFolder
         self.tracker = tracker
@@ -126,5 +132,15 @@ enum NodeInfoAction: ActionType {
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
         rootNavigationController.present(navigationController, animated: true)
+    }
+
+    private func isNodeAnIncomingShare(_ node: NodeEntity) -> Bool {
+        guard !node.isInShare else { return true }
+
+        if let parent = nodeUseCase.nodeForHandle(node.parentHandle) {
+            return isNodeAnIncomingShare(parent)
+        }
+
+        return false
     }
 }

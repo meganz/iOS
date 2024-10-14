@@ -48,6 +48,10 @@ extension SharedItemsViewController {
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo),
+            backupUseCase: BackupsUseCase(
+                backupsRepository: BackupsRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
             isNodeUndecryptedFolder: isNodeUndecryptedFolder,
             shouldDisplayContactVerificationInfo: isContactVerificationEnabled() && incomingButton?.isSelected == true,
             completion: { [weak self] in

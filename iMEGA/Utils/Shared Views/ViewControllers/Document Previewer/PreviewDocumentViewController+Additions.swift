@@ -11,7 +11,11 @@ extension PreviewDocumentViewController {
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo)
+                nodeRepository: NodeRepository.newRepo),
+            backupUseCase: BackupsUseCase(
+                backupsRepository: BackupsRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
         )
     }
     
