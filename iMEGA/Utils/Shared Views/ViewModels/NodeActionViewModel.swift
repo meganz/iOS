@@ -64,6 +64,9 @@ struct NodeActionViewModel {
                   try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: nodes) else {
                 return nil
             }
+            guard hasValidProOrUnexpiredBusinessAccount else {
+                return false
+            }
             
             return await containsOnlySensitiveNodes(for: nodes)
         } catch is CancellationError {
@@ -75,7 +78,7 @@ struct NodeActionViewModel {
     }
     
     func isSensitive(node: NodeEntity) async -> Bool {
-        if !featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+        if !featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) || !hasValidProOrUnexpiredBusinessAccount {
             false
         } else if node.isMarkedSensitive {
             true

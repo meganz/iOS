@@ -18,6 +18,7 @@ struct SearchResultMapper: Sendable {
     let nodeUseCase: any NodeUseCaseProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     let mediaUseCase: any MediaUseCaseProtocol
+    let accountUseCase: any AccountUseCaseProtocol
     let nodeActions: NodeActions
     let hiddenNodesFeatureEnabled: Bool
     
@@ -214,7 +215,8 @@ struct SearchResultMapper: Sendable {
     }
     
     private func isSensitive(node: NodeEntity) -> Bool {
-        guard hiddenNodesFeatureEnabled else { return false }
+        guard hiddenNodesFeatureEnabled,
+              accountUseCase.hasValidProOrUnexpiredBusinessAccount() else { return false }
         if node.isMarkedSensitive {
             return true
         }

@@ -17,13 +17,15 @@ extension ThumbnailViewerTableViewCell {
     }
     
     @objc func createViewModel(nodes: [MEGANode]) -> ThumbnailViewerTableViewCellViewModel {
-        .init(nodes: nodes.toNodeEntities(),
+        let accountUseCase = AccountUseCase(
+            repository: AccountRepository.newRepo)
+        return .init(nodes: nodes.toNodeEntities(),
               sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo)),
+                accountUseCase: accountUseCase),
               nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared),
-              thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo))
+              thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+              accountUseCase: accountUseCase)
     }
     
     @objc func configureItem(at indexPath: NSIndexPath, cell: ItemCollectionViewCell) {

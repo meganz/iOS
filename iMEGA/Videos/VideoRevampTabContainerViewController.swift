@@ -53,6 +53,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
 
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
@@ -73,6 +74,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol
@@ -87,6 +89,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.nodeIconUseCase = nodeIconUseCase
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.accountUseCase = accountUseCase
         self.videoConfig = videoConfig
         self.router = router
         self.videoToolbarViewModel = VideoToolbarViewModel()
@@ -148,6 +151,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             nodeIconUseCase: nodeIconUseCase,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            accountUseCase: accountUseCase,
             videoConfig: videoConfig,
             router: router
         )

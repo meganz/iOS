@@ -11,11 +11,35 @@ import XCTest
 final class ItemCollectionViewCellViewModelTests: XCTestCase {
     
     @MainActor
+    func testConfigureCell_whenAccountInvalid_shouldSetIsSensitiveTrue() async {
+        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
+        let viewModel = sut(
+            node: node,
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            featureFlagHiddenNodes: true)
+        
+        await viewModel.configureCell().value
+
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .first { !$0 }
+            .sink { isSensitive in
+                XCTAssertFalse(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
+    
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeIsSensitive_shouldSetIsSensitiveTrue() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -40,6 +64,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlagHiddenNodes: false)
         
         await viewModel.configureCell().value
@@ -65,6 +90,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -89,6 +115,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlagHiddenNodes: false)
         
         await viewModel.configureCell().value
@@ -115,6 +142,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlagHiddenNodes: false)
         
         let taskFirstCall = viewModel.configureCell()
@@ -166,12 +194,14 @@ extension ItemCollectionViewCellViewModelTests {
              sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
              thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
+             accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
              featureFlagHiddenNodes: Bool = false) -> ItemCollectionViewCellViewModel {
         ItemCollectionViewCellViewModel(
             node: node,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
+            accountUseCase: accountUseCase,
             featureFlagProvider: MockFeatureFlagProvider(
                 list: [.hiddenNodes: featureFlagHiddenNodes]))
     }

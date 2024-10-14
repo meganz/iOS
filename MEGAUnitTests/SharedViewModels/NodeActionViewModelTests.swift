@@ -15,10 +15,24 @@ final class NodeActionViewModelTests: XCTestCase {
         XCTAssertNil(result)
     }
     
+    func testIsHidden_invalidAccount_shouldReturnFalse() async throws {
+        let nodes = makeSensitiveNodes(count: 100)
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            featureFlagProvider: featureFlagProvider)
+        
+        let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
+        
+        XCTAssertFalse(try XCTUnwrap(result))
+    }
+    
     func testIsHidden_nodesContainsOnlySensitiveNodes_shouldReturnTrue() async throws {
         let nodes = makeSensitiveNodes(count: 100)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            featureFlagProvider: featureFlagProvider)
         
         let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
         
@@ -29,7 +43,9 @@ final class NodeActionViewModelTests: XCTestCase {
         var nodes = makeSensitiveNodes(count: 100)
         nodes.append(NodeEntity(handle: HandleEntity(nodes.count + 1), isMarkedSensitive: false))
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            featureFlagProvider: featureFlagProvider)
         
         let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
         
@@ -109,6 +125,7 @@ final class NodeActionViewModelTests: XCTestCase {
         
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: featureFlagProvider
         )
@@ -151,10 +168,35 @@ final class NodeActionViewModelTests: XCTestCase {
         XCTAssertFalse(isSenstive)
     }
     
+    func testIsSensitive_featureFlagOff_shouldReturnFalse() async {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
+        let sut = makeSUT(
+            featureFlagProvider: featureFlagProvider)
+        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
+        
+        let isSenstive = await sut.isSensitive(node: node)
+        
+        XCTAssertFalse(isSenstive)
+    }
+    
+    func testIsSensitive_invalidAccount_shouldReturnFalse() async {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            featureFlagProvider: featureFlagProvider)
+        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
+        
+        let isSenstive = await sut.isSensitive(node: node)
+        
+        XCTAssertFalse(isSenstive)
+    }
+    
     func testIsSensitive_whenFeatureFlagEnabledAndNodeIsSensitive_shouldReturnTrue() async {
         // given
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            featureFlagProvider: featureFlagProvider)
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         
         // when
@@ -168,8 +210,10 @@ final class NodeActionViewModelTests: XCTestCase {
         // given
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true))
-        let sut = makeSUT(sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: featureFlagProvider)
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            featureFlagProvider: featureFlagProvider)
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
         
         // when

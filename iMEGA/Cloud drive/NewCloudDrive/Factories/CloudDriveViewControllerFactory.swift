@@ -175,6 +175,7 @@ struct CloudDriveViewControllerFactory {
                 nodeUseCase: nodeUseCase,
                 sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
                 mediaUseCase: homeFactory.makeMediaUseCase(),
+                accountUseCase: accountUseCase,
                 nodeActions: nodeActions,
                 hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
             ),
