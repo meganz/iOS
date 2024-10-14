@@ -46,18 +46,6 @@ final class VerificationCodeViewController: UIViewController, ViewType {
         navigationController?.isNavigationBarHidden = false
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
-            }
-            
-            updateAppearance()
-        }
-    }
-    
     // MARK: - Config views
     private func configViewContents() {
         verificationCodeSentToLabel.text = Strings.Localizable.pleaseTypeTheVerificationCodeSentTo
@@ -72,7 +60,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
         verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
         verificationCodeFields.first?.becomeFirstResponder()
         
-        updateAppearance()
+        setupColors()
     }
 
     private func showResendView() {
@@ -89,7 +77,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
         errorView.isHidden = false
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         view.backgroundColor = TokenColors.Background.page
         
         updateCodeFieldsAppearance()

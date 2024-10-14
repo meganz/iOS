@@ -67,18 +67,6 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if navigationController != nil {
-                AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
-            }
-            
-            updateAppearance()
-        }
-    }
-    
     // MARK: - UI actions
     @IBAction private func didTapCancelButton() {
         viewModel.dispatch(.cancel)
@@ -139,7 +127,7 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         phoneNumberLabel.text = Strings.Localizable.yourPhoneNumber
         nextButton.setTitle(Strings.Localizable.next, for: .normal)
         
-        updateAppearance()
+        setupColors()
     }
     
     private func configViewForAddPhoneNumber() {
@@ -161,12 +149,12 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         descriptionTextView.text = Strings.Localizable.YourAccountHasBeenSuspendedTemporarilyDueToPotentialAbuse.pleaseVerifyYourPhoneNumberToUnlockYourAccount
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         view.backgroundColor = TokenColors.Background.page
         
         let primaryTextColor = TokenColors.Text.primary
         let secondaryTextColor = TokenColors.Text.secondary
-        let separatorColor = UIColor.mnz_separator()
+        let separatorColor = TokenColors.Border.strong
         let fieldBackgroundColor = TokenColors.Background.page
         
         titleLabel.textColor = primaryTextColor
