@@ -315,6 +315,8 @@ final class HomeScreenFactory: NSObject {
             downloadedNodesListener: makeDownloadedNodesListener(),
             nodeIconUsecase: makeNodeIconUsecase(),
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo),
             allChips: Self.allChips(),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),

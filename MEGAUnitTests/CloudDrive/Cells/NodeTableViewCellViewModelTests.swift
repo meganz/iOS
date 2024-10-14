@@ -41,6 +41,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlags: [.hiddenNodes: true]
             )
         
@@ -58,6 +59,33 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         
         subscription.cancel()
     }
+    
+    @MainActor
+    func testConfigureCell_invalidAccount_shouldSetIsSensitiveFalse() async {
+        let nodes = [
+            NodeEntity(handle: 1, isMarkedSensitive: true)
+        ]
+        let viewModel = sut(
+            nodes: nodes,
+            shouldApplySensitiveBehaviour: true,
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            featureFlags: [.hiddenNodes: true]
+            )
+        
+        await viewModel.configureCell().value
+
+        let expectation = expectation(description: "viewModel.isSensitive should return value")
+        let subscription = viewModel.$isSensitive
+            .first { !$0 }
+            .sink { isSensitive in
+                XCTAssertFalse(isSensitive)
+                expectation.fulfill()
+            }
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        
+        subscription.cancel()
+    }
         
     @MainActor
     func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
@@ -68,6 +96,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlags: [.hiddenNodes: false]
         )
         
@@ -96,6 +125,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlags: [.hiddenNodes: true]
             )
         
@@ -123,6 +153,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlags: [.hiddenNodes: false]
         )
 
@@ -152,6 +183,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             featureFlags: [.hiddenNodes: true]
             )
         
@@ -179,6 +211,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
                 nodes: [.init(handle: 1, isMarkedSensitive: true)],
                 shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
+                accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
                 featureFlags: [.hiddenNodes: true]
             )
             
@@ -207,7 +240,8 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: [node],
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
             thumbnailUseCase: MockThumbnailUseCase(
-                loadThumbnailResult: .success(.init(url: imageUrl, type: .thumbnail))))
+                loadThumbnailResult: .success(.init(url: imageUrl, type: .thumbnail))),
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true))
         
         await viewModel.configureCell().value
         
@@ -226,7 +260,8 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             nodes: [node],
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
-            nodeIconUseCase: nodeIconUseCase)
+            nodeIconUseCase: nodeIconUseCase,
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true))
         
         await viewModel.configureCell().value
         
@@ -245,7 +280,8 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: [node],
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
-            nodeIconUseCase: nodeIconUseCase)
+            nodeIconUseCase: nodeIconUseCase,
+            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true))
         
         await viewModel.configureCell().value
         
@@ -262,6 +298,7 @@ extension NodeTableViewCellViewModelTests {
              sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
              thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
+             accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
              featureFlags: [FeatureFlagKey: Bool] = [.hiddenNodes: false]) -> NodeTableViewCellViewModel {
         NodeTableViewCellViewModel(
             nodes: nodes,
@@ -269,6 +306,7 @@ extension NodeTableViewCellViewModelTests {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
+            accountUseCase: accountUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: featureFlags))
     }
 }

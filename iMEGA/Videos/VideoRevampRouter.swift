@@ -74,6 +74,8 @@ struct VideoRevampRouter: VideoRevampRouting {
                 nodeRepository: nodeRepository
             ),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo),
             videoConfig: .live(),
             router: self,
             featureFlagProvider: DIContainer.featureFlagProvider
@@ -134,10 +136,11 @@ struct VideoRevampRouter: VideoRevampRouting {
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }
         )
         let nodeRepository = NodeRepository.newRepo
+        let accountUseCase = AccountUseCase(
+            repository: AccountRepository.newRepo)
         let sensitiveNodeUseCase = SensitiveNodeUseCase(
             nodeRepository: nodeRepository,
-            accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo))
+            accountUseCase: accountUseCase)
         let videoPlaylistContentsUseCase = VideoPlaylistContentsUseCase(
             userVideoPlaylistRepository: userVideoPlaylistsRepo,
             photoLibraryUseCase: photoLibraryUseCase,
@@ -173,6 +176,7 @@ struct VideoRevampRouter: VideoRevampRouting {
                 nodeRepository: nodeRepository
             ),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            accountUseCase: accountUseCase,
             router: self,
             presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(

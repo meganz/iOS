@@ -48,11 +48,15 @@ public class VideoRevampFactory {
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
         
-        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase, nodeIconUseCase: nodeIconUseCase)
+        let thumbnailLoader = makeThumbnailLoader(
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeIconUseCase: nodeIconUseCase,
+            accountUseCase: accountUseCase)
         let videoListViewModel = VideoListViewModel(
             syncModel: syncModel, 
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
@@ -111,6 +115,7 @@ public class VideoRevampFactory {
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
@@ -118,7 +123,10 @@ public class VideoRevampFactory {
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         syncModel: VideoRevampSyncModel
     ) -> UIViewController {
-        let thumbnailLoader = makeThumbnailLoader(sensitiveNodeUseCase: sensitiveNodeUseCase, nodeIconUseCase: nodeIconUseCase)
+        let thumbnailLoader = makeThumbnailLoader(
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeIconUseCase: nodeIconUseCase,
+            accountUseCase: accountUseCase)
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
@@ -162,12 +170,14 @@ public class VideoRevampFactory {
 extension VideoRevampFactory {
     private static func makeThumbnailLoader(
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        nodeIconUseCase: some NodeIconUsecaseProtocol
+        nodeIconUseCase: some NodeIconUsecaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol
     ) -> any ThumbnailLoaderProtocol {
         ThumbnailLoaderFactory.makeThumbnailLoader(
             config: .sensitiveWithFallbackIcon(
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
-                nodeIconUseCase: nodeIconUseCase
+                nodeIconUseCase: nodeIconUseCase,
+                accountUseCase: accountUseCase
             ),
             thumbnailUseCase: ThumbnailUseCase(
                 repository: ThumbnailRepository.newRepo
