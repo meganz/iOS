@@ -26,15 +26,7 @@
     
     [self setupTitleImage];
     [self setupView];
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 #pragma mark - IBActions
@@ -73,7 +65,7 @@
     self.checkImageView.hidden = self.completedAchievementIndex == nil;
 }
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.view.backgroundColor = [self defaultBackgroundColor];
     self.subtitleView.backgroundColor = [self defaultBackgroundColor];
     self.howItWorksTopSeparatorView.backgroundColor = [self separatorColor];

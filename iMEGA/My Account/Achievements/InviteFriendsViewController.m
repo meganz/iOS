@@ -42,20 +42,12 @@
     self.howItWorksSecondParagraphLabel.text = LocalizedString(@"howItWorksSecondary", @"");
     self.howItWorksThirdParagraphLabel.text = LocalizedString(@"howItWorksTertiary", @"A message which is shown once someone has invited a friend as part of the achievements program.");
     
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     UIColor *backgroundColor = [self defaultBackgroundColor];
     UIColor *primaryTextColor = [self primaryTextColor];
     UIColor *secondaryTextColor = [self secondayTextColor];

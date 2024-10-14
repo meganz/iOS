@@ -45,22 +45,12 @@
         [self.inviteAchievementsEmailsMutableArray addObject:email];
     }
     
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
-    }
+    [self setupColors];
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.view.backgroundColor = UIColor.systemBackgroundColor;
     self.tableView.separatorColor = [UIColor mnz_separator];
 }
