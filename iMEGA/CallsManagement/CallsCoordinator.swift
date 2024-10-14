@@ -5,6 +5,7 @@ import CombineSchedulers
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASwift
 
 protocol CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
@@ -78,7 +79,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
 }
 
-@objc final class CallsCoordinator: NSObject {
+@objc final class CallsCoordinator: NSObject, @unchecked Sendable {
     private let callUseCase: any CallUseCaseProtocol
     private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
@@ -89,15 +90,16 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     
     private let callManager: any CallManagerProtocol
-    private var providerDelegate: (any CallKitProviderDelegateProtocol)?
+    
+    @Atomic private var providerDelegate: (any CallKitProviderDelegateProtocol)?
     
     private let passcodeManager: any PasscodeManagerProtocol
     
     private let uuidFactory: () -> UUID
     private let callUpdateFactory: CXCallUpdateFactory
     
-    private var callUpdateTask: Task<Void, Never>?
-    private var callSessionUpdateTask: Task<Void, Never>?
+    @Atomic private var callUpdateTask: Task<Void, Never>?
+    @Atomic private var callSessionUpdateTask: Task<Void, Never>?
     
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
     
@@ -138,10 +140,12 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         
         super.init()
         
-        self.providerDelegate = callKitProviderDelegateFactory.build(
-            callCoordinator: self,
-            callManager: callManager
-        )
+        self.$providerDelegate.mutate {
+            $0 = callKitProviderDelegateFactory.build(
+                callCoordinator: self,
+                callManager: callManager
+            )
+        }
 
         onCallUpdateListener()
         monitorOnChatConnectionStateUpdate()
@@ -156,9 +160,11 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private func onCallUpdateListener() {
         let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
         callUpdateTask?.cancel()
-        callUpdateTask = Task { [weak self] in
-            for await call in callUpdates {
-                self?.onCallUpdate(call)
+        $callUpdateTask.mutate {
+            $0 = Task { [weak self] in
+                for await call in callUpdates {
+                    self?.onCallUpdate(call)
+                }
             }
         }
     }
@@ -179,14 +185,16 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private func configureCallSessionsListener() {
         guard callSessionUpdateTask == nil else { return }
         let sessionUpdates = sessionUpdateUseCase.monitorOnSessionUpdate()
-        callSessionUpdateTask = Task { [weak self] in
-            guard let self else { return }
-            for await (session, call) in sessionUpdates {
-                switch session.changeType {
-                case .remoteAvFlags:
-                    updateVideoForCall(call)
-                default:
-                    break
+        $callSessionUpdateTask.mutate {
+            $0 = Task { [weak self] in
+                guard let self else { return }
+                for await (session, call) in sessionUpdates {
+                    switch session.changeType {
+                    case .remoteAvFlags:
+                        updateVideoForCall(call)
+                    default:
+                        break
+                    }
                 }
             }
         }
@@ -262,7 +270,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     
     private func removeCallListeners() {
         callSessionUpdateTask?.cancel()
-        callSessionUpdateTask = nil
+        $callSessionUpdateTask.mutate { $0 = nil }
     }
     
     private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {

@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGADomain
 
-final class MockCallsCoordinator: CallsCoordinatorProtocol {
+final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable {
     var startCall_CalledTimes = 0
     var answerCall_CalledTimes = 0
     var endCall_CalledTimes = 0
