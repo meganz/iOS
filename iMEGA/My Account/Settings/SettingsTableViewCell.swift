@@ -13,14 +13,7 @@ class SettingsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         displayValueLabel.textColor = UIColor.secondaryLabel
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
+        setupColors()
     }
     
     func update(viewModel: SettingCellViewModel) {
@@ -34,12 +27,9 @@ class SettingsTableViewCell: UITableViewCell {
         trailingIcon.tintColor = TokenColors.Icon.secondary
         displayValueLabel.text = viewModel.displayValue
         displayValueLabel.isHidden = viewModel.displayValue.isEmpty
-        
-        updateAppearance()
     }
     
-    private func updateAppearance() {
-        titleLabel.textColor = isDestructive ? UIColor.mnz_errorRed() :
-                                               UIColor.primaryTextColor()
+    private func setupColors() {
+        titleLabel.textColor = isDestructive ? TokenColors.Text.error : TokenColors.Text.primary
     }
 }

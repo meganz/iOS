@@ -46,26 +46,16 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     self.uploadSyncedAlbumsLabel.text = LocalizedString(@"Upload Albums Synced from iTunes", @"Title of the switch to config whether to upload synced albums");
     self.uploadSyncedAlbumsSwitch.on = CameraUploadManager.shouldUploadSyncedAlbums;
     
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     [self configSwitchTintColors];
     
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - UI Actions

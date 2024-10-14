@@ -33,23 +33,14 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.FiveMinutes, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.FiveMinutes.rawValue)))
         
         tableView.backgroundColor = TokenColors.Background.page
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance()
-        }
+        setupColors()
     }
     
     // MARK: - Private
     
-    func updateAppearance() {
-        tableView.separatorColor = UIColor.mnz_separator()
+    func setupColors() {
+        tableView.separatorColor = TokenColors.Border.strong
         tableView.backgroundColor = TokenColors.Background.page
-        
-        tableView.reloadData()
     }
     
     // MARK: - UITableViewDataSource

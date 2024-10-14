@@ -6,8 +6,8 @@ extension RubbishBinTableViewController {
         UpgradeAccountRouter().presentUpgradeTVC()
     }
 
-    @objc func updateAppearance() {
-        tableView.separatorColor = UIColor.mnz_separator()
+    @objc func setupColors() {
+        tableView.separatorColor = TokenColors.Border.strong
         tableView.backgroundColor = TokenColors.Background.page
 
         rubbishBinCleaningSchedulerLabel.textColor = TokenColors.Text.primary
@@ -17,6 +17,5 @@ extension RubbishBinTableViewController {
         clearRubbishBinLabel.textColor = TokenColors.Text.error
 
         setupTableViewHeaderAndFooter()
-        tableView.reloadData()
     }
 }

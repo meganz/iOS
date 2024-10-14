@@ -39,21 +39,13 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     [self configVideoFormatTexts];
     
     [self updateNavigationTitle];
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self configUI];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
 }
 
 #pragma mark - Private
@@ -105,15 +97,13 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     self.videoQualityRightDetailLabel.text = videoQualityString;
 }
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.videoQualityRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     [self configLabelsTextColor];
     
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - UI Actions

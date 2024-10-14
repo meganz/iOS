@@ -32,7 +32,7 @@
     self.highLabel.text = LocalizedString(@"media.quality.high", @"High");
     self.originalLabel.text = LocalizedString(@"media.quality.original", @"Original");
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -43,21 +43,11 @@
     cell.redCheckmarkImageView.hidden = NO;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate

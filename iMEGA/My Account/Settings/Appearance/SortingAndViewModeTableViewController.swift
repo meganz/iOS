@@ -44,7 +44,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         viewModePreferenceListViewLabel.text = Strings.Localizable.listView
         viewModePreferenceThumbnailViewLabel.text = Strings.Localizable.thumbnailView
         
-        updateAppearance()
+        setupColors()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,30 +57,20 @@ class SortingAndViewModeTableViewController: UITableViewController {
         setupUI()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-    
     // MARK: - Private
     
-    private func updateAppearance() {
+    private func setupColors() {
         sortingPreferenceSameForAllDetailLabel.textColor = UIColor.secondaryLabel
         
-        tableView.separatorColor = UIColor.mnz_separator()
+        tableView.separatorColor = TokenColors.Border.strong
         tableView.backgroundColor = TokenColors.Background.page
 
-        sortingPreferencePerFolderLabel.textColor = UIColor.primaryTextColor()
-        sortingPreferenceSameForAllLabel.textColor = UIColor.primaryTextColor()
-        sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
-        viewModePreferencePerFolderLabel.textColor = UIColor.primaryTextColor()
-        viewModePreferenceListViewLabel.textColor = UIColor.primaryTextColor()
-        viewModePreferenceThumbnailViewLabel.textColor = UIColor.primaryTextColor()
-
-        tableView.reloadData()
+        sortingPreferencePerFolderLabel.textColor = TokenColors.Text.primary
+        sortingPreferenceSameForAllLabel.textColor = TokenColors.Text.primary
+        sortingPreferenceSameForAllDetailLabel.textColor = TokenColors.Text.secondary
+        viewModePreferencePerFolderLabel.textColor = TokenColors.Text.primary
+        viewModePreferenceListViewLabel.textColor = TokenColors.Text.primary
+        viewModePreferenceThumbnailViewLabel.textColor = TokenColors.Text.primary
     }
     
     private func setupUI() {

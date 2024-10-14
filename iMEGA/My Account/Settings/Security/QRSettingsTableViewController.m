@@ -32,15 +32,7 @@
     }];
     [MEGASdk.shared getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
     
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 #pragma mark - UITableViewDataSource

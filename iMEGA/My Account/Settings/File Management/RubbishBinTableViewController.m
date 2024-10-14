@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateAppearance];
+    [self setupColors];
     
     if ([MEGASdk.shared mnz_isProAccount]) {
         self.tableView.tableFooterView = nil;
@@ -65,10 +65,6 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
     
     if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
         [self setupTableViewHeaderAndFooter];

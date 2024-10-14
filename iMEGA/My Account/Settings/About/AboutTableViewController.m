@@ -49,7 +49,7 @@
     
     [self.acknowledgementsLabel setText:LocalizedString(@"acknowledgements", @"")];
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -59,23 +59,13 @@
     
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     
     self.versionNumberLabel.textColor = self.sdkVersionSHALabel.textColor = self.megachatSdkSHALabel.textColor = UIColor.secondaryLabelColor;
-    
-    [self.tableView reloadData];
 }
 
 - (void)appVersionTappedFiveTimes:(UITapGestureRecognizer *)sender {
