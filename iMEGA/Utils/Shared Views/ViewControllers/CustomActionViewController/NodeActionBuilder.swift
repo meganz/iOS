@@ -471,7 +471,7 @@ final class NodeActionBuilder {
         switch displayMode {
         case .unknown:
             break
-        case .cloudDrive, .sharedItem, .nodeInfo, .recents:
+        case .cloudDrive, .sharedItem, .nodeInfo, .recents, .photosTimeline, .photosAlbum:
             if isBackupNode {
                 nodeActions = backupsNodeActions()
             } else {
@@ -479,7 +479,7 @@ final class NodeActionBuilder {
             }
         case .rubbishBin:
             nodeActions = nodeActionsForRubbishBin()
-        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .previewPdfPage, .textEditor, .photosAlbum, .photosFavouriteAlbum, .photosTimeline, .mediaDiscovery, .albumLink:
+        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .previewPdfPage, .textEditor, .photosFavouriteAlbum, .mediaDiscovery, .albumLink:
             break
         case .nodeVersions:
             nodeActions = nodeVersionsNodeActions()

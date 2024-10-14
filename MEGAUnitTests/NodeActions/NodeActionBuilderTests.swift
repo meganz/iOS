@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGASDKRepoMock
+import Testing
 import XCTest
 
 class NodeActionBuilderTests: XCTestCase {
@@ -214,49 +215,49 @@ class NodeActionBuilderTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
     }
-
+    
     func testTakeDownNode_onSingleFileSelection_shouldHaveDisputedActions() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 1)
             .setIsTakedown(true)
             .multiselectBuild()
-
+        
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
     }
-
+    
     func testTakeDownNode_onMultipleFilesSelection_shouldHaveOnlyMoveToBinAction() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 2)
             .setIsTakedown(true)
             .multiselectBuild()
-
+        
         XCTAssertTrue(isEqual(nodeActionTypes: [.moveToRubbishBin]))
     }
-
+    
     func testTakeDownNode_onSingleFolderSelection_shouldHaveDisputedActions() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.folders, selectedNodeCount: 1)
             .setIsTakedown(true)
             .multiselectBuild()
-
+        
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
     }
-
+    
     func testTakeDownNode_onMultipleFoldersSelection_shouldHaveOnlyMoveToBinAction() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.folders, selectedNodeCount: 2)
             .setIsTakedown(true)
             .multiselectBuild()
-
+        
         XCTAssertTrue(isEqual(nodeActionTypes: [.moveToRubbishBin]))
     }
-
+    
     func testTakeDownNode_onMultipleFilesAndFoldersSelection_shouldHaveOnlyMoveToBinAction() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
             .setIsTakedown(true)
             .multiselectBuild()
-
+        
         XCTAssertTrue(isEqual(nodeActionTypes: [.moveToRubbishBin]))
     }
     
@@ -782,7 +783,7 @@ class NodeActionBuilderTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .hide]))
     }
-
+    
     // MARK: - Preview Documents
     
     func testDocumentPreviewFileLink() {
@@ -858,7 +859,7 @@ class NodeActionBuilderTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
     }
-
+    
     func testDocumentPreviewPdfThumbnail_isNotExported_isNotLink() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
@@ -1296,41 +1297,6 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectMediaFiles_photosAlbum_shouldReturnCorrectActions() {
-        actions = NodeActionBuilder()
-            .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setAreMediaFiles(true)
-            .setDisplayMode(.photosAlbum)
-            .multiselectBuild()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin]))
-    }
-    
-    func testMultiselectMediaFiles_hiddenForPhotosAlbumValidAccountType_shouldReturnCorrrectActions() {
-        let expectations: [(isHidden: Bool?, nodeAction: MegaNodeActionType?)] = [
-            (isHidden: true, nodeAction: .unhide),
-            (isHidden: false, nodeAction: .hide),
-            (isHidden: nil, nodeAction: nil)
-        ]
-        expectations.forEach { isHidden, hiddenNodeActionType in
-            actions = NodeActionBuilder()
-                .setNodeSelectionType(.files, selectedNodeCount: 4)
-                .setAreMediaFiles(true)
-                .setDisplayMode(.photosAlbum)
-                .setIsHiddenNodesFeatureEnabled(true)
-                .setHasValidProOrUnexpiredBusinessAccount(true)
-                .setIsHidden(isHidden)
-                .multiselectBuild()
-            
-            let expectedActionTypes = [.download, .shareLink, .exportFile,
-                                       .sendToChat, hiddenNodeActionType, .moveToRubbishBin]
-                .compactMap { $0 }
-            
-            XCTAssertTrue(isEqual(nodeActionTypes: expectedActionTypes),
-                          "NodeActions invalid for isHidden: \(String(describing: isHidden))")
-        }
-    }
-    
     func testMultiselectMediaFiles_photosFavouriteAlbum_shouldReturnCorrrectActions() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
@@ -1367,16 +1333,6 @@ class NodeActionBuilderTests: XCTestCase {
             XCTAssertTrue(isEqual(nodeActionTypes: expectedActionTypes),
                           "NodeActions invalid for isHidden: \(String(describing: isHidden))")
         }
-    }
-    
-    func testMultiselectMediaFiles_PhotosTimeline() {
-        actions = NodeActionBuilder()
-            .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setAreMediaFiles(true)
-            .setDisplayMode(.photosTimeline)
-            .multiselectBuild()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
     func testMultiselectMediaFiles_MediaDiscovery() {
@@ -1467,60 +1423,6 @@ class NodeActionBuilderTests: XCTestCase {
                 .multiselectBuild()
             
             XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
-        }
-    }
-    
-    func testMultiselectBuild_photosTimelineContainsHiddenFileForFileDisplayModeValidAccountType_shouldReturnCorrectActions() {
-        actions = NodeActionBuilder()
-            .setAccessLevel(.accessOwner)
-            .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setDisplayMode(.photosTimeline)
-            .setIsHiddenNodesFeatureEnabled(true)
-            .setHasValidProOrUnexpiredBusinessAccount(true)
-            .setIsHidden(true)
-            .multiselectBuild()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat,
-                                                .unhide, .move, .copy, .moveToRubbishBin]))
-    }
-    
-    func testMultiselectBuild_photosTimelineNotContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
-        actions = NodeActionBuilder()
-            .setAccessLevel(.accessOwner)
-            .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setDisplayMode(.photosTimeline)
-            .setIsHiddenNodesFeatureEnabled(true)
-            .setIsHidden(false)
-            .multiselectBuild()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat,
-                                                .hide, .move, .copy, .moveToRubbishBin]))
-    }
-
-    func testMultiselectBuild_photosTimelineContainsHiddenFileOrFolderForFileAndFolderDisplayMode_shouldReturnCorrectActions() {
-        actions = NodeActionBuilder()
-            .setAccessLevel(.accessOwner)
-            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
-            .setDisplayMode(.photosTimeline)
-            .setIsHiddenNodesFeatureEnabled(true)
-            .setIsHidden(false)
-            .multiselectBuild()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .hide,
-                                                .move, .copy, .moveToRubbishBin]))
-    }
-    
-    func testMultiselectBuild_photosTimelineForDisplayModesHiddenValueNilValidAccountType_shouldNotContainHideAction() {
-        [NodeSelectionType.folders, .files, .filesAndFolders].forEach {
-            actions = NodeActionBuilder()
-                .setNodeSelectionType($0, selectedNodeCount: 4)
-                .setDisplayMode(.photosTimeline)
-                .setIsHiddenNodesFeatureEnabled(true)
-                .setHasValidProOrUnexpiredBusinessAccount(true)
-                .setIsHidden(nil)
-                .multiselectBuild()
-            
-            XCTAssertTrue(actions.notContains(where: { $0.type == .hide || $0.type == .unhide }))
         }
     }
     
