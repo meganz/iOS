@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwiftUI
@@ -189,6 +190,46 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.promoList.count, expectedPromoListCount, file: file, line: line)
     }
     
+    func testSharedItemNotificationMessage_withFilesOnly_shouldReturnCorrectMessage() {
+        let fileCount = randomItemCount
+        
+        assertSharedItemNotificationMessage(
+            fileCount: fileCount,
+            expectedMessage: Strings.Localizable.Notifications.Message.SharedItems.filesOnly(fileCount)
+        )
+    }
+    
+    func testSharedItemNotificationMessage_withFoldersOnly_shouldReturnCorrectMessage() {
+        let folderCount = randomItemCount
+ 
+        assertSharedItemNotificationMessage(
+            folderCount: folderCount,
+            expectedMessage: Strings.Localizable.Notifications.Message.SharedItems.foldersOnly(folderCount)
+        )
+    }
+    
+    func testSharedItemNotificationMessage_withFileAndFolders_shouldReturnCorrectMessage() {
+        let folderCount = randomItemCount
+        let fileCount = randomItemCount
+
+        assertSharedItemNotificationMessage(
+            folderCount: folderCount,
+            fileCount: fileCount,
+            expectedMessage: Strings.Localizable.Notifications.Message.SharedItems.FilesAndfolders.files(fileCount) + " " +  Strings.Localizable.Notifications.Message.SharedItems.FilesAndfolders.folders(folderCount)
+        )
+    }
+    
+    private func assertSharedItemNotificationMessage(
+        folderCount: Int = 0,
+        fileCount: Int = 0,
+        expectedMessage: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let (sut, _) = makeSUT()
+        XCTAssertEqual(sut.sharedItemNotificationMessage(folderCount: folderCount, fileCount: fileCount), expectedMessage, file: file, line: line)
+    }
+    
     private func makeSUT(
         lastReadNotification: NotificationIDEntity = NotificationIDEntity(0),
         notifications: [NotificationEntity] = [],
@@ -212,5 +253,9 @@ final class NotificationsViewModelTests: XCTestCase {
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, mockNotificationsUseCase)
+    }
+    
+    private var randomItemCount: Int {
+        Int.random(in: 1...10)
     }
 }
