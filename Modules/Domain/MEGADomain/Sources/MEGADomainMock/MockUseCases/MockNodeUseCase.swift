@@ -17,9 +17,17 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
     
     private let isDownloaded: Bool
-    
-    public init(isDownloaded: Bool  = false) {
+    private let isNodeInRubbishBin: Bool
+    private let nodes: [HandleEntity: NodeEntity]
+
+    public init(
+        isDownloaded: Bool = false,
+        isNodeInRubbishBin: Bool = false,
+        nodes: [HandleEntity: NodeEntity] = [:]
+    ) {
         self.isDownloaded = isDownloaded
+        self.isNodeInRubbishBin = isNodeInRubbishBin
+        self.nodes = nodes
     }
     
     public func rootNode() -> NodeEntity? {
@@ -64,11 +72,11 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
     
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
-        false
+        isNodeInRubbishBin
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
-        nil
+        nodes[handle]
     }
     
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {

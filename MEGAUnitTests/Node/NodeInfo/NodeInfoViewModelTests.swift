@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
 
@@ -105,12 +106,37 @@ final class NodeInfoViewModelTests: XCTestCase {
         }
     }
 
-    func testShouldShowNodeTags_whenFeatureToggleIsOn_shouldReturnTrue() {
+    func testShouldShowNodeTags_whenNodeInCloudDriveAndFeatureToggleOn_shouldReturnTrue() {
         assertShouldShowNodeTags(whenFeatureToggleIsOn: true, shouldReturn: true)
     }
 
-    func testShouldShowNodeTags_whenFeatureToggleIsOff_shouldReturnTrue() {
+    func testShouldShowNodeTags_whenFeatureToggleIsOff_shouldReturnFalse() {
         assertShouldShowNodeTags(whenFeatureToggleIsOn: false, shouldReturn: false)
+    }
+
+    func testShouldShowNodeTags_whenNodeInRubbishBin_shouldReturnFalse() {
+        let nodeUseCase = MockNodeUseCase(isNodeInRubbishBin: true)
+        let sut = makeSUT(nodeUseCase: nodeUseCase)
+        XCTAssertFalse(sut.shouldShowNodeTags)
+    }
+
+    func testShouldShowNodeTags_whenNodeInBackup_shouldReturnFalse() {
+        let backupUseCase = MockBackupsUseCase(isBackupsNode: true)
+        let sut = makeSUT(backupUseCase: backupUseCase)
+        XCTAssertFalse(sut.shouldShowNodeTags)
+    }
+
+    func testShouldShowNodeTags_whenNodeIsIncomingShareRoot_shouldReturnFalse() {
+        let sut = makeSUT(node: MockNode(handle: 100, isInShare: true))
+        XCTAssertFalse(sut.shouldShowNodeTags)
+    }
+
+    func testShouldShowNodeTags_whenNodeIsIncomingShareChild_shouldReturnFalse() {
+        let rootNode = MockNode(handle: 100, isInShare: true)
+        let childNode = MockNode(handle: 101, parentHandle: 100, isInShare: false)
+        let nodeUseCase = MockNodeUseCase(nodes: [100: rootNode.toNodeEntity()])
+        let sut = makeSUT(node: childNode, nodeUseCase: nodeUseCase)
+        XCTAssertFalse(sut.shouldShowNodeTags)
     }
 
     private func assertShouldShowNodeTags(
@@ -128,6 +154,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         node: MockNode = MockNode(handle: 0),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        backupUseCase: some BackupsUseCaseProtocol = MockBackupsUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #file,
         line: UInt = #line
@@ -136,6 +163,7 @@ final class NodeInfoViewModelTests: XCTestCase {
             withNode: node,
             shareUseCase: shareUseCase,
             nodeUseCase: nodeUseCase,
+            backupUseCase: backupUseCase,
             featureFlagProvider: featureFlagProvider
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
