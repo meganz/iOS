@@ -101,7 +101,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     self.chatNotificationsSwitch.enabled = NO;
     self.globalDNDNotificationControl = [GlobalDNDNotificationControl.alloc initWithDelegate:self];
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -129,14 +129,6 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     [MEGAChatSdk.shared removeChatDelegate:self];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - IBActions
 
 - (IBAction)richPreviewsValueChanged:(UISwitch *)sender {
@@ -161,13 +153,11 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.statusRightDetailLabel.textColor = self.imageQualityRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
-    
-    [self.tableView reloadData];
 }
 
 - (void)internetConnectionChanged {

@@ -10,26 +10,14 @@ class ChatImageQualityTableViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = Strings.Localizable.imageQuality
         
-        updateAppearance()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-            
-            tableView.reloadData()
-        }
+        setupColors()
     }
     
     // MARK: - Private
     
-    private func updateAppearance() {
-        tableView.separatorColor = UIColor.mnz_separator()
+    private func setupColors() {
+        tableView.separatorColor = TokenColors.Border.strong
         tableView.backgroundColor = TokenColors.Background.page
-        
-        tableView.reloadData()
     }
 
     // MARK: - UITableViewDataSource

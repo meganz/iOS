@@ -15,7 +15,7 @@ extension MasterKeyViewController {
         whyDoINeedARecoveryKeyButton?.titleLabel?.textAlignment = .center
     }
 
-    @objc func updateAppearance() {
+    @objc func setupColors() {
         view.backgroundColor = TokenColors.Background.page
 
         illustrationView?.backgroundColor = TokenColors.Background.page

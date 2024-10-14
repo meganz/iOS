@@ -96,20 +96,12 @@ class AppearanceTableViewController: UITableViewController {
         let alternateIconName = UIApplication.shared.alternateIconName
         selectIcon(with: alternateIconName)
         
-        updateAppearance()
+        setupColors()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         defaultTabDetailLabel.text = TabManager.getPreferenceTab().title
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     // MARK: - Private
@@ -122,15 +114,13 @@ class AppearanceTableViewController: UITableViewController {
         }
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         tableView.separatorColor = UIColor.mnz_separator()
         tableView.backgroundColor = TokenColors.Background.page
         
         [defaultTabLabel, sortingAndViewModeLabel, sortingAndViewModeLabel, mediaDiscoveryViewLabel, mediaDiscoverySubfolderLabel, hideRecentActivityLabel, hiddenItemsViewLabel]
-            .forEach { $0?.textColor = UIColor.primaryTextColor() }
-        defaultTabDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
-        
-        tableView.reloadData()
+            .forEach { $0?.textColor = TokenColors.Text.primary }
+        defaultTabDetailLabel.textColor = TokenColors.Text.secondary
     }
     
     private func selectIcon(with name: String?) {

@@ -25,7 +25,6 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        colorAppearanceDidChange(to: traitCollection, from: nil)
         
         localizeText()
                 
@@ -33,6 +32,7 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
             DispatchQueue.main.async { self?.executeCommand(command) }
         }
         viewModel.dispatch(.onViewLoaded)
+        setupColors()
     }
     
     // MARK: - private
@@ -50,6 +50,16 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
         } else {
             viewModel.dispatch(.disableFileVersions)
         }
+    }
+    
+    private func setupColors() {
+        tableView.backgroundColor = TokenColors.Background.page
+        tableView.separatorColor = TokenColors.Border.strong
+
+        fileVersionsLabel.textColor = TokenColors.Text.primary
+        fileVersioningLabel.textColor = TokenColors.Text.primary
+        detailLabel.textColor = TokenColors.Text.secondary
+        deleteOldVersionsLabel.textColor = TokenColors.Text.error
     }
     
     // MARK: - Execute command
@@ -117,22 +127,5 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
         guard let headerFooterView = view as? UITableViewHeaderFooterView else { return }
 
         headerFooterView.textLabel?.textColor = TokenColors.Text.secondary
-    }
-}
-
-extension FileVersioningTableViewController: TraitEnvironmentAware {
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        tableView.backgroundColor = TokenColors.Background.page
-        tableView.separatorColor = UIColor.mnz_separator()
-
-        fileVersionsLabel.textColor = TokenColors.Text.primary
-        fileVersioningLabel.textColor = TokenColors.Text.primary
-        detailLabel.textColor = TokenColors.Text.secondary
-        deleteOldVersionsLabel.textColor = TokenColors.Text.error
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
     }
 }

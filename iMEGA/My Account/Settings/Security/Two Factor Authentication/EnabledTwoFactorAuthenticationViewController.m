@@ -40,21 +40,12 @@
     
     [MEGASdk.shared isMasterKeyExportedWithDelegate:self];
     
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.view.backgroundColor = [UIColor pageBackgroundColor];
     self.titleLabel.textColor = [self primaryTextColor];
     self.firstLabel.textColor = self.secondLabel.textColor = [self secondaryTextColor];

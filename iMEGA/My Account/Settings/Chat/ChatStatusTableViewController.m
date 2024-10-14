@@ -52,7 +52,7 @@
     self.statusPersistenceLabel.text = LocalizedString(@"statusPersistence", @"");
     [self.autoAwayTimeSaveButton setTitle:LocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -76,17 +76,9 @@
     [MEGAChatSdk.shared removeChatDelegate:self];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.backgroundColor = [self defaultBackgroundColor];
     
     self.onlineLabel.textColor = [self primaryTextColor];
@@ -106,8 +98,6 @@
     self.lastActiveSwitch.tintColor = [self switchTintColor];
     
     self.tableView.separatorColor = [UIColor mnz_separator];
-    
-    [self.tableView reloadData];
 }
 
 - (void)internetConnectionChanged {

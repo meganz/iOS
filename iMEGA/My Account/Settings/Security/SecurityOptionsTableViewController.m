@@ -49,7 +49,7 @@
     
     self.closeOtherSessionsLabel.text = LocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -62,19 +62,9 @@
     [self.tableView reloadData];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     

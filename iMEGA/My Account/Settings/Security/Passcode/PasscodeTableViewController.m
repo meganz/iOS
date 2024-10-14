@@ -56,20 +56,12 @@
     LTHPasscodeViewController.sharedUser.navigationTintColor = [UIColor mnz_primaryGray];
     LTHPasscodeViewController.sharedUser.navigationTitleColor = UIColor.labelColor;
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self configureView];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
 }
         
 #pragma mark - Private
@@ -93,7 +85,7 @@
     [self.tableView reloadData];
 }
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.requirePasscodeDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.tableView.separatorColor = [UIColor mnz_separator];
@@ -103,8 +95,6 @@
     self.changePasscodeLabel.textColor = UIColor.primaryTextColor;
     self.requirePasscodeLabel.textColor = UIColor.primaryTextColor;
     self.requirePasscodeDetailLabel.textColor = UIColor.mnz_secondaryTextColor;
-
-    [self.tableView reloadData];
 }
 
 - (BOOL)isTouchIDAvailable {

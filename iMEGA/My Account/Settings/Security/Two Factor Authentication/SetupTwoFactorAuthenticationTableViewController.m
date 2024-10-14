@@ -31,7 +31,7 @@
     
     self.twoFactorAuthenticationLabel.text = LocalizedString(@"twoFactorAuthentication", @"");
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,23 +45,13 @@
     [MEGASdk.shared multiFactorAuthCheckWithEmail:[MEGASdk.shared myEmail] delegate:delegate];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
 
     self.twoFactorAuthenticationLabel.textColor = UIColor.primaryTextColor;
-
-    [self.tableView reloadData];
 }
 
 #pragma mark - IBActions

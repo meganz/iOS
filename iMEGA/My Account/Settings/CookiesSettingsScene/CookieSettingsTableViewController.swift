@@ -45,17 +45,6 @@ class CookieSettingsTableViewController: UITableViewController {
         
         configView()
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            AppearanceManager.forceNavigationBarUpdate(self.navigationController?.navigationBar ?? UINavigationBar(), traitCollection: traitCollection)
-            AppearanceManager.forceToolbarUpdate(self.navigationController?.toolbar ?? UIToolbar(), traitCollection: traitCollection)
-            
-            updateAppearance()
-        }
-    }
     
     // MARK: - Execute command
     func executeCommand(_ command: CookieSettingsViewModel.Command) {
@@ -137,7 +126,7 @@ class CookieSettingsTableViewController: UITableViewController {
         
         viewModel.dispatch(.configView)
         
-        updateAppearance()
+        setupColors()
     }
     
     private func configToolbar() {
@@ -149,11 +138,11 @@ class CookieSettingsTableViewController: UITableViewController {
         navigationController?.toolbar.isTranslucent = true
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         tableView.backgroundColor = TokenColors.Background.page
-        tableView.separatorColor = .mnz_separator()
+        tableView.separatorColor = TokenColors.Border.strong
         
-        saveBarButtonItem.tintColor = .mnz_primaryGray()
+        saveBarButtonItem.tintColor = TokenColors.Text.secondary
         
         acceptCookiesLabel.textColor = TokenColors.Text.primary
         acceptCookiesSwitch.onTintColor = TokenColors.Support.success
@@ -166,8 +155,6 @@ class CookieSettingsTableViewController: UITableViewController {
         
         advertisingCookiesLabel.textColor = TokenColors.Text.primary
         advertisingCookiesSwitch.onTintColor = TokenColors.Support.success
-        
-        tableView.reloadData()
     }
     
     private func updateAppearanceForTableViewHeaderFooterView(_ view: UITableViewHeaderFooterView) {

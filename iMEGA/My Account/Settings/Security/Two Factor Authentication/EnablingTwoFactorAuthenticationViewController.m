@@ -44,20 +44,12 @@
     
     [self.seedTextView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnTextView:)]];
     
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     [self setupFirstSectionLabelTextAndImage];
 
     NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", MEGASdk.shared.myEmail, self.seed];

@@ -44,7 +44,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
 
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,23 +81,13 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
 
     [self updateLabelAppearance];
-
-    [self.tableView reloadData];
 }
 
 - (void)reloadUI {

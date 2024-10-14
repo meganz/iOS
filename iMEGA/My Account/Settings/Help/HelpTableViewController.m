@@ -35,16 +35,8 @@
     self.joinBetaLabel.text = LocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
     self.rateUsLabel.text = LocalizedString(@"rateUsLabel", @"Title to rate the app");
     
-    [self updateAppearance];
-        self.reportIssueLabel.text = LocalizedString(@"help.reportIssue.title", @"");
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
+    self.reportIssueLabel.text = LocalizedString(@"help.reportIssue.title", @"");
 }
 
 - (SendFeedbackViewModel *)sendFeedbackViewModel {
@@ -102,11 +94,9 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
-    
-    [self.tableView reloadData];
 }
 
 - (void)openHelpCentre {
