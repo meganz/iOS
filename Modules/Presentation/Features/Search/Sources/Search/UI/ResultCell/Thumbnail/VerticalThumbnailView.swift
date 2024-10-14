@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 // ┌────────────────────────────────────────────────────┐
@@ -47,9 +48,9 @@ struct VerticalThumbnailView: View {
             bottomInfoView
         }
         .frame(height: 214)
-        .clipShape(RoundedRectangle(cornerRadius: 4))
+        .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
         .overlay(
-            RoundedRectangle(cornerRadius: 4)
+            RoundedRectangle(cornerRadius: TokenRadius.small)
                 .stroke(borderColor, lineWidth: 1)
         )
         .clipped()
@@ -123,7 +124,7 @@ struct VerticalThumbnailView: View {
                         .font(.caption)
                         .foregroundColor(viewModel.colorAssets.verticalThumbnailFooterText)
                         .background(viewModel.colorAssets.verticalThumbnailFooterBackground)
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
                 case .spacer:
                     Spacer()
                 }
