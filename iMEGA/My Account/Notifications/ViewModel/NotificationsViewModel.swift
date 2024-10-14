@@ -1,6 +1,7 @@
 import Foundation
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGASwiftUI
 import Notifications
@@ -127,5 +128,22 @@ enum NotificationAction: ActionType {
         case .clearImageCache:
             imageLoader.clearCache()
         }
+    }
+    
+    @objc func sharedItemNotificationMessage(folderCount: Int, fileCount: Int) -> String {
+        if folderCount >= 1 && fileCount >= 1 {
+            // Added x file/s and x folder/s
+            let fileString = Strings.Localizable.Notifications.Message.SharedItems.FilesAndfolders.files(fileCount)
+            let folderString = Strings.Localizable.Notifications.Message.SharedItems.FilesAndfolders.folders(folderCount)
+            return fileString + " " + folderString
+        }
+        
+        if folderCount >= 1 {
+            // Added x folder/s
+            return Strings.Localizable.Notifications.Message.SharedItems.foldersOnly(folderCount)
+        }
+        
+        // Added x file/s
+        return Strings.Localizable.Notifications.Message.SharedItems.filesOnly(fileCount)
     }
 }

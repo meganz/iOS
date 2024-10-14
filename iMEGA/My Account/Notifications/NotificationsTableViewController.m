@@ -281,39 +281,10 @@
             break;
         }
             
-        case MEGAUserAlertTypeNewShareNodes: {
-            int64_t fileCount = [userAlert numberAtIndex:1];
-            int64_t folderCount = [userAlert numberAtIndex:0];
-            NSString *text;
-            if ((folderCount > 1) && (fileCount > 1)) {
-                text = [[LocalizedString(@"Added [A] files and [B] folders", @"Content of a notification that informs how many files and folders have been added to a shared folder") stringByReplacingOccurrencesOfString:@"[A]" withString:[NSString stringWithFormat:@"%lld", fileCount]] stringByReplacingOccurrencesOfString:@"[B]" withString:[NSString stringWithFormat:@"%lld", folderCount]];
-            }
-            else if ((folderCount > 1) && (fileCount == 1)) {
-                text = [NSString stringWithFormat:LocalizedString(@"Added 1 file and %lld folders", @"Content of a notification that informs how many files and folders have been added to a shared folder"), folderCount];
-            }
-            else if ((folderCount == 1) && (fileCount > 1)) {
-                text = [NSString stringWithFormat:LocalizedString(@"Added %lld files and 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder"), fileCount];
-            }
-            else if ((folderCount == 1) && (fileCount == 1)) {
-                text = LocalizedString(@"Added 1 file and 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder");
-            }
-            else if (folderCount > 1) {
-                text = [NSString stringWithFormat:LocalizedString(@"Added %lld folders", @"Content of a notification that informs how many files and folders have been added to a shared folder"), folderCount];
-            }
-            else if (fileCount > 1) {
-                text = [NSString stringWithFormat:LocalizedString(@"Added %lld files", @"Content of a notification that informs how many files and folders have been added to a shared folder"), fileCount];
-            }
-            else if (folderCount == 1) {
-                text = LocalizedString(@"Added 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder");
-            }
-            else if (fileCount == 1) {
-                text = LocalizedString(@"Added 1 file", @"Content of a notification that informs how many files and folders have been added to a shared folder");
-            } else {
-                text = userAlert.title;
-            }
-            contentLabel.text = text;
+        case MEGAUserAlertTypeNewShareNodes:
+            contentLabel.text = [self.viewModel sharedItemNotificationMessageWithFolderCount:[userAlert numberAtIndex:0]
+                                                                                   fileCount:[userAlert numberAtIndex:1]];
             break;
-        }
             
         case MEGAUserAlertTypeRemovedSharesNodes: {
             int64_t itemCount = [userAlert numberAtIndex:0];
