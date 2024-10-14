@@ -18,6 +18,6 @@ public struct MockTransfersListenerRepository: TransfersListenerRepositoryProtoc
     }
     
     public init() {
-        (stream, continuation) = AsyncStream.makeStream(of: TransferEntity.self, bufferingPolicy: .bufferingNewest(1))
+        (stream, continuation) = AsyncStream.makeStream(of: TransferEntity.self, bufferingPolicy: .unbounded)
     }
 }
