@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -41,6 +42,7 @@ extension NodeTagsCellController: UITableViewDataSource {
 
         let view = NodeTagsCellView(viewModel: NodeTagsCellViewModel(accountUseCase: self.accountUseCase))
         cell.host(view, parent: controller)
+        cell.backgroundColor = TokenColors.Background.page
         return cell
     }
 }
