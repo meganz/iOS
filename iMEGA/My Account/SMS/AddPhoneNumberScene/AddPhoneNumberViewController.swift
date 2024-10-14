@@ -27,17 +27,6 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
         viewModel.dispatch(.onViewReady)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
-            }
-            updateAppearance()
-        }
-    }
-    
     // MARK: - Configure views
     private func configureViews() {
         addPhoneNumberButton.setTitle(Strings.Localizable.addPhoneNumber, for: .normal)
@@ -45,10 +34,10 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
         dontShowAgainButton.setTitle(Strings.Localizable.dontShowAgain, for: .normal)
         addPhoneNumberTitle.text = Strings.Localizable.addPhoneNumber
         
-        updateAppearance()
+        setupColors()
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         view.backgroundColor = TokenColors.Background.page
         addPhoneNumberTitle.textColor = TokenColors.Text.primary
         descriptionLabel.textColor = TokenColors.Text.primary

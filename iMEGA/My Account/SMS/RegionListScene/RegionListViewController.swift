@@ -63,21 +63,6 @@ final class RegionListViewController: UIViewController, ViewType {
         navigationController?.isNavigationBarHidden = false
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            if let nav = navigationController {
-                AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
-            }
-            AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                                   backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                                                   traitCollection: traitCollection)
-            
-            updateAppearance()
-        }
-    }
-    
     // MARK: - Config view
     private func configView() {
         title = Strings.Localizable.chooseYourRegion
@@ -88,10 +73,10 @@ final class RegionListViewController: UIViewController, ViewType {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        updateAppearance()
+        setupColors()
     }
     
-    private func updateAppearance() {        
+    private func setupColors() {
         tableView.backgroundColor = TokenColors.Background.surface1
         tableView.sectionIndexColor = TokenColors.Text.primary
         tableView.separatorColor = TokenColors.Border.strong
