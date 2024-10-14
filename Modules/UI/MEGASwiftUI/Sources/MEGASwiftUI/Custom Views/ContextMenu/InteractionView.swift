@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct InteractionView<Content: View>: UIViewRepresentable {
@@ -10,7 +11,7 @@ struct InteractionView<Content: View>: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = TokenColors.Background.page
         let menuInteraction = UIContextMenuInteraction(delegate: context.coordinator)
         
         let hostView = UIHostingController(rootView: sourcePreview())
@@ -78,7 +79,7 @@ struct InteractionView<Content: View>: UIViewRepresentable {
             }
             
             gr.end = { [weak self] in
-                self?.hosting?.view.backgroundColor = .clear
+                self?.hosting?.view.backgroundColor = TokenColors.Background.page
             }
             
             hosting?.view?.addGestureRecognizer(gr)
