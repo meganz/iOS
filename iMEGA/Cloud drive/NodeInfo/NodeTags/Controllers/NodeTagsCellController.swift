@@ -47,6 +47,9 @@ extension NodeTagsCellController: UITableViewDataSource {
 
 extension NodeTagsCellController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let controller else { return }
+        let addTagsRouter = AddTagsViewRouter(presenter: controller)
+        addTagsRouter.start()
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -2624,6 +2624,9 @@
 		C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */; };
 		C4944FE82C339F6800A2C082 /* MockDownloadedNodesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4944FE72C339F6800A2C082 /* MockDownloadedNodesListener.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
+		C49955B02CB8D4B500771BC7 /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49955AE2CB8D4B500771BC7 /* AddTagsView.swift */; };
+		C49955B12CB8D4B500771BC7 /* AddTagsView+Subviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49955AF2CB8D4B500771BC7 /* AddTagsView+Subviews.swift */; };
+		C49955B32CB8D4C700771BC7 /* AddTagsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49955B22CB8D4C700771BC7 /* AddTagsViewRouter.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
 		C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */; };
 		C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */; };
@@ -5430,6 +5433,9 @@
 		C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveViewController.swift; sourceTree = "<group>"; };
 		C4944FE72C339F6800A2C082 /* MockDownloadedNodesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadedNodesListener.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
+		C49955AE2CB8D4B500771BC7 /* AddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsView.swift; sourceTree = "<group>"; };
+		C49955AF2CB8D4B500771BC7 /* AddTagsView+Subviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddTagsView+Subviews.swift"; sourceTree = "<group>"; };
+		C49955B22CB8D4C700771BC7 /* AddTagsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsViewRouter.swift; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
 		C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
 		C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouter.swift; sourceTree = "<group>"; };
@@ -12598,6 +12604,8 @@
 		BF93661E2CB47B28001BD0CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C49955AF2CB8D4B500771BC7 /* AddTagsView+Subviews.swift */,
+				C49955AE2CB8D4B500771BC7 /* AddTagsView.swift */,
 				BF6C9B9F2CB48408007FFE96 /* NodeTagsCellView.swift */,
 			);
 			path = Views;
@@ -12915,6 +12923,7 @@
 				BFEE74CE2CAE22BF007FA672 /* Controllers */,
 				BF9366212CB47B7D001BD0CD /* ViewModels */,
 				BF93661E2CB47B28001BD0CD /* Views */,
+				C49955B22CB8D4C700771BC7 /* AddTagsViewRouter.swift */,
 			);
 			path = NodeTags;
 			sourceTree = "<group>";
@@ -14528,6 +14537,9 @@
 				B662B85B24ECC7A30089376A /* AddPhoneNumberRouter.swift in Sources */,
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
 				B662B85924ECB3500089376A /* AddPhoneNumberViewModel.swift in Sources */,
+				C49955B12CB8D4B500771BC7 /* AddTagsView+Subviews.swift in Sources */,
+				C49955B02CB8D4B500771BC7 /* AddTagsView.swift in Sources */,
+				C49955B32CB8D4C700771BC7 /* AddTagsViewRouter.swift in Sources */,
 				BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */,
 				BF7EBD34244FA92B0015255F /* AddToChatCameraCollectionCell.swift in Sources */,
 				BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */,
