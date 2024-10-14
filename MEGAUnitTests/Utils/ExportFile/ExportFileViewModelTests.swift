@@ -12,7 +12,7 @@ struct ExportFileViewModelTestSuite {
         action: ExportFileAction,
         expectedURLs: [URL]
     ) async {
-        let (sut, router, exportUseCase, analyticsUseCase) = makeSUT(urls: expectedURLs)
+        let (sut, router, _, analyticsUseCase) = makeSUT(urls: expectedURLs)
         
         sut.dispatch(action)
         

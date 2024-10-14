@@ -13,7 +13,7 @@ struct DeepLinkingTestSuite {
             Issue.record("Invalid URL string: \(urlString)")
             return
         }
-        #expect(url.mnz_type() == expectedType, "Expected \(expectedType) but got \(url.mnz_type) for URL: \(urlString)")
+        #expect(url.mnz_type() == expectedType, "Expected \(expectedType) but got \(url.mnz_type()) for URL: \(urlString)")
     }
 
     // MARK: - File Link Tests
