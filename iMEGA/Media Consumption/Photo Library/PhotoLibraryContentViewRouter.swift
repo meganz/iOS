@@ -127,12 +127,16 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
 extension PhotoLibraryContentMode {
     var displayMode: DisplayMode {
         switch self {
-        case .library, .album, .mediaDiscovery:
-            return .cloudDrive
+        case .library:
+            .photosTimeline
+        case .album:
+            .photosAlbum
+        case .mediaDiscovery:
+            .cloudDrive
         case .albumLink:
-            return .albumLink
+            .albumLink
         case .mediaDiscoveryFolderLink:
-            return .nodeInsideFolderLink
+            .nodeInsideFolderLink
         }
     }
 }
