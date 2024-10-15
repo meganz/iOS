@@ -32,7 +32,8 @@ let package = Package(
         .testTarget(
             name: "MEGARepoTests",
             dependencies: ["MEGARepo"],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: settings
         )
     ]
 )

@@ -2,6 +2,12 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny"),
+    .enableExperimentalFeature("StrictConcurrency=targeted")
+]
+
 let package = Package(
     name: "Settings",
     platforms: [
@@ -24,7 +30,8 @@ let package = Package(
     targets: [
         .target(
             name: "Settings",
-            dependencies: ["MEGADomain", "MEGAPresentation", "MEGAL10n", "ChatRepo", "LogRepo", "MEGASwiftUI"]),
+            dependencies: ["MEGADomain", "MEGAPresentation", "MEGAL10n", "ChatRepo", "LogRepo", "MEGASwiftUI"],
+            swiftSettings: settings),
         .testTarget(
             name: "SettingsTests",
             dependencies: ["Settings",

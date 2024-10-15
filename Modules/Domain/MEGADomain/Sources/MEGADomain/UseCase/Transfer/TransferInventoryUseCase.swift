@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Use case protocol -
 public protocol TransferInventoryUseCaseProtocol: Sendable {
-    @available(*, deprecated, message: "Use async version instead")
+    /// This function is deprecated, please use async version instead
     func transfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func transfers(filteringUserTransfers: Bool) async -> [TransferEntity]
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]

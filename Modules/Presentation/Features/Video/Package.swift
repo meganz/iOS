@@ -3,7 +3,11 @@
 
 import PackageDescription
 
-let settings: [SwiftSetting] = [.enableExperimentalFeature("ExistentialAny"), .enableExperimentalFeature("StrictConcurrency=targeted")]
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny"),
+    .enableExperimentalFeature("StrictConcurrency=targeted")
+]
 
 let package = Package(
     name: "Video",

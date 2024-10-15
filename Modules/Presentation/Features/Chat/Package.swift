@@ -4,6 +4,7 @@
 import PackageDescription
 
 let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
     .enableExperimentalFeature("ExistentialAny"),
     .enableExperimentalFeature("StrictConcurrency=targeted")
 ]
@@ -52,7 +53,8 @@ let package = Package(
                     name: "MEGAPresentationMock",
                     package: "MEGAPresentation"
                 )
-            ]
+            ],
+            swiftSettings: settings
         )
     ]
 )

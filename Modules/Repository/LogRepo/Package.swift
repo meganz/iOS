@@ -1,6 +1,12 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny"),
+    .enableExperimentalFeature("StrictConcurrency=targeted")
+]
+
 let package = Package(
     name: "LogRepo",
     platforms: [
@@ -24,7 +30,8 @@ let package = Package(
                 "MEGADomain",
                 "CocoaLumberjack",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
-            ]
+            ],
+            swiftSettings: settings
         )
     ]
 )

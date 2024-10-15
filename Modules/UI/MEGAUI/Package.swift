@@ -2,6 +2,12 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny"),
+    .enableExperimentalFeature("StrictConcurrency=targeted")
+]
+
 let package = Package(
     name: "MEGAUI",
     platforms: [
@@ -19,10 +25,10 @@ let package = Package(
         .target(
             name: "MEGAUI",
             dependencies: ["MEGADesignToken"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+            swiftSettings: settings),
         .testTarget(
             name: "MEGAUITests",
             dependencies: ["MEGAUI"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
+            swiftSettings: settings)
     ]
 )

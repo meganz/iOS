@@ -1,6 +1,12 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny"),
+    .enableExperimentalFeature("StrictConcurrency=targeted")
+]
+
 let package = Package(
     name: "MEGAL10n",
     defaultLocalization: "en",
@@ -27,6 +33,7 @@ let package = Package(
                 "Localization.h",
                 "Localization.m"
             ],
+            swiftSettings: settings,
             plugins: [
                 .plugin(name: "SwiftGen", package: "MEGAPlugins")
             ]
@@ -37,7 +44,8 @@ let package = Package(
             exclude: [
                 "Localization.swift"
             ],
-            publicHeadersPath: "."
+            publicHeadersPath: ".",
+            swiftSettings: settings
         )
     ]
 )

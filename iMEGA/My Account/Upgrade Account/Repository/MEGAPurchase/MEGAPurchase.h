@@ -1,6 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 @protocol MEGAPurchaseDelegate;
 @protocol MEGARestoreDelegate;
 @protocol MEGAPurchasePricingDelegate;
@@ -55,3 +58,4 @@
 - (void)pricingsReady;
 
 @end
+#pragma GCC diagnostic push
