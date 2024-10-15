@@ -19,12 +19,68 @@ extension MEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
         return try context.fetch(fetchRequest)
     }
     
-    public func insertOrUpdateMediaDestination(fingerprint: String, destination: Int, timescale: Int?) {
-        insertOrUpdateMediaDestination(
-            withFingerprint: fingerprint,
-            destination: destination as NSNumber,
-            timescale: timescale as? NSNumber
-        )
+    public func insertOrUpdateRecentlyOpenedNode(fingerprint: String, destination: Int, timescale: Int?, lastOpenedDate: Date) {
+        guard let context = stack.viewContext else { return }
+        
+        guard let moMediaDestination: MOMediaDestination = {
+            if let existingMediaDestination = fetchMediaDestination(withFingerprint: fingerprint) {
+                existingMediaDestination.destination = destination as NSNumber
+                existingMediaDestination.timescale = timescale as? NSNumber
+                return existingMediaDestination
+            } else {
+                guard let mediaDestination = NSEntityDescription.insertNewObject(forEntityName: "MediaDestination", into: context) as? MOMediaDestination else {
+                    MEGALogError("could not create instance of MOMediaDestination")
+                    return nil
+                }
+                mediaDestination.fingerprint = fingerprint
+                mediaDestination.destination = destination as NSNumber
+                mediaDestination.timescale = timescale as? NSNumber
+                return mediaDestination
+            }
+        }() else {
+            return
+        }
+        
+        if let existingRecentlyOpenedNode = fetchRecentlyOpenedNode(fingerprint: fingerprint) {
+            existingRecentlyOpenedNode.lastOpenedDate = lastOpenedDate
+            existingRecentlyOpenedNode.mediaDestination = moMediaDestination
+            
+            logRecentlyOpenedNode(existingRecentlyOpenedNode)
+        } else {
+            guard let recentlyOpenedNode = NSEntityDescription.insertNewObject(forEntityName: "MORecentlyOpenedNode", into: context) as? MORecentlyOpenedNode else {
+                MEGALogError("could not create instance of MORecentlyOpenedNode")
+                return
+            }
+            recentlyOpenedNode.fingerprint = fingerprint
+            recentlyOpenedNode.lastOpenedDate = lastOpenedDate
+            recentlyOpenedNode.mediaDestination = moMediaDestination
+            
+            logRecentlyOpenedNode(recentlyOpenedNode)
+        }
+        
+        MEGAStore.shareInstance().save(context)
+    }
+    
+    @objc func fetchRecentlyOpenedNode(fingerprint: String) -> MORecentlyOpenedNode? {
+        guard let context = stack.viewContext else {
+            MEGALogError("\(type(of: MEGAStore.self)) Failed to create ManagedObjectContext when fetching recently opened node with fingerprint: \(fingerprint)")
+            return nil
+        }
+        
+        let request: NSFetchRequest<MORecentlyOpenedNode> = MORecentlyOpenedNode.fetchRequest()
+        request.predicate = NSPredicate(format: "fingerprint == %@", fingerprint)
+        
+        do {
+            return try context.fetch(request).first
+        } catch {
+            MEGALogError("\(type(of: MEGAStore.self)) Failed to fetch recently opened node: \(error)")
+            return nil
+        }
+    }
+    
+    private func logRecentlyOpenedNode(_ moRecentlyOpenedNode: MORecentlyOpenedNode) {
+        let moMediaDestination = moRecentlyOpenedNode.mediaDestination
+        MEGALogError("Save context - update recently opened node with fingerprint: \(String(describing: moRecentlyOpenedNode.fingerprint)), last opened date: \(String(describing: moRecentlyOpenedNode.lastOpenedDate)), destination: \(String(describing: moMediaDestination?.destination)), timescale: \(String(describing: moMediaDestination?.timescale))")
     }
     
     public func clearRecentlyOpenedNodes() async throws {

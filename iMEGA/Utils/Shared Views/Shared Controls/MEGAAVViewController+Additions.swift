@@ -6,6 +6,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import MEGASdk
+import MEGASDKRepo
 import MEGASwift
 
 extension MEGAAVViewController {
@@ -275,5 +276,19 @@ extension MEGAAVViewController {
     
     @objc func configureViewColor() {
         view.backgroundColor = TokenColors.Background.page
+    }
+    
+    @objc func saveRecentlyWatchedVideo(destination: NSNumber, timescale: NSNumber) {
+        let repository = RecentlyOpenedNodesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared)
+        let useCase = RecentlyOpenedNodesUseCase(recentlyOpenedNodesRepository: repository)
+        
+        guard let video = node?.toNodeEntity(), video.fileExtensionGroup.isVideo else { return }
+        let mediaDestination = MediaDestinationEntity(fingerprint: fileFingerprint(), destination: destination.intValue, timescale: timescale.intValue)
+        let recentlyWatchedVideo = RecentlyOpenedNodeEntity(node: video, lastOpenedDate: Date.now, mediaDestination: mediaDestination)
+        do {
+            try useCase.saveNode(recentlyOpenedNode: recentlyWatchedVideo)
+        } catch {
+            MEGALogError("Failed to save recently opened node from: \(MEGAAVViewController.self)")
+        }
     }
 }

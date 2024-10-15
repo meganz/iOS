@@ -48,7 +48,7 @@ final class RecentlyOpenedNodesRepositoryTests: XCTestCase {
         
         try? sut.saveNode(recentlyOpenedNode: nodeToSave)
         
-        XCTAssertEqual(store.invocations, [ .insertOrUpdateMediaDestination ])
+        XCTAssertEqual(store.invocations, [ .insertOrUpdateRecentlyOpenedNode ])
     }
     
     func testSaveNode_whenCalledButNodeHasNoFingerprint_doesNotSaveNode() async {

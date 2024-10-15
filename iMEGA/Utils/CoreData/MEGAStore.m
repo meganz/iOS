@@ -433,7 +433,7 @@
     [self saveContext:self.managedObjectContext];
 }
 
-- (MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint {
+- (nullable MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint {
     NSFetchRequest *request = [MOMediaDestination fetchRequest];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
