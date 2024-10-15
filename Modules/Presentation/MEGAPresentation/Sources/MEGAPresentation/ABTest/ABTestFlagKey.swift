@@ -16,4 +16,7 @@ public enum ABTestFlagKey: ABTestFlagName, CaseIterable, Sendable {
     
     // This flag is part of real experiment related to the onboarding pro plan upselling dialog feature. Contains baseline, variantA and variantB group.
     case onboardingUpsellingDialog = "obusd"
+    
+    /// This flag determines if hidden node feature is enabled or not.
+    case hiddenNodes = "hnir"
 }
