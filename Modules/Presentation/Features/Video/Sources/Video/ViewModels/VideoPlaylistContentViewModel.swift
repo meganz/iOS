@@ -41,6 +41,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var selectedVideos: [NodeEntity]?
     
     @Published var shouldShowVideoPlaylistPicker = false
+    @Published var shouldShowShareLinkView = false
     
     @Published private(set) var viewState: ViewState = .partial
     
@@ -220,6 +221,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             switch action {
             case .rename:
                 shouldShowRenamePlaylistAlert = true
+            case .shareLink:
+                shouldShowShareLinkView = true
             default:
                 break
             }

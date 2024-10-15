@@ -51,6 +51,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsFilterActive(config.isFilterActive)
                         .setIsHidden(config.isHidden)
                         .setIsCameraUploadsEnabled(config.isCameraUploadsEnabled)
+                        .setIsVideoPlaylistSharingFeatureFlagEnabled(config.isPlaylistSharingFeatureFlagEnabled)
                         .build()
     }
 }

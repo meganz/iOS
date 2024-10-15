@@ -89,6 +89,9 @@ struct PlaylistContentScreen: View {
                 viewModel.didTapCancelOnDeleteVideosFromVideoPlaylistActionSheet()
             }
         }
+        .sheet(isPresented: $viewModel.shouldShowShareLinkView) {
+            AnyView(router.showShareLink(videoPlaylist: viewModel.videoPlaylistEntity))
+        }
     }
     
     private var deleteVideoPlaylistAlertView: some View {

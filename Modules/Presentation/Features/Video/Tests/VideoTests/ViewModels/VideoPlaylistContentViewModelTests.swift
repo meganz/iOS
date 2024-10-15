@@ -450,6 +450,84 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         await fulfillment(of: [backgroundTaskExp], timeout: 1.0)
     }
     
+    @MainActor
+    func testSubscribeToSelectedDisplayActionChanged_whenSelectedQuickActionEntityIsShareLink_shouldShowShareLinkView() async throws {
+        // Arrange
+        let allVideos: [NodeEntity] = []
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            setIdentifier: SetIdentifier(handle: 1),
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+        var receivedShouldShowShareLinkView: Bool?
+        let shouldShowExp = expectation(description: "Wait for alert subscription")
+        shouldShowExp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowShareLinkView
+            .sink { shouldShow in
+                receivedShouldShowShareLinkView = shouldShow
+                shouldShowExp.fulfill()
+            }
+        let backgroundTaskExp = expectation(description: "Wait for background task finished")
+        let task = Task {
+            await sut.subscribeToSelectedDisplayActionChanged()
+            backgroundTaskExp.fulfill()
+        }
+        
+        // Act
+        sharedUIState.selectedQuickActionEntity = .shareLink
+        await fulfillment(of: [shouldShowExp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertEqual(receivedShouldShowShareLinkView, true)
+        
+        cancellable.cancel()
+        task.cancel()
+        await fulfillment(of: [backgroundTaskExp], timeout: 1.0)
+    }
+    
+    @MainActor
+    func testSubscribeToSelectedDisplayActionChanged_whenSelectedQuickActionEntityIsNotShareLink_shouldNotShowShareLinkView() async throws {
+        // Arrange
+        let allVideos: [NodeEntity] = []
+        let videoPlaylistEntity = VideoPlaylistEntity(
+            setIdentifier: SetIdentifier(handle: 1),
+            name: "name",
+            count: allVideos.count,
+            type: .user,
+            creationTime: Date(),
+            modificationTime: Date()
+        )
+        let (sut, _, _, _, sharedUIState, _, _, _, _) = makeSUT(videoPlaylistEntity: videoPlaylistEntity)
+        var receivedShouldShowShareLinkView: Bool?
+        let shouldShowExp = expectation(description: "Wait for alert subscription")
+        shouldShowExp.assertForOverFulfill = false
+        let cancellable = sut.$shouldShowShareLinkView
+            .sink { shouldShow in
+                receivedShouldShowShareLinkView = shouldShow
+                shouldShowExp.fulfill()
+            }
+        let backgroundTaskExp = expectation(description: "Wait for background task finished")
+        let task = Task {
+            await sut.subscribeToSelectedDisplayActionChanged()
+            backgroundTaskExp.fulfill()
+        }
+        
+        // Act
+        sharedUIState.selectedQuickActionEntity = QuickActionEntity.allCases.filter { $0 != .shareLink }.first ?? .none
+        await fulfillment(of: [shouldShowExp], timeout: 0.5)
+        
+        // Assert
+        XCTAssertEqual(receivedShouldShowShareLinkView, false)
+        
+        cancellable.cancel()
+        task.cancel()
+        await fulfillment(of: [backgroundTaskExp], timeout: 1.0)
+    }
+    
     // MARK: - monitorVideoPlaylists
     
     @MainActor

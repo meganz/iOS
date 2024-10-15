@@ -43,6 +43,7 @@ public final class ContextMenuBuilder {
     private var isFilterActive: Bool = false
     private var isHidden: Bool?
     private var isCameraUploadsEnabled: Bool = false
+    private var isVideoPlaylistSharingFeatureFlagEnabled: Bool = false
 
     public init() {}
     
@@ -263,6 +264,11 @@ public final class ContextMenuBuilder {
     
     public func setIsCameraUploadsEnabled(_ isCameraUploadsEnabled: Bool) -> ContextMenuBuilder {
         self.isCameraUploadsEnabled = isCameraUploadsEnabled
+        return self
+    }
+    
+    public func setIsVideoPlaylistSharingFeatureFlagEnabled(_ isEnabled: Bool) -> ContextMenuBuilder {
+        self.isVideoPlaylistSharingFeatureFlagEnabled = isEnabled
         return self
     }
     
@@ -706,6 +712,7 @@ public final class ContextMenuBuilder {
             displayActionsMenuChildren.append(CMEntity(
                 displayInline: true,
                 children: [
+                    isVideoPlaylistSharingFeatureFlagEnabled ? shareLink : nil,
                     rename,
                     isEmptyState ? nil : select,
                     addVideosToVideoPlaylistContent
