@@ -2,6 +2,12 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny"),
+    .enableExperimentalFeature("StrictConcurrency=targeted")
+]
+
 let package = Package(
     name: "MEGASwiftUI",
     platforms: [
@@ -30,7 +36,7 @@ let package = Package(
                 "MEGAPresentation",
                 "MEGAFoundation"
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .target(
             name: "MEGASwiftUIMock",

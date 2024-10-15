@@ -1,5 +1,5 @@
 public protocol TransferInventoryRepositoryProtocol: Sendable {
-    @available(*, deprecated, message: "Use async version instead")
+    /// This function is deprecated, please use async version instead
     func transfers() -> [TransferEntity]
     func transfers() async -> [TransferEntity]
     func downloadTransfers() -> [TransferEntity]
