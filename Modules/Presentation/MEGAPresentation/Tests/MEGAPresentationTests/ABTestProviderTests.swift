@@ -1,16 +1,24 @@
 import MEGADomainMock
 import MEGAPresentation
-import XCTest
+import Testing
 
-final class ABTestProviderTests: XCTestCase {
-
-    func testABTestVariant_returnCorrectVariant() async {
+struct ABTestProviderTests {
+    @Test("When AB flag provided it should return correct variant")
+    func returnCorrectVariant() async {
         let expectedVariant = randomVariant
 
         let sut = ABTestProvider(useCase: MockABTestUseCase(abTestValue: expectedVariant.rawValue))
-        let abTestVariant = await sut.abTestVariant(for: .devTest)
         
-        XCTAssertEqual(abTestVariant, expectedVariant)
+        #expect(await sut.abTestVariant(for: .devTest) == expectedVariant)
+    }
+    
+    @Test("When AB flag provided it should return false for baseLine and true for variantA",
+          arguments: [(ABTestVariant.baseline, false),
+                      (.variantA, true)])
+    func isEnabled(variant: ABTestVariant, expectedEnabled: Bool) async {
+        let sut = ABTestProvider(useCase: MockABTestUseCase(abTestValue: variant.rawValue))
+        
+        #expect(await sut.isEnabled(for: .devTest) == expectedEnabled)
     }
     
     // MARK: Helpers
