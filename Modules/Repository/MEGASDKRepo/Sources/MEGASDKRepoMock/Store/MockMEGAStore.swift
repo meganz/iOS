@@ -1,3 +1,4 @@
+import Foundation
 import MEGADomain
 import MEGASDKRepo
 import MEGASwift
@@ -5,7 +6,7 @@ import MEGASwift
 public final class MockMEGAStore: @unchecked Sendable {
     
     public enum Invocation: Sendable, Equatable {
-        case insertOrUpdateMediaDestination
+        case insertOrUpdateRecentlyOpenedNode
         case fetchRecentlyOpenedNodes
         case clearRecentlyOpenedNodes
     }
@@ -19,8 +20,8 @@ public final class MockMEGAStore: @unchecked Sendable {
 
 extension MockMEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
     
-    public func insertOrUpdateMediaDestination(fingerprint: String, destination: Int, timescale: Int?) {
-        $invocations.mutate { $0.append(.insertOrUpdateMediaDestination) }
+    public func insertOrUpdateRecentlyOpenedNode(fingerprint: String, destination: Int, timescale: Int?, lastOpenedDate: Date) {
+        $invocations.mutate { $0.append(.insertOrUpdateRecentlyOpenedNode) }
     }
     
     public func fetchRecentlyOpenedNodes() async throws -> [RecentlyOpenedNodeRepositoryDTO] {

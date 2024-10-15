@@ -82,7 +82,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     if (self.isViewDidAppearFirstTime) {
         if (fingerprint && ![fingerprint isEqualToString:@""]) {
-            MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
+            MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchRecentlyOpenedNodeWithFingerprint:fingerprint].mediaDestination;
             if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
                 if ([FileExtensionGroupOCWrapper verifyIsVideo:[self fileName]]) {
                     NSString *infoVideoDestination = LocalizedString(@"video.alert.resumeVideo.message", @"Message to show the user info (video name and time) about the resume of the video");
@@ -159,7 +159,8 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         if (self.isEndPlaying || second <= MIN_SECOND) {
             [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
         } else {
-            [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
+            [self saveRecentlyWatchedVideoWithDestination:[NSNumber numberWithLongLong:self.player.currentTime.value]
+                                                timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
         }
     }
 }

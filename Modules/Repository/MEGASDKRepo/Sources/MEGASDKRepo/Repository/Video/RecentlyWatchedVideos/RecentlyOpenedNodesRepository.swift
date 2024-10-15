@@ -33,10 +33,11 @@ public final class RecentlyOpenedNodesRepository: RecentlyOpenedNodesRepositoryP
         guard let fingerprint = recentlyOpenedNode.node.fingerprint else {
             throw RecentlyOpenedNodesErrorEntity.couldNotSaveNodeFailToGetDataToSave
         }
-        store.insertOrUpdateMediaDestination(
+        store.insertOrUpdateRecentlyOpenedNode(
             fingerprint: fingerprint,
             destination: recentlyOpenedNode.mediaDestination.destination,
-            timescale: recentlyOpenedNode.mediaDestination.timescale
+            timescale: recentlyOpenedNode.mediaDestination.timescale,
+            lastOpenedDate: recentlyOpenedNode.lastOpenedDate ?? Date.now
         )
     }
 }
