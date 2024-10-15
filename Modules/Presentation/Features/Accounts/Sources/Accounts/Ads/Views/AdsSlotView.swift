@@ -25,7 +25,7 @@ public struct AdsSlotView<T: View>: View {
         .task {
             await viewModel.setupAdsRemoteFlag()
             await viewModel.initializeGoogleAds()
-            await viewModel.monitorAdsSlotChanges()
+            viewModel.monitorAdsSlotChanges()
         }
         .onAppear {
             viewModel.setupSubscriptions()

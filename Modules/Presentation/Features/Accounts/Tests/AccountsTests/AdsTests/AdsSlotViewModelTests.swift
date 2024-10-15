@@ -120,7 +120,8 @@ final class AdsSlotViewModelTests: XCTestCase {
         
         // Monitor Ads slot changes
         await sut.setupAdsRemoteFlag()
-        await sut.monitorAdsSlotChanges()
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
         
         XCTAssertEqual(sut.adsSlotConfig, expectedLatestAdsSlotConfig, file: file, line: line)
         XCTAssertEqual(sut.displayAds, expectedLatestAdsSlotConfig.displayAds, file: file, line: line)

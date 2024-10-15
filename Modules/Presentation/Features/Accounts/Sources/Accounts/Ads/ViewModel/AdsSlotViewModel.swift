@@ -11,6 +11,7 @@ final public class AdsSlotViewModel: ObservableObject {
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
     
     private(set) var adsSlotConfig: AdsSlotConfig?
+    private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     
     @Published var isExternalAdsEnabled: Bool = false
@@ -26,6 +27,11 @@ final public class AdsSlotViewModel: ObservableObject {
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
+    }
+    
+    deinit {
+        monitorAdsSlotChangesTask?.cancel()
+        monitorAdsSlotChangesTask = nil
     }
 
     // MARK: Setup
@@ -57,9 +63,13 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     // MARK: Ads Slot changes
-    func monitorAdsSlotChanges() async {
-        for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
-            await updateAdsSlot(newAdsSlotConfig)
+    func monitorAdsSlotChanges() {
+        monitorAdsSlotChangesTask = Task { [weak self] in
+            guard let self else { return }
+            for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
+                if Task.isCancelled { return }
+                await updateAdsSlot(newAdsSlotConfig)
+            }
         }
     }
     
