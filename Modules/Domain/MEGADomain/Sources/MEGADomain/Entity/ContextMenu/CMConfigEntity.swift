@@ -89,6 +89,7 @@ public struct CMConfigEntity: Sendable {
     public var isFilterActive: Bool = false
     public var isHidden: Bool?
     public var isCameraUploadsEnabled: Bool
+    public var isPlaylistSharingFeatureFlagEnabled: Bool
 
     public init(
         menuType: CMElementTypeEntity,
@@ -136,7 +137,8 @@ public struct CMConfigEntity: Sendable {
         isMediaFile: Bool = false,
         isFilterActive: Bool = false,
         isHidden: Bool? = nil,
-        isCameraUploadsEnabled: Bool = false
+        isCameraUploadsEnabled: Bool = false,
+        isPlaylistSharingFeatureFlagEnabled: Bool = false
     ) {
         self.menuType = menuType
         self.viewMode = viewMode
@@ -184,5 +186,6 @@ public struct CMConfigEntity: Sendable {
         self.isFilterActive = isFilterActive
         self.isHidden = isHidden
         self.isCameraUploadsEnabled = isCameraUploadsEnabled
+        self.isPlaylistSharingFeatureFlagEnabled = isPlaylistSharingFeatureFlagEnabled
     }
 }

@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
@@ -402,7 +403,8 @@ extension VideoPlaylistContentViewController {
             sortType: sortOrder,
             isVideoPlaylistContent: true,
             isSelectHidden: false,
-            isEmptyState: isEmptyState
+            isEmptyState: isEmptyState,
+            isPlaylistSharingFeatureFlagEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlaylistSharing)
         )
         
         moreBarButtonItem.menu = contextMenuManager.contextMenu(with: contextMenuConfiguration)
