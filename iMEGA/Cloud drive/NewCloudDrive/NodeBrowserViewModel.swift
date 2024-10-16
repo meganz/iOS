@@ -140,7 +140,7 @@ class NodeBrowserViewModel: ObservableObject {
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         onNodeStructureChanged: @escaping () -> Void,
         isFullSOQBannerEnabled: @escaping () -> Bool = {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .fullStorageOverQuotaBanner)
+            true
         },
         isAlmostFullSOQBannerEnabled: @escaping () -> Bool = {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .almostFullStorageOverQuotaBanner)
