@@ -81,15 +81,6 @@
     [self clearImageLoaderCache];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        self.tableView.separatorColor = [UIColor mnz_separator];
-        [self.tableView reloadData];
-    }
-}
-
 #pragma mark - Private
 
 - (void)configureTypeLabel:(UILabel *)typeLabel forType:(MEGAUserAlertType)type {
