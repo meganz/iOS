@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="친구를 초대하세요";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="추천한 가입자마다 %@의 용량. \n365일간 이용 가능.";
+"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="기기 연락처에서 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="당신은 무료 가입 보너스로 저장 공간 %@를 받았습니다.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="추천 보너스";
+"account.achievement.referralBonus.title"="초대 보너스";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="MEGA 데스크톱 앱 설치";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="숨겨진 항목";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="숨겨진 항목 보기";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="모든 숨긴 항목은 보이게 되지만, “숨김” 상태를 나타내기 위해 흐리게 나타납니다.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="미디어 발견 보기";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4376,3 +4378,13 @@
 "set.addTo"="Add to";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="사진첩에 추가";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="태그";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Pro 전용";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="데이터를 찾고 정리하는데에 도움을 받기 위해 태그를 이용하세요. 연도, 위치, 프로젝트, 또는 제목으로 태그해보세요.";

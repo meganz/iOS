@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Undang temanmu";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@penyimpanan untuk setiap rujukan. \nBerlaku selama 365 hari.";
+"account.achievement.referral.subtitle"="%@ penyimpanan untuk setiap undangan. \nBerlaku selama 365 hari.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Pilih dari kontak perangkat atau masukkan beberapa alamat email.";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Anda telah menerima %@ ruang penyimpanan sebagai bonus pendaftaran gratis anda.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Bonus Referral";
+"account.achievement.referralBonus.title"="Bonus undangan";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Instal aplikasi desktop MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Item tersembunyi";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Tampilkan item tersembunyi";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="Semua item tersembunyi akan terlihat, tetapi kabur untuk menunjukkan status “tersembunyi” mereka.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Tampilan penemuan media";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -3289,7 +3291,7 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Tambah deskripsi";
 /* Schedule meeting title unencrypted disclaimer message */
-"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA can see your meeting name and description, but we keep them private";
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA dapat melihat nama dan deskripsi rapat anda, tetapi kami merahasiakannya";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Masukan hingga 30 karakter";
 /* Schedule meeting description error */
@@ -4365,14 +4367,24 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="Bergabunglah dengan jutaan orang dan bisnis yang mempercayai MEGA untuk menyimpan dan melindungi data mereka.";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+"chat.meetings.shareLink.main"="Pertemuan dikonfirmasi: Undang orang lain untuk bergabung";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="Siapa pun yang memiliki tautan ini dapat bergabung ke rapat dan melihat obrolan rapat.";
 /* Button title to send to chat in modal shown when sharing a meeting link */
-"chat.meetings.shareLink.sendToChat"="Send link to chat";
+"chat.meetings.shareLink.sendToChat"="Kirim tautan ke obrolan";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="Bagikan Tautan";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="Tambahkan ke";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Tambahkan ke album";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Tag";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Hanya Pro";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Tambahkan tag";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Tambahkan tag";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="Gunakan tag untuk membantu anda menemukan dan mengatur data anda. Coba tag berdasarkan tahun, lokasi, proyek, atau subjek.";

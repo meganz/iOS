@@ -691,7 +691,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="No hay una cuenta de correo electrónico configurada";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Política de privacidad y datos";
+"privacyPolicyLabel"="Política de privacidad y de datos";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Política de Cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invita a tus amigos";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ de almacenamiento gratuito para cada invitación. \nVálido durante 365 días.";
+"account.achievement.referral.subtitle"="%@ de almacenamiento para cada invitación. \nVálido durante 365 días.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleccionar contactos desde el dispositivo o añadir varios correos electrónicos.";
 /*  */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Elementos ocultos";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Mostrar elementos ocultos";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="Los elementos ocultos serán visibles, pero se difuminarán para indicar su estado “oculto”.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Vista de explorador multimedia";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4365,14 +4367,24 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="Únete a los millones de personas y empresas que confían en MEGA para almacenar y proteger sus datos.";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+"chat.meetings.shareLink.main"="Reunión confirmada: invita a otras personas a unirse";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="Los que tengan este enlace podrán unirse a la reunión y ver el chat de la reunión.";
 /* Button title to send to chat in modal shown when sharing a meeting link */
-"chat.meetings.shareLink.sendToChat"="Send link to chat";
+"chat.meetings.shareLink.sendToChat"="Enviar enlace del chat";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="Compartir enlace";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="Añadir a";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Añadir al álbum";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Etiquetas";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Exclusivo para Pro";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="Usa las etiquetas para encontrar y organizar tus datos. Puedes etiquetar por año, ubicación, proyecto o tema.";
