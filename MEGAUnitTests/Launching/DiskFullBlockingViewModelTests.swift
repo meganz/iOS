@@ -13,7 +13,7 @@ final class DiskFullBlockingViewModelTests: XCTestCase {
         let expectedBlockingModel = DiskFullBlockingModel(title: Strings.Localizable.theDeviceDoesNotHaveEnoughSpaceForMEGAToRunProperly,
                                                   description: description,
                                                   highlightedText: storagePath,
-                                                  manageDiskSpaceTitle: Strings.Localizable.manage,
+                                                  manageDiskSpaceTitle: Strings.Localizable.close,
                                                   headerImage: UIImage.blockingDiskFull)
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedBlockingModel)])
     }
