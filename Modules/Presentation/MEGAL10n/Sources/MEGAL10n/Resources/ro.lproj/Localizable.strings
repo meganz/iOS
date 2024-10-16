@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invită-ți prietenii";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ spațiu de stocare pentru fiecare recomandare. \nValabili timp de 365 de zile.";
+"account.achievement.referral.subtitle"="%@ spațiu de stocare pentru fiecare invitație. \nValabil 365 de zile.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selectează din contactele dispozitivului sau introdu mai multe adrese de e-mail.";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Ați primit %@ spațiu de stocare ca bonus de înscriere gratuit.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Bonusuri pentru recomandări";
+"account.achievement.referralBonus.title"="Bonusuri pt. invitații";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Instalează Aplicația Desktop MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Elemente ascunse";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Afișați elementele ascunse";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="Toate elementele ascunse vor fi vizibile, dar neclare pentru a indica starea lor „ascunsă”.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Vizualizare pentru descoperire media";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4376,3 +4378,13 @@
 "set.addTo"="Adaugă la";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Adăugați la album";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Etichete";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Numai Pro";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="Folosiți etichete pentru a vă ajuta să găsiți și să vă organizați datele. Încercați să etichetați după an, locație, proiect sau subiect.";

@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Convide os seus amigos";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="Obtenha %@ de armazenamento por cada indicação. \nVálido por 365 dias.";
+"account.achievement.referral.subtitle"="%@ de armazenamento por cada convite. \nVálido por 365 dias.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selecione entre os contatos do seu dispositivo ou digite vários emails";
 /*  */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Itens ocultos";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Mostrar itens ocultos";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="Todos os itens ocultos ficarão visíveis, mas desfocados para indicar o seu status “oculto”.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Visualização do explorador multimídia";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4376,3 +4378,13 @@
 "set.addTo"="Adicionar a";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Adicionar ao álbum";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Etiquetas";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Somente para usuários Pro";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Adicionar etiquetas";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Adicionar etiquetas";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="Use etiquetas para que seja mais fácil encontrar e organizar os seus dados. Você pode etiquetar por ano, localização, projeto ou assunto.";

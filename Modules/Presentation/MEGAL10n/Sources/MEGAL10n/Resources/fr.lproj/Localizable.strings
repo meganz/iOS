@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Inviter vos amies et amis";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ d’espace de stockage pour chaque parrainage. \nValable pendant 365 jours.";
+"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Sélectionner des contacts sur votre appareil ou saisir plusieurs adresses courriel";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Vous avez reçu %@ d’espace de stockage supplémentaire comme prime d’inscription.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Primes de parrainage";
+"account.achievement.referralBonus.title"="Primes d’invitation";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Installer l’appli MEGA pour ordinateur";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Éléments cachés";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Afficher les éléments cachés";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="Tous les éléments cachés seront visibles, mais flous pour indiquer leur état « caché »";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Mode de découverte des médias";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4323,7 +4325,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Inviter";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Essayez de rechercher des fichiers multimédia";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Votre espace de stockage est saturé";
 /* Button title to upgrade when storage is full */
@@ -4373,6 +4375,16 @@
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="Partager le lien";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="Ajouter à";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Ajouter à l’album";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Étiquettes";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Pro seulement";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="Utilisez des étiquettes pour vous aider à trouver et à organiser vos données. Essayez d’étiqueter par année, emplacement, projet ou sujet.";

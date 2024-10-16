@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Nodig uw vrienden uit";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ aan opslag voor elke verwijzing. \n Geldig voor 365 dagen.";
+"account.achievement.referral.subtitle"="%@ opslagruimte voor elke uitnodiging. \n365 dagen geldig.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selecteer vanuit apparaat contacten of voer meerdere e-mailadressen in.";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="U ontvangt %@ opslagruimte als gratis aanmeldingsbonus.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Verwijzingsbonussen";
+"account.achievement.referralBonus.title"="Uitnodigingsbonussen";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Installeer de MEGA Desktop Applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Verborgen items";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Verborgen items weergeven";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="Alle verborgen items zijn zichtbaar, maar worden wazig weergegeven om hun “verborgen” status aan te geven.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Media discovery weergave";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4365,14 +4367,24 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="Sluit aan bij de miljoenen mensen en bedrijven die op MEGA vertrouwen om hun gegevens op te slaan en te beschermen.";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+"chat.meetings.shareLink.main"="Vergadering bevestigd: nodig anderen uit om aan te sluiten";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="Iedereen met deze link kan aansluiten in de vergadering en het vergadergesprek weergeven.";
 /* Button title to send to chat in modal shown when sharing a meeting link */
-"chat.meetings.shareLink.sendToChat"="Send link to chat";
+"chat.meetings.shareLink.sendToChat"="Stuur link naar het gesprek";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="Link Delen";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="Toevoegen aan";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Aan album toevoegen";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Labels";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Alleen Pro";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Tags toevoegen";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Tags toevoegen";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="Gebruik tags om uw gegevens te vinden en te ordenen. Probeer te taggen op jaar, lokatie, project of onderwerp.";

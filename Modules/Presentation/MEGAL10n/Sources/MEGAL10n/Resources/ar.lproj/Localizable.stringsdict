@@ -4380,10 +4380,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتم كتم الإشعارات حتى [Time]</string>
         <key>one</key>
-        <string>Notifications will be muted until [Time]</string>
+        <string>سيتم كتم الإشعارات حتى [Time]</string>
+        <key>two</key>
+        <string>سيتم كتم الإشعارات حتى [Time]</string>
+        <key>few</key>
+        <string>سيتم كتم الإشعارات حتى [Time]</string>
+        <key>many</key>
+        <string>سيتم كتم الإشعارات حتى [Time]</string>
         <key>other</key>
-        <string>Notifications will be muted until [Time]</string>
+        <string>سيتم كتم الإشعارات حتى [Time]</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
@@ -4540,10 +4548,82 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تمت إضافة %d عنصر إلى [A]</string>
         <key>one</key>
-        <string>Added to [A]</string>
+        <string>تمت الإضافة إلى [A]</string>
+        <key>two</key>
+        <string>تمت إضافة %d عنصرين إلى [A]</string>
+        <key>few</key>
+        <string>تمت إضافة %d عناصر إلى [A]</string>
+        <key>many</key>
+        <string>تمت إضافة %d عنصراً إلى [A]</string>
         <key>other</key>
-        <string>Added %d items to [A]</string>
+        <string>تمت إضافة %d عنصر إلى [A]</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added %d file</string>
+        <key>other</key>
+        <string>Added %d files</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.foldersOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added %d folder</string>
+        <key>other</key>
+        <string>Added %d folders</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added %d file</string>
+        <key>other</key>
+        <string>Added %d files</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.folders</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>and %d folder</string>
+        <key>other</key>
+        <string>and %d folders</string>
       </dict>
     </dict>
   </dict>

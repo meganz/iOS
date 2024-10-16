@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="邀請朋友";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="每推薦1個可獲得%@的儲存空間。\n有效期限365天。";
+"account.achievement.referral.subtitle"="每個邀請可獲得%@的儲存空間。\n有效期為365天。";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="從裝置上的聯絡人來選擇或輸入多個電子郵件地址。";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="您已收到%@儲存空間作為免費註冊獎勵。";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="推薦獎勵";
+"account.achievement.referralBonus.title"="邀請獎勵";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="安裝MEGA桌面應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="隱藏的項目";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="顯示隱藏的項目";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="可看到所有隱藏的項目，但會模糊顯示以表示其「隱藏」狀態。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="媒體探索檢視";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4376,3 +4378,13 @@
 "set.addTo"="新增到";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="新增到相簿";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="標籤";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Pro會員限定";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="使用標籤來幫助您尋找和整理資料。試著按年份、地點、項目或主題進行標記。";

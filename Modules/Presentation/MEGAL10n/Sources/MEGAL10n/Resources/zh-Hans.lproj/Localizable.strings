@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="邀请您的好友";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="单次引荐获得%@存储空间。\n有效期为365天。";
+"account.achievement.referral.subtitle"="每次邀请可获得%@的存储空间。\n有效期为365天。";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="从设备通讯录中选择或者输入多个电子邮件地址。";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="您已经收到%@的存储空间作为您的免费注册奖励。";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="推荐奖励";
+"account.achievement.referralBonus.title"="邀请奖励";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="安装MEGA桌面应用程序";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="隐藏的项目";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="显示隐藏的项目";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="所有隐藏的项目都将可见，但会模糊显示以表示其“隐藏”状态。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="媒体发现视图";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4365,14 +4367,24 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="加入数百万信任MEGA的个人和企业的行列，用以存储并保护数据。";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+"chat.meetings.shareLink.main"="会议确认：邀请其他人加入";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="知道此链接的任何人都可以加入会议并查看会议聊天。";
 /* Button title to send to chat in modal shown when sharing a meeting link */
-"chat.meetings.shareLink.sendToChat"="Send link to chat";
+"chat.meetings.shareLink.sendToChat"="发送聊天链接";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="分享链接";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="添加到";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="添加到相册";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="标签";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="仅限Pro会员";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="使用标签来帮助您查找和整理数据。尝试按年份、位置、项目或主题进行标记。";

@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invite your friends";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="You have received %@ storage space as your free signup bonus.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Referral bonuses";
+"account.achievement.referralBonus.title"="Invitation bonuses";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Install the MEGA Desktop App";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -4386,5 +4386,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
 /* The placeholder of the input text in the Add Tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
-/* The hint for user input in the Add tags screen  */
+/* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Use tags to help you find and organise your data. Try tagging by year, location, project, or subject.";

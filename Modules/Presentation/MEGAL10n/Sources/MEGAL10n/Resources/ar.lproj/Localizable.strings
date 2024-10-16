@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="ادع اصدقائك";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ من مساحة التخزين عن كل إحالة. \nصالحة لمدة 365 يوم.";
+"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الجهاز أو أدخل عناوين بريد إلكتروني متعددة.";
 /*  */
@@ -983,7 +983,7 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="لقد استلمت %@ من مساحة التخزين كمكافأة تسجيل مجانية.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="مكافآت الإحالة";
+"account.achievement.referralBonus.title"="مكافآت الدعوة";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="قم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="عناصر مخفية";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="عرض العناصر المخفية";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="ستكون جميع العناصر المخفية مرئية ولكن غير واضحة للإشارة إلى حالتها «المخفية».";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="عرض اكتشاف الوسائط";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4365,14 +4367,24 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="انضم إلى ملايين الأشخاص والشركات الذين يثقون في ميغا MEGA لتخزين بياناتهم وحمايتها.";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+"chat.meetings.shareLink.main"="تم تأكيد الاجتماع: قم بدعوة الآخرين للانضمام";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="يمكن لأي شخص لديه هذا الرابط الانضمام إلى الاجتماع و الاطلاع على محادثة الاجتماع.";
 /* Button title to send to chat in modal shown when sharing a meeting link */
-"chat.meetings.shareLink.sendToChat"="Send link to chat";
+"chat.meetings.shareLink.sendToChat"="إرسال رابط إلى المحادثة";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="مشاركة رابط";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="إضافة إلى";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="إضافة إلى الألبوم";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="الوسمات";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="لمشتركي برو Pro فقط";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="استخدم العلامات لمساعدتك في العثور على بياناتك وتنظيمها. حاول وضع العلامات حسب السنة أو الموقع أو المشروع أو الموضوع.";

@@ -2662,5 +2662,61 @@
         <string>%d項目を[A]に追加しました</string>
       </dict>
     </dict>
+    <key>notifications.message.sharedItems.filesOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個のファイルを追加</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.foldersOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個のフォルダを追加</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個のファイル</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.folders</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>と%d個のフォルダを追加</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

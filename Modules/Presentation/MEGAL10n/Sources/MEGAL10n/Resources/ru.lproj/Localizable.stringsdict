@@ -3802,5 +3802,85 @@
         <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
+    <key>notifications.message.sharedItems.filesOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Добавлен %d файл</string>
+        <key>few</key>
+        <string>Добавлено %d файла</string>
+        <key>many</key>
+        <string>Добавлено %d файлов</string>
+        <key>other</key>
+        <string>Добавлено %d файла</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.foldersOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Добавлена %d папка</string>
+        <key>few</key>
+        <string>Добавлено %d папки</string>
+        <key>many</key>
+        <string>Добавлено %d папок</string>
+        <key>other</key>
+        <string>Добавлено %d папки</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Добавлен %d файл</string>
+        <key>few</key>
+        <string>Добавлено %d файла</string>
+        <key>many</key>
+        <string>Добавлено %d файлов</string>
+        <key>other</key>
+        <string>Добавлено %d файла</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.folders</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>и %d папка</string>
+        <key>few</key>
+        <string>и %d папки</string>
+        <key>many</key>
+        <string>и %d папок</string>
+        <key>other</key>
+        <string>и %d папки</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

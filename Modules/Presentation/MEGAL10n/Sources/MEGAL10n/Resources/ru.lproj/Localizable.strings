@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Пригласите друзей";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ на диске за каждого приведённого пользователя. \nНа 365 дней.";
+"account.achievement.referral.subtitle"="%@ на диске за каждое приглашение.\nДействительно 365 дней.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Выберите из контактов на устройстве или введите адреса электронной почты.";
 /*  */
@@ -2146,6 +2146,8 @@
 "settings.userInterface.hiddenItems.header"="Скрытые элементы";
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the cell label. */
 "settings.userInterface.hiddenItems.label"="Показывать скрытые элементы";
+/* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
+"settings.userInterface.hiddenItems.footer"="Все скрытые элементы будут видны, но размыты, чтобы указать на их «скрытый» статус.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
 "settings.userInterface.mediaDiscovery"="Режим обнаружения медиа";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
@@ -4376,3 +4378,13 @@
 "set.addTo"="Добавить в";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Добавить в альбом";
+/* Node info cell title for tags */
+"cloudDrive.nodeInfo.nodeTags.header"="Метки";
+/* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Только Pro";
+/* Title for `Add tags` screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Добавление меток";
+/* The placeholder of the input text in the Add Tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Новая метка";
+/* The hint for user input in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.hint"="Используйте метки, чтобы облегчить поиск и систематизацию данных. Попробуйте отметить год, место, проект или тему.";
