@@ -7,6 +7,9 @@ public protocol AccountUseCaseProtocol: Sendable {
     var isGuest: Bool { get }
     var isNewAccount: Bool { get }
     var myEmail: String? { get }
+    /// Indicates whether the current account has an active subscription that is not expired.
+    /// - Returns: `true` if the account has a valid, non-expired subscription, `false` otherwise.
+    var hasValidSubscription: Bool { get }
 
     // Account characteristics
     var accountCreationDate: Date? { get }
@@ -116,7 +119,16 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     public var isAchievementsEnabled: Bool {
         repository.isAchievementsEnabled
     }
-    
+
+    public var hasValidSubscription: Bool {
+        guard !isFreeTierUser else { return false }
+        if (isAccountType(.proFlexi) || isAccountType(.business)) && repository.isExpiredAccount() {
+            return false
+        }
+
+        return true
+    }
+
     public func currentAccountPlan() async -> PlanEntity? {
         await repository.currentAccountPlan()
     }

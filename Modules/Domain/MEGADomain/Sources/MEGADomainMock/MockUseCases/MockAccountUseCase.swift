@@ -35,7 +35,8 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _incomingSharesStorage: Int64
     private let _backupStorage: Int64
     private let _currentAccountPlan: PlanEntity?
-    
+    private let _hasValidSubscription: Bool
+
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
         isGuest: Bool = false,
@@ -69,7 +70,8 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         backupStorage: Int64 = 0,
         accountPlan: PlanEntity? = nil,
         currentProPlan: AccountPlanEntity? = nil,
-        currentSubscription: AccountSubscriptionEntity? = nil
+        currentSubscription: AccountSubscriptionEntity? = nil,
+        hasValidSubscription: Bool = false
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -104,6 +106,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _incomingSharesStorage = incomingSharesStorage
         _backupStorage = backupStorage
         _currentAccountPlan = accountPlan
+        _hasValidSubscription = hasValidSubscription
     }
     
     // MARK: - User authentication status and identifiers
@@ -147,7 +150,11 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     public var isAchievementsEnabled: Bool {
         _isAchievementsEnabled
     }
-    
+
+    public var hasValidSubscription: Bool {
+        _hasValidSubscription
+    }
+
     public func currentAccountPlan() async -> PlanEntity? {
         _currentAccountPlan
     }
