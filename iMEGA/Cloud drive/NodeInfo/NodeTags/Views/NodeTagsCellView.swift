@@ -13,7 +13,7 @@ struct NodeTagsCellView: View {
                 .font(.body)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
 
-            if !viewModel.isProUser {
+            if !viewModel.isPaidAccount {
                 AvailableForProOnlyView(
                     proOnlyText: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Feature.availableForProOnlyText,
                     foregroundColor: TokenColors.Button.brand.swiftUI,
@@ -24,7 +24,7 @@ struct NodeTagsCellView: View {
 
             Spacer()
 
-            if viewModel.isProUser {
+            if viewModel.isPaidAccount {
                 Image(systemName: "chevron.right")
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
             }

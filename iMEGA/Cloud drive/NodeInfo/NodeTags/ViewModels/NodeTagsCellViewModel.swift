@@ -4,8 +4,8 @@ import MEGADomain
 final class NodeTagsCellViewModel {
     private let accountUseCase: any AccountUseCaseProtocol
 
-    var isProUser: Bool {
-        accountUseCase.hasValidProOrUnexpiredBusinessAccount()
+    var isPaidAccount: Bool {
+        accountUseCase.hasValidSubscription
     }
 
     init(accountUseCase: some AccountUseCaseProtocol) {
