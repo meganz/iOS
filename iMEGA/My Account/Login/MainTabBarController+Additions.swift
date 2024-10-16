@@ -48,7 +48,7 @@ extension MainTabBarController {
                 UIApplication.mainTabBarRootViewController() as? MainTabBarController
             },
             storageQuotaStatusProvider: {
-                let isFullSOQBannerEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .fullStorageOverQuotaBanner)
+                let isFullSOQBannerEnabled = true
                 let isAlmostFullSOQBannerEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .almostFullStorageOverQuotaBanner)
                 let accountStorageUseCase =  AccountStorageUseCase(
                     accountRepository: AccountRepository.newRepo,

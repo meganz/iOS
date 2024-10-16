@@ -768,7 +768,7 @@ struct CloudDriveViewControllerFactory {
     private func makeOverriddenConfigIfNeeded(
         nodeSource: NodeSource,
         config: NodeBrowserConfig,
-        isFullSOQBannerEnabled: @escaping () -> Bool = { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .fullStorageOverQuotaBanner) },
+        isFullSOQBannerEnabled: @escaping () -> Bool = { true },
         isAlmostFullSOQBannerEnabled: @escaping () -> Bool = { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .almostFullStorageOverQuotaBanner) }
     ) -> NodeBrowserConfig {
         

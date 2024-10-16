@@ -10,7 +10,7 @@ extension AccountRepository: @retroactive RepositoryProtocol {
             accountUpdatesProvider: AccountUpdatesProvider(
                 sdk: MEGASdk.sharedSdk,
                 areSOQBannersEnabled: {
-                    DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .fullStorageOverQuotaBanner)
+                    true
                 }
             )
         )
