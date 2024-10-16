@@ -91,6 +91,54 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testViewDidLoad_setupRefreshAccountDetailsSubscription_notifHasNewAccountDetailsObject_shouldSetAccountDetails() async {
+        await assertRefreshAccountDetailsNotification(
+            expectedAccountDetails: AccountDetailsEntity.random,
+            notifContainsNewAccountDetails: true
+        )
+    }
+    
+    @MainActor
+    func testViewDidLoad_setupRefreshAccountDetailsSubscription_notifHasNilObject_shouldFetchAccountDetails() async {
+        await assertRefreshAccountDetailsNotification(
+            expectedAccountDetails: AccountDetailsEntity.random,
+            notifContainsNewAccountDetails: false
+        )
+    }
+    
+    @MainActor
+    func assertRefreshAccountDetailsNotification(
+        expectedAccountDetails: AccountDetailsEntity,
+        notifContainsNewAccountDetails: Bool
+    ) async {
+        // If notifContainsNewAccountDetails is true, expectedAccountDetails will be returned on notification object and should be the new account details.
+        // If notifContainsNewAccountDetails is false, expectedAccountDetails will be used as returning value on MockMyAccountHallUseCase as the currentAccountDetails when fetchAccountDetails is called
+        let notificationCenter = NotificationCenter()
+        let (sut, _) = makeSUT(
+            currentAccountDetails: notifContainsNewAccountDetails ? nil : expectedAccountDetails,
+            notificationCenter: notificationCenter
+        )
+        
+        sut.dispatch(.viewDidLoad)
+        
+        let exp = expectation(description: "Receive currentPlanName from accountDetails")
+        let cancellable = sut.$currentPlanName
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        notificationCenter.post(
+            name: .refreshAccountDetails,
+            object: notifContainsNewAccountDetails ? expectedAccountDetails : nil
+        )
+        await fulfillment(of: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(sut.currentPlanName, expectedAccountDetails.proLevel.toAccountTypeDisplayName())
+        cancellable.cancel()
+    }
+    
+    @MainActor
     func testViewWillAppear_shouldStartAccountUpdatesMonitoring() {
         let (sut, _) = makeSUT()
         
@@ -644,7 +692,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         rubbishBinStorage: Int64 = 0,
         onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        notificationCenter: NotificationCenter = NotificationCenter()
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
             currentAccountDetails: currentAccountDetails ?? AccountDetailsEntity.random,
@@ -670,7 +719,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
                 notificationsUseCase: notificationUseCase,
                 deviceCenterBridge: deviceCenterBridge,
                 tracker: tracker,
-                router: router
+                router: router,
+                notificationCenter: notificationCenter
             ), router
         )
     }

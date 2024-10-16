@@ -63,6 +63,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let notificationCenter: NotificationCenter
     let shareUseCase: any ShareUseCaseProtocol
     let deviceCenterBridge: DeviceCenterBridge
     let router: any MyAccountHallRouting
@@ -86,7 +87,8 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
          notificationsUseCase: some NotificationsUseCaseProtocol,
          deviceCenterBridge: DeviceCenterBridge,
          tracker: some AnalyticsTracking,
-         router: some MyAccountHallRouting) {
+         router: some MyAccountHallRouting,
+         notificationCenter: NotificationCenter = .default) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -95,6 +97,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         self.deviceCenterBridge = deviceCenterBridge
         self.tracker = tracker
         self.router = router
+        self.notificationCenter = notificationCenter
         
         setAccountDetails(myAccountHallUseCase.currentAccountDetails)
         makeDeviceCenterBridge()
@@ -111,6 +114,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         switch action {
         case .viewDidLoad:
             trackAccountScreenEvent()
+            setupSubscriptions()
         case .viewWillAppear:
             startAccountUpdatesMonitoring()
         case .viewWillDisappear:
@@ -346,8 +350,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     private func setupSubscriptions() {
-        NotificationCenter
-            .default
+        notificationCenter
             .publisher(for: .refreshAccountDetails)
             .map({ $0.object as? AccountDetailsEntity })
             .sink { [weak self] account in
