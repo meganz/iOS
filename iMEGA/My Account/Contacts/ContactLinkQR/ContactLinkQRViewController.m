@@ -104,14 +104,6 @@
     return (self.segmentedControl.selectedSegmentIndex == QRSectionMyCode) ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance: self.segmentedControl];
-    }
-}
-
 #pragma mark - User avatar and camera mask
 
 - (void)setUserAvatar {

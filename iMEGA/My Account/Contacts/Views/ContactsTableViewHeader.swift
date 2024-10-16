@@ -24,7 +24,7 @@ class ContactsTableViewHeader: UIView {
         groupsLabel.text = Strings.Localizable.groups
         
         configDetailsLabel()
-        updateAppearance()
+        setupColors()
         
         disclosureIndicatorRequestImageView.image?.withRenderingMode(.alwaysTemplate)
         disclosureIndicatorRequestImageView.tintColor = TokenColors.Icon.secondary
@@ -32,24 +32,16 @@ class ContactsTableViewHeader: UIView {
         disclosureIndicatorGroupsImageView.tintColor = TokenColors.Icon.secondary
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance()
-        }
-    }
-    
     // MARK: - Private
     
-    private func updateAppearance() {
+    private func setupColors() {
         backgroundColor = TokenColors.Background.page
         
         requestsLabel.textColor = TokenColors.Text.primary
         groupsLabel.textColor = TokenColors.Text.primary
         requestsDetailLabel.textColor = TokenColors.Text.secondary
         
-        requestsSeparatorView.backgroundColor = UIColor.mnz_separator()
+        requestsSeparatorView.backgroundColor = TokenColors.Border.strong
         
         requestsImageView.image = UIImage.contactRequests.imageFlippedForRightToLeftLayoutDirection()
         groupsImageView.image = UIImage.contactGroups.imageFlippedForRightToLeftLayoutDirection()

@@ -44,14 +44,6 @@ class NicknameViewController: UIViewController {
         super.viewDidAppear(animated)
         nicknameTextField.becomeFirstResponder()
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
     
     // MARK: - IBActions
 
@@ -138,10 +130,10 @@ class NicknameViewController: UIViewController {
         saveBarButtonItem.title = Strings.Localizable.save
         nicknameLabel.text = Strings.Localizable.aliasNickname
         
-        updateAppearance()
+        setupColors()
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         view.backgroundColor = TokenColors.Background.page
         
         nicknameView.backgroundColor = TokenColors.Background.page

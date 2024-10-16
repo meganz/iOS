@@ -35,7 +35,7 @@ class EnterEmailViewController: UIViewController {
         
         disableInviteContactsButton()
         
-        updateAppearance()
+        setupColors()
         
         navigationController?.presentationController?.delegate = self
         contactPickerViewController.delegate = self
@@ -61,14 +61,6 @@ class EnterEmailViewController: UIViewController {
         coordinator.animate(alongsideTransition: { (_) in
             self.tagsFieldHeightLayoutConstraint.constant = self.tagsField.frame.height
         }, completion: nil)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance(shouldClearExistingText: false)
-        }
     }
     
     // MARK: Notifications
@@ -104,14 +96,14 @@ class EnterEmailViewController: UIViewController {
     
     // MARK: Private
     
-    private func updateAppearance(shouldClearExistingText: Bool = true) {
+    private func setupColors() {
         view.backgroundColor = TokenColors.Background.page
         descriptionLabel.textColor = TokenColors.Text.primary
         tagsFieldView.backgroundColor = TokenColors.Background.page
         tagsFieldButton.tintColor = TokenColors.Button.primary
         separatorView.backgroundColor = TokenColors.Border.strong
         
-        customizeTagsField(shouldClearExistingText: shouldClearExistingText)
+        customizeTagsField()
         
         if tagsField.tags.isNotEmpty || tagsField.text?.mnz_isValidEmail() == true {
             inviteContactsButton.mnz_setupPrimary(traitCollection)
@@ -147,7 +139,7 @@ class EnterEmailViewController: UIViewController {
         )
     }
     
-    private func customizeTagsField(shouldClearExistingText: Bool = true) {
+    private func customizeTagsField() {
         
         tagsField.layoutMargins = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
         

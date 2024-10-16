@@ -2,7 +2,7 @@ import MEGADesignToken
 import MEGAL10n
 
 extension ContactTableViewCell {
-    @objc func updateAppearance() {
+    @objc func setupColors() {
         backgroundColor = TokenColors.Background.page
         nameLabel.textColor = TokenColors.Text.primary
         shareLabel?.textColor = TokenColors.Text.secondary

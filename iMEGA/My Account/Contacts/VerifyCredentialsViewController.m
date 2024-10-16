@@ -12,7 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIView *userCredentialsView;
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *userEmailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *firstPartOfUserCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondPartOfUserCredentialsLabel;
@@ -24,10 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *eighthPartOfUserCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ninthPartOfUserCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tenthPartOfUserCredentialsLabel;
-
-@property (weak, nonatomic) IBOutlet UIView *myCredentialsTopSeparatorView;
-@property (weak, nonatomic) IBOutlet UIView *myCredentialsView;
-@property (weak, nonatomic) IBOutlet UIView *myCredentialsSubView;
 
 @property (weak, nonatomic) IBOutlet UILabel *yourCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *firstPartOfYourCredentialsLabel;
@@ -98,17 +93,8 @@
     
     [self updateVerifyOrResetButton];
     
-    [self updateAppearance];
-
-    [self setLabelColors];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-        
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
+    [self updateVerifyOrResetButton];
 }
 
 #pragma mark - Public
@@ -119,20 +105,6 @@
 }
 
 #pragma mark - Private
-
-- (void)updateAppearance {
-    self.view.backgroundColor = [UIColor pageBackgroundColor];
-    
-    self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separator];
-    self.myCredentialsView.backgroundColor = [UIColor pageBackgroundColor];
-    self.userEmailLabel.textColor = [UIColor mnz_subtitles];
-    
-    self.myCredentialsSubView.backgroundColor = [UIColor mnz_tertiaryBackgroundElevated:self.traitCollection];
-    self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separator].CGColor;
-
-    [self setLabelColors];
-    [self updateVerifyOrResetButton];
-}
 
 - (void)updateVerifyOrResetButton {
     if ([MEGASdk.shared areCredentialsVerifiedOfUser:self.user]) {

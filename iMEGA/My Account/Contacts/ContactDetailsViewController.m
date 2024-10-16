@@ -180,7 +180,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     [self.tableView sizeHeaderToFit];
     
-    [self updateAppearance];
+    [self setupColors];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
     
@@ -223,19 +223,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.avatarViewHeightConstraint.constant = self.avatarCollapsedPosition;
         self.gradientView.alpha = 1.0f;
     } completion:nil];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        // We need to async reload tableView because the tableView cell color is reset
-        // from storyboard right after traitCollectionDidChange is called
-        [self reloadTableViewAsync];
-    } else if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self.tableView reloadData];
-    }
 }
 
 #pragma mark - Private - Table view cells

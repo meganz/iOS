@@ -34,32 +34,19 @@ class ContactsGroupsViewController: UIViewController {
                                                backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                traitCollection: traitCollection)
         
-        updateAppearance()
+        setupColors()
         
         fetchGroupChatsList()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                                   backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                                                   traitCollection: traitCollection)
-            
-            updateAppearance()
-        }
-    }
-    
     // MARK: - Private
     
-    private func updateAppearance() {
+    private func setupColors() {
         newGroupChatLabel.textColor = TokenColors.Text.primary
         view.backgroundColor = TokenColors.Background.page
         separatorView.backgroundColor = TokenColors.Border.strong
         tableView.separatorColor = TokenColors.Border.strong
         disclosureIndicatorImageView.image =  UIImage(resource: .disclosure)
-        tableView.reloadData()
     }
 
     func fetchGroupChatsList() {
