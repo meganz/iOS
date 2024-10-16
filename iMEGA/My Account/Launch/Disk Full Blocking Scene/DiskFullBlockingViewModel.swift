@@ -33,7 +33,7 @@ struct DiskFullBlockingViewModel: ViewModelType {
             let blockingModel = DiskFullBlockingModel(title: Strings.Localizable.theDeviceDoesNotHaveEnoughSpaceForMEGAToRunProperly,
                                                       description: description,
                                                       highlightedText: storagePath,
-                                                      manageDiskSpaceTitle: Strings.Localizable.manage,
+                                                      manageDiskSpaceTitle: Strings.Localizable.close,
                                                       headerImage: UIImage.blockingDiskFull)
             invokeCommand?(.configView(blockingModel))
         case .manage:
