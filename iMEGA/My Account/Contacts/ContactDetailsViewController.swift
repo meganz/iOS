@@ -147,7 +147,7 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
     }
     
     @objc
-    func updateAppearance() {
+    func setupColors() {
         actionsView.backgroundColor = TokenColors.Background.page
         actionsBottomSeparatorView.backgroundColor = TokenColors.Border.strong
         tableView.backgroundColor = TokenColors.Background.page
@@ -175,14 +175,6 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
     @objc
     func updateHeaderBackgroundColor(headerView: GenericHeaderFooterView) {
         headerView.tokenBackgroundColor = TokenColors.Background.page
-    }
-    
-    @objc func reloadTableViewAsync() {
-        Task {
-            await MainActor.run {
-                self.tableView.reloadData()
-            }
-        }
     }
 }
 

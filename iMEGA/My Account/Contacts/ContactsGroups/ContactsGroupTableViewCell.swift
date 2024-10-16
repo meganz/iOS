@@ -12,15 +12,6 @@ class ContactsGroupTableViewCell: UITableViewCell {
     @IBOutlet weak var keyRotationImage: UIImageView!
     
     private var viewModel: ContactsGroupCellViewModel?
-        
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateStyle(with: traitCollection)
-            configureAvatarImages()
-        }
-    }
     
     func configure(
         with chatListItem: ChatListItemEntity
@@ -45,7 +36,7 @@ class ContactsGroupTableViewCell: UITableViewCell {
         frontAvatarImage.borderColor = TokenColors.Background.page
     }
     
-    private func updateStyle(with trait: UITraitCollection) {
+    private func updateStyle() {
         titleLabel.textColor = TokenColors.Text.primary
     }
 }

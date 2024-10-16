@@ -56,7 +56,7 @@ class InviteContactViewController: UIViewController {
 
         MEGASdk.shared.contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
-        updateAppearance()
+        setupColors()
 
         contactPickerViewController.delegate = self
         tracker.trackInviteScreen()
@@ -69,21 +69,13 @@ class InviteContactViewController: UIViewController {
         setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.inviteContact)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance()
-        }
-    }
-    
     // MARK: - Private
     
     private func forceResetNavigationBar() {
         AppearanceManager.forceResetNavigationBar(traitCollection)
     }
     
-    private func updateAppearance() {
+    private func setupColors() {
         mainView.backgroundColor = TokenColors.Background.page
         
         disclosureIndicatorImageViews.forEach {

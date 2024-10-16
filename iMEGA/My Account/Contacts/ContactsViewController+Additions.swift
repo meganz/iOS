@@ -224,7 +224,7 @@ extension ContactsViewController {
     }
     
     @objc
-    func updateAppearance() {
+    func setupColors() {
         let bgColor = TokenColors.Background.page
         view.backgroundColor = bgColor
         tableView.backgroundColor = bgColor

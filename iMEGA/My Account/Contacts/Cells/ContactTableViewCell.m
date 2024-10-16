@@ -24,7 +24,7 @@
     
     self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)prepareForReuse {
@@ -34,15 +34,7 @@
     [self.controlSwitch setOn:YES];
     
     self.avatarImageView.image = nil;
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {

@@ -16,9 +16,15 @@ extension VerifyCredentialsViewController {
         }
     }
 
-    @objc func setLabelColors() {
-        contactHeaderLabel.textColor = UIColor.mnz_primaryGray()
-        myCredentialsHeaderLabel.textColor = UIColor.mnz_primaryGray()
+    @objc func setupColors() {
+        contactHeaderLabel.textColor = TokenColors.Text.secondary
+        myCredentialsHeaderLabel.textColor = TokenColors.Text.secondary
+        view.backgroundColor = TokenColors.Background.page
+        myCredentialsTopSeparatorView.backgroundColor = TokenColors.Border.strong
+        myCredentialsView.backgroundColor = TokenColors.Background.surface1
+        userEmailLabel.textColor = TokenColors.Text.secondary
+        myCredentialsSubView.layer.borderColor = TokenColors.Border.strong.cgColor
+        myCredentialsSubView.backgroundColor = TokenColors.Background.surface2
     }
     
     @objc func setResetButtonColor(_ button: UIButton) {

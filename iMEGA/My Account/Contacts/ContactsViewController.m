@@ -138,7 +138,7 @@
         self.allowNonHostToAddParticipantsLabel.text = LocalizedString(@"meetings.addContacts.allowNonHost.message", @"Message to allow non host to add contacts in the group chat and meeting");
     }
     
-    [self updateAppearance];
+    [self setupColors];
     
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 15) {
         self.tableView.sectionHeaderTopPadding = 0.0f;
@@ -202,21 +202,6 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                                traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
-    }
 }
 
 - (ContactsViewModel *)viewModel {

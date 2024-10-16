@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, Segment) {
     self.navigationItem.titleView = self.contactRequestsSegmentedControl;
     
     self.relativeDateTimeFormatter = NSRelativeDateTimeFormatter.alloc.init;
+    [self setupColors];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,16 +85,6 @@ typedef NS_ENUM(NSInteger, Segment) {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
-    }
 }
 
 #pragma mark - Private
