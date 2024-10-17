@@ -28,7 +28,9 @@ pipeline {
             script {
                 def message = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Testflight"
 
-                if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
+                if (env.gitlabTriggerPhrase == 'upload_app_description_to_appstoreconnect') {
+                    message = ":rocket: Upload app description to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded"
+                } else if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
                     message = ":rocket: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} succeeded"
                 } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices' || env.GIT_BRANCH == 'origin/develop') {
                     message = ":rocket: Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) uploaded successfully to Firebase"
@@ -53,7 +55,9 @@ pipeline {
             script {
                 def message = ":x: Testflight build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
 
-                if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
+                if (env.gitlabTriggerPhrase == 'upload_app_description_to_appstoreconnect') {
+                    message = ":x: Upload app description to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed"
+                } else if (env.gitlabTriggerPhrase == 'upload_whats_new_to_appstoreconnect') {
                     message = ":x: Upload what's new to App Store Connect for version ${env.MEGA_VERSION_NUMBER} failed"
                 } else if (env.gitlabTriggerPhrase == 'deliver_qa' || env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices' || env.GIT_BRANCH == 'origin/develop') {
                     message = ":x: Firebase Build ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) failed"
@@ -141,7 +145,7 @@ pipeline {
                     when {
                         anyOf {
                             environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect' 
-                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect'
+                            environment name: 'gitlabTriggerPhrase', value: 'upload_app_description_to_appstoreconnect'
                         }
                     }
                     steps {
@@ -377,6 +381,24 @@ pipeline {
                             injectEnvironments({
                                 dir("scripts/") {
                                     sh 'python3 download_change_logs_from_transifex.py \"$TRANSIFIX_AUTHORIZATION_TOKEN\" $MEGA_VERSION_NUMBER'
+                                }
+                                sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
+                            })
+                        }
+                    }
+                }
+
+                stage('Update app description to appstore connect') {
+                    when {
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'upload_app_description_to_appstoreconnect'
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Update app description to appstore connect') {
+                            injectEnvironments({
+                                dir("scripts/AppDescriptionUpdater/") {
+                                    sh 'swift run AppDescriptionUpdater \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
                                 }
                                 sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                             })
