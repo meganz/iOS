@@ -6,7 +6,7 @@ extension RecentsViewController {
         guard let node = nodes.first else { return nil }
         
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .photosBrowser) {
-            let config = PhotosBrowserConfiguration(displayMode: .recents,
+            let config = PhotosBrowserConfiguration(displayMode: .cloudDrive,
                                                     library: MediaLibrary(assets: nodes.toPhotosBrowserEntities(), currentIndex: 0))
             let photoBrowserViewModel = PhotosBrowserViewModel(config: config)
             let photosBrowserViewController = PhotosBrowserViewController(viewModel: photoBrowserViewModel)

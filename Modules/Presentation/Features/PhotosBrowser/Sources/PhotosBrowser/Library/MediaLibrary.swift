@@ -2,12 +2,12 @@ import Foundation
 import MEGADomain
 
 public final class MediaLibrary: ObservableObject {
-    @Published var assets: [PhotosBrowserLibraryEntity]
-    var currentIndex: Int = 0
+    @Published public var assets: [PhotosBrowserLibraryEntity]
+    @Published public var currentIndex: Int = 0
     
-    lazy var currentAsset: PhotosBrowserLibraryEntity = {
-        assets[currentIndex]
-    }()
+    var currentAsset: PhotosBrowserLibraryEntity? {
+        assets[safe: currentIndex]
+    }
     
     // MARK: Lifecycle
     
