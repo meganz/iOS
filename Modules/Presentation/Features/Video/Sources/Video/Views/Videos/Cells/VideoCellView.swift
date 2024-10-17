@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGADomain
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
@@ -152,7 +153,7 @@ struct VideoCellViewContent: View {
         case .selection:
             checkMarkView
                 .padding(.leading, 10)
-        case .reorder:
+        case .reorder where DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent):
             dragIndicatorView
         default:
             EmptyView()
