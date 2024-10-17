@@ -1,0 +1,24 @@
+{
+    "data": {
+        "attributes": {
+            "content_encoding": "text",
+            "file_type": "default",
+            "mode": "sourceastranslation"
+        },
+        "relationships": {
+            "language": {
+                "data": {
+                    "id": "l:ar",
+                    "type": "languages"
+                }
+            },
+            "resource": {
+                "data": {
+                    "id": "o:meganz-1:p:stores:r:app_store_ios",
+                    "type": "resources"
+                }
+            }
+        },
+        "type": "resource_translations_async_downloads"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "data": {
+        "attributes": {
+            "content_encoding": "text",
+            "file_type": "default"
+        },
+        "relationships": {
+            "resource": {
+                "data": {
+                    "id": "o:meganz-1:p:stores:r:app_store_ios",
+                    "type": "resources"
+                }
+            }
+        },
+        "type": "resource_strings_async_downloads"
+    }
+}
