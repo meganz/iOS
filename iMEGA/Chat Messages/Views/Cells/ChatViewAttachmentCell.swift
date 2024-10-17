@@ -129,12 +129,12 @@ open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
         configureAccessoryView()
     }
 
-    open override func messageContainerSize(for message: any MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
        guard let chatMessage = message as? ChatMessage else {
             fatalError("ChatViewAttachmentCellCalculator: wrong type message passed.")
         }
         
-        let maxWidth = messageContainerMaxWidth(for: message)
+        let maxWidth = messageContainerMaxWidth(for: message, at: indexPath)
         
         chatViewAttachmentCell.attachmentViewModel = ChatViewAttachmentCellViewModel(chatMessage: chatMessage)
         let size = chatViewAttachmentCell.sizeThatFits()

@@ -14,13 +14,13 @@ class ChatTextMessageViewCell: TextMessageCell {
         let megaMessage = chatMessage.message
         
         guard let attributedText = megaMessage.attributedText else {
-            let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(chatMessage.message.content ?? ""))
-            super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
+            let dummyMessage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(chatMessage.message.content ?? ""))
+            super.configure(with: dummyMessage, at: indexPath, and: messagesCollectionView)
             return
         }
         
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .attributedText(attributedText))
-        super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
+        let dummyMessage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .attributedText(attributedText))
+        super.configure(with: dummyMessage, at: indexPath, and: messagesCollectionView)
     }
 }
 
@@ -38,17 +38,17 @@ class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
         outgoingMessageLabelInsets = UIEdgeInsets(top: 10, left: 18, bottom: 10, right: 18)
     }
 
-    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
-        return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
+    open override func messageContainerMaxWidth(for message: any MessageType, at indexPath: IndexPath) -> CGFloat {
+       min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message, at: indexPath))
     }
 
-    open override func messageContainerSize(for message: any MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         guard let chatMessage = message as? ChatMessage, chatMessage.message.content != nil else {
             return .zero
         }
         
         let megaMessage = chatMessage.message
-        let maxWidth: CGFloat = messageContainerMaxWidth(for: message)
+        let maxWidth: CGFloat = messageContainerMaxWidth(for: message, at: indexPath)
         
         let attributedText = megaMessage.attributedText
         calculateLabel.attributedText = attributedText

@@ -200,6 +200,8 @@ class ChatViewController: MessagesViewController {
         
         super.viewDidLoad()
         
+        messageInputBar.removeFromSuperview()
+        
         messagesCollectionView.backgroundColor = TokenColors.Background.page
         chatRoomDelegate.chatViewController = self
         configureMessageCollectionView()
@@ -815,7 +817,7 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.emptyDataSetSource = self
         messagesCollectionView.emptyDataSetDelegate = self
         
-        maintainPositionOnKeyboardFrameChanged = true
+        maintainPositionOnInputBarHeightChanged = true
     }
     
     private func configureTapToReturnToCallButton() {
@@ -945,45 +947,79 @@ class ChatViewController: MessagesViewController {
     }
     
     private func addObservers() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.reachabilityChanged,
-                                               object: nil,
-                                               queue: OperationQueue.main) { [weak self] _ in
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.reachabilityChanged,
+            object: nil,
+            queue: OperationQueue.main
+        ) { [weak self] _ in
             self?.configureNavigationBar()
         }
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleKeyboardShown(_:)),
-                                               name: UIResponder.keyboardDidShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleKeyboardHidden(_:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleKeyboardShown(_:)),
+            name: UIResponder.keyboardDidShowNotification,
+            object: nil
+        )
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(willResignActive(_:)),
-                                               name: UIApplication.willResignActiveNotification,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleKeyboardHidden(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(didBecomeActive(_:)),
-                                               name: UIApplication.didBecomeActiveNotification,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(willResignActive(_:)),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didBecomeActive(_:)),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        
+        /// This manage a missed feature or bug in 4.x MessageKit library,
+        /// when keyboard will be shown, the offset is not changed if last message is visible.
+        /// more detailed in `handleKeyboardDidChangeFrame(_:)`
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleKeyboardWillShow(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
     }
     
     private func removeObservers() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name.reachabilityChanged,
-                                                  object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardDidShowNotification,
-                                                  object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification,
-                                                  object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIApplication.willResignActiveNotification,
-                                                  object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name.reachabilityChanged,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardDidShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
     }
     
     @objc private func handleKeyboardShown(_ notification: Notification) {
@@ -1152,5 +1188,62 @@ class ChatViewController: MessagesViewController {
     deinit {
         removeObservers()
         closeChatRoom()
+    }
+}
+
+extension ChatViewController {
+    /// Reused code from MessageKit 3.8 version to call `setContentOffset`when keyboard appears,
+    /// this way, the last message will remain above the chat input bar and keyboard.
+    /// Issue reported to library's repository https://github.com/MessageKit/MessageKit/issues/1867, once it is fixed this will be removed.
+    @objc
+    private func handleKeyboardWillShow(_ notification: Notification) {
+        guard self.presentedViewController == nil else {
+            // This is important to skip notifications from child modal controllers in iOS >= 13.0
+            return
+        }
+
+        guard let keyboardEndFrameInScreenCoords = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        let keyboardEndFrame = view.convert(keyboardEndFrameInScreenCoords, from: view.window)
+        
+        // Avoid to setContentOffset if just the chatInputBar is visible
+        guard keyboardEndFrame.height != chatInputBar?.frame.height else {
+            return
+        }
+        
+        let newBottomInset = requiredScrollViewBottomInset(forKeyboardFrame: keyboardEndFrame)
+        let differenceOfBottomInset = newBottomInset - messagesCollectionView.contentInset.bottom
+        
+        if maintainPositionOnInputBarHeightChanged && differenceOfBottomInset != 0 {
+            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
+            // Changing contentOffset to bigger number than the contentSize will result in a jump of content
+            // https://github.com/MessageKit/MessageKit/issues/1486
+            guard contentOffset.y <= messagesCollectionView.contentSize.height else {
+                return
+            }
+            messagesCollectionView.setContentOffset(
+                contentOffset,
+                animated: false
+            )
+        }
+    }
+
+    private func requiredScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
+        // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view;
+        // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
+        let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
+        
+        if intersection.isNull || (messagesCollectionView.frame.maxY - intersection.maxY) > 0.001 {
+            // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
+            // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
+            return max(0, additionalBottomInset - automaticallyAddedBottomInset)
+        } else {
+            return max(0, intersection.height + additionalBottomInset - automaticallyAddedBottomInset)
+        }
+    }
+    
+    private var automaticallyAddedBottomInset: CGFloat {
+       messagesCollectionView.adjustedContentInset.bottom - messagesCollectionView.contentInset.bottom
     }
 }

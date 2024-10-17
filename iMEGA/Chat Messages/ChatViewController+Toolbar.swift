@@ -196,7 +196,7 @@ extension ChatViewController {
                 hasText = true
             }
             if chatMessage.message.type == .containsMeta,
-               (chatMessage.message.containsMeta?.type == .geolocation || chatMessage.message.containsMeta?.type == .richPreview) {
+               chatMessage.message.containsMeta?.type == .geolocation || chatMessage.message.containsMeta?.type == .richPreview {
                 hasText = true
             }
             if chatMessage.message.type == .attachment || chatMessage.message.type == .voiceClip {

@@ -17,8 +17,8 @@ class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
         
         self.indexPath = indexPath
         self.megaMessage = megaMessage
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
-        super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
+        let dummyMessage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
+        super.configure(with: dummyMessage, at: indexPath, and: messagesCollectionView)
         
         if megaMessage.type == .containsMeta {
             richPreviewDialogView.isHidden = false
@@ -64,21 +64,21 @@ class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
 open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCalculator {
     var richPreviewDialogView: RichPreviewDialogView = RichPreviewDialogView()
 
-    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
-        return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
+    open override func messageContainerMaxWidth(for message: any MessageType, at indexPath: IndexPath) -> CGFloat {
+       min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message, at: indexPath))
     }
 
-    open override func messageContainerSize(for message: any MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         guard let chatMessage = message as? ChatMessage else {
             return .zero
         }
         
         let megaMessage = chatMessage.message
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
+        let dummyMessage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
         
-        let maxWidth = messageContainerMaxWidth(for: dummyMssage)
+        let maxWidth = messageContainerMaxWidth(for: dummyMessage, at: indexPath)
         
-        let containerSize = super.messageContainerSize(for: dummyMssage)
+        let containerSize = super.messageContainerSize(for: dummyMessage, at: indexPath)
         switch message.kind {
         case .custom:
             let width = max(maxWidth, containerSize.width)
