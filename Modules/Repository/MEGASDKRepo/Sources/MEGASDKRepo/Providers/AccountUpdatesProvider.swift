@@ -84,6 +84,7 @@ public struct AccountUpdatesProvider: AccountUpdatesProviderProtocol {
                 areSOQBannersEnabled: areSOQBannersEnabled,
                 onStorageStatusEventUpdate: { storageStatus in
                 continuation.yield(storageStatus)
+                NotificationCenter.default.post(name: .storageStatusDidChange, object: storageStatus)
             })
             
             continuation.onTermination = { _ in

@@ -53,8 +53,8 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         currentUserSource.accountDetails
     }
     
-    public var shouldRefreshAccountDetails: Bool {
-        currentUserSource.shouldRefreshAccountDetails
+    public var shouldRefreshStorageStatus: Bool {
+        currentUserSource.storageStatus == nil
     }
     
     public var bandwidthOverquotaDelay: Int64 {
@@ -73,6 +73,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         sdk.isAchievementsEnabled
     }
     
+    public var isUnlimitedStorageAccount: Bool {
+        currentAccountDetails?.proLevel == .proFlexi || currentAccountDetails?.proLevel == .business
+    }
+    
     public func currentAccountPlan() async -> PlanEntity? {
         let availablePlans = await availablePlans()
         
@@ -82,13 +86,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
     
     public var currentStorageStatus: StorageStatusEntity {
-        guard let details = currentAccountDetails else { return .noStorageProblems }
-
-        let percentageUsed = Double(details.storageUsed) / Double(details.storageMax)
-
-        return percentageUsed >= fullStorageLimit ? .full :
-               percentageUsed >= almostFullStorageLimit ? .almostFull :
-               .noStorageProblems
+        currentUserSource.storageStatus ?? .noStorageProblems
     }
     
     public var currentProPlan: AccountPlanEntity? {
@@ -132,6 +130,33 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
                     completion(.success(accountDetails))
                 case .failure:
                     completion(.failure(AccountDetailsErrorEntity.generic))
+                }
+            })
+        })
+    }
+    
+    public func refreshCurrentStorageState() async throws -> StorageStatusEntity? {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.getUserAttributeType(.storageState, delegate: RequestDelegate { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let request):
+                    let storageState = StorageState(rawValue: UInt(request.number))
+                    if let storageStatus = storageState?.toStorageStatusEntity() {
+                        currentUserSource.setStorageStatus(storageStatus)
+                        completion(.success(storageStatus))
+                    } else {
+                        completion(.success(nil))
+                    }
+                    
+                case .failure(let error):
+                    let mappedError: any Error = switch error.type {
+                    case .apiERange:
+                        UserAttributeErrorEntity.attributeNotFound
+                    default:
+                        GenericErrorEntity()
+                    }
+                    completion(.failure(mappedError))
                 }
             })
         })
