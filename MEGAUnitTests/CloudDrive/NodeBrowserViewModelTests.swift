@@ -566,17 +566,17 @@ class NodeBrowserViewModelTests: XCTestCase {
         let (harness, mockAccountStorageUseCase) = makeHarness(displayMode: .cloudDrive)
         
         mockAccountStorageUseCase._currentStorageStatus = .almostFull
-        harness.sut.refreshStorageStatus()
+        harness.sut.refreshStorageBanners()
         
         XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .almostFullStorageOverQuota)
         
         mockAccountStorageUseCase._currentStorageStatus = .full
-        harness.sut.refreshStorageStatus()
+        harness.sut.refreshStorageBanners()
         
         XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
         
         mockAccountStorageUseCase._currentStorageStatus = .noStorageProblems
-        harness.sut.refreshStorageStatus()
+        harness.sut.refreshStorageBanners()
         
         XCTAssertNil(harness.sut.currentBannerViewModel)
     }
@@ -585,7 +585,7 @@ class NodeBrowserViewModelTests: XCTestCase {
     func testRefreshStorageStatus_withSharedItemConfig_shouldNotDisplayBanner() {
         let (harness, _) = makeHarness(currentStatus: .full)
         
-        harness.sut.refreshStorageStatus()
+        harness.sut.refreshStorageBanners()
         
         XCTAssertNil(harness.sut.currentBannerViewModel, "No banner should be shown for shared items.")
     }
@@ -595,7 +595,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         let (harness, mockAccountStorageUseCase) = makeHarness(displayMode: .cloudDrive)
         
         mockAccountStorageUseCase._currentStorageStatus = .almostFull
-        harness.sut.refreshStorageStatus()
+        harness.sut.refreshStorageBanners()
         
         XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .almostFullStorageOverQuota)
     }
@@ -605,7 +605,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         let (harness, mockAccountStorageUseCase) = makeHarness(displayMode: .cloudDrive)
         
         mockAccountStorageUseCase._currentStorageStatus = .full
-        harness.sut.refreshStorageStatus()
+        harness.sut.refreshStorageBanners()
         
         XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
     }

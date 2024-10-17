@@ -28,7 +28,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _currentProPlan: AccountPlanEntity?
     private let _currentSubscription: AccountSubscriptionEntity?
     private let _currentStorageStatus: StorageStatusEntity
-    private let _shouldRefreshAccountDetails: Bool
+    private let _isUnlimitedStorageAccount: Bool
+    private let _shouldRefreshStorageStatus: Bool
     
     // MARK: - Result Handlers
     private let getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity>
@@ -68,7 +69,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         isBilledProPlan: Bool = false,
         hasMultipleBilledProPlan: Bool = false,
         isAchievementsEnabled: Bool = false,
-        shouldRefreshAccountDetails: Bool = false,
+        shouldRefreshStorageStatus: Bool = false,
         plans: [PlanEntity] = [],
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
@@ -90,6 +91,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         backupStorage: Int64 = 0,
         currentProPlan: AccountPlanEntity? = nil,
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
+        isUnlimitedStorageAccount: Bool = false,
         currentSubscription: AccountSubscriptionEntity? = nil,
         onAccountRequestFinishUpdate: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
@@ -107,10 +109,11 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isBilledProPlan = isBilledProPlan
         _hasMultipleBilledProPlan = hasMultipleBilledProPlan
         _isAchievementsEnabled = isAchievementsEnabled
-        _shouldRefreshAccountDetails = shouldRefreshAccountDetails
+        _shouldRefreshStorageStatus = shouldRefreshStorageStatus
         _plans = plans
         _currentProPlan = currentProPlan
         _currentStorageStatus = currentStorageStatus
+        _isUnlimitedStorageAccount = isUnlimitedStorageAccount
         _currentSubscription = currentSubscription
         _accountCreationDate = accountCreationDate
         _isSmsAllowed = isSmsAllowed
@@ -187,8 +190,12 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _hasMultipleBilledProPlan
     }
     
-    public var shouldRefreshAccountDetails: Bool {
-        _shouldRefreshAccountDetails
+    public var shouldRefreshStorageStatus: Bool {
+        _shouldRefreshStorageStatus
+    }
+    
+    public func refreshCurrentStorageState() async throws -> StorageStatusEntity? {
+        currentStorageStatus
     }
     
     public var currentProPlan: AccountPlanEntity? {
@@ -201,6 +208,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public var currentStorageStatus: StorageStatusEntity {
         _currentStorageStatus
+    }
+    
+    public var isUnlimitedStorageAccount: Bool {
+        _isUnlimitedStorageAccount
     }
     
     public var accountCreationDate: Date? {

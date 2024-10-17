@@ -54,8 +54,7 @@ extension MainTabBarController {
                     accountRepository: AccountRepository.newRepo,
                     preferenceUseCase: PreferenceUseCase.default
                 )
-                
-                guard isFullSOQBannerEnabled || (isAlmostFullSOQBannerEnabled && accountStorageUseCase.shouldShowStorageBanner) else { return .noStorageProblems }
+                guard !accountStorageUseCase.isUnlimitedStorageAccount && (isFullSOQBannerEnabled || (isAlmostFullSOQBannerEnabled && accountStorageUseCase.shouldShowStorageBanner)) else { return .noStorageProblems }
                 
                 return accountStorageUseCase.currentStorageStatus
             }

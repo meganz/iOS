@@ -96,7 +96,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let onNodeStructureChanged: () -> Void
     private var nodeSensitivityChangesListenerTask: Task<Void, Never>?
     private var accountStorageMonitoringTask: Task<Void, Never>?
-    private var refreshAccountDetailsTask: Task<Void, Never>?
+    private var refreshStorageStatusTask: Task<Void, Never>?
     private var updatedViewModesTask: Task<Void, Never>?
 
     var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
@@ -267,16 +267,18 @@ class NodeBrowserViewModel: ObservableObject {
 
         addNodesUpdateHandler()
         subscribeToViewModePreferenceChangeNotification(with: cloudDriveViewModeMonitoringService)
-        monitorStorageStatusUpdates()
+        if !accountStorageUseCase.isUnlimitedStorageAccount {
+            monitorStorageStatusUpdates()
+        }
     }
     
     deinit {
         accountStorageMonitoringTask?.cancel()
-        refreshAccountDetailsTask?.cancel()
+        refreshStorageStatusTask?.cancel()
         updatedViewModesTask?.cancel()
 
         accountStorageMonitoringTask = nil
-        refreshAccountDetailsTask = nil
+        refreshStorageStatusTask = nil
         updatedViewModesTask = nil
     }
 
@@ -300,7 +302,9 @@ class NodeBrowserViewModel: ObservableObject {
         updateSortOrderIfNeeded()
         nodeSourceUpdatesListener.startListening()
         listenToNodeSensitivityChanges()
-        refreshStorageStatus()
+        if !accountStorageUseCase.isUnlimitedStorageAccount {
+            refreshStorageBanners()
+        }
     }
     
     func onViewDisappear() {
@@ -533,18 +537,12 @@ class NodeBrowserViewModel: ObservableObject {
         
         accountStorageMonitoringTask = Task { [weak self] in
             for await status in onStorageStatusUpdateSequence {
-                if self?.accountStorageUseCase.currentStorageStatus != status {
-                    self?.refreshAccountDetails()
-                } else {
-                    self?.updateTemporaryBanner(status: status)
-                }
+                self?.updateTemporaryBanner(status: status)
             }
         }
     }
     
     func updateTemporaryBanner(status: StorageStatusEntity) {
-        guard !accountStorageUseCase.shouldRefreshAccountDetails else { return }
-        
         switch status {
         case .full:
             if isFullSOQBannerEnabled(), temporaryBannerViewModel?.warningType != .fullStorageOverQuota {
@@ -562,7 +560,7 @@ class NodeBrowserViewModel: ObservableObject {
                         self?.accountStorageUseCase.updateLastStorageBannerDismissDate()
                     }
                 )
-            } else if temporaryBannerViewModel?.warningType == .almostFullStorageOverQuota || !shouldShowStorageBanner {
+            } else {
                 resetTemporaryBanner()
             }
         default:
@@ -571,7 +569,7 @@ class NodeBrowserViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    func refreshStorageStatus() {
+    func refreshStorageBanners() {
         guard isFullSOQBannerEnabled() || isAlmostFullSOQBannerEnabled(),
               config.isFromSharedItem != true,
               let displayMode = config.displayMode,
@@ -584,21 +582,23 @@ class NodeBrowserViewModel: ObservableObject {
             return
         }
         
-        if accountStorageUseCase.shouldRefreshAccountDetails {
-            refreshAccountDetails()
+        if accountStorageUseCase.shouldRefreshStorageStatus {
+            refreshStorageStatus()
         }
         updateTemporaryBanner(status: accountStorageUseCase.currentStorageStatus)
     }
     
-    private func refreshAccountDetails() {
-        refreshAccountDetailsTask = Task { [weak self] in
-            try? await self?.accountStorageUseCase.refreshCurrentAccountDetails()
-           
-            if let currentStorageStatus = self?.accountStorageUseCase.currentStorageStatus {
+    /// Refreshes the current storage status asynchronously and updates the temporary storage banner if needed.
+    ///
+    /// This method initiates a background task to refresh the storage status by calling `refreshCurrentStorageState()`
+    /// on the `accountStorageUseCase`. The storage status is cached to avoid repetitive asynchronous calls. The value is
+    /// fetched and stored the first time this method is called, and any subsequent updates to the storage status are handled
+    /// by receiving `EventType.storage` type events, which keep the cached value updated. If a logout occurs, this cached value is reset.
+    private func refreshStorageStatus() {
+        refreshStorageStatusTask = Task { [weak self] in
+            if let currentStorageStatus = try? await self?.accountStorageUseCase.refreshCurrentStorageState() {
                 self?.updateTemporaryBanner(status: currentStorageStatus)
             }
-            
-            NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: false)
         }
     }
     

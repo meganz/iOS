@@ -60,6 +60,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private var transferDelegates: [any MEGATransferDelegate] = []
     private var requestDelegates: [any MEGARequestDelegate] = []
     private var globalDelegates: [any MEGAGlobalDelegate] = []
+    private let storageState: StorageState?
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -163,7 +164,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
                 nodeFingerprint: String? = nil,
                 nodeSizes: [MEGAHandle: Int64] = [:],
                 folderInfo: MEGAFolderInfo? = nil,
-                shouldListGlobalDelegates: Bool = false
+                shouldListGlobalDelegates: Bool = false,
+                storageState: StorageState? = nil
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -221,6 +223,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.nodeSizes = nodeSizes
         self.folderInfo = folderInfo
         self.shouldListGlobalDelegates = shouldListGlobalDelegates
+        self.storageState = storageState
         super.init()
     }
     
@@ -648,6 +651,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         case .deviceNames: .init(handle: 1, stringDict: devices)
         case .contentConsumptionPreferences: .init(handle: 1,
                                                    stringDict: contentConsumptionPreferences.mapValues { $0.base64Encoded ?? "Failed to encode to base64" })
+        case .storageState:
+            .init(handle: 1, number: Int64(storageState?.rawValue ?? 0))
         default: nil
         }
         

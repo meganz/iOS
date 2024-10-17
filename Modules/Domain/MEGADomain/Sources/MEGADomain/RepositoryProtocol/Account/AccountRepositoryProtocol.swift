@@ -11,7 +11,7 @@ public protocol AccountRepositoryProtocol: Sendable {
     // Account characteristics
     var accountCreationDate: Date? { get }
     var currentAccountDetails: AccountDetailsEntity? { get }
-    var shouldRefreshAccountDetails: Bool { get }
+    var shouldRefreshStorageStatus: Bool { get }
     var bandwidthOverquotaDelay: Int64 { get }
     var isMasterBusinessAccount: Bool { get }
     var isSMSAllowed: Bool { get }
@@ -21,12 +21,18 @@ public protocol AccountRepositoryProtocol: Sendable {
     /// - Returns: A `StorageStatusEntity` that provides the current status of the user's account storage.
     /// This property reflects whether the user's storage is under quota, approaching quota, or over quota.
     var currentStorageStatus: StorageStatusEntity { get }
+    /// Indicates whether the account is Pro Flexi or Business.
+    /// - Returns: A Boolean value that is `true` if the current account is a Pro Flexi or Business account,
+    /// where storage limits do not apply. These accounts are charged based on actual usage and have no storage restrictions.
+    /// This property can be used to avoid showing storage-related warnings or banners for these account types.
+    var isUnlimitedStorageAccount: Bool { get }
 
     // User and session management
     func currentUser() async -> UserEntity?
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
+    func refreshCurrentStorageState() async throws -> StorageStatusEntity?
     func isExpiredAccount() -> Bool
     func isInGracePeriod() -> Bool
     /// Checks if the current Pro plan is associated with any subscription.
