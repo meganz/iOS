@@ -39,12 +39,6 @@ public final class PhotosBrowserViewController: UIViewController {
     
     // MARK: Private
     
-    private func executeCommand(_ command: PhotosBrowserViewModel.Command) {
-        switch command {
-        case .onViewReady: break
-        }
-    }
-    
     private func buildBottomToolBar() {
         toolbar = UIToolbar()
         toolbar.backgroundColor = TokenColors.Background.surface1
@@ -67,19 +61,13 @@ public final class PhotosBrowserViewController: UIViewController {
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(navigationBar)
         
-        let navigationItem = UINavigationItem()
         NSLayoutConstraint.activate([
             navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         
-        let config = NavigationBarConfigurationFactory.configuration(on: viewModel.config.displayMode)
-        config.configure(navigationItem: navigationItem,
-                         with: viewModel.config.library,
-                         in: self)
-        
-        navigationBar.items = [navigationItem]
+        updateNavigationBarTitle()
     }
     
     private func configPhotosBrowserCollectionView() {
@@ -99,5 +87,23 @@ public final class PhotosBrowserViewController: UIViewController {
         
         host.view.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
         host.didMove(toParent: self)
+    }
+    
+    // MARK: - Commands
+    
+    private func executeCommand(_ command: PhotosBrowserViewModel.Command) {
+        switch command {
+        case .onViewReady: break
+        case .onCurrentIndexChange: updateNavigationBarTitle()
+        }
+    }
+    
+    private func updateNavigationBarTitle() {
+        let navigationItem = UINavigationItem()
+        let config = NavigationBarConfigurationFactory.configuration(on: viewModel.config.displayMode)
+        config.configure(navigationItem: navigationItem,
+                         with: viewModel.config.library,
+                         in: self)
+        self.navigationBar.items = [navigationItem]
     }
 }

@@ -1,6 +1,8 @@
 import MEGADesignToken
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
+import PhotosBrowser
 
 extension ThumbnailViewerTableViewCell {
     @objc func setupColors() {
@@ -35,5 +37,25 @@ extension ThumbnailViewerTableViewCell {
         }
         
         cell.bind(viewModel: itemViewModel)
+    }
+    
+    @objc func photosBrowserViewController(with nodes: [MEGANode], at indexPath: IndexPath) -> UIViewController? {
+        guard nodes.isNotEmpty else { return nil }
+        
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .photosBrowser) {
+            let config = PhotosBrowserConfiguration(displayMode: .cloudDrive,
+                                                    library: MediaLibrary(assets: nodes.toPhotosBrowserEntities(),
+                                                                          currentIndex: indexPath.row))
+            let photoBrowserViewModel = PhotosBrowserViewModel(config: config)
+            let photosBrowserViewController = PhotosBrowserViewController(viewModel: photoBrowserViewModel)
+            photosBrowserViewController.modalPresentationStyle = .overFullScreen
+            
+            return photosBrowserViewController
+        } else {
+            return MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: nodes),
+                                                               api: MEGASdk.shared,
+                                                               displayMode: DisplayMode.cloudDrive,
+                                                               isFromSharedItem: false, presenting: nodes[indexPath.row])
+        }
     }
 }

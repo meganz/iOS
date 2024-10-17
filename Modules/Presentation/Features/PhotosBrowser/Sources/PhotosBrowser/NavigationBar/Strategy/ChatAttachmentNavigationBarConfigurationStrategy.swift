@@ -8,6 +8,8 @@ struct ChatAttachmentNavigationBarConfigurationStrategy: NavigationBarConfigurat
     func configure(navigationItem: UINavigationItem,
                    with library: MediaLibrary,
                    in viewController: PhotosBrowserViewController) {
+        guard let asset = library.currentAsset else { return }
+        
         // Placeholder
         let closeButton = UIBarButtonItem(title: Strings.Localizable.close,
                                           primaryAction: UIAction { [weak viewController] _ in viewController?.didTapClose() })
@@ -18,7 +20,8 @@ struct ChatAttachmentNavigationBarConfigurationStrategy: NavigationBarConfigurat
         let subtitle = formattedText.replacingOccurrences(
             of: "[A]",
             with: String(format: "%lu", library.currentIndex + 1))
-        let titleView = NavigationTitleView(title: library.currentAsset.name, subtitle: subtitle).toUIView()
+        let titleView = NavigationTitleView(title: asset.name, subtitle: subtitle).toUIView()
+        navigationItem.titleView?.removeFromSuperview()
         navigationItem.titleView = titleView
         navigationItem.titleView?.sizeToFit()
         

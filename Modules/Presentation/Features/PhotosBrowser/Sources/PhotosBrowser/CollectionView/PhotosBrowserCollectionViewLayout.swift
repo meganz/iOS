@@ -1,6 +1,12 @@
+import Combine
 import UIKit
 
 final class PhotosBrowserCollectionViewLayout: UICollectionViewFlowLayout {
+    let _pageIndexSubject = PassthroughSubject<Int, Never>()
+    
+    var pageIndexPublisher: AnyPublisher<Int, Never> {
+        _pageIndexSubject.removeDuplicates().eraseToAnyPublisher()
+    }
     
     // MARK: - Life cycle
     
@@ -39,10 +45,28 @@ final class PhotosBrowserCollectionViewLayout: UICollectionViewFlowLayout {
             round(approxPage)
         }
         
-        guard speed != 0 else { return CGPoint(x: nextOrCurrentPage * pageLength, y: 0) }
+        guard speed != 0 else {
+            let targetOffset = CGPoint(x: nextOrCurrentPage * pageLength, y: 0)
+            updateCurrentIndex(collectionView, targetOffset: targetOffset)
+            
+            return targetOffset
+        }
         
         let nextPage: CGFloat = nextOrCurrentPage + (speed > 0 ? 1 : -1)
         
-        return CGPoint(x: nextPage * pageLength, y: 0)
+        let targetOffset = CGPoint(x: nextPage * pageLength, y: 0)
+        updateCurrentIndex(collectionView, targetOffset: targetOffset)
+        
+        return targetOffset
+    }
+    
+    // MARK: - Private
+    
+    private func updateCurrentIndex(_ collectionView: UICollectionView, targetOffset: CGPoint) {
+        let pageLength = itemSize.width + minimumLineSpacing
+        let index = Int(targetOffset.x / pageLength)
+        let newIndex = min(max(0, index), collectionView.numberOfItems(inSection: 0) - 1)
+        
+        _pageIndexSubject.send(newIndex)
     }
 }

@@ -9,20 +9,22 @@ struct PhotosBrowserCollectionViewRepresenter: UIViewRepresentable {
     }
     
     func makeUIView(context: Context) -> UICollectionView {
+        let layout = PhotosBrowserCollectionViewLayout()
         let collectionView = UICollectionView(
             frame: .zero,
-            collectionViewLayout: PhotosBrowserCollectionViewLayout())
+            collectionViewLayout: layout)
         collectionView.backgroundColor = TokenColors.Background.page
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         
         context.coordinator.configureDataSource(for: collectionView)
+        context.coordinator.updateLayout(layout)
         
         return collectionView
     }
     
     func updateUIView(_ uiView: UICollectionView, context: Context) {
-        context.coordinator.updateUI(with: viewModel.mediaAssets)
+        context.coordinator.updateUI(with: viewModel.library.assets)
     }
 }

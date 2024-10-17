@@ -19,7 +19,7 @@ struct PhotosBrowserCollectionViewModelTests {
         let library = MediaLibrary(assets: initialAssets, currentIndex: 0)
         let viewModel = PhotosBrowserCollectionViewModel(library: library)
         
-        #expect(viewModel.mediaAssets.count == initialAssets.count)
+        #expect(viewModel.library.assets.count == initialAssets.count)
     }
     
     @Test func mediaAssetsUpdatesWhenLibraryAssetsChange() async {
@@ -35,7 +35,7 @@ struct PhotosBrowserCollectionViewModelTests {
         var cancellables = Set<AnyCancellable>()
         
         await confirmation("mediaAssets should update when library.assets changes") { @MainActor confirm in
-            viewModel.$mediaAssets
+            viewModel.library.$assets
                 .dropFirst()
                 .sink { newAssets in
                     receivedMediaAssets = newAssets
@@ -47,6 +47,6 @@ struct PhotosBrowserCollectionViewModelTests {
         }
         
         #expect(receivedMediaAssets?.count == updatedAssets.count)
-        #expect(viewModel.mediaAssets.count == updatedAssets.count)
+        #expect(viewModel.library.assets.count == updatedAssets.count)
     }
 }
