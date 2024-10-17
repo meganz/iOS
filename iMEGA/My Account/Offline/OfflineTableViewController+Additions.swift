@@ -7,7 +7,7 @@ extension OfflineTableViewViewController {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateAppearanceForTraitCollection(self.traitCollection)
+        updateAppearanceForTraitCollection()
     }
     
     @objc func tableView(_ tableView: UITableView,
@@ -56,16 +56,9 @@ extension OfflineTableViewViewController {
             cell.thumbnailPlayImageView.isHidden = !isVideoExtension
         }
     }
-    @objc(updateAppearance:)
-    func updateAppearanceForTraitCollection(_ traitCollection: UITraitCollection) {
+    @objc(updateAppearance)
+    func updateAppearanceForTraitCollection() {
         self.tableView?.backgroundColor = TokenColors.Background.page
         self.tableView?.separatorColor = TokenColors.Border.strong
-    }
-    
-    override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearanceForTraitCollection(traitCollection)
-        }
     }
 }
