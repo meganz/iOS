@@ -48,7 +48,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         self.videoConfig = representer.videoConfig
     }
     
-    func configureDataSource(for collectionView: UICollectionView) {        
+    func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
         collectionView.dataSource = dataSource
     }
