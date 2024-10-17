@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 
 @MainActor
@@ -51,7 +52,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     func configure(_ collectionView: UICollectionView) {
         configureDataSource(for: collectionView)
         
-        if viewContext() == .playlistContent {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent) && viewContext() == .playlistContent {
             configureDragDropInteraction(for: collectionView)
         }
     }
