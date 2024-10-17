@@ -18,8 +18,8 @@ class ContactLinkCollectionViewCell: TextMessageCell {
         let megaMessage = chatMessage.message
         contactLinkContentView.message = megaMessage
         
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
-        super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
+        let dummyMessage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
+        super.configure(with: dummyMessage, at: indexPath, and: messagesCollectionView)
         
         guard megaMessage.richString == nil,
               let path = megaMessage.megaLink?.absoluteString,
@@ -96,25 +96,25 @@ open class ChatContactLinkCollectionViewSizeCalculator: TextMessageSizeCalculato
         configureAccessoryView()
     }
     
-    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
-        min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
+    open override func messageContainerMaxWidth(for message: any MessageType, at indexPath: IndexPath) -> CGFloat {
+        min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message, at: indexPath))
     }
 
-    open override func messageContainerSize(for message: any MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         guard let chatMessage = message as? ChatMessage else {
             return .zero
         }
         
         let megaMessage = chatMessage.message
         let messageKind: MessageKind = .text(megaMessage.content ?? "")
-        let dummyMssage = ConcreteMessageType(sender: message.sender,
+        let dummyMessage = ConcreteMessageType(sender: message.sender,
                                               messageId: message.messageId,
                                               sentDate: message.sentDate,
                                               kind: messageKind)
 
-        let maxWidth = messageContainerMaxWidth(for: dummyMssage)
+        let maxWidth = messageContainerMaxWidth(for: dummyMessage, at: indexPath)
 
-        let containerSize = super.messageContainerSize(for: dummyMssage)
+        let containerSize = super.messageContainerSize(for: dummyMessage, at: indexPath)
         switch message.kind {
         case .custom:
             let messageInfo = messageInfo(for: chatMessage)

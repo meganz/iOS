@@ -244,14 +244,14 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
         configureAccessoryView()
     }
 
-    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
-        return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
+    open override func messageContainerMaxWidth(for message: any MessageType, at indexPath: IndexPath) -> CGFloat {
+       min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message, at: indexPath))
     }
 
-    override open func messageContainerSize(for message: any MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         switch message.kind {
         case .custom:
-            let maxWidth = min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), messageContainerMaxWidth(for: message))
+            let maxWidth = min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), messageContainerMaxWidth(for: message, at: indexPath))
             let maxHeight = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
             guard let chatMessage = message as? ChatMessage else {
                 return .zero

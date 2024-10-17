@@ -15,8 +15,8 @@ class ChatManagmentTypeCollectionViewCell: TextMessageCell {
 
 open class ChatManagementTypeCollectionViewSizeCalculator: TextMessageSizeCalculator {
    
-    open override func messageContainerSize(for message: any MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         guard let chatMessage = message as? ChatMessage else { return .zero }
-        return super.messageContainerSize(for: ConcreteMessageType(chatMessage: chatMessage))
+        return super.messageContainerSize(for: ConcreteMessageType(chatMessage: chatMessage), at: indexPath)
     }
 }

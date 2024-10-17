@@ -9118,6 +9118,58 @@
 			path = Shortcuts;
 			sourceTree = "<group>";
 		};
+		833DA1EF2CBFE4120086B786 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2F7E7063251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift */,
+				2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */,
+				2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */,
+				2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */,
+				2F0986752511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift */,
+				2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */,
+				2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */,
+				BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */,
+				BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */,
+				2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */,
+				BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */,
+				2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */,
+				9433A72228DB7D720041F0DB /* ContactLinkCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		833DA1F02CBFE5000086B786 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */,
+				BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */,
+				BF7EBD32244FA92B0015255F /* AddToChatCameraCollectionCell.swift */,
+				BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */,
+				BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */,
+				BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */,
+				BF7EBD502452B0A00015255F /* AddToChatMenu.swift */,
+				BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */,
+				BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */,
+				BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */,
+				BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		833DA1F12CBFE5750086B786 /* AddToChat */ = {
+			isa = PBXGroup;
+			children = (
+				833DA1F02CBFE5000086B786 /* Views */,
+				BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */,
+				BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */,
+				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
+				BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */,
+				BF7EBD2C244E916F0015255F /* AddToChatViewController.swift */,
+				BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */,
+			);
+			path = AddToChat;
+			sourceTree = "<group>";
+		};
 		833DF274280487FD00B25B64 /* OCWrapper */ = {
 			isa = PBXGroup;
 			children = (
@@ -12367,14 +12419,9 @@
 		BF06E3E0243191B800B30FB7 /* Chat Messages */ = {
 			isa = PBXGroup;
 			children = (
+				833DA1F12CBFE5750086B786 /* AddToChat */,
 				6D39A57729EF455B00348D1C /* ViewModel */,
 				BFB464172435831900FB90B9 /* Views */,
-				BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */,
-				BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */,
-				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
-				BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */,
-				BF7EBD2C244E916F0015255F /* AddToChatViewController.swift */,
-				BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */,
 				2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */,
 				BFB463E82433394500FB90B9 /* ChatMessage.swift */,
 				2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */,
@@ -12811,37 +12858,14 @@
 		BFB464172435831900FB90B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				833DA1EF2CBFE4120086B786 /* Cells */,
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 				2F7B67DA24AEDD6B008291D7 /* ReactionView */,
-				BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */,
-				BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */,
-				BF7EBD32244FA92B0015255F /* AddToChatCameraCollectionCell.swift */,
-				BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */,
-				BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */,
-				BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */,
-				BF7EBD502452B0A00015255F /* AddToChatMenu.swift */,
-				BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */,
-				BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */,
-				BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */,
-				BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */,
 				2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */,
-				2F7E7063251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift */,
-				2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */,
-				2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */,
-				2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */,
-				2F0986752511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift */,
-				2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */,
-				2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
-				BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */,
-				BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */,
-				2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */,
-				BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */,
 				BFB463F9243456D900FB90B9 /* ChatViewIntroductionHeaderView.swift */,
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
-				2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */,
-				9433A72228DB7D720041F0DB /* ContactLinkCollectionViewCell.swift */,
 				9422494128DB77A2009626E6 /* ContactLinkContentView.swift */,
 				9422494328DB77B8009626E6 /* ContactLinkContentView.xib */,
 				2F147789244D2E2A0069B264 /* GeoLocationView.swift */,
@@ -17145,8 +17169,8 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_STRICT_CONCURRENCY = targeted;
-				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = YES;
@@ -17264,8 +17288,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
-				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
 					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
@@ -18813,8 +18837,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MessageKit/MessageKit";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				kind = revision;
+				revision = b024c1287ac30fb6ea2ee07169e6193efc11d972;
 			};
 		};
 		BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */ = {

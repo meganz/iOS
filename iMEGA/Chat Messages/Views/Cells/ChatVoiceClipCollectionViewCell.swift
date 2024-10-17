@@ -193,8 +193,8 @@ open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
         incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 0))
     }
     
-    open override func messageContainerSize(for message: any MessageType) -> CGSize {
-        let fitSize = CGSize(width: messageContainerMaxWidth(for: message), height: .greatestFiniteMagnitude)
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
+        let fitSize = CGSize(width: messageContainerMaxWidth(for: message, at: indexPath), height: .greatestFiniteMagnitude)
         return calculateDynamicSize(for: message, fitSize: fitSize)
     }
     

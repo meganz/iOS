@@ -3,7 +3,7 @@ import MEGAL10n
 import MessageKit
 
 extension ChatViewController: MessagesDataSource {
-    public func currentSender() -> any SenderType {
+    public var currentSender: any SenderType {
         return myUser
     }
     

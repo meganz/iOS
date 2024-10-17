@@ -22,7 +22,7 @@ class ChatUnreadMessagesLabelCollectionCellSizeCalculator: MessageSizeCalculator
         return titleLabel
     }()
     
-    override func messageContainerSize(for message: any MessageType) -> CGSize {
+    override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         guard let notificationMessage = message as? ChatNotificationMessage, case .unreadMessage(let count) = notificationMessage.type, count > 0 else {
             return .zero
         }

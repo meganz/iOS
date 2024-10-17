@@ -73,18 +73,18 @@ open class ChatGiphyCollectionViewSizeCalculator: MessageSizeCalculator {
         configureAccessoryView()
     }
 
-    override open func messageContainerSize(for message: any MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         switch message.kind {
         case .custom:
-            return size(for: message)
+            return size(for: message, at: indexPath)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
     }
     
-    private func size(for message: some MessageType) -> CGSize {
+    private func size(for message: some MessageType, at indexPath: IndexPath) -> CGSize {
         let maxHeight = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
-        let maxWidth = min(maxHeight, messageContainerMaxWidth(for: message))
+        let maxWidth = min(maxHeight, messageContainerMaxWidth(for: message, at: indexPath))
         
         guard let chatMessage = message as? ChatMessage,
                 case let megaMessage = chatMessage.message,
