@@ -119,3 +119,29 @@ extension Event {
         }
     }
 }
+
+extension StorageState {
+    public func toStorageStatusEntity() -> StorageStatusEntity? {
+        switch self {
+        case .green: .noStorageProblems
+        case .orange: .almostFull
+        case .red: .full
+        case .change: .pendingChange
+        case .paywall: .paywall
+        @unknown default: nil
+        }
+    }
+}
+
+extension StorageStatusEntity {
+    public func toStorageState() -> StorageState? {
+        switch self {
+        case .noStorageProblems: .green
+        case .almostFull: .orange
+        case .full: .red
+        case .pendingChange: .change
+        case .paywall: .paywall
+        @unknown default: nil
+        }
+    }
+}

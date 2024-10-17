@@ -8,9 +8,19 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     /// - Returns: True, if storage quote will exceed if the given nodes are added to the user account, else false.
     func willStorageQuotaExceed(after nodes: some Sequence<NodeEntity>) -> Bool
     
-    ///  Refreshes the current account details, this needs to be called before using other operations to get most correct result.
+    /// Refreshes the current account details, this needs to be called before using other operations to get most correct result.
     func refreshCurrentAccountDetails() async throws
     
+    /// Refreshes the current storage state of the account.
+    ///
+    /// This method retrieves the latest storage state of the user's account, such as whether the account is nearing full storage capacity or has exceeded its limit.
+    ///
+    /// - Returns: An optional `StorageStatusEntity` indicating the current storage status of the account.
+    func refreshCurrentStorageState() async throws -> StorageStatusEntity?
+    
+    /// Updates the last dismissed date for the storage banner.
+    ///
+    /// This method stores the current date as the last time the storage banner was dismissed. The banner will not be shown again until the configured duration has passed.
     func updateLastStorageBannerDismissDate()
     
     /// An asynchronous sequence that emits `StorageStatusEntity` updates from multiple sources.
@@ -32,8 +42,22 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     /// It can return `.noStorageProblems`, `.almostFull`, or `.full` based on the storage usage.
     var currentStorageStatus: StorageStatusEntity { get }
     
-    var shouldRefreshAccountDetails: Bool { get }
+    /// A boolean value indicating whether the storage status should be refreshed.
+    ///
+    /// If `true`, the storage status should be refreshed to ensure accurate data is presented.
+    var shouldRefreshStorageStatus: Bool { get }
+    
+    /// A boolean value indicating whether the storage banner should be shown.
+    ///
+    /// The storage banner is shown when the user is nearing or exceeding their storage quota.
+    /// This method checks if enough time has passed since the last dismissal of the banner and if the banner should be shown again.
     var shouldShowStorageBanner: Bool { get }
+    
+    /// A boolean value indicating whether the user account has unlimited storage.
+    ///
+    /// This property is used to prevent the display of storage-related banners or warnings
+    /// for users with unlimited storage accounts, such as Business or Pro Flexi plans.
+    var isUnlimitedStorageAccount: Bool { get }
 }
 
 public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
@@ -54,6 +78,10 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     
     public func refreshCurrentAccountDetails() async throws {
         _ = try await accountRepository.refreshCurrentAccountDetails()
+    }
+    
+    public func refreshCurrentStorageState() async throws -> StorageStatusEntity? {
+        try await accountRepository.refreshCurrentStorageState()
     }
     
     public func updateLastStorageBannerDismissDate() {
@@ -79,8 +107,8 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
         accountRepository.currentStorageStatus
     }
     
-    public var shouldRefreshAccountDetails: Bool {
-        accountRepository.shouldRefreshAccountDetails
+    public var shouldRefreshStorageStatus: Bool {
+        accountRepository.shouldRefreshStorageStatus
     }
     
     public var shouldShowStorageBanner: Bool {
@@ -88,5 +116,9 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
             return true
         }
         return Date().timeIntervalSince(lastStorageBannerDismissedDate) > storageBannerDismissDuration
+    }
+    
+    public var isUnlimitedStorageAccount: Bool {
+        accountRepository.isUnlimitedStorageAccount
     }
 }

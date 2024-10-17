@@ -460,33 +460,6 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertEqual(usedStorage, expectedSize)
     }
     
-    func testCurrentStorageStatus_whenNoAccountDetails_shouldReturnNoStorageProblems() {
-        let (sut, _) = makeSUT(accountDetailsEntity: nil)
-        
-        XCTAssertEqual(sut.currentStorageStatus, .noStorageProblems)
-    }
-
-    func testCurrentStorageStatus_whenStorageUsedBelow90Percent_shouldReturnNoStorageProblems() {
-        let accountDetails = AccountDetailsEntity.build(storageUsed: 400, storageMax: 1000)
-        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
-        
-        XCTAssertEqual(sut.currentStorageStatus, .noStorageProblems)
-    }
-
-    func testCurrentStorageStatus_whenStorageUsedBetween90And100Percent_shouldReturnAlmostFull() {
-        let accountDetails = AccountDetailsEntity.build(storageUsed: 950, storageMax: 1000)
-        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
-        
-        XCTAssertEqual(sut.currentStorageStatus, .almostFull)
-    }
-
-    func testCurrentStorageStatus_whenStorageUsedAt100Percent_shouldReturnFull() {
-        let accountDetails = AccountDetailsEntity.build(storageUsed: 1000, storageMax: 1000)
-        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
-        
-        XCTAssertEqual(sut.currentStorageStatus, .full)
-    }
-    
     func testOnStorageStatusUpdates_whenReceivingUpdates_shouldEmitCorrectValues() async throws {
         let expectedStatusUpdates: [StorageStatusEntity] = [.almostFull, .full, .pendingChange, .paywall]
         let asyncStream = makeAsyncStream(for: expectedStatusUpdates)
@@ -506,17 +479,73 @@ final class AccountRepositoryTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1.0)
         XCTAssertEqual(receivedStatusUpdates, expectedStatusUpdates)
     }
-    
-    func testShouldRefreshAccountDetails_whenTrue_shouldReturnTrue() {
-        let (sut, _) = makeSUT(shouldRefreshAccountDetails: true)
-        
-        XCTAssertTrue(sut.shouldRefreshAccountDetails)
+
+    func testRefreshCurrentStorageState_whenFull_shouldReturnFull() async throws {
+        try await assertRefreshStorageState(expectedState: .full)
+    }
+
+    func testRefreshCurrentStorageState_whenAlmostFull_shouldReturnAlmostFull() async throws {
+        try await assertRefreshStorageState(expectedState: .almostFull)
+    }
+
+    func testRefreshCurrentStorageState_whenNoStorageProblems_shouldReturnNoStorageProblems() async throws {
+        try await assertRefreshStorageState(expectedState: .noStorageProblems)
     }
     
-    func testShouldRefreshAccountDetails_whenFalse_shouldReturnFalse() {
-        let (sut, _) = makeSUT(shouldRefreshAccountDetails: false)
+    func testRefreshCurrentStorageState_whenPendingChange_shouldReturnPendingChange() async throws {
+        try await assertRefreshStorageState(expectedState: .pendingChange)
+    }
+
+    func testRefreshCurrentStorageState_whenPaywall_shouldReturnPaywall() async throws {
+        try await assertRefreshStorageState(expectedState: .paywall)
+    }
+    
+    func testCurrentStorageStatus_whenNoStorageStatus_shouldReturnNoStorageProblems() {
+        let (sut, _) = makeSUT()
         
-        XCTAssertFalse(sut.shouldRefreshAccountDetails)
+        XCTAssertEqual(sut.currentStorageStatus, .noStorageProblems)
+        XCTAssertTrue(sut.shouldRefreshStorageStatus)
+    }
+    
+    func testCurrentStorageStatus_whenStorageStatusIsSet_shouldReturnCorrectValue() {
+        let expectedStorageStatus: StorageStatusEntity = .almostFull
+        let (sut, _) = makeSUT(storageStatus: expectedStorageStatus)
+        
+        XCTAssertEqual(sut.currentStorageStatus, expectedStorageStatus)
+    }
+    
+    func testIsUnlimitedStorageAccount_whenProFlexiAccount_shouldReturnTrue() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .proFlexi)
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+
+        XCTAssertTrue(sut.isUnlimitedStorageAccount)
+    }
+
+    func testIsUnlimitedStorageAccount_whenBusinessAccount_shouldReturnTrue() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .business)
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+
+        XCTAssertTrue(sut.isUnlimitedStorageAccount)
+    }
+
+    func testIsUnlimitedStorageAccount_whenFreeAccount_shouldReturnFalse() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .free)
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+
+        XCTAssertFalse(sut.isUnlimitedStorageAccount)
+    }
+
+    func testIsUnlimitedStorageAccount_whenProAccount_shouldReturnFalse() {
+        let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
+        let (sut, _) = makeSUT(accountDetailsEntity: accountDetails)
+
+        XCTAssertFalse(sut.isUnlimitedStorageAccount)
+    }
+
+    func testIsUnlimitedStorageAccount_whenNoAccountDetails_shouldReturnFalse() {
+        let (sut, _) = makeSUT()
+
+        XCTAssertFalse(sut.isUnlimitedStorageAccount)
     }
     
     // MARK: - Helpers
@@ -549,7 +578,8 @@ final class AccountRepositoryTests: XCTestCase {
         accountRequestUpdate: Result<AccountRequestEntity, any Error> = .failure(MockError.failingError),
         userAlertsUpdates: [UserAlertEntity] = [],
         contactRequestsUpdates: [ContactRequestEntity] = [],
-        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        storageStatus: StorageStatusEntity? = nil
     ) -> (AccountRepository, MockSdk) {
         let incomingNodes = MockNodeList(nodes: incomingNodes)
         let myChatFilesRootNodeAccess = nodeAccess(for: myChatFilesNodeHandle)
@@ -574,7 +604,8 @@ final class AccountRepositoryTests: XCTestCase {
             requestResult: requestResult,
             accountCreationDate: accountCreationDate,
             nodeSizes: nodeSizes,
-            folderInfo: MockFolderInfo(currentSize: currentSize)
+            folderInfo: MockFolderInfo(currentSize: currentSize),
+            storageState: storageStatus?.toStorageState()
         )
         
         let currentUserSource = CurrentUserSource(sdk: mockSdk)
@@ -586,6 +617,10 @@ final class AccountRepositoryTests: XCTestCase {
                 (accountDetails ?? defaultAccountDetails(type: .free, nodeSizes: nodeSizes))
                     .toAccountDetailsEntity()
             )
+        }
+        
+        if let storageStatus {
+            currentUserSource.setStorageStatus(storageStatus)
         }
         
         currentUserSource.setShouldRefreshAccountDetails(shouldRefreshAccountDetails)
@@ -635,5 +670,17 @@ final class AccountRepositoryTests: XCTestCase {
             }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
+    }
+    
+    private func assertRefreshStorageState(
+        expectedState: StorageStatusEntity,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) async throws {
+        let (sut, _) = makeSUT(storageStatus: expectedState)
+        
+        let result = try await sut.refreshCurrentStorageState()
+        
+        XCTAssertEqual(result, expectedState, file: file, line: line)
     }
 }
