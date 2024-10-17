@@ -4,7 +4,7 @@ import MEGASwift
 public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @unchecked Sendable {
     private let willStorageQuotaExceed: Bool
     private let _shouldShowStorageBanner: Bool
-    
+    private let _isUnlimitedStorageAccount: Bool
     public var _currentStorageStatus: StorageStatusEntity
     
     public init(
@@ -12,13 +12,15 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
         onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         shouldRefreshAccountDetails: Bool = false,
-        shouldShowStorageBanner: Bool = false
+        shouldShowStorageBanner: Bool = false,
+        isUnlimitedStorageAccount: Bool = false
     ) {
         self.willStorageQuotaExceed = willStorageQuotaExceed
         self.onStorageStatusUpdates = onStorageStatusUpdates
         _currentStorageStatus = currentStorageStatus
-        self.shouldRefreshAccountDetails = shouldRefreshAccountDetails
+        self.shouldRefreshStorageStatus = shouldRefreshAccountDetails
         _shouldShowStorageBanner = shouldShowStorageBanner
+        _isUnlimitedStorageAccount = isUnlimitedStorageAccount
     }
     
     public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
@@ -27,7 +29,11 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
         _currentStorageStatus
     }
     
-    public var shouldRefreshAccountDetails: Bool
+    public var shouldRefreshStorageStatus: Bool
+    
+    public func refreshCurrentStorageState() async throws -> StorageStatusEntity? {
+        currentStorageStatus
+    }
     
     public var shouldShowStorageBanner: Bool {
         _shouldShowStorageBanner
@@ -40,4 +46,8 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
     }
     
     public func updateLastStorageBannerDismissDate() {}
+    
+    public var isUnlimitedStorageAccount: Bool {
+        _isUnlimitedStorageAccount
+    }
 }

@@ -13,6 +13,7 @@ public final class CurrentUserSource: @unchecked Sendable {
     private var _isLoggedIn: Atomic<Bool>
     @Atomic private var _shouldRefreshAccountDetails: Bool = false
     @Atomic private var _accountDetails: AccountDetailsEntity?
+    @Atomic private var _storageStatus: StorageStatusEntity?
     
     public init(sdk: MEGASdk) {
         self.sdk = sdk
@@ -38,6 +39,9 @@ public final class CurrentUserSource: @unchecked Sendable {
     }
     public var accountDetails: AccountDetailsEntity? {
         _accountDetails
+    }
+    public var storageStatus: StorageStatusEntity? {
+        _storageStatus
     }
     
     public var isGuest: Bool {
@@ -71,6 +75,7 @@ public final class CurrentUserSource: @unchecked Sendable {
                 _isLoggedIn.mutate { $0 = false }
                 $_shouldRefreshAccountDetails.mutate { $0 = false }
                 $_accountDetails.mutate { $0 = nil }
+                $_storageStatus.mutate { $0 = nil }
             }
             .store(in: &subscriptions)
         
@@ -113,6 +118,15 @@ public final class CurrentUserSource: @unchecked Sendable {
                 self?.setAccountDetails(accountDetails)
             }
             .store(in: &subscriptions)
+        
+        NotificationCenter
+            .default
+            .publisher(for: .storageStatusDidChange)
+            .compactMap { $0.object as? StorageStatusEntity }
+            .sink { [weak self] storageStatus in
+                self?.setStorageStatus(storageStatus)
+            }
+            .store(in: &subscriptions)
     }
     
     public func setShouldRefreshAccountDetails(_ shouldRefresh: Bool) {
@@ -121,5 +135,9 @@ public final class CurrentUserSource: @unchecked Sendable {
     
     public func setAccountDetails(_ userAccountDetails: AccountDetailsEntity?) {
         $_accountDetails.mutate { $0 = userAccountDetails }
+    }
+    
+    public func setStorageStatus(_ storageStatus: StorageStatusEntity) {
+        $_storageStatus.mutate { $0 = storageStatus }
     }
 }

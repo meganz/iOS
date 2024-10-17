@@ -737,9 +737,10 @@ struct CloudDriveViewControllerFactory {
             preferenceUseCase: PreferenceUseCase.default
         )
         let shouldShowStorageBanner = accountStorageUseCase.shouldShowStorageBanner
+        let isUnlimitedStorageAccount = accountStorageUseCase.isUnlimitedStorageAccount
         
         guard case .node = nodeSource,
-              storageQuotaStatus == .full || (storageQuotaStatus == .almostFull && shouldShowStorageBanner)
+              !isUnlimitedStorageAccount && (storageQuotaStatus == .full || (storageQuotaStatus == .almostFull && shouldShowStorageBanner))
         else {
             return nil
         }
@@ -804,7 +805,7 @@ struct CloudDriveViewControllerFactory {
                         preferenceUseCase: PreferenceUseCase.default
                     )
                     
-                    guard isFullSOQBannerEnabled() || (isAlmostFullSOQBannerEnabled() && accountStorageUseCase.shouldShowStorageBanner) else { return .noStorageProblems }
+                    guard !accountStorageUseCase.isUnlimitedStorageAccount && (isFullSOQBannerEnabled() || (isAlmostFullSOQBannerEnabled() && accountStorageUseCase.shouldShowStorageBanner)) else { return .noStorageProblems }
                     
                     return accountStorageUseCase.currentStorageStatus
                 }

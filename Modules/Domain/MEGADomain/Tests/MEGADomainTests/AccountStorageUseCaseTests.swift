@@ -52,14 +52,14 @@ final class AccountStorageUseCaseTests: XCTestCase {
         XCTAssertEqual(sut.currentStorageStatus, expectedStatus)
     }
     
-    func testShouldRefreshAccountDetails_whenShouldRefreshIsTrue_shouldReturnTrue() {
-        let (sut, _) = makeSUT(shouldRefreshAccountDetails: true)
-        XCTAssertTrue(sut.shouldRefreshAccountDetails)
+    func testShouldRefreshStorageStatus_whenShouldRefreshIsTrue_shouldReturnTrue() {
+        let (sut, _) = makeSUT(shouldRefreshStorageStatus: true)
+        XCTAssertTrue(sut.shouldRefreshStorageStatus)
     }
     
-    func testShouldRefreshAccountDetails_whenShouldRefreshIsFalse_shouldReturnFalse() {
-        let (sut, _) = makeSUT(shouldRefreshAccountDetails: false)
-        XCTAssertFalse(sut.shouldRefreshAccountDetails)
+    func testShouldRefreshStorageStatus_whenShouldRefreshIsFalse_shouldReturnFalse() {
+        let (sut, _) = makeSUT(shouldRefreshStorageStatus: false)
+        XCTAssertFalse(sut.shouldRefreshStorageStatus)
     }
     
     func testShouldShowStorageBanner_whenLastDismissDateIsNil_shouldReturnTrue() {
@@ -99,18 +99,24 @@ final class AccountStorageUseCaseTests: XCTestCase {
         XCTAssertTrue(updatedDate > oldDate, "Expected updated date to be more recent than the old date.")
     }
     
+    func testIsUnlimitedStorageAccount_whenAccountTypeIsProvided_shouldReturnExpectedResult() {
+        assertIsUnlimitedStorageAccount(for: "Pro Flexi or Bussiness", isUnlimited: true)
+        assertIsUnlimitedStorageAccount(for: "Free or Other Pro accounts", isUnlimited: false)
+        assertIsUnlimitedStorageAccount(for: "No account details", isUnlimited: false)
+    }
+    
     // MARK: - Helpers
     
     func makeSUT(
         storageUsed: Int64 = 0,
         storageMax: Int64 = 1000,
-        shouldRefreshAccountDetails: Bool = false,
+        shouldRefreshStorageStatus: Bool = false,
         onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         lastStorageBannerDismissedDate: Date? = nil
     ) -> (AccountStorageUseCase, MockPreferenceUseCase) {
         let accountRepository = MockAccountRepository(
-            shouldRefreshAccountDetails: shouldRefreshAccountDetails,
+            shouldRefreshStorageStatus: shouldRefreshStorageStatus,
             currentAccountDetails: AccountDetailsEntity.build(
                 storageUsed: storageUsed,
                 storageMax: storageMax
@@ -140,4 +146,14 @@ final class AccountStorageUseCaseTests: XCTestCase {
             NodeEntity(handle: 3, size: 100)
         ]
     }
+    
+    private func assertIsUnlimitedStorageAccount(
+        for accountType: String,
+        isUnlimited: Bool,
+        line: UInt = #line
+    ) {
+        let sut = MockAccountRepository(isUnlimitedStorageAccount: isUnlimited)
+        XCTAssertEqual(sut.isUnlimitedStorageAccount, isUnlimited, "Expected isUnlimitedStorageAccount to be \(isUnlimited) for \(accountType) account", line: line)
+    }
+
 }
