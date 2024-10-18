@@ -13,7 +13,7 @@ struct NodeTagsCellView: View {
                 .font(.body)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
 
-            if !viewModel.shouldShowProTag {
+            if viewModel.shouldShowProTag {
                 AvailableForProOnlyView(
                     proOnlyText: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Feature.availableForProOnlyText,
                     foregroundColor: TokenColors.Button.brand.swiftUI,
