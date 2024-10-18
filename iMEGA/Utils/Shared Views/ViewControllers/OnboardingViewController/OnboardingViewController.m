@@ -16,7 +16,7 @@
 
 #pragma mark - Initialization
 
-+ (OnboardingViewController *)instanciateOnboardingWithType:(OnboardingType)type {
++ (OnboardingViewController *)instantiateOnboardingWithType:(OnboardingType)type {
     OnboardingViewController *onboardingViewController = [[UIStoryboard storyboardWithName:@"Onboarding" bundle:nil] instantiateViewControllerWithIdentifier:@"OnboardingViewControllerID"];
     onboardingViewController.type = type;
     

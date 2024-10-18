@@ -45,7 +45,7 @@ extension FolderLinkViewController {
 
             MEGALinkManager.selectedOption = .importFolderOrNodes
 
-            navigationController?.pushViewController(OnboardingViewController.instanciateOnboarding(with: .default), animated: true)
+            navigationController?.pushViewController(OnboardingViewController.instantiateOnboarding(with: .default), animated: true)
         }
     }
     

@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OnboardingViewController : UIViewController
 
-+ (OnboardingViewController *)instanciateOnboardingWithType:(OnboardingType)type;
++ (OnboardingViewController *)instantiateOnboardingWithType:(OnboardingType)type;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *tertiaryButton;
