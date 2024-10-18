@@ -52,8 +52,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     func configure(_ collectionView: UICollectionView) {
         configureDataSource(for: collectionView)
         
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent) && viewContext() == .playlistContent {
+        switch viewContext() {
+        case .playlistContent(let type) where type == .user && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent):
             configureDragDropInteraction(for: collectionView)
+        default:
+            break
         }
     }
     
@@ -100,7 +103,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     private func viewContext() -> VideoCellViewModel.ViewContext? {
         switch representer.viewType {
         case .allVideos: .allVideos
-        case .playlistContent: .playlistContent
+        case .playlistContent(let type): .playlistContent(type: type)
         case .playlists: nil
         }
     }

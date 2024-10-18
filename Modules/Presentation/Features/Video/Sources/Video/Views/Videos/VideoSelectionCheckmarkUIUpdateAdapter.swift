@@ -50,8 +50,10 @@ final class VideoSelectionCheckmarkUIUpdateAdapter {
         switch viewModel.viewContext {
         case .allVideos:
                 .plain
-        case .playlistContent:
+        case .playlistContent(let type) where type == .user:
                 .reorder
+        default:
+                .plain
         }
     }
 }

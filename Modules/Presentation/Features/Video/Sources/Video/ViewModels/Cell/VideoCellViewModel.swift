@@ -19,9 +19,9 @@ final class VideoCellViewModel: ObservableObject {
         case reorder
     }
     
-    enum ViewContext {
+    enum ViewContext: Equatable {
         case allVideos
-        case playlistContent
+        case playlistContent(type: VideoPlaylistEntityType)
     }
     
     private let thumbnailLoader: any ThumbnailLoaderProtocol

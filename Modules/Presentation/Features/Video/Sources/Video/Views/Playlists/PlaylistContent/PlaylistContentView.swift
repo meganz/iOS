@@ -29,6 +29,7 @@ struct PlaylistContentScreen: View {
             viewState: viewModel.viewState,
             previewEntity: viewModel.headerPreviewEntity,
             videos: viewModel.videos,
+            playlistType: viewModel.videoPlaylistEntity.type,
             router: router,
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
@@ -114,6 +115,7 @@ struct PlaylistContentView: View {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let videos: [NodeEntity]
+    private let playlistType: VideoPlaylistEntityType
     let router: any VideoRevampRouting
     @StateObject private var videoSelection: VideoSelection
     private let onTapAddButton: () -> Void
@@ -123,6 +125,7 @@ struct PlaylistContentView: View {
         viewState: VideoPlaylistContentViewModel.ViewState,
         previewEntity: VideoPlaylistCellPreviewEntity,
         videos: [NodeEntity],
+        playlistType: VideoPlaylistEntityType,
         router: any VideoRevampRouting,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
@@ -137,6 +140,7 @@ struct PlaylistContentView: View {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
         self.videos = videos
+        self.playlistType = playlistType
         self.router = router
         _videoSelection = StateObject(wrappedValue: videoSelection())
         self.onTapAddButton = onTapAddButton
@@ -207,7 +211,7 @@ struct PlaylistContentView: View {
             videoConfig: videoConfig,
             selection: videoSelection,
             router: router,
-            viewType: .playlistContent,
+            viewType: .playlistContent(type: playlistType),
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase
@@ -229,6 +233,7 @@ struct PlaylistContentView: View {
             type: .favourite
         ),
         videos: [],
+        playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
@@ -253,6 +258,7 @@ struct PlaylistContentView: View {
             type: .favourite
         ),
         videos: [],
+        playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
@@ -280,6 +286,7 @@ struct PlaylistContentView: View {
             type: .user
         ),
         videos: [ .preview ],
+        playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
@@ -305,6 +312,7 @@ struct PlaylistContentView: View {
             type: .favourite
         ),
         videos: [],
+        playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
@@ -329,6 +337,7 @@ struct PlaylistContentView: View {
             type: .user
         ),
         videos: [],
+        playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
