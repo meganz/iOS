@@ -12,7 +12,7 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     enum ViewType {
         case allVideos
         case playlists
-        case playlistContent
+        case playlistContent(type: VideoPlaylistEntityType)
     }
     
     init(
