@@ -431,7 +431,11 @@ final class NodeInfoViewController: UITableViewController {
                 .tags(
                     NodeTagsCellController(
                         controller: self,
-                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+                        viewModel: NodeTagsCellControllerModel(
+                            accountUseCase: AccountUseCase(
+                                repository: AccountRepository.newRepo
+                            )
+                        )
                     )
                 )
             )

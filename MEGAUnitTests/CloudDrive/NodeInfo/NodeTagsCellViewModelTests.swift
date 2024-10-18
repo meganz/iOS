@@ -5,25 +5,26 @@ import Testing
 
 @Suite("NodeTagsCellViewModel Tests")
 struct NodeTagsCellViewModelTests {
+    @MainActor
     @Test(
-        "Check if the user is a pro user",
+        "Check if the Pro only tag needs to be shown",
         arguments: [
-            (proLevel: AccountTypeEntity.free, isExpiredAccount: true, result: false),
-            (proLevel: AccountTypeEntity.proI, isExpiredAccount: true, result: true),
-            (proLevel: AccountTypeEntity.proII, isExpiredAccount: true, result: true),
-            (proLevel: AccountTypeEntity.proIII, isExpiredAccount: true, result: true),
-            (proLevel: AccountTypeEntity.lite, isExpiredAccount: true, result: true),
-            (proLevel: AccountTypeEntity.business, isExpiredAccount: false, result: true),
+            (proLevel: AccountTypeEntity.free, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.proI, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.proII, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.proIII, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.lite, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.business, isExpiredAccount: false, result: false),
             (proLevel: AccountTypeEntity.business, isExpiredAccount: true, result: false),
-            (proLevel: AccountTypeEntity.proFlexi, isExpiredAccount: false, result: true),
+            (proLevel: AccountTypeEntity.proFlexi, isExpiredAccount: false, result: false),
             (proLevel: AccountTypeEntity.proFlexi, isExpiredAccount: true, result: false),
-            (proLevel: AccountTypeEntity.starter, isExpiredAccount: true, result: true),
-            (proLevel: AccountTypeEntity.basic, isExpiredAccount: true, result: true),
-            (proLevel: AccountTypeEntity.essential, isExpiredAccount: true, result: true),
-            (proLevel: AccountTypeEntity.feature, isExpiredAccount: true, result: true)
+            (proLevel: AccountTypeEntity.starter, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.basic, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.essential, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.feature, isExpiredAccount: true, result: false)
         ]
     )
-    func isProUser(
+    func shouldShowProTag(
         proLevel: AccountTypeEntity,
         isExpiredAccount: Bool,
         result: Bool
@@ -32,9 +33,10 @@ struct NodeTagsCellViewModelTests {
             proLevel: proLevel,
             isExpiredAccount: isExpiredAccount
         )
-        #expect(sut.isPaidAccount == result)
+        #expect(sut.shouldShowProTag == result)
     }
 
+    @MainActor
     private func makeSUT(
         proLevel: AccountTypeEntity,
         isExpiredAccount: Bool

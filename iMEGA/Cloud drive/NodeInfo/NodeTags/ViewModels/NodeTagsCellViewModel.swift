@@ -1,11 +1,12 @@
 import Foundation
 import MEGADomain
 
+@MainActor
 final class NodeTagsCellViewModel {
     private let accountUseCase: any AccountUseCaseProtocol
 
-    var isPaidAccount: Bool {
-        accountUseCase.hasValidSubscription
+    var shouldShowProTag: Bool {
+        accountUseCase.isFreeTierUser
     }
 
     init(accountUseCase: some AccountUseCaseProtocol) {
