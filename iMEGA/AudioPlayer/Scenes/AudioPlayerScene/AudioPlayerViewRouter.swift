@@ -59,6 +59,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             if let adsSlotViewController = baseViewController as? (any AdsSlotViewControllerProtocol) {
                 audioPlayerViewController = AdsSlotRouter(
                     adsSlotViewController: adsSlotViewController,
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                     contentView: AdsViewWrapper(viewController: audioPlayerViewController)
                 ).build()
             }

@@ -65,6 +65,45 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     // MARK: - Ads slot
+    func testSetupAdsRemoteFlag_whenAccountIsNotFree_shouldDisableExternalAds() async {
+        let billedAccountTypes = AccountTypeEntity.allCases.filter({ $0 != .free })
+        for type in billedAccountTypes {
+            let sut = makeSUT(accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: type)))
+            await sut.setupAdsRemoteFlag()
+            XCTAssertFalse(sut.isExternalAdsEnabled, "Account type \(type) should hide ads")
+        }
+    }
+    
+    func testSetupAdsRemoteFlag_whenAccountIsFreeWithSuccessAccountDetailsResult_shouldMatchExternalAdsValue() async {
+        await assertSetupAdsRemoteFlag(isLoggedIn: true, accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: .free)))
+    }
+                                       
+    func testSetupAdsRemoteFlag_whenAccountIsFreeWithFailedAccountDetailsResult_shouldMatchExternalAdsValue() async {
+        await assertSetupAdsRemoteFlag(isLoggedIn: true, accountDetailsResult: .failure(.generic))
+    }
+                                       
+    func testSetupAdsRemoteFlag_whenNoLoggedInUser_shouldMatchExternalAdsValue() async {
+        await assertSetupAdsRemoteFlag(isLoggedIn: false)
+    }
+    
+    private func assertSetupAdsRemoteFlag(
+        isLoggedIn: Bool = true,
+        accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .success(AccountDetailsEntity.build(proLevel: .free)),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        let expectedExternalAdsValue = Bool.random()
+        let sut = makeSUT(
+            isExternalAdsFlagEnabled: expectedExternalAdsValue,
+            accountDetailsResult: accountDetailsResult,
+            isLoggedIn: isLoggedIn
+        )
+        
+        await sut.setupAdsRemoteFlag()
+        
+        XCTAssertEqual(sut.isExternalAdsEnabled, expectedExternalAdsValue, file: file, line: line)
+    }
+
     func testUpdateAdsSlot_externalAdsDisabled_shouldHideAds() async {
         let sut = makeSUT(isExternalAdsFlagEnabled: false)
         
@@ -185,6 +224,8 @@ final class AdsSlotViewModelTests: XCTestCase {
         adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = MockAppEnvironmentUseCase(),
         isNewAccount: Bool = false,
+        accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .success(AccountDetailsEntity.build(proLevel: .free)),
+        isLoggedIn: Bool = true,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AdsSlotViewModel {
@@ -192,7 +233,8 @@ final class AdsSlotViewModelTests: XCTestCase {
             adsSlotChangeStream: adsSlotChangeStream,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(valueToReturn: isExternalAdsFlagEnabled),
             adMobConsentManager: adMobConsentManager,
-            appEnvironmentUseCase: appEnvironmentUseCase
+            appEnvironmentUseCase: appEnvironmentUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult)
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

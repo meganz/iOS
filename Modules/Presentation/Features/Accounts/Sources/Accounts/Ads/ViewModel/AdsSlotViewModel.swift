@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import MEGASwift
 import SwiftUI
 
@@ -9,6 +10,7 @@ final public class AdsSlotViewModel: ObservableObject {
     private let adsSlotChangeStream: any AdsSlotChangeStreamProtocol
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     
     private(set) var adsSlotConfig: AdsSlotConfig?
     private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
@@ -21,12 +23,14 @@ final public class AdsSlotViewModel: ObservableObject {
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
-        appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared
+        appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
+        accountUseCase: some AccountUseCaseProtocol
     ) {
         self.adsSlotChangeStream = adsSlotChangeStream
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
+        self.accountUseCase = accountUseCase
     }
     
     deinit {
@@ -59,6 +63,13 @@ final public class AdsSlotViewModel: ObservableObject {
     // MARK: Remote Flag
     @MainActor
     func setupAdsRemoteFlag() async {
+        // Check for enabled external ads only if there is no logged in user or the account type is free
+        if accountUseCase.isLoggedIn(),
+           let accountDetails = try? await accountUseCase.refreshCurrentAccountDetails(),
+           accountDetails.proLevel != .free {
+            isExternalAdsEnabled = false
+            return
+        }
         isExternalAdsEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
     }
     
