@@ -298,6 +298,10 @@ struct CloudDriveViewControllerFactory {
         
         let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
         let adsVisibilityViewModel = AdsVisibilityViewModel(configuratorProvider: config.adsConfiguratorProvider)
+        let accountStorageUseCase = AccountStorageUseCase(
+            accountRepository: AccountRepository.newRepo,
+            preferenceUseCase: PreferenceUseCase.default
+        )
         
         return .init(
             viewMode: initialViewMode,
@@ -312,6 +316,7 @@ struct CloudDriveViewControllerFactory {
                 config: config
             ),
             temporaryWarningViewModel: makeOptionalTemporaryWarningViewModel(
+                accountStorageUseCase: accountStorageUseCase,
                 nodeSource,
                 config: config
             ),
@@ -329,10 +334,7 @@ struct CloudDriveViewControllerFactory {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(
                     repository: AccountRepository.newRepo)),
-            accountStorageUseCase: AccountStorageUseCase(
-                accountRepository: AccountRepository.newRepo,
-                preferenceUseCase: PreferenceUseCase.default
-            ),
+            accountStorageUseCase: accountStorageUseCase,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -725,27 +727,25 @@ struct CloudDriveViewControllerFactory {
         await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node?.handle ?? .invalid)
     }
     
+    /// Returns a `WarningBannerViewModel` if the current screen is inside the Cloud Drive section
+    /// and the account's storage status indicates that a storage over-quota banner should be displayed.
+    /// The banner will be shown when the user is nearing or exceeding their storage limit,
+    /// unless the account has unlimited storage or the banner has been recently dismissed.
+    /// Specifically, this method checks if the current view is not displaying shared items,
+    /// and evaluates the account's storage status to determine if a warning is necessary.
     private func makeOptionalTemporaryWarningViewModel(
+        accountStorageUseCase: AccountStorageUseCase,
         _ nodeSource: NodeSource,
         config: NodeBrowserConfig
     ) -> WarningBannerViewModel? {
-        guard config.displayMode == .cloudDrive else { return nil }
-        
-        let storageQuotaStatus = config.storageQuotaStatusProvider()
-        let accountStorageUseCase = AccountStorageUseCase(
-            accountRepository: AccountRepository.newRepo,
-            preferenceUseCase: PreferenceUseCase.default
-        )
-        let shouldShowStorageBanner = accountStorageUseCase.shouldShowStorageBanner
-        let isUnlimitedStorageAccount = accountStorageUseCase.isUnlimitedStorageAccount
-        
-        guard case .node = nodeSource,
-              !isUnlimitedStorageAccount && (storageQuotaStatus == .full || (storageQuotaStatus == .almostFull && shouldShowStorageBanner))
-        else {
+        guard config.displayMode == .cloudDrive,
+              config.isFromSharedItem != true,
+              case .node = nodeSource,
+              accountStorageUseCase.shouldShowStorageBanner else {
             return nil
         }
         
-        return makeSOQWarningViewModel(status: storageQuotaStatus)
+        return makeSOQWarningViewModel(status: accountStorageUseCase.currentStorageStatus)
     }
     
     private func makeOptionalWarningViewModel(
@@ -768,9 +768,7 @@ struct CloudDriveViewControllerFactory {
     
     private func makeOverriddenConfigIfNeeded(
         nodeSource: NodeSource,
-        config: NodeBrowserConfig,
-        isFullSOQBannerEnabled: @escaping () -> Bool = { true },
-        isAlmostFullSOQBannerEnabled: @escaping () -> Bool = { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .almostFullStorageOverQuotaBanner) }
+        config: NodeBrowserConfig
     ) -> NodeBrowserConfig {
         
         switch nodeSource {
@@ -792,23 +790,6 @@ struct CloudDriveViewControllerFactory {
                 }
                 
                 return preferences[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
-            }
-            
-            // The Storage over quota banners should only be shown in the Cloud Drive.
-            // The condition checks if the current view is not from a shared item.
-            // If `isFromSharedItem` is `nil` or `false`, it means the current item is part of the Cloud Drive,
-            // and thus, the storage over-quota banners should be displayed if applicable.
-            if overriddenConfig.isFromSharedItem != true {
-                overriddenConfig.storageQuotaStatusProvider = {
-                    let accountStorageUseCase = AccountStorageUseCase(
-                        accountRepository: AccountRepository.newRepo,
-                        preferenceUseCase: PreferenceUseCase.default
-                    )
-                    
-                    guard !accountStorageUseCase.isUnlimitedStorageAccount && (isFullSOQBannerEnabled() || (isAlmostFullSOQBannerEnabled() && accountStorageUseCase.shouldShowStorageBanner)) else { return .noStorageProblems }
-                    
-                    return accountStorageUseCase.currentStorageStatus
-                }
             }
             
             return overriddenConfig
