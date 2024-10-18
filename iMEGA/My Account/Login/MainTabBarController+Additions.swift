@@ -46,17 +46,6 @@ extension MainTabBarController {
             showsAvatar: true,
             adsConfiguratorProvider: {
                 UIApplication.mainTabBarRootViewController() as? MainTabBarController
-            },
-            storageQuotaStatusProvider: {
-                let isFullSOQBannerEnabled = true
-                let isAlmostFullSOQBannerEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .almostFullStorageOverQuotaBanner)
-                let accountStorageUseCase =  AccountStorageUseCase(
-                    accountRepository: AccountRepository.newRepo,
-                    preferenceUseCase: PreferenceUseCase.default
-                )
-                guard !accountStorageUseCase.isUnlimitedStorageAccount && (isFullSOQBannerEnabled || (isAlmostFullSOQBannerEnabled && accountStorageUseCase.shouldShowStorageBanner)) else { return .noStorageProblems }
-                
-                return accountStorageUseCase.currentStorageStatus
             }
         )
         

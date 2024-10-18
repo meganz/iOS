@@ -37,9 +37,15 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     ///
     /// The storage status reflects the current usage of storage compared to the maximum available quota.
     /// The value can indicate whether the user is under quota, nearing quota, or has exceeded their storage limit.
+    /// If the account has unlimited storage (e.g., Business or Pro Flexi plans), this will always return
+    /// `.noStorageProblems` regardless of the actual storage usage.
     ///
     /// - Returns: A `StorageStatusEntity` indicating the current state of the user's account storage.
-    /// It can return `.noStorageProblems`, `.almostFull`, or `.full` based on the storage usage.
+    /// It can return:
+    ///   - `.noStorageProblems` for users who are not close to exceeding or exceeding their storage limit or
+    ///      for unlimited storage accounts (Business, Pro Flexi).
+    ///   - `.almostFull` when the account is nearing the storage limit.
+    ///   - `.full` when the account has exceeded the storage limit.
     var currentStorageStatus: StorageStatusEntity { get }
     
     /// A boolean value indicating whether the storage status should be refreshed.
@@ -49,8 +55,19 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     
     /// A boolean value indicating whether the storage banner should be shown.
     ///
-    /// The storage banner is shown when the user is nearing or exceeding their storage quota.
-    /// This method checks if enough time has passed since the last dismissal of the banner and if the banner should be shown again.
+    /// The storage banners are displayed when the user is nearing or exceeding their storage quota.
+    /// This method determines whether a storage banner should be shown based on the current storage status,
+    /// the time since the last dismissal of the banner, and whether the account has unlimited storage.
+    ///
+    /// - The banner is not shown if the account has unlimited storage (e.g., Business or Pro Flexi).
+    /// - The banner is shown in two cases:
+    ///   1. The account has exceeded its storage limit (storage status is `.full`).
+    ///   2. The account is almost full (storage status is `.almostFull`), and enough time has passed since
+    ///      the banner was last dismissed (more than 24 hours).
+    ///
+    /// - Returns: `true` if the storage banner should be shown based on the user's storage status
+    /// and banner dismissal rules. Returns `false` if the banner should not be shown, either because
+    /// the account has unlimited storage or the banner has been dismissed recently.
     var shouldShowStorageBanner: Bool { get }
     
     /// A boolean value indicating whether the user account has unlimited storage.
@@ -63,15 +80,18 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
 public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     private let accountRepository: any AccountRepositoryProtocol
     private let storageBannerDismissDuration: TimeInterval = 24 * 60 * 60 // 24 hours in seconds
+    private let currentDate: @Sendable () -> Date
     
     @PreferenceWrapper(key: .lastStorageBannerDismissedDate, defaultValue: nil)
     private var lastStorageBannerDismissedDate: Date?
     
     public init(
         accountRepository: some AccountRepositoryProtocol,
-        preferenceUseCase: some PreferenceUseCaseProtocol
+        preferenceUseCase: some PreferenceUseCaseProtocol,
+        currentDate: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.accountRepository = accountRepository
+        self.currentDate = currentDate
         
         $lastStorageBannerDismissedDate.useCase = preferenceUseCase
     }
@@ -85,7 +105,7 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     }
     
     public func updateLastStorageBannerDismissDate() {
-        lastStorageBannerDismissedDate = Date()
+        lastStorageBannerDismissedDate = currentDate()
     }
     
     public func willStorageQuotaExceed(after nodes: some Sequence<NodeEntity>) -> Bool {
@@ -104,7 +124,8 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     }
     
     public var currentStorageStatus: StorageStatusEntity {
-        accountRepository.currentStorageStatus
+        guard !isUnlimitedStorageAccount else { return .noStorageProblems }
+        return accountRepository.currentStorageStatus
     }
     
     public var shouldRefreshStorageStatus: Bool {
@@ -112,13 +133,25 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     }
     
     public var shouldShowStorageBanner: Bool {
-        guard let lastStorageBannerDismissedDate else {
-            return true
-        }
-        return Date().timeIntervalSince(lastStorageBannerDismissedDate) > storageBannerDismissDuration
+        isFullStorageStatus || (isAlmostFullStorageStatus && shouldShowAlmostFullBanner)
     }
     
     public var isUnlimitedStorageAccount: Bool {
         accountRepository.isUnlimitedStorageAccount
+    }
+
+    private var isFullStorageStatus: Bool {
+        accountRepository.currentStorageStatus == .full
+    }
+
+    private var isAlmostFullStorageStatus: Bool {
+        accountRepository.currentStorageStatus == .almostFull
+    }
+
+    private var shouldShowAlmostFullBanner: Bool {
+        guard let lastDismissedDate = lastStorageBannerDismissedDate else {
+            return true
+        }
+        return currentDate().timeIntervalSince(lastDismissedDate) > storageBannerDismissDuration
     }
 }
