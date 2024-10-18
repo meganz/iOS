@@ -2487,6 +2487,8 @@
 		BFD2146328FF8BD50057150E /* ChatRoomContextMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
+		BFD453072CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD453062CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift */; };
+		BFD453092CC1FBE100C8FEE4 /* NodeTagsCellControllerModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD453082CC1FBDB00C8FEE4 /* NodeTagsCellControllerModelTests.swift */; };
 		BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */; };
 		BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */; };
 		BFD6534B25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */; };
@@ -5307,6 +5309,8 @@
 		BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionLabel.swift; sourceTree = "<group>"; };
 		BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomContextMenuOption.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		BFD453062CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsCellControllerModel.swift; sourceTree = "<group>"; };
+		BFD453082CC1FBDB00C8FEE4 /* NodeTagsCellControllerModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsCellControllerModelTests.swift; sourceTree = "<group>"; };
 		BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomViewModelTests.swift; sourceTree = "<group>"; };
 		BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FutureMeetingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContactInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -6359,6 +6363,7 @@
 				BF07C4D22C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift */,
 				BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */,
 				245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */,
+				BFD453082CC1FBDB00C8FEE4 /* NodeTagsCellControllerModelTests.swift */,
 				BF6C9BA22CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift */,
 			);
 			path = NodeInfo;
@@ -12661,6 +12666,7 @@
 		BF9366212CB47B7D001BD0CD /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				BFD453062CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift */,
 				BF9366222CB47B89001BD0CD /* NodeTagsCellViewModel.swift */,
 			);
 			path = ViewModels;
@@ -15590,6 +15596,7 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */,
 				BFEE74D02CAE22DE007FA672 /* NodeTagsCellController.swift in Sources */,
+				BFD453072CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift in Sources */,
 				BF6C9BA02CB48408007FFE96 /* NodeTagsCellView.swift in Sources */,
 				BF9366232CB47B9B001BD0CD /* NodeTagsCellViewModel.swift in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
@@ -16846,6 +16853,7 @@
 				6D01A3CA2C084F4400089BA8 /* NodeInfoViewModelTests.swift in Sources */,
 				BF5F118C2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift in Sources */,
 				25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */,
+				BFD453092CC1FBE100C8FEE4 /* NodeTagsCellControllerModelTests.swift in Sources */,
 				BF6C9BA32CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift in Sources */,
 				0EDE90422BF6D7E300D2F96E /* NodeUseCaseFactoryTests.swift in Sources */,
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,

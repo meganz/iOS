@@ -11,12 +11,12 @@ final class NodeTagsCellController: NSObject {
     // A weak reference to the parent UIViewController that contains the table view.
     // The controller is responsible for managing the user interface or navigating when a row is selected.
     private weak var controller: UIViewController?
+    private let viewModel: NodeTagsCellControllerModel
 
-    private let accountUseCase: any AccountUseCaseProtocol
-
-    init(controller: UIViewController, accountUseCase: some AccountUseCaseProtocol) {
+    init(controller: UIViewController, viewModel: NodeTagsCellControllerModel) {
         self.controller = controller
-        self.accountUseCase = accountUseCase
+        self.viewModel = viewModel
+        super.init()
     }
 
     static func registerCell(for tableView: UITableView) {
@@ -40,7 +40,7 @@ extension NodeTagsCellController: UITableViewDataSource {
 
         guard let cell, let controller else { return HostingTableViewCell<NodeTagsCellView>() }
 
-        let view = NodeTagsCellView(viewModel: NodeTagsCellViewModel(accountUseCase: self.accountUseCase))
+        let view = NodeTagsCellView(viewModel: viewModel.cellViewModel)
         cell.host(view, parent: controller)
         cell.backgroundColor = TokenColors.Background.page
         return cell
@@ -49,7 +49,7 @@ extension NodeTagsCellController: UITableViewDataSource {
 
 extension NodeTagsCellController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let controller else { return }
+        guard let controller, viewModel.hasValidSubscription else { return }
         let addTagsRouter = AddTagsViewRouter(presenter: controller)
         addTagsRouter.start()
     }
