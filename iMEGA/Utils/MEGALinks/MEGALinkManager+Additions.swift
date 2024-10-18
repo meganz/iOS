@@ -280,6 +280,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
          guard let adsSlotViewController = adsSlotViewController as? (any AdsSlotViewControllerProtocol) else { return }
          AdsSlotRouter(
             adsSlotViewController: adsSlotViewController,
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             contentView: AdsViewWrapper(viewController: containerController),
             presenter: UIApplication.mnz_visibleViewController(),
             presentationStyle: presentationStyle
