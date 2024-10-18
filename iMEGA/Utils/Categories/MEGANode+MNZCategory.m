@@ -548,7 +548,7 @@
                 MEGALinkManager.selectedOption = LinkOptionImportNode;
             }
             
-            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
+            OnboardingViewController *onboardingVC = [OnboardingViewController instantiateOnboardingWithType:OnboardingTypeDefault];
             if (viewController.navigationController) {
                 [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {

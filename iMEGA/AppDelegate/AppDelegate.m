@@ -244,7 +244,7 @@
         [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
     } else {
         // Resume ephemeral account
-        self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
+        self.window.rootViewController = [OnboardingViewController instantiateOnboardingWithType:OnboardingTypeDefault];
         NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
@@ -732,7 +732,7 @@
         return;
     }
     
-    OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
+    OnboardingViewController *onboardingVC = [OnboardingViewController instantiateOnboardingWithType:OnboardingTypeDefault];
     UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
     [onboardingVC.view addSubview:overlayView];
     self.window.rootViewController = onboardingVC;
