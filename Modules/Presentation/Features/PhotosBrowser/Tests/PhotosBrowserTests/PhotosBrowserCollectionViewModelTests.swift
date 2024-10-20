@@ -34,7 +34,7 @@ struct PhotosBrowserCollectionViewModelTests {
         var receivedMediaAssets: [PhotosBrowserLibraryEntity]?
         var cancellables = Set<AnyCancellable>()
         
-        await confirmation("mediaAssets should update when library.assets changes") { @MainActor confirm in
+        await confirmation("mediaAssets should update when library.assets changes") { confirm in
             viewModel.library.$assets
                 .dropFirst()
                 .sink { newAssets in
