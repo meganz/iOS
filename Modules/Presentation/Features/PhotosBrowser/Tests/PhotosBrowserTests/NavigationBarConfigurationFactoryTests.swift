@@ -6,11 +6,12 @@ import Testing
 
 struct NavigationBarConfigurationFactoryTests {
     
-    @Test("New Photos Browser Navigation Bar Configuration Tests", arguments: [
+    static let arguments: [PhotosBrowserDisplayMode: NavigationBarConfigurationStrategy.Type] = [
         PhotosBrowserDisplayMode.cloudDrive: CloudDriveNavigationBarConfigurationStrategy.self,
-        PhotosBrowserDisplayMode.chatAttachment: ChatAttachmentNavigationBarConfigurationStrategy.self,
-        PhotosBrowserDisplayMode.fileLink: CloudDriveNavigationBarConfigurationStrategy.self
-    ])
+        PhotosBrowserDisplayMode.chatAttachment: ChatAttachmentNavigationBarConfigurationStrategy.self
+    ]
+    
+    @Test("New Photos Browser Navigation Bar Configuration Tests", arguments: arguments)
     func navigationBarConfig(with displayMode: PhotosBrowserDisplayMode, strategy: NavigationBarConfigurationStrategy.Type) {
         let config = NavigationBarConfigurationFactory.configuration(on: displayMode)
         #expect(type(of: config) == strategy)

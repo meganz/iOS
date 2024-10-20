@@ -1,6 +1,7 @@
 import Combine
 import UIKit
 
+@MainActor
 final class PhotosBrowserCollectionViewLayoutChangesMonitor {
     private weak var collectionView: UICollectionView?
     private let representer: PhotosBrowserCollectionViewRepresenter
