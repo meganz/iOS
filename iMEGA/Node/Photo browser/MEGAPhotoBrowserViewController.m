@@ -413,6 +413,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeSharedItem:
         case DisplayModeCloudDrive:
         case DisplayModePhotosTimeline:
+        case DisplayModePhotosAlbum:
             return self.centerToolbarItem;
         case DisplayModeAlbumLink:
         case DisplayModeNodeInsideFolderLink:
