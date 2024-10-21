@@ -175,13 +175,18 @@ final class MeetingFloatingPanelViewController: UIViewController {
                           isMeeting: Bool,
                           allowNonHostToAddParticipantsEnabled: Bool,
                           isMyselfAModerator: Bool) {
-        
+        // checking if the implicitly unwrapped optional are loaded from XIBS yet [MEET-4517]
         if isOneToOneCall {
-            optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-            optionsStackViewHeightConstraint.constant = 0.0
+            if optionsStackView != nil {
+                optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+            }
+            if optionsStackViewHeightConstraint != nil {
+                optionsStackViewHeightConstraint.constant = 0.0
+            }
         }
-        shareLinkLabel.text = isMeeting ? Strings.Localizable.Meetings.Action.shareLink : Strings.Localizable.Meetings.Panel.shareLink
-
+        if shareLinkLabel != nil {
+            shareLinkLabel.text = isMeeting ? Strings.Localizable.Meetings.Action.shareLink : Strings.Localizable.Meetings.Panel.shareLink
+        }
         isAllowNonHostToAddParticipantsEnabled = allowNonHostToAddParticipantsEnabled
     }
 }
