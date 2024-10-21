@@ -1,40 +1,26 @@
 import MEGADomain
 import MEGADomainMock
-import XCTest
+import Testing
 
-final class RemoteFeatureFlagUseCaseTests: XCTestCase {
-    actor MockRemoteFeatureFlagRepository: RemoteFeatureFlagRepositoryProtocol {
-        private var receivedFlags: [RemoteFeatureFlag] = []
-        private let valueToReturn: Int
-        init(valueToReturn: Int = 0) {
-            self.valueToReturn = valueToReturn
-        }
-        func remoteFeatureFlagValue(for flag: RemoteFeatureFlag) async -> Int {
-            receivedFlags.append(flag)
-            return valueToReturn
-        }
+struct RemoteFeatureFlagUseCaseTests {
+    
+    @Suite("Remote feature flags")
+    struct RemoteFeatureFlags {
         
-        func capturedReceivedFlags() async -> [RemoteFeatureFlag] {
-            receivedFlags
-        }
-        
-        static var newRepo: MockRemoteFeatureFlagRepository {
-            Self()
+        @Test("When requesting remote feature flag it should return value from repository",
+              arguments: [(1, true), (0, false)])
+        func returnValueFromRepository(flagValue: Int, expectedResult: Bool) {
+            let repo = MockRemoteFeatureFlagRepository(valueToReturn: flagValue)
+            let sut = RemoteFeatureFlagUseCaseTests.makeSUT(repository: repo)
+            
+            #expect(sut.isFeatureFlagEnabled(for: .chatMonetisation) == expectedResult)
+            #expect(repo.receivedFlags == [.chatMonetisation])
         }
     }
     
-    func testRemoteValue_asksRepo() async {
-        let repo = MockRemoteFeatureFlagRepository()
-        let usecase = RemoteFeatureFlagUseCase(repository: repo)
-        _ = await usecase.isFeatureFlagEnabled(for: .chatMonetisation)
-        let flags = await repo.capturedReceivedFlags()
-        XCTAssertEqual(flags, [.chatMonetisation])
-    }
-    
-    func testRemoteValue_returnsValueFromRepo() async {
-        let repo = MockRemoteFeatureFlagRepository(valueToReturn: 123)
-        let usecase = RemoteFeatureFlagUseCase(repository: repo)
-        let value = await usecase.isFeatureFlagEnabled(for: .chatMonetisation)
-        XCTAssertTrue(value)
+    private static func makeSUT(
+        repository: MockRemoteFeatureFlagRepository = MockRemoteFeatureFlagRepository()
+    ) -> RemoteFeatureFlagUseCase<MockRemoteFeatureFlagRepository> {
+        RemoteFeatureFlagUseCase(repository: repository)
     }
 }

@@ -31,7 +31,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var planList: [PlanEntity] = []
     private var accountDetails: AccountDetailsEntity
     private(set) var viewType: UpgradeAccountPlanViewType
-    @Published var isExternalAdsActive: Bool = false
+    let isExternalAdsActive: Bool
     
     private(set) var alertType: UpgradeAccountPlanAlertType?
     @Published var isAlertPresented = false {
@@ -77,6 +77,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.tracker = tracker
         self.viewType = viewType
         self.router = router
+        isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+        
         registerDelegates()
         setupPlans()
     }
@@ -97,10 +99,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     // MARK: - Setup
-    func setUpExternalAds() async {
-        isExternalAdsActive = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
-    }
-    
     private func registerDelegates() {
         guard registerDelegateTask == nil else { return }
         registerDelegateTask = Task {

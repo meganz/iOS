@@ -25,7 +25,7 @@ struct AlbumRemoteFeatureFlagProvider: AlbumRemoteFeatureFlagProviderProtocol {
     }
     
     private func isAlbumPerformanceRemoteFeatureFlagEnabled() async -> Bool {
-        let isEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .albumPerformanceImprovements)
+        let isEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .albumPerformanceImprovements)
         MEGALogInfo("[\(type(of: self))]: Album performance improvements enabled: \(isEnabled)")
         return isEnabled
     }

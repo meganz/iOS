@@ -60,9 +60,7 @@ struct ScheduleMeetingView: View {
         .background(TokenColors.Background.page.swiftUI)
         .ignoresSafeArea(.container, edges: [.top, .bottom])
         .onAppear {
-            Task { @MainActor in
-                await viewModel.viewAppeared()
-            }
+            viewModel.viewAppeared()
         }
         .actionSheet(isPresented: $viewModel.showDiscardAlert) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.title), buttons: discardChangesButtons())

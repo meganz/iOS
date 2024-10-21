@@ -70,7 +70,7 @@ final public class AdsSlotViewModel: ObservableObject {
             isExternalAdsEnabled = false
             return
         }
-        isExternalAdsEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+        isExternalAdsEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
     }
     
     // MARK: Ads Slot changes

@@ -58,7 +58,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         let router = TermsAndPoliciesRouter(accountUseCase: accountUseCase)
         let sut = TermsAndPoliciesViewModel(
             accountUseCase: accountUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(valueToReturn: isExternalAdsFlagEnabled),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             router: router
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

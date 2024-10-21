@@ -93,9 +93,6 @@ struct UpgradeAccountPlanView: View {
         .frame(maxWidth: 768, alignment: .leading)
         .clipped()
         .disabled(viewModel.isLoading)
-        .task {
-            await viewModel.setUpExternalAds()
-        }
         .onChange(of: viewModel.isDismiss) { newValue in
             if newValue {
                 dismiss()

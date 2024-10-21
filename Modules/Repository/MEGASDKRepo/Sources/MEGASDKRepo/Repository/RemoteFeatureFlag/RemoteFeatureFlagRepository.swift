@@ -12,7 +12,7 @@ public final class RemoteFeatureFlagRepository: RemoteFeatureFlagRepositoryProto
         self.sdk = sdk
     }
     
-    public func remoteFeatureFlagValue(for flag: RemoteFeatureFlag) async -> Int {
+    public func remoteFeatureFlagValue(for flag: RemoteFeatureFlag) -> Int {
         sdk.remoteFeatureFlagValue(flag.rawValue)
     }
 }
