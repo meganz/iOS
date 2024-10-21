@@ -3,7 +3,7 @@ import MEGADomain
 import MEGASwift
 
 public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Sendable {
-    public static var newRepo: MockChatRoomRepository = MockChatRoomRepository()
+    public static let newRepo: MockChatRoomRepository = MockChatRoomRepository()
     
     private let chatRoom: ChatRoomEntity?
     private let peerHandles: [MEGADomain.HandleEntity]

@@ -1,8 +1,8 @@
 import MEGADomain
 
-public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
+public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryProtocol, @unchecked Sendable {
     
-    public static var newRepo = MockCreateContextMenuRepository()
+    public static let newRepo = MockCreateContextMenuRepository()
     
     public func createContextMenu(config: CMConfigEntity) -> CMEntity? {
         ContextMenuBuilder()

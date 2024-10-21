@@ -81,35 +81,47 @@ final class AccountStorageUseCaseTests: XCTestCase {
     
     func testShouldShowStorageBanner_whenLastDismissDateIsLessThan24HoursAgo_shouldReturnFalse() {
         let dateLessThan24HoursAgo = Calendar.current.date(byAdding: .hour, value: -10, to: currentTestDate)
-        let (sut, _) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: dateLessThan24HoursAgo, currentDate: { self.currentTestDate })
+        let (sut, _) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: dateLessThan24HoursAgo, currentDate: { [currentTestDate] in
+            currentTestDate
+        })
         XCTAssertFalse(sut.shouldShowStorageBanner, "Expected banner to not show when last dismiss date is less than 24 hours ago.")
     }
     
     func testShouldShowStorageBanner_whenLastDismissDateIsMoreThan24HoursAgo_shouldReturnTrue() {
         let dateMoreThan24HoursAgo = Calendar.current.date(byAdding: .hour, value: -25, to: currentTestDate)
-        let (sut, _) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: dateMoreThan24HoursAgo, currentDate: { self.currentTestDate })
+        let (sut, _) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: dateMoreThan24HoursAgo, currentDate: { [currentTestDate] in
+            currentTestDate
+        })
         XCTAssertTrue(sut.shouldShowStorageBanner, "Expected banner to show when last dismiss date is more than 24 hours ago.")
     }
     
     func testShouldShowStorageBanner_whenStorageStatusIsAlmostFullAndNoDismissDate_shouldReturnTrue() {
-        let (sut, _) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: nil, currentDate: { self.currentTestDate })
+        let (sut, _) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: nil, currentDate: { [currentTestDate] in
+            currentTestDate
+        })
         XCTAssertTrue(sut.shouldShowStorageBanner, "Expected banner to show when storage status is almost full and no dismiss date.")
     }
     
     func testShouldShowStorageBanner_whenStorageStatusIsFull_shouldReturnTrue() {
-        let (sut, _) = makeSUT(currentStorageStatus: .full, currentDate: { self.currentTestDate })
+        let (sut, _) = makeSUT(currentStorageStatus: .full, currentDate: { [currentTestDate] in
+            currentTestDate
+        })
         XCTAssertTrue(sut.shouldShowStorageBanner, "Expected banner to show when storage status is full.")
     }
     
     func testShouldShowStorageBanner_whenStorageStatusIsNoStorageProblems_shouldReturnFalse() {
-        let (sut, _) = makeSUT(currentStorageStatus: .noStorageProblems, currentDate: { self.currentTestDate })
+        let (sut, _) = makeSUT(currentStorageStatus: .noStorageProblems, currentDate: { [currentTestDate] in
+            currentTestDate
+        })
         XCTAssertFalse(sut.shouldShowStorageBanner, "Expected banner to not show when storage status is no storage problems.")
     }
     
     // MARK: - Update Last Storage Banner Dismiss Date Tests
     
     func testUpdateLastStorageBannerDismissDate_shouldUpdateToCurrentDate() throws {
-        let (sut, preferenceUC) = makeSUT(currentDate: { self.currentTestDate })
+        let (sut, preferenceUC) = makeSUT(currentDate: { [currentTestDate] in
+            currentTestDate
+        })
         sut.updateLastStorageBannerDismissDate()
         let updatedDate = try XCTUnwrap(preferenceUC.dict[.lastStorageBannerDismissedDate] as? Date)
         
@@ -119,7 +131,9 @@ final class AccountStorageUseCaseTests: XCTestCase {
     
     func testUpdateLastStorageBannerDismissDate_shouldOverwritePreviousDate() throws {
         let oldDate = Calendar.current.date(byAdding: .day, value: -2, to: currentTestDate)!
-        let (sut, preferenceUC) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: oldDate, currentDate: { self.currentTestDate })
+        let (sut, preferenceUC) = makeSUT(currentStorageStatus: .almostFull, lastStorageBannerDismissedDate: oldDate, currentDate: { [currentTestDate] in
+            currentTestDate
+        })
         sut.updateLastStorageBannerDismissDate()
         let updatedDate = try XCTUnwrap(preferenceUC.dict[.lastStorageBannerDismissedDate] as? Date)
         

@@ -1,10 +1,10 @@
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
-import XCTest
+import Testing
 
-final class TransfersListenerUseCaseTests: XCTestCase {
-    class Harness {
+struct TransfersListenerUseCaseTests {
+    final class Harness: Sendable {
         let sut: TransfersListenerUseCase<MockTransfersListenerRepository>
         let repo: MockTransfersListenerRepository
         
@@ -14,33 +14,29 @@ final class TransfersListenerUseCaseTests: XCTestCase {
         }
     }
     
+    @Test
     func testTransfers() async {
         // given
         let harness = Harness()
         let mockTransfers = [TransferEntity(nodeHandle: 1), TransferEntity(nodeHandle: 2)]
         
-        let taskStartedExp = expectation(description: "Waiting for Task to start")
-        let exp = expectation(description: "Waiting for transfers")
-        exp.expectedFulfillmentCount = mockTransfers.count
-        
         // when
         let task = Task {
-            taskStartedExp.fulfill()
-            var expectedResults = mockTransfers.map(\.nodeHandle)
+            var transfers: [HandleEntity] = []
             for await transfer in harness.sut.completedTransfers {
-                XCTAssertEqual(transfer.nodeHandle, expectedResults.removeFirst())
-                // then
-                exp.fulfill()
+                transfers.append(transfer.nodeHandle)
             }
+            return transfers
         }
-        
-        await fulfillment(of: [taskStartedExp], timeout: 0.5)
         
         mockTransfers.forEach {
             harness.repo.simulateTransfer($0)
         }
+        
+        harness.repo.simulateTransferCompletion()
 
-        await fulfillment(of: [exp], timeout: 0.5)
-        task.cancel()
+        let receivedTransfers = await task.value
+        
+        #expect(receivedTransfers == [1, 2])
     }
 }

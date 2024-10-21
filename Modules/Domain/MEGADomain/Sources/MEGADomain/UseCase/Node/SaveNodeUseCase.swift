@@ -4,8 +4,8 @@ extension Notification.Name {
     public static let nodeSavedToOffline = Notification.Name("nz.mega.SaveNodeUseCase.nodeSavedToOffline")
 }
 
-public protocol SaveNodeUseCaseProtocol {
-    func saveNode(from transfer: TransferEntity, completion: @escaping (Result<Bool, SaveMediaToPhotosErrorEntity>) -> Void)
+public protocol SaveNodeUseCaseProtocol: Sendable {
+    func saveNode(from transfer: TransferEntity) async -> Bool
 }
 
 /// When saving media node (photo/video) to Photos, in case of failure we'd like to give user a chance to make that node to offline so they can access later rather than just showing error.
@@ -57,31 +57,26 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
         $saveVideoInGallery.useCase = preferenceUseCase
     }
     
-    public func saveNode(from transfer: TransferEntity, completion: @escaping (Result<Bool, SaveMediaToPhotosErrorEntity>) -> Void) {
+    public func saveNode(from transfer: TransferEntity) async -> Bool {
         guard let name = transfer.fileName, let transferUrl = urlForTransfer(transfer: transfer, nodeName: name) else {
-            completion(.success(false))
-            return
+            return false
         }
 
         if savePhotoInGallery && mediaUseCase.isImage(name) || saveVideoInGallery && mediaUseCase.isVideo(name) || transferInventoryRepository.isSaveToPhotosAppTransfer(transfer) {
-            photosLibraryRepository.copyMediaFileToPhotos(at: transferUrl) { error in
-                guard error != nil else {
-                    completion(.success(true))
-                    return
+            do {
+                try await photosLibraryRepository.copyMediaFileToPhotos(at: transferUrl)
+                return true
+            } catch {
+                guard await saveMediaToPhotoFailureHandler.shouldFallbackToMakingOffline() else {
+                    return false
                 }
                 
-                Task { @MainActor in
-                    guard await saveMediaToPhotoFailureHandler.shouldFallbackToMakingOffline() else {
-                        completion(.success(false))
-                        return
-                    }
-                    moveFileToOffline(name: name, transferUrl: transferUrl, nodeHandle: transfer.nodeHandle)
-                    completion(.success(false))
-                }
+                await self.moveFileToOffline(name: name, transferUrl: transferUrl, nodeHandle: transfer.nodeHandle)
+                return false
             }
         } else {
-            createOfflineFile(name: name, nodeHandle: transfer.nodeHandle)
-            completion(.success(false))
+            await createOfflineFile(name: name, nodeHandle: transfer.nodeHandle)
+            return false
         }
     }
     
@@ -99,13 +94,14 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
         }
     }
     
-    private func moveFileToOffline(name: String, transferUrl: URL, nodeHandle: HandleEntity) {
+    private func moveFileToOffline(name: String, transferUrl: URL, nodeHandle: HandleEntity) async {
         let offlineURL = fileCacheRepository.offlineFileURL(name: name)
         guard fileSystemRepository.moveFile(at: transferUrl, to: offlineURL) else { return }
-        createOfflineFile(name: name, nodeHandle: nodeHandle)
+        await createOfflineFile(name: name, nodeHandle: nodeHandle)
     }
     
-    private func createOfflineFile(name: String, nodeHandle: HandleEntity) {
+    @MainActor
+    private func createOfflineFile(name: String, nodeHandle: HandleEntity) async {
         offlineFilesRepository.createOfflineFile(name: name, for: nodeHandle)
         notificationCenter.post(name: .nodeSavedToOffline, object: nodeRepository.nodeForHandle(nodeHandle))
     }

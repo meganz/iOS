@@ -3,7 +3,7 @@ import MEGAL10n
 import MEGARepo
 import MEGASDKRepo
 
-@objc class SaveNodeUseCaseOCWrapper: NSObject {
+@objc final class SaveNodeUseCaseOCWrapper: NSObject, Sendable {
     private let saveNodeUseCase: any SaveNodeUseCaseProtocol
         
     @objc init(saveMediaToPhotoFailureHandler: any SaveMediaToPhotoFailureHandling) {
@@ -21,29 +21,18 @@ import MEGASDKRepo
     }
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
-        saveNodeUseCase.saveNode(from: transfer.toTransferEntity()) { result in
-            Task { [weak self] in
-                await self?.handleSaveNodeResult(result)
-            }
+        Task {
+            let savedToPhotos = await saveNodeUseCase.saveNode(from: transfer.toTransferEntity())
+            await handleSaveNode(savedToPhotos)
         }
     }
     
-    private nonisolated func handleSaveNodeResult(_ result: Result<Bool, SaveMediaToPhotosErrorEntity>) async {
-        switch result {
-        case .success(let savedToPhotos):
-            let transferInventoryUseCase = TransferInventoryUseCase(
-                transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
-            let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
-            if savedToPhotos, !anyPendingSavePhotosTransfer {
-                await SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
-            }
-        case .failure(let error):
-            switch error {
-            case .videoNotSaved, .imageNotSaved:
-                await SVProgressHUD.showError(withStatus: Strings.Localizable.couldNotSaveItem)
-            default:
-                await SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
-            }
+    private func handleSaveNode(_ savedToPhotos: Bool) async {
+        let transferInventoryUseCase = TransferInventoryUseCase(
+            transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
+        let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
+        if savedToPhotos, !anyPendingSavePhotosTransfer {
+            await SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
         }
     }
 }

@@ -4,7 +4,7 @@ import MEGADomain
 import MEGASwift
 
 public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
-    public static var newRepo = MockUserAlbumRepository()
+    public static let newRepo = MockUserAlbumRepository()
     private let node: NodeEntity?
     private let albums: [SetEntity]
     private let albumContent: [HandleEntity: [SetElementEntity]]

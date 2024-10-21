@@ -1,7 +1,7 @@
 import MEGADomain
 
 public struct MockNodeValidationRepository: NodeValidationRepositoryProtocol {
-    public static var newRepo: MockNodeValidationRepository = MockNodeValidationRepository()
+    public static let newRepo: MockNodeValidationRepository = MockNodeValidationRepository()
     
     private let hasVersions: Bool
     private let isDownloaded: Bool

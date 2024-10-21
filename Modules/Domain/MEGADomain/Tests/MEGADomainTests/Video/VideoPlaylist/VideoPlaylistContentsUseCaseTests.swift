@@ -89,7 +89,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let started = expectation(description: "started")
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for try await videoPlaylist in sut.monitorVideoPlaylist(for: videoPlaylist) {
                 $receivedVideoPlaylist.mutate { $0 = videoPlaylist }
@@ -116,7 +116,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let started = expectation(description: "started")
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for try await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
                 $receivedVideos.mutate { $0 = videos }
@@ -158,7 +158,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let started = expectation(description: "started")
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
                 $receivedVideos.mutate { $0 = videos }
@@ -201,7 +201,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let iterated = expectation(description: "iterated")
         iterated.expectedFulfillmentCount = 2
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
                 $receivedVideos.mutate { $0 = videos }
@@ -244,7 +244,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let iterated = expectation(description: "iterated")
         iterated.expectedFulfillmentCount = 3
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
                 $receivedVideos.mutate { $0 = videos }
@@ -310,7 +310,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let iterated = expectation(description: "iterated")
         iterated.expectedFulfillmentCount = 2
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for try await videoPlaylist in sut.monitorVideoPlaylist(for: videoPlaylist) {
                 $receivedVideoPlaylist.mutate { $0 = videoPlaylist }
@@ -373,7 +373,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let iterated = expectation(description: "iterated")
         iterated.expectedFulfillmentCount = 2
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
                 $receivedVideos.mutate { $0 = videos }
@@ -402,7 +402,7 @@ final class VideoPlaylistContentsUseCaseTests: XCTestCase {
         let iterated = expectation(description: "iterated")
         iterated.expectedFulfillmentCount = 2
         let finished = expectation(description: "finished")
-        let task = Task {
+        let task = Task { @Sendable in
             started.fulfill()
             for await videos in sut.monitorUserVideoPlaylistContent(for: videoPlaylist) {
                 $receivedVideos.mutate { $0 = videos }

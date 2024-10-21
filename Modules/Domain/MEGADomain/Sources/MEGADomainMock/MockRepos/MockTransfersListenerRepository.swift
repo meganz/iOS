@@ -17,6 +17,10 @@ public struct MockTransfersListenerRepository: TransfersListenerRepositoryProtoc
         continuation.yield(transfer)
     }
     
+    public func simulateTransferCompletion() {
+        continuation.finish()
+    }
+    
     public init() {
         (stream, continuation) = AsyncStream.makeStream(of: TransferEntity.self, bufferingPolicy: .unbounded)
     }

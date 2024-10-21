@@ -1,7 +1,7 @@
 import MEGADomain
 
 public struct MockNodeAttributeRepository: NodeAttributeRepositoryProtocol {
-    public static var newRepo: MockNodeAttributeRepository = MockNodeAttributeRepository()
+    public static let newRepo: MockNodeAttributeRepository = MockNodeAttributeRepository()
     
     private let path: String?
     private let children: Int

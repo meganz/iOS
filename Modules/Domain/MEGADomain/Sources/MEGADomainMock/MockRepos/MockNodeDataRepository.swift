@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 
 public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
-    public static var newRepo: MockNodeDataRepository = MockNodeDataRepository()
+    public static let newRepo: MockNodeDataRepository = MockNodeDataRepository()
     
     private let nodeAccessLevel: NodeAccessTypeEntity
     private let labelString: String

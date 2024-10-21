@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockAppEnvironmentUseCase: AppEnvironmentUseCaseProtocol {
+public final class MockAppEnvironmentUseCase: AppEnvironmentUseCaseProtocol, @unchecked Sendable {
     public var configuration: AppConfigurationEntity
     
     public init(configuration: AppConfigurationEntity = .debug) {

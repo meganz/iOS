@@ -126,5 +126,5 @@ public extension CallEntity {
 }
 
 public extension UUID {
-    static var testUUID = UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!
+    static let testUUID = UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!
 }
