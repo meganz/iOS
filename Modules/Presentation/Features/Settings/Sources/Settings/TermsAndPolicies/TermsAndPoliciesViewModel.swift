@@ -27,7 +27,7 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     func setupCookiePolicyURL() async {
         guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return }
 
-        let isExternalAdsEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+        let isExternalAdsEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
         guard isExternalAdsEnabled else {
             cookieUrl = cookiePolicyURL
             return

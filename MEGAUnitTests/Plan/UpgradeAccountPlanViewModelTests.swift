@@ -732,21 +732,19 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
         
     // MARK: - Ads
-    @MainActor func testSetupExternalAds_externalAdsEnabled_shouldBeTrue() async {
-        await assertSetupExternalAds(isExternalAdsFlagEnabled: true)
+    @MainActor func testSetupExternalAds_externalAdsEnabled_shouldBeTrue() {
+        assertSetupExternalAds(isExternalAdsFlagEnabled: true)
     }
     
-    @MainActor func testSetupExternalAds_externalAdsDisabled_shouldBeFalse() async {
-        await assertSetupExternalAds(isExternalAdsFlagEnabled: false)
+    @MainActor func testSetupExternalAds_externalAdsDisabled_shouldBeFalse() {
+        assertSetupExternalAds(isExternalAdsFlagEnabled: false)
     }
     
-    @MainActor func assertSetupExternalAds(isExternalAdsFlagEnabled: Bool) async {
+    @MainActor func assertSetupExternalAds(isExternalAdsFlagEnabled: Bool) {
         let (sut, _) = makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
             isExternalAdsFlagEnabled: isExternalAdsFlagEnabled
         )
-        
-        await sut.setUpExternalAds()
         
         XCTAssertEqual(sut.isExternalAdsActive, isExternalAdsFlagEnabled)
     }
@@ -807,7 +805,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(valueToReturn: isExternalAdsFlagEnabled),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             tracker: tracker,
             viewType: viewType,
             router: router

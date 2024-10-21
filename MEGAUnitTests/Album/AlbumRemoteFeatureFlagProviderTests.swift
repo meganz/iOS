@@ -20,7 +20,7 @@ final class AlbumRemoteFeatureFlagProviderTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
         for isRemoteEnabled in [true, false] {
             
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(valueToReturn: isRemoteEnabled)
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.albumPerformanceImprovements: isRemoteEnabled])
             let sut = makeSUT(featureFlagProvider: featureFlagProvider,
                               remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
             
@@ -32,7 +32,7 @@ final class AlbumRemoteFeatureFlagProviderTests: XCTestCase {
     
     private func makeSUT(
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(valueToReturn: false)
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
     ) -> AlbumRemoteFeatureFlagProvider {
         AlbumRemoteFeatureFlagProvider(
             featureFlagProvider: featureFlagProvider,

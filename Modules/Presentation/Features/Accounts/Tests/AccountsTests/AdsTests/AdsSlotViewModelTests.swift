@@ -231,7 +231,7 @@ final class AdsSlotViewModelTests: XCTestCase {
     ) -> AdsSlotViewModel {
         let sut = AdsSlotViewModel(
             adsSlotChangeStream: adsSlotChangeStream,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(valueToReturn: isExternalAdsFlagEnabled),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult)

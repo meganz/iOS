@@ -782,12 +782,12 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testFreePlanTimeLimitation_durationShorterThan60minutesAndUserIsFree_viewShouldNotBeShown() async {
+    func testFreePlanTimeLimitation_durationShorterThan60minutesAndUserIsFree_viewShouldNotBeShown() {
         let harness = Harness(
             accountUseCase: .free,
             remoteFeatureFlagUseCase: .enabled
         )
-        await harness.sut.viewAppeared()
+        harness.sut.viewAppeared()
         let date = Date.now
         harness.sut.startDate = date
         harness.sut.endDate = date.addingTimeInterval(300)
@@ -795,9 +795,9 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testFreePlanTimeLimitation_durationLongerThan60minutesAndUserIsFree_viewShouldBeShown() async {
+    func testFreePlanTimeLimitation_durationLongerThan60minutesAndUserIsFree_viewShouldBeShown() {
         let harness = Harness(accountUseCase: .free, remoteFeatureFlagUseCase: .enabled)
-        await harness.sut.viewAppeared()
+        harness.sut.viewAppeared()
         let date = Date.now
         harness.sut.startDate = date
         harness.sut.endDate = date.addingTimeInterval(3601)
@@ -869,11 +869,11 @@ extension MockAccountUseCase {
 
 extension MockRemoteFeatureFlagUseCase {
     static var enabled: MockRemoteFeatureFlagUseCase {
-        MockRemoteFeatureFlagUseCase(valueToReturn: true)
+        MockRemoteFeatureFlagUseCase(list: [.chatMonetisation: true])
     }
     
     static var disabled: MockRemoteFeatureFlagUseCase {
-        MockRemoteFeatureFlagUseCase(valueToReturn: false)
+        MockRemoteFeatureFlagUseCase(list: [.chatMonetisation: false])
     }
 }
 

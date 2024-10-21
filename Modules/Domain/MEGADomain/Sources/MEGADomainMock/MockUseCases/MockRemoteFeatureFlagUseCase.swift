@@ -1,20 +1,17 @@
 import MEGADomain
+import MEGASwift
 
-public actor MockRemoteFeatureFlagUseCase: RemoteFeatureFlagUseCaseProtocol {
-    private let valueToReturn: Bool
+public final class MockRemoteFeatureFlagUseCase: RemoteFeatureFlagUseCaseProtocol, @unchecked Sendable {
+    private let list: [RemoteFeatureFlag: Bool]
     
-    public init(valueToReturn: Bool) {
-        self.valueToReturn = valueToReturn
+    @Atomic public var flagsPassedIn: [RemoteFeatureFlag] = []
+    
+    public init(list: [RemoteFeatureFlag: Bool] = [:]) {
+        self.list = list
     }
     
-    private var flagsPassedIn: [RemoteFeatureFlag] = []
-    
-    func capturedFlags() async -> [RemoteFeatureFlag] {
-        flagsPassedIn
-    }
-    
-    public func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) async -> Bool {
-        flagsPassedIn.append(flag)
-        return valueToReturn
+    public func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) -> Bool {
+        $flagsPassedIn.mutate { $0.append(flag) }
+        return list[flag] ?? false
     }
 }

@@ -159,18 +159,18 @@ final class ScheduleMeetingViewModel: ObservableObject {
         initShowWarningBannerSubscription()
     }
     
-    func viewAppeared() async {
+    func viewAppeared() {
         // [MEET-3932] as part of migration from local, synchronous feature flags system,
         // to server backed, remote async system, we read and cache the value
         // when view appears to avoid rewriting too much inside the view model itself
-        await loadAndCacheFeatureFlagValue()
+        loadAndCacheFeatureFlagValue()
         updateRightBarButtonState()
         showLimitDurationViewIfNeeded()
         tracker.trackAnalyticsEvent(with: viewConfiguration.trackingEvents.screenEvent)
     }
     
-    func loadAndCacheFeatureFlagValue() async {
-        chatMonetisationEnabled = await remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .chatMonetisation)
+    func loadAndCacheFeatureFlagValue() {
+        chatMonetisationEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .chatMonetisation)
     }
     
     // MARK: - Public

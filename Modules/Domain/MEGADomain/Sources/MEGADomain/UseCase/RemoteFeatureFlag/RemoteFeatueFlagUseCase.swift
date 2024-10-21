@@ -1,5 +1,5 @@
 public protocol RemoteFeatureFlagUseCaseProtocol: Sendable {
-    func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) async -> Bool
+    func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) -> Bool
 }
 
 public struct RemoteFeatureFlagUseCase<T: RemoteFeatureFlagRepositoryProtocol>: RemoteFeatureFlagUseCaseProtocol {
@@ -10,7 +10,7 @@ public struct RemoteFeatureFlagUseCase<T: RemoteFeatureFlagRepositoryProtocol>: 
         self.repository = repository
     }
     
-    public func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) async -> Bool {
-        await repository.remoteFeatureFlagValue(for: flag) != 0
+    public func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) -> Bool {
+        repository.remoteFeatureFlagValue(for: flag) != 0
     }
 }
