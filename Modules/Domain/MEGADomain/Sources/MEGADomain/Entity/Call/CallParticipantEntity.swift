@@ -1,11 +1,12 @@
 import Foundation
+import MEGASwift
 
 public enum VideoFrameType {
     case cameraVideo
     case screenShare
 }
 
-public enum AbsentParticipantState {
+public enum AbsentParticipantState: Sendable {
     case notInCall
     case calling
     case noResponse
@@ -15,42 +16,302 @@ public protocol CallParticipantVideoDelegate: AnyObject {
     func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType)
 }
 
-public final class CallParticipantEntity {
-    public enum CallParticipantAudioVideoFlag {
+public final class CallParticipantEntity: @unchecked Sendable {
+    public enum CallParticipantAudioVideoFlag: Sendable {
         case off
         case on
         case unknown
     }
+    private let _clientId: Atomic<HandleEntity>
+    private let _name: Atomic<String?>
+    private let _isModerator: Atomic<Bool>
+    private let _video: Atomic<CallParticipantAudioVideoFlag>
+    private let _audio: Atomic<CallParticipantAudioVideoFlag>
+    private let _isVideoHiRes: Atomic<Bool>
+    private let _isVideoLowRes: Atomic<Bool>
+    private let _canReceiveVideoHiRes: Atomic<Bool>
+    private let _canReceiveVideoLowRes: Atomic<Bool>
+    private let _videoDataDelegate = WeakAtomic(wrappedValue: nil)
+    private let _speakerVideoDataDelegate = WeakAtomic(wrappedValue: nil)
+    private let _isSpeakerPinned: Atomic<Bool>
+    private let _sessionRecoverable: Atomic<Bool>
+    private let _hasCamera: Atomic<Bool>
+    private let _isLowResCamera: Atomic<Bool>
+    private let _isHiResCamera: Atomic<Bool>
+    private let _hasScreenShare: Atomic<Bool>
+    private let _isLowResScreenShare: Atomic<Bool>
+    private let _isHiResScreenShare: Atomic<Bool>
+    private let _audioDetected: Atomic<Bool>
+    private let _isScreenShareCell: Atomic<Bool>
+    private let _isReceivingHiResVideo: Atomic<Bool>
+    private let _isReceivingLowResVideo: Atomic<Bool>
+    private let _isRecording: Atomic<Bool>
+    private let _absentParticipantState: Atomic<AbsentParticipantState>
+    private let _raisedHand: Atomic<Bool>
     
     public let chatId: HandleEntity
     public let participantId: HandleEntity
-    public var clientId: HandleEntity
-    public var name: String?
-    public var isModerator: Bool
-    public var video: CallParticipantAudioVideoFlag
-    public var audio: CallParticipantAudioVideoFlag
-    public var isVideoHiRes: Bool
-    public var isVideoLowRes: Bool
-    public var canReceiveVideoHiRes: Bool
-    public var canReceiveVideoLowRes: Bool
-    public weak var videoDataDelegate: (any CallParticipantVideoDelegate)?
-    public weak var speakerVideoDataDelegate: (any CallParticipantVideoDelegate)?
-    public var isSpeakerPinned: Bool
-    public var sessionRecoverable: Bool
-    public var hasCamera: Bool
-    public var isLowResCamera: Bool
-    public var isHiResCamera: Bool
-    public var hasScreenShare: Bool
-    public var isLowResScreenShare: Bool
-    public var isHiResScreenShare: Bool
-    public var audioDetected: Bool
-    public var isScreenShareCell: Bool = false
-    public var isReceivingHiResVideo: Bool = false
-    public var isReceivingLowResVideo: Bool = false
-    public var isRecording: Bool = false
-    public var absentParticipantState: AbsentParticipantState = .notInCall
-    public var raisedHand: Bool = false
+    
+    public var clientId: HandleEntity {
+        get {
+            _clientId.wrappedValue
+        }
+        
+        set {
+            _clientId.mutate { $0 = newValue }
+        }
+    }
+    
+    public var name: String? {
+        get {
+            _name.wrappedValue
+        }
+        
+        set {
+            _name.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isModerator: Bool {
+        get {
+            _isModerator.wrappedValue
+        }
+        
+        set {
+            _isModerator.mutate { $0 = newValue }
+        }
+    }
+    
+    public var video: CallParticipantAudioVideoFlag {
+        get {
+            _video.wrappedValue
+        }
+        
+        set {
+            _video.mutate { $0 = newValue }
+        }
+    }
+    
+    public var audio: CallParticipantAudioVideoFlag {
+        get {
+            _audio.wrappedValue
+        }
+        
+        set {
+            _audio.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isVideoHiRes: Bool {
+        get {
+            _isVideoHiRes.wrappedValue
+        }
+        
+        set {
+            _isVideoHiRes.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isVideoLowRes: Bool {
+        get {
+            _isVideoLowRes.wrappedValue
+        }
+        
+        set {
+            _isVideoLowRes.mutate { $0 = newValue }
+        }
+    }
+    
+    public var canReceiveVideoHiRes: Bool {
+        get {
+            _canReceiveVideoHiRes.wrappedValue
+        }
+        
+        set {
+            _canReceiveVideoHiRes.mutate { $0 = newValue }
+        }
+    }
+    
+    public var canReceiveVideoLowRes: Bool {
+        get {
+            _canReceiveVideoLowRes.wrappedValue
+        }
+        
+        set {
+            _canReceiveVideoLowRes.mutate { $0 = newValue }
+        }
+    }
+    
+    public var videoDataDelegate: (any CallParticipantVideoDelegate)? {
+        get {
+            _videoDataDelegate.wrappedValue as? CallParticipantVideoDelegate
+        }
+        
+        set {
+            _videoDataDelegate.mutate { $0 = newValue }
+        }
+    }
 
+    public weak var speakerVideoDataDelegate: (any CallParticipantVideoDelegate)? {
+        get {
+            _speakerVideoDataDelegate.wrappedValue as? CallParticipantVideoDelegate
+        }
+        
+        set {
+            _speakerVideoDataDelegate.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isSpeakerPinned: Bool {
+        get {
+            _isSpeakerPinned.wrappedValue
+        }
+        
+        set {
+            _isSpeakerPinned.mutate { $0 = newValue }
+        }
+    }
+    
+    public var sessionRecoverable: Bool {
+        get {
+            _sessionRecoverable.wrappedValue
+        }
+        
+        set {
+            _sessionRecoverable.mutate { $0 = newValue }
+        }
+    }
+    
+    public var hasCamera: Bool {
+        get {
+            _hasCamera.wrappedValue
+        }
+        
+        set {
+            _hasCamera.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isLowResCamera: Bool {
+        get {
+            _isLowResCamera.wrappedValue
+        }
+        
+        set {
+            _isLowResCamera.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isHiResCamera: Bool {
+        get {
+            _isHiResCamera.wrappedValue
+        }
+        
+        set {
+            _isHiResCamera.mutate { $0 = newValue }
+        }
+    }
+    
+    public var hasScreenShare: Bool {
+        get {
+            _hasScreenShare.wrappedValue
+        }
+        
+        set {
+            _hasScreenShare.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isLowResScreenShare: Bool {
+        get {
+            _isLowResScreenShare.wrappedValue
+        }
+        
+        set {
+            _isLowResScreenShare.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isHiResScreenShare: Bool {
+        get {
+            _isHiResScreenShare.wrappedValue
+        }
+        
+        set {
+            _isHiResScreenShare.mutate { $0 = newValue }
+        }
+    }
+    
+    public var audioDetected: Bool {
+        get {
+            _audioDetected.wrappedValue
+        }
+        
+        set {
+            _audioDetected.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isScreenShareCell: Bool {
+        get {
+            _isScreenShareCell.wrappedValue
+        }
+        
+        set {
+            _isScreenShareCell.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isReceivingHiResVideo: Bool {
+        get {
+            _isReceivingHiResVideo.wrappedValue
+        }
+        
+        set {
+            _isReceivingHiResVideo.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isReceivingLowResVideo: Bool {
+        get {
+            _isReceivingLowResVideo.wrappedValue
+        }
+        
+        set {
+            _isReceivingLowResVideo.mutate { $0 = newValue }
+        }
+    }
+    
+    public var isRecording: Bool {
+        get {
+            _isRecording.wrappedValue
+        }
+        
+        set {
+            _isRecording.mutate { $0 = newValue }
+        }
+    }
+    
+    public var absentParticipantState: AbsentParticipantState {
+        get {
+            _absentParticipantState.wrappedValue
+        }
+        
+        set {
+            _absentParticipantState.mutate { $0 = newValue }
+        }
+    }
+    
+    public var raisedHand: Bool {
+        get {
+            _raisedHand.wrappedValue
+        }
+        
+        set {
+            _raisedHand.mutate { $0 = newValue }
+        }
+    }
+    
     public init(
         chatId: HandleEntity,
         participantId: HandleEntity,
@@ -72,33 +333,39 @@ public final class CallParticipantEntity {
         isLowResScreenShare: Bool,
         isHiResScreenShare: Bool,
         audioDetected: Bool,
-        isRecording: Bool,
-        absentParticipantState: AbsentParticipantState,
-        raisedHand: Bool
+        isRecording: Bool = false,
+        absentParticipantState: AbsentParticipantState = .notInCall,
+        raisedHand: Bool = false,
+        isScreenShareCell: Bool = false,
+        isReceivingHiResVideo: Bool = false,
+        isReceivingLowResVideo: Bool = false
     ) {
         self.chatId = chatId
         self.participantId = participantId
-        self.clientId = clientId
-        self.isModerator = isModerator
-        self.video = video
-        self.audio = audio
-        self.isVideoHiRes = isVideoHiRes
-        self.isVideoLowRes = isVideoLowRes
-        self.canReceiveVideoHiRes = canReceiveVideoHiRes
-        self.canReceiveVideoLowRes = canReceiveVideoLowRes
-        self.name = name
-        self.sessionRecoverable = sessionRecoverable
-        self.isSpeakerPinned = isSpeakerPinned
-        self.hasCamera = hasCamera
-        self.isLowResCamera = isLowResCamera
-        self.isHiResCamera = isHiResCamera
-        self.hasScreenShare = hasScreenShare
-        self.isLowResScreenShare = isLowResScreenShare
-        self.isHiResScreenShare = isHiResScreenShare
-        self.audioDetected = audioDetected
-        self.isRecording = isRecording
-        self.absentParticipantState = absentParticipantState
-        self.raisedHand = raisedHand
+        self._clientId = Atomic(wrappedValue: clientId)
+        self._isModerator = Atomic(wrappedValue: isModerator)
+        self._video = Atomic(wrappedValue: video)
+        self._audio = Atomic(wrappedValue: audio)
+        self._isVideoHiRes = Atomic(wrappedValue: isVideoHiRes)
+        self._isVideoLowRes = Atomic(wrappedValue: isVideoLowRes)
+        self._canReceiveVideoHiRes = Atomic(wrappedValue: canReceiveVideoHiRes)
+        self._canReceiveVideoLowRes = Atomic(wrappedValue: canReceiveVideoLowRes)
+        self._name = Atomic(wrappedValue: name)
+        self._sessionRecoverable = Atomic(wrappedValue: sessionRecoverable)
+        self._isSpeakerPinned = Atomic(wrappedValue: isSpeakerPinned)
+        self._hasCamera = Atomic(wrappedValue: hasCamera)
+        self._isLowResCamera = Atomic(wrappedValue: isLowResCamera)
+        self._isHiResCamera = Atomic(wrappedValue: isHiResCamera)
+        self._hasScreenShare = Atomic(wrappedValue: hasScreenShare)
+        self._isLowResScreenShare = Atomic(wrappedValue: isLowResScreenShare)
+        self._isHiResScreenShare = Atomic(wrappedValue: isHiResScreenShare)
+        self._audioDetected = Atomic(wrappedValue: audioDetected)
+        self._isRecording = Atomic(wrappedValue: isRecording)
+        self._absentParticipantState = Atomic(wrappedValue: absentParticipantState)
+        self._raisedHand = Atomic(wrappedValue: raisedHand)
+        self._isScreenShareCell = Atomic(wrappedValue: isScreenShareCell)
+        self._isReceivingHiResVideo = Atomic(wrappedValue: isReceivingHiResVideo)
+        self._isReceivingLowResVideo = Atomic(wrappedValue: isReceivingLowResVideo)
     }
     
     public func remoteVideoFrame(width: Int, height: Int, buffer: Data!, isHiRes: Bool) {

@@ -12,7 +12,9 @@ public struct MockPhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
         self.error = error
     }
     
-    public func copyMediaFileToPhotos(at url: URL, completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?) {
-        completion?(error)
+    public func copyMediaFileToPhotos(at url: URL) async throws(SaveMediaToPhotosErrorEntity) {
+        if let error {
+            throw error
+        }
     }
 }

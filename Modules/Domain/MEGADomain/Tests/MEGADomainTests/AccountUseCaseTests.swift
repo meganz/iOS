@@ -83,7 +83,7 @@ final class AccountUseCaseTests: XCTestCase {
     private func assertAccountPlan(
         for type: AccountTypeEntity,
         cycle: SubscriptionCycleEntity,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) async {
         let plans = allPlans

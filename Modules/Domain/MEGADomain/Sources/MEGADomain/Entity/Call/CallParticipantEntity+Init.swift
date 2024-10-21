@@ -100,7 +100,7 @@ public extension CallParticipantEntity {
     static func createScreenShareParticipant(
         _ participant: CallParticipantEntity
     ) -> CallParticipantEntity {
-        let callParticipant = CallParticipantEntity(
+        CallParticipantEntity(
             chatId: participant.chatId,
             participantId: participant.participantId,
             clientId: participant.clientId,
@@ -123,12 +123,10 @@ public extension CallParticipantEntity {
             audioDetected: false,
             isRecording: false,
             absentParticipantState: .notInCall,
-            raisedHand: false
+            raisedHand: false,
+            isScreenShareCell: true,
+            isReceivingHiResVideo: participant.isReceivingHiResVideo,
+            isReceivingLowResVideo: participant.isReceivingLowResVideo
         )
-        callParticipant.name = participant.name
-        callParticipant.isScreenShareCell = true
-        callParticipant.isReceivingHiResVideo = participant.isReceivingHiResVideo
-        callParticipant.isReceivingLowResVideo = participant.isReceivingLowResVideo
-        return callParticipant
     }
 }

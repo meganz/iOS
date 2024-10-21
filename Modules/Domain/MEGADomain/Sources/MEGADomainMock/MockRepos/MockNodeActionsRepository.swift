@@ -1,7 +1,7 @@
 import MEGADomain
 
 public struct MockNodeActionsRepository: NodeActionsRepositoryProtocol {
-    public static var newRepo: MockNodeActionsRepository = MockNodeActionsRepository()
+    public static let newRepo: MockNodeActionsRepository = MockNodeActionsRepository()
     
     private let copiedNodeIfExists: Bool
     private let copiedNodeHandle: UInt64?

@@ -124,8 +124,8 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
     private var testFingerprint = "test-fingerprint"
 }
 
-private var minimumTime = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants.minimumContinuationPlaybackTime
-private var completedThreshold = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants.completedPlaybackThreshold
+private let minimumTime = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants.minimumContinuationPlaybackTime
+private let completedThreshold = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants.completedPlaybackThreshold
 
-private var lessThanMinimumTime: TimeInterval = TimeInterval(Int(minimumTime) - 1)
-private var moreThanMinimumTime: TimeInterval = TimeInterval(Int(minimumTime) + 1)
+private let lessThanMinimumTime: TimeInterval = TimeInterval(Int(minimumTime) - 1)
+private let moreThanMinimumTime: TimeInterval = TimeInterval(Int(minimumTime) + 1)

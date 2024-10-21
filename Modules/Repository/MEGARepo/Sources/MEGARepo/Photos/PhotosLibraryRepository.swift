@@ -1,5 +1,5 @@
 import MEGADomain
-import Photos
+@preconcurrency import Photos
 
 public struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
     public static var newRepo: PhotosLibraryRepository {
@@ -13,23 +13,18 @@ public struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
     }()
 
     private let library = PHPhotoLibrary.shared()
-
-    public func copyMediaFileToPhotos(at url: URL, completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?) {
+    
+    public func copyMediaFileToPhotos(at url: URL) async throws(SaveMediaToPhotosErrorEntity) {
         let type: PHAssetResourceType = url.fileExtensionGroup.isImage ? .photo : .video
-        library.performChanges {
-            PHAssetCreationRequest.forAsset().addResource(with: type, fileURL: url, options: self.options)
-        } completionHandler: { success, _ in
-            if success {
-                completion?(nil)
-            } else {
-                switch type {
-                case .photo:
-                    completion?(.imageNotSaved)
-                case .video:
-                    completion?(.videoNotSaved)
-                default:
-                    completion?(.wrongExtensionFormat)
-                }
+        do {
+            try await library.performChanges {
+                PHAssetCreationRequest.forAsset().addResource(with: type, fileURL: url, options: self.options)
+            }
+        } catch {
+            throw switch type {
+            case .photo: .imageNotSaved
+            case .video: .videoNotSaved
+            default: .wrongExtensionFormat
             }
         }
     }

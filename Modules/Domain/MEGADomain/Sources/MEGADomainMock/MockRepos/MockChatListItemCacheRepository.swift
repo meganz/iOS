@@ -1,7 +1,7 @@
 import MEGADomain
 
 public final class MockChatListItemCacheRepository: ChatListItemCacheRepositoryProtocol, @unchecked Sendable {
-    public static var newRepo: MockChatListItemCacheRepository = MockChatListItemCacheRepository()
+    public static let newRepo: MockChatListItemCacheRepository = MockChatListItemCacheRepository()
 
     private var descriptionCache: [HandleEntity: ChatListItemDescriptionEntity]
     private var avatarCache: [HandleEntity: ChatListItemAvatarEntity]

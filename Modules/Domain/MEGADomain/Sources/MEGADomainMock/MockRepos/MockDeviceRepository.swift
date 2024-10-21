@@ -1,7 +1,7 @@
 import MEGADomain
 
-public struct MockDeviceRepository: DeviceRepositoryProtocol {
-    public static var newRepo = MockDeviceRepository()
+public struct MockDeviceRepository: DeviceRepositoryProtocol, Sendable {
+    public static let newRepo = MockDeviceRepository()
     private let currentDeviceName: String?
     private let deviceName: String?
     private let renameError: Error?

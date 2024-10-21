@@ -1,7 +1,7 @@
 import MEGADomain
 
 public struct MockMEGAHandleRepository: MEGAHandleRepositoryProtocol {
-    public static var newRepo: MockMEGAHandleRepository = MockMEGAHandleRepository()
+    public static let newRepo: MockMEGAHandleRepository = MockMEGAHandleRepository()
     
     public init() {}
 

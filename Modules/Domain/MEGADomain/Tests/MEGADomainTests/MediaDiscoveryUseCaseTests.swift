@@ -115,7 +115,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         nodesUpdatePublisher.send(expectedNodes)
         nodesUpdatePublisher.send(completion: .finished)
 
-        waitForExpectations(timeout: 2)
+        wait(for: [expectaction], timeout: 2)
         XCTAssertEqual(results, [expectedNodes])
         XCTAssertTrue(fileSearchRepo.stopMonitoringNodesUpdateCalled == 1)
     }

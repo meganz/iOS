@@ -1,11 +1,10 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let settings: [SwiftSetting] = [
     .unsafeFlags(["-warnings-as-errors"]),
-    .enableExperimentalFeature("ExistentialAny"),
-    .enableExperimentalFeature("StrictConcurrency=targeted")
+    .enableExperimentalFeature("ExistentialAny")
 ]
 
 let package = Package(
@@ -45,5 +44,6 @@ let package = Package(
             name: "MEGADomainTests",
             dependencies: ["MEGADomain", "MEGADomainMock", "MEGATest"],
             swiftSettings: settings)
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
