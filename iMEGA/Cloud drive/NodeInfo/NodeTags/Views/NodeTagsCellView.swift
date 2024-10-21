@@ -24,7 +24,7 @@ struct NodeTagsCellView: View {
 
             Spacer()
 
-            if viewModel.shouldShowProTag {
+            if !viewModel.shouldShowProTag {
                 Image(systemName: "chevron.right")
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
             }
