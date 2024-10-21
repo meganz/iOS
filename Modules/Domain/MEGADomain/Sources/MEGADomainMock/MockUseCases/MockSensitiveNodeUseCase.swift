@@ -3,24 +3,31 @@ import MEGADomain
 import MEGASwift
 
 public final class MockSensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
-    
+
+    private let _isAccessible: Bool
     private let isInheritingSensitivityResult: Result<Bool, Error>
     private let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>]
     private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
     private let sensitivityChangesForNode: AnyAsyncSequence<Bool>
     private let _folderSensitivityChanged: AnyAsyncSequence<Void>
     
-    public init(isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
+    public init(isAccessible: Bool = true,
+                isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
                 isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:],
                 monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
                 sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
                 folderSensitivityChanged: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
+        _isAccessible = isAccessible
         self.isInheritingSensitivityResult = isInheritingSensitivityResult
         self.isInheritingSensitivityResults = isInheritingSensitivityResults
         self.monitorInheritedSensitivityForNode = monitorInheritedSensitivityForNode
         self.sensitivityChangesForNode = sensitivityChangesForNode
         _folderSensitivityChanged = folderSensitivityChanged
+    }
+    
+    public func isAccessible() -> Bool {
+        _isAccessible
     }
     
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {

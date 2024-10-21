@@ -167,13 +167,55 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
         return SensitiveNodeUseCase(
             nodeRepository: mockNodeRepository,
             accountUseCase: MockAccountUseCase(
-                hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount))
+                currentAccountDetails: .build(proLevel: hasValidProOrUnexpiredBusinessAccount ? .proI : .free),
+                hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount
+            ))
     }
 }
 
 @Suite("SensitiveNodeUseCaseTests")
 struct SensitiveNodeUseCaseSuite {
     
+    @Suite("calls isAccessible")
+    struct CallIsAccessible {
+        
+        private static let featureAccessibleAccountTypes: [AccountTypeEntity] = [
+            .lite,
+            .proI,
+            .proII,
+            .proIII,
+            .proFlexi,
+            .starter,
+            .basic,
+            .essential
+        ]
+        
+        /// Provide arguments ensuring that when new cases are added, the test for invalid cases will pick it up.
+        /// - Returns: List of AccountTypeEntity to args
+        private static func invalidProAccountTypesArgument() -> [AccountTypeEntity?] {
+            AccountTypeEntity.allCases.filter { featureAccessibleAccountTypes.notContains($0) } + [nil]
+        }
+                
+        @Test("when user has valid account type, expect true", arguments: featureAccessibleAccountTypes)
+        func whenUserHasValidProAccountTypes(accountType: AccountTypeEntity) async throws {
+            let sut = makeSUT(
+                accountUseCase: MockAccountUseCase(
+                    currentAccountDetails: .build(proLevel: accountType),
+                    hasValidProOrUnexpiredBusinessAccount: true))
+            #expect(sut.isAccessible() == true)
+        }
+        
+        @Test("when user has an invalid account type, expect false", arguments: invalidProAccountTypesArgument())
+        func whenUserHasProAccountTypes(accountType: AccountTypeEntity?) async throws {
+            let currentAccountDetails: AccountDetailsEntity? = if let accountType { .build(proLevel: accountType) } else { nil }
+            let sut = makeSUT(
+                accountUseCase: MockAccountUseCase(
+                    currentAccountDetails: currentAccountDetails,
+                    hasValidProOrUnexpiredBusinessAccount: false))
+            #expect(sut.isAccessible() == false)
+        }
+    }
+
     @Suite("Invalid pro or expired business account")
     struct InvalidAccount {
         private let node = NodeEntity(handle: 43)
