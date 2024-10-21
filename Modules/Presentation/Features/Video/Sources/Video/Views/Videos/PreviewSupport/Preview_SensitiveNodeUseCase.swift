@@ -3,7 +3,10 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_SensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
-    
+    func isAccessible() -> Bool {
+        false
+    }
+        
     func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
         false
     }

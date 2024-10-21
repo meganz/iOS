@@ -2,6 +2,12 @@ import AsyncAlgorithms
 import MEGASwift
 
 public protocol SensitiveNodeUseCaseProtocol: Sendable {
+    
+    /// Determine is the current logged in user has a valid account type, that gives them access to use the Hidden Files features
+    /// This is determined by what account type they have such pro (I, II, III), flexi, business, lowTierplans and etc
+    /// - Returns: Return true, if the active user has the correct account type to use hidden files feature. Else false.
+    func isAccessible() -> Bool
+
     /// Ascertain if the node's ancestor is marked as sensitive
     ///  - Parameters: node - the node to check
     ///  - Returns: true if the node's ancestor is marked as sensitive
@@ -52,20 +58,31 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
         self.accountUseCase = accountUseCase
     }
     
+    public func isAccessible() -> Bool {
+        switch accountUseCase.currentAccountDetails?.proLevel {
+        case .lite, .proI, .proII, .proIII, .business, .proFlexi:
+            accountUseCase.hasValidProOrUnexpiredBusinessAccount()
+        case .starter, .basic, .essential:
+            true
+        case nil, .free, .feature:
+            false
+        }
+    }
+    
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else { return false }
+        guard isAccessible() else { return false }
         
         return try await nodeRepository.isInheritingSensitivity(node: node)
     }
     
     public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else { return false }
+        guard isAccessible() else { return false }
         
         return try nodeRepository.isInheritingSensitivity(node: node)
     }
     
     public func monitorInheritedSensitivity(for node: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+        guard isAccessible() else {
             return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
         }
         return nodeRepository.nodeUpdates
@@ -78,7 +95,7 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
     }
     
     public func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+        guard isAccessible() else {
             return EmptyAsyncSequence().eraseToAnyAsyncSequence()
         }
         return nodeRepository.nodeUpdates
@@ -93,7 +110,7 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
     public func mergeInheritedAndDirectSensitivityChanges(
         for node: NodeEntity
     ) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+        guard isAccessible() else {
             return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
         }
         return AsyncAlgorithms.merge(
@@ -104,7 +121,7 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
     }
     
     public func folderSensitivityChanged() -> AnyAsyncSequence<Void> {
-        guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+        guard isAccessible() else {
             return EmptyAsyncSequence().eraseToAnyAsyncSequence()
         }
         return nodeRepository
