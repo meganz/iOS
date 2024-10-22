@@ -3,6 +3,9 @@ import MEGASDKRepo
 
 extension MORecentlyOpenedNode {
     
+    /// A mapping function from `MORecentlyOpenedNode` to `RecentlyOpenedNodeRepositoryDTO` type.
+    /// - Returns: `RecentlyOpenedNodeRepositoryDTO` model representation
+    /// - Important: Always access this function from CoreData context which deal with `MORecentlyOpenedNode`, otherwise CoreData will throw crash, to prevent potential CoreData corruption.
     func toRecentlyOpenedNodeRepositoryDTO() -> RecentlyOpenedNodeRepositoryDTO {
         RecentlyOpenedNodeRepositoryDTO(
             fingerprint: fingerprint,
@@ -11,6 +14,9 @@ extension MORecentlyOpenedNode {
         )
     }
     
+    /// A mapping function from `MOMediaDestination` to `MediaDestinationRepositoryDTO` type.
+    /// - Returns: `MediaDestinationRepositoryDTO` model representation
+    /// - Important: Always access this function from CoreData context which deal with `MORecentlyOpenedNode`, otherwise CoreData will throw crash, to prevent potential CoreData corruption.
     private func mediaDestinationDTO() -> MediaDestinationRepositoryDTO {
         guard let destination = mediaDestination?.toMediaDestinationRepositoryDTO() else {
             return MediaDestinationRepositoryDTO(
@@ -25,6 +31,9 @@ extension MORecentlyOpenedNode {
 
 extension Array where Element == MORecentlyOpenedNode {
     
+    /// A mapping function from `[MORecentlyOpenedNode]` to `[RecentlyOpenedNodeRepositoryDTO]` type.
+    /// - Returns: `[RecentlyOpenedNodeRepositoryDTO]` model representation
+    /// - Important: Always access this function from CoreData context which deal with `MORecentlyOpenedNode`, otherwise CoreData will throw crash, to prevent potential CoreData corruption.
     func toRecentlyOpenedNodeRepositoryDTOs() -> [RecentlyOpenedNodeRepositoryDTO] {
         map { $0.toRecentlyOpenedNodeRepositoryDTO() }
     }

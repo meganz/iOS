@@ -6,17 +6,15 @@ import MEGASDKRepo
 extension MEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
     
     public func fetchRecentlyOpenedNodes() async throws -> [RecentlyOpenedNodeRepositoryDTO] {
-        try await fetchRecentlyOpenedNodes()
-            .toRecentlyOpenedNodeRepositoryDTOs()
-    }
-    
-    private func fetchRecentlyOpenedNodes() async throws -> [MORecentlyOpenedNode] {
         guard let context = stack.newBackgroundContext() else {
             throw RecentlyOpenedNodesErrorEntity.couldNotCreateNewBackgroundContext
         }
-        let fetchRequest: NSFetchRequest<MORecentlyOpenedNode> = MORecentlyOpenedNode.fetchRequest()
-        fetchRequest.relationshipKeyPathsForPrefetching = ["mediaDestination"]
-        return try context.fetch(fetchRequest)
+        return try await context.perform {
+            let fetchRequest: NSFetchRequest<MORecentlyOpenedNode> = MORecentlyOpenedNode.fetchRequest()
+            fetchRequest.relationshipKeyPathsForPrefetching = ["mediaDestination"]
+            let nodes = try context.fetch(fetchRequest)
+            return nodes.map { $0.toRecentlyOpenedNodeRepositoryDTO() }
+        }
     }
     
     public func insertOrUpdateRecentlyOpenedNode(fingerprint: String, destination: Int, timescale: Int?, lastOpenedDate: Date) {
