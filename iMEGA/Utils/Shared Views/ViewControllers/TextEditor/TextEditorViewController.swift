@@ -2,6 +2,8 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASwiftUI
+import SwiftUI
 
 final class TextEditorViewController: UIViewController {
     private var viewModel: TextEditorViewModel
@@ -13,6 +15,8 @@ final class TextEditorViewController: UIViewController {
         textView.adjustsFontForContentSizeCategory = true
         return textView
     }()
+    
+    private var markdownSupportTextViewController: UIViewController?
 
     private weak var activityIndicator: UIActivityIndicatorView?
     private weak var progressView: UIProgressView?
@@ -130,6 +134,10 @@ extension TextEditorViewController: ViewType {
         } else {
             toolbarItems = nil
             navigationController?.setToolbarHidden(true, animated: true)
+        }
+        
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .markdownSupport) {
+            configureMarkdownSupportText(textEditorModel)
         }
     }
     
@@ -430,5 +438,41 @@ extension TextEditorViewController: ViewType {
     @objc func keyboardDidHide(notification: NSNotification) {
         textView.contentInset = .zero
         textView.scrollIndicatorInsets = textView.contentInset
+    }
+}
+
+// MARK: - Markdown support
+
+extension TextEditorViewController {
+    
+    private func configureMarkdownSupportText(_ textEditorModel: TextEditorModel) {
+        switch textEditorModel.textEditorMode {
+        case .view:
+            renderTextUsingMarkdownSupportRenderingOnView(textEditorModel)
+        case .edit:
+            renderTextUsingLegacyTextView()
+        case .create, .load:
+            break
+        }
+    }
+    
+    private func renderTextUsingMarkdownSupportRenderingOnView(_ textEditorModel: TextEditorModel) {
+        let markdownTextView = MarkdownSupportTextView(string: textEditorModel.textFile.content)
+        let controller = UIHostingController(rootView: markdownTextView)
+        controller.view.backgroundColor = .clear
+        markdownSupportTextViewController = controller
+        add(controller, container: view)
+        
+        textView.isHidden = true
+    }
+    
+    private func renderTextUsingLegacyTextView() {
+        textView.isHidden = false
+        removeMarkdownSupportTextRenderingFromView()
+    }
+    
+    private func removeMarkdownSupportTextRenderingFromView() {
+        remove(childViewController: markdownSupportTextViewController)
+        markdownSupportTextViewController = nil
     }
 }
