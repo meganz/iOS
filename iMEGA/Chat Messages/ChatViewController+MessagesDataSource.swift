@@ -110,7 +110,7 @@ extension ChatViewController: MessagesDataSource {
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
         
         let descriptionAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(),
+            NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary,
             NSAttributedString.Key.font: UIFont.preferredFont(style: .caption2, weight: .medium)
         ]
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)

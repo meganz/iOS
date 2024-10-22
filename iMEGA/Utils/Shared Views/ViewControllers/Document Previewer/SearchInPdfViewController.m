@@ -27,7 +27,7 @@
 
     if ([UIDevice currentDevice].iPadDevice) {
         UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(iPadCancelSearch)];
-        [cancel setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_primaryGray]} forState:UIControlStateNormal];
+        [cancel setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_secondaryTextColor]} forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = cancel;
     }
     

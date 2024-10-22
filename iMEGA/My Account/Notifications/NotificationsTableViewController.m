@@ -415,7 +415,7 @@
     }
     [self configureHeadingLabel:cell.headingLabel forAlert:userAlert];
     [self configureContentLabel:cell.contentLabel forAlert:userAlert indexPath:indexPath];
-    cell.dateLabel.textColor = [UIColor mnz_primaryGray];
+    cell.dateLabel.textColor = [UIColor mnz_secondaryTextColor];
     cell.dateLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[userAlert timestampAtIndex:0]]];
     
     return cell;

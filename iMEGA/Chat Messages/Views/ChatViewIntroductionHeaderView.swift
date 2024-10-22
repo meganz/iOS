@@ -143,7 +143,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
         
         let descriptionAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline),
-                                                                     NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray()]
+                                                                     NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary]
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)
         
         titleAttributedString.append(descriptionAttributedString)

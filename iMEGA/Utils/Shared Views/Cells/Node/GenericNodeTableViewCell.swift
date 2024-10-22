@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 
 final class GenericNodeTableViewCell: UITableViewCell {
@@ -92,7 +93,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
         } else {
             mainLabel.text = nodeModel.name
             mainLabel.textColor = .label
-            secondaryLabel.textColor = .mnz_subtitles()
+            secondaryLabel.textColor = TokenColors.Text.secondary
         }
         
         if nodeModel.isFile {

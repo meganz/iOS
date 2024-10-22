@@ -101,10 +101,10 @@
     } else {
         self.nameLabel.text = node.name;
         self.nameLabel.textColor = [UIColor primaryTextColor];
-        self.subtitleLabel.textColor = [UIColor mnz_subtitles];
+        self.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
     }
     
-    self.infoLabel.textColor = [UIColor mnz_subtitles];
+    self.infoLabel.textColor = [UIColor mnz_secondaryTextColor];
     if (node.isFile) {
         MEGASdk *megaSDK = self.recentActionBucket ? MEGASdk.shared : api;
         switch (self.cellFlavor) {
@@ -191,7 +191,7 @@
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
     
-    self.subtitleLabel.textColor = self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitles];
+    self.subtitleLabel.textColor = self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_secondaryTextColor];
 }
 
 #pragma mark - IBActions
@@ -203,8 +203,8 @@
 - (void)setupColors {
     [self configureMoreButtonUI];
     
-    self.infoLabel.textColor = [UIColor mnz_subtitles];
-    self.infoStringRightLabel.textColor = [UIColor mnz_subtitles];
+    self.infoLabel.textColor = [UIColor mnz_secondaryTextColor];
+    self.infoStringRightLabel.textColor = [UIColor mnz_secondaryTextColor];
     
     [self setCellBackgroundColor];
    
@@ -212,8 +212,8 @@
         return;
     }
     
-    self.timeLabel.textColor = [UIColor mnz_subtitles];
-    self.subtitleLabel.textColor = [UIColor mnz_subtitles];
+    self.timeLabel.textColor = [UIColor mnz_secondaryTextColor];
+    self.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
 
     [self configureIconsImageColor];
 }

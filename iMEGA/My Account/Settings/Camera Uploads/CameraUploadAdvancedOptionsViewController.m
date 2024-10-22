@@ -141,14 +141,14 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
         UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
-        headerFooterView.textLabel.textColor = [UIColor mnz_subtitles];
+        headerFooterView.textLabel.textColor = [UIColor mnz_secondaryTextColor];
     }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
     if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
         UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
-        headerFooterView.textLabel.textColor = [UIColor mnz_subtitles];
+        headerFooterView.textLabel.textColor = [UIColor mnz_secondaryTextColor];
     }
 }
 

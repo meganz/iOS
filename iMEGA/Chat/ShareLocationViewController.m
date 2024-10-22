@@ -116,7 +116,7 @@
 - (void)updateAppearance {
     self.mapOptionsView.backgroundColor = self.sendLocationView.backgroundColor = UIColor.systemBackgroundColor;
     
-    self.subtitleLabel.textColor = [UIColor mnz_subtitles];
+    self.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
 }
 
 - (void)sendGeolocationWithCoordinate2d:(CLLocationCoordinate2D)coordinate {

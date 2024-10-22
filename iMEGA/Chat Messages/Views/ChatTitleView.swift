@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -90,7 +91,7 @@ class ChatTitleView: UIView {
         titleLabel.textColor = UIColor.primaryTextColor()
         
         subtitleLabel.font = UIFont.systemFont(ofSize: 12)
-        subtitleLabel.textColor = UIColor.mnz_subtitles()
+        subtitleLabel.textColor = TokenColors.Text.secondary
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

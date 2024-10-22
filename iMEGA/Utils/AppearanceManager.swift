@@ -76,8 +76,8 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setShadowColor(TokenColors.Text.primary)
         SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
-        SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray())
-        SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray())
+        SVProgressHUD.setForegroundColor(TokenColors.Text.secondary)
+        SVProgressHUD.setForegroundImageColor(TokenColors.Text.secondary)
         SVProgressHUD.setBackgroundColor(TokenColors.Background.page)
         SVProgressHUD.setHapticsEnabled(true)
         
@@ -133,17 +133,17 @@ class AppearanceManager: NSObject {
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .surface1Background()
         
-        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray()
+        appearance.stackedLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
         appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
-        appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray()
+        appearance.inlineLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
         appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
         appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
-        appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray()
+        appearance.compactInlineLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
         appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
         appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
@@ -207,7 +207,7 @@ class AppearanceManager: NSObject {
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
         UIActivityIndicatorView.appearance().style = .medium
-        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : UIColor.mnz_primaryGray()
+        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : TokenColors.Text.secondary
     }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {

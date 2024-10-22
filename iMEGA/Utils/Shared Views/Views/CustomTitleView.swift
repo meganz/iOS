@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class CustomTitleView: UIView {
@@ -19,7 +20,7 @@ final class CustomTitleView: UIView {
         titleLabel.textColor = UIColor.primaryTextColor()
         
         subtitleLabel.font = UIFont.systemFont(ofSize: 12)
-        subtitleLabel.textColor = UIColor.mnz_subtitles()
+        subtitleLabel.textColor = TokenColors.Text.secondary
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

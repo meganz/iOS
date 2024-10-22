@@ -46,7 +46,7 @@ extension UsageViewController {
             label?.textColor = secondaryTextColor
         }
 
-        pieChartSecondaryLabel?.textColor = UIColor.mnz_primaryGray()
+        pieChartSecondaryLabel?.textColor = TokenColors.Text.secondary
         pieChartTertiaryLabel?.textColor = secondaryTextColor
 
         usagePageControl?.currentPageIndicatorTintColor = TokenColors.Support.success

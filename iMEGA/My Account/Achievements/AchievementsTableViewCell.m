@@ -23,7 +23,7 @@
     self.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
     self.storageQuotaRewardLabel.textColor =  [UIColor whiteTextColor];
     self.titleLabel.textColor = [UIColor primaryTextColor];
-    self.subtitleLabel.textColor = [UIColor secondaryTextColor];
+    self.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
 }
 
 @end

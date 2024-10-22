@@ -131,7 +131,7 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.systemBackgroundColor;
     
-    self.descriptionLabel.textColor = [UIColor mnz_subtitles];
+    self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
     
     [self.passwordView updateAppearance];
     

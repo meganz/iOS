@@ -74,9 +74,9 @@
 
 - (void)updateAppearance {
     self.backgroundColor = [UIColor pageBackgroundColor];
-    self.chatLastMessage.textColor = [UIColor mnz_subtitles];
+    self.chatLastMessage.textColor = [UIColor mnz_secondaryTextColor];
     
-    self.chatLastTime.textColor = [UIColor mnz_subtitles];
+    self.chatLastTime.textColor = [UIColor mnz_secondaryTextColor];
     
     BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:LocalizedString(@"archived", @"Title of flag of archived chats.")];
     if (chatRoomsTypeArchived) {
@@ -89,13 +89,13 @@
     }
     self.unreadCount.textColor = [UIColor mnz_whiteFFFFFF];
     
-    self.onCallDuration.textColor = [UIColor mnz_subtitles];
+    self.onCallDuration.textColor = [UIColor mnz_secondaryTextColor];
 }
 
 - (void)manageUnreadMessages:(NSInteger)unreadCount {
     if (unreadCount != 0) {
         self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = [UIColor mnz_subtitles];
+        self.chatLastMessage.textColor = [UIColor mnz_secondaryTextColor];
         
         self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
         
@@ -109,9 +109,9 @@
         }
     } else {
         self.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-        self.chatLastMessage.textColor = [UIColor mnz_primaryGray];
+        self.chatLastMessage.textColor = [UIColor mnz_secondaryTextColor];
         self.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-        self.chatLastTime.textColor = [UIColor mnz_primaryGray];
+        self.chatLastTime.textColor = [UIColor mnz_secondaryTextColor];
         
         self.unreadView.hidden = YES;
         self.unreadCount.text = nil;
@@ -192,13 +192,13 @@
             if (!self.timer.valid && call.status == MEGAChatCallStatusInProgress) {
                 self.initDuration = call.duration;
                 self.baseDate = [NSDate date];
-                self.onCallDuration.textColor = [UIColor mnz_subtitles];
+                self.onCallDuration.textColor = [UIColor mnz_secondaryTextColor];
                 [self updateDuration];
                 self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
             }
         }
-        self.chatLastMessage.textColor = [UIColor mnz_subtitles];
+        self.chatLastMessage.textColor = [UIColor mnz_secondaryTextColor];
     }
     
     [self updateUnreadCountChange:chatListItem.unreadCount];

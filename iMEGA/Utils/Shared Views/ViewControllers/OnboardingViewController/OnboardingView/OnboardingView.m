@@ -44,7 +44,7 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        self.descriptionLabel.textColor = [UIColor mnz_subtitles];
+        self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
         self.titleLabel.textColor = [UIColor primaryTextColor];
         
         self.backgroundColor = [UIColor pageBackgroundColor];
@@ -60,7 +60,7 @@
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     self.titleLabel.textColor = [UIColor primaryTextColor];
-    self.descriptionLabel.textColor = [UIColor mnz_subtitles];
+    self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
     
     self.backgroundColor = [UIColor pageBackgroundColor];
 }

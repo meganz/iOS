@@ -53,7 +53,7 @@
     
     [LTHPasscodeViewController.sharedUser updateColorWithDesignToken];
     LTHPasscodeViewController.sharedUser.navigationBarTintColor = [UIColor surface1Background];
-    LTHPasscodeViewController.sharedUser.navigationTintColor = [UIColor mnz_primaryGray];
+    LTHPasscodeViewController.sharedUser.navigationTintColor = [UIColor mnz_secondaryTextColor];
     LTHPasscodeViewController.sharedUser.navigationTitleColor = UIColor.labelColor;
     
     [self setupColors];

@@ -483,7 +483,7 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
         NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:LocalizedString(@"¹ ", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_red]}];
         
-        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGray]}];
+        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_secondaryTextColor]}];
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
         
         cell.subjectToYourParticipationLabel.attributedText = superscriptOneAttributedString;
