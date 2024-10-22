@@ -77,8 +77,9 @@ struct AlbumListView: View {
                     cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
                 searchRepository: FilesSearchRepository.newRepo, 
                 sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                    accountUseCase: AccountUseCase(
-                        repository: AccountRepository.newRepo),
+                    sensitiveNodeUseCase: SensitiveNodeUseCase(
+                        nodeRepository: NodeRepository.newRepo,
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                     contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                         repo: UserAttributeRepository.newRepo),
                     hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),

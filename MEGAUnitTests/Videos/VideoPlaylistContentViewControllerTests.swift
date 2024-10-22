@@ -73,7 +73,6 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
             videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(),
             nodeUseCase: MockNodeUseCase(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-            accountUseCase: MockAccountUseCase(),
             router: MockVideoRevampRouter(),
             presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(shouldShowSnackBar: false, text: nil),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,

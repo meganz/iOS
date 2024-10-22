@@ -8,12 +8,11 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
     @MainActor
     func testHide_invalidProProOrBussinessAccount_shouldShowSeeUpgradePlansOnboarding() async {
         let router = MockHideFilesAndFoldersRouter()
-        let accountUseCase = MockAccountUseCase(
-            hasValidProOrUnexpiredBusinessAccount: false)
-        
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isAccessible: false)
+
         let sut = HideFilesAndFoldersViewModel(nodes: [NodeEntity(handle: 1)],
                                                router: router,
-                                               accountUseCase: accountUseCase,
+                                               sensitiveNodeUseCase: sensitiveNodeUseCase,
                                                nodeActionUseCase: MockNodeActionUseCase(),
                                                contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase())
         
@@ -25,7 +24,7 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
     @MainActor
     func testHide_validAccountNotOnboardedBefore_shouldShowFirstTimeOnboardingAndHandleOnboardCorrectly() async throws {
         let router = MockHideFilesAndFoldersRouter()
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isAccessible: true)
         let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
             sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: false))
         let node = NodeEntity(handle: 1)
@@ -34,7 +33,7 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
         
         let sut = makeSUT(nodes: [node],
                           router: router,
-                          accountUseCase: accountUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           nodeActionUseCase: nodeActionUseCase,
                           contentConsumptionUserAttributeUseCase: contentConsumptionUseCase)
         
@@ -46,7 +45,7 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
     @MainActor
     func testHideNodes_validAccountAndUserAlreadyOnboarded_shouldHideNodesAndShowSuccessMessageWithCount() async throws {
         let router = MockHideFilesAndFoldersRouter()
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isAccessible: true)
         let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
             sensitiveNodesUserAttributeEntity: .init(onboarded: true, showHiddenNodes: false))
         let firstSuccessNode = NodeEntity(handle: 5)
@@ -59,7 +58,7 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
         
         let sut = makeSUT(nodes: [firstSuccessNode, secondSuccessNode, failedNode],
                           router: router,
-                          accountUseCase: accountUseCase,
+                          sensitiveNodeUseCase: sensitiveNodeUseCase,
                           nodeActionUseCase: nodeActionUseCase,
                           contentConsumptionUserAttributeUseCase: contentConsumptionUseCase)
         
@@ -73,14 +72,14 @@ final class HideFilesAndFoldersViewModelTests: XCTestCase {
     private func makeSUT(
         nodes: [NodeEntity] = [],
         router: some HideFilesAndFoldersRouting = MockHideFilesAndFoldersRouter(),
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         nodeActionUseCase: some NodeActionUseCaseProtocol = MockNodeActionUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase()
     ) -> HideFilesAndFoldersViewModel {
         HideFilesAndFoldersViewModel(
             nodes: nodes,
             router: router,
-            accountUseCase: accountUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeActionUseCase: nodeActionUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
     }

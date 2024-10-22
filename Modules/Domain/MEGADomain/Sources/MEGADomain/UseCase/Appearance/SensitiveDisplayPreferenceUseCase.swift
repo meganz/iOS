@@ -7,23 +7,23 @@ public protocol SensitiveDisplayPreferenceUseCaseProtocol: Sendable {
 
 public struct SensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCaseProtocol {
     
-    private let accountUseCase: any AccountUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
     
     public init(
-        accountUseCase: some AccountUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
     ) {
-        self.accountUseCase = accountUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     public func excludeSensitives() async -> Bool {
         guard hiddenNodesFeatureFlagEnabled(),
-              accountUseCase.hasValidProOrUnexpiredBusinessAccount() else { return false }
+              sensitiveNodeUseCase.isAccessible() else { return false }
         
         return await !contentConsumptionUserAttributeUseCase
             .fetchSensitiveAttribute().showHiddenNodes

@@ -240,7 +240,6 @@ class CloudDriveViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let nodeSensitiveChecker = NodeSensitivityChecker(
             featureFlagProvider: featureFlagProvider,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
         )
@@ -313,9 +312,8 @@ class CloudDriveViewModelTests: XCTestCase {
         let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
         let nodeSensitiveChecker = NodeSensitivityChecker(
             featureFlagProvider: featureFlagProvider,
-            accountUseCase: MockAccountUseCase(),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase()
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false)
         )
         let sut = makeSUT(
             parentNode: parentNode,
@@ -334,7 +332,6 @@ class CloudDriveViewModelTests: XCTestCase {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let nodeSensitiveChecker = NodeSensitivityChecker(
             featureFlagProvider: featureFlagProvider,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
         )
@@ -572,7 +569,6 @@ class CloudDriveViewModelTests: XCTestCase {
         sdk: MEGASdk = MockSdk(),
         nodeSensitivityChecker: some NodeSensitivityChecking = NodeSensitivityChecker(
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            accountUseCase: MockAccountUseCase(),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         ),

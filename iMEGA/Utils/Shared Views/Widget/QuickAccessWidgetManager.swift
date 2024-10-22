@@ -44,8 +44,11 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
             repo: FavouriteNodesRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
             sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo),
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: AccountUseCase(
+                        repository: AccountRepository.newRepo)
+                ),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }))
@@ -64,8 +67,11 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
             repo: FavouriteNodesRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
             sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo),
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: AccountUseCase(
+                        repository: AccountRepository.newRepo)
+                ),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })),

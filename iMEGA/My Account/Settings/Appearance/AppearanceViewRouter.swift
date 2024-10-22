@@ -18,7 +18,9 @@ struct AppearanceViewRouter: Routing {
                 let viewModel = AppearanceViewModel(
                     preferenceUseCase: PreferenceUseCase(
                         repository: PreferenceRepository.newRepo),
-                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo), 
+                    sensitiveNodeUseCase: SensitiveNodeUseCase(
+                        nodeRepository: NodeRepository.newRepo,
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                     contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                         repo: UserAttributeRepository.newRepo))
                 return AppearanceTableViewController(coder: coder, viewModel: viewModel) }) as? AppearanceTableViewController else {

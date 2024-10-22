@@ -114,14 +114,12 @@ struct NodeActionViewModelTestSuite {
     }
     
     private static func makeSUT(
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         maxDetermineSensitivityTasks: Int = 10,
         featureFlagList: [FeatureFlagKey: Bool] = [:]
     ) -> NodeActionViewModel {
         NodeActionViewModel(
-            accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             maxDetermineSensitivityTasks: maxDetermineSensitivityTasks,

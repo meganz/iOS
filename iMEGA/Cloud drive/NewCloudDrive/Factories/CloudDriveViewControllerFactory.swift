@@ -175,7 +175,6 @@ struct CloudDriveViewControllerFactory {
                 nodeUseCase: nodeUseCase,
                 sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
                 mediaUseCase: homeFactory.makeMediaUseCase(),
-                accountUseCase: accountUseCase,
                 nodeActions: nodeActions,
                 hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
             ),
@@ -198,7 +197,6 @@ struct CloudDriveViewControllerFactory {
             nodeActions: nodeActions,
             nodeSensitivityChecker: NodeSensitivityChecker(
                 featureFlagProvider: DIContainer.featureFlagProvider,
-                accountUseCase: accountUseCase,
                 systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
                     systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
                 ),
@@ -1010,8 +1008,9 @@ struct CloudDriveViewControllerFactory {
             analyticsUseCase: mediaAnalyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase,
             sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo),
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
         )

@@ -30,7 +30,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 nodeRepository: nodeRepository,
                 accountUseCase: accountUseCase),
             sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                accountUseCase: accountUseCase,
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: accountUseCase),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
@@ -82,8 +84,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             tracker: DIContainer.tracker,
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
             sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo),
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
@@ -141,8 +144,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
         SensitiveDisplayPreferenceUseCase(
-            accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })

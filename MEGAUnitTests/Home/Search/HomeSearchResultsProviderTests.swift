@@ -119,7 +119,6 @@ class HomeSearchResultsProviderTests: XCTestCase {
                 downloadedNodesListener: downloadedNodesListener,
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-                accountUseCase: MockAccountUseCase(),
                 allChips: SearchChipEntity.allChips(
                     currentDate: { .testDate },
                     calendar: .testCalendar

@@ -75,7 +75,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -96,7 +96,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -117,7 +117,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -138,7 +138,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
@@ -193,14 +193,14 @@ final class AppearanceViewModelTests: XCTestCase {
     
     private func makeSUT(
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [.hiddenNodes: false]),
         file: StaticString = #file,
         line: UInt = #line) -> AppearanceViewModel {
             let sut = AppearanceViewModel(
                 preferenceUseCase: preferenceUseCase,
-                accountUseCase: accountUseCase, 
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 featureFlagProvider: featureFlagProvider
             )

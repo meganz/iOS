@@ -19,20 +19,17 @@ extension NodeCollectionViewCell {
     }
     
     @objc func createViewModel(node: MEGANode?, isFromSharedItem: Bool, sdk: MEGASdk) -> NodeCollectionViewCellViewModel {
-        let accountUseCase = AccountUseCase(
-            repository: AccountRepository.newRepo)
-        return .init(
+        .init(
             node: node?.toNodeEntity(),
             isFromSharedItem: isFromSharedItem,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
-                accountUseCase: accountUseCase),
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository(
                 sdk: sdk,
                 fileManager: .default,
                 nodeProvider: DefaultMEGANodeProvider(sdk: sdk))),
-            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: sdk)),
-            accountUseCase: accountUseCase)
+            nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: sdk)))
     }
     
     @objc  func bind(viewModel: NodeCollectionViewCellViewModel) {

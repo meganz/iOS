@@ -5,8 +5,8 @@ import MEGASDKRepo
 
 extension ThumbnailLoaderFactory {
     static func makeThumbnailLoader(
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-         mode: PhotoLibraryContentMode? = nil
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        mode: PhotoLibraryContentMode? = nil
     ) -> any ThumbnailLoaderProtocol {
         if [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink].notContains(mode) {
             makeThumbnailLoader(
@@ -14,9 +14,9 @@ extension ThumbnailLoaderFactory {
                     sensitiveNodeUseCase: SensitiveNodeUseCase(
                         nodeRepository: NodeRepository.newRepo,
                         accountUseCase: AccountUseCase(
-                            repository: AccountRepository.newRepo)),
-                    accountUseCase: AccountUseCase(
-                        repository: AccountRepository.newRepo)),
+                            repository: AccountRepository.newRepo)
+                    )
+                ),
                 thumbnailUseCase: makeThumbnailUseCase(mode: mode),
                 featureFlagProvider: featureFlagProvider)
         } else {

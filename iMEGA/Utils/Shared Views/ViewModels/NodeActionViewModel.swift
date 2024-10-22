@@ -27,7 +27,6 @@ struct NodeActionViewModel {
         let isInheritingSensitivity: Bool
     }
     
-    private let accountUseCase: any AccountUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -35,15 +34,13 @@ struct NodeActionViewModel {
     private let maxDetermineSensitivityTasks: Int
     
     var hasValidProOrUnexpiredBusinessAccount: Bool {
-        accountUseCase.hasValidProOrUnexpiredBusinessAccount()
+        sensitiveNodeUseCase.isAccessible()
     }
     
-    init(accountUseCase: some AccountUseCaseProtocol,
-         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
+    init(systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          maxDetermineSensitivityTasks: Int = 500,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
-        self.accountUseCase = accountUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.maxDetermineSensitivityTasks = maxDetermineSensitivityTasks

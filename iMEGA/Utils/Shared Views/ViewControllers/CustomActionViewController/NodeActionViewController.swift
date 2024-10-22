@@ -22,7 +22,6 @@ class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
     private let viewModel = NodeActionViewModel(
-        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
         systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
             systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
         ),

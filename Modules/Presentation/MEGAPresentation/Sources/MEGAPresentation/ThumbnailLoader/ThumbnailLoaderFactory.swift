@@ -10,8 +10,7 @@ public enum ThumbnailLoaderFactory {
         case general
         /// Configuration used to create a SensitiveThumbnailLoader
         /// This variation will generate variations adhering to SensitiveImageContaining and ImageContainers
-        case sensitive(sensitiveNodeUseCase: SensitiveNodeUseCaseProtocol,
-                       accountUseCase: AccountUseCaseProtocol)
+        case sensitive(sensitiveNodeUseCase: SensitiveNodeUseCaseProtocol)
         
         /// Configuration used to create a General Purpose ThumbnailLoader with fallback icon if failed to generate the icon
         /// This variation will generate URLImageContainers and ImageContainers
@@ -20,8 +19,7 @@ public enum ThumbnailLoaderFactory {
         /// Configuration used to create a SensitiveThumbnailLoader with fallback icon if failed to generate the icon
         /// This variation will generate variations adhering to SensitiveImageContaining and ImageContainers
         case sensitiveWithFallbackIcon(sensitiveNodeUseCase: SensitiveNodeUseCaseProtocol,
-                                       nodeIconUseCase: NodeIconUsecaseProtocol,
-                                       accountUseCase: AccountUseCaseProtocol)
+                                       nodeIconUseCase: NodeIconUsecaseProtocol)
     }
     
     public static func makeThumbnailLoader(
@@ -33,24 +31,22 @@ public enum ThumbnailLoaderFactory {
         switch config {
         case .general:
             makeThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
-        case .sensitive(let sensitiveNodeUseCase, let accountUseCase) where featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes):
+        case .sensitive(let sensitiveNodeUseCase) where featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes):
             makeSensitiveThumbnailLoader(
                 thumbnailUseCase: thumbnailUseCase,
-                sensitiveNodeUseCase: sensitiveNodeUseCase,
-                accountUseCase: accountUseCase
+                sensitiveNodeUseCase: sensitiveNodeUseCase
             )
         case .generalWithFallBackIcon(let nodeIconUseCase):
             makeThumbnailLoaderWithFallbackIcon(
                 thumbnailUseCase: thumbnailUseCase,
                 nodeIconUseCase: nodeIconUseCase
             )
-        case .sensitiveWithFallbackIcon(let sensitiveNodeUseCase, let nodeIconUseCase, let accountUseCase):
+        case .sensitiveWithFallbackIcon(let sensitiveNodeUseCase, let nodeIconUseCase):
             if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
                 makeSensitiveThumbnailLoaderWithFallbackIcon(
                     thumbnailUseCase: thumbnailUseCase,
                     sensitiveNodeUseCase: sensitiveNodeUseCase,
-                    nodeIconUseCase: nodeIconUseCase,
-                    accountUseCase: accountUseCase
+                    nodeIconUseCase: nodeIconUseCase
                 )
             } else {
                 makeThumbnailLoaderWithFallbackIcon(
@@ -65,25 +61,21 @@ public enum ThumbnailLoaderFactory {
     
     private static func makeSensitiveThumbnailLoader(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        accountUseCase: some AccountUseCaseProtocol
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
     ) -> some ThumbnailLoaderProtocol {
         SensitiveThumbnailLoader(
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(thumbnailUseCase: thumbnailUseCase),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: accountUseCase)
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
     
     private static func makeSensitiveThumbnailLoaderWithFallbackIcon(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        nodeIconUseCase: some NodeIconUsecaseProtocol,
-        accountUseCase: some AccountUseCaseProtocol
+        nodeIconUseCase: some NodeIconUsecaseProtocol
     ) -> some ThumbnailLoaderProtocol {
         SensitiveThumbnailLoader(
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoaderWithFallbackIcon(thumbnailUseCase: thumbnailUseCase, nodeIconUseCase: nodeIconUseCase),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: accountUseCase)
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
     
     private static func makeThumbnailLoader(thumbnailUseCase: some ThumbnailUseCaseProtocol) -> some ThumbnailLoaderProtocol {

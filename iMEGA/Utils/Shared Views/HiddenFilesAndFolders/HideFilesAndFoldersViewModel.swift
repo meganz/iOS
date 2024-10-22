@@ -4,26 +4,26 @@ import MEGADomain
 final class HideFilesAndFoldersViewModel {
     private let router: any HideFilesAndFoldersRouting
     private let nodes: [NodeEntity]
-    private let accountUseCase: any AccountUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeActionUseCase: any NodeActionUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     
     init(
         nodes: [NodeEntity],
         router: some HideFilesAndFoldersRouting,
-        accountUseCase: some AccountUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeActionUseCase: some NodeActionUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol
     ) {
         self.nodes = nodes
         self.router = router
-        self.accountUseCase = accountUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeActionUseCase = nodeActionUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
     }
     
     func hide() async {
-        if !accountUseCase.hasValidProOrUnexpiredBusinessAccount() {
+        if !sensitiveNodeUseCase.isAccessible() {
             router.showSeeUpgradePlansOnboarding()
         } else if await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().onboarded {
             router.showFirstTimeOnboarding(nodes: nodes)

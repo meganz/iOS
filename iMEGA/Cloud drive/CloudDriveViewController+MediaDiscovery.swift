@@ -57,8 +57,9 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
             analyticsUseCase: analyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase,
             sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo),
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
             )

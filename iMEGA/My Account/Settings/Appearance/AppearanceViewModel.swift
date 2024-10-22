@@ -24,16 +24,16 @@ class AppearanceViewModel {
     private var autoMediaDiscoverySetting: Bool
     @PreferenceWrapper(key: .mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
     private var mediaDiscoveryShouldIncludeSubfolderSetting: Bool
-    private let accountUseCase: any AccountUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     init(preferenceUseCase: some PreferenceUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
-        self.accountUseCase = accountUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.featureFlagProvider = featureFlagProvider
         
@@ -61,7 +61,7 @@ class AppearanceViewModel {
             guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
                 return false
             }
-            return accountUseCase.hasValidProOrUnexpiredBusinessAccount()
+            return sensitiveNodeUseCase.isAccessible()
         case .none:
             return false
         case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .mediaDiscoverySubfolder:

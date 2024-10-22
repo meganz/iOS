@@ -187,7 +187,8 @@ struct SensitiveNodeUseCaseSuite {
             .proFlexi,
             .starter,
             .basic,
-            .essential
+            .essential,
+            .business
         ]
         
         /// Provide arguments ensuring that when new cases are added, the test for invalid cases will pick it up.

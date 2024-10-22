@@ -15,8 +15,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
     func testMakeThumbnailLoader_configIsSensitiveIfFeatureFlagOn_shouldReturnSensitiveThumbnailLoader() {
         
         let thumbnailLoader = ThumbnailLoaderFactory
-            .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-                                                    accountUseCase: MockAccountUseCase()),
+            .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()),
                                  thumbnailUseCase: MockThumbnailUseCase(),
                                  featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
         
@@ -26,8 +25,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
     func testMakeThumbnailLoader_configIsSensitiveIfFeatureFlagOff_shouldReturnGeneralThumbnailLoader() {
         
         let thumbnailLoader = ThumbnailLoaderFactory
-            .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-                                                    accountUseCase: MockAccountUseCase()),
+            .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()),
                                  thumbnailUseCase: MockThumbnailUseCase(),
                                  featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
         
@@ -52,8 +50,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
             .makeThumbnailLoader(
                 config: .sensitiveWithFallbackIcon(
                     sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-                    nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData()),
-                    accountUseCase: MockAccountUseCase()
+                    nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData())
                 ),
                 thumbnailUseCase: MockThumbnailUseCase(),
                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
@@ -68,8 +65,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
             .makeThumbnailLoader(
                 config: .sensitiveWithFallbackIcon(
                     sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-                    nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData()),
-                    accountUseCase: MockAccountUseCase()
+                    nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData())
                 ),
                 thumbnailUseCase: MockThumbnailUseCase(),
                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false])
