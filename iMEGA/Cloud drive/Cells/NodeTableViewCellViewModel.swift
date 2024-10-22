@@ -16,7 +16,7 @@ import MEGASwift
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var task: Task<Void, Never>?
     
     init(nodes: [NodeEntity],
@@ -24,7 +24,7 @@ import MEGASwift
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         
         self.nodes = nodes
         self.hasThumbnail = [
@@ -35,7 +35,7 @@ import MEGASwift
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     deinit {
@@ -86,7 +86,7 @@ import MEGASwift
     }
     
     private func applySensitiveConfiguration(for nodes: [NodeEntity]) async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               shouldApplySensitiveBehaviour,
               sensitiveNodeUseCase.isAccessible() else {
             await setIsSensitive(false)

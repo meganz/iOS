@@ -304,8 +304,7 @@ final class HomeScreenFactory: NSObject {
         parentNodeProvider: @escaping () -> NodeEntity?,
         navigationController: UINavigationController
     ) -> HomeSearchResultsProvider {
-        let featureFlagProvider = makeFeatureFlagProvider()
-        return HomeSearchResultsProvider(
+        HomeSearchResultsProvider(
             parentNodeProvider: parentNodeProvider,
             filesSearchUseCase: makeFilesSearchUseCase(),
             nodeDetailUseCase: makeNodeDetailUseCase(),
@@ -318,7 +317,7 @@ final class HomeScreenFactory: NSObject {
             allChips: Self.allChips(),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
-            hiddenNodesFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+            hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
         )
     }
     private static func allChips() -> [SearchChipEntity] {
@@ -437,6 +436,6 @@ final class HomeScreenFactory: NSObject {
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }

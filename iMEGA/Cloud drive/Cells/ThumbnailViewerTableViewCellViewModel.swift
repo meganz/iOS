@@ -11,7 +11,7 @@ import MEGAPresentation
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         
         self.thumbnailViewModels = nodes.map {
             ItemCollectionViewCellViewModel(
@@ -19,7 +19,7 @@ import MEGAPresentation
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 thumbnailUseCase: thumbnailUseCase,
                 nodeIconUseCase: nodeIconUseCase,
-                featureFlagProvider: featureFlagProvider)
+                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         }
     }
     

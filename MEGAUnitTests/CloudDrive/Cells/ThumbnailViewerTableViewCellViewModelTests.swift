@@ -1,8 +1,6 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASdk
 import MEGASDKRepoMock
 import XCTest
@@ -53,6 +51,6 @@ extension ThumbnailViewerTableViewCellViewModelTests {
             sensitiveNodeUseCase: sensitiveNodeUseCase, 
             nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: Data()),
             thumbnailUseCase: MockThumbnailUseCase(),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: featureFlagHiddenNodes]))
     }
 }

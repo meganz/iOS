@@ -16,7 +16,7 @@ import MEGASwift
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var task: Task<Void, Never>?
     
     init(node: NodeEntity?,
@@ -24,14 +24,14 @@ import MEGASwift
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         
         self.node = node
         self.isFromSharedItem = isFromSharedItem
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     deinit {
@@ -95,7 +95,7 @@ import MEGASwift
     @MainActor
     private func applySensitiveConfiguration(for node: NodeEntity) async {
         guard !isFromSharedItem,
-              featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               sensitiveNodeUseCase.isAccessible() else {
             isSensitive = false
             return

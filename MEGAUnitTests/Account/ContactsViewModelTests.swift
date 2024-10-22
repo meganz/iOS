@@ -3,7 +3,6 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
@@ -320,7 +319,7 @@ final class ContactsViewModelTests: XCTestCase {
             shareUseCase: MockShareUseCase(
                 containsSensitiveContent: containsSensitiveContent
             ),
-            featureFlagProvider: MockFeatureFlagProvider(
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
                 list: [.hiddenNodes: isHiddenNodesEnabled])
         )
     }

@@ -11,8 +11,8 @@ final class PhotoYearCardViewModel: PhotoCardViewModel {
     init(photoByYear: PhotoByYear,
          thumbnailLoader: some ThumbnailLoaderProtocol,
          nodeUseCase: some NodeUseCaseProtocol,
-         sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.photoByYear = photoByYear
         
         title = photoByYear.categoryDate.formatted(.dateTime.year().locale(.current))
@@ -22,7 +22,7 @@ final class PhotoYearCardViewModel: PhotoCardViewModel {
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            featureFlagProvider: featureFlagProvider
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
         )
     }
 }

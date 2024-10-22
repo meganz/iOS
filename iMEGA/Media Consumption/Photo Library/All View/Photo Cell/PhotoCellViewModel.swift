@@ -42,7 +42,7 @@ class PhotoCellViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let nodeUseCase: (any NodeUseCaseProtocol)?
     private let sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let selection: PhotoSelection
     private var subscriptions = Set<AnyCancellable>()
     
@@ -51,13 +51,13 @@ class PhotoCellViewModel: ObservableObject {
          thumbnailLoader: some ThumbnailLoaderProtocol,
          nodeUseCase: (any NodeUseCaseProtocol)?,
          sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailLoader = thumbnailLoader
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
@@ -107,7 +107,7 @@ class PhotoCellViewModel: ObservableObject {
     }
     
     func monitorInheritedSensitivityChanges() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               sensitiveNodeUseCase != nil,
               !photo.isMarkedSensitive,
               await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else { return }
@@ -124,7 +124,7 @@ class PhotoCellViewModel: ObservableObject {
     /// Monitor photo node and inherited sensitivity changes
     /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
     func monitorPhotoSensitivityChanges() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               nodeUseCase != nil,
               sensitiveNodeUseCase != nil else { return }
         // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder

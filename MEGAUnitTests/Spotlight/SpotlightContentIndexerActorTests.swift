@@ -1,7 +1,6 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 import XCTest
 
 final class SpotlightContentIndexerActorTests: XCTestCase {
@@ -163,7 +162,7 @@ extension SpotlightContentIndexerActorTests {
             favouritesUseCase: favouritesUseCase,
             nodeAttributeUseCase: nodeAttributeUseCase,
             spotlightSearchableIndexUseCase: spotlightSearchableIndexUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: featureFlagHiddenNodes]))
         trackForMemoryLeaks(on: sut)
         return sut
     }

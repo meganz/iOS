@@ -1,6 +1,6 @@
 @testable import MEGA
-import MEGAPresentation
-import MEGAPresentationMock
+import MEGADomain
+import MEGADomainMock
 import XCTest
 
 class AlbumToolbarConfiguratorTest: XCTestCase {
@@ -8,7 +8,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
         [AlbumType.gif, .raw].forEach { albumType in
             [true, false].forEach { isHiddenNodesEnabled in
                 let sut = makeSUT(albumType: albumType,
-                                  featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: isHiddenNodesEnabled]))
+                                  remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: isHiddenNodesEnabled]))
                 
                 let buttonItems = sut.toolbarItems(forNodes: nil)
                 
@@ -37,7 +37,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
     func testToolbarItems_forFavouriteAlbum_shouldReturnCorrectItems() {
         [true, false].forEach { isHiddenNodesEnabled in
             let sut = makeSUT(albumType: .favourite,
-                              featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: isHiddenNodesEnabled]))
+                              remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: isHiddenNodesEnabled]))
             
             let buttonItems = sut.toolbarItems(forNodes: nil)
             XCTAssertEqual(buttonItems, [
@@ -57,7 +57,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
     func testToolbarItems_forUserAlbum_shouldReturnCorrectItems() {
         [true, false].forEach { isHiddenNodesEnabled in
             let sut = makeSUT(albumType: .user,
-                              featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: isHiddenNodesEnabled]))
+                              remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: isHiddenNodesEnabled]))
             
             let buttonItems = sut.toolbarItems(forNodes: nil)
             XCTAssertEqual(buttonItems, [
@@ -104,7 +104,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
         sendToChatAction: @escaping AlbumToolbarConfigurator.ButtonAction = { _ in },
         moreAction: @escaping AlbumToolbarConfigurator.ButtonAction = { _ in },
         albumType: AlbumType,
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
     ) -> AlbumToolbarConfigurator {
         AlbumToolbarConfigurator(
             downloadAction: downloadAction,
@@ -118,6 +118,6 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
             sendToChatAction: sendToChatAction,
             moreAction: moreAction,
             albumType: albumType,
-            featureFlagProvider: featureFlagProvider)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
     }
 }

@@ -7,7 +7,7 @@ actor SpotlightContentIndexerActor {
     private let favouritesUseCase: any FavouriteNodesUseCaseProtocol
     private let nodeAttributeUseCase: any NodeAttributeUseCaseProtocol
     private let spotlightSearchableIndexUseCase: any SpotlightSearchableIndexUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private enum Constants {
         static let favouritesId = "favourites"
@@ -16,12 +16,12 @@ actor SpotlightContentIndexerActor {
     init(favouritesUseCase: some FavouriteNodesUseCaseProtocol, 
          nodeAttributeUseCase: some NodeAttributeUseCaseProtocol,
          spotlightSearchableIndexUseCase: some SpotlightSearchableIndexUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.favouritesUseCase = favouritesUseCase
         self.nodeAttributeUseCase = nodeAttributeUseCase
         self.spotlightSearchableIndexUseCase = spotlightSearchableIndexUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     func indexSearchableItems() async {
@@ -46,7 +46,7 @@ actor SpotlightContentIndexerActor {
     
     func reindex(updatedNodes: [NodeEntity]) async {
         
-        if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) {
             
             let acceptedNodeChanges = updatedNodes
                 .nodes(for: [.favourite, .sensitive, .name, .removed])
@@ -93,7 +93,7 @@ actor SpotlightContentIndexerActor {
         try await favouritesUseCase
             .allFavouriteNodes(
                 searchString: nil,
-                excludeSensitives: featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+                excludeSensitives: remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
                 limit: 100)
             .map(searchableItem(node:))
     }

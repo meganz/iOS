@@ -13,20 +13,20 @@ class PhotoCardViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     @Published var thumbnailContainer: any ImageContaining
     
     init(coverPhoto: NodeEntity?,
          thumbnailLoader: some ThumbnailLoaderProtocol,
          nodeUseCase: some NodeUseCaseProtocol,
-         sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.coverPhoto = coverPhoto
         self.thumbnailLoader = thumbnailLoader
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         
         thumbnailContainer = if let photo = coverPhoto {
             thumbnailLoader.initialImage(
@@ -57,7 +57,7 @@ class PhotoCardViewModel: ObservableObject {
     }
         
     func monitorInheritedSensitivityChanges() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               let coverPhoto,
               !coverPhoto.isMarkedSensitive,
               await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else {
@@ -78,7 +78,7 @@ class PhotoCardViewModel: ObservableObject {
     
     func monitorPhotoSensitivityChanges() async {
         guard
-            featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+            remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
             let coverPhoto else {
             return
         }

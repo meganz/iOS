@@ -26,16 +26,16 @@ class AppearanceViewModel {
     private var mediaDiscoveryShouldIncludeSubfolderSetting: Bool
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     init(preferenceUseCase: some PreferenceUseCaseProtocol,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         
         $autoMediaDiscoverySetting.useCase = preferenceUseCase
         $mediaDiscoveryShouldIncludeSubfolderSetting.useCase = preferenceUseCase
@@ -58,7 +58,7 @@ class AppearanceViewModel {
     func isAppearanceSectionVisible(section: AppearanceSection?) -> Bool {
         switch section {
         case .hiddenItems:
-            guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+            guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) else {
                 return false
             }
             return sensitiveNodeUseCase.isAccessible()

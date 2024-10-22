@@ -44,7 +44,7 @@ enum CloudDriveAction: ActionType {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let sdk: MEGASdk
 
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     private var parentNode: MEGANode?
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
@@ -66,7 +66,7 @@ enum CloudDriveAction: ActionType {
          accountUseCase: some AccountUseCaseProtocol,
          sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
          tracker: some AnalyticsTracking,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
          moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol,
          nodeSensitivityChecker: some NodeSensitivityChecking,
          sdk: MEGASdk = MEGASdk.shared
@@ -78,7 +78,7 @@ enum CloudDriveAction: ActionType {
         self.accountUseCase = accountUseCase
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.tracker = tracker
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         self.sdk = sdk
         self.nodeSensitivityChecker = nodeSensitivityChecker
@@ -170,7 +170,7 @@ enum CloudDriveAction: ActionType {
         case .moveToRubbishBin(let nodes):
             moveToRubbishBinViewModel.moveToRubbishBin(nodes: nodes.toNodeEntities())
         case .resetSensitivitySetting:
-            guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else { return }
+            guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) else { return }
             sensitiveSettingTask = nil
         case .didTapChooseFromPhotos:
             trackChooseFromPhotosEvent()

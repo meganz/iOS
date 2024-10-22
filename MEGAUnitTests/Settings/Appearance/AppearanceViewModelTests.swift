@@ -1,8 +1,6 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 final class AppearanceViewModelTests: XCTestCase {
@@ -76,7 +74,7 @@ final class AppearanceViewModelTests: XCTestCase {
     func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
             (.launch, true),
@@ -97,7 +95,7 @@ final class AppearanceViewModelTests: XCTestCase {
     func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
             (.launch, true),
@@ -118,7 +116,7 @@ final class AppearanceViewModelTests: XCTestCase {
     func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
             (.launch, true),
@@ -139,7 +137,7 @@ final class AppearanceViewModelTests: XCTestCase {
     func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
             (.launch, true),
@@ -195,14 +193,14 @@ final class AppearanceViewModelTests: XCTestCase {
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [.hiddenNodes: false]),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]),
         file: StaticString = #file,
         line: UInt = #line) -> AppearanceViewModel {
             let sut = AppearanceViewModel(
                 preferenceUseCase: preferenceUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                featureFlagProvider: featureFlagProvider
+                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
             )
             trackForMemoryLeaks(on: sut, file: file, line: line)
             return sut
