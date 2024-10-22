@@ -44,6 +44,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     enum Command: CommandType, Equatable {
         case reloadCounts
         case reloadUIContent
+        case reloadStorage
         case configPlanDisplay
         case setUserAvatar
         case setName
@@ -76,7 +77,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     // MARK: Account Plan view
     @Published private(set) var currentPlanName: String = ""
-    @Published var isUpdatingAccountDetails: Bool = false
+    @Published var showCurrentPlanLoadingView: Bool = false
     
     // MARK: - Init
     
@@ -249,7 +250,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .planList:
             await fetchPlanList()
         case .accountDetails:
-            guard !isUpdatingAccountDetails && accountDetails == nil else { return }
             await fetchAccountDetails()
         case .contentCounts:
             await fetchCounts()
@@ -263,16 +263,17 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         configPlanDisplay()
     }
     
-    private func fetchAccountDetails() async {
-        isUpdatingAccountDetails = true
+    private func fetchAccountDetails(showCurrentPlanLoadingView: Bool = false) async {
+        self.showCurrentPlanLoadingView = showCurrentPlanLoadingView
         
         do {
             let accountDetails = try await myAccountHallUseCase.refreshCurrentAccountDetails()
             setAccountDetails(accountDetails)
-            isUpdatingAccountDetails = false
+            self.showCurrentPlanLoadingView = false
             configPlanDisplay()
+            reloadStorage()
         } catch {
-            isUpdatingAccountDetails = false
+            self.showCurrentPlanLoadingView = false
             MEGALogError("[Account Hall] Error loading account details. Error: \(error)")
         }
     }
@@ -304,6 +305,10 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     private func configPlanDisplay() {
         invokeCommand?(.configPlanDisplay)
+    }
+    
+    private func reloadStorage() {
+        invokeCommand?(.reloadStorage)
     }
 
     // MARK: Subscriptions and Account updates
@@ -359,7 +364,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
                     guard let self else { return }
                     
                     guard let account else {
-                        await fetchAccountDetails()
+                        await fetchAccountDetails(showCurrentPlanLoadingView: true)
                         return
                     }
                     
