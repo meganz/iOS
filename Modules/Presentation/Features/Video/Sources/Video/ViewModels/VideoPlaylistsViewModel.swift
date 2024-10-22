@@ -198,7 +198,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
     
     func createUserVideoPlaylist(with name: String?) {
         guard let name else { return }
-        createVideoPlaylistTask = Task {
+        createVideoPlaylistTask = Task { @MainActor in
             do {
                 let mappedName = VideoPlaylistNameCreationMapper.videoPlaylistName(from: name, from: videoPlaylistNames)
                 newlyCreatedVideoPlaylist = try await videoPlaylistsUseCase.createVideoPlaylist(mappedName)

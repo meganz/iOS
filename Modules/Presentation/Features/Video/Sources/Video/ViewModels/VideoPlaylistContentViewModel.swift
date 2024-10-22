@@ -182,7 +182,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     }
     
     private func doesSupport(_ sortOrder: SortOrderEntity) -> Bool {
-        [.defaultAsc, .defaultDesc, .modificationAsc, .modificationDesc].contains(sortOrder)
+        PlaylistContentSupportedSortOrderPolicy.supportedSortOrders.contains(sortOrder)
     }
     
     func addVideosToVideoPlaylist(videos: [NodeEntity]) async {
