@@ -96,7 +96,7 @@ extension MyAccountHallViewController {
     
     private func excuteCommand(_ command: MyAccountHallViewModel.Command) {
         switch command {
-        case .reloadCounts:
+        case .reloadCounts, .reloadStorage:
             tableView?.reloadData()
         case .reloadUIContent:
             configNavigationBar()
