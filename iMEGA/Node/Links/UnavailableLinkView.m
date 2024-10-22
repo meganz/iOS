@@ -27,7 +27,7 @@
 - (void)updateAppearance {
     self.backgroundColor = [UIColor pageBackgroundColor];
     
-    self.firstTextLabel.textColor = self.secondTextLabel.textColor = self.thirdTextLabel.textColor = [UIColor mnz_subtitles];
+    self.firstTextLabel.textColor = self.secondTextLabel.textColor = self.thirdTextLabel.textColor = [UIColor mnz_secondaryTextColor];
 }
 
 - (void)showTerms {

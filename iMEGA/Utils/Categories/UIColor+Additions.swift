@@ -73,11 +73,11 @@ extension UIColor {
     }
     
     // MARK: - Background Colors
-
+    
     @objc class func surface1Background() -> UIColor {
         TokenColors.Background.surface1
     }
-
+    
     @objc class func pageBackgroundColor() -> UIColor {
         TokenColors.Background.page
     }
@@ -251,28 +251,12 @@ extension UIColor {
         }
     }
     
-    @objc class func mnz_secondaryLabelTextColor() -> UIColor {
-        TokenColors.Text.secondary
-    }
-    
     @objc class func supportInfoColor() -> UIColor {
         TokenColors.Support.info
     }
     
     @objc class func supportSuccessColor() -> UIColor {
         TokenColors.Support.success
-    }
-    
-    // MARK: - Chat Reactions
-    
-    @objc class func secondaryTextColor() -> UIColor {
-        TokenColors.Text.secondary
-    }
-    
-    // MARK: - Text
-    
-    @objc class func mnz_subtitles() -> UIColor {
-        TokenColors.Text.secondary
     }
     
     // MARK: - PRO account colors
@@ -366,14 +350,13 @@ extension UIColor {
     class func mnz_inputbarButtonBackground(
         _ traitCollection: UITraitCollection
     ) -> UIColor? {
-        let primaryGray = mnz_primaryGray()
         return (
             traitCollection.userInterfaceStyle == .dark
         )
-        ? primaryGray.withAlphaComponent(
+        ? mnz_secondaryTextColor().withAlphaComponent(
             0.2
         )
-        : primaryGray.withAlphaComponent(
+        : mnz_secondaryTextColor().withAlphaComponent(
             0.04
         )
     }
@@ -441,10 +424,6 @@ extension UIColor {
     
     @objc class func mnz_grayDBDBDB() -> UIColor {
         UIColor.grayDBDBDB
-    }
-    
-    @objc class func mnz_primaryGray() -> UIColor {
-        TokenColors.Text.secondary
     }
     
     @objc class func iconSecondaryColor() -> UIColor {

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 class GeoLocationView: UIView {
@@ -14,7 +15,7 @@ class GeoLocationView: UIView {
     private func updateAppearance () {
         backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
         titleLabel.textColor = UIColor.label
-        subtitleLabel.textColor = .mnz_subtitles()
+        subtitleLabel.textColor = TokenColors.Text.secondary
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

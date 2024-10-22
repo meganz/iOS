@@ -32,9 +32,9 @@ class ChatSharedItemTableViewCell: UITableViewCell {
     func configure(for node: MEGANode, ownerHandle: UInt64, chatRoom: MEGAChatRoom) {
         nameLabel.text = node.name
         ownerNameLabel.text = chatRoom.userDisplayName(forUserHandle: ownerHandle)
-        ownerNameLabel.textColor = .mnz_subtitles()
+        ownerNameLabel.textColor = TokenColors.Text.secondary
         infoLabel.text = Helper.sizeAndModificationDate(for: node, api: .shared)
-        infoLabel.textColor = .mnz_subtitles()
+        infoLabel.textColor = TokenColors.Text.secondary
         moreButton.tintColor = TokenColors.Icon.primary
         
         if node.hasThumbnail() {

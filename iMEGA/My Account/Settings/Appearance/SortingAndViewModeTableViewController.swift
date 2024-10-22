@@ -159,14 +159,14 @@ class SortingAndViewModeTableViewController: UITableViewController {
         else { return }
 
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
-        tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
+        tableViewHeaderFooterView.textLabel?.textColor = TokenColors.Text.secondary
     }
 
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView
         else { return }
 
-        tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
+        tableViewHeaderFooterView.textLabel?.textColor = TokenColors.Text.secondary
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

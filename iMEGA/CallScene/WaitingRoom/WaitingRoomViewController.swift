@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAUIKit
 import SwiftUI
@@ -56,7 +57,7 @@ final class WaitingRoomViewController: UIViewController {
             subtitle: viewModel.createMeetingDate(),
             subtitleFont: UIFont.preferredFont(style: .caption1, weight: .regular),
             titleColor: UIColor.primaryTextColor(),
-            subtitleColor: UIColor.mnz_subtitles()
+            subtitleColor: TokenColors.Text.secondary
         )
         navigationItem.titleView?.sizeToFit()
     }

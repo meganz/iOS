@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASDKRepo
 import MEGAUIKit
 import UIKit
@@ -23,7 +24,7 @@ class ContactLinkContentView: UIView {
     private func updateAppearance(with trait: UITraitCollection) {
         backgroundColor = .mnz_chatRichLinkContentBubble(trait)
         titleLabel.textColor = UIColor.label
-        descriptionLabel.textColor = UIColor.mnz_subtitles()
+        descriptionLabel.textColor = TokenColors.Text.secondary
         imageView.layer.cornerRadius = imageView.frame.size.height / 2
         imageView.clipsToBounds = true
     }

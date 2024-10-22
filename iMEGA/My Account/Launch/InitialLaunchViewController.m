@@ -48,7 +48,7 @@
     self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     self.titleLabel.textColor = [UIColor primaryTextColor];
-    self.descriptionLabel.textColor = [UIColor mnz_subtitles];
+    self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
     
     [self.setupButton mnz_setupPrimary:self.traitCollection];
     [self.skipButton mnz_setupSecondary:self.traitCollection];

@@ -244,7 +244,7 @@ class AddToChatViewController: UIViewController {
         view.backgroundColor = UIDevice.current.iPadDevice ? contentView.backgroundColor : .clear
         patchView.backgroundColor = TokenColors.Background.page
         pageControl.pageIndicatorTintColor = .mnz_tertiaryGray(for: traitCollection)
-        pageControl.currentPageIndicatorTintColor = .mnz_primaryGray()
+        pageControl.currentPageIndicatorTintColor = TokenColors.Text.secondary
     }
     
     // MARK: - Actions.

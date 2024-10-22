@@ -129,7 +129,7 @@
     
     if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] ||
         [MEGASdk.shared isAccountType:MEGAAccountTypeProFlexi]) {
-        self.accountTypeLabel.textColor = [UIColor mnz_subtitles];
+        self.accountTypeLabel.textColor = [UIColor mnz_secondaryTextColor];
         
         self.tableFooterContainerView.backgroundColor = [UIColor surface1Background];
         self.tableFooterLabel.textColor = primaryTextColor;

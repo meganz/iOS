@@ -84,7 +84,7 @@ extension MyAccountHallTableViewCell {
         }
 
         if detailLabel != nil {
-            detailLabel.textColor = UIColor.mnz_secondaryLabelTextColor()
+            detailLabel.textColor =  TokenColors.Text.secondary
         }
         
         if pendingView != nil {

@@ -162,7 +162,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)updateSelector {
     self.inProgressButton.backgroundColor = self.completedButton.backgroundColor = [UIColor surface1Background];
     
-    UIColor *unselectedColor = [UIColor mnz_primaryGray];
+    UIColor *unselectedColor = [UIColor mnz_secondaryTextColor];
     UIColor *selectedColor = [UIColor mnz_red];
     
     [self.inProgressButton setTitleColor:unselectedColor forState:UIControlStateNormal];

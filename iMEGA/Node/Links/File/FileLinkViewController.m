@@ -113,7 +113,7 @@
     
     self.mainView.backgroundColor = [UIColor pageBackgroundColor];
     
-    self.sizeLabel.textColor = [UIColor mnz_subtitles];
+    self.sizeLabel.textColor = [UIColor mnz_secondaryTextColor];
     
     [self.importButton mnz_setupPrimary:self.traitCollection];
     [self.openButton mnz_setupBasic:self.traitCollection titleColor:NULL];

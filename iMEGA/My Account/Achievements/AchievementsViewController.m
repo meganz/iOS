@@ -85,7 +85,7 @@
     self.unlockedBonusesView.backgroundColor = [UIColor surface1Background];
     self.inviteYourFriendsTitleLabel.textColor = [UIColor primaryTextColor];
     self.unlockedBonusesLabel.textColor = [UIColor primaryTextColor];
-    self.storageQuotaLabel.textColor = [UIColor secondaryTextColor];
+    self.storageQuotaLabel.textColor = [UIColor mnz_secondaryTextColor];
     
     self.tableView.separatorColor = [UIColor mnz_separator];
     self.inviteYourFriendsView.backgroundColor = [UIColor pageBackgroundColor];
@@ -255,7 +255,7 @@
             [self setStorageQuotaRewardsForCell:cell forIndex:index.integerValue];
             NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
             cell.subtitleLabel.text = [self achievementSubtitleWithRemainingDays:awardExpirationdDate.daysUntil];
-            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_errorRed] : [UIColor mnz_subtitles];
+            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_errorRed] : [UIColor mnz_secondaryTextColor];
         } else {
             NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
             
@@ -266,7 +266,7 @@
             cell.storageQuotaRewardLabel.textColor = [UIColor whiteTextColor];
             
             cell.subtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.incomplete.subtitle", @""), storageString];
-            cell.subtitleLabel.textColor = [UIColor mnz_subtitles];
+            cell.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
         }
     }
     

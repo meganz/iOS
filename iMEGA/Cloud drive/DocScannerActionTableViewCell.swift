@@ -29,7 +29,7 @@ class DocScannerActionTableViewCell: UITableViewCell {
             actionImageView.image = UIImage.upload
             actionLabel.text = Strings.Localizable.uploadToMega
         case .sendMessage:
-            actionImageView.tintColor = .mnz_primaryGray()
+            actionImageView.tintColor = TokenColors.Text.secondary
             actionImageView.image = UIImage.sendToChat
             actionLabel.text = Strings.Localizable.General.sendToChat
         }
