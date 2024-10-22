@@ -206,6 +206,8 @@
 		244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
 		2455359C2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */; };
+		245603672CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */; };
+		245603692CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */; };
 		24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */; };
 		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
 		245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */; };
@@ -2976,6 +2978,8 @@
 		244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTableViewControllerTests.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
 		2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDataSourceTests.swift; sourceTree = "<group>"; };
+		245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModel.swift; sourceTree = "<group>"; };
+		245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModelTests.swift; sourceTree = "<group>"; };
 		24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerTests.swift; sourceTree = "<group>"; };
 		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
 		245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaData.swift; sourceTree = "<group>"; };
@@ -6281,6 +6285,7 @@
 		24385D272BF09420002F0561 /* VideoPlaylist */ = {
 			isa = PBXGroup;
 			children = (
+				245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */,
 				2484574E2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift */,
 				24385D282BF09469002F0561 /* VideoPlaylistContentViewController.swift */,
 			);
@@ -6333,6 +6338,7 @@
 			isa = PBXGroup;
 			children = (
 				24EDF7202C1BF13A0065A26D /* MockVideoRevampRouter.swift */,
+				245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */,
 				24EDF71C2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift */,
 				244CEFC02B2319F400147302 /* VideoRevampTabContainerViewModelTests.swift */,
 			);
@@ -16211,6 +16217,7 @@
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				244CEFCF2B257AD000147302 /* VideoConfig+Live.swift in Sources */,
+				245603672CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift in Sources */,
 				2484574F2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */,
 				241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */,
@@ -16965,6 +16972,7 @@
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
 				A894E7A32B8F6396006AC2C5 /* UserAvatarHandlerTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
+				245603692CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift in Sources */,
 				24EDF71D2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift in Sources */,
 				244CEFC12B2319F400147302 /* VideoRevampTabContainerViewModelTests.swift in Sources */,
 				9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */,

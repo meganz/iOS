@@ -8,37 +8,6 @@ import XCTest
 
 final class VideoPlaylistContentViewControllerTests: XCTestCase {
     
-    // MARK: - sortMenu
-    
-    func testSortMenu_whenHasInValidSortOrderType_doesNotSaveSortOrder() {
-        let invalidSortOrders: [SortOrderEntity] = SortOrderEntity.allCases
-            .filter { $0 != .defaultAsc
-                && $0 != .defaultDesc
-                && $0 != .modificationAsc
-                && $0 != .modificationDesc
-            }
-        
-        invalidSortOrders.enumerated().forEach { (index, invalidSortOrder) in
-            let (sut, sortOrderPreferenceUseCase) = makeSUT()
-            
-            sut.sortMenu(didSelect: invalidSortOrder.toSortOrderType())
-            
-            XCTAssertTrue(sortOrderPreferenceUseCase.messages.isEmpty, "fail at index: \(index), with value: \(invalidSortOrder)")
-        }
-    }
-    
-    func testSortMenu_whenHasValidSortOrderType_saveSortOrder() {
-        let validSortOrders: [SortOrderEntity] = [ .defaultAsc, .defaultDesc, .modificationAsc, .modificationDesc ]
-        
-        validSortOrders.enumerated().forEach { (index, validSortOrder) in
-            let (sut, sortOrderPreferenceUseCase) = makeSUT()
-            
-            sut.sortMenu(didSelect: validSortOrder.toSortOrderType())
-            
-            XCTAssertEqual(sortOrderPreferenceUseCase.messages, [ .save(sortOrder: validSortOrder, for: .videoPlaylistContent) ], "fail at index: \(index), with value: \(validSortOrder)")
-        }
-    }
-    
     // MARK: - quickActionsMenu
     
     func testQuickAction_whenCalled_setActionInSharedUIState() {

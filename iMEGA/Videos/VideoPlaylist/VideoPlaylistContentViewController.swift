@@ -45,6 +45,8 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let videoToolbarViewModel = VideoToolbarViewModel()
     private var toolbar = UIToolbar()
     
+    private var viewModel: VideoPlaylistContentContainerViewModel
+    
     init(
         videoConfig: VideoConfig,
         videoPlaylistEntity: VideoPlaylistEntity,
@@ -77,6 +79,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.videoSelection = videoSelection
         self.selectionAdapter = selectionAdapter
         self.syncModel = syncModel
+        self.viewModel = VideoPlaylistContentContainerViewModel(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -368,29 +371,13 @@ extension VideoPlaylistContentViewController {
         
         Publishers.CombineLatest(
             sharedUIState.$videosCount.map { $0 == 0 }.removeDuplicates(),
-            sortOrderChangedSequence()
+            viewModel.$sortOrder
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] isEmptyVideos, sortOrder in
             self?.setupMoreBarButtonItem(isEmptyState: isEmptyVideos, sortOrder: sortOrder)
         }
         .store(in: &subscriptions)
-    }
-    
-    private func sortOrderChangedSequence() -> AnyPublisher<SortOrderEntity, Never> {
-        sortOrderPreferenceUseCase.monitorSortOrder(for: . videoPlaylistContent)
-            .map { [weak self] sortOrder in
-                guard let self else {
-                    return SortOrderEntity.defaultAsc
-                }
-                return doesSupport(sortOrder) ? sortOrder : .defaultAsc
-            }
-            .removeDuplicates()
-            .eraseToAnyPublisher()
-    }
-    
-    private func doesSupport(_ sortOrder: SortOrderEntity) -> Bool {
-        [.defaultAsc, .defaultDesc, .modificationAsc, .modificationDesc].contains(sortOrder)
     }
     
     private func setupMoreBarButtonItem(isEmptyState: Bool, sortOrder: SortOrderEntity) {
@@ -416,10 +403,7 @@ extension VideoPlaylistContentViewController: DisplayMenuDelegate {
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
-        guard doesSupport(sortType.toSortOrderEntity()) else {
-            return
-        }
-        sortOrderPreferenceUseCase.save(sortOrder: sortType.toSortOrderEntity(), for: .videoPlaylistContent)
+        viewModel.didSelectSortMenu(sortOrder: sortType.toSortOrderEntity())
     }
 }
 
