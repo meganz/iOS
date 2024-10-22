@@ -164,7 +164,7 @@ public class VideoRevampFactory {
 }
 
 extension VideoRevampFactory {
-    private static func makeThumbnailLoader(
+    public static func makeThumbnailLoader(
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol
     ) -> any ThumbnailLoaderProtocol {
