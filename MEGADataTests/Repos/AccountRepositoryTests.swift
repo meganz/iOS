@@ -569,7 +569,6 @@ final class AccountRepositoryTests: XCTestCase {
         nodeSizes: [UInt64: Int64] = [:],
         incomingNodes: [MockNode] = [],
         currentSize: Int64 = 0,
-        shouldRefreshAccountDetails: Bool = false,
         accountDetails: MockMEGAAccountDetails? = nil,
         accountDetailsEntity: AccountDetailsEntity? = nil,
         upgradeSecurityClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
@@ -622,8 +621,6 @@ final class AccountRepositoryTests: XCTestCase {
         if let storageStatus {
             currentUserSource.setStorageStatus(storageStatus)
         }
-        
-        currentUserSource.setShouldRefreshAccountDetails(shouldRefreshAccountDetails)
         
         let accountUpdatesProvider = MockAccountUpdatesProvider(
             onAccountRequestFinish: SingleItemAsyncSequence(item: accountRequestUpdate).eraseToAnyAsyncSequence(),

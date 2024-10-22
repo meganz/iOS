@@ -34,9 +34,7 @@ public final class CurrentUserSource: @unchecked Sendable {
     public var isLoggedIn: Bool {
         _isLoggedIn.wrappedValue
     }
-    public var shouldRefreshAccountDetails: Bool {
-        _shouldRefreshAccountDetails
-    }
+    
     public var accountDetails: AccountDetailsEntity? {
         _accountDetails
     }
@@ -103,15 +101,6 @@ public final class CurrentUserSource: @unchecked Sendable {
         
         NotificationCenter
             .default
-            .publisher(for: .setShouldRefreshAccountDetails)
-            .compactMap { $0.object as? Bool }
-            .sink { [weak self] shouldRefresh in
-                self?.setShouldRefreshAccountDetails(shouldRefresh)
-            }
-            .store(in: &subscriptions)
-        
-        NotificationCenter
-            .default
             .publisher(for: .accountDidFinishFetchAccountDetails)
             .compactMap { $0.object as? AccountDetailsEntity }
             .sink { [weak self] accountDetails in
@@ -127,10 +116,6 @@ public final class CurrentUserSource: @unchecked Sendable {
                 self?.setStorageStatus(storageStatus)
             }
             .store(in: &subscriptions)
-    }
-    
-    public func setShouldRefreshAccountDetails(_ shouldRefresh: Bool) {
-        $_shouldRefreshAccountDetails.mutate { $0 = shouldRefresh }
     }
     
     public func setAccountDetails(_ userAccountDetails: AccountDetailsEntity?) {
