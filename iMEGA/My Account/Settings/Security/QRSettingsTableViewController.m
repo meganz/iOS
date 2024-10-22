@@ -80,7 +80,7 @@
     MEGASetAttrUserRequestDelegate *delegate = [[MEGASetAttrUserRequestDelegate alloc] initWithCompletion:^() {
         [MEGASdk.shared getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
     }];
-    [MEGASdk.shared setContactLinksOptionDisable:!sender.isOn delegate:delegate];
+    [MEGASdk.shared setContactLinksOptionDisable:sender.isOn delegate:delegate];
 }
 
 - (IBAction)didTapCloseButton:(UIBarButtonItem *)sender {
