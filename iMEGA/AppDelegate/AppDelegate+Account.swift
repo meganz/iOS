@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGASdk
 
 extension AppDelegate {
     @objc func expiredAccountTitle() -> String {
@@ -51,7 +52,7 @@ extension AppDelegate {
         NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: shouldRequest)
     }
     
-    @objc func postDidFinishFetchAccountDetailsNotification(accountDetails: Bool) {
-        NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails)
+    @objc func postDidFinishFetchAccountDetailsNotification(accountDetails: MEGAAccountDetails?) {
+        NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails?.toAccountDetailsEntity())
     }
 }
