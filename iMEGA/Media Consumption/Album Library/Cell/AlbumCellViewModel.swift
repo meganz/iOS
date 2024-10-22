@@ -114,11 +114,11 @@ final class AlbumCellViewModel: ObservableObject {
             selectedAlbum = album
         }
         
-        await trackAnalytics()
+        trackAnalytics()
     }
     
     func monitorAlbumPhotos() async {
-        guard await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled(),
+        guard albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled(),
               album.type == .user else { return }
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         for await albumPhotos in await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
@@ -190,13 +190,13 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailContainer = imageContainer
     }
     
-    private func trackAnalytics() async {
+    private func trackAnalytics() {
         let selectionType: AlbumSelected.SelectionType = if isEditing {
             isSelected ? .multiadd : .multiremove
         } else {
             .single
         }
-        let event = if await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
+        let event = if albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
             AlbumSelectedEvent(
                 selectionType: selectionType,
                 imageCount: albumMetaData?.imageCount.toKotlinInt(),

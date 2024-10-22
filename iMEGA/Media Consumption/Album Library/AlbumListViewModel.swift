@@ -290,7 +290,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func monitorAlbums() async throws {
-        guard await !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else {
+        guard !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else {
             await newAlbumMonitoring()
             return
         }
@@ -402,14 +402,11 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     // Throttle is not available in swift-async-algorithms package and will most likely only be available for iOS 16 and above due to the use of `Clock`.
     private func subscribeToAlbums() {
-        Task { [weak self] in
-            guard let self,
-                  await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
-            
-            albumsSubject
-                .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
-                .assign(to: &$albums)
-        }
+        guard albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
+        
+        albumsSubject
+            .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
+            .assign(to: &$albums)
     }
     
     @MainActor

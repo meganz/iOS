@@ -3,7 +3,7 @@ import MEGAPresentation
 import MEGASDKRepo
 
 protocol AlbumRemoteFeatureFlagProviderProtocol: Sendable {
-    func isPerformanceImprovementsEnabled() async -> Bool
+    func isPerformanceImprovementsEnabled() -> Bool
 }
 
 struct AlbumRemoteFeatureFlagProvider: AlbumRemoteFeatureFlagProviderProtocol {
@@ -16,15 +16,15 @@ struct AlbumRemoteFeatureFlagProvider: AlbumRemoteFeatureFlagProviderProtocol {
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
-    func isPerformanceImprovementsEnabled() async -> Bool {
+    func isPerformanceImprovementsEnabled() -> Bool {
         if featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) {
-            await isAlbumPerformanceRemoteFeatureFlagEnabled()
+            isAlbumPerformanceRemoteFeatureFlagEnabled()
         } else {
             false
         }
     }
     
-    private func isAlbumPerformanceRemoteFeatureFlagEnabled() async -> Bool {
+    private func isAlbumPerformanceRemoteFeatureFlagEnabled() -> Bool {
         let isEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .albumPerformanceImprovements)
         MEGALogInfo("[\(type(of: self))]: Album performance improvements enabled: \(isEnabled)")
         return isEnabled

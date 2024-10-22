@@ -209,7 +209,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func loadNodes() async {
-        guard await !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
+        guard !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
         do {
             let photos = try await albumContentsUseCase.photos(in: album)
             guard !Task.isCancelled else { return }
@@ -300,7 +300,7 @@ final class AlbumContentViewModel: ViewModelType {
     
     private func setupAlbumMonitoring() {
         setupSubscriptionTask = Task {
-            if await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
+            if albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
                 await monitorAlbumPhotos()
             } else {
                 setupSubscription()

@@ -3,34 +3,35 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
-import XCTest
+import Testing
 
-final class AlbumRemoteFeatureFlagProviderTests: XCTestCase {
-
-    func testIsPerformanceImprovementsEnabled_localFlagOff_shouldReturnFalse() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: false])
-        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-        
-        let isEnabled = await sut.isPerformanceImprovementsEnabled()
-        
-        XCTAssertFalse(isEnabled)
-    }
-
-    func testIsPerformanceImprovementsEnabled_localFlagOn_shouldReturnRemoteFlagStatus() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
-        for isRemoteEnabled in [true, false] {
-            
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.albumPerformanceImprovements: isRemoteEnabled])
-            let sut = makeSUT(featureFlagProvider: featureFlagProvider,
-                              remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
-            
-            let isEnabled = await sut.isPerformanceImprovementsEnabled()
+struct AlbumRemoteFeatureFlagProviderTests {
     
-            XCTAssertEqual(isEnabled, isRemoteEnabled)
+    @Suite("Call to check enabled state")
+    struct EnabledState {
+        @Test("Local flag is off should return false")
+        func localFlagOff() async throws {
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: false])
+            let sut = AlbumRemoteFeatureFlagProviderTests.makeSUT(
+                featureFlagProvider: featureFlagProvider)
+            
+            #expect(sut.isPerformanceImprovementsEnabled() == false)
+        }
+        
+        @Test("Local flag is off should return remote flag status",
+              arguments: [true, false])
+        func remoteFlag(isRemoteEnabled: Bool) async throws {
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.albumPhotoCache: true])
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.albumPerformanceImprovements: isRemoteEnabled])
+            let sut = AlbumRemoteFeatureFlagProviderTests.makeSUT(
+                featureFlagProvider: featureFlagProvider,
+                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+            
+            #expect(sut.isPerformanceImprovementsEnabled() == isRemoteEnabled)
         }
     }
     
-    private func makeSUT(
+    private static func makeSUT(
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
     ) -> AlbumRemoteFeatureFlagProvider {

@@ -7,7 +7,7 @@ struct MockAlbumRemoteFeatureFlagProvider: AlbumRemoteFeatureFlagProviderProtoco
         self.isEnabled = isEnabled
     }
     
-    func isPerformanceImprovementsEnabled() async -> Bool {
+    func isPerformanceImprovementsEnabled() -> Bool {
         isEnabled
     }
 }
