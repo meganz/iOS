@@ -60,7 +60,7 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     
     private func onViewReady() {
         loadingTask = Task {
-            if await albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
+            if albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
                 await loadAlbumPhotos()
             } else {
                 invokeCommand?(.setLabels(title: album.name,
