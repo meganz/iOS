@@ -310,7 +310,7 @@ class NodeActionViewController: ActionSheetViewController {
     override func updateAppearance() {
         super.updateAppearance()
         
-        headerView?.backgroundColor = TokenColors.Background.surface2
+        headerView?.backgroundColor = TokenColors.Background.surface1
         if nodes.count == 1, let node = nodes.first, node.isTakenDown() {
             titleLabel.attributedText = node.attributedTakenDownName()
             titleLabel.textColor = TokenColors.Text.error
