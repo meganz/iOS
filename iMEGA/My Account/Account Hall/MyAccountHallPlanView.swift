@@ -49,12 +49,12 @@ struct MyAccountHallPlanView: View {
     
     @ViewBuilder
     private func currentPlanNameView() -> some View {
-        if viewModel.isUpdatingAccountDetails {
+        if viewModel.showCurrentPlanLoadingView {
             ProgressView()
         } else {
             Text(viewModel.currentPlanName)
                 .font(.body)
-                .foregroundStyle( TokenColors.Text.primary.swiftUI)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }
     }
 }

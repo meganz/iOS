@@ -51,45 +51,19 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testLoadAccountDetails_withNoAccountDetailsAndIsUpdatingAccountDetailsFalse_shouldLoadAccountDetails() async {
-        await assertActionLoadAccountDetails(
-            currentAccountDetails: nil,
-            isUpdatingAccountDetails: false,
-            expectedCommands: [.configPlanDisplay]
-        )
-    }
-    
-    @MainActor
-    func testLoadAccountDetails_withCurrentAccountDetailsAndIsUpdatingAccountDetailsTrue_shouldNotLoadAccountDetails() async {
-        await assertActionLoadAccountDetails(
-            currentAccountDetails: AccountDetailsEntity.random,
-            isUpdatingAccountDetails: true,
-            expectedCommands: []
-        )
-    }
-    
-    @MainActor
-    private func assertActionLoadAccountDetails(
-        currentAccountDetails: AccountDetailsEntity?,
-        isUpdatingAccountDetails: Bool,
-        expectedCommands: [MyAccountHallViewModel.Command]
-    ) async {
+    func testLoadAccountDetails_shouldLoadAccountDetails() async {
         let (sut, _) = makeSUT()
         var commands = [MyAccountHallViewModel.Command]()
         sut.invokeCommand = { viewCommand in
             commands.append(viewCommand)
         }
-        sut.$accountDetails.mutate { currentValue in
-            currentValue = currentAccountDetails
-        }
-        sut.isUpdatingAccountDetails = isUpdatingAccountDetails
         
         sut.dispatch(.load(.accountDetails))
         await sut.loadContentTask?.value
         
-        XCTAssertEqual(commands, expectedCommands)
+        XCTAssertEqual(commands, [.configPlanDisplay, .reloadStorage])
     }
-    
+
     @MainActor
     func testViewDidLoad_setupRefreshAccountDetailsSubscription_notifHasNewAccountDetailsObject_shouldSetAccountDetails() async {
         await assertRefreshAccountDetailsNotification(
