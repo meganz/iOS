@@ -62,10 +62,11 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     }
 
     func testEvaluateNodeSensitivity_whenInvokedByFreeUser_shouldReturnNil() async {
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: false)
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-            accountUseCase: accountUseCase
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let result = await sut.evaluateNodeSensitivity(
             for: NodeSource.node { NodeEntity(isFolder: true) },
@@ -76,13 +77,14 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     }
 
     func testEvaluateNodeSensitivity_forSystemGeneratedNode_shouldReturnNil() async {
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true)
         let node = NodeEntity(isFolder: true)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [.cameraUpload: node])
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-            accountUseCase: accountUseCase,
-            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase
+            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let result = await sut.evaluateNodeSensitivity(
             for: NodeSource.node { node },
@@ -95,14 +97,13 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     func testEvaluateNodeSensitivity_whenInheritingSensitivityTrueOrFailed_shouldReturnNil() async {
         let inheritSensitiveResults: [Result<Bool, any Error>] = [.success(true), .failure(GenericErrorEntity())]
         for inheritSensitiveResult in inheritSensitiveResults {
-            let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
             let node = NodeEntity(isFolder: true)
             let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
             let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+                isAccessible: true,
                 isInheritingSensitivityResult: inheritSensitiveResult)
             let sut = makeSUT(
                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-                accountUseCase: accountUseCase,
                 systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase
             )
@@ -116,15 +117,17 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     }
 
     func testEvaluateNodeSensitivity_whenSystemGeneratedNodeThrowingError_shouldReturnNil() async {
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
         let node = NodeEntity(isFolder: true)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(
             containsSystemGeneratedNodeError: NSError(domain: "", code: 0)
         )
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true)
+        
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-            accountUseCase: accountUseCase,
-            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase
+            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let result = await sut.evaluateNodeSensitivity(
             for: NodeSource.node { node },
@@ -135,14 +138,14 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     }
 
     func testEvaluateNodeSensitivity_ForSensitiveNode_shouldReturnNodeAsSensitive() async {
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
         let node = NodeEntity(isFolder: true, isMarkedSensitive: false)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
+            isInheritingSensitivityResult: .success(false))
 
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-            accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
@@ -155,14 +158,14 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     }
 
     func testEvaluateNodeSensitivity_ForInSensitiveNode_shouldReturnNodeAsInSensitive() async {
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
         let node = NodeEntity(isFolder: true, isMarkedSensitive: false)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
+            isInheritingSensitivityResult: .success(false))
 
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-            accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
@@ -175,15 +178,15 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     }
     
     func testEvaluateNodeSensitivity_whenSystemGeneratedNodeInvalidAccount_shouldReturnNil() async {
-        let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false)
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isAccessible: false)
         let systemNode = NodeEntity(isFolder: true, isMarkedSensitive: false)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(
             nodesForLocation: [.cameraUpload: systemNode])
 
         let sut = makeSUT(
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
-            accountUseCase: accountUseCase,
-            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase
+            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let result = await sut.evaluateNodeSensitivity(
             for: NodeSource.node { systemNode },
@@ -197,13 +200,11 @@ final class NodeSensitivityCheckerTests: XCTestCase {
 
     private func makeSUT(
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> NodeSensitivityChecker {
         .init(
             featureFlagProvider: featureFlagProvider,
-            accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )

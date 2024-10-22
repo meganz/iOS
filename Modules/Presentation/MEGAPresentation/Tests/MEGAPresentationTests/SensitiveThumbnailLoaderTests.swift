@@ -14,7 +14,7 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         let thumbnailLoader = MockThumbnailLoader(initialImage: imageContainer)
         let sut = makeSUT(
             thumbnailLoader: thumbnailLoader,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false)
         )
         
         XCTAssertTrue(sut.initialImage(for: node, type: .thumbnail, placeholder: { Image("heart") })
@@ -25,7 +25,7 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         let node = NodeEntity(name: "test.jpg", handle: 1)
         let placeholder: Image = Image("heart")
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true)
         )
         
         XCTAssertTrue(sut.initialImage(for: node, type: .thumbnail, placeholder: { placeholder })
@@ -42,7 +42,7 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         
         let sut = makeSUT(
             thumbnailLoader: thumbnailLoader,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true)
         )
         
         let expected = SensitiveImageContainer(image: image, type: type,
@@ -54,8 +54,9 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         let node = NodeEntity(name: "test.jpg", handle: 1)
         
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true))
-        
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true)
+        )
+
         let expectedImage = Image("folder")
         XCTAssertTrue(sut.initialImage(for: node, type: .thumbnail, placeholder: { expectedImage })
             .isEqual(ImageContainer(image: expectedImage, type: .placeholder)))
@@ -70,7 +71,7 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         
         let sut = makeSUT(
             thumbnailLoader: thumbnailLoader,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false)
         )
         
         var iterator = try await sut.loadImage(for: node, type: .preview).makeAsyncIterator()
@@ -105,7 +106,7 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         
         let sut = makeSUT(
             thumbnailLoader: thumbnailLoader,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true)
         )
         
         var iterator = try await sut.loadImage(for: node, type: .preview).makeAsyncIterator()
@@ -136,12 +137,14 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
         
         let inheritedSensitivity = false
         let thumbnailLoader = MockThumbnailLoader(loadImage: stream.eraseToAnyAsyncSequence())
-        let nodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(inheritedSensitivity))
+        let nodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
+            isInheritingSensitivityResult: .success(inheritedSensitivity))
         
         let sut = makeSUT(
             thumbnailLoader: thumbnailLoader,
-            sensitiveNodeUseCase: nodeUseCase,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true))
+            sensitiveNodeUseCase: nodeUseCase
+        )
         
         var iterator = try await sut.loadImage(for: node, type: .preview).makeAsyncIterator()
         
@@ -168,12 +171,10 @@ final class SensitiveThumbnailLoaderTests: XCTestCase {
     
     private func makeSUT(
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase()
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> SensitiveThumbnailLoader {
         SensitiveThumbnailLoader(
             thumbnailLoader: thumbnailLoader,
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: accountUseCase)
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
 }

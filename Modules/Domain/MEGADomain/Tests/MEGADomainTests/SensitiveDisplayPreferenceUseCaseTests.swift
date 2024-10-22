@@ -9,7 +9,7 @@ struct SensitiveDisplayPreferenceUseCaseTests {
         @Test
         func alwaysExcludesSensitives() async {
             let sut = SensitiveDisplayPreferenceUseCase(
-                accountUseCase: MockAccountUseCase(),
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
                 contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(),
                 hiddenNodesFeatureFlagEnabled: { false })
             
@@ -50,8 +50,7 @@ struct SensitiveDisplayPreferenceUseCaseTests {
             showHiddenNodes: Bool
         ) -> SensitiveDisplayPreferenceUseCase {
             SensitiveDisplayPreferenceUseCase(
-                accountUseCase: MockAccountUseCase(
-                    hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount),
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: hasValidProOrUnexpiredBusinessAccount),
                 contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
                     sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)),
                 hiddenNodesFeatureFlagEnabled: { true }

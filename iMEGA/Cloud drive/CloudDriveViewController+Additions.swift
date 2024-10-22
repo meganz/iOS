@@ -51,7 +51,6 @@ extension CloudDriveViewController {
         )
         let nodeSensitivityChecker = NodeSensitivityChecker(
             featureFlagProvider: DIContainer.featureFlagProvider,
-            accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
@@ -70,7 +69,9 @@ extension CloudDriveViewController {
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             accountUseCase: accountUseCase,
             sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                accountUseCase: accountUseCase,
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: accountUseCase),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),

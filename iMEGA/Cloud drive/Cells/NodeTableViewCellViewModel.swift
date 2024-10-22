@@ -16,7 +16,6 @@ import MEGASwift
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
-    private let accountUseCase: any AccountUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var task: Task<Void, Never>?
     
@@ -25,7 +24,6 @@ import MEGASwift
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
         self.nodes = nodes
@@ -37,7 +35,6 @@ import MEGASwift
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
-        self.accountUseCase = accountUseCase
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -91,7 +88,7 @@ import MEGASwift
     private func applySensitiveConfiguration(for nodes: [NodeEntity]) async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
               shouldApplySensitiveBehaviour,
-              accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+              sensitiveNodeUseCase.isAccessible() else {
             await setIsSensitive(false)
             return
         }

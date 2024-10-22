@@ -124,7 +124,8 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: node,
             isFromSharedItem: false,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
+                isAccessible: false),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -146,8 +147,9 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
             node: node,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
+                isAccessible: true,
+                isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -169,8 +171,9 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
             node: node,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
+                isAccessible: true,
+                isInheritingSensitivityResult: .success(false)),
             featureFlagHiddenNodes: false)
         
         await viewModel.configureCell().value
@@ -193,8 +196,9 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
         let viewModel = sut(
             node: node,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
+                isAccessible: true,
+                isInheritingSensitivityResult: .success(true)),
             featureFlagHiddenNodes: true)
         
         await viewModel.configureCell().value
@@ -277,7 +281,6 @@ extension NodeCollectionViewCellViewModelTests {
                      sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
                      nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
                      thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
-                     accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
                      featureFlagHiddenNodes: Bool = false) -> NodeCollectionViewCellViewModel {
         NodeCollectionViewCellViewModel(
             node: node,
@@ -285,7 +288,6 @@ extension NodeCollectionViewCellViewModelTests {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
-            accountUseCase: accountUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes]))
     }
 }

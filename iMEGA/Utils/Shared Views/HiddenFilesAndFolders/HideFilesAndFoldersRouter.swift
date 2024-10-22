@@ -105,8 +105,9 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         HideFilesAndFoldersViewModel(
             nodes: nodes,
             router: self,
-            accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             nodeActionUseCase: NodeActionUseCase(
                 repo: NodeActionRepository.newRepo),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(

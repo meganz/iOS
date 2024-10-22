@@ -51,7 +51,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         downloadedNodesListener: some DownloadedNodesListening,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-        accountUseCase: some AccountUseCaseProtocol,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
@@ -74,7 +73,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             mediaUseCase: mediaUseCase,
-            accountUseCase: accountUseCase,
             nodeActions: nodeActions,
             hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
         )

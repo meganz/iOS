@@ -11,7 +11,6 @@ import MEGAPresentation
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
         self.thumbnailViewModels = nodes.map {
@@ -20,7 +19,6 @@ import MEGAPresentation
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 thumbnailUseCase: thumbnailUseCase,
                 nodeIconUseCase: nodeIconUseCase,
-                accountUseCase: accountUseCase,
                 featureFlagProvider: featureFlagProvider)
         }
     }

@@ -73,7 +73,7 @@ final class SearchResultMapperTests: XCTestCase {
     func test_isSensitive_whenInvalidAccount_shouldReturnFalse() {
         // given
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
             hiddenNodesFeatureEnabled: true)
         
         // when
@@ -87,7 +87,7 @@ final class SearchResultMapperTests: XCTestCase {
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeIsSensitive_shouldReturnTrue() {
         // given
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
             hiddenNodesFeatureEnabled: true)
         
         // when
@@ -100,10 +100,11 @@ final class SearchResultMapperTests: XCTestCase {
     
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeParentIsSensitive_shouldReturnTrue() {
         // given
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
+            isInheritingSensitivityResult: .success(true))
         let sut = makeSUT(
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             hiddenNodesFeatureEnabled: true
         )
         
@@ -117,10 +118,11 @@ final class SearchResultMapperTests: XCTestCase {
     
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeParentIsNotSensitive_shouldReturnFalse() {
         // given
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
+            isInheritingSensitivityResult: .success(false))
         let sut = makeSUT(
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             hiddenNodesFeatureEnabled: true)
         
         // when
@@ -133,10 +135,11 @@ final class SearchResultMapperTests: XCTestCase {
     
     func test_isSensitive_whenIsInheritingSensitivityThrowError_shouldReturnFalse() {
         // given
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .failure(GenericErrorEntity()))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
+            isInheritingSensitivityResult: .failure(GenericErrorEntity()))
         let sut = makeSUT(
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             hiddenNodesFeatureEnabled: true)
         
         // when
@@ -158,7 +161,6 @@ final class SearchResultMapperTests: XCTestCase {
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         nodeActions: NodeActions = .makeActions(sdk: MockSdk(), navigationController: .init()),
         hiddenNodesFeatureEnabled: Bool = true
     ) -> SUT {
@@ -169,7 +171,6 @@ final class SearchResultMapperTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             mediaUseCase: mediaUseCase,
-            accountUseCase: accountUseCase,
             nodeActions: nodeActions,
             hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
         )

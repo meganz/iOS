@@ -19,7 +19,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let nodes = makeSensitiveNodes(count: 100)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
             featureFlagProvider: featureFlagProvider)
         
         let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
@@ -31,7 +31,7 @@ final class NodeActionViewModelTests: XCTestCase {
         let nodes = makeSensitiveNodes(count: 100)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
             featureFlagProvider: featureFlagProvider)
         
         let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
@@ -44,7 +44,7 @@ final class NodeActionViewModelTests: XCTestCase {
         nodes.append(NodeEntity(handle: HandleEntity(nodes.count + 1), isMarkedSensitive: false))
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
             featureFlagProvider: featureFlagProvider)
         
         let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
@@ -121,11 +121,11 @@ final class NodeActionViewModelTests: XCTestCase {
             nodeInheritingSensitivity.handle: .success(true)
         ]
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
             isInheritingSensitivityResults: isInheritingSensitivityResults)
         
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: featureFlagProvider
         )
@@ -145,13 +145,13 @@ final class NodeActionViewModelTests: XCTestCase {
     func testHasValidProOrUnexpiredBusinessAccount_onAccountValidity_shouldReturnCorrectResult() {
         [true, false]
             .enumerated()
-            .forEach { (index, isValid) in
-                let accountUseCase = MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: isValid)
+            .forEach { (index, isAccessible) in
+                let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isAccessible: isAccessible)
                 
-                let sut = makeSUT(accountUseCase: accountUseCase)
+                let sut = makeSUT(sensitiveNodeUseCase: sensitiveNodeUseCase)
                 
-                XCTAssertEqual(sut.hasValidProOrUnexpiredBusinessAccount, isValid,
-                               "failed at index: \(index) for expected: \(isValid)")
+                XCTAssertEqual(sut.hasValidProOrUnexpiredBusinessAccount, isAccessible,
+                               "failed at index: \(index) for expected: \(isAccessible)")
             }
     }
     
@@ -182,7 +182,7 @@ final class NodeActionViewModelTests: XCTestCase {
     func testIsSensitive_invalidAccount_shouldReturnFalse() async {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
             featureFlagProvider: featureFlagProvider)
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         
@@ -195,7 +195,7 @@ final class NodeActionViewModelTests: XCTestCase {
         // given
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
             featureFlagProvider: featureFlagProvider)
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         
@@ -209,9 +209,10 @@ final class NodeActionViewModelTests: XCTestCase {
     func testIsSensitive_whenFeatureFlagEnabledAndParentNodeIsSensitive_shouldReturnTrue() async {
         // given
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true))
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isAccessible: true,
+            isInheritingSensitivityResult: .success(true))
         let sut = makeSUT(
-            accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             featureFlagProvider: featureFlagProvider)
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
@@ -224,14 +225,12 @@ final class NodeActionViewModelTests: XCTestCase {
     }
     
     private func makeSUT(
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         maxDetermineSensitivityTasks: Int = 10,
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> NodeActionViewModel {
         NodeActionViewModel(
-            accountUseCase: accountUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             maxDetermineSensitivityTasks: maxDetermineSensitivityTasks,

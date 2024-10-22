@@ -48,15 +48,13 @@ public class VideoRevampFactory {
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        accountUseCase: some AccountUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
         
         let thumbnailLoader = makeThumbnailLoader(
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            nodeIconUseCase: nodeIconUseCase,
-            accountUseCase: accountUseCase)
+            nodeIconUseCase: nodeIconUseCase)
         let videoListViewModel = VideoListViewModel(
             syncModel: syncModel, 
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
@@ -115,7 +113,6 @@ public class VideoRevampFactory {
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        accountUseCase: some AccountUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
@@ -125,8 +122,7 @@ public class VideoRevampFactory {
     ) -> UIViewController {
         let thumbnailLoader = makeThumbnailLoader(
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            nodeIconUseCase: nodeIconUseCase,
-            accountUseCase: accountUseCase)
+            nodeIconUseCase: nodeIconUseCase)
         let viewModel = VideoPlaylistContentViewModel(
             videoPlaylistEntity: previewEntity,
             videoPlaylistContentsUseCase: videoPlaylistContentUseCase,
@@ -170,14 +166,12 @@ public class VideoRevampFactory {
 extension VideoRevampFactory {
     private static func makeThumbnailLoader(
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        nodeIconUseCase: some NodeIconUsecaseProtocol,
-        accountUseCase: some AccountUseCaseProtocol
+        nodeIconUseCase: some NodeIconUsecaseProtocol
     ) -> any ThumbnailLoaderProtocol {
         ThumbnailLoaderFactory.makeThumbnailLoader(
             config: .sensitiveWithFallbackIcon(
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
-                nodeIconUseCase: nodeIconUseCase,
-                accountUseCase: accountUseCase
+                nodeIconUseCase: nodeIconUseCase
             ),
             thumbnailUseCase: ThumbnailUseCase(
                 repository: ThumbnailRepository.newRepo

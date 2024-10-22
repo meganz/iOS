@@ -74,8 +74,6 @@ struct VideoRevampRouter: VideoRevampRouting {
                 nodeRepository: nodeRepository
             ),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo),
             videoConfig: .live(),
             router: self,
             featureFlagProvider: DIContainer.featureFlagProvider
@@ -176,7 +174,6 @@ struct VideoRevampRouter: VideoRevampRouting {
                 nodeRepository: nodeRepository
             ),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            accountUseCase: accountUseCase,
             router: self,
             presentationConfig: presentationConfig,
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
@@ -240,8 +237,9 @@ struct VideoRevampRouter: VideoRevampRouting {
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
         SensitiveDisplayPreferenceUseCase(
-            accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })

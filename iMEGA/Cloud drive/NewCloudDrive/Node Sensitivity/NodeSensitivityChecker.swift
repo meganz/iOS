@@ -23,18 +23,15 @@ protocol NodeSensitivityChecking: Sendable {
 
 struct NodeSensitivityChecker: NodeSensitivityChecking {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private let accountUseCase: any AccountUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
 
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        accountUseCase: some AccountUseCaseProtocol,
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
     ) {
         self.featureFlagProvider = featureFlagProvider
-        self.accountUseCase = accountUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
@@ -58,7 +55,7 @@ struct NodeSensitivityChecker: NodeSensitivityChecking {
             guard try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode]) else {
                 return nil
             }
-            guard accountUseCase.hasValidProOrUnexpiredBusinessAccount() else {
+            guard sensitiveNodeUseCase.isAccessible() else {
                 return false // Always show hide regardless of the node sensitivity.
             }
             // Parent inheriting sensitivity should not be able to be hidden or unhidden.
