@@ -13,7 +13,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     private let albums: [AlbumEntity]
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
     private var albumLinks: [HandleEntity: String]?
     private var loadingTask: Task<Void, Never>?
@@ -27,12 +27,12 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
          shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
          tracker: some AnalyticsTracking,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.albums = albums
         self.shareCollectionUseCase = shareCollectionUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     // MARK: - Dispatch action
@@ -86,7 +86,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         
         let (stream, continuation) = AsyncStream.makeStream(of: SensitiveContentAcknowledgementStatus.self, bufferingPolicy: .bufferingNewest(1))
         
-        continuation.yield(featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) ? .unknown : .authorized) // Set initial value
+        continuation.yield(remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) ? .unknown : .authorized) // Set initial value
         
         for await status in stream {
             switch status {

@@ -184,8 +184,8 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_hiddenNodesFeatureOff_shouldReturnNil() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
-        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false])
+        let sut = makeSUT(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         XCTAssertNil(isHidden)
@@ -193,10 +193,10 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func tesIsParentMarkedAsSensitiveForDisplayMode_displayModeNotCloudDrive_shouldReturnNil() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1)
         let sut = makeSUT(parentNode: parentNode,
-                          featureFlagProvider: featureFlagProvider)
+                          remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .rubbishBin, isFromSharedItem: false)
         XCTAssertNil(isHidden)
@@ -204,10 +204,10 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFile_shouldReturnNil() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .file)
         let sut = makeSUT(parentNode: parentNode,
-                          featureFlagProvider: featureFlagProvider)
+                          remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         XCTAssertNil(isHidden)
@@ -215,10 +215,10 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_rootNode_shouldReturnNil() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .root)
         let sut = makeSUT(parentNode: parentNode,
-                          featureFlagProvider: featureFlagProvider)
+                          remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         XCTAssertNil(isHidden)
@@ -229,7 +229,7 @@ class CloudDriveViewModelTests: XCTestCase {
         let parentNode = MockNode(handle: 1, nodeType: .folder)
         let sut = makeSUT(parentNode: parentNode,
                           accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         XCTAssertNil(isHidden)
@@ -237,9 +237,9 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFolder_shouldMatchSensitiveState() async throws {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let nodeSensitiveChecker = NodeSensitivityChecker(
-            featureFlagProvider: featureFlagProvider,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
         )
@@ -247,7 +247,7 @@ class CloudDriveViewModelTests: XCTestCase {
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
             let sut = makeSUT(parentNode: parentNode,
                               accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                              featureFlagProvider: featureFlagProvider,
+                              remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
                               nodeSensitivityChecker: nodeSensitiveChecker)
 
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
@@ -257,11 +257,11 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_whenEntryPointArrivedFromSharedItem_shouldReturnNilForDisplaySharedItems() async throws {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         for await isMarkedSensitive in [true, false].async {
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: isMarkedSensitive)
             let sut = makeSUT(parentNode: parentNode,
-                              featureFlagProvider: featureFlagProvider)
+                              remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
             
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: true)
             XCTAssertNil(isHidden)
@@ -276,7 +276,7 @@ class CloudDriveViewModelTests: XCTestCase {
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
                 nodesForLocation: [.cameraUpload: parentNode.toNodeEntity()]),
             accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
         XCTAssertNil(isHidden)
@@ -291,7 +291,7 @@ class CloudDriveViewModelTests: XCTestCase {
         ]
         
         for await error in errors.async {
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false)
             let sut = makeSUT(
                 parentNode: parentNode,
@@ -299,7 +299,7 @@ class CloudDriveViewModelTests: XCTestCase {
                     nodesForLocation: [.cameraUpload: parentNode.toNodeEntity()],
                     containsSystemGeneratedNodeError: error),
                 accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                featureFlagProvider: featureFlagProvider)
+                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
             
             let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
             XCTAssertNil(isHidden)
@@ -308,17 +308,17 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_accountNotValid_shouldReturnFalse() async throws {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
         let nodeSensitiveChecker = NodeSensitivityChecker(
-            featureFlagProvider: featureFlagProvider,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false)
         )
         let sut = makeSUT(
             parentNode: parentNode,
             accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: false),
-            featureFlagProvider: featureFlagProvider,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             nodeSensitivityChecker: nodeSensitiveChecker)
 
         let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
@@ -329,15 +329,15 @@ class CloudDriveViewModelTests: XCTestCase {
     @MainActor
     func testAction_updateParentNode_updatesParentNodeAndReloadsNavigationBarItems() async throws {
         let updatedParentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let nodeSensitiveChecker = NodeSensitivityChecker(
-            featureFlagProvider: featureFlagProvider,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false))
         )
         let sut = makeSUT(parentNode: MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false),
                           accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                          featureFlagProvider: featureFlagProvider,
+                          remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
                           nodeSensitivityChecker: nodeSensitiveChecker)
 
         await test(viewModel: sut, action: .updateParentNode(updatedParentNode),
@@ -364,7 +364,7 @@ class CloudDriveViewModelTests: XCTestCase {
     
     @MainActor
     func testShouldExcludeSensitiveItems_featureFlagOff_shouldReturnFalse() async {
-        let sut = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+        let sut = makeSUT(remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
         
         let shouldExclude = await sut.shouldExcludeSensitiveItems()
         XCTAssertFalse(shouldExclude)
@@ -377,7 +377,7 @@ class CloudDriveViewModelTests: XCTestCase {
                 excludeSensitives: excludeSensitives)
             let sut = makeSUT(
                 sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
             
             let shouldExclude = await sut.shouldExcludeSensitiveItems()
             XCTAssertEqual(shouldExclude, excludeSensitives)
@@ -390,7 +390,7 @@ class CloudDriveViewModelTests: XCTestCase {
             excludeSensitives: true)
         let sut = makeSUT(
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let shouldExcludeFirstCall = await sut.shouldExcludeSensitiveItems()
         XCTAssertTrue(shouldExcludeFirstCall)
@@ -564,11 +564,11 @@ class CloudDriveViewModelTests: XCTestCase {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         sdk: MEGASdk = MockSdk(),
         nodeSensitivityChecker: some NodeSensitivityChecking = NodeSensitivityChecker(
-            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         ),
@@ -584,8 +584,8 @@ class CloudDriveViewModelTests: XCTestCase {
             accountUseCase: accountUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             tracker: tracker,
-            featureFlagProvider: featureFlagProvider,
-            moveToRubbishBinViewModel: moveToRubbishBinViewModel, 
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel,
             nodeSensitivityChecker: nodeSensitivityChecker,
             sdk: sdk
         )

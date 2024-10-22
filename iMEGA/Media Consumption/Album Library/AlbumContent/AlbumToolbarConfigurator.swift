@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAPresentation
 
 final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
@@ -7,14 +8,14 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     private let exportAction: ButtonAction
     private let sendToChatAction: ButtonAction
     private let albumType: AlbumType
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private var favouriteItemImage: UIImage {
         albumType == .favourite ? UIImage.removeFavourite : UIImage.favourite
     }
     
     private var isHiddenNodesEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
     }
     
     lazy var favouriteItem = UIBarButtonItem(
@@ -50,14 +51,14 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         sendToChatAction: @escaping ButtonAction,
         moreAction: @escaping ButtonAction,
         albumType: AlbumType,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.favouriteAction = favouriteAction
         self.removeToRubbishBinAction = removeToRubbishBinAction
         self.exportAction = exportAction
         self.sendToChatAction = sendToChatAction
         self.albumType = albumType
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         
         super.init(
             downloadAction: downloadAction,

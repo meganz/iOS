@@ -764,7 +764,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             photo: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         )
         
         var expectedImageContainer = [
@@ -800,7 +800,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -829,7 +829,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -862,7 +862,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -890,7 +890,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nil,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -928,7 +928,7 @@ final class PhotoCellViewModelTests: XCTestCase {
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),
@@ -978,7 +978,7 @@ final class PhotoCellViewModelTests: XCTestCase {
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),
@@ -1018,7 +1018,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         nodeUseCase: (any NodeUseCaseProtocol)? = nil,
         sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)? = nil,
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> PhotoCellViewModel {
@@ -1028,7 +1028,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            featureFlagProvider: featureFlagProvider)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         addTeardownBlock { [weak sut] in
             // Add sleep to give `@Published` properties used in infinite async sequences via `.values` time to cancel
             try await Task.sleep(nanoseconds: 100_000_000)

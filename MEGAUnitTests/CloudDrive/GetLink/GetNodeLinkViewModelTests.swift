@@ -199,7 +199,7 @@ extension GetNodeLinkViewModelTests {
     ) -> GetNodeLinkViewModel {
         let sut = GetNodeLinkViewModel(
             shareUseCase: shareUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
                 list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))
         sut.nodes = nodes
         return sut

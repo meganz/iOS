@@ -29,6 +29,7 @@ struct NodeActionViewModel {
     
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private let maxDetermineSensitivityTasks: Int
@@ -40,10 +41,12 @@ struct NodeActionViewModel {
     init(systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          maxDetermineSensitivityTasks: Int = 500,
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.maxDetermineSensitivityTasks = maxDetermineSensitivityTasks
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -54,7 +57,7 @@ struct NodeActionViewModel {
     /// - Returns: An `Optional<Bool>`: if value is nil, don't show entry point; if value is false, show hide action; if value is true, don't show hide action
     func isHidden(_ nodes: [NodeEntity], isFromSharedItem: Bool, containsBackupNode: Bool) async -> Bool? {
         do {
-            guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+            guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
                   isFromSharedItem == false,
                   !containsBackupNode,
                   nodes.isNotEmpty,
@@ -75,7 +78,7 @@ struct NodeActionViewModel {
     }
     
     func isSensitive(node: NodeEntity) async -> Bool {
-        if !featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) || !hasValidProOrUnexpiredBusinessAccount {
+        if !remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) || !hasValidProOrUnexpiredBusinessAccount {
             false
         } else if node.isMarkedSensitive {
             true

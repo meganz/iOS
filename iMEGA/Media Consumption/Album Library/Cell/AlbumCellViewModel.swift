@@ -43,7 +43,7 @@ final class AlbumCellViewModel: ObservableObject {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     
     private var subscriptions = Set<AnyCancellable>()
@@ -64,7 +64,7 @@ final class AlbumCellViewModel: ObservableObject {
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         selectedAlbum: Binding<AlbumEntity?>,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
     ) {
         self.thumbnailLoader = thumbnailLoader
@@ -77,7 +77,7 @@ final class AlbumCellViewModel: ObservableObject {
         self.selection = selection
         self.tracker = tracker
         _selectedAlbum = selectedAlbum
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         
         title = album.name
@@ -132,7 +132,7 @@ final class AlbumCellViewModel: ObservableObject {
     
     /// Monitor inherited sensitivity changes for album cover photo
     func monitorCoverPhotoSensitivity() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               let coverNode = album.coverNode,
               !coverNode.isMarkedSensitive else { return }
         // Wait for initial thumbnail to load with sensitivity before checking inherited sensitivity updates

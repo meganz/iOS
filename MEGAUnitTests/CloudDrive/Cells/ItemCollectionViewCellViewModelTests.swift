@@ -2,8 +2,6 @@ import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
@@ -208,7 +206,7 @@ extension ItemCollectionViewCellViewModelTests {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
                 list: [.hiddenNodes: featureFlagHiddenNodes]))
     }
 }

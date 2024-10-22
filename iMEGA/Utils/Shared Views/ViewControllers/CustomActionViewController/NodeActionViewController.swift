@@ -152,7 +152,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsFavourite(displayMode == .photosFavouriteAlbum)
                 .setIsBackupNode(containsABackupNode)
                 .setAreMediaFiles(areMediaFiles)
-                .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
+                .setIsHiddenNodesFeatureEnabled(DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes))
                 .setIsHidden(await viewModel.isHidden(
                     nodeEntities,
                     isFromSharedItem: isFromSharedItem,
@@ -260,7 +260,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsInVersionsView(isInVersionsView)
                 .setIsBackupNode(isBackupNode)
                 .setIsExported(node.isExported())
-                .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
+                .setIsHiddenNodesFeatureEnabled(DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes))
                 .setIsHidden(await viewModel.isHidden(
                     [node.toNodeEntity()], isFromSharedItem: isFromSharedItem, containsBackupNode: isBackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
@@ -324,7 +324,7 @@ class NodeActionViewController: ActionSheetViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               let action = actions[safe: indexPath.row] as? NodeAction,
               let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: NodeActionTableViewCell.self),
                                                        for: indexPath) as? NodeActionTableViewCell else {
@@ -467,7 +467,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsVerifyContact(isVerifyContact,
                                     sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                     sharedFolderContact: sharedFolderContact)
-                .setIsHiddenNodesFeatureEnabled(DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes))
+                .setIsHiddenNodesFeatureEnabled(DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes))
                 .setIsHidden(await viewModel.isHidden(
                     nodes.toNodeEntities(), isFromSharedItem: isFromSharedItem, containsBackupNode: isBackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)

@@ -19,8 +19,8 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
     init(photoByMonth: PhotoByMonth,
          thumbnailLoader: some ThumbnailLoaderProtocol,
          nodeUseCase: some NodeUseCaseProtocol,
-         sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.photoByMonth = photoByMonth
         title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
         
@@ -29,7 +29,7 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            featureFlagProvider: featureFlagProvider
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
         )
     }
 }

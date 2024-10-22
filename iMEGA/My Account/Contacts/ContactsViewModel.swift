@@ -1,5 +1,5 @@
-import Combine
 import Chat
+import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
@@ -47,13 +47,13 @@ import MEGAPresentation
         sdk: MEGASdk,
         contactsMode: ContactsMode,
         shareUseCase: some ShareUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.sdk = sdk
         self.contactsMode = contactsMode
         self.shareUseCase = shareUseCase
-        isHiddenNodesEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+        isHiddenNodesEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
         self.tracker = tracker
     }
     

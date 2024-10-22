@@ -2,8 +2,6 @@ import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 final class NodeTableViewCellViewModelTests: XCTestCase {
@@ -305,13 +303,13 @@ extension NodeTableViewCellViewModelTests {
              sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
              thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
-             featureFlags: [FeatureFlagKey: Bool] = [.hiddenNodes: false]) -> NodeTableViewCellViewModel {
+             featureFlags: [RemoteFeatureFlag: Bool] = [.hiddenNodes: false]) -> NodeTableViewCellViewModel {
         NodeTableViewCellViewModel(
             nodes: nodes,
             shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: featureFlags))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: featureFlags))
     }
 }

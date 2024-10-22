@@ -22,16 +22,16 @@ protocol NodeSensitivityChecking: Sendable {
 }
 
 struct NodeSensitivityChecker: NodeSensitivityChecking {
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
 
     init(
-        featureFlagProvider: some FeatureFlagProviderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol
     ) {
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
@@ -41,7 +41,7 @@ struct NodeSensitivityChecker: NodeSensitivityChecking {
         displayMode: DisplayMode,
         isFromSharedItem: Bool
     ) async -> Bool? {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               isFromSharedItem == false,
               displayMode == .cloudDrive,
               let parentNode = nodeSource.parentNode,

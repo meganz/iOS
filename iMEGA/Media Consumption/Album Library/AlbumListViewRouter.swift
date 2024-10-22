@@ -35,7 +35,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                     accountUseCase: accountUseCase),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
             albumCoverUseCase: AlbumCoverUseCase(nodeRepository: nodeRepository),
             album: album,
             selection: selection,
@@ -89,7 +89,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) }),
+                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                     placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                     affirmativeButtonTitle: Strings.Localizable.createFolderButton,
@@ -139,7 +139,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
                                    searchRepository: FilesSearchRepository.newRepo,
                                    sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-                                   hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+                                   hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
@@ -149,6 +149,6 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
     }
 }

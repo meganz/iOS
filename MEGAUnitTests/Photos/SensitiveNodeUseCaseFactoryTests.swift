@@ -1,7 +1,6 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 import Testing
 
 struct SensitiveNodeUseCaseFactoryTests {
@@ -13,7 +12,7 @@ struct SensitiveNodeUseCaseFactoryTests {
         func featureFlagOff(mode: PhotoLibraryContentMode) {
             let useCase = SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(
                 for: mode,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
             
             #expect(useCase == nil)
         }
@@ -26,7 +25,7 @@ struct SensitiveNodeUseCaseFactoryTests {
         func validModes(mode: PhotoLibraryContentMode) {
             let useCase = SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(
                 for: mode,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
             
             #expect(useCase != nil)
         }
@@ -39,7 +38,7 @@ struct SensitiveNodeUseCaseFactoryTests {
         func validModes(mode: PhotoLibraryContentMode) {
             let useCase = SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(
                 for: mode,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
             
             #expect(useCase == nil)
         }

@@ -27,7 +27,7 @@ final class VideoCellViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private(set) var nodeEntity: NodeEntity
     private let onTapMoreOptions: (_ node: NodeEntity) -> Void
     private let onTapped: (_ node: NodeEntity) -> Void
@@ -45,7 +45,7 @@ final class VideoCellViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void,
         onTapped: @escaping (_ node: NodeEntity) -> Void
     ) {
@@ -55,7 +55,7 @@ final class VideoCellViewModel: ObservableObject {
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.onTapMoreOptions = onTapMoreOptions
         self.onTapped = onTapped
         
@@ -76,9 +76,9 @@ final class VideoCellViewModel: ObservableObject {
     }
     
     func monitorInheritedSensitivityChanges() async {
-        guard 
-            featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
-              !nodeEntity.isMarkedSensitive,
+        guard
+            remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
+            !nodeEntity.isMarkedSensitive,
             await $previewEntity.values.contains(where: { @Sendable in $0.imageContainer.type != .placeholder }) else { return }
         
         do {

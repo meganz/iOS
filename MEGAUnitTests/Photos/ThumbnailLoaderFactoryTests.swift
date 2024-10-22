@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomainMock
 @testable import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
@@ -7,14 +8,14 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
 
     func testMakeThumbnailLoader_featureFlagOffNilMode_shouldReturnThumbnailLoaderInstance() {
         let thumbnailLoader = ThumbnailLoaderFactory
-            .makeThumbnailLoader(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+            .makeThumbnailLoader(remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
         
         XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
     }
     
     func testMakeThumbnailLoader_featureFlagOffModeProvided_shouldReturnThumbnailLoaderInstance() {
         let thumbnailLoader = ThumbnailLoaderFactory
-            .makeThumbnailLoader(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]),
+            .makeThumbnailLoader(remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]),
                                  mode: .albumLink)
         
         XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
@@ -22,7 +23,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
     
     func testMakeThumbnailLoader_featureFlagOnNilMode_shouldReturnThumbnailLoader() {
         let thumbnailLoader = ThumbnailLoaderFactory
-            .makeThumbnailLoader(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+            .makeThumbnailLoader(remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         XCTAssertTrue(thumbnailLoader is SensitiveThumbnailLoader)
     }
@@ -30,7 +31,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
     func testMakeThumbnailLoader_featureFlagOnAlbumLinkAndMediaDiscoveryLink_shouldReturnThumbnailLoader() {
         [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink]
             .forEach {
-                let thumbnailLoader = ThumbnailLoaderFactory.makeThumbnailLoader(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
+                let thumbnailLoader = ThumbnailLoaderFactory.makeThumbnailLoader(remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
                                                                                  mode: $0)
                 
                 XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
@@ -41,7 +42,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
         [PhotoLibraryContentMode.library, .album, .mediaDiscovery]
             .forEach {
                 let thumbnailLoader = ThumbnailLoaderFactory
-                    .makeThumbnailLoader(featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]),
+                    .makeThumbnailLoader(remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
                                          mode: $0)
                 
                 XCTAssertTrue(thumbnailLoader is SensitiveThumbnailLoader)

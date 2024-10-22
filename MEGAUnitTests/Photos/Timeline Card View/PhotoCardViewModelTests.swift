@@ -109,7 +109,7 @@ final class PhotoCardViewModelTests: XCTestCase {
             coverPhoto: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         )
         
         var expectedImageContainer = [
@@ -149,7 +149,7 @@ final class PhotoCardViewModelTests: XCTestCase {
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -182,7 +182,7 @@ final class PhotoCardViewModelTests: XCTestCase {
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -219,7 +219,7 @@ final class PhotoCardViewModelTests: XCTestCase {
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -260,7 +260,7 @@ final class PhotoCardViewModelTests: XCTestCase {
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),
@@ -313,7 +313,7 @@ final class PhotoCardViewModelTests: XCTestCase {
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
                           nodeUseCase: nodeUseCase,
                           sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),
@@ -352,7 +352,7 @@ final class PhotoCardViewModelTests: XCTestCase {
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> PhotoCardViewModel {
@@ -361,7 +361,7 @@ final class PhotoCardViewModelTests: XCTestCase {
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            featureFlagProvider: featureFlagProvider)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

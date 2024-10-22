@@ -5,9 +5,9 @@ import MEGASDKRepo
 struct SensitiveNodeUseCaseFactory {
     static func makeSensitiveNodeUseCase(
         for mode: PhotoLibraryContentMode,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) -> (any SensitiveNodeUseCaseProtocol)? {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               [PhotoLibraryContentMode.library, .album, .mediaDiscovery].contains(mode) else {
             return nil
         }

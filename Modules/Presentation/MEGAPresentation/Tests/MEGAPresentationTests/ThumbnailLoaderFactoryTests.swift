@@ -17,7 +17,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
         let thumbnailLoader = ThumbnailLoaderFactory
             .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()),
                                  thumbnailUseCase: MockThumbnailUseCase(),
-                                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true]))
+                                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
         
         XCTAssertTrue(thumbnailLoader is SensitiveThumbnailLoader)
     }
@@ -27,7 +27,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
         let thumbnailLoader = ThumbnailLoaderFactory
             .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()),
                                  thumbnailUseCase: MockThumbnailUseCase(),
-                                 featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false]))
+                                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
         
         XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
     }
@@ -53,7 +53,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
                     nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData())
                 ),
                 thumbnailUseCase: MockThumbnailUseCase(),
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: true])
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             )
         
         XCTAssertTrue(thumbnailLoader is SensitiveThumbnailLoader)
@@ -68,7 +68,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
                     nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData())
                 ),
                 thumbnailUseCase: MockThumbnailUseCase(),
-                featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: false])
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false])
             )
         
         XCTAssertTrue(thumbnailLoader is ThumbnailLoaderWithFallbackIcon)

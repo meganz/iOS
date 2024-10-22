@@ -81,7 +81,7 @@ extension RecentsViewController {
     }
     
     private func shouldExcludeSensitive() async -> Bool {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) else {
             return false
         }
         

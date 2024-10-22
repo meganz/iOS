@@ -61,7 +61,7 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) })
+                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
             )
         
         let viewController = MediaDiscoveryContentViewController(viewModel: viewModel)

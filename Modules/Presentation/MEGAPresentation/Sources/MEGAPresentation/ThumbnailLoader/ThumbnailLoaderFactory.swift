@@ -25,13 +25,13 @@ public enum ThumbnailLoaderFactory {
     public static func makeThumbnailLoader(
         config: Configuration,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) -> any ThumbnailLoaderProtocol {
         
         switch config {
         case .general:
             makeThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
-        case .sensitive(let sensitiveNodeUseCase) where featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes):
+        case .sensitive(let sensitiveNodeUseCase) where remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes):
             makeSensitiveThumbnailLoader(
                 thumbnailUseCase: thumbnailUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase
@@ -42,7 +42,7 @@ public enum ThumbnailLoaderFactory {
                 nodeIconUseCase: nodeIconUseCase
             )
         case .sensitiveWithFallbackIcon(let sensitiveNodeUseCase, let nodeIconUseCase):
-            if featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) {
+            if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) {
                 makeSensitiveThumbnailLoaderWithFallbackIcon(
                     thumbnailUseCase: thumbnailUseCase,
                     sensitiveNodeUseCase: sensitiveNodeUseCase,

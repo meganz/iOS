@@ -19,14 +19,11 @@ protocol PhotoLibraryContentViewRouting {
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     private let contentMode: PhotoLibraryContentMode
     private let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     init(contentMode: PhotoLibraryContentMode = .library,
-         tracker: some AnalyticsTracking = DIContainer.tracker,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.contentMode = contentMode
         self.tracker = tracker
-        self.featureFlagProvider = featureFlagProvider
     }
     
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
@@ -46,8 +43,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
                 photoByMonth: photoByMonth,
                 thumbnailLoader: makeThumbnailLoader(),
                 nodeUseCase: makeNodeUseCase(),
-                sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
-                featureFlagProvider: featureFlagProvider
+                sensitiveNodeUseCase: makeSensitiveNodeUseCase()
             )
         )
     }
@@ -58,8 +54,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
                 photoByDay: photoByDay,
                 thumbnailLoader: makeThumbnailLoader(), 
                 nodeUseCase: makeNodeUseCase(),
-                sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
-                featureFlagProvider: featureFlagProvider
+                sensitiveNodeUseCase: makeSensitiveNodeUseCase()
             )
         )
     }
@@ -71,8 +66,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
                 viewModel: viewModel,
                 thumbnailLoader: makeThumbnailLoader(),
                 nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: contentMode),
-                sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: contentMode),
-                featureFlagProvider: featureFlagProvider
+                sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: contentMode)
             )
         )
     }

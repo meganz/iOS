@@ -511,6 +511,6 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                               shareCollectionUseCase: shareCollectionUseCase,
                               sectionViewModels: sectionViewModels,
                               tracker: tracker,
-                              featureFlagProvider: MockFeatureFlagProvider(list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))
+                              remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))
     }
 }
