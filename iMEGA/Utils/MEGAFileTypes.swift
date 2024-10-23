@@ -132,10 +132,12 @@ struct FileTypes {
         "svg": .filetypeVector,
         "svgz": .filetypeVector,
         
+        "avif": .filetypeImages,
         "bmp": .filetypeImages,
         "gif": .filetypeImages,
         "jpeg": .filetypeImages,
         "jpg": .filetypeImages,
+        "jxl": .filetypeImages,
         "heic": .filetypeImages,
         "tga": .filetypeImages,
         "tif": .filetypeImages,
