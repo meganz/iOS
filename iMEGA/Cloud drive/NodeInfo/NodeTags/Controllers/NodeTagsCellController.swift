@@ -49,9 +49,14 @@ extension NodeTagsCellController: UITableViewDataSource {
 
 extension NodeTagsCellController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let controller, viewModel.hasValidSubscription else { return }
-        let addTagsRouter = AddTagsViewRouter(presenter: controller)
-        addTagsRouter.start()
+        guard let controller else { return }
+        if viewModel.hasValidSubscription {
+            let addTagsRouter = AddTagsViewRouter(presenter: controller)
+            addTagsRouter.start()
+        } else if let accountDetails = viewModel.currentAccountDetails {
+            let upgradeRouter = UpgradeAccountPlanRouter(presenter: controller, accountDetails: accountDetails)
+            upgradeRouter.start()
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

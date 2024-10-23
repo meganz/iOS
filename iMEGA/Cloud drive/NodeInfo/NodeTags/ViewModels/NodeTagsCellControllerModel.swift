@@ -9,6 +9,10 @@ final class NodeTagsCellControllerModel {
     var hasValidSubscription: Bool {
         accountUseCase.hasValidSubscription
     }
+    
+    var currentAccountDetails: AccountDetailsEntity? {
+        accountUseCase.currentAccountDetails
+    }
 
     init(accountUseCase: some AccountUseCaseProtocol) {
         self.accountUseCase = accountUseCase
