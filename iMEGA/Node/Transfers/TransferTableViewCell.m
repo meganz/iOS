@@ -133,7 +133,7 @@
             [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:extension]];
         }
     }];
-    
+    self.backgroundColor = [UIColor pageBackgroundColor];
     [self queuedStateLayout];
 }
 
