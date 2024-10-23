@@ -35,6 +35,15 @@ struct NodeTagsCellControllerModelTests {
         )
         #expect(sut.hasValidSubscription == result)
     }
+    
+    @Test(
+        "Test value of currentAccountDetails",
+        arguments: [AccountDetailsEntity?.none, AccountDetailsEntity.testValue]
+    ) func currentAccountDetails(_ accountDetails: AccountDetailsEntity?) async {
+        let mockAccountUsecase = MockAccountUseCase(currentAccountDetails: accountDetails)
+        let sut = await NodeTagsCellControllerModel(accountUseCase: mockAccountUsecase)
+        #expect(await sut.currentAccountDetails == accountDetails)
+    }
 
     @MainActor
     private func makeSUT(
@@ -49,5 +58,11 @@ struct NodeTagsCellControllerModelTests {
             )
         )
         return NodeTagsCellControllerModel(accountUseCase: accountUseCase)
+    }
+}
+
+private extension AccountDetailsEntity {
+    static var testValue: Self {
+        AccountDetailsEntity(storageUsed: 0, versionsStorageUsed: 0, storageMax: 0, transferUsed: 0, transferMax: 0, proLevel: .free, proExpiration: 0, subscriptionStatus: .none, subscriptionRenewTime: 0, subscriptionMethod: nil, subscriptionMethodId: .none, subscriptionCycle: .none, numberUsageItems: 0, subscriptions: [], plans: [], storageUsedForHandle: { _ in 0 })
     }
 }
