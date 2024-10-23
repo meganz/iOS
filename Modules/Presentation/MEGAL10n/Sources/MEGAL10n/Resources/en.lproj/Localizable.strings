@@ -4248,6 +4248,14 @@
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Select a reason to cancel your subscription";
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Enter details";
+/* Cancel subscription confirmation alert title */
+"accounts.cancelSubscriptionConfirmationAlert.title"="Your subscription has been cancelled";
+/* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date)*/
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="You will move to a free MEGA account when your current plan expires on %@.";
+/* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Please ensure your storage amount is under the limit of %@ by this date. Your account may be locked if you are over the limit.";
+/* Cancel subscription confirmation alert button title */
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="OK, got it";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Hidden items";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
