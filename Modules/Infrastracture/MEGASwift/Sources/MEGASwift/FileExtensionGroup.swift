@@ -145,8 +145,10 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
             "mp4": .video,
             "mqv": .video,
             "qt": .video,
+            // MARK: - Image
             "3fr": .image,
             "arw": .image,
+            "avif": .image,
             "bmp": .image,
             "cr2": .image,
             "crw": .image,
@@ -165,6 +167,7 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
             "jpf": .image,
             "jpeg": .image,
             "jpg": .image,
+            "jxl": .image,
             "k25": .image,
             "kdc": .image,
             "mef": .image,
