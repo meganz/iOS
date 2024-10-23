@@ -4,7 +4,11 @@ import MEGADomain
 @MainActor
 final class NodeTagsCellControllerModel {
     private let accountUseCase: any AccountUseCaseProtocol
-    private(set) lazy var cellViewModel: NodeTagsCellViewModel = NodeTagsCellViewModel(accountUseCase: accountUseCase)
+    private let node: NodeEntity
+    private(set) lazy var cellViewModel = NodeTagsCellViewModel(
+        node: node,
+        accountUseCase: accountUseCase
+    )
 
     var hasValidSubscription: Bool {
         accountUseCase.hasValidSubscription
@@ -14,7 +18,8 @@ final class NodeTagsCellControllerModel {
         accountUseCase.currentAccountDetails
     }
 
-    init(accountUseCase: some AccountUseCaseProtocol) {
+    init(node: NodeEntity, accountUseCase: some AccountUseCaseProtocol) {
+        self.node = node
         self.accountUseCase = accountUseCase
     }
 }

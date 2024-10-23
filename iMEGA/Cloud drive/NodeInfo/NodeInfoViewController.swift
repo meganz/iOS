@@ -432,6 +432,7 @@ final class NodeInfoViewController: UITableViewController {
                     NodeTagsCellController(
                         controller: self,
                         viewModel: NodeTagsCellControllerModel(
+                            node: node.toNodeEntity(),
                             accountUseCase: AccountUseCase(
                                 repository: AccountRepository.newRepo
                             )

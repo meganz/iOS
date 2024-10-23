@@ -1,25 +1,29 @@
+import MEGADesignToken
 import SwiftUI
 
 public struct PillViewModel {
+    public let title: String
+    public let icon: PillView.Icon
+    public let foreground: Color
+    public let background: Color
+    public let font: Font
+    public let shape: PillView.Shape
+
     public init(
         title: String,
         icon: PillView.Icon,
         foreground: Color,
         background: Color,
+        font: Font = .system(size: 15, weight: .medium, design: .default),
         shape: PillView.Shape = .rectangle
     ) {
         self.title = title
         self.icon = icon
         self.foreground = foreground
         self.background = background
+        self.font = font
         self.shape = shape
     }
-    
-    public let title: String
-    public let icon: PillView.Icon
-    public let foreground: Color
-    public let background: Color
-    public let shape: PillView.Shape
 }
 
 public struct PillView: View {
@@ -41,25 +45,43 @@ public struct PillView: View {
     }
     
     public var body: some View {
-        HStack(spacing: 4) {
-            if case let .leading(image) = viewModel.icon {
-                image
-            }
-            Text(viewModel.title)
-            if case let .trailing(image) = viewModel.icon {
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 10, height: 22)
+        contentView
+            .foregroundStyle(viewModel.foreground)
+            .padding(
+                EdgeInsets(
+                    top: TokenSpacing._3,
+                    leading: TokenSpacing._4,
+                    bottom: TokenSpacing._3,
+                    trailing: TokenSpacing._4
+                )
+            )
+            .background(viewModel.background)
+            .font(viewModel.font)
+            .mask(viewModel.shape == .rectangle ? AnyView(Rectangle()) : AnyView(Capsule()))
+            .cornerRadius(TokenRadius.medium)
+    }
+
+    // Using if condition inside the HStack seem to create an issue with geometry reader when added to the background of the view. Always returns 0 for some unknown reason.
+    private var contentView: some View {
+        Group {
+            switch viewModel.icon {
+            case .none:
+                Text(viewModel.title)
+            case .leading(let image):
+                HStack(spacing: TokenSpacing._2) {
+                    image
+                    Text(viewModel.title)
+                }
+            case .trailing(let image):
+                HStack(spacing: TokenSpacing._2) {
+                    Text(viewModel.title)
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 10, height: 22)
+                }
             }
         }
-        .foregroundColor(viewModel.foreground)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
-        .background(viewModel.background)
-        .font(.system(size: 15, weight: .medium, design: .default))
-        .mask(viewModel.shape == .rectangle ? AnyView(Rectangle()) : AnyView(Capsule()))
-        .cornerRadius(8)
     }
 }
 

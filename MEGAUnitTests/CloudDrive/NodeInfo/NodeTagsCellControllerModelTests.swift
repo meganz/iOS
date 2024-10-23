@@ -35,20 +35,30 @@ struct NodeTagsCellControllerModelTests {
         )
         #expect(sut.hasValidSubscription == result)
     }
-    
+
+    @MainActor
     @Test(
         "Test value of currentAccountDetails",
         arguments: [AccountDetailsEntity?.none, AccountDetailsEntity.testValue]
     ) func currentAccountDetails(_ accountDetails: AccountDetailsEntity?) async {
-        let mockAccountUsecase = MockAccountUseCase(currentAccountDetails: accountDetails)
-        let sut = await NodeTagsCellControllerModel(accountUseCase: mockAccountUsecase)
-        #expect(await sut.currentAccountDetails == accountDetails)
+        let mockAccountUseCase = MockAccountUseCase(currentAccountDetails: accountDetails)
+        let sut = makeSUT(accountUseCase: mockAccountUseCase)
+        #expect(sut.currentAccountDetails == accountDetails)
+    }
+
+    @MainActor
+    @Test("Check for tags")
+    func checkTags() {
+        let node = NodeEntity(tags: ["tag1", "tag2", "tag3"])
+        let sut = makeSUT(node: node)
+        #expect(sut.cellViewModel.tags == ["#tag1", "#tag2", "#tag3"])
     }
 
     @MainActor
     private func makeSUT(
-        proLevel: AccountTypeEntity,
-        isExpiredAccount: Bool
+        node: NodeEntity = NodeEntity(),
+        proLevel: AccountTypeEntity = .free,
+        isExpiredAccount: Bool = false
     ) -> NodeTagsCellControllerModel {
         let accountUseCase = AccountUseCase(
             repository: MockAccountRepository(
@@ -57,7 +67,16 @@ struct NodeTagsCellControllerModelTests {
                 accountType: proLevel
             )
         )
-        return NodeTagsCellControllerModel(accountUseCase: accountUseCase)
+
+        return makeSUT(node: node, accountUseCase: accountUseCase)
+    }
+
+    @MainActor
+    private func makeSUT(
+        node: NodeEntity = NodeEntity(),
+        accountUseCase: some AccountUseCaseProtocol
+    ) -> NodeTagsCellControllerModel {
+        NodeTagsCellControllerModel(node: node, accountUseCase: accountUseCase)
     }
 }
 

@@ -29,6 +29,7 @@ extension NodeEntity {
         isMarkedSensitive: false, 
         description: nil,
         label: .grey,
+        tags: [],
         publicHandle: 1,
         expirationTime: nil,
         publicLinkCreationTime: nil,
