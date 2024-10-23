@@ -56,7 +56,10 @@ struct RecentlyWatchedVideosSorter: RecentlyWatchedVideosSorterProtocol {
                         )
                         .localisedString(from: date)
                 }
-                return RecentlyWatchedVideoSection(title: title, videos: videos)
+                return RecentlyWatchedVideoSection(
+                    title: title,
+                    videos: videos.sorted { $0.lastOpenedDate ?? Date.distantPast > $1.lastOpenedDate ?? Date.distantPast }
+                )
             }
             .sorted { $0.videos.first?.lastOpenedDate ?? Date.now > $1.videos.first?.lastOpenedDate ?? Date.now }
     }

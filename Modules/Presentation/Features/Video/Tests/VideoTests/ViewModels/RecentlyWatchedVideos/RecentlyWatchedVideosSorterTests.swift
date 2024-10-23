@@ -35,6 +35,25 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
         XCTAssertEqual(sortedSections.first?.videos.count, 2, "Expected two video in the section")
     }
     
+    func testSortVideosByDay_withTwoItemsSameDayDifferentTime_returnsSingleSection() {
+        let firstWatchedVideo = anyVideo(handle: 2, hourAgo: 4)
+        let latestWatchedVideo = anyVideo(handle: 1, hourAgo: 1)
+        let videos = [
+            firstWatchedVideo,
+            latestWatchedVideo
+        ]
+        let sortedSections = sortVideosByDay(videos: videos)
+        
+        XCTAssertEqual(sortedSections.count, 1, "Expected one section")
+        XCTAssertEqual(sortedSections.first?.title, todayTitle, "Expected section title to be 'Today'")
+        XCTAssertEqual(sortedSections.first?.videos.count, 2, "Expected two video in the section")
+        let retrievedVideos = sortedSections.first?.videos.map(\.node.handle)
+        XCTAssertEqual(retrievedVideos, [
+            latestWatchedVideo.node.handle,
+            firstWatchedVideo.node.handle
+        ])
+    }
+    
     func testSortVideosByDay_withTwoItemsWithDifferentDay_returnsTwoSections() {
         let videos = [
             anyVideo(handle: 1, daysAgo: 0), // Today
@@ -70,6 +89,16 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
     private func anyVideo(handle: Int, daysAgo: Int) -> RecentlyOpenedNodeEntity {
         let calendar = Calendar.current
         let date = calendar.date(byAdding: .day, value: -daysAgo, to: Date())!
+        return RecentlyOpenedNodeEntity(
+            node: NodeEntity(name: "video-\(handle).mp4", handle: HandleEntity(handle)),
+            lastOpenedDate: date,
+            mediaDestination: MediaDestinationEntity(fingerprint: "any-fingerprint", destination: 0, timescale: 0)
+        )
+    }
+    
+    private func anyVideo(handle: Int, hourAgo: Int) -> RecentlyOpenedNodeEntity {
+        let calendar = Calendar.current
+        let date = calendar.date(byAdding: .hour, value: -hourAgo, to: Date())!
         return RecentlyOpenedNodeEntity(
             node: NodeEntity(name: "video-\(handle).mp4", handle: HandleEntity(handle)),
             lastOpenedDate: date,
