@@ -33,7 +33,8 @@ public struct NodeEntity: Sendable {
     public let isMarkedSensitive: Bool
     public let description: String?
     public let label: NodeLabelTypeEntity
-    
+    public let tags: [String]
+
     // MARK: - Link
     public let publicHandle: HandleEntity
     public let expirationTime: Date?
@@ -85,6 +86,7 @@ public struct NodeEntity: Sendable {
         isMarkedSensitive: Bool,
         description: String?,
         label: NodeLabelTypeEntity,
+        tags: [String],
         publicHandle: HandleEntity,
         expirationTime: Date?,
         publicLinkCreationTime: Date?,
@@ -126,6 +128,7 @@ public struct NodeEntity: Sendable {
         self.isMarkedSensitive = isMarkedSensitive
         self.description = description
         self.label = label
+        self.tags = tags
         self.publicHandle = publicHandle
         self.expirationTime = expirationTime
         self.publicLinkCreationTime = publicLinkCreationTime

@@ -2351,6 +2351,8 @@
 		BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */; };
 		BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */; };
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
+		BF8C60E72CC8620F000F5757 /* NodeTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C60E62CC8620F000F5757 /* NodeTagsViewModel.swift */; };
+		BF8C60EC2CC86526000F5757 /* NodeTagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C60EA2CC86520000F5757 /* NodeTagsViewModelTests.swift */; };
 		BF8CB0402C34F63900119979 /* NodeSensitivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CB03F2C34F63900119979 /* NodeSensitivityChecker.swift */; };
 		BF8DD11C2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */; };
 		BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
@@ -2453,6 +2455,7 @@
 		BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */; };
 		BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */; };
 		BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */; };
+		BFBBD3712CC70C210004FD7A /* NodeTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD3702CC70C210004FD7A /* NodeTagsView.swift */; };
 		BFC060F328A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */; };
 		BFC060F628A0C2FE00BA2AD7 /* ParticipantsAddingViewFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC060F528A0C2FE00BA2AD7 /* ParticipantsAddingViewFactoryTests.swift */; };
 		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
@@ -5186,6 +5189,8 @@
 		BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContainerViewModelTests.swift; sourceTree = "<group>"; };
 		BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModelTests.swift; sourceTree = "<group>"; };
 		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
+		BF8C60E62CC8620F000F5757 /* NodeTagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsViewModel.swift; sourceTree = "<group>"; };
+		BF8C60EA2CC86520000F5757 /* NodeTagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsViewModelTests.swift; sourceTree = "<group>"; };
 		BF8CB03F2C34F63900119979 /* NodeSensitivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSensitivityChecker.swift; sourceTree = "<group>"; };
 		BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoWrapperViewController.swift; sourceTree = "<group>"; };
 		BF90C7A626040930006061F8 /* UserStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreRepository.swift; sourceTree = "<group>"; };
@@ -5282,6 +5287,7 @@
 		BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRulesEntityTests.swift; sourceTree = "<group>"; };
 		BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingMonthlyRecurrenceFootnoteView.swift; sourceTree = "<group>"; };
+		BFBBD3702CC70C210004FD7A /* NodeTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsView.swift; sourceTree = "<group>"; };
 		BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsAddingViewFactory.swift; sourceTree = "<group>"; };
 		BFC060F528A0C2FE00BA2AD7 /* ParticipantsAddingViewFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsAddingViewFactoryTests.swift; sourceTree = "<group>"; };
 		BFC1794F24491073004F35AB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -6374,6 +6380,7 @@
 				245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */,
 				BFD453082CC1FBDB00C8FEE4 /* NodeTagsCellControllerModelTests.swift */,
 				BF6C9BA22CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift */,
+				BF8C60EA2CC86520000F5757 /* NodeTagsViewModelTests.swift */,
 			);
 			path = NodeInfo;
 			sourceTree = "<group>";
@@ -12677,6 +12684,7 @@
 				C49955AF2CB8D4B500771BC7 /* AddTagsView+Subviews.swift */,
 				C49955AE2CB8D4B500771BC7 /* AddTagsView.swift */,
 				BF6C9B9F2CB48408007FFE96 /* NodeTagsCellView.swift */,
+				BFBBD3702CC70C210004FD7A /* NodeTagsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -12686,6 +12694,7 @@
 			children = (
 				BFD453062CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift */,
 				BF9366222CB47B89001BD0CD /* NodeTagsCellViewModel.swift */,
+				BF8C60E62CC8620F000F5757 /* NodeTagsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -15618,6 +15627,8 @@
 				BFD453072CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift in Sources */,
 				BF6C9BA02CB48408007FFE96 /* NodeTagsCellView.swift in Sources */,
 				BF9366232CB47B9B001BD0CD /* NodeTagsCellViewModel.swift in Sources */,
+				BFBBD3712CC70C210004FD7A /* NodeTagsView.swift in Sources */,
+				BF8C60E72CC8620F000F5757 /* NodeTagsViewModel.swift in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
 				0EDE903E2BF6D21700D2F96E /* NodeUseCaseFactory.swift in Sources */,
@@ -16875,6 +16886,7 @@
 				25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */,
 				BFD453092CC1FBE100C8FEE4 /* NodeTagsCellControllerModelTests.swift in Sources */,
 				BF6C9BA32CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift in Sources */,
+				BF8C60EC2CC86526000F5757 /* NodeTagsViewModelTests.swift in Sources */,
 				0EDE90422BF6D7E300D2F96E /* NodeUseCaseFactoryTests.swift in Sources */,
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,

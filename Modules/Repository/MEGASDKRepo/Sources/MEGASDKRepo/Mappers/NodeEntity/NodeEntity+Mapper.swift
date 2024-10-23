@@ -63,7 +63,8 @@ fileprivate extension NodeEntity {
             isMarkedSensitive                  : node.isMarkedSensitive,
             description                        : node.description,
             label                              : node.label.toNodeLabelTypeEntity(),
-            
+            tags                               : node.tags?.toArray() ?? [],
+
             // MARK: - Links
             publicHandle                       : node.publicHandle,
             expirationTime                     : Date(timeIntervalSince1970: TimeInterval(node.expirationTime)),

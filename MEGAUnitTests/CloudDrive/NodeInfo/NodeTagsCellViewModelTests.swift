@@ -37,9 +37,49 @@ struct NodeTagsCellViewModelTests {
     }
 
     @MainActor
-    private func makeSUT(
+    @Test(
+        "Check if the user has a valid subscription",
+        arguments: [
+            (proLevel: AccountTypeEntity.free, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.proI, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.proII, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.proIII, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.lite, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.business, isExpiredAccount: false, result: true),
+            (proLevel: AccountTypeEntity.business, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.proFlexi, isExpiredAccount: false, result: true),
+            (proLevel: AccountTypeEntity.proFlexi, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.starter, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.basic, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.essential, isExpiredAccount: true, result: true),
+            (proLevel: AccountTypeEntity.feature, isExpiredAccount: true, result: true)
+        ]
+    )
+    func hasValidSubscription(
         proLevel: AccountTypeEntity,
-        isExpiredAccount: Bool
+        isExpiredAccount: Bool,
+        result: Bool
+    ) {
+        let sut = makeSUT(
+            proLevel: proLevel,
+            isExpiredAccount: isExpiredAccount
+        )
+        #expect(sut.hasValidSubscription == result)
+    }
+
+    @MainActor
+    @Test("Check for tags")
+    func checkTags() {
+        let node = NodeEntity(tags: ["tag1", "tag2", "tag3"])
+        let sut = makeSUT(node: node)
+        #expect(sut.tags == ["#tag1", "#tag2", "#tag3"])
+    }
+
+    @MainActor
+    private func makeSUT(
+        node: NodeEntity = NodeEntity(),
+        proLevel: AccountTypeEntity = .free,
+        isExpiredAccount: Bool = false
     ) -> NodeTagsCellViewModel {
         let accountUseCase = AccountUseCase(
             repository: MockAccountRepository(
@@ -48,6 +88,6 @@ struct NodeTagsCellViewModelTests {
                 accountType: proLevel
             )
         )
-        return NodeTagsCellViewModel(accountUseCase: accountUseCase)
+        return NodeTagsCellViewModel(node: node, accountUseCase: accountUseCase)
     }
 }
