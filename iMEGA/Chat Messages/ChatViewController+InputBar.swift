@@ -155,6 +155,7 @@ extension ChatViewController {
                 self.messagesCollectionView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.scrollToBottom()
+                    self.reloadInputViews()
                 }
             }
             if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
