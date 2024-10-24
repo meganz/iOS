@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import UIKit
 
@@ -14,6 +15,12 @@ class GetLinkInfoTableViewCell: UITableViewCell {
             }
             viewModel?.dispatch(.onViewReady)
         }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        nameLabel.textColor = TokenColors.Text.primary
+        subtitleLabel.textColor = TokenColors.Text.secondary
     }
     
     override func prepareForReuse() {
