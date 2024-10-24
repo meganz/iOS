@@ -1,14 +1,15 @@
 import MEGAL10n
 import MEGASwift
+import MEGASwiftUI
 import SwiftUI
 import WidgetKit
 
 struct ShortcutsProvider: IntentTimelineProvider {
-
+    
     typealias Intent = SelectShortcutIntent
-
+    
     typealias Entry = ShortcutsWidgetEntry
-
+    
     func placeholder(in context: Context) -> Entry {
         return Entry(date: Date(), shortcuts: ShortcutDetail.availableShortcuts)
     }
@@ -31,7 +32,6 @@ struct ShortcutsProvider: IntentTimelineProvider {
     }
     
     func shortcut(for intent: IntentShortcut?) -> ShortcutDetail {
-        
         guard let identifier = intent?.identifier else {
             return .defaultShortcut
         }
@@ -53,7 +53,7 @@ struct ShortcutsProvider: IntentTimelineProvider {
 
 struct ShortcutsWidget: Widget {
     let kind: String = MEGAShortcutsWidget
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: SelectShortcutIntent.self, provider: ShortcutsProvider()) { entry in
             ShortcutsWidgetView(entry: entry)
@@ -78,16 +78,19 @@ struct SmallShortcutWidgetView: View {
             VStack(alignment: .leading) {
                 Image(shortcut.imageName)
                     .frame(width: 56, height: 56, alignment: .leading)
+                    .applyWidgetAccent()
                 Spacer()
                 Text(shortcut.title)
                     .font(.system(size: 14, weight: .semibold, design: .default))
                     .foregroundColor(.white)
+                    .applyWidgetAccent()
             }
             .padding(16)
             Spacer()
         }
         .widgetBackground(LinearGradient(gradient: Gradient(colors: [shortcut.topBackgroundColor, shortcut.bottomBackgroundColor]), startPoint: .top, endPoint: .bottom))
         .widgetURL(URL(string: shortcut.link))
+        .applyWidgetAccent()
     }
 }
 
@@ -105,11 +108,41 @@ struct ShortcutView: View {
                     .font(.system(size: 12, weight: .semibold, design: .default))
                     .foregroundColor(.white)
                     .padding([.leading, .trailing], 8)
+                    .applyWidgetAccent()
             }
             Spacer()
         }
         .frame(maxHeight: .infinity)
         .background(LinearGradient(gradient: Gradient(colors: [shortcut.topBackgroundColor, shortcut.bottomBackgroundColor]), startPoint: .top, endPoint: .bottom))
+        .cornerRadius(8)
+    }
+}
+
+@available(iOS 16.0, *)
+struct ShortcutView_iOS16: View {
+    let shortcut: ShortcutDetail
+    
+    @Environment(\.widgetRenderingMode) private var widgetRenderingMode
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Image(shortcut.imageName)
+                    .resizable()
+                    .frame(width: 28, height: 28, alignment: .leading)
+                    .padding([.leading, .trailing], 8)
+                Text(shortcut.title)
+                    .font(.system(size: 12, weight: .semibold, design: .default))
+                    .foregroundColor(.white)
+                    .padding([.leading, .trailing], 8)
+                    .applyWidgetAccent()
+            }
+            Spacer()
+        }
+        .frame(maxHeight: .infinity)
+        .shortcutBackgroundColor(topBackgroundColor: shortcut.topBackgroundColor,
+                                 bottomBackgroundColor: shortcut.bottomBackgroundColor,
+                                 renderMode: widgetRenderingMode)
         .cornerRadius(8)
     }
 }
@@ -123,27 +156,27 @@ struct MediumShortcutsWidgetView: View {
                 HStack(alignment: .top, spacing: 8) {
                     if let firstShortcut = shortcuts[safe: 0], let url = URL(string: firstShortcut.link) {
                         Link(destination: url, label: {
-                            ShortcutView(shortcut: firstShortcut)
+                            buildShortcutView(shortcut: firstShortcut)
                         })
                     }
                     if let secondShortcut = shortcuts[safe: 1], let url = URL(string: secondShortcut.link) {
                         Link(destination: url, label: {
-                            ShortcutView(shortcut: secondShortcut)
+                            buildShortcutView(shortcut: secondShortcut)
                         })
                     }
                 }
                 .padding(EdgeInsets(top: 8, leading: 8, bottom: 4, trailing: 8))
                 .frame(width: geometry.size.width, height: geometry.size.height/2)
-
+                
                 HStack(alignment: .top, spacing: 8) {
                     if let thirdShortcut = shortcuts[safe: 2], let url = URL(string: thirdShortcut.link) {
                         Link(destination: url, label: {
-                            ShortcutView(shortcut: thirdShortcut)
+                            buildShortcutView(shortcut: thirdShortcut)
                         })
                     }
                     if let fourthShortcut = shortcuts[safe: 3], let url = URL(string: fourthShortcut.link) {
                         Link(destination: url, label: {
-                            ShortcutView(shortcut: fourthShortcut)
+                            buildShortcutView(shortcut: fourthShortcut)
                         })
                     }
                 }
@@ -152,6 +185,15 @@ struct MediumShortcutsWidgetView: View {
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .widgetBackground(Color("SecondaryBackground"))
+        }
+    }
+    
+    @ViewBuilder
+    private func buildShortcutView(shortcut: ShortcutDetail) -> some View {
+        if #available(iOS 16.0, *) {
+            ShortcutView_iOS16(shortcut: shortcut)
+        } else {
+            ShortcutView(shortcut: shortcut)
         }
     }
 }

@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct QuickAccessWidgetView: View {
@@ -24,12 +26,14 @@ struct QuickAccessWidgetView: View {
         if entry.value.status == .noSession {
             Image(.megaLogoGrayscale)
                 .resizable()
+                .applyAccentedDesaturatedRenderingMode()
                 .frame(width: 31, height: 28, alignment: .leading)
                 .padding()
         } else {
             Text(entry.section)
                 .font(.system(size: 17, weight: .bold, design: .default))
                 .foregroundColor(Color(UIColor.label))
+                .applyWidgetAccent()
                 .padding(.leading, 24)
         }
     }
@@ -76,6 +80,7 @@ struct QuickAccessWidgetView: View {
             }
             Spacer()
         }
+        .applyWidgetAccent()
     }
     
     func errorView() -> some View {
@@ -85,6 +90,7 @@ struct QuickAccessWidgetView: View {
                 Spacer()
                 Text("Error")
                     .font(.system(size: 18, weight: .regular, design: .default))
+                    .applyWidgetAccent()
                 Spacer()
             }
             Spacer()
@@ -98,7 +104,8 @@ struct QuickAccessWidgetView: View {
                 Spacer()
                 Text(Strings.Localizable.login)
                     .font(.system(size: 17, weight: .semibold, design: .default))
-                    .foregroundColor(Color("00A886"))
+                    .foregroundColor(TokenColors.Text.primary.swiftUI)
+                    .applyWidgetAccent()
                 Spacer()
             }
             .frame(maxWidth: .infinity, minHeight: 44)
@@ -118,6 +125,7 @@ struct QuickAccessWidgetView: View {
                 Spacer()
                 Text(Strings.Localizable.loading)
                     .font(.system(size: 20, weight: .medium, design: .default))
+                    .applyWidgetAccent()
                 Spacer()
             }
             Spacer()
