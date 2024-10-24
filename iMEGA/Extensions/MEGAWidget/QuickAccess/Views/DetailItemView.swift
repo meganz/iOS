@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct DetailItemView: View {
@@ -7,8 +8,10 @@ struct DetailItemView: View {
         HStack {
             item.thumbnail
                 .resizable()
+                .applyAccentedDesaturatedRenderingMode()
                 .frame(width: 24, height: 24, alignment: .leading)
                 .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 0))
+            
             if let image = item.image, let description = item.description {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(item.name)
@@ -27,7 +30,7 @@ struct DetailItemView: View {
                         Spacer()
                     }
                     .padding([.bottom], 10)
-
+                    
                 }
             } else {
                 Text(item.name)
@@ -36,6 +39,7 @@ struct DetailItemView: View {
                     .padding([.bottom, .top], 8)
                     .lineLimit(2)
             }
+            
             Spacer()
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, idealHeight: 50)

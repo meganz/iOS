@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct GridView: View {
@@ -18,6 +19,7 @@ struct GridView: View {
     private func cell(for item: QuickAccessItemModel, maxHeight: CGFloat) -> some View {
         GridCell(item: item)
             .frame(maxWidth: .infinity, maxHeight: maxHeight)
+            .applyWidgetAccent()
     }
 }
 

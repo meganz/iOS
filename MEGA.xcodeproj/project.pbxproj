@@ -826,6 +826,7 @@
 		6DF356B52BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF356B62BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF356B82BAD36370099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
+		6DFC67842CC87957000EA8BC /* MEGASwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6DFC67832CC87957000EA8BC /* MEGASwiftUI */; };
 		6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 6DFE02972CB7338400703844 /* MEGAUIComponent */; };
 		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
@@ -5654,6 +5655,7 @@
 				BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */,
 				BF61496C2A9FF39500AB051A /* MEGAL10nObjc in Frameworks */,
 				946ACCC7299C0B3500E6C0F5 /* MEGAPresentation in Frameworks */,
+				6DFC67842CC87957000EA8BC /* MEGASwiftUI in Frameworks */,
 				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13817,6 +13819,7 @@
 				BF0CB9412803AF6000C21F11 /* SAMKeychain */,
 				BF6149692A9FF39500AB051A /* MEGAL10n */,
 				BF61496B2A9FF39500AB051A /* MEGAL10nObjc */,
+				6DFC67832CC87957000EA8BC /* MEGASwiftUI */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -18990,6 +18993,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */;
 			productName = MEGADesignToken;
+		};
+		6DFC67832CC87957000EA8BC /* MEGASwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASwiftUI;
 		};
 		6DFE02972CB7338400703844 /* MEGAUIComponent */ = {
 			isa = XCSwiftPackageProductDependency;
