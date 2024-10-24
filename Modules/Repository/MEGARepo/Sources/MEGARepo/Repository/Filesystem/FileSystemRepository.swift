@@ -8,27 +8,17 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     }
     
     private let fileManager: FileManager
-    private static var cachedDocumentDirectoryURL: URL?
+    private let documentsDirectoryURL: URL
     private let queue = DispatchQueue(label: "nz.mega.MEGARepo.FileSystemRepository")
     
     public init(fileManager: FileManager) {
         self.fileManager = fileManager
+        let path = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        self.documentsDirectoryURL = if let url = URL(string: path.lastPathComponent) { url } else { path }
     }
 
     public func documentsDirectory() -> URL {
-        if let cachedURL = FileSystemRepository.cachedDocumentDirectoryURL {
-            return cachedURL
-        } else {
-            let paths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-            
-            guard let documentsDirectory = URL(string: paths[0].lastPathComponent) else {
-                FileSystemRepository.cachedDocumentDirectoryURL = paths[0]
-                return paths[0]
-            }
-
-            FileSystemRepository.cachedDocumentDirectoryURL = documentsDirectory
-            return documentsDirectory
-        }
+        documentsDirectoryURL
     }
     
     public func fileExists(at url: URL) -> Bool {
@@ -85,7 +75,7 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     
     // MARK: - Private
     
-    private func removeItemAsync(at url: URL, completion: @escaping (Result<Void, Error>) -> Void) {
+    private func removeItemAsync(at url: URL, completion: @Sendable @escaping (Result<Void, Error>) -> Void) {
         queue.async {
             do {
                 try FileManager.default.removeItem(at: url)
