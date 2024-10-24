@@ -84,21 +84,14 @@ struct FeatureListHelperTestSuite {
     
     private static func makeSUT(
         accountType: AccountTypeEntity = .proI,
-        storageMax: Int64 = 1000000000,
-        transferMax: Int64 = 500000000,
         unavailableImageName: String = "unavailable",
         availableImageName: String = "available"
     ) -> FeatureListHelper {
-        let account = AccountDetailsEntity.build(
-            storageMax: storageMax,
-            transferMax: transferMax
-        )
         let assets = CancelAccountPlanAssets(
             availableImageName: availableImageName,
             unavailableImageName: unavailableImageName
         )
         return FeatureListHelper(
-            account: account,
             currentPlan: PlanEntity(type: accountType),
             assets: assets
         )
