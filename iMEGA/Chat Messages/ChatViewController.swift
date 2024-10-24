@@ -15,8 +15,11 @@ class ChatViewController: MessagesViewController {
     let sdk = MEGASdk.shared
     let chatContentViewModel: ChatContentViewModel
     
-    @objc private(set) var chatRoom: MEGAChatRoom
-    
+    private(set) var chatRoom: ChatRoomEntity
+    @objc var chatId: ChatIdEntity {
+        chatRoom.chatId // This is accessed from MEGALinkManager and MEGAChatNotificationDelegate
+    }
+
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     var chatInputBar: ChatInputBar?
@@ -183,7 +186,7 @@ class ChatViewController: MessagesViewController {
         updateToolbarState()
     }
     
-    init(chatRoom: MEGAChatRoom, chatContentViewModel: ChatContentViewModel) {
+    init(chatRoom: ChatRoomEntity, chatContentViewModel: ChatContentViewModel) {
         self.chatRoom = chatRoom
         self.chatContentViewModel = chatContentViewModel
         super.init(nibName: nil, bundle: nil)
@@ -222,7 +225,7 @@ class ChatViewController: MessagesViewController {
         setMenuCapableBackButtonWith(
             menuTitle: Self.backButtonMenuTitle(
                 chatTitle: chatRoom.title,
-                isOneToOne: chatRoom.isOneToOne
+                isOneToOne: chatRoom.chatType == .oneToOne
             )
         )
         
@@ -247,9 +250,9 @@ class ChatViewController: MessagesViewController {
         return title
     }
     
-    @objc func update(chatRoom: MEGAChatRoom) {
+    func update(chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
-        updateChatRoom(chatRoom.toChatRoomEntity())
+        updateChatRoom(chatRoom)
         update()
     }
     
@@ -295,7 +298,6 @@ class ChatViewController: MessagesViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MEGAChatSdk.shared.add(self as (any MEGAChatDelegate))
         
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
@@ -381,8 +383,6 @@ class ChatViewController: MessagesViewController {
         saveDraft()
         
         stopVoiceRecording()
-        
-        MEGAChatSdk.shared.removeMEGAChatDelegateAsync(self as (any MEGAChatDelegate))
         
         if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
@@ -758,7 +758,7 @@ class ChatViewController: MessagesViewController {
             return (displayName as NSString).mnz_initialForAvatar()
         }
         
-        if let peerFullname = chatRoom.participantName(forUserHandle: userHandle) {
+        if let peerFullname = participantName(forUserHandle: userHandle) {
             return (peerFullname as NSString).mnz_initialForAvatar()
         }
         
@@ -781,6 +781,10 @@ class ChatViewController: MessagesViewController {
             showTapToReturnToCall(withTitle: title)
         case .enableAudioVideoButtons(let enable):
             shouldEnableAudioVideoButtons(enable)
+        case .updateLastGreenTime(let lastGreenMinutes):
+            if let titleView = navigationItem.titleView as? ChatTitleView {
+                titleView.lastGreen = lastGreenMinutes
+            }
         }
     }
     
@@ -910,9 +914,7 @@ class ChatViewController: MessagesViewController {
         configureNavigationBar()
         chatRoomDelegate.openChatRoom()
         
-        if !chatRoom.isGroup {
-            MEGAChatSdk.shared.requestLastGreen(chatRoom.peerHandle(at: 0))
-        }
+        chatContentViewModel.dispatch(.requestLastGreenIfNeeded)
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.setMessageOutgoingAvatarSize(.zero)

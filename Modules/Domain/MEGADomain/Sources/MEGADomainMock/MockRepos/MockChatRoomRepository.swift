@@ -29,6 +29,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
     private let hasScheduledMeetingChange: Bool
     private let userEmail: String?
     private let monitorChatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)>
+    private let monitorChatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: ChatIdEntity, status: ChatStatusEntity, inProgress: Bool)>
+    private let monitorPresenceLastGreenUpdates: AnyAsyncSequence<(userHandle: ChatIdEntity, lastGreen: Int)>
 
     public init(
         chatRoom: ChatRoomEntity? = nil,
@@ -54,7 +56,9 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
         chatRoomMessageLoadedPublisher: AnyPublisher<MEGADomain.ChatMessageEntity?, Never> = Empty().eraseToAnyPublisher(),
         hasScheduledMeetingChange: Bool = false,
         userEmail: String? = nil,
-        monitorChatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        monitorChatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        monitorChatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: ChatIdEntity, status: ChatStatusEntity, inProgress: Bool)> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        monitorPresenceLastGreenUpdates: AnyAsyncSequence<(userHandle: ChatIdEntity, lastGreen: Int)> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.chatRoom = chatRoom
         self.peerHandles = peerHandles
@@ -80,6 +84,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
         self.hasScheduledMeetingChange = hasScheduledMeetingChange
         self.userEmail = userEmail
         self.monitorChatConnectionStateUpdate = monitorChatConnectionStateUpdate
+        self.monitorChatOnlineStatusUpdate = monitorChatOnlineStatusUpdate
+        self.monitorPresenceLastGreenUpdates = monitorPresenceLastGreenUpdates
     }
     
     public func chatRoom(forChatId chatId: MEGADomain.HandleEntity) -> MEGADomain.ChatRoomEntity? {
@@ -228,7 +234,17 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
         userEmail
     }
     
+    public func requestLastGreen(for user: HandleEntity) { }
+    
     public var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> {
         monitorChatConnectionStateUpdate.eraseToAnyAsyncSequence()
+    }
+    
+    public var chatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)> {
+        monitorChatOnlineStatusUpdate.eraseToAnyAsyncSequence()
+    }
+    
+    public var presenceLastGreenUpdates: AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)> {
+        monitorPresenceLastGreenUpdates.eraseToAnyAsyncSequence()
     }
 }

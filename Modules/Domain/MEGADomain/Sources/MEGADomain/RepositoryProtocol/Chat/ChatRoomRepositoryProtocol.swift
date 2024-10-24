@@ -37,6 +37,8 @@ public protocol ChatRoomRepositoryProtocol: RepositoryProtocol, Sendable {
     func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity
     func chatRoomMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
     func userEmail(for handle: HandleEntity) async -> String?
-    /// - Returns: `AnyAsyncSequence` that will yield `(ChatIdEntity, ChatConnectionStatus)` items until sequence terminated.
+    func requestLastGreen(for user: HandleEntity)
     var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> { get }
+    var chatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)> { get }
+    var presenceLastGreenUpdates: AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)> { get }
 }

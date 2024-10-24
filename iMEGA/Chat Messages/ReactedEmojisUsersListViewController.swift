@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import PanModal
 
@@ -19,7 +20,7 @@ class ReactedEmojisUsersListViewController: UIViewController {
         }
     }
     
-    private let chatRoom: MEGAChatRoom
+    private let chatRoom: ChatRoomEntity
     private let messageId: UInt64
     private let emojiList: [String]
     private let localSavedEmojis = EmojiListReader.readFromFile()
@@ -29,7 +30,7 @@ class ReactedEmojisUsersListViewController: UIViewController {
     init(delegate: some ReactedEmojisUsersListViewControllerDelegate,
          emojiList: [String],
          selectedEmoji: String,
-         chatRoom: MEGAChatRoom,
+         chatRoom: ChatRoomEntity,
          messageId: UInt64) {
         self.delegate = delegate
         self.emojiList = emojiList
@@ -167,7 +168,7 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
 
             return nil
         }
-        return chatRoom.participantName(forUserHandle: handle)
+        return participantName(forUserHandle: handle)
     }
 }
 

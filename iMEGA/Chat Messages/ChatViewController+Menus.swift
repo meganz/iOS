@@ -172,7 +172,7 @@ extension ChatViewController {
         }
     }
     
-    private func saveToPhotos(node: MEGANode, chatMessage: ChatMessage, chatRoom: MEGAChatRoom) {
+    private func saveToPhotos(node: MEGANode, chatMessage: ChatMessage, chatRoom: ChatRoomEntity) {
         let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
         TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()

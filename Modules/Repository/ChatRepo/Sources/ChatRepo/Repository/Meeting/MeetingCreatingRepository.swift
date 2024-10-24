@@ -10,18 +10,18 @@ public final class MeetingCreatingRepository: NSObject, MeetingCreatingRepositor
         MeetingCreatingRepository(
             chatSdk: .sharedChatSdk,
             sdk: .sharedSdk,
-            chatConnectionStateUpdateProvider: ChatConnectionStateUpdateProvider(sdk: .sharedChatSdk)
+            chatConnectionStateUpdateProvider: ChatUpdatesProvider(sdk: .sharedChatSdk)
         )
     }
     
     private let chatSdk: MEGAChatSdk
     private let sdk: MEGASdk
-    private let chatConnectionStateUpdateProvider: any ChatConnectionStateUpdateProviderProtocol
+    private let chatConnectionStateUpdateProvider: any ChatUpdatesProviderProtocol
     
     public init(
         chatSdk: MEGAChatSdk,
         sdk: MEGASdk,
-        chatConnectionStateUpdateProvider: some ChatConnectionStateUpdateProviderProtocol
+        chatConnectionStateUpdateProvider: some ChatUpdatesProviderProtocol
     ) {
         self.chatSdk = chatSdk
         self.sdk = sdk

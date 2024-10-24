@@ -62,7 +62,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
             contactDetailsVC.userEmail = userEmail
             contactDetailsVC.userName = chatMessage.displayName
             contactDetailsVC.userHandle = chatMessage.message.userHandle
-            contactDetailsVC.groupChatRoom = self.chatRoom
+            contactDetailsVC.groupChatRoom = self.chatRoom.toMEGAChatRoom()
             self.navigationController?.pushViewController(contactDetailsVC, animated: true)
         }
     }

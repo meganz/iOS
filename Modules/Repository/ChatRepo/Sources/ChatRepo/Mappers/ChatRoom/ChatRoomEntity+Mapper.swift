@@ -26,6 +26,7 @@ fileprivate extension ChatRoomEntity {
             userTypingHandle: chatRoom.userTypingHandle,
             retentionTime: chatRoom.retentionTime,
             creationTimeStamp: chatRoom.creationTimeStamp,
+            previewersCount: chatRoom.previewersCount,
             hasCustomTitle: chatRoom.hasCustomTitle,
             isPublicChat: chatRoom.isPublicChat,
             isPreview: chatRoom.isPreview,

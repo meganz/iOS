@@ -495,7 +495,7 @@ extension AppDelegate {
     }
     
     private func waitUntilChatStatusComesOnline(forChatId chatId: HandleEntity) async throws {
-        let chatConnectionProvider = ChatConnectionStateUpdateProvider(sdk: .sharedChatSdk)
+        let chatConnectionProvider = ChatUpdatesProvider(sdk: .sharedChatSdk)
   
         _ = await chatConnectionProvider
             .updates

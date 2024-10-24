@@ -1,3 +1,4 @@
+import MEGADomain
 import MEGAL10n
 import MEGAUIKit
 import UIKit
@@ -8,11 +9,11 @@ class GiphySelectionViewController: UIViewController {
         return self.view as! GiphySelectionView
     }
     
-    let chatRoom: MEGAChatRoom!
+    let chatRoom: ChatRoomEntity
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    init(chatRoom: MEGAChatRoom) {
+    init(chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
 
         super.init(nibName: nil, bundle: nil)

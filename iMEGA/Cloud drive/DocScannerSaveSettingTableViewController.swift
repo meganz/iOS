@@ -61,7 +61,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     }
 
     @objc var docs: [UIImage]?
-    @objc var chatRoom: MEGAChatRoom?
+    var chatRoom: ChatRoomEntity?
     var charactersNotAllowed: Bool = false
 
     @IBOutlet weak var sendButton: UIBarButtonItem!

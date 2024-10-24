@@ -21,6 +21,7 @@ enum ChatContentAction: ActionType {
     case startCallBarButtonTapped(isVideoEnabled: Bool)
     case startOrJoinFloatingButtonTapped
     case returnToCallBannerButtonTapped
+    case requestLastGreenIfNeeded
 }
 
 @MainActor
@@ -33,6 +34,7 @@ final class ChatContentViewModel: ViewModelType {
         case showTapToReturnToCall(_ title: String)
         case enableAudioVideoButtons(_ enable: Bool)
         case hideStartOrJoinCallButton(_ hide: Bool)
+        case updateLastGreenTime(_ lastGreenMinutes: Int) /// Minutes that have elapsed since the user was last online
     }
     
     struct NavBarRightItems: OptionSet {
@@ -113,6 +115,9 @@ final class ChatContentViewModel: ViewModelType {
         
         subscribeToOnCallUpdate()
         subscribeToNoUserJoinedNotification()
+        monitorOnChatConnectionStateUpdate()
+        monitorOnChatOnlineStatusUpdate()
+        monitorOnChatPresenceLastGreenUpdate()
     }
     
     // MARK: - Dispatch actions
@@ -139,6 +144,11 @@ final class ChatContentViewModel: ViewModelType {
             checkPermissionsAndStartCall(isVideoEnabled: false, notRinging: true)
         case .returnToCallBannerButtonTapped:
             returnToCallUI()
+        case .requestLastGreenIfNeeded:
+            // If chat room is one to one, ask for last time other user was online
+            if let userHandle = chatRoom.oneToOneRoomOtherParticipantUserHandle() {
+                chatRoomUseCase.requestLastGreen(for: userHandle)
+            }
         }
     }
     
@@ -484,5 +494,82 @@ final class ChatContentViewModel: ViewModelType {
             .sink { [weak self] call in
                 self?.onChatCallUpdate(for: call)
             }
+    }
+    
+    // MARK: Chat connection state update
+    private func monitorOnChatConnectionStateUpdate() {
+        let chatConnectionsStateUpdate = chatRoomUseCase.monitorOnChatConnectionStateUpdate()
+        Task { [weak self] in
+            do {
+                for try await chatConnectionState in chatConnectionsStateUpdate {
+                    self?.onChatConnectionStateUpdate(
+                        chatId: chatConnectionState.chatId,
+                        connectionStatus: chatConnectionState.connectionStatus
+                    )
+                }
+            } catch {
+                MEGALogError("[ChatContentViewModel] monitorOnChatConnectionStateUpdate failed: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func onChatConnectionStateUpdate(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus) {
+        if chatRoom.chatId == chatId {
+            invokeCommand?(.configNavigationBar)
+            updateContentIfNeeded()
+        }
+    }
+    
+    // MARK: Chat online status update
+    private func monitorOnChatOnlineStatusUpdate() {
+        guard chatRoom.chatType == .oneToOne else { return } // For groups there are not online status
+        let chatOnlineStatusUpdates = chatRoomUseCase.monitorOnChatOnlineStatusUpdate()
+        Task { [weak self] in
+            for try await chatOnlineStatusUpdate in chatOnlineStatusUpdates {
+                self?.onChatOnlineStatusUpdate(chatOnlineStatusUpdate)
+            }
+        }
+    }
+    
+    private func onChatOnlineStatusUpdate(_ chatOnlineStatus: (userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)) {
+        // If the online status updated is not finalised (inProgress == true)
+        // or the online status is from logged user (myUserHandle) return function,
+        // as we just want to update for other participant in one to one chat room
+        if chatOnlineStatus.inProgress || chatOnlineStatus.userHandle == chatUseCase.myUserHandle() {
+            return
+        }
+        
+        if chatRoom.oneToOneRoomOtherParticipantUserHandle() == chatOnlineStatus.userHandle,
+           chatOnlineStatus.status != .invalid {
+            invokeCommand?(.configNavigationBar)
+            switch chatOnlineStatus.status {
+            case .offline, .away:
+                chatRoomUseCase.requestLastGreen(for: chatOnlineStatus.userHandle)
+            default:
+                break
+            }
+        }
+    }
+    
+    // MARK: Chat presence last green update
+    private func monitorOnChatPresenceLastGreenUpdate() {
+        guard chatRoom.chatType == .oneToOne else { return } // For groups there are not presence last green
+        let chatPresenceLastGreenUpdates = chatRoomUseCase.monitorOnPresenceLastGreenUpdates()
+        Task { [weak self] in
+            for try await chatPresenceLastGreenUpdate in chatPresenceLastGreenUpdates {
+                self?.onPresenceLastGreenUpdate(chatPresenceLastGreenUpdate)
+            }
+        }
+    }
+    private func onPresenceLastGreenUpdate(_ presenceLastGreen: (userHandle: HandleEntity, lastGreen: Int)) {
+        if presenceLastGreen.userHandle == chatRoom.peers.first?.handle {
+            let status = chatRoomUseCase.userStatus(forUserHandle: presenceLastGreen.userHandle)
+            switch status {
+            case .offline, .away:
+                invokeCommand?(.updateLastGreenTime(presenceLastGreen.lastGreen))
+            default:
+                break
+            }
+        }
     }
 }

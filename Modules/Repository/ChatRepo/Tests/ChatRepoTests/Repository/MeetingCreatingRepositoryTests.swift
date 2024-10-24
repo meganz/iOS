@@ -117,7 +117,7 @@ final class MeetingCreatingRepositoryTests: XCTestCase {
         let sut = MeetingCreatingRepository(
             chatSdk: chatSDK,
             sdk: sdk,
-            chatConnectionStateUpdateProvider: ChatConnectionStateUpdateProvider(sdk: chatSDK)
+            chatConnectionStateUpdateProvider: ChatUpdatesProvider(sdk: chatSDK)
         )
         
         trackForMemoryLeaks(on: sut)

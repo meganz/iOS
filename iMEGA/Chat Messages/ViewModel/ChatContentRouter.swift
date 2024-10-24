@@ -62,9 +62,6 @@ enum ChatContentRoutingStyle {
     }
     
     func build() -> UIViewController {
-        guard let megaChatRoom = chatRoom.toMEGAChatRoom() else {
-            return UIViewController()
-        }
         let chatContentViewModel = ChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
@@ -80,7 +77,7 @@ enum ChatContentRoutingStyle {
             callManager: CallKitCallManager.shared
         )
         
-        let chatViewController = ChatViewController(chatRoom: megaChatRoom, chatContentViewModel: chatContentViewModel)
+        let chatViewController = ChatViewController(chatRoom: chatRoom, chatContentViewModel: chatContentViewModel)
         if let publicLink {
             chatViewController.publicChatWithLinkCreated = showShareLinkViewAfterOpenChat
             chatViewController.publicChatLink = URL(string: publicLink)
