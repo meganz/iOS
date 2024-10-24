@@ -12,7 +12,12 @@ class GetLinkDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var activityIndicatorContainerView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        activityIndicatorView.color = TokenColors.Icon.secondary
+    }
+
     lazy private var detailLabelSelectedTextColor: UIColor = {
         TokenColors.Text.primary
     }()

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -8,6 +9,13 @@ class GetLinkSwitchOptionTableViewCell: UITableViewCell {
     @IBOutlet weak var selectorSwitch: UISwitch!
     @IBOutlet weak var activityIndicatorContainerView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        nameLabel.textColor = TokenColors.Text.primary
+        activityIndicatorView.color = TokenColors.Icon.secondary
+        selectorSwitch.tintColor = TokenColors.Support.success
+    }
     
     func configureDecryptKeySeparatedCell(isOn: Bool, enabled: Bool) {
         nameLabel.text = Strings.Localizable.sendDecryptionKeySeparately
