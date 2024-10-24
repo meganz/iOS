@@ -9,7 +9,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
     // MARK: - Properties
     
     private var transfers: [ChatMessage] = []
-    private var chatRoom: MEGAChatRoom
+    private var chatRoom: ChatRoomEntity
     weak var chatViewController: ChatViewController?
     var chatMessages: [any MessageType] = []
     var messages: [any MessageType] {
@@ -29,7 +29,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
     
     // MARK: - Init
     
-    init(chatRoom: MEGAChatRoom) {
+    init(chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
         super.init()
     }
@@ -90,8 +90,8 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
         Task { @MainActor in
             MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
             
-            chatViewController?.update(chatRoom: chat)
-            chatRoom = chat
+            chatViewController?.update(chatRoom: chat.toChatRoomEntity())
+            chatRoom = chat.toChatRoomEntity()
             
             switch chat.changes {
             case .participants:
@@ -223,7 +223,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
                !chatViewController.previewMode {
                 MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
             } else if let chatRoom = api.chatRoom(forChatId: chatRoom.chatId) {
-                self.chatRoom = chatRoom
+                self.chatRoom = chatRoom.toChatRoomEntity()
             }
             
             if message.type == .truncate {
@@ -701,9 +701,9 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
     }
     
     private func username(forHandle handle: UInt64) -> String? {
-        if let userNickname = chatRoom.userNickname(forUserHandle: handle) {
+        if let userNickname = userNickname(forUserHandle: handle) {
             return userNickname
-        } else if let userFirstName = chatRoom.participantName(forUserHandle: handle) {
+        } else if let userFirstName = participantName(forUserHandle: handle) {
             return userFirstName
         }
         return nil

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MEGAPresentation
 
 enum PasteImagePreviewAction: ActionType {
@@ -17,7 +18,7 @@ final class PasteImagePreviewViewModel: ViewModelType {
     
     // MARK: - Private properties
     private let router: any PasteImagePreviewRouting
-    private let chatRoom: MEGAChatRoom
+    private let chatRoom: ChatRoomEntity
     private let chatUploader: any ChatUploaderProtocol
     
     // MARK: - Internel properties
@@ -26,7 +27,7 @@ final class PasteImagePreviewViewModel: ViewModelType {
     // MARK: - Init
     init(
         router: some PasteImagePreviewRouting,
-        chatRoom: MEGAChatRoom,
+        chatRoom: ChatRoomEntity,
         chatUploader: some ChatUploaderProtocol = ChatUploader.sharedInstance
     ) {
         self.router = router

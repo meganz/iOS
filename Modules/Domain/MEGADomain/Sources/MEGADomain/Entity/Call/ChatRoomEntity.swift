@@ -46,7 +46,8 @@ public struct ChatRoomEntity: Sendable {
     public let userTypingHandle: HandleEntity
     public let retentionTime: UInt
     public let creationTimeStamp: UInt64
-    
+    public let previewersCount: UInt
+
     public let hasCustomTitle: Bool
     public let isPublicChat: Bool
     public let isPreview: Bool
@@ -70,6 +71,7 @@ public struct ChatRoomEntity: Sendable {
         userTypingHandle: HandleEntity,
         retentionTime: UInt,
         creationTimeStamp: UInt64,
+        previewersCount: UInt,
         hasCustomTitle: Bool,
         isPublicChat: Bool,
         isPreview: Bool,
@@ -92,6 +94,7 @@ public struct ChatRoomEntity: Sendable {
         self.userTypingHandle = userTypingHandle
         self.retentionTime = retentionTime
         self.creationTimeStamp = creationTimeStamp
+        self.previewersCount = previewersCount
         self.hasCustomTitle = hasCustomTitle
         self.isPublicChat = isPublicChat
         self.isPreview = isPreview
@@ -103,6 +106,37 @@ public struct ChatRoomEntity: Sendable {
         self.userHandle = userHandle
         self.isOpenInviteEnabled = isOpenInviteEnabled
         self.isWaitingRoomEnabled = isWaitingRoomEnabled
+    }
+}
+
+extension ChatRoomEntity {
+    public var isGroup: Bool {
+        chatType != .oneToOne
+    }
+    
+    public var ownPrivilegeIsReadOnlyOrLower: Bool {
+        switch ownPrivilege {
+        case .unknown, .removed, .readOnly:
+            true
+        case .standard, .moderator:
+            false
+        }
+    }
+    
+    public var canAddReactions: Bool {
+        if isPublicChat,
+        isPreview {
+            false
+        } else if ownPrivilegeIsReadOnlyOrLower {
+            false
+        } else {
+            true
+        }
+    }
+    
+    ///  For one to one chat rooms returns the other participant user handle
+    public func oneToOneRoomOtherParticipantUserHandle() -> HandleEntity? {
+        chatType == .oneToOne ? peers.first?.handle : nil
     }
 }
 

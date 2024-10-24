@@ -1,8 +1,9 @@
 @testable import MEGA
+import MEGADomain
 import XCTest
 
 final class PasteImagePreviewViewModelTests: XCTestCase {
-    private func makeSUT(chatRoom: MEGAChatRoom = MEGAChatRoom()) -> (
+    private func makeSUT(chatRoom: ChatRoomEntity = ChatRoomEntity()) -> (
         sut: PasteImagePreviewViewModel,
         mockRouter: MockPasteImagePreviewRouter,
         mockChatUploader: MockChatUploader
@@ -24,7 +25,7 @@ final class PasteImagePreviewViewModelTests: XCTestCase {
     }
 
     func testDispatch_didClickSend_withImageInPasteboard_shouldUploadImage() {
-        let (sut, mockRouter, mockChatUploader) = makeSUT(chatRoom: MEGAChatRoom())
+        let (sut, mockRouter, mockChatUploader) = makeSUT(chatRoom: ChatRoomEntity())
         UIPasteboard.general.image = UIImage()
         sut.dispatch(.didClickSend)
         XCTAssertTrue(mockRouter.dismiss_calledTimes == 1)
@@ -32,7 +33,7 @@ final class PasteImagePreviewViewModelTests: XCTestCase {
     }
 
     func testDispatch_didClickSend_withNoImageInPasteboard_shouldNotUploadImage() {
-        let (sut, mockRouter, mockChatUploader) = makeSUT(chatRoom: MEGAChatRoom())
+        let (sut, mockRouter, mockChatUploader) = makeSUT(chatRoom: ChatRoomEntity())
         UIPasteboard.general.image = nil
         sut.dispatch(.didClickSend)
         XCTAssertTrue(mockRouter.dismiss_calledTimes == 1)

@@ -222,7 +222,7 @@ final class ChatRoomRepositoryTests: XCTestCase {
         )
         let sut = ChatRoomRepository(
             sdk: chatSDK,
-            chatConnectionStateUpdateProvider: ChatConnectionStateUpdateProvider(sdk: chatSDK)
+            chatUpdatesProvider: ChatUpdatesProvider(sdk: chatSDK)
         )
         
         trackForMemoryLeaks(on: sut)

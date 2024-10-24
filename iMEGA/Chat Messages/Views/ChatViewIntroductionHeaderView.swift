@@ -1,3 +1,4 @@
+import ChatRepo
 import CoreGraphics
 import MEGADesignToken
 import MEGADomain
@@ -36,7 +37,9 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     
     private let contentSpacing: CGFloat = 20.0
     
-    var chatRoom: MEGAChatRoom? {
+    private let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
+
+    var chatRoom: ChatRoomEntity? {
         didSet {
             updateStatus()
         }
@@ -52,30 +55,31 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             return
         }
         
-        participantsLabel.text = chatRoom.participantNames
+        participantsLabel.text = participantNames(for: chatRoom)
 
         updateAvatar(for: chatRoom)
         updateStatusView(for: chatRoom)
         updateAppearance()
     }
     
-    private func updateAvatar(for chatRoom: MEGAChatRoom) {
+    private func updateAvatar(for chatRoom: ChatRoomEntity) {
         if chatRoom.isGroup {
             avatarImageView.isHidden = true
         } else {
-            let userHandle = chatRoom.peerHandle(at: 0)
+            guard let userHandle = chatRoom.peers.first?.handle else { return }
             avatarImageView.image = UIImage.mnz_image(forUserHandle: userHandle, name: chatRoom.title ?? "", size: CGSize(width: 80, height: 80), delegate: self)
         }
     }
     
-    private func updateStatusView(for chatRoom: MEGAChatRoom) {
-        if chatRoom.isOneToOne {
-            if let status = chatRoom.onlineStatus {
+    private func updateStatusView(for chatRoom: ChatRoomEntity) {
+        if chatRoom.chatType == .oneToOne {
+            if let userHandle = chatRoom.oneToOneRoomOtherParticipantUserHandle() {
+                let status = chatRoomUseCase.userStatus(forUserHandle: userHandle)
                 statusView.isHidden = (status == .invalid)
-                statusView.backgroundColor = UIColor.color(withChatStatus: status)
+                statusView.backgroundColor = status.uiColor
                 
                 statusLabel.isHidden = (status == .invalid)
-                statusLabel.text = NSString.chatStatusString(status)
+                statusLabel.text = status.localizedIdentifier
             }
         } else if chatRoom.isMeeting {
             statusView.isHidden = true
@@ -122,10 +126,10 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let authenticityText = Strings.Localizable.authenticityExplanation
         setAttributedText(with: authenticityText, label: authenticityTextLabel)
         
-        guard let status = chatRoom?.onlineStatus else {
-            return
+        if let userHandle = chatRoom?.peers.first?.handle {
+            let status = chatRoomUseCase.userStatus(forUserHandle: userHandle)
+            statusView.backgroundColor = status.uiColor
         }
-        statusView.backgroundColor = UIColor.color(withChatStatus: status)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

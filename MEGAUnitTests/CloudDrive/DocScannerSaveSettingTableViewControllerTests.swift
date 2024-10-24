@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 import XCTest
 
 final class DocScannerSaveSettingTableViewControllerTests: XCTestCase {
@@ -53,7 +54,7 @@ final class DocScannerSaveSettingTableViewControllerTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(chatRoom: MEGAChatRoom? = nil, file: StaticString = #filePath, line: UInt = #line) -> DocScannerSaveSettingTableViewController {
+    private func makeSUT(chatRoom: ChatRoomEntity? = nil, file: StaticString = #filePath, line: UInt = #line) -> DocScannerSaveSettingTableViewController {
         let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
         let sut = storyboard.instantiateViewController(withIdentifier: "DocScannerSaveSettingTableViewController") as! DocScannerSaveSettingTableViewController
         sut.chatRoom = chatRoom
@@ -78,7 +79,7 @@ final class DocScannerSaveSettingTableViewControllerTests: XCTestCase {
         }
     }
     
-    private func anyChatRoom() -> MEGAChatRoom {
-        MEGAChatRoom()
+    private func anyChatRoom() -> ChatRoomEntity {
+        ChatRoomEntity()
     }
 }

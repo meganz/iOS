@@ -1,4 +1,6 @@
+import ChatRepo
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import UIKit
 
@@ -7,13 +9,15 @@ class ChatTitleView: UIView {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var statusView: UIView!
     
+    private let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
+
     var lastGreen: Int? {
         didSet {
             updateSubtitleLabel()
         }
     }
     
-    var chatRoom: MEGAChatRoom! {
+    var chatRoom: ChatRoomEntity! {
         didSet {
             guard chatRoom != nil else {
                 return
@@ -51,19 +55,19 @@ class ChatTitleView: UIView {
         if chatRoom.isArchived {
             subtitleLabel.text = Strings.Localizable.archived
         } else if chatRoom.isGroup {
-            if chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.ro.rawValue {
+            if !chatRoom.ownPrivilege.isUserInChat {
                 subtitleLabel.text = Strings.Localizable.inactiveChat
             } else if chatRoom.hasCustomTitle {
-                subtitleLabel.text = chatRoom.participantNames
+                subtitleLabel.text = participantNames(for: chatRoom)
             } else {
                 let participantsCount = Int(chatRoom.peerCount) + 1
                 subtitleLabel.text = Strings.Localizable.Chat.Info.numberOfParticipants(participantsCount)
             }
             
         } else {
-            if let status = chatRoom.onlineStatus {
-                subtitleLabel.isHidden = (status == .invalid)
-                subtitleLabel.text = NSString.chatStatusString(status)
+            if let userHandle = chatRoom.peers.first?.handle {
+                let status = chatRoomUseCase.userStatus(forUserHandle: userHandle)
+                subtitleLabel.text = status.localizedIdentifier
                 switch status {
                 case .offline, .away:
                     if let lastGreen = lastGreen {
@@ -71,7 +75,7 @@ class ChatTitleView: UIView {
                     }
                 default:
                     subtitleLabel.isHidden = (status == .invalid)
-                    subtitleLabel.text = NSString.chatStatusString(status)
+                    subtitleLabel.text = status.localizedIdentifier
                 }
             }
         }
@@ -79,10 +83,10 @@ class ChatTitleView: UIView {
     
     private func updateStatusView() {
         statusView.isHidden = chatRoom.isGroup
-        
-        if let status = chatRoom.onlineStatus {
+        if let userHandle = chatRoom.peers.first?.handle {
+            let status = chatRoomUseCase.userStatus(forUserHandle: userHandle)
             statusView.isHidden = (status == .invalid)
-            statusView.backgroundColor = UIColor.color(withChatStatus: status)
+            statusView.backgroundColor = status.uiColor
         }
     }
     

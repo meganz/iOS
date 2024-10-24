@@ -1,11 +1,12 @@
 import Foundation
+import MEGADomain
 
 final class PasteImagePreviewRouter: PasteImagePreviewRouting {
     private weak var baseViewController: UIViewController?
     private weak var viewControllerToPresent: UIViewController?
-    private let chatRoom: MEGAChatRoom
+    private let chatRoom: ChatRoomEntity
 
-    init(viewControllerToPresent: UIViewController, chatRoom: MEGAChatRoom) {
+    init(viewControllerToPresent: UIViewController, chatRoom: ChatRoomEntity) {
         self.viewControllerToPresent = viewControllerToPresent
         self.chatRoom = chatRoom
     }

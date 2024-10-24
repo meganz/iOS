@@ -57,7 +57,8 @@ extension ChatViewController {
             }
             pushGroupDetailsViewController()
         } else {
-            pushContactDetailsViewController(withPeerHandle: chatRoom.peerHandle(at: 0))
+            guard let peerHandle = chatRoom.oneToOneRoomOtherParticipantUserHandle() else { return }
+            pushContactDetailsViewController(withPeerHandle: peerHandle)
         }
     }
     
@@ -68,7 +69,7 @@ extension ChatViewController {
         } else {
             let storyboard = UIStoryboard(name: "Chat", bundle: nil)
             if let groupDetailsViewController = storyboard.instantiateViewController(withIdentifier: "GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController {
-                groupDetailsViewController.chatRoom = chatRoom
+                groupDetailsViewController.chatRoom = chatRoom.toMEGAChatRoom()
                 navigationController.pushViewController(groupDetailsViewController, animated: true)
             } else {
                 MEGALogError("ChatViewController: Could not GroupChatDetailsViewController")
@@ -105,7 +106,7 @@ extension ChatViewController {
         contactDetailsVC.contactDetailsMode = chatRoom.isGroup ? .fromGroupChat : .fromChat
         contactDetailsVC.userEmail = userEmail
         contactDetailsVC.userHandle = peerHandle
-        contactDetailsVC.groupChatRoom = chatRoom
+        contactDetailsVC.groupChatRoom = chatRoom.toMEGAChatRoom()
         navigationController?.pushViewController(contactDetailsVC, animated: true)
     }
     
@@ -143,7 +144,7 @@ extension ChatViewController {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
-            chatRoom: chatRoom.toChatRoomEntity()
+            chatRoom: chatRoom
         )
     }
 }

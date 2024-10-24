@@ -924,7 +924,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     
     if ([UIApplication.mnz_visibleViewController isKindOfClass:ChatViewController.class]) {
         ChatViewController *currentChatViewController = (ChatViewController *)UIApplication.mnz_visibleViewController;
-        if (currentChatViewController.chatRoom.chatId == chatId) {
+        if (currentChatViewController.chatId == chatId) {
             [SVProgressHUD dismiss];
             return;
         }

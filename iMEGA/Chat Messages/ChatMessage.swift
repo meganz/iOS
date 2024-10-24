@@ -1,3 +1,4 @@
+import MEGADomain
 import MessageKit
 
 struct User: SenderType {
@@ -7,14 +8,14 @@ struct User: SenderType {
 
 struct ChatMessage {
     let message: MEGAChatMessage
-    let chatRoom: MEGAChatRoom
+    let chatRoom: ChatRoomEntity
     var transfer: MEGATransfer?
-    init(message: MEGAChatMessage, chatRoom: MEGAChatRoom) {
+    init(message: MEGAChatMessage, chatRoom: ChatRoomEntity) {
         self.message = message
         self.chatRoom = chatRoom
     }
     
-    init(transfer: MEGATransfer, chatRoom: MEGAChatRoom) {
+    init(transfer: MEGATransfer, chatRoom: ChatRoomEntity) {
         self.message = MEGAChatMessage()
         self.transfer = transfer
         self.chatRoom = chatRoom
@@ -76,7 +77,7 @@ extension ChatMessage: SenderType {
 
     var displayName: String {
         let userEmail = MEGAChatSdk.shared.userEmailFromCache(byUserHandle: message.userHandle) ?? ""
-        let userName = chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? userEmail
+        let userName = userDisplayName(forUserHandle: message.userHandle) ?? userEmail
         return userName
     }
 }

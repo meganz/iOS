@@ -7,7 +7,7 @@ import MEGASwift
 public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: ChatRoomRepository {
         ChatRoomRepository(sdk: .sharedChatSdk,
-                           chatConnectionStateUpdateProvider: ChatConnectionStateUpdateProvider(sdk: .sharedChatSdk)
+                           chatUpdatesProvider: ChatUpdatesProvider(sdk: .sharedChatSdk)
         )
     }
     
@@ -16,14 +16,14 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
     @Atomic private var chatRoomMessageLoadedListeners = [ChatRoomMessageLoadedListener]()
     @Atomic private var openChatRooms = Set<HandleEntity>()
     
-    private let chatConnectionStateUpdateProvider: any ChatConnectionStateUpdateProviderProtocol
+    private let chatUpdatesProvider: any ChatUpdatesProviderProtocol
 
     public init(
         sdk: MEGAChatSdk,
-        chatConnectionStateUpdateProvider: some ChatConnectionStateUpdateProviderProtocol
+        chatUpdatesProvider: some ChatUpdatesProviderProtocol
     ) {
         self.sdk = sdk
-        self.chatConnectionStateUpdateProvider = chatConnectionStateUpdateProvider
+        self.chatUpdatesProvider = chatUpdatesProvider
     }
     
     public func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity? {
@@ -365,8 +365,21 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
             }
         }
     }
+    
+    public func requestLastGreen(for user: HandleEntity) {
+        sdk.requestLastGreen(user)
+    }
+
     public var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> {
-        chatConnectionStateUpdateProvider.updates
+        chatUpdatesProvider.updates
+    }
+    
+    public var chatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)> {
+        chatUpdatesProvider.chatOnlineUpdates
+    }
+    
+    public var presenceLastGreenUpdates: AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)> {
+        chatUpdatesProvider.presenceLastGreenUpdates
     }
 }
 

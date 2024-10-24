@@ -21,7 +21,7 @@ extension ChatViewController {
             chatRoom.isPreview,
             !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
             return joinInputBar
-        } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue || previewMode {
+        } else if chatRoom.ownPrivilegeIsReadOnlyOrLower || previewMode {
             return nil
         } else if chatInputBar == nil {
             chatInputBar = ChatInputBar()
@@ -49,7 +49,7 @@ extension ChatViewController {
     func updateJoinView() {
         var newState: JoinViewState
         if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
-            newState = chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue ? .joining : .leaving
+            newState = chatRoom.ownPrivilegeIsReadOnlyOrLower ? .joining : .leaving
         } else {
             newState = .default
         }
@@ -121,7 +121,10 @@ extension ChatViewController {
             fatalError("ChatViewController: could not create an instance of ShareLocationViewController")
         }
         
-        shareLocationViewController.chatRoom = chatRoom
+        guard let megaChatRoom = chatRoom.toMEGAChatRoom() else {
+            return
+        }
+        shareLocationViewController.chatRoom = megaChatRoom
         
         if editing, let editMessage = self.editMessage {
             shareLocationViewController.editMessage = editMessage.message
@@ -148,7 +151,7 @@ extension ChatViewController {
                 }
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.remove(MEGASdk.base64Handle(forUserHandle: self.chatRoom.chatId) ?? "")
                 self.closeChatRoom()
-                self.update(chatRoom: chatRoom)
+                self.update(chatRoom: chatRoom.toChatRoomEntity())
                 self.messagesCollectionView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.scrollToBottom()
