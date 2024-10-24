@@ -36,8 +36,9 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
     }
     
     func testSortVideosByDay_withTwoItemsSameDayDifferentTime_returnsSingleSection() {
-        let firstWatchedVideo = anyVideo(handle: 2, hourAgo: 4)
-        let latestWatchedVideo = anyVideo(handle: 1, hourAgo: 1)
+        let calendar = Calendar(identifier: .gregorian)
+        let firstWatchedVideo = anyVideo(handle: 2, hourAgo: 4, respectiveToDate: customTestSpecificDate(using: calendar).date, calendar: calendar)
+        let latestWatchedVideo = anyVideo(handle: 1, hourAgo: 1, respectiveToDate: customTestSpecificDate(using: calendar).date, calendar: calendar)
         let videos = [
             firstWatchedVideo,
             latestWatchedVideo
@@ -45,7 +46,8 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
         let sortedSections = sortVideosByDay(videos: videos)
         
         XCTAssertEqual(sortedSections.count, 1, "Expected one section")
-        XCTAssertEqual(sortedSections.first?.title, todayTitle, "Expected section title to be 'Today'")
+        let dateInString = customTestSpecificDate(using: calendar).dateInString
+        XCTAssertEqual(sortedSections.first?.title, dateInString, "Expected section title to be 'Sat, Sep 30, 2023'")
         XCTAssertEqual(sortedSections.first?.videos.count, 2, "Expected two video in the section")
         let retrievedVideos = sortedSections.first?.videos.map(\.node.handle)
         XCTAssertEqual(retrievedVideos, [
@@ -86,24 +88,20 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func anyVideo(handle: Int, daysAgo: Int) -> RecentlyOpenedNodeEntity {
-        let calendar = Calendar.current
-        let date = calendar.date(byAdding: .day, value: -daysAgo, to: Date())!
+    private func anyVideo(handle: Int, daysAgo: Int = 0, hourAgo: Int = 0, respectiveToDate date: Date = Date.now, calendar: Calendar = Calendar.current) -> RecentlyOpenedNodeEntity {
+        let dayAdjustedDate = calendar.date(byAdding: .day, value: -daysAgo, to: date)!
+        let finalDate = calendar.date(byAdding: .hour, value: -hourAgo, to: dayAdjustedDate)!
         return RecentlyOpenedNodeEntity(
             node: NodeEntity(name: "video-\(handle).mp4", handle: HandleEntity(handle)),
-            lastOpenedDate: date,
+            lastOpenedDate: finalDate,
             mediaDestination: MediaDestinationEntity(fingerprint: "any-fingerprint", destination: 0, timescale: 0)
         )
     }
     
-    private func anyVideo(handle: Int, hourAgo: Int) -> RecentlyOpenedNodeEntity {
-        let calendar = Calendar.current
-        let date = calendar.date(byAdding: .hour, value: -hourAgo, to: Date())!
-        return RecentlyOpenedNodeEntity(
-            node: NodeEntity(name: "video-\(handle).mp4", handle: HandleEntity(handle)),
-            lastOpenedDate: date,
-            mediaDestination: MediaDestinationEntity(fingerprint: "any-fingerprint", destination: 0, timescale: 0)
-        )
+    private func customTestSpecificDate(using calendar: Calendar) -> (date: Date, dateInString: String) {
+        let date = calendar.date(from: DateComponents(year: 2023, month: 10, day: 1, hour: 14, minute: 0))!
+        let dateInString = "Sat, Sep 30, 2023"
+        return (date, dateInString)
     }
     
     private var todayTitle: String {
@@ -121,6 +119,7 @@ final class RecentlyWatchedVideosSorterTests: XCTestCase {
     
     private func testDateConfiguration() -> RecentlyWatchedVideosSectionDateConfiguration {
         RecentlyWatchedVideosSectionDateConfiguration(
+            dateFormatTemplate: "E, d MMM yyyy",
             calendar: Calendar(identifier: .gregorian),
             timeZone: TimeZone(secondsFromGMT: 0),
             locale: Locale(identifier: "en-US")

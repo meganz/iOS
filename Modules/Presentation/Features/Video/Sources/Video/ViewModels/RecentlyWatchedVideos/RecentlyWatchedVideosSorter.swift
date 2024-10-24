@@ -49,7 +49,7 @@ struct RecentlyWatchedVideosSorter: RecentlyWatchedVideosSorterProtocol {
                 } else {
                     DateFormatter
                         .fromTemplate(
-                            "E, d MMM yyyy",
+                            configuration.dateFormatTemplate,
                             calendar: configuration.calendar,
                             timeZone: configuration.timeZone,
                             locale: configuration.locale
