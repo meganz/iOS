@@ -101,6 +101,8 @@ final class SlideShowViewController: UIViewController, ViewType {
     private func setNavigationAndToolbarColor() {
         bottomBarBackground.backgroundColor = TokenColors.Background.surface1
         statusBarBackground.backgroundColor = TokenColors.Background.surface1
+        btnPlay.tintColor = TokenColors.Icon.primary
+        slideShowOptionButton.tintColor = TokenColors.Icon.primary
     }
     
     private func adjustHeightOfTopAndBottomView() {
