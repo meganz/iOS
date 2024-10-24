@@ -93,11 +93,13 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
     }
     
     func testInit_shouldSetProperties() async {
-        let expectedName = "Pro Plan"
-        let expectedStorage = "400 GB"
+        let proLevel: AccountTypeEntity = .proI
+        let expectedName = proLevel.toAccountTypeDisplayName()
+        let storageUsed: Int64 = 400
+        let expectedStorage = String.memoryStyleString(fromByteCount: storageUsed)
         let (sut, _) = makeSUT(
-            currentPlanName: expectedName,
-            currentPlanStorageUsed: expectedStorage,
+            proLevel: proLevel,
+            storageUsed: storageUsed,
             features: features
         )
         
@@ -137,8 +139,8 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
     
     private func makeSUT(
         currentSubscription: AccountSubscriptionEntity = AccountSubscriptionEntity(id: "123"),
-        currentPlanName: String = "",
-        currentPlanStorageUsed: String = "",
+        proLevel: AccountTypeEntity = .free,
+        storageUsed: Int64 = 0,
         features: [FeatureDetails] = [],
         tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #file,
@@ -147,13 +149,16 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         viewModel: CancelAccountPlanViewModel,
         router: MockCancelAccountPlanRouter
     ) {
+        let accountDetails = AccountDetailsEntity.build(
+            storageUsed: storageUsed,
+            proLevel: proLevel
+        )
         let router = MockCancelAccountPlanRouter()
         let viewModel = CancelAccountPlanViewModel(
             currentSubscription: currentSubscription,
-            currentPlanName: currentPlanName,
-            currentPlanStorageUsed: currentPlanStorageUsed,
-            featureListHelper: MockFeatureListHelper(features: features), 
+            featureListHelper: MockFeatureListHelper(features: features),
             achievementUseCase: MockAchievementUseCase(),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: accountDetails),
             tracker: tracker,
             router: router
         )

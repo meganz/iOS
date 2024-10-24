@@ -10,6 +10,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     let featureListHelper: FeatureListHelperProtocol
     let router: CancelAccountPlanRouting
     private let achievementUseCase: any AchievementUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let currentSubscription: AccountSubscriptionEntity
     @Published var showCancellationSurvey: Bool = false
     @Published var showCancellationSteps: Bool = false
@@ -20,17 +21,17 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     
     init(
         currentSubscription: AccountSubscriptionEntity,
-        currentPlanName: String,
-        currentPlanStorageUsed: String,
         featureListHelper: FeatureListHelperProtocol,
         achievementUseCase: some AchievementUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
         router: CancelAccountPlanRouting
     ) {
         self.currentSubscription = currentSubscription
-        self.currentPlanName = currentPlanName
-        self.currentPlanStorageUsed = currentPlanStorageUsed
+        self.currentPlanName = accountUseCase.currentAccountDetails?.proLevel.toAccountTypeDisplayName() ?? ""
+        self.currentPlanStorageUsed = String.memoryStyleString(fromByteCount: accountUseCase.currentAccountDetails?.storageUsed ?? 0)
         self.achievementUseCase = achievementUseCase
+        self.accountUseCase = accountUseCase
         self.featureListHelper = featureListHelper
         self.tracker = tracker
         self.router = router

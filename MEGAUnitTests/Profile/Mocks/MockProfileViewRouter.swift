@@ -6,7 +6,7 @@ final class MockProfileViewRouter: ProfileViewRouting {
     var showCancelAccountPlan_calledTimes = 0
     var showCancellationSteps_calledTimes = 0
     
-    func showCancelAccountPlan(currentSubscription: AccountSubscriptionEntity, currentPlan: PlanEntity, accountDetails: AccountDetailsEntity, assets: CancelAccountPlanAssets) {
+    func showCancelAccountPlan(currentSubscription: AccountSubscriptionEntity, currentPlan: PlanEntity, assets: CancelAccountPlanAssets) {
         showCancelAccountPlan_calledTimes += 1
     }
     

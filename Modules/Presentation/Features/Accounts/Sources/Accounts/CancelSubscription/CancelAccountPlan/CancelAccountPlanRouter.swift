@@ -14,7 +14,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
     private let currentSubscription: AccountSubscriptionEntity
-    private let accountDetails: AccountDetailsEntity
+    private let accountUseCase: any AccountUseCaseProtocol
     private let currentPlan: PlanEntity
     private let assets: CancelAccountPlanAssets
     
@@ -23,20 +23,21 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     }
     
     /// CancelAccountPlanRouter is used to manage redirections of the cancel subscription flow
-    /// - Parameter currentSubscription: Holds the current active subscription
-    /// - Parameter accountDetails: Contains the account details of the user
-    /// - Parameter currentPlan: Holds the current subscribed plan
-    /// - Parameter assets: Contains the Image names of the assets
-    /// - Parameter navigationController: Holds the navigation that pushes the presenter of `CancelAccountPlanRouter`. Manages the redirections.
+    /// - Parameters:
+    ///   - currentSubscription: Holds the current active subscription details.
+    ///   - accountUseCase: A use case handling account-related functionalities and actions.
+    ///   - currentPlan: Contains the details of the user's current subscribed plan.
+    ///   - assets: Holds the asset names (such as images) for display in the flow.
+    ///   - navigationController: The navigation controller that manages presenting and dismissing the views related to the cancel account plan flow.
     public init(
         currentSubscription: AccountSubscriptionEntity,
-        accountDetails: AccountDetailsEntity,
+        accountUseCase: some AccountUseCaseProtocol,
         currentPlan: PlanEntity,
         assets: CancelAccountPlanAssets,
         navigationController: UINavigationController
     ) {
         self.currentSubscription = currentSubscription
-        self.accountDetails = accountDetails
+        self.accountUseCase = accountUseCase
         self.currentPlan = currentPlan
         self.assets = assets
         self.navigationController = navigationController
@@ -44,17 +45,15 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     
     public func build() -> UIViewController {
         let featureListHelper = FeatureListHelper(
-            account: accountDetails,
             currentPlan: currentPlan,
             assets: assets
         )
         
         let viewModel = CancelAccountPlanViewModel(
-            currentSubscription: currentSubscription, 
-            currentPlanName: accountDetails.proLevel.toAccountTypeDisplayName(),
-            currentPlanStorageUsed: String.memoryStyleString(fromByteCount: accountDetails.storageUsed),
+            currentSubscription: currentSubscription,
             featureListHelper: featureListHelper, 
             achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
+            accountUseCase: accountUseCase,
             tracker: DIContainer.tracker,
             router: self
         )

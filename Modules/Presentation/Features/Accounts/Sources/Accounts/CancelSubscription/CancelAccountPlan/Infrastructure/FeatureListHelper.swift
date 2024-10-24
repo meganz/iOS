@@ -10,7 +10,6 @@ public protocol FeatureListHelperProtocol {
 }
 
 struct FeatureListHelper: FeatureListHelperProtocol {
-    let account: AccountDetailsEntity
     let currentPlan: PlanEntity
     let assets: CancelAccountPlanAssets
     
