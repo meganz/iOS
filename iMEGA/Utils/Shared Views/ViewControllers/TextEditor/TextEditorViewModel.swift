@@ -76,6 +76,7 @@ final class TextEditorViewModel: ViewModelType {
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     private var isBackupNode: Bool = false
+    private var downloadTask: Task<Void, any Error>?
     private let tracker: any AnalyticsTracking
     
     init(
@@ -260,6 +261,7 @@ final class TextEditorViewModel: ViewModelType {
             textEditorMode = .view
             self.setupView(shallUpdateContent: true)
         }
+        downloadTask?.cancel()
     }
     
     private func downloadToOffline() {
@@ -272,30 +274,53 @@ final class TextEditorViewModel: ViewModelType {
     
     private func downloadToTempFolder() {
         guard let nodeHandle = nodeEntity?.handle else { return }
-        downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil) { (transferEntity) in
-            let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
-            self.invokeCommand?(.updateProgressView(progress: percentage))
-        } completion: { (result) in
-            switch result {
-            case .failure:
-                self.invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download))
-            case .success(let transferEntity):
-                guard let path = transferEntity.path else { return }
-                do {
-                    var encode: String.Encoding = .utf8
-                    self.textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)
-                    self.textFile.encode = encode.rawValue
-                    if self.shouldEditAfterOpen {
-                        self.editFile(shallUpdateContent: true)
-                        self.shouldEditAfterOpen = false
-                    } else {
-                        self.textEditorMode = .view
-                        self.setupView(shallUpdateContent: true)
+        
+        downloadTask?.cancel()
+        downloadTask = Task { @MainActor in
+            do {
+                let downloadStream = try downloadNodeUseCase.downloadFileToTempFolder(
+                    nodeHandle: nodeHandle,
+                    appData: nil
+                )
+                
+                for await event in downloadStream {
+                    guard !Task.isCancelled else { return }
+                    switch event {
+                    case .update(let transferEntity):
+                        handleDownloadInProgress(transferEntity)
+                    case .finish(let transferEntity):
+                        handleDownloadCompletion(transferEntity)
+                    default:
+                        break
                     }
-                } catch {
-                    self.router.showPreviewDocVC(fromFilePath: path, showUneditableError: self.shouldEditAfterOpen)
+                
                 }
+            } catch {
+                invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download))
             }
+        }
+    }
+    
+    private func handleDownloadInProgress(_ transferEntity: TransferEntity) {
+        let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
+        invokeCommand?(.updateProgressView(progress: percentage))
+    }
+    
+    private func handleDownloadCompletion(_ transferEntity: TransferEntity) {
+        guard let path = transferEntity.path else { return }
+        do {
+            var encode: String.Encoding = .utf8
+            textFile.content = try String(contentsOfFile: path, usedEncoding: &encode)
+            textFile.encode = encode.rawValue
+            if shouldEditAfterOpen {
+                editFile(shallUpdateContent: true)
+                shouldEditAfterOpen = false
+            } else {
+                textEditorMode = .view
+                setupView(shallUpdateContent: true)
+            }
+        } catch {
+            router.showPreviewDocVC(fromFilePath: path, showUneditableError: shouldEditAfterOpen)
         }
     }
     

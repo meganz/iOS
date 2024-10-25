@@ -33,22 +33,21 @@ extension FileDownloadUseCase: FileDownloadUseCaseProtocol {
     }
     
     public func downloadNode(_ node: NodeEntity) async throws -> URL {
-        try await withCheckedThrowingContinuation { continuation in
-            if let url = cachedOriginalPath(node) {
-                continuation.resume(returning: url)
-                return
-            }
-            let url = fileCacheRepository.cachedOriginalImageURL(for: node)
-            downloadFileRepository.download(nodeHandle: node.handle, to: url, metaData: .none) { result in
-                switch result {
-                case .success(let transferEntity):
-                    guard let path = transferEntity.path else { return }
-                    let url = URL(fileURLWithPath: path)
-                    continuation.resume(returning: url)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
+        if let url = cachedOriginalPath(node) {
+            return url
+        }
+        
+        let url = fileCacheRepository.cachedOriginalImageURL(for: node)
+        let downloadedFile = try await downloadFileRepository.download(
+            nodeHandle: node.handle,
+            to: url,
+            metaData: .none
+        )
+        
+        if let path = downloadedFile.path {
+            return URL(fileURLWithPath: path)
+        } else {
+            throw TransferErrorEntity.download
         }
     }
 }

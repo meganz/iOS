@@ -147,7 +147,7 @@ final class TextEditorViewModelTests: XCTestCase {
         }
     }
     
-    @MainActor func testAction_setUpView_Load_tempDownload_success_read_failed() {
+    @MainActor func testAction_setUpView_Load_tempDownload_success_read_failed() async {
         let textFile = TextFile(fileName: "testAction_setUpView_Load_tempDownload_success_read_failed")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -189,7 +189,7 @@ final class TextEditorViewModelTests: XCTestCase {
 
         let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
 
-        test(viewModel: viewModel,
+        await test(viewModel: viewModel,
              action: .setUpView,
              expectedCommands: [
                 .setupLoadViews,
@@ -200,7 +200,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testAction_setUpView_Load_tempDownload_failed() {
+    @MainActor func testAction_setUpView_Load_tempDownload_failed() async {
         let textFile = TextFile(fileName: "testAction_setUpView_Load_tempDownload_failed")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
@@ -239,15 +239,12 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeEntity: mockNode
         )
 
-        let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
-
-        test(viewModel: viewModel,
+        await test(viewModel: viewModel,
              action: .setUpView,
              expectedCommands: [
                 .setupLoadViews,
                 .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false, isBackupNode: false),
                 .setupNavbarItems(navbarItemsModel),
-                .updateProgressView(progress: percentage),
                 .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download)
              ]
         )

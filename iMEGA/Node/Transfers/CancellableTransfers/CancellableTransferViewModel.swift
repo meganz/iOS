@@ -69,10 +69,12 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                 }
             case .download:
                 sendDownloadAnalyticsStats()
-                if fileTransfers.isNotEmpty {
-                    startFileDownloads()
-                } else {
-                    startFolderDownloads()
+                Task(priority: .userInitiated) {
+                    if fileTransfers.isNotEmpty {
+                        await startFileDownloads()
+                    } else {
+                        await startFolderDownloads()
+                    }
                 }
             case .downloadChat:
                 sendDownloadAnalyticsStats()
@@ -80,7 +82,9 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                     await startChatFileDownloads()
                 }
             case .downloadFileLink:
-                startFileLinkDownload()
+                Task {
+                    await startFileLinkDownload()
+                }
             }
             showAlertViewIfNeeded()
         case .didTapCancelButton:
@@ -144,7 +148,9 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
         } else {
             switch transferType {
             case .download:
-                startFolderDownloads()
+                Task(priority: .userInitiated) {
+                    await startFolderDownloads()
+                }
             case .upload:
                 startFolderUploads()
             default:
@@ -286,94 +292,125 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
         }
     }
 
-    private func startFileDownloads() {
-        fileTransfers.forEach { transferViewEntity in
-            downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,
-                                                      filename: transferViewEntity.name,
-                                                      appdata: transferViewEntity.appData,
-                                                      startFirst: transferViewEntity.priority) { transferEntity in
-                transferViewEntity.setState(transferEntity.state)
-                self.continueFolderTransfersIfNeeded()
-            } update: { _ in } completion: { [weak self] result in
-                switch result {
-                case .success(let transferEntity):
-                    transferViewEntity.setState(transferEntity.state)
-                case .failure(let error):
-                    transferViewEntity.setState(.failed)
-                    if error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                        self?.transferErrors.append(error)
+    private func startFileDownloads() async {
+        for transferViewEntity in fileTransfers {
+            do {
+                let downloadStream = try downloadNodeUseCase.downloadFileToOffline(
+                    forNodeHandle: transferViewEntity.handle,
+                    filename: transferViewEntity.name,
+                    appData: transferViewEntity.appData,
+                    startFirst: transferViewEntity.priority
+                )
+                for await event in downloadStream {
+                    guard !Task.isCancelled else { return }
+                    switch event {
+                    case .start(let transferEntity):
+                        transferViewEntity.setState(transferEntity.state)
+                        continueFolderTransfersIfNeeded()
+                    case .update, .folderUpdate:
+                        break
+                    case .finish(let transferEntity):
+                        transferViewEntity.setState(transferEntity.state)
                     }
-                    self?.continueFolderTransfersIfNeeded()
                 }
-            } folderUpdate: { _ in }
+            } catch {
+                transferViewEntity.setState(.failed)
+                if let error = error as? TransferErrorEntity,
+                   error != .alreadyDownloaded && error != .copiedFromTempFolder {
+                    transferErrors.append(error)
+                }
+                continueFolderTransfersIfNeeded()
+            }
         }
     }
     
-    private func startFileLinkDownload() {
+    private func startFileLinkDownload() async {
         guard let transferViewEntity = fileTransfers[safe: 0], let linkUrl = transferViewEntity.fileLinkURL else {
             return
         }
         let fileLink = FileLinkEntity(linkURL: linkUrl)
+        
+        do {
+            let downloadStream = try await downloadNodeUseCase.downloadFileLinkToOffline(
+                fileLink,
+                filename: transferViewEntity.name,
+                metaData: nil,
+                startFirst: transferViewEntity.priority
+            )
+            for await event in downloadStream {
+                guard !Task.isCancelled else { return }
 
-        downloadNodeUseCase.downloadFileLinkToOffline(fileLink,
-                                                      filename: transferViewEntity.name,
-                                                      metaData: nil,
-                                                      startFirst: transferViewEntity.priority) { transferEntity in
-            transferViewEntity.setState(transferEntity.state)
-            self.manageTransfersCompletion()
-        } update: { _ in } completion: { [weak self] result in
-            switch result {
-            case .success(let transferEntity):
-                transferViewEntity.setState(transferEntity.state)
-            case .failure(let error):
-                transferViewEntity.setState(.failed)
-                if error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                    self?.transferErrors.append(error)
+                switch event {
+                case .start(let transferEntity):
+                    transferViewEntity.setState(transferEntity.state)
+                    manageTransfersCompletion()
+                case .folderUpdate, .update:
+                    break
+                case .finish(let transferEntity):
+                    transferViewEntity.setState(transferEntity.state)
                 }
-                self?.manageTransfersCompletion()
+            }
+        } catch {
+            transferViewEntity.setState(.failed)
+            if let error = error as? TransferErrorEntity,
+                error != .alreadyDownloaded && error != .copiedFromTempFolder {
+                transferErrors.append(error)
+            }
+            manageTransfersCompletion()
+        }
+    }
+    
+    private func startFolderDownloads() async {
+        
+        for transferViewEntity in folderTransfers {
+            do {
+                let downloadStream = try downloadNodeUseCase.downloadFileToOffline(
+                    forNodeHandle: transferViewEntity.handle,
+                    filename: transferViewEntity.name,
+                    appData: transferViewEntity.appData,
+                    startFirst: transferViewEntity.priority
+                )
+                
+                for await event in downloadStream {
+                    guard !Task.isCancelled else { return }
+                    switch event {
+                    case .start:
+                        break
+                    case .folderUpdate(let folderTransferUpdateEntity):
+                        handleFolderUpdateWhileDownloadingFolder(folderTransferUpdateEntity)
+                    case .update(let transferEntity):
+                        if case .transferringFiles = transferEntity.stage {
+                            transferViewEntity.setStage(transferEntity.stage)
+                            transferViewEntity.setState(transferEntity.state)
+                            checkIfAllTransfersStartedTransferring()
+                        }
+                    case .finish(let transferEntity):
+                        transferViewEntity.setState(transferEntity.state)
+                        checkIfAllTransfersStartedTransferring()
+                    }
+                }
+                
+            } catch {
+                transferViewEntity.setState(.failed)
+                if let error = error as? TransferErrorEntity,
+                   error != .alreadyDownloaded && error != .copiedFromTempFolder {
+                    transferErrors.append(error)
+                }
+                checkIfAllTransfersStartedTransferring()
             }
         }
     }
     
-    private func startFolderDownloads() {
-        folderTransfers.forEach { transferViewEntity in
-            downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,
-                                                      filename: transferViewEntity.name,
-                                                      appdata: transferViewEntity.appData,
-                                                      startFirst: transferViewEntity.priority,
-                                                      start: nil) { transferEntity in
-                switch transferEntity.stage {
-                case .transferringFiles:
-                    transferViewEntity.setStage(transferEntity.stage)
-                    transferViewEntity.setState(transferEntity.state)
-                    self.checkIfAllTransfersStartedTransferring()
-                default:
-                    break
-                }
-            } completion: { [weak self] result in
-                switch result {
-                case .success(let transferEntity):
-                    transferViewEntity.setState(transferEntity.state)
-                case .failure(let error):
-                    transferViewEntity.setState(.failed)
-                    if error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                        self?.transferErrors.append(error)
-                    }
-                }
-                self?.checkIfAllTransfersStartedTransferring()
-            } folderUpdate: { [weak self] folderUpdate in
-                guard let self else { return }
-                switch folderUpdate.stage {
-                case .scan:
-                    self.invokeCommand?(.scanning(name: folderUpdate.transfer.fileName ?? "", folders: folderUpdate.folderCount, files: folderUpdate.fileCount))
-                case .createTree:
-                    self.invokeCommand?(.creatingFolders(createdFolders: folderUpdate.createdFolderCount, totalFolders: folderUpdate.folderCount))
-                case .transferringFiles:
-                    self.checkIfAllTransfersStartedTransferring()
-                default:
-                    break
-                }
-            }
+    private func handleFolderUpdateWhileDownloadingFolder(_ folderUpdate: FolderTransferUpdateEntity) {
+        switch folderUpdate.stage {
+        case .scan:
+            invokeCommand?(.scanning(name: folderUpdate.transfer.fileName ?? "", folders: folderUpdate.folderCount, files: folderUpdate.fileCount))
+        case .createTree:
+            invokeCommand?(.creatingFolders(createdFolders: folderUpdate.createdFolderCount, totalFolders: folderUpdate.folderCount))
+        case .transferringFiles:
+            checkIfAllTransfersStartedTransferring()
+        default:
+            break
         }
     }
     

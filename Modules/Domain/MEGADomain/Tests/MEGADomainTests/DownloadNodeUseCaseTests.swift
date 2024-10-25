@@ -3,7 +3,7 @@ import MEGADomainMock
 import XCTest
 
 class DownloadNodeUseCaseTests: XCTestCase {
-    func testDownloadNode_fileAlreadyInOfflineError() {
+    func testDownloadNode_fileAlreadyInOfflineError() async {
         let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle", isFile: true))
         let offlineNode = OfflineFileEntity(base64Handle: "base64Handle", localPath: "Documents/", parentBase64Handle: nil, fingerprint: nil, timestamp: nil)
         let offlineFilesRepo = MockOfflineFilesRepository(offlineFileEntity: offlineNode)
@@ -23,25 +23,34 @@ class DownloadNodeUseCaseTests: XCTestCase {
             chatNodeRepository: MockChatNodeRepository(), 
             downloadChatRepository: MockDownloadChatRepository()
         )
-        sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
-            switch result {
-            case .success:
-                XCTFail("Nodes already in offline, should return \(mockError) error")
-            case .failure(let error):
-                XCTAssertEqual(error, mockError)
+        
+        do {
+            let downloadStream = try sut.downloadFileToOffline(
+                forNodeHandle: .invalid,
+                filename: nil,
+                appData: nil,
+                startFirst: false
+            )
+            
+            for await event in downloadStream {
+                if case .finish = event {
+                    XCTFail("Nodes already in offline, should return \(mockError) error")
+                }
             }
-        } folderUpdate: { _ in }
+        } catch {
+            XCTAssertEqual(error as? TransferErrorEntity, mockError)
+        }
     }
     
-    func testDownloadNode_copiedFromTempFolderError() {
+    func testDownloadNode_copiedFromTempFolderError() async {
         let nodeRepo = MockNodeRepository(node: NodeEntity(name: "nodeName", base64Handle: "base64Handle", isFile: true, size: 10))
-        let fileSytemRepo = MockFileSystemRepository(fileExists: true, copiedNode: true)
+        let fileSystemRepo = MockFileSystemRepository(fileExists: true, copiedNode: true)
         
         let mockError: TransferErrorEntity = .copiedFromTempFolder
         let sut = DownloadNodeUseCase(
             downloadFileRepository: MockDownloadFileRepository(),
             offlineFilesRepository: MockOfflineFilesRepository(),
-            fileSystemRepository: fileSytemRepo,
+            fileSystemRepository: fileSystemRepo,
             nodeRepository: nodeRepo,
             nodeDataRepository: MockNodeDataRepository.newRepo,
             fileCacheRepository: MockFileCacheRepository(),
@@ -51,17 +60,26 @@ class DownloadNodeUseCaseTests: XCTestCase {
             chatNodeRepository: MockChatNodeRepository(),
             downloadChatRepository: MockDownloadChatRepository()
         )
-        sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
-            switch result {
-            case .success:
-                XCTFail("Nodes copied from temp folder, should return \(mockError) error")
-            case .failure(let error):
-                XCTAssertEqual(error, mockError)
+        
+        do {
+            let downloadStream = try sut.downloadFileToOffline(
+                forNodeHandle: .invalid,
+                filename: nil,
+                appData: nil,
+                startFirst: false
+            )
+            
+            for await event in downloadStream {
+                if case .finish = event {
+                    XCTFail("Nodes copied from temp folder, should return \(mockError) error")
+                }
             }
-        } folderUpdate: { _ in }
+        } catch {
+            XCTAssertEqual(error as? TransferErrorEntity, mockError)
+        }
     }
     
-    func testDownloadNode_folderNamedInboxError() {
+    func testDownloadNode_folderNamedInboxError() async {
         let nodeRepo = MockNodeRepository(node: NodeEntity(name: "Inbox", isFile: false))
         
         let mockError: TransferErrorEntity = .inboxFolderNameNotAllowed
@@ -78,26 +96,36 @@ class DownloadNodeUseCaseTests: XCTestCase {
             chatNodeRepository: MockChatNodeRepository(),
             downloadChatRepository: MockDownloadChatRepository()
         )
-        sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
-            switch result {
-            case .success:
-                XCTFail("Folder nodes named 'Inbox' could not be saved in Documents folder, should return \(mockError) error")
-            case .failure(let error):
-                XCTAssertEqual(error, mockError)
+        
+        do {
+            let downloadStream = try sut.downloadFileToOffline(
+                forNodeHandle: .invalid,
+                filename: nil,
+                appData: nil,
+                startFirst: false
+            )
+            
+            for await event in downloadStream {
+                if case .finish = event {
+                    XCTFail("Folder nodes named 'Inbox' could not be saved in Documents folder, should return \(mockError) error")
+                }
             }
-        } folderUpdate: { _ in }
+            
+        } catch {
+            XCTAssertEqual(error as? TransferErrorEntity, mockError)
+        }
     }
     
-    func testDownloadNode_downloadSuccess() {
+    func testDownloadNode_downloadSuccess() async throws {
         let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle"))
         let nodeDataRepo = MockNodeDataRepository(size: 10)
-        let fileSytemRepo = MockFileSystemRepository()
+        let fileSystemRepo = MockFileSystemRepository()
         let mockTransferEntity = TransferEntity(type: .download, path: "Documents/")
         let downloadRepo = MockDownloadFileRepository(completionResult: .success(mockTransferEntity))
         let sut = DownloadNodeUseCase(
             downloadFileRepository: downloadRepo,
             offlineFilesRepository: MockOfflineFilesRepository(),
-            fileSystemRepository: fileSytemRepo,
+            fileSystemRepository: fileSystemRepo,
             nodeRepository: nodeRepo,
             nodeDataRepository: nodeDataRepo,
             fileCacheRepository: MockFileCacheRepository(),
@@ -107,14 +135,18 @@ class DownloadNodeUseCaseTests: XCTestCase {
             chatNodeRepository: MockChatNodeRepository(),
             downloadChatRepository: MockDownloadChatRepository()
         )
-        sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
-            switch result {
-            case .success(let transferEntity):
+        let downloadStream = try sut.downloadFileToOffline(
+            forNodeHandle: .invalid,
+            filename: nil,
+            appData: nil,
+            startFirst: false
+        )
+        
+        for await event in downloadStream {
+            if case .finish(let transferEntity) = event {
                 XCTAssertEqual(transferEntity.path, "Documents/")
                 XCTAssertEqual(transferEntity.type, .download)
-            case .failure(let error):
-                XCTFail("Not expected error: \(error)")
             }
-        } folderUpdate: { _ in }
+        }
     }
 }

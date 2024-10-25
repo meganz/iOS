@@ -1,7 +1,7 @@
 public protocol SaveMediaToPhotosUseCaseProtocol: Sendable {
     func saveToPhotos(nodes: [NodeEntity]) async throws
     func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) async throws
-    func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
+    func saveToPhotos(fileLink: FileLinkEntity) async throws
 }
         
 public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheRepositoryProtocol, V: NodeRepositoryProtocol, W: ChatNodeRepositoryProtocol, X: DownloadChatRepositoryProtocol>: SaveMediaToPhotosUseCaseProtocol {
@@ -72,21 +72,24 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
         }
     }
     
-    public func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        nodeRepository.nodeFor(fileLink: fileLink) { result in
-            switch result {
-            case .success(let node):
-                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle), metaData: .saveInPhotos, startFirst: true, start: nil, update: nil) { result in
-                    switch result {
-                    case .success:
-                        completion(.success)
-                    case .failure(let error):
-                        completion(.failure(error == TransferErrorEntity.cancelled ? .cancelled : .downloadFailed))
-                    }
-                }
-            case .failure:
-                completion(.failure(.nodeNotFound))
+    public func saveToPhotos(fileLink: FileLinkEntity) async throws {
+        do {
+            let node = try await nodeRepository.nodeFor(fileLink: fileLink)
+            do {
+                _ = try downloadFileRepository.downloadFileLink(
+                    fileLink,
+                    named: node.name,
+                    to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle),
+                    metaData: .saveInPhotos,
+                    startFirst: true
+                )
+            } catch {
+                throw (error as? TransferErrorEntity) == .cancelled
+                ? SaveMediaToPhotosErrorEntity.cancelled
+                : SaveMediaToPhotosErrorEntity.downloadFailed
             }
+        } catch {
+            throw SaveMediaToPhotosErrorEntity.nodeNotFound
         }
     }
 }
