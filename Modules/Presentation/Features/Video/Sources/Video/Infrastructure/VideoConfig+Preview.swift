@@ -71,32 +71,7 @@ extension VideoConfig {
         ),
         recentlyWatchedAssets: RecentlyWatchedAssets(
             emptyView: .init(
-                color: .init(
-                    pageBackgroundColor: TokenColors.Background.page.swiftUI,
-                    textColor: TokenColors.Text.primary.swiftUI,
-                    iconColor: TokenColors.Icon.secondary.swiftUI
-                ),
                 recentsEmptyStateImage: MEGAAssetsImageProvider.image(named: "recentlyWatchedVideosEmptyState")!
-            ),
-            listView: .init(
-                header: .init(
-                    color: .init(
-                        primaryTextColor: TokenColors.Text.primary.swiftUI,
-                        pageBackgroundColor: TokenColors.Background.page.swiftUI
-                    )
-                ),
-                cell: .init(
-                    color: .init(
-                        primaryTextColor: TokenColors.Text.primary.swiftUI,
-                        secondaryTextColor: TokenColors.Text.secondary.swiftUI,
-                        secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
-                        durationTextColor: TokenColors.Button.primary.swiftUI,
-                        durationTextBackgroundColor: TokenColors.Background.blur.swiftUI,
-                        pageBackgroundColor: TokenColors.Background.page.swiftUI,
-                        progressBarActiveColor: TokenColors.Button.brand.swiftUI,
-                        progressBarBackgroundColor: TokenColors.Button.brand.swiftUI
-                    )
-                )
             )
         ),
         playlistContentAssets: PlaylistContentAssets(
