@@ -98,12 +98,8 @@ pipeline {
             steps {
                 script {
                     injectEnvironments {
-                        dir("scripts/") {
-                            sh 'python3 download_change_logs_from_transifex.py \"$TRANSIFIX_AUTHORIZATION_TOKEN\" $MEGA_VERSION_NUMBER'
-                        }
-
-                        dir("scripts/AppDescriptionUpdater/") {
-                            sh 'swift run AppDescriptionUpdater \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                        dir("scripts/AppMetadataUpdater/") {
+                            sh 'swift run AppMetadataUpdater --update-description --update-release-notes -v $MEGA_VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"' 
                         }
 
                         def used_phrase = env.gitlabTriggerPhrase

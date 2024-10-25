@@ -379,8 +379,8 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'Update what\'s new to appstore connect') {
                             injectEnvironments({
-                                dir("scripts/") {
-                                    sh 'python3 download_change_logs_from_transifex.py \"$TRANSIFIX_AUTHORIZATION_TOKEN\" $MEGA_VERSION_NUMBER'
+                                dir("scripts/AppMetadataUpdater/") {
+                                    sh 'swift run AppMetadataUpdater --update-release-notes -v $MEGA_VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
                                 }
                                 sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                             })
@@ -397,8 +397,8 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'Update app description to appstore connect') {
                             injectEnvironments({
-                                dir("scripts/AppDescriptionUpdater/") {
-                                    sh 'swift run AppDescriptionUpdater \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                                dir("scripts/AppMetadataUpdater/") {
+                                    sh 'swift run AppMetadataUpdater --update-description \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
                                 }
                                 sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                             })
