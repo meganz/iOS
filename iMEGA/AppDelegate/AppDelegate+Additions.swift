@@ -233,6 +233,20 @@ extension AppDelegate {
             NotificationCenter.default.post(name: NSNotification.Name.MEGASQLiteDiskFull, object: nil)
         }
     }
+    
+    @objc func updateUserAttributes(
+        user: MEGAUser?,
+        email: String?,
+        attributeType: MEGAUserAttribute,
+        newValue: String
+    ) {
+        UserAttributeHandler().handleUserAttribute(
+            user: user?.toUserEntity(),
+            email: email,
+            attributeType: attributeType.toAttributeEntity(),
+            newValue: newValue
+        )
+    }
 }
 
 // MARK: - Config Cookie Settings

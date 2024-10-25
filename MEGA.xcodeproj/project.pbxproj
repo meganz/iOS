@@ -1357,6 +1357,9 @@
 		943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
 		943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
+		943FA1D72CBE6D2B0021EAC3 /* UserAttributeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FA1D62CBE6D1D0021EAC3 /* UserAttributeHandlerTests.swift */; };
+		943FA1E12CBEF4110021EAC3 /* MockUserAttributesMEGAStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FA1E02CBEF40F0021EAC3 /* MockUserAttributesMEGAStore.swift */; };
+		943FA1E32CBEF4250021EAC3 /* MockMOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FA1E22CBEF41F0021EAC3 /* MockMOUser.swift */; };
 		944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */; };
 		9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */; };
 		9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */; };
@@ -1469,6 +1472,7 @@
 		94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */; };
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
 		94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */; };
+		94AF34972CBD71700010EBA8 /* UserAttributeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF34962CBD71700010EBA8 /* UserAttributeHandler.swift */; };
 		94AFB6F42CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFB6F32CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift */; };
 		94B09E552B84CC87007D6B84 /* NodeActionsDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */; };
 		94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */; };
@@ -4185,6 +4189,9 @@
 		943F8B1E1EF2704900AFD89F /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = iMEGA/Extensions/MEGAShare/ShareViewController.h; sourceTree = SOURCE_ROOT; };
 		943F8B241EF2708E00AFD89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAShare-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
+		943FA1D62CBE6D1D0021EAC3 /* UserAttributeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeHandlerTests.swift; sourceTree = "<group>"; };
+		943FA1E02CBEF40F0021EAC3 /* MockUserAttributesMEGAStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserAttributesMEGAStore.swift; sourceTree = "<group>"; };
+		943FA1E22CBEF41F0021EAC3 /* MockMOUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMOUser.swift; sourceTree = "<group>"; };
 		944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertTypeModel.swift; sourceTree = "<group>"; };
 		9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertDataModel.swift; sourceTree = "<group>"; };
@@ -4292,6 +4299,7 @@
 		94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeUploadingViewModelTests.swift; sourceTree = "<group>"; };
 		94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTests.swift; sourceTree = "<group>"; };
 		94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManagementTableViewController+Additions.swift"; sourceTree = "<group>"; };
+		94AF34962CBD71700010EBA8 /* UserAttributeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeHandler.swift; sourceTree = "<group>"; };
 		94AFB6F32CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkDialogRouterTests.swift; sourceTree = "<group>"; };
 		94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionsDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarActionFactory.swift; sourceTree = "<group>"; };
@@ -7291,6 +7299,7 @@
 				B639952A2898CBA400EA88F1 /* SwiftUI */,
 				B582965627C5DF28004DD7A5 /* Transfers */,
 				C4F06F702B6915DE005C1A3D /* UpgradeEncouragementShowTimeTracker */,
+				94AF34952CBD714F0010EBA8 /* UserAttributes */,
 				5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */,
 				B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */,
 				C473097426FC93BB00DC9D55 /* CrashlyticsLogger.swift */,
@@ -10374,6 +10383,23 @@
 			path = MEGAShare;
 			sourceTree = "<group>";
 		};
+		943FA1D52CBE6D100021EAC3 /* UserAttributes */ = {
+			isa = PBXGroup;
+			children = (
+				943FA1D62CBE6D1D0021EAC3 /* UserAttributeHandlerTests.swift */,
+			);
+			path = UserAttributes;
+			sourceTree = "<group>";
+		};
+		943FA1DF2CBEF3FE0021EAC3 /* UserAttributes */ = {
+			isa = PBXGroup;
+			children = (
+				943FA1E22CBEF41F0021EAC3 /* MockMOUser.swift */,
+				943FA1E02CBEF40F0021EAC3 /* MockUserAttributesMEGAStore.swift */,
+			);
+			path = UserAttributes;
+			sourceTree = "<group>";
+		};
 		9441533028E4609B005EF5F9 /* ReportIssue */ = {
 			isa = PBXGroup;
 			children = (
@@ -10591,9 +10617,18 @@
 		949B86E12BBC202700CB8ADF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				943FA1DF2CBEF3FE0021EAC3 /* UserAttributes */,
 				949B86E52BBC205D00CB8ADF /* MockImageLoader.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		94AF34952CBD714F0010EBA8 /* UserAttributes */ = {
+			isa = PBXGroup;
+			children = (
+				94AF34962CBD71700010EBA8 /* UserAttributeHandler.swift */,
+			);
+			path = UserAttributes;
 			sourceTree = "<group>";
 		};
 		94B09E3C2B84CC86007D6B84 /* NewCloudDrive */ = {
@@ -11451,6 +11486,7 @@
 				248A03182A79024700F183A2 /* Shared Views */,
 				2434EC3B2C61C12F0052D2F0 /* SortOrder */,
 				C4F06F762B691934005C1A3D /* UpgradeEncouragementShowTimeTracker */,
+				943FA1D52CBE6D100021EAC3 /* UserAttributes */,
 				A874D305263FF683000861DB /* ViewControllers */,
 				99E1A9272A383E9700974FC9 /* Views */,
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
@@ -16232,6 +16268,7 @@
 				94779D9B2C075860008A5198 /* UsageViewModel.swift in Sources */,
 				94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */,
 				25D360B32BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift in Sources */,
+				94AF34972CBD71700010EBA8 /* UserAttributeHandler.swift in Sources */,
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCaseAdditions+Additions.swift in Sources */,
 				A87BDB352B8CD3BC0074EE4C /* UserAvatarHandler.swift in Sources */,
 				8313914B293519F900E20170 /* UserAvatarView.swift in Sources */,
@@ -16831,6 +16868,7 @@
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				948A0E962C9ED7A7004DDF55 /* MockMegaStore.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
+				943FA1E32CBEF4250021EAC3 /* MockMOUser.swift in Sources */,
 				A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */,
 				949CC15D2B0FD5230047D581 /* MockMyAccountHallRouter.swift in Sources */,
 				C4D6750F2BB2CAF1000A1F79 /* MockNavigationController.swift in Sources */,
@@ -16860,6 +16898,7 @@
 				947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */,
 				C4A016C02B67630F00492185 /* MockUpgradeAccountRouter.swift in Sources */,
 				C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */,
+				943FA1E12CBEF4110021EAC3 /* MockUserAttributesMEGAStore.swift in Sources */,
 				94BF69162CAFFA840052F1D5 /* MockUserBannerUseCase.swift in Sources */,
 				24EDF7212C1BF13A0065A26D /* MockVideoRevampRouter.swift in Sources */,
 				943BD8472C91CA5C00619F2B /* MockWarningViewRouter.swift in Sources */,
@@ -16998,6 +17037,7 @@
 				94B09E6F2B84D0B6007D6B84 /* UploadAddMenuDelegateHandlerTests.swift in Sources */,
 				940CE3CC2C255EDA0083068E /* UsageViewModelTests.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
+				943FA1D72CBE6D2B0021EAC3 /* UserAttributeHandlerTests.swift in Sources */,
 				A894E7A32B8F6396006AC2C5 /* UserAvatarHandlerTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				245603692CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift in Sources */,

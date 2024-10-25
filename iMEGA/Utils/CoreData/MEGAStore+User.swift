@@ -28,4 +28,20 @@ extension MEGAStore {
             save(context)
         }
     }
+    
+    func insertUser(
+        userHandle: HandleEntity,
+        firstname: String? = nil,
+        lastname: String? = nil,
+        nickname: String? = nil,
+        email: String? = nil
+    ) {
+        self.insertUser(
+            withUserHandle: userHandle,
+            firstname: firstname,
+            lastname: lastname,
+            nickname: nickname,
+            email: email
+        )
+    }
 }
