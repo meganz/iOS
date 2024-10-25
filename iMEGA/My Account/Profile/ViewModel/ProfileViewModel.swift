@@ -19,6 +19,8 @@ enum ProfileAction: ActionType {
     case changeEmail
     case changePassword
     case cancelSubscription
+    case didTapBackUpRecoveryKey
+    case didTapLogout
 }
 
 private struct CancelSubscriptionIconAssets {
@@ -134,7 +136,10 @@ extension ProfileViewModel {
     
     func dispatch(_ action: ProfileAction) {
         switch action {
-        case .onViewDidLoad, .invalidateSections:
+        case .onViewDidLoad:
+            invalidateSectionsValueSubject.send()
+            tracker.trackAnalyticsEvent(with: ProfileScreenEvent())
+        case .invalidateSections:
             invalidateSectionsValueSubject.send()
         case .changeEmail:
             handleChangeProfileAction(requestedChangeType: .email)
@@ -143,6 +148,10 @@ extension ProfileViewModel {
         case .cancelSubscription:
             trackCancelSubscriptionButtonEvent()
             initCancelSubscriptionFlow()
+        case .didTapBackUpRecoveryKey:
+            tracker.trackAnalyticsEvent(with: BackupRecoveryKeyButtonPressedEvent())
+        case .didTapLogout:
+            tracker.trackAnalyticsEvent(with: LogoutButtonPressedEvent())
         }
     }
     
