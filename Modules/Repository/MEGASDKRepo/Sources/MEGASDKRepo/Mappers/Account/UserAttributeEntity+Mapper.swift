@@ -37,6 +37,7 @@ extension UserAttributeEntity {
         case .noCallKit: self = .noCallKit
         case .appsPreferences: self = .appsPreferences
         case .contentConsumptionPreferences: self = .contentConsumptionPreferences
+        case .lastReadNotification: self = .lastReadNotification
         default: return nil
         }
     }
@@ -45,37 +46,78 @@ extension UserAttributeEntity {
 extension UserAttributeEntity {
     public func toMEGAUserAttribute() -> MEGAUserAttribute {
         switch self {
-        case .avatar: return MEGAUserAttribute.avatar
-        case .firstName: return MEGAUserAttribute.firstname
-        case .lastName: return MEGAUserAttribute.lastname
-        case .authRing: return MEGAUserAttribute.authRing
-        case .lastInteraction: return MEGAUserAttribute.lastInteraction
-        case .eD25519PublicKey: return MEGAUserAttribute.ed25519PublicKey
-        case .cU25519PublicKey: return MEGAUserAttribute.cu25519PublicKey
-        case .keyring: return MEGAUserAttribute.keyring
-        case .sigRsaPublicKey: return MEGAUserAttribute.sigRsaPublicKey
-        case .sigCU255PublicKey: return MEGAUserAttribute.sigCU255PublicKey
-        case .language: return MEGAUserAttribute.language
-        case .pwdReminder: return MEGAUserAttribute.pwdReminder
-        case .disableVersions: return MEGAUserAttribute.disableVersions
-        case .contactLinkVerification: return MEGAUserAttribute.contactLinkVerification
-        case .richPreviews: return MEGAUserAttribute.richPreviews
-        case .rubbishTime: return MEGAUserAttribute.rubbishTime
-        case .lastPSA: return MEGAUserAttribute.lastPSA
-        case .storageState: return MEGAUserAttribute.storageState
-        case .geolocation: return MEGAUserAttribute.geolocation
-        case .cameraUploadsFolder: return MEGAUserAttribute.cameraUploadsFolder
-        case .myChatFilesFolder: return MEGAUserAttribute.myChatFilesFolder
-        case .pushSettings: return MEGAUserAttribute.pushSettings
-        case .alias: return MEGAUserAttribute.alias
-        case .deviceNames: return MEGAUserAttribute.deviceNames
-        case .backupsFolder: return MEGAUserAttribute.backupsFolder
-        case .cookieSettings: return MEGAUserAttribute.cookieSettings
-        case .jsonSyncConfigData: return MEGAUserAttribute.jsonSyncConfigData
-        case .drivesName: return MEGAUserAttribute.drivesName
-        case .noCallKit: return MEGAUserAttribute.noCallKit
-        case .appsPreferences: return MEGAUserAttribute.appsPreferences
-        case .contentConsumptionPreferences: return MEGAUserAttribute.contentConsumptionPreferences
+        case .avatar: .avatar
+        case .firstName: .firstname
+        case .lastName: .lastname
+        case .authRing: .authRing
+        case .lastInteraction: .lastInteraction
+        case .eD25519PublicKey: .ed25519PublicKey
+        case .cU25519PublicKey: .cu25519PublicKey
+        case .keyring: .keyring
+        case .sigRsaPublicKey: .sigRsaPublicKey
+        case .sigCU255PublicKey: .sigCU255PublicKey
+        case .language: .language
+        case .pwdReminder: .pwdReminder
+        case .disableVersions: .disableVersions
+        case .contactLinkVerification: .contactLinkVerification
+        case .richPreviews: .richPreviews
+        case .rubbishTime: .rubbishTime
+        case .lastPSA: .lastPSA
+        case .storageState: .storageState
+        case .geolocation: .geolocation
+        case .cameraUploadsFolder: .cameraUploadsFolder
+        case .myChatFilesFolder: .myChatFilesFolder
+        case .pushSettings: .pushSettings
+        case .alias: .alias
+        case .deviceNames: .deviceNames
+        case .backupsFolder: .backupsFolder
+        case .cookieSettings: .cookieSettings
+        case .jsonSyncConfigData: .jsonSyncConfigData
+        case .drivesName: .drivesName
+        case .noCallKit: .noCallKit
+        case .appsPreferences: .appsPreferences
+        case .contentConsumptionPreferences: .contentConsumptionPreferences
+        case .lastReadNotification: .lastReadNotification
+        }
+    }
+}
+
+extension MEGAUserAttribute {
+    public func toAttributeEntity() -> UserAttributeEntity? {
+        switch self {
+        case .avatar: .avatar
+        case .firstname: .firstName
+        case .lastname: .lastName
+        case .authRing: .authRing
+        case .lastInteraction: .lastInteraction
+        case .ed25519PublicKey: .eD25519PublicKey
+        case .cu25519PublicKey: .cU25519PublicKey
+        case .keyring: .keyring
+        case .sigRsaPublicKey: .sigRsaPublicKey
+        case .sigCU255PublicKey: .sigCU255PublicKey
+        case .language: .language
+        case .pwdReminder: .pwdReminder
+        case .disableVersions: .disableVersions
+        case .contactLinkVerification: .contactLinkVerification
+        case .richPreviews: .richPreviews
+        case .rubbishTime: .rubbishTime
+        case .lastPSA: .lastPSA
+        case .storageState: .storageState
+        case .geolocation: .geolocation
+        case .cameraUploadsFolder: .cameraUploadsFolder
+        case .myChatFilesFolder: .myChatFilesFolder
+        case .pushSettings: .pushSettings
+        case .alias: .alias
+        case .deviceNames: .deviceNames
+        case .backupsFolder: .backupsFolder
+        case .cookieSettings: .cookieSettings
+        case .jsonSyncConfigData: .jsonSyncConfigData
+        case .drivesName: .drivesName
+        case .noCallKit: .noCallKit
+        case .appsPreferences: .appsPreferences
+        case .contentConsumptionPreferences: .contentConsumptionPreferences
+        case .lastReadNotification: .lastReadNotification
+        @unknown default: nil
         }
     }
 }

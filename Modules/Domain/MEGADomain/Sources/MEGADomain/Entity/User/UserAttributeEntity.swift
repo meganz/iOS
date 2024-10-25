@@ -30,4 +30,5 @@ public enum UserAttributeEntity: Sendable {
     case noCallKit
     case appsPreferences
     case contentConsumptionPreferences
+    case lastReadNotification
 }

@@ -40,6 +40,7 @@ final class UserAttributeEntityMappingTests: XCTestCase {
             case .noCallKit: XCTAssertEqual(type.toMEGAUserAttribute(), .noCallKit)
             case .appsPreferences: XCTAssertEqual(type.toMEGAUserAttribute(), .appsPreferences)
             case .contentConsumptionPreferences: XCTAssertEqual(type.toMEGAUserAttribute(), .contentConsumptionPreferences)
+            case .lastReadNotification: XCTAssertEqual(type.toMEGAUserAttribute(), .lastReadNotification)
             }
         }
     }

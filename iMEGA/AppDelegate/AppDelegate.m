@@ -1571,48 +1571,11 @@
             } else if (request.email == nil) {
                 user = me;
             }
-                        
-            if (user) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
-                if (moUser) {
-                    if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
-                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle firstname:request.text];
-                    }
-                    
-                    if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
-                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle lastname:request.text];
-                    }
-                } else {
-                    if (request.paramType == MEGAUserAttributeFirstname) {
-                        [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:request.text lastname:nil nickname:nil email:user.email];
-                    }
-                    
-                    if (request.paramType == MEGAUserAttributeLastname) {
-                        [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:nil lastname:request.text nickname:nil email:user.email];
-                    }
-                }
-            } else if (request.email.length > 0) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:request.email];
-                if (moUser) {
-                    if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
-                        [[MEGAStore shareInstance] updateUserWithEmail:request.email firstname:request.text];
-                    }
-                    
-                    if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
-                        [[MEGAStore shareInstance] updateUserWithEmail:request.email lastname:request.text];
-                    }
-                } else {
-                    if (request.paramType == MEGAUserAttributeFirstname) {
-                        [MEGAStore.shareInstance insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:request.text lastname:nil nickname:nil email:request.email];
-                    }
-                    
-                    if (request.paramType == MEGAUserAttributeLastname) {
-                        [MEGAStore.shareInstance insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:nil lastname:request.text nickname:nil email:request.email];
-                    }
-                }
-            } else if (request.paramType == MEGAUserAttributeAlias) {
-                [MEGAStore.shareInstance updateUserWithUserHandle:user.handle nickname:request.name];
-            }
+            
+            [self updateUserAttributesWithUser:user
+                                         email:request.email
+                                 attributeType:request.paramType
+                                      newValue:request.text];
             break;
         }
             
