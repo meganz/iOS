@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 #pragma mark - Utils for UI
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;
-+ (void)showMasterKeyCopiedAlert;
++ (void)showMasterKeyCopiedAlert:(void (^ _Nullable)(void))completion;
 
 #pragma mark - Manage session
 

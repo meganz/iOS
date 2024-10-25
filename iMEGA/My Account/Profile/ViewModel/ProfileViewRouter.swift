@@ -9,6 +9,7 @@ protocol ProfileViewRouting: Routing {
         assets: CancelAccountPlanAssets
     )
     func showCancellationSteps()
+    func showRecoveryKey()
 }
 
 final class ProfileViewRouter: ProfileViewRouting {
@@ -73,5 +74,9 @@ final class ProfileViewRouter: ProfileViewRouting {
             type: .webClient,
             presenter: presenter
         ).start()
+    }
+    
+    func showRecoveryKey() {
+        RecoveryKeyViewRouter(navigationController: navigationController).start()
     }
 }

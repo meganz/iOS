@@ -73,7 +73,7 @@
 - (IBAction)tapBackupRecoveryKey:(id)sender {
     if ([MEGASdk.shared isLoggedIn]) {
         if (self.isLoggingOut) {
-            [Helper showMasterKeyCopiedAlert];
+            [Helper showMasterKeyCopiedAlert:nil];
         } else {
             __weak PasswordReminderViewController *weakSelf = self;
             
