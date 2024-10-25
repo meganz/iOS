@@ -1,6 +1,6 @@
 import Foundation
 
-struct AppDescription: Decodable {
+struct Description: Decodable {
     let paragraph1: String?
     let paragraph2: String?
     let paragraph3: String?

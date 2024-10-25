@@ -1,0 +1,19 @@
+{
+    "fastlaneBasePath": "../../fastlane/metadata/",
+    "projects": [
+        {
+            "name": "Stores",
+            "id": "o:meganz-1:p:stores:r:app_store_ios",
+            "filename": "description.txt",
+            "maxAllowedLength": 4000,
+            "maxAllowedOverflowError": "The app description is too long. Should be lesser than 4000 characters"
+        },
+        {
+            "name": "Changelogs",
+            "id": "o:meganz-1:p:ios-35:r:changelogs",
+            "filename": "release_notes.txt",
+            "maxAllowedLength": 4000,
+            "maxAllowedOverflowError": "The release notes is too long. Should be lesser than 4000 characters"
+        }
+    ]
+}
