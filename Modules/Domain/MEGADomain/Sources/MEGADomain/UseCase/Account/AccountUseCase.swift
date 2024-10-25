@@ -28,12 +28,18 @@ public protocol AccountUseCaseProtocol: Sendable {
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
     /// Check if the current account has a Pro plan or Pro Flexi plan that is not expired
-    /// Returns: `true` if the account is subscribed to a valid standard Pro plan or Pro Flexi that is not expired, `false` otherwise.
+    /// - Returns: `true` if the account is subscribed to a valid standard Pro plan or Pro Flexi that is not expired, `false` otherwise.
     func hasValidProAccount() -> Bool
     /// Check if the current account has a valid pro account or business account thats not expired
-    /// Returns: `true` if the account is standard pro account or pro flexi account thats not expired or in grace period or a business
-    /// account thats not expired, `false` otherwise.
+    /// - Returns: `true` if the account is standard pro, pro flexi or business that is not expired, `false` otherwise.
     func hasValidProOrUnexpiredBusinessAccount() -> Bool
+    /// Check if the current account has an active Business account
+    /// - Returns: `true` if the account is business type and neither expired nor in grace period, `false` otherwise.
+    func hasActiveBusinessAccount() -> Bool
+    /// Check if the current account has an active Pro Flexi account
+    /// - Returns: `true` if the account is Pro Flexi and neither expired nor in grace period, `false` otherwise.
+    func hasActiveProFlexiAccount() -> Bool
+    
     /// Check if the current Pro Plan is associated with any subscription.
     /// - Returns: `true` if the current Pro Plan is associated with an active subscription.
     func isBilledProPlan() -> Bool
@@ -175,6 +181,14 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     
     public func hasValidProOrUnexpiredBusinessAccount() -> Bool {
         hasValidProAccount() || isBusinessAccountNotExpired()
+    }
+    
+    public func hasActiveBusinessAccount() -> Bool {
+        isBusinessAccountNotExpired() && !repository.isInGracePeriod()
+    }
+    
+    public func hasActiveProFlexiAccount() -> Bool {
+        isValidProFlexiAccount() && !repository.isInGracePeriod()
     }
     
     // MARK: - Account operations

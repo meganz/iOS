@@ -36,6 +36,8 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _backupStorage: Int64
     private let _currentAccountPlan: PlanEntity?
     private let _hasValidSubscription: Bool
+    private let _hasActiveBusinessAccount: Bool
+    private let _hasActiveProFlexiAccount: Bool
 
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -71,7 +73,9 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         accountPlan: PlanEntity? = nil,
         currentProPlan: AccountPlanEntity? = nil,
         currentSubscription: AccountSubscriptionEntity? = nil,
-        hasValidSubscription: Bool = false
+        hasValidSubscription: Bool = false,
+        hasActiveBusinessAccount: Bool = false,
+        hasActiveProFlexiAccount: Bool = false
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -107,6 +111,8 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _backupStorage = backupStorage
         _currentAccountPlan = accountPlan
         _hasValidSubscription = hasValidSubscription
+        _hasActiveBusinessAccount = hasActiveBusinessAccount
+        _hasActiveProFlexiAccount = hasActiveProFlexiAccount
     }
     
     // MARK: - User authentication status and identifiers
@@ -202,6 +208,14 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public func hasMultipleBilledProPlans() -> Bool {
         _hasMultipleBilledProPlan
+    }
+    
+    public func hasActiveBusinessAccount() -> Bool {
+        _hasActiveBusinessAccount
+    }
+    
+    public func hasActiveProFlexiAccount() -> Bool {
+        _hasActiveProFlexiAccount
     }
     
     // MARK: - Account operations

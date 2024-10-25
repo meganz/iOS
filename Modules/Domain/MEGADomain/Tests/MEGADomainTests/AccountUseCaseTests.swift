@@ -413,6 +413,42 @@ final class AccountUseCaseTests: XCTestCase {
         
         XCTAssertEqual(sut.currentSubscription(), expectedSubscription)
     }
+    
+    func testHasActiveBusinessAccount_shouldReturnCorrectValue() {
+        let nonBusinessAccountType = AccountTypeEntity.allCases.filter({ $0 != .business }).randomElement() ?? .free
+        accountTypeStatusTestCases(expectedAccountType: .business, unexpectedAccountType: nonBusinessAccountType)
+            .enumerated()
+            .forEach { (index, testCase) in
+                let sut = makeSUT(isExpiredAccount: testCase.isExpiredAccount,
+                                  isInGracePeriod: testCase.isInGracePeriod,
+                                  accountType: testCase.accountType)
+                
+                XCTAssertEqual(sut.hasActiveBusinessAccount(), testCase.expectedResult, "Failed at index: \(index). Expected result is \(testCase.expectedResult).")
+            }
+    }
+    
+    func testHasActiveProFlexiAccount_shouldReturnCorrectValue() {
+        let nonProFlexiAccountType = AccountTypeEntity.allCases.filter({ $0 != .proFlexi }).randomElement() ?? .free
+        accountTypeStatusTestCases(expectedAccountType: .proFlexi, unexpectedAccountType: nonProFlexiAccountType)
+            .enumerated()
+            .forEach { (index, testCase) in
+                let sut = makeSUT(isExpiredAccount: testCase.isExpiredAccount,
+                                  isInGracePeriod: testCase.isInGracePeriod,
+                                  accountType: testCase.accountType)
+                
+                XCTAssertEqual(sut.hasActiveProFlexiAccount(), testCase.expectedResult, "Failed at index: \(index). Expected result is \(testCase.expectedResult).")
+            }
+    }
+    
+    private func accountTypeStatusTestCases(
+        expectedAccountType: AccountTypeEntity,
+        unexpectedAccountType: AccountTypeEntity
+    ) -> [(accountType: AccountTypeEntity, isExpiredAccount: Bool, isInGracePeriod: Bool, expectedResult: Bool)] {
+        [(accountType: expectedAccountType, isExpiredAccount: false, isInGracePeriod: false, expectedResult: true),
+         (accountType: expectedAccountType, isExpiredAccount: true, isInGracePeriod: false, expectedResult: false),
+         (accountType: expectedAccountType, isExpiredAccount: false, isInGracePeriod: true, expectedResult: false),
+         (accountType: unexpectedAccountType, isExpiredAccount: false, isInGracePeriod: false, expectedResult: false)]
+    }
 }
 
 final class AccountUserCaseProtocolTests: XCTestCase {

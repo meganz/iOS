@@ -77,7 +77,7 @@ import UIKit
         dataSource = ProfileTableViewDataSource(
             tableView: tableView,
             parent: self,
-            traitCollection: traitCollection
+            viewModel: viewModel
         )
         
         registerCustomCells()

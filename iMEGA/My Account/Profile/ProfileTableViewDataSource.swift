@@ -8,9 +8,8 @@ import PhoneNumberKit
 import UIKit
 
 final class ProfileTableViewDataSource {
-    
-    private var traitCollection: UITraitCollection
     private weak var tableView: UITableView?
+    private weak var viewModel: ProfileViewModel?
     private var snapshot = NSDiffableDataSourceSnapshot<ProfileSection, ProfileSectionRow>()
     private var dataSource: ProfileTableViewDiffableDataSource?
     private let parent: UIViewController
@@ -18,11 +17,11 @@ final class ProfileTableViewDataSource {
     init(
         tableView: UITableView,
         parent: UIViewController,
-        traitCollection: UITraitCollection
+        viewModel: ProfileViewModel?
     ) {
         self.tableView = tableView
         self.parent = parent
-        self.traitCollection = traitCollection
+        self.viewModel = viewModel
     }
     
     func configureDataSource() {
@@ -109,45 +108,21 @@ final class ProfileTableViewDataSource {
             return cell
         case .upgrade:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
-            cell.nameLabel.text = Strings.Localizable.upgradeAccount
-            cell.selectionStyle = .default
-            cell.accessoryType = MEGAPurchase.sharedInstance()?.products?.count ?? 0 > 0 ? .disclosureIndicator : .none
+            cell.detailLabel.textColor = TokenColors.Text.secondary
+            cell.selectionStyle = .none
+            cell.accessoryType = .none
             
-            guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
+            guard let viewModel, let accountDetails = viewModel.accountDetails else {
                 return cell
             }
-            
-            let accountType = accountDetails.type
-            
-            switch accountType {
-            case .free:
-                cell.detailLabel.text = Strings.Localizable.free
-                cell.detailLabel.textColor = TokenColors.Text.secondary
-            case .proI:
-                cell.detailLabel.text = "Pro I"
-                cell.detailLabel.textColor = TokenColors.Text.secondary
-            case .proII:
-                cell.detailLabel.text = "Pro II"
-                cell.detailLabel.textColor = TokenColors.Text.secondary
-            case .proIII:
-                cell.detailLabel.text = "Pro III"
-                cell.detailLabel.textColor = TokenColors.Text.secondary
-            case .lite:
-                cell.detailLabel.text = Strings.Localizable.proLite
-                cell.detailLabel.textColor = TokenColors.Text.secondary
+
+            switch accountDetails.proLevel {
             case .business:
-                if MEGASdk.shared.businessStatus == .active {
-                    cell.detailLabel.text = Strings.Localizable.active
-                } else {
-                    cell.detailLabel.text = Strings.Localizable.paymentOverdue
-                }
-                cell.detailLabel.textColor = TokenColors.Text.secondary
                 cell.nameLabel.text = Strings.Localizable.business
-                cell.accessoryType = .none
+                cell.detailLabel.text = viewModel.hasActiveBusinessAccount ? Strings.Localizable.active : Strings.Localizable.paymentOverdue
             case .proFlexi:
-                cell.nameLabel.text = MEGAAccountDetails.string(for: accountType)
-                cell.selectionStyle = .none
-                cell.accessoryType = .none
+                cell.nameLabel.text = accountDetails.proLevel.toAccountTypeDisplayName()
+                cell.detailLabel.text = viewModel.hasActiveProFlexiAccount ? "" : Strings.Localizable.paymentOverdue
             default:
                 cell.detailLabel.text = "..."
             }
