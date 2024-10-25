@@ -91,7 +91,8 @@ struct App: AsyncParsableCommand {
                 }
             }
 
-            return try await group.waitForAll()
+            // Complete when the first task throws an error or wait until all tasks have finished successfully
+            while let _ = try await group.next() {}
         }
     }
 }
