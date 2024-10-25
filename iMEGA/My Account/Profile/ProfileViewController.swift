@@ -368,6 +368,7 @@ extension ProfileViewController: UITableViewDelegate {
         case .changePassword:
             viewModel.dispatch(.changePassword)
         case .recoveryKey:
+            viewModel.dispatch(.didTapBackUpRecoveryKey)
             let recoveryKeyViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "MasterKeyViewControllerID")
             navigationController?.pushViewController(recoveryKeyViewController, animated: true)
         case .upgrade, .role:
@@ -379,6 +380,7 @@ extension ProfileViewController: UITableViewDelegate {
                 UpgradeAccountRouter().pushUpgradeTVC(navigationController: navigationController)
             }
         case .logout:
+            viewModel.dispatch(.didTapLogout)
             if MEGAReachabilityManager.isReachableHUDIfNot() {
                 guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
                     return

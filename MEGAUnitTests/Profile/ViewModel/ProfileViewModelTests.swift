@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASDKRepoMock
+import MEGATest
 import XCTest
 
 final class ProfileViewModelTests: XCTestCase {
@@ -34,6 +35,27 @@ final class ProfileViewModelTests: XCTestCase {
         )
         
         XCTAssertEqual(result, expectedSections)
+    }
+    
+    func testAction_onViewDidLoad_shouldTrackAnalyticsEvent() {
+        assertActionTracker(
+            action: .onViewDidLoad,
+            expectedEventIdentifiers: [ProfileScreenEvent()]
+        )
+    }
+    
+    func testAction_didTapBackUpRecoveryKey_shouldTrackAnalyticsEvent() {
+        assertActionTracker(
+            action: .didTapBackUpRecoveryKey,
+            expectedEventIdentifiers: [BackupRecoveryKeyButtonPressedEvent()]
+        )
+    }
+    
+    func testAction_didTapLogouty_shouldTrackAnalyticsEvent() {
+        assertActionTracker(
+            action: .didTapLogout,
+            expectedEventIdentifiers: [LogoutButtonPressedEvent()]
+        )
     }
     
     func testSectionsVisibility_withoutValidProAccount_shouldNotShowSubscriptionSection() {
@@ -192,15 +214,10 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(router.showCancelAccountPlan_calledTimes, 1, "Expected showCancelAccountPlan to be called once.")
     }
     
-    func testAction_cancelSubscription_tracksAnalyticsEvent() {
-        let mockTracker = MockTracker()
-        let (sut, _) = makeSUT(tracker: mockTracker)
-        
-        sut.dispatch(.cancelSubscription)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
-            with: [CancelSubscriptionButtonPressedEvent()]
+    func testAction_cancelSubscription_shouldTrackAnalyticsEvent() {
+        assertActionTracker(
+            action: .cancelSubscription,
+            expectedEventIdentifiers: [CancelSubscriptionButtonPressedEvent()]
         )
     }
     
@@ -448,5 +465,17 @@ final class ProfileViewModelTests: XCTestCase {
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         let containsSubscriptionSection = result?.sectionOrder.contains(.subscription) ?? false
         XCTAssertEqual(containsSubscriptionSection, shouldBeShown, "Subscription section visibility does not match expectation for standard pro account state \(isStandardProAccount)", file: file, line: line)
+    }
+    
+    private func assertActionTracker(action: ProfileAction, expectedEventIdentifiers: [any EventIdentifier]) {
+        let tracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: tracker)
+        
+        sut.dispatch(action)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: expectedEventIdentifiers
+        )
     }
 }
