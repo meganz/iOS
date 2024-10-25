@@ -593,12 +593,16 @@
     }
 }
 
-+ (void)showMasterKeyCopiedAlert {
++ (void)showMasterKeyCopiedAlert:(void (^ _Nullable)(void))completion {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = [MEGASdk.shared masterKey];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction: [UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if (completion) {
+            completion();
+        }
+    }]];
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     
     [MEGASdk.shared masterKeyExported];

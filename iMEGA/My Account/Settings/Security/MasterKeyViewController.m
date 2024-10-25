@@ -19,28 +19,21 @@
     
     [self setupContent];
     [self setupColors];
+    [self dispatchOnViewDidLoadAction];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)copyMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([MEGASdk.shared isLoggedIn]) {
-        [Helper showMasterKeyCopiedAlert];
-    } else {
-        [MEGAReachabilityManager isReachableHUDIfNot];
-    }
+    [self dispatchTapCopyAction];
 }
 
 - (IBAction)saveMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([MEGASdk.shared isLoggedIn]) {
-        [Helper showExportMasterKeyInView:self completion:nil];
-    } else {
-        [MEGAReachabilityManager isReachableHUDIfNot];
-    }
+    [self dispatchTapSaveAction];
 }
 
 - (IBAction)whyDoINeedARecoveryKeyTouchUpInside:(UIButton *)sender {
-    [[NSURL URLWithString:@"https://mega.nz/security"] mnz_presentSafariViewController];
+    [self dispatchTapWhyDoINeedARecoveryKeyAction];
 }
 
 @end

@@ -27,4 +27,20 @@ extension MasterKeyViewController {
 
         whyDoINeedARecoveryKeyButton?.setTitleColor(recoveryButtonColor, for: .normal)
     }
+    
+    @objc func dispatchOnViewDidLoadAction() {
+        viewModel.dispatch(.onViewDidLoad)
+    }
+    
+    @objc func dispatchTapCopyAction() {
+        viewModel.dispatch(.didTapCopyButton)
+    }
+    
+    @objc func dispatchTapSaveAction() {
+        viewModel.dispatch(.didTapSaveButton)
+    }
+    
+    @objc func dispatchTapWhyDoINeedARecoveryKeyAction() {
+        viewModel.dispatch(.didTapWhyDoINeedARecoveryKey)
+    }
 }

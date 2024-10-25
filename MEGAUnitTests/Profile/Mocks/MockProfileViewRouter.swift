@@ -5,6 +5,7 @@ import MEGADomain
 final class MockProfileViewRouter: ProfileViewRouting {
     var showCancelAccountPlan_calledTimes = 0
     var showCancellationSteps_calledTimes = 0
+    var showRecoveryKey_calledTimes = 0
     
     func showCancelAccountPlan(currentSubscription: AccountSubscriptionEntity, currentPlan: PlanEntity, assets: CancelAccountPlanAssets) {
         showCancelAccountPlan_calledTimes += 1
@@ -12,5 +13,9 @@ final class MockProfileViewRouter: ProfileViewRouting {
     
     func showCancellationSteps() {
         showCancellationSteps_calledTimes += 1
+    }
+    
+    func showRecoveryKey() {
+        showRecoveryKey_calledTimes += 1
     }
 }

@@ -51,7 +51,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
-    func testAction_didTapLogouty_shouldTrackAnalyticsEvent() {
+    func testAction_didTapLogout_shouldTrackAnalyticsEvent() {
         assertActionTracker(
             action: .didTapLogout,
             expectedEventIdentifiers: [LogoutButtonPressedEvent()]

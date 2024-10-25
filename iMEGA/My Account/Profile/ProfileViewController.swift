@@ -369,8 +369,6 @@ extension ProfileViewController: UITableViewDelegate {
             viewModel.dispatch(.changePassword)
         case .recoveryKey:
             viewModel.dispatch(.didTapBackUpRecoveryKey)
-            let recoveryKeyViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "MasterKeyViewControllerID")
-            navigationController?.pushViewController(recoveryKeyViewController, animated: true)
         case .upgrade, .role:
             if !MEGASdk.shared.isAccountType(.business) &&
                 !MEGASdk.shared.isAccountType(.proFlexi) {

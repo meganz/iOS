@@ -162,6 +162,7 @@ extension ProfileViewModel {
             initCancelSubscriptionFlow()
         case .didTapBackUpRecoveryKey:
             tracker.trackAnalyticsEvent(with: BackupRecoveryKeyButtonPressedEvent())
+            router.showRecoveryKey()
         case .didTapLogout:
             tracker.trackAnalyticsEvent(with: LogoutButtonPressedEvent())
         }
