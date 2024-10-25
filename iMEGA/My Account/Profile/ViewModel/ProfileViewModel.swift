@@ -129,6 +129,18 @@ final class ProfileViewModel: ViewModelType {
         accountUseCase.isBilledProPlan() &&
         !accountUseCase.hasMultipleBilledProPlans()
     }
+    
+    var hasActiveBusinessAccount: Bool {
+        accountUseCase.hasActiveBusinessAccount()
+    }
+    
+    var hasActiveProFlexiAccount: Bool {
+        accountUseCase.hasActiveProFlexiAccount()
+    }
+    
+    var accountDetails: AccountDetailsEntity? {
+        accountUseCase.currentAccountDetails
+    }
 }
 
 // MARK: ViewModelType - Command/Actions

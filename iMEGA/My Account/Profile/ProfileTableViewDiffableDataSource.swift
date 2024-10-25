@@ -30,7 +30,9 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
                     planFooterString = Strings.Localizable.renewsOn + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
-                } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
+                } else if accountDetails.proExpiration > 0 &&
+                            accountDetails.type != .business &&
+                            accountDetails.type != .proFlexi {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
                     planFooterString = Strings.Localizable.expiresOn(expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
                 }

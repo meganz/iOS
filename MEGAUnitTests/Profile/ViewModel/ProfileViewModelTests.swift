@@ -283,6 +283,24 @@ final class ProfileViewModelTests: XCTestCase {
         testSubscriptionSectionVisibility(shouldBeShown: false)
     }
     
+    func testHasActiveBusinessAccount_shouldReturnCorrectValue() {
+        let expectedValue = Bool.random()
+        let (sut, _) = makeSUT(hasActiveBusinessAccount: expectedValue)
+        XCTAssertEqual(sut.hasActiveBusinessAccount, expectedValue)
+    }
+    
+    func testHasActiveProFlexiAccount_shouldReturnCorrectValue() {
+        let expectedValue = Bool.random()
+        let (sut, _) = makeSUT(hasActiveProFlexiAccount: expectedValue)
+        XCTAssertEqual(sut.hasActiveProFlexiAccount, expectedValue)
+    }
+    
+    func testAccountDetails_shouldReturnCorrectAccountDetails() {
+        let expectedAccountType = AccountTypeEntity.allCases.randomElement() ?? .free
+        let (sut, _) = makeSUT(accountType: expectedAccountType)
+        XCTAssertEqual(sut.accountDetails, AccountDetailsEntity.build(proLevel: expectedAccountType))
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -296,6 +314,8 @@ final class ProfileViewModelTests: XCTestCase {
         isStandardProAccount: Bool = false,
         isBilledProPlan: Bool = false,
         hasMultipleBilledProPlan: Bool = false,
+        hasActiveBusinessAccount: Bool = false,
+        hasActiveProFlexiAccount: Bool = false,
         tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -313,7 +333,9 @@ final class ProfileViewModelTests: XCTestCase {
             multiFactorAuthCheckResult: multiFactorAuthCheckResult,
             multiFactorAuthCheckDelay: 1.0,
             accountPlan: accountPlan,
-            currentSubscription: currentSubscription
+            currentSubscription: currentSubscription,
+            hasActiveBusinessAccount: hasActiveBusinessAccount,
+            hasActiveProFlexiAccount: hasActiveProFlexiAccount
         )
         let router = MockProfileViewRouter()
         
