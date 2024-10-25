@@ -15,7 +15,8 @@ extension MetadataUpdating {
                 }
             }
 
-            return try await group.waitForAll()
+            // Complete when the first task throws an error or wait until all tasks have finished successfully
+            while let _ = try await group.next() {}
         }
     }
 
@@ -27,6 +28,8 @@ extension MetadataUpdating {
         )
         let fetcher = Fetcher(api: api)
         let data = try await fetcher.fetch()
+        // Now that data is fetched from the server, check if the task has been canceled before proceeding.
+        try Task.checkCancellation()
         let string = try convert(data)
         if string.count > metadata.maxAllowedLength ?? -1, let errorString = metadata.maxAllowedOverflowError {
             throw errorString
