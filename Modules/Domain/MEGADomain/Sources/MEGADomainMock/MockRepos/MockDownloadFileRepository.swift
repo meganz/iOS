@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
 public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
     
@@ -16,34 +17,43 @@ public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
         self.error = error
         self.transferEntity = transferEntity
     }
-    
-    public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        completion(completionResult)
-    }
-    
+        
     public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?) async throws -> TransferEntity {
         try await withCheckedThrowingContinuation { continuation in continuation.resume(with: completionResult) }
     }
-
-    public func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        completion(completionResult)
+    
+    public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
     
-    public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?, progress: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        completion(completionResult)
+    public func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool) throws -> AnyAsyncSequence<TransferEventEntity> {
+        try proceedDownload()
     }
     
-    public func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
-        completion?(completionResult)
-    }
-    
-    public func downloadChatFile(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
-        completion?(completionResult)
-    }
-    
-    public func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, to url: URL, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
-        completion?(completionResult)
+    public func downloadFileLink(
+        _ fileLink: FileLinkEntity,
+        named name: String,
+        to url: URL,
+        metaData: TransferMetaDataEntity?,
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        try proceedDownload()
     }
     
     public func cancelDownloadTransfers() { }
+    
+    // MARK: Private
+    private func proceedDownload() throws -> AnyAsyncSequence<TransferEventEntity> {
+        switch completionResult {
+        case .success(let transferEntity):
+            AsyncThrowingStream(TransferEventEntity.self) { continuation in
+                continuation.yield(.start(transferEntity))
+                continuation.yield(.update(transferEntity))
+                continuation.yield(.finish(transferEntity))
+                continuation.finish()
+            }.eraseToAnyAsyncSequence()
+        case .failure(let error):
+            throw error
+        }
+    }
 }

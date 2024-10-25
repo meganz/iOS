@@ -2,7 +2,13 @@ import Foundation
 import MEGASwift
 
 public protocol DownloadNodeUseCaseProtocol: Sendable {
-    func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?)
+    func downloadFileToOffline(
+        forNodeHandle handle: HandleEntity,
+        filename: String?,
+        appData: String?,
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity>
+
     func downloadChatFileToOffline(
         forNodeHandle handle: HandleEntity,
         messageId: HandleEntity,
@@ -11,8 +17,16 @@ public protocol DownloadNodeUseCaseProtocol: Sendable {
         appdata: String?,
         startFirst: Bool
     ) async throws -> AnyAsyncSequence<TransferEventEntity>
-    func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
-    func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
+    
+    func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity>
+    
+    func downloadFileLinkToOffline(
+        _ fileLink: FileLinkEntity,
+        filename: String?,
+        metaData: TransferMetaDataEntity?,
+        startFirst: Bool
+    ) async throws -> AnyAsyncSequence<TransferEventEntity>
+    
     func cancelDownloadTransfers()
 }
 
@@ -50,17 +64,16 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         $saveVideoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
     }
     
-    public func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?) {
+    public func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appData: String?, startFirst: Bool) throws -> AnyAsyncSequence<TransferEventEntity> {
+
         guard let node = nodeRepository.nodeForHandle(handle) else {
-            completion?(.failure(.couldNotFindNodeByHandle))
-            return
+            throw TransferErrorEntity.couldNotFindNodeByHandle
         }
         
         if !shouldDownloadToGallery(name: node.name) {
             if node.isFile {
                 guard offlineFileFetcherRepository.offlineFile(for: node.base64Handle) == nil else {
-                    completion?(.failure(.alreadyDownloaded))
-                    return
+                    throw TransferErrorEntity.alreadyDownloaded
                 }
                 
                 let tempUrl = tempURL(for: node)
@@ -68,26 +81,23 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                     let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
                     if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl) {
                         offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
-                        completion?(.failure(.copiedFromTempFolder))
-                        return
+                        throw TransferErrorEntity.copiedFromTempFolder
                     }
                 }
             } else {
                 guard node.name != "Inbox" else {
-                    completion?(.failure(.inboxFolderNameNotAllowed))
-                    return
+                    throw TransferErrorEntity.inboxFolderNameNotAllowed
                 }
             }
         }
 
-        downloadFileRepository.downloadFile(forNodeHandle: handle, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, start: start, update: update, folderUpdate: folderUpdate) { result in
-            switch result {
-            case .success(let transferEntity):
-                completion?(.success(transferEntity))
-            case .failure(let error):
-                completion?(.failure(error))
-            }
-        }
+        return try downloadFileRepository.downloadFile(
+            forNodeHandle: handle,
+            to: fileSystemRepository.documentsDirectory(),
+            filename: filename,
+            appdata: appData,
+            startFirst: startFirst
+        )
     }
     
     @MainActor
@@ -130,19 +140,25 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         )
     }
 
-    public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        downloadFileRepository.downloadTo(fileCacheRepository.tempFolder, nodeHandle: nodeHandle, appData: appData, progress: update, completion: completion)
+    public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
+        try downloadFileRepository.downloadTo(fileCacheRepository.tempFolder, nodeHandle: nodeHandle, appData: appData)
     }
     
-    public func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        nodeRepository.nodeFor(fileLink: fileLink) { result in
-            switch result {
-            case .success(let node):
-                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileSystemRepository.documentsDirectory(), metaData: metaData, startFirst: true, start: start, update: update, completion: completion)
-            case .failure:
-                completion(.failure(.couldNotFindNodeByLink))
-            }
-        }
+    public func downloadFileLinkToOffline(
+        _ fileLink: FileLinkEntity,
+        filename: String?,
+        metaData: TransferMetaDataEntity?,
+        startFirst: Bool
+    ) async throws -> AnyAsyncSequence<TransferEventEntity> {
+        let node = try await nodeRepository.nodeFor(fileLink: fileLink)
+        
+        return try downloadFileRepository.downloadFileLink(
+            fileLink,
+            named: node.name,
+            to: fileSystemRepository.documentsDirectory(),
+            metaData: metaData,
+            startFirst: true
+        )
     }
     
     public func cancelDownloadTransfers() {

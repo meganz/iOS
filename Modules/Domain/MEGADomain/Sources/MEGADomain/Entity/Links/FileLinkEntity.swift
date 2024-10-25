@@ -1,6 +1,6 @@
 import Foundation
 
-public struct FileLinkEntity {
+public struct FileLinkEntity: Sendable {
     public let linkURL: URL
     
     public init(linkURL: URL) {

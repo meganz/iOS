@@ -54,61 +54,46 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             )
         }
     }
-    
-    public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        var megaNode: MEGANode
         
-        if let sharedFolderSdk = sharedFolderSdk {
-            guard let node = sharedFolderSdk.node(forHandle: nodeHandle), let sharedNode = sharedFolderSdk.authorizeNode(node) else {
-                completion(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
-                return
-            }
-            megaNode = sharedNode
-        } else {
-            guard let node = sdk.node(forHandle: nodeHandle) else {
-                completion(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
-                return
-            }
-            megaNode = node
-        }
-        
-        sdk.startDownloadNode(
-            megaNode,
-            localPath: url.path,
-            fileName: nil,
-            appData: metaData?.rawValue,
-            startFirst: true,
-            cancelToken: cancelToken.value,
-            collisionCheck: CollisionCheck.fingerprint,
-            collisionResolution: CollisionResolution.newWithN,
-            delegate: TransferDelegate(completion: completion)
-        )
-    }
-
-    public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?, progress: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
         guard let node = sdk.node(forHandle: nodeHandle),
               let base64Handle = node.base64Handle else {
-                  completion(.failure(.couldNotFindNodeByHandle))
-                  return
-              }
-        
-        let nodeFolderPath = url.path.append(pathComponent: base64Handle)
-        
-        guard let name = node.name else {
-            completion(.failure(.nodeNameUndefined))
-            return
+            throw TransferErrorEntity.couldNotFindNodeByHandle
         }
         
-        let nodeFilePath = nodeFolderPath.append(pathComponent: name)
+        guard let name = node.name else {
+            throw TransferErrorEntity.nodeNameUndefined
+        }
         
+        let nodeFolderPath = url.path.append(pathComponent: base64Handle)
+        let nodeFilePath = nodeFolderPath.append(pathComponent: name)
+
         do {
-            try FileManager.default.createDirectory(atPath: nodeFolderPath, withIntermediateDirectories: true, attributes: nil)
-            let transferDelegate: TransferDelegate
-            if let progress = progress {
-                transferDelegate = TransferDelegate(progress: progress, completion: completion)
-            } else {
-                transferDelegate = TransferDelegate(completion: completion)
+            try FileManager.default.createDirectory(
+                atPath: nodeFolderPath,
+                withIntermediateDirectories: true,
+                attributes: nil
+            )
+        } catch {
+            throw TransferErrorEntity.createDirectory
+        }
+        
+        let sequence: AnyAsyncSequence<TransferEventEntity> = AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            
+            let transferDelegate = TransferDelegate { result in
+                switch result {
+                case .success(let transferEntity):
+                    continuation.yield(.finish(transferEntity))
+                    continuation.finish()
+                case .failure(let error):
+                    continuation.finish(throwing: error)
+                }
             }
+            
+            transferDelegate.progress = { transferEntity in
+                continuation.yield(.update(transferEntity))
+            }
+            
             sdk.startDownloadNode(
                 node,
                 localPath: nodeFilePath,
@@ -120,93 +105,124 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                 collisionResolution: CollisionResolution.newWithN,
                 delegate: transferDelegate
             )
-        } catch {
-            completion(.failure(.createDirectory))
-        }
+
+        }.eraseToAnyAsyncSequence()
+        return sequence
     }
     
-    public func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    public func downloadFile(
+        forNodeHandle handle: HandleEntity,
+        to url: URL,
+        filename: String?,
+        appdata: String?,
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        
         var megaNode: MEGANode
         var nodeName: String
         
         if let sharedFolderSdk = sharedFolderSdk {
-            guard let node = sharedFolderSdk.node(forHandle: handle), let sharedNode = sharedFolderSdk.authorizeNode(node), let name = node.name else {
-                completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
-                return
+            guard let node = sharedFolderSdk.node(forHandle: handle),
+                  let sharedNode = sharedFolderSdk.authorizeNode(node),
+                  let name = node.name
+            else {
+                throw TransferErrorEntity.couldNotFindNodeByHandle
             }
             nodeName = name
             megaNode = sharedNode
         } else {
-            guard let node = sdk.node(forHandle: handle), let name = node.name else {
-                completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
-                return
+            guard let node = sdk.node(forHandle: handle),
+                  let name = node.name
+            else {
+                throw TransferErrorEntity.couldNotFindNodeByHandle
             }
             nodeName = name
             megaNode = node
         }
         
-        downloadFile(for: megaNode, name: nodeName, to: url, completion: completion, start: start, update: update, folderUpdate: folderUpdate, filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: self.cancelToken.value)
-    }
-
-    public func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, to url: URL, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
-        sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate(completion: { result in
-            switch result {
-            case .failure:
-                completion?(.failure(.couldNotFindNodeByLink))
-                
-            case let .success(request):
-                guard let node = request.publicNode else {
-                    completion?(.failure(.couldNotFindNodeByLink))
-                    return
+        let offlineNameString = sdk.escapeFsIncompatible(nodeName, destinationPath: url.path)
+        let filePath = url.path + "/" + (offlineNameString ?? nodeName)
+        
+        let sequence: AnyAsyncSequence<TransferEventEntity> = AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            let transferDelegate = TransferDelegate { result in
+                switch result {
+                case .success(let transferEntity):
+                    continuation.yield(.finish(transferEntity))
+                    continuation.finish()
+                case .failure(let error):
+                    continuation.finish(throwing: error)
                 }
-                
-                self.downloadFile(for: node, name: name, to: url, completion: completion, start: start, update: update, filename: nil, appdata: metaData?.rawValue, startFirst: startFirst, cancelToken: self.cancelToken.value)
             }
-        }))
-    }
-    
-    public func cancelDownloadTransfers() {
-        cancelToken.cancel()
-    }
-    
-    // MARK: - Private
-    private func downloadFile(for node: MEGANode, name: String, to url: URL, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil, filename: String? = nil, appdata: String? = nil, startFirst: Bool, cancelToken: MEGACancelToken?) {
-        let offlineNameString = sdk.escapeFsIncompatible(name, destinationPath: url.path)
-        let filePath = url.path + "/" + (offlineNameString ?? name)
-
-        if let completion = completion {
-            let transferDelegate = TransferDelegate(completion: completion)
-            if let start = start {
-                transferDelegate.start = start
+            
+            transferDelegate.start = { transferEntity in
+                continuation.yield(.start(transferEntity))
             }
-            if let update = update {
-                transferDelegate.progress = update
+            
+            transferDelegate.progress = { transferEntity in
+                continuation.yield(.update(transferEntity))
             }
-            if let folderUpdate = folderUpdate {
-                transferDelegate.folderUpdate = folderUpdate
+            
+            transferDelegate.folderUpdate = { folderTransferUpdateEntity in
+                continuation.yield(.folderUpdate(folderTransferUpdateEntity))
             }
+            
             sdk.startDownloadNode(
-                node,
+                megaNode,
                 localPath: filePath,
                 fileName: filename,
                 appData: appdata,
                 startFirst: startFirst,
-                cancelToken: cancelToken,
+                cancelToken: cancelToken.value,
                 collisionCheck: CollisionCheck.fingerprint,
                 collisionResolution: CollisionResolution.newWithN,
                 delegate: transferDelegate
             )
-        } else {
-            sdk.startDownloadNode(
-                node,
-                localPath: filePath,
-                fileName: filename,
-                appData: appdata,
-                startFirst: startFirst,
-                cancelToken: cancelToken,
-                collisionCheck: CollisionCheck.fingerprint,
-                collisionResolution: CollisionResolution.newWithN
+        }.eraseToAnyAsyncSequence()
+        
+        return sequence        
+    }
+    
+    public func downloadFileLink(
+        _ fileLink: FileLinkEntity,
+        named name: String,
+        to url: URL,
+        metaData: TransferMetaDataEntity?,
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        let offlineNameString = sdk.escapeFsIncompatible(name, destinationPath: url.path)
+        let filePath = url.path + "/" + (offlineNameString ?? name)
+        
+        let sequence: AnyAsyncSequence<TransferEventEntity> = AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            sdk.publicNode(
+                forMegaFileLink: fileLink.linkURL.absoluteString,
+                delegate: RequestDelegate { result in
+                    switch result {
+                    case .success(let request):
+                        guard let node = request.publicNode else {
+                            continuation.finish(throwing: TransferErrorEntity.couldNotFindNodeByLink)
+                            return
+                        }
+                        sdk.startDownloadNode(
+                            node,
+                            localPath: filePath,
+                            fileName: name,
+                            appData: metaData?.rawValue,
+                            startFirst: startFirst,
+                            cancelToken: cancelToken.value,
+                            collisionCheck: CollisionCheck.fingerprint,
+                            collisionResolution: CollisionResolution.newWithN
+                        )
+                    case .failure(let error):
+                        continuation.finish(throwing: error)
+                    }
+                }
             )
-        }
+        }.eraseToAnyAsyncSequence()
+        
+        return sequence
+    }
+    
+    public func cancelDownloadTransfers() {
+        cancelToken.cancel()
     }
 }

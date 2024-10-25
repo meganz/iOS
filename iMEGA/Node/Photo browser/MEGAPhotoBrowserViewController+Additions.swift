@@ -141,17 +141,7 @@ extension MEGAPhotoBrowserViewController {
             guard let self else { return }
             if granted {
                 let saveMediaUseCase = dataProvider.makeSaveMediaToPhotosUseCase(for: displayMode)
-                
-                let completionBlock: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
-                    if case let .failure(error) = result, error != .cancelled {
-                        SVProgressHUD.dismiss()
-                        SVProgressHUD.show(
-                            .saveToPhotos,
-                            status: error.localizedDescription
-                        )
-                    }
-                }
-                
+                                
                 switch self.displayMode {
                 case .chatAttachment, .chatSharedFiles:
                     Task(priority: .userInitiated) {
@@ -174,7 +164,20 @@ extension MEGAPhotoBrowserViewController {
                 case .fileLink:
                     guard let linkUrl = URL(string: self.publicLink) else { return }
                     let fileLink = FileLinkEntity(linkURL: linkUrl)
-                    saveMediaUseCase.saveToPhotos(fileLink: fileLink, completion: completionBlock)
+                    Task { @MainActor in
+                        do {
+                            try await saveMediaUseCase.saveToPhotos(fileLink: fileLink)
+                        } catch {
+                            if (error as? SaveMediaToPhotosErrorEntity) != .cancelled {
+                                await SVProgressHUD.dismiss()
+                                SVProgressHUD.show(
+                                    .saveToPhotos,
+                                    status: error.localizedDescription
+                                )
+                            }
+                        }
+                    }
+                    
                 default:
                     Task { @MainActor in
                         do {

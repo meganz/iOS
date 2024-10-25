@@ -1,4 +1,4 @@
-public enum TransferMetaDataEntity {
+public enum TransferMetaDataEntity: Sendable {
     case exportFile
     case saveInPhotos
 }

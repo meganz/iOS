@@ -3,33 +3,32 @@ import MEGASwift
 
 public final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
     private let transferEntity: TransferEntity?
+    private let folderUpdateEntity: FolderTransferUpdateEntity?
     private let result: (Result<TransferEntity, TransferErrorEntity>)?
-    private let transferError: TransferErrorEntity
     
     public init(transferEntity: TransferEntity? = nil,
-                result: Result<TransferEntity, TransferErrorEntity>? = nil,
-                transferError: TransferErrorEntity = .generic) {
+                folderUpdateEntity: FolderTransferUpdateEntity? = nil,
+                result: Result<TransferEntity, TransferErrorEntity>? = nil) {
         self.transferEntity = transferEntity
+        self.folderUpdateEntity = folderUpdateEntity
         self.result = result
-        self.transferError = transferError
     }
     
-    public func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?) {
-        guard let result = result else { return }
-        completion?(result)
+    public func downloadFileToOffline(
+        forNodeHandle handle: HandleEntity,
+        filename: String?,
+        appData: String?,
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        try proceedDownload()
     }
 
-    public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let transferEntity = transferEntity,
-              let update = update else { return }
-        update(transferEntity)
-        guard let result = result else { return }
-        completion(result)
+    public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
+        try proceedDownload()
     }
-    
-    public func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let result = result else { return }
-        completion(result)
+        
+    public func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, metaData: TransferMetaDataEntity?, startFirst: Bool) async throws -> AnyAsyncSequence<TransferEventEntity> {
+        try proceedDownload()
     }
     
     public func cancelDownloadTransfers() { }
@@ -43,5 +42,27 @@ public final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
         startFirst: Bool
     ) throws -> AnyAsyncSequence<TransferEventEntity> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    }
+    
+    // MARK: Private
+    private func proceedDownload() throws -> AnyAsyncSequence<TransferEventEntity> {
+        guard let result else {
+            return EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        }
+        
+        switch result {
+        case .success(let transferEntity):
+            return AsyncThrowingStream(TransferEventEntity.self) { continuation in
+                continuation.yield(.start(transferEntity))
+                continuation.yield(.update(transferEntity))
+                if let folderUpdateEntity {
+                    continuation.yield(.folderUpdate(folderUpdateEntity))
+                }
+                continuation.yield(.finish(transferEntity))
+                continuation.finish()
+            }.eraseToAnyAsyncSequence()
+        case .failure(let error):
+            throw error
+        }
     }
 }
