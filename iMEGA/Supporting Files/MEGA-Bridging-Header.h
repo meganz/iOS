@@ -148,8 +148,6 @@
 #import "RTCDispatcher.h"
 #import "RTCAudioSessionConfiguration.h"
 #import "MOUploadTransfer+CoreDataProperties.h"
-#import "UpgradeTableViewController.h"
-#import "ProductDetailViewController.h"
 #import "ProductDetailTableViewCell.h"
 #import "ContactsViewController.h"
 #import "AchievementsViewController.h"

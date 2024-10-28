@@ -119,7 +119,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self updateAppearance];
+    [self setupColors];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -144,12 +144,6 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
-    }
-    
     if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
         [self setupTableViewHeaderAndFooter];
     }
@@ -173,7 +167,7 @@
     return _viewModel;
 }
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.navigationController.toolbarHidden = YES;
     
     [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];

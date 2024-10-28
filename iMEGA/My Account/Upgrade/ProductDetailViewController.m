@@ -95,7 +95,7 @@
     [_selectMembershiptLabel setText:LocalizedString(@"selectMembership", @"")];
     [_save17Label setText:LocalizedString(@"save17", @"")];
     
-    [self updateAppearance];
+    [self setupColors];
     [self.tableView sizeHeaderToFit];
 }
 
@@ -113,19 +113,9 @@
     }
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        
-        [self.tableView reloadData];
-    }
-}
-
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.tableView.separatorColor = [UIColor mnz_separator];
     
     self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = [self whiteTextColor];
