@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -445,48 +446,43 @@ opqr stuv wxyz</string>
                             <tableViewSection headerTitle="" footerTitle="Two-factor authentication is a second layer of security for your account. " id="Gc6-hj-Zsa">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="xVd-Fy-72f" userLabel="Save photos to gallery Table View Cell">
-                                        <rect key="frame" x="0.0" y="39.5" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="39.5" width="375" height="47.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="xVd-Fy-72f" id="X0d-Zv-xxR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="47.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lIM-cp-2SU">
-                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="7Mx-Ny-izo"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="301" y="8.5" width="60" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mtr-bw-zaP">
-                                                    <rect key="frame" x="16" y="11.5" width="202" height="20.5"/>
+                                                    <rect key="frame" x="16" y="13" width="277" height="21.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7xh-1u-QJI">
-                                                    <rect key="frame" x="310" y="6.5" width="49" height="31"/>
+                                                    <rect key="frame" x="304" y="8.5" width="52" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="52" id="Iiz-rq-JDl"/>
+                                                        <constraint firstAttribute="height" constant="31" id="XD6-OC-rHJ"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="twoFactorAuthenticationTouchUpInside:" destination="ugG-Up-HZS" eventType="touchUpInside" id="kDN-mR-Z7S"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7xh-1u-QJI" firstAttribute="height" secondItem="lIM-cp-2SU" secondAttribute="height" id="5sl-4P-h6M"/>
-                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="trailing" secondItem="X0d-Zv-xxR" secondAttribute="trailingMargin" id="Pb5-ae-bV9"/>
-                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mtr-bw-zaP" secondAttribute="trailing" constant="8" id="Xmz-ct-Aps"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="lIM-cp-2SU" secondAttribute="trailing" id="Ze5-HS-eP5"/>
-                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="leading" secondItem="X0d-Zv-xxR" secondAttribute="leadingMargin" id="a99-Xt-4cK"/>
-                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="centerY" secondItem="X0d-Zv-xxR" secondAttribute="centerY" id="lAO-e6-RhF"/>
-                                                <constraint firstItem="7xh-1u-QJI" firstAttribute="centerX" secondItem="lIM-cp-2SU" secondAttribute="centerX" id="oyq-YK-svB"/>
-                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="centerY" secondItem="X0d-Zv-xxR" secondAttribute="centerY" id="rEa-tK-2RL"/>
-                                                <constraint firstItem="7xh-1u-QJI" firstAttribute="centerY" secondItem="lIM-cp-2SU" secondAttribute="centerY" id="xlJ-1f-ZsW"/>
-                                                <constraint firstItem="7xh-1u-QJI" firstAttribute="width" secondItem="lIM-cp-2SU" secondAttribute="width" id="zrD-9n-Gty"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="7xh-1u-QJI" secondAttribute="trailing" constant="3" id="K5N-hX-ErH"/>
+                                                <constraint firstItem="7xh-1u-QJI" firstAttribute="centerY" secondItem="lIM-cp-2SU" secondAttribute="centerY" id="Knj-ED-Zyg"/>
+                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="leading" secondItem="Mtr-bw-zaP" secondAttribute="trailing" constant="8" symbolic="YES" id="NR4-De-Ud1"/>
+                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="centerY" secondItem="X0d-Zv-xxR" secondAttribute="centerY" id="PoY-5F-Mii"/>
+                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="top" secondItem="X0d-Zv-xxR" secondAttribute="topMargin" constant="2" id="Q1n-oO-aXf"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Mtr-bw-zaP" secondAttribute="bottom" constant="2" id="Yed-P5-N07"/>
+                                                <constraint firstItem="7xh-1u-QJI" firstAttribute="centerX" secondItem="lIM-cp-2SU" secondAttribute="centerX" id="ipZ-lp-cK2"/>
+                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="leading" secondItem="X0d-Zv-xxR" secondAttribute="leadingMargin" id="m5Q-71-fLi"/>
+                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="trailing" secondItem="X0d-Zv-xxR" secondAttribute="trailingMargin" id="s1t-1R-Yy9"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Pb5-ae-bV9"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
@@ -505,14 +501,14 @@ opqr stuv wxyz</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="38V-D8-6HP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="166" y="-484"/>
+            <point key="canvasLocation" x="165.59999999999999" y="-484.40779610194909"/>
         </scene>
         <!--Enabled Two-Factor Authentication-->
         <scene sceneID="Q5T-ir-iba">
             <objects>
                 <viewController storyboardIdentifier="EnabledTwoFactorAuthenticationViewControllerID" id="kdQ-Q4-Fte" userLabel="Enabled Two-Factor Authentication" customClass="EnabledTwoFactorAuthenticationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vWA-0n-dO3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GrC-8N-WOI">

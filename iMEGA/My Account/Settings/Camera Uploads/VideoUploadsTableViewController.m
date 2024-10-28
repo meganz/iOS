@@ -219,4 +219,8 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
 @end
