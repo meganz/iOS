@@ -27,13 +27,6 @@ final class SharedItemsTableViewCell: UITableViewCell {
         updateAppearance()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-    
     @IBAction func infoButtonTouchUpInside(_ sender: UIButton) {
         delegate?.didTapInfoButton(sender: sender)
     }
