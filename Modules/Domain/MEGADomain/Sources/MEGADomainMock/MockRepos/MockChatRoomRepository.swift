@@ -108,8 +108,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
         userStatus
     }
     
-    public func createChatRoom(forUserHandle userHandle: MEGADomain.HandleEntity, completion: @escaping (Result<MEGADomain.ChatRoomEntity, MEGADomain.ChatRoomErrorEntity>) -> Void) {
-        completion(createChatRoomResult)
+    public func createChatRoom(forUserHandle userHandle: HandleEntity) async throws -> ChatRoomEntity {
+        try createChatRoomResult.get()
     }
     
     public func createPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String {
@@ -130,12 +130,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol, @unchecke
         }
     }
     
-    public func renameChatRoom(_ chatRoom: MEGADomain.ChatRoomEntity, title: String, completion: @escaping (Result<String, MEGADomain.ChatRoomErrorEntity>) -> Void) {
-        completion(renameChatRoomResult)
-    }
-    
     public func renameChatRoom(_ chatRoom: MEGADomain.ChatRoomEntity, title: String) async throws -> String {
-        title
+        try renameChatRoomResult.get()
     }
     
     public func archive(_ archive: Bool, chatRoom: MEGADomain.ChatRoomEntity) {

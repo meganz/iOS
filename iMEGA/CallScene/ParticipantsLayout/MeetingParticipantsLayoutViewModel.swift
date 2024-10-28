@@ -614,15 +614,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             containerViewModel?.dispatch(.tapOnBackButton)
         case .showRenameChatAlert:
             invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.chatType == .meeting))
-        case .setNewTitle(let newTitle):
-            chatRoomUseCase.renameChatRoom(chatRoom, title: newTitle) { [weak self] result in
-                switch result {
-                case .success(let title):
-                    self?.invokeCommand?(.updateName(title))
-                case .failure:
+        case .setNewTitle(let newTitle):            
+            Task {
+                do {
+                    let newName = try await chatRoomUseCase.renameChatRoom(chatRoom, title: newTitle)
+                    invokeCommand?(.updateName(newName))
+                } catch {
                     MEGALogError("Could not change the chat title")
                 }
-                self?.containerViewModel?.dispatch(.changeMenuVisibility)
+                containerViewModel?.dispatch(.changeMenuVisibility)
             }
         case .discardChangeTitle:
             containerViewModel?.dispatch(.changeMenuVisibility)

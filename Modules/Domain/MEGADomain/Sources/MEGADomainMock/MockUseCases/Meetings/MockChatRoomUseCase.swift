@@ -4,9 +4,9 @@ import MEGASwift
 
 public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable {
     private let publicLinkCompletion: Result<String, ChatLinkErrorEntity>
-    var createChatRoomCompletion: Result<ChatRoomEntity, ChatRoomErrorEntity>?
+    private let createChatRoomResult: Result<ChatRoomEntity, ChatRoomErrorEntity>
     private let chatRoomEntity: ChatRoomEntity?
-    var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
+    private let renameChatRoomResult: Result<String, ChatRoomErrorEntity>
     private let myPeerHandles: [HandleEntity]
     var participantsUpdatedSubject = PassthroughSubject<[HandleEntity], Never>()
     private let participantsUpdatedSubjectWithChatRoom: PassthroughSubject<ChatRoomEntity, Never>
@@ -54,7 +54,9 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
         userStatusEntity: ChatStatusEntity = ChatStatusEntity.invalid,
         monitorChatConnectionStateUpdate: AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
         monitorChatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: ChatIdEntity, status: ChatStatusEntity, inProgress: Bool)> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        monitorPresenceLastGreenUpdates: AnyAsyncSequence<(userHandle: ChatIdEntity, lastGreen: Int)> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        monitorPresenceLastGreenUpdates: AnyAsyncSequence<(userHandle: ChatIdEntity, lastGreen: Int)> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        createChatRoomResult: Result<ChatRoomEntity, ChatRoomErrorEntity> = .failure(.generic),
+        renameChatRoomResult: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     ) {
         self.chatRoomEntity = chatRoomEntity
         self.peerPrivilege = peerPrivilege
@@ -72,6 +74,8 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
         self.monitorChatConnectionStateUpdate = monitorChatConnectionStateUpdate
         self.monitorChatOnlineStatusUpdate = monitorChatOnlineStatusUpdate
         self.monitorPresenceLastGreenUpdates = monitorPresenceLastGreenUpdates
+        self.createChatRoomResult = createChatRoomResult
+        self.renameChatRoomResult = renameChatRoomResult
     }
     
     public func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
@@ -90,32 +94,16 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
         myPeerHandles
     }
     
-    public func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
-        if let completionBlock = createChatRoomCompletion {
-            completion(completionBlock)
-        }
+    public func createChatRoom(forUserHandle userHandle: HandleEntity) async throws -> ChatRoomEntity {
+        try createChatRoomResult.get()
     }
     
     public func fetchPublicLink(forChatRoom chatRoom: MEGADomain.ChatRoomEntity) async throws -> String {
-        switch publicLinkCompletion {
-        case .success(let link):
-            return link
-        case .failure(let error):
-            throw error
-        }
-    }
-    
-    public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
-        completion(renameChatRoomCompletion)
+        try publicLinkCompletion.get()
     }
     
     public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String {
-        switch renameChatRoomCompletion {
-        case .success(let newName):
-            return newName
-        case .failure(let failure):
-            throw failure
-        }
+        try renameChatRoomResult.get()
     }
     
     public func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never> {
@@ -191,12 +179,7 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
     }
     
     public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
-        switch updatedChatPrivilegeResult {
-        case .success(let privilege):
-            return privilege
-        case .failure(let error):
-            throw error
-        }
+        try updatedChatPrivilegeResult.get()
     }
     
     public func invite(toChat chat: ChatRoomEntity, userId: HandleEntity) {

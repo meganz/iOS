@@ -57,13 +57,20 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
         sdk.userOnlineStatus(userHandle).toChatStatusEntity()
     }
     
-    public func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
+    public func createChatRoom(forUserHandle userHandle: HandleEntity) async throws -> ChatRoomEntity {
         if let chatRoom = chatRoom(forUserHandle: userHandle) {
-            completion(.success(chatRoom))
+            return chatRoom
         }
         
-        sdk.createChatRoom(userHandle: userHandle) { megaChatRoom in
-            completion(.success(megaChatRoom.toChatRoomEntity()))
+        return try await withAsyncThrowingValue { completion in
+            sdk.createChatRoom(userHandle: userHandle) { result in
+                switch result {
+                case .success(let chatRoom):
+                    completion(.success(chatRoom.toChatRoomEntity()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
         }
     }
     
@@ -101,32 +108,24 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
         }
     }
     
-    public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
-        sdk.setChatTitle(chatRoom.chatId, title: title, delegate: ChatRequestDelegate { result in
-            switch result {
-            case .success(let request):
-                guard let text = request.text else {
-                    completion(.failure(.emptyTextResponse))
-                    return
-                }
-                
-                completion(.success(text))
-            case .failure:
-                completion(.failure(.generic))
-            }
-        })
-    }
-    
     public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String {
         try await withAsyncThrowingValue { completion in
-            renameChatRoom(chatRoom, title: title) { result in
-                switch result {
-                case .success(let updatedTitle):
-                    completion(.success(updatedTitle))
-                case .failure(let error):
-                    completion(.failure(error))
+            sdk.setChatTitle(
+                chatRoom.chatId,
+                title: title,
+                delegate: ChatRequestDelegate { result in
+                    switch result {
+                    case .success(let request):
+                        guard let updatedTitle = request.text else {
+                            completion(.failure(ChatRoomErrorEntity.emptyTextResponse))
+                            return
+                        }
+                        completion(.success(updatedTitle))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
                 }
-            }
+            )
         }
     }
     
@@ -476,7 +475,7 @@ private class ChatRoomDelegateDTO: NSObject, MEGAChatRoomDelegate {
 }
 
 private extension MEGAChatSdk {
-    func createChatRoom(userHandle: UInt64, completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) {
+    func createChatRoom(userHandle: UInt64, completion: @escaping(Result<MEGAChatRoom, ChatRoomErrorEntity>) -> Void) {
         let peerList = MEGAChatPeerList()
         peerList.addPeer(withHandle: userHandle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
         
@@ -486,10 +485,11 @@ private extension MEGAChatSdk {
                 let self,
                 let chatRoom = self.chatRoom(forChatId: request.chatHandle)
             else {
+                completion(.failure(.generic))
                 return
             }
             
-            completion(chatRoom)
+            completion(.success(chatRoom))
         }
         
         createChatGroup(false, peers: peerList, delegate: delegate)

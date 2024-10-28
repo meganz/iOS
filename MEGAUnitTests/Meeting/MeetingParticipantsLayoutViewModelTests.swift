@@ -1268,6 +1268,24 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await fulfillment(of: [remoteUserLowHandExpectation, snackBarNilExpectation], timeout: 1)
     }
         
+    @MainActor
+    func testRenameChatRoom_shouldUpdateName() async {
+        let expectedNewName = "newChatRoomName"
+        let expectation = expectation(description: "Chat room renamed successfully")
+        let chatRoomUseCase = MockChatRoomUseCase(renameChatRoomResult: .success(expectedNewName))
+        let harness = Harness(chatRoomUseCase: chatRoomUseCase)
+        harness.sut.invokeCommand = { command in
+            switch command {
+            case .updateName(let receivedNewName):
+                expectation.fulfill()
+                XCTAssertEqual(expectedNewName, receivedNewName)
+            default: break
+            }
+        }
+        harness.sut.dispatch(.setNewTitle(expectedNewName))
+        await fulfillment(of: [expectation], timeout: 1)
+    }
+
     @MainActor final class Harness: Sendable {
         let scheduler: AnySchedulerOf<DispatchQueue>
         let callUpdateUseCase: MockCallUpdateUseCase
