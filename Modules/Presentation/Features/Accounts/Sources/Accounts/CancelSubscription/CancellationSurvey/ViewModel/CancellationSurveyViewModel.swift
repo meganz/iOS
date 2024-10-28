@@ -22,18 +22,21 @@ final class CancellationSurveyViewModel: ObservableObject {
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let cancelAccountPlanRouter: any CancelAccountPlanRouting
     private let tracker: any AnalyticsTracking
+    private let logger: ((String) -> Void)?
     var submitSurveyTask: Task<Void, Never>?
     
     init(
         subscription: AccountSubscriptionEntity,
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
         cancelAccountPlanRouter: some CancelAccountPlanRouting,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        logger: ((String) -> Void)? = nil
     ) {
         self.subscription = subscription
         self.subscriptionsUseCase = subscriptionsUseCase
         self.cancelAccountPlanRouter = cancelAccountPlanRouter
         self.tracker = tracker
+        self.logger = logger
     }
     
     deinit {
@@ -90,35 +93,64 @@ final class CancellationSurveyViewModel: ObservableObject {
     
     @MainActor
     func didTapCancelSubscriptionButton() {
-        guard let selectedReason else {
-            showNoReasonSelectedError = true
-            return
-        }
-
-        if selectedReason.isOtherReason {
-            guard !otherReasonText.isEmpty && 
-                    otherReasonText.count >= minimumTextRequired else {
-                showMinLimitOrEmptyOtherFieldError = true
-                return
-            }
-            
-            guard otherReasonText.count <= maximumTextRequired else { return }
-            
+        guard validateSelectedReason() else { return }
+        
+        if selectedReason?.isOtherReason == true {
+            guard validateOtherReasonText() else { return }
             dismissKeyboard = true
         }
         
-        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyCancelSubscriptionButtonEvent())
+        trackCancelSubscriptionEvent()
         
         submitSurveyTask = Task { [weak self] in
             guard let self else { return }
-            
-            cancelAccountPlanRouter.showAppleManageSubscriptions()
-            
-            try? await subscriptionsUseCase.cancelSubscriptions(
+            await handleSubscriptionCancellation()
+        }
+    }
+
+    private func validateSelectedReason() -> Bool {
+        guard selectedReason != nil else {
+            showNoReasonSelectedError = true
+            return false
+        }
+        return true
+    }
+
+    private func validateOtherReasonText() -> Bool {
+        guard !otherReasonText.isEmpty && otherReasonText.count >= minimumTextRequired else {
+            showMinLimitOrEmptyOtherFieldError = true
+            return false
+        }
+        
+        guard otherReasonText.count <= maximumTextRequired else {
+            return false
+        }
+        
+        return true
+    }
+
+    private func trackCancelSubscriptionEvent() {
+        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyCancelSubscriptionButtonEvent())
+    }
+
+    @MainActor
+    private func handleSubscriptionCancellation() async {
+        do {
+            try await subscriptionsUseCase.cancelSubscriptions(
                 reason: formattedReasonString,
                 subscriptionId: subscription.id,
                 canContact: allowToBeContacted
             )
+            
+            switch subscription.paymentMethodId {
+            case .itunes:
+                cancelAccountPlanRouter.showAppleManageSubscriptions()
+            default:
+                cancelAccountPlanRouter.showAlert(.success(Date(timeIntervalSince1970: TimeInterval(subscription.renewTime))))
+            }
+        } catch {
+            logger?("[Cancellation Survey] Error - \(error.localizedDescription)")
+            cancelAccountPlanRouter.showAlert(.failure(error))
         }
     }
 }

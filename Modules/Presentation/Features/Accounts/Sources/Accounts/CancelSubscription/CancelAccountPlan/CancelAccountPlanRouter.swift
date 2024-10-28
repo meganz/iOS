@@ -6,21 +6,35 @@ import StoreKit
 import SwiftUI
 
 public protocol CancelAccountPlanRouting: Routing {
-    func dismissCancellationFlow()
+    func dismissCancellationFlow(completion: (() -> Void)?)
     func showAppleManageSubscriptions()
+    func showAlert(_ result: CancelSubscriptionResult)
+    
+    typealias CancelSubscriptionResult = Result<Date, Error>
+}
+
+extension CancelAccountPlanRouting {
+    func dismissCancellationFlow() {
+        dismissCancellationFlow(completion: nil)
+    }
 }
 
 public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
     private let currentSubscription: AccountSubscriptionEntity
+    private let freeAccountStorageLimit: Int
     private let accountUseCase: any AccountUseCaseProtocol
     private let currentPlan: PlanEntity
     private let assets: CancelAccountPlanAssets
+    private let logger: ((String) -> Void)?
     
     private var appleIDSubscriptionsURL: URL? {
         URL(string: "https://apps.apple.com/account/subscriptions")
     }
+    
+    private let onSuccess: (_ expirationDate: Date, _ storageLimit: Int) -> Void
+    private let onFailure: (Error) -> Void
     
     /// CancelAccountPlanRouter is used to manage redirections of the cancel subscription flow
     /// - Parameters:
@@ -31,16 +45,24 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     ///   - navigationController: The navigation controller that manages presenting and dismissing the views related to the cancel account plan flow.
     public init(
         currentSubscription: AccountSubscriptionEntity,
+        freeAccountStorageLimit: Int,
         accountUseCase: some AccountUseCaseProtocol,
         currentPlan: PlanEntity,
         assets: CancelAccountPlanAssets,
-        navigationController: UINavigationController
+        navigationController: UINavigationController,
+        onSuccess: @escaping (_ expirationDate: Date, _ storageLimit: Int) -> Void,
+        onFailure: @escaping (Error) -> Void,
+        logger: ((String) -> Void)? = nil
     ) {
         self.currentSubscription = currentSubscription
+        self.freeAccountStorageLimit = freeAccountStorageLimit
         self.accountUseCase = accountUseCase
         self.currentPlan = currentPlan
         self.assets = assets
         self.navigationController = navigationController
+        self.onSuccess = onSuccess
+        self.onFailure = onFailure
+        self.logger = logger
     }
     
     public func build() -> UIViewController {
@@ -51,10 +73,12 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         
         let viewModel = CancelAccountPlanViewModel(
             currentSubscription: currentSubscription,
-            featureListHelper: featureListHelper, 
+            featureListHelper: featureListHelper,
+            freeAccountStorageLimit: freeAccountStorageLimit,
             achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
             accountUseCase: accountUseCase,
             tracker: DIContainer.tracker,
+            logger: logger,
             router: self
         )
         
@@ -70,9 +94,11 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         navigationController?.topViewController?.present(viewController, animated: true)
     }
     
-    public func dismissCancellationFlow() {
-        navigationController?.topViewController?.dismiss(animated: true)
-        navigationController?.popViewController(animated: false)
+    public func dismissCancellationFlow(completion: (() -> Void)?) {
+        navigationController?.topViewController?.dismiss(animated: true) { [weak self] in
+            self?.navigationController?.popViewController(animated: false)
+            completion?()
+        }
     }
 
     public func showAppleManageSubscriptions() {
@@ -92,6 +118,18 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
                 dismissCancellationFlow()
             } catch {
                 openAppleIDSubscriptionsPage()
+            }
+        }
+    }
+    
+    public func showAlert(_ result: CancelSubscriptionResult) {
+        dismissCancellationFlow { [weak self] in
+            guard let self else { return }
+            switch result {
+            case .success(let expirationDate):
+                onSuccess(expirationDate, freeAccountStorageLimit)
+            case .failure(let error):
+                onFailure(error)
             }
         }
     }

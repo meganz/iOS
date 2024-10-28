@@ -7,6 +7,7 @@ import MEGASDKRepo
 public final class CancelAccountPlanViewModel: ObservableObject {
     let currentPlanName: String
     let currentPlanStorageUsed: String
+    let freeAccountStorageLimit: Int
     let featureListHelper: FeatureListHelperProtocol
     let router: CancelAccountPlanRouting
     private let achievementUseCase: any AchievementUseCaseProtocol
@@ -16,24 +17,29 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     @Published var showCancellationSteps: Bool = false
     
     private let tracker: any AnalyticsTracking
+    private let logger: ((String) -> Void)?
     
     @Published private(set) var features: [FeatureDetails] = []
     
     init(
         currentSubscription: AccountSubscriptionEntity,
         featureListHelper: FeatureListHelperProtocol,
+        freeAccountStorageLimit: Int,
         achievementUseCase: some AchievementUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
+        logger: ((String) -> Void)? = nil,
         router: CancelAccountPlanRouting
     ) {
         self.currentSubscription = currentSubscription
+        self.freeAccountStorageLimit = freeAccountStorageLimit
         self.currentPlanName = accountUseCase.currentAccountDetails?.proLevel.toAccountTypeDisplayName() ?? ""
         self.currentPlanStorageUsed = String.memoryStyleString(fromByteCount: accountUseCase.currentAccountDetails?.storageUsed ?? 0)
         self.achievementUseCase = achievementUseCase
         self.accountUseCase = accountUseCase
         self.featureListHelper = featureListHelper
         self.tracker = tracker
+        self.logger = logger
         self.router = router
     }
     
@@ -43,16 +49,17 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     
     @MainActor
     func setupFeatureList() async {
-        do {
-            let bytesBaseStorage = try await achievementUseCase.baseStorage()
-            features = featureListHelper.createCurrentFeatures(
-                baseStorage: bytesBaseStorage.bytesToGigabytes()
-            )
-        } catch {
+        guard freeAccountStorageLimit > 0 else {
             dismiss()
+            return
         }
+        
+        features = featureListHelper.createCurrentFeatures(
+            baseStorage: freeAccountStorageLimit
+        )
     }
     
+    @MainActor
     func dismiss() {
         tracker.trackAnalyticsEvent(with: CancelSubscriptionKeepPlanButtonPressedEvent())
         router.dismissCancellationFlow()
@@ -62,12 +69,13 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     func didTapContinueCancellation() {
         tracker.trackAnalyticsEvent(with: CancelSubscriptionContinueCancellationButtonPressedEvent())
         
-        if currentSubscription.paymentMethodId == .itunes {
-            // Show cancellation survey. This is only for Apple subscriptions.
-            showCancellationSurvey = true
-        } else {
-            // Show cancellation step for either google or webclient subscriptions
+        switch currentSubscription.paymentMethodId {
+        case .googleWallet:
+            // Show cancellation step for google subscriptions.
             showCancellationSteps = true
+        default:
+            // Show cancellation survey. For WebClient or Apple subscriptions.
+            showCancellationSurvey = true
         }
     }
     
@@ -75,6 +83,8 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         CancellationSurveyViewModel(
             subscription: currentSubscription,
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
-            cancelAccountPlanRouter: router)
+            cancelAccountPlanRouter: router,
+            logger: logger
+        )
     }
 }

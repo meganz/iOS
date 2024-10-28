@@ -13,6 +13,7 @@ import MEGAPresentation
     case enableKeyRotation
     case upgradeSecurity
     case pendingUnverifiedOutShare
+    case cancelSubscription
 }
 
 @objc class CustomModalAlertRouter: NSObject, Routing {
@@ -24,6 +25,9 @@ import MEGAPresentation
     private var chatId: ChatIdEntity?
     
     private var outShareEmail: String?
+    
+    private var expirationDate: Date?
+    private var storageLimit: Int?
     
     private var transferQuotaDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode?
     
@@ -52,6 +56,18 @@ import MEGAPresentation
         self.transferQuotaDisplayMode = transferQuotaDisplayMode
     }
     
+    init (
+        _ mode: CustomModalAlertMode,
+        presenter: UIViewController,
+        expirationDate: Date,
+        storageLimit: Int
+    ) {
+        self.mode = mode
+        self.presenter = presenter
+        self.expirationDate = expirationDate
+        self.storageLimit = storageLimit
+    }
+    
     func build() -> UIViewController {
         let customModalAlertVC = CustomModalAlertViewController()
         switch mode {
@@ -75,6 +91,10 @@ import MEGAPresentation
         case .pendingUnverifiedOutShare:
             guard let outShareEmail else { return customModalAlertVC }
             customModalAlertVC.configureForPendingUnverifiedOutshare(for: outShareEmail)
+            
+        case .cancelSubscription:
+            guard let expirationDate, let storageLimit else { return customModalAlertVC }
+            customModalAlertVC.configureForCancelSubscriptionConfirmation(expirationDate: expirationDate, storageLimit: storageLimit)
             
         default: break
         }

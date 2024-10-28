@@ -54,6 +54,7 @@ final class ProfileViewModel: ViewModelType {
     // Internal State
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let achievementUseCase: any AchievementUseCaseProtocol
     private let requestedChangeTypeValueSubject = CurrentValueSubject<ChangeType?, Never>(nil)
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
@@ -63,11 +64,13 @@ final class ProfileViewModel: ViewModelType {
     
     init(
         accountUseCase: some AccountUseCaseProtocol,
+        achievementUseCase: some AchievementUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking,
         router: some ProfileViewRouting
     ) {
         self.accountUseCase = accountUseCase
+        self.achievementUseCase = achievementUseCase
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.router = router
@@ -217,9 +220,12 @@ extension ProfileViewModel {
             guard let currentPlan = await accountUseCase.currentAccountPlan(),
                   let currentSubscription = accountUseCase.currentSubscription() else { return }
             
+            let bytesBaseStorage = try? await achievementUseCase.baseStorage()
+            
             router.showCancelAccountPlan(
                 currentSubscription: currentSubscription,
                 currentPlan: currentPlan,
+                freeAccountStorageLimit: bytesBaseStorage?.bytesToGigabytes() ?? 0,
                 assets: CancelAccountPlanAssets(
                     availableImageName: CancelSubscriptionIconAssets.availableIcon,
                     unavailableImageName: CancelSubscriptionIconAssets.unavailableIcon

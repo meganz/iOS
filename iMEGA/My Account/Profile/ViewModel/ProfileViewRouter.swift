@@ -1,11 +1,13 @@
 import Accounts
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 protocol ProfileViewRouting: Routing {
     func showCancelAccountPlan(
         currentSubscription: AccountSubscriptionEntity,
         currentPlan: PlanEntity,
+        freeAccountStorageLimit: Int,
         assets: CancelAccountPlanAssets
     )
     func showCancellationSteps()
@@ -28,6 +30,7 @@ final class ProfileViewRouter: ProfileViewRouting {
     func build() -> UIViewController {
         let viewModel = ProfileViewModel(
             accountUseCase: accountUseCase,
+            achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
             tracker: DIContainer.tracker,
             router: self
         )
@@ -54,16 +57,29 @@ final class ProfileViewRouter: ProfileViewRouting {
     func showCancelAccountPlan(
         currentSubscription: AccountSubscriptionEntity,
         currentPlan: PlanEntity,
+        freeAccountStorageLimit: Int,
         assets: CancelAccountPlanAssets
     ) {
         guard let nav = navigationController else { return }
         
         CancelAccountPlanRouter(
             currentSubscription: currentSubscription,
+            freeAccountStorageLimit: freeAccountStorageLimit,
             accountUseCase: accountUseCase,
             currentPlan: currentPlan,
             assets: assets,
-            navigationController: nav
+            navigationController: nav,
+            onSuccess: { expirationDate, storageLimit in
+                CustomModalAlertRouter(
+                    .cancelSubscription,
+                    presenter: UIApplication.mnz_presentingViewController(),
+                    expirationDate: expirationDate,
+                    storageLimit: storageLimit
+                ).start()
+            }, onFailure: { error in
+                MEGALogError("[Cancel Subscription] Error: \(error.localizedDescription)")
+            },
+            logger: { MEGALogError($0) }
         ).start()
     }
     
