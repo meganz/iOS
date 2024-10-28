@@ -57,10 +57,10 @@ class VerifyEmailViewController: UIViewController {
         view.backgroundColor = TokenColors.Background.page
         resendButton.mnz_setupBasic(traitCollection)
 
-        topSeparatorView.backgroundColor = UIColor.mnz_separator()
+        topSeparatorView.backgroundColor = TokenColors.Border.strong
         hintButton.setTitleColor(TokenColors.Support.success, for: .normal)
         hintButton.backgroundColor = .mnz_tertiaryBackgroundElevated(traitCollection)
-        bottomSeparatorView.backgroundColor = UIColor.mnz_separator()
+        bottomSeparatorView.backgroundColor = TokenColors.Border.strong
         
         hintLabel.textColor = TokenColors.Text.secondary
     }

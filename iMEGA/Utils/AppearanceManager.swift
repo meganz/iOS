@@ -49,7 +49,7 @@ class AppearanceManager: NSObject {
         UIProgressView.appearance().tintColor = TokenColors.Support.success
         
         UITableView.appearance().backgroundColor = TokenColors.Background.page
-        UITableView.appearance().separatorColor = UIColor.mnz_separator()
+        UITableView.appearance().separatorColor = TokenColors.Border.strong
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         UITableViewCell.appearance().tintColor = TokenColors.Support.success
         
@@ -228,7 +228,7 @@ class AppearanceManager: NSObject {
         toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: false)]
         
         toolbarAppearance.shadowImage = nil
-        toolbarAppearance.shadowColor = UIColor.mnz_toolbarShadow(for: traitCollection)
+        toolbarAppearance.shadowColor = TokenColors.Border.strong
         
         return toolbarAppearance
     }

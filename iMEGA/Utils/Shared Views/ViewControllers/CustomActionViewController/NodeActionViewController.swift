@@ -318,7 +318,7 @@ class NodeActionViewController: ActionSheetViewController {
             titleLabel.textColor = TokenColors.Text.primary
         }
         subtitleLabel.textColor = TokenColors.Text.secondary
-        separatorLineView.backgroundColor = UIColor.mnz_separator()
+        separatorLineView.backgroundColor = TokenColors.Border.strong
     }
     
     // MARK: - UITableViewDelegate

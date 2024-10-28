@@ -97,7 +97,7 @@
     self.statusPersistenceSwitch.tintColor = [self switchTintColor];
     self.lastActiveSwitch.tintColor = [self switchTintColor];
     
-    self.tableView.separatorColor = [UIColor mnz_separator];
+    self.tableView.separatorColor = [UIColor borderStrong];
 }
 
 - (void)internetConnectionChanged {

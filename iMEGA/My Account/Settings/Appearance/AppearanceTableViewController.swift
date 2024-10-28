@@ -115,7 +115,7 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     private func setupColors() {
-        tableView.separatorColor = UIColor.mnz_separator()
+        tableView.separatorColor = TokenColors.Border.strong
         tableView.backgroundColor = TokenColors.Background.page
         
         [defaultTabLabel, sortingAndViewModeLabel, sortingAndViewModeLabel, mediaDiscoveryViewLabel, mediaDiscoverySubfolderLabel, hideRecentActivityLabel, hiddenItemsViewLabel]

@@ -189,7 +189,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     private func updateAppearance() {
         tableView.backgroundColor = TokenColors.Background.page
-        tableView.separatorColor = .mnz_separator()
+        tableView.separatorColor = TokenColors.Border.strong
     }
     
     // MARK: - Table view data source

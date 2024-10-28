@@ -88,7 +88,7 @@
 - (void)setupColors {
     self.requirePasscodeDetailLabel.textColor = UIColor.secondaryLabelColor;
     
-    self.tableView.separatorColor = [UIColor mnz_separator];
+    self.tableView.separatorColor = [UIColor borderStrong];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
 
     self.turnOnOffPasscodeLabel.textColor = UIColor.primaryTextColor;

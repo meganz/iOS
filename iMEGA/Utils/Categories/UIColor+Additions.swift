@@ -229,7 +229,7 @@ extension UIColor {
         TokenColors.Button.secondary
     }
     
-    @objc class func mnz_separator() -> UIColor {
+    @objc class func borderStrong() -> UIColor {
         TokenColors.Border.strong
     }
     
@@ -385,12 +385,6 @@ extension UIColor {
         isEnabled ? TokenColors.Text.primary: TokenColors.Text.disabled
     }
     
-    class func mnz_toolbarShadow(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Border.strong
-    }
-    
     // MARK: - Voice recording view
     
     class func mnz_voiceRecordingViewBackground(
@@ -409,14 +403,6 @@ extension UIColor {
     }
     
     // MARK: Gray
-    
-    class func mnz_gray3C3C43() -> UIColor {
-        TokenColors.Border.strong
-    }
-    
-    @objc class func mnz_gray545458() -> UIColor {
-        TokenColors.Border.strong
-    }
     
     class func mnz_gray545457() -> UIColor {
         UIColor.gray545457

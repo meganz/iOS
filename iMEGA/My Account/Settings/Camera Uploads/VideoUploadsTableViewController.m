@@ -102,7 +102,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     
     [self configLabelsTextColor];
     
-    self.tableView.separatorColor = [UIColor mnz_separator];
+    self.tableView.separatorColor = [UIColor borderStrong];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
 }
 

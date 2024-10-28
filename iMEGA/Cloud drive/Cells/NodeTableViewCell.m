@@ -142,7 +142,7 @@
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
-    self.separatorView.backgroundColor = [UIColor mnz_separator];
+    self.separatorView.backgroundColor = [UIColor borderStrong];
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
