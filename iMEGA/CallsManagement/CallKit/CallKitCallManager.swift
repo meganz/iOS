@@ -71,7 +71,10 @@ extension CallKitCallManager: CallManagerProtocol {
     }
     
     func endCall(in chatRoom: ChatRoomEntity, endForAll: Bool) {
-        guard let callUUID = callUUID(forChatRoom: chatRoom) else { return }
+        guard let callUUID = callUUID(forChatRoom: chatRoom) else {
+            MEGALogError("no callUUID for chatRoom \(chatRoom.chatId), expected a value")
+            return
+        }
         
         if endForAll {
             var endCallSync = callsDictionary[callUUID]
