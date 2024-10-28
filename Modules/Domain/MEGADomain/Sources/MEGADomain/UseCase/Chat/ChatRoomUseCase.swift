@@ -7,9 +7,8 @@ public protocol ChatRoomUseCaseProtocol: Sendable {
     func peerHandles(forChatRoom chatRoom: ChatRoomEntity) -> [HandleEntity]
     func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity
     func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity
-    func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
+    func createChatRoom(forUserHandle userHandle: HandleEntity) async throws -> ChatRoomEntity
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String
-    func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
     func waitingRoom(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
@@ -55,8 +54,8 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         chatRoomRepo.chatRoom(forUserHandle: userHandle)
     }
     
-    public func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
-        chatRoomRepo.createChatRoom(forUserHandle: userHandle, completion: completion)
+    public func createChatRoom(forUserHandle userHandle: HandleEntity) async throws -> ChatRoomEntity {
+        try await chatRoomRepo.createChatRoom(forUserHandle: userHandle)
     }
     
     public func peerHandles(forChatRoom chatRoom: ChatRoomEntity) -> [HandleEntity] {
@@ -88,10 +87,6 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         } else {
             return try await chatRoomRepo.queryChatLink(forChatRoom: chatRoom)
         }
-    }
-
-    public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
-        chatRoomRepo.renameChatRoom(chatRoom, title: title, completion: completion)
     }
     
     public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String {

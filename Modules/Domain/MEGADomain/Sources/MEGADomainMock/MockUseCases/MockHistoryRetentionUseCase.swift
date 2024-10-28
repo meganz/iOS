@@ -5,20 +5,10 @@ public struct MockHistoryRetentionUseCase: HistoryRetentionUseCaseProtocol {
     var setChatRetentionTime: (Result<UInt, ManageChatHistoryErrorEntity>) = .failure(.generic)
     
     public func chatRetentionTime(for chatId: ChatIdEntity) async throws -> UInt {
-        switch chatRetentionTime {
-        case .success(let successValue):
-            successValue
-        case .failure(let error):
-            throw error
-        }
+        try chatRetentionTime.get()
     }
     
     public func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt) async throws -> UInt {
-        switch setChatRetentionTime {
-        case .success(let successValue):
-            successValue
-        case .failure(let error):
-            throw error
-        }
+        try setChatRetentionTime.get()
     }
 }

@@ -7,10 +7,9 @@ public protocol ChatRoomRepositoryProtocol: RepositoryProtocol, Sendable {
     func peerHandles(forChatRoom chatRoom: ChatRoomEntity) -> [HandleEntity]
     func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity
     func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity
-    func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
+    func createChatRoom(forUserHandle userHandle: HandleEntity) async throws -> ChatRoomEntity
     func createPublicLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String
     func queryChatLink(forChatRoom chatRoom: ChatRoomEntity) async throws -> String
-    func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity)
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool

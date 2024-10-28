@@ -145,10 +145,9 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
         if let chatRoom = chatRoomUseCase.chatRoom(forUserHandle: participant.participantId) {
             router.openChatRoom(chatRoom)
         } else {
-            chatRoomUseCase.createChatRoom(forUserHandle: participant.participantId) { result in
-                if case .success(let chatRoom) = result {
-                    self.router.openChatRoom(chatRoom)
-                }
+            Task { @MainActor in
+                let newChatRoom = try await chatRoomUseCase.createChatRoom(forUserHandle: participant.participantId)
+                router.openChatRoom(newChatRoom)
             }
         }
     }
