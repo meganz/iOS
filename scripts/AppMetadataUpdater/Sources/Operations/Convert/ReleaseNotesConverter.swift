@@ -30,7 +30,7 @@ struct ReleaseNotesConverter: Converting {
                 OneOrMore(.any, .reluctant)
             }
             " "
-            version.contains(".") ? version : "\(version).0"
+            formattedVersion(version)
             "\"=\""
             Capture {
                 OneOrMore(.any, .reluctant)
@@ -51,5 +51,13 @@ struct ReleaseNotesConverter: Converting {
         }
 
         return changeLogs.firstMatch(of: regex)?.output.1.replacingOccurrences(of: "[Br]", with: "\n")
+    }
+
+    private func formattedVersion(_ version: String) -> String {
+        if let match = version.firstMatch(of: /^([^\.]*\.[^\.]*)/) {
+            return String(match.1)
+        } else {
+            return version + ".0"
+        }
     }
 }
