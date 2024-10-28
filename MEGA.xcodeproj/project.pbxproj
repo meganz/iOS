@@ -1384,6 +1384,7 @@
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
 		9459CA892C6510B900458B67 /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459CA882C6510B900458B67 /* MemoryUsage.swift */; };
 		945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945A90C72C3D611500E10BBF /* MockMeetingContainerRouter.swift */; };
+		945DEF732CC90DA300E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945DEF722CC90D9200E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift */; };
 		9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */; };
 		94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */; };
 		94614C7329104F6900503174 /* TransferTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C7229104F6900503174 /* TransferTableViewCell.xib */; };
@@ -4223,6 +4224,7 @@
 		94598D741F0CD53A00B57144 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Share.storyboard; path = iMEGA/Extensions/MEGAShare/Share.storyboard; sourceTree = SOURCE_ROOT; };
 		9459CA882C6510B900458B67 /* MemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUsage.swift; sourceTree = "<group>"; };
 		945A90C72C3D611500E10BBF /* MockMeetingContainerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingContainerRouter.swift; sourceTree = "<group>"; };
+		945DEF722CC90D9200E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+CancelSubscription.swift"; sourceTree = "<group>"; };
 		9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+EmptyState.swift"; sourceTree = "<group>"; };
 		94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+Backup.swift"; sourceTree = "<group>"; };
 		94614C7229104F6900503174 /* TransferTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferTableViewCell.xib; sourceTree = "<group>"; };
@@ -6070,6 +6072,7 @@
 			isa = PBXGroup;
 			children = (
 				124667EB275DB81F00C94335 /* CustomModalAlertViewController+Business.swift */,
+				945DEF722CC90D9200E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift */,
 				124667F1275DB81F00C94335 /* CustomModalAlertViewController+Config.swift */,
 				124667F0275DB81F00C94335 /* CustomModalAlertViewController+Contacts.swift */,
 				124667EC275DB81F00C94335 /* CustomModalAlertViewController+CookieDialog.swift */,
@@ -15085,6 +15088,7 @@
 				2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */,
 				B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */,
 				124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */,
+				945DEF732CC90DA300E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift in Sources */,
 				124667FF275DB82000C94335 /* CustomModalAlertViewController+Config.swift in Sources */,
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,
 				124667FA275DB82000C94335 /* CustomModalAlertViewController+CookieDialog.swift in Sources */,

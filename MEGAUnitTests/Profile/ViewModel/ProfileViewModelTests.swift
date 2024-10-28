@@ -342,6 +342,7 @@ final class ProfileViewModelTests: XCTestCase {
         return (
             ProfileViewModel(
                 accountUseCase: accountUseCase,
+                achievementUseCase: MockAchievementUseCase(),
                 tracker: tracker,
                 router: router
             ),

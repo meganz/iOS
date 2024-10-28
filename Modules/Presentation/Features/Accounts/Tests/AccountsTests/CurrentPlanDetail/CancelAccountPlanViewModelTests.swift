@@ -19,26 +19,24 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
             proText: "100GB"
         )
     ]
-
-    func testDismiss_shouldTrackAnalyticsEvent() {
+    
+    @MainActor func testDismiss_shouldTrackAnalyticsEvent() {
         performAnalyticsTest(action: { sut in
             sut.dismiss()
         }, expectedEvent: CancelSubscriptionKeepPlanButtonPressedEvent())
     }
     
-    func testDismiss_shouldDismissCancellationFlow() {
+    @MainActor func testDismiss_shouldDismissCancellationFlow() {
         let (sut, router) = makeSUT()
         
         sut.dismiss()
-
+        
         XCTAssertEqual(router.dismissCancellationFlow_calledTimes, 1, "Expected dismissCancellationFlow to be called on router")
     }
     
-    func testDidTapContinueCancellation_subscriptionPaymentMethodIsNotItunes_shouldShowCancellationSteps() async {
-        let paymentMethods = PaymentMethodEntity.allCases.filter { $0 != .itunes }
-        let randomPaymentMethod = paymentMethods.randomElement() ?? .stripe
-        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: randomPaymentMethod))
-  
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsGoogleWallet_shouldShowCancellationSteps() async {
+        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: .googleWallet))
+        
         await assertDidTapContinueCancellation(
             sut: sut,
             publisher: sut.$showCancellationSteps,
@@ -46,16 +44,19 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         )
         XCTAssertFalse(sut.showCancellationSurvey)
     }
-    
+
     func testDidTapContinueCancellation_subscriptionPaymentMethodIsItunes_shouldShowCancellationSurvey() async {
-        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: .itunes))
-        
-        await assertDidTapContinueCancellation(
-            sut: sut,
-            publisher: sut.$showCancellationSurvey,
+        await assertContinueCancellation(
+            for: .itunes,
             expectedVisibility: true
         )
-        XCTAssertFalse(sut.showCancellationSteps)
+    }
+
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsAnyWebClientMethod_shouldShowCancellationSurvey() async {
+        await assertContinueCancellation(
+            for: randomWebClientPaymentMethod(),
+            expectedVisibility: true
+        )
     }
     
     private func assertDidTapContinueCancellation(
@@ -76,6 +77,26 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         
         await sut.didTapContinueCancellation()
         await fulfillment(of: [exp], timeout: 0.5)
+    }
+    
+    func testSetupFeatureList_freeAccountStorageLimitAboveZero_shouldSetFeatures() async {
+        let (sut, _) = makeSUT(
+            freeAccountStorageLimit: 20,
+            features: features
+        )
+        
+        await sut.setupFeatureList()
+        
+        XCTAssertEqual(sut.features.count, features.count, "Expected features count to be \(features.count)")
+        XCTAssertEqual(sut.features.first?.title, features.first?.title, "Expected first feature title to match")
+    }
+
+    @MainActor func testSetupFeatureList_freeAccountStorageLimitZero_shouldDismiss() async {
+        let (sut, router) = makeSUT(freeAccountStorageLimit: 0)
+        
+        await sut.setupFeatureList()
+        
+        XCTAssertEqual(router.dismissCancellationFlow_calledTimes, 1, "Expected dismissCancellationFlow to be called when storage limit is zero")
     }
     
     func testDidTapContinueCancellation_shouldTrackAnalyticsEvent() async {
@@ -100,6 +121,7 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             proLevel: proLevel,
             storageUsed: storageUsed,
+            freeAccountStorageLimit: 20,
             features: features
         )
         
@@ -141,6 +163,7 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         currentSubscription: AccountSubscriptionEntity = AccountSubscriptionEntity(id: "123"),
         proLevel: AccountTypeEntity = .free,
         storageUsed: Int64 = 0,
+        freeAccountStorageLimit: Int = 0,
         features: [FeatureDetails] = [],
         tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #file,
@@ -157,6 +180,7 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         let viewModel = CancelAccountPlanViewModel(
             currentSubscription: currentSubscription,
             featureListHelper: MockFeatureListHelper(features: features),
+            freeAccountStorageLimit: freeAccountStorageLimit,
             achievementUseCase: MockAchievementUseCase(),
             accountUseCase: MockAccountUseCase(currentAccountDetails: accountDetails),
             tracker: tracker,
@@ -180,5 +204,23 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
             trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
             with: [expectedEvent]
         )
+    }
+    
+    private func randomWebClientPaymentMethod() -> PaymentMethodEntity {
+        PaymentMethodEntity
+            .allCases
+            .filter { $0 != .itunes && $0 != .googleWallet }
+            .randomElement() ?? .stripe
+    }
+    
+    private func assertContinueCancellation(for paymentMethod: PaymentMethodEntity, expectedVisibility: Bool, file: StaticString = #file, line: UInt = #line) async {
+        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: paymentMethod))
+        
+        await assertDidTapContinueCancellation(
+            sut: sut,
+            publisher: sut.$showCancellationSurvey,
+            expectedVisibility: expectedVisibility
+        )
+        XCTAssertFalse(sut.showCancellationSteps, file: file, line: line)
     }
 }

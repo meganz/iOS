@@ -91,6 +91,56 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissCancellationFlow_calledTimes, 1)
     }
     
+    func testTracker_viewOnAppear_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        
+        sut.trackViewOnAppear()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyScreenEvent()]
+        )
+    }
+    
+    @MainActor func testTracker_didTapCancelButton_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        
+        sut.didTapCancelButton()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyCancelViewButtonEvent()]
+        )
+    }
+    
+    @MainActor func testTracker_didTapDontCancelButton_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        
+        sut.didTapDontCancelButton()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyDontCancelButtonEvent()]
+        )
+    }
+    
+    @MainActor func testTracker_didTapCancelSubscriptionButton_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker)
+        sut.selectedReason = randomReason
+        sut.otherReasonText = "This is a test reason"
+        
+        sut.didTapCancelSubscriptionButton()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyCancelSubscriptionButtonEvent()]
+        )
+    }
+    
     @MainActor func testDidTapCancelSubscriptionButton_noSelectedReason_shouldSetShowNoReasonSelectedErrorToTrue() {
         let sut = makeSUT()
         sut.selectedReason = nil
@@ -136,93 +186,77 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         sut.didTapCancelSubscriptionButton()
         XCTAssertTrue(sut.dismissKeyboard, "The reason is within the 120-character limit. Should dismiss the keyboard and proceed with the submission.")
     }
-
-    @MainActor func testDidTapCancelSubscriptionButton_reasonSelected_cancellationRequesSuccess_shouldShowManageSubscription() async {
-        await assertDidTapCancelSubscriptionButtonWithValidForm(requestResult: .success)
+    
+    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestSuccessForItunesPaymentMethod_shouldShowManageSubscriptions() async {
+        await assertDidTapCancelSubscriptionButtonWithValidForm(
+            paymentMethod: .itunes,
+            requestResult: .success,
+            shouldShowManageSubscriptions: true
+        )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_reasonSelected_cancellationRequesFailed_shouldStillShowManageSubscription() async {
-        await assertDidTapCancelSubscriptionButtonWithValidForm(requestResult: .failure(.generic))
+    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestSuccessForRandomWebclientPaymentMethod_shouldShowSuccessAlert() async {
+        await assertDidTapCancelSubscriptionButtonWithValidForm(
+            paymentMethod: randomWebclientPaymentMethod(),
+            requestResult: .success,
+            shouldShowManageSubscriptions: false
+        )
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestFailure_shouldShowFailureAlert() async {
+        await assertDidTapCancelSubscriptionButtonWithValidForm(
+            paymentMethod: randomWebclientPaymentMethod(),
+            requestResult: .failure(.generic),
+            shouldShowManageSubscriptions: false,
+            shouldShowFailure: true
+        )
     }
     
     @MainActor private func assertDidTapCancelSubscriptionButtonWithValidForm(
+        paymentMethod: PaymentMethodEntity,
         requestResult: Result<Void, AccountErrorEntity>,
+        shouldShowManageSubscriptions: Bool,
+        shouldShowFailure: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
         let mockRouter = MockCancelAccountPlanRouter()
-        let sut = makeSUT(requestResult: requestResult, mockRouter: mockRouter)
+        let sut = makeSUT(
+            requestResult: requestResult,
+            paymentMethod: paymentMethod,
+            mockRouter: mockRouter
+        )
         sut.selectedReason = randomReason
-        sut.otherReasonText = "This is a test reason"
+        sut.otherReasonText = "Test reason"
         
         sut.didTapCancelSubscriptionButton()
-        
         await sut.submitSurveyTask?.value
-        XCTAssertEqual(mockRouter.showAppleManageSubscriptions_calledTimes, 1, file: file, line: line)
+        
+        if shouldShowManageSubscriptions {
+            XCTAssertEqual(mockRouter.showAppleManageSubscriptions_calledTimes, 1, file: file, line: line)
+        } else {
+            if shouldShowFailure {
+                XCTAssertEqual(mockRouter.showFailureAlert_calledTimes, 1, file: file, line: line)
+            } else {
+                XCTAssertEqual(mockRouter.showSuccessAlert_calledTimes, 1, file: file, line: line)
+            }
+        }
     }
     
-    func testTracker_viewOnAppear_shouldTrackEvent() {
-        let mockTracker = MockTracker()
-        let sut = makeSUT(mockTracker: mockTracker)
-        
-        sut.trackViewOnAppear()
-
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
-            with: [SubscriptionCancellationSurveyScreenEvent()]
-        )
-    }
-    
-    @MainActor func testTracker_didTapCancelButton_shouldTrackEvent() {
-        let mockTracker = MockTracker()
-        let sut = makeSUT(mockTracker: mockTracker)
-        
-        sut.didTapCancelButton()
-
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
-            with: [SubscriptionCancellationSurveyCancelViewButtonEvent()]
-        )
-    }
-    
-    @MainActor func testTracker_didTapDontCancelButton_shouldTrackEvent() {
-        let mockTracker = MockTracker()
-        let sut = makeSUT(mockTracker: mockTracker)
-        
-        sut.didTapDontCancelButton()
-
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
-            with: [SubscriptionCancellationSurveyDontCancelButtonEvent()]
-        )
-    }
-    
-    @MainActor func testTracker_didTapCancelSubscriptionButton_shouldTrackEvent() {
-        let mockTracker = MockTracker()
-        let sut = makeSUT(mockTracker: mockTracker)
-        sut.selectedReason = randomReason
-        sut.otherReasonText = "This is a test reason"
-        
-        sut.didTapCancelSubscriptionButton()
-
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
-            with: [SubscriptionCancellationSurveyCancelSubscriptionButtonEvent()]
-        )
-    }
-
     // MARK: - Helper
     private func makeSUT(
         currentSubscription: AccountSubscriptionEntity = AccountSubscriptionEntity(),
         requestResult: Result<Void, AccountErrorEntity> = .failure(.generic),
+        paymentMethod: PaymentMethodEntity = .none,
         mockRouter: MockCancelAccountPlanRouter = MockCancelAccountPlanRouter(),
         mockTracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CancellationSurveyViewModel {
+        let subscription = AccountSubscriptionEntity(paymentMethodId: paymentMethod)
         let subscriptionsUseCase = MockSubscriptionsUseCase(requestResult: requestResult)
         let sut = CancellationSurveyViewModel(
-            subscription: currentSubscription,
+            subscription: subscription,
             subscriptionsUseCase: subscriptionsUseCase,
             cancelAccountPlanRouter: mockRouter,
             tracker: mockTracker
@@ -234,5 +268,11 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     
     private var randomReason: CancellationSurveyReason {
         CancellationSurveyReason.allCases.randomElement() ?? .one
+    }
+    
+    private func randomWebclientPaymentMethod() -> PaymentMethodEntity {
+        PaymentMethodEntity.allCases
+            .filter { $0 != .itunes && $0 != .googleWallet }
+            .randomElement() ?? .stripe
     }
 }
