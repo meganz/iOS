@@ -164,19 +164,6 @@
     } completion:nil];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor pageBackgroundColor]
-                                traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
-    }
-}
-
 - (SharedItemsViewModel *)viewModel {
     if (_viewModel == nil) {
         _viewModel = [self createSharedItemsViewModel];
