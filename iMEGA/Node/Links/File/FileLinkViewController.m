@@ -67,7 +67,7 @@
     
     self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
-    [self updateAppearance];
+    [self setupColors];
     [self configureContextMenuManager];
 }
 
@@ -85,17 +85,6 @@
     } completion:nil];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        
-        [self updateAppearance];
-    }
-}
-
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
     [super dismissViewControllerAnimated:flag completion:^{
         MEGALinkManager.secondaryLinkURL = nil;
@@ -108,7 +97,7 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     self.mainView.backgroundColor = [UIColor pageBackgroundColor];
