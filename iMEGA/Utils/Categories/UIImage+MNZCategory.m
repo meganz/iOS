@@ -1,5 +1,5 @@
 #import "UIImage+MNZCategory.h"
-
+#import <mach/mach.h>
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
@@ -127,18 +127,34 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
         image = [UIImage imageWithContentsOfFile:avatarFilePath];
     } else {
-        NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
-        NSString *secondaryColorString = [MEGASdk avatarSecondaryColorForBase64UserHandle:base64Handle];
-        MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
-        NSString *initialForAvatar = nil;
-        if (user != nil) {
-            initialForAvatar = user.displayName.mnz_initialForAvatar;
-        } else {
-            initialForAvatar = name.mnz_initialForAvatar;
-        }
+#ifdef MNZ_SHARE_EXTENSION
+        task_vm_info_data_t vmInfo;
+        mach_msg_type_number_t count = TASK_VM_INFO_COUNT;
+        task_info(mach_task_self(),
+                  TASK_VM_INFO,
+                  (task_info_t)&vmInfo,
+                  &count);
         
-        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
-        [UIImageJPEGRepresentation(image, 1) writeToFile:avatarFilePath atomically:YES];
+        // Do not generate avatar image with initials if remaining memory is less than 40MB in Share extension.
+        if (vmInfo.limit_bytes_remaining > 40 * 1024 * 1024) {
+#endif
+            NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
+            NSString *secondaryColorString = [MEGASdk avatarSecondaryColorForBase64UserHandle:base64Handle];
+            MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
+            NSString *initialForAvatar = nil;
+            if (user != nil) {
+                initialForAvatar = user.displayName.mnz_initialForAvatar;
+            } else {
+                initialForAvatar = name.mnz_initialForAvatar;
+            }
+            
+            image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
+            [UIImageJPEGRepresentation(image, 1) writeToFile:avatarFilePath atomically:YES];
+#ifdef MNZ_SHARE_EXTENSION
+        } else {
+            image = [UIImage imageNamed:@"contactGroups"];
+        }
+#endif
         
         [MEGASdk.shared getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
     }
