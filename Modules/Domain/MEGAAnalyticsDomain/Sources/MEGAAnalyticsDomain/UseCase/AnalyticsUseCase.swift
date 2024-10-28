@@ -1,4 +1,4 @@
-public protocol AnalyticsUseCaseProtocol {
+public protocol AnalyticsUseCaseProtocol: Sendable {
     func sendEvent(_ eventEntity: EventEntity)
 }
 

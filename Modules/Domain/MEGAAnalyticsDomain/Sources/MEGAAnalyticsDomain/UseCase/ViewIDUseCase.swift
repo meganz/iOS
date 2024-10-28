@@ -1,4 +1,4 @@
-public protocol ViewIDUseCaseProtocol {
+public protocol ViewIDUseCaseProtocol: Sendable {
     func generateViewId() throws -> ViewID
 }
 

@@ -8,6 +8,7 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     let selection: VideoSelection
     let router: any VideoRevampRouting
     let viewType: ViewType
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     enum ViewType {
         case allVideos
@@ -23,7 +24,8 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
         viewType: ViewType,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.viewModel = AllVideosCollectionViewModel(
             videos: videos,
@@ -35,6 +37,7 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
         self.selection = selection
         self.router = router
         self.viewType = viewType
+        self.featureFlagProvider = featureFlagProvider
     }
     
     func makeUIView(context: Context) -> UICollectionView {
@@ -53,6 +56,6 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     }
     
     func makeCoordinator() -> AllVideosCollectionViewCoordinator {
-        AllVideosCollectionViewCoordinator(self)
+        AllVideosCollectionViewCoordinator(self, featureFlagProvider: featureFlagProvider)
     }
 }

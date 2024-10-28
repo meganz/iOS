@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 public protocol URLOpening {
     func canOpenURL(_ url: URL) -> Bool
     func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any], completionHandler completion: (@MainActor @Sendable (Bool) -> Void)?)
@@ -13,6 +14,7 @@ protocol DeepLinkRoutable {
     func navigate()
 }
 
+@MainActor
 public struct AppOpener {
     private let opener: any URLOpening
     private let app: MEGAApp

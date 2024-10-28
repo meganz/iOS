@@ -106,7 +106,8 @@ struct VideoListView: View {
             viewType: .allVideos,
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
-            nodeUseCase: viewModel.nodeUseCase
+            nodeUseCase: viewModel.nodeUseCase,
+            featureFlagProvider: viewModel.featureFlagProvider
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
     }
@@ -165,7 +166,8 @@ struct VideoListView: View {
             fileSearchUseCase: Preview_FilesSearchUseCase(),
             thumbnailLoader: Preview_ThumbnailLoader(),
             sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
-            nodeUseCase: Preview_NodeUseCase()
+            nodeUseCase: Preview_NodeUseCase(),
+            featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false)
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()

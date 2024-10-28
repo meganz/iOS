@@ -28,6 +28,7 @@ final class VideoCellViewModel: ObservableObject {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var nodeEntity: NodeEntity
     private let onTapMoreOptions: (_ node: NodeEntity) -> Void
     private let onTapped: (_ node: NodeEntity) -> Void
@@ -38,6 +39,10 @@ final class VideoCellViewModel: ObservableObject {
     @Published var mode: VideoCellViewModel.Mode
     private(set) var viewContext: VideoCellViewModel.ViewContext
     
+    var reorderVideosInVideoPlaylistContentEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent)
+    }
+    
     init(
         mode: VideoCellViewModel.Mode,
         viewContext: VideoCellViewModel.ViewContext,
@@ -46,6 +51,7 @@ final class VideoCellViewModel: ObservableObject {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void,
         onTapped: @escaping (_ node: NodeEntity) -> Void
     ) {
@@ -56,6 +62,7 @@ final class VideoCellViewModel: ObservableObject {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.onTapMoreOptions = onTapMoreOptions
         self.onTapped = onTapped
         

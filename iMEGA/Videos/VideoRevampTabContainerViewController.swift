@@ -149,7 +149,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             videoConfig: videoConfig,
-            router: router
+            router: router,
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
         add(contentView, container: view, animate: false)
         

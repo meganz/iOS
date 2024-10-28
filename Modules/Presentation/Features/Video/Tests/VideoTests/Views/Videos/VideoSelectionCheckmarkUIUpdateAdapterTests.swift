@@ -22,6 +22,7 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             onTapMoreOptions: { _ in },
             onTapped: { _ in }
         )
@@ -58,6 +59,7 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             onTapMoreOptions: { _ in },
             onTapped: { _ in }
         )

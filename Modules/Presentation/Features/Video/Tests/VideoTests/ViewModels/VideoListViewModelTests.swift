@@ -331,7 +331,8 @@ final class VideoListViewModelTests: XCTestCase {
             fileSearchUseCase: MockFilesSearchUseCase(),
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-            nodeUseCase: MockNodeUseCase()
+            nodeUseCase: MockNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
         
         trackTaskCancellation { await sut.onViewAppear() }
@@ -366,7 +367,8 @@ final class VideoListViewModelTests: XCTestCase {
             fileSearchUseCase: MockFilesSearchUseCase(),
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-            nodeUseCase: MockNodeUseCase()
+            nodeUseCase: MockNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
         trackTaskCancellation { await sut.onViewAppear() }
         
@@ -989,7 +991,8 @@ final class VideoListViewModelTests: XCTestCase {
             fileSearchUseCase: fileSearchUseCase,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-            nodeUseCase: MockNodeUseCase()
+            nodeUseCase: MockNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
         return (sut, fileSearchUseCase, photoLibraryUseCase, syncModel)
