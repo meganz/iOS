@@ -132,7 +132,30 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             
             let chatInitials = initials(for: message)
-            let avatar = Avatar(image: avatarImage(for: message), initials: chatInitials)
+            let avatar = Avatar(
+                image: avatarImage(
+                    for: message,
+                    refresh: { [weak self] in
+                        // Here we call configureAvatar method again when image is not cached
+                        // and after we finished fetching it. This is recommended MessageKit
+                        // method to handle such scenario
+                        // https://github.com/MessageKit/MessageKit/issues/585
+                        MEGALogDebug("AVATAR:refresh avatar indexPath \(indexPath)")
+                        self?.configureAvatarView(
+                            avatarView,
+                            for: message,
+                            at: indexPath,
+                            in: messagesCollectionView
+                        )
+                    }
+                ),
+                initials: chatInitials
+            )
+            if avatar.image != nil {
+                MEGALogDebug("AVATAR: loaded indexPath \(indexPath)")
+            } else {
+                MEGALogDebug("AVATAR: not loaded indexPath \(indexPath)")
+            }
             avatarView.set(avatar: avatar)
             avatarView.isHidden = isFromCurrentSender(message: message)
         }
