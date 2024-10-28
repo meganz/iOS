@@ -204,7 +204,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
 
     private func showNodeInfo(_ node: MEGANode) {
-        let nodeInfoControllers = NodeInfoViewController.makeInstance(
+        let nodeInfoController = NodeInfoViewController.makeInstance(
             with: NodeInfoViewModel(
                 withNode: node,
                 nodeUseCase: NodeUseCase(
@@ -219,8 +219,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             delegate: nil
         )
 
-        nodeInfoControllers.nodeInfoViewController.display(node, withDelegate: self)
-        viewController?.present(nodeInfoControllers.navigationController, animated: true, completion: nil)
+        nodeInfoController.nodeInfoViewController.display(node, withDelegate: self)
+        viewController?.present(nodeInfoController.navigationController, animated: true, completion: nil)
     }
     
     private func showNodeVersions(_ node: MEGANode) {
