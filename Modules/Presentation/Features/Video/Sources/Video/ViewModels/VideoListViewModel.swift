@@ -25,6 +25,7 @@ final class VideoListViewModel: ObservableObject {
     let thumbnailLoader: any ThumbnailLoaderProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     let nodeUseCase: any NodeUseCaseProtocol
+    let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private(set) var syncModel: VideoRevampSyncModel
     private(set) var selection: VideoSelection
@@ -50,6 +51,7 @@ final class VideoListViewModel: ObservableObject {
     private let contentProvider: any VideoListViewModelContentProviderProtocol
     private let monitorSearchRequestsSubject = CurrentValueSubject<MonitorSearchRequest, Never>(.invalidate)
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    
     private var subscriptions = Set<AnyCancellable>()
 
     private var searchTask: Task<Void, Never>? {
@@ -72,12 +74,14 @@ final class VideoListViewModel: ObservableObject {
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.syncModel = syncModel
         self.selection = selection
         

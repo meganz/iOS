@@ -30,6 +30,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     
     private let videoConfig: VideoConfig
     private let representer: AllVideosCollectionViewRepresenter
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var dataSource: DiffableDataSource?
     private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item>
@@ -44,7 +45,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         reloadSnapshotTask?.cancel()
     }
     
-    init(_ representer: AllVideosCollectionViewRepresenter) {
+    init(
+        _ representer: AllVideosCollectionViewRepresenter,
+        featureFlagProvider: some FeatureFlagProviderProtocol
+    ) {
+        self.featureFlagProvider = featureFlagProvider
         self.representer = representer
         self.videoConfig = representer.videoConfig
     }
@@ -53,7 +58,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         configureDataSource(for: collectionView)
         
         switch viewContext() {
-        case .playlistContent(let type) where type == .user && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent):
+        case .playlistContent(let type) where type == .user && featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent):
             configureDragDropInteraction(for: collectionView)
         default:
             break
@@ -85,6 +90,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
                 nodeUseCase: viewModel.nodeUseCase,
+                featureFlagProvider: featureFlagProvider,
                 onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) },
                 onTapped: { [weak self] in self?.onTapCell(video: $0) }
             )

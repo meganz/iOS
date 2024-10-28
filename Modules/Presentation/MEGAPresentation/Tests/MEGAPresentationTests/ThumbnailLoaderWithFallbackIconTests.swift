@@ -22,7 +22,7 @@ final class ThumbnailLoaderWithFallbackIconTests: XCTestCase {
     func testInitialImageWithPlaceholder_whenHasThumbnail_forwardsCall() {
         let (sut, thumbnailLoader, nodeIconUseCase) = makeSUT()
         
-        _ = sut.initialImage(for: anyNode(hasThumbnail: true, name: "video.mp4"), type: anyThumbnailType, placeholder: { anyPlaceholder })
+        _ = sut.initialImage(for: anyNode(hasThumbnail: true, name: "video.mp4"), type: anyThumbnailType, placeholder: { [anyPlaceholder] in anyPlaceholder })
         
         XCTAssertEqual(thumbnailLoader.invocations, [ .initialImageWithPlaceholder ])
         XCTAssertTrue(nodeIconUseCase.invocations.isEmpty)
@@ -31,7 +31,7 @@ final class ThumbnailLoaderWithFallbackIconTests: XCTestCase {
     func testInitialImageWithPlaceholder_whenHasNoThumbnail_forwardsToNodeIconUseCase() {
         let (sut, thumbnailLoader, nodeIconUseCase) = makeSUT()
         
-        _ = sut.initialImage(for: anyNode(hasThumbnail: false, name: "video.mp4"), type: anyThumbnailType, placeholder: { anyPlaceholder })
+        _ = sut.initialImage(for: anyNode(hasThumbnail: false, name: "video.mp4"), type: anyThumbnailType, placeholder: { [anyPlaceholder] in anyPlaceholder })
         
         XCTAssertEqual(nodeIconUseCase.invocations, [ .iconData ])
         XCTAssertTrue(thumbnailLoader.invocations.isEmpty)

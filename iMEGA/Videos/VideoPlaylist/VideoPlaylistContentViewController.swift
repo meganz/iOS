@@ -117,6 +117,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
             nodeIconUseCase: nodeIconUseCase,
             nodeUseCase: nodeUseCase,
+            featureFlagProvider: DIContainer.featureFlagProvider,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             router: router,
             sharedUIState: sharedUIState,

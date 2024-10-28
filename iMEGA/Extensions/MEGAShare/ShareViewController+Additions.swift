@@ -3,10 +3,6 @@ import MEGAPresentation
 
 extension ShareViewController {
     
-    @objc func toggleFeatureFlags() {
-        FeatureFlagProvider.disableFeatureFlags = false
-    }
-    
     @objc func successSendToChatMessage(attachments: [ShareAttachment], receiverCount: Int) -> String {
         if attachments.count > 1 {
             let filesString = Strings.Localizable.General.Format.Count.file(attachments.count)

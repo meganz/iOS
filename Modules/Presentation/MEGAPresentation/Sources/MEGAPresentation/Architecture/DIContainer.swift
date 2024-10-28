@@ -12,14 +12,6 @@ public enum DIContainer {
         )
     }
     
-    public static var featureFlagProvider: some FeatureFlagProviderProtocol {
-        FeatureFlagProvider(
-            useCase: FeatureFlagUseCase(
-                repository: FeatureFlagRepository.newRepo
-            )
-        )
-    }
-    
     public static var rubbishBinUseCase: some RubbishBinUseCaseProtocol {
         RubbishBinUseCase(
             rubbishBinRepository: RubbishBinRepository.newRepo
@@ -48,7 +40,7 @@ public extension DIContainer {
 extension PlaybackContinuationUseCase where T == PreviousPlaybackSessionRepository {
     /// We need to keep a single instance of this use case because we want to keep user's playback continuation preference.
     /// This preference only lives until the app is killed thus it shouldn't be kept in a local persistence framework like UserDefaults.
-    static var shared = PlaybackContinuationUseCase(
+    static let shared = PlaybackContinuationUseCase(
         previousSessionRepo: PreviousPlaybackSessionRepository.newRepo
     )
 }

@@ -34,6 +34,7 @@ struct PlaylistContentScreen: View {
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
             nodeUseCase: viewModel.nodeUseCase,
+            featureFlagProvider: viewModel.featureFlagProvider,
             videoSelection: videoSelection,
             onTapAddButton: { viewModel.shouldShowVideoPlaylistPicker = true }
         )
@@ -114,6 +115,7 @@ struct PlaylistContentView: View {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videos: [NodeEntity]
     private let playlistType: VideoPlaylistEntityType
     let router: any VideoRevampRouting
@@ -130,6 +132,7 @@ struct PlaylistContentView: View {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         videoSelection: @autoclosure @escaping () -> VideoSelection,
         onTapAddButton: @escaping () -> Void
     ) {
@@ -139,6 +142,7 @@ struct PlaylistContentView: View {
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.videos = videos
         self.playlistType = playlistType
         self.router = router
@@ -214,7 +218,8 @@ struct PlaylistContentView: View {
             viewType: .playlistContent(type: playlistType),
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            nodeUseCase: nodeUseCase
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: featureFlagProvider
         )
     }
 }
@@ -238,6 +243,7 @@ struct PlaylistContentView: View {
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         nodeUseCase: Preview_NodeUseCase(),
+        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -263,6 +269,7 @@ struct PlaylistContentView: View {
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         nodeUseCase: Preview_NodeUseCase(),
+        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -291,6 +298,7 @@ struct PlaylistContentView: View {
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         nodeUseCase: Preview_NodeUseCase(),
+        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -317,6 +325,7 @@ struct PlaylistContentView: View {
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         nodeUseCase: Preview_NodeUseCase(),
+        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )
@@ -342,6 +351,7 @@ struct PlaylistContentView: View {
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         nodeUseCase: Preview_NodeUseCase(),
+        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
         onTapAddButton: {}
     )

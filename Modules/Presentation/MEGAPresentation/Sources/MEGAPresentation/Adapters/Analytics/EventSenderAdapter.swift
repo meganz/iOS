@@ -1,7 +1,7 @@
 import MEGAAnalyticsDomain
 import MEGAAnalyticsiOS
 
-final class EventSenderAdapter: EventSender {
+final class EventSenderAdapter: EventSender, Sendable {
     private let analyticsUseCase: any AnalyticsUseCaseProtocol
     
     init(analyticsUseCase: some AnalyticsUseCaseProtocol) {

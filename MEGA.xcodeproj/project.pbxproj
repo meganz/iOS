@@ -1629,6 +1629,7 @@
 		A5BED9792B9AF72500C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */; };
 		A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */; };
+		A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */; };
 		A5EFB0532B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */; };
 		A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
@@ -4452,6 +4453,7 @@
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
+		A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+FeatureFlagProvider.swift"; sourceTree = "<group>"; };
 		A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SaveNode.swift"; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -7285,6 +7287,7 @@
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				C45C2FA425C94D5800315369 /* Delegates */,
 				B68ED09127D05F8700713850 /* DomainExtensions */,
+				A5D5278F2CCF624600CC9E46 /* FeatureFlag */,
 				83D0E56427C78D16003BEC2E /* FileActionsHelpers */,
 				A873E84226E117A400CBB174 /* FirstLaunchCheck */,
 				B695E57E23275A3800D12B9E /* Functions */,
@@ -10809,6 +10812,14 @@
 				A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */,
 			);
 			path = MoveToRubbishBin;
+			sourceTree = "<group>";
+		};
+		A5D5278F2CCF624600CC9E46 /* FeatureFlag */ = {
+			isa = PBXGroup;
+			children = (
+				A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */,
+			);
+			path = FeatureFlag;
 			sourceTree = "<group>";
 		};
 		A802B1F41FAB274200AC8BB0 /* Chat */ = {
@@ -15120,6 +15131,7 @@
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
 				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
+				A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */,
 				6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */,
 				8358A6EA2925461C00EE197C /* DisclosureView.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,

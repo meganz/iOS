@@ -23,6 +23,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     let thumbnailLoader: any ThumbnailLoaderProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     let nodeUseCase: any NodeUseCaseProtocol
+    let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private weak var selectionDelegate: VideoPlaylistContentViewModelSelectionDelegate?
@@ -78,6 +79,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         syncModel: VideoRevampSyncModel
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
@@ -93,6 +95,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.syncModel = syncModel
         
         assignVideoPlaylistRenameValidator()

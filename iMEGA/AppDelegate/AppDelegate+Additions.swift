@@ -460,10 +460,6 @@ extension AppDelegate {
         ScheduleMeetingPushNotifications.registerCustomActions()
     }
     
-    @objc func toggleFeatureFlags() {
-        FeatureFlagProvider.disableFeatureFlags = false
-    }
-    
     @MainActor
     private func openWaitingRoomOrStartCallWithNoRinging(forChatRoom chatRoom: ChatRoomEntity) async throws {
         let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)

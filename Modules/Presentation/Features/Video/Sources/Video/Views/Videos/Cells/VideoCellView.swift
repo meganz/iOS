@@ -27,6 +27,7 @@ struct VideoCellView: View {
             mode: viewModel.mode,
             previewEntity: viewModel.previewEntity,
             videoConfig: videoConfig,
+            reorderVideosInVideoPlaylistContentEnabled: viewModel.reorderVideosInVideoPlaylistContentEnabled,
             isSelected: $viewModel.isSelected,
             onTappedCheckMark: onTappedCheckMark,
             onTappedCell: onTappedCell,
@@ -50,6 +51,7 @@ struct VideoCellViewContent: View {
     let mode: VideoCellViewModel.Mode
     let previewEntity: VideoCellPreviewEntity
     let videoConfig: VideoConfig
+    let reorderVideosInVideoPlaylistContentEnabled: Bool
     let isSelected: Binding<Bool>
     let onTappedCheckMark: () -> Void
     let onTappedCell: () -> Void
@@ -153,7 +155,7 @@ struct VideoCellViewContent: View {
         case .selection:
             checkMarkView
                 .padding(.leading, 10)
-        case .reorder where DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent):
+        case .reorder where reorderVideosInVideoPlaylistContentEnabled:
             dragIndicatorView
         default:
             EmptyView()
@@ -169,6 +171,7 @@ struct VideoCellViewContent: View {
             mode: .plain,
             previewEntity: .standard,
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(false),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -179,6 +182,7 @@ struct VideoCellViewContent: View {
             mode: .plain,
             previewEntity: .favorite,
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(false),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -189,6 +193,7 @@ struct VideoCellViewContent: View {
             mode: .selection,
             previewEntity: .hasPublicLink,
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(true),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -199,6 +204,7 @@ struct VideoCellViewContent: View {
             mode: .reorder,
             previewEntity: .hasPublicLink,
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(true),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -209,6 +215,7 @@ struct VideoCellViewContent: View {
             mode: .plain,
             previewEntity: .hasLabel,
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(false),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -219,6 +226,7 @@ struct VideoCellViewContent: View {
             mode: .plain,
             previewEntity: .all(title: .short),
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(false),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -229,6 +237,7 @@ struct VideoCellViewContent: View {
             mode: .plain,
             previewEntity: .all(title: .medium),
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(false),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -239,6 +248,7 @@ struct VideoCellViewContent: View {
             mode: .plain,
             previewEntity: .all(title: .long),
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(false),
             onTappedCheckMark: {},
             onTappedCell: {},
@@ -249,6 +259,7 @@ struct VideoCellViewContent: View {
             mode: .plain,
             previewEntity: .placeholder,
             videoConfig: .preview,
+            reorderVideosInVideoPlaylistContentEnabled: false,
             isSelected: .constant(false),
             onTappedCheckMark: {},
             onTappedCell: {},

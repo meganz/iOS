@@ -49,7 +49,8 @@ public class VideoRevampFactory {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         videoConfig: VideoConfig,
-        router: some VideoRevampRouting
+        router: some VideoRevampRouting,
+        featureFlagProvider: any FeatureFlagProviderProtocol
     ) -> UIViewController {
         
         let thumbnailLoader = makeThumbnailLoader(
@@ -62,7 +63,8 @@ public class VideoRevampFactory {
             fileSearchUseCase: fileSearchUseCase,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            nodeUseCase: nodeUseCase
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: featureFlagProvider
         )
         let videoPlaylistViewModel = VideoPlaylistsViewModel(
             videoPlaylistsUseCase: videoPlaylistUseCase,
@@ -86,7 +88,7 @@ public class VideoRevampFactory {
                 message: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Subtitle.enterTheNewName
             ),
             thumbnailLoader: thumbnailLoader,
-            featureFlagProvider: DIContainer.featureFlagProvider,
+            featureFlagProvider: featureFlagProvider,
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: videoPlaylistUseCase
             )
@@ -112,6 +114,7 @@ public class VideoRevampFactory {
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
@@ -150,6 +153,7 @@ public class VideoRevampFactory {
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
+            featureFlagProvider: featureFlagProvider,
             syncModel: syncModel
         )
         

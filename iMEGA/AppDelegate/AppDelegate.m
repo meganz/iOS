@@ -100,7 +100,6 @@
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
     [MEGAChatSdk setCatchException:false];
-    [self toggleFeatureFlags];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelFatal];

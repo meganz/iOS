@@ -248,6 +248,7 @@ final class VideoCellViewModelTests: XCTestCase {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: featureFlagHiddenNodes]),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             onTapMoreOptions: onTapMoreOptions,
             onTapped: onTapped
         )
