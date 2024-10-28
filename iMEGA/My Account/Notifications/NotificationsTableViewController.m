@@ -45,7 +45,7 @@
     self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.separatorColor = [UIColor mnz_separator];
+    self.tableView.separatorColor = [UIColor borderStrong];
     
     [self setupViewModelForCommandHandling];
 }

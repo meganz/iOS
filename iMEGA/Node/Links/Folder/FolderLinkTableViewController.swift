@@ -156,7 +156,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
             cell.selectedBackgroundView = nil
         }
         
-        cell.separatorView.layer.borderColor = UIColor.mnz_separator().cgColor
+        cell.separatorView.layer.borderColor = TokenColors.Border.strong.cgColor
         cell.separatorView.layer.borderWidth = 0.5
         
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = true

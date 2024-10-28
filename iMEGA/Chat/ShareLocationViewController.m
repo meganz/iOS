@@ -70,7 +70,7 @@
     self.sendLocationLabel.text = LocalizedString(@"Send This Location", @"Title of the button to share a location in a chat.");
     
     UIView *separatorBetweenButtonsLayer = [UIView.alloc initWithFrame:CGRectMake(0, self.mapOptionsView.frame.size.height / 2, self.mapOptionsView.frame.size.width, 0.5)];
-    separatorBetweenButtonsLayer.backgroundColor = [UIColor mnz_separator];
+    separatorBetweenButtonsLayer.backgroundColor = [UIColor borderStrong];
     [self.mapOptionsView addSubview:separatorBetweenButtonsLayer];
     
     LocationSearchTableViewController *locationSearchTVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"LocationSearchTableViewControllerID"];

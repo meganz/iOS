@@ -113,10 +113,10 @@
     self.view.backgroundColor = [UIColor pageBackgroundColor];
     
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
-    self.tableView.separatorColor = [UIColor mnz_separator];
+    self.tableView.separatorColor = [UIColor borderStrong];
     
     self.profileView.backgroundColor = [UIColor surface1Background];
-    self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separator];
+    self.profileBottomSeparatorView.backgroundColor = [UIColor borderStrong];
     
     self.addPhoneNumberView.backgroundColor = [UIColor pageBackgroundColor];
     

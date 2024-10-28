@@ -84,7 +84,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 #pragma mark - Private
 
 - (void)setupColors {
-    self.tableView.separatorColor = [UIColor mnz_separator];
+    self.tableView.separatorColor = [UIColor borderStrong];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
 
     [self updateLabelAppearance];

@@ -1,4 +1,5 @@
 import Haptica
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -140,7 +141,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     override func updateAppearance() {
         super.updateAppearance()
         
-        separatorLineView.backgroundColor = UIColor.mnz_separator()
+        separatorLineView.backgroundColor = TokenColors.Border.strong
         emojiViews.forEach { (view) in
             view.backgroundColor = UIColor.surface1Background()
         }

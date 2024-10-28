@@ -8,7 +8,7 @@ final class DefaultTabTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Strings.Localizable.defaultTab
-        tableView.separatorColor = UIColor.mnz_separator()
+        tableView.separatorColor = TokenColors.Border.strong
         tableView.backgroundColor = TokenColors.Background.page
     }
 

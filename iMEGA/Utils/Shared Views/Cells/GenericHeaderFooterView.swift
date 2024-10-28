@@ -105,7 +105,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         }
         
         self.detailLabel.textColor = TokenColors.Text.primary
-        self.topSeparatorView.backgroundColor = UIColor.mnz_separator()
-        self.bottomSeparatorView.backgroundColor = UIColor.mnz_separator()
+        self.topSeparatorView.backgroundColor = TokenColors.Border.strong
+        self.bottomSeparatorView.backgroundColor = TokenColors.Border.strong
     }
 }

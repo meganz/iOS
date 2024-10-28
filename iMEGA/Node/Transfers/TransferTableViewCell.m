@@ -76,7 +76,7 @@
     
     [self configureCellWithTransferState:transfer.state];
     
-    self.separatorView.layer.borderColor = [UIColor mnz_separator].CGColor;
+    self.separatorView.layer.borderColor = [UIColor borderStrong].CGColor;
     self.separatorView.layer.borderWidth = 0.5;
 }
 

@@ -62,7 +62,7 @@
 #pragma mark - Private
 
 - (void)setupColors {
-    self.tableView.separatorColor = [UIColor mnz_separator];
+    self.tableView.separatorColor = [UIColor borderStrong];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
     
     self.versionNumberLabel.textColor = self.sdkVersionSHALabel.textColor = self.megachatSdkSHALabel.textColor = UIColor.secondaryLabelColor;
