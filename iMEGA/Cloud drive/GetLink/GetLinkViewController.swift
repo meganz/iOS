@@ -788,9 +788,11 @@ class GetLinkViewController: UIViewController {
     private func updateHeaderViewForSingleItem(forHeader header: inout GenericHeaderFooterView, forSection sectionType: GetLinkTableViewSection) {
         switch sectionType {
         case .link:
-            header.configure(title: nil, detail: Strings.Localizable.link, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            let attributedString = NSMutableAttributedString(string: Strings.Localizable.link, attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary as Any])
+            header.configure(attributedTitle: attributedString, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .key:
-            header.configure(title: Strings.Localizable.key, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            let attributedString = NSMutableAttributedString(string: Strings.Localizable.key, attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary as Any])
+            header.configure(attributedTitle: attributedString, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .decryptKeySeparate:
             header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .expiryDate:
@@ -836,7 +838,8 @@ class GetLinkViewController: UIViewController {
             footer.configure(attributedTitle: attributedString, topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
         case .expiryDate:
             if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
-                footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+                let attributedString = NSMutableAttributedString(string: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary as Any])
+                footer.configure(attributedTitle: attributedString, topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
             } else {
                 footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
             }
