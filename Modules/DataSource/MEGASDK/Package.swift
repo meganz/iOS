@@ -51,7 +51,6 @@ let package = Package(
                 "src/fuse/common/testing",
                 "src/fuse/supported",
                 "src/mega_utf8proc_data.c",
-                "src/thread/libuvthread.cpp",
                 "src/win32",
                 "tests",
                 "tools"
