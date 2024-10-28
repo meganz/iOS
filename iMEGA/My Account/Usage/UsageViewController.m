@@ -37,14 +37,6 @@
     self.navigationItem.title = LocalizedString(@"Storage", @"Navigate title for the storage information screen");
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 - (void)setUpPieChartView {
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
