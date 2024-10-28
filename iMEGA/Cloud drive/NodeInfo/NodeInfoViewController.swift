@@ -179,6 +179,7 @@ final class NodeInfoViewController: UITableViewController {
     /// Custom UI update method to respond to node updates
     /// Call this method instead of `reloadData()`  when you want to handle node updates
     private func reloadDataUponNodeUpdate() {
+        MEGALogDebug("[Node Info] reload data for node \(node.handle) upon updates")
         cacheNodePropertiesSoThatTableViewChangesAreAtomic()
         handleNodeDescriptionUpdateIfNeeded()
         
@@ -190,6 +191,8 @@ final class NodeInfoViewController: UITableViewController {
             return
         }
         let sectionsToReload = (tableView.indexPathsForVisibleRows ?? []).filter { $0.section != descSection }.map(\.section)
+        MEGALogDebug("[Node info] sections to reload: \(sectionsToReload)")
+        
         tableView.reloadSections(.init(sectionsToReload), with: .automatic)
     }
     
@@ -380,6 +383,7 @@ final class NodeInfoViewController: UITableViewController {
         cachedSections = sections(descriptionCellController: descriptionCellController())
         cachedDetailRows = detailRows()
         cachedInfoRows = infoRows()
+        MEGALogDebug("[Node Info] cache sections for \(node.handle) created: \(cachedSections)")
     }
 
     private func descriptionCellController() -> NodeDescriptionCellController? {
@@ -912,10 +916,14 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                 continue
             }
             
+            MEGALogDebug("[Node Info] node \(nodeUpdated.handle) changed with types: \(nodeUpdated.toNodeEntity().changeTypes)")
+            
             if nodeUpdated.hasChangedType(.removed) {
                 if nodeUpdated.handle == node.handle {
+                    MEGALogDebug("[Node Info] current version removed")
                     return currentVersionRemoved()
                 } else if nodeVersions.contains(where: { $0.handle == nodeUpdated.handle }) {
+                    MEGALogDebug("[Node Info] node version removed")
                     return nodeVersionRemoved()
                 }
             }
@@ -924,9 +932,12 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                 guard let parentNode = sdk.node(forHandle: nodeUpdated.parentHandle) else { return }
                 if parentNode.isFolder() { // Node moved
                     guard let newNode = sdk.node(forHandle: nodeUpdated.handle) else { return }
+                    MEGALogDebug("[Node Info] Node moved")
                     node = newNode
+                    
                 } else { // Node versioned
                     guard let newNode = sdk.node(forHandle: nodeUpdated.parentHandle) else { return }
+                    MEGALogDebug("[Node Info] Node versioned")
                     node = newNode
                 }
                 
@@ -934,6 +945,7 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
             }
             
             if nodeUpdated.handle == node.handle {
+                MEGALogDebug("[Node Info] Generic update versioned")
                 return reloadOrShowWarningAfterNodeUpdate()
             }
         }
