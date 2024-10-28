@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
@@ -56,20 +55,12 @@
     UITextView *firstTextView = [self.view viewWithTag:1];
     [firstTextView becomeFirstResponder];
     
-    [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self setupColors];
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     self.view.backgroundColor = [self defaultBackgroundColor];
 
     self.firstDigitContainerView.backgroundColor = [self defaultBackgroundColor];
