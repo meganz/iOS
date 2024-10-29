@@ -742,23 +742,11 @@ class ChatViewController: MessagesViewController {
         return currentSenderId == previousSenderId
     }
     
-    func avatarImage(
-        for message: any MessageType,
-        refresh: @escaping () -> Void
-    ) -> UIImage? {
+    func avatarImage(for message: any MessageType) -> UIImage? {
         guard let userHandle = UInt64(message.sender.senderId) else { return nil }
         
-        return UIImage.mnz_image(
-            forUserHandle: userHandle,
-            name: message.sender.displayName,
-            size: CGSize(width: 24, height: 24),
-            delegate: RequestDelegate(
-                completion: { _ in
-                    Task { @MainActor in
-                        refresh()
-                    }
-                })
-        )
+        return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: RequestDelegate(completion: { _ in
+        }))
     }
     
     func initials(for message: any MessageType) -> String {
