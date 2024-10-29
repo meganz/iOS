@@ -169,15 +169,17 @@ pipeline {
 
         stage('main app - Run Unit test and generate code coverage') {
             steps {
-                gitlabCommitStatus(name: 'main app - Run unit tes and generate code coveraget') {
-                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                        injectEnvironments({
-                            script {
-                                RUN_UNIT_TESTS_STEP_REACHED = 'true'
-                            }
-                            sh "bundle exec fastlane run_tests_app"
-                            sh "bundle exec fastlane get_coverage"
-                        })
+                lock(resource: "${env.NODE_NAME}", quantity: 1) {
+                    gitlabCommitStatus(name: 'main app - Run unit test and generate code coverage') {
+                        withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                            injectEnvironments({
+                                script {
+                                    RUN_UNIT_TESTS_STEP_REACHED = 'true'
+                                }
+                                sh "bundle exec fastlane run_tests_app"
+                                sh "bundle exec fastlane get_coverage"
+                            })
+                        }
                     }
                 }
             }
