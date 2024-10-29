@@ -8,6 +8,8 @@ public struct SearchBarView: View {
     var placeholder: String
     var cancelTitle: String
     
+    @FocusState private var isSearchFieldFocused: Bool
+    
     public init(
         text: Binding<String>,
         isEditing: Binding<Bool>,
@@ -34,8 +36,9 @@ public struct SearchBarView: View {
                         text = ""
                     }
                 )
-                .onTapGesture {
-                    isEditing = true
+                .focused($isSearchFieldFocused)
+                .onChange(of: isSearchFieldFocused) { focused in
+                    isEditing = focused
                 }
  
             if isEditing {

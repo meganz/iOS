@@ -31,8 +31,6 @@ struct DeviceListContentView: View {
                 content: content,
                 placeholder: PlaceholderContentView(placeholderRow: placeholderRowView)
             )
-        }.task {
-            viewModel.updateInternetConnectionStatus()
         }
         .task {
             viewModel.updateInternetConnectionStatus()

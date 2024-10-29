@@ -248,6 +248,9 @@ final class DeviceListViewModelTests: XCTestCase {
             networkMonitorUseCase: mockNetworkMonitorUseCase
         )
         
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
         await viewModel.updateInternetConnectionStatus()
         
         XCTAssertTrue(viewModel.hasNetworkConnection)
@@ -258,6 +261,9 @@ final class DeviceListViewModelTests: XCTestCase {
         let viewModel = makeSUT(
             networkMonitorUseCase: mockNetworkMonitorUseCase
         )
+        
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
         
         await viewModel.updateInternetConnectionStatus()
         
@@ -399,10 +405,9 @@ final class DeviceListViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: expectationDescription)
         
         viewModel.$filteredDevices
+            .dropFirst()
             .sink { _ in
-                if viewModel.isSearchActive {
-                    expectation.fulfill()
-                }
+                expectation.fulfill()
             }
             .store(in: &cancellable)
         

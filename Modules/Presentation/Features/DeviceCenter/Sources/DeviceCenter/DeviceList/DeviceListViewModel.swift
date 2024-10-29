@@ -34,7 +34,7 @@ public final class DeviceListViewModel: ObservableObject {
         filteredDevices.isEmpty
     }
     var isFiltered: Bool {
-        isSearchActive && searchText.isNotEmpty
+        searchText.isNotEmpty
     }
     
     @Published private(set) var currentDevice: DeviceCenterItemViewModel?
@@ -125,12 +125,10 @@ public final class DeviceListViewModel: ObservableObject {
     
     private func filterDevices() {
         if searchText.isNotEmpty {
-            isSearchActive = true
             filteredDevices = allDevices().filter {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         } else {
-            isSearchActive = false
             filteredDevices = allDevices()
         }
     }
@@ -223,9 +221,8 @@ public final class DeviceListViewModel: ObservableObject {
         devicesUpdatePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] devices in
-                guard let self else { return }
                 Task {
-                    await self.arrangeDevices(devices)
+                    await self?.arrangeDevices(devices)
                 }
             }
             .store(in: &cancellable)
