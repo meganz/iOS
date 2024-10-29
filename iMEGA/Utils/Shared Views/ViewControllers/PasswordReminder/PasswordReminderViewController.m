@@ -23,6 +23,8 @@
     [self configureUI];
     
     [self updateAppearance];
+    
+    [self trackScreenView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -48,13 +50,25 @@
     }
 }
 
+- (PasswordReminderViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self makePasswordReminderViewModel];
+    }
+    
+    return _viewModel;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)tapClose:(id)sender {
+    [self trackCloseButtonTap];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)tapTestPassword:(id)sender {
+    [self trackTestPasswordButtonTap];
+    
     if (self.isLoggingOut) {
         TestPasswordViewController *testPasswordViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"TestPasswordViewID"];
         testPasswordViewController.logout = self.isLoggingOut;
@@ -71,9 +85,13 @@
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
+    [self trackExportRecoveryKeyButtonTap];
+    
     if ([MEGASdk.shared isLoggedIn]) {
         if (self.isLoggingOut) {
-            [Helper showMasterKeyCopiedAlert:nil];
+            [Helper showMasterKeyCopiedAlert:^{
+                [self trackExportRecoveryKeyCopyOKAlertButtonTap];
+            }];
         } else {
             __weak PasswordReminderViewController *weakSelf = self;
             
@@ -89,6 +107,8 @@
 }
 
 - (IBAction)tapDismiss:(id)sender {
+    [self trackDismissButtonTap];
+    
     [self dismissViewControllerAnimated:YES completion:^{
         [self notifyUserSkippedOrBlockedPasswordReminder];
     }];
