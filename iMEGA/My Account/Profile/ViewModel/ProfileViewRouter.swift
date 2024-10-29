@@ -79,6 +79,7 @@ final class ProfileViewRouter: ProfileViewRouting {
             }, onFailure: { error in
                 MEGALogError("[Cancel Subscription] Error: \(error.localizedDescription)")
             },
+            featureFlagProvider: DIContainer.featureFlagProvider,
             logger: { MEGALogError($0) }
         ).start()
     }

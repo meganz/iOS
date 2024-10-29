@@ -27,6 +27,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     private let accountUseCase: any AccountUseCaseProtocol
     private let currentPlan: PlanEntity
     private let assets: CancelAccountPlanAssets
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let logger: ((String) -> Void)?
     
     private var appleIDSubscriptionsURL: URL? {
@@ -52,6 +53,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         navigationController: UINavigationController,
         onSuccess: @escaping (_ expirationDate: Date, _ storageLimit: Int) -> Void,
         onFailure: @escaping (Error) -> Void,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         logger: ((String) -> Void)? = nil
     ) {
         self.currentSubscription = currentSubscription
@@ -62,6 +64,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         self.navigationController = navigationController
         self.onSuccess = onSuccess
         self.onFailure = onFailure
+        self.featureFlagProvider = featureFlagProvider
         self.logger = logger
     }
     
@@ -78,6 +81,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
             achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
             accountUseCase: accountUseCase,
             tracker: DIContainer.tracker,
+            featureFlagProvider: featureFlagProvider,
             logger: logger,
             router: self
         )
