@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 
+@class PasswordReminderViewModel;
 @interface PasswordReminderViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -20,5 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
 @property (assign, getter=isLoggingOut) BOOL logout;
+@property (nonatomic, strong) PasswordReminderViewModel *viewModel;
 
 @end

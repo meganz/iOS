@@ -1,6 +1,9 @@
 import MEGADesignToken
 
 extension PasswordReminderViewController {
+    @objc func makePasswordReminderViewModel() -> PasswordReminderViewModel {
+        PasswordReminderViewModel()
+    }
     
     @objc func requestStopAudioPlayerSession() {
         let streamingInfoUseCase = StreamingInfoUseCase()
@@ -29,5 +32,32 @@ extension PasswordReminderViewController {
         
         backupKeyButton?.mnz_setupPrimary(traitCollection)
     }
-
+    
+    // MARK: - Analytics Events
+    
+    @objc func trackScreenView() {
+        viewModel.trackEvent(.onViewDidLoad)
+    }
+    
+    @objc func trackCloseButtonTap() {
+        viewModel.trackEvent(.didTapClose)
+    }
+    
+    @objc func trackTestPasswordButtonTap() {
+        viewModel.trackEvent(.didTapTestPassword)
+    }
+    
+    @objc func trackExportRecoveryKeyButtonTap() {
+        viewModel.trackEvent(.didTapExportRecoveryKey)
+    }
+    
+    @objc func trackExportRecoveryKeyCopyOKAlertButtonTap() {
+        viewModel.trackEvent(.didTapExportRecoveryKeyCopyOKAlert)
+    }
+    
+    @objc func trackDismissButtonTap() {
+        if isLoggingOut {
+            viewModel.trackEvent(.didTapProceedToLogout)
+        }
+    }
 }
