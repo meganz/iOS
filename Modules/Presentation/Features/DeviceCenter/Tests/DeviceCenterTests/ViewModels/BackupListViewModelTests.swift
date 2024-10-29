@@ -374,10 +374,9 @@ final class BackupListViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: expectationDescription)
         
         viewModel.$filteredBackups
+            .dropFirst()
             .sink { _ in
-                if viewModel.isSearchActive {
-                    expectation.fulfill()
-                }
+                expectation.fulfill()
             }
             .store(in: &cancellables)
         

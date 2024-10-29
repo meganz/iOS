@@ -163,7 +163,6 @@ public final class BackupListViewModel: ObservableObject {
     
     private func filterBackups() {
         let hasSearchQuery = searchText.isNotEmpty
-        isSearchActive = hasSearchQuery
         if hasSearchQuery {
             filteredBackups = backupModels.filter {
                 $0.name.lowercased().contains(searchText.lowercased())
