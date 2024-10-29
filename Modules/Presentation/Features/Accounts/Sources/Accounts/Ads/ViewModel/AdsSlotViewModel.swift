@@ -29,11 +29,6 @@ final public class AdsSlotViewModel: ObservableObject {
         self.appEnvironmentUseCase = appEnvironmentUseCase
     }
     
-    deinit {
-        monitorAdsSlotChangesTask?.cancel()
-        monitorAdsSlotChangesTask = nil
-    }
-
     // MARK: Setup
     func setupSubscriptions() {
         NotificationCenter.default
@@ -64,11 +59,9 @@ final public class AdsSlotViewModel: ObservableObject {
     
     // MARK: Ads Slot changes
     func monitorAdsSlotChanges() {
-        monitorAdsSlotChangesTask = Task { [weak self] in
-            guard let self else { return }
+        monitorAdsSlotChangesTask = Task { [weak self, adsSlotChangeStream] in
             for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
-                if Task.isCancelled { return }
-                await updateAdsSlot(newAdsSlotConfig)
+                await self?.updateAdsSlot(newAdsSlotConfig)
             }
         }
     }
