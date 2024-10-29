@@ -2,19 +2,52 @@ import Foundation
 import MEGADomain
 import MEGASdk
 
+/// Configuration for managing access to a specific node, allowing customization of behavior
+/// when interacting with the node in memory and remotely.
 public struct NodeAccessConfiguration {
+    /// Closure to determine if a node should be automatically created. E.g.: Camera Uploads, My Chat Files
     var autoCreate: (() -> Bool)?
+    
+    /// Notification name for updating the node in memory. The notification is triggered
+    /// when the in-memory node handle changes.
     let updateInMemoryNotificationName: Notification.Name?
+    
+    /// Notification name for updating the node from a remote source.
+    /// This notification is posted when changes to the node are detected remotely (We receive an event from the SDK to indicate that the indicated node has been updated)
     let updateInRemoteNotificationName: Notification.Name?
+    
+    /// Closure that triggers the request to load a node from the SDK.
+    /// - Parameter delegate: The delegate to handle request completion.
     let loadNodeRequest: (any MEGARequestDelegate) -> Void
+    
+    /// Closure that sets the node by its handle, allowing for custom logic when setting a node.
+    /// - Parameters:
+    ///   - handle: The handle of the node to set.
+    ///   - delegate: The delegate to handle request completion.
     var setNodeRequest: ((HandleEntity, any MEGARequestDelegate) -> Void)?
+    
+    /// Optional name of the node. Contains value only if the node must be created at some point in time, using the `createNodeRequest:`
     var nodeName: String?
+    
+    /// Closure that defines how to create a new node if it does not exist.
+    /// - Parameters:
+    ///   - name: The name of the new node.
+    ///   - parent: The parent node in which the new node will be created.
+    ///   - delegate: The delegate to handle request completion.
     var createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)?
 }
 
+/// `NodeAccess` is responsible for managing the special nodes of MEGA, such as the Camera Uploads, My Chat Files, and Backups.
+/// These nodes have distinct behaviors that require special handling. Provides methods to handle both in-memory and remote synchronization of these nodes, ensuring
+/// that the correct node is always loaded and up to date.
+///
+/// - Note:
+/// For some nodes like Camera Uploads and My Chat Files, it is necessary to first check whether
+/// the node has been created before accessing it. If the node doesn't exist, `NodeAccess` ensures that it is created from the app.
 public class NodeAccess: NSObject, NodeAccessProtocol, @unchecked Sendable {
     
     private let sdk = MEGASdk.sharedSdk
+    // Semaphore to handle thread-safe access and node loading,updating and creating operations.
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
     private var nodeLoadOperation: NodeLoadOperation?
     
