@@ -52,31 +52,23 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         )
     }
 
-    func testDidTapContinueCancellation_subscriptionPaymentMethodIsAnyWebClientMethod_shouldShowCancellationSurvey() async {
-        await assertContinueCancellation(
-            for: randomWebClientPaymentMethod(),
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsAnyWebClientMethodAndWebclientCancellationInAppIsNotEnabled_shouldShowCancellationSurvey() async {
+        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: randomWebClientPaymentMethod()))
+        
+        await assertDidTapContinueCancellation(
+            sut: sut,
+            publisher: sut.$showCancellationSteps,
             expectedVisibility: true
         )
+        XCTAssertFalse(sut.showCancellationSurvey)
     }
     
-    private func assertDidTapContinueCancellation(
-        sut: CancelAccountPlanViewModel,
-        publisher: Published<Bool>.Publisher,
-        expectedVisibility: Bool,
-        file: StaticString = #file,
-        line: UInt = #line
-    ) async {
-        let exp = expectation(description: "Sheet visibility expectation")
-        publisher
-            .dropFirst()
-            .sink(receiveValue: { shouldShow in
-                XCTAssertEqual(shouldShow, expectedVisibility, file: file, line: line)
-                exp.fulfill()
-            })
-            .store(in: &subscriptions)
-        
-        await sut.didTapContinueCancellation()
-        await fulfillment(of: [exp], timeout: 0.5)
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsAnyWebClientMethodAndWebclientCancellationInAppIsEnabled_shouldShowCancellationSurvey() async {
+        await assertContinueCancellation(
+            for: randomWebClientPaymentMethod(),
+            isWebclientSubscriptionCancellationEnabled: true,
+            expectedVisibility: true
+        )
     }
     
     func testSetupFeatureList_freeAccountStorageLimitAboveZero_shouldSetFeatures() async {
@@ -166,6 +158,7 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         freeAccountStorageLimit: Int = 0,
         features: [FeatureDetails] = [],
         tracker: some AnalyticsTracking = MockTracker(),
+        featureFlagList: [FeatureFlagKey: Bool] = [:],
         file: StaticString = #file,
         line: UInt = #line
     ) -> (
@@ -184,6 +177,7 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
             achievementUseCase: MockAchievementUseCase(),
             accountUseCase: MockAccountUseCase(currentAccountDetails: accountDetails),
             tracker: tracker,
+            featureFlagProvider: MockFeatureFlagProvider(list: featureFlagList),
             router: router
         )
         
@@ -213,8 +207,37 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
             .randomElement() ?? .stripe
     }
     
-    private func assertContinueCancellation(for paymentMethod: PaymentMethodEntity, expectedVisibility: Bool, file: StaticString = #file, line: UInt = #line) async {
-        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: paymentMethod))
+    private func assertDidTapContinueCancellation(
+        sut: CancelAccountPlanViewModel,
+        publisher: Published<Bool>.Publisher,
+        expectedVisibility: Bool,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) async {
+        let exp = expectation(description: "Sheet visibility expectation")
+        publisher
+            .dropFirst()
+            .sink(receiveValue: { shouldShow in
+                XCTAssertEqual(shouldShow, expectedVisibility, file: file, line: line)
+                exp.fulfill()
+            })
+            .store(in: &subscriptions)
+        
+        await sut.didTapContinueCancellation()
+        await fulfillment(of: [exp], timeout: 0.5)
+    }
+    
+    private func assertContinueCancellation(
+        for paymentMethod: PaymentMethodEntity,
+        isWebclientSubscriptionCancellationEnabled: Bool = false,
+        expectedVisibility: Bool,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) async {
+        let (sut, _) = makeSUT(
+            currentSubscription: AccountSubscriptionEntity(paymentMethodId: paymentMethod),
+            featureFlagList: isWebclientSubscriptionCancellationEnabled ? [.webclientSubscribersCancelSubscription: true] : [:]
+        )
         
         await assertDidTapContinueCancellation(
             sut: sut,

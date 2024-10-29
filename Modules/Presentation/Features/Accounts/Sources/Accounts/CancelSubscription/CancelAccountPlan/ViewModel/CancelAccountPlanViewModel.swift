@@ -17,6 +17,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     @Published var showCancellationSteps: Bool = false
     
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let logger: ((String) -> Void)?
     
     @Published private(set) var features: [FeatureDetails] = []
@@ -28,6 +29,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         achievementUseCase: some AchievementUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         logger: ((String) -> Void)? = nil,
         router: CancelAccountPlanRouting
     ) {
@@ -39,6 +41,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.featureListHelper = featureListHelper
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         self.logger = logger
         self.router = router
     }
@@ -70,12 +73,21 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         tracker.trackAnalyticsEvent(with: CancelSubscriptionContinueCancellationButtonPressedEvent())
         
         switch currentSubscription.paymentMethodId {
+        case .itunes:
+            // Show cancellation survey for Apple subscriptions.
+            showCancellationSurvey = true
         case .googleWallet:
-            // Show cancellation step for google subscriptions.
+            // Show cancellation steps for Google subscriptions.
             showCancellationSteps = true
         default:
-            // Show cancellation survey. For WebClient or Apple subscriptions.
-            showCancellationSurvey = true
+            // Webclient payment methods
+            if featureFlagProvider.isFeatureFlagEnabled(for: .webclientSubscribersCancelSubscription) {
+                // Show cancellation survey if the feature flag is enabled.
+                showCancellationSurvey = true
+            } else {
+                // Show cancellation steps if not.
+                showCancellationSteps = true
+            }
         }
     }
     
