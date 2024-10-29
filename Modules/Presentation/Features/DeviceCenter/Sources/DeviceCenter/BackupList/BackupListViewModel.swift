@@ -208,9 +208,14 @@ public final class BackupListViewModel: ObservableObject {
     
     @MainActor
     func updateCurrentDevice(_ devices: [DeviceEntity]) {
-        guard let currentDevice = devices.first(where: {$0.id == selectedDevice.id}) else { return }
+        guard let currentDevice = devices.first(where: {$0.id == selectedDevice.id}) else {
+            showEmptyStateView = true
+            return
+        }
         
-        selectedDevice.backups = currentDevice.backups ?? []
+        let currentDeviceBackups = currentDevice.backups ?? []
+        showEmptyStateView = currentDeviceBackups.isEmpty
+        selectedDevice.backups = currentDeviceBackups
         loadBackupsModels()
         
         selectedDevice.name = currentDevice.name
@@ -284,13 +289,10 @@ public final class BackupListViewModel: ObservableObject {
         case .cameraUploads:
             deviceCenterBridge.cameraUploadActionTapped { [weak self] in
                 Task {
-                    guard let self else { return }
-                    if self.showEmptyStateView,
-                       let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
-                        self.selectedDevice.id = currentDeviceId
+                    if let currentDeviceId = self?.deviceCenterUseCase.loadCurrentDeviceId() {
+                        self?.selectedDevice.id = currentDeviceId
                     }
-                    self.showEmptyStateView.toggle()
-                    await self.syncDevicesAndLoadBackups()
+                    await self?.syncDevicesAndLoadBackups()
                 }
             }
         case .rename:
