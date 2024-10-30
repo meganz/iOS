@@ -107,7 +107,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             delegate: AudioPlayerViewRouterNodeActionAdapter(
                 configEntity: configEntity,
                 nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,
-                fileLinkActionViewControllerDelegate: fileLinkActionViewControllerDelegate
+                fileLinkActionViewControllerDelegate: fileLinkActionViewControllerDelegate,
+                audioPlayerViewController: baseViewController
             ),
             displayMode: displayMode,
             isInVersionsView: isPlayingFromVersionView(),

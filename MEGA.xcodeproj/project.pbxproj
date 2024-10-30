@@ -206,6 +206,7 @@
 		244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
 		2455359C2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */; };
+		245570642CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */; };
 		245603672CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */; };
 		245603692CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */; };
 		24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */; };
@@ -257,6 +258,7 @@
 		24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */; };
 		24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */; };
 		24E038462AEBE5570001159C /* AudioPlayerConfigEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */; };
+		24EC98A72CCF5ECF00783B68 /* AudioPlayerViewControllerNodeActionForwardingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC98A62CCF5ECF00783B68 /* AudioPlayerViewControllerNodeActionForwardingDelegate.swift */; };
 		24EDF71D2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF71C2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift */; };
 		24EDF7212C1BF13A0065A26D /* MockVideoRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF7202C1BF13A0065A26D /* MockVideoRevampRouter.swift */; };
 		24EF67062B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF67052B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift */; };
@@ -2998,6 +3000,7 @@
 		244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTableViewControllerTests.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
 		2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDataSourceTests.swift; sourceTree = "<group>"; };
+		245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MegaNodeActionType+NodeActionTypeEntity_Mapper.swift"; sourceTree = "<group>"; };
 		245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModel.swift; sourceTree = "<group>"; };
 		245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModelTests.swift; sourceTree = "<group>"; };
 		24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3046,6 +3049,7 @@
 		24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoUseCase.swift; sourceTree = "<group>"; };
 		24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStreamingInfoUseCase.swift; sourceTree = "<group>"; };
 		24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntityTests.swift; sourceTree = "<group>"; };
+		24EC98A62CCF5ECF00783B68 /* AudioPlayerViewControllerNodeActionForwardingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewControllerNodeActionForwardingDelegate.swift; sourceTree = "<group>"; };
 		24EDF71C2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentViewControllerTests.swift; sourceTree = "<group>"; };
 		24EDF7202C1BF13A0065A26D /* MockVideoRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVideoRevampRouter.swift; sourceTree = "<group>"; };
 		24EF67052B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerEventObserversLoadingLogicController.swift; sourceTree = "<group>"; };
@@ -7808,6 +7812,7 @@
 				948D92672B2373CE0020E894 /* DisplayMode.h */,
 				77F63E7E24C0A95800DEEA66 /* JoinViewState.h */,
 				5BE08A0820F4DB0100950D30 /* LinkOption.h */,
+				245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 				83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */,
 				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
@@ -13481,6 +13486,7 @@
 				C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */,
 				24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */,
 				C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */,
+				24EC98A62CCF5ECF00783B68 /* AudioPlayerViewControllerNodeActionForwardingDelegate.swift */,
 				C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */,
 				C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */,
 				246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */,
@@ -14803,6 +14809,7 @@
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
 				24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */,
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
+				24EC98A72CCF5ECF00783B68 /* AudioPlayerViewControllerNodeActionForwardingDelegate.swift in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */,
 				246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */,
@@ -15530,6 +15537,7 @@
 				B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
 				9443B38C2B28BA8500D87E35 /* MEGANode+MNZCategory.swift in Sources */,
+				245570642CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift in Sources */,
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,
 				B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */,
 				5D8A76F024FCD0C900C0610C /* MEGANotificationUseCase.swift in Sources */,

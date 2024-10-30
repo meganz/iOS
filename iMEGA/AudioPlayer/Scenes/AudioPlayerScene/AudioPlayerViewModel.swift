@@ -6,8 +6,18 @@ import MEGAL10n
 import MEGAPresentation
 
 enum AudioPlayerAction: ActionType {
+    
+    /// Enum to represent the reasons for the dissapearance  of a view.
+    enum ViewDisappearReason {
+        /// User dismissal means the user initiated the dismissal of the screen (e.g., tapping the close button or swiping down to close the audio player view).
+        case userInitiatedDismissal
+        
+        /// The view disappeared because another view was pushed over the current audio player view.
+        case systemPushedAnotherView
+    }
+    
     case onViewDidLoad
-    case viewDidDissapear
+    case viewDidDissapear(reason: ViewDisappearReason)
     case initMiniPlayer
     case updateCurrentTime(percentage: Float)
     case progressDragEventBegan
@@ -60,6 +70,7 @@ enum PlayerType: String, CaseIterable {
 
 @MainActor
 final class AudioPlayerViewModel: ViewModelType {
+    
     enum Command: CommandType, Equatable {
         case reloadNodeInfo(name: String, artist: String, thumbnail: UIImage?, size: String?)
         case reloadThumbnail(thumbnail: UIImage)
@@ -468,8 +479,13 @@ final class AudioPlayerViewModel: ViewModelType {
         case .onTermsOfServiceViolationAlertDismissAction:
             configEntity.playerHandler.closePlayer()
             router.dismiss()
-        case .viewDidDissapear:
-            accountUseCase.isLoggedIn() ? initMiniPlayer() : requestStopAudioPlayerSession()
+        case .viewDidDissapear(let reason):
+            switch reason {
+            case .userInitiatedDismissal:
+                accountUseCase.isLoggedIn() ? initMiniPlayer() : requestStopAudioPlayerSession()
+            case .systemPushedAnotherView:
+                break
+            }
         case .initMiniPlayer:
             initMiniPlayer()
         }
