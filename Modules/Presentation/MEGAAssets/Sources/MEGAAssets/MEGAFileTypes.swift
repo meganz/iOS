@@ -1,17 +1,16 @@
 import MEGASwift
 
-typealias MEGAFileTypeResource = ImageResource
-
 struct FileTypes {
-    func fileTypeResource(forFileName name: String) -> MEGAFileTypeResource {
+    
+    static func fileTypeResource(forFileName name: String) -> MEGAAssetsImageName {
         fileTypeResource(forFileExtension: name.pathExtension)
     }
     
-    func fileTypeResource(forFileExtension fileExtension: String) -> MEGAFileTypeResource {
+    static func fileTypeResource(forFileExtension fileExtension: String) -> MEGAAssetsImageName {
         fileTypeImageResources[fileExtension.lowercased()] ?? .filetypeGeneric
     }
     
-    let fileTypeImageResources: [String: MEGAFileTypeResource] = [
+    private static let fileTypeImageResources: [String: MEGAAssetsImageName] = [
         "3ds": .filetype3D,
         "3dm": .filetype3D,
         "max": .filetype3D,
@@ -200,6 +199,6 @@ struct FileTypes {
         "sketch": .filetypeSketch,
         "torrent": .filetypeTorrent,
         "url": .filetypeUrl,
-        "Xd": .filetypeExperiencedesign
+        "xd": .filetypeExperiencedesign
     ]
 }

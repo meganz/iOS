@@ -7,7 +7,7 @@ struct ShareAttachmentCellView: View {
     var body: some View {
         GeometryReader { geo in
             HStack {
-                Image(viewModel.fileIcon)
+                viewModel.fileIcon
                     .resizable()
                     .scaledToFit()
                     .frame(width: geo.size.height * 0.80, height: geo.size.height * 0.80)

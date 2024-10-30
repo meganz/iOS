@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGARepo
 import MEGASDKRepo
@@ -35,24 +36,9 @@ import MEGASDKRepo
     }
     
     @objc func image(for extension: String) -> UIImage {
-        UIImage(resource: imageResource(for: `extension`))
+        MEGAAssetsImageProvider.fileTypeResource(forFileExtension: `extension`)
     }
-    
-    func image(for extension: String) -> MEGAFileTypeResource {
-        imageResource(for: `extension`)
-    }
-    
-    private func imageResource(for extension: String) -> MEGAFileTypeResource {
-        let ext = `extension`.lowercased()
-        
-        if ext.matches(regex: FileExtensionType.jpg.rawValue) {
-            return .filetypeImages
-        } else {
-            let fileTypeImageResource = FileTypes().fileTypeResource(forFileExtension: ext)
-            return fileTypeImageResource
-        }
-    }
-    
+            
     private func commonFolderImage(for node: MEGANode) -> UIImage {
         if node.isInShare() {
             return UIImage.folderIncoming
@@ -79,10 +65,6 @@ import MEGASDKRepo
             return UIImage.pc
         }
     }
-}
-
-enum FileExtensionType: String {
-    case jpg = "jpg|jpeg"
 }
 
 extension NodeAssetsManager: NodeIconRepositoryProtocol {

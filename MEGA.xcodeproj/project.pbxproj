@@ -281,6 +281,8 @@
 		2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */; };
 		2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */; };
 		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
+		25455BE82CCB8E1D008DE44E /* MEGAAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 25455BE72CCB8E1D008DE44E /* MEGAAssets */; };
+		25455BEA2CCB8FE0008DE44E /* MEGAAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 25455BE92CCB8FE0008DE44E /* MEGAAssets */; };
 		2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */; };
 		25484F782B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */; };
 		254E997D2C697185002C82D4 /* WidgetCentreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254E997C2C697185002C82D4 /* WidgetCentreProtocol.swift */; };
@@ -2081,9 +2083,6 @@
 		B6ADE4D927320C3300C19F36 /* PhotoYearCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADE4D827320C3300C19F36 /* PhotoYearCard.swift */; };
 		B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AF22C126097C310008FF72 /* DiskFullBlockingModel.swift */; };
 		B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AF22DE26097F500008FF72 /* DiskFullBlockingViewModelTests.swift */; };
-		B6B1A27928A1DE630057E75B /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */; };
-		B6B1A27A28A1DE630057E75B /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */; };
-		B6B1A27B28A1DE630057E75B /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */; };
 		B6B23E8E28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B23E8D28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift */; };
 		B6B3C366222628C200918D44 /* TransferResponseValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3C365222628C200918D44 /* TransferResponseValidator.m */; };
 		B6B73E6E22C5713700ACAD48 /* RegionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6D22C5713700ACAD48 /* RegionListViewController.swift */; };
@@ -4934,7 +4933,6 @@
 		B6ADE4D827320C3300C19F36 /* PhotoYearCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoYearCard.swift; sourceTree = "<group>"; };
 		B6AF22C126097C310008FF72 /* DiskFullBlockingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingModel.swift; sourceTree = "<group>"; };
 		B6AF22DE26097F500008FF72 /* DiskFullBlockingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModelTests.swift; sourceTree = "<group>"; };
-		B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAFileTypes.swift; sourceTree = "<group>"; };
 		B6B23E8D28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryMapperTests.swift; sourceTree = "<group>"; };
 		B6B3C364222628C200918D44 /* TransferResponseValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferResponseValidator.h; sourceTree = "<group>"; };
 		B6B3C365222628C200918D44 /* TransferResponseValidator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferResponseValidator.m; sourceTree = "<group>"; };
@@ -5689,6 +5687,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */,
+				25455BEA2CCB8FE0008DE44E /* MEGAAssets in Frameworks */,
 				B610447428979EA200AAECF4 /* MEGADomain in Frameworks */,
 				BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */,
 				BF61496C2A9FF39500AB051A /* MEGAL10nObjc in Frameworks */,
@@ -5736,6 +5735,7 @@
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
 				B5866BB92CA566BA009E0A1E /* GoogleMobileAds in Frameworks */,
 				BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */,
+				25455BE82CCB8E1D008DE44E /* MEGAAssets in Frameworks */,
 				A812CB3D2A4B0FBE00F99382 /* MEGAChatSdk in Frameworks */,
 				6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */,
 				B610447228979E9B00AAECF4 /* MEGADomain in Frameworks */,
@@ -7341,7 +7341,6 @@
 				415226881A692ECC00EC7BB6 /* Helper.m */,
 				B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */,
 				B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */,
-				B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */,
 				A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */,
 				A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */,
 				947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */,
@@ -13925,6 +13924,7 @@
 				BF6149692A9FF39500AB051A /* MEGAL10n */,
 				BF61496B2A9FF39500AB051A /* MEGAL10nObjc */,
 				6DFC67832CC87957000EA8BC /* MEGASwiftUI */,
+				25455BE92CCB8FE0008DE44E /* MEGAAssets */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -14017,6 +14017,7 @@
 				B5D58D572AC67D0D004ECD36 /* Accounts */,
 				6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */,
 				B5866BB82CA566BA009E0A1E /* GoogleMobileAds */,
+				25455BE72CCB8E1D008DE44E /* MEGAAssets */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -15518,7 +15519,6 @@
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
-				B6B1A27928A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
@@ -16459,7 +16459,6 @@
 				83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */,
 				A899467B297189F5008448C4 /* MEGAConstants.m in Sources */,
 				83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */,
-				B6B1A27B28A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */,
 				A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */,
 				83E345A525B598A7006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
@@ -16603,7 +16602,6 @@
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				C482B7D4271F360A0074CFC4 /* MEGAError+MNZCategory.m in Sources */,
 				94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */,
-				B6B1A27A28A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				77D7E853243719E0005D2795 /* MEGAFunctions.swift in Sources */,
 				2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				24DA49E12B172B360065FF57 /* MEGAGetPublicNodeRequestDelegate.m in Sources */,
@@ -19099,6 +19097,14 @@
 		2446DEE82B0F099D00FA3FB8 /* Video */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Video;
+		};
+		25455BE72CCB8E1D008DE44E /* MEGAAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAssets;
+		};
+		25455BE92CCB8FE0008DE44E /* MEGAAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAssets;
 		};
 		256428542CC7927D005DA9B1 /* ContentLibraries */ = {
 			isa = XCSwiftPackageProductDependency;

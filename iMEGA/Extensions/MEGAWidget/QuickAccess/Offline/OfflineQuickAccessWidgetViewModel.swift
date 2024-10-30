@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
@@ -52,7 +53,7 @@ final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     
     private func imageForPatExtension(_ pathExtension: String) -> Image {
         if pathExtension != "" {
-            return Image(FileTypes().fileTypeImageResources[pathExtension] ?? .filetypeGeneric)
+            return MEGAAssetsImageProvider.fileTypeResource(forFileExtension: pathExtension)
         } else {
             return Image(.filetypeFolder)
         }

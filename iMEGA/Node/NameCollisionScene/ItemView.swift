@@ -7,11 +7,11 @@ struct ItemView: View {
     var size: String?
     var date: String?
     var imageUrl: URL?
-    var imagePlaceholder: MEGAFileTypeResource
+    var imagePlaceholder: Image
     
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
-            (Image(contentsOfFile: imageUrl?.path) ?? Image(imagePlaceholder))
+            (Image(contentsOfFile: imageUrl?.path) ?? imagePlaceholder)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 40.0, height: 40.0)
