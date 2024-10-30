@@ -145,14 +145,14 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             
             defer { cancelAlbumRemoveShareLinkTask() }
             
-            let removeLinkAlbumIds = Set(albums.map { $0.id })
-            let successfullyRemoveLinkAlbumIds = await shareCollectionUseCase.removeSharedLink(forAlbums: albums)
+            let removeLinkAlbumIds = Set(albums.map { SetIdentifier(handle: $0.id) })
+            let successfullyRemoveLinkAlbumIds = await shareCollectionUseCase.removeSharedLink(forCollections: albums.map { SetIdentifier(handle: $0.id) })
             let diff = Set(removeLinkAlbumIds).subtracting(Set(successfullyRemoveLinkAlbumIds))
             
             if diff.count == 0 {
-                onRemoveAlbumShareLinkSuccess(successfullyRemoveLinkAlbumIds)
+                onRemoveAlbumShareLinkSuccess(successfullyRemoveLinkAlbumIds.map { HandleEntity($0.handle) })
             } else if diff.count < removeLinkAlbumIds.count {
-                onRemoveAlbumShareLinkSuccess(successfullyRemoveLinkAlbumIds)
+                onRemoveAlbumShareLinkSuccess(successfullyRemoveLinkAlbumIds.map { HandleEntity($0.handle) })
                 MEGALogError("Albums [\(diff)] share link can not be removed")
             } else {
                 MEGALogError("Albums [\(diff)] share link can not be removed")

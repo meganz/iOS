@@ -441,7 +441,7 @@ final class AlbumContentViewModel: ViewModelType {
     private func removeSharedLink() {
         Task {
             do {
-                try await shareCollectionUseCase.removeSharedLink(forAlbum: album)
+                try await shareCollectionUseCase.removeSharedLink(forCollectionId: SetIdentifier(handle: album.id))
                 invokeCommand?(.showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1))))
             } catch {
                 MEGALogError("Error removing album link for album: \(album.id)")

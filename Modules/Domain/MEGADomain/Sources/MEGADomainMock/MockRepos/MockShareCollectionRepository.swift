@@ -3,7 +3,7 @@ import MEGASwift
 
 public final class MockShareCollectionRepository: ShareCollectionRepositoryProtocol, @unchecked Sendable {
     public static let newRepo = MockShareCollectionRepository()
-    private let shareCollectionResults: [HandleEntity: Result<String?, Error>]
+    private let shareCollectionResults: [SetIdentifier: Result<String?, Error>]
     private let disableCollectionShareResult: Result<Void, Error>
     private let publicCollectionContentsResult: Result<SharedCollectionEntity, Error>
     private let publicNodeResults: [HandleEntity: Result<NodeEntity, Error>]
@@ -12,7 +12,7 @@ public final class MockShareCollectionRepository: ShareCollectionRepositoryProto
     @Atomic public var stopCollectionLinkPreviewCalled = 0
     
     public init(
-        shareCollectionResults: [HandleEntity: Result<String?, Error>] = [:],
+        shareCollectionResults: [SetIdentifier: Result<String?, Error>] = [:],
         disableCollectionShareResult: Result<Void, Error> = .failure(GenericErrorEntity()),
         publicCollectionContentsResult: Result<SharedCollectionEntity, Error> = .failure(GenericErrorEntity()),
         publicNodeResults: [HandleEntity: Result<NodeEntity, Error>] = [:],
@@ -25,8 +25,8 @@ public final class MockShareCollectionRepository: ShareCollectionRepositoryProto
         self.copyPublicNodesResult = copyPublicNodesResult
     }
     
-    public func shareCollectionLink(_ album: AlbumEntity) async throws -> String? {
-        guard let shareCollectionResult = shareCollectionResults.first(where: { $0.key == album.id })?.value else {
+    public func shareCollectionLink(_ collection: SetEntity) async throws -> String? {
+        guard let shareCollectionResult = shareCollectionResults.first(where: { $0.key == collection.setIdentifier })?.value else {
             return nil
         }
         return try await withCheckedThrowingContinuation {
@@ -34,7 +34,7 @@ public final class MockShareCollectionRepository: ShareCollectionRepositoryProto
         }
     }
     
-    public func removeSharedLink(forCollectionId id: HandleEntity) async throws {
+    public func removeSharedLink(forCollectionId id: SetIdentifier) async throws {
         try await withCheckedThrowingContinuation {
             $0.resume(with: disableCollectionShareResult)
         }

@@ -1,8 +1,8 @@
 import Foundation
 
 public protocol ShareCollectionRepositoryProtocol: RepositoryProtocol, Sendable {
-    func shareCollectionLink(_ album: AlbumEntity) async throws -> String?
-    func removeSharedLink(forCollectionId id: HandleEntity) async throws
+    func shareCollectionLink(_ collection: SetEntity) async throws -> String?
+    func removeSharedLink(forCollectionId id: SetIdentifier) async throws
     /// Retrieve set and set entities for collection link
     /// - Parameter link: public collection link to retrieve Set and Set elements
     ///

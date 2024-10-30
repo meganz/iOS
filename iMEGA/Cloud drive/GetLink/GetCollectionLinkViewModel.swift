@@ -4,7 +4,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
-final class GetAlbumLinkViewModel: GetLinkViewModelType {
+final class GetCollectionLinkViewModel: GetLinkViewModelType {
     var invokeCommand: ((GetLinkViewModelCommand) -> Void)?
     let isMultiLink: Bool = false
     var loadingTask: Task<Void, Never>?
@@ -19,7 +19,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         return decryptCellViewModel.isSwitchOn
     }
     
-    private let album: AlbumEntity
+    private let collection: SetEntity
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
@@ -32,13 +32,13 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         loadingTask?.cancel()
     }
     
-    init(album: AlbumEntity,
+    init(setEntity: SetEntity,
          shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
          tracker: some AnalyticsTracking,
          remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         
-        self.album = album
+        self.collection = setEntity
         self.shareCollectionUseCase = shareCollectionUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
@@ -50,7 +50,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     func dispatch(_ action: GetLinkAction) {
         switch action {
         case .onViewReady:
-            tracker.trackAnalyticsEvent(with: SingleAlbumLinkScreenEvent())
+            trackOnViewReadyAnalyticsEvent()
             updateViewConfiguration()
         case .onViewDidAppear where loadingTask == nil:
             loadingTask = Task { await startGetLinksCoordinatorStream() }
@@ -83,8 +83,18 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     }
     
     // MARK: - Private
+    
+    private func trackOnViewReadyAnalyticsEvent() {
+        switch collection.setType {
+        case .album:
+            tracker.trackAnalyticsEvent(with: SingleAlbumLinkScreenEvent())
+        case .playlist, .invalid:
+            break
+        }
+    }
+    
     private func updateViewConfiguration() {
-        let title = album.isLinkShared ? Strings.Localizable.General.MenuAction.ManageLink.title(1) :
+        let title = collection.isExported ? Strings.Localizable.General.MenuAction.ManageLink.title(1) :
         Strings.Localizable.General.MenuAction.ShareLink.title(1)
         invokeCommand?(.configureView(title: title,
                                       isMultilink: isMultiLink,
@@ -101,35 +111,35 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         for await status in stream {
             switch status {
             case .unknown:
-                await determineIfAlbumsContainSensitiveNodes(continuation: continuation)
+                await determineIfCollectionsContainSensitiveNodes(continuation: continuation)
             case .notDetermined:
                 showContainsSensitiveContentAlert(continuation: continuation)
             case .noSensitiveContent:
-                await loadAlbumLink(continuation: continuation)
+                await loadCollectionLink(continuation: continuation)
             case .authorized:
                 invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
-                await loadAlbumLink(continuation: continuation)
+                await loadCollectionLink(continuation: continuation)
             case .denied:
                 invokeCommand?(.dismiss)
             }
         }
     }
     
-    private func loadAlbumLink(continuation: Continuation) async {
-        do { 
-            if let albumLink = try await shareCollectionUseCase.shareCollectionLink(album), !Task.isCancelled {
-                updateLink(albumLink)
+    private func loadCollectionLink(continuation: Continuation) async {
+        do {
+            if let collectionLink = try await shareCollectionUseCase.shareCollectionLink(collection), !Task.isCancelled {
+                updateLink(collectionLink)
             }
         } catch {
-            MEGALogError("Error sharing album link: \(error.localizedDescription)")
+            MEGALogError("Error sharing collection link: \(error.localizedDescription)")
             invokeCommand?(.dismissHud)
         }
         continuation.finish()
     }
         
-    private func determineIfAlbumsContainSensitiveNodes(continuation: Continuation) async {
+    private func determineIfCollectionsContainSensitiveNodes(continuation: Continuation) async {
         
-        guard !album.isLinkShared else {
+        guard !collection.isExported else {
             continuation.yield(.authorized)
             return
         }
@@ -137,10 +147,10 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         invokeCommand?(.showHud(.status(Strings.Localizable.generatingLinks)))
         
         do {
-            let result = try await shareCollectionUseCase.doesCollectionsContainSensitiveElement(for: [album])
+            let result = try await shareCollectionUseCase.doesCollectionsContainSensitiveElement(for: [collection])
             continuation.yield(result ? .notDetermined : .noSensitiveContent)
         } catch {
-            MEGALogError("[\(type(of: self))]: determineIfAlbumsContainSensitiveNodes returned \(error.localizedDescription)")
+            MEGALogError("[\(type(of: self))]: determineIfCollectionsContainSensitiveNodes returned \(error.localizedDescription)")
             continuation.finish()
         }
     }

@@ -34,7 +34,7 @@ struct ShareAlbumsLinkInitialSections {
                     albumCoverUseCase: albumCoverUseCase
                 ),
                 GetLinkStringCellViewModel(link: "")
-            ], itemHandle: $0.id)
+            ], setIdentifier: $0.setIdentifier)
         }
     }
 }

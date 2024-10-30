@@ -9,7 +9,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let expectedLink = "the_shared_link"
         let mockSdk = MockSdk(link: expectedLink)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
-        let result = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
+        let result = try await sut.shareCollectionLink(SetEntity(handle: 1, isExported: false))
         XCTAssertEqual(result, expectedLink)
     }
     
@@ -17,7 +17,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let expectedLink = "the_existing_shared_link"
         let mockSdk = MockSdk(link: expectedLink)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
-        let result = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)))
+        let result = try await sut.shareCollectionLink(SetEntity(handle: 1, isExported: true))
         XCTAssertEqual(result, expectedLink)
     }
     
@@ -25,7 +25,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBusinessPastDue)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            _ = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
+            _ = try await sut.shareCollectionLink(SetEntity(handle: 1, isExported: false))
         } catch {
             XCTAssertEqual(error as? ShareCollectionErrorEntity, ShareCollectionErrorEntity.buisinessPastDue)
         }
@@ -35,7 +35,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            _ = try await sut.shareCollectionLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
+            _ = try await sut.shareCollectionLink(SetEntity(handle: 1, isExported: false))
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {
@@ -45,14 +45,14 @@ class ShareAlbumRepositoryTests: XCTestCase {
     
     func testDisableAlbumShare_onSuccess_shouldComplete() async throws {
         let sut = makeShareAlbumRepository(sdk: MockSdk())
-        try await sut.removeSharedLink(forCollectionId: 1)
+        try await sut.removeSharedLink(forCollectionId: SetIdentifier(handle: 1))
     }
     
     func testDisableAlbumShare_onBuisinessPastDue_shouldThrowError() async {
         let mockSdk = MockSdk(megaSetError: .apiEBusinessPastDue)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            try await sut.removeSharedLink(forCollectionId: 1)
+            try await sut.removeSharedLink(forCollectionId: SetIdentifier(handle: 1))
         } catch {
             XCTAssertEqual(error as? ShareCollectionErrorEntity, ShareCollectionErrorEntity.buisinessPastDue)
         }
@@ -62,7 +62,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = makeShareAlbumRepository(sdk: mockSdk)
         do {
-            try await sut.removeSharedLink(forCollectionId: 1)
+            try await sut.removeSharedLink(forCollectionId: SetIdentifier(handle: 1))
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {

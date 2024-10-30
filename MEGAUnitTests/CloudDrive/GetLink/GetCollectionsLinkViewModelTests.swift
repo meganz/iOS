@@ -8,28 +8,28 @@ import MEGAPresentationMock
 import MEGATest
 import XCTest
 
-final class GetAlbumsLinkViewModelTests: XCTestCase {
+final class GetCollectionsLinkViewModelTests: XCTestCase {
 
     func testNumberOfSections_init_isCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let sections = [
-            GetLinkSectionViewModel(sectionType: .info, cellViewModels: [], itemHandle: album.id)
+            GetLinkSectionViewModel(sectionType: .info, cellViewModels: [], setIdentifier: album.setIdentifier)
         ]
-        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+        let sut = makeCollectionsLinkViewModel(setEntities: [album],
                                              sectionViewModels: sections)
         
         XCTAssertEqual(sut.numberOfSections, sections.count)
     }
     
     func testNumberRowsInSection_init_isCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let cellViewModels = [GetLinkStringCellViewModel(link: "Test link")]
         let sections = [
             GetLinkSectionViewModel(sectionType: .info,
                                     cellViewModels: cellViewModels,
-                                    itemHandle: album.id)
+                                    setIdentifier: album.setIdentifier)
         ]
-        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+        let sut = makeCollectionsLinkViewModel(setEntities: [album],
                                              sectionViewModels: sections)
         
         XCTAssertEqual(sut.numberOfRowsInSection(0),
@@ -37,14 +37,14 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     }
     
     func testCellViewModel_init_forIndexPath_isCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let cellViewModels = [GetLinkStringCellViewModel(link: "Test link")]
         let sections = [
             GetLinkSectionViewModel(sectionType: .info,
                                     cellViewModels: cellViewModels,
-                                    itemHandle: album.id)
+                                    setIdentifier: album.setIdentifier)
         ]
-        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+        let sut = makeCollectionsLinkViewModel(setEntities: [album],
                                              sectionViewModels: sections)
         
         let indexPath = IndexPath(row: 0, section: 0)
@@ -54,11 +54,11 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     }
     
     func testCellViewModel_init_sectionTypeRetrievalIsCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let section = GetLinkSectionViewModel(sectionType: .info,
                                               cellViewModels: [],
-                                              itemHandle: album.id)
-        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+                                              setIdentifier: album.setIdentifier)
+        let sut = makeCollectionsLinkViewModel(setEntities: [album],
                                              sectionViewModels: [section])
         
         XCTAssertEqual(sut.sectionType(forSection: 0),
@@ -67,11 +67,11 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     
     @MainActor func testDispatch_onViewReady_shouldSetTitleToShareLinkAndTrackEvent() throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
+            let albums = [SetEntity(handle: 1, setType: .album), SetEntity(handle: 2, setType: .album)]
             let tracker = MockTracker()
-            let sut = makeGetAlbumsLinkViewModel(
-                albums: albums,
-                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+            let sut = makeCollectionsLinkViewModel(
+                setEntities: albums,
+                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = false })),
                 tracker: tracker,
                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -97,13 +97,13 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     @MainActor func testDispatch_onViewReadyAndAllAlbumsAlreadyExported_shouldSetTitleToShareLinkAndTrackEvent() throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let albums = [
-                AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)),
-                AlbumEntity(id: 2, type: .user, sharedLinkStatus: .exported(true))
+                SetEntity(handle: 1, setType: .album, isExported: true),
+                SetEntity(handle: 2, setType: .album, isExported: true)
             ]
             let tracker = MockTracker()
-            let sut = makeGetAlbumsLinkViewModel(
-                albums: albums,
-                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+            let sut = makeCollectionsLinkViewModel(
+                setEntities: albums,
+                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = false })),
                 tracker: tracker,
                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -129,26 +129,26 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     @MainActor func testDispatch_onViewReadyLinksLoaded_shouldUpdateLinkCells() throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
-            let firstAlbum = AlbumEntity(id: 1, type: .user)
-            let secondAlbum = AlbumEntity(id: 2, type: .user)
+            let firstAlbum = SetEntity(handle: 1, setType: .album)
+            let secondAlbum = SetEntity(handle: 2, setType: .album)
             let albums = [firstAlbum, secondAlbum]
             let sections = albums.map {
                 GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                     GetLinkStringCellViewModel(link: "")
-                ], itemHandle: $0.id)
+                ], setIdentifier: $0.setIdentifier)
             }
             let expectedRowReloads = sections.indices.map {
                 IndexPath(row: 0, section: $0)
             }
-            let links = [firstAlbum.id: "link1", secondAlbum.id: "link2"]
-            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+            let links = [ firstAlbum.id: "link1", secondAlbum.id: "link2" ]
+            let sut = makeCollectionsLinkViewModel(setEntities: albums,
                                                  shareCollectionUseCase: MockShareCollectionUseCase(
                                                     shareCollectionsLinks: links,
-                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
-            expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
+            expectSuccessfulOnViewReady(sut: sut, setEntities: albums, expectedRowReload: expectedRowReloads)
             
             try expectedRowReloads.forEach { index in
                 let cellViewModel = try XCTUnwrap(sut.cellViewModel(indexPath: index) as? GetLinkStringCellViewModel)
@@ -160,24 +160,24 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     @MainActor func testDispatch_shareLink_shouldShowShareActivityWithJoinedLinksInNewLine() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
-            let albums = [AlbumEntity(id: 1, type: .user),
-                          AlbumEntity(id: 2, type: .user)]
+            let albums = [SetEntity(handle: 1, setType: .album),
+                          SetEntity(handle: 2, setType: .album)]
             let sections = albums.map {
                 GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                     GetLinkStringCellViewModel(link: "")
-                ], itemHandle: $0.id)
+                ], setIdentifier: $0.setIdentifier)
             }
-            let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
-            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+            let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.setIdentifier, "link-\($0.handle)") })
+            let sut = makeCollectionsLinkViewModel(setEntities: albums,
                                                  shareCollectionUseCase: MockShareCollectionUseCase(
                                                     shareCollectionsLinks: links,
-                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             let expectedRowReloads = sections.indices.map {
                 IndexPath(row: 0, section: $0)
             }
-            expectSuccessfulOnViewReady(sut: sut, albums: albums,
+            expectSuccessfulOnViewReady(sut: sut, setEntities: albums,
                                         expectedRowReload: expectedRowReloads)
             
             let expectedLink = links.values.joined(separator: "\n")
@@ -192,25 +192,25 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     @MainActor func testDispatch_copyLink_shouldAddSpaceSeparatedLinksToPasteboard() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
-            let albums = [AlbumEntity(id: 1, type: .user),
-                          AlbumEntity(id: 2, type: .user)]
+            let albums = [SetEntity(handle: 1, setType: .album),
+                          SetEntity(handle: 2, setType: .album)]
             let sections = albums.map {
                 GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                     GetLinkStringCellViewModel(link: "")
-                ], itemHandle: $0.id)
+                ], setIdentifier: $0.setIdentifier)
             }
-            let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
-            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+            let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.setIdentifier, "link-\($0.handle)") })
+            let sut = makeCollectionsLinkViewModel(setEntities: albums,
                                                  shareCollectionUseCase: MockShareCollectionUseCase(
                                                     shareCollectionsLinks: links,
-                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
             let expectedRowReloads = sections.indices.map {
                 IndexPath(row: 0, section: $0)
             }
-            expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
+            expectSuccessfulOnViewReady(sut: sut, setEntities: albums, expectedRowReload: expectedRowReloads)
             let expectedLink = links.values.joined(separator: " ")
             test(viewModel: sut, action: .copyLink,
                  expectedCommands: [
@@ -223,25 +223,25 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     
     @MainActor func testDispatch_onDidSelectRowIndexPath_shouldAddSelectedLinkToPasteBoard() {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let album = AlbumEntity(id: 1, type: .user)
-            let otherAlbum = AlbumEntity(id: 3, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
+            let otherAlbum = SetEntity(handle: 3, setType: .album)
             let albums = [album, otherAlbum]
             let sections = albums.map {
                 GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                     GetLinkStringCellViewModel(link: "")
-                ], itemHandle: $0.id)
+                ], setIdentifier: $0.setIdentifier)
             }
             let expectedLink = "link-to-copy"
-            let links = [album.id: expectedLink]
-            let sut = makeGetAlbumsLinkViewModel(albums: albums,
+            let links = [ album.id: expectedLink ]
+            let sut = makeCollectionsLinkViewModel(setEntities: albums,
                                                  shareCollectionUseCase: MockShareCollectionUseCase(
                                                     shareCollectionsLinks: links,
-                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = false })),
+                                                    doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = false })),
                                                  sectionViewModels: sections,
                                                  hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
             let linkIndexPath = IndexPath(row: 0, section: 0)
-            expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: [linkIndexPath])
+            expectSuccessfulOnViewReady(sut: sut, setEntities: albums, expectedRowReload: [linkIndexPath])
             
             test(viewModel: sut, action: .didSelectRow(indexPath: linkIndexPath),
                  expectedCommands: [
@@ -253,11 +253,11 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     }
     
     @MainActor func testDispatch_onViewReadyAndAlbumContainsSensitiveElement_shouldShowAlert() throws {
-        let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
+        let albums = [SetEntity(handle: 1, setType: .album), SetEntity(handle: 2, setType: .album)]
         let tracker = MockTracker()
-        let sut = makeGetAlbumsLinkViewModel(
-            albums: albums,
-            shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+        let sut = makeCollectionsLinkViewModel(
+            setEntities: albums,
+            shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = true })),
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
         
@@ -287,19 +287,19 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     }
     
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsContinue_shouldLoadLinks() throws {
-        let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
+        let albums = [SetEntity(handle: 1, setType: .album), SetEntity(handle: 2, setType: .album)]
         let sections = albums.map {
             GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                 GetLinkStringCellViewModel(link: "")
-            ], itemHandle: $0.id)
+            ], setIdentifier: $0.setIdentifier)
         }
         let expectedRowReloads = sections.indices.map { IndexPath(row: 0, section: $0) }
         let tracker = MockTracker()
-        let sut = makeGetAlbumsLinkViewModel(
-            albums: albums,
+        let sut = makeCollectionsLinkViewModel(
+            setEntities: albums,
             shareCollectionUseCase: MockShareCollectionUseCase(
-                shareCollectionsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
-                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+                shareCollectionsLinks: Dictionary(uniqueKeysWithValues: albums.map { (SetIdentifier(handle: $0.handle), "link-\($0.handle)") }),
+                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = true })),
             sectionViewModels: sections,
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
@@ -329,21 +329,21 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     
     @MainActor func testDispatch_onViewReadyAndOneAlbumContainsSensitiveElementsAndIsNotExported_shouldShowAlert() throws {
         let albums = [
-            AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)),
-            AlbumEntity(id: 2, type: .user)
+            SetEntity(handle: 1, setType: .album, isExported: true),
+            SetEntity(handle: 2, setType: .album)
         ]
         let sections = albums.map {
             GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                 GetLinkStringCellViewModel(link: "")
-            ], itemHandle: $0.id)
+            ], setIdentifier: $0.setIdentifier)
         }
 
         let tracker = MockTracker()
-        let sut = makeGetAlbumsLinkViewModel(
-            albums: albums,
+        let sut = makeCollectionsLinkViewModel(
+            setEntities: albums,
             shareCollectionUseCase: MockShareCollectionUseCase(
-                shareCollectionsLinks: Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") }),
-                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+                shareCollectionsLinks: Dictionary(uniqueKeysWithValues: albums.map { (SetIdentifier(handle: $0.handle), "link-\($0.handle)") }),
+                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = true })),
             sectionViewModels: sections,
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
@@ -367,12 +367,12 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
     }
     
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsCancel_shouldDismissView() throws {
-        let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
+        let albums = [SetEntity(handle: 1, setType: .album), SetEntity(handle: 2, setType: .album)]
         let tracker = MockTracker()
-        let sut = makeGetAlbumsLinkViewModel(
-            albums: albums,
+        let sut = makeCollectionsLinkViewModel(
+            setEntities: albums,
             shareCollectionUseCase: MockShareCollectionUseCase(
-                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.id] = true })),
+                doesCollectionsContainSensitiveElement: albums.reduce(into: [HandleEntity: Bool](), { $0[$1.handle] = true })),
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
         
@@ -395,11 +395,11 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
-    @MainActor private func expectSuccessfulOnViewReady(sut: GetAlbumsLinkViewModel, albums: [AlbumEntity], expectedRowReload: [IndexPath]) {
+    @MainActor private func expectSuccessfulOnViewReady(sut: GetCollectionsLinkViewModel, setEntities: [SetEntity], expectedRowReload: [IndexPath]) {
         test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
-            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count),
+            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(setEntities.count),
                            isMultilink: true,
-                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(setEntities.count)),
             .hideMultiLinkDescription,
             .showHud(.status(Strings.Localizable.generatingLinks)),
             .reloadRows(expectedRowReload),
@@ -408,14 +408,14 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
-    private func makeGetAlbumsLinkViewModel(
-        albums: [AlbumEntity] = [],
+    private func makeCollectionsLinkViewModel(
+        setEntities: [SetEntity] = [],
         shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         sectionViewModels: [GetLinkSectionViewModel] = [],
         tracker: some AnalyticsTracking = MockTracker(),
         hiddenNodesFeatureFlagActive: Bool = false
-    ) -> GetAlbumsLinkViewModel {
-        GetAlbumsLinkViewModel(albums: albums,
+    ) -> GetCollectionsLinkViewModel {
+        GetCollectionsLinkViewModel(setEntities: setEntities,
                                shareCollectionUseCase: shareCollectionUseCase,
                                sectionViewModels: sectionViewModels,
                                tracker: tracker,
