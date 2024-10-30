@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 
@@ -55,8 +56,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
             thumbnailImageView.image = thumbnailImage
             
         case .setIcon(let iconName):
-            let iconImage = UIImage(resource: iconName)
-            thumbnailImageView.image = iconImage
+            thumbnailImageView.image = MEGAAssetsImageProvider.image(named: iconName)
             
         case .setVersions(let hasVersions):
             versionedImageView.isHidden = !hasVersions

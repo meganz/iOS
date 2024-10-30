@@ -1,4 +1,6 @@
+import MEGAAssets
 import MEGADomain
+import SwiftUI
 
 struct DuplicatedItem {
     var name: String
@@ -6,7 +8,7 @@ struct DuplicatedItem {
     var isFile: Bool
     var size: String
     var date: String
-    var imagePlaceholder: MEGAFileTypeResource
+    var imagePlaceholder: Image
     var collisionFileSize: String?
     var collisionFileDate: String?
     var collisionNodeHandle: HandleEntity?

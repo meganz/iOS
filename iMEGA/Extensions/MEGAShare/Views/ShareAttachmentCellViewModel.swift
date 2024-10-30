@@ -1,9 +1,11 @@
 import Combine
+import MEGAAssets
 import MEGADomain
 import MEGASwift
+import SwiftUI
 
 final class ShareAttachmentCellViewModel: ObservableObject {
-    private(set) var fileIcon: MEGAFileTypeResource = .filetypeGeneric
+    private(set) var fileIcon: Image = MEGAAssetsImageProvider.image(named: .filetypeGeneric)
     private(set) var fileExtension: FileExtension = ""
     private let index: Int
     @Published var fileName = ""
@@ -17,12 +19,12 @@ final class ShareAttachmentCellViewModel: ObservableObject {
         let name = attachment.name ?? ""
         
         if attachment.type == .URL {
-            fileIcon = .filetypeWebData
+            fileIcon = MEGAAssetsImageProvider.image(named: .filetypeWebData)
             fileName = name
             fileExtension = ""
         } else {
             let extensionOfFile = name.pathExtension
-            fileIcon = NodeAssetsManager.shared.image(for: extensionOfFile)
+            fileIcon = MEGAAssetsImageProvider.fileTypeResource(forFileExtension: extensionOfFile)
             fileExtension = extensionOfFile.isNotEmpty ? ".\(extensionOfFile)" : ""
             fileName = NSURL(fileURLWithPath: name).deletingPathExtension?.lastPathComponent ?? ""
         }

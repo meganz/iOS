@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADomain
 import MEGAFoundation
 import MEGAPresentation
@@ -74,7 +75,7 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     
     private func imageForPatExtension(_ pathExtension: String) -> Image {
         if pathExtension != "" {
-            return Image(FileTypes().fileTypeImageResources[pathExtension] ?? .filetypeGeneric)
+            return MEGAAssetsImageProvider.fileTypeResource(forFileExtension: pathExtension)
         } else {
             return Image(.filetypeFolder)
         }

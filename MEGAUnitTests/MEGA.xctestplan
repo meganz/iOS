@@ -104,59 +104,9 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/Chat",
-        "identifier" : "ChatTests",
-        "name" : "ChatTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/Shared\/ContentLibraries",
-        "identifier" : "ContentLibrariesTests",
-        "name" : "ContentLibrariesTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/Search",
-        "identifier" : "SearchTests",
-        "name" : "SearchTests"
-      }
-    },
-    {
-      "enabled" : false,
-      "target" : {
-        "containerPath" : "container:Modules\/UI\/MEGAUIKit",
-        "identifier" : "MEGAUIKitTests",
-        "name" : "MEGAUIKitTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Modules\/Repository\/ChatRepo",
-        "identifier" : "ChatRepoTests",
-        "name" : "ChatRepoTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Modules\/Domain\/MEGADomain",
-        "identifier" : "MEGADomainTests",
-        "name" : "MEGADomainTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Modules\/Infrastracture\/MEGASwift",
         "identifier" : "MEGASwiftTests",
         "name" : "MEGASwiftTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
-        "identifier" : "MEGAAnalyticsDomainTests",
-        "name" : "MEGAAnalyticsDomainTests"
       }
     },
     {
@@ -168,16 +118,31 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/MEGAPhotos",
-        "identifier" : "MEGAPhotosTests",
-        "name" : "MEGAPhotosTests"
+        "containerPath" : "container:Modules\/Presentation\/MEGAAssets",
+        "identifier" : "MEGAAssetsTests",
+        "name" : "MEGAAssetsTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/Settings",
-        "identifier" : "SettingsTests",
-        "name" : "SettingsTests"
+        "containerPath" : "container:Modules\/Presentation\/Features\/Accounts",
+        "identifier" : "AccountsTests",
+        "name" : "AccountsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/PhotosBrowser",
+        "identifier" : "PhotosBrowserTests",
+        "name" : "PhotosBrowserTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:Modules\/UI\/MEGASwiftUI",
+        "identifier" : "MEGASwiftUITests",
+        "name" : "MEGASwiftUITests"
       }
     },
     {
@@ -201,16 +166,23 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/MEGAPresentation",
-        "identifier" : "MEGAPresentationTests",
-        "name" : "MEGAPresentationTests"
+        "containerPath" : "container:Modules\/Presentation\/Features\/Video",
+        "identifier" : "VideoTests",
+        "name" : "VideoTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/PhotosBrowser",
-        "identifier" : "PhotosBrowserTests",
-        "name" : "PhotosBrowserTests"
+        "containerPath" : "container:Modules\/Presentation\/Features\/DeviceCenter",
+        "identifier" : "DeviceCenterTests",
+        "name" : "DeviceCenterTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/Shared\/ContentLibraries",
+        "identifier" : "ContentLibrariesTests",
+        "name" : "ContentLibrariesTests"
       }
     },
     {
@@ -231,11 +203,53 @@
       }
     },
     {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/MEGAPresentation",
+        "identifier" : "MEGAPresentationTests",
+        "name" : "MEGAPresentationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/Chat",
+        "identifier" : "ChatTests",
+        "name" : "ChatTests"
+      }
+    },
+    {
       "enabled" : false,
       "target" : {
-        "containerPath" : "container:Modules\/UI\/MEGASwiftUI",
-        "identifier" : "MEGASwiftUITests",
-        "name" : "MEGASwiftUITests"
+        "containerPath" : "container:Modules\/UI\/MEGAUIKit",
+        "identifier" : "MEGAUIKitTests",
+        "name" : "MEGAUIKitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
+        "identifier" : "MEGAAnalyticsDomainTests",
+        "name" : "MEGAAnalyticsDomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Repository\/ChatRepo",
+        "identifier" : "ChatRepoTests",
+        "name" : "ChatRepoTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Infrastracture\/MEGAPermissions",
+        "identifier" : "MEGAPermissionsTests",
+        "name" : "MEGAPermissionsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/Settings",
+        "identifier" : "SettingsTests",
+        "name" : "SettingsTests"
       }
     },
     {
@@ -253,30 +267,23 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/Accounts",
-        "identifier" : "AccountsTests",
-        "name" : "AccountsTests"
+        "containerPath" : "container:Modules\/Presentation\/Features\/Search",
+        "identifier" : "SearchTests",
+        "name" : "SearchTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Infrastracture\/MEGAPermissions",
-        "identifier" : "MEGAPermissionsTests",
-        "name" : "MEGAPermissionsTests"
+        "containerPath" : "container:Modules\/Presentation\/Features\/MEGAPhotos",
+        "identifier" : "MEGAPhotosTests",
+        "name" : "MEGAPhotosTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/DeviceCenter",
-        "identifier" : "DeviceCenterTests",
-        "name" : "DeviceCenterTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Modules\/Presentation\/Features\/Video",
-        "identifier" : "VideoTests",
-        "name" : "VideoTests"
+        "containerPath" : "container:Modules\/Domain\/MEGADomain",
+        "identifier" : "MEGADomainTests",
+        "name" : "MEGADomainTests"
       }
     }
   ],

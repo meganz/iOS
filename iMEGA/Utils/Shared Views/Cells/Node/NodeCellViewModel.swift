@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -20,7 +21,7 @@ final class NodeCellViewModel: ViewModelType {
         case hideLabel(Bool)
         case setLabel(String)
         case setThumbnail(String)
-        case setIcon(MEGAFileTypeResource)
+        case setIcon(MEGAAssetsImageName)
         case setVersions(Bool)
         case setDownloaded(Bool)
     }
@@ -146,18 +147,17 @@ final class NodeCellViewModel: ViewModelType {
                 self.invokeCommand?(.setIcon(folderImage(for: nodeModel)))
             }
         } else if nodeModel.isFile {
-            let image = FileTypes().fileTypeResource(forFileName: nodeModel.name)
-            self.invokeCommand?(.setIcon(image))
+            self.invokeCommand?(.setIcon(MEGAAssetsImageProvider.fileTypeResource(forFileName: nodeModel.name)))
         }
     }
     
-    private func folderImage(for nodeModel: NodeEntity) -> MEGAFileTypeResource {
+    private func folderImage(for nodeModel: NodeEntity) -> MEGAAssetsImageName {
         if nodeModel.isInShare {
-            return .folderIncoming
+            .folderIncoming
         } else if nodeModel.isOutShare {
-            return .folderOutgoing
+            .folderOutgoing
         } else {
-            return .filetypeFolder
+            .filetypeFolder
         }
     }
 }

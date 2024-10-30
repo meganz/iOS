@@ -1,4 +1,6 @@
+import MEGAAssets
 import MEGADomain
+import SwiftUI
 
 struct NameCollisionAction: Identifiable {
     let id = UUID()
@@ -8,5 +10,5 @@ struct NameCollisionAction: Identifiable {
     var date: String?
     var isFile: Bool
     var imageUrl: URL?
-    var imagePlaceholder: MEGAFileTypeResource = .filetypeGeneric
+    var imagePlaceholder: Image = MEGAAssetsImageProvider.image(named: .filetypeGeneric)
 }

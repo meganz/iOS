@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAPresentation
 import SwiftUI
@@ -17,6 +18,6 @@ extension ThumbnailLoaderProtocol {
 
 fileprivate extension NodeEntity {
     var placeholderImage: Image {
-        Image(FileTypes().fileTypeResource(forFileName: name))
+        MEGAAssetsImageProvider.fileTypeResource(forFileName: name)
     }
 }

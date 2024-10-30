@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -118,8 +119,8 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         _ nodeName: String,
         completion: @escaping (UIImage?) -> Void
     ) {
-        let fileTypeImageResource = FileTypes().fileTypeResource(forFileExtension: nodeName.pathExtension)
-        completion(UIImage(resource: fileTypeImageResource))
+        let fileTypeImageResource: UIImage = MEGAAssetsImageProvider.fileTypeResource(forFileExtension: nodeName.pathExtension)
+        completion(fileTypeImageResource)
     }
 
     private func defaultFolderImage(forNode node: NodeEntity) -> UIImage? {

@@ -1,5 +1,6 @@
 @preconcurrency import Combine
 @testable import MEGA
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAFoundation
@@ -46,7 +47,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     @MainActor
     func testInit_defaultValue() {
-        let initialContainer = ImageContainer(image: Image(FileTypes().fileTypeResource(forFileName: "0.jpg")), type: .placeholder)
+        let initialContainer = ImageContainer(image: MEGAAssetsImageProvider.fileTypeResource(forFileName: "0.jpg"), type: .placeholder)
         let sut = makeSUT(photo: NodeEntity(name: "0.jpg", handle: 0),
                                      viewModel: allViewModel,
                           thumbnailLoader: MockThumbnailLoader(initialImage: initialContainer))
@@ -187,7 +188,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadThumbnail_noThumbnails_showPlaceholder() async {
-        let placeholder = ImageContainer(image: Image(.filetypeImages), type: .placeholder)
+        let placeholder = ImageContainer(image: MEGAAssetsImageProvider.image(named: .filetypeImages), type: .placeholder)
         let sut = makeSUT(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
