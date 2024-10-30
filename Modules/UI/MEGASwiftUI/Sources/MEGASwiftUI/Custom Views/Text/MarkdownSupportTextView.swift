@@ -11,6 +11,7 @@ public struct MarkdownSupportTextView: View {
     public var body: some View {
         ScrollView {
             Text(localizedStringKey)
+                .textSelection(.enabled)
                 .multilineTextAlignment(.leading)
                 .padding()
         }
