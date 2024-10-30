@@ -16,7 +16,10 @@ let package = Package(
     products: [
         .library(
             name: "MEGAUI",
-            targets: ["MEGAUI"])
+            targets: ["MEGAUI"]),
+        .library(
+            name: "MEGAUIMock",
+            targets: ["MEGAUIMock"])
     ],
     dependencies: [
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
@@ -26,6 +29,11 @@ let package = Package(
             name: "MEGAUI",
             dependencies: ["MEGADesignToken"],
             swiftSettings: settings),
+        .target(
+            name: "MEGAUIMock",
+            dependencies: ["MEGAUI"],
+            swiftSettings: settings
+        ),
         .testTarget(
             name: "MEGAUITests",
             dependencies: ["MEGAUI"],

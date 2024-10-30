@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAUI
 import UIKit
 
 protocol NodeInsertionRouting {
@@ -7,7 +8,7 @@ protocol NodeInsertionRouting {
     func scanDocument(for nodeEntity: NodeEntity)
     func importFromFiles(for nodeEntity: NodeEntity)
     func capturePhotoVideo(for nodeEntity: NodeEntity)
-    func choosePhotoVideo(for nodeEntity: NodeEntity)
+    func choosePhotoVideo(for nodeEntity: NodeEntity) async
 }
 
 struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
@@ -50,11 +51,13 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
         CloudDriveMediaCaptureRouter(parentNode: nodeEntity, presenter: navigationController).start()
     }
 
+    @MainActor
     func choosePhotoVideo(for nodeEntity: NodeEntity) {
         CloudDrivePhotosPickerRouter(
             parentNode: nodeEntity,
             presenter: navigationController,
-            assetUploader: CloudDriveAssetUploader()
+            assetUploader: CloudDriveAssetUploader(),
+            photoPicker: MEGAPhotoPicker(presenter: navigationController)
         ).start()
     }
 }

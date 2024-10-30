@@ -10,6 +10,7 @@ import MEGARepo
 import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
+import MEGAUI
 import MEGAUIKit
 import Search
 import SwiftUI
@@ -67,7 +68,7 @@ final class HomeScreenFactory: NSObject {
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             tracker: tracker,
-            router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
+            router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController, photoPicker: MEGAPhotoPicker(presenter: navigationController))
         )
         
         homeViewController.myAvatarViewModel = myAvatarViewModel

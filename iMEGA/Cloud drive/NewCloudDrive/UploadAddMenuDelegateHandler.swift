@@ -33,7 +33,9 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
         switch action {
         case .chooseFromPhotos:
             trackChooseFromPhotosEvent()
-            nodeInsertionRouter.choosePhotoVideo(for: node)
+            Task {
+                await nodeInsertionRouter.choosePhotoVideo(for: node)
+            }
         case .capture:
             nodeInsertionRouter.capturePhotoVideo(for: node)
         case .importFrom:

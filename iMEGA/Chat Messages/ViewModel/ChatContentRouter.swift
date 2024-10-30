@@ -4,6 +4,7 @@ import MEGAPermissions
 import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
+import MEGAUI
 
 enum ChatContentRoutingStyle {
     case push
@@ -62,6 +63,9 @@ enum ChatContentRoutingStyle {
     }
     
     func build() -> UIViewController {
+        guard let presenter else {
+            return UIViewController()
+        }
         let chatContentViewModel = ChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
@@ -77,7 +81,7 @@ enum ChatContentRoutingStyle {
             callManager: CallKitCallManager.shared
         )
         
-        let chatViewController = ChatViewController(chatRoom: chatRoom, chatContentViewModel: chatContentViewModel)
+        let chatViewController = ChatViewController(chatRoom: chatRoom, chatContentViewModel: chatContentViewModel, photoPicker: MEGAPhotoPicker(presenter: presenter))
         if let publicLink {
             chatViewController.publicChatWithLinkCreated = showShareLinkViewAfterOpenChat
             chatViewController.publicChatLink = URL(string: publicLink)
