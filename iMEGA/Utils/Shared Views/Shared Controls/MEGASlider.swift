@@ -8,13 +8,11 @@ final class MEGASlider: UISlider {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        registerForTraitChanges()
         configure()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        registerForTraitChanges()
         configure()
     }
     
@@ -23,31 +21,11 @@ final class MEGASlider: UISlider {
     }
     
     private func configure() {
-        configureMinimumTrackTintColor()
+        setMinimumTrackImage(customMinimumTrackImage(bgColor: TokenColors.Components.interactive), for: .normal)
         maximumTrackTintColor = TokenColors.Background.surface2
         
-        setThumbImage(thumbImage(bgColor: customTintColor(), radius: thumbRadius), for: .normal)
-        setThumbImage(thumbImage(bgColor: customTintColor(), radius: hightlitedThumbRadius), for: .highlighted)
-    }
-    
-    private func registerForTraitChanges() {
-        guard #available(iOS 17.0, *) else { return }
-        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { [weak self] (slider: MEGASlider, previousTraitCollection: UITraitCollection) in
-            if slider.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
-                self?.configure()
-            }
-        })
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            configure()
-        }
-    }
-    
-    private func configureMinimumTrackTintColor() {
-        setMinimumTrackImage(customMinimumTrackImage(bgColor: customTintColor()), for: .normal)
+        setThumbImage(thumbImage(bgColor: TokenColors.Components.interactive, radius: thumbRadius), for: .normal)
+        setThumbImage(thumbImage(bgColor: TokenColors.Components.interactive, radius: hightlitedThumbRadius), for: .highlighted)
     }
     
     /// Custom minimum track image slider background. We need this to render exactly same color as the `thumbImage(UIColor: CGFloat) -> UIImage`.  Setting the color of `minimumTrackTintColor` directly won't render the exactly same color as the `thumbImage(UIColor: CGFloat) -> UIImage`
@@ -75,10 +53,6 @@ final class MEGASlider: UISlider {
         return renderer.image { rendererContext in
             thumb.layer.render(in: rendererContext.cgContext)
         }
-    }
-    
-    private func customTintColor() -> UIColor {
-        TokenColors.Components.interactive
     }
 }
 
