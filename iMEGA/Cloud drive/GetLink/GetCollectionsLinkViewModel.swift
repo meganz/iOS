@@ -4,18 +4,18 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
-final class GetAlbumsLinkViewModel: GetLinkViewModelType {
+final class GetCollectionsLinkViewModel: GetLinkViewModelType {
     
     let isMultiLink: Bool = true
     var invokeCommand: ((GetLinkViewModelCommand) -> Void)?
     var numberOfSections: Int { sectionViewModels.count }
     
-    private let albums: [AlbumEntity]
+    private let setEntities: [SetEntity]
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
-    private var albumLinks: [HandleEntity: String]?
+    private var albumLinks: [SetIdentifier: String]?
     private var loadingTask: Task<Void, Never>?
     private typealias Continuation = AsyncStream<SensitiveContentAcknowledgementStatus>.Continuation
     
@@ -23,12 +23,12 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         loadingTask?.cancel()
     }
 
-    init(albums: [AlbumEntity],
+    init(setEntities: [SetEntity],
          shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
          tracker: some AnalyticsTracking,
          remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
-        self.albums = albums
+        self.setEntities = setEntities
         self.shareCollectionUseCase = shareCollectionUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
@@ -40,7 +40,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     func dispatch(_ action: GetLinkAction) {
         switch action {
         case .onViewReady:
-            tracker.trackAnalyticsEvent(with: MultipleAlbumLinksScreenEvent())
+            trackOnViewReadyAnalyticsEvent()
             updateViewConfiguration()
         case .onViewDidAppear where loadingTask == nil:
             loadingTask = Task { await startGetLinksCoordinatorStream() }
@@ -71,9 +71,20 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     }
     
     // MARK: - Private
+    
+    private func trackOnViewReadyAnalyticsEvent() {
+        guard let setType = setEntities.map(\.setType).first else { return }
+        switch setType {
+        case .album:
+            tracker.trackAnalyticsEvent(with: MultipleAlbumLinksScreenEvent())
+        case .playlist, .invalid:
+            break
+        }
+    }
+    
     private func updateViewConfiguration() {
-        let itemCount = albums.count
-        let title = albums.contains(where: { $0.isLinkShared }) ? Strings.Localizable.General.MenuAction.ManageLink.title(itemCount) :
+        let itemCount = setEntities.count
+        let title = setEntities.contains(where: { $0.isExported }) ? Strings.Localizable.General.MenuAction.ManageLink.title(itemCount) :
         Strings.Localizable.General.MenuAction.ShareLink.title(itemCount)
         invokeCommand?(.configureView(title: title,
                                       isMultilink: isMultiLink,
@@ -112,7 +123,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
             return
         }
         
-        let sharedLinks = await shareCollectionUseCase.shareLink(forAlbums: albums)
+        let sharedLinks = await shareCollectionUseCase.shareLink(forCollections: setEntities)
         
         guard !Task.isCancelled else {
             return
@@ -123,7 +134,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     }
         
     private func determineIfAlbumsContainSensitiveNodes(continuation: Continuation) async {
-        let excludeExportedAlbums = albums.filter { !$0.isLinkShared }
+        let excludeExportedAlbums = setEntities.filter { !$0.isExported }
                                                    
         guard excludeExportedAlbums.isNotEmpty else {
             continuation.yield(.authorized)
@@ -144,7 +155,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     private func showContainsSensitiveContentAlert(continuation: Continuation) {
         
         invokeCommand?(.dismissHud)
-        let message = if albums.count > 1 {
+        let message = if setEntities.count > 1 {
             Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.multi
         } else {
             Strings.Localizable.CameraUploads.Albums.AlbumLink.Sensitive.Alert.Message.single
@@ -165,7 +176,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     }
 
     @MainActor
-    private func updateLinkRows(forAlbumLinks sharedLinks: [HandleEntity: String]) {
+    private func updateLinkRows(forAlbumLinks sharedLinks: [SetIdentifier: String]) {
         let rowsToReload = sharedLinks.compactMap { albumId, link in
             updateLinkRow(link: link, albumId: albumId)
         }.sorted()
@@ -179,8 +190,8 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         invokeCommand?(.dismissHud)
     }
     
-    private func updateLinkRow(link: String, albumId: HandleEntity) -> IndexPath? {
-        guard let sectionIndex = sectionViewModels.firstIndex(where: { $0.itemHandle == albumId }),
+    private func updateLinkRow(link: String, albumId: SetIdentifier) -> IndexPath? {
+        guard let sectionIndex = sectionViewModels.firstIndex(where: { $0.setIdentifier == albumId }),
               let rowIndex = sectionViewModels[safe: sectionIndex]?.cellViewModels.firstIndex(where: { $0 is GetLinkStringCellViewModel }) else {
             return nil
         }
@@ -205,7 +216,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     }
     
     private func copyLinkToPasteBoard(at indexPath: IndexPath) {
-        guard let sectionItemHandle = sectionViewModels[safe: indexPath.section]?.itemHandle,
+        guard let sectionItemHandle = sectionViewModels[safe: indexPath.section]?.setIdentifier,
               let albumLinks,
               let link = albumLinks[sectionItemHandle] else {
             return

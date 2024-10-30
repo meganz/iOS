@@ -2,15 +2,15 @@ import Foundation
 import MEGASwift
 
 public protocol ShareCollectionUseCaseProtocol: Sendable {
-    func shareCollectionLink(_ album: AlbumEntity) async throws -> String?
-    func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity: String]
-    func removeSharedLink(forAlbum album: AlbumEntity) async throws
-    func removeSharedLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity]
+    func shareCollectionLink(_ collection: SetEntity) async throws -> String?
+    func shareLink(forCollections collections: [SetEntity]) async -> [SetIdentifier: String]
+    func removeSharedLink(forCollectionId collectionId: SetIdentifier) async throws
+    func removeSharedLink(forCollections collectionIds: [SetIdentifier]) async -> [SetIdentifier]
     
     ///  Determines if the given sequence of Collection Entities contains any sensitive elements in them.
-    /// - Parameter albums: Sequence of AlbumEntities to iterate over and determine if any contain sensitive elements
-    /// - Returns: True, if any albums contains a sensitive element, else false.
-    func doesCollectionsContainSensitiveElement(for albums: some Sequence<AlbumEntity>) async throws -> Bool
+    /// - Parameter collections: Sequence of SetEntities to iterate over and determine if any contain sensitive elements
+    /// - Returns: True, if any collections contains a sensitive element, else false.
+    func doesCollectionsContainSensitiveElement(for collections: some Sequence<SetEntity>) async throws -> Bool
 }
 
 public struct ShareCollectionUseCase: ShareCollectionUseCaseProtocol {
@@ -22,63 +22,57 @@ public struct ShareCollectionUseCase: ShareCollectionUseCaseProtocol {
         shareAlbumRepository: some ShareCollectionRepositoryProtocol,
         userAlbumRepository: some UserAlbumRepositoryProtocol,
         nodeRepository: some NodeRepositoryProtocol) {
-        self.shareAlbumRepository = shareAlbumRepository
-        self.userAlbumRepository = userAlbumRepository
-        self.nodeRepository = nodeRepository
-    }
-    
-    public func shareCollectionLink(_ album: AlbumEntity) async throws -> String? {
-        guard album.type == .user else {
-            throw ShareCollectionErrorEntity.invalidCollectionType
+            self.shareAlbumRepository = shareAlbumRepository
+            self.userAlbumRepository = userAlbumRepository
+            self.nodeRepository = nodeRepository
         }
-        return try await shareAlbumRepository.shareCollectionLink(album)
+    
+    public func shareCollectionLink(_ collection: SetEntity) async throws -> String? {
+        try await shareAlbumRepository.shareCollectionLink(collection)
     }
     
-    public func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity: String] {
-        await withTaskGroup(of: (HandleEntity, String?).self) { group in
-            albums.forEach { album in
+    public func shareLink(forCollections collections: [SetEntity]) async -> [SetIdentifier: String] {
+        await withTaskGroup(of: (SetIdentifier, String?).self) { group in
+            collections.forEach { collection in
                 group.addTask {
-                    return (album.id, try? await shareCollectionLink(album))
+                    return (collection.setIdentifier, try? await shareCollectionLink(collection))
                 }
             }
-            return await group.reduce(into: [HandleEntity: String](), {
+            return await group.reduce(into: [SetIdentifier: String](), {
                 $0[$1.0] = $1.1
             })
         }
     }
     
-    public func removeSharedLink(forAlbum album: AlbumEntity) async throws {
-        guard album.type == .user else {
-            throw ShareCollectionErrorEntity.invalidCollectionType
-        }
-        try await shareAlbumRepository.removeSharedLink(forCollectionId: album.id)
+    public func removeSharedLink(forCollectionId collectionId: SetIdentifier) async throws {
+        try await shareAlbumRepository.removeSharedLink(forCollectionId: collectionId)
     }
     
-    public func removeSharedLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity] {
-        await withTaskGroup(of: HandleEntity?.self) { group in
-            albums.forEach { album in
+    public func removeSharedLink(forCollections collectionIds: [SetIdentifier]) async -> [SetIdentifier] {
+        await withTaskGroup(of: SetIdentifier?.self) { group in
+            collectionIds.forEach { collectionId in
                 group.addTask {
                     do {
-                        try await removeSharedLink(forAlbum: album)
-                        return album.id
+                        try await removeSharedLink(forCollectionId: collectionId)
+                        return collectionId
                     } catch {
                         return nil
                     }
                 }
             }
             
-            return await group.reduce(into: [HandleEntity](), {
+            return await group.reduce(into: [SetIdentifier](), {
                 if let removeShareLinkAlbumId = $1 { $0.append(removeShareLinkAlbumId) }
             })
         }
     }
     
-    public func doesCollectionsContainSensitiveElement(for albums: some Sequence<AlbumEntity>) async throws -> Bool {
+    public func doesCollectionsContainSensitiveElement(for collections: some Sequence<SetEntity>) async throws -> Bool {
         try await withThrowingTaskGroup(of: Bool.self) { taskGroup in
-            taskGroup.addTasksUnlessCancelled(for: albums, operation: doesCollectionContainSensitiveNode(album:))
-            let doesAlbumContainSensitiveNode = try await taskGroup.contains(true)
+            taskGroup.addTasksUnlessCancelled(for: collections, operation: doesCollectionContainSensitiveNode(album:))
+            let doesCollectionContainSensitiveNode = try await taskGroup.contains(true)
             taskGroup.cancelAll()
-            return doesAlbumContainSensitiveNode
+            return doesCollectionContainSensitiveNode
         }
     }
 }
@@ -86,9 +80,20 @@ public struct ShareCollectionUseCase: ShareCollectionUseCaseProtocol {
 extension ShareCollectionUseCase {
     
     @Sendable
-    private func doesCollectionContainSensitiveNode(album: AlbumEntity) async throws -> Bool {
-        try await withThrowingTaskGroup(of: Bool.self) { taskGroup in
-            let albumElementIds = await userAlbumRepository.albumElementIds(by: album.id, includeElementsInRubbishBin: false)
+    private func doesCollectionContainSensitiveNode(album: SetEntity) async throws -> Bool {
+        switch album.setType {
+        case .invalid:
+            throw GenericErrorEntity()
+        case .album:
+            return try await doesAlbumContainSensitiveNode(album: album)
+        case .playlist:
+            return false
+        }
+    }
+    
+    private func doesAlbumContainSensitiveNode(album: SetEntity) async throws -> Bool {
+        return try await withThrowingTaskGroup(of: Bool.self) { taskGroup in
+            let albumElementIds = await userAlbumRepository.albumElementIds(by: album.handle, includeElementsInRubbishBin: false)
             taskGroup.addTasksUnlessCancelled(for: albumElementIds) { albumElementId in
                 if let photo = nodeRepository.nodeForHandle(albumElementId.nodeId) {
                     photo.isMarkedSensitive ? true : try await nodeRepository.isInheritingSensitivity(node: photo)

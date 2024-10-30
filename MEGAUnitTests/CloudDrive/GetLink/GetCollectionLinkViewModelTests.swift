@@ -8,29 +8,29 @@ import MEGAPresentationMock
 import MEGATest
 import XCTest
 
-final class GetAlbumLinkViewModelTests: XCTestCase {
+final class GetCollectionLinkViewModelTests: XCTestCase {
     
     func testNumberOfSections_init_isCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let sections = [
-            GetLinkSectionViewModel(sectionType: .info, cellViewModels: [], itemHandle: album.id)
+            GetLinkSectionViewModel(sectionType: .info, cellViewModels: [], setIdentifier: album.setIdentifier)
         ]
         
-        let sut = makeGetAlbumLinkViewModel(album: album,
+        let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                             sectionViewModels: sections)
         XCTAssertEqual(sut.numberOfSections, sections.count)
     }
     
     func testNumberRowsInSection_init_isCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let cellViewModels = [GetLinkStringCellViewModel(link: "Test link")]
         let sections = [
             GetLinkSectionViewModel(sectionType: .info,
                                     cellViewModels: cellViewModels,
-                                    itemHandle: album.id)
+                                    setIdentifier: album.setIdentifier)
         ]
         
-        let sut = makeGetAlbumLinkViewModel(album: album,
+        let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                             sectionViewModels: sections)
         
         XCTAssertEqual(sut.numberOfRowsInSection(0),
@@ -38,14 +38,14 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     }
     
     func testCellViewModel_init_forIndexPath_isCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let cellViewModels = [GetLinkStringCellViewModel(link: "Test link")]
         let sections = [
             GetLinkSectionViewModel(sectionType: .info,
                                     cellViewModels: cellViewModels,
-                                    itemHandle: album.id)
+                                    setIdentifier: album.setIdentifier)
         ]
-        let sut = makeGetAlbumLinkViewModel(album: album,
+        let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                             sectionViewModels: sections)
         let indexPath = IndexPath(row: 0, section: 0)
         XCTAssertEqual(sut.cellViewModel(indexPath: indexPath)?.type,
@@ -54,11 +54,11 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     }
     
     func testCellViewModel_init_sectionTypeRetrievalIsCorrect() {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let section = GetLinkSectionViewModel(sectionType: .info,
                                               cellViewModels: [],
-                                              itemHandle: album.id)
-        let sut = makeGetAlbumLinkViewModel(album: album,
+                                              setIdentifier: album.setIdentifier)
+        let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                             sectionViewModels: [section])
         XCTAssertEqual(sut.sectionType(forSection: 0),
                        section.sectionType)
@@ -66,10 +66,10 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     
     @MainActor func testDispatchViewConfiguration_onNoExportedAlbums_shouldSetTitleToShareLinkAndTrackScreen() {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false))
+            let album = SetEntity(handle: 1, setType: .album, isExported: false)
             let tracker = MockTracker()
-            let sut = makeGetAlbumLinkViewModel(album: album,
-                                                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: [album.id: false]),
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
+                                                shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: [album.handle: false]),
                                                 tracker: tracker,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
             
@@ -94,8 +94,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     @MainActor func testDispatchViewConfiguration_onExportedAlbums_shouldSetTitleToManageShareLink() {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
-            let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true))
-            let sut = makeGetAlbumLinkViewModel(album: album,
+            let album = SetEntity(handle: 1, setType: .album, isExported: true)
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
 
             let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(1)
@@ -113,18 +113,18 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     func testDispatchOnViewReady_onAlbumLinkLoaded_shouldUpdateLinkSectionLinkCell() async throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
-            let album = AlbumEntity(id: 1, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
             let sections = [
                 GetLinkSectionViewModel(sectionType: .link,
                                         cellViewModels: [GetLinkStringCellViewModel(link: "")],
-                                        itemHandle: album.id)
+                                        setIdentifier: album.setIdentifier)
             ]
             let link = "the shared link"
             let shareCollectionUseCase = MockShareCollectionUseCase(
                 shareCollectionLinkResult: .success(link),
-                doesCollectionsContainSensitiveElement: [album.id: false])
+                doesCollectionsContainSensitiveElement: [album.handle: false])
 
-            let sut = makeGetAlbumLinkViewModel(album: album,
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
@@ -152,20 +152,20 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     @MainActor
     func testDispatchSwitchToggled_onDecryptKeySeparateToggled_linkAndKeyShouldUpdateCorrectly() async throws {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let album = AlbumEntity(id: 1, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
             let sections = [
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))],
-                                        itemHandle: album.id),
+                                        setIdentifier: album.setIdentifier),
                 GetLinkSectionViewModel(sectionType: .link,
                                         cellViewModels: [GetLinkStringCellViewModel(link: "")],
-                                        itemHandle: album.id)
+                                        setIdentifier: album.setIdentifier)
             ]
             let link = "/collection/link#key"
             let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
-                                                          doesCollectionsContainSensitiveElement: [album.id: false])
-            let sut = makeGetAlbumLinkViewModel(album: album,
+                                                          doesCollectionsContainSensitiveElement: [album.handle: false])
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
@@ -207,17 +207,17 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     func testDispatchShareLink_onDecryptSeperateOff_shouldOnlyShareOriginalLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
-            let album = AlbumEntity(id: 1, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
             let link = "https://mega.nz/collection/link#key"
             let sections = [
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))],
-                                        itemHandle: album.id)
+                                        setIdentifier: album.setIdentifier)
             ]
             let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
-                                                          doesCollectionsContainSensitiveElement: [album.id: false])
-            let sut = makeGetAlbumLinkViewModel(album: album,
+                                                          doesCollectionsContainSensitiveElement: [album.handle: false])
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
@@ -244,7 +244,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     @MainActor
     func testDispatchShareLink_onDecryptSeperateOn_shouldShareLinkSeperatelyFromKey() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let album = AlbumEntity(id: 1, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
             let linkOnly = "https://mega.nz/collection/link"
             let key = "key"
             let link = "\(linkOnly)#\(key)"
@@ -252,11 +252,11 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
-                                        itemHandle: album.id)
+                                        setIdentifier: album.setIdentifier)
             ]
             let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
-                                                          doesCollectionsContainSensitiveElement: [album.id: false])
-            let sut = makeGetAlbumLinkViewModel(album: album,
+                                                          doesCollectionsContainSensitiveElement: [album.handle: false])
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
@@ -282,18 +282,18 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     @MainActor
     func testDispatchCopyLink_onDecryptSeperateOff_shouldCopyShareOriginalLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let album = AlbumEntity(id: 1, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
             let link = "https://mega.nz/collection/link#key"
             let sections = [
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))],
-                                        itemHandle: album.id)
+                                        setIdentifier: album.setIdentifier)
             ]
             let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
-                                                          doesCollectionsContainSensitiveElement: [album.id: false])
+                                                          doesCollectionsContainSensitiveElement: [album.handle: false])
 
-            let sut = makeGetAlbumLinkViewModel(album: album,
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
@@ -323,7 +323,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     @MainActor
     func testDispatchCopyLink_onDecryptSeperateOn_shouldCopyOnlyLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let album = AlbumEntity(id: 1, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
             let linkOnly = "https://mega.nz/collection/link"
             let key = "key"
             let link = "\(linkOnly)#\(key)"
@@ -331,12 +331,12 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
-                                        itemHandle: album.id)
+                                        setIdentifier: album.setIdentifier)
             ]
             let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
-                                                          doesCollectionsContainSensitiveElement: [album.id: false])
+                                                          doesCollectionsContainSensitiveElement: [album.handle: false])
 
-            let sut = makeGetAlbumLinkViewModel(album: album,
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
@@ -367,7 +367,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     @MainActor
     func testDispatchCopyKey_onDecryptSeperateOn_shouldCopyKey() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
-            let album = AlbumEntity(id: 1, type: .user)
+            let album = SetEntity(handle: 1, setType: .album)
             let linkOnly = "https://mega.nz/collection/link"
             let key = "key"
             let link = "\(linkOnly)#\(key)"
@@ -375,12 +375,12 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
                                                                                           configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
-                                        itemHandle: album.id)
+                                        setIdentifier: album.setIdentifier)
             ]
             let shareCollectionUseCase = MockShareCollectionUseCase(shareCollectionLinkResult: .success(link),
-                                                          doesCollectionsContainSensitiveElement: [album.id: false])
+                                                          doesCollectionsContainSensitiveElement: [album.handle: false])
 
-            let sut = makeGetAlbumLinkViewModel(album: album,
+            let sut = makeGetCollectionLinkViewModel(setEntity: album,
                                                 shareCollectionUseCase: shareCollectionUseCase,
                                                 sectionViewModels: sections,
                                                 hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
@@ -407,9 +407,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     
     @MainActor func testDispatchViewConfiguration_onNotExportedAlbumsAndContainsSensitiveElement_shouldPromptAlert() {
         
-        let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false))
-        let sut = makeGetAlbumLinkViewModel(album: album,
-                                            shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: [album.id: true]),
+        let album = SetEntity(handle: 1, setType: .album, isExported: false)
+        let sut = makeGetCollectionLinkViewModel(setEntity: album,
+                                            shareCollectionUseCase: MockShareCollectionUseCase(doesCollectionsContainSensitiveElement: [album.handle: true]),
                                             hiddenNodesFeatureFlagActive: true)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(1)
@@ -430,19 +430,19 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     }
     
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsContinue_shouldLoadLinks() throws {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let sections = [
             GetLinkSectionViewModel(sectionType: .link, cellViewModels: [
                 GetLinkStringCellViewModel(link: "")
-            ], itemHandle: album.id)
+            ], setIdentifier: album.setIdentifier)
         ]
         let expectedRowReloads = sections.indices.map { IndexPath(row: 0, section: $0) }
         let tracker = MockTracker()
-        let sut = makeGetAlbumLinkViewModel(
-            album: album,
+        let sut = makeGetCollectionLinkViewModel(
+            setEntity: album,
             shareCollectionUseCase: MockShareCollectionUseCase(
-                shareCollectionLinkResult: .success("link-\(album.id)"),
-                doesCollectionsContainSensitiveElement: [album.id: true]),
+                shareCollectionLinkResult: .success("link-\(album.handle)"),
+                doesCollectionsContainSensitiveElement: [album.handle: true]),
             sectionViewModels: sections,
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
@@ -470,12 +470,12 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     }
     
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsCancel_shouldDismissView() throws {
-        let album = AlbumEntity(id: 1, type: .user)
+        let album = SetEntity(handle: 1, setType: .album)
         let tracker = MockTracker()
-        let sut = makeGetAlbumLinkViewModel(
-            album: album,
+        let sut = makeGetCollectionLinkViewModel(
+            setEntity: album,
             shareCollectionUseCase: MockShareCollectionUseCase(
-                doesCollectionsContainSensitiveElement: [album.id: true]),
+                doesCollectionsContainSensitiveElement: [album.handle: true]),
             tracker: tracker,
             hiddenNodesFeatureFlagActive: true)
         
@@ -500,14 +500,14 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeGetAlbumLinkViewModel(
-        album: AlbumEntity,
+    private func makeGetCollectionLinkViewModel(
+        setEntity: SetEntity,
         shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         sectionViewModels: [GetLinkSectionViewModel] = [],
         tracker: some AnalyticsTracking = MockTracker(),
         hiddenNodesFeatureFlagActive: Bool = true
-    ) -> GetAlbumLinkViewModel {
-        GetAlbumLinkViewModel(album: album,
+    ) -> GetCollectionLinkViewModel {
+        GetCollectionLinkViewModel(setEntity: setEntity,
                               shareCollectionUseCase: shareCollectionUseCase,
                               sectionViewModels: sectionViewModels,
                               tracker: tracker,

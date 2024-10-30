@@ -4,13 +4,13 @@ import MEGADomain
 struct GetLinkSectionViewModel {
     let sectionType: GetLinkTableViewSection
     var cellViewModels: [any GetLinkCellViewModelType]
-    let itemHandle: HandleEntity?
+    let setIdentifier: SetIdentifier?
     
     init(sectionType: GetLinkTableViewSection,
          cellViewModels: [any GetLinkCellViewModelType],
-         itemHandle: HandleEntity? = nil) {
+         setIdentifier: SetIdentifier? = nil) {
         self.sectionType = sectionType
         self.cellViewModels = cellViewModels
-        self.itemHandle = itemHandle
+        self.setIdentifier = setIdentifier
     }
 }

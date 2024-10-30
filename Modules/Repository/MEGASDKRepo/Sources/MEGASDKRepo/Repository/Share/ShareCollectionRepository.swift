@@ -17,12 +17,12 @@ public struct ShareCollectionRepository: ShareCollectionRepositoryProtocol {
         self.publicAlbumNodeProvider = publicAlbumNodeProvider
     }
     
-    public func shareCollectionLink(_ album: AlbumEntity) async throws -> String? {
-        if album.isLinkShared {
-            return sdk.publicLinkForExportedSet(bySid: album.id)
+    public func shareCollectionLink(_ collection: SetEntity) async throws -> String? {
+        if collection.isExported {
+            return sdk.publicLinkForExportedSet(bySid: collection.handle)
         }
         return try await withAsyncThrowingValue(in: { completion in
-            sdk.exportSet(album.id, delegate: RequestDelegate { result in
+            sdk.exportSet(collection.handle, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
                     completion(.success(request.link))
@@ -37,9 +37,9 @@ public struct ShareCollectionRepository: ShareCollectionRepositoryProtocol {
         })
     }
     
-    public func removeSharedLink(forCollectionId id: HandleEntity) async throws {
+    public func removeSharedLink(forCollectionId id: SetIdentifier) async throws {
         try await withAsyncThrowingValue { completion in
-            sdk.disableExportSet(id, delegate: RequestDelegate { result in
+            sdk.disableExportSet(id.handle, delegate: RequestDelegate { result in
                 switch result {
                 case .success:
                     completion(.success)

@@ -3,20 +3,10 @@ import MEGADomainMock
 import XCTest
 
 class ShareCollectionUseCaseTests: XCTestCase {
-    func testShareAlbum_onNonUserAlbum_shouldThrowInvalidAlbumType() async {
-        let sut = sut(shareAlbumRepository: MockShareCollectionRepository())
-        do {
-            _ = try await sut.shareCollectionLink(AlbumEntity(id: 2, type: .favourite))
-        } catch {
-            XCTAssertEqual(error as? ShareCollectionErrorEntity,
-                           ShareCollectionErrorEntity.invalidCollectionType)
-        }
-    }
-    
     func testShareAlbum_onUserAlbum_shouldReturnPublicLink() async throws {
         let expectedLink = "public_link"
-        let album = AlbumEntity(id: 5, type: .user)
-        let repository = MockShareCollectionRepository(shareCollectionResults: [album.id: .success(expectedLink)])
+        let album = SetEntity(handle: 5, setType: .album)
+        let repository = MockShareCollectionRepository(shareCollectionResults: [ album.setIdentifier: .success(expectedLink) ])
         let sut = sut(shareAlbumRepository: repository)
         let result = try await sut.shareCollectionLink(album)
         XCTAssertEqual(result, expectedLink)
@@ -25,57 +15,47 @@ class ShareCollectionUseCaseTests: XCTestCase {
     func testShareLinksForAlbum_onAllLinksSuccessfullyRetrieved_shouldReturnAllLinksWithHandles() async throws {
         let firstAlbumPublicLink = "public_link"
         let secondAlbumPublicLink = "public_link_2"
-        let firstUserAlbum = AlbumEntity(id: 5, type: .user)
-        let secondUserAlbum = AlbumEntity(id: 6, type: .user)
-        let shareAlbumResults: [HandleEntity: Result<String?, Error>] = [
-            firstUserAlbum.id: .success(firstAlbumPublicLink),
-            secondUserAlbum.id: .success(secondAlbumPublicLink)]
+        let firstUserAlbum = SetEntity(handle: 5, setType: .album)
+        let secondUserAlbum = SetEntity(handle: 6, setType: .album)
+        let shareAlbumResults: [SetIdentifier: Result<String?, Error>] = [
+            firstUserAlbum.setIdentifier: .success(firstAlbumPublicLink),
+            secondUserAlbum.setIdentifier: .success(secondAlbumPublicLink)]
         let repository = MockShareCollectionRepository(shareCollectionResults: shareAlbumResults)
        
         let sut = sut(shareAlbumRepository: repository)
         let albums = [firstUserAlbum, secondUserAlbum]
-        let result = await sut.shareLink(forAlbums: albums)
-        XCTAssertEqual(result[firstUserAlbum.id], firstAlbumPublicLink)
-        XCTAssertEqual(result[secondUserAlbum.id], secondAlbumPublicLink)
+        let result = await sut.shareLink(forCollections: albums)
+        XCTAssertEqual(result[firstUserAlbum.setIdentifier], firstAlbumPublicLink)
+        XCTAssertEqual(result[secondUserAlbum.setIdentifier], secondAlbumPublicLink)
     }
     
     func testShareLinksForAlbum_onFailedLink_shouldReturnOnlySuccessfulLinks() async throws {
         let firstAlbumPublicLink = "public_link"
-        let firstUserAlbum = AlbumEntity(id: 5, type: .user)
-        let secondUserAlbum = AlbumEntity(id: 6, type: .user)
-        let shareAlbumResults: [HandleEntity: Result<String?, Error>] = [
-            firstUserAlbum.id: .success(firstAlbumPublicLink),
-            secondUserAlbum.id: .failure(GenericErrorEntity())]
+        let firstUserAlbum = SetEntity(handle: 5, setType: .album)
+        let secondUserAlbum = SetEntity(handle: 6, setType: .album)
+        let shareAlbumResults: [SetIdentifier: Result<String?, Error>] = [
+            firstUserAlbum.setIdentifier: .success(firstAlbumPublicLink),
+            secondUserAlbum.setIdentifier: .failure(GenericErrorEntity())]
         let repository = MockShareCollectionRepository(shareCollectionResults: shareAlbumResults)
        
         let sut = sut(shareAlbumRepository: repository)
         let albums = [firstUserAlbum, secondUserAlbum]
-        let result = await sut.shareLink(forAlbums: albums)
-        XCTAssertEqual(result[firstUserAlbum.id], firstAlbumPublicLink)
-        XCTAssertNil(result[secondUserAlbum.id])
-    }
-    
-    func testDisableShare_onNonUserAlbum_shouldThrowInvalidAlbumType() async {
-        let sut = sut(shareAlbumRepository: MockShareCollectionRepository())
-        do {
-            try await sut.removeSharedLink(forAlbum: AlbumEntity(id: 2, type: .favourite))
-        } catch {
-            XCTAssertEqual(error as? ShareCollectionErrorEntity,
-                           ShareCollectionErrorEntity.invalidCollectionType)
-        }
+        let result = await sut.shareLink(forCollections: albums)
+        XCTAssertEqual(result[firstUserAlbum.setIdentifier], firstAlbumPublicLink)
+        XCTAssertNil(result[secondUserAlbum.setIdentifier])
     }
     
     func testDisableShare_onUserAlbum_shouldComplete() async throws {
         let repository = MockShareCollectionRepository(disableCollectionShareResult: .success)
         let sut = sut(shareAlbumRepository: repository)
-        try await sut.removeSharedLink(forAlbum: AlbumEntity(id: 5, type: .user))
+        try await sut.removeSharedLink(forCollectionId: SetEntity(handle: 5, setType: .album).id)
     }
     
     func testRemoveSharedLink_onMultipleUserAlbum_shouldComplete() async {
         let repository = MockShareCollectionRepository(disableCollectionShareResult: .success)
         let sut = sut(shareAlbumRepository: repository)
-        let albums = [AlbumEntity(id: 5, type: .user), AlbumEntity(id: 6, type: .user)]
-        let albumIds = await sut.removeSharedLink(forAlbums: albums)
+        let albums = [SetEntity(handle: 5, setType: .album), SetEntity(handle: 6, setType: .album)]
+        let albumIds = await sut.removeSharedLink(forCollections: albums.map { $0.setIdentifier })
         XCTAssertEqual(Set(albums.map { $0.id }), Set(albumIds))
     }
     
@@ -91,7 +71,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
                 isInheritingSensitivityResults: [node: .success(true)]))
         
         let albumsToTest = [
-            AlbumEntity(id: 1, type: .user)
+            SetEntity(handle: 1, setType: .album)
         ]
         let result = try await sut.doesCollectionsContainSensitiveElement(for: albumsToTest)
         XCTAssertTrue(result)
@@ -109,7 +89,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
                 isInheritingSensitivityResults: [node: .success(false)]))
         
         let albumsToTest = [
-            AlbumEntity(id: 1, type: .user)
+            SetEntity(handle: 1, setType: .album)
         ]
         let result = try await sut.doesCollectionsContainSensitiveElement(for: albumsToTest)
         XCTAssertFalse(result)

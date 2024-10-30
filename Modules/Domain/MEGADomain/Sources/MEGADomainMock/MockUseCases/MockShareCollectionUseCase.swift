@@ -3,15 +3,15 @@ import MEGADomain
 public struct MockShareCollectionUseCase: ShareCollectionUseCaseProtocol {
     
     private let shareCollectionLinkResult: Result<String, Error>
-    private let shareCollectionsLinks: [HandleEntity: String]
+    private let shareCollectionsLinks: [SetIdentifier: String]
     private let removeSharedCollectionLinkResult: Result<Void, Error>
-    private let successfullyRemoveSharedCollectionLinkIds: [HandleEntity]
+    private let successfullyRemoveSharedCollectionLinkIds: [SetIdentifier]
     private let doesCollectionsContainSensitiveElement: [HandleEntity: Bool]
     
     public init(shareCollectionLinkResult: Result<String, Error> = .failure(GenericErrorEntity()),
-                shareCollectionsLinks: [HandleEntity: String] = [:],
+                shareCollectionsLinks: [SetIdentifier: String] = [:],
                 removeSharedCollectionLinkResult: Result<Void, Error> = .failure(GenericErrorEntity()),
-                successfullyRemoveSharedCollectionLinkIds: [HandleEntity] = [HandleEntity](),
+                successfullyRemoveSharedCollectionLinkIds: [SetIdentifier] = [SetIdentifier](),
                 doesCollectionsContainSensitiveElement: [HandleEntity: Bool] = [:]) {
         self.shareCollectionLinkResult = shareCollectionLinkResult
         self.shareCollectionsLinks = shareCollectionsLinks
@@ -20,31 +20,31 @@ public struct MockShareCollectionUseCase: ShareCollectionUseCaseProtocol {
         self.doesCollectionsContainSensitiveElement = doesCollectionsContainSensitiveElement
     }
     
-    public func shareCollectionLink(_ album: AlbumEntity) async throws -> String? {
+    public func shareCollectionLink(_ collection: SetEntity) async throws -> String? {
         try await withCheckedThrowingContinuation { continuation in
             continuation.resume(with: shareCollectionLinkResult)
         }
     }
     
-    public func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity: String] {
+    public func shareLink(forCollections collections: [SetEntity]) async -> [SetIdentifier: String] {
         shareCollectionsLinks
     }
     
-    public func removeSharedLink(forAlbum album: AlbumEntity) async throws {
+    public func removeSharedLink(forCollectionId collectionId: SetIdentifier) async throws {
         try await withCheckedThrowingContinuation { continuation in
             continuation.resume(with: removeSharedCollectionLinkResult)
         }
     }
     
-    public func removeSharedLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity] {
+    public func removeSharedLink(forCollections collectionIds: [SetIdentifier]) async -> [SetIdentifier] {
         successfullyRemoveSharedCollectionLinkIds
     }
     
-    public func doesCollectionsContainSensitiveElement(for albums: some Sequence<AlbumEntity>) async throws -> Bool {
-        guard albums.contains(where: { album in doesCollectionsContainSensitiveElement[album.id] != nil }) else {
+    public func doesCollectionsContainSensitiveElement(for collections: some Sequence<SetEntity>) async throws -> Bool {
+        guard collections.contains(where: { collection in doesCollectionsContainSensitiveElement[collection.handle] != nil }) else {
             // Mock has no data to compare against, therefore it should fail
             throw GenericErrorEntity()
         }
-        return albums.contains { doesCollectionsContainSensitiveElement[$0.id] ?? false }
+        return collections.contains { doesCollectionsContainSensitiveElement[$0.handle] ?? false }
     }
 }

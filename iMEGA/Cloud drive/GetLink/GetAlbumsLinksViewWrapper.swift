@@ -30,33 +30,38 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
     // MARK: - Private
     
     @MainActor
-    private func makeGetAlbumLinkViewModel(album: AlbumEntity) -> GetAlbumLinkViewModel {
+    private func makeGetAlbumLinkViewModel(album: AlbumEntity) -> GetCollectionLinkViewModel {
         let initialSections = ShareAlbumLinkInitialSections(
             album: album,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             albumCoverUseCase: makeAlbumCoverUseCase())
-        return GetAlbumLinkViewModel(
-            album: album,
+        return GetCollectionLinkViewModel(
+            setEntity: album.toSetEntity(currentUserHandle: currentUserHandle()),
             shareCollectionUseCase: makeShareCollectionUseCase(),
             sectionViewModels: initialSections.initialLinkSectionViewModels,
             tracker: DIContainer.tracker)
     }
     
     @MainActor
-    private func makeGetAlbumsLinkViewModel(albums: [AlbumEntity]) -> GetAlbumsLinkViewModel {
+    private func makeGetAlbumsLinkViewModel(albums: [AlbumEntity]) -> GetCollectionsLinkViewModel {
         let initialSections = ShareAlbumsLinkInitialSections(
             albums: albums,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             albumCoverUseCase: makeAlbumCoverUseCase())
-        return GetAlbumsLinkViewModel(
-            albums: albums,
+        return GetCollectionsLinkViewModel(
+            setEntities: albums.toSetEntities(currentUserHandle: currentUserHandle()),
             shareCollectionUseCase: makeShareCollectionUseCase(),
             sectionViewModels: initialSections.initialLinkSectionViewModels,
             tracker: DIContainer.tracker)
+    }
+    
+    private func currentUserHandle() -> HandleEntity {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        return accountUseCase.currentUserHandle ?? .invalid
     }
     
     private func makeShareCollectionUseCase() -> some ShareCollectionUseCaseProtocol {

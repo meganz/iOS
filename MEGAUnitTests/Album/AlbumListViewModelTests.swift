@@ -592,7 +592,7 @@ final class AlbumListViewModelTests: XCTestCase {
                       AlbumEntity(id: HandleEntity(2), name: "DEF", coverNode: nil, count: 2, type: .user)]
         
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = albumListViewModel(shareCollectionUseCase: MockShareCollectionUseCase(successfullyRemoveSharedCollectionLinkIds: [HandleEntity(1), HandleEntity(2)]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(shareCollectionUseCase: MockShareCollectionUseCase(successfullyRemoveSharedCollectionLinkIds: [SetIdentifier(handle: 1), SetIdentifier(handle: 2)]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         XCTAssertNil(sut.albumHudMessage)
         sut.onAlbumShareLinkRemoveConfirm(albums)
@@ -613,7 +613,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let succesfullyDeleteAlbum = albums[0]
         
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = albumListViewModel(shareCollectionUseCase: MockShareCollectionUseCase(successfullyRemoveSharedCollectionLinkIds: [succesfullyDeleteAlbum.id]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(shareCollectionUseCase: MockShareCollectionUseCase(successfullyRemoveSharedCollectionLinkIds: [SetIdentifier(handle: succesfullyDeleteAlbum.id)]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         XCTAssertNil(sut.albumHudMessage)
         sut.onAlbumShareLinkRemoveConfirm(albums)
