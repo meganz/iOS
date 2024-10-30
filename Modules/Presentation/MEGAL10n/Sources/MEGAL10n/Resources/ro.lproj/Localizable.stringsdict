@@ -3433,9 +3433,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>Adăugat %d fişier</string>
+        <key>few</key>
+        <string>Adăugat %d fișiere</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>Adăugat %d fișiere</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -3449,9 +3451,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d folder</string>
+        <string>Adăugat %d folder</string>
+        <key>few</key>
+        <string>Adăugat %d foldere</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>Adăugat %d foldere</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3465,9 +3469,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>Adăugat %d fişier</string>
+        <key>few</key>
+        <string>Adăugat %d fișiere</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>Adăugat %d fișiere</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3481,9 +3487,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>and %d folder</string>
+        <string>și %d folder</string>
+        <key>few</key>
+        <string>și %d foldere</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>și %d foldere</string>
       </dict>
     </dict>
   </dict>

@@ -2658,10 +2658,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added to [A]</string>
         <key>other</key>
-        <string>Added %d items to [A]</string>
+        <string>เพิ่ม %d รายการไปยัง [A] แล้ว</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesOnly</key>
@@ -2674,10 +2672,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d file</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>เพิ่ม %d ไฟล์แล้ว</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -2690,10 +2686,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d folder</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>เพิ่ม %d โฟลเดอร์แล้ว</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -2706,10 +2700,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d file</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>เพิ่ม %d ไฟล์แล้ว</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -2722,10 +2714,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>and %d folder</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>และ %d โฟลเดอร์</string>
       </dict>
     </dict>
   </dict>

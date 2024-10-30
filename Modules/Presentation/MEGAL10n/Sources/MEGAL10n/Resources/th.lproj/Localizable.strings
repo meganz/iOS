@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="เชิญเพื่อนของคุณ";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="รับพื้นที่เก็บข้อมูล %@ ทุกครั้งเมื่อชวนเพื่อนสร้างรายได้ \nมีอายุใช้งาน 365 วัน";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในอุปกรณ์หรือกรอกอีเมลได้หลายรายการ";
 /*  */
@@ -4248,6 +4248,14 @@
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="เลือกเหตุผลที่คุณยกเลิกการสมัครใช้งาน";
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="กรอกรายละเอียด";
+/* Cancel subscription confirmation alert title */
+"accounts.cancelSubscriptionConfirmationAlert.title"="การสมัครใช้งานของคุณได้ถูกยกเลิกแล้ว";
+/* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="เมื่อแผนการสมัครใช้งานของคุณสิ้นสุดลงในวันที่ %@ บัญชีของคุณจะเปลี่ยนเป็นบัญชี MEGA ฟรีโดยอัตโนมัติ";
+/* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="กรุณาตรวจสอบพื้นที่จัดเก็บของคุณให้เหลือไม่เกิน %@ ภายในวันที่กำหนด หากคุณมีข้อมูลเกินกว่าที่กำหนด บัญชีของคุณอาจถูกระงับการใช้งานชั่วคราวได้";
+/* Cancel subscription confirmation alert button title */
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="โอเค เข้าใจแล้ว";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="รายการที่ถูกซ่อน";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4383,8 +4391,8 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Pro เท่านั้น";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="เพิ่มแท็ก";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="เพิ่มแท็ก";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="ใช้แท็กเพื่อช่วยค้นหาและจัดระเบียบข้อมูลของคุณ ลองใช้แท็กโดยแยกตามปี ตำแหน่งที่ตั้ง โครงการ หรือหัวข้อ";

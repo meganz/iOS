@@ -3813,9 +3813,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>Dodano %d plik</string>
+        <key>few</key>
+        <string>Dodano %d plików</string>
+        <key>many</key>
+        <string>Dodano %d plików</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>Dodano %d plików</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -3829,9 +3833,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d folder</string>
+        <string>Dodano %d katalog</string>
+        <key>few</key>
+        <string>Dodano %d katalogi</string>
+        <key>many</key>
+        <string>Dodano %d katalogi</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>Dodano %d katalogi</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3845,9 +3853,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>Dodano %d plik</string>
+        <key>few</key>
+        <string>Dodano %d plików</string>
+        <key>many</key>
+        <string>Dodano %d plików</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>Dodano %d plików</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3861,9 +3873,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>and %d folder</string>
+        <string>i %d katalog</string>
+        <key>few</key>
+        <string>i %d katalogi</string>
+        <key>many</key>
+        <string>i %d katalogi</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>i %d katalogi</string>
       </dict>
     </dict>
   </dict>

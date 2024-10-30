@@ -4248,6 +4248,14 @@
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Bitte wählen Sie den Grund für die Kündigung Ihres Abonnements aus";
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Bitte Einzelheiten angeben";
+/* Cancel subscription confirmation alert title */
+"accounts.cancelSubscriptionConfirmationAlert.title"="Ihr Abonnement wurde gekündigt";
+/* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="Sie werden auf einen kostenlosen MEGA-Account umgestellt, wenn Ihr aktuelles Paket am %@ ausläuft.";
+/* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Bitte stellen Sie bis zu diesem Datum sicher, dass Ihr belegter Speicherplatz unter dem Speicherlimit von %@ liegt. Ihr Account kann gesperrt werden, wenn Sie das Limit überschreiten.";
+/* Cancel subscription confirmation alert button title */
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="Alles klar";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Verborgene Elemente";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4383,8 +4391,8 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="erfordert Pro";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Tags hinzufügen";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Tags hinzufügen";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Verwenden Sie Tags, um Ihre Daten zu finden und zu organisieren. Probieren Sie das Tagging nach Jahr, Ort, Projekt oder Thema aus.";

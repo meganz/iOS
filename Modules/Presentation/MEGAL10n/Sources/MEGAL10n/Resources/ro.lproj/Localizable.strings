@@ -4248,6 +4248,14 @@
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Selectați un motiv pentru anularea abonamentului";
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Introduceți detalii";
+/* Cancel subscription confirmation alert title */
+"accounts.cancelSubscriptionConfirmationAlert.title"="Abonamentul dvs. a fost anulat";
+/* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="Vă veți muta la un cont MEGA gratuit când abonamentul dvs. actual expiră %@.";
+/* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Vă rugăm să vă asigurați că cantitatea de spațiu de stocare este sub limita de %@ până la această dată. Contul dvs. poate fi blocat dacă depășiți limita.";
+/* Cancel subscription confirmation alert button title */
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="Închide";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Elemente ascunse";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4383,8 +4391,8 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Numai Pro";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Adăugați etichete";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Adăugați etichete";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Folosiți etichete pentru a vă ajuta să găsiți și să vă organizați datele. Încercați să etichetați după an, locație, proiect sau subiect.";

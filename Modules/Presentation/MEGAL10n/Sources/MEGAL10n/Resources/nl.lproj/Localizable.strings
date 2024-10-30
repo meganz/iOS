@@ -4248,6 +4248,14 @@
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Selecteer een reden om uw abonnement te annuleren";
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Voer details in";
+/* Cancel subscription confirmation alert title */
+"accounts.cancelSubscriptionConfirmationAlert.title"="Uw abonnement is opgezegd";
+/* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="U gaat over naar een gratis MEGA-account wanneer uw huidige abonnement afloopt %@.";
+/* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Zorg ervoor dat uw opslaghoeveelheid onder de limiet ligt van %@ tegen deze datum. Uw account is mogelijk vergrendeld als u de limiet overschrijdt.";
+/* Cancel subscription confirmation alert button title */
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="Ok, ik snap het";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Verborgen items";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */

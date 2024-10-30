@@ -2672,10 +2672,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d file</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>已添加%d个文件</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -2688,10 +2686,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d folder</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>已添加%d个文件夹</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -2704,10 +2700,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d file</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>已添加%d个文件</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -2720,10 +2714,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>and %d folder</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>和%d个文件夹</string>
       </dict>
     </dict>
   </dict>

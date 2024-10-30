@@ -4572,10 +4572,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تمت إضافة %d ملفات</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>تمت إضافة %d ملف</string>
+        <key>two</key>
+        <string>تمت إضافة %d ملفين</string>
+        <key>few</key>
+        <string>تمت إضافة %d ملفات</string>
+        <key>many</key>
+        <string>تمت إضافة %d ملف</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>تمت إضافة %d ملف</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -4588,10 +4596,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تمت إضافة %d مجلد</string>
         <key>one</key>
-        <string>Added %d folder</string>
+        <string>تمت إضافة %d مجلد</string>
+        <key>two</key>
+        <string>تمت إضافة %d مجلدين</string>
+        <key>few</key>
+        <string>تمت إضافة %d مجلدات</string>
+        <key>many</key>
+        <string>تمت إضافة %d مجلد</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>تمت إضافة %d مجلد</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -4604,10 +4620,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تمت إضافة %d ملفات</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>تمت إضافة %d ملف</string>
+        <key>two</key>
+        <string>تمت إضافة %d ملفين</string>
+        <key>few</key>
+        <string>تمت إضافة %d ملفات</string>
+        <key>many</key>
+        <string>تمت إضافة %d ملف</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>تمت إضافة %d ملف</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -4620,10 +4644,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>و %d مجلد</string>
         <key>one</key>
-        <string>and %d folder</string>
+        <string>و %d مجلد</string>
+        <key>two</key>
+        <string>و %d مجلدين</string>
+        <key>few</key>
+        <string>و %d مجلدات</string>
+        <key>many</key>
+        <string>و %d مجلد</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>و %d مجلد</string>
       </dict>
     </dict>
   </dict>
