@@ -52,6 +52,8 @@
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
     [self updateAppearance];
+    
+    [self trackScreenView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -84,22 +86,36 @@
     }
 }
 
+- (TestPasswordViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self makeTestPasswordViewModel];
+    }
+    
+    return _viewModel;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)tapConfirm:(id)sender {
+    [self trackConfirmButtonTap];
     [self.passwordView.passwordTextField resignFirstResponder];
     if ([MEGASdk.shared checkPassword:self.passwordView.passwordTextField.text]) {
         [self passwordTestSuccess];
         [MEGASdk.shared passwordReminderDialogSucceeded];
+        [self trackPasswordAcceptedDisplayed];
     } else {
         [self passwordTestFailed];
+        [self trackWrongPasswordDisplayed];
     }
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
+    [self trackExportRecoveryKeyButtonTap];
     if ([MEGASdk.shared isLoggedIn]) {
         if (self.isLoggingOut) {
-            [Helper showMasterKeyCopiedAlert:nil];
+            [Helper showMasterKeyCopiedAlert:^{
+                [self trackExportRecoveryKeyCopyOKAlertButtonTap];
+            }];
         } else {
             __weak TestPasswordViewController *weakSelf = self;
             
@@ -117,6 +133,7 @@
 }
 
 - (IBAction)tapClose:(id)sender {
+    [self trackProceedToLogoutButtonTap];
     [self.passwordView.passwordTextField resignFirstResponder];
     
     [self dismissViewControllerAnimated:YES completion:^{

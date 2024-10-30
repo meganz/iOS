@@ -196,3 +196,4 @@
 #import "QRSettingsTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "MasterKeyViewController.h"
+#import "TestPasswordViewController.h"
