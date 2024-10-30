@@ -7,6 +7,7 @@ import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwift
 import MEGATest
+import MEGAUIMock
 import XCTest
 
 final class HomeUploadingViewModelTests: XCTestCase {
@@ -20,7 +21,7 @@ final class HomeUploadingViewModelTests: XCTestCase {
             networkMonitorUseCase: MockNetworkMonitorUseCase(),
             createContextMenuUseCase: MockCreateContextMenuUseCase(),
             tracker: tracker,
-            router: FileUploadingRouter(baseViewController: UIViewController())
+            router: FileUploadingRouter(baseViewController: UIViewController(), photoPicker: MockMEGAPhotoPicker())
         )
     }
     

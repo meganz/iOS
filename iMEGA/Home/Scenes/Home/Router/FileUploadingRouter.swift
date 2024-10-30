@@ -1,12 +1,32 @@
 import CoreServices
 import Foundation
 import MEGADomain
+import MEGAPresentation
+import MEGAUI
 import VisionKit
 
 final class FileUploadingRouter {
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     
     private lazy var vNDocumentCameraVCDelegate: VNDocumentCameraVCDelegate? = nil
+    
+    private weak var navigationController: UINavigationController?
+
+    private weak var baseViewController: UIViewController?
+    
+    private var photoPicker: any MEGAPhotoPickerProtocol
+    
+    // MARK: - Initialiser
+
+    init(
+        navigationController: UINavigationController? = nil,
+        baseViewController: UIViewController,
+        photoPicker: some MEGAPhotoPickerProtocol
+    ) {
+        self.navigationController = navigationController
+        self.baseViewController = baseViewController
+        self.photoPicker = photoPicker
+    }
     
     func upload(from source: FileUploadSource) {
         switch source {
@@ -26,23 +46,34 @@ final class FileUploadingRouter {
     // MARK: - Display PhotoAlbum Selection View Controller
 
     private func presentPhotoAlbumSelection(completion: @escaping (([PHAsset], MEGANode) -> Void)) {
-        let albumTableViewController = AlbumsTableViewController(
-            selectionActionType: AlbumsSelectionActionType.upload,
-            selectionActionDisabledText: HomeLocalisation.upload.rawValue
-        ) { [weak self] assets in
-            asyncOnMain {
-                self?.presentDestinationFolderBrowser { targetNode in
-                    completion(assets, targetNode)
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newPhotoPicker) {
+            Task { @MainActor in
+                let assets = await photoPicker.pickAssets()
+                if assets.count > 0 {
+                    self.presentDestinationFolderBrowser { targetNode in
+                        completion(assets, targetNode)
+                    }
                 }
             }
-        }
-        asyncOnMain { [weak self] in
-            guard let self else { return }
-            self.navigationController?.present(
-                MEGANavigationController(rootViewController: albumTableViewController),
-                animated: true,
-                completion: nil
-            )
+        } else {
+            let albumTableViewController = AlbumsTableViewController(
+                selectionActionType: AlbumsSelectionActionType.upload,
+                selectionActionDisabledText: HomeLocalisation.upload.rawValue
+            ) { [weak self] assets in
+                asyncOnMain {
+                    self?.presentDestinationFolderBrowser { targetNode in
+                        completion(assets, targetNode)
+                    }
+                }
+            }
+            asyncOnMain { [weak self] in
+                guard let self else { return }
+                self.navigationController?.present(
+                    MEGANavigationController(rootViewController: albumTableViewController),
+                    animated: true,
+                    completion: nil
+                )
+            }
         }
     }
 
@@ -165,17 +196,6 @@ final class FileUploadingRouter {
         browserNavigationController.setToolbarHidden(false, animated: false)
         navigationController?.present(browserNavigationController, animated: true, completion: nil)
     }
-
-    // MARK: - Initialiser
-
-    init(navigationController: UINavigationController? = nil, baseViewController: UIViewController) {
-        self.navigationController = navigationController
-        self.baseViewController = baseViewController
-    }
-
-    private weak var navigationController: UINavigationController?
-
-    private weak var baseViewController: UIViewController?
 
     // MARK: - Event Source
 

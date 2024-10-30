@@ -4,7 +4,9 @@ import Foundation
 import ISEmojiView
 import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
+import MEGAUI
 import MessageKit
 import VisionKit
 
@@ -630,18 +632,26 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        let selectionActionDisabledText = Strings.Localizable.send
-        let albumTableViewController = AlbumsTableViewController(selectionActionType: AlbumsSelectionActionType.send,
-                                                                 selectionActionDisabledText: selectionActionDisabledText) { [weak self] assets in
-                                                                    guard let `self` = self else {
-                                                                        return
-                                                                    }
-                                                                    
-                                                                    self.startUpload(assets: assets)
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newPhotoPicker) {
+            let photoPicker = MEGAPhotoPicker(presenter: self)
+            Task { @MainActor in
+                let assets = await photoPicker.pickAssets()
+                startUpload(assets: assets)
+            }
+        } else {
+            let selectionActionDisabledText = Strings.Localizable.send
+            let albumTableViewController = AlbumsTableViewController(selectionActionType: AlbumsSelectionActionType.send,
+                                                                     selectionActionDisabledText: selectionActionDisabledText) { [weak self] assets in
+                guard let self else {
+                    return
+                }
+                
+                self.startUpload(assets: assets)
+            }
+            albumTableViewController.source = .chat
+            let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
+            present(viewController: navigationController)
         }
-        albumTableViewController.source = .chat
-        let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
-        present(viewController: navigationController)
     }
     
     func showCamera() {

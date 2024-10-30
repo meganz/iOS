@@ -62,7 +62,6 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     func didTapUploadFromPhotoAlbum() {
         tracker.trackAnalyticsEvent(with: HomeChooseFromPhotosMenuToolbarEvent())
-        
         permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
             guard let self else { return }
             if granted {

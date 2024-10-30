@@ -1712,6 +1712,7 @@
 		A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */; };
 		A8754A292A331B39007475C2 /* FileAttributeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8754A282A331B39007475C2 /* FileAttributeGenerator.swift */; };
 		A87BDB352B8CD3BC0074EE4C /* UserAvatarHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87BDB342B8CD3BC0074EE4C /* UserAvatarHandler.swift */; };
+		A87F09192CCFE65100A1B03C /* MEGAUIMock in Frameworks */ = {isa = PBXBuildFile; productRef = A87F09182CCFE65100A1B03C /* MEGAUIMock */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
@@ -5646,6 +5647,7 @@
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
 				6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
+				A87F09192CCFE65100A1B03C /* MEGAUIMock in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				B51616492B83361900C6E842 /* Notifications in Frameworks */,
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
@@ -13864,6 +13866,7 @@
 				B5866BB42CA539E4009E0A1E /* GoogleMobileAds */,
 				6DFE02972CB7338400703844 /* MEGAUIComponent */,
 				256428542CC7927D005DA9B1 /* ContentLibraries */,
+				A87F09182CCFE65100A1B03C /* MEGAUIMock */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -19279,6 +19282,10 @@
 		A86280BB291E8D510010D6E0 /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGADomain;
+		};
+		A87F09182CCFE65100A1B03C /* MEGAUIMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAUIMock;
 		};
 		A891E8A429C1E09D0020072A /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;

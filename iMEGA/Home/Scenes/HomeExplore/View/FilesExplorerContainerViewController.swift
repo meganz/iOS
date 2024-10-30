@@ -3,6 +3,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
+import MEGAUI
 import MEGAUIKit
 
 class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
@@ -168,7 +169,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     func didSelect(action: UploadAddActionEntity) {
-        if uploadViewModel == nil {
+        if uploadViewModel == nil, let navigationController {
             let uploadViewModel = HomeUploadingViewModel(
                 uploadFilesUseCase: UploadPhotoAssetsUseCase(
                     uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
@@ -177,7 +178,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
                 networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
                 tracker: DIContainer.tracker,
-                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
+                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self, photoPicker: MEGAPhotoPicker(presenter: navigationController))
             )
             self.uploadViewModel = uploadViewModel
         }

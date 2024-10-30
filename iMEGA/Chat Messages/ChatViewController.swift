@@ -6,6 +6,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGASDKRepo
+import MEGAUI
 import MEGAUIKit
 import MessageKit
 import UIKit
@@ -153,6 +154,8 @@ class ChatViewController: MessagesViewController {
     private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
     private var chatBottomInfoScreenBottomPadding: CGFloat = 5.0
     
+    private var photoPicker: any MEGAPhotoPickerProtocol
+    
     // MARK: - Overriden methods
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -186,9 +189,14 @@ class ChatViewController: MessagesViewController {
         updateToolbarState()
     }
     
-    init(chatRoom: ChatRoomEntity, chatContentViewModel: ChatContentViewModel) {
+    init(
+        chatRoom: ChatRoomEntity,
+        chatContentViewModel: ChatContentViewModel,
+        photoPicker: some MEGAPhotoPickerProtocol
+    ) {
         self.chatRoom = chatRoom
         self.chatContentViewModel = chatContentViewModel
+        self.photoPicker = photoPicker
         super.init(nibName: nil, bundle: nil)
     }
     

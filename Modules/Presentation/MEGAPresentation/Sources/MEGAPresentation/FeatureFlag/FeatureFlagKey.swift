@@ -13,4 +13,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case nodeTags = "Node Tags"
     case markdownSupport = "Markdown support"
     case webclientSubscribersCancelSubscription = "Webclient subscribers cancel subscription flow"
+    case newPhotoPicker = "New Photo Picker"
 }
