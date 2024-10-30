@@ -4248,6 +4248,14 @@
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="選擇取消訂閱的原因";
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="輸入詳細訊息";
+/* Cancel subscription confirmation alert title */
+"accounts.cancelSubscriptionConfirmationAlert.title"="您的訂閱已取消";
+/* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="您目前的方案於%@到期後將變成一個免費的MEGA帳戶";
+/* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="請確保在此日期之前您的儲存用量在%@的範圍內。如果超過此限額，您的帳戶可能會被鎖定。";
+/* Cancel subscription confirmation alert button title */
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="好的，明白了";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="隱藏的項目";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4383,8 +4391,8 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Pro會員限定";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="新增檟籤";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="新增檟籤";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="使用標籤來幫助您尋找和整理資料。試著按年份、地點、項目或主題進行標記。";

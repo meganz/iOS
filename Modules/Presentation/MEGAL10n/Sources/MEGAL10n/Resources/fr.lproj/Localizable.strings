@@ -951,7 +951,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Inviter vos amies et amis";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="%@ d’espace de stockage pour chaque invitation.\nValable pendant 365 jours.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Sélectionner des contacts sur votre appareil ou saisir plusieurs adresses courriel";
 /*  */
@@ -4248,6 +4248,14 @@
 "accounts.cancelSubscriptionSurvey.error.selectAReason"="Sélectionnez une raison d’annulation de votre abonnement";
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Saisissez des détails";
+/* Cancel subscription confirmation alert title */
+"accounts.cancelSubscriptionConfirmationAlert.title"="Votre abonnement a été annulé";
+/* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="Vous passerez à un compte MEGA gratuit à l'expiration de votre abonnement actuel le %@.";
+/* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Veuillez vous assurer que la quantité d'espace de stockage est inférieure à la limite de %@ à cette date. Votre compte peut être bloqué si vous dépassez la limite.";
+/* Cancel subscription confirmation alert button title */
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="D’accord, j’ai compris";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Éléments cachés";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4383,8 +4391,8 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Pro seulement";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Ajoutez des étiquettes";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Ajoutez des étiquettes";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Utilisez des étiquettes pour vous aider à trouver et à organiser vos données. Essayez d’étiqueter par année, emplacement, projet ou sujet.";

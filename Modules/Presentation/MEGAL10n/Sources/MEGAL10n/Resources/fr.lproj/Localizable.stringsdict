@@ -3433,9 +3433,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>Ajouté %d fichier</string>
+        <key>many</key>
+        <string>Ajouté %d fichiers</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>Ajouté %d fichiers</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -3449,9 +3451,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d folder</string>
+        <string>Ajouté %d dossier</string>
+        <key>many</key>
+        <string>Ajouté %d dossiers</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>Ajouté %d dossiers</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3465,9 +3469,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>Ajouté %d fichier</string>
+        <key>many</key>
+        <string>Ajouté %d fichiers</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>Ajouté %d fichiers</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3481,9 +3487,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>and %d folder</string>
+        <string>et %d dossier</string>
+        <key>many</key>
+        <string>et %d dossiers</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>et %d dossiers</string>
       </dict>
     </dict>
   </dict>
