@@ -6,7 +6,7 @@ import MEGAL10n
 import MEGASDKRepo
 import UIKit
 
-final class AudioPlayerViewController: UIViewController {
+class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNodeActionForwardingDelegate {
     @IBOutlet weak var imageViewContainerView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var dataStackView: UIStackView!
@@ -41,6 +41,8 @@ final class AudioPlayerViewController: UIViewController {
     private var pendingDragEvent: Bool = false
     private var playerType: PlayerType = .default
     
+    private var selectedNodeActionTypeEntity: NodeActionTypeEntity?
+    
     // MARK: - Internal properties
     private(set) var viewModel: AudioPlayerViewModel
     
@@ -69,17 +71,22 @@ final class AudioPlayerViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isMovingFromParent || isBeingDismissed {
-            viewModel.dispatch(.viewDidDissapear)
-        } else if let presentingViewController = presentingViewController, presentingViewController.isBeingDismissed {
-            viewModel.dispatch(.viewDidDissapear)
+        if isMovingFromParent || isBeingDismissed || presentingViewController?.isBeingDismissed == true {
+            viewModel.dispatch(.viewDidDissapear(reason: .userInitiatedDismissal))
+        } else {
+            if let selectedNodeActionTypeEntity, isSelectingSupportedNodeActionType(selectedNodeActionTypeEntity) {
+                viewModel.dispatch(.viewDidDissapear(reason: .systemPushedAnotherView))
+            } else {
+                viewModel.dispatch(.viewDidDissapear(reason: .userInitiatedDismissal))
+            }
+            selectedNodeActionTypeEntity = nil
         }
     }
     
     /// Overriding dismiss function to detect dismissal of current view controller triggered from navigation controller's dismissal
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         super.dismiss(animated: flag, completion: completion)
-        viewModel.dispatch(.viewDidDissapear)
+        viewModel.dispatch(.viewDidDissapear(reason: .userInitiatedDismissal))
     }
     
     deinit {
@@ -88,6 +95,11 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     // MARK: - Private functions
+    
+    private func isSelectingSupportedNodeActionType(_ selectedNodeActionTypeEntity: NodeActionTypeEntity) -> Bool {
+        selectedNodeActionTypeEntity == .import
+        || selectedNodeActionTypeEntity == .download
+    }
     
     private func configureActivityIndicatorViewColor() {
         activityIndicatorView.color = TokenColors.Icon.secondary
@@ -538,6 +550,12 @@ final class AudioPlayerViewController: UIViewController {
     private func setForegroundColor(for button: UIButton, color: UIColor) {
         button.tintColor = color
         button.setImage(button.currentImage?.withTintColor(color, renderingMode: .alwaysTemplate), for: .normal)
+    }
+    
+    // MARK: - AudioPlayerViewControllerNodeActionForwardingDelegate
+    
+    func didSelectNodeActionTypeMenu(_ nodeActionTypeEntity: NodeActionTypeEntity) {
+        selectedNodeActionTypeEntity = nodeActionTypeEntity
     }
 }
 
