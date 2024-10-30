@@ -31,14 +31,6 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         detailLabel.isHidden = true
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-    
     @objc func setPreferredBackgroundColor(_ color: UIColor?) {
         preferredBackgroundColor = color
         updateAppearance()
