@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI

@@ -16,6 +16,12 @@ public struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         static let originalCacheDirectory = "originalV3"
     }
     
+    public enum SupportedVariation {
+        case defaultNodes
+        case folderLinkNodes
+        case publicNodes
+    }
+    
     private let sdk: MEGASdk
     private let fileManager: FileManager
     private let groupContainer: AppGroupContainer
@@ -29,7 +35,7 @@ public struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         groupContainer = AppGroupContainer(fileManager: fileManager)
         appGroupCacheURL = groupContainer.url(for: .cache)
     }
-    
+        
     public func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL? {
         let url = generateCachingURL(for: node.base64Handle, type: type)
         return fileExists(at: url) ? url : nil
@@ -120,5 +126,35 @@ extension ThumbnailRepository {
     
     private func fileExists(at url: URL) -> Bool {
         fileManager.fileExists(atPath: url.path)
+    }
+}
+
+extension ThumbnailRepository {
+    
+    /// A preconfigured variation of ThumbnailRepository. This uses the .sharedSDK in conjunction with the DefaultMEGANodeProvider. This version is default version to use in most situation with working with a actively logged in session.
+    /// - Returns: ThumbnailRepository - Default Configured
+    public static func defaultThumbnailRepository() -> Self {
+        ThumbnailRepository(
+            sdk: .sharedSdk,
+            fileManager: .default,
+            nodeProvider: DefaultMEGANodeProvider(sdk: .sharedSdk))
+    }
+    
+    /// A preconfigured variation of ThumbnailRepository. This uses the .sharedSDK in conjunction with the PublicAlbumNodeProvider. This version is typically only required to be used when working with Public SetEntities and SetElements.
+    /// - Returns: ThumbnailRepository - Public Set and Element Configuration
+    public static func publicThumbnailRepository(nodeProvider: PublicAlbumNodeProvider = .shared) -> Self {
+        ThumbnailRepository(
+            sdk: .sharedSdk,
+            fileManager: .default,
+            nodeProvider: nodeProvider)
+    }
+    
+    /// A preconfigured variation of ThumbnailRepository. This uses the .sharedFolderLinkSdk in conjunction with the DefaultMEGANodeProvider. This version is typically only required to be used when working with folder links.
+    /// - Returns: ThumbnailRepository - Folder Links Configured
+    public static func folderLinkThumbnailRepository() -> Self {
+        ThumbnailRepository(
+            sdk: .sharedFolderLinkSdk,
+            fileManager: .default,
+            nodeProvider: DefaultMEGANodeProvider(sdk: .sharedSdk))
     }
 }

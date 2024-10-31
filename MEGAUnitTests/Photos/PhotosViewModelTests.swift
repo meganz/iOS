@@ -1,4 +1,5 @@
 @preconcurrency import Combine
+import ContentLibraries
 @testable import MEGA
 import MEGAAnalyticsiOS
 @testable import MEGADomain

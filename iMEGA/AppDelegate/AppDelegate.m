@@ -120,6 +120,8 @@
     [MEGASdk setLogToConsole:YES];
     
     [self enableLogsIfNeeded];
+    
+    [self initialiseModules];
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     

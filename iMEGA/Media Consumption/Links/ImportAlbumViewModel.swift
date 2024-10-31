@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
@@ -262,7 +263,7 @@ final class ImportAlbumViewModel: ObservableObject {
             publicAlbumName = publicAlbum.set.name
             let photos = await publicCollectionUseCase.publicNodes(publicAlbum.setElements)
             try Task.checkCancellation()
-            photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
+            photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .modificationDesc)
             publicLinkStatus = .loaded
             tracker.trackAnalyticsEvent(with: DIContainer.importAlbumContentLoadedEvent)
         } catch is CancellationError {

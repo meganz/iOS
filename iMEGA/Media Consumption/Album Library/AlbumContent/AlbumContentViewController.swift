@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -57,7 +58,10 @@ final class AlbumContentViewController: UIViewController, ViewType {
         
         buildNavigationBar()
         
-        configPhotoLibraryView(in: view)
+        configPhotoLibraryView(
+            in: view,
+            router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode))
+        
         setupPhotoLibrarySubscriptions()
         contextMenuManager = contextMenuManagerConfiguration()
         
@@ -127,7 +131,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         case .finishLoading:
             SVProgressHUD.dismiss()
         case .showAlbumPhotos(let nodes, let sortOrder):
-            updatePhotoLibrary(by: nodes, withSortType: sortOrder)
+            updatePhotoLibrary(by: nodes, withSortType: sortOrder.toSortOrderEntity())
             
             if nodes.isEmpty {
                 showEmptyView()

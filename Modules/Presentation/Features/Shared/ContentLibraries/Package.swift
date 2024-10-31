@@ -1,4 +1,6 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
+// To get this to Swift 6, we need to resolve a similar issue as
+// https://forums.swift.org/t/ongeometrychange-assertion-failed-block-was-expected-to-execute-on-queue/74827
 
 import PackageDescription
 
@@ -15,35 +17,42 @@ let package = Package(
     products: [
         .library(
             name: "ContentLibraries",
-            targets: ["ContentLibraries"]),
+            targets: ["ContentLibraries"])
     ],
     dependencies: [
         .package(path: "../../../../Domain/MEGASwiftUI"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
         .package(path: "../../../Infrastracture/MEGATest"),
+        .package(path: "../../../MEGAPresentation"),
         .package(path: "../../../../Presentation/MEGAL10n"),
         .package(path: "../../../../Presentation/MEGAAssets"),
         .package(path: "../../../../Domain/MEGADomain"),
-        .package(path: "../../../Repository/MEGARepo")
+        .package(path: "../../../Repository/MEGARepo"),
+        .package(path: "../../../Repository/MEGASDKRepo")
     ],
     targets: [
         .target(
             name: "ContentLibraries",
             dependencies: [
+                "MEGAPresentation",
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGADomain",
                 "MEGAL10n",
                 "MEGAAssets",
-                "MEGARepo"
+                "MEGARepo",
+                "MEGASDKRepo"
             ],
             swiftSettings: settings),
         .testTarget(
             name: "ContentLibrariesTests",
             dependencies: [
                 "ContentLibraries",
+                "MEGAPresentation",
+                "MEGAAssets",
                 "MEGATest",
-                .product(name: "MEGADomainMock", package: "MEGADomain")
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAPresentationMock", package: "MEGAPresentation")
             ],
             swiftSettings: settings)
     ]

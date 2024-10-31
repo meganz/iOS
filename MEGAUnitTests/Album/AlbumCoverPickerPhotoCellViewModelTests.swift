@@ -1,3 +1,4 @@
+import ContentLibraries
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -8,7 +9,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
 
     @MainActor
     func testOnPhotoSelect_whenDifferentPhotoSelected_shouldSetIsSelectedToTrue() throws {
-        let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
+        let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
         let viewModel = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)

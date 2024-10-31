@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -56,7 +57,10 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         
         buildNavigationBar()
         
-        configPhotoLibraryView(in: view)
+        configPhotoLibraryView(
+            in: view,
+            router: PhotoLibraryContentViewRouter(
+                contentMode: photoLibraryContentViewModel.contentMode))
         setupPhotoLibrarySubscriptions()
         
         viewModel.invokeCommand = { [weak self] command in

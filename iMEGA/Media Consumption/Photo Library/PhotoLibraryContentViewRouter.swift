@@ -1,20 +1,11 @@
 import Combine
+import ContentLibraries
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
-
-@MainActor
-protocol PhotoLibraryContentViewRouting {
-    func card(for photoByYear: PhotoByYear) -> PhotoYearCard
-    func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard
-    func card(for photoByDay: PhotoByDay) -> PhotoDayCard
-    func card(for photo: NodeEntity, viewModel: PhotoLibraryModeAllGridViewModel) -> PhotoCell
-    func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity])
-    func openCameraUploadSettings(viewModel: PhotoLibraryModeAllViewModel)
-}
 
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     private let contentMode: PhotoLibraryContentMode
@@ -52,7 +43,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
                 photoByDay: photoByDay,
-                thumbnailLoader: makeThumbnailLoader(), 
+                thumbnailLoader: makeThumbnailLoader(),
                 nodeUseCase: makeNodeUseCase(),
                 sensitiveNodeUseCase: makeSensitiveNodeUseCase()
             )
@@ -134,3 +125,4 @@ extension PhotoLibraryContentMode {
         }
     }
 }
+

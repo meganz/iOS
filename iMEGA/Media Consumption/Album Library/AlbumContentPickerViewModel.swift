@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -115,7 +116,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     private func updatePhotoLibraryContent(cloudDrivePhotos: [NodeEntity], cameraUploadPhotos: [NodeEntity]) {
         let filteredPhotos = photoNodes(for: photoSourceLocation, from: cloudDrivePhotos, and: cameraUploadPhotos)
             .filter { $0.hasThumbnail }
-        photoLibraryContentViewModel.library = filteredPhotos.toPhotoLibrary(withSortType: .newest)
+        photoLibraryContentViewModel.library = filteredPhotos.toPhotoLibrary(withSortType: .modificationDesc)
         photoLibraryContentViewModel.selection.editMode = .active
     }
     
