@@ -1,3 +1,4 @@
+import ContentLibraries
 import Foundation
 
 extension MediaDiscoveryViewController: PhotoLibraryProvider {

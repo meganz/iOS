@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain

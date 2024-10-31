@@ -87,7 +87,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(linkStatusResults, [.inProgress, .loaded])
         XCTAssertEqual(sut.publicAlbumName, albumName)
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
-                       photos.toPhotoLibrary(withSortType: .newest))
+                       photos.toPhotoLibrary(withSortType: .modificationDesc))
         XCTAssertTrue(sut.shouldShowPhotoLibraryContent)
         
         assertTrackAnalyticsEventCalled(
@@ -186,7 +186,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(linkStatusResults, [.inProgress, .loaded])
         XCTAssertEqual(sut.publicAlbumName, albumName)
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
-                       photos.toPhotoLibrary(withSortType: .newest))
+                       photos.toPhotoLibrary(withSortType: .modificationDesc))
         XCTAssertEqual(sut.publicLink, link)
     }
     

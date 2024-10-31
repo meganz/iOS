@@ -10,7 +10,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, strong) MyAvatarManager *myAvatarManager;
 @property (strong, nonatomic) PhotoSelectionAdapter *selection;
-@property (strong, nonatomic) PhotoLibraryContentViewModel *photoLibraryContentViewModel;
 
 @property (weak,   nonatomic) PhotoAlbumContainerViewController *parentPhotoAlbumsController;
 @property (assign, nonatomic) BOOL shouldShowRightBarButton;

@@ -112,14 +112,6 @@
     [self objcWrapper_configPhotoLibraryViewIn:self.photoContainerView];
 }
 
-- (PhotoLibraryContentViewModel *)photoLibraryContentViewModel {
-    if (_photoLibraryContentViewModel == nil) {
-        _photoLibraryContentViewModel = [self createPhotoLibraryContentViewModel];
-    }
-    
-    return _photoLibraryContentViewModel;
-}
-
 - (PhotoSelectionAdapter *)selection {
     if (_selection == nil) {
         _selection = [[PhotoSelectionAdapter alloc] initWithSdk:MEGASdk.shared];

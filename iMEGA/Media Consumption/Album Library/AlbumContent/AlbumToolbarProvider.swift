@@ -1,4 +1,5 @@
 import ChatRepo
+import ContentLibraries
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n

@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -67,7 +68,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: cloudPhotos, allPhotosFromCameraUpload: cameraUploadPhotos)
         await sut.photosLoadingTask?.value
         let expectedPhotos = (cloudPhotos + cameraUploadPhotos).filter { $0.hasThumbnail }
-            .toPhotoLibrary(withSortType: .newest)
+            .toPhotoLibrary(withSortType: .modificationDesc)
             .allPhotos
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
     }
@@ -203,7 +204,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         await sut.photosLoadingTask?.value
         
         let expectedPhotos = cloudDrivePhotos.filter { $0.hasThumbnail }
-            .toPhotoLibrary(withSortType: .newest)
+            .toPhotoLibrary(withSortType: .modificationDesc)
             .allPhotos
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
         XCTAssertEqual(sut.photoSourceLocation, .cloudDrive)
@@ -220,7 +221,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         await sut.photosLoadingTask?.value
         
         let expectedPhotos = cameraUploadPhotos.filter { $0.hasThumbnail }
-            .toPhotoLibrary(withSortType: .newest)
+            .toPhotoLibrary(withSortType: .modificationDesc)
             .allPhotos
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
         XCTAssertEqual(sut.photoSourceLocation, .cameraUploads)

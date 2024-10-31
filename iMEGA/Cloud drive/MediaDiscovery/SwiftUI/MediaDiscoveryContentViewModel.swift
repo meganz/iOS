@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import Foundation
 import MEGADomain
 import MEGAFoundation
@@ -143,7 +144,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     }
     
     private func sortIntoPhotoLibrary(nodes: [NodeEntity], sortOrder: SortOrderType) async -> PhotoLibrary {
-        nodes.toPhotoLibrary(withSortType: sortOrder)
+        nodes.toPhotoLibrary(withSortType: sortOrder.toSortOrderEntity())
     }
     
     private func startTracking() {
