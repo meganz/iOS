@@ -6,7 +6,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
 
-#import "AwaitingEmailConfirmationView.h"
 #import "SetupTwoFactorAuthenticationTableViewController.h"
 #import "QRSettingsTableViewController.h"
 

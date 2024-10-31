@@ -2,22 +2,15 @@ import MEGADesignToken
 
 extension PasswordView {
     @objc func updateAppearance() {
-        topSeparatorView.backgroundColor = separatorColor()
-        bottomSeparatorView.backgroundColor = separatorColor()
+        topSeparatorView.backgroundColor = TokenColors.Border.strong
+        bottomSeparatorView.backgroundColor = TokenColors.Border.strong
         
-        leftImageView?.renderImage(withColor: iconTintColor())
+        leftImageView?.renderImage(withColor: TokenColors.Icon.secondary)
         
         topLabel.textColor = normalLabelColor()
         passwordTextField.textColor = normalTextColor()
         
         backgroundColor = TokenColors.Background.page
-    }
-    
-    override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     @objc func errorTextColor() -> UIColor {
@@ -34,15 +27,5 @@ extension PasswordView {
     
     @objc func setToggleSecureButtonTintColor(isActive: Bool) {
         toggleSecureButton.tintColor = isActive ? TokenColors.Icon.primary : TokenColors.Icon.disabled
-    }
-    
-    // MARK: - Private
-    
-    private func separatorColor() -> UIColor {
-        TokenColors.Border.strong
-    }
-    
-    private func iconTintColor() -> UIColor {
-        TokenColors.Icon.secondary
     }
 }

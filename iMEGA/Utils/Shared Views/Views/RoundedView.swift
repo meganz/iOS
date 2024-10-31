@@ -9,10 +9,4 @@ final class RoundedView: UIView {
         let divisor: CGFloat = 2
         layer.cornerRadius = height / divisor
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        setNeedsLayout()
-    }
 }

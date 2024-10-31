@@ -100,20 +100,12 @@
     self.topStackViewCenterConstraint.active = YES;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Lifecycle
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [self updateAppearance];
+    [self setupColors];
     
 #ifdef MAIN_APP_TARGET
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(bottomViewVisibility) name:MEGAAudioPlayerShouldUpdateContainerNotification object:nil];
@@ -143,7 +135,7 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)setupColors {
     [self designTokenColors];
     [self.button mnz_setupPrimary:self.traitCollection];
 }
