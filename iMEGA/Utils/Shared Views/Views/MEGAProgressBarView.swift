@@ -13,30 +13,12 @@ final class MEGAProgressBarView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        registerForTraitChanges()
         configureSublayers()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        registerForTraitChanges()
         configureSublayers()
-    }
-    
-    private func registerForTraitChanges() {
-        guard #available(iOS 17.0, *) else { return }
-        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { [weak self] (progressBarView: MEGAProgressBarView, previousTraitCollection: UITraitCollection) in
-            if progressBarView.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
-                self?.configureSublayers()
-            }
-        })
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            configureSublayers()
-        }
     }
     
     func setProgress(progress: CGFloat, animated: Bool) {

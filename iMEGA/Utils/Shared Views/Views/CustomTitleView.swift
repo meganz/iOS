@@ -17,17 +17,9 @@ final class CustomTitleView: UIView {
     
     private func updateAppearance() {
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        titleLabel.textColor = UIColor.primaryTextColor()
+        titleLabel.textColor = TokenColors.Text.primary
         
         subtitleLabel.font = UIFont.systemFont(ofSize: 12)
         subtitleLabel.textColor = TokenColors.Text.secondary
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(traitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
 }
