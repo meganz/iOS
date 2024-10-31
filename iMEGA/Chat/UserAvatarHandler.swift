@@ -36,7 +36,7 @@ struct UserAvatarHandler: UserAvatarHandling {
             let avatarPath = try await userImageUseCase.fetchAvatar(base64Handle: userHandle, forceDownload: false)
             
             guard let image = UIImage(contentsOfFile: avatarPath) else {
-                if let image = drawImage() {
+                if let image = await drawImage() {
                     writeImage(image.jpegData(compressionQuality: 1.0), to: URL(fileURLWithPath: avatarPath))
                     return image
                 }
@@ -51,6 +51,7 @@ struct UserAvatarHandler: UserAvatarHandling {
     
     // MARK: - Private
     
+    @MainActor
     private func drawImage() -> UIImage? {
         UIImage.drawImage(
             forInitials: initials,

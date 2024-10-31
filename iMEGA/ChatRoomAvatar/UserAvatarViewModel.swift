@@ -103,7 +103,7 @@ final class UserAvatarViewModel: ObservableObject {
         let initials = chatTitle.initialForAvatar()
         let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
         
-        return UIImage.drawImage(
+        return await UIImage.drawImage(
             forInitials: initials,
             size: size,
             backgroundColor: avatarBackgroundColor,

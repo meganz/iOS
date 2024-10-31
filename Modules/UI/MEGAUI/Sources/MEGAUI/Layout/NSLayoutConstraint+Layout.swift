@@ -1,10 +1,12 @@
 import UIKit
 
 public extension Array where Element == NSLayoutConstraint {
+    @MainActor
     func activate() {
         NSLayoutConstraint.activate(self)
     }
     
+    @MainActor
     func deactivate() {
         NSLayoutConstraint.deactivate(self)
     }
