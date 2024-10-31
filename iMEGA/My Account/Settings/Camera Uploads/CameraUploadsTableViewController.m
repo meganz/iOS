@@ -45,17 +45,7 @@
     [super viewDidLoad];
     
     [self configureNavigationBar];
-    [self.enableCameraUploadsLabel setText:LocalizedString(@"cameraUploadsLabel", @"")];
-    
-    [self.uploadVideosInfoLabel setText:LocalizedString(@"uploadVideosLabel", @"")];
-    [self.uploadVideosLabel setText:LocalizedString(@"uploadVideosLabel", @"")];
-    
-    self.useCellularConnectionLabel.text = LocalizedString(@"useMobileData", @"");
-    self.useCellularConnectionForVideosLabel.text = LocalizedString(@"Use Mobile Data for Videos", @"");
-    
-    self.advancedLabel.text = LocalizedString(@"advanced", @"");
-    self.includeGPSTagsLabel.text = LocalizedString(@"Include Location Tags", @"Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file");
-    
+    [self configureLabelsText];
     [self configImageFormatTexts];
     
     if (self.isPresentedModally) {
@@ -235,7 +225,7 @@
                 if (granted) {
                     if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] &&
                         !MEGASdk.shared.isMasterBusinessAccount) {
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:LocalizedString(@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account", @"Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data.") preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"general.cameraUploads", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:LocalizedString(@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account", @"Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"enable", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [CameraUploadManager.shared enableCameraUpload];

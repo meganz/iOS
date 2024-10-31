@@ -81,7 +81,7 @@ extension MyAccountHallViewModel {
         return [
             ContextAction(
                 type: .cameraUploads,
-                title: Strings.Localizable.cameraUploadsLabel,
+                title: Strings.Localizable.General.cameraUploads,
                 dynamicSubtitle: {
                     CameraUploadManager.isCameraUploadEnabled ? Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.enabled :
                         Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.disabled

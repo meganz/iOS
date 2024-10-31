@@ -21,7 +21,7 @@ extension ContextAction {
     static func cameraUploadsAction(isEnabled: Bool) -> ContextAction {
         ContextAction(
             type: .cameraUploads,
-            title: Strings.Localizable.cameraUploadsLabel,
+            title: Strings.Localizable.General.cameraUploads,
             subtitle: isEnabled ?
             Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.enabled :
             Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.disabled,

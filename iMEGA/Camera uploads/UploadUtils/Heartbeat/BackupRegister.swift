@@ -73,7 +73,7 @@ final class BackupRegister {
         Task {
             do {
                 let parentHandle = try await cameraUploadsUseCase.registerCameraUploadsBackup(
-                    Strings.Localizable.cameraUploadsLabel
+                    Strings.Localizable.General.cameraUploads
                 )
                 MEGALogDebug("[Camera Upload] heartbeat - register backup \(String(describing: type(of: sdk).base64Handle(forHandle: parentHandle))) success")
                 cachedBackupId = parentHandle

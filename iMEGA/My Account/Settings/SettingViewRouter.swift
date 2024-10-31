@@ -44,7 +44,7 @@ class SettingViewRouter: Routing {
     
     private func createCameraUploadCellViewModel() -> SettingCellViewModel {
         let vm = SettingCellViewModel(image: UIImage.cameraUploadsSettings,
-                                      title: Strings.Localizable.cameraUploadsLabel,
+                                      title: Strings.Localizable.General.cameraUploads,
                                       displayValue: CameraUploadManager.getCameraUploadStatus(), router: nil)
         let router = CameraUploadsSettingsViewRouter(presenter: presenter, closure: { [weak vm] in
             vm?.updateDisplayValue(CameraUploadManager.getCameraUploadStatus())
