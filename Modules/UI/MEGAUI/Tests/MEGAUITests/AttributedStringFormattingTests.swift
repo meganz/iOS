@@ -15,7 +15,7 @@ final class AttributedStringFormattingTests: XCTestCase {
     private func checkURL(
         in attributedString: AttributedString,
         expectedURL: String,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         if let range = attributedString.range(of: expectedURL) {
@@ -38,7 +38,7 @@ final class AttributedStringFormattingTests: XCTestCase {
     private func checkBoldFormatting(
         in attributedString: AttributedString,
         expectedBoldString: String,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         if let range = attributedString.range(of: expectedBoldString) {

@@ -2,6 +2,7 @@ import CoreGraphics
 import UIKit
 
 public extension UIImage {
+    @MainActor
     static func drawImage(
         forInitials initials: String,
         size imageSize: CGSize,
@@ -83,7 +84,6 @@ public extension UIImage {
         return image
     }()
 }
-
 
 public extension UIImage {
     func applying(alpha: CGFloat) -> UIImage? {
