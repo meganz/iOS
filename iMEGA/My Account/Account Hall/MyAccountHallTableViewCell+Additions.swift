@@ -1,8 +1,16 @@
 import Accounts
 import MEGADesignToken
-import UIKit
+import MEGAUIKit
 
 extension MyAccountHallTableViewCell {
+    private var pendingViewWidthConstraint: String {
+        "pendingViewWidthConstraint"
+    }
+    
+    private var pendingViewHeightConstraint: String {
+        "pendingViewHeightConstraint"
+    }
+    
     func setup(data: MyAccountHallCellData) {
         if let sectionText = data.sectionText, sectionLabel != nil {
             sectionLabel.text = sectionText
@@ -17,6 +25,7 @@ extension MyAccountHallTableViewCell {
             pendingView.clipsToBounds = true
             pendingView.isHidden = false
         } else {
+            setPendingViewSizeToZero()
             pendingView?.isHidden = true
         }
         
@@ -51,30 +60,9 @@ extension MyAccountHallTableViewCell {
         }
     }
     
-    private func layoutPendingView() {
-        let pendingViewHeight = calculatePendingViewHeight()
-        
-        NSLayoutConstraint.activate([
-            pendingView.heightAnchor.constraint(equalToConstant: calculatePendingViewHeight()),
-            pendingView.widthAnchor.constraint(greaterThanOrEqualToConstant: pendingViewHeight)
-        ])
-        
-        pendingView.layer.cornerRadius = pendingViewHeight / 2
-    }
-    
-    private func calculatePendingViewHeight() -> CGFloat {
-        let verticalPadding: CGFloat = 4
-        let calculateNotLabel = MEGALabel()
-        calculateNotLabel.apply(style: .caption2, weight: .medium)
-        calculateNotLabel.text = "1"
-        
-        let fitSize = CGSize(width: UIScreen.main.bounds.width, height: .greatestFiniteMagnitude)
-        return CGSize(width: fitSize.width, height: calculateNotLabel.sizeThatFits(fitSize).height).height + verticalPadding
-    }
-    
     @objc func setupCell() {
         backgroundColor = TokenColors.Background.page
-
+        
         if iconImageView != nil {
             iconImageView.tintColor = TokenColors.Icon.primary
         }
@@ -82,7 +70,7 @@ extension MyAccountHallTableViewCell {
         if sectionLabel != nil {
             sectionLabel.textColor = UIColor.primaryTextColor()
         }
-
+        
         if detailLabel != nil {
             detailLabel.textColor =  TokenColors.Text.secondary
         }
@@ -98,5 +86,58 @@ extension MyAccountHallTableViewCell {
             promoLabel.textColor = TokenColors.Text.success
             promoView.layer.cornerRadius = 4.0
         }
+    }
+    
+    // MARK: - Private
+    
+    private func layoutPendingView() {
+        let pendingViewHeight = calculatePendingViewHeight()
+        
+        let widthConstraint = pendingView.constraint(with: pendingViewWidthConstraint) ?? {
+            let constraint = pendingView.widthAnchor.constraint(greaterThanOrEqualToConstant: pendingViewHeight)
+            constraint.identifier = pendingViewWidthConstraint
+            return constraint
+        }()
+        
+        let heightConstraint = pendingView.constraint(with: pendingViewHeightConstraint) ?? {
+            let constraint = pendingView.heightAnchor.constraint(equalToConstant: pendingViewHeight)
+            constraint.identifier = pendingViewHeightConstraint
+            return constraint
+        }()
+        
+        widthConstraint.constant = pendingViewHeight
+        heightConstraint.constant = pendingViewHeight
+        
+        NSLayoutConstraint.activate([widthConstraint, heightConstraint])
+        
+        pendingView.layer.cornerRadius = pendingViewHeight / 2
+    }
+    
+    private func setPendingViewSizeToZero() {
+        if let existingWidthConstraint = pendingView.constraint(with: pendingViewWidthConstraint) {
+            pendingView.removeConstraint(existingWidthConstraint)
+        }
+        
+        let widthConstraint = pendingView.widthAnchor.constraint(equalToConstant: 0)
+        widthConstraint.identifier = pendingViewWidthConstraint
+        
+        if let existingHeightConstraint = pendingView.constraint(with: pendingViewHeightConstraint) {
+            pendingView.removeConstraint(existingHeightConstraint)
+        }
+        
+        let heightConstraint = pendingView.heightAnchor.constraint(equalToConstant: 0)
+        heightConstraint.identifier = pendingViewHeightConstraint
+        
+        NSLayoutConstraint.activate([widthConstraint, heightConstraint])
+    }
+    
+    private func calculatePendingViewHeight() -> CGFloat {
+        let verticalPadding: CGFloat = 4
+        let calculateNotLabel = MEGALabel()
+        calculateNotLabel.apply(style: .caption2, weight: .medium)
+        calculateNotLabel.text = "1"
+        
+        let fitSize = CGSize(width: UIScreen.main.bounds.width, height: .greatestFiniteMagnitude)
+        return CGSize(width: fitSize.width, height: calculateNotLabel.sizeThatFits(fitSize).height).height + verticalPadding
     }
 }
