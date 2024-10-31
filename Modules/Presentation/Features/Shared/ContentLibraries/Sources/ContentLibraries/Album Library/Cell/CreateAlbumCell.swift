@@ -3,8 +3,8 @@ import MEGAL10n
 import MEGAPresentation
 import SwiftUI
 
-struct CreateAlbumCell: View {
-    let onTapHandler: (() -> Void)
+public struct CreateAlbumCell: View {
+    private let onTapHandler: (() -> Void)
     
     @Environment(\.colorScheme) private var colorScheme
     @State private var orientation = UIDevice.current.orientation
@@ -17,7 +17,11 @@ struct CreateAlbumCell: View {
         TokenColors.Background.surface2.swiftUI
     }
     
-    var body: some View {
+    public init(onTapHandler: @escaping () -> Void) {
+        self.onTapHandler = onTapHandler
+    }
+    
+    public var body: some View {
         Button(action: onTapHandler, label: content)
             .buttonStyle(.plain)
     }
@@ -52,9 +56,9 @@ struct CreateAlbumCell: View {
     private var iconSize: CGFloat {
         switch orientation {
         case .landscapeLeft, .landscapeRight:
-            UIDevice.current.iPad ? 35 : 25
+            UIDevice.current.userInterfaceIdiom == .pad ? 35 : 25
         default:
-            UIDevice.current.iPad ? 25 : 20
+            UIDevice.current.userInterfaceIdiom == .pad ? 25 : 20
         }
     }
 }

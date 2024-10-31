@@ -1,14 +1,17 @@
-import ContentLibraries
 import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
-struct AlbumCell: View {
-    @StateObject var viewModel: AlbumCellViewModel
+public struct AlbumCell: View {
+    @StateObject private var viewModel: AlbumCellViewModel
     
-    var body: some View {
+    public init(viewModel: @autoclosure @escaping () -> AlbumCellViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel() )
+    }
+    
+    public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack(alignment: viewModel.isLoading ? .center : .bottomTrailing) {
                 PhotoCellImage(
@@ -16,7 +19,7 @@ struct AlbumCell: View {
                     bgColor: TokenColors.Background.surface2.swiftUI
                 )
                 /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
-                .overlay(Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))
+                .overlay(Color.black.opacity(viewModel.isSelected ? 0.2 : 0.0))
                 .cornerRadius(6)
                 
                 GeometryReader { geo in
