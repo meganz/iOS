@@ -9,7 +9,7 @@ extension CameraUploadsTableViewController {
     
     @objc
     func configureNavigationBar() {
-        let title = Strings.Localizable.cameraUploadsLabel
+        let title = Strings.Localizable.General.cameraUploads
         navigationItem.title = title
         setMenuCapableBackButtonWith(menuTitle: title)
     }
@@ -26,5 +26,16 @@ extension CameraUploadsTableViewController {
         useCellularConnectionLabel.textColor = UIColor.primaryTextColor()
         advancedLabel.textColor = UIColor.primaryTextColor()
         useCellularConnectionForVideosLabel.textColor = UIColor.primaryTextColor()
+    }
+    
+    @objc
+    func configureLabelsText() {
+        enableCameraUploadsLabel.text = Strings.Localizable.General.cameraUploads
+        uploadVideosInfoLabel.text = Strings.Localizable.uploadVideosLabel
+        uploadVideosLabel.text = Strings.Localizable.uploadVideosLabel
+        useCellularConnectionLabel.text = Strings.Localizable.useMobileData
+        useCellularConnectionForVideosLabel.text = Strings.Localizable.useMobileDataForVideos
+        advancedLabel.text = Strings.Localizable.advanced
+        includeGPSTagsLabel.text = Strings.Localizable.includeLocationTags
     }
 }

@@ -53,39 +53,21 @@ import MEGAL10n
     
     @objc var icon: UIImage? {
         switch tabType {
-        case .cloudDrive:
-            return UIImage.cloudDriveIcon
-            
-        case .cameraUploads:
-            return UIImage.cameraUploadsIcon
-            
-        case .home:
-            return UIImage.home
-            
-        case .chat:
-            return UIImage.chatIcon
-            
-        case .sharedItems:
-            return UIImage.sharedItemsIcon
+        case .cloudDrive: UIImage.cloudDriveIcon
+        case .cameraUploads: UIImage.cameraUploadsIcon
+        case .home: UIImage.home
+        case .chat: UIImage.chatIcon
+        case .sharedItems: UIImage.sharedItemsIcon
         }
     }
     
     @objc var title: String {
         switch tabType {
-        case .cloudDrive:
-            return Strings.Localizable.cloudDrive
-            
-        case .cameraUploads:
-            return Strings.Localizable.cameraUploadsLabel
-            
-        case .home:
-            return Strings.Localizable.home
-            
-        case .chat:
-            return Strings.Localizable.chat
-            
-        case .sharedItems:
-            return Strings.Localizable.sharedItems
+        case .cloudDrive: Strings.Localizable.cloudDrive
+        case .cameraUploads: Strings.Localizable.General.cameraUploads
+        case .home: Strings.Localizable.home
+        case .chat: Strings.Localizable.chat
+        case .sharedItems: Strings.Localizable.sharedItems
         }
     }
 }
