@@ -298,7 +298,8 @@ struct CloudDriveViewControllerFactory {
         let adsVisibilityViewModel = AdsVisibilityViewModel(configuratorProvider: config.adsConfiguratorProvider)
         let accountStorageUseCase = AccountStorageUseCase(
             accountRepository: AccountRepository.newRepo,
-            preferenceUseCase: PreferenceUseCase.default
+            preferenceUseCase: PreferenceUseCase.default,
+            almostFullSOQBannerFeatureFlagEnabled: { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .almostFullStorageOverQuotaBanner) }
         )
         
         return .init(
