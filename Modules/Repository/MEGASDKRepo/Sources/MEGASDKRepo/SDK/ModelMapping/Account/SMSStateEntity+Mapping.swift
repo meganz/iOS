@@ -3,6 +3,12 @@ import MEGASdk
 
 extension SMSState {
     public func toStateEntity() -> SMSStateEntity {
-        SMSStateEntity.init(rawValue: self.rawValue) ?? .notAllowed
+        SMSStateEntity(rawValue: self.rawValue) ?? .notAllowed
+    }
+}
+
+extension SMSStateEntity {
+    public func toSMSState() -> SMSState {
+        SMSState(rawValue: self.rawValue) ?? .notAllowed
     }
 }

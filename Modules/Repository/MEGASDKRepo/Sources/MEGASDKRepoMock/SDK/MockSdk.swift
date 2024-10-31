@@ -61,6 +61,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private var requestDelegates: [any MEGARequestDelegate] = []
     private var globalDelegates: [any MEGAGlobalDelegate] = []
     private let storageState: StorageState?
+    private let verifiedPhoneNumber: String?
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -109,63 +110,65 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public var delegateQueueType: ListenerQueueType?
     public var contentConsumptionPreferences: [String: String]
     
-    public init(fileLinkNode: MEGANode? = nil,
-                nodes: [MEGANode] = [],
-                rubbishNodes: [MEGANode] = [],
-                syncDebrisNodes: [MEGANode] = [],
-                incomingNodes: MEGANodeList = MEGANodeList(),
-                outgoingNodes: MEGANodeList = MEGANodeList(),
-                publicLinkNodes: MEGANodeList = MEGANodeList(),
-                backupInfoList: [MEGABackupInfo] = [],
-                deviceId: String? = nil,
-                myContacts: MEGAUserList = MEGAUserList(),
-                myUser: MEGAUser? = nil,
-                isLoggedIn: Int = 0,
-                isMasterBusinessAccount: Bool = false,
-                isAchievementsEnabled: Bool = false,
-                isNewAccount: Bool = false,
-                isContactVerificationWarningEnabled: Bool = false,
-                bandwidthOverquotaDelay: Int64 = 0,
-                smsState: SMSState = .notAllowed,
-                myEmail: String? = nil,
-                megaSets: [MEGASet] = [],
-                megaSetElements: [MEGASetElement] = [],
-                megaRootNode: MEGANode? = nil,
-                rubbishBinNode: MEGANode? = nil,
-                megaSetElementCounts: [MEGAHandle: UInt] = [:],
-                nodeList: MEGANodeList = MEGANodeList(),
-                shareList: MEGAShareList = MEGAShareList(),
-                isSharedFolderOwnerVerified: Bool = false,
-                sharedFolderOwner: MEGAUser? = nil,
-                createSupportTicketError: MEGAErrorType = .apiOk,
-                link: String? = nil,
-                megaSetError: MEGAErrorType = .apiOk,
-                incomingContactRequestList: MEGAContactRequestList = MEGAContactRequestList(),
-                userAlertList: MEGAUserAlertList = MEGAUserAlertList(),
-                upgradeSecurity: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
-                accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
-                devices: [String: String] = [:],
-                contentConsumptionPreferences: [String: String] = [:],
-                file: String? = nil,
-                copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
-                abTestValues: [String: Int] = [:],
-                remoteFeatureFlagValues: [String: Int] = [:],
-                requestResult: MockSdkRequestResult = .failure(MockError.failingError),
-                accountCreationDate: Date? = nil,
-                enabledNotificationIdList: MEGAIntegerList? = nil,
-                lastReadNotificationId: Int32 = 0,
-                isNodeInheritingSensitivity: Bool = false,
-                nodesInheritingSensitivity: [MEGAHandle: Bool] = [:],
-                hasVersionsForNode: Bool = false,
-                setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk },
-                outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList(),
-                createdFolderHandle: MEGAHandle? = nil,
-                shareAccessLevel: MEGAShareType = .accessUnknown,
-                nodeFingerprint: String? = nil,
-                nodeSizes: [MEGAHandle: Int64] = [:],
-                folderInfo: MEGAFolderInfo? = nil,
-                shouldListGlobalDelegates: Bool = false,
-                storageState: StorageState? = nil
+    public init(
+        fileLinkNode: MEGANode? = nil,
+        nodes: [MEGANode] = [],
+        rubbishNodes: [MEGANode] = [],
+        syncDebrisNodes: [MEGANode] = [],
+        incomingNodes: MEGANodeList = MEGANodeList(),
+        outgoingNodes: MEGANodeList = MEGANodeList(),
+        publicLinkNodes: MEGANodeList = MEGANodeList(),
+        backupInfoList: [MEGABackupInfo] = [],
+        deviceId: String? = nil,
+        myContacts: MEGAUserList = MEGAUserList(),
+        myUser: MEGAUser? = nil,
+        isLoggedIn: Int = 0,
+        isMasterBusinessAccount: Bool = false,
+        isAchievementsEnabled: Bool = false,
+        isNewAccount: Bool = false,
+        isContactVerificationWarningEnabled: Bool = false,
+        bandwidthOverquotaDelay: Int64 = 0,
+        smsState: SMSState = .notAllowed,
+        myEmail: String? = nil,
+        megaSets: [MEGASet] = [],
+        megaSetElements: [MEGASetElement] = [],
+        megaRootNode: MEGANode? = nil,
+        rubbishBinNode: MEGANode? = nil,
+        megaSetElementCounts: [MEGAHandle: UInt] = [:],
+        nodeList: MEGANodeList = MEGANodeList(),
+        shareList: MEGAShareList = MEGAShareList(),
+        isSharedFolderOwnerVerified: Bool = false,
+        sharedFolderOwner: MEGAUser? = nil,
+        createSupportTicketError: MEGAErrorType = .apiOk,
+        link: String? = nil,
+        megaSetError: MEGAErrorType = .apiOk,
+        incomingContactRequestList: MEGAContactRequestList = MEGAContactRequestList(),
+        userAlertList: MEGAUserAlertList = MEGAUserAlertList(),
+        upgradeSecurity: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
+        accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
+        devices: [String: String] = [:],
+        contentConsumptionPreferences: [String: String] = [:],
+        file: String? = nil,
+        copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
+        abTestValues: [String: Int] = [:],
+        remoteFeatureFlagValues: [String: Int] = [:],
+        requestResult: MockSdkRequestResult = .failure(MockError.failingError),
+        accountCreationDate: Date? = nil,
+        enabledNotificationIdList: MEGAIntegerList? = nil,
+        lastReadNotificationId: Int32 = 0,
+        isNodeInheritingSensitivity: Bool = false,
+        nodesInheritingSensitivity: [MEGAHandle: Bool] = [:],
+        hasVersionsForNode: Bool = false,
+        setUserAttributeTypeMegaSetError: @escaping (MEGAUserAttribute) -> MEGAErrorType = { _ in .apiOk },
+        outgoingContactRequests: MEGAContactRequestList = MEGAContactRequestList(),
+        createdFolderHandle: MEGAHandle? = nil,
+        shareAccessLevel: MEGAShareType = .accessUnknown,
+        nodeFingerprint: String? = nil,
+        nodeSizes: [MEGAHandle: Int64] = [:],
+        folderInfo: MEGAFolderInfo? = nil,
+        shouldListGlobalDelegates: Bool = false,
+        storageState: StorageState? = nil,
+        verifiedPhoneNumber: String? = nil
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -224,6 +227,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.folderInfo = folderInfo
         self.shouldListGlobalDelegates = shouldListGlobalDelegates
         self.storageState = storageState
+        self.verifiedPhoneNumber = verifiedPhoneNumber
         super.init()
     }
     
@@ -854,6 +858,22 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         globalDelegates.forEach {
             $0.onEvent?(self, event: event)
         }
+    }
+    
+    public override func smsVerifiedPhoneNumber() -> String? {
+        verifiedPhoneNumber
+    }
+    
+    public override func getCountryCallingCodes(with delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func checkSMSVerificationCode(_ verificationCode: String, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func sendSMSVerificationCode(toPhoneNumber phoneNumber: String, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
     }
 }
 

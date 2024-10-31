@@ -13,6 +13,7 @@ public final class MockRequest: MEGARequest {
     private let _publicNode: MEGANode?
     private let _backupInfoList: [MEGABackupInfo]
     private let stringDict: [String: String]
+    private let stringListDictionary: [String: MEGAStringList]
     private let _file: String?
     private let _accountDetails: MEGAAccountDetails?
     private let _numDetails: Int
@@ -21,25 +22,26 @@ public final class MockRequest: MEGARequest {
     private let _name: String?
     private let _folderInfo: MEGAFolderInfo?
     
-    public init(handle: MEGAHandle,
-                set: MEGASet? = nil,
-                text: String? = nil,
-                parentHandle: MEGAHandle = .invalidHandle,
-                elementInSet: [MEGASetElement] = [],
-                number: Int64 = 0,
-                link: String? = nil,
-                flag: Bool = false,
-                publicNode: MEGANode? = nil,
-                backupInfoList: [MEGABackupInfo] = [],
-                stringDict: [String: String] = [:],
-                file: String? = nil,
-                accountDetails: MEGAAccountDetails? = nil,
-                numDetails: Int = 0,
-                notifications: MEGANotificationList? = nil,
-                recentActionsBuckets: [MEGARecentActionBucket] = [],
-                name: String? = nil,
-                folderInfo: MEGAFolderInfo? = nil
-                
+    public init(
+        handle: MEGAHandle,
+        set: MEGASet? = nil,
+        text: String? = nil,
+        parentHandle: MEGAHandle = .invalidHandle,
+        elementInSet: [MEGASetElement] = [],
+        number: Int64 = 0,
+        link: String? = nil,
+        flag: Bool = false,
+        publicNode: MEGANode? = nil,
+        backupInfoList: [MEGABackupInfo] = [],
+        stringDict: [String: String] = [:],
+        stringListDictionary: [String: MEGAStringList] = [:],
+        file: String? = nil,
+        accountDetails: MEGAAccountDetails? = nil,
+        numDetails: Int = 0,
+        notifications: MEGANotificationList? = nil,
+        recentActionsBuckets: [MEGARecentActionBucket] = [],
+        name: String? = nil,
+        folderInfo: MEGAFolderInfo? = nil
     ) {
         self.handle = handle
         _set = set
@@ -52,6 +54,7 @@ public final class MockRequest: MEGARequest {
         _publicNode = publicNode
         _backupInfoList = backupInfoList
         self.stringDict = stringDict
+        self.stringListDictionary = stringListDictionary
         _file = file
         _accountDetails = accountDetails
         _numDetails = numDetails
@@ -80,4 +83,5 @@ public final class MockRequest: MEGARequest {
     public override var recentActionsBuckets: [MEGARecentActionBucket]? { _recentActionsBuckets }
     public override var name: String? { _name }
     public override var megaFolderInfo: MEGAFolderInfo? { _folderInfo }
+    public override var megaStringListDictionary: [String: MEGAStringList]? { stringListDictionary }
 }
