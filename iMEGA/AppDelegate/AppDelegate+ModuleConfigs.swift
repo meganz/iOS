@@ -8,7 +8,10 @@ extension AppDelegate {
     @objc func initialiseModules() {
         ContentLibraries.configuration = .init(
             sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
-            nodeUseCase: makeNodeUseCase()
+            nodeUseCase: makeNodeUseCase(),
+            isAlbumPerformanceImprovementsEnabled: {
+                AlbumRemoteFeatureFlagProvider().isPerformanceImprovementsEnabled()
+            }
         )
     }
     

@@ -1,6 +1,7 @@
 import AsyncAlgorithms
 @preconcurrency import Combine
 import MEGAAnalyticsiOS
+import MEGAAssets
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
@@ -8,7 +9,7 @@ import MEGASwiftUI
 import SwiftUI
 
 @MainActor
-final class AlbumCellViewModel: ObservableObject {
+public final class AlbumCellViewModel: ObservableObject {
     let album: AlbumEntity
     let selection: AlbumSelection
     let isLinkShared: Bool
@@ -44,7 +45,7 @@ final class AlbumCellViewModel: ObservableObject {
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
-    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
+    private let configuration: ContentLibraries.Configuration
     
     private var subscriptions = Set<AnyCancellable>()
     private var albumMetaData: AlbumMetaDataEntity?
@@ -53,7 +54,7 @@ final class AlbumCellViewModel: ObservableObject {
         selection.editMode.isEditing
     }
     
-    init(
+    public init(
         thumbnailLoader: some ThumbnailLoaderProtocol,
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
@@ -65,7 +66,7 @@ final class AlbumCellViewModel: ObservableObject {
         tracker: some AnalyticsTracking = DIContainer.tracker,
         selectedAlbum: Binding<AlbumEntity?>,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
+        configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
         self.thumbnailLoader = thumbnailLoader
         self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
@@ -78,16 +79,21 @@ final class AlbumCellViewModel: ObservableObject {
         self.tracker = tracker
         _selectedAlbum = selectedAlbum
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
-        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
+        self.configuration = configuration
         
         title = album.name
         numberOfNodes = album.count
         isLinkShared = album.isLinkShared
         
         if let coverNode = album.coverNode {
-            thumbnailContainer = thumbnailLoader.initialImage(for: coverNode, type: .thumbnail, placeholder: { Image(.placeholder) })
+            thumbnailContainer = thumbnailLoader.initialImage(
+                for: coverNode,
+                type: .thumbnail,
+                placeholder: { MEGAAssetsImageProvider.image(named: .placeholder) })
         } else {
-            thumbnailContainer = ImageContainer(image: Image(.placeholder), type: .placeholder)
+            thumbnailContainer = ImageContainer(
+                image: MEGAAssetsImageProvider.image(named: .placeholder),
+                type: .placeholder)
         }
         
         configSelection()
@@ -118,7 +124,7 @@ final class AlbumCellViewModel: ObservableObject {
     }
     
     func monitorAlbumPhotos() async {
-        guard albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled(),
+        guard configuration.isAlbumPerformanceImprovementsEnabled(),
               album.type == .user else { return }
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         for await albumPhotos in await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
@@ -183,7 +189,9 @@ final class AlbumCellViewModel: ObservableObject {
         let imageContainer = if let albumCover = await albumCoverUseCase.albumCover(for: album, photos: photos) {
             try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
         } else {
-            ImageContainer(image: Image(.placeholder), type: .placeholder)
+            ImageContainer(
+                image: MEGAAssetsImageProvider.image(named: .placeholder),
+                type: .placeholder)
         }
         guard let imageContainer,
               !thumbnailContainer.isEqual(imageContainer) else { return }
@@ -196,7 +204,7 @@ final class AlbumCellViewModel: ObservableObject {
         } else {
             .single
         }
-        let event = if albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
+        let event = if configuration.isAlbumPerformanceImprovementsEnabled() {
             AlbumSelectedEvent(
                 selectionType: selectionType,
                 imageCount: albumMetaData?.imageCount.toKotlinInt(),

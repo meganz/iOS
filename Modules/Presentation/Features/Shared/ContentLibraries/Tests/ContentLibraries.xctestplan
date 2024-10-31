@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "F477827D-D768-402A-B590-ED5A928C12FD",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ContentLibrariesTests",
+        "name" : "ContentLibrariesTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,5 +1,5 @@
 import Combine
-@testable import MEGA
+@testable import ContentLibraries
 import MEGADomain
 import SwiftUI
 import XCTest

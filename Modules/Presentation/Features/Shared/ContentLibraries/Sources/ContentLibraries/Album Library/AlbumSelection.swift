@@ -2,8 +2,8 @@ import Combine
 import MEGADomain
 import SwiftUI
 
-final class AlbumSelection: ObservableObject {
-    @Published var editMode: EditMode = .inactive {
+public final class AlbumSelection: ObservableObject {
+    @Published public var editMode: EditMode = .inactive {
         willSet {
             if !newValue.isEditing {
                 allSelected = false
@@ -11,9 +11,9 @@ final class AlbumSelection: ObservableObject {
         }
     }
     
-    @Published var albums = [HandleEntity: AlbumEntity]()
+    @Published public var albums = [HandleEntity: AlbumEntity]()
     
-    @Published var allSelected = false {
+    @Published public var allSelected = false {
         willSet {
             if !newValue {
                 albums.removeAll()
@@ -21,7 +21,9 @@ final class AlbumSelection: ObservableObject {
         }
     }
     
-    func setSelectedAlbums(_ albums: [AlbumEntity]) {
+    public init() { }
+    
+    public func setSelectedAlbums(_ albums: [AlbumEntity]) {
         self.albums = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, $0) })
     }
     
@@ -30,7 +32,8 @@ final class AlbumSelection: ObservableObject {
     }
 }
 
-extension AlbumSelection {
+public extension AlbumSelection {
+    
     var isAlbumSelectedPublisher: AnyPublisher<Bool, Never> {
         $albums
             .map { $0.values.isNotEmpty }
