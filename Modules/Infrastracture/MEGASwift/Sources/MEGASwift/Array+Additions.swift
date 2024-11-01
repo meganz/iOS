@@ -59,3 +59,16 @@ public extension Array where Element: Equatable {
         remove(at: index)
     }
 }
+
+public extension Array where Element == String {
+    /// Returns a new array where each element is prefixed with the specified string.
+    ///
+    /// This method does not modify the original array but instead returns a new array
+    /// where each element is prefixed by the provided string.
+    ///
+    /// - Parameter prefix: The string to prepend to each element in the array.
+    /// - Returns: A new array of strings where each element is prefixed with `prefix`.
+    func elementsPrepended(with prefix: String) -> [String] {
+        map { prefix + $0 }
+    }
+}
