@@ -1,3 +1,4 @@
+@testable import MEGASwift
 import XCTest
 
 final class ArrayAdditionsTests: XCTestCase {
@@ -80,5 +81,12 @@ final class ArrayAdditionsTests: XCTestCase {
         
         array.remove(object: 1)
         XCTAssertEqual(array, [2, 4])
+    }
+
+    func testElementsPrepended() {
+        XCTAssertEqual(
+            ["test1", "test2", "test3", "test4"].elementsPrepended(with: "#"),
+            ["#test1", "#test2", "#test3", "#test4"]
+        )
     }
 }

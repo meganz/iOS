@@ -16,9 +16,12 @@ struct AddTagsViewRouter: AddTagsViewRouting {
     }
     
     func build() -> UIViewController {
-        // `doneButtonDisabled` will be handled in [SAO-1819]
-        let navigationBarViewModel = AddTagsView.AddTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true))
-        let view = AddTagsView(navigationBarViewModel: navigationBarViewModel)
+        let view = ManageTagsView(
+            viewModel: ManageTagsViewModel(
+                navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
+                existingTagsViewModel: ExistingTagsViewModel()
+            )
+        )
         return UIHostingController(rootView: view)
     }
 }
