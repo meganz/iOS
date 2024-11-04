@@ -82,7 +82,11 @@ class ChatTitleView: UIView {
     }
     
     private func updateStatusView() {
-        statusView.isHidden = chatRoom.isGroup
+        guard !chatRoom.isGroup else {
+            statusView.isHidden = true
+            return
+        }
+
         if let userHandle = chatRoom.peers.first?.handle {
             let status = chatRoomUseCase.userStatus(forUserHandle: userHandle)
             statusView.isHidden = (status == .invalid)

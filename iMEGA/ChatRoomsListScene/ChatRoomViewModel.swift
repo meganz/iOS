@@ -805,9 +805,3 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         }
     }
 }
-
-extension ChatRoomViewModel: Equatable {
-    nonisolated static func == (lhs: ChatRoomViewModel, rhs: ChatRoomViewModel) -> Bool {
-        lhs.chatListItem == rhs.chatListItem
-    }
-}
