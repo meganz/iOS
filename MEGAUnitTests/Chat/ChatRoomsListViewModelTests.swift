@@ -101,8 +101,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         subscription = viewModel
             .$displayChatRooms
             .dropFirst()
-            .sink {
-                XCTAssert(mockList.map { ChatRoomViewModelFactory.make(chatListItem: $0) } == $0)
+            .sink { result in
+                XCTAssert(mockList == result.flatMap { $0.map(\.chatListItem) })
                 expectation.fulfill()
             }
         
@@ -130,7 +130,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         
         viewModel.selectChatMode(.meetings)
         wait(for: [expectation], timeout: 10)
-        XCTAssertEqual(mockList.map { ChatRoomViewModelFactory.make(chatListItem: $0) }, viewModel.displayPastMeetings)
+        XCTAssertEqual(mockList, viewModel.displayPastMeetings.flatMap { $0.map(\.chatListItem) })
     }
     
     @MainActor
