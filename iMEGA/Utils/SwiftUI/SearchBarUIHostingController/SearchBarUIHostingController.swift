@@ -111,26 +111,6 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         removeToolbar(animated: false)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            
-            if let navigationBar = self.wrapper?.searchController.navigationController?.navigationBar {
-                AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: self.traitCollection)
-            }
-            
-            if let toolbar {
-                AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: self.traitCollection)
-            }
-            if let searchBar = self.wrapper?.searchController.searchBar {
-                AppearanceManager.forceSearchBarUpdate(searchBar, 
-                                                       backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                                                       traitCollection: self.traitCollection)
-            }
-        }
-    }
-    
     // MARK: - AudioPlayerPresenterProtocol
     func updateContentView(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
