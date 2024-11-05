@@ -7,6 +7,12 @@ public extension MEGAChatListItem {
     }
 }
 
+public extension [MEGAChatListItem] {
+    func toChatListItemEntities() -> [ChatListItemEntity] {
+        map { $0.toChatListItemEntity() }
+    }
+}
+
 fileprivate extension ChatListItemEntity {
     init(with chatListItem: MEGAChatListItem) {
         self.init(

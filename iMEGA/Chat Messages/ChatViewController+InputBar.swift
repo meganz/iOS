@@ -299,9 +299,9 @@ extension ChatViewController {
     
     private func createUploadTransferDelegate() -> MEGAStartUploadTransferDelegate {
         return MEGAStartUploadTransferDelegate(toUploadToChatWithTotalBytes: nil, progress: nil) { [weak self] transfer in
-            guard let self = self, let state = transfer?.state else { return }
+            guard let self else { return }
             
-            switch state {
+            switch transfer.state {
             case .complete:
                 self.postMessageSentAccessibilityNotification()
             case .failed:
