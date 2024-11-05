@@ -3,6 +3,7 @@ import CoreServices
 import Foundation
 import ISEmojiView
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
@@ -632,7 +633,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newPhotoPicker) {
+        if RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo).isFeatureFlagEnabled(for: .nativePhotoPicker) {
             let photoPicker = MEGAPhotoPicker(presenter: self)
             Task { @MainActor in
                 let assets = await photoPicker.pickAssets()

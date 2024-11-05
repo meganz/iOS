@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 import MEGAUI
 import UIKit
 
@@ -57,7 +58,8 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
             parentNode: nodeEntity,
             presenter: navigationController,
             assetUploader: CloudDriveAssetUploader(),
-            photoPicker: MEGAPhotoPicker(presenter: navigationController)
+            photoPicker: MEGAPhotoPicker(presenter: navigationController),
+            remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo)
         ).start()
     }
 }
