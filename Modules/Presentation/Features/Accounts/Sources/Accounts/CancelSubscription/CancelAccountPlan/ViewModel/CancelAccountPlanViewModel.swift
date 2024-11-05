@@ -95,6 +95,7 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         CancellationSurveyViewModel(
             subscription: currentSubscription,
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
+            accountUseCase: accountUseCase,
             cancelAccountPlanRouter: router,
             logger: logger
         )

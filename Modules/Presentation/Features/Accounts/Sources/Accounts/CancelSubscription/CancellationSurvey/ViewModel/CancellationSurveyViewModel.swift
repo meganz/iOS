@@ -20,6 +20,7 @@ final class CancellationSurveyViewModel: ObservableObject {
     let maximumTextRequired = 120
     private(set) var subscription: AccountSubscriptionEntity
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let cancelAccountPlanRouter: any CancelAccountPlanRouting
     private let tracker: any AnalyticsTracking
     private let logger: ((String) -> Void)?
@@ -28,12 +29,14 @@ final class CancellationSurveyViewModel: ObservableObject {
     init(
         subscription: AccountSubscriptionEntity,
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         cancelAccountPlanRouter: some CancelAccountPlanRouting,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         logger: ((String) -> Void)? = nil
     ) {
         self.subscription = subscription
         self.subscriptionsUseCase = subscriptionsUseCase
+        self.accountUseCase = accountUseCase
         self.cancelAccountPlanRouter = cancelAccountPlanRouter
         self.tracker = tracker
         self.logger = logger
@@ -146,7 +149,8 @@ final class CancellationSurveyViewModel: ObservableObject {
             case .itunes:
                 cancelAccountPlanRouter.showAppleManageSubscriptions()
             default:
-                cancelAccountPlanRouter.showAlert(.success(Date(timeIntervalSince1970: TimeInterval(subscription.renewTime))))
+                guard let currentPlanExpirationDate = accountUseCase.currentProPlan?.expirationTime else { return }
+                cancelAccountPlanRouter.showAlert(.success(Date(timeIntervalSince1970: TimeInterval(currentPlanExpirationDate))))
             }
         } catch {
             logger?("[Cancellation Survey] Error - \(error.localizedDescription)")
