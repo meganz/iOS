@@ -31,6 +31,7 @@ let package = Package(
             exclude: [
                 "Package.swift",
                 "bindings",
+                "cmake",
                 "contrib",
                 "doc",
                 "examples",
