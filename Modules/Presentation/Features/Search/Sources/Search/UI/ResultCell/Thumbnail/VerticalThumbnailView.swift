@@ -177,7 +177,7 @@ struct VerticalThumbnailView: View {
         HStack(spacing: 4) {
             Text(viewModel.result.title)
                 .foregroundStyle(viewModel.titleTextColor)
-                .font(.body)
+                .font(.system(.caption).weight(.medium))
                 .lineLimit(1)
             
             viewModel
