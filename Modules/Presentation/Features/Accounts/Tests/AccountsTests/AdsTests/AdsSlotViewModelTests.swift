@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASDKRepoMock
+import MEGASwift
 import MEGATest
 import XCTest
 
@@ -28,7 +29,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         await assertAccountDidPurchasedPlanNotif(isExternalAdsFlagEnabled: false)
     }
     
-    private func assertAccountDidPurchasedPlanNotif(
+    @MainActor private func assertAccountDidPurchasedPlanNotif(
         isExternalAdsFlagEnabled: Bool,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -65,12 +66,13 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     // MARK: - Ads slot
-    func testSetupAdsRemoteFlag_whenAccountIsNotFree_shouldDisableExternalAds() async {
+    @MainActor func testSetupAdsRemoteFlag_whenAccountIsNotFree_shouldDisableExternalAds() async throws {
         let billedAccountTypes = AccountTypeEntity.allCases.filter({ $0 != .free })
         for type in billedAccountTypes {
             let sut = makeSUT(accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: type)))
             await sut.setupAdsRemoteFlag()
-            XCTAssertFalse(sut.isExternalAdsEnabled, "Account type \(type) should hide ads")
+            let isExternalAdsEnabled = try XCTUnwrap(sut.isExternalAdsEnabled)
+            XCTAssertFalse(isExternalAdsEnabled, "Account type \(type) should hide ads")
         }
     }
     
@@ -86,7 +88,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         await assertSetupAdsRemoteFlag(isLoggedIn: false)
     }
     
-    private func assertSetupAdsRemoteFlag(
+    @MainActor private func assertSetupAdsRemoteFlag(
         isLoggedIn: Bool = true,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .success(AccountDetailsEntity.build(proLevel: .free)),
         file: StaticString = #filePath,
@@ -104,17 +106,29 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isExternalAdsEnabled, expectedExternalAdsValue, file: file, line: line)
     }
 
-    func testUpdateAdsSlot_externalAdsDisabled_shouldHideAds() async {
+    @MainActor func testUpdateAdsSlot_externalAdsDisabled_shouldHideAds() async {
         let sut = makeSUT(isExternalAdsFlagEnabled: false)
         
         await sut.setupAdsRemoteFlag()
-        await sut.updateAdsSlot(randomAdsSlotConfig)
+        sut.updateAdsSlot(randomAdsSlotConfig)
         
         XCTAssertNil(sut.adsSlotConfig)
         XCTAssertFalse(sut.displayAds)
     }
     
-    func testUpdateAdsSlot_externalAdsEnabledAndReceivedSameAdsSlot_withDifferentDisplayAdsValue_shouldHaveLatestDisplayAds() async {
+    @MainActor func testUpdateAdsSlot_externalAdsIsNil_shouldSetAdsSlotConfig() async {
+        let sut = makeSUT()
+        
+        XCTAssertNil(sut.isExternalAdsEnabled)
+        
+        let expectedAdsSlotConfig = randomAdsSlotConfig
+        sut.updateAdsSlot(expectedAdsSlotConfig)
+        
+        XCTAssertEqual(sut.adsSlotConfig, expectedAdsSlotConfig)
+        XCTAssertEqual(sut.displayAds, expectedAdsSlotConfig.displayAds)
+    }
+    
+    @MainActor func testUpdateAdsSlot_externalAdsEnabledAndReceivedSameAdsSlot_withDifferentDisplayAdsValue_shouldHaveLatestDisplayAds() async {
         let randomAdSlot = randomAdsSlotConfig
         let expectedConfig = AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)
         
@@ -145,25 +159,36 @@ final class AdsSlotViewModelTests: XCTestCase {
         )
     }
     
-    private func assertUpdateAdsSlotShouldDisplayAds(
+    @MainActor private func assertUpdateAdsSlotShouldDisplayAds(
         adsSlots: [AdsSlotConfig],
         expectedLatestAdsSlotConfig: AdsSlotConfig,
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
-        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlots)
-        let sut = makeSUT(adsSlotChangeStream: stream, isExternalAdsFlagEnabled: true)
+        let adsSlotUpdates = MockAdsSlotUpdatesProvider(
+            adsSlotUpdates: makeAdsSlotUpdatesStream(adsSlotConfigs: adsSlots).eraseToAnyAsyncSequence()
+        )
+        let sut = makeSUT(adsSlotUpdatesProvider: adsSlotUpdates, isExternalAdsFlagEnabled: true)
         
         // Set initial AdSlot
-        await sut.updateAdsSlot(randomAdsSlotConfig)
+        sut.updateAdsSlot(randomAdsSlotConfig)
         
         // Monitor Ads slot changes
         await sut.setupAdsRemoteFlag()
-        sut.monitorAdsSlotChanges()
-        await sut.monitorAdsSlotChangesTask?.value
+        sut.startMonitoringAdsSlotUpdates()
+        await sut.monitorAdsSlotUpdatesTask?.value
         
         XCTAssertEqual(sut.adsSlotConfig, expectedLatestAdsSlotConfig, file: file, line: line)
         XCTAssertEqual(sut.displayAds, expectedLatestAdsSlotConfig.displayAds, file: file, line: line)
+    }
+    
+    @MainActor func testStopMonitoringAdsSlotUpdates_shouldCancelTask() async {
+        let sut = makeSUT(isExternalAdsFlagEnabled: true)
+        sut.startMonitoringAdsSlotUpdates()
+        await sut.monitorAdsSlotUpdatesTask?.value
+        
+        sut.stopMonitoringAdsSlotUpdates()
+        XCTAssertTrue(sut.monitorAdsSlotUpdatesTask?.isCancelled ?? false)
     }
     
     func testInitializeGoogleAds_externalAdsEnabled_shouldInitialize() async {
@@ -174,7 +199,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         await assertInitializingGoogleAds(isExternalAdsFlagEnabled: false, expectedCallCount: 0)
     }
     
-    private func assertInitializingGoogleAds(
+    @MainActor private func assertInitializingGoogleAds(
         isExternalAdsFlagEnabled: Bool,
         expectedCallCount: Int,
         file: StaticString = #filePath,
@@ -192,21 +217,21 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(adMobConsentManager.initializeGoogleMobileAdsSDKCalledCount, expectedCallCount, file: file, line: line)
     }
     
-    func testAdMob_withTestEnvironment_shouldUseTestUnitID() {
+    @MainActor func testAdMob_withTestEnvironment_shouldUseTestUnitID() {
         assertAdMob(
             forEnvs: AppConfigurationEntity.allCases.filter({ $0 != .production }),
             expectedAdMob: AdMob.test
         )
     }
     
-    func testAdMob_withLiveEnvironment_shouldUseLiveUnitID() {
+    @MainActor func testAdMob_withLiveEnvironment_shouldUseLiveUnitID() {
         assertAdMob(
             forEnvs: [.production],
             expectedAdMob: AdMob.live
         )
     }
     
-    private func assertAdMob(forEnvs envs: [AppConfigurationEntity], expectedAdMob: AdMob) {
+    @MainActor private func assertAdMob(forEnvs envs: [AppConfigurationEntity], expectedAdMob: AdMob) {
         let appEnvironmentUseCase = MockAppEnvironmentUseCase()
         let sut = makeSUT(appEnvironmentUseCase: appEnvironmentUseCase)
         
@@ -217,8 +242,8 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     // MARK: Helper
-    private func makeSUT(
-        adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
+    @MainActor private func makeSUT(
+        adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol = MockAdsSlotUpdatesProvider(),
         adsList: [String: String] = [:],
         isExternalAdsFlagEnabled: Bool = true,
         adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
@@ -230,7 +255,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> AdsSlotViewModel {
         let sut = AdsSlotViewModel(
-            adsSlotChangeStream: adsSlotChangeStream,
+            adsSlotUpdatesProvider: adsSlotUpdatesProvider,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
@@ -240,14 +265,13 @@ final class AdsSlotViewModelTests: XCTestCase {
         return sut
     }
     
-    private func makeMockAdsSlotChangeStream(adsSlotConfigs: [AdsSlotConfig?]) -> MockAdsSlotChangeStream {
-        let adsSlotStream = AsyncStream<AdsSlotConfig?> { continuation in
-            adsSlotConfigs.forEach { config in
-                continuation.yield(config)
+    private func makeAdsSlotUpdatesStream(adsSlotConfigs: [AdsSlotConfig?]) -> AnyAsyncSequence<AdsSlotConfig?> {
+        AsyncStream { continuation in
+            adsSlotConfigs.forEach {
+                continuation.yield($0)
             }
             continuation.finish()
-        }
-        return MockAdsSlotChangeStream(adsSlotStream: adsSlotStream)
+        }.eraseToAnyAsyncSequence()
     }
 
     private var randomAdsSlotConfig: AdsSlotConfig {

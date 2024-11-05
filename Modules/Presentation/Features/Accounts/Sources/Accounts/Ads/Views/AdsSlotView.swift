@@ -15,7 +15,7 @@ public struct AdsSlotView<T: View>: View {
         VStack(spacing: 0) {
             contentView
             
-            if viewModel.isExternalAdsEnabled {
+            if viewModel.isExternalAdsEnabled == true {
                 AdMobBannerView(adMob: viewModel.adMob)
                     .background()
                     .frame(height: shouldHideAds ? 0 : 50)
@@ -25,13 +25,16 @@ public struct AdsSlotView<T: View>: View {
         .task {
             await viewModel.setupAdsRemoteFlag()
             await viewModel.initializeGoogleAds()
-            viewModel.monitorAdsSlotChanges()
         }
         .onAppear {
+            viewModel.startMonitoringAdsSlotUpdates()
             viewModel.setupSubscriptions()
         }
+        .onDisappear {
+            viewModel.stopMonitoringAdsSlotUpdates()
+        }
         .ignoresSafeArea(.keyboard)
-        .ignoresSafeArea(edges: shouldHideAds || !viewModel.isExternalAdsEnabled ? .all : [.top])
+        .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) ? .all : [.top])
     }
     
     private var shouldHideAds: Bool {

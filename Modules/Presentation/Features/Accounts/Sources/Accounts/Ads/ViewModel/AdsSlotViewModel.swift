@@ -5,46 +5,42 @@ import MEGASDKRepo
 import MEGASwift
 import SwiftUI
 
+@MainActor
 final public class AdsSlotViewModel: ObservableObject {
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
-    private let adsSlotChangeStream: any AdsSlotChangeStreamProtocol
+    private let adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     
     private(set) var adsSlotConfig: AdsSlotConfig?
-    private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
+    private(set) var monitorAdsSlotUpdatesTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     
-    @Published var isExternalAdsEnabled: Bool = false
+    @Published var isExternalAdsEnabled: Bool?
     @Published var displayAds: Bool = false
     
     public init(
-        adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
+        adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
         accountUseCase: some AccountUseCaseProtocol
     ) {
-        self.adsSlotChangeStream = adsSlotChangeStream
+        self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
         self.accountUseCase = accountUseCase
     }
-    
-    deinit {
-        monitorAdsSlotChangesTask?.cancel()
-        monitorAdsSlotChangesTask = nil
-    }
-    
+
     // MARK: Setup
     func setupSubscriptions() {
         NotificationCenter.default
             .publisher(for: .accountDidPurchasedPlan)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                guard let self, isExternalAdsEnabled else { return }
+                guard let self, isExternalAdsEnabled == true else { return }
                 
                 Task { @MainActor [weak self] in
                     guard let self else { return }
@@ -56,12 +52,11 @@ final public class AdsSlotViewModel: ObservableObject {
     }
 
     func initializeGoogleAds() async {
-        guard isExternalAdsEnabled else { return }
+        guard isExternalAdsEnabled == true else { return }
         await adMobConsentManager.initializeGoogleMobileAdsSDK()
     }
 
     // MARK: Remote Flag
-    @MainActor
     func setupAdsRemoteFlag() async {
         // Check for enabled external ads only if there is no logged in user or the account type is free
         if accountUseCase.isLoggedIn(),
@@ -74,25 +69,30 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     // MARK: Ads Slot changes
-    func monitorAdsSlotChanges() {
-        monitorAdsSlotChangesTask?.cancel()
-        monitorAdsSlotChangesTask = Task { [weak self, adsSlotChangeStream] in
-            for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
-                await self?.updateAdsSlot(newAdsSlotConfig)
+    func startMonitoringAdsSlotUpdates() {
+        monitorAdsSlotUpdatesTask?.cancel()
+        monitorAdsSlotUpdatesTask = Task { [weak self, adsSlotUpdatesProvider] in
+            for await newAdsSlotConfig in adsSlotUpdatesProvider.adsSlotUpdates {
+                self?.updateAdsSlot(newAdsSlotConfig)
             }
         }
     }
     
-    @MainActor
+    func stopMonitoringAdsSlotUpdates() {
+        monitorAdsSlotUpdatesTask?.cancel()
+    }
+    
     func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig? = nil) {
-        guard isExternalAdsEnabled else {
-            adsSlotConfig = nil
-            displayAds = false
-            return
-        }
-        
-        guard adsSlotConfig != newAdsSlotConfig else {
-            return
+        if let isExternalAdsEnabled {
+            guard isExternalAdsEnabled else {
+                adsSlotConfig = nil
+                displayAds = false
+                return
+            }
+            
+            guard adsSlotConfig != newAdsSlotConfig else {
+                return
+            }
         }
         
         adsSlotConfig = newAdsSlotConfig
