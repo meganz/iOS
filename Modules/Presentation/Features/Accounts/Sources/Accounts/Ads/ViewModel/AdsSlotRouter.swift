@@ -3,6 +3,7 @@ import MEGASDKRepo
 import SwiftUI
 import UIKit
 
+@MainActor
 public struct AdsSlotRouter<T: View> {
     private weak var presenter: UIViewController?
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
@@ -46,7 +47,7 @@ public struct AdsSlotRouter<T: View> {
     
     public func build(onViewFirstAppeared: (() -> Void)? = nil) -> UIViewController {
         let viewModel = AdsSlotViewModel(
-            adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: adsSlotViewController),
+            adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
             accountUseCase: accountUseCase
         )
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
