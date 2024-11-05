@@ -212,6 +212,31 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestSuccess_shouldShowSuccessAlertWithCorrectExpirationDate() async {
+        let expectedExpirationDate = Date().addingTimeInterval(24*60*60)
+        let expectation = XCTestExpectation(description: "Success alert should display the correct expiration date")
+        
+        let mockRouter = MockCancelAccountPlanRouter { expirationDate in
+            self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
+        }
+        
+        let sut = makeSUT(
+            requestResult: .success,
+            paymentMethod: randomWebclientPaymentMethod(),
+            mockRouter: mockRouter,
+            expirationDate: expectedExpirationDate
+        )
+        
+        sut.selectedReason = randomReason
+        sut.otherReasonText = "Test reason"
+        
+        sut.didTapCancelSubscriptionButton()
+        await sut.submitSurveyTask?.value
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        XCTAssertEqual(mockRouter.showSuccessAlert_calledTimes, 1, "Success alert should be shown exactly once")
+    }
+    
     @MainActor private func assertDidTapCancelSubscriptionButtonWithValidForm(
         paymentMethod: PaymentMethodEntity,
         requestResult: Result<Void, AccountErrorEntity>,
@@ -250,14 +275,17 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         paymentMethod: PaymentMethodEntity = .none,
         mockRouter: MockCancelAccountPlanRouter = MockCancelAccountPlanRouter(),
         mockTracker: some AnalyticsTracking = MockTracker(),
+        expirationDate: Date = Date(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CancellationSurveyViewModel {
         let subscription = AccountSubscriptionEntity(paymentMethodId: paymentMethod)
         let subscriptionsUseCase = MockSubscriptionsUseCase(requestResult: requestResult)
+        let accountUseCase = MockAccountUseCase(currentProPlan: AccountPlanEntity(expirationTime: Int64(expirationDate.timeIntervalSince1970)))
         let sut = CancellationSurveyViewModel(
             subscription: subscription,
             subscriptionsUseCase: subscriptionsUseCase,
+            accountUseCase: accountUseCase,
             cancelAccountPlanRouter: mockRouter,
             tracker: mockTracker
         )
@@ -274,5 +302,16 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         PaymentMethodEntity.allCases
             .filter { $0 != .itunes && $0 != .googleWallet }
             .randomElement() ?? .stripe
+    }
+    
+    private func dateComponents(from date: Date) -> DateComponents {
+        Calendar.current.dateComponents([.year, .month, .day], from: date)
+    }
+    
+    private func assertExpirationDate(_ expirationDate: Date, matches expectedDate: Date, expectation: XCTestExpectation) {
+        let actualDateComponents = dateComponents(from: expirationDate)
+        let expectedDateComponents = dateComponents(from: expectedDate)
+        XCTAssertEqual(actualDateComponents, expectedDateComponents, "Success alert should display the correct expiration date without considering time.")
+        expectation.fulfill()
     }
 }

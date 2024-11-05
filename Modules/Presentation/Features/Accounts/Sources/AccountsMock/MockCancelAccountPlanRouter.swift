@@ -8,8 +8,12 @@ public class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
     public var showFailureAlert_calledTimes = 0
     public var lastShownSuccessAlertExpirationDate: Date?
     public var lastShownFailureAlertError: Error?
-
-    public init() {}
+    
+    private let onSuccess: (_ expirationDate: Date) -> Void
+    
+    public init(onSuccess: @escaping (_ expirationDate: Date) -> Void = {_ in }) {
+        self.onSuccess = onSuccess
+    }
 
     public func build() -> UIViewController {
         UIViewController()
@@ -28,6 +32,7 @@ public class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
     public func showAlert(_ result: CancelSubscriptionResult) {
         switch result {
         case .success(let expirationDate):
+            onSuccess(expirationDate)
             showSuccessAlert_calledTimes += 1
             lastShownSuccessAlertExpirationDate = expirationDate
         case .failure(let error):
