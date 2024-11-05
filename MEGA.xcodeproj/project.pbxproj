@@ -1574,6 +1574,7 @@
 		9D94AF7029653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */; };
 		9DAC1B632951589F00562475 /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC1B622951589E00562475 /* NodeInfoRepository.swift */; };
 		9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB88B62290D98BB008CB09E /* ImageScrollView.swift */; };
+		A50036882CD3273A0067734F /* DocScannerSaveSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50036872CD3272F0067734F /* DocScannerSaveSettingsViewModel.swift */; };
 		A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A559E16A2BE8C7C700374073 /* NSNotification+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */; };
@@ -4300,6 +4301,7 @@
 		9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentPickerViewModelTests.swift; sourceTree = "<group>"; };
 		9DAC1B622951589E00562475 /* NodeInfoRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
+		A50036872CD3272F0067734F /* DocScannerSaveSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingsViewModel.swift; sourceTree = "<group>"; };
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Additions.swift"; sourceTree = "<group>"; };
 		A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInProgressTimeReporter.swift; sourceTree = "<group>"; };
@@ -6854,6 +6856,7 @@
 				BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */,
 				BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */,
 				BFCF8438246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift */,
+				A50036872CD3272F0067734F /* DocScannerSaveSettingsViewModel.swift */,
 				2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */,
 				BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */,
 				B51C37092CAEB17C00AAEC84 /* MEGARecentActionBucket+Addition.swift */,
@@ -14689,6 +14692,7 @@
 				BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */,
 				BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
+				A50036882CD3273A0067734F /* DocScannerSaveSettingsViewModel.swift in Sources */,
 				2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
 				BF6DF8582B9191160043A589 /* DocumentPickerViewRouter.swift in Sources */,

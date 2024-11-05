@@ -46,6 +46,12 @@ extension MEGAUser {
     }
 }
 
+extension [MEGAUser] {
+    public func toUserEntities() -> [UserEntity] {
+        map { $0.toUserEntity() }
+    }
+}
+
 extension MEGAUserList {
     public func toUserEntities() -> [UserEntity] {
         guard size > 0 else { return [] }
