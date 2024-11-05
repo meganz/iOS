@@ -3,6 +3,7 @@
 
 static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
 
+NS_SWIFT_SENDABLE
 @interface MEGAProcessAsset : NSObject
 
 /* if YES keep asset original name, for example: IMG_XXXX.JPG */

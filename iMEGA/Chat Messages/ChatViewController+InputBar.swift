@@ -315,22 +315,22 @@ extension ChatViewController {
         }
     }
     
-    private func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String) {
+    private nonisolated func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
         var appData: String?
         
         if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
             appData = NSString().mnz_appData(toSaveCoordinates: cordinates)
         }
                                             
-        appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: false)
+        appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
         appData = ((appData ?? "") as NSString).mnz_appData(toLocalIdentifier: localIdentifier)
         
         ChatUploader.sharedInstance.upload(filepath: filePath,
                                            appData: appData ?? "",
-                                           chatRoomId: chatRoom.chatId,
+                                           chatRoomId: chatRoomId,
                                            parentNode: parentNode,
                                            isSourceTemporary: false,
-                                           delegate: self.createUploadTransferDelegate())
+                                           delegate: delegate)
     }
     
     private func uploadVideo(withFilePath path: String, parentNode: MEGANode) {
@@ -344,7 +344,7 @@ extension ChatViewController {
                 return
             }
             
-            self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: "")
+            self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: "", chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
         }, error: { [weak self] error in
             guard let `self` = self else {
                 return
@@ -363,59 +363,51 @@ extension ChatViewController {
         processAsset?.prepare()
     }
     
-    private func startUpload(assets: [PHAsset]) {
-        MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
-        MyChatFilesFolderNodeAccess.shared.loadNode { [weak self] myChatFilesFolderNode, error in
-            guard let myChatFilesFolderNode = myChatFilesFolderNode, let `self` = self else {
-                if let error = error {
-                    MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
-                }
+    private nonisolated func uploadingAssets(assets: [PHAsset], parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
+        let processAsset = MEGAProcessAsset(toShareThroughChatWith: assets,
+                                            filePaths: { [weak self] filePaths in
+            
+            guard let self, let filePaths else { return }
+                                                
+            filePaths.enumerated().forEach { (index, filePath) in
+                self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: assets[index].localIdentifier, chatRoomId: chatRoomId, delegate: delegate)
+            }
+            
+        }, errors: { errors in
+            guard let errors = errors else {
                 return
             }
             
-            let processAsset = MEGAProcessAsset(toShareThroughChatWith: assets,
-                                                filePaths: { [weak self] filePaths in
-                
-                guard let `self` = self,
-                    let filePaths = filePaths else {
-                    return
-                }
-                                                    
-                filePaths.enumerated().forEach { (index, filePath) in
-                    self.uploadAsset(withFilePath: filePath, parentNode: myChatFilesFolderNode, localIdentifier: assets[index].localIdentifier)
-                }
-                
-            }, errors: { errors in
-                guard let errors = errors else {
-                    return
-                }
-                
-                var message: String?
-                
-                if let error = errors.first,
-                    errors.count == 1 {
-                    message = error.localizedDescription
-                } else {
-                    message = Strings.Localizable.shareExtensionUnsupportedAssets
-                }
-                
+            let message = if let error = errors.first, errors.count == 1 {
+                error.localizedDescription
+            } else {
+                Strings.Localizable.shareExtensionUnsupportedAssets
+            }
+            
+            Task { @MainActor in
                 let alertController = UIAlertController(title: Strings.Localizable.error,
                                                         message: message,
                                                         preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: Strings.Localizable.ok,
                                                         style: .cancel,
                                                         handler: nil))
-                
-                DispatchQueue.main.async {
-                    self.present(alertController, animated: true)
-                }
-            })
-            
-            DispatchQueue.global(qos: .background).async {
-                processAsset?.isOriginalName = true
-                processAsset?.prepare()
+                self.present(alertController, animated: true)
             }
-            
+        })
+        
+        DispatchQueue.global(qos: .background).async {
+            processAsset?.isOriginalName = true
+            processAsset?.prepare()
+        }
+    }
+    
+    private func startUpload(assets: [PHAsset]) async {
+        do {
+            MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
+            guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else { return }
+            uploadingAssets(assets: assets, parentNode: myChatFilesFolderNode, chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
+        } catch {
+            MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
         }
     }
 }
@@ -493,46 +485,48 @@ extension ChatViewController: ChatInputBarDelegate {
         }
     }
     
-    func tappedSendAudio(atPath path: String) {
-        MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
-        MyChatFilesFolderNodeAccess.shared.loadNode { [weak self] myChatFilesFolderNode, error in
-            guard let myChatFilesFolderNode = myChatFilesFolderNode, let `self` = self else {
-                if let error = error {
-                    MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
-                }
-                return
-            }
-                        
-            let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
-            
-            if let voiceMessagesNode = MEGASdk.shared.node(forPath: MEGAVoiceMessagesFolderName, node: myChatFilesFolderNode) {
-                ChatUploader.sharedInstance.upload(filepath: path,
-                                                   appData: appData,
-                                                   chatRoomId: self.chatRoom.chatId,
-                                                   parentNode: voiceMessagesNode,
-                                                   isSourceTemporary: false,
-                                                   delegate: self.createUploadTransferDelegate())
-            } else {
-                let requestDelegate: some MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
-                    guard let request = request else {
-                        fatalError("request object should not be nil")
-                    }
-                    
-                    if let voiceMessagesNode = MEGASdk.shared.node(forHandle: request.nodeHandle) {
-                        ChatUploader.sharedInstance.upload(filepath: path,
-                                                           appData: appData,
-                                                           chatRoomId: self.chatRoom.chatId,
-                                                           parentNode: voiceMessagesNode,
-                                                           isSourceTemporary: false,
-                                                           delegate: self.createUploadTransferDelegate())
-                    } else {
-                        MEGALogDebug("Voice folder not created")
-                    }
+    private nonisolated func uploadAudio(path: String, parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
+        let appData = ("" as NSString).mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: true)
+        
+        if let voiceMessagesNode = MEGASdk.shared.node(forPath: MEGAVoiceMessagesFolderName, node: parentNode) {
+            ChatUploader.sharedInstance.upload(filepath: path,
+                                               appData: appData,
+                                               chatRoomId: chatRoomId,
+                                               parentNode: voiceMessagesNode,
+                                               isSourceTemporary: false,
+                                               delegate: delegate)
+        } else {
+            let requestDelegate: some MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
+                guard let request = request else {
+                    fatalError("request object should not be nil")
                 }
                 
-                MEGASdk.shared.createFolder(withName: MEGAVoiceMessagesFolderName,
-                                                             parent: myChatFilesFolderNode,
-                                                             delegate: requestDelegate)
+                if let voiceMessagesNode = MEGASdk.shared.node(forHandle: request.nodeHandle) {
+                    ChatUploader.sharedInstance.upload(filepath: path,
+                                                       appData: appData,
+                                                       chatRoomId: chatRoomId,
+                                                       parentNode: voiceMessagesNode,
+                                                       isSourceTemporary: false,
+                                                       delegate: delegate)
+                } else {
+                    MEGALogDebug("Voice folder not created")
+                }
+            }
+            
+            MEGASdk.shared.createFolder(withName: MEGAVoiceMessagesFolderName,
+                                                         parent: parentNode,
+                                                         delegate: requestDelegate)
+        }
+    }
+    
+    func tappedSendAudio(atPath path: String) {
+        Task {
+            do {
+                MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
+                guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else { return }
+                uploadAudio(path: path, parentNode: myChatFilesFolderNode, chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
+            } catch {
+                MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
             }
         }
     }
@@ -629,7 +623,9 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func send(asset: PHAsset) {
-        startUpload(assets: [asset])
+        Task {
+            await startUpload(assets: [asset])
+        }
     }
     
     func loadPhotosView() {
@@ -637,7 +633,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             let photoPicker = MEGAPhotoPicker(presenter: self)
             Task { @MainActor in
                 let assets = await photoPicker.pickAssets()
-                startUpload(assets: assets)
+                await startUpload(assets: assets)
             }
         } else {
             let selectionActionDisabledText = Strings.Localizable.send
@@ -647,7 +643,9 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                     return
                 }
                 
-                self.startUpload(assets: assets)
+                Task {
+                    await self.startUpload(assets: assets)
+                }
             }
             albumTableViewController.source = .chat
             let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
@@ -665,7 +663,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             }
             let pathGroup = path.fileExtensionGroup
             if pathGroup.isImage {
-                self.uploadAsset(withFilePath: path, parentNode: parentNode, localIdentifier: "")
+                self.uploadAsset(withFilePath: path, parentNode: parentNode, localIdentifier: "", chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
             } else if pathGroup.isVideo {
                 self.uploadVideo(withFilePath: path, parentNode: parentNode)
             } else {
@@ -823,17 +821,14 @@ extension ChatViewController: UIPopoverPresentationControllerDelegate {
 
 extension ChatViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
-        MyChatFilesFolderNodeAccess.shared.loadNode { [weak self] myChatFilesFolderNode, error in
-            guard let myChatFilesFolderNode = myChatFilesFolderNode, let self = self else {
-                if let error = error {
-                    MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
+        Task { @MainActor in
+            do {
+                guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else { return }
+                urls.forEach { url in
+                    uploadAsset(withFilePath: url.path, parentNode: myChatFilesFolderNode, localIdentifier: "", chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
                 }
-                return
-            }
-            
-            urls.forEach { url in
-                self.uploadAsset(withFilePath: url.path, parentNode: myChatFilesFolderNode, localIdentifier: "")
+            } catch {
+                MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
             }
         }
     }
