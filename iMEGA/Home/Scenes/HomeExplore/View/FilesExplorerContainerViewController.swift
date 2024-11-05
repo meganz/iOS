@@ -178,7 +178,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
                 networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
                 tracker: DIContainer.tracker,
-                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self, photoPicker: MEGAPhotoPicker(presenter: navigationController))
+                router: FileUploadingRouter(navigationController: navigationController, baseViewController: self, photoPicker: MEGAPhotoPicker(presenter: navigationController), remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo))
             )
             self.uploadViewModel = uploadViewModel
         }

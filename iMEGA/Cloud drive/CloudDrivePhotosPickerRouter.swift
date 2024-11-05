@@ -14,6 +14,7 @@ struct CloudDrivePhotosPickerRouter {
     private let assetUploader: any AssetUploader
     
     private var photoPicker: any MEGAPhotoPickerProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
 
     private var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
@@ -27,18 +28,20 @@ struct CloudDrivePhotosPickerRouter {
         parentNode: NodeEntity,
         presenter: UIViewController,
         assetUploader: some AssetUploader,
-        photoPicker: some MEGAPhotoPickerProtocol
+        photoPicker: some MEGAPhotoPickerProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol
     ) {
         self.parentNode = parentNode
         self.presenter = presenter
         self.assetUploader = assetUploader
         self.photoPicker = photoPicker
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
 
     func start() {
         permissionHandler.photosPermissionWithCompletionHandler { granted in
             if granted {
-                if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newPhotoPicker) {
+                if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .nativePhotoPicker) {
                     Task { @MainActor in
                         let assets = await photoPicker.pickAssets()
                         assetUploader.upload(assets: assets, to: parentNode.handle)

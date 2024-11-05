@@ -15,17 +15,20 @@ final class FileUploadingRouter {
     private weak var baseViewController: UIViewController?
     
     private var photoPicker: any MEGAPhotoPickerProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     // MARK: - Initialiser
 
     init(
         navigationController: UINavigationController? = nil,
         baseViewController: UIViewController,
-        photoPicker: some MEGAPhotoPickerProtocol
+        photoPicker: some MEGAPhotoPickerProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol
     ) {
         self.navigationController = navigationController
         self.baseViewController = baseViewController
         self.photoPicker = photoPicker
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     func upload(from source: FileUploadSource) {
@@ -46,7 +49,7 @@ final class FileUploadingRouter {
     // MARK: - Display PhotoAlbum Selection View Controller
 
     private func presentPhotoAlbumSelection(completion: @escaping (([PHAsset], MEGANode) -> Void)) {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newPhotoPicker) {
+        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .nativePhotoPicker) {
             Task { @MainActor in
                 let assets = await photoPicker.pickAssets()
                 if assets.count > 0 {
