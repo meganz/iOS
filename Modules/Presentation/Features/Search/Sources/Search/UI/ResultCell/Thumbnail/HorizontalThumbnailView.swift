@@ -21,6 +21,8 @@ struct HorizontalThumbnailView: View {
     @Binding var selected: Set<ResultId>
     @Binding var selectionEnabled: Bool
     
+    @ScaledMetric(relativeTo: .title) var height = 46
+    
     private let layout: ResultCellLayout = .thumbnail(.horizontal)
     
     var body: some View {
@@ -40,7 +42,7 @@ struct HorizontalThumbnailView: View {
         }
         .padding(.leading, 9)
         .padding(.trailing, 8)
-        .frame(height: 46)
+        .frame(height: height)
         .overlay(
             RoundedRectangle(cornerRadius: 4)
                 .stroke(borderColor, lineWidth: 1)
@@ -63,7 +65,7 @@ struct HorizontalThumbnailView: View {
     private var titleAndLabel: some View {
         HStack(spacing: 4) {
             Text(viewModel.result.title)
-                .font(.system(size: 12, weight: .medium))
+                .font(.callout)
                 .foregroundStyle(viewModel.titleTextColor)
             
             viewModel
