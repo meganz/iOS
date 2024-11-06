@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPhotos
 import MEGAPresentation
+import MEGARepo
 import MEGASDKRepo
 import MEGAUIKit
 import SwiftUI
@@ -25,7 +26,10 @@ final class PhotoAlbumContainerViewController: UIViewController {
     private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
     private lazy var searchBarTextFieldUpdater = SearchBarTextFieldUpdater()
     private lazy var searchController: UISearchController = {
-        let resultController = VisualMediaSearchResultsViewControllerFactory.makeViewController(searchBarTextFieldUpdater: searchBarTextFieldUpdater)
+        let resultController = VisualMediaSearchResultsViewControllerFactory.makeViewController(viewModel: VisualMediaSearchResultsViewModel(
+            searchBarTextFieldUpdater: searchBarTextFieldUpdater,
+            visualMediaSearchHistoryUseCase: VisualMediaSearchHistoryUseCase(
+                visualMediaSearchHistoryRepository: VisualMediaSearchHistoryCacheRepository.newRepo)))
         let controller = UISearchController(searchResultsController: resultController)
         controller.searchResultsUpdater = resultController
         controller.searchBar.delegate = resultController

@@ -9,7 +9,11 @@ import MEGASwiftUI
 import SwiftUI
 
 @MainActor
-public final class AlbumCellViewModel: ObservableObject {
+public final class AlbumCellViewModel: ObservableObject, Identifiable {
+    nonisolated public var id: SetHandleEntity {
+        album.id
+    }
+    
     let album: AlbumEntity
     let selection: AlbumSelection
     let isLinkShared: Bool
@@ -215,6 +219,12 @@ public final class AlbumCellViewModel: ObservableObject {
                 selectionType: selectionType)
         }
         tracker.trackAnalyticsEvent(with: event)
+    }
+}
+
+extension AlbumCellViewModel: Equatable {
+    nonisolated public static func == (lhs: AlbumCellViewModel, rhs: AlbumCellViewModel) -> Bool {
+        lhs.album == rhs.album
     }
 }
 

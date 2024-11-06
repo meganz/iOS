@@ -1,14 +1,15 @@
 import Combine
+import ContentLibraries
 import Foundation
 import MEGADomain
 
 @MainActor
-class VisualMediaSearchResultsViewModel: ObservableObject {
+public final class VisualMediaSearchResultsViewModel: ObservableObject {
     enum ViewState: Equatable {
         case loading
         case empty
         case recentlySearched(items: [SearchHistoryItem])
-        case searchResults
+        case searchResults(albums: [AlbumCellViewModel], photos: [NodeEntity])
     }
     @Published private(set) var viewState: ViewState = .loading
     @Published var searchText = ""
@@ -22,10 +23,12 @@ class VisualMediaSearchResultsViewModel: ObservableObject {
         didSet { oldValue?.cancel() }
     }
     
-    init(searchBarTextFieldUpdater: SearchBarTextFieldUpdater,
-         visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol,
-         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(300),
-         debounceQueue: DispatchQueue = DispatchQueue(label: "nz.mega.VisualMediaSearchDebounceQueue", qos: .userInitiated)) {
+    public init(
+        searchBarTextFieldUpdater: SearchBarTextFieldUpdater,
+        visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol,
+        searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(300),
+        debounceQueue: DispatchQueue = DispatchQueue(label: "nz.mega.VisualMediaSearchDebounceQueue", qos: .userInitiated)
+    ) {
         self.visualMediaSearchHistoryUseCase = visualMediaSearchHistoryUseCase
         self.searchDebounceTime = searchDebounceTime
         self.debounceQueue = debounceQueue
@@ -65,7 +68,7 @@ class VisualMediaSearchResultsViewModel: ObservableObject {
             
             // Perform search here and populate result in enum
             
-            viewState = .searchResults
+            viewState = .searchResults(albums: [], photos: [])
         }
     }
     
