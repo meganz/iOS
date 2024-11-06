@@ -47,7 +47,12 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         richPreviewContentView.isHidden = true
         richPreviewContentView.message = megaMessage
 
-        let dummyMessage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content ?? ""))
+        let dummyMessage = ConcreteMessageType(
+            sender: message.sender,
+            messageId: message.messageId,
+            sentDate: message.sentDate,
+            kind: .attributedText(createAttributedContent(from: megaMessage.content ?? ""))
+        )
         super.configure(with: dummyMessage, at: indexPath, and: messagesCollectionView)
 
         if megaMessage.type == .containsMeta {
@@ -160,6 +165,15 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             MEGASdk.shared.add(self)
         }
     }
+    
+    private func createAttributedContent(from text: String) -> NSAttributedString {
+        NSAttributedString(
+            string: text,
+            attributes: [
+                NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)
+            ]
+        )
+    }
 }
 
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {
@@ -201,7 +215,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         }
         
         let megaMessage = chatMessage.message
-        let messageKind: MessageKind = .text(megaMessage.content ?? "")
+        let messageKind: MessageKind = .attributedText(createAttributedContent(from: megaMessage.content ?? ""))
         let dummyMessage = ConcreteMessageType(sender: message.sender,
                                               messageId: message.messageId,
                                               sentDate: message.sentDate,
@@ -245,6 +259,15 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
+    }
+    
+    private func createAttributedContent(from text: String) -> NSAttributedString {
+        NSAttributedString(
+            string: text,
+            attributes: [
+                NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)
+            ]
+        )
     }
     
     private func calculatePreviewSize(for chatMessage: ChatMessage) -> CGSize {
