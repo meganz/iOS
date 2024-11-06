@@ -11,6 +11,10 @@ struct ManageTagsViewModelTests {
         arguments: [
             ("", "", ManageTagsViewModel.TagNameState.empty),
             ("#", "", ManageTagsViewModel.TagNameState.empty),
+            ("#test", "test", ManageTagsViewModel.TagNameState.valid),
+            ("####test", "test", ManageTagsViewModel.TagNameState.valid),
+            ("####test#", "test#", ManageTagsViewModel.TagNameState.invalid),
+            ("####test#again", "test#again", ManageTagsViewModel.TagNameState.invalid),
             ("Tag1", "tag1", ManageTagsViewModel.TagNameState.valid),
             ("tag1", "", ManageTagsViewModel.TagNameState.valid),
             ("invalid@tag!", "", ManageTagsViewModel.TagNameState.invalid),

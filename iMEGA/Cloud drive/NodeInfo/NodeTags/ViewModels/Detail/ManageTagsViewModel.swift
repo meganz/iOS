@@ -35,26 +35,38 @@ final class ManageTagsViewModel: ObservableObject {
     }
 
     func validateAndUpdateTagNameStateIfRequired(with updatedTagName: String) {
-        if updatedTagName.isEmpty {
-            tagNameState = .empty
-        } else if updatedTagName == "#" {
-            tagName = ""
-            tagNameState = .empty
-        } else if containsInvalidCharacters(in: updatedTagName) {
-            tagNameState = .invalid
-        } else if updatedTagName.count > maxAllowedCharacterCount {
-            tagNameState = .tooLong
-        } else if containsUpperCaseCharacters(in: updatedTagName) {
-            tagName = updatedTagName.lowercased()
-            tagNameState = .valid
-        } else {
-            tagNameState = .valid
-        }
+        let formattedTagName = formatTagName(updatedTagName)
+        updateTagNameState(for: formattedTagName)
+
+        guard updatedTagName != formattedTagName else { return }
+        tagName = formattedTagName
     }
 
     func clearTextField() {
         tagName = ""
         tagNameState = .empty
+    }
+
+    private func formatTagName(_ tagName: String) -> String {
+        if tagName.hasPrefix("#") {
+            return String(tagName.drop(while: { $0 == "#" }))
+        } else if containsUpperCaseCharacters(in: tagName) {
+            return tagName.lowercased()
+        } else {
+            return tagName
+        }
+    }
+
+    private func updateTagNameState(for updatedTagName: String) {
+        if updatedTagName.isEmpty {
+            tagNameState = .empty
+        } else if containsInvalidCharacters(in: updatedTagName) {
+            tagNameState = .invalid
+        } else if updatedTagName.count > maxAllowedCharacterCount {
+            tagNameState = .tooLong
+        } else {
+            tagNameState = .valid
+        }
     }
 
     private func containsInvalidCharacters(in tagName: String) -> Bool {
