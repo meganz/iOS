@@ -34,7 +34,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
         containerViewModel: MeetingContainerViewModel,
         completion: @escaping () -> Void
     )
-    func hideSnackBar() 
+    func hideSnackBar()
     var floatingPanelShown: Bool { get }
     func notifyFloatingPanelInviteParticipants()
     func showShareLinkOptionsAlert(_ shareLinkOptions: ShareLinkOptions)
@@ -203,7 +203,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                          sender: UIBarButtonItem,
                          isMyselfModerator: Bool,
                          containerViewModel: MeetingContainerViewModel) {
-                
+        
         let optionsMenuRouter = MeetingOptionsMenuRouter(presenter: presenter,
                                                          sender: sender,
                                                          isMyselfModerator: isMyselfModerator,
@@ -213,21 +213,21 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showShareChatLinkActivity(presenter: UIViewController?, sender: AnyObject, link: String, metadataItemSource: ChatLinkPresentationItemSource, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             guard UIActivityViewController.isAlreadyPresented == false else {
                 MEGALogDebug("Meeting link Share controller is already presented.")
                 return
             }
+            
             let activityViewController = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
-            if let barButtonSender = sender as? UIBarButtonItem {
-                activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
-            } else if let buttonSender = sender as? UIButton {
+            
+            if let buttonSender = sender as? UIButton {
                 activityViewController.popoverPresentationController?.sourceView = buttonSender
                 activityViewController.popoverPresentationController?.sourceRect = buttonSender.frame
             } else {
-                MEGALogError("Parameter sender has a not allowed type")
-                return
+                activityViewController.popoverPresentationController?.sourceView = self?.sourceViewForiPad()
             }
+            
             activityViewController.overrideUserInterfaceStyle = .dark
             activityViewController.completionWithItemsHandler = completion
             
@@ -267,7 +267,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             self?.endCallDialog = nil
             endCallCompletion()
         }
-
+        
         meetingParticipantsRouter?.startCallEndCountDownTimer()
         endCallDialog.show()
         self.endCallDialog = endCallDialog
@@ -350,7 +350,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                 UpgradeAccountPlanRouter(presenter: presenter, accountDetails: account).start()
             }
         }
-
+        
         presenter.dismiss(animated: true) {
             BottomSheetRouter(
                 presenter: presenter,
@@ -401,6 +401,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         )
         alert.addAction(cancelAction)
         
+        if let popOverController = alert.popoverPresentationController {
+            popOverController.sourceView = sourceViewForiPad()
+        }
+        
         presenter.present(alert, animated: true)
     }
     
@@ -435,7 +439,18 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         SVProgressHUD.show(UIImage(resource: .hudSuccess), status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
     }
     
-    // MARK: - Private methods.
+    // MARK: - Private
+    
+    private func sourceViewForiPad() -> UIView? {
+        guard let presenter = presenter?.presenterViewController() else { return nil }
+        
+        if let lastSubview = presenter.view.subviews.last, lastSubview is UIToolbar {
+            return lastSubview
+        } else {
+            return presenter.view
+        }
+    }
+    
     private func showCallViewRouter(
         containerViewModel: MeetingContainerViewModel
     ) {
