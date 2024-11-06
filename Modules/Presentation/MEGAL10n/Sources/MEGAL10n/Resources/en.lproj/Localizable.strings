@@ -4408,3 +4408,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add \"#%@\" tag";
 /* Section title that is shown over the existing tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Existing tags";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Media";

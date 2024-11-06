@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 // MAKE SCREEN WIDE TO SEE DOCUMENTATION

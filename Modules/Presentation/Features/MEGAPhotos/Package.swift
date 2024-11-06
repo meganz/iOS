@@ -27,7 +27,8 @@ let package = Package(
         .package(path: "../../MEGAPresentation"),
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Presentation/MEGAAssets"),
-        .package(path: "../Shared/ContentLibraries")
+        .package(path: "../Shared/ContentLibraries"),
+        .package(path: "../../../UI/MEGAUIComponent")
     ],
     targets: [
         .target(
@@ -40,7 +41,8 @@ let package = Package(
                 "MEGASwift",
                 "MEGAL10n",
                 "MEGAAssets",
-                "ContentLibraries"
+                "ContentLibraries",
+                "MEGAUIComponent"
             ],
             swiftSettings: settings),
         .testTarget(

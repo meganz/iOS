@@ -20,7 +20,7 @@ struct AlbumSearchResultView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: [.init(.fixed(182))], spacing: 12) {
-                    ForEach(Array(viewModel.cellViewModels.enumerated()), id: \.element.id) { index, viewModel in
+                    ForEach(Array(viewModel.albums.enumerated()), id: \.element.id) { index, viewModel in
                         AlbumCell(viewModel: viewModel)
                             .frame(width: 140)
                             .padding(.leading, index == 0 ? 16 : 0)
@@ -34,5 +34,5 @@ struct AlbumSearchResultView: View {
 }
 
 #Preview {
-    AlbumSearchResultView(viewModel: .init(cellViewModels: [], searchText: .constant("")))
+    AlbumSearchResultView(viewModel: .init(albums: [], searchText: .constant("")))
 }

@@ -1,14 +1,19 @@
-import UIKit
 import SwiftUI
+import UIKit
 
 /// Need to wrap an actual UIButton to be returned when context button is tapped.
 /// It  is required to position popover on the iPad correctly
-struct UIButtonWrapper: UIViewRepresentable {
+public struct UIButtonWrapper: UIViewRepresentable {
     
-    let image: UIImage
-    let action: (UIButton) -> Void
+    private let image: UIImage
+    private let action: (UIButton) -> Void
     
-    func makeUIView(context: Self.Context) -> UIButton {
+    public init(image: UIImage, action: @escaping (UIButton) -> Void) {
+        self.image = image
+        self.action = action
+    }
+    
+    public func makeUIView(context: Self.Context) -> UIButton {
         let uiButton = UIButton()
         context.coordinator.uiButton = uiButton
         context.coordinator.addTarget()
@@ -16,13 +21,13 @@ struct UIButtonWrapper: UIViewRepresentable {
         return uiButton
     }
     
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
-    func updateUIView(_ uiView: UIButton, context: Self.Context) {}
+    public func updateUIView(_ uiView: UIButton, context: Self.Context) {}
     
-    class Coordinator: NSObject {
+    public final class Coordinator: NSObject {
         var parent: UIButtonWrapper
         var uiButton = UIButton()
         
