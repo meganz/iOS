@@ -1,5 +1,8 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
+import MEGAPresentation
+import MEGASDKRepo
 import MEGAUIKit
 import UIKit
 import Video
@@ -7,9 +10,29 @@ import Video
 final class RecentlyWatchedVideosViewController: UIViewController {
     
     private let videoConfig: VideoConfig
+    private let recentlyOpenedNodesUseCase: any RecentlyOpenedNodesUseCaseProtocol
+    private let router: any VideoRevampRouting
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    init(videoConfig: VideoConfig) {
+    init(
+        videoConfig: VideoConfig,
+        recentlyOpenedNodesUseCase: some RecentlyOpenedNodesUseCaseProtocol,
+        router: some VideoRevampRouting,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol
+    ) {
         self.videoConfig = videoConfig
+        self.recentlyOpenedNodesUseCase = recentlyOpenedNodesUseCase
+        self.router = router
+        self.thumbnailLoader = thumbnailLoader
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.nodeUseCase = nodeUseCase
+        self.featureFlagProvider = featureFlagProvider
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,7 +61,13 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     
     private func setupContentView() {
         let contentView = VideoRevampFactory.makeRecentlyWatchedVideosView(
-            videoConfig: videoConfig
+            recentlyOpenedNodesUseCase: recentlyOpenedNodesUseCase,
+            videoConfig: videoConfig,
+            router: router,
+            thumbnailLoader: thumbnailLoader,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: featureFlagProvider
         )
         add(contentView, container: view, animate: false)
     }

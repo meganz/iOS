@@ -212,7 +212,30 @@ struct VideoRevampRouter: VideoRevampRouting {
     }
     
     func openRecentlyWatchedVideos() {
-        let viewController = RecentlyWatchedVideosViewController(videoConfig: .live())
+        let sdk = MEGASdk.shared
+        let nodeRepository = NodeRepository.newRepo
+        let nodeUseCase = NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: nodeRepository
+        )
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(nodeRepository: nodeRepository, accountUseCase: accountUseCase)
+        let nodeIconUseCase = NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: sdk))
+        let recenltyOpenedNodesRepository = RecentlyOpenedNodesRepository(store: MEGAStore.shareInstance(), sdk: sdk)
+        let recenltyOpenedNodeUseCase = RecentlyOpenedNodesUseCase(recentlyOpenedNodesRepository: recenltyOpenedNodesRepository)
+        let viewController = RecentlyWatchedVideosViewController(
+            videoConfig: .live(),
+            recentlyOpenedNodesUseCase: recenltyOpenedNodeUseCase,
+            router: self,
+            thumbnailLoader: VideoRevampFactory.makeThumbnailLoader(
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
+                nodeIconUseCase: nodeIconUseCase
+            ),
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase,
+            featureFlagProvider: DIContainer.featureFlagProvider
+        )
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)
     }

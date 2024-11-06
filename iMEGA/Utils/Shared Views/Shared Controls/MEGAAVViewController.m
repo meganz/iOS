@@ -158,6 +158,8 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
         if (self.isEndPlaying || second <= MIN_SECOND) {
             [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
+            [self saveRecentlyWatchedVideoWithDestination:[NSNumber numberWithInt:0]
+                                                timescale:nil];
         } else {
             [self saveRecentlyWatchedVideoWithDestination:[NSNumber numberWithLongLong:self.player.currentTime.value]
                                                 timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];

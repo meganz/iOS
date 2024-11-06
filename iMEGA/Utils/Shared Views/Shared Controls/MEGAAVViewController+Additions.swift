@@ -278,12 +278,12 @@ extension MEGAAVViewController {
         view.backgroundColor = TokenColors.Background.page
     }
     
-    @objc func saveRecentlyWatchedVideo(destination: NSNumber, timescale: NSNumber) {
+    @objc func saveRecentlyWatchedVideo(destination: NSNumber, timescale: NSNumber?) {
         let repository = RecentlyOpenedNodesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared)
         let useCase = RecentlyOpenedNodesUseCase(recentlyOpenedNodesRepository: repository)
         
         guard let video = node?.toNodeEntity(), video.fileExtensionGroup.isVideo else { return }
-        let mediaDestination = MediaDestinationEntity(fingerprint: fileFingerprint(), destination: destination.intValue, timescale: timescale.intValue)
+        let mediaDestination = MediaDestinationEntity(fingerprint: fileFingerprint(), destination: destination.intValue, timescale: timescale?.intValue)
         let recentlyWatchedVideo = RecentlyOpenedNodeEntity(node: video, lastOpenedDate: Date.now, mediaDestination: mediaDestination)
         do {
             try useCase.saveNode(recentlyOpenedNode: recentlyWatchedVideo)
