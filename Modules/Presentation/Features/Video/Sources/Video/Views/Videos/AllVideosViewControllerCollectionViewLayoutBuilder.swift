@@ -16,7 +16,7 @@ struct AllVideosViewControllerCollectionViewLayoutBuilder {
         viewType: AllVideosCollectionViewRepresenter.ViewType
     ) -> NSCollectionLayoutSection {
         switch viewType {
-        case .allVideos, .playlists:
+        case .allVideos, .playlists, .recentlyWatchedVideos:
             allVideosLayoutSection(layoutEnvironment: layoutEnvironment)
         case .playlistContent:
             makeSingleColumnLayout()
@@ -61,10 +61,14 @@ struct AllVideosViewControllerCollectionViewLayoutBuilder {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 16
         let trailing: CGFloat = switch viewType {
-        case .allVideos, .playlistContent: 12
+        case .allVideos, .playlistContent, .recentlyWatchedVideos: 12
         case .playlists: 2
         }
         section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: trailing)
+        
+        if viewType == .recentlyWatchedVideos {
+            section.boundarySupplementaryItems = [ recentlyWatchedVideosSectionHeader() ]
+        }
         
         return section
     }
@@ -91,6 +95,22 @@ struct AllVideosViewControllerCollectionViewLayoutBuilder {
         section.interGroupSpacing = 24
         section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
         
+        if viewType == .recentlyWatchedVideos {
+            section.boundarySupplementaryItems = [ recentlyWatchedVideosSectionHeader() ]
+        }
+        
         return section
+    }
+    
+    private func recentlyWatchedVideosSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(24)
+        )
+        return NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: RecentlyWatchedVideosSupplementaryElementKind.recentlyWatchedVideosDateSectionHeader.elementKind,
+            alignment: .top
+        )
     }
 }

@@ -22,6 +22,7 @@ final class VideoCellViewModel: ObservableObject {
     enum ViewContext: Equatable {
         case allVideos
         case playlistContent(type: VideoPlaylistEntityType)
+        case recentlyWatchedVideos
     }
     
     private let thumbnailLoader: any ThumbnailLoaderProtocol

@@ -111,6 +111,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         case .allVideos: .allVideos
         case .playlistContent(let type): .playlistContent(type: type)
         case .playlists: nil
+        case .recentlyWatchedVideos: nil
         }
     }
     

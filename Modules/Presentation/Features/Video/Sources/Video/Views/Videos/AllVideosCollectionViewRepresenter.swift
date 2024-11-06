@@ -10,10 +10,11 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     let viewType: ViewType
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    enum ViewType {
+    enum ViewType: Equatable {
         case allVideos
         case playlists
         case playlistContent(type: VideoPlaylistEntityType)
+        case recentlyWatchedVideos
     }
     
     init(
