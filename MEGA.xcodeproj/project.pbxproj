@@ -2456,6 +2456,7 @@
 		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
 		C43817B92746925E00EA82A8 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* FontStyle.swift */; };
+		C43EC4A32CDB01C400556C4C /* Task+Yield.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */; };
 		C4463BAF2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */; };
 		C44947762652A466004B4C8E /* BannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44947752652A466004B4C8E /* BannerType.swift */; };
 		C44BE4C92CAF629E00F18033 /* CloudDriveDownloadedNodesListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44BE4C82CAF629400F18033 /* CloudDriveDownloadedNodesListenerTests.swift */; };
@@ -5189,6 +5190,7 @@
 		C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+QuickUploadAction.swift"; sourceTree = "<group>"; };
 		C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouter.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
+		C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Yield.swift"; sourceTree = "<group>"; };
 		C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailViewerTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
 		C44BE4C82CAF629400F18033 /* CloudDriveDownloadedNodesListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadedNodesListenerTests.swift; sourceTree = "<group>"; };
@@ -11216,6 +11218,7 @@
 				B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */,
 				0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
+				C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */,
 				947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */,
 				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
 			);
@@ -16511,6 +16514,7 @@
 				BF0730DC2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift in Sources */,
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
+				C43EC4A32CDB01C400556C4C /* Task+Yield.swift in Sources */,
 				BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */,
 				B52CE0DD2CD094DF0083889E /* TestPasswordViewModelTests.swift in Sources */,
 				0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */,
