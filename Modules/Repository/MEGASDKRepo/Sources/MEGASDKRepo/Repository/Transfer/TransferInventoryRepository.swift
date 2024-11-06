@@ -42,7 +42,7 @@ public struct TransferInventoryRepository: TransferInventoryRepositoryProtocol {
         transfer.appData?.contains(TransferMetaDataEntity.saveInPhotos.rawValue) ?? false
     }
     
-    private func getTransfers(completion: @escaping ([TransferEntity]) -> Void) {
+    private func getTransfers(completion: @Sendable @escaping ([TransferEntity]) -> Void) {
         queue.async {
             completion(sdk.transfers.toTransferEntities())
         }

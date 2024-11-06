@@ -161,7 +161,7 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
         }
     }
     
-    private func isInheritingSensitivity(node: NodeEntity, completion: @escaping (Bool) -> Void) {
+    private func isInheritingSensitivity(node: NodeEntity, completion: @Sendable @escaping (Bool) -> Void) {
         queue.async {
             if let megaNode = sdk.node(forHandle: node.handle) {
                 completion(sdk.isNodeInheritingSensitivity(megaNode))

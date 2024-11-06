@@ -1,7 +1,7 @@
 import MEGASdk
 import MEGASDKRepo
 
-public final class MockMEGAAccountDetails: MEGAAccountDetails {
+public final class MockMEGAAccountDetails: MEGAAccountDetails, @unchecked Sendable {
     private var _storageUsed: Int64
     private var _versionsStorageUsed: Int64
     private var _storageMax: Int64

@@ -6,7 +6,6 @@ import MEGASwift
 public final class AccountRepository: NSObject, AccountRepositoryProtocol {    
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
-    private let myChatFilesFolderNodeAccess: NodeAccessProtocol
     private let backupsRootFolderNodeAccess: NodeAccessProtocol
     private let accountUpdatesProvider: any AccountUpdatesProviderProtocol
     
@@ -16,13 +15,11 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public init(
         sdk: MEGASdk = MEGASdk.sharedSdk,
         currentUserSource: CurrentUserSource = .shared,
-        myChatFilesFolderNodeAccess: NodeAccessProtocol,
         backupsRootFolderNodeAccess: NodeAccessProtocol,
         accountUpdatesProvider: some AccountUpdatesProviderProtocol
     ) {
         self.sdk = sdk
         self.currentUserSource = currentUserSource
-        self.myChatFilesFolderNodeAccess = myChatFilesFolderNodeAccess
         self.backupsRootFolderNodeAccess = backupsRootFolderNodeAccess
         self.accountUpdatesProvider = accountUpdatesProvider
     }
@@ -191,17 +188,6 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     
     public func totalNodesCount() -> UInt64 {
         sdk.totalNodes
-    }
-    
-    public func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
-        myChatFilesFolderNodeAccess.loadNode { myChatFilesFolderNode, _ in
-            guard let myChatFilesFolderNode = myChatFilesFolderNode else {
-                completion(.failure(AccountErrorEntity.nodeNotFound))
-                return
-            }
-            
-            completion(.success(myChatFilesFolderNode.toNodeEntity()))
-        }
     }
     
     public func upgradeSecurity() async throws -> Bool {

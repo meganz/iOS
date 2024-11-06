@@ -143,7 +143,7 @@ final class NodeRepositoryTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
     
     private typealias NodeRetrievalClosure = () -> NodeEntity?
@@ -152,7 +152,7 @@ final class NodeRepositoryTests: XCTestCase {
         nodeName: String,
         expectedNode: MockNode? = nil,
         retrieveNode: NodeRetrievalClosure,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
        let result = retrieveNode()
@@ -211,7 +211,7 @@ final class NodeRepositoryTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 1, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
 
     func testNodeForFileLink_invalidLink_completesWithFailure() throws {

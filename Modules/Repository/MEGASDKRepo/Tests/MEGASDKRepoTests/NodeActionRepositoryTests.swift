@@ -22,12 +22,11 @@ final class NodeActionRepositoryTests: XCTestCase {
     func testSetSensitive_called_shouldSetSensitiveToCorrectState() async throws {
         let result = try await withThrowingTaskGroup(of: Bool.self) { group in
             [true, false].forEach { sensitive in
-                group.addTask {
-                    let node = MockNode(handle: 7, isMarkedSensitive: sensitive)
-                    let sdk = MockSdk(nodes: [node])
-                    
-                    let sut = self.makeSUT(sdk: sdk)
-                    
+                let node = MockNode(handle: 7, isMarkedSensitive: sensitive)
+                let sdk = MockSdk(nodes: [node])
+                let sut = self.makeSUT(sdk: sdk)
+                
+                group.addTask { @Sendable in
                     let result = try await sut.setSensitive(node: node.toNodeEntity(),
                                                             sensitive: sensitive)
                     

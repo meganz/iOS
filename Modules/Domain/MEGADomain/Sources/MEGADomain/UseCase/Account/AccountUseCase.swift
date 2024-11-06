@@ -51,7 +51,6 @@ public protocol AccountUseCaseProtocol: Sendable {
     // this will return also deleted contacts, need to filter by `visibility` to get current ones
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt64
-    func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
     func upgradeSecurity() async throws -> Bool
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
     func getMiscFlags() async throws
@@ -198,10 +197,6 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     
     public func totalNodesCount() -> UInt64 {
         return repository.totalNodesCount()
-    }
-
-    public func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
-        repository.getMyChatFilesFolder(completion: completion)
     }
     
     public func upgradeSecurity() async throws -> Bool {

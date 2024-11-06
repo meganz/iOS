@@ -3,7 +3,9 @@ import MEGADomain
 import MEGASdk
 
 final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContentsUpdateNotifierRepositoryProtocol {
-    public static var newRepo = AlbumContentsUpdateNotifierRepository(sdk: MEGASdk.sharedSdk)
+    public static var newRepo: AlbumContentsUpdateNotifierRepository {
+        AlbumContentsUpdateNotifierRepository(sdk: MEGASdk.sharedSdk)
+    }
     
     private let albumReloadSourcePublisher = PassthroughSubject<Void, Never>()
     private let sdk: MEGASdk

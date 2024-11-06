@@ -431,7 +431,7 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         userAlbumCache: some UserAlbumCacheProtocol = MockUserAlbumCache(),
         userAlbumCacheRepositoryMonitors: some UserAlbumCacheRepositoryMonitorsProtocol = MockUserAlbumCacheRepositoryMonitors(),
         albumCacheMonitorTaskManager: some AlbumCacheMonitorTaskManagerProtocol = MockAlbumCacheMonitorTaskManager(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> UserAlbumCacheRepository {
         let sut = UserAlbumCacheRepository(

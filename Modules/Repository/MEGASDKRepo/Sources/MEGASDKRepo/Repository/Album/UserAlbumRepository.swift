@@ -5,7 +5,9 @@ import MEGASwift
 
 final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     
-    public static var newRepo: UserAlbumRepository = UserAlbumRepository(sdk: MEGASdk.sharedSdk)
+    public static var newRepo: UserAlbumRepository {
+        UserAlbumRepository(sdk: MEGASdk.sharedSdk)
+    }
     
     private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
     private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()

@@ -1,6 +1,6 @@
 public typealias RegionCode = String
 
-public struct RegionEntity: Equatable {
+public struct RegionEntity: Equatable, Sendable {
     public let regionCode: RegionCode
     public let regionName: String?
     public let callingCodes: [String]

@@ -97,19 +97,19 @@ public struct AccountUpdatesProvider: AccountUpdatesProviderProtocol {
 }
 
 // MARK: - AccountRequestDelegate
-private final class AccountRequestDelegate: NSObject {
-    private let areSOQBannersEnabled: () -> Bool
-    private let onRequestFinish: (Result<AccountRequestEntity, any Error>) -> Void
-    private let onUserAlertsUpdate: ([UserAlertEntity]) -> Void
-    private let onContactRequestsUpdate: ([ContactRequestEntity]) -> Void
-    private let onStorageStatusEventUpdate: (StorageStatusEntity) -> Void
+private final class AccountRequestDelegate: NSObject, Sendable {
+    private let areSOQBannersEnabled: @Sendable () -> Bool
+    private let onRequestFinish: @Sendable (Result<AccountRequestEntity, any Error>) -> Void
+    private let onUserAlertsUpdate: @Sendable ([UserAlertEntity]) -> Void
+    private let onContactRequestsUpdate: @Sendable ([ContactRequestEntity]) -> Void
+    private let onStorageStatusEventUpdate: @Sendable (StorageStatusEntity) -> Void
     
     init(
-        areSOQBannersEnabled: @escaping () -> Bool = { false },
-        onRequestFinish: @escaping (Result<AccountRequestEntity, any Error>) -> Void = {_ in },
-        onUserAlertsUpdate: @escaping ([UserAlertEntity]) -> Void = {_ in },
-        onContactRequestsUpdate: @escaping ([ContactRequestEntity]) -> Void = {_ in },
-        onStorageStatusEventUpdate: @escaping (StorageStatusEntity) -> Void = {_ in }
+        areSOQBannersEnabled: @Sendable @escaping () -> Bool = { false },
+        onRequestFinish: @Sendable @escaping (Result<AccountRequestEntity, any Error>) -> Void = {_ in },
+        onUserAlertsUpdate: @Sendable @escaping ([UserAlertEntity]) -> Void = {_ in },
+        onContactRequestsUpdate: @Sendable @escaping ([ContactRequestEntity]) -> Void = {_ in },
+        onStorageStatusEventUpdate: @Sendable @escaping (StorageStatusEntity) -> Void = {_ in }
     ) {
         self.onRequestFinish = onRequestFinish
         self.onUserAlertsUpdate = onUserAlertsUpdate

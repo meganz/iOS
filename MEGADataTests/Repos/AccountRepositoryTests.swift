@@ -581,7 +581,6 @@ final class AccountRepositoryTests: XCTestCase {
         storageStatus: StorageStatusEntity? = nil
     ) -> (AccountRepository, MockSdk) {
         let incomingNodes = MockNodeList(nodes: incomingNodes)
-        let myChatFilesRootNodeAccess = nodeAccess(for: myChatFilesNodeHandle)
         let backupsRootNodeAccess = nodeAccess(for: backupRootNodeHandle)
         
         let mockSdk = MockSdk(
@@ -632,7 +631,6 @@ final class AccountRepositoryTests: XCTestCase {
         return (AccountRepository(
             sdk: mockSdk,
             currentUserSource: currentUserSource,
-            myChatFilesFolderNodeAccess: myChatFilesRootNodeAccess,
             backupsRootFolderNodeAccess: backupsRootNodeAccess,
             accountUpdatesProvider: accountUpdatesProvider
         ), mockSdk)

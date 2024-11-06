@@ -3,9 +3,9 @@ import MEGADomain
 import MEGASdk
 
 public struct NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol {
-    public static var newRepo: NodeFavouriteActionRepository = {
+    public static var newRepo: NodeFavouriteActionRepository {
         NodeFavouriteActionRepository(sdk: MEGASdk.sharedSdk)
-    }()
+    }
 
     private let sdk: MEGASdk
 

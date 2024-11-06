@@ -1,7 +1,7 @@
 import MEGASdk
 import MEGASDKRepo
 
-public final class MockMEGASetElement: MEGASetElement {
+public final class MockMEGASetElement: MEGASetElement, @unchecked Sendable {
     private let setElementHandle: MEGAHandle
     private let setElementOwnerId: MEGAHandle
     private let setElementOrder: UInt64

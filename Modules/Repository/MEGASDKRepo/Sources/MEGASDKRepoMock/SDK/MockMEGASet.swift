@@ -1,7 +1,7 @@
 import MEGASdk
 import MEGASDKRepo
 
-public final class MockMEGASet: MEGASet {
+public final class MockMEGASet: MEGASet, @unchecked Sendable {
     private let setHandle: MEGAHandle
     private let setUserId: MEGAHandle
     private let setCoverId: MEGAHandle

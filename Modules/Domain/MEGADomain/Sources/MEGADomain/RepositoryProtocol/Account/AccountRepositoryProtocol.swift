@@ -64,7 +64,6 @@ public protocol AccountRepositoryProtocol: Sendable {
     // Account operations
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt64
-    func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
     func upgradeSecurity() async throws -> Bool
     func getMiscFlags() async throws
     func sessionTransferURL(path: String) async throws -> URL

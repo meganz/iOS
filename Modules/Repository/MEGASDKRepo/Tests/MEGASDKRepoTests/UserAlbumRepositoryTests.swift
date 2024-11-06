@@ -203,7 +203,7 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let albumContentUpdatesYieldedExp = expectation(description: "Album content update was emitted")
         let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
         
-        let task = Task {
+        let task = Task { @Sendable in
             let sequence = await sut.albumContentUpdated(by: albumId)
             taskStartedExp.fulfill()
             for await updatedSetElements in sequence {
