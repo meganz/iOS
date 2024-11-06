@@ -140,7 +140,7 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cancellationStepsSubscriptionType, .webClient)
     }
     
-    func testMakeCancellationSurveyViewModel_shouldHaveCorrectSubscription() {
+    @MainActor func testMakeCancellationSurveyViewModel_shouldHaveCorrectSubscription() {
         let expectedSubscription = AccountSubscriptionEntity(id: "ABC123")
         let (sut, _) = makeSUT(currentSubscription: expectedSubscription)
         

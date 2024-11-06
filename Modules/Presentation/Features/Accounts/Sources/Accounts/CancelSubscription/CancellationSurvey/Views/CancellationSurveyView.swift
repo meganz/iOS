@@ -31,8 +31,8 @@ struct CancellationSurveyView: View {
                         cancellationReasonListView
                         
                         otherReasonTextView
-
-                        allowToBeContactedCheckBox
+                        
+                        allowToBeContactedCheckBoxView
                             .padding(.vertical, 20)
                         
                         bottomButtonsView
@@ -78,7 +78,7 @@ struct CancellationSurveyView: View {
     }
     
     private var headerView: some View {
-        VStack(spacing: 10) {
+        VStack(alignment: .leading, spacing: 10) {
             Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.Header.title)
                 .font(.title3)
                 .bold()
@@ -89,7 +89,16 @@ struct CancellationSurveyView: View {
                 .font(.subheadline)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .multilineTextAlignment(.center)
+            
+            if viewModel.isMultipleSelectionEnabled {
+                Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.SubHeader.title)
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .multilineTextAlignment(.leading)
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     @ViewBuilder
@@ -104,21 +113,35 @@ struct CancellationSurveyView: View {
         }
     }
     
+    @ViewBuilder
     private var cancellationReasonListView: some View {
-        ForEach(viewModel.cancellationSurveyReasonList, id: \.id) { reason in
-            RadioButton(
-                id: reason.id,
-                text: reason.title,
-                isSelected: viewModel.isReasonSelected(reason)
-            ) {
-                viewModel.selectReason(reason)
+        if viewModel.isMultipleSelectionEnabled {
+            ForEach(viewModel.cancellationSurveyReasonList, id: \.id) { reason in
+                CheckBoxWithTextButton(
+                    isChecked: viewModel.isReasonSelected(reason),
+                    id: reason.id,
+                    text: reason.title,
+                    font: Font.subheadline
+                ) { _ in
+                    viewModel.updateSelectedReason(reason)
+                }
+            }
+        } else {
+            ForEach(viewModel.cancellationSurveyReasonList, id: \.id) { reason in
+                RadioButton(
+                    id: reason.id,
+                    text: reason.title,
+                    isSelected: viewModel.isReasonSelected(reason)
+                ) {
+                    viewModel.updateSelectedReason(reason)
+                }
             }
         }
     }
     
     @ViewBuilder
     private var otherReasonTextView: some View {
-        if let selectedReason = viewModel.selectedReason, selectedReason.isOtherReason {
+        if viewModel.showOtherField {
             BorderedTextEditorView(
                 textInput: $viewModel.otherReasonText,
                 isFocused: $viewModel.isOtherFieldFocused,
@@ -141,11 +164,19 @@ struct CancellationSurveyView: View {
         }
     }
     
-    private var allowToBeContactedCheckBox: some View {
-        CheckBoxWithTextButton(
-            isChecked: $viewModel.allowToBeContacted,
-            text: Strings.Localizable.Accounts.CancelSubscriptionSurvey.AllowToContactCheckbox.title
-        )
+    private var allowToBeContactedCheckBoxView: some View {
+        VStack(spacing: 20) {
+            Divider()
+                .background(TokenColors.Border.strong.swiftUI)
+                .opacity(viewModel.isMultipleSelectionEnabled ? 1 : 0)
+                
+            CheckBoxWithTextButton(
+                isChecked: viewModel.allowToBeContacted,
+                text: Strings.Localizable.Accounts.CancelSubscriptionSurvey.AllowToContactCheckbox.title
+            ) { isChecked in
+                viewModel.setAllowToBeContacted(isChecked)
+            }
+        }
     }
     
     private var bottomButtonsView: some View {

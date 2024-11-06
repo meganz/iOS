@@ -21,58 +21,136 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cancellationSurveyReasonList.count, reasonList.count)
     }
     
-    @MainActor func testSelectReason_shouldSetCorrectReason_andShouldHideReasonErrorAndKeyboard() {
-        let expectedReason = randomReason
+    // MARK: - Multiple selection
+    @MainActor func testUpdateSelectedReason_whenReasonIsNotOnTheList_shouldAddReasonAndHideReasonError() {
+        assertUpdateSelectedReason(
+            currentSelectedReasons: [],
+            newSelectedReason: randomReason,
+            shouldAddSelectedReason: true
+        )
+    }
+    
+    @MainActor func testUpdateSelectedReason_whenReasonIsOnTheList_shouldRemoveReason() {
+        let selectedReason = randomReason
+        assertUpdateSelectedReason(
+            currentSelectedReasons: [selectedReason],
+            newSelectedReason: selectedReason,
+            shouldAddSelectedReason: false
+        )
+    }
+    
+    @MainActor private func assertUpdateSelectedReason(
+        currentSelectedReasons: Set<CancellationSurveyReason>,
+        newSelectedReason: CancellationSurveyReason,
+        shouldAddSelectedReason: Bool
+    ) {
         let sut = makeSUT()
+        let expectedIsOtherFieldFocused = Bool.random()
+        sut.selectedReasons = currentSelectedReasons
+        sut.isOtherFieldFocused = expectedIsOtherFieldFocused
+        sut.showNoReasonSelectedError = Bool.random()
+        
+        sut.updateSelectedReason(newSelectedReason)
+        
+        XCTAssertEqual(sut.selectedReasons.contains(newSelectedReason), shouldAddSelectedReason)
+        XCTAssertEqual(sut.isOtherFieldFocused, expectedIsOtherFieldFocused)
+        XCTAssertFalse(sut.showNoReasonSelectedError)
+    }
+    
+    @MainActor func testUpdateSelectedReason_whenAddedOtherReason_shouldShowOtherField() {
+        let sut = makeSUT()
+        sut.selectedReasons = []
+        
+        sut.updateSelectedReason(CancellationSurveyReason.otherReason)
+        
+        XCTAssertTrue(sut.showOtherField)
+    }
+    
+    @MainActor func testUpdateSelectedReason_whenOtherReasonIsOnTheListAndAddedNewReason_shouldShowOtherField() {
+        let sut = makeSUT()
+        sut.selectedReasons = []
+        
+        // Add other reason
+        sut.updateSelectedReason(CancellationSurveyReason.otherReason)
+        
+        // Add new reason
+        sut.updateSelectedReason(randomReasonExceptOthers)
+        
+        XCTAssertTrue(sut.showOtherField)
+    }
+    
+    @MainActor func testIsReasonSelected_whenReasonSelected_shouldReturnTrue() {
+        let selectedReason = randomReason
+        
+        let sut = makeSUT()
+        sut.selectedReasons = [selectedReason]
+        
+        XCTAssertTrue(sut.isReasonSelected(selectedReason))
+    }
+    
+    @MainActor func testIsReasonSelected_whenReasonNotSelected_shouldReturnFalse() {
+        let newReasonNotOnList: CancellationSurveyReason = [.four, .five, .six].randomElement() ?? .four
+        
+        let sut = makeSUT()
+        sut.selectedReasons = [.one, .two, .three]
+        
+        XCTAssertFalse(sut.isReasonSelected(newReasonNotOnList))
+    }
+    
+    // MARK: - Single selection - reason validation
+    @MainActor func testSelectReason_isMultipleSelectionDisabled_shouldSetCorrectReasonAndHideReasonErrorAndKeyboard() {
+        let expectedReason = randomReason
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.isOtherFieldFocused = Bool.random()
         sut.showNoReasonSelectedError = Bool.random()
         
-        sut.selectReason(expectedReason)
+        sut.updateSelectedReason(expectedReason)
         
         XCTAssertEqual(sut.selectedReason, expectedReason)
         XCTAssertFalse(sut.isOtherFieldFocused)
         XCTAssertFalse(sut.showNoReasonSelectedError)
     }
     
-    func testFormattedReasonString_forOtherReason_shouldReturnCorrectFormat() {
+    @MainActor func testFormattedReasonString_isMultipleSelectionDisabled_forOtherReason_shouldReturnCorrectFormat() {
         let expectedText = "This is a test reason"
         
-        let sut = makeSUT()
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = CancellationSurveyReason.otherReason
         sut.otherReasonText = expectedText
         
         XCTAssertEqual(sut.formattedReasonString, expectedText)
     }
     
-    func testFormattedReasonString_anyReasonExceptOtherReason_shouldReturnCorrectFormat() {
-        let randomReason = CancellationSurveyReason.allCases.filter { !$0.isOtherReason }.randomElement() ?? .one
+    @MainActor func testFormattedReasonString_isMultipleSelectionDisabled_anyReasonExceptOtherReason_shouldReturnCorrectFormat() {
+        let randomReason = randomReasonExceptOthers
         let expectedText = "\(randomReason.id) - \(randomReason.title)"
         
-        let sut = makeSUT()
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = randomReason
         
         XCTAssertEqual(sut.formattedReasonString, expectedText)
     }
     
-    func testIsReasonSelected_reasonSelected_shouldReturnTrue() {
+    @MainActor func testIsReasonSelected_isMultipleSelectionDisabled_whenReasonSelected_shouldReturnTrue() {
         let selectedReason = randomReason
         
-        let sut = makeSUT()
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = selectedReason
         
         XCTAssertTrue(sut.isReasonSelected(selectedReason))
     }
     
-    func testIsReasonSelected_reasonNotSelected_shouldReturnFalse() {
+    @MainActor func testIsReasonSelected_isMultipleSelectionDisabled_whenReasonNotSelected_shouldReturnFalse() {
         let selectedReason: CancellationSurveyReason = [.one, .two, .three].randomElement() ?? .one
         let newReason: CancellationSurveyReason = [.four, .five, .six].randomElement() ?? .four
         
-        let sut = makeSUT()
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = selectedReason
         
         XCTAssertFalse(sut.isReasonSelected(newReason))
     }
     
+    // MARK: - Actions
     @MainActor func testDidTapCancelButton_shouldDismissView() {
         let sut = makeSUT()
         
@@ -91,7 +169,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissCancellationFlow_calledTimes, 1)
     }
     
-    func testTracker_viewOnAppear_shouldTrackEvent() {
+    @MainActor func testTracker_viewOnAppear_shouldTrackEvent() {
         let mockTracker = MockTracker()
         let sut = makeSUT(mockTracker: mockTracker)
         
@@ -127,10 +205,12 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testTracker_didTapCancelSubscriptionButton_shouldTrackEvent() {
+    // MARK: - Multiple selection - Cancel subscription
+    
+    @MainActor func testTracker_isMultipleSelectionDisabled_didTapCancelSubscriptionButton_shouldTrackEvent() {
         let mockTracker = MockTracker()
         let sut = makeSUT(mockTracker: mockTracker)
-        sut.selectedReason = randomReason
+        sut.selectedReasons = [randomReason]
         sut.otherReasonText = "This is a test reason"
         
         sut.didTapCancelSubscriptionButton()
@@ -143,7 +223,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     
     @MainActor func testDidTapCancelSubscriptionButton_noSelectedReason_shouldSetShowNoReasonSelectedErrorToTrue() {
         let sut = makeSUT()
-        sut.selectedReason = nil
+        sut.selectedReasons = []
         sut.showNoReasonSelectedError = false
         
         sut.didTapCancelSubscriptionButton()
@@ -151,32 +231,9 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showNoReasonSelectedError)
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_otherReasonSelected_reasonTextIsEmpty_shouldSetIsOtherFieldFocusedToTrue() {
-        assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "")
-    }
-    
-    @MainActor func testDidTapCancelSubscriptionButton_otherReasonSelected_reasonTextIsLessThanMinLimit10_shouldSetIsOtherFieldFocusedToTrue() {
-        assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "Test")
-    }
-    
-    @MainActor private func assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(
-        reasonText: String,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        let sut = makeSUT()
-        sut.selectedReason = CancellationSurveyReason.otherReason
-        sut.otherReasonText = reasonText
-        
-        sut.didTapCancelSubscriptionButton()
-        
-        XCTAssertTrue(sut.showMinLimitOrEmptyOtherFieldError, file: file, line: line)
-        XCTAssertNil(sut.submitSurveyTask, file: file, line: line)
-    }
-    
     @MainActor func testDidTapCancelSubscriptionButton_otherReasonSelected_shouldHandleTextCountCorrectly() {
         let sut = makeSUT()
-        sut.selectedReason = CancellationSurveyReason.otherReason
+        sut.selectedReasons = [CancellationSurveyReason.otherReason]
         
         sut.otherReasonText = String(repeating: "a", count: 121)
         sut.didTapCancelSubscriptionButton()
@@ -191,7 +248,8 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: .itunes,
             requestResult: .success,
-            shouldShowManageSubscriptions: true
+            shouldShowManageSubscriptions: true,
+            isFeatureFlagEnabled: true
         )
     }
     
@@ -199,7 +257,8 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: randomWebclientPaymentMethod(),
             requestResult: .success,
-            shouldShowManageSubscriptions: false
+            shouldShowManageSubscriptions: false,
+            isFeatureFlagEnabled: true
         )
     }
     
@@ -208,7 +267,8 @@ final class CancellationSurveyViewModelTests: XCTestCase {
             paymentMethod: randomWebclientPaymentMethod(),
             requestResult: .failure(.generic),
             shouldShowManageSubscriptions: false,
-            shouldShowFailure: true
+            shouldShowFailure: true,
+            isFeatureFlagEnabled: true
         )
     }
     
@@ -227,6 +287,129 @@ final class CancellationSurveyViewModelTests: XCTestCase {
             expirationDate: expectedExpirationDate
         )
         
+        sut.selectedReasons = [randomReason]
+        sut.otherReasonText = "Test reason"
+        
+        sut.didTapCancelSubscriptionButton()
+        await sut.submitSurveyTask?.value
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        XCTAssertEqual(mockRouter.showSuccessAlert_calledTimes, 1, "Success alert should be shown exactly once")
+    }
+    
+    // MARK: - Single selection - Cancel subscription
+    
+    @MainActor func testTracker_didTapCancelSubscriptionButton_shouldTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(mockTracker: mockTracker, featureFlagList: [.multipleOptionsForCancellationSurvey: false])
+        sut.selectedReason = randomReason
+        sut.otherReasonText = "This is a test reason"
+        
+        sut.didTapCancelSubscriptionButton()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [SubscriptionCancellationSurveyCancelSubscriptionButtonEvent()]
+        )
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_noSelectedReason_shouldSetShowNoReasonSelectedErrorToTrue() {
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
+        sut.selectedReason = nil
+        sut.showNoReasonSelectedError = false
+        
+        sut.didTapCancelSubscriptionButton()
+        
+        XCTAssertTrue(sut.showNoReasonSelectedError)
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_otherReasonSelected_reasonTextIsEmpty_shouldSetIsOtherFieldFocusedToTrue() {
+        assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "", isFeatureFlagEnabled: false)
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_otherReasonSelected_reasonTextIsLessThanMinLimit10_shouldSetIsOtherFieldFocusedToTrue() {
+        assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "Test", isFeatureFlagEnabled: false)
+    }
+    
+    @MainActor private func assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(
+        reasonText: String,
+        isFeatureFlagEnabled: Bool,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: isFeatureFlagEnabled])
+        
+        if isFeatureFlagEnabled {
+            sut.selectedReasons = [CancellationSurveyReason.otherReason]
+        } else {
+            sut.selectedReason = CancellationSurveyReason.otherReason
+        }
+        
+        sut.otherReasonText = reasonText
+        
+        sut.didTapCancelSubscriptionButton()
+        
+        XCTAssertTrue(sut.showMinLimitOrEmptyOtherFieldError, file: file, line: line)
+        XCTAssertNil(sut.submitSurveyTask, file: file, line: line)
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_otherReasonSelected_shouldHandleTextCountCorrectly() {
+        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
+        sut.selectedReason = CancellationSurveyReason.otherReason
+        
+        sut.otherReasonText = String(repeating: "a", count: 121)
+        sut.didTapCancelSubscriptionButton()
+        XCTAssertNil(sut.submitSurveyTask, "The reason has reached the maximum limit of 120 characters. Submission should not proceed.")
+        
+        sut.otherReasonText = String(repeating: "a", count: 120)
+        sut.didTapCancelSubscriptionButton()
+        XCTAssertTrue(sut.dismissKeyboard, "The reason is within the 120-character limit. Should dismiss the keyboard and proceed with the submission.")
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccessForItunesPaymentMethod_shouldShowManageSubscriptions() async {
+        await assertDidTapCancelSubscriptionButtonWithValidForm(
+            paymentMethod: .itunes,
+            requestResult: .success,
+            shouldShowManageSubscriptions: true,
+            isFeatureFlagEnabled: false
+        )
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccessForRandomWebclientPaymentMethod_shouldShowSuccessAlert() async {
+        await assertDidTapCancelSubscriptionButtonWithValidForm(
+            paymentMethod: randomWebclientPaymentMethod(),
+            requestResult: .success,
+            shouldShowManageSubscriptions: false,
+            isFeatureFlagEnabled: false
+        )
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestFailure_shouldShowFailureAlert() async {
+        await assertDidTapCancelSubscriptionButtonWithValidForm(
+            paymentMethod: randomWebclientPaymentMethod(),
+            requestResult: .failure(.generic),
+            shouldShowManageSubscriptions: false,
+            shouldShowFailure: true,
+            isFeatureFlagEnabled: false
+        )
+    }
+    
+    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccess_shouldShowSuccessAlertWithCorrectExpirationDate() async {
+        let expectedExpirationDate = Date().addingTimeInterval(24*60*60)
+        let expectation = XCTestExpectation(description: "Success alert should display the correct expiration date")
+        
+        let mockRouter = MockCancelAccountPlanRouter { expirationDate in
+            self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
+        }
+        
+        let sut = makeSUT(
+            requestResult: .success,
+            paymentMethod: randomWebclientPaymentMethod(),
+            mockRouter: mockRouter,
+            expirationDate: expectedExpirationDate,
+            featureFlagList: [.multipleOptionsForCancellationSurvey: false]
+        )
+        
         sut.selectedReason = randomReason
         sut.otherReasonText = "Test reason"
         
@@ -242,6 +425,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         requestResult: Result<Void, AccountErrorEntity>,
         shouldShowManageSubscriptions: Bool,
         shouldShowFailure: Bool = false,
+        isFeatureFlagEnabled: Bool,
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
@@ -249,9 +433,14 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let sut = makeSUT(
             requestResult: requestResult,
             paymentMethod: paymentMethod,
-            mockRouter: mockRouter
+            mockRouter: mockRouter,
+            featureFlagList: [.multipleOptionsForCancellationSurvey: isFeatureFlagEnabled]
         )
-        sut.selectedReason = randomReason
+        if isFeatureFlagEnabled {
+            sut.selectedReasons = [CancellationSurveyReason.otherReason]
+        } else {
+            sut.selectedReason = CancellationSurveyReason.otherReason
+        }
         sut.otherReasonText = "Test reason"
         
         sut.didTapCancelSubscriptionButton()
@@ -269,13 +458,14 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     }
     
     // MARK: - Helper
-    private func makeSUT(
+    @MainActor private func makeSUT(
         currentSubscription: AccountSubscriptionEntity = AccountSubscriptionEntity(),
         requestResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         paymentMethod: PaymentMethodEntity = .none,
         mockRouter: MockCancelAccountPlanRouter = MockCancelAccountPlanRouter(),
         mockTracker: some AnalyticsTracking = MockTracker(),
         expirationDate: Date = Date(),
+        featureFlagList: [FeatureFlagKey: Bool] = [.multipleOptionsForCancellationSurvey: true],
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CancellationSurveyViewModel {
@@ -287,7 +477,8 @@ final class CancellationSurveyViewModelTests: XCTestCase {
             subscriptionsUseCase: subscriptionsUseCase,
             accountUseCase: accountUseCase,
             cancelAccountPlanRouter: mockRouter,
-            tracker: mockTracker
+            tracker: mockTracker,
+            featureFlagProvider: MockFeatureFlagProvider(list: featureFlagList)
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
@@ -296,6 +487,10 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     
     private var randomReason: CancellationSurveyReason {
         CancellationSurveyReason.allCases.randomElement() ?? .one
+    }
+    
+    private var randomReasonExceptOthers: CancellationSurveyReason {
+        CancellationSurveyReason.allCases.filter { !$0.isOtherReason }.randomElement() ?? .one
     }
     
     private func randomWebclientPaymentMethod() -> PaymentMethodEntity {

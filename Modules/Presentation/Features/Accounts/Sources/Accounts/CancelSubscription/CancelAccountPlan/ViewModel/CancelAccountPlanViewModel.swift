@@ -91,13 +91,15 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func makeCancellationSurveyViewModel() -> CancellationSurveyViewModel {
         CancellationSurveyViewModel(
             subscription: currentSubscription,
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
             accountUseCase: accountUseCase,
             cancelAccountPlanRouter: router,
-            logger: logger
+            logger: logger,
+            featureFlagProvider: featureFlagProvider
         )
     }
 }
