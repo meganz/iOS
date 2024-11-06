@@ -9,39 +9,19 @@ struct ManageTagsViewModelTests {
     @Test(
         "Verify tagNameState updates based on tagName input",
         arguments: [
-            ("", ManageTagsViewModel.TagNameState.empty),
-            ("tag1", ManageTagsViewModel.TagNameState.valid),
-            ("invalid@tag!", ManageTagsViewModel.TagNameState.invalid),
-            (String(repeating: "a", count: 33), ManageTagsViewModel.TagNameState.tooLong)
+            ("", "", ManageTagsViewModel.TagNameState.empty),
+            ("#", "", ManageTagsViewModel.TagNameState.empty),
+            ("Tag1", "tag1", ManageTagsViewModel.TagNameState.valid),
+            ("tag1", "", ManageTagsViewModel.TagNameState.valid),
+            ("invalid@tag!", "", ManageTagsViewModel.TagNameState.invalid),
+            (String(repeating: "a", count: 33), "", ManageTagsViewModel.TagNameState.tooLong)
         ]
     )
-    func verifyTagNameState(tagName: String, expectedState: ManageTagsViewModel.TagNameState) async {
+    func validateAndUpdateTagNameState(updatedTagName: String, expectedTagName: String, expectedState: ManageTagsViewModel.TagNameState) async {
         let viewModel = makeSUT()
-        viewModel.tagName = tagName
-
-        await withCheckedContinuation { continuation in
-            var resumed = false
-
-            let cancellable = viewModel
-                .$tagNameState
-                .sink { newState in
-                    if newState == expectedState && !resumed {
-                        resumed = true
-                        continuation.resume()
-                    }
-                }
-
-            // timeout task
-            Task {
-                try await Task.sleep(nanoseconds: 500_000_000)
-                if !resumed {
-                    resumed = true
-                    continuation.resume()
-                }
-                cancellable.cancel()
-            }
-        }
-
+        viewModel.tagName = ""
+        viewModel.validateAndUpdateTagNameStateIfRequired(with: updatedTagName)
+        #expect(viewModel.tagName == expectedTagName)
         #expect(viewModel.tagNameState == expectedState)
     }
     
@@ -54,7 +34,7 @@ struct ManageTagsViewModelTests {
         ]
     )
     func verifyAddTag(
-        initialTagName: String,
+        updatedTagName: String,
         expectedContainsTag: Bool,
         expectedTagName: String,
         expectedContainsExistingTags: Bool
@@ -62,13 +42,26 @@ struct ManageTagsViewModelTests {
         let viewModel = makeSUT()
 
         // Set the initial tag name and add it
-        viewModel.tagName = initialTagName
+        viewModel.tagName = updatedTagName
+        viewModel.validateAndUpdateTagNameStateIfRequired(with: updatedTagName)
         viewModel.addTag()
 
         // Expectation checks
-        #expect(viewModel.existingTagsViewModel.tags.contains(initialTagName) == expectedContainsTag)
+        #expect(viewModel.existingTagsViewModel.tags.contains(updatedTagName) == expectedContainsTag)
         #expect(viewModel.tagName == expectedTagName)
         #expect(viewModel.containsExistingTags == expectedContainsExistingTags)
+    }
+
+    @MainActor
+    @Test("Verify clear text field")
+    func verifyClearTextField() {
+        let viewModel = makeSUT()
+
+        let initialTagName = "Initial Tag Name"
+        viewModel.tagName = initialTagName
+        #expect(viewModel.tagName == initialTagName)
+        viewModel.clearTextField()
+        #expect(viewModel.tagName == "")
     }
 
     @MainActor

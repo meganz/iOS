@@ -24,21 +24,6 @@ final class ManageTagsViewModel: ObservableObject {
     init(navigationBarViewModel: ManageTagsViewNavigationBarViewModel, existingTagsViewModel: ExistingTagsViewModel) {
         self.navigationBarViewModel = navigationBarViewModel
         self.existingTagsViewModel = existingTagsViewModel
-
-        $tagName
-            .sink { [weak self] updatedTagName in
-                guard let self else { return }
-                if updatedTagName.isEmpty {
-                    tagNameState = .empty
-                } else if containsInvalidCharacters(in: updatedTagName) {
-                    tagNameState = .invalid
-                } else if updatedTagName.count > maxAllowedCharacterCount {
-                    tagNameState = .tooLong
-                } else {
-                    tagNameState = .valid
-                }
-            }
-            .store(in: &subscriptions)
     }
 
     func addTag() {
@@ -49,9 +34,34 @@ final class ManageTagsViewModel: ObservableObject {
         hasTextFieldFocus = false
     }
 
+    func validateAndUpdateTagNameStateIfRequired(with updatedTagName: String) {
+        if updatedTagName.isEmpty {
+            tagNameState = .empty
+        } else if updatedTagName == "#" {
+            tagName = ""
+            tagNameState = .empty
+        } else if containsInvalidCharacters(in: updatedTagName) {
+            tagNameState = .invalid
+        } else if updatedTagName.count > maxAllowedCharacterCount {
+            tagNameState = .tooLong
+        } else if containsUpperCaseCharacters(in: updatedTagName) {
+            tagName = updatedTagName.lowercased()
+            tagNameState = .valid
+        } else {
+            tagNameState = .valid
+        }
+    }
+
+    func clearTextField() {
+        tagName = ""
+        tagNameState = .empty
+    }
+
     private func containsInvalidCharacters(in tagName: String) -> Bool {
-        tagName.rangeOfCharacter(
-            from: CharacterSet.alphanumerics.inverted.union(CharacterSet.uppercaseLetters)
-        ) != nil
+        tagName.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) != nil
+    }
+
+    private func containsUpperCaseCharacters(in tagName: String) -> Bool {
+        tagName.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil
     }
 }

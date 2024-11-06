@@ -13,9 +13,9 @@ struct ManageTagsView: View {
     init(viewModel: @autoclosure @escaping () -> ManageTagsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
     }
-    
+
     public var body: some View {
-        return content
+        content
             .background(TokenColors.Background.page.swiftUI)
             .onChange(of: shouldDismiss) {
                 if $0 { dismiss() }
@@ -58,7 +58,21 @@ struct ManageTagsView: View {
             .onSubmit {
                 viewModel.addTag()
             }
+            .onChange(of: viewModel.tagName) { updatedTagName in
+                viewModel.validateAndUpdateTagNameStateIfRequired(with: updatedTagName)
+            }
             .padding(.vertical, TokenSpacing._3)
+            if hasFocus {
+                Button {
+                    viewModel.clearTextField()
+                } label: {
+                    Image(.searchBarCloseCircle)
+                        .resizable()
+                        .frame(width: 17, height: 17)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                }
+                .padding(.horizontal, TokenSpacing._5)
+            }
         }
         .foregroundStyle(TokenColors.Text.primary.swiftUI)
         .background(TokenColors.Background.surface2.swiftUI)
