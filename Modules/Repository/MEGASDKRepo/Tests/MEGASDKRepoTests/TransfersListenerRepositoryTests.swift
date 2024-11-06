@@ -5,7 +5,7 @@ import MEGASDKRepoMock
 import XCTest
 
 final class TransfersListenerRepositoryTests: XCTestCase {
-    class Harness {
+    final class Harness: Sendable {
         let sut: TransfersListenerRepository
         fileprivate let sdk: TestSdk
         
@@ -38,7 +38,7 @@ final class TransfersListenerRepositoryTests: XCTestCase {
         let exp = expectation(description: "Waiting for transfers")
         exp.expectedFulfillmentCount = mockTransfers.count
         
-        let task = Task {
+        let task = Task { @Sendable in
             taskStartedExp.fulfill()
             var expectedResults = mockTransfers.map(\.nodeHandle)
             for await transfer in harness.sut.completedTransfers {

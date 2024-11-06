@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASdk
 
-public typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: (any Error)?) -> Void
+public typealias NodeLoadCompletion = @Sendable (_ node: MEGANode?, _ error: (any Error)?) -> Void
 
 public protocol NodeAccessProtocol: Sendable {
     /// Load the current type node, it follows the below steps to load the node:

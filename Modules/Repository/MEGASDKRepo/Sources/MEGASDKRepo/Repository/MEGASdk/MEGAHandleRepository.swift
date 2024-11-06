@@ -2,7 +2,9 @@ import MEGADomain
 import MEGASdk
 
 public struct MEGAHandleRepository: MEGAHandleRepositoryProtocol {
-    public static var newRepo: MEGAHandleRepository = MEGAHandleRepository()
+    public static var newRepo: MEGAHandleRepository {
+        MEGAHandleRepository()
+    }
     
     public func base64Handle(forUserHandle handle: HandleEntity) -> Base64HandleEntity? {
         MEGASdk.base64Handle(forUserHandle: handle)

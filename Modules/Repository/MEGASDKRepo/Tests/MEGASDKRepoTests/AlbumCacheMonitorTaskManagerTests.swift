@@ -45,7 +45,7 @@ final class AlbumCacheMonitorTaskManagerTests: XCTestCase {
 
     private func makeSUT(
         repositoryMonitor: some UserAlbumCacheRepositoryMonitorsProtocol = MockUserAlbumCacheRepositoryMonitors(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> AlbumCacheMonitorTaskManager {
         let sut = AlbumCacheMonitorTaskManager(repositoryMonitor: repositoryMonitor)

@@ -22,10 +22,10 @@ public struct TransfersListenerRepository: TransfersListenerRepositoryProtocol {
     }
 }
 
-private class PrivateTransferDelegate: NSObject, MEGATransferDelegate {
-    private let onTransferFinish: (TransferEntity) -> Void
+private final class PrivateTransferDelegate: NSObject, MEGATransferDelegate, Sendable {
+    private let onTransferFinish: @Sendable (TransferEntity) -> Void
     
-    init(onTransferFinish: @escaping (TransferEntity) -> Void) {
+    init(onTransferFinish: @Sendable @escaping (TransferEntity) -> Void) {
         self.onTransferFinish = onTransferFinish
     }
     

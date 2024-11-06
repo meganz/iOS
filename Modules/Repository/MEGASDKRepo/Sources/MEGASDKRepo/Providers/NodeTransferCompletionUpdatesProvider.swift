@@ -36,10 +36,10 @@ public struct NodeTransferCompletionUpdatesProvider: NodeTransferCompletionUpdat
     }
 }
 
-private class NodeTransferDelegate: NSObject, MEGATransferDelegate {
-    private let onTransferFinish: (TransferEntity) -> Void
+private final class NodeTransferDelegate: NSObject, MEGATransferDelegate, Sendable {
+    private let onTransferFinish: @Sendable (TransferEntity) -> Void
     
-    init(onTransferFinish: @escaping (TransferEntity) -> Void) {
+    init(onTransferFinish: @Sendable @escaping (TransferEntity) -> Void) {
         self.onTransferFinish = onTransferFinish
         super.init()
     }

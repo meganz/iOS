@@ -1,6 +1,6 @@
 import MEGASdk
 
-public final class MockError: MEGAError {
+public final class MockError: MEGAError, @unchecked Sendable {
     let megaErrorType: MEGAErrorType
     private let _name: String
     private let _value: Int64

@@ -89,7 +89,7 @@ final class PhotosRepositoryTaskManagerTests: XCTestCase {
     private func makeSUT(
         photoLocalSource: some PhotoLocalSourceProtocol = MockPhotoLocalSource(),
         photoCacheRepositoryMonitors: some PhotoCacheRepositoryMonitorsProtocol = MockPhotoCacheRepositoryMonitors(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> PhotosRepositoryTaskManager {
         let sut = PhotosRepositoryTaskManager(photoLocalSource: photoLocalSource,

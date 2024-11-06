@@ -1,5 +1,5 @@
 import MEGADomain
-import MEGASdk
+@preconcurrency import MEGASdk
 
 extension MEGAAccountDetails {
     public func toAccountDetailsEntity() -> AccountDetailsEntity {
