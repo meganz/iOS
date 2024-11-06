@@ -92,7 +92,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let exp = expectation(description: "search results")
         
         let subscription = viewStateUpdates(on: sut) {
-            XCTAssertEqual($0, .searchResults)
+            XCTAssertEqual($0, .searchResults(albums: [], photos: []))
             exp.fulfill()
         }
         

@@ -31,6 +31,11 @@ public struct VisualMediaSearchResultsView: View {
             VisualMediaSearchHistoryView(
                 searchedItems: items,
                 selectedRecentlySearched: $viewModel.selectedRecentlySearched)
+        case .searchResults(let albumCellViewModels, let photos):
+            VisualMediaSearchResultFoundView(
+                albumCellViewModels: albumCellViewModels,
+                photos: photos,
+                searchText: $viewModel.searchText)
         case .empty:
             EmptySearchView()
         default:

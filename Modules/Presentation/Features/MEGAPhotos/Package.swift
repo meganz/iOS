@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -7,7 +7,6 @@ let settings: [SwiftSetting] = [
     .enableExperimentalFeature("ExistentialAny"),
     .enableExperimentalFeature("StrictConcurrency=targeted")
 ]
-
 
 let package = Package(
     name: "MEGAPhotos",
@@ -22,11 +21,13 @@ let package = Package(
     dependencies: [
         .package(path: "../../../Domain/MEGASwiftUI"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
+        .package(path: "../../../Infrastructure/MEGASwift"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(path: "../../../Domain/MEGADomain"),
+        .package(path: "../../MEGAPresentation"),
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Presentation/MEGAAssets"),
-        .package(path: "../../Repository/MEGARepo")
+        .package(path: "../Shared/ContentLibraries")
     ],
     targets: [
         .target(
@@ -35,9 +36,11 @@ let package = Package(
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGADomain",
+                "MEGAPresentation",
+                "MEGASwift",
                 "MEGAL10n",
                 "MEGAAssets",
-                "MEGARepo"
+                "ContentLibraries"
             ],
             swiftSettings: settings),
         .testTarget(
@@ -45,8 +48,10 @@ let package = Package(
             dependencies: [
                 "MEGAPhotos",
                 "MEGATest",
-                .product(name: "MEGADomainMock", package: "MEGADomain")
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAPresentationMock", package: "MEGAPresentation")
             ],
             swiftSettings: settings)
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
