@@ -7,7 +7,8 @@ final class NodeTagsCellControllerModel {
     private let node: NodeEntity
     private(set) lazy var cellViewModel = NodeTagsCellViewModel(
         node: node,
-        accountUseCase: accountUseCase
+        accountUseCase: accountUseCase,
+        notificationCenter: .default
     )
 
     var hasValidSubscription: Bool {

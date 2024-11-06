@@ -561,7 +561,7 @@ extension MockChatRoomUseCase {
 }
 
 extension MockAccountUseCase {
-    static var loggedIn: Self {
+    static var loggedIn: MockAccountUseCase {
         .init(
             currentUser: UserEntity(handle: 100),
             isGuest: false,

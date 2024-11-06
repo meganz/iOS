@@ -40,7 +40,7 @@ extension NodeTagsCellController: UITableViewDataSource {
 
         guard let cell, let controller else { return HostingTableViewCell<NodeTagsCellView>() }
 
-        let view = NodeTagsCellView(viewModel: viewModel.cellViewModel)
+        let view = NodeTagsCellView(viewModel: self.viewModel.cellViewModel)
         cell.host(view, parent: controller)
         cell.backgroundColor = TokenColors.Background.page
         return cell

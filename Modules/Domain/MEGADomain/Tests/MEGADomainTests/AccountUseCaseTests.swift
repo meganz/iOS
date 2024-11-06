@@ -319,6 +319,60 @@ final class AccountUseCaseTests: XCTestCase {
             }
     }
     
+    func testHasValidSubscription_proLevelFree_shouldReturnCorrectValues() {
+        let testData = [
+            (proLevel: AccountTypeEntity.free, isExpiredAccount: false, result: false),
+            (proLevel: AccountTypeEntity.free, isExpiredAccount: false, result: false),
+            (proLevel: AccountTypeEntity.free, isExpiredAccount: true, result: false),
+            (proLevel: AccountTypeEntity.free, isExpiredAccount: true, result: false)
+        ]
+        
+        testHasValidSubscription(data: testData)
+    }
+    
+    func testHasValidSubscription_proLevelBusiness_shouldReturnCorrectValues() {
+        let testData = [
+            (proLevel: AccountTypeEntity.business, isExpiredAccount: false, result: true),
+            (proLevel: AccountTypeEntity.business, isExpiredAccount: true, result: false)
+        ]
+        
+        testHasValidSubscription(data: testData)
+    }
+    
+    func testHasValidSubscription_proLevelProFlexi_shouldReturnCorrectValues() {
+        let testData = [
+            (proLevel: AccountTypeEntity.proFlexi, isExpiredAccount: false, result: true),
+            (proLevel: AccountTypeEntity.proFlexi, isExpiredAccount: true, result: false)
+        ]
+        
+        testHasValidSubscription(data: testData)
+    }
+    
+    func testHasValidSubscription_proLevelNonFreeNonBusinessNonProFlexi_shouldReturnCorrectValues() {
+        
+        let testData = AccountTypeEntity.allCases.filter { $0 != .free && $0 != .business && $0 != .proFlexi }
+            .flatMap { proLevel in
+                [true, false].map { isExpiredAccount in
+                    (proLevel: proLevel, isExpiredAccount: isExpiredAccount, result: true)
+                }
+            }
+        
+        testHasValidSubscription(data: testData)
+    }
+    
+    private func testHasValidSubscription(data: [(proLevel: AccountTypeEntity, isExpiredAccount: Bool, result: Bool)]) {
+        for datum in data {
+            let sut = makeSUT(
+                currentAccountDetails: AccountDetailsEntity.build(
+                    proLevel: datum.proLevel
+                ),
+                isExpiredAccount: datum.isExpiredAccount,
+                accountType: datum.proLevel
+            )
+            XCTAssertEqual(sut.hasValidSubscription, datum.result)
+        }
+    }
+    
     private func testHasValidProAccount(
         _ accountType: AccountTypeEntity,
         isExpiredAccount: Bool = false,

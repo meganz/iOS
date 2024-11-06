@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public struct MockAccountUseCase: AccountUseCaseProtocol {
+public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let totalNodesCountVariable: UInt64
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
@@ -23,7 +23,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _currentSubscription: AccountSubscriptionEntity?
     private let _isStandardProAccount: Bool
     private let _contacts: [UserEntity]
-    private let _currentAccountDetails: AccountDetailsEntity?
+    private var _currentAccountDetails: AccountDetailsEntity?
     private let _isOverQuota: Bool
     private let _email: String?
     private let _isMasterBusinessAccount: Bool
@@ -35,7 +35,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _incomingSharesStorage: Int64
     private let _backupStorage: Int64
     private let _currentAccountPlan: PlanEntity?
-    private let _hasValidSubscription: Bool
+    private var _hasValidSubscription: Bool
     private let _hasActiveBusinessAccount: Bool
     private let _hasActiveProFlexiAccount: Bool
 
@@ -277,5 +277,9 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public func backupStorageUsed() async throws -> Int64 {
         _backupStorage
+    }
+    
+    public func setCurrentAccountDetails(_ details: AccountDetailsEntity?) {
+        _currentAccountDetails = details
     }
 }

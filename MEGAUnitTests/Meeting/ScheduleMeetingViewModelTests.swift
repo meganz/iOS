@@ -854,15 +854,15 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
 }
 
 extension MockAccountUseCase {
-    static var free: Self {
+    static var free: MockAccountUseCase {
         level(.free)
     }
     
-    static var proI: Self {
+    static var proI: MockAccountUseCase {
         level(.proI)
     }
     
-    static func level(_ proLevel: AccountTypeEntity) -> Self {
+    static func level(_ proLevel: AccountTypeEntity) -> MockAccountUseCase {
         MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: proLevel))
     }
 }

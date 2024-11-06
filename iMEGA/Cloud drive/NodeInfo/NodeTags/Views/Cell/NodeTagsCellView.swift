@@ -5,11 +5,7 @@ import SwiftUI
 
 struct NodeTagsCellView: View {
 
-    private let viewModel: NodeTagsCellViewModel
-
-    init(viewModel: NodeTagsCellViewModel) {
-        self.viewModel = viewModel
-    }
+    @StateObject var viewModel: NodeTagsCellViewModel
 
     var body: some View {
         VStack {
@@ -17,22 +13,9 @@ struct NodeTagsCellView: View {
                 Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.header)
                     .font(.body)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
-
-                if viewModel.shouldShowProTag {
-                    AvailableForProOnlyView(
-                        proOnlyText: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Feature.availableForProOnlyText,
-                        foregroundColor: TokenColors.Button.brand.swiftUI,
-                        borderColor: TokenColors.Button.brand.swiftUI,
-                        cornerRadius: TokenRadius.extraSmall
-                    )
-                }
-
+                proBagdeView
                 Spacer()
-
-                if viewModel.hasValidSubscription {
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                }
+                disclosureView
             }
 
             if viewModel.tags.isNotEmpty {
@@ -48,5 +31,35 @@ struct NodeTagsCellView: View {
                 trailing: TokenSpacing._5
             )
         )
+        .task {
+            await viewModel.startMonitoringAccountDetails()
+        }
+    }
+    
+    @ViewBuilder
+    private var proBagdeView: some View {
+        if viewModel.isLoading {
+            ProgressView()
+                .padding(.leading, TokenSpacing._2)
+        } else if viewModel.showsProTag {
+            AvailableForProOnlyView(
+                proOnlyText: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Feature.availableForProOnlyText,
+                foregroundColor: TokenColors.Button.brand.swiftUI,
+                borderColor: TokenColors.Button.brand.swiftUI,
+                cornerRadius: TokenRadius.extraSmall
+            )
+        } else {
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    private var disclosureView: some View {
+        if !viewModel.isLoading && viewModel.hasValidSubscription {
+            Image(systemName: "chevron.right")
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+        } else {
+            EmptyView()
+        }
     }
 }
