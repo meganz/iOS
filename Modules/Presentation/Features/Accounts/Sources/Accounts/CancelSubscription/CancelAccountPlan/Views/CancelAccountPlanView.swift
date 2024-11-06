@@ -109,6 +109,7 @@ struct CancelAccountPlanView: View {
                 .bold()
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .textCase(nil)
+                .multilineTextAlignment(.center)
                 .padding(.top, 10)
             
             Text(Strings.Localizable.Cancellation.Subscription.Header.message(viewModel.currentPlanStorageUsed))
