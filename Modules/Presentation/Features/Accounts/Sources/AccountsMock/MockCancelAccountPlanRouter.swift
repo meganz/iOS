@@ -1,17 +1,17 @@
 import Accounts
 import SwiftUI
 
-public class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
+public final class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
     public var dismissCancellationFlow_calledTimes = 0
     public var showAppleManageSubscriptions_calledTimes = 0
     public var showSuccessAlert_calledTimes = 0
     public var showFailureAlert_calledTimes = 0
     public var lastShownSuccessAlertExpirationDate: Date?
     public var lastShownFailureAlertError: Error?
+
+    private let onSuccess: @Sendable (_ expirationDate: Date) -> Void
     
-    private let onSuccess: (_ expirationDate: Date) -> Void
-    
-    public init(onSuccess: @escaping (_ expirationDate: Date) -> Void = {_ in }) {
+    public nonisolated init(onSuccess: @Sendable @escaping (_ expirationDate: Date) -> Void = {_ in }) {
         self.onSuccess = onSuccess
     }
 

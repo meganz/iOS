@@ -4222,6 +4222,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="We’re sorry to see you leave! Can you tell us why you’re cancelling your subscription?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Your subscription will be cancelled immediately and you will be moved to a free MEGA account when your current plan expires. Note: Cancelling your subscription won’t delete your account.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="I needed this plan temporarily and no longer use it";
 /* Cancel subscription survey reason with id 2 */

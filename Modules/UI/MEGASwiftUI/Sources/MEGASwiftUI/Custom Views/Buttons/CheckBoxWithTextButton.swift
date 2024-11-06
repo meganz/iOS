@@ -2,26 +2,31 @@ import MEGADesignToken
 import SwiftUI
 
 public struct CheckBoxWithTextButton: View {
-    @Binding var isChecked: Bool
-    let text: String
-    let textColor: Color
-    let font: Font
-    let checkIconColor: Color
-    let checkedBackgroundColor: Color
-    let unCheckedBorderColor: Color
-    let checkboxSize: CGFloat
+    @State private var isChecked: Bool
+    private let id: Int
+    private let text: String
+    private let textColor: Color
+    private let font: Font
+    private let checkIconColor: Color
+    private let checkedBackgroundColor: Color
+    private let unCheckedBorderColor: Color
+    private let checkboxSize: CGFloat
+    private let action: (_ isChecked: Bool) -> Void
     
     public init(
-        isChecked: Binding<Bool>,
+        isChecked: Bool,
+        id: Int = 0,
         text: String,
         textColor: Color = TokenColors.Text.primary.swiftUI,
         font: Font = .subheadline.bold(),
         checkIconColor: Color = TokenColors.Icon.inverse.swiftUI,
         checkedBackgroundColor: Color = TokenColors.Button.primary.swiftUI,
         unCheckedBorderColor: Color = TokenColors.Border.strong.swiftUI,
-        checkboxSize: CGFloat = 20
+        checkboxSize: CGFloat = 20,
+        action: @escaping (_ isChecked: Bool) -> Void
     ) {
-        _isChecked = isChecked
+        self.isChecked = isChecked
+        self.id = id
         self.text = text
         self.textColor = textColor
         self.font = font
@@ -29,11 +34,14 @@ public struct CheckBoxWithTextButton: View {
         self.checkedBackgroundColor = checkedBackgroundColor
         self.unCheckedBorderColor = unCheckedBorderColor
         self.checkboxSize = checkboxSize
+        self.action = action
     }
     
     public var body: some View {
         Button {
             isChecked.toggle()
+            
+            action(isChecked)
         } label: {
             HStack(spacing: 12) {
                 checkboxIcon
@@ -44,6 +52,9 @@ public struct CheckBoxWithTextButton: View {
                     .multilineTextAlignment(.leading)
                 
                 Spacer()
+            }
+            .transaction { transaction in
+                transaction.animation = nil
             }
         }
         .contentShape(Rectangle())
@@ -83,7 +94,7 @@ public struct CheckBoxWithTextButton: View {
 
 #Preview {
     Group {
-        CheckBoxWithTextButton(isChecked: .constant(true), text: "Allow this to proceed")
-        CheckBoxWithTextButton(isChecked: .constant(false), text: "Allow this to proceed")
+        CheckBoxWithTextButton(isChecked: true, text: "Allow this to proceed", action: {_ in })
+        CheckBoxWithTextButton(isChecked: false, text: "Allow this to proceed", action: {_ in })
     }
 }
