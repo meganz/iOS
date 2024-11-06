@@ -19,19 +19,19 @@ struct AlbumSearchResultViewModelTests {
             
             let searchText = Binding.constant("album")
             let sut = AlbumSearchResultViewModelTests
-                .makeSUT(albumCellViewModels: albumsCellViewModels,
+                .makeSUT(albums: albumsCellViewModels,
                          searchText: searchText)
             
-            #expect(sut.cellViewModels == albumsCellViewModels)
+            #expect(sut.albums == albumsCellViewModels)
         }
     }
     
     @MainActor
     private static func makeSUT(
-        albumCellViewModels: [AlbumCellViewModel] = [],
+        albums: [AlbumCellViewModel] = [],
         searchText: Binding<String> = .constant("")
     ) -> AlbumSearchResultViewModel {
-        .init(cellViewModels: albumCellViewModels,
+        .init(albums: albums,
               searchText: searchText)
     }
 }
@@ -39,7 +39,7 @@ struct AlbumSearchResultViewModelTests {
 private extension AlbumCellViewModel {
     convenience init(album: AlbumEntity) {
         self.init(
-            thumbnailLoader: MockThumbnailLoader(initialImage: ImageContainer(image: Image("folder"), type: .thumbnail)),
+            thumbnailLoader: MockThumbnailLoader(initialImage: ImageContainer(image: Image(systemName: "square"), type: .thumbnail)),
             monitorUserAlbumPhotosUseCase: MockMonitorUserAlbumPhotosUseCase(),
             nodeUseCase: MockNodeDataUseCase(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),

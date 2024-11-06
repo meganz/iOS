@@ -9,7 +9,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         case loading
         case empty
         case recentlySearched(items: [SearchHistoryItem])
-        case searchResults(albums: [AlbumCellViewModel], photos: [NodeEntity])
+        case searchResults(albums: [AlbumCellViewModel], photos: [PhotoSearchResultItemViewModel])
     }
     @Published private(set) var viewState: ViewState = .loading
     @Published var searchText = ""

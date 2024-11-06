@@ -3,19 +3,23 @@ import MEGADomain
 import SwiftUI
 
 struct VisualMediaSearchResultFoundView: View {
-    let albumCellViewModels: [AlbumCellViewModel]
-    let photos: [NodeEntity]
+    let albums: [AlbumCellViewModel]
+    let photos: [PhotoSearchResultItemViewModel]
     @Binding var searchText: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if albumCellViewModels.isNotEmpty {
+            if albums.isNotEmpty {
                 AlbumSearchResultView(
                     viewModel: .init(
-                        cellViewModels: albumCellViewModels,
+                        albums: albums,
                         searchText: $searchText)
                 )
             }
+            
+            PhotoSearchResultView(photos: photos)
+                .opacity(photos.isNotEmpty ? 1: 0)
+            
         }
         .frame(maxHeight: .infinity, alignment: .top)
     }
@@ -23,7 +27,7 @@ struct VisualMediaSearchResultFoundView: View {
 
 #Preview {
     VisualMediaSearchResultFoundView(
-        albumCellViewModels: [],
+        albums: [],
         photos: [],
         searchText: .constant(""))
 }

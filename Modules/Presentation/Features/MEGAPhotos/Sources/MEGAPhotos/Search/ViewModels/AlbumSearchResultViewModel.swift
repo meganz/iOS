@@ -4,13 +4,13 @@ import SwiftUI
 
 @MainActor
 final class AlbumSearchResultViewModel: ObservableObject {
-    let cellViewModels: [AlbumCellViewModel]
+    let albums: [AlbumCellViewModel]
     @Binding var searchText: String
     @Published var selectedAlbum: AlbumEntity?
     
-    init(cellViewModels: [AlbumCellViewModel],
+    init(albums: [AlbumCellViewModel],
          searchText: Binding<String>) {
-        self.cellViewModels = cellViewModels
+        self.albums = albums
         _searchText = searchText
     }
 }

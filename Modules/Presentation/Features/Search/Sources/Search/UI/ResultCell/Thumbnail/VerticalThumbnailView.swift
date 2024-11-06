@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGASwiftUI
 import SwiftUI
 
 // ┌────────────────────────────────────────────────────┐

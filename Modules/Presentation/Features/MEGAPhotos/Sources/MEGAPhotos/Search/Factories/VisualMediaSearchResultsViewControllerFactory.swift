@@ -1,4 +1,3 @@
-import MEGADomain
 import UIKit
 
 public struct VisualMediaSearchResultsViewControllerFactory {
