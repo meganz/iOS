@@ -40,4 +40,10 @@ public final class RecentlyOpenedNodesRepository: RecentlyOpenedNodesRepositoryP
             lastOpenedDate: recentlyOpenedNode.lastOpenedDate ?? Date.now
         )
     }
+    
+    // MARK: - ClearNode
+    
+    public func clearNode(for fingerprint: String) async throws(RecentlyOpenedNodesErrorEntity) {
+        try await store.clearRecentlyOpenedNode(for: fingerprint)
+    }
 }

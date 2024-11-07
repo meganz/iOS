@@ -7,6 +7,7 @@ public final class MockRecentlyOpenedNodesUseCase: RecentlyOpenedNodesUseCasePro
         case loadNodes
         case clearNodes
         case saveNode
+        case clearNode
     }
     
     @Atomic public var invocations = [Invocation]()
@@ -31,5 +32,9 @@ public final class MockRecentlyOpenedNodesUseCase: RecentlyOpenedNodesUseCasePro
     public func saveNode(recentlyOpenedNode: RecentlyOpenedNodeEntity) throws {
         $invocations.mutate { $0.append(.saveNode) }
         throw GenericErrorEntity()
+    }
+    
+    public func clearNode(for fingerprint: String) async throws {
+        $invocations.mutate { $0.append(.clearNode) }
     }
 }

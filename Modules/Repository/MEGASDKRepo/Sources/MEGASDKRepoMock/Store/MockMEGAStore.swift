@@ -9,6 +9,7 @@ public final class MockMEGAStore: @unchecked Sendable {
         case insertOrUpdateRecentlyOpenedNode
         case fetchRecentlyOpenedNodes
         case clearRecentlyOpenedNodes
+        case clearRecentlyOpenedNode(fingerprint: String)
     }
     
     @Atomic public var invocations = [Invocation]()
@@ -31,5 +32,9 @@ extension MockMEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
     
     public func clearRecentlyOpenedNodes() async throws {
         $invocations.mutate { $0.append(.clearRecentlyOpenedNodes) }
+    }
+    
+    public func clearRecentlyOpenedNode(for fingerprint: String) async throws(RecentlyOpenedNodesErrorEntity) {
+        $invocations.mutate { $0.append(.clearRecentlyOpenedNode(fingerprint: fingerprint)) }
     }
 }

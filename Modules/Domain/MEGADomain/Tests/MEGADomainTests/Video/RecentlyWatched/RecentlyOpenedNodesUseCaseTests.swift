@@ -116,6 +116,27 @@ final class RecentlyOpenedNodesUseCaseTests: XCTestCase {
         try await sut.clearNodes()
     }
     
+    // MARK: - clearNode
+    
+    func testClearNode_notFoundFingerprint_deliversError() async {
+        let error = RecentlyOpenedNodesErrorEntity.couldNotFindNodeForFingerprint
+        let (sut, _) = makeSUT(
+            recentlyOpenedNodesRepository: MockRecentlyOpenedNodesRepository(clearNodeResult: .failure(error))
+        )
+        
+        await XCTAsyncAssertThrowsError(try await sut.clearNode(for: "any fingerprint for error")) { thrownError in
+            XCTAssertEqual(thrownError as? RecentlyOpenedNodesErrorEntity, error)
+        }
+    }
+    
+    func testClearNode_success_doesNotThrowError() async throws {
+        let (sut, _) = makeSUT(
+            recentlyOpenedNodesRepository: MockRecentlyOpenedNodesRepository(clearNodeResult: .success(()))
+        )
+        
+        try await sut.clearNode(for: "any fingerprint")
+    }
+    
     // MARK: - saveNode
     
     func testSaveNode_whenCalled_performSaveNode() {
