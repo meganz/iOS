@@ -338,7 +338,7 @@
     MEGAChatRoom *chatRoom         = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
     
     if (chatRoom != nil) {
-        [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:self.navigationController publicLink:nil showShareLinkViewAfterOpenChat:NO] start];
+        [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:self.navigationController publicLink:nil showShareLinkViewAfterOpenChat:NO chatContentRoutingStyle:ChatContentRoutingStylePush] start];
     }
 }
 

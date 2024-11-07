@@ -146,7 +146,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             
             MEGALinkManager.createChatAndShow(chatId, publicChatLink: chatLink)
             
-            addNotficiation(
+            addNotification(
                 notificationText: notificationText,
                 chatId: chatId,
                 identifier: identifier
@@ -154,7 +154,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         }
     }
     
-    static func addNotficiation(
+    static func addNotification(
         notificationText: String,
         chatId: UInt64,
         identifier: String
@@ -271,6 +271,86 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
     @objc class func navigateToCameraUploadsSettings() {
         guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
         mainTabBar.showCameraUploadsSettings()
+    }
+    
+    @objc class func openChat(
+        chatRoom: MEGAChatRoom,
+        request: MEGAChatRequest,
+        chatLinkUrl: URL
+    ) {
+    
+        guard !chatRoom.isPreview && !chatRoom.isActive else {
+            self.createChatAndShow(request.chatHandle, publicChatLink: chatLinkUrl)
+            return
+        }
+        
+        let chatSDK = MEGAChatSdk.shared
+        
+        chatSDK.autorejoinPublicChat(request.chatHandle,
+                                 publicHandle: request.userHandle,
+                                 delegate: ChatRequestDelegate(completion: { rejoinRequest, error in
+            guard error == nil else {
+                if let error {
+                    SVProgressHUD.setDefaultMaskType(.none)
+                    SVProgressHUD.showError(withStatus: "\(rejoinRequest?.requestString ?? "") \(NSLocalizedString(error.name ?? "", comment: ""))")
+                }
+                return
+            }
+            if let rejoinRequest {
+                if let base64Handle = MEGASdk.base64Handle(forUserHandle: rejoinRequest.chatHandle) {
+                    MEGALinkManager.joiningOrLeavingChatBase64Handles.remove(base64Handle)
+                }
+                MEGALinkManager.createChatAndShow(rejoinRequest.chatHandle, publicChatLink: chatLinkUrl)
+            }
+        }))
+                                 
+        if let base64Handle = MEGASdk.base64Handle(forUserHandle: request.chatHandle) {
+            MEGALinkManager.joiningOrLeavingChatBase64Handles.add(base64Handle)
+        }
+    }
+    
+    @objc class func createMeetingAndShow(chatId: UInt64, userHandle: UInt64, publicChatLink: URL) {
+        guard let rootViewController = UIApplication.mnz_keyWindow()?.rootViewController else {
+            return
+        }
+        
+        guard MEGAChatSdk.shared.chatRoom(forChatId: chatId) != nil else {
+            return
+        }
+        
+        guard !MEGAChatSdk.shared.mnz_existsActiveCall else {
+            MeetingAlreadyExistsAlert.show(presenter: rootViewController)
+            return
+        }
+        
+        let type: MeetingConfigurationType = self.isLoggedIn() ? .join : .guestJoin
+        guard let mainTabBar = UIApplication.mainTabBarVisibleController() as? MainTabBarController else {
+            let router = MeetingCreatingViewRouter(
+                viewControllerToPresent: UIApplication.mnz_visibleViewController(),
+                type: type,
+                link: publicChatLink.absoluteString,
+                userhandle: userHandle
+            )
+            router.start()
+            return
+        }
+        
+        let router = MeetingCreatingViewRouter(
+            viewControllerToPresent: mainTabBar,
+            type: type,
+            link: publicChatLink.absoluteString,
+            userhandle: userHandle
+        )
+        mainTabBar.selectedIndex = TabType.chat.rawValue
+        
+        if mainTabBar.presentedViewController != nil {
+            mainTabBar.dismiss(animated: false) {
+                router.start()
+            }
+        } else {
+            router.start()
+        }
+        
     }
 }
 

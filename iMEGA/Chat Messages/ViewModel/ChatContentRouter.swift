@@ -6,7 +6,8 @@ import MEGARepo
 import MEGASDKRepo
 import MEGAUI
 
-enum ChatContentRoutingStyle {
+@objc
+enum ChatContentRoutingStyle: Int {
     case push
     case present
 }
@@ -41,14 +42,15 @@ enum ChatContentRoutingStyle {
         chatRoom: MEGAChatRoom,
         presenter: UIViewController?,
         publicLink: String?,
-        showShareLinkViewAfterOpenChat: Bool
+        showShareLinkViewAfterOpenChat: Bool,
+        chatContentRoutingStyle: ChatContentRoutingStyle
     ) {
         self.chatRoom = chatRoom.toChatRoomEntity()
         self.presenter = presenter
         self.publicLink = publicLink
         self.showShareLinkViewAfterOpenChat = showShareLinkViewAfterOpenChat
-        self.chatContentRoutingStyle = .push
         self.tracker = DIContainer.tracker
+        self.chatContentRoutingStyle = chatContentRoutingStyle
     }
     
     @objc static func chatViewController(
@@ -98,7 +100,9 @@ enum ChatContentRoutingStyle {
             guard let navigationPresenter = presenter as? UINavigationController else { return }
             navigationPresenter.pushViewController(chatViewController, animated: true)
         case .present:
-            presenter?.present(MEGANavigationController(rootViewController: chatViewController), animated: true)
+            let nc = MEGANavigationController(rootViewController: chatViewController)
+            nc.modalPresentationStyle = .fullScreen
+            presenter?.present(nc, animated: true)
         }
     }
     
