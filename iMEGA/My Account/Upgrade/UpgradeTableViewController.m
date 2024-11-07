@@ -364,9 +364,6 @@
     NSRange freeStorageValueRange = [freeStorageString rangeOfString:freeStorageValueString];
     [freeStorageMutableAttributedString replaceCharactersInRange:freeStorageValueRange withAttributedString:storageMutableAttributedString];
     
-    NSAttributedString *superscriptOneAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@" ¹", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_red]}];
-    [freeStorageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
-    
     return freeStorageMutableAttributedString;
 }
 
@@ -475,13 +472,6 @@
     ProductTableViewCell *cell;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
-        NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:LocalizedString(@"¹ ", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_red]}];
-        
-        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_secondaryTextColor]}];
-        [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
-        
-        cell.subjectToYourParticipationLabel.attributedText = superscriptOneAttributedString;
-        [cell layoutIfNeeded];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"productCell" forIndexPath:indexPath];
     }
