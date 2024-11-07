@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -268,13 +268,14 @@
                                                     <constraints>
                                                         <constraint firstItem="64P-Jn-H5s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MTJ-eX-4ny" secondAttribute="trailing" constant="14" id="Ab5-9A-n8p"/>
                                                         <constraint firstAttribute="bottom" secondItem="64P-Jn-H5s" secondAttribute="bottom" constant="22" id="LEQ-Vm-Kae"/>
-                                                        <constraint firstItem="kQy-tK-wrG" firstAttribute="leading" secondItem="bdM-YA-sg4" secondAttribute="trailing" constant="7" id="MU6-f5-3mb"/>
+                                                        <constraint firstItem="kQy-tK-wrG" firstAttribute="leading" secondItem="bdM-YA-sg4" secondAttribute="trailing" priority="900" constant="7" id="MU6-f5-3mb"/>
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="leading" secondItem="DgO-Mi-JsC" secondAttribute="leading" constant="14" id="N7e-4C-acT"/>
+                                                        <constraint firstItem="MTJ-eX-4ny" firstAttribute="leading" secondItem="bdM-YA-sg4" secondAttribute="trailing" priority="800" constant="30" id="OGn-SH-Jbp"/>
                                                         <constraint firstItem="kQy-tK-wrG" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="Pho-fh-ath"/>
                                                         <constraint firstAttribute="trailing" secondItem="64P-Jn-H5s" secondAttribute="trailing" constant="7" id="TV4-Ij-lu3"/>
                                                         <constraint firstItem="64P-Jn-H5s" firstAttribute="top" secondItem="DgO-Mi-JsC" secondAttribute="top" constant="22" id="TWh-vC-9Ql"/>
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="centerY" secondItem="bdM-YA-sg4" secondAttribute="centerY" id="UVv-af-YMi"/>
-                                                        <constraint firstItem="MTJ-eX-4ny" firstAttribute="leading" secondItem="kQy-tK-wrG" secondAttribute="trailing" constant="7" id="Vtu-ek-VHM"/>
+                                                        <constraint firstItem="MTJ-eX-4ny" firstAttribute="leading" secondItem="kQy-tK-wrG" secondAttribute="trailing" priority="900" constant="7" id="Vtu-ek-VHM"/>
                                                         <constraint firstItem="MTJ-eX-4ny" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="ad4-el-Oqh"/>
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="sMd-xb-dn3"/>
                                                         <constraint firstItem="bdM-YA-sg4" firstAttribute="leading" secondItem="UAp-tU-btg" secondAttribute="trailing" constant="18" id="uYD-1R-Kv4"/>
@@ -288,6 +289,7 @@
                                                     <outlet property="iconImageView" destination="UAp-tU-btg" id="BTZ-Js-dQg"/>
                                                     <outlet property="pendingLabel" destination="k9L-sP-xFg" id="tHv-eM-YEf"/>
                                                     <outlet property="pendingView" destination="kQy-tK-wrG" id="xsF-ch-e0P"/>
+                                                    <outlet property="pendingViewSpacingConstraint" destination="OGn-SH-Jbp" id="gMA-Mx-vzE"/>
                                                     <outlet property="promoLabel" destination="QkF-fC-hzO" id="iFq-Mq-y9E"/>
                                                     <outlet property="promoView" destination="MTJ-eX-4ny" id="85i-zE-vbf"/>
                                                     <outlet property="sectionLabel" destination="bdM-YA-sg4" id="wDM-4f-r4A"/>
@@ -416,15 +418,6 @@
             <point key="canvasLocation" x="488.40579710144931" y="363.61607142857139"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="QkF-fC-hzO">
-            <size key="intrinsicContentSize" width="31.5" height="12"/>
-        </designable>
-        <designable name="YqG-fz-6ti"/>
-        <designable name="k9L-sP-xFg">
-            <size key="intrinsicContentSize" width="8" height="12"/>
-        </designable>
-    </designables>
     <resources>
         <image name="addPhoneNumberSmall" width="60" height="60"/>
         <image name="myAccountIcon" width="31" height="28"/>
