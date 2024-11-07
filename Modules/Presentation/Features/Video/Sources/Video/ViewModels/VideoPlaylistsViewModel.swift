@@ -5,6 +5,12 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASwiftUI
 
+enum ShareLinkActionMenuMode: Equatable {
+    case hidden
+    case shareLink
+    case manageAndRemoveLink
+}
+
 final class VideoPlaylistsViewModel: ObservableObject {
     
     enum ViewState: Equatable {
@@ -53,7 +59,7 @@ final class VideoPlaylistsViewModel: ObservableObject {
         videoPlaylists.map(\.name)
     }
     
-    @Published var shouldShowShareLinkContextActionForSelectedVideoPlaylist = false
+    @Published var shareLinkContextActionForSelectedVideoPlaylistMode: ShareLinkActionMenuMode = .hidden
     
     private(set) var alertViewModel: TextFieldAlertViewModel
     private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
@@ -257,20 +263,29 @@ final class VideoPlaylistsViewModel: ObservableObject {
         }
         self.selectedVideoPlaylistEntity = selectedVideoPlaylistEntity
         
-        shouldShowShareLinkContextActionForSelectedVideoPlaylist = featureFlagProvider.isFeatureFlagEnabled(for: .videoPlaylistSharing)
-        && !selectedVideoPlaylistEntity.isLinkShared
+        shareLinkContextActionForSelectedVideoPlaylistMode = shareLinkActionMenuMode(for: selectedVideoPlaylistEntity)
         
         isSheetPresented = true
+    }
+    
+    private func shareLinkActionMenuMode(for videoPlaylistEntity: VideoPlaylistEntity) -> ShareLinkActionMenuMode {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .videoPlaylistSharing) else {
+            return .hidden
+        }
+        return videoPlaylistEntity.isLinkShared ? .manageAndRemoveLink : .shareLink
     }
     
     func didSelectActionSheetMenuAction(_ contextAction: ContextAction) {
         switch contextAction.type {
         case .rename:
             shouldShowRenamePlaylistAlert = true
-        case .shareLink:
+        case .shareLink, .manageLink:
             guard selectedVideoPlaylistEntity != nil else { return }
             selectedVideoPlaylistEntityForShareLink = selectedVideoPlaylistEntity
             selectedVideoPlaylistEntity = nil
+        case .removeLink:
+            // Todo: CC-7725
+            break
         case .deletePlaylist:
             shouldShowDeletePlaylistAlert = true
         }
