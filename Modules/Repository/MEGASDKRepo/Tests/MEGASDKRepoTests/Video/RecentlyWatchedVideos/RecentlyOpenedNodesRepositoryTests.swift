@@ -69,6 +69,17 @@ final class RecentlyOpenedNodesRepositoryTests: XCTestCase {
         }
     }
     
+    // MARK: - clearNode
+    
+    func testClearNode_whenCalled_invokeStore() async throws {
+        let fingerprint = "any-fingerprint"
+        let (sut, store) = makeSUT()
+        
+        _ = try await sut.clearNode(for: fingerprint)
+        
+        XCTAssertEqual(store.invocations, [ .clearRecentlyOpenedNode(fingerprint: fingerprint) ])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

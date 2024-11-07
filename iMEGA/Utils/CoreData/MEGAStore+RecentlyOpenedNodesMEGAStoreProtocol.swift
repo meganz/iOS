@@ -5,6 +5,8 @@ import MEGASDKRepo
 
 extension MEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
     
+    // MARK: - fetchRecentlyOpenedNodes
+    
     public func fetchRecentlyOpenedNodes() async throws -> [RecentlyOpenedNodeRepositoryDTO] {
         guard let context = stack.newBackgroundContext() else {
             throw RecentlyOpenedNodesErrorEntity.couldNotCreateNewBackgroundContext
@@ -16,6 +18,8 @@ extension MEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
             return nodes.map { $0.toRecentlyOpenedNodeRepositoryDTO() }
         }
     }
+    
+    // MARK: - insertOrUpdateRecentlyOpenedNode
     
     public func insertOrUpdateRecentlyOpenedNode(fingerprint: String, destination: Int, timescale: Int?, lastOpenedDate: Date) {
         guard let context = stack.viewContext else { return }
@@ -81,6 +85,8 @@ extension MEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
         MEGALogError("Save context - update recently opened node with fingerprint: \(String(describing: moRecentlyOpenedNode.fingerprint)), last opened date: \(String(describing: moRecentlyOpenedNode.lastOpenedDate)), destination: \(String(describing: moMediaDestination?.destination)), timescale: \(String(describing: moMediaDestination?.timescale))")
     }
     
+    // MARK: - clearRecentlyOpenedNodes
+    
     public func clearRecentlyOpenedNodes() async throws {
         guard let context = stack.newBackgroundContext() else {
             throw RecentlyOpenedNodesErrorEntity.couldNotCreateNewBackgroundContext
@@ -90,6 +96,35 @@ extension MEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
             fetchRequest.includesPropertyValues = false
             let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             try context.execute(batchDeleteRequest)
+            try context.save()
+        }
+    }
+    
+    // MARK: - clearRecentlyOpenedNode
+    
+    public func clearRecentlyOpenedNode(for fingerprint: String) async throws(RecentlyOpenedNodesErrorEntity) {
+        guard let context = stack.newBackgroundContext() else {
+            throw RecentlyOpenedNodesErrorEntity.couldNotCreateNewBackgroundContext
+        }
+        do {
+            try await performClearRecentlyOpenedNode(for: fingerprint, using: context)
+        } catch {
+            throw RecentlyOpenedNodesErrorEntity.couldNotClearRecentlyOpenedNode
+        }
+    }
+    
+    private func performClearRecentlyOpenedNode(for fingerprint: String, using context: NSManagedObjectContext) async throws {
+        try await context.perform {
+            let fetchRequest: NSFetchRequest<MORecentlyOpenedNode> = MORecentlyOpenedNode.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "fingerprint == %@", fingerprint)
+            fetchRequest.includesPropertyValues = false
+            
+            guard let nodeToDelete = try context.fetch(fetchRequest).first else {
+                MEGALogError("\(type(of: MEGAStore.self)) No recently opened node found with fingerprint: \(fingerprint)")
+                throw RecentlyOpenedNodesErrorEntity.couldNotFindNodeForFingerprint
+            }
+            
+            context.delete(nodeToDelete)
             try context.save()
         }
     }

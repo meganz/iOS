@@ -2,6 +2,7 @@ public protocol RecentlyOpenedNodesUseCaseProtocol: Sendable {
     func loadNodes() async throws -> [RecentlyOpenedNodeEntity]
     func clearNodes() async throws
     func saveNode(recentlyOpenedNode: RecentlyOpenedNodeEntity) throws
+    func clearNode(for fingerprint: String) async throws
 }
 
 public struct RecentlyOpenedNodesUseCase: RecentlyOpenedNodesUseCaseProtocol {
@@ -22,5 +23,9 @@ public struct RecentlyOpenedNodesUseCase: RecentlyOpenedNodesUseCaseProtocol {
     
     public func saveNode(recentlyOpenedNode: RecentlyOpenedNodeEntity) throws {
         try recentlyOpenedNodeRepository.saveNode(recentlyOpenedNode: recentlyOpenedNode)
+    }
+    
+    public func clearNode(for fingerprint: String) async throws {
+        try await recentlyOpenedNodeRepository.clearNode(for: fingerprint)
     }
 }
