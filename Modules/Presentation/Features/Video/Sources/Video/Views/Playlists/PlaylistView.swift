@@ -124,34 +124,50 @@ struct PlaylistView: View {
                 type: .rename,
                 icon: "rename",
                 title: Strings.Localizable.rename
-            ),
-            shareLinkActionButton(),
+            )
+        ]
+        +
+        shareLinkActionButton()
+        +
+        [
             ContextAction(
                 type: .deletePlaylist,
                 icon: "rubbishBin",
                 title: Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Menu.deletePlaylist
             )
-        ].compactMap { $0 }
+        ]
         
-        return items
-            .map { contextAction in
-                ActionSheetButton(
-                    icon: contextAction.icon,
-                    title: contextAction.title,
-                    action: { viewModel.didSelectActionSheetMenuAction(contextAction) }
-                )
-            }
+        return items.map { contextAction in
+            ActionSheetButton(
+                icon: contextAction.icon,
+                title: contextAction.title,
+                action: { viewModel.didSelectActionSheetMenuAction(contextAction) }
+            )
+        }
     }
     
-    private func shareLinkActionButton() -> ContextAction? {
-        if viewModel.shouldShowShareLinkContextActionForSelectedVideoPlaylist {
+    private func shareLinkActionButton() -> [ContextAction] {
+        switch viewModel.shareLinkContextActionForSelectedVideoPlaylistMode {
+        case .hidden: []
+        case .shareLink: [
             ContextAction(
                 type: .shareLink,
                 icon: "hudLink",
                 title: Strings.Localizable.Meetings.Panel.shareLink
             )
-        } else {
-            nil
+        ]
+        case .manageAndRemoveLink: [
+            ContextAction(
+                type: .manageLink,
+                icon: "hudLink",
+                title: Strings.Localizable.General.MenuAction.ManageLink.title(1)
+            ),
+            ContextAction(
+                type: .removeLink,
+                icon: "removeLink",
+                title: Strings.Localizable.General.MenuAction.RemoveLink.title(1)
+            )
+        ]
         }
     }
     

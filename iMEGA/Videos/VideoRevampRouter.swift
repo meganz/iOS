@@ -252,7 +252,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             )
         )
         return EnforceCopyrightWarningView(viewModel: viewModel) {
-            ShareEmptyView()
+            GetVideoPlaylistsLinksViewWrapper(videoPlaylist: videoPlaylist)
                 .ignoresSafeArea(edges: .bottom)
                 .navigationBarHidden(true)
         }

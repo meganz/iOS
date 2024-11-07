@@ -532,6 +532,7 @@ class GetLinkViewController: UIViewController {
         }
     }
     
+    // CC-8410 - When copy share link for video playlist should use SnackBar instead of HUD
     @IBAction func copyLinkBarButtonTapped(_ sender: UIBarButtonItem) {
         if let getLinkViewModel {
             getLinkViewModel.dispatch(.copyLink)
@@ -914,6 +915,8 @@ extension GetLinkViewController: UITableViewDataSource {
                 return switchOptionCell(forIndexPath: indexPath, cellViewModel: cellViewModel)
             case let cellViewModel as GetLinkStringCellViewModel:
                 return linkStringCell(forIndexPath: indexPath, cellViewModel: cellViewModel)
+            case _ as GetLinkAccessInfoCellViewModel:
+                return linkAccessInfoCell(forIndexPath: indexPath)
             default:
                 return UITableViewCell()
             }

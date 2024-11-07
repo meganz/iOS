@@ -6,6 +6,8 @@ struct ContextAction {
     enum Category {
         case rename
         case shareLink
+        case manageLink
+        case removeLink
         case deletePlaylist
     }
 }

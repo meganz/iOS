@@ -6,6 +6,7 @@ public enum GetLinkCellType: Sendable {
     case decryptKeySeparate
     case link
     case key
+    case linkAccess
 }
 
 protocol GetLinkCellViewModelType {

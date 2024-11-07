@@ -343,11 +343,11 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
-        XCTAssertFalse(sut.shouldShowShareLinkContextActionForSelectedVideoPlaylist)
+        XCTAssertEqual(sut.shareLinkContextActionForSelectedVideoPlaylistMode, .hidden)
     }
     
     @MainActor
-    func testDidSelectMoreOptionForItem_whenVideoPlaylistIsNotExported_shouldReturnTrue() async {
+    func testDidSelectMoreOptionForItem_whenVideoPlaylistIsNotExported_shouldShowShareLink() async {
         let creationTime = Date()
         let modificationTime = Date()
         let initialUserVideoPlaylists = [
@@ -368,11 +368,11 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
-        XCTAssertTrue(sut.shouldShowShareLinkContextActionForSelectedVideoPlaylist)
+        XCTAssertEqual(sut.shareLinkContextActionForSelectedVideoPlaylistMode, .shareLink)
     }
     
     @MainActor
-    func testDidSelectMoreOptionForItem_whenVideoPlaylistIsExported_shouldReturnFalse() async {
+    func testDidSelectMoreOptionForItem_whenVideoPlaylistIsExported_shouldShowManageAndRemoveLink() async {
         let creationTime = Date()
         let modificationTime = Date()
         let initialUserVideoPlaylists = [
@@ -393,7 +393,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         sut.didSelectMoreOptionForItem(selectedVideoPlaylist)
         
-        XCTAssertFalse(sut.shouldShowShareLinkContextActionForSelectedVideoPlaylist)
+        XCTAssertEqual(sut.shareLinkContextActionForSelectedVideoPlaylistMode, .manageAndRemoveLink)
     }
     
     // MARK: - didSelectActionSheetMenuAction
@@ -428,6 +428,18 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     func testDidSelectActionSheetMenuAction_showShareLink_ShowShareLinkWhenHasSelectedVideoPlaylist() {
         let deletePlaylistPlaylistContextAction = ContextAction(type: .shareLink, icon: "any", title: "any")
+        let (sut, _, _, _) = makeSUT()
+        let videoPlaylistToBeSelected = videoPlaylist(id: 1, creationTime: Date(), modificationTime: Date(), type: .user)
+        sut.didSelectMoreOptionForItem(videoPlaylistToBeSelected)
+        
+        sut.didSelectActionSheetMenuAction(deletePlaylistPlaylistContextAction)
+        
+        XCTAssertNotNil(sut.selectedVideoPlaylistEntityForShareLink)
+        XCTAssertNil(sut.selectedVideoPlaylistEntity)
+    }
+    
+    func testDidSelectActionSheetMenuAction_manageLink_ShowShareLinkWhenHasSelectedVideoPlaylist() {
+        let deletePlaylistPlaylistContextAction = ContextAction(type: .manageLink, icon: "any", title: "any")
         let (sut, _, _, _) = makeSUT()
         let videoPlaylistToBeSelected = videoPlaylist(id: 1, creationTime: Date(), modificationTime: Date(), type: .user)
         sut.didSelectMoreOptionForItem(videoPlaylistToBeSelected)

@@ -192,6 +192,7 @@
 		246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */; };
 		246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */; };
 		246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */; };
+		247456212CD4746A00183DBE /* GetLinkAccessInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247456202CD4746900183DBE /* GetLinkAccessInfoCellViewModel.swift */; };
 		247A64652C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247A64642C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift */; };
 		247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */; };
 		24828D8F2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24828D8E2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift */; };
@@ -200,6 +201,8 @@
 		2486F1AE2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2486F1AD2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift */; };
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
 		248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */; };
+		249351BF2CD36DE300A8F653 /* ShareVideoPlaylistLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249351BE2CD36DE300A8F653 /* ShareVideoPlaylistLinkInitialSections.swift */; };
+		249351C62CD36EE500A8F653 /* GetVideoPlaylistsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249351C52CD36EE500A8F653 /* GetVideoPlaylistsLinksViewWrapper.swift */; };
 		249B71DA2ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B71D92ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift */; };
 		24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A619DE2A52735600EBB863 /* QASettingsViewModelTests.swift */; };
 		24A6ADD62A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADD52A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift */; };
@@ -2881,6 +2884,7 @@
 		246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdvancedTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapterTests.swift; sourceTree = "<group>"; };
 		246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapter.swift; sourceTree = "<group>"; };
+		247456202CD4746900183DBE /* GetLinkAccessInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAccessInfoCellViewModel.swift; sourceTree = "<group>"; };
 		247A64642C72EC3A00B088B8 /* MORecentlyOpenedNode+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MORecentlyOpenedNode+Mapper.swift"; sourceTree = "<group>"; };
 		247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouterTests.swift; sourceTree = "<group>"; };
 		24828D8E2C71D28A00AADF18 /* MOMediaDestination+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOMediaDestination+Mapper.swift"; sourceTree = "<group>"; };
@@ -2889,6 +2893,8 @@
 		2486F1AD2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampTabContainerViewModel.swift; sourceTree = "<group>"; };
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
 		248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerTests.swift; sourceTree = "<group>"; };
+		249351BE2CD36DE300A8F653 /* ShareVideoPlaylistLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVideoPlaylistLinkInitialSections.swift; sourceTree = "<group>"; };
+		249351C52CD36EE500A8F653 /* GetVideoPlaylistsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVideoPlaylistsLinksViewWrapper.swift; sourceTree = "<group>"; };
 		249B71D92ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVideoPlayerItemMetadataCommandTests.swift; sourceTree = "<group>"; };
 		249BF9D12B0DBA6F00419CD9 /* Video */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Video; sourceTree = "<group>"; };
 		24A619DE2A52735600EBB863 /* QASettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsViewModelTests.swift; sourceTree = "<group>"; };
@@ -6199,6 +6205,15 @@
 			path = "Shared Controls";
 			sourceTree = "<group>";
 		};
+		249351C22CD36E0F00A8F653 /* VideoPlaylists */ = {
+			isa = PBXGroup;
+			children = (
+				249351C52CD36EE500A8F653 /* GetVideoPlaylistsLinksViewWrapper.swift */,
+				249351BE2CD36DE300A8F653 /* ShareVideoPlaylistLinkInitialSections.swift */,
+			);
+			path = VideoPlaylists;
+			sourceTree = "<group>";
+		};
 		24B101802C6B38CF006193CF /* RecentlyWatchedVideos */ = {
 			isa = PBXGroup;
 			children = (
@@ -9305,6 +9320,7 @@
 			isa = PBXGroup;
 			children = (
 				A86F05722567E65500437985 /* Cells */,
+				249351C22CD36E0F00A8F653 /* VideoPlaylists */,
 				837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */,
 				0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */,
 				0E3E07A02A1EA5D200A2A71B /* GetCollectionLinkViewModel.swift */,
@@ -10653,6 +10669,7 @@
 		A86F05722567E65500437985 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				247456202CD4746900183DBE /* GetLinkAccessInfoCellViewModel.swift */,
 				9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */,
 				0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */,
 				0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */,
@@ -14818,6 +14835,7 @@
 				0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */,
 				0E3E07A12A1EA5D200A2A71B /* GetCollectionLinkViewModel.swift in Sources */,
 				0EDE0DDB2A20587E0006A9F1 /* GetCollectionsLinkViewModel.swift in Sources */,
+				247456212CD4746A00183DBE /* GetLinkAccessInfoCellViewModel.swift in Sources */,
 				9444859C2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift in Sources */,
 				0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */,
 				0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */,
@@ -14836,6 +14854,7 @@
 				837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */,
 				0E3E07AD2A1EBEDF00A2A71B /* GetLinkViewModelType.swift in Sources */,
 				2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */,
+				249351C62CD36EE500A8F653 /* GetVideoPlaylistsLinksViewWrapper.swift in Sources */,
 				A81C658B254B2D3000105BF4 /* GiphyCategoryView.swift in Sources */,
 				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
 				A81C6593254B2EC900105BF4 /* GiphyPreviewViewController.swift in Sources */,
@@ -15619,6 +15638,7 @@
 				94F92EB82CAAD6DE00966A0F /* ShareLinkDialogRouter.swift in Sources */,
 				83B944782C5B95A700F8D6B6 /* ShareLinkOptions.swift in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
+				249351BF2CD36DE300A8F653 /* ShareVideoPlaylistLinkInitialSections.swift in Sources */,
 				8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */,
 				831056332BB432D50094A872 /* SimpleDialogConfigFactory.swift in Sources */,
