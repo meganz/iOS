@@ -52,8 +52,42 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         )
     }
 
-    func testDidTapContinueCancellation_subscriptionPaymentMethodIsAnyWebClientMethodAndWebclientCancellationInAppIsNotEnabled_shouldShowCancellationSurvey() async {
-        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: randomWebClientPaymentMethod()))
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsStripeMethodAndWebclientCancellationInAppIsNotEnabled_shouldShowCancellationSurvey() async {
+        let (stripeSUT, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: .stripe))
+        
+        await assertDidTapContinueCancellation(
+            sut: stripeSUT,
+            publisher: stripeSUT.$showCancellationSteps,
+            expectedVisibility: true
+        )
+        XCTAssertFalse(stripeSUT.showCancellationSurvey)
+        
+        let (stripe2SUT, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: .stripe2))
+        
+        await assertDidTapContinueCancellation(
+            sut: stripe2SUT,
+            publisher: stripe2SUT.$showCancellationSteps,
+            expectedVisibility: true
+        )
+        XCTAssertFalse(stripe2SUT.showCancellationSurvey)
+    }
+    
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsStripeMethodAndWebclientCancellationInAppIsEnabled_shouldShowCancellationSurvey() async {
+        await assertContinueCancellation(
+            for: .stripe,
+            isWebclientSubscriptionCancellationEnabled: true,
+            expectedVisibility: true
+        )
+        
+        await assertContinueCancellation(
+            for: .stripe2,
+            isWebclientSubscriptionCancellationEnabled: true,
+            expectedVisibility: true
+        )
+    }
+    
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsWebclientNotStripeMethodAndWebclientCancellationInAppIsNotEnabled_shouldShowCancellationSteps() async {
+        let (sut, _) = makeSUT(currentSubscription: AccountSubscriptionEntity(paymentMethodId: randomNonStripeWebClientPaymentMethod()))
         
         await assertDidTapContinueCancellation(
             sut: sut,
@@ -63,12 +97,18 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         XCTAssertFalse(sut.showCancellationSurvey)
     }
     
-    func testDidTapContinueCancellation_subscriptionPaymentMethodIsAnyWebClientMethodAndWebclientCancellationInAppIsEnabled_shouldShowCancellationSurvey() async {
-        await assertContinueCancellation(
-            for: randomWebClientPaymentMethod(),
-            isWebclientSubscriptionCancellationEnabled: true,
+    func testDidTapContinueCancellation_subscriptionPaymentMethodIsWebclientNotStripeAndWebclientCancellationInAppIsEnabled_shouldShowCancellationSteps() async {
+        let (sut, _) = makeSUT(
+            currentSubscription: AccountSubscriptionEntity(paymentMethodId: randomNonStripeWebClientPaymentMethod()),
+            featureFlagList: [.webclientSubscribersCancelSubscription: true]
+        )
+        
+        await assertDidTapContinueCancellation(
+            sut: sut,
+            publisher: sut.$showCancellationSteps,
             expectedVisibility: true
         )
+        XCTAssertTrue(sut.showCancellationSteps)
     }
     
     func testSetupFeatureList_freeAccountStorageLimitAboveZero_shouldSetFeatures() async {
@@ -200,11 +240,15 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
         )
     }
     
-    private func randomWebClientPaymentMethod() -> PaymentMethodEntity {
+    private func randomNonStripeWebClientPaymentMethod() -> PaymentMethodEntity {
         PaymentMethodEntity
             .allCases
-            .filter { $0 != .itunes && $0 != .googleWallet }
+            .filter { $0 != .itunes && $0 != .googleWallet && !isStripePaymentMethod($0) }
             .randomElement() ?? .stripe
+    }
+    
+    private func isStripePaymentMethod(_ paymentMethod: PaymentMethodEntity) -> Bool {
+        paymentMethod == .stripe || paymentMethod == .stripe2
     }
     
     private func assertDidTapContinueCancellation(

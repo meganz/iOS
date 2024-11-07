@@ -81,8 +81,9 @@ public final class CancelAccountPlanViewModel: ObservableObject {
             showCancellationSteps = true
         default:
             // Webclient payment methods
-            if featureFlagProvider.isFeatureFlagEnabled(for: .webclientSubscribersCancelSubscription) {
-                // Show cancellation survey if the feature flag is enabled.
+            if featureFlagProvider.isFeatureFlagEnabled(for: .webclientSubscribersCancelSubscription),
+                currentSubscription.paymentMethodId == .stripe || currentSubscription.paymentMethodId == .stripe2 {
+                // Show cancellation survey for stripe payment methods, if the feature flag is enabled.
                 showCancellationSurvey = true
             } else {
                 // Show cancellation steps if not.
