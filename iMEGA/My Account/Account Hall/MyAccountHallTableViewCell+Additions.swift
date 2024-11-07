@@ -89,7 +89,6 @@ extension MyAccountHallTableViewCell {
     }
     
     // MARK: - Private
-    
     private func layoutPendingView() {
         let pendingViewHeight = calculatePendingViewHeight()
         
@@ -105,30 +104,20 @@ extension MyAccountHallTableViewCell {
             return constraint
         }()
         
-        widthConstraint.constant = pendingViewHeight
-        heightConstraint.constant = pendingViewHeight
-        
         NSLayoutConstraint.activate([widthConstraint, heightConstraint])
         
         pendingView.layer.cornerRadius = pendingViewHeight / 2
+        pendingViewSpacingConstraint.isActive = false
+        pendingViewSpacingConstraint.priority = UILayoutPriority(800)
     }
     
     private func setPendingViewSizeToZero() {
-        if let existingWidthConstraint = pendingView.constraint(with: pendingViewWidthConstraint) {
-            pendingView.removeConstraint(existingWidthConstraint)
-        }
+        guard pendingView != nil else { return }
         
-        let widthConstraint = pendingView.widthAnchor.constraint(equalToConstant: 0)
-        widthConstraint.identifier = pendingViewWidthConstraint
-        
-        if let existingHeightConstraint = pendingView.constraint(with: pendingViewHeightConstraint) {
-            pendingView.removeConstraint(existingHeightConstraint)
-        }
-        
-        let heightConstraint = pendingView.heightAnchor.constraint(equalToConstant: 0)
-        heightConstraint.identifier = pendingViewHeightConstraint
-        
-        NSLayoutConstraint.activate([widthConstraint, heightConstraint])
+        pendingViewSpacingConstraint.isActive = true
+        pendingViewSpacingConstraint.priority = UILayoutPriority(1000)
+        pendingViewSpacingConstraint.constant = 10
+        pendingView.isHidden = true
     }
     
     private func calculatePendingViewHeight() -> CGFloat {
