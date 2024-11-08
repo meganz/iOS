@@ -13,19 +13,27 @@ struct MyAccountHallPlanView: View {
     
     var body: some View {
         HStack {
-            Image(uiImage: .plan)
-                .renderingMode(.template)
-                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                .frame(width: 24, height: 24)
-                .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 12))
-            
-            VStack(alignment: .leading, spacing: 0) {
-                Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
-                    .font(.footnote)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            HStack {
+                Image(uiImage: .plan)
+                    .renderingMode(.template)
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                    .frame(width: 24, height: 24)
+                    .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 12))
                 
-                currentPlanNameView()
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
+                        .font(.footnote)
+                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                        .accessibilityHidden(true)
+                    
+                    currentPlanNameView()
+                        .accessibilityHidden(true)
+                }
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(
+                Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan + " " + viewModel.currentPlanName
+            )
             
             Spacer()
             
