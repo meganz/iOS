@@ -4,11 +4,23 @@ import MEGASdk
 import MEGASDKRepo
 import UIKit
 
+private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
+
 extension NodeCollectionViewCell {
+    
+    private var loadThumbnailTask: Task<Void, any Error>? {
+        get {
+            objc_getAssociatedObject(self, &AssociatedLoadThumbnailTaskHandle) as? Task<Void, any Error>
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedLoadThumbnailTaskHandle, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
     
     open override func prepareForReuse() {
         super.prepareForReuse()
         
+        loadThumbnailTask?.cancel()
         cancellables = []
         
         [thumbnailIconView, thumbnailImageView]
@@ -94,10 +106,11 @@ extension NodeCollectionViewCell {
     }
     
     @objc func setThumbnail(url: URL) {
+        guard url.relativeString.fileExtensionGroup.isVisualMedia else { return }
         let fileAttributeGenerator = FileAttributeGenerator(sourceURL: url)
-        
-        Task { @MainActor in
-            guard let image = await fileAttributeGenerator.requestThumbnail() else { return }
+        loadThumbnailTask = Task { @MainActor [weak self] in
+            guard let self, let image = await fileAttributeGenerator.requestThumbnail() else { return }
+            try Task.checkCancellation()
             self.thumbnailIconView?.isHidden = true
             self.thumbnailImageView?.image = image
         }
