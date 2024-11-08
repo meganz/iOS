@@ -33,6 +33,9 @@ public struct MyAccountHallMenuView: View {
             offset: 55,
             color: separatorColor
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(menuDetails.sectionText ?? "Menu")
+        .accessibilityAddTraits(.isButton)
     }
     
     @ViewBuilder
