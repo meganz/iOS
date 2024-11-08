@@ -8,12 +8,11 @@ struct RecentlyWatchedVideosView: View {
     
     @StateObject private var viewModel: RecentlyWatchedVideosViewModel
     private let videoConfig: VideoConfig
-    
-    let router: any VideoRevampRouting
-    let thumbnailLoader: any ThumbnailLoaderProtocol
-    let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
-    let nodeUseCase: any NodeUseCaseProtocol
-    let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let router: any VideoRevampRouting
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     init(
         viewModel: @autoclosure @escaping () -> RecentlyWatchedVideosViewModel,
@@ -47,6 +46,14 @@ struct RecentlyWatchedVideosView: View {
         .task {
             await viewModel.loadRecentlyWatchedVideos()
         }
+        .confirmationDialog(Strings.Localizable.Videos.RecentlyWatched.Deletion.Alert.title, isPresented: $viewModel.shouldShowDeleteAlert) {
+            Button(Strings.Localizable.Videos.RecentlyWatched.Deletion.Alert.Option.clearRecentlyWatched, role: .destructive) {
+                viewModel.clearRecentlyWatchedVideos()
+            }
+            Button(Strings.Localizable.cancel, role: .cancel) { }
+        } message: {
+            Text(Strings.Localizable.Videos.RecentlyWatched.Deletion.Alert.title)
+        }     
     }
 }
 
@@ -67,7 +74,7 @@ struct RecentlyWatchedVideosContent: View {
         case .partial:
             EmptyView()
         case .loading:
-            EmptyView() // CC-8411
+            EmptyView() // Todo: CC-8411
         case .loaded:
             listView()
         case .empty:

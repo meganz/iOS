@@ -9,6 +9,7 @@ extension VideoRevampFactory {
     public static func makeRecentlyWatchedVideosView(
         recentlyOpenedNodesUseCase: some RecentlyOpenedNodesUseCaseProtocol,
         videoConfig: VideoConfig,
+        sharedUIState: RecentlyWatchedVideosSharedUIState,
         router: some VideoRevampRouting,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
@@ -17,7 +18,8 @@ extension VideoRevampFactory {
     ) -> UIViewController {
         let viewModel = RecentlyWatchedVideosViewModel(
             recentlyOpenedNodesUseCase: recentlyOpenedNodesUseCase,
-            recentlyWatchedVideosSorter: RecentlyWatchedVideosSorter()
+            recentlyWatchedVideosSorter: RecentlyWatchedVideosSorter(),
+            sharedUIState: sharedUIState
         )
         let view = RecentlyWatchedVideosView(
             viewModel: viewModel,

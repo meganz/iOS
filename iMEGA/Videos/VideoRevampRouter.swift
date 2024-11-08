@@ -227,6 +227,7 @@ struct VideoRevampRouter: VideoRevampRouting {
         let viewController = RecentlyWatchedVideosViewController(
             videoConfig: .live(),
             recentlyOpenedNodesUseCase: recenltyOpenedNodeUseCase,
+            sharedUIState: RecentlyWatchedVideosSharedUIState(),
             router: self,
             thumbnailLoader: VideoRevampFactory.makeThumbnailLoader(
                 sensitiveNodeUseCase: sensitiveNodeUseCase,

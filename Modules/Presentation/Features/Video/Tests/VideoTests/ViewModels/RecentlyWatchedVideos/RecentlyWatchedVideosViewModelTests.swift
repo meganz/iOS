@@ -7,21 +7,21 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     
     @MainActor
     func testInit_whenCalled_doesNotRequestUseCase() {
-        let (_, recentlyWatchedVideosUseCase, _) = makeSUT()
+        let (_, recentlyWatchedVideosUseCase, _, _) = makeSUT()
         
         XCTAssertTrue(recentlyWatchedVideosUseCase.invocations.isEmpty)
     }
     
     @MainActor
     func testInit_whenCalled_inInitialState() {
-        let (sut, _, _) = makeSUT()
+        let (sut, _, _, _) = makeSUT()
         
         XCTAssertEqual(sut.viewState, .partial)
     }
     
     @MainActor
     func testLoadRecentlyWatchedVideos_whenCalled_loadVideosThenSorted() async {
-        let (sut, recentlyWatchedVideosUseCase, sorter) = makeSUT(
+        let (sut, recentlyWatchedVideosUseCase, sorter, _) = makeSUT(
             recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success([]))
         )
         
@@ -33,7 +33,7 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadRecentlyWatchedVideos_whenLoadedWithError_showsError() async {
-        let (sut, _, _) = makeSUT()
+        let (sut, _, _, _) = makeSUT()
         
         await sut.loadRecentlyWatchedVideos()
         
@@ -42,7 +42,7 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadRecentlyWatchedVideos_whenLoadedWithError_showsCorrectTransitionViewState() async {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .failure(GenericErrorEntity()))
         )
         var receivedViewStates: [RecentlyWatchedVideosViewModel.ViewState] = []
@@ -64,7 +64,7 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadRecentlyWatchedVideos_whenLoadedSuccessfullyWithEmptyItems_showsCorrectTransitionViewState() async {
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success([]))
         )
         var receivedViewStates: [RecentlyWatchedVideosViewModel.ViewState] = []
@@ -89,7 +89,7 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
         let itemCount = 3
         let items = nonEmptyItems(count: itemCount)
         let sections = [ RecentlyWatchedVideoSection(title: "any section title", videos: items) ]
-        let (sut, _, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success(items)),
             recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter(sortVideosByDayResult: sections)
         )
@@ -109,6 +109,80 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
         cancellable.cancel()
     }
     
+    // MARK: - didTapRubbishBinBarButtonItem
+    
+    @MainActor
+    func testDidTapRubbishBinBarButtonItem_whenTapped_shouldShowDeleteAlert() {
+        let (sut, _, _, sharedUIState) = makeSUT()
+        let exp = expectation(description: "should toggle show delete alert")
+        exp.expectedFulfillmentCount = 2
+        var receivedValue: Bool?
+        let cancellable = sut.$shouldShowDeleteAlert
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink {
+                receivedValue = $0
+                exp.fulfill()
+            }
+        
+        sharedUIState.shouldShowDeleteAlert = true
+        wait(for: [exp], timeout: 0.1)
+        
+        XCTAssertEqual(receivedValue, true)
+        cancellable.cancel()
+    }
+    
+    // MARK: - isRubbishBinBarButtonItemEnabled
+    
+    @MainActor
+    func testIsRubbishBinBarButtonItemEnabled_whenEmptyItems_disableButton() async {
+        let (sut, _, _, sharedUIState) = makeSUT(
+            recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success([])),
+            recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter(sortVideosByDayResult: [])
+        )
+        let exp = expectation(description: "should toggle rubbish bin button enabled")
+        var isEnabled: Bool?
+        let cancellable = sharedUIState.$isRubbishBinBarButtonItemEnabled
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink {
+                isEnabled = $0
+                exp.fulfill()
+            }
+        
+        await sut.loadRecentlyWatchedVideos()
+        await fulfillment(of: [exp], timeout: 0.1)
+        
+        XCTAssertEqual(isEnabled, false)
+        cancellable.cancel()
+    }
+    
+    @MainActor
+    func testIsRubbishBinBarButtonItemEnabled_whenNonEmptyItems_enableButton() async {
+        let itemCount = 3
+        let items = nonEmptyItems(count: itemCount)
+        let sections = [ RecentlyWatchedVideoSection(title: "any section title", videos: items) ]
+        let (sut, _, _, sharedUIState) = makeSUT(
+            recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase(loadNodesResult: .success(items)),
+            recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter(sortVideosByDayResult: sections)
+        )
+        let exp = expectation(description: "should toggle rubbish bin button enabled")
+        var isEnabled: Bool?
+        let cancellable = sharedUIState.$isRubbishBinBarButtonItemEnabled
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink {
+                isEnabled = $0
+                exp.fulfill()
+            }
+        
+        await sut.loadRecentlyWatchedVideos()
+        await fulfillment(of: [exp], timeout: 0.1)
+        
+        XCTAssertEqual(isEnabled, true)
+        cancellable.cancel()
+    }
+    
     // MARK: - Helpers
     
     @MainActor
@@ -118,13 +192,16 @@ final class RecentlyWatchedVideosViewModelTests: XCTestCase {
     ) -> (
         sut: RecentlyWatchedVideosViewModel,
         recentlyWatchedVideosUseCase: MockRecentlyOpenedNodesUseCase,
-        recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter
+        recentlyWatchedVideosSorter: MockRecentlyWatchedVideosSorter,
+        sharedUIState: RecentlyWatchedVideosSharedUIState
     ) {
+        let sharedUIState = RecentlyWatchedVideosSharedUIState()
         let sut = RecentlyWatchedVideosViewModel(
             recentlyOpenedNodesUseCase: recentlyWatchedVideosUseCase,
-            recentlyWatchedVideosSorter: recentlyWatchedVideosSorter
+            recentlyWatchedVideosSorter: recentlyWatchedVideosSorter,
+            sharedUIState: sharedUIState
         )
-        return (sut, recentlyWatchedVideosUseCase, recentlyWatchedVideosSorter)
+        return (sut, recentlyWatchedVideosUseCase, recentlyWatchedVideosSorter, sharedUIState)
     }
     
     private func nonEmptyItems(count: Int) -> [RecentlyOpenedNodeEntity] {
