@@ -5,16 +5,22 @@ import MEGASDKRepo
 protocol RecoveryKeyViewRouting: Routing {
     var recoveryKeyViewController: UIViewController? { get }
     func showSecurityLink()
+    func presentView()
 }
 
 final class RecoveryKeyViewRouter: RecoveryKeyViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
+    private weak var presenter: UIViewController?
     
     private let securityURLLink = NSURL(string: "https://mega.nz/security")
     
-    init(navigationController: UINavigationController?) {
+    init(
+        navigationController: UINavigationController? = nil,
+        presenter: UIViewController? = nil
+    ) {
         self.navigationController = navigationController
+        self.presenter = presenter
     }
     
     func build() -> UIViewController {
@@ -36,6 +42,17 @@ final class RecoveryKeyViewRouter: RecoveryKeyViewRouting {
         }
 
         navigationController.pushViewController(build(), animated: true)
+    }
+    
+    func presentView() {
+        guard let presenter else {
+            MEGALogDebug("[Recovery Key] No presenter UIViewController passed on RecoveryKeyViewRouter")
+            return
+        }
+        
+        let navigationController = MEGANavigationController(rootViewController: build())
+        navigationController.addRightCancelButton()
+        presenter.present(navigationController, animated: true)
     }
     
     var recoveryKeyViewController: UIViewController? {

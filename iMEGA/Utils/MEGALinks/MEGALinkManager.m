@@ -647,16 +647,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     [self presentViewControllerWithAds:folderNavigationController adsSlotViewController:folderlinkVC presentationStyle:UIModalPresentationFullScreen];
 }
 
-+ (void)showBackupLinkView {
-    if ([Helper hasSession_alertIfNot]) {
-        MasterKeyViewController *masterKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"MasterKeyViewControllerID"];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:masterKeyVC];
-        [navigationController addRightCancelButton];
-        
-        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
-    }
-}
-
 + (void)showContactRequestsView {
     if ([Helper hasSession_alertIfNot]) {
         ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
