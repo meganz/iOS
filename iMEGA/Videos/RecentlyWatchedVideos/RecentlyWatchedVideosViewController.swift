@@ -1,3 +1,4 @@
+import Combine
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -11,15 +12,19 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     
     private let videoConfig: VideoConfig
     private let recentlyOpenedNodesUseCase: any RecentlyOpenedNodesUseCaseProtocol
+    private let sharedUIState: RecentlyWatchedVideosSharedUIState
     private let router: any VideoRevampRouting
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
+    private var cancellables: Set<AnyCancellable> = []
+    
     init(
         videoConfig: VideoConfig,
         recentlyOpenedNodesUseCase: some RecentlyOpenedNodesUseCaseProtocol,
+        sharedUIState: RecentlyWatchedVideosSharedUIState,
         router: some VideoRevampRouting,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
@@ -28,6 +33,7 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     ) {
         self.videoConfig = videoConfig
         self.recentlyOpenedNodesUseCase = recentlyOpenedNodesUseCase
+        self.sharedUIState = sharedUIState
         self.router = router
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
@@ -54,15 +60,20 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     }
     
     private func setupBarButtonItem() {
-        let rubbishBinBarButtonItem = UIBarButtonItem(image: UIImage.rubbishBin, primaryAction: nil)
+        let rubbishBinBarButtonItem = UIBarButtonItem(image: UIImage.rubbishBin, primaryAction: UIAction(action: onTapRubbishBinBarButtonItem))
         navigationItem.rightBarButtonItems = [ rubbishBinBarButtonItem ]
-        navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
+        
+        sharedUIState.$isRubbishBinBarButtonItemEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { rubbishBinBarButtonItem.isEnabled = $0 }
+            .store(in: &cancellables)
     }
     
     private func setupContentView() {
         let contentView = VideoRevampFactory.makeRecentlyWatchedVideosView(
             recentlyOpenedNodesUseCase: recentlyOpenedNodesUseCase,
             videoConfig: videoConfig,
+            sharedUIState: sharedUIState,
             router: router,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
@@ -97,5 +108,9 @@ final class RecentlyWatchedVideosViewController: UIViewController {
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
         }
+    }
+    
+    private func onTapRubbishBinBarButtonItem() {
+        sharedUIState.shouldShowDeleteAlert = true
     }
 }
