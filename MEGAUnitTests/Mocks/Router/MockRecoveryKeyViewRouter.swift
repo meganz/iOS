@@ -2,6 +2,7 @@
 
 final class MockRecoveryKeyViewRouter: RecoveryKeyViewRouting {
     private(set) var showSecurityLink_calledTimes = 0
+    private(set) var presentView_calledTimes = 0
     private let _recoveryKeyViewController: UIViewController?
     
     init(recoveryKeyViewController: UIViewController? = nil) {
@@ -14,5 +15,9 @@ final class MockRecoveryKeyViewRouter: RecoveryKeyViewRouting {
     
     func showSecurityLink() {
         showSecurityLink_calledTimes += 1
+    }
+    
+    func presentView() {
+        presentView_calledTimes += 1
     }
 }
