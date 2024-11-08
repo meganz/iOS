@@ -352,6 +352,11 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         }
         
     }
+    
+    @objc class func showBackupLinkView() {
+        guard Helper.hasSession_alertIfNot() else { return }
+        RecoveryKeyViewRouter(presenter: UIApplication.mnz_visibleViewController()).presentView()
+    }
 }
 
 // MARK: - Ads
