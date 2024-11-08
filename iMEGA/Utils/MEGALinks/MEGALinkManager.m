@@ -767,7 +767,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             }
         } else { // Chat link
             MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:request.chatHandle];
-            [MEGALinkManager openChatWithChatRoom:chatRoom
+            [MEGALinkManager autoRejoinAndOpenChatVCWithChatRoom:chatRoom
                                           request: request
                                       chatLinkUrl:chatLinkUrl];
             [SVProgressHUD dismiss];
@@ -828,7 +828,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     else {
         // [MEET-2619] we jump straight to chat for ended or not began meetings
         [SVProgressHUD dismiss];
-        [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+        MEGAChatRoom *chatRoom = [[MEGAChatSdk shared] chatRoomForChatId:request.chatHandle];
+        if (chatRoom == nil) {
+            MEGALogError(@"Cannot join chat, missing chat room %llu", request.chatHandle);
+            return;
+        }
+        [MEGALinkManager autoRejoinAndOpenChatVCWithChatRoom:chatRoom
+                                      request:request
+                                  chatLinkUrl:chatLinkUrl];
     }
 }
 
