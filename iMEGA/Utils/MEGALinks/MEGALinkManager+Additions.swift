@@ -273,7 +273,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         mainTabBar.showCameraUploadsSettings()
     }
     
-    @objc class func openChat(
+    @objc class func autoRejoinAndOpenChatVC(
         chatRoom: MEGAChatRoom,
         request: MEGAChatRequest,
         chatLinkUrl: URL
