@@ -272,6 +272,11 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
         mainTabBar.showCameraUploadsSettings()
     }
+    
+    @objc class func showBackupLinkView() {
+        guard Helper.hasSession_alertIfNot() else { return }
+        RecoveryKeyViewRouter(presenter: UIApplication.mnz_visibleViewController()).presentView()
+    }
 }
 
 // MARK: - Ads
