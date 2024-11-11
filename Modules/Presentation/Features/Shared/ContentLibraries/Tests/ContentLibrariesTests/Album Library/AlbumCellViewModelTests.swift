@@ -757,7 +757,7 @@ final class AlbumCellViewModelTests: XCTestCase {
                                      selectedAlbum: selectedAlbum,
                                      remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
                                      configuration: configuration)
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 500_000_000, file: file, line: line)
         return sut
     }
     

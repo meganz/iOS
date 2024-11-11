@@ -43,10 +43,3 @@ public struct VisualMediaSearchResultsView: View {
         }
     }
 }
-
-#Preview {
-    VisualMediaSearchResultsView(
-        viewModel: VisualMediaSearchResultsViewModel(
-            searchBarTextFieldUpdater: SearchBarTextFieldUpdater(),
-            visualMediaSearchHistoryUseCase: Preview_VisualMediaSearchHistoryUseCase()))
-}

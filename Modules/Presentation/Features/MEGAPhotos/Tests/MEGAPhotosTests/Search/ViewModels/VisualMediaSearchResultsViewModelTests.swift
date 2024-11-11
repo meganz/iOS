@@ -1,12 +1,16 @@
 import Combine
+import ContentLibraries
 import MEGADomain
 import MEGADomainMock
 @testable import MEGAPhotos
+import MEGAPresentation
+import MEGAPresentationMock
+import MEGASwift
 import MEGATest
 import XCTest
 
 final class VisualMediaSearchResultsViewModelTests: XCTestCase {
-
+    
     @MainActor
     func testMonitorSearchResults_emptyNoHistoryItems_shouldSetViewModeToEmpty() {
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
@@ -56,13 +60,20 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
     func testMonitorSearchResult_searchUpdated_shouldShowEmptyThenLoadingWithSearchResultsWhenCompleted() async throws {
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
             searchQueryHistoryEntries: [])
-
-        let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
-
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+                item: .success([])).eraseToAnyAsyncSequence(),
+            monitorUserAlbumsSequence: SingleItemAsyncSequence<[AlbumEntity]>(
+                item: []).eraseToAnyAsyncSequence()
+        )
+        let sut = makeSUT(
+            visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
+            monitorAlbumsUseCase: monitorAlbumsUseCase)
+        
         let emptyExp = expectation(description: "Empty Shown")
         let loadingExp = expectation(description: "loading shown")
         let searchResultsExp = expectation(description: "loading and search result shown")
-
+        
         let subscription = viewStateUpdates(on: sut) {
             switch $0 {
             case .empty: emptyExp.fulfill()
@@ -71,28 +82,45 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             default: XCTFail("Unexpected view state \($0)")
             }
         }
-
+        
         trackTaskCancellation { await sut.monitorSearchResults() }
-
+        
         await fulfillment(of: [emptyExp], timeout: 0.2)
-
+        
         sut.searchText = "Search"
-
+        
         await fulfillment(of: [loadingExp, searchResultsExp], timeout: 0.2)
         subscription.cancel()
     }
     
     @MainActor
-    func testUpdateSearchResult_emptyRetrievedHistoryAfterFirstSearch_shouldShowHistoryItemWhenSearchCleared() {
+    func testUpdateSearchResult_emptyRetrievedHistoryAfterFirstSearch_shouldShowHistoryItemWhenSearchCleared() async {
+        let searchText = "fav"
+        let userAlbum = AlbumEntity(id: 1, name: "Queenstown Favourite Photos", type: .user)
+        let systemAlbum = AlbumEntity(id: 2, name: "Favourites", type: .favourite)
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
             searchQueryHistoryEntries: [])
-        
-        let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
+        let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+            monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+                item: .success([systemAlbum])).eraseToAnyAsyncSequence(),
+            monitorUserAlbumsSequence: SingleItemAsyncSequence(
+                item: [userAlbum]).eraseToAnyAsyncSequence()
+        )
+        let excludeSensitive = true
+        let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(excludeSensitives: excludeSensitive)
+        let sut = makeSUT(
+            visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
         
         let exp = expectation(description: "search results")
         
         let subscription = viewStateUpdates(on: sut) {
-            XCTAssertEqual($0, .searchResults(albums: [], photos: []))
+            XCTAssertEqual($0, .searchResults(
+                albums: [AlbumCellViewModel(album: systemAlbum),
+                         AlbumCellViewModel(album: userAlbum)],
+                photos: [])
+            )
             exp.fulfill()
         }
         
@@ -100,9 +128,14 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         
         sut.searchText = "1"
         sut.searchText = "2"
-        sut.searchText = "queenstown trip"
+        sut.searchText = searchText
+       
+        await fulfillment(of: [exp], timeout: 0.5)
         
-        wait(for: [exp], timeout: 0.2)
+        let monitorTypes = await monitorAlbumsUseCase.state.monitorTypes
+        XCTAssertEqual(Set(monitorTypes),
+                       Set([.systemAlbum(excludeSensitives: excludeSensitive),
+                            .userAlbum(excludeSensitives: excludeSensitive)]))
         
         subscription.cancel()
     }
@@ -124,11 +157,22 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             XCTFail("Expected addSearchHistory invocation")
         }
     }
-
+    
     @MainActor
     private func makeSUT(
         searchBarTextFieldUpdater: SearchBarTextFieldUpdater = SearchBarTextFieldUpdater(),
         visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol = MockVisualMediaSearchHistoryUseCase(),
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
+        contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            nodeUseCase: MockNodeUseCase(),
+            isAlbumPerformanceImprovementsEnabled: { true }),
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -136,6 +180,14 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let sut = VisualMediaSearchResultsViewModel(
             searchBarTextFieldUpdater: searchBarTextFieldUpdater,
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            thumbnailLoader: thumbnailLoader,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            albumCoverUseCase: albumCoverUseCase,
+            contentLibrariesConfiguration: contentLibrariesConfiguration,
             searchDebounceTime: searchDebounceTime)
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
         return sut
