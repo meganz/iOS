@@ -149,7 +149,11 @@
     }
     
     UIColor *percentageColor = [self transferInfoColorFor:transfer.type];
-    float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
+    float percentage = 0;
+    if (transfer.totalBytes) {
+        percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
+    }
+    
     self.progressView.progress = percentage;
     NSString *fileSize = [NSString memoryStyleStringFromByteCount:transfer.totalBytes];
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %% of %@ ", percentage  * 100, fileSize];
