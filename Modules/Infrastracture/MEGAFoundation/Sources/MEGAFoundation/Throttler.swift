@@ -1,58 +1,19 @@
+@preconcurrency import Combine
 import Foundation
 
-@objc public final class Throttler: NSObject {
-    private var dispatchQueue: DispatchQueue
-    private var dispatchWork: DispatchWorkItem?
-    private let workQueue = DispatchQueue(label: "ThrottlerWorkQueue")
-
-    private var previousScheduled: DispatchTime?
-
-    private var lastExecutionTime: DispatchTime?
-
-    private var waitingForPerform: Bool = false
-
-    private var timeInterval: TimeInterval
+public final class Throttler: Sendable {
+    public typealias Action = () -> Void
+    private let subject = PassthroughSubject<Action, Never>()
+    private let cancellable: AnyCancellable
     
-    @objc public init(timeInterval: TimeInterval, dispatchQueue: DispatchQueue) {
-        self.timeInterval = timeInterval
-        self.dispatchQueue = dispatchQueue
+    public init(timeInterval: TimeInterval, dispatchQueue: DispatchQueue = .main) {
+        cancellable = subject
+            .throttle(for: .seconds(timeInterval), scheduler: RunLoop.main, latest: true)
+            .receive(on: dispatchQueue)
+            .sink { $0() }
     }
     
-    @objc public func start(action: @escaping () -> Void) {
-        workQueue.async {
-            self.dispatchWork?.cancel()
-            let dispatchWork = DispatchWorkItem { [weak self] in
-                self?.lastExecutionTime = .now()
-                self?.waitingForPerform = false
-                action()
-            }
-            
-            self.dispatchWork = dispatchWork
-            let (now, dispatchTime) = self.evaluateDispatchTime()
-            self.previousScheduled = now
-            self.waitingForPerform = true
-            
-            self.dispatchQueue.asyncAfter(deadline: dispatchTime, execute: dispatchWork)
-        }
-    }
-    
-    private func evaluateDispatchTime() -> (now: DispatchTime, evaluated: DispatchTime) {
-        let now: DispatchTime = .now()
-        
-        if let lastExecutionTime = self.lastExecutionTime {
-            let evaluatedTime = (lastExecutionTime + self.timeInterval)
-            if evaluatedTime > now {
-                return (now, evaluatedTime)
-            }
-        }
-        
-        guard self.waitingForPerform else {
-            return ((now, (now + self.timeInterval)))
-        }
-        
-        if let previousScheduled = self.previousScheduled, previousScheduled > now {
-            return (now, previousScheduled)
-        }
-        return (now, now)
+    public func start(action: @escaping () -> Void) {
+        subject.send(action)
     }
 }

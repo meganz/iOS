@@ -411,8 +411,9 @@ extension ProgressIndicatorView: MEGATransferDelegate {
             }
         }
         throttler.start { [weak self] in
-            guard let self else { return }
-            self.configureData()
+            Task { @MainActor in
+                self?.configureData()
+            }
         }
     }
     
@@ -454,10 +455,10 @@ extension ProgressIndicatorView: MEGATransferDelegate {
             MEGASdk.shared.resetTotalUploads()
             MEGASdk.shared.resetTotalDownloads()
         }
-        Task { @MainActor in
-            self.throttler.start { [weak self] in
-                guard let self else { return }
-                self.configureData()
+        
+        self.throttler.start { [weak self] in
+            Task { @MainActor in
+                self?.configureData()
             }
         }
     }

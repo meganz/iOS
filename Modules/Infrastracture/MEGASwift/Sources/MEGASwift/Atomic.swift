@@ -55,18 +55,6 @@ public final class Atomic<T>: @unchecked Sendable {
     }
 }
 
-/// Abstraction of DispatchQueue to enable testability for `Atomic`
-public protocol AtomicDispatchQueueProtocol {
-    func async(flags: DispatchWorkItemFlags, execute work: @escaping @Sendable @convention(block) () -> Void)
-    func sync<T>(execute work: () throws -> T) rethrows -> T
-}
-
-extension DispatchQueue: AtomicDispatchQueueProtocol {
-    public func async(flags: DispatchWorkItemFlags, execute work: @escaping @Sendable @convention(block) () -> Void) {
-        async(group: nil, qos: qos, flags: flags, execute: work)
-    }
-}
-
 @propertyWrapper
 public final class WeakAtomic: @unchecked Sendable {
     
