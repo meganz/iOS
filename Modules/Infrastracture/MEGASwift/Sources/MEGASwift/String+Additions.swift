@@ -90,7 +90,7 @@ public extension String {
 }
 
 public extension String {
-    static var byteCountFormatter = ByteCountFormatter()
+    nonisolated(unsafe) static var byteCountFormatter = ByteCountFormatter()
     
     /// Converts a byte count to a formatted string using memory style and ensures proper spacing between the count and unit.
     /// - Parameters:

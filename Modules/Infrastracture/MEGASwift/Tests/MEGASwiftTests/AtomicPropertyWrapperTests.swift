@@ -8,7 +8,7 @@ final class AtomicPropertyWrapperTests: XCTestCase {
         
         try await withThrowingTaskGroup(of: Void.self) { group in
             for _ in 0..<1000 {
-                group.addTask {
+                group.addTask { @Sendable in
                     $counter.mutate { $0 += 1 }
                 }
             }
