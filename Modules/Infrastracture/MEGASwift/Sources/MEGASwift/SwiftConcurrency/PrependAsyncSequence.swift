@@ -4,7 +4,7 @@ public extension AsyncSequence {
     /// Prefixes a async sequence output with the specified value.
     ///
     /// - Parameter element: element to yield prior to the async sequence
-    func prepend(_ element: Element) -> PrependAsyncSequence<Self> {
+    func prepend(_ element: Element) -> PrependAsyncSequence<Self> where Element: Sendable {
         prepend { element }
     }
     

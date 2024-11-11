@@ -1,5 +1,5 @@
 import Foundation
-import MEGAChatSdk
+@preconcurrency import MEGAChatSdk
 import MEGADomain
 import MEGASDKRepo
 import MEGASwift
