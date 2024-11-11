@@ -2,10 +2,10 @@ import Foundation
 import MEGASwift
 
 public enum DateStyle {
-    public static var dateStyleFactory: some DateStyleFactory = DateStyleFactoryImpl()
+    public static let dateStyleFactory: some DateStyleFactory = DateStyleFactoryImpl()
 }
 
-public protocol DateStyleFactory {
+public protocol DateStyleFactory: Sendable {
 
     func templateStyle(
         fromTemplate template: String,
@@ -37,7 +37,7 @@ public struct DateStyleFactoryImpl: DateStyleFactory {
 /// A  date formatter pool that holds date formatter used in MEGA. As `DateFormatter` is a heavy object, so making a cache pool to hold popular
 /// date formatters saving time.
 /// NOTE: This shared object is thread safe.
-public final class DateFormatterPool {
+public final class DateFormatterPool: @unchecked Sendable {
 
     // MARK: - Cache for date formatter
 
@@ -47,7 +47,7 @@ public final class DateFormatterPool {
 
     // MARK: - Static
 
-    static var shared = DateFormatterPool()
+    static let shared = DateFormatterPool()
 
     // MARK: - Lifecycles
 

@@ -292,9 +292,8 @@ extension ContactsViewController: MEGARequestDelegate {
             let userAttribute = UserAttributeEntity(rawValue: request.paramType)
             guard userAttribute == .firstName || userAttribute == .lastName else { return }
             Self.throttler.start { [weak self] in
-                DispatchQueue.main.async {
-                    guard let self else { return }
-                    self.reloadUI()
+                Task { @MainActor in
+                    self?.reloadUI()
                 }
             }
         default:
