@@ -21,7 +21,7 @@ struct AutoMediaDiscoveryBannerView: View {
             bannerDescription
             closeButton
         }
-        .background(bannerBackgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
         .border(bannerBorderColor,
                 width: Constants.bannerBorderWidth)
     }
@@ -45,10 +45,6 @@ struct AutoMediaDiscoveryBannerView: View {
                 .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
         }
         .padding(.trailing, Constants.defaultPadding)
-    }
-    
-    private var bannerBackgroundColor: Color {
-        colorScheme == .dark ? UIColor.black2C2C2E.swiftUI :  UIColor.whiteFFFFFF.swiftUI
     }
     
     private var bannerBorderColor: Color {
