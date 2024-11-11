@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -26,10 +27,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
     private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
     private lazy var searchBarTextFieldUpdater = SearchBarTextFieldUpdater()
     private lazy var searchController: UISearchController = {
-        let resultController = VisualMediaSearchResultsViewControllerFactory.makeViewController(viewModel: VisualMediaSearchResultsViewModel(
-            searchBarTextFieldUpdater: searchBarTextFieldUpdater,
-            visualMediaSearchHistoryUseCase: VisualMediaSearchHistoryUseCase(
-                visualMediaSearchHistoryRepository: VisualMediaSearchHistoryCacheRepository.newRepo)))
+        let resultController = VisualMediaSearchResultsViewControllerFactory
+            .makeViewController(viewModel: makeVisualMediaSearchResultsViewModel())
         let controller = UISearchController(searchResultsController: resultController)
         controller.searchResultsUpdater = resultController
         controller.searchBar.delegate = resultController
@@ -167,8 +166,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
                 searchRepository: fileSearchRepository,
                 sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
                     sensitiveNodeUseCase: SensitiveNodeUseCase(
-                      nodeRepository: NodeRepository.newRepo,
-                      accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
+                        nodeRepository: NodeRepository.newRepo,
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                     contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                         repo: UserAttributeRepository.newRepo),
                     hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
@@ -373,5 +372,82 @@ extension PhotoAlbumContainerViewController {
 extension PhotoAlbumContainerViewController: UISearchControllerDelegate {
     func presentSearchController(_ searchController: UISearchController) {
         searchController.showsSearchResultsController = true
+    }
+}
+
+// MARK: - Visual Media Search
+
+extension PhotoAlbumContainerViewController {
+    private func makeVisualMediaSearchResultsViewModel() -> VisualMediaSearchResultsViewModel {
+        VisualMediaSearchResultsViewModel(
+            searchBarTextFieldUpdater: searchBarTextFieldUpdater,
+            visualMediaSearchHistoryUseCase: makeVisualMediaSearchHistoryUseCase(),
+            monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
+            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
+            monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo)),
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            albumCoverUseCase: AlbumCoverUseCase(
+                nodeRepository: NodeRepository.newRepo))
+    }
+    
+    private func makeVisualMediaSearchHistoryUseCase() -> some VisualMediaSearchHistoryUseCaseProtocol {
+        VisualMediaSearchHistoryUseCase(
+            visualMediaSearchHistoryRepository: VisualMediaSearchHistoryCacheRepository.newRepo)
+    }
+    
+    private func makeMonitorAlbumsUseCase() -> some MonitorAlbumsUseCaseProtocol {
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
+        
+        return MonitorAlbumsUseCase(
+            monitorPhotosUseCase: MonitorPhotosUseCase(
+                photosRepository: PhotosRepository.sharedRepo,
+                photoLibraryUseCase: makePhotoLibraryUseCase(),
+                sensitiveNodeUseCase: sensitiveNodeUseCase),
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
+            userAlbumRepository: UserAlbumRepository.newRepo,
+            photosRepository: PhotosRepository.sharedRepo,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
+    }
+    
+    private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
+        let photoLibraryRepository = PhotoLibraryRepository(
+            cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
+        return PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
+                                   searchRepository: FilesSearchRepository.newRepo,
+                                   sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+                                   hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+    }
+    
+    private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {
+        SensitiveDisplayPreferenceUseCase(
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                repo: UserAttributeRepository.newRepo),
+            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+    }
+    
+    private func makeMonitorUserAlbumPhotosUseCase() -> some MonitorUserAlbumPhotosUseCaseProtocol {
+        MonitorUserAlbumPhotosUseCase(
+            userAlbumRepository: UserAlbumCacheRepository.newRepo,
+            photosRepository: PhotosRepository.sharedRepo,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo))
+        )
     }
 }
