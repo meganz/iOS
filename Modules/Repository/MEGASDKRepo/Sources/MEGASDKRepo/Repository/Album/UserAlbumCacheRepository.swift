@@ -189,6 +189,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     }
     
     private func primeCaches() async {
+        MEGALogDebug("priming cache started")
         await userAlbumCache.removeAllCachedValues(forced: false)
         
         let userAlbums = await userAlbumRepository.albums()

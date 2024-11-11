@@ -121,6 +121,7 @@ public struct PhotosRepository: PhotosRepositoryProtocol {
     }
     
     private func primeCaches() async {
+        MEGALogDebug("priming cache started")
         await photoLocalSource.removeAllPhotos(forced: false)
         _ = try? await loadAllPhotos()
     }
