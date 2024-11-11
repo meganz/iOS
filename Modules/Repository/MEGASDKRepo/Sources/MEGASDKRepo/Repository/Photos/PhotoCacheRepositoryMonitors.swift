@@ -40,6 +40,7 @@ public struct PhotoCacheRepositoryMonitors: PhotoCacheRepositoryMonitorsProtocol
     }
     
     public func monitorPhotoNodeUpdates() async {
+        MEGALogDebug("Monitor photo node updates started")
         for await nodeUpdates in nodeUpdatesProvider.nodeUpdates {
             guard !Task.isCancelled else {
                 await photosUpdateSequences.terminateContinuations()
@@ -51,19 +52,22 @@ public struct PhotoCacheRepositoryMonitors: PhotoCacheRepositoryMonitorsProtocol
             
             await photosUpdateSequences.yield(element: updatedPhotos)
         }
+        MEGALogWarning("Monitor photo node updates stopped")
     }
     
     public func monitorCacheInvalidationTriggers() async {
         guard !Task.isCancelled else {
             return
         }
-        
+        MEGALogDebug("Monitor cache invalidation triggers started")
         for await _ in await cacheInvalidationTrigger.cacheInvalidationSequence() {
             guard !Task.isCancelled else {
                 break
             }
             await photoLocalSource.removeAllPhotos(forced: true)
+            MEGALogWarning("Cache invalidation triggered forced cleared")
         }
+        MEGALogWarning("Monitor cache invalidation triggers stopped")
     }
     
     private func updatePhotos(_ updatedPhotos: [NodeEntity]) async {

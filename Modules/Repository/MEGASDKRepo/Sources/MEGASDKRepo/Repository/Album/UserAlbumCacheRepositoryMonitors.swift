@@ -60,6 +60,7 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
     }
     
     public func monitorSetUpdates() async {
+        MEGALogDebug("Monitor set updates started")
         for await setUpdates in setAndElementsUpdatesProvider.setUpdates(filteredBy: [.album]) {
             guard !Task.isCancelled else {
                 await setUpdateSequences.terminateContinuations()
@@ -81,9 +82,11 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
             setsUpdatedSourcePublisher.send(setUpdates)
             await setUpdateSequences.yield(element: setUpdates)
         }
+        MEGALogWarning("Monitor set updates stopped")
     }
     
     public func monitorSetElementUpdates() async {
+        MEGALogDebug("Monitor set element updates started")
         for await setElementUpdate in setAndElementsUpdatesProvider.setElementUpdates() {
             guard !Task.isCancelled else {
                 break
@@ -114,15 +117,19 @@ public struct UserAlbumCacheRepositoryMonitors: UserAlbumCacheRepositoryMonitors
             await setElementUpdateSequences.yield(element: setElementUpdate)
             await setElementUpdateOnSetsSequences.yield(element: updatedAlbums)
         }
+        MEGALogWarning("Monitor set element updates stopped")
     }
     
     public func monitorCacheInvalidationTriggers() async {
+        MEGALogDebug("Monitor cache invalidation triggers started")
         for await _ in await cacheInvalidationTrigger.cacheInvalidationSequence() {
             guard !Task.isCancelled else {
                 break
             }
             await userAlbumCache.removeAllCachedValues(forced: true)
+            MEGALogWarning("Cache invalidation triggered forced cleared")
         }
+        MEGALogWarning("Monitor cache invalidation triggers stopped")
     }
     
     private func album(for handle: HandleEntity) async -> SetEntity? {
