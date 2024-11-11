@@ -25,34 +25,25 @@ pipeline {
     post { 
         failure {
             script {
-                if (hasGitLabMergeRequest()) {
-                    def mr_number = env.gitlabMergeRequestIid
-
-                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    }
-
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        final String logsResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
-                        def logsJSON = new groovy.json.JsonSlurperClassic().parseText(logsResponse)
-                        env.MARKDOWN_LINK = ":x: Failed to submit version ${env.MEGA_VERSION_NUMBER} to the App Store. <br />Build Log: ${logsJSON.markdown}"
-                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mr_number}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
-                    }   
+                withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+                    sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
                 }
+
+                withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                    final String logsResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
+                    def logsJSON = new groovy.json.JsonSlurperClassic().parseText(logsResponse)
+                    env.MARKDOWN_LINK = ":x: Failed to submit version ${params.VERSION_NUMBER} to the App Store. <br />Build Log: ${logsJSON.markdown}"
+                    env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${params.MR_NUMBER}/notes"
+                    sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+                } 
             }
         }
         success {
             script {
-                if (hasGitLabMergeRequest()) {
-                    def mr_number = env.gitlabMergeRequestIid
-                    env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
-
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        env.MARKDOWN_LINK = ":rocket: ${env.MEGA_VERSION_NUMBER} (${env.MEGA_BUILD_NUMBER}) has been submitted to App Store for review."
-                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mr_number}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
-                    }
+                withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                    env.MARKDOWN_LINK = ":rocket: ${params.VERSION_NUMBER} (${params.BUILD_NUMBER}) has been submitted to App Store for review."
+                    env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${params.MR_NUMBER}/notes"
+                    sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
                 }
             }
         }
@@ -68,16 +59,6 @@ pipeline {
                         script {
                             injectEnvironments {
                                 sh 'bundle install'
-                            }
-                        }
-                    }
-                }
-                stage('Get version number') {
-                    steps {
-                        script {
-                            injectEnvironments {
-                                sh "bundle exec fastlane fetch_version_number"
-                                env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
                             }
                         }
                     }
@@ -99,30 +80,14 @@ pipeline {
                 script {
                     injectEnvironments {
                         dir("scripts/AppMetadataUpdater/") {
-                            sh 'swift run AppMetadataUpdater --update-description --update-release-notes -v $MEGA_VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"' 
+                            env.VERSION_NUMBER = params.VERSION_NUMBER
+                            sh 'swift run AppMetadataUpdater --update-description --update-release-notes -v $VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
                         }
 
-                        def used_phrase = env.gitlabTriggerPhrase
-                        def phased_release = used_phrase.contains("submit_appstore_auto_phased_release")
-
-                        if (!used_phrase.contains("build:")) {
-                            error "Submit command must contain explicit build number"
-                        }
-
-                        def buildNumber = used_phrase.replaceAll(/.*build:(\d+).*/, '$1')
-                        sh "bundle exec fastlane submit_review phased_release:${phased_release} build_number:${buildNumber}"
+                        sh "bundle exec fastlane submit_review phased_release:${params.PHASED_RELEASE} version_number:${params.VERSION_NUMBER} build_number:${params.BUILD_NUMBER}"
                     }
                 }
             }
         }
     }
-}
-
-/**
- * Check if this build is triggered by a GitLab Merge Request.
- * @return true if this build is triggerd by a GitLab MR. False if this build is triggerd
- * by a plain git push.
- */
-private boolean hasGitLabMergeRequest() {
-    return env.gitlabMergeRequestIid != null && !env.gitlabMergeRequestIid.isEmpty()
 }
