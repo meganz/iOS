@@ -12,11 +12,13 @@ public struct MockSMSRepository: SMSRepositoryProtocol {
     private let checkCodeResult: Result<String, CheckSMSErrorEntity>
     private let sendToNumberResult: Result<String, CheckSMSErrorEntity>
     
-    public init(verifiedNumber: String? = nil,
-                smsState: SMSStateEntity = .notAllowed,
-                regionCodesResult: Result<[RegionEntity], GetSMSErrorEntity> = .failure(.generic),
-                checkCodeResult: Result<String, CheckSMSErrorEntity> = .failure(.generic),
-                sendToNumberResult: Result<String, CheckSMSErrorEntity> = .failure(.generic)) {
+    public init(
+        verifiedNumber: String? = nil,
+        smsState: SMSStateEntity = .notAllowed,
+        regionCodesResult: Result<[RegionEntity], GetSMSErrorEntity> = .failure(.generic),
+        checkCodeResult: Result<String, CheckSMSErrorEntity> = .failure(.generic),
+        sendToNumberResult: Result<String, CheckSMSErrorEntity> = .failure(.generic)
+    ) {
         self.verifiedNumber = verifiedNumber
         self.smsState = smsState
         self.regionCodesResult = regionCodesResult
@@ -28,16 +30,16 @@ public struct MockSMSRepository: SMSRepositoryProtocol {
         verifiedNumber
     }
     
-    public func getRegionCallingCodes(completion: @escaping (Result<[RegionEntity], GetSMSErrorEntity>) -> Void) {
-        completion(regionCodesResult)
+    public func getRegionCallingCodes() async throws -> [RegionEntity] {
+        try regionCodesResult.get()
     }
     
-    public func checkVerificationCode(_ code: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
-        completion(checkCodeResult)
+    public func checkVerificationCode(_ code: String) async throws -> String {
+        try checkCodeResult.get()
     }
     
-    public func sendVerification(toPhoneNumber: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
-        completion(sendToNumberResult)
+    public func sendVerification(toPhoneNumber: String) async throws -> String {
+        try sendToNumberResult.get()
     }
     
     public func checkState() -> SMSStateEntity {

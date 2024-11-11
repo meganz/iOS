@@ -13,12 +13,12 @@ public struct MockCheckSMSUseCase: CheckSMSUseCaseProtocol {
         self.smsState = smsState
     }
     
-    public func checkVerificationCode(_ code: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
-        completion(checkCodeResult)
+    public func checkVerificationCode(_ code: String) async throws -> String {
+        try checkCodeResult.get()
     }
     
-    public func sendVerification(toPhoneNumber: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
-        completion(sendToNumberResult)
+    public func sendVerification(toPhoneNumber: String) async throws -> String {
+        try sendToNumberResult.get()
     }
     
     public func checkState() -> SMSStateEntity {

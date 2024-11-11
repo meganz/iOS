@@ -6,6 +6,11 @@ import Testing
 
 @Suite("SMSRepository Test Suite - Verifying SMS repository functionalities.")
 struct SMSRepositoryTests {
+    private static let phoneNumber = "1234567890"
+    private static let validVerificationCode = "1234567890"
+    private static let successMessage = "Verification sent"
+    private static let regionCodeUS = "US"
+    private static let regionCodeCA = "CA"
     
     // MARK: - Helper Functions
     private static func makeSUT(
@@ -27,10 +32,10 @@ struct SMSRepositoryTests {
         
         @Test("Should return the verified phone number when available")
         func verifiedPhoneNumberReturnsPhoneNumberWhenAvailable() {
-            let sut = makeSUT(verifiedPhoneNumber: "1234567890")
+            let sut = makeSUT(verifiedPhoneNumber: phoneNumber)
             let result = sut.verifiedPhoneNumber()
             
-            #expect(result == "1234567890", "Expected the verified phone number to match")
+            #expect(result == phoneNumber, "Expected the verified phone number to match")
         }
 
         @Test("Should return nil when no verified phone number is available")
@@ -52,26 +57,20 @@ struct SMSRepositoryTests {
                 MockRequest(
                     handle: 1,
                     stringListDictionary: [
-                        "US": MockMEGAStringList(size: 1, strings: ["1"]),
-                        "CA": MockMEGAStringList(size: 1, strings: ["1"])
+                        regionCodeUS: MockMEGAStringList(size: 1, strings: ["1"]),
+                        regionCodeCA: MockMEGAStringList(size: 1, strings: ["1"])
                     ]
                 )
             )
             let sut = makeSUT(requestResult: requestResult)
             
-            let result = await withCheckedContinuation { continuation in
-                sut.getRegionCallingCodes { result in
-                    continuation.resume(returning: result)
-                }
-            }
-            
-            switch result {
-            case .success(let regions):
+            do {
+                let regions = try await sut.getRegionCallingCodes()
                 #expect(regions.count == 2, "Expected two regions in the result")
                 let regionCodes = regions.map(\.regionCode)
-                #expect(regionCodes.contains("US"), "Expected to have 'US' as a region code in the array")
-                #expect(regionCodes.contains("CA"), "Expected to have 'CA' as a region code in the array")
-            default:
+                #expect(regionCodes.contains(regionCodeUS), "Expected to have 'US' as a region code in the array")
+                #expect(regionCodes.contains(regionCodeCA), "Expected to have 'CA' as a region code in the array")
+            } catch {
                 Issue.record("Expected success with region entities")
             }
         }
@@ -81,17 +80,13 @@ struct SMSRepositoryTests {
             let requestResult: MockSdkRequestResult = .failure(MockError(errorType: .apiEFailed))
             let sut = makeSUT(requestResult: requestResult)
             
-            let result = await withCheckedContinuation { continuation in
-                sut.getRegionCallingCodes { result in
-                    continuation.resume(returning: result)
-                }
-            }
-            
-            switch result {
-            case .failure(let error):
-                #expect(error == .failedToGetCallingCodes, "Expected failure with GetSMSErrorEntity.failedToGetCallingCodes")
-            default:
+            do {
+                _ = try await sut.getRegionCallingCodes()
                 Issue.record("Expected failure with GetSMSErrorEntity.failedToGetCallingCodes")
+            } catch let error as GetSMSErrorEntity {
+                #expect(error == .failedToGetCallingCodes, "Expected failure with GetSMSErrorEntity.failedToGetCallingCodes")
+            } catch {
+                Issue.record("Expected a CheckSMSErrorEntity, but found \(error)")
             }
         }
     }
@@ -102,20 +97,13 @@ struct SMSRepositoryTests {
         
         @Test("Should return phone number when verification code is correct")
         func checkVerificationCodeReturnsPhoneNumberWhenCodeIsCorrect() async {
-            let validCode = "1234567890"
-            let requestResult: MockSdkRequestResult = .success(MockRequest(handle: 1, text: validCode))
+            let requestResult: MockSdkRequestResult = .success(MockRequest(handle: 1, text: validVerificationCode))
             let sut = makeSUT(requestResult: requestResult)
             
-            let result = await withCheckedContinuation { continuation in
-                sut.checkVerificationCode(validCode) { result in
-                    continuation.resume(returning: result)
-                }
-            }
-            
-            switch result {
-            case .success(let phoneNumber):
-                #expect(phoneNumber == validCode, "Expected the phone number to match the verification code")
-            default:
+            do {
+                let phoneNumber = try await sut.checkVerificationCode(validVerificationCode)
+                #expect(phoneNumber == validVerificationCode, "Expected the phone number to match the verification code")
+            } catch {
                 Issue.record("Expected success with a phone number")
             }
         }
@@ -125,17 +113,13 @@ struct SMSRepositoryTests {
             let requestResult: MockSdkRequestResult = .failure(MockError(errorType: .apiEFailed))
             let sut = makeSUT(requestResult: requestResult)
             
-            let result = await withCheckedContinuation { continuation in
-                sut.checkVerificationCode("invalidCode") { result in
-                    continuation.resume(returning: result)
-                }
-            }
-            
-            switch result {
-            case .failure(let error):
-                #expect(error == .codeDoesNotMatch, "Expected failure with CheckSMSErrorEntity.codeDoesNotMatch")
-            default:
+            do {
+                _ = try await sut.checkVerificationCode("invalidCode")
                 Issue.record("Expected failure with CheckSMSErrorEntity.codeDoesNotMatch")
+            } catch let error as CheckSMSErrorEntity {
+                #expect(error == .codeDoesNotMatch, "Expected failure with CheckSMSErrorEntity.codeDoesNotMatch")
+            } catch {
+                Issue.record("Expected a CheckSMSErrorEntity, but found \(error)")
             }
         }
     }
@@ -146,19 +130,13 @@ struct SMSRepositoryTests {
         
         @Test("Should return success message when verification code is sent")
         func sendVerificationReturnsSuccessMessageWhenCodeSent() async {
-            let requestResult: MockSdkRequestResult = .success(MockRequest(handle: 1, text: "Verification sent"))
+            let requestResult: MockSdkRequestResult = .success(MockRequest(handle: 1, text: successMessage))
             let sut = makeSUT(requestResult: requestResult)
             
-            let result = await withCheckedContinuation { continuation in
-                sut.sendVerification(toPhoneNumber: "1234567890") { result in
-                    continuation.resume(returning: result)
-                }
-            }
-            
-            switch result {
-            case .success(let message):
-                #expect(message == "Verification sent", "Expected a success message indicating verification was sent")
-            default:
+            do {
+                let message = try await sut.sendVerification(toPhoneNumber: phoneNumber)
+                #expect(message == successMessage, "Expected a success message indicating verification was sent")
+            } catch {
                 Issue.record("Expected success with a message")
             }
         }

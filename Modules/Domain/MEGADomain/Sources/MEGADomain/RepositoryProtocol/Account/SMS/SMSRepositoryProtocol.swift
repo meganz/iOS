@@ -1,7 +1,7 @@
-public protocol SMSRepositoryProtocol: RepositoryProtocol {
+public protocol SMSRepositoryProtocol: RepositoryProtocol, Sendable {
     func verifiedPhoneNumber() -> String?
-    func getRegionCallingCodes(completion: @escaping (Result<[RegionEntity], GetSMSErrorEntity>) -> Void)
-    func checkVerificationCode(_ code: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void)
-    func sendVerification(toPhoneNumber: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void)
+    func getRegionCallingCodes() async throws -> [RegionEntity]
+    func checkVerificationCode(_ code: String) async throws -> String
+    func sendVerification(toPhoneNumber: String) async throws -> String
     func checkState() -> SMSStateEntity
 }

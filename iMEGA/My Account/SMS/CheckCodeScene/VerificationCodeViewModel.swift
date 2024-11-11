@@ -17,6 +17,7 @@ protocol VerificationCodeViewRouting: Routing {
     func phoneNumberVerified()
 }
 
+@MainActor
 struct VerificationCodeViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case startLoading
@@ -67,7 +68,9 @@ struct VerificationCodeViewModel: ViewModelType {
             invokeCommand?(.configView(phoneNumber: formatNumber(phoneNumber, withRegionCode: regionCode),
                                        screenTitle: screenTitle))
         case .checkVerificationCode(let code):
-            checkVerificationCode(code)
+            Task {
+                await checkVerificationCode(code)
+            }
         case .resendCode:
             router.goBack()
         case .didCheckCodeSucceeded:
@@ -85,28 +88,23 @@ struct VerificationCodeViewModel: ViewModelType {
     }
     
     // MARK: - Check code
-    private func checkVerificationCode(_ code: String) {
+    private func checkVerificationCode(_ code: String) async {
         invokeCommand?(.startLoading)
-        checkSMSUseCase.checkVerificationCode(code) {
-            self.invokeCommand?(.finishLoading)
-            switch $0 {
-            case .success:
-                self.invokeCommand?(.checkCodeSucceeded)
-            case .failure(let error):
-                var message: String
-                switch error {
-                case .reachedDailyLimit:
-                    message = Strings.Localizable.youHaveReachedTheDailyLimit
-                case .codeDoesNotMatch:
-                    message = Strings.Localizable.theVerificationCodeDoesnTMatch
-                case .alreadyVerifiedWithAnotherAccount:
-                    message = Strings.Localizable.yourAccountIsAlreadyVerified
-                default:
-                    message = Strings.Localizable.unknownError
-                }
-                self.invokeCommand?(.checkCodeError(message: message))
+        do {
+            _ = try await checkSMSUseCase.checkVerificationCode(code)
+            invokeCommand?(.checkCodeSucceeded)
+        } catch let error as CheckSMSErrorEntity {
+            let message: String = switch error {
+            case .reachedDailyLimit: Strings.Localizable.youHaveReachedTheDailyLimit
+            case .codeDoesNotMatch: Strings.Localizable.theVerificationCodeDoesnTMatch
+            case .alreadyVerifiedWithAnotherAccount: Strings.Localizable.yourAccountIsAlreadyVerified
+            default: Strings.Localizable.unknownError
             }
+            invokeCommand?(.checkCodeError(message: message))
+        } catch {
+            invokeCommand?(.checkCodeError(message: Strings.Localizable.unknownError))
         }
+        invokeCommand?(.finishLoading)
     }
     
     private func didCheckCodeSucceeded() {
