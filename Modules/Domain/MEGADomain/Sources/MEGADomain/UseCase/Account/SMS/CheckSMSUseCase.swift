@@ -1,6 +1,6 @@
-public protocol CheckSMSUseCaseProtocol {
-    func checkVerificationCode(_ code: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void)
-    func sendVerification(toPhoneNumber: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void)
+public protocol CheckSMSUseCaseProtocol: Sendable {
+    func checkVerificationCode(_ code: String) async throws -> String
+    func sendVerification(toPhoneNumber: String) async throws -> String
     func checkState() -> SMSStateEntity
 }
 
@@ -11,13 +11,12 @@ public struct CheckSMSUseCase<T: SMSRepositoryProtocol>: CheckSMSUseCaseProtocol
         self.repo = repo
     }
     
-    public func checkVerificationCode(_ code: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
-        repo.checkVerificationCode(code, completion: completion)
+    public func checkVerificationCode(_ code: String) async throws -> String {
+        try await repo.checkVerificationCode(code)
     }
-
-    public func sendVerification(toPhoneNumber: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
-        
-        repo.sendVerification(toPhoneNumber: toPhoneNumber, completion: completion)
+    
+    public func sendVerification(toPhoneNumber: String) async throws -> String {
+        try await repo.sendVerification(toPhoneNumber: toPhoneNumber)
     }
     
     public func checkState() -> SMSStateEntity {

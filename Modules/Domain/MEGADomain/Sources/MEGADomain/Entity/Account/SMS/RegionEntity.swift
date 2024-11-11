@@ -12,7 +12,7 @@ public struct RegionEntity: Equatable, Sendable {
     }
 }
 
-public struct RegionListEntity {
+public struct RegionListEntity: Sendable {
     public let currentRegion: RegionEntity?
     public let allRegions: [RegionEntity]
     

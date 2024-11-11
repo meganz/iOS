@@ -1,8 +1,8 @@
 import Foundation
 
-public protocol GetSMSUseCaseProtocol {
+public protocol GetSMSUseCaseProtocol: Sendable {
     func verifiedPhoneNumber() -> String?
-    func getRegionCallingCodes(completion: @escaping (Result<RegionListEntity, GetSMSErrorEntity>) -> Void)
+    func getRegionCallingCodes() async throws -> RegionListEntity
 }
 
 public struct GetSMSUseCase<T: SMSRepositoryProtocol, U: L10nRepositoryProtocol>: GetSMSUseCaseProtocol {
@@ -18,23 +18,28 @@ public struct GetSMSUseCase<T: SMSRepositoryProtocol, U: L10nRepositoryProtocol>
         repo.verifiedPhoneNumber()
     }
     
-    public func getRegionCallingCodes(completion: @escaping (Result<RegionListEntity, GetSMSErrorEntity>) -> Void) {
-        repo.getRegionCallingCodes { result in
-            completion(result.map {
-                let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue: l10n.appLanguage]))
-                
-                let allRegions = $0.map {
-                    RegionEntity(regionCode: $0.regionCode,
-                                 regionName: appLocale.localizedString(forRegionCode: $0.regionCode),
-                                 callingCodes: $0.callingCodes)
-                }
-                
-                let currentRegion = allRegions.first {
-                    $0.regionCode.caseInsensitiveCompare(l10n.deviceRegion) == .orderedSame
-                }
-                
-                return RegionListEntity(currentRegion: currentRegion, allRegions: allRegions)
-            })
+    public func getRegionCallingCodes() async throws -> RegionListEntity {
+        let appLocale = Locale(
+            identifier: Locale.identifier(
+                fromComponents: [NSLocale.Key.languageCode.rawValue: l10n.appLanguage]
+            )
+        )
+        
+        let allRegions = try await repo.getRegionCallingCodes().map {
+            RegionEntity(
+                regionCode: $0.regionCode,
+                regionName: appLocale.localizedString(forRegionCode: $0.regionCode),
+                callingCodes: $0.callingCodes
+            )
         }
+        
+        let currentRegion = allRegions.first {
+            $0.regionCode.caseInsensitiveCompare(l10n.deviceRegion) == .orderedSame
+        }
+        
+        return RegionListEntity(
+            currentRegion: currentRegion,
+            allRegions: allRegions
+        )
     }
 }

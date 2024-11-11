@@ -16,7 +16,7 @@ public struct MockGetSMSUseCase: GetSMSUseCaseProtocol {
         verifiedNumber
     }
     
-    public func getRegionCallingCodes(completion: @escaping (Result<RegionListEntity, GetSMSErrorEntity>) -> Void) {
-        completion(regionCodesResult)
+    public func getRegionCallingCodes() async throws -> RegionListEntity {
+        try regionCodesResult.get()
     }
 }

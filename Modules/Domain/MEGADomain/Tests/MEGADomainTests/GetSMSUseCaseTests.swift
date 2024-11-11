@@ -1,68 +1,119 @@
 import MEGADomain
 import MEGADomainMock
-import XCTest
+import Testing
 
-final class GetSMSUseCaseTests: XCTestCase {
-    func testVerifiedPhoneNumber_nil() {
-        let repo = MockSMSRepository.newRepo
-        let sut = GetSMSUseCase(repo: repo, l10n: MockL10nRepository())
-        XCTAssertNil(sut.verifiedPhoneNumber())
+@Suite("Get SMS Use Case Tests - Validates core functionalities of GetSMSUseCase.")
+struct GetSMSUseCaseTests {
+    private static let samplePhoneNumber = "0101010101"
+    private static let mockRegionCodeNZ = "NZ"
+    private static let mockCallingCodesNZ = ["+64"]
+    private static let mockRegionEntityNZ = RegionEntity(
+        regionCode: "NZ",
+        regionName: "New Zealand",
+        callingCodes: ["+64"]
+    )
+    
+    private static func makeSUT(repo: MockSMSRepository, language: String = "en", deviceRegion: String = "NZ") -> GetSMSUseCaseProtocol {
+        GetSMSUseCase(
+            repo: repo,
+            l10n: MockL10nRepository(
+                appLanguage: language,
+                deviceRegion: deviceRegion
+            )
+        )
     }
     
-    func testVerifiedPhoneNumber_notNil() {
-        let number = "0101010101"
-        let repo = MockSMSRepository(verifiedNumber: number)
-        let sut = GetSMSUseCase(repo: repo, l10n: MockL10nRepository())
-        XCTAssertEqual(sut.verifiedPhoneNumber(), number)
+    private static func assertVerifiedPhoneNumber(sut: GetSMSUseCaseProtocol, expectedNumber: String?) {
+        #expect(sut.verifiedPhoneNumber() == expectedNumber, "Expected verified phone number to be \(expectedNumber ?? "nil") but got \(sut.verifiedPhoneNumber() ?? "nil")")
     }
     
-    func testGetRegionCallingCodes_success_matchCurrentRegion() {
-        let mockRegions = [RegionEntity(regionCode: "NZ", regionName: nil, callingCodes: ["+64"])]
-        let sut = GetSMSUseCase(repo: MockSMSRepository(regionCodesResult: .success(mockRegions)),
-                                l10n: MockL10nRepository())
-        
-        sut.getRegionCallingCodes { result in
-            switch result {
-            case .failure:
-                XCTFail("errors are not expected!")
-            case .success(let list):
-                XCTAssertEqual(list.currentRegion, RegionEntity(regionCode: "NZ", regionName: "New Zealand", callingCodes: ["+64"]))
-                XCTAssertEqual(list.allRegions, [RegionEntity(regionCode: "NZ", regionName: "New Zealand", callingCodes: ["+64"])])
-            }
+    private static func assertRegionCallingCodes(
+        sut: GetSMSUseCaseProtocol,
+        expectedCurrentRegion: RegionEntity?,
+        expectedAllRegions: [RegionEntity]
+    ) async {
+        do {
+            let list = try await sut.getRegionCallingCodes()
+            #expect(list.currentRegion == expectedCurrentRegion, "Expected current region to match \(expectedCurrentRegion?.regionCode ?? "nil") but got \(list.currentRegion?.regionCode ?? "nil")")
+            #expect(list.allRegions == expectedAllRegions, "Expected all regions to match \(expectedAllRegions) but got \(list.allRegions)")
+        } catch {
+            Issue.record("Unexpected error occurred!")
         }
     }
     
-    func testGetRegionCallingCodes_success_doesNotmatchCurrentRegion() {
-        let mockRegions = [RegionEntity(regionCode: "NZ", regionName: nil, callingCodes: ["+64"])]
-        let sut = GetSMSUseCase(repo: MockSMSRepository(regionCodesResult: .success(mockRegions)),
-                                l10n: MockL10nRepository(appLanguage: "en", deviceRegion: "AU"))
-        
-        sut.getRegionCallingCodes { result in
-            switch result {
-            case .failure:
-                XCTFail("errors are not expected!")
-            case .success(let list):
-                XCTAssertNil(list.currentRegion)
-                XCTAssertEqual(list.allRegions, [RegionEntity(regionCode: "NZ", regionName: "New Zealand", callingCodes: ["+64"])])
-            }
+    private static func assertErrorHandling(
+        mockError: GetSMSErrorEntity,
+        sut: GetSMSUseCaseProtocol
+    ) async {
+        do {
+            _ = try await sut.getRegionCallingCodes()
+            Issue.record("Expected error \(mockError) but no error occurred.")
+        } catch let error as GetSMSErrorEntity {
+            #expect(error == mockError, "Expected error \(mockError) but got \(error)")
+        } catch {
+            Issue.record("Unexpected error occurred when expecting \(mockError)")
         }
     }
     
-    func testGetRegionCallingCodes_error() {
-        let errors: [GetSMSErrorEntity] = [.failedToGetCallingCodes, .generic]
+    // MARK: - Phone Number Verification Tests
+    @Suite("Phone Number Verification - Checks if the verified phone number is correct.")
+    struct PhoneNumberVerificationTests {
         
-        for mockError in errors {
-            let sut = GetSMSUseCase(repo: MockSMSRepository(regionCodesResult: .failure(mockError)),
-                                    l10n: MockL10nRepository())
+        @Test("Returns nil when phone number is not verified.")
+        func returnsNilWhenPhoneNumberNotVerified() {
+            let sut = makeSUT(repo: MockSMSRepository.newRepo)
+            assertVerifiedPhoneNumber(sut: sut, expectedNumber: nil)
+        }
+        
+        @Test("Returns verified phone number when set.")
+        func returnsVerifiedPhoneNumberWhenSet() {
+            let sut = makeSUT(repo: MockSMSRepository(verifiedNumber: samplePhoneNumber))
+            assertVerifiedPhoneNumber(sut: sut, expectedNumber: samplePhoneNumber)
+        }
+    }
+
+    // MARK: - Region Calling Codes Tests
+    @Suite("Region Calling Codes - Validates fetching and matching region calling codes.")
+    struct RegionCallingCodesTests {
+        
+        @Test("Returns current region when device region matches.")
+        func returnsCurrentRegionForMatchingDeviceRegion() async {
+            let mockRegions = [RegionEntity(regionCode: mockRegionCodeNZ, regionName: nil, callingCodes: mockCallingCodesNZ)]
+            let sut = makeSUT(repo: MockSMSRepository(regionCodesResult: .success(mockRegions)))
             
-            sut.getRegionCallingCodes { result in
-                switch result {
-                case .failure(let error):
-                    XCTAssertEqual(mockError, error)
-                case .success:
-                    XCTFail("error \(mockError) is expected!")
-                }
-            }
+            await assertRegionCallingCodes(
+                sut: sut,
+                expectedCurrentRegion: mockRegionEntityNZ,
+                expectedAllRegions: [mockRegionEntityNZ]
+            )
+        }
+        
+        @Test("Returns nil for current region when device region does not match.")
+        func returnsNilForNonMatchingDeviceRegion() async {
+            let mockRegions = [RegionEntity(regionCode: mockRegionCodeNZ, regionName: nil, callingCodes: mockCallingCodesNZ)]
+            let sut = makeSUT(repo: MockSMSRepository(regionCodesResult: .success(mockRegions)), deviceRegion: "AU")
+            
+            await assertRegionCallingCodes(
+                sut: sut,
+                expectedCurrentRegion: nil,
+                expectedAllRegions: [mockRegionEntityNZ]
+            )
+        }
+    }
+    
+    // MARK: - Error Handling Tests
+    @Suite("Error Handling - Validates correct error handling for region calling codes fetch.")
+    struct ErrorHandlingTests {
+        
+        @Test("Returns expected error when fetching region calling codes fails.", arguments: [
+            GetSMSErrorEntity.failedToGetCallingCodes, GetSMSErrorEntity.generic
+        ])
+        func returnsExpectedErrorOnFailedRegionFetch(error: GetSMSErrorEntity) async {
+            let sut = makeSUT(repo: MockSMSRepository(regionCodesResult: .failure(error)))
+            await assertErrorHandling(
+                mockError: error,
+                sut: sut
+            )
         }
     }
 }

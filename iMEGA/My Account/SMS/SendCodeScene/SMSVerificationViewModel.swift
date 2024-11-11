@@ -19,6 +19,7 @@ protocol SMSVerificationViewRouting: Routing {
     func goToVerificationCode(forPhoneNumber number: String, withRegionCode: RegionCode)
 }
 
+@MainActor
 final class SMSVerificationViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case startLoading
@@ -65,17 +66,23 @@ final class SMSVerificationViewModel: ViewModelType {
         case .onViewReady:
             invokeCommand?(.configView(verificationType))
             if case SMSVerificationType.addPhoneNumber = verificationType {
-                getAchievementStorage()
+                Task {
+                    await getAchievementStorage()
+                }
             }
         case .loadRegionCodes:
-            loadCallingCodes()
+            Task {
+                await loadCallingCodes()
+            }
         case .showRegionList:
             router.goToRegionList(regionList) { [weak self] in
                 self?.setSelectedRegion($0)
                 self?.showRegion($0)
             }
         case .sendCodeToPhoneNumber(let number, let regionCode):
-            sendCodeToPhoneNumber(number, regionCode: regionCode)
+            Task {
+                await sendCodeToPhoneNumber(number, regionCode: regionCode)
+            }
         case .logout:
             authUseCase.logout()
         case .cancel:
@@ -84,23 +91,19 @@ final class SMSVerificationViewModel: ViewModelType {
     }
     
     // MARK: - Load regions
-    private func loadCallingCodes() {
+    private func loadCallingCodes() async {
         invokeCommand?(.startLoading)
-        smsUseCase.getSMSUseCase.getRegionCallingCodes { [weak self] in
-            guard let self else { return }
-            
-            self.invokeCommand?(.finishLoading)
-            switch $0 {
-            case .success(let codes):
-                self.regionList = codes.allRegions.compactMap { $0.toSMSRegion() }
-                if let region = codes.currentRegion?.toSMSRegion() {
-                    self.setSelectedRegion(region)
-                    self.showRegion(region)
-                }
-            case .failure(let error):
-                MEGALogError("Could not load country calling code with error \(error)")
+        do {
+            let codes = try await smsUseCase.getSMSUseCase.getRegionCallingCodes()
+            regionList = codes.allRegions.compactMap { $0.toSMSRegion() }
+            if let region = codes.currentRegion?.toSMSRegion() {
+                setSelectedRegion(region)
+                showRegion(region)
             }
+        } catch {
+            MEGALogError("Could not load country calling code with error \(error)")
         }
+        invokeCommand?(.finishLoading)
     }
     
     // MARK: - Show a region
@@ -113,21 +116,22 @@ final class SMSVerificationViewModel: ViewModelType {
     }
 
     // MARK: - Get achievement
-    private func getAchievementStorage() {
-        Task { @MainActor  [weak self] in
-            do {
-                guard let storage = try await self?.achievementUseCase.getAchievementStorage(by: .addPhone) else { return }
-                let message = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
-                self?.invokeCommand?(.showLoadAchievementResult(.showStorage(message)))
-            } catch {
-                let message = Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA
-                self?.invokeCommand?(.showLoadAchievementResult(.showError(message)))
-            }
+    private func getAchievementStorage() async {
+        do {
+            let storage = try await achievementUseCase.getAchievementStorage(by: .addPhone)
+            let message = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
+            invokeCommand?(.showLoadAchievementResult(.showStorage(message)))
+        } catch {
+            let message = Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA
+            invokeCommand?(.showLoadAchievementResult(.showError(message)))
         }
     }
     
     // MARK: - Send code
-    private func sendCodeToPhoneNumber(_ phoneNumber: String, regionCode: RegionCode) {
+    private func sendCodeToPhoneNumber(
+        _ phoneNumber: String,
+        regionCode: RegionCode
+    ) async {
         invokeCommand?(.startLoading)
         let formattedNumber: String
         do {
@@ -140,26 +144,25 @@ final class SMSVerificationViewModel: ViewModelType {
             invokeCommand?(.sendCodeToPhoneNumberError(message: message))
             return
         }
-        smsUseCase.checkSMSUseCase.sendVerification(toPhoneNumber: formattedNumber) { [weak self] in
-            self?.invokeCommand?(.finishLoading)
-            switch $0 {
-            case .success(let number):
-                DispatchQueue.main.async { self?.router.goToVerificationCode(forPhoneNumber: number, withRegionCode: regionCode) }
-            case .failure(let error):
-                let message: String
-                switch error {
-                case .reachedDailyLimit:
-                    message = Strings.Localizable.youHaveReachedTheDailyLimit
-                case .alreadyVerifiedWithCurrentAccount:
-                    message = Strings.Localizable.yourAccountIsAlreadyVerified
-                case .alreadyVerifiedWithAnotherAccount:
-                    message = Strings.Localizable.thisNumberIsAlreadyAssociatedWithAMegaAccount
-                default:
-                    message = Strings.Localizable.unknownError
-                }
-                
-                self?.invokeCommand?(.sendCodeToPhoneNumberError(message: message))
+
+        await sendVerificationCode(formattedNumber)
+        invokeCommand?(.finishLoading)
+    }
+    
+    private func sendVerificationCode(_ code: String) async {
+        do {
+            let number = try await smsUseCase.checkSMSUseCase.sendVerification(toPhoneNumber: code)
+            router.goToVerificationCode(forPhoneNumber: number, withRegionCode: code)
+        } catch let error as CheckSMSErrorEntity {
+            let message = switch error {
+            case .reachedDailyLimit: Strings.Localizable.youHaveReachedTheDailyLimit
+            case .alreadyVerifiedWithCurrentAccount: Strings.Localizable.yourAccountIsAlreadyVerified
+            case .alreadyVerifiedWithAnotherAccount: Strings.Localizable.thisNumberIsAlreadyAssociatedWithAMegaAccount
+            default: Strings.Localizable.unknownError
             }
+            invokeCommand?(.sendCodeToPhoneNumberError(message: message))
+        } catch {
+            invokeCommand?(.sendCodeToPhoneNumberError(message: Strings.Localizable.unknownError))
         }
     }
 }
