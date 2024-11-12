@@ -424,8 +424,12 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     func endCall(_ callActionSync: CallActionSync) async -> Bool {
         guard let call = callUseCase.call(for: callActionSync.chatRoom.chatId) else { return false }
         
-        // If call is reported but user ignored CallKit notification or the call was missed, we need to report end call and remove the it from our calls dictionary
+        // If call is reported but user ignored CallKit notification or the call was missed, we need to report end call and remove it from our calls dictionary
         if call.status == .userNoPresent {
+            // Call is one to one and user is not present when performing ending call action, so user is rejecting the call and we should inform the caller
+            if callActionSync.chatRoom.chatType == .oneToOne {
+                callUseCase.hangCall(for: call.callId)
+            }
             reportEndCall(call)
         } else {
             if callActionSync.endForAll {
