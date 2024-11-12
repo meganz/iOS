@@ -110,6 +110,23 @@ final class CallsCoordinatorTests: XCTestCase {
     }
     
     @MainActor
+    func testEndCall_UserNotPresentOneToOneChat_ShouldHangCall() async {
+        let harness = Harness(chatRoomEntity: .testChatRoomEntity, call: CallEntity(status: .userNoPresent, participants: [100]))
+        _ = await harness.sut.endCall(.speakerEnabled(false))
+        
+        XCTAssertEqual(harness.callUseCase.hangCall_CalledTimes, 1)
+    }
+    
+    @MainActor
+    func testEndCall_UserNotPresentGroupChat_ShouldNotHangCall() async {
+        let chatRoom = ChatRoomEntity(chatType: .group)
+        let harness = Harness(chatRoomEntity: chatRoom, call: CallEntity(status: .userNoPresent, participants: [100]))
+        _ = await harness.sut.endCall(CallActionSync(chatRoom: chatRoom))
+        
+        XCTAssertEqual(harness.callUseCase.hangCall_CalledTimes, 0)
+    }
+    
+    @MainActor
     func testOnChatCallUpdate_StopRingingAndUserNotParticipant_ShouldReportEndCall() async throws {
         let expectation = expectation(description: #function)
         let initialCall = CallEntity(
