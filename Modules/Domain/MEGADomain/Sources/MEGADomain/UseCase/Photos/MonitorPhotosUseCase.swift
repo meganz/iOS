@@ -13,8 +13,21 @@ public protocol MonitorPhotosUseCaseProtocol: Sendable {
     /// - Throws: `CancellationError`
     func monitorPhotos(
         filterOptions: PhotosFilterOptionsEntity,
-        excludeSensitive: Bool
+        excludeSensitive: Bool,
+        searchText: String?
     ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
+}
+
+extension MonitorPhotosUseCaseProtocol {
+    func monitorPhotos(
+        filterOptions: PhotosFilterOptionsEntity,
+        excludeSensitive: Bool
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+        await monitorPhotos(
+            filterOptions: filterOptions,
+            excludeSensitive: excludeSensitive,
+            searchText: nil)
+    }
 }
 
 private typealias NodeEntityFilter = (@Sendable (NodeEntity) -> Bool)
@@ -34,9 +47,11 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     
     public func monitorPhotos(
         filterOptions: PhotosFilterOptionsEntity,
-        excludeSensitive: Bool)
-    async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
-        let filters = await makeNodeFilters(filterOptions)
+        excludeSensitive: Bool,
+        searchText: String?
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+        let filters = await makeNodeFilters(
+            options: filterOptions, searchText: searchText)
         guard filters.isNotEmpty else {
             return await monitorPhotos(excludeSensitive: excludeSensitive)
         }
@@ -69,7 +84,10 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    private func makeNodeFilters(_ filterOptions: PhotosFilterOptionsEntity) async -> [NodeEntityFilter] {
+    private func makeNodeFilters(
+        options filterOptions: PhotosFilterOptionsEntity,
+        searchText: String?
+    ) async -> [NodeEntityFilter] {
         var filters = [NodeEntityFilter]()
         if let locationFilter = await makeLocationNodeFilters(filterOptions: filterOptions) {
             filters.append(locationFilter)
@@ -79,6 +97,9 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         }
         if filterOptions.contains(.favourites) {
             filters.append { $0.isFavourite }
+        }
+        if let searchText {
+            filters.append({ $0.name.localizedCaseInsensitiveContains(searchText) })
         }
         return filters
     }
@@ -118,7 +139,7 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
             return .failure(error)
         }
     }
-
+    
     private func updatePhotos() async -> AnyAsyncSequence<Void> {
         let photosUpdated = await photosRepository
             .photosUpdated()

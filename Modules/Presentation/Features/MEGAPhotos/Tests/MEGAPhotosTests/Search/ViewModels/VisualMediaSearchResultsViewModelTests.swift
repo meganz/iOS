@@ -66,9 +66,12 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             monitorUserAlbumsSequence: SingleItemAsyncSequence<[AlbumEntity]>(
                 item: []).eraseToAnyAsyncSequence()
         )
+        let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
+            item: .success([])).eraseToAnyAsyncSequence())
         let sut = makeSUT(
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
-            monitorAlbumsUseCase: monitorAlbumsUseCase)
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            monitorPhotosUseCase: monitorPhotosUseCase)
         
         let emptyExp = expectation(description: "Empty Shown")
         let loadingExp = expectation(description: "loading shown")
@@ -94,7 +97,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testUpdateSearchResult_emptyRetrievedHistoryAfterFirstSearch_shouldShowHistoryItemWhenSearchCleared() async {
+    func testUpdateSearchResult_emptyRetrievedHistoryAfterFirstSearch_shouldShowHistoryItemWhenSearchCleared() async throws {
         let searchText = "fav"
         let userAlbum = AlbumEntity(id: 1, name: "Queenstown Favourite Photos", type: .user)
         let systemAlbum = AlbumEntity(id: 2, name: "Favourites", type: .favourite)
@@ -108,10 +111,16 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         )
         let excludeSensitive = true
         let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(excludeSensitives: excludeSensitive)
+        let photo1 = NodeEntity(name: "\(searchText) car", handle: 1, modificationTime: try "2024-11-12T08:00:00Z".date)
+        let photo2 = NodeEntity(name: "\(searchText) bag", handle: 2, modificationTime: try "2024-11-12T08:00:00Z".date)
+        let photo3 = NodeEntity(name: "\(searchText) game", handle: 3, modificationTime: try "2024-11-11T22:05:04Z".date)
+        let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
+            item: .success([photo1, photo2, photo3])).eraseToAnyAsyncSequence())
         let sut = makeSUT(
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            monitorPhotosUseCase: monitorPhotosUseCase)
         
         let exp = expectation(description: "search results")
         
@@ -119,7 +128,9 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             XCTAssertEqual($0, .searchResults(
                 albums: [AlbumCellViewModel(album: systemAlbum),
                          AlbumCellViewModel(album: userAlbum)],
-                photos: [])
+                photos: [PhotoSearchResultItemViewModel(photo: photo3),
+                         PhotoSearchResultItemViewModel(photo: photo2),
+                         PhotoSearchResultItemViewModel(photo: photo1)])
             )
             exp.fulfill()
         }
@@ -169,6 +180,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
+        monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol = MockMonitorPhotosUseCase(),
         contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
@@ -187,6 +199,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             albumCoverUseCase: albumCoverUseCase,
+            monitorPhotosUseCase: monitorPhotosUseCase,
             contentLibrariesConfiguration: contentLibrariesConfiguration,
             searchDebounceTime: searchDebounceTime)
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
@@ -219,5 +232,14 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
 private extension Sequence where Element == SearchTextHistoryEntryEntity {
     func sortedByDateQueries() -> [String] {
         sorted(by: { $0.searchDate > $1.searchDate }).map(\.query)
+    }
+}
+
+private extension PhotoSearchResultItemViewModel {
+    convenience init(photo: NodeEntity, searchText: String = "") {
+        self.init(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(),
+            searchText: searchText)
     }
 }

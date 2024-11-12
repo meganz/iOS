@@ -3,44 +3,46 @@ import MEGADomain
 import MEGAPresentation
 import SwiftUI
 
+@MainActor
 final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
     let title: String
-    @Published var searchText = ""
-    @Published var thumbnailContainer: any ImageContaining
+    let searchText: String
+    @Published private var loadedThumbnailContainer: (any ImageContaining)?
     
-    var id: HandleEntity {
+    nonisolated var id: HandleEntity {
         photo.handle
+    }
+    
+    var thumbnailContainer: any ImageContaining {
+        loadedThumbnailContainer ?? ImageContainer(
+            image: MEGAAssetsImageProvider.fileTypeResource(forFileName: photo.name),
+            type: .placeholder)
     }
     
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     
-    init(photo: NodeEntity,
-         thumbnailLoader: some ThumbnailLoaderProtocol,
-         searchTextPublisher: Published<String>.Publisher
+    nonisolated init(
+        photo: NodeEntity,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        searchText: String
     ) {
         self.photo = photo
         self.thumbnailLoader = thumbnailLoader
         title = photo.name
-        
-        thumbnailContainer = thumbnailLoader.initialImage(for: photo, type: .thumbnail, placeholder: {
-            MEGAAssetsImageProvider.fileTypeResource(forFileName: photo.name) })
-        
-        searchTextPublisher.assign(to: &$searchText)
+        self.searchText = searchText
     }
     
-    @MainActor
     func loadThumbnail() async {
-        guard thumbnailContainer.type == .placeholder,
-              let imageContainer = try? await thumbnailLoader.loadImage(for: photo, type: .thumbnail) else {
+        guard let imageContainer = try? await thumbnailLoader.loadImage(for: photo, type: .thumbnail) else {
             return
         }
-        thumbnailContainer = imageContainer
+        loadedThumbnailContainer = imageContainer
     }
 }
 
 extension PhotoSearchResultItemViewModel: Equatable {
-    static func == (lhs: PhotoSearchResultItemViewModel, rhs: PhotoSearchResultItemViewModel) -> Bool {
+    nonisolated static func == (lhs: PhotoSearchResultItemViewModel, rhs: PhotoSearchResultItemViewModel) -> Bool {
         lhs.photo == rhs.photo
     }
 }

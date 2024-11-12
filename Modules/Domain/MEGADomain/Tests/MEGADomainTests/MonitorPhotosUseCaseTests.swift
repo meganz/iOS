@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import Testing
 import XCTest
 
 final class MonitorPhotosUseCaseTests: XCTestCase {
@@ -13,7 +14,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(Set(initialPhotos ?? []), Set(photos))
@@ -29,7 +31,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
@@ -47,7 +50,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.allLocations, .allMedia],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(initialPhotos, [thumbnailPhoto])
@@ -63,7 +67,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.allLocations, .allMedia],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
@@ -88,7 +93,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.cloudDrive, .videos],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(initialPhotos, [thumbnailVideo])
@@ -108,7 +114,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.cloudDrive, .videos],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
@@ -138,7 +145,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.cameraUploads, .images],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(Set(initialPhotos ?? []),
@@ -163,7 +171,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.cameraUploads, .images],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertTrue(initialPhotos?.isEmpty ?? false)
@@ -181,7 +190,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.allLocations, .allMedia],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         do {
             _ = try await iterator.next()?.get()
@@ -204,7 +214,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         
         var iterator = await sut.monitorPhotos(
             filterOptions: [.allLocations, .allMedia],
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(initialPhotos, [thumbnailPhoto])
@@ -224,7 +235,8 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
         let options: PhotosFilterOptionsEntity = [.allLocations, .allMedia, .favourites]
         var iterator = await sut.monitorPhotos(
             filterOptions: options,
-            excludeSensitive: false).makeAsyncIterator()
+            excludeSensitive: false,
+            searchText: nil).makeAsyncIterator()
         
         let initialPhotos = try await iterator.next()?.get()
         XCTAssertEqual(initialPhotos, [favouritePhoto])
@@ -245,5 +257,41 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
     private func makePhotosUpdatedSequenceWithItems() -> AnyAsyncSequence<[NodeEntity]> {
         SingleItemAsyncSequence(item: [NodeEntity(name: "test99.jpg", handle: 999, hasThumbnail: true)])
             .eraseToAnyAsyncSequence()
+    }
+}
+
+@Suite("MonitorPhotosUseCase Tests")
+struct MonitorPhotosUseCaseTestSuite {
+    @Suite("Calls to monitorPhotos(filterOptions:excludeSensitive:searchText:)")
+    struct MonitorPhotos {
+        
+        @Test("When search text provided it should filter photos", arguments: [
+            (String?.none, [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)], [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)]),
+            (String?.some("Te"), [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)], [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)]),
+            (String?.some("SomethingElse"), [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)], [])
+        ])
+        func searchTextProvided(searchText: String?, photos: [NodeEntity], expectedPhotos: [NodeEntity]) async throws {
+            let photosRepository = MockPhotosRepository(photos: photos)
+            let sut = MonitorPhotosUseCaseTestSuite.makeSUT(
+                photosRepository: photosRepository)
+            
+            var iterator = await sut.monitorPhotos(
+                filterOptions: [],
+                excludeSensitive: false,
+                searchText: searchText).makeAsyncIterator()
+            
+            let initialPhotos = try #require(try await iterator.next()?.get())
+            #expect(Set(initialPhotos) == Set(expectedPhotos))
+        }
+    }
+    
+    private static func makeSUT(
+        photosRepository: some PhotosRepositoryProtocol = MockPhotosRepository(),
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
+    ) -> MonitorPhotosUseCase {
+        MonitorPhotosUseCase(photosRepository: photosRepository,
+                             photoLibraryUseCase: photoLibraryUseCase,
+                             sensitiveNodeUseCase: sensitiveNodeUseCase)
     }
 }
