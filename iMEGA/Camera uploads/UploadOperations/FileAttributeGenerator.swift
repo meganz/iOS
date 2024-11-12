@@ -41,13 +41,8 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
     
     func createThumbnail(at destinationURL: URL) async -> Bool {
         let size = sizeForThumbnail()
-        let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
-                                                   size: size,
-                                                   scale: 1.0,
-                                                   representationTypes: .thumbnail)
-        
         do {
-            let representation = try await qlThumbnailGenerator.generateBestRepresentation(for: request)
+            let representation = try await generateThumbnail(size: size)
             guard let newImage = representation.cgImage.cropping(to: tileRect(width: representation.cgImage.width, height: representation.cgImage.height)) else { return false }
             let data = UIImage(cgImage: newImage).jpegData(compressionQuality: Constants.compressionQuality)
             try data?.write(to: destinationURL)
@@ -78,21 +73,26 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
     
     func requestThumbnail() async -> UIImage? {
         let size = CGSize(width: Constants.thumbnailSize, height: Constants.thumbnailSize)
-        let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
-                                                   size: size,
-                                                   scale: 1.0,
-                                                   representationTypes: .lowQualityThumbnail)
         
         do {
-            let representation = try await qlThumbnailGenerator.generateBestRepresentation(for: request)
+            let representation = try await generateThumbnail(size: size)
             return representation.uiImage
         } catch let error {
-            MEGALogError("Create thumbnail for local file \(sourceURL.lastPathComponent) fails with error \(error)")
-            return nil
+            let retryResult = try? await generateThumbnail(size: size, presentationType: .all).uiImage
+            MEGALogDebug("Create thumbnail for local file \(sourceURL.lastPathComponent) fails with error \(error). Retried with result: \(retryResult != nil ? "Success" : "Failure")")
+            return retryResult
         }
     }
     
     // MARK: - Private
+    
+    private func generateThumbnail(size: CGSize, presentationType: QLThumbnailGenerator.Request.RepresentationTypes = .thumbnail) async throws -> QLThumbnailRepresentation {
+        let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
+                                                   size: size,
+                                                   scale: 1.0,
+                                                   representationTypes: presentationType)
+        return try await qlThumbnailGenerator.generateBestRepresentation(for: request)
+    }
     
     /// Size for scaled thumbnail
     /// - Returns: return size for the scaled thumbnail (min side is 200px)
