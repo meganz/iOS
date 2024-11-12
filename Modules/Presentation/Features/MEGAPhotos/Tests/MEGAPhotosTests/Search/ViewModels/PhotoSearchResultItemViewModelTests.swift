@@ -28,7 +28,7 @@ struct PhotoSearchResultItemViewModelTests {
         func searchText() {
             let expected = "Search me"
             let sut = PhotoSearchResultItemViewModelTests
-                .makeSUT(searchText: Published(initialValue: expected))
+                .makeSUT(searchText: expected)
             
             #expect(sut.searchText == expected)
         }
@@ -36,37 +36,19 @@ struct PhotoSearchResultItemViewModelTests {
         @Test("Initial image found for photo should set thumbnail container")
         @MainActor
         func initialImageFound() async throws {
-            let thumbnailContainer = ImageContainer(image: Image(systemName: "square"), type: .thumbnail)
-            let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
-            let sut = PhotoSearchResultItemViewModelTests
-                .makeSUT(thumbnailLoader: thumbnailLoader)
+            let sut = PhotoSearchResultItemViewModelTests.makeSUT()
             
-            #expect(sut.thumbnailContainer.isEqual(thumbnailContainer))
+            #expect(sut.thumbnailContainer.type == .placeholder)
         }
     }
     
     @Suite("calls loadThumbnail()")
     struct LoadThumbnail {
-        @Test("When initial image is set (not placeholder) then it should not load anything")
-        @MainActor
-        func notPlaceholder() async {
-            let thumbnailContainer = ImageContainer(image: Image(systemName: "square"), type: .thumbnail)
-            let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
-            let sut = PhotoSearchResultItemViewModelTests
-                .makeSUT(thumbnailLoader: thumbnailLoader)
-            
-            await sut.loadThumbnail()
-            
-            #expect(thumbnailLoader.invocations.notContains(.loadImage))
-        }
-        
-        
         @Test("When initial image is thumbnail, then it should load image")
         @MainActor
         func initialImagePlaceholder() async {
             let loadedImage = ImageContainer(image: Image(systemName: "square"), type: .thumbnail)
             let thumbnailLoader = MockThumbnailLoader(
-                initialImage: ImageContainer(image: Image(systemName:"circle.fill"), type: .placeholder),
                 loadImage: SingleItemAsyncSequence<any ImageContaining>(item: loadedImage).eraseToAnyAsyncSequence())
             let sut = PhotoSearchResultItemViewModelTests
                 .makeSUT(thumbnailLoader: thumbnailLoader)
@@ -81,12 +63,11 @@ struct PhotoSearchResultItemViewModelTests {
     private static func makeSUT(
         photo: NodeEntity = .init(handle: 1),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        searchText: Published<String> = Published(initialValue: "")
+        searchText: String = ""
     ) -> PhotoSearchResultItemViewModel {
-        var searchTextPublisher = searchText
-        return PhotoSearchResultItemViewModel(
+        PhotoSearchResultItemViewModel(
             photo: photo,
             thumbnailLoader: thumbnailLoader,
-            searchTextPublisher: searchTextPublisher .projectedValue)
+            searchText: searchText)
     }
 }

@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import ContentLibraries
 import Foundation
@@ -25,6 +26,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
+    private let monitorPhotosUseCase: any MonitorPhotosUseCaseProtocol
     private let contentLibrariesConfiguration: ContentLibraries.Configuration
     private let searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride
     private let debounceQueue: DispatchQueue
@@ -43,6 +45,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
+        monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol,
         contentLibrariesConfiguration: ContentLibraries.Configuration = ContentLibraries.configuration,
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(300),
         debounceQueue: DispatchQueue = DispatchQueue(label: "nz.mega.VisualMediaSearchDebounceQueue", qos: .userInitiated)
@@ -56,6 +59,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.albumCoverUseCase = albumCoverUseCase
         self.contentLibrariesConfiguration = contentLibrariesConfiguration
+        self.monitorPhotosUseCase = monitorPhotosUseCase
         self.searchDebounceTime = searchDebounceTime
         self.debounceQueue = debounceQueue
         
@@ -119,10 +123,16 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     
     private func loadVisualMedia(for searchText: String) async throws {
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
+        try Task.checkCancellation()
+        let albumsSequence = try await albumCellViewModelsSequence(
+            excludeSensitives: excludeSensitives, searchText: searchText)
+        try Task.checkCancellation()
+        let photosSequence = await photoSearchResultItemViewModelsSequence(
+            excludeSensitives: excludeSensitives, searchText: searchText)
+        try Task.checkCancellation()
         
-        for await albumCellViewModels in try await albumCellViewModelsSequence(
-            excludeSensitives: excludeSensitives, searchText: searchText) {
-            viewState = .searchResults(albums: albumCellViewModels, photos: [])
+        for await (albumCellViewModels, photoSearchResultItemViewModels) in combineLatest(albumsSequence, photosSequence) {
+            viewState = .searchResults(albums: albumCellViewModels, photos: photoSearchResultItemViewModels)
         }
     }
     
@@ -157,5 +167,33 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                 configuration: contentLibrariesConfiguration
             )
         }
+    }
+    
+    private func photoSearchResultItemViewModelsSequence(
+        excludeSensitives: Bool,
+        searchText: String
+    ) async -> AnyAsyncSequence<[PhotoSearchResultItemViewModel]> {
+        await monitorPhotosUseCase.monitorPhotos(filterOptions: [.allLocations, .allMedia], excludeSensitive: excludeSensitives, searchText: searchText)
+            .compactMap { [weak self] photoResult -> [PhotoSearchResultItemViewModel]? in
+                guard let self else { return nil }
+                var photos = (try? photoResult.get()) ?? []
+                try photos.sort {
+                    try Task.checkCancellation()
+                    return if $0.modificationTime == $1.modificationTime {
+                        $0.handle > $1.handle
+                    } else {
+                        $0.modificationTime < $1.modificationTime
+                    }
+                }
+                return try photos
+                    .map { photo in
+                        try Task.checkCancellation()
+                        return PhotoSearchResultItemViewModel(
+                            photo: photo,
+                            thumbnailLoader: thumbnailLoader,
+                            searchText: searchText)
+                    }
+            }
+            .eraseToAnyAsyncSequence()
     }
 }

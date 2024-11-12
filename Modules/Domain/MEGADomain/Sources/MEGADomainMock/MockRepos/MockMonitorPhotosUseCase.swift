@@ -23,12 +23,16 @@ public struct MockMonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     
     public func monitorPhotos(
         filterOptions: PhotosFilterOptionsEntity,
-        excludeSensitive: Bool
+        excludeSensitive: Bool,
+        searchText: String?
     ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
         await state.addInvocation(
             .monitorPhotos(filterOptions: filterOptions, excludeSensitive: excludeSensitive))
         
-        let filters = makeFilters(filterOptions: filterOptions, excludeSensitive: excludeSensitive)
+        let filters = makeFilters(
+            filterOptions: filterOptions,
+            excludeSensitive: excludeSensitive,
+            searchText: searchText)
         
         return if filters.isEmpty {
             monitorPhotosAsyncSequence
@@ -41,13 +45,17 @@ public struct MockMonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     }
     
     private func makeFilters(filterOptions: PhotosFilterOptionsEntity,
-                             excludeSensitive: Bool) -> [NodeEntityFilter] {
+                             excludeSensitive: Bool,
+                             searchText: String?) -> [NodeEntityFilter] {
         var filters = [NodeEntityFilter]()
         if filterOptions.contains(.favourites) {
             filters.append({ $0.isFavourite })
         }
         if excludeSensitive {
             filters.append({ !$0.isMarkedSensitive })
+        }
+        if let searchText {
+            filters.append({ $0.name.localizedCaseInsensitiveContains(searchText) })
         }
         return filters
     }

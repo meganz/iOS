@@ -1,3 +1,4 @@
+import ContentLibraries
 import Foundation
 import MEGAAssets
 import MEGADesignToken
@@ -14,9 +15,7 @@ struct PhotoSearchResultItemView: View {
         MEGAList(title: viewModel.title)
             .titleLineLimit(1)
             .replaceLeadingView {
-                viewModel.thumbnailContainer.image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                PhotoCellImage(container: viewModel.thumbnailContainer)
                     .frame(width: 40, height: 40)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                     .task {

@@ -396,7 +396,8 @@ extension PhotoAlbumContainerViewController {
                     repository: AccountRepository.newRepo)),
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             albumCoverUseCase: AlbumCoverUseCase(
-                nodeRepository: NodeRepository.newRepo))
+                nodeRepository: NodeRepository.newRepo),
+            monitorPhotosUseCase: makeMonitorPhotosUseCase())
     }
     
     private func makeVisualMediaSearchHistoryUseCase() -> some VisualMediaSearchHistoryUseCaseProtocol {
@@ -444,10 +445,22 @@ extension PhotoAlbumContainerViewController {
         MonitorUserAlbumPhotosUseCase(
             userAlbumRepository: UserAlbumCacheRepository.newRepo,
             photosRepository: PhotosRepository.sharedRepo,
-            sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo,
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo))
+            sensitiveNodeUseCase: makeSensitiveNodeUseCase()
+        )
+    }
+    
+    private func makeMonitorPhotosUseCase() -> some MonitorPhotosUseCaseProtocol {
+        MonitorPhotosUseCase(
+            photosRepository: PhotosRepository.sharedRepo,
+            photoLibraryUseCase: makePhotoLibraryUseCase(),
+            sensitiveNodeUseCase: makeSensitiveNodeUseCase())
+    }
+    
+    private func makeSensitiveNodeUseCase() -> some SensitiveNodeUseCaseProtocol {
+        SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo)
         )
     }
 }
