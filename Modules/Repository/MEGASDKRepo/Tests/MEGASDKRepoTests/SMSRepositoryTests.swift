@@ -1,5 +1,4 @@
 import MEGADomain
-import MEGASdk
 import MEGASDKRepo
 import MEGASDKRepoMock
 import Testing

@@ -110,6 +110,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public var delegateQueueType: ListenerQueueType?
     public var contentConsumptionPreferences: [String: String]
     
+    public var _isRequestStatusMonitorEnabled: Bool
+    
     public init(
         fileLinkNode: MEGANode? = nil,
         nodes: [MEGANode] = [],
@@ -168,7 +170,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         folderInfo: MEGAFolderInfo? = nil,
         shouldListGlobalDelegates: Bool = false,
         storageState: StorageState? = nil,
-        verifiedPhoneNumber: String? = nil
+        verifiedPhoneNumber: String? = nil,
+        isRequestStatusMonitorEnabled: Bool = false
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -228,6 +231,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.shouldListGlobalDelegates = shouldListGlobalDelegates
         self.storageState = storageState
         self.verifiedPhoneNumber = verifiedPhoneNumber
+        _isRequestStatusMonitorEnabled = isRequestStatusMonitorEnabled
         super.init()
     }
     
@@ -874,6 +878,14 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public override func sendSMSVerificationCode(toPhoneNumber phoneNumber: String, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
+    }
+    
+    public override func enableRequestStatusMonitor(_ enable: Bool) {
+        _isRequestStatusMonitorEnabled = enable
+    }
+    
+    public override var isRequestStatusMonitorEnabled: Bool {
+        _isRequestStatusMonitorEnabled
     }
 }
 
