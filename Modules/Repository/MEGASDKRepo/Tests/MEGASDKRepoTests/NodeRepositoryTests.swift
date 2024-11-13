@@ -124,26 +124,21 @@ final class NodeRepositoryTests: XCTestCase {
         megaErrorType: MEGAErrorType,
         expectedErrorEntity: NodeErrorEntity,
         expectationDescription: String
-    ) {
+    ) async {
         let sut = makeSUT(error: megaErrorType)
         
-        let expectation = self.expectation(description: expectationDescription)
-
-        sut.nodeFor(fileLink: FileLinkEntity(linkURL: link)) { result in
-            switch result {
-            case .failure(let error):
-                XCTAssertEqual(
-                    error,
-                    expectedErrorEntity,
-                    "Expected error '\(expectedErrorEntity)' but received \(error)"
-                )
-            case .success(let node):
-                XCTFail("Expected failure with error \(expectedErrorEntity), but received success with node: \(node)")
-            }
-            expectation.fulfill()
+        do {
+            let node = try await sut.nodeFor(fileLink: FileLinkEntity(linkURL: link))
+            XCTFail("Expected failure with error \(expectedErrorEntity), but received success with node: \(node)")
+        } catch let error as NodeErrorEntity {
+            XCTAssertEqual(
+                error,
+                expectedErrorEntity,
+                "Expected error '\(expectedErrorEntity)' but received \(error)"
+            )
+        } catch {
+            XCTFail("Expected failure with NodeErrorEntity, but found: \(error)")
         }
-
-        wait(for: [expectation], timeout: 1)
     }
     
     private typealias NodeRetrievalClosure = () -> NodeEntity?
@@ -194,30 +189,25 @@ final class NodeRepositoryTests: XCTestCase {
     }
     
     // MARK: - Node for file Link
-    func testNodeForFileLink_validLink_completesWithNode() throws {
-        let link = try defaultLink()
-        let expectedNode = defaultNode()
-        let sut = makeSUT(fileLinkNode: expectedNode)
-        let expectation = self.expectation(description: "Node fetch for valid file link should complete with a node.")
-
-        sut.nodeFor(fileLink: FileLinkEntity(linkURL: link)) { result in
-            switch result {
-            case .success(let node):
-                XCTAssertEqual(node.handle, expectedNode.handle, "Node handle should match the expected handle.")
-                XCTAssertEqual(node.name, expectedNode.name, "Node name should match the expected name.")
-            case .failure(let error):
-                XCTFail("Expected success with a node, but received failure with error: \(error)")
-            }
-            expectation.fulfill()
+    func testNodeForFileLink_validLink_completesWithNode() async {
+        do {
+            let link = try defaultLink()
+            let expectedNode = defaultNode()
+            let sut = makeSUT(fileLinkNode: expectedNode)
+            let fileLink = FileLinkEntity(linkURL: link)
+            
+            let node = try await sut.nodeFor(fileLink: fileLink)
+            XCTAssertEqual(node.handle, expectedNode.handle, "Node handle should match the expected handle.")
+            XCTAssertEqual(node.name, expectedNode.name, "Node name should match the expected name.")
+        } catch {
+            XCTFail("Expected success with a node, but received failure with error: \(error)")
         }
-        
-        wait(for: [expectation], timeout: 1)
     }
 
-    func testNodeForFileLink_invalidLink_completesWithFailure() throws {
+    func testNodeForFileLink_invalidLink_completesWithFailure() async throws {
         let link = try defaultLink()
         
-        executeNodeForFileLinkTest(
+        await executeNodeForFileLinkTest(
             link: link,
             megaErrorType: .apiENoent,
             expectedErrorEntity: .nodeNotFound,
@@ -225,10 +215,10 @@ final class NodeRepositoryTests: XCTestCase {
         )
     }
     
-    func testNodeForFileLink_validLinkMissingNode_completesWithFailure() throws {
+    func testNodeForFileLink_validLinkMissingNode_completesWithFailure() async throws {
         let link = try defaultLink()
         
-        executeNodeForFileLinkTest(
+        await executeNodeForFileLinkTest(
             link: link,
             megaErrorType: .apiOk,
             expectedErrorEntity: .nodeNotFound,

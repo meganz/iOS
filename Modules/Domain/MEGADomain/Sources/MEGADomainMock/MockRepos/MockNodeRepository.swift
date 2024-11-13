@@ -57,14 +57,6 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         node
     }
     
-    public func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
-        guard let node = fileLinkNode else {
-            completion(.failure(.nodeNotFound))
-            return
-        }
-        completion(.success(node))
-    }
-    
     public func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
         guard let node = fileLinkNode else {
             throw NodeErrorEntity.nodeNotFound

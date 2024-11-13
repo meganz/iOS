@@ -37,31 +37,20 @@ public struct NodeRepository: NodeRepositoryProtocol {
         return nil
     }
     
-    public func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
-        sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { (result) in
-            switch result {
-            case .success(let request):
-                guard let node = request.publicNode else {
-                    completion(.failure(.nodeNotFound))
-                    return
-                }
-                completion(.success(node.toNodeEntity()))
-            case .failure:
-                completion(.failure(.nodeNotFound))
-            }
-        })
-    }
-    
     public func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
         try await withCheckedThrowingContinuation { continuation in
-            nodeFor(fileLink: fileLink) { result in
+            sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { result in
                 switch result {
-                case .success(let node):
-                    continuation.resume(returning: node)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
+                case .success(let request):
+                    guard let node = request.publicNode else {
+                        continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
+                        return
+                    }
+                    continuation.resume(returning: node.toNodeEntity())
+                case .failure:
+                    continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
                 }
-            }
+            })
         }
     }
     
