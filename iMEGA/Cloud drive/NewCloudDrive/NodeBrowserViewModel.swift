@@ -537,12 +537,14 @@ class NodeBrowserViewModel: ObservableObject {
         
         accountStorageMonitoringTask = Task { [weak self] in
             for await status in onStorageStatusUpdateSequence {
+                MEGALogDebug("[StorageBanner] monitorStorageStatusUpdates - storage status: \(status)")
                 self?.updateTemporaryBanner(status: status)
             }
         }
     }
     
     func updateTemporaryBanner(status: StorageStatusEntity) {
+        MEGALogDebug("[StorageBanner] updateTemporaryBanner, current warning type: \(String(describing: temporaryBannerViewModel?.warningType)), new storage status: \(status)")
         switch status {
         case .full:
             if isFullSOQBannerEnabled(), temporaryBannerViewModel?.warningType != .fullStorageOverQuota {
@@ -581,7 +583,7 @@ class NodeBrowserViewModel: ObservableObject {
             }
             return
         }
-        
+        MEGALogDebug("[StorageBanner] refreshStorageBanners - storage status: \(accountStorageUseCase.currentStorageStatus)")
         if accountStorageUseCase.shouldRefreshStorageStatus {
             refreshStorageStatus()
         }
