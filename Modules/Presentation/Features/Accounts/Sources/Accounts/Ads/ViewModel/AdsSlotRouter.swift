@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASDKRepo
+import MEGASwiftUI
 import SwiftUI
 import UIKit
 
@@ -10,26 +11,6 @@ public struct AdsSlotRouter<T: View> {
     private let accountUseCase: any AccountUseCaseProtocol
     private let contentView: T
     private let presentationStyle: UIModalPresentationStyle
-    
-    private class HostingController<S: View>: UIHostingController<AdsSlotView<S>> {
-        
-        private var onViewFirstAppeared: (() -> Void)?
-        
-        init(rootView: AdsSlotView<S>, onViewFirstAppeared: (() -> Void)? = nil) {
-            self.onViewFirstAppeared = onViewFirstAppeared
-            super.init(rootView: rootView)
-        }
-        
-        required dynamic init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-        
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
-            onViewFirstAppeared?()
-            onViewFirstAppeared = nil
-        }
-    }
     
     public init(
         adsSlotViewController: some AdsSlotViewControllerProtocol,
@@ -50,12 +31,13 @@ public struct AdsSlotRouter<T: View> {
             adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
             accountUseCase: accountUseCase
         )
+        
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
-        let adsViewController = HostingController(
-            rootView: adsSlotView,
-            onViewFirstAppeared: onViewFirstAppeared
-        )
+            .onFirstAppear(perform: onViewFirstAppeared)
+        
+        let adsViewController = UIHostingController(rootView: adsSlotView)
         adsViewController.modalPresentationStyle = presentationStyle
+        
         return adsViewController
     }
     
