@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
@@ -378,7 +379,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            callUseCase: callUseCase,
                                                            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
-        await test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
+        await test(viewModel: viewModel, action: .participantListShareLinkButtonPressed(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         
         try await Task.sleep(nanoseconds: 500_000_000)
 
@@ -397,7 +398,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            callUseCase: callUseCase,
                                                            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
+        test(viewModel: viewModel, action: .participantListShareLinkButtonPressed(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(containerRouter.shareLink_calledTimes == 0)
     }
     
@@ -408,7 +409,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        test(viewModel: viewModel, action: .inviteParticipantsRowTapped, expectedCommands: [])
         XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
@@ -420,7 +421,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase, chatRoomUseCase: chatRoomUseCase,
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        test(viewModel: viewModel, action: .inviteParticipantsRowTapped, expectedCommands: [])
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
     
@@ -431,7 +432,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase,
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        test(viewModel: viewModel, action: .inviteParticipantsRowTapped, expectedCommands: [])
         XCTAssert(router.showNoAvailableContactsAlert_CalledTimes == 1)
     }
     
@@ -442,7 +443,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase,
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        test(viewModel: viewModel, action: .inviteParticipantsRowTapped, expectedCommands: [])
         XCTAssert(router.inviteParticipants_calledTimes == 0)
     }
     
@@ -453,7 +454,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        test(viewModel: viewModel, action: .inviteParticipantsRowTapped, expectedCommands: [])
         XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
@@ -467,7 +468,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: mockAccountUseCase, chatRoomUseCase: chatRoomUseCase,
                                                            headerConfigFactory: headerConfigFactory)
-        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        test(viewModel: viewModel, action: .inviteParticipantsRowTapped, expectedCommands: [])
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
     
@@ -485,9 +486,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase,
             headerConfigFactory: headerConfigFactory
         )
-        viewModel.dispatch(.inviteParticipants)
+        viewModel.dispatch(.inviteParticipantsRowTapped)
         XCTAssert(router.inviteParticipants_calledTimes == 1)
-        viewModel.dispatch(.inviteParticipants)
+        viewModel.dispatch(.inviteParticipantsRowTapped)
         XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
@@ -867,6 +868,24 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         harness.raiseHandParticipantsMustMatch(raiseHandsList: raiseHandList, withUpdatedParticipants: participantsUpdated.filter { $0.raisedHand })
     }
     
+    @MainActor func testInviteParticipantsRowTappedIsTracked() {
+        let harness = Harness()
+        harness.sut.dispatch(.inviteParticipantsRowTapped)
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.tracker.trackedEventIdentifiers,
+            [ParticipantListInviteParticipantRowPressedEvent()]
+        )
+    }
+    
+    @MainActor func testShareLinkParticipantListRowTappedIsTracked() {
+        let harness = Harness()
+        harness.sut.dispatch(.participantListShareLinkButtonPressed(presenter: UIViewController(), sender: UIButton()))
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.tracker.trackedEventIdentifiers,
+            [ParticipantListShareMeetingLinkPressedEvent()]
+        )
+    }
+    
     @MainActor final class Harness {
         let sut: MeetingFloatingPanelViewModel
                 
@@ -882,7 +901,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let chatRoom: ChatRoomEntity
         let router: MockMeetingFloatingPanelRouter
         let callUseCase: MockCallUseCase
-
+        let tracker = MockTracker()
+        
         init(
             router: MockMeetingFloatingPanelRouter = .init(),
             containerViewModel: MeetingContainerViewModel? = nil,
@@ -900,7 +920,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             self.chatRoom = chatRoom
             self.router = router
             self.callUseCase = callUseCase
-            
             self.callUpdateUseCase = callUpdateUseCase
             self.chatRoomUpdateUseCase = chatRoomUpdateUseCase
             self.sessionUpdateUseCase = sessionUpdateUseCase
@@ -920,7 +939,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 headerConfigFactory: headerConfigFactory,
                 featureFlags: MockFeatureFlagProvider(list: .init()),
                 notificationCenter: NotificationCenter.default,
-                presentUpgradeFlow: { _ in }
+                presentUpgradeFlow: { _ in },
+                tracker: tracker
             )
         }
         

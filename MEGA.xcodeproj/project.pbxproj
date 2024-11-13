@@ -1435,6 +1435,7 @@
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
 		94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */; };
 		94AF34972CBD71700010EBA8 /* UserAttributeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF34962CBD71700010EBA8 /* UserAttributeHandler.swift */; };
+		94AF8A132CE4C4E6009B27A9 /* AnalyticsTracking+ShareLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF8A122CE4C4DA009B27A9 /* AnalyticsTracking+ShareLink.swift */; };
 		94AFB6F42CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFB6F32CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift */; };
 		94B09E552B84CC87007D6B84 /* NodeActionsDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */; };
 		94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */; };
@@ -4174,6 +4175,7 @@
 		94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTests.swift; sourceTree = "<group>"; };
 		94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManagementTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		94AF34962CBD71700010EBA8 /* UserAttributeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeHandler.swift; sourceTree = "<group>"; };
+		94AF8A122CE4C4DA009B27A9 /* AnalyticsTracking+ShareLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsTracking+ShareLink.swift"; sourceTree = "<group>"; };
 		94AFB6F32CAC1B14009EAE2F /* ShareLinkDialogRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkDialogRouterTests.swift; sourceTree = "<group>"; };
 		94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionsDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarActionFactory.swift; sourceTree = "<group>"; };
@@ -9647,6 +9649,7 @@
 		83B944762C5B959B00F8D6B6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				94AF8A122CE4C4DA009B27A9 /* AnalyticsTracking+ShareLink.swift */,
 				83B944772C5B95A700F8D6B6 /* ShareLinkOptions.swift */,
 			);
 			path = Model;
@@ -14306,6 +14309,7 @@
 				25AA545F2B27E1640094F2A2 /* AlbunListPlaceholderView.swift in Sources */,
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
 				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
+				94AF8A132CE4C4E6009B27A9 /* AnalyticsTracking+ShareLink.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,

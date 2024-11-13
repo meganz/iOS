@@ -1,6 +1,7 @@
 import Chat
 import ChatRepo
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -9,8 +10,9 @@ import MEGAPresentation
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
     case onViewAppear
-    case shareLink(presenter: UIViewController, sender: UIButton)
-    case inviteParticipants
+    case participantListShareLinkButtonPressed(presenter: UIViewController, sender: UIButton)
+    case inviteParticipantsRowTapped
+    case presentInviteParticipantsScreen
     case onContextMenuTap(presenter: UIViewController, sender: UIButton, participant: CallParticipantEntity)
     case makeModerator(participant: CallParticipantEntity)
     case removeModeratorPrivilege(forParticipant: CallParticipantEntity)
@@ -63,13 +65,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
-
+    private let tracker: any AnalyticsTracking
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var callParticipantsNotInCall = [CallParticipantEntity]()
     private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
     private var seeWaitingRoomListNotificationTask: Task<Void, Never>?
-
+    
     private let presentUpgradeFlow: (AccountDetailsEntity) -> Void
     // store state of the fact that user dismissed upsell banner
     // shown to non-organizer host when there's more than max number of meeting participant
@@ -132,7 +134,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol,
          featureFlags: some FeatureFlagProviderProtocol,
          notificationCenter: NotificationCenter,
-         presentUpgradeFlow: @escaping (AccountDetailsEntity) -> Void
+         presentUpgradeFlow: @escaping (AccountDetailsEntity) -> Void,
+         tracker: some AnalyticsTracking
     ) {
         self.router = router
         self.containerViewModel = containerViewModel
@@ -150,6 +153,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.featureFlagProvider = featureFlags
         self.notificationCenter = notificationCenter
         self.presentUpgradeFlow = presentUpgradeFlow
+        self.tracker = tracker
     }
     
     func dispatch(_ action: MeetingFloatingPanelAction) {
@@ -161,10 +165,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 selectWaitingRoomList = false
                 invokeCommand?(.transitionToLongForm)
             }
-        case .shareLink(let presenter, let sender):
-            containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
-        case .inviteParticipants:
-            inviteParticipants()
+        case .participantListShareLinkButtonPressed(let presenter, let sender):
+            tracker.trackShareLink(.participantListBottomButton)
+            containerViewModel?.dispatch(.presentShareLinkActivity(presenter: presenter, sender: sender, completion: nil))
+        case .inviteParticipantsRowTapped:
+            inviteParticipantsRowTapped()
+        case .presentInviteParticipantsScreen:
+            presentInviteParticipants()
         case .onContextMenuTap(let presenter, let sender, let participant):
             router.showContextMenu(presenter: presenter,
                                    sender: sender,
@@ -251,7 +258,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     // MARK: - Private methods
     
-    private func inviteParticipants() {
+    private func inviteParticipantsRowTapped() {
+        tracker.trackAnalyticsEvent(with: ParticipantListInviteParticipantRowPressedEvent())
+        presentInviteParticipants()
+    }
+    
+    private func presentInviteParticipants() {
+        
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         
         guard participantsAddingViewFactory.hasVisibleContacts else {
@@ -281,7 +294,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 )
             }
         )
-                       
+        
         router.inviteParticipants(
             withParticipantsAddingViewFactory: participantsAddingViewFactory,
             contactPickerConfig: config
@@ -593,7 +606,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     // MARK: - Raise hand
-
+    
     private func reloadRaiseHandParticipantsList(_ call: CallEntity) {
         for participant in callParticipants {
             participant.raisedHand = call.raiseHandsList.contains(participant.participantId)
@@ -726,7 +739,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .waitingRoom:
             callParticipantsInWaitingRoom
         }
-    
+        
         return ParticipantsListView(
             headerConfig: headerConfigFactory.headerConfig(
                 tab: tab,
@@ -805,7 +818,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         let myself = CallParticipantEntity.myself(
             handle: accountUseCase.currentUserHandle ?? .invalid,
             userName: chatUseCase.myFullName(),
-            chatRoom: chatRoom, 
+            chatRoom: chatRoom,
             raisedHand: call.raiseHandsList.contains(accountUseCase.currentUserHandle ?? .invalid)
         )
         myself.video = call.hasLocalVideo ? .on : .off

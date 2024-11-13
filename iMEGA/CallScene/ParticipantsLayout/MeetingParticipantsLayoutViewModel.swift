@@ -2,6 +2,7 @@ import Chat
 @preconcurrency import Combine
 import CombineSchedulers
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -18,7 +19,8 @@ enum CallViewAction: ActionType {
     case tapOnBackButton
     case showRenameChatAlert
     case switchCamera
-    case shareLinkTapped(sender: NSObject)
+    case shareLinkEmptyMeetingButtonTapped(sender: AnyObject)
+    case shareLinkTappedBarButtonTapped(sender: NSObject)
     case setNewTitle(String)
     case discardChangeTitle
     case renameTitleDidChange(String)
@@ -224,7 +226,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var layoutUpdateChannel: ParticipantLayoutUpdateChannel
     let cameraSwitcher: any CameraSwitching
     let scheduler: AnySchedulerOf<DispatchQueue>
-        
+    let tracker: any AnalyticsTracking
     init(
         containerViewModel: MeetingContainerViewModel,
         scheduler: AnySchedulerOf<DispatchQueue>,
@@ -249,7 +251,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         call: CallEntity,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         layoutUpdateChannel: ParticipantLayoutUpdateChannel,
-        cameraSwitcher: some CameraSwitching
+        cameraSwitcher: some CameraSwitching,
+        tracker: some AnalyticsTracking
     ) {
         self.chatUseCase = chatUseCase
         self.scheduler = scheduler
@@ -275,6 +278,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.layoutUpdateChannel = layoutUpdateChannel
         self.cameraSwitcher = cameraSwitcher
         self.cameraEnabled = call.hasLocalVideo
+        self.tracker = tracker
         super.init()
         self.$callsSoundNotificationPreference.useCase = preferenceUseCase
         
@@ -614,7 +618,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             containerViewModel?.dispatch(.tapOnBackButton)
         case .showRenameChatAlert:
             invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.chatType == .meeting))
-        case .setNewTitle(let newTitle):            
+        case .setNewTitle(let newTitle):
             Task {
                 do {
                     let newName = try await chatRoomUseCase.renameChatRoom(chatRoom, title: newTitle)
@@ -708,13 +712,21 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             Task {
                 await cameraSwitcher.switchCamera()
             }
-        case .shareLinkTapped(let sender):
-            containerViewModel?.dispatch(.shareLinkTapped(sender))
         case .copyLinkTapped:
             containerViewModel?.dispatch(.copyLinkTapped)
         case .inviteParticipantsTapped:
             containerViewModel?.dispatch(.inviteParticipantsTapped)
+        case .shareLinkTappedBarButtonTapped(let sender):
+            tracker.trackShareLink(.callNavBarButton)
+            presentShareOptions(sender)
+        case .shareLinkEmptyMeetingButtonTapped(sender: let sender):
+            tracker.trackShareLink(.callEmptyAlert)
+            presentShareOptions(sender)
         }
+    }
+                                         
+    func presentShareOptions(_ sender: AnyObject) {
+        containerViewModel?.dispatch(.presentShareLinkOptions(sender))
     }
     
     var cameraAndShareButtonsInNavBar: Bool {

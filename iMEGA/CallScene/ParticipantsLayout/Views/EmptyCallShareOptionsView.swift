@@ -27,16 +27,20 @@ struct EmptyCallShareOptionsView: View {
             } label: {
                 Text(Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.shareMeetingLink)
                     .foregroundColor(TokenColors.Text.inverseAccent.swiftUI)
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
             }
             .frame(width: 250, height: 50)
             .background(TokenColors.Button.primary.swiftUI)
             .cornerRadius(8)
-            
+
             Button {
                 actionHandler(.copyLink)
             } label: {
                 Text(Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.copyMeetingLink)
                     .foregroundColor(TokenColors.Text.primary.swiftUI)
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
             }
             .frame(width: 250, height: 50)
             .background(TokenColors.Button.secondary.swiftUI)
@@ -48,6 +52,8 @@ struct EmptyCallShareOptionsView: View {
                 } label: {
                     Text(Strings.Localizable.Call.Meeting.Empty.ShareOptionsDialog.inviteParticipants)
                         .foregroundColor(TokenColors.Text.primary.swiftUI)
+                        .frame(maxWidth: .infinity)
+                        .contentShape(Rectangle())
                 }
                 .frame(width: 250, height: 50)
             }

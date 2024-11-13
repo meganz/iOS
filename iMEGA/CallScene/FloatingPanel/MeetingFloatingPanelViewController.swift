@@ -165,7 +165,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func shareLink(_ sender: UIButton) {
-        viewModel.dispatch(.shareLink(presenter: self, sender: sender))
+        viewModel.dispatch(
+            .participantListShareLinkButtonPressed(
+                presenter: self,
+                sender: sender
+            )
+        )
     }
     
     // MARK: - Private methods
@@ -249,7 +254,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         case .invite:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingInviteParticipantTableViewCell else { return UITableViewCell() }
             cell.cellTappedHandler = { [weak self] in
-                self?.viewModel.dispatch(.inviteParticipants)
+                self?.viewModel.dispatch(.inviteParticipantsRowTapped)
             }
             return cell
         case .participants:

@@ -70,7 +70,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         image: UIImage(resource: .shareCallLink),
         style: .plain,
         target: self,
-        action: #selector(MeetingParticipantsLayoutViewController.shareLinkButtonTapped)
+        action: #selector(MeetingParticipantsLayoutViewController.shareLinkBarButtonTapped)
     )
     
     private var statusBarHidden = false {
@@ -356,8 +356,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         viewModel.dispatch(.tapOnOptionsMenuButton(presenter: navigationController ?? self, sender: optionsMenuButton))
     }
     
-    @objc func shareLinkButtonTapped() {
-        viewModel.dispatch(.shareLinkTapped(sender: shareLinkButton))
+    @objc func shareLinkBarButtonTapped() {
+        viewModel.dispatch(.shareLinkTappedBarButtonTapped(sender: shareLinkButton))
     }
     
     @IBAction func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
@@ -699,7 +699,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             guard let self else { return }
             switch action {
             case .shareLink:
-                viewModel.dispatch(.shareLinkTapped(sender: shareLinkButton))
+                viewModel.dispatch(.shareLinkEmptyMeetingButtonTapped(sender: shareLinkButton))
             case .copyLink:
                 viewModel.dispatch(.copyLinkTapped)
             case .inviteParticipants:

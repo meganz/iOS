@@ -442,8 +442,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     // MARK: - Private
     
     private func fetchChats() {
+        cancelLoadingTask()
         loadingTask = Task {
-            defer { cancelLoadingTask() }
             
             updateUnreadBadgeForChatsAndMeetings()
             
@@ -787,8 +787,10 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func listenToChatListUpdate() {
         chatUseCase
             .monitorChatListItemUpdate()
-            .sink { [weak self] chatListItems in
-                self?.onChatListItemsUpdate(chatListItems)
+            .sink { @Sendable [weak self] chatListItems in
+                Task { @MainActor in
+                    self?.onChatListItemsUpdate(chatListItems)
+                }
             }
             .store(in: &subscriptions)
     }
@@ -907,12 +909,14 @@ final class ChatRoomsListViewModel: ObservableObject {
 extension ChatRoomsListViewModel: ChatMenuDelegate {
     
     nonisolated func chatStatusMenu(didSelect action: ChatStatusEntity) {
+        tracker.trackAnalyticsEvent(with: ChatRoomStatusMenuItemEvent())
         Task { @MainActor in
             changeChatStatus(to: action)
         }
     }
     
     nonisolated func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption) {
+        tracker.trackAnalyticsEvent(with: ChatRoomDNDMenuItemEvent())
         Task { @MainActor in
             globalDNDNotificationControl.turnOnDND(dndTurnOnOption: option) { [weak self] in
                 self?.refreshContextMenu()
@@ -933,6 +937,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
     }
     
     nonisolated func archivedChatsTapped() {
+        tracker.trackAnalyticsEvent(with: ArchivedChatsMenuItemEvent())
         Task { @MainActor in
             router.showArchivedChatRooms()
         }

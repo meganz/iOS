@@ -91,7 +91,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             chatRoomUseCase: MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
         )
         
-        await test(viewModel: harness.sut, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
+        await test(viewModel: harness.sut, action: .presentShareLinkActivity(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         
         try await Task.sleep(nanoseconds: 500_000_000)
         
@@ -100,7 +100,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     
     @MainActor func testAction_shareLink_Failure() {
         let harness = Harness(chatRoom: .standardPrivilegeMeeting)
-        test(viewModel: harness.sut, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
+        test(viewModel: harness.sut, action: .presentShareLinkActivity(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(harness.router.shareLink_calledTimes == 0)
     }
     
@@ -452,6 +452,24 @@ final class MeetingContainerViewModelTests: XCTestCase {
         )
         
         XCTAssertEqual(harness.router.notifyFloatingPanelInviteParticipants_calledTimes, 1)
+    }
+    
+    @MainActor func test_sendLinkToChatTapped_tracked() {
+        let harness = Harness()
+        harness.sut.dispatch(.sendLinkToChatTapped)
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.tracker.trackedEventIdentifiers,
+            [SendLinkToChatPressedEvent()]
+        )
+    }
+    
+    @MainActor func test_inviteParticipantsTapped_tracked() {
+        let harness = Harness()
+        harness.sut.dispatch(.inviteParticipantsTapped)
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.tracker.trackedEventIdentifiers,
+            [InviteParticipantsPressedEvent()]
+        )
     }
 }
 

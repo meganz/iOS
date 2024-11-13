@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -16,7 +17,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private var chatRoom: ChatRoomEntity
     private var invitedUserIdsToBypassWaitingRoom = Set<HandleEntity>()
     private var subscriptions = Set<AnyCancellable>()
-
+    private let tracker: any AnalyticsTracking
     @Published var myUserParticipant: ChatRoomParticipantViewModel
     @Published var chatRoomParticipants = [ChatRoomParticipantViewModel]()
     @Published var shouldShowAddParticipants = false
@@ -31,7 +32,8 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         chatUseCase: some ChatUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
-        chatRoom: ChatRoomEntity
+        chatRoom: ChatRoomEntity,
+        tracker: some AnalyticsTracking
     ) {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
@@ -40,6 +42,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.callUseCase = callUseCase
         self.chatRoom = chatRoom
+        self.tracker = tracker
         
         myUserParticipant = ChatRoomParticipantViewModel(
             router: router,
@@ -59,6 +62,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     
     @MainActor
     func addParticipantTapped() {
+        tracker.trackAnalyticsEvent(with: MeetingInfoAddParticipantButtonTappedEvent())
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         
         guard participantsAddingViewFactory.hasVisibleContacts else {

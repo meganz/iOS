@@ -243,4 +243,19 @@ final class MeetingInfoViewModelTests: XCTestCase {
             sut.chatRoomAvatarViewModel?.chatListItemAvatar != beforeChatListItemAvatar
         }
     }
+    
+    @MainActor
+    func test_leaveGroupViewTapped_tracked() async {
+        let tracker = MockTracker()
+        let sut = MeetingInfoViewModel(
+            tracker: tracker
+        )
+        sut.leaveGroupViewTapped()  
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MeetingInfoLeaveMeetingButtonTappedEvent()
+            ]
+        )
+    }
 }

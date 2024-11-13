@@ -116,6 +116,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     }
     
     func moreButtonTapped() async {
+        tracker.trackAnalyticsEvent(with: CallUIMoreButtonPressedEvent())
         menuPresenter(moreMenuActions)
         if showRaiseHandBadge {
             await raiseHandBadgeStoring.incrementRaiseHandBadgePresented()

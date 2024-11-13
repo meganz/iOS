@@ -152,7 +152,9 @@ final class MeetingInfoViewModel: ObservableObject {
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
-            chatRoom: chatRoom)
+            chatRoom: chatRoom,
+            tracker: tracker
+        )
     }
     
     private func initSubscriptions() {
@@ -303,6 +305,8 @@ extension MeetingInfoViewModel {
     
     // MARK: - Leave group
     func leaveGroupViewTapped() {
+        
+        tracker.trackAnalyticsEvent(with: MeetingInfoLeaveMeetingButtonTappedEvent())
         guard let chatRoom else {
             return
         }

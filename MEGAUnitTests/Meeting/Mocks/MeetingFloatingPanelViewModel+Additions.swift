@@ -65,7 +65,8 @@ extension MeetingFloatingPanelViewModel {
             headerConfigFactory: headerConfigFactory,
             featureFlags: MockFeatureFlagProvider(list: .init()), 
             notificationCenter: NotificationCenter.default,
-            presentUpgradeFlow: {_ in }
+            presentUpgradeFlow: {_ in },
+            tracker: MockTracker()
         )
     }
 }
