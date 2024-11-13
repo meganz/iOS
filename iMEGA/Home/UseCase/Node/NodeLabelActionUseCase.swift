@@ -51,7 +51,7 @@ final class NodeLabelActionUseCase: NodeLabelActionUseCaseProtocol {
         forNode nodeHandle: HandleEntity,
         completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
     ) {
-        nodeLabelActionRepository.resetNodeLabelColor(forNode: nodeHandle, completion: completion ?? { _ in })
+        nodeLabelActionRepository.resetNodeLabelColor(forNode: nodeHandle, completion: completion)
     }
 }
 
