@@ -263,6 +263,8 @@
 		25484F782B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */; };
 		254E997D2C697185002C82D4 /* WidgetCentreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254E997C2C697185002C82D4 /* WidgetCentreProtocol.swift */; };
 		2554C5C62BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */; };
+		25594E3E2CE169F00039745E /* SlideShowCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25594E3D2CE169F00039745E /* SlideShowCellViewModel.swift */; };
+		25594E402CE16A270039745E /* MediaEntityLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25594E3F2CE16A270039745E /* MediaEntityLoader.swift */; };
 		255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255FE68F2ACBB5D40077A85C /* AppearanceListFooterView.swift */; };
 		255FE6932ACCB1810077A85C /* AppearanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255FE6922ACCB1810077A85C /* AppearanceViewModel.swift */; };
 		2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */; };
@@ -2947,6 +2949,8 @@
 		25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadBannerStatusProviderTests.swift; sourceTree = "<group>"; };
 		254E997C2C697185002C82D4 /* WidgetCentreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetCentreProtocol.swift; sourceTree = "<group>"; };
 		2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SystemGeneratedNodeRepository+Additions.swift"; sourceTree = "<group>"; };
+		25594E3D2CE169F00039745E /* SlideShowCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowCellViewModel.swift; sourceTree = "<group>"; };
+		25594E3F2CE16A270039745E /* MediaEntityLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaEntityLoader.swift; sourceTree = "<group>"; };
 		255FE68F2ACBB5D40077A85C /* AppearanceListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceListFooterView.swift; sourceTree = "<group>"; };
 		255FE6922ACCB1810077A85C /* AppearanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModel.swift; sourceTree = "<group>"; };
 		2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -6682,7 +6686,9 @@
 			isa = PBXGroup;
 			children = (
 				9DB88B62290D98BB008CB09E /* ImageScrollView.swift */,
+				25594E3F2CE16A270039745E /* MediaEntityLoader.swift */,
 				325EFA7028AB9405005D4851 /* Slideshow.storyboard */,
+				25594E3D2CE169F00039745E /* SlideShowCellViewModel.swift */,
 				328A913928A9DB890058C645 /* SlideShowCollectionView.swift */,
 				328A913A28A9DB890058C645 /* SlideShowCollectionViewCell.swift */,
 				328A913C28A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift */,
@@ -15002,6 +15008,7 @@
 				124306D727E16048003286C8 /* MediaDiscoveryRouter.swift in Sources */,
 				12647CD427D7F7C3002033AF /* MediaDiscoveryViewController.swift in Sources */,
 				122977DE27DA976F0048F381 /* MediaDiscoveryViewModel.swift in Sources */,
+				25594E402CE16A270039745E /* MediaEntityLoader.swift in Sources */,
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
 				BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */,
 				BFD6534B25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift in Sources */,
@@ -15668,6 +15675,7 @@
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
 				5DD6B16B24D67E7C00F14515 /* SlidePanelView.swift in Sources */,
+				25594E3E2CE169F00039745E /* SlideShowCellViewModel.swift in Sources */,
 				328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */,
 				328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */,
 				328A914028A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift in Sources */,

@@ -1,9 +1,13 @@
-import MEGADomain
+import Combine
 import UIKit
 
 final class SlideShowCollectionViewCell: UICollectionViewCell {
+    
     let imageScrollView = ImageScrollView()
+    
     private var slideshowInteraction: (any SlideShowInteraction)?
+    private var viewModelSubject = PassthroughSubject<SlideShowCellViewModel, Never>()
+    private var cancellables = Set<AnyCancellable>()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -21,13 +25,34 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTapGestureRecognizer(_:)))
         addGestureRecognizer(singleTapGesture)
+        
+        bindToViewModel()
     }
     
-    func update(with mediaEntity: SlideShowMediaEntity, andInteraction slideshowInteraction: some SlideShowInteraction) {
+    func update(with viewModel: SlideShowCellViewModel, andInteraction slideshowInteraction: some SlideShowInteraction) {
         self.slideshowInteraction = slideshowInteraction
         imageScrollView.setup()
-        guard let image = mediaEntity.image else { return }
-        imageScrollView.display(image: image, gifImageFileUrl: mediaEntity.fileUrl)
+        viewModelSubject.send(viewModel)
+    }
+    
+    private func bindToViewModel() {
+        
+        viewModelSubject
+            .map { viewModel -> AnyPublisher<SlideShowCellViewModel.ImageSource?, Never> in
+                viewModel.$imageSource.eraseToAnyPublisher()
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] imageSource in
+                guard
+                    let self,
+                    let imageSource else { return }
+                
+                imageScrollView.display(
+                    image: imageSource.image,
+                    gifImageFileUrl: imageSource.fileUrl)
+            }
+            .store(in: &cancellables)
     }
     
     func resetZoomScale() {

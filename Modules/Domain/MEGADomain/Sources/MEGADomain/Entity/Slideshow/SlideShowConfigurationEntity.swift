@@ -1,6 +1,6 @@
 import Foundation
 
-public enum SlideShowPlayingOrderEntity: Codable {
+public enum SlideShowPlayingOrderEntity: Codable, Sendable {
     case shuffled
     case newest
     case oldest

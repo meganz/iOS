@@ -17,7 +17,10 @@ class SlideshowViewModelTests: XCTestCase {
         return nodes
     }
     
-    private func makeSlideshowViewModel(tracker: some AnalyticsTracking = MockTracker()) throws -> SlideShowViewModel {
+    @MainActor
+    private func makeSlideshowViewModel(
+        configuration: SlideShowConfigurationEntity = SlideShowConfigurationEntity(playingOrder: .newest, timeIntervalForSlideInSeconds: .normal, isRepeat: false, includeSubfolders: false),
+        tracker: some AnalyticsTracking = MockTracker()) throws -> SlideShowViewModel {
         SlideShowViewModel(
             dataSource: SlideShowDataSource(
                 currentPhoto: try XCTUnwrap(nodeEntities.first),
@@ -25,21 +28,17 @@ class SlideshowViewModelTests: XCTestCase {
                 thumbnailUseCase: MockThumbnailUseCase(),
                 fileDownloadUseCase: FileDownloadUseCase(fileCacheRepository: MockFileCacheRepository.newRepo, fileSystemRepository: MockFileSystemRepository.newRepo, downloadFileRepository: MockDownloadFileRepository.newRepo),
                 mediaUseCase: MockMediaUseCase(),
-                fileExistenceUseCase: FileExistUseCase(fileSystemRepository: MockFileSystemRepository.newRepo),
-                advanceNumberOfPhotosToLoad: 20,
-                numberOfUnusedPhotosBuffer: 20
+                advanceNumberOfPhotosToLoad: 20
             ),
             slideShowUseCase: MockSlideShowUseCase(
-                config: SlideShowConfigurationEntity(
-                    playingOrder: .newest,
-                    timeIntervalForSlideInSeconds: .normal,
-                    isRepeat: false, includeSubfolders: false),
+                config: configuration,
                 forUser: 1),
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 3)),
             tracker: tracker
         )
     }
-
+    
+    @MainActor
     func testSlideShowViewModel_play_playbackStatusShouldBePlaying() throws {
         let slideShowViewModel = try makeSlideshowViewModel()
 
@@ -47,6 +46,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
     }
     
+    @MainActor
     func testSlideShowViewModel_pause_playbackStatusShouldBePaused() throws {
         let slideShowViewModel = try makeSlideshowViewModel()
         slideShowViewModel.dispatch(.pause)
@@ -54,6 +54,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.playbackStatus == .pause)
     }
     
+    @MainActor
     func testSlideShowViewModel_finish_playbackStatusShouldBeComplete() throws {
         let slideShowViewModel = try makeSlideshowViewModel()
 
@@ -61,6 +62,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.playbackStatus == .complete)
     }
     
+    @MainActor
     func testSlideShowViewModel_resetTimer_playbackStatusShouldBePlaying() throws {
         let slideShowViewModel = try makeSlideshowViewModel()
 
@@ -69,6 +71,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
     }
     
+    @MainActor
     func testSlideShowViewModel_cancel_playbackStatusShouldBePlaying() throws {
         let slideShowViewModel = try makeSlideshowViewModel()
         let sut: some SlideShowViewModelPreferenceProtocol = slideShowViewModel
@@ -80,8 +83,17 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
     }
     
+    @MainActor
     func testSlideShowViewModel_restart_repeatShouldBeTrueAndTimeShouldBe8AndCurrentSlideShouldBeNeg1() throws {
-        let slideShowViewModel = try makeSlideshowViewModel()
+        let slideShowViewModel = try makeSlideshowViewModel(
+            configuration: SlideShowConfigurationEntity(
+                playingOrder: .oldest,
+                timeIntervalForSlideInSeconds: .normal,
+                isRepeat: false,
+                includeSubfolders: false
+            )
+        )
+        
         let sut: some SlideShowViewModelPreferenceProtocol = slideShowViewModel
         
         XCTAssertTrue(slideShowViewModel.playbackStatus == .initialized)
@@ -89,7 +101,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
         slideShowViewModel.dispatch(.pause)
         XCTAssertTrue(slideShowViewModel.playbackStatus == .pause)
-        XCTAssertTrue(slideShowViewModel.currentSlideIndex == 0)
+        XCTAssertEqual(slideShowViewModel.currentSlideIndex, 0)
         XCTAssertTrue(slideShowViewModel.timeIntervalForSlideInSeconds == 4)
         XCTAssertTrue(slideShowViewModel.configuration.isRepeat == false)
         
@@ -102,6 +114,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.configuration.isRepeat == true)
     }
     
+    @MainActor
     func testSlideShowViewModel_invokeCommandRestartSlideShow_shouldExecuteCommandShowLoaderAndRestart() throws {
         let dataSource = MockSlideShowDataSource(nodeEntities: nodeEntities, thumbnailUseCase: MockThumbnailUseCase())
 
@@ -134,6 +147,7 @@ class SlideshowViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
+    @MainActor
     func testActionOnViewDidAppear_shouldSendScreenEvent() throws {
         let tracker = MockTracker()
         let sut = try makeSlideshowViewModel(tracker: tracker)
