@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol FileDownloadUseCaseProtocol {
+public protocol FileDownloadUseCaseProtocol: Sendable {
     func cachedOriginalPath(_ node: NodeEntity) -> URL?
     func downloadNode(_ node: NodeEntity) async throws -> URL
 }

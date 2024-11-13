@@ -40,9 +40,7 @@ struct SlideShowRouter: Routing {
                                                      fileSystemRepository: FileSystemRepository.newRepo,
                                                      downloadFileRepository: DownloadFileRepository.newRepo),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
-            fileExistenceUseCase: FileExistUseCase(fileSystemRepository: FileSystemRepository.newRepo),
-            advanceNumberOfPhotosToLoad: 20,
-            numberOfUnusedPhotosBuffer: 20
+            advanceNumberOfPhotosToLoad: 10
         )
     }
     

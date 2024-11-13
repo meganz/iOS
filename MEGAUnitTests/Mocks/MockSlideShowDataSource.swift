@@ -3,14 +3,10 @@ import Foundation
 import MEGADomain
 
 final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
-    var photos = [SlideShowMediaEntity]() {
-        didSet {
-            if photos.count == 1 {
-                initialPhotoDownloadCallback?()
-            }
-        }
-    }
+    var count: Int { nodeEntities.count }
     
+    var items: [Int: SlideShowCellViewModel] = [:]
+
     var nodeEntities: [NodeEntity]
     var initialPhotoDownloadCallback: (() -> Void)?
     var thumbnailUseCase: any ThumbnailUseCaseProtocol
@@ -24,25 +20,22 @@ final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
     }
     
     func resetData() {
-        photos.removeAll()
-        startInitialDownload(false)
+        items.removeAll()
     }
-    
-    func startInitialDownload(_ initialPhotoDownloaded: Bool) {
-        processData(basedOnCurrentSlideIndex: 0, andOldSlideIndex: 0)
-    }
-    
-    func loadSelectedPhotoPreview() -> Bool {
-        true
-    }
-    
-    func processData(basedOnCurrentSlideIndex currentSlideIndex: Int, andOldSlideIndex oldSlideIndex: Int) {
-        nodeEntities.forEach { node in
-            photos.append(SlideShowMediaEntity(image: nil, node: node, fileUrl: nil))
-        }
-    }
-    
-    func sortNodes(byOrder order: MEGADomain.SlideShowPlayingOrderEntity) {
+
+    func sortNodes(byOrder order: SlideShowPlayingOrderEntity) {
         nodeEntities.sort { $0.modificationTime > $1.modificationTime }
+    }
+    
+    func download(fromCurrentIndex index: Int) {
+        
+    }
+    
+    func loadSelectedPhotoPreview() {
+        
+    }
+    
+    func indexOfCurrentPhoto() -> Int {
+        0
     }
 }

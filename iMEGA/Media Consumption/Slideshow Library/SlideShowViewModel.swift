@@ -40,20 +40,16 @@ final class SlideShowViewModel: ViewModelType {
     var playbackStatus: SlideshowPlaybackStatus = .initialized
     
     var numberOfSlideShowContents: Int {
-        dataSource.nodeEntities.count
+        dataSource.count
     }
-    
-    var photos: [SlideShowMediaEntity] {
-        dataSource.photos
-    }
-        
+     
     var timeIntervalForSlideInSeconds: Double {
         configuration.timeIntervalForSlideInSeconds.value
     }
     
-    var currentSlideIndex = 0 {
+    var currentSlideIndex: Int {
         didSet {
-            dataSource.processData(basedOnCurrentSlideIndex: currentSlideIndex, andOldSlideIndex: oldValue)
+            dataSource.download(fromCurrentIndex: currentSlideIndex)
         }
     }
     
@@ -75,12 +71,11 @@ final class SlideShowViewModel: ViewModelType {
         
         dataSource.sortNodes(byOrder: configuration.playingOrder)
         
-        if dataSource.loadSelectedPhotoPreview() {
-            dataSource.startInitialDownload(true)
-            invokeCommand?(.initialPhotoLoaded)
-        } else {
-            dataSource.startInitialDownload(false)
-        }
+        self.currentSlideIndex = dataSource.indexOfCurrentPhoto()
+        
+        dataSource.loadSelectedPhotoPreview()
+        invokeCommand?(.initialPhotoLoaded)
+        dataSource.download(fromCurrentIndex: currentSlideIndex)
     }
     
     private func playOrPauseSlideShow() {
@@ -98,16 +93,12 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     func restartSlideShow() {
-        invokeCommand?(.showLoader)
-        dataSource.initialPhotoDownloadCallback = { [weak self] in
-            self?.currentSlideIndex = 0
-            self?.invokeCommand?(.restart)
-        }
-        dataSource.resetData()
+        currentSlideIndex = dataSource.indexOfCurrentPhoto()
+        invokeCommand?(.restart)
     }
-    
-    func mediaEntity(at indexPath: IndexPath) -> SlideShowMediaEntity? {
-        photos[safe: indexPath.row]
+        
+    func mediaEntity(at indexPath: IndexPath) -> SlideShowCellViewModel? {
+        dataSource.items[indexPath.row]
     }
     
     func dispatch(_ action: SlideShowAction) {

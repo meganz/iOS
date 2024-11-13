@@ -38,11 +38,11 @@ final class SlideShowViewController: UIViewController, ViewType {
         setVisibility(false)
         setNavigationAndToolbarColor()
         setupActivityIndicator()
-        guard let viewModel = viewModel else {
+        guard viewModel != nil else {
             showLoader()
             return
         }
-        if viewModel.photos.isNotEmpty {
+        if numberOfSlideShowContents() > 0 {
             playSlideShow()
         }
     }
@@ -118,7 +118,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
         
         hideLoader()
-        if viewModel.photos.isNotEmpty {
+        if numberOfSlideShowContents() > 0 {
             reload()
             playSlideShow()
         }
@@ -128,7 +128,15 @@ final class SlideShowViewController: UIViewController, ViewType {
          switch command {
          case .play: play()
          case .pause: pause()
-         case .initialPhotoLoaded: playSlideShow()
+         case .initialPhotoLoaded:
+             guard let viewModel else {
+                 return
+             }
+             collectionView.scrollToItem(
+                at: IndexPath(row: viewModel.currentSlideIndex, section: 0),
+                at: .centeredHorizontally,
+                animated: false)
+             playSlideShow()
          case .resetTimer: resetTimer()
          case .restart: restart()
          case .showLoader: showLoader()
@@ -143,17 +151,17 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func play() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         let cell = collectionView.visibleCells.first(where: { $0 is SlideShowCollectionViewCell }) as? SlideShowCollectionViewCell
         setVisibility(false)
         
         CrashlyticsLogger.log("[SlideShow] play button tapped.")
-        
+        let numberOfSlideShowContents = numberOfSlideShowContents()
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = .black000000
             self.view.backgroundColor = TokenColors.Background.page
             cell?.resetZoomScale()
-            if viewModel.currentSlideIndex >= viewModel.photos.count - 1 {
+            if viewModel.currentSlideIndex >= numberOfSlideShowContents - 1 {
                 viewModel.currentSlideIndex = -1
                 self.changeImage()
             }
@@ -203,7 +211,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         
         let slideNumber = viewModel.currentSlideIndex + 1
         
-        if slideNumber < viewModel.photos.count {
+        if slideNumber < numberOfSlideShowContents() {
             CrashlyticsLogger.log("[SlideShow] current slide is changed from \(viewModel.currentSlideIndex) to \(slideNumber)")
             viewModel.currentSlideIndex = slideNumber
             hideLoader()
@@ -271,14 +279,19 @@ extension SlideShowViewController: UICollectionViewDelegate {
 }
 
 extension SlideShowViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    private func numberOfSlideShowContents() -> Int {
         viewModel?.numberOfSlideShowContents ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        numberOfSlideShowContents()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: SlideShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "slideShowCell", for: indexPath) as! SlideShowCollectionViewCell
         
-        guard let viewModel = viewModel, let mediaEntity = viewModel.mediaEntity(at: indexPath) else { return cell }
+        guard let mediaEntity = viewModel?.mediaEntity(at: indexPath) else { return cell }
         cell.update(with: mediaEntity, andInteraction: self)
         return cell
     }
