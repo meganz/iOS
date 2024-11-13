@@ -1,6 +1,8 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import MEGATest
 import XCTest
 
@@ -86,6 +88,20 @@ final class ChatRoomParticipantsListViewModelTests: XCTestCase {
         XCTAssertEqual(callUseCase.allowUsersJoinCall_CalledTimes, 0)
     }
     
+    @MainActor
+    func test_addParticipantTapped_tracked() async {
+        let tracker = MockTracker()
+        let sut = makeChatRoomParticipantsListViewModel(
+            tracker: tracker
+        )
+        sut.addParticipantTapped()
+        
+        XCTAssertTrackedAnalyticsEventsEqual(
+            tracker.trackedEventIdentifiers,
+            [MeetingInfoAddParticipantButtonTappedEvent()]
+        )
+    }
+    
     // MARK: - Private
     
     private func makeChatRoomParticipantsListViewModel(
@@ -96,6 +112,7 @@ final class ChatRoomParticipantsListViewModelTests: XCTestCase {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
+        tracker: MockTracker = .init(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> ChatRoomParticipantsListViewModel {
@@ -106,7 +123,8 @@ final class ChatRoomParticipantsListViewModelTests: XCTestCase {
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             callUseCase: callUseCase,
-            chatRoom: chatRoom
+            chatRoom: chatRoom,
+            tracker: tracker
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

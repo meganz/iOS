@@ -18,25 +18,31 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     private let isMyselfModerator: Bool
     private weak var containerViewModel: MeetingContainerViewModel?
     private let sender: UIBarButtonItem
-
-    init(chatRoom: ChatRoomEntity,
-         isMyselfModerator: Bool,
-         containerViewModel: MeetingContainerViewModel?,
-         sender: UIBarButtonItem) {
+    private let tracker: any AnalyticsTracking
+    
+    init(
+        chatRoom: ChatRoomEntity,
+        isMyselfModerator: Bool,
+        containerViewModel: MeetingContainerViewModel?,
+        sender: UIBarButtonItem,
+        tracker: some AnalyticsTracking
+    ) {
         self.chatRoom = chatRoom
         self.isMyselfModerator = isMyselfModerator
         self.containerViewModel = containerViewModel
         self.sender = sender
+        self.tracker = tracker
     }
     
     var invokeCommand: ((Command) -> Void)?
-
+    
     func dispatch(_ action: MeetingOptionsMenuAction) {
         switch action {
         case .onViewReady:
             invokeCommand?(.configView(actions: actions()))
         case .shareLinkAction:
-            containerViewModel?.dispatch(.shareLink(presenter: nil, sender: sender, completion: { _, _, _, _ in 
+            tracker.trackShareLink(.meetingOptionsMenu)
+            containerViewModel?.dispatch(.presentShareLinkActivity(presenter: nil, sender: sender, completion: { _, _, _, _ in
                 containerViewModel?.dispatch(.hideOptionsMenu)
             }))
         case .renameAction:
@@ -50,7 +56,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     
     private func actions() -> [ActionSheetAction] {
         var actions = [ActionSheetAction]()
-
+        
         if isMyselfModerator {
             actions.append(renameAction())
         }
@@ -61,7 +67,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     
     private func renameAction() -> ActionSheetAction {
         ActionSheetAction(title: chatRoom.chatType == .meeting ?
-                            Strings.Localizable.Meetings.Action.rename :
+                          Strings.Localizable.Meetings.Action.rename :
                             Strings.Localizable.renameGroup,
                           detail: nil,
                           image: UIImage(resource: .rename),
@@ -72,7 +78,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
     
     private func shareLinkAction() -> ActionSheetAction {
         ActionSheetAction(title: chatRoom.chatType == .meeting ?
-                            Strings.Localizable.Meetings.Action.shareLink :
+                          Strings.Localizable.Meetings.Action.shareLink :
                             Strings.Localizable.getChatLink,
                           detail: nil,
                           image: UIImage(resource: .share),

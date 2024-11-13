@@ -74,7 +74,8 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             cameraSwitcher: CameraSwitcher(
                 captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                 localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .sharedChatSdk))
-            )
+            ),
+            tracker: DIContainer.tracker
         )
         
         let vc = MeetingParticipantsLayoutViewController(viewModel: vm)

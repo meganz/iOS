@@ -130,7 +130,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             headerConfigFactory: MeetingFloatingPanelHeaderConfigFactory(infoBannerFactory: MeetingFloatingPanelBannerFactory()),
             featureFlags: DIContainer.featureFlagProvider,
             notificationCenter: NotificationCenter.default,
-            presentUpgradeFlow: showUpgradeFlow
+            presentUpgradeFlow: showUpgradeFlow,
+            tracker: DIContainer.tracker
         )
         
         let userImageUseCase = UserImageUseCase(
@@ -259,7 +260,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func triggerInviteParticipantsFromContainer() {
-        viewModel?.dispatch(.inviteParticipants)
+        viewModel?.dispatch(.presentInviteParticipantsScreen)
     }
     
     func showWaitingRoomParticipantsList(

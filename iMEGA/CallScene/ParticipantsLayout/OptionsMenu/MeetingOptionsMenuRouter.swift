@@ -21,7 +21,13 @@ struct MeetingOptionsMenuRouter: Routing {
     }
     
     func build() -> UIViewController {
-        let viewModel = MeetingOptionsMenuViewModel(chatRoom: chatRoom, isMyselfModerator: isMyselfModerator, containerViewModel: containerViewModel, sender: sender)
+        let viewModel = MeetingOptionsMenuViewModel(
+            chatRoom: chatRoom,
+            isMyselfModerator: isMyselfModerator,
+            containerViewModel: containerViewModel,
+            sender: sender,
+            tracker: DIContainer.tracker
+        )
         
         return MeetingOptionsMenuViewController(viewModel: viewModel, sender: sender)
     }

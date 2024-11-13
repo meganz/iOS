@@ -554,6 +554,60 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertTrackedAnalyticsEventsEqual(mockTracker.trackedEventIdentifiers, [MeetingsTabEvent(), ChatsTabEvent()])
     }
     
+    @MainActor
+    func test_ChatStatusMenu_tracked() {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(
+            router: MockChatRoomsListRouter(),
+            tracker: mockTracker
+        )
+        
+        viewModel.chatStatusMenu(didSelect: .away)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [
+                ChatRoomStatusMenuItemEvent()
+            ]
+        )
+    }
+    
+    @MainActor
+    func test_chatDoNotDisturbMenu_tracked() {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(
+            router: MockChatRoomsListRouter(),
+            tracker: mockTracker
+        )
+        
+        viewModel.chatDoNotDisturbMenu(didSelect: .forever)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [
+                ChatRoomDNDMenuItemEvent()
+            ]
+        )
+    }
+    
+    @MainActor
+    func test_archivedChatsTapped_tracked() {
+        let mockTracker = MockTracker()
+        let viewModel = makeChatRoomsListViewModel(
+            router: MockChatRoomsListRouter(),
+            tracker: mockTracker
+        )
+        
+        viewModel.archivedChatsTapped()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [
+                ArchivedChatsMenuItemEvent()
+            ]
+        )
+    }
+    
     // MARK: - Private methods
     
     private func pastDate(bySubtractHours numberOfHours: Int) -> Date? {

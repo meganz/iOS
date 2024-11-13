@@ -11,7 +11,14 @@ enum MeetingContainerAction: ActionType {
     case changeMenuVisibility
     case showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool)
     case hideOptionsMenu
-    case shareLink(presenter: UIViewController?, sender: AnyObject, completion: UIActivityViewController.CompletionWithItemsHandler?)
+    case presentShareLinkActivity(
+        presenter: UIViewController?,
+        sender: AnyObject,
+        completion: UIActivityViewController.CompletionWithItemsHandler?
+    )
+    case shareLinkTappedBarButtonTapped(AnyObject)
+    case presentShareLinkOptions(AnyObject)
+    case shareLinkEmptyMeetingButtonTapped(AnyObject)
     case renameChat
     case dismissCall(completion: (() -> Void)?)
     case endGuestUserCall(completion: (() -> Void)?)
@@ -33,7 +40,6 @@ enum MeetingContainerAction: ActionType {
     // this one is to hide snack bar when user swipes to show participant list
     case willTransitionToLongForm
     case inviteParticipantsTapped
-    case shareLinkTapped(AnyObject)
     case copyLinkTapped
     case sendLinkToChatTapped
 }
@@ -161,8 +167,16 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showOptionsMenu(presenter: presenter, sender: sender, isMyselfModerator: isMyselfModerator, containerViewModel: self)
         case .hideOptionsMenu:
             router.toggleFloatingPanel(containerViewModel: self)
-        case .shareLink(let presenter, let sender, let completion):
-            shareLink(presenter, sender, completion)
+        case .presentShareLinkOptions(let sender):
+            presentShareLinkOptions(from: sender)
+        case .presentShareLinkActivity(let presenter, let sender, let completion):
+            presentShareLinkActivity(presenter, sender, completion)
+        case .shareLinkTappedBarButtonTapped(let sender):
+            // tracking handled in the MeetingParticipantsLayoutViewModel
+            presentShareLinkOptions(from: sender)
+        case .shareLinkEmptyMeetingButtonTapped(let sender):
+            // tracking handled in the MeetingParticipantsLayoutViewModel
+            presentShareLinkOptions(from: sender)
         case .renameChat:
             router.renameChat()
         case .dismissCall(let completion):
@@ -215,15 +229,18 @@ final class MeetingContainerViewModel: ViewModelType {
             )
         case .willTransitionToLongForm:
             router.hideSnackBar()
-        case .shareLinkTapped(let sender):
-            shareLink(from: sender)
         case .copyLinkTapped:
             copyLinkToClipboard()
         case .sendLinkToChatTapped:
             sendLinkToChat()
         case .inviteParticipantsTapped:
+            trackInviteParticipantsPressed()
             router.notifyFloatingPanelInviteParticipants()
         }
+    }
+    
+    private func trackInviteParticipantsPressed() {
+        tracker.trackAnalyticsEvent(with: InviteParticipantsPressedEvent())
     }
     
     // MARK: - Private
@@ -317,8 +334,7 @@ final class MeetingContainerViewModel: ViewModelType {
         router.floatingPanelShown
     }
     
-    private func shareLink(from sender: AnyObject) {
-        tracker.trackAnalyticsEvent(with: ShareLinkBarButtonPressedEvent())
+    private func presentShareLinkOptions(from sender: AnyObject) {
         let shareLinkOptions = ShareLinkOptions(
             sender: sender) { [weak self] in
                 self?.dispatch(.sendLinkToChatTapped)
@@ -326,7 +342,7 @@ final class MeetingContainerViewModel: ViewModelType {
                 self?.dispatch(.copyLinkTapped)
             } shareLinkAction: { [weak self] presenter in
                 self?.dispatch(
-                    .shareLink(
+                    .presentShareLinkActivity(
                         presenter: presenter,
                         sender: sender,
                         completion: nil
@@ -361,8 +377,7 @@ final class MeetingContainerViewModel: ViewModelType {
         }
     }
     
-    private func shareLink(_ presenter: UIViewController?, _ sender: AnyObject, _ completion: UIActivityViewController.CompletionWithItemsHandler?) {
-        tracker.trackAnalyticsEvent(with: ShareLinkPressedEvent())
+    private func presentShareLinkActivity(_ presenter: UIViewController?, _ sender: AnyObject, _ completion: UIActivityViewController.CompletionWithItemsHandler?) {
         Task {
             do {
                 let link = try await chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom)

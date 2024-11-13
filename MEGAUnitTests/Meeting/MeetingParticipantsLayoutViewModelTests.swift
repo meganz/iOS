@@ -1,5 +1,6 @@
 import CombineSchedulers
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -1285,12 +1286,35 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         harness.sut.dispatch(.setNewTitle(expectedNewName))
         await fulfillment(of: [expectation], timeout: 1)
     }
+    
+    @MainActor
+    func testShareLinkTappedBarButtonTappedITracked() {
+        let harness = Harness()
+        harness.sut.dispatch(.shareLinkTappedBarButtonTapped(sender: NSObject()))
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.tracker.trackedEventIdentifiers,
+            [ShareLinkBarButtonPressedEvent()]
+        )
+        
+    }
+    
+    @MainActor
+    func testShareLinkEmptyMeetingButtonTappedIsTracked() {
+        let harness = Harness()
+        harness.sut.dispatch(.shareLinkEmptyMeetingButtonTapped(sender: NSObject()))
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.tracker.trackedEventIdentifiers,
+            [ShareLinkPressedEvent()]
+        )
+        
+    }
 
     @MainActor final class Harness: Sendable {
         let scheduler: AnySchedulerOf<DispatchQueue>
         let callUpdateUseCase: MockCallUpdateUseCase
         let sessionUpdateUseCase: MockSessionUpdateUseCase
         let callManager: MockCallManager
+        let tracker = MockTracker()
         let sut: MeetingParticipantsLayoutViewModel
         init(
             containerViewModel: MeetingContainerViewModel? = nil,
@@ -1344,7 +1368,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 call: call,
                 preferenceUseCase: preferenceUseCase,
                 layoutUpdateChannel: .init(),
-                cameraSwitcher: cameraSwitcher
+                cameraSwitcher: cameraSwitcher,
+                tracker: tracker
             )
             
             sut.monitorOnCallUpdate()
