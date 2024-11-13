@@ -743,7 +743,7 @@ struct CloudDriveViewControllerFactory {
               accountStorageUseCase.shouldShowStorageBanner else {
             return nil
         }
-        
+        MEGALogDebug("[StorageBanner] creating temporary banner view model with \(accountStorageUseCase.currentStorageStatus) storage status.")
         return makeSOQWarningViewModel(status: accountStorageUseCase.currentStorageStatus)
     }
     

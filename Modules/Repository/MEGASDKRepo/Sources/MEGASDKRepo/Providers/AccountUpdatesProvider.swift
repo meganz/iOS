@@ -144,6 +144,7 @@ extension AccountRequestDelegate: MEGAGlobalDelegate {
             let eventEntity = event.toEventEntity()
             if eventEntity.isStorageCapacityEvent(),
                let storageStatus = eventEntity.storageStatus {
+                MEGALogDebug("[StorageBanner] new storage event received: \(storageStatus)")
                 onStorageStatusEventUpdate(storageStatus)
             }
         }
