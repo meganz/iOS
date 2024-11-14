@@ -11,8 +11,8 @@ public struct MockPSARepository: PSARepositoryProtocol {
         self.psaResult = psaResult
     }
     
-    public func getPSA(completion: @escaping (Result<PSAEntity, PSAErrorEntity>) -> Void) {
-        completion(psaResult)
+    public func getPSA() async throws -> PSAEntity {
+        try psaResult.get()
     }
     
     public func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier) { }

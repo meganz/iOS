@@ -1,6 +1,6 @@
 public typealias PSAIdentifier = Int64
 
-public struct PSAEntity {
+public struct PSAEntity: Sendable {
     public let identifier: PSAIdentifier
     public let title: String?
     public let description: String?

@@ -1,4 +1,4 @@
-public protocol PSARepositoryProtocol: RepositoryProtocol {
-    func getPSA(completion: @escaping (Result<PSAEntity, PSAErrorEntity>) -> Void)
+public protocol PSARepositoryProtocol: RepositoryProtocol, Sendable {
+    func getPSA() async throws -> PSAEntity
     func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier)
 }

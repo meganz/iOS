@@ -1,5 +1,5 @@
-public protocol PSAUseCaseProtocol {
-    func getPSA(completion: @escaping (Result<PSAEntity, PSAErrorEntity>) -> Void)
+public protocol PSAUseCaseProtocol: Sendable {
+    func getPSA() async throws -> PSAEntity
     func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier)
 }
 
@@ -10,8 +10,8 @@ public struct PSAUseCase<T: PSARepositoryProtocol>: PSAUseCaseProtocol {
         self.repo = repo
     }
     
-    public func getPSA(completion: @escaping (Result<PSAEntity, PSAErrorEntity>) -> Void) {
-        repo.getPSA(completion: completion)
+    public func getPSA() async throws -> PSAEntity {
+        try await repo.getPSA()
     }
     
     public func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier) {
