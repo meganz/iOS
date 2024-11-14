@@ -183,7 +183,6 @@ final class AudioPlayerViewModel: ViewModelType {
                 await dismiss()
                 return
             }
-            CrashlyticsLogger.log(category: .audioPlayer, "Offline player - Initializing with offline file paths: \(offlineFilePaths)")
             await initialize(with: offlineFilePaths)
         } else {
             guard let node = configEntity.node else {
@@ -194,7 +193,6 @@ final class AudioPlayerViewModel: ViewModelType {
             if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
                 streamingInfoUseCase?.startServer()
             }
-            CrashlyticsLogger.log(category: .audioPlayer, "Online player - Initializing with node: \(node)")
             await initialize(with: node)
         }
     }
@@ -227,11 +225,8 @@ final class AudioPlayerViewModel: ViewModelType {
     
     private nonisolated func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) async {
         let mutableTracks = await shift(tracks: tracks, startItem: currentTrack)
-        CrashlyticsLogger.log(category: .audioPlayer, "Initializing with player type: \(configEntity.playerType), tracks: \(tracks)")
         
         if !(configEntity.playerHandler.isPlayerDefined()) {
-            CrashlyticsLogger.log(category: .audioPlayer, "playerHandler is not defined, creating new AudioPlayer instance")
-            
             let audioPlayer = AudioPlayer()
             audioPlayer.add(listener: self)
             configEntity.playerHandler.setCurrent(player: audioPlayer, autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks)
@@ -290,11 +285,9 @@ final class AudioPlayerViewModel: ViewModelType {
                 await dismiss()
                 return
             }
-            CrashlyticsLogger.log(category: .audioPlayer, "File link - Initializing with single file track: \(track)")
             await initialize(tracks: [track], currentTrack: track)
         } else {
             if let allNodes = configEntity.allNodes, allNodes.isNotEmpty, await isCurrentUserNode(node) {
-                CrashlyticsLogger.log(category: .audioPlayer, "Not file link - Initializing with all nodes from current user's node")
                 await initializeTracksForAllAudioFilesAsPlaylist(from: node, allNodes)
             } else {
                 guard let (currentTrack, children) = await getTracks(from: node) else {
@@ -302,11 +295,9 @@ final class AudioPlayerViewModel: ViewModelType {
                         await dismiss()
                         return
                     }
-                    CrashlyticsLogger.log(category: .audioPlayer, "getTracks(from: node) returns nil - Initializing with track from streamingInfoUseCase?.info(from: node): \(track)")
                     await initialize(tracks: [track], currentTrack: track)
                     return
                 }
-                CrashlyticsLogger.log(category: .audioPlayer, "getTracks(from: node) returns values - Initializing with tracks: \(children)")
                 await initialize(tracks: children, currentTrack: currentTrack)
             }
         }
@@ -322,14 +313,12 @@ final class AudioPlayerViewModel: ViewModelType {
                 await dismiss()
                 return
             }
-            CrashlyticsLogger.log(category: .audioPlayer, "getTracks(from:) is nil, initializing with streamingInfoUseCase?.info(from: node) result:\(track)")
             await initialize(tracks: [track], currentTrack: track)
             return
         }
         
         let allTracks = allNodes
             .compactMap { streamingInfoUseCase?.info(from: $0) }
-        CrashlyticsLogger.log(category: .audioPlayer, "getTracks(from:) is not nil, initializing with tracks: \(allTracks)")
         await initialize(tracks: allTracks, currentTrack: currentTrack)
     }
     

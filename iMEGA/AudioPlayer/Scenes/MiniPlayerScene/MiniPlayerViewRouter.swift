@@ -15,7 +15,6 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     }
     
     @objc func build() -> UIViewController {
-        CrashlyticsLogger.log(category: .audioPlayer, "Building MiniPlayerViewModel")
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "MiniPlayerViewControllerID") as! MiniPlayerViewController
                 
         folderSDKLogoutRequired = configEntity.isFolderLink

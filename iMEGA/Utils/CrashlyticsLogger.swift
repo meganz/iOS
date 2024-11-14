@@ -9,7 +9,6 @@ final class CrashlyticsLogger: NSObject {
     @objc enum LogCategory: Int, RawRepresentable {
         
         case general
-        case audioPlayer
         case transfersWidget
         case appLifecycle
         case calls
@@ -18,7 +17,6 @@ final class CrashlyticsLogger: NSObject {
         var rawValue: String {
             switch self {
             case .general: "General"
-            case .audioPlayer: "Audio Player"
             case .transfersWidget: "Transfers Widget"
             case .appLifecycle: "App Lifecycle"
             case .calls: "Calls"
