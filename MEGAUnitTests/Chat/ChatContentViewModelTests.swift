@@ -617,7 +617,7 @@ final class ChatContentViewModelTests: XCTestCase {
     
     @MainActor
     func testDetermineNavBarRightItems_onIsNotEditingAndNotOneToOneChatAndModerator_shouldBeAddParticipantAndAudioCall() {
-        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isActive: true, chatType: .group)
         let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
         
         let result = sut.determineNavBarRightItems(isEditing: false)
@@ -627,12 +627,36 @@ final class ChatContentViewModelTests: XCTestCase {
     
     @MainActor
     func testDetermineNavBarRightItems_onIsNotEditingAndNotOneToOneChatAndOpenInviteEnabled_shouldBeAddParticipantAndAudioCall() {
-        let chatRoom = ChatRoomEntity(chatType: .group, isOpenInviteEnabled: true)
+        let chatRoom = ChatRoomEntity(isActive: true, chatType: .group, isOpenInviteEnabled: true)
         let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
         
         let result = sut.determineNavBarRightItems(isEditing: false)
         
         XCTAssertEqual(result, .addParticipantAndAudioCall)
+    }
+    
+    @MainActor func testDetermineNavBarRightItems_AddParticipantAndAudioCallWhenChatRoomActive_Moderator() {
+        let chatRoom = ChatRoomEntity.canInviteAnd(isActive: true, canInvite: .moderator)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
+        XCTAssertEqual(sut.determineNavBarRightItems(isEditing: false), .addParticipantAndAudioCall)
+    }
+    
+    @MainActor func testDetermineNavBarRightItems_AddParticipantAndAudioCallWhenChatRoomActive_OpenInvite() {
+        let chatRoom = ChatRoomEntity.canInviteAnd(isActive: true, canInvite: .openInvite)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
+        XCTAssertEqual(sut.determineNavBarRightItems(isEditing: false), .addParticipantAndAudioCall)
+    }
+    
+    @MainActor func testDetermineNavBarRightItems_NotHasAddParticipantAndAudioCallWhenChatRoomInActive_Moderator() {
+        let chatRoom = ChatRoomEntity.canInviteAnd(isActive: false, canInvite: .moderator)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
+        XCTAssertEqual(sut.determineNavBarRightItems(isEditing: false), .audioCall)
+    }
+    
+    @MainActor func testDetermineNavBarRightItems_DoNotHasAddParticipantAndAudioCallWhenChatRoomInActive_OpenInvite() {
+        let chatRoom = ChatRoomEntity.canInviteAnd(isActive: false, canInvite: .openInvite)
+        let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom)
+        XCTAssertEqual(sut.determineNavBarRightItems(isEditing: false), .audioCall)
     }
     
     @MainActor
@@ -745,5 +769,31 @@ final class MockChatContentRouter: ChatContentRouting {
     
     func removeEndCallDialogIfNeeded() {
         removeEndCallDialogIfNeeded_calledTimes += 1
+    }
+}
+
+enum CanInviteMode {
+case moderator
+case openInvite
+}
+
+extension ChatRoomEntity {
+    static func canInviteAnd(isActive: Bool, canInvite: CanInviteMode) -> Self {
+        switch canInvite {
+        case .moderator:
+            ChatRoomEntity(
+                ownPrivilege: .moderator, // <-
+                isActive: isActive,
+                chatType: .meeting,
+                isOpenInviteEnabled: false
+            )
+        case .openInvite:
+            ChatRoomEntity(
+                ownPrivilege: .standard,
+                isActive: isActive,
+                chatType: .meeting,
+                isOpenInviteEnabled: true // <-
+            )
+        }
     }
 }
