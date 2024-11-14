@@ -13,6 +13,7 @@ final class CrashlyticsLogger: NSObject {
         case transfersWidget
         case appLifecycle
         case calls
+        case nodeInfo
         var rawValue: String {
             switch self {
             case .general: "General"
@@ -20,6 +21,7 @@ final class CrashlyticsLogger: NSObject {
             case .transfersWidget: "Transfers Widget"
             case .appLifecycle: "App Lifecycle"
             case .calls: "Calls"
+            case .nodeInfo: "Node Info"
             }
         }
     }
