@@ -8,6 +8,10 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
     var didTapRenameAction_calledTimes = 0
     var didTapInfoAction_calledTimes = 0
     var didTapShowInAction_calledTimes = 0
+    var navigateToProfile_calledTimes = 0
+    var navigateToUsage_calledTimes = 0
+    var navigateToSettings_calledTimes = 0
+    var navigateToNotificationCentre_calledTimes = 0
     
     func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterAssets: DeviceCenterAssets) {
         navigateToDeviceCenter_calledTimes += 1
@@ -29,7 +33,19 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
         didTapInfoAction_calledTimes += 1
     }
     
-    func navigateToProfile() {}
-    func navigateToUsage() {}
-    func navigateToSettings() {}
+    func navigateToProfile() {
+        navigateToProfile_calledTimes += 1
+    }
+
+    func navigateToUsage() {
+        navigateToUsage_calledTimes += 1
+    }
+
+    func navigateToSettings() {
+        navigateToSettings_calledTimes += 1
+    }
+
+    func navigateToNotificationCentre() {
+        navigateToNotificationCentre_calledTimes += 1
+    }
 }

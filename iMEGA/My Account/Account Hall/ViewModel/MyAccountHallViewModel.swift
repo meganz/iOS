@@ -36,6 +36,7 @@ enum MyAccountHallAction: ActionType {
     case navigateToSettings
     case didTapMyAccountButton
     case didTapAccountHeader
+    case didTapNotificationCentre
 }
 
 @MainActor
@@ -57,7 +58,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     var invokeCommand: ((Command) -> Void)?
     var incomingContactRequestsCount = 0
     var unreadNotificationsCount = 0
-
+    
     private(set) var planList: [PlanEntity] = []
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
@@ -65,6 +66,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let notificationCenter: NotificationCenter
+    private var hasTrackedNotificationCentreDisplayedEvents = false
     let shareUseCase: any ShareUseCaseProtocol
     let deviceCenterBridge: DeviceCenterBridge
     let router: any MyAccountHallRouting
@@ -81,15 +83,17 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     // MARK: - Init
     
-    init(myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
-         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
-         shareUseCase: some ShareUseCaseProtocol,
-         notificationsUseCase: some NotificationsUseCaseProtocol,
-         deviceCenterBridge: DeviceCenterBridge,
-         tracker: some AnalyticsTracking,
-         router: some MyAccountHallRouting,
-         notificationCenter: NotificationCenter = .default) {
+    init(
+        myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        shareUseCase: some ShareUseCaseProtocol,
+        notificationsUseCase: some NotificationsUseCaseProtocol,
+        deviceCenterBridge: DeviceCenterBridge,
+        tracker: some AnalyticsTracking,
+        router: some MyAccountHallRouting,
+        notificationCenter: NotificationCenter = .default
+    ) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -142,6 +146,9 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
             trackMyAccountEvent()
         case .didTapAccountHeader:
             trackAccountHeaderEvent()
+        case .didTapNotificationCentre:
+            trackNotificationCentreButtonPressedEvent()
+            router.navigateToNotificationCentre()
         }
     }
     
@@ -159,6 +166,18 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     private func trackUpgradeAccountButtonTappedEvent() {
         tracker.trackAnalyticsEvent(with: UpgradeMyAccountEvent())
+    }
+    
+    private func trackNotificationCentreButtonPressedEvent() {
+        tracker.trackAnalyticsEvent(with: NotificationsEntryButtonPressedEvent())
+    }
+    
+    private func trackNotificationCentreDisplayedWithNoUnreadNotificationsEvent() {
+        tracker.trackAnalyticsEvent(with: AccountNotificationCentreDisplayedWithNoUnreadNotificationsEvent())
+    }
+    
+    private func trackNotificationCentreDisplayedWithUnreadNotificationsEvent() {
+        tracker.trackAnalyticsEvent(with: AccountNotificationCentreDisplayedWithUnreadNotificationsEvent())
     }
     
     private func showUpgradeAccountPlanView() {
@@ -286,6 +305,11 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         }
         
         unreadNotificationsCount = await notificationsUseCase.unreadNotificationIDs().count
+        
+        if !hasTrackedNotificationCentreDisplayedEvents {
+            unreadNotificationsCount > 0 ? trackNotificationCentreDisplayedWithUnreadNotificationsEvent() : trackNotificationCentreDisplayedWithNoUnreadNotificationsEvent()
+            hasTrackedNotificationCentreDisplayedEvents = true
+        }
 
         reloadNotificationCounts()
     }

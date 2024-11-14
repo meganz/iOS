@@ -1,5 +1,6 @@
 import Foundation
 import MEGADesignToken
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -26,15 +27,18 @@ enum NotificationAction: ActionType {
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private(set) var promoList: [NotificationItem] = []
     private var unreadNotificationIds: [NotificationIDEntity] = []
+    private let tracker: any AnalyticsTracking
     var invokeCommand: ((Command) -> Void)?
     let imageLoader: any ImageLoadingProtocol
     
     init(
         notificationsUseCase: some NotificationsUseCaseProtocol,
-        imageLoader: some ImageLoadingProtocol
+        imageLoader: some ImageLoadingProtocol,
+        tracker: some AnalyticsTracking
     ) {
         self.notificationsUseCase = notificationsUseCase
         self.imageLoader = imageLoader
+        self.tracker = tracker
         super.init()
     }
     
@@ -116,14 +120,24 @@ enum NotificationAction: ActionType {
         return notificationList.filter { enabledNotifications.contains($0.id) }
     }
     
+    private func trackNotificationCentreScreenEvent() {
+        tracker.trackAnalyticsEvent(with: NotificationCentreScreenEvent())
+    }
+    
+    private func trackNotificationCentreItemTapped() {
+        tracker.trackAnalyticsEvent(with: NotificationCentreItemTappedEvent())
+    }
+    
     func dispatch(_ action: NotificationAction) {
         switch action {
         case .onViewDidLoad:
+            trackNotificationCentreScreenEvent()
             setupNotifications()
         case .onViewDidAppear:
             updateNotificationStates()
         case .didTapNotification(let notification):
             guard let urlLink = notification.redirectionURL else { return }
+            trackNotificationCentreItemTapped()
             invokeCommand?(.presentURLLink(urlLink))
         case .clearImageCache:
             imageLoader.clearCache()

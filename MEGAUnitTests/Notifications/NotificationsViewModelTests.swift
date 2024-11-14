@@ -1,10 +1,12 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwiftUI
+import MEGATest
 import Notifications
 import XCTest
 
@@ -219,6 +221,36 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
+    func testOnViewDidAppear_shouldTrackNotificationCentreEvent() {
+        let mockTracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: mockTracker)
+        
+        sut.dispatch(.onViewDidLoad)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [NotificationCentreScreenEvent()]
+        )
+    }
+        
+    @MainActor
+    func testDidTapNotification_shouldTrackNotificationCentreItemTapped() {
+        let mockTracker = MockTracker()
+        let (sut, _) = makeSUT(tracker: mockTracker)
+        let testNotification = NotificationEntity(
+            id: NotificationIDEntity(1),
+            firstCallToAction: NotificationEntity.CallToAction(text: "Test", link: URL(string: "http://test")!)
+        ).toNotificationItem(isSeen: true)
+        
+        sut.dispatch(.didTapNotification(testNotification))
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [NotificationCentreItemTappedEvent()]
+        )
+    }
+    
     private func assertSharedItemNotificationMessage(
         folderCount: Int = 0,
         fileCount: Int = 0,
@@ -236,6 +268,7 @@ final class NotificationsViewModelTests: XCTestCase {
         enabledNotifications: [NotificationIDEntity] = [],
         unreadNotificationIds: [NotificationIDEntity] = [],
         imageLoader: some ImageLoadingProtocol = ImageLoader(),
+        tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (NotificationsViewModel, MockNotificationUseCase) {
@@ -248,7 +281,8 @@ final class NotificationsViewModelTests: XCTestCase {
         
         let sut = NotificationsViewModel(
             notificationsUseCase: mockNotificationsUseCase,
-            imageLoader: imageLoader
+            imageLoader: imageLoader,
+            tracker: tracker
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
