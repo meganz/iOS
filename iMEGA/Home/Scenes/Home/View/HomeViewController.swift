@@ -190,6 +190,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         AudioPlayerManager.shared.addDelegate(self)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
         configureViewMode()
+        configureAdsVisibility()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -306,8 +307,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         super.viewWillAppear(animated)
         
         myAvatarViewModel?.inputs.viewIsAppearing()
-        
-        configureAdsVisibility()
     }
 
     override func viewDidDisappear(_ animated: Bool) {

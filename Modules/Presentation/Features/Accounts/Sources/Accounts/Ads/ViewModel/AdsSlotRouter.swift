@@ -29,11 +29,11 @@ public struct AdsSlotRouter<T: View> {
     public func build(onViewFirstAppeared: (() -> Void)? = nil) -> UIViewController {
         let viewModel = AdsSlotViewModel(
             adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
-            accountUseCase: accountUseCase
+            accountUseCase: accountUseCase,
+            onViewFirstAppeared: onViewFirstAppeared
         )
         
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
-            .onFirstAppear(perform: onViewFirstAppeared)
         
         let adsViewController = UIHostingController(rootView: adsSlotView)
         adsViewController.modalPresentationStyle = presentationStyle

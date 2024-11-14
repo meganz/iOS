@@ -22,6 +22,9 @@ public struct AdsSlotView<T: View>: View {
                     .opacity(shouldHideAds ? 0 : 1)
             }
         }
+        .onFirstAppear(perform: {
+            viewModel.onViewFirstAppeared?()
+        })
         .task {
             await viewModel.setupAdsRemoteFlag()
             await viewModel.initializeGoogleAds()
