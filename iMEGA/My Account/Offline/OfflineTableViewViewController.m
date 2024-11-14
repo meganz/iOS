@@ -93,7 +93,9 @@ static NSString *kPath = @"kPath";
     
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
-    if (isDirectory) {
+    // Note: nameString might be `nil` due to concurrency loading (becayse self.offline could be empty/nil), therefore we need to check nameString to fully determine
+    // whether the item is a directory or not.
+    if (isDirectory && nameString) {
         cell.thumbnailImageView.image = UIImage.mnz_folderImage;
         
         NSInteger files = 0;
@@ -107,7 +109,6 @@ static NSString *kPath = @"kPath";
                 [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
                 isDirectory ? folders++ : files++;
             }
-            
         }
         
         cell.infoLabel.text = [NSString mnz_stringByFiles:files andFolders:folders];

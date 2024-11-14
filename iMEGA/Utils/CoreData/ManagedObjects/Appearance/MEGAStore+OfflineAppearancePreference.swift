@@ -17,7 +17,13 @@ extension MEGAStore {
     }
     
     @objc func insertOrUpdateOfflineViewMode(path: String, viewMode: Int) {
-        guard let context = stack.viewContext else { return }
+        guard let context: NSManagedObjectContext = {
+            if Thread.isMainThread {
+                return stack.viewContext
+            } else {
+                return stack.newBackgroundContext()
+            }
+        }() else { return }
         
         if let offlineAppearancePreference = fetchOfflineAppearancePreference(path: path) {
             offlineAppearancePreference.viewMode = NSNumber(value: viewMode)
@@ -51,6 +57,31 @@ extension MEGAStore {
             return nil
         }
     }
+    
+    // Thread-safe method to fetch OfflineAppearancePreference.sortType
+    @objc func fetchOfflineAppearancePreferenceSortType(path: String) -> NSNumber? {
+         guard let context: NSManagedObjectContext = {
+             if Thread.isMainThread {
+                 return stack.viewContext
+             } else {
+                 return stack.newBackgroundContext()
+             }
+         }() else { return nil }
+         
+         var result: NSNumber?
+         
+         context.performAndWait {
+             let fetchRequest = NSFetchRequest<OfflineAppearancePreference>(entityName: "OfflineAppearancePreference")
+             fetchRequest.predicate = NSPredicate(format: "localPath == %@", path)
+             do {
+                 result = try context.fetch(fetchRequest).first?.sortType
+             } catch let error as NSError {
+                 MEGALogError("Could not fetch [OfflineAppearancePreference] \(error)")
+             }
+         }
+        
+        return result
+     }
     
     @objc func fetchOfflineAppearancePreferences() -> [OfflineAppearancePreference]? {
         guard let context = stack.viewContext else { return nil }

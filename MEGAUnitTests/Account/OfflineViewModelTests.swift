@@ -2,6 +2,7 @@ import Combine
 import CoreData
 import MEGADomain
 import MEGADomainMock
+import MEGAFoundation
 import MEGASwift
 import MEGATest
 import XCTest
@@ -49,7 +50,8 @@ final class OfflineViewModelTests: XCTestCase {
             offlineUseCase: offlineUseCase,
             megaStore: megaStore,
             fileManager: fileManager,
-            documentsDirectoryPath: documentDirectoryPath
+            documentsDirectoryPath: documentDirectoryPath,
+            throttler: MockThrottler()
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000)
         return sut
@@ -309,5 +311,11 @@ private class CoreDataTestStack {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = persistentStoreCoordinator
         return context
+    }
+}
+
+private class MockThrottler: Throttleable {
+    func start(action: @escaping () -> Void) {
+        action()
     }
 }

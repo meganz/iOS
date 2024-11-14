@@ -44,7 +44,7 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-
+@property (nonatomic, strong) dispatch_queue_t serialQueue;
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 @property (nonatomic, strong) NSMutableArray *offlineItems;
 @property (nonatomic, strong) NSMutableArray *offlineFiles;
@@ -83,6 +83,9 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
+    self.navigationItem.searchController = self.searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = NO;
+    self.serialQueue = dispatch_queue_create("nz.mega.offlineviewcontroller.reloadui", DISPATCH_QUEUE_SERIAL);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -111,9 +114,7 @@ static NSString *kisDirectory = @"kisDirectory";
                 [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
                 [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog]];
                 [fileManager copyItemAtPath:[self.logsPath stringByAppendingPathComponent:notificationServiceExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog] error:nil];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self reloadUI];
-                });
+                [self reloadUI];
             });
         }
     }
@@ -302,100 +303,105 @@ static NSString *kisDirectory = @"kisDirectory";
 #pragma mark - Private
 
 - (void)reloadUI {
-    self.offlineSortedItems = [[NSMutableArray alloc] init];
-    self.offlineSortedFileItems = [[NSMutableArray alloc] init];
-    self.offlineFiles = [[NSMutableArray alloc] init];
-    self.offlineMultimediaFiles = [[NSMutableArray alloc] init];
-    self.offlineItems = [[NSMutableArray alloc] init];
-    
-    NSString *directoryPathString = [self currentOfflinePath];
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
-    
-    int offsetIndex = 0;
-    for (int i = 0; i < (int)[directoryContents count]; i++) {
-        NSString *filePath = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:i]];
-        NSString *fileName = [NSString stringWithFormat:@"%@", [directoryContents objectAtIndex:i]];
+    dispatch_async(self.serialQueue, ^(void) {
+        NSMutableArray* tmpOfflineSortedItems = [[NSMutableArray alloc] init];
+        NSMutableArray* tmpOfflineSortedFileItems = [[NSMutableArray alloc] init];
+        NSMutableArray* tmpOfflineFiles = [[NSMutableArray alloc] init];
+        NSMutableArray* tmpOfflineMultimediaFiles = [[NSMutableArray alloc] init];
+        NSMutableArray* tmpOfflineItems = [[NSMutableArray alloc] init];
         
-        // Inbox folder in documents folder is created by the system. Don't show it
-        if ([[[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"] isEqualToString:filePath]) {
-            continue;
-        }
+        NSString *directoryPathString = [self currentOfflinePath];
+        NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
         
-        if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+        int offsetIndex = 0;
+        for (int i = 0; i < (int)[directoryContents count]; i++) {
+            NSString *filePath = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:i]];
+            NSString *fileName = [NSString stringWithFormat:@"%@", [directoryContents objectAtIndex:i]];
             
-            NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
-            [tempDictionary setValue:fileName forKey:kFileName];
-            [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
-            [tempDictionary setValue:[NSURL fileURLWithPath:filePath] forKey:kPath];
+            // Inbox folder in documents folder is created by the system. Don't show it
+            if ([[[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"] isEqualToString:filePath]) {
+                continue;
+            }
             
-            NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
-            BOOL isDirectory;
-            [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory];
-            
-            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
-            
-            [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
-            [tempDictionary setValue:filePropertiesDictionary[NSFileModificationDate] forKey:kModificationDate];
-            
-            [self.offlineItems addObject:tempDictionary];
-            
-            if (!isDirectory) {
-                if (![self shouldSkipQLPreviewForFile:fileName]) {
-                    offsetIndex++;
+            if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+                
+                NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
+                [tempDictionary setValue:fileName forKey:kFileName];
+                [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
+                [tempDictionary setValue:[NSURL fileURLWithPath:filePath] forKey:kPath];
+                
+                NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+                BOOL isDirectory;
+                [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory];
+                
+                [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
+                
+                [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
+                [tempDictionary setValue:filePropertiesDictionary[NSFileModificationDate] forKey:kModificationDate];
+                
+                [tmpOfflineItems addObject:tempDictionary];
+                
+                if (!isDirectory) {
+                    if (![self shouldSkipQLPreviewForFile:fileName]) {
+                        offsetIndex++;
+                    }
                 }
             }
         }
-    }
-    
-    MEGASortOrderType sortOrderType = [Helper sortTypeFor:self.currentOfflinePath];
-    [self sortBySortType:sortOrderType];
-    
-    offsetIndex = 0;
-    for (NSDictionary *p in self.offlineItems) {
-        NSURL *fileURL = [p objectForKey:kPath];
-        NSString *fileName = [p objectForKey:kFileName];
         
-        // Inbox folder in documents folder is created by the system. Don't show it
-        if ([[[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"] isEqualToString:[fileURL path]]) {
-            continue;
-        }
+        MEGASortOrderType sortOrderType = [Helper sortTypeFor:self.currentOfflinePath];
+        tmpOfflineItems = [self sortBySortType:sortOrderType array: tmpOfflineItems];
         
-        if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+        offsetIndex = 0;
+        for (NSDictionary *p in tmpOfflineItems) {
+            NSURL *fileURL = [p objectForKey:kPath];
+            NSString *fileName = [p objectForKey:kFileName];
             
-            NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
-            [tempDictionary setValue:fileName forKey:kFileName];
-            [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
-            [tempDictionary setValue:fileURL forKey:kPath];
+            // Inbox folder in documents folder is created by the system. Don't show it
+            if ([[[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"] isEqualToString:[fileURL path]]) {
+                continue;
+            }
             
-            NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[fileURL path] error:nil];
-            BOOL isDirectory;
-            [[NSFileManager defaultManager] fileExistsAtPath:[fileURL path] isDirectory:&isDirectory];
-            
-            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
-            
-            [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
-            [tempDictionary setValue:filePropertiesDictionary[NSFileModificationDate] forKey:kModificationDate];
-            
-            [self.offlineSortedItems addObject:tempDictionary];
-            
-            if (!isDirectory) {
-                [self.offlineSortedFileItems addObject:tempDictionary];
-                if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:fileName]) {
-                    [self.offlineMultimediaFiles addObject:[fileURL path]];
-                } else if (![self shouldSkipQLPreviewForFile:fileName]) {
-                    offsetIndex++;
-                    [self.offlineFiles addObject:[fileURL path]];
+            if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+                
+                NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
+                [tempDictionary setValue:fileName forKey:kFileName];
+                [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
+                [tempDictionary setValue:fileURL forKey:kPath];
+                
+                NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[fileURL path] error:nil];
+                BOOL isDirectory;
+                [[NSFileManager defaultManager] fileExistsAtPath:[fileURL path] isDirectory:&isDirectory];
+                
+                [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
+                
+                [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
+                [tempDictionary setValue:filePropertiesDictionary[NSFileModificationDate] forKey:kModificationDate];
+                
+                [tmpOfflineSortedItems addObject:tempDictionary];
+                
+                if (!isDirectory) {
+                    [tmpOfflineSortedFileItems addObject:tempDictionary];
+                    if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:fileName]) {
+                        [tmpOfflineMultimediaFiles addObject:[fileURL path]];
+                    } else if (![self shouldSkipQLPreviewForFile:fileName]) {
+                        offsetIndex++;
+                        [tmpOfflineFiles addObject:[fileURL path]];
+                    }
                 }
             }
         }
-    }
-    
-    self.navigationItem.searchController = self.searchController;
-    self.navigationItem.hidesSearchBarWhenScrolling = NO;
-
-    [self updateNavigationBarTitle];
-    
-    [self reloadData];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            self.offlineSortedItems = tmpOfflineSortedItems;
+            self.offlineSortedFileItems = tmpOfflineSortedFileItems;
+            self.offlineFiles = tmpOfflineFiles;
+            self.offlineMultimediaFiles = tmpOfflineMultimediaFiles;
+            self.offlineItems = tmpOfflineItems;
+            [self updateNavigationBarTitle];
+            [self reloadData];
+        });
+    });
 }
 
 - (BOOL)shouldSkipQLPreviewForFile:(NSString *)fileName {
@@ -433,7 +439,7 @@ static NSString *kisDirectory = @"kisDirectory";
     return pathFromOffline;
 }
 
-- (void)sortBySortType:(MEGASortOrderType)sortOrderType {
+- (NSMutableArray*)sortBySortType:(MEGASortOrderType)sortOrderType array: (NSArray *)items {
     NSSortDescriptor *sortDescriptor = nil;
     NSSortDescriptor *sortDirectoryDescriptor = nil;
     
@@ -468,8 +474,7 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDirectoryDescriptor, sortDescriptor, nil];
-    NSArray *sortedArray = [self.offlineItems sortedArrayUsingDescriptors:sortDescriptors];
-    self.offlineItems = [NSMutableArray arrayWithArray:sortedArray];
+    return [[items sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
 }
 
 - (nullable MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
@@ -502,7 +507,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)reloadData {
     self.view.backgroundColor = [UIColor pageBackgroundColor];
-    
     if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.offlineTableView.tableView reloadData];
     } else {

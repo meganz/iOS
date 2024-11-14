@@ -272,8 +272,8 @@
                 if ([relativeOfflinePath length] == 0) {
                     relativeOfflinePath = @"Documents";
                 }
-                OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath: relativeOfflinePath];
-                sortType = offlineAppearancePreference ? offlineAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+                NSNumber *savedSortType = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceSortTypeWithPath: relativeOfflinePath];
+                sortType = savedSortType ? savedSortType.integerValue : MEGASortOrderTypeDefaultAsc;
             } else {
                 sortType = MEGASortOrderTypeDefaultAsc;
             }
