@@ -880,6 +880,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         processRequestResult(delegate: delegate)
     }
     
+    public override func getURLPublicServiceAnnouncement(with delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
     public override func enableRequestStatusMonitor(_ enable: Bool) {
         _isRequestStatusMonitorEnabled = enable
     }

@@ -4,121 +4,132 @@ import MEGADomainMock
 import XCTest
 
 final class PSAViewModelTests: XCTestCase {
+    private let urlString = "https://mega.nz/updatedterms"
     
-    @MainActor func testAction_onViewReady_fetchPSAEntity() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
-        let router = PSAViewRouter(tabBarController: UITabBarController())
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
-        test(viewModel: viewModel, action: .onViewReady, expectedCommands: [.configView(mocPSAEntity())])
-    }
-    
-    @MainActor func testAction_shouldShowPSAView_AfterOneHourScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
-        let router = MockPSAViewRouter()
-        let mocPreferenceUseCase = MockPreferenceUseCase()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mocPreferenceUseCase)
-        mocPreferenceUseCase.dict[PreferenceKeyEntity.lastPSARequestTimestamp] = Date().timeIntervalSince1970 - 3600
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+    @MainActor func testAction_onViewReady_fetchPSAEntity() async {
+        let (viewModel, router, _) = makeSUT(psaResult: .success(mockPSAEntity()))
+        
+        await test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
+        await test(viewModel: viewModel, action: .onViewReady, expectedCommands: [.configView(mockPSAEntity())])
+        
         XCTAssertTrue(router.psaViewShown)
     }
     
-    @MainActor func testAction_shouldShowPSAView_WithinOneHourScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
-        let router = MockPSAViewRouter()
-        let mocPreferenceUseCase = MockPreferenceUseCase()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mocPreferenceUseCase)
-        mocPreferenceUseCase.dict[PreferenceKeyEntity.lastPSARequestTimestamp] = Date().timeIntervalSince1970 - 3599
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
-        XCTAssertFalse(router.psaViewShown)
-    }
-    
-    @MainActor func testAction_shouldShowPSAView_SuccessScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
-        XCTAssertTrue(router.psaViewShown)
-    }
-
-    @MainActor func testAction_shouldShowPSAView_genericErrorScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .failure(.generic)))
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
-        XCTAssertFalse(router.psaViewShown)
-    }
-
-    @MainActor func testAction_shouldShowPSAView_noDataAvailableScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .failure(.noDataAvailable)))
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
-        XCTAssertFalse(router.psaViewShown)
-    }
-
-    @MainActor func testAction_shouldShowPSAView_PSAAlreadyShownScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocPSAEntity())))
-        let mockPreference = MockPreferenceUseCase()
-        mockPreference.dict[.lastPSARequestTimestamp] = Date().timeIntervalSince1970
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mockPreference)
-
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
-        XCTAssertFalse(router.psaViewShown)
-    }
-
-    @MainActor func testAction_shouldShowPSAView_PSAURLScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-
-        test(viewModel: viewModel, action: .showPSAViewIfNeeded, expectedCommands: [])
-        XCTAssertTrue(router.didOpenPSAURLString)
-    }
-    
-    @MainActor func testAction_hidePSAViewScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-
-        test(viewModel: viewModel, action: .setPSAViewHidden(true), expectedCommands: [])
-        XCTAssertFalse(router.psaViewShown)
-    }
-    
-    @MainActor func testAction_showPSAViewScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-
-        test(viewModel: viewModel, action: .setPSAViewHidden(false), expectedCommands: [])
-        XCTAssertTrue(router.psaViewShown)
-    }
-
-    // MARK: - Private methods
-
-    private func mocPSAEntity() -> PSAEntity {
-        return PSAEntity(identifier: 400,
-                         title: "Terms of service update",
-                         description: "Our revised Terms of service, Privacy and data policy, and taken down guidence policy apply from Jan 18th January 2021",
-                         imageURL: "https://eu.static.mega.co.nz/3/images/mega/psa/psa1.png",
-                         positiveText: "View Terms",
-                         positiveLink: "https://mega.nz/updatedterms",
-                         URLString: nil
+    @MainActor func testAction_shouldShowPSAView_AfterOneHourScenario() async throws {
+        await performTest(
+            psaResult: .success(mockPSAEntity()),
+            lastPSARequestTimestamp: Date().timeIntervalSince1970 - 3600,
+            action: .showPSAViewIfNeeded,
+            psaViewShown: true
         )
     }
-
-    private func mocURLPSAEntity() -> PSAEntity {
-        return PSAEntity(identifier: 400,
-                         title: "Terms of service update",
-                         description: "Our revised Terms of service, Privacy and data policy, and taken down guidence policy apply from Jan 18th January 2021",
-                         imageURL: "https://eu.static.mega.co.nz/3/images/mega/psa/psa1.png",
-                         positiveText: "View Terms",
-                         positiveLink: "https://mega.nz/updatedterms",
-                         URLString: "https://mega.nz/updatedterms"
+    
+    @MainActor func testAction_shouldShowPSAView_WithinOneHourScenario() async throws {
+        await performTest(
+            psaResult: .success(mockPSAEntity()),
+            lastPSARequestTimestamp: Date().timeIntervalSince1970 - 3599,
+            action: .showPSAViewIfNeeded,
+            psaViewShown: false
+        )
+    }
+    
+    @MainActor func testAction_shouldShowPSAView_SuccessScenario() async throws {
+        await performTest(
+            psaResult: .success(mockPSAEntity()),
+            action: .showPSAViewIfNeeded,
+            psaViewShown: true
+        )
+    }
+    
+    @MainActor func testAction_shouldShowPSAView_genericErrorScenario() async throws {
+        await performTest(
+            psaResult: .failure(.generic),
+            action: .showPSAViewIfNeeded,
+            psaViewShown: false
+        )
+    }
+    
+    @MainActor func testAction_shouldShowPSAView_noDataAvailableScenario() async throws {
+        await performTest(
+            psaResult: .failure(.noDataAvailable),
+            action: .showPSAViewIfNeeded,
+            psaViewShown: false
+        )
+    }
+    
+    @MainActor func testAction_shouldShowPSAView_PSAAlreadyShownScenario() async throws {
+        await performTest(
+            psaResult: .success(mockPSAEntity()),
+            lastPSARequestTimestamp: Date().timeIntervalSince1970,
+            action: .showPSAViewIfNeeded,
+            psaViewShown: false
+        )
+    }
+    
+    @MainActor func testAction_shouldShowPSAView_PSAURLScenario() async throws {
+        await performTest(
+            psaResult: .success(mockPSAEntity(url: urlString)),
+            action: .showPSAViewIfNeeded,
+            didOpenPSAURLString: true
+        )
+    }
+    
+    @MainActor func testAction_hidePSAViewScenario() async throws {
+        await performTest(
+            psaResult: .success(mockPSAEntity(url: urlString)),
+            action: .setPSAViewHidden(true),
+            psaViewShown: false
+        )
+    }
+    
+    @MainActor func testAction_showPSAViewScenario() async {
+        await performTest(
+            psaResult: .success(mockPSAEntity(url: urlString)),
+            action: .setPSAViewHidden(false),
+            psaViewShown: true
+        )
+    }
+    
+    // MARK: - Private helper methods
+    
+    private func makeSUT(psaResult: Result<PSAEntity, PSAErrorEntity>) -> (PSAViewModel, MockPSAViewRouter, MockPreferenceUseCase) {
+        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: psaResult))
+        let router = MockPSAViewRouter()
+        let mockPreference = MockPreferenceUseCase()
+        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: mockPreference)
+        return (viewModel, router, mockPreference)
+    }
+    
+    @MainActor private func performTest(
+        psaResult: Result<PSAEntity, PSAErrorEntity>,
+        lastPSARequestTimestamp: TimeInterval? = nil,
+        action: PSAViewAction,
+        expectedCommands: [PSAViewModel.Command] = [],
+        psaViewShown: Bool = false,
+        didOpenPSAURLString: Bool = false
+    ) async {
+        let (viewModel, router, mockPreference) = makeSUT(psaResult: psaResult)
+        
+        if let timestamp = lastPSARequestTimestamp {
+            mockPreference.dict[PreferenceKeyEntity.lastPSARequestTimestamp] = timestamp
+        }
+        
+        await test(viewModel: viewModel, action: action, expectedCommands: expectedCommands)
+        await viewModel.currentTask?.value
+        
+        XCTAssertEqual(router.psaViewShown, psaViewShown)
+        XCTAssertEqual(router.didOpenPSAURLString, didOpenPSAURLString)
+    }
+    
+    private func mockPSAEntity(url: String? = nil) -> PSAEntity {
+        PSAEntity(
+            identifier: 400,
+            title: "Terms of service update",
+            description: "Our revised Terms of service, Privacy and data policy, and taken down guidance policy apply from Jan 18th January 2021",
+            imageURL: "https://eu.static.mega.co.nz/3/images/mega/psa/psa1.png",
+            positiveText: "View Terms",
+            positiveLink: "https://mega.nz/updatedterms",
+            URLString: url
         )
     }
 }

@@ -19,6 +19,8 @@ final class PSAViewModel: NSObject, ViewModelType {
     @PreferenceWrapper(key: .lastPSARequestTimestamp, defaultValue: -1.0)
     private var lastPSARequestTimestampPreference: TimeInterval
     
+    private(set) var currentTask: Task<Void, Never>?
+    
     enum Command: CommandType, Equatable {
         case configView(PSAEntity)
     }
@@ -38,11 +40,15 @@ final class PSAViewModel: NSObject, ViewModelType {
         switch action {
         case .showPSAViewIfNeeded:
             guard router.isPSAViewAlreadyShown() == false else { return }
-            shouldShowView { [weak self] show in
-                guard let self = self, !self.router.isPSAViewAlreadyShown(), show else { return }
+            
+            currentTask?.cancel()
+            currentTask = Task {
+                let shouldShowView = await shouldShowView()
                 
-                self.router.start()
-                self.router.currentPSAView()?.viewModel = self
+                guard router.isPSAViewAlreadyShown() == false, shouldShowView else { return }
+                
+                router.start()
+                router.currentPSAView()?.viewModel = self
             }
         case .setPSAViewHidden(let hide):
             router.hidePSAView(hide)
@@ -56,31 +62,27 @@ final class PSAViewModel: NSObject, ViewModelType {
         }
     }
     
-    // MARK: - Private methods.
-    
-    private func shouldShowView(completion: @escaping ((Bool) -> Void)) {
-        // Avoid showing PSA if it is shown already within 1 hour (3600 seconds) time span.
+    // MARK: - Private methods
+    @MainActor
+    private func shouldShowView() async -> Bool {
         guard lastPSARequestTimestampPreference <= 0
                 || (Date().timeIntervalSince1970 - lastPSARequestTimestampPreference) >= 3600 else {
             MEGALogDebug("PSA is already fetched \(Date().timeIntervalSince1970 - lastPSARequestTimestampPreference) seconds back")
-            completion(false)
-            return
+            return false
         }
         
         lastPSARequestTimestampPreference = Date().timeIntervalSince1970
-        useCase.getPSA { [weak self] result in
-            switch result {
-            case .success(let psaEntity):
-                self?.psaEntity = psaEntity
-                if let URLString = psaEntity.URLString, !URLString.isEmpty {
-                    self?.invokeConfigViewCommandIfNeeded()
-                    completion(false)
-                } else {
-                    completion(true)
-                }
-            case .failure:
-                completion(false)
+        
+        do {
+            psaEntity = try await useCase.getPSA()
+            if let URLString = psaEntity?.URLString, !URLString.isEmpty {
+                invokeConfigViewCommandIfNeeded()
+                return false
+            } else {
+                return true
             }
+        } catch {
+            return false
         }
     }
     
