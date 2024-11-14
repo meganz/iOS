@@ -662,6 +662,8 @@
 "settingsTitle"="Pengaturan";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Unggahan kamera";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Unggahan kamera";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA memiliki akses terbatas ke perpustakaan foto anda dan tidak dapat membuat cadangan semua media anda. Ketuk untuk mengubah izin.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Baru-baru ini ditonton";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Tidak ada aktivitas terbaru";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Video akan dihapus dari daftar ini, tetapi tidak dihapus dari drive Cloud anda";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Hapus daftar";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Tidak ada seorang pun di ruang tunggu";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="Kami menyesal melihat anda pergi! Bisakah anda memberi tahu kami mengapa anda membatalkan langganan anda?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Langganan anda akan segera dibatalkan dan anda akan dipindahkan ke akun MEGA gratis ketika paket anda saat ini berakhir. Catatan: Membatalkan langganan tidak akan menghapus akun anda.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Pilih semua yang berlaku";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Saya membutuhkan paket ini untuk sementara dan tidak lagi menggunakannya";
 /* Cancel subscription survey reason with id 2 */
@@ -4249,11 +4257,11 @@
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Masukkan detail";
 /* Cancel subscription confirmation alert title */
-"accounts.cancelSubscriptionConfirmationAlert.title"="Your subscription has been cancelled";
+"accounts.cancelSubscriptionConfirmationAlert.title"="Langganan anda telah dibatalkan";
 /* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
-"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="You will move to a free MEGA account when your current plan expires on %@.";
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="Anda akan pindah ke akun MEGA gratis ketika paket anda saat ini berakhir pada %@.";
 /* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
-"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Please ensure your storage amount is under the limit of %@ by this date. Your account may be locked if you are over the limit.";
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Harap pastikan jumlah penyimpanan anda di bawah batas %@ pada tanggal ini. Akun anda mungkin terkunci jika anda melebihi batas.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="Ok, mengerti";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Tambahkan tag";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Gunakan tag untuk membantu anda menemukan dan mengatur data anda. Coba tag berdasarkan tahun, lokasi, proyek, atau subjek.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tag tidak boleh berisi spasi atau simbol. Tag akan muncul dalam huruf kecil. Karakter non-Latin, seperti Mandarin atau Korea, diperbolehkan.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Maksimal 32 karakter";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Existing tags";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Media";

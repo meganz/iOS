@@ -662,6 +662,8 @@
 "settingsTitle"="Instellingen";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera uploads";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Camera uploads";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA heeft beperkte toegang tot uw fotobibliotheek en kan geen back-up van al uw foto's maken. Tik om machtigingen te wijzigen.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Recent bekeken";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Geen Recente Activiteit";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Video's worden uit deze lijst verwijderd, maar niet van uw Cloud-schijf";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Lijst wissen";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="Het spijt ons u te zien verlaten! Kunt u ons vertellen waarom u uw abonnement opzegt?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Uw abonnement wordt onmiddellijk opgezegd en u wordt overgezet naar een gratis MEGA-account wanneer uw huidige abonnement afloopt. Hou er rekening mee dat als u uw abonnement annuleert, uw account niet wordt verwijderd.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Selecteer alles wat van toepassing is";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Ik had dit abonnement tijdelijk nodig en gebruik het niet meer";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Tags toevoegen";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Gebruik tags om uw gegevens te vinden en te ordenen. Probeer te taggen op jaar, lokatie, project of onderwerp.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Labels bevatten geen spaties of symbolen. Tags worden in kleine letters weergegeven. Niet-Latijnse tekens, zoals Chinees of Koreaans, zijn toegestaan.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Maximaal 32 tekens";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Label “#%@” toevoegen";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Bestaande labels";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Media";

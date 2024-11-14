@@ -3368,24 +3368,6 @@
         <string>Se han eliminado %d vídeos de “[A]”</string>
       </dict>
     </dict>
-    <key>rewind.for.pro.users.maximumDays</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@maximumDays@</string>
-      <key>maximumDays</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Hasta %d día</string>
-        <key>many</key>
-        <string>Hasta %d de días</string>
-        <key>other</key>
-        <string>Hasta %d días</string>
-      </dict>
-    </dict>
     <key>nodes.action.hideItems</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

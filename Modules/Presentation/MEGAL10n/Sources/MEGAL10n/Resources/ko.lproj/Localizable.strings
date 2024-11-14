@@ -662,6 +662,8 @@
 "settingsTitle"="설정";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="카메라 업로드";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="카메라 업로드";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA가 당신의 사진 라이브러리에 제한된 접근 권한을 가지고 있으며 모든 미디어를 백업할 수 없습니다. 권한을 변경하려면 탭 하세요.";
 /* Navigation title for Photo Controller */
@@ -951,7 +953,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="친구를 초대하세요";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="각 초대마다 %@의 저장소. \n365일간 이용 가능";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="기기 연락처에서 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="최근에 봄";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="최근 활동 없음";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="대기실에 아무도 없습니다";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="떠나시는 것을 보게 되어 안타깝습니다! 왜 구독을 취소하는지 알려주실 수 있나요?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="당신의 구독은 즉시 취소되며 현재 요금제가 만료되면 무료 MEGA 계정으로 옮겨질 것입니다. 참고사항: 구독을 취소하는 것이 계정을 삭제하지는 않습니다.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="적용되는 모든 것 선택";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="이 요금제가 일시적으로 필요했고 더 이상 필요하지 않습니다";
 /* Cancel subscription survey reason with id 2 */
@@ -4249,11 +4257,11 @@
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="자세한 정보를 입력하세요";
 /* Cancel subscription confirmation alert title */
-"accounts.cancelSubscriptionConfirmationAlert.title"="Your subscription has been cancelled";
+"accounts.cancelSubscriptionConfirmationAlert.title"="구독이 취소되었습니다";
 /* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
-"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="You will move to a free MEGA account when your current plan expires on %@.";
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="%@에 현재 요금제가 만료되면 무료 MEGA 계정으로 이동됩니다.";
 /* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
-"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Please ensure your storage amount is under the limit of %@ by this date. Your account may be locked if you are over the limit.";
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="저장소 크기가 이 날짜까지 %@의 한도 이하인지 확인하세요. 이 한도를 넘으면 계정이 잠길 수 있습니다.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="알겠습니다";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
@@ -4375,15 +4383,15 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="데이터를 저장하고 보호하기 위해 MEGA를 믿는 수백만의 사람과 기업들에 참여하세요.";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+"chat.meetings.shareLink.main"="회의 확정됨: 다른 사람들을 초대하세요";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
 /* Button title to send to chat in modal shown when sharing a meeting link */
-"chat.meetings.shareLink.sendToChat"="Send link to chat";
+"chat.meetings.shareLink.sendToChat"="대화에 링크 보내기";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="링크 공유";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="다음에 추가";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="사진첩에 추가";
 /* Node info cell title for tags */
@@ -4391,8 +4399,18 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Pro 전용";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="태그 추가";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="태그 추가";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="데이터를 찾고 정리하는데에 도움을 받기 위해 태그를 이용하세요. 연도, 위치, 프로젝트, 또는 제목으로 태그해보세요.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="태그는 공백 또는 기호를 포함할 수 없습니다. 태그는 소문자로 나타납니다. 한국어 또는 중국어 같은 비라틴 문자도 허용됩니다.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="최대 32자";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="“#%@” 태그 추가";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="존재하는 태그";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="미디어";

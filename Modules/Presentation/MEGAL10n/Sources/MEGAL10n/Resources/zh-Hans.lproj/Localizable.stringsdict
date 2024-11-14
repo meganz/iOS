@@ -2620,20 +2620,6 @@
         <string>已移从“[A]”中移除%d个视频</string>
       </dict>
     </dict>
-    <key>rewind.for.pro.users.maximumDays</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@maximumDays@</string>
-      <key>maximumDays</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>长达%d天</string>
-      </dict>
-    </dict>
     <key>nodes.action.hideItems</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

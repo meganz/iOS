@@ -2560,10 +2560,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Notifications will be muted until [Time]</string>
         <key>other</key>
-        <string>Notifications will be muted until [Time]</string>
+        <string>알림이 [Time]까지 울리지 않습니다</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
@@ -2622,20 +2620,6 @@
         <string>“[A]”에서 동영상 %d개 제거함</string>
       </dict>
     </dict>
-    <key>rewind.for.pro.users.maximumDays</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@maximumDays@</string>
-      <key>maximumDays</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>nodes.action.hideItems</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2660,10 +2644,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added to [A]</string>
         <key>other</key>
-        <string>Added %d items to [A]</string>
+        <string>[A]에 %d개의 항목 추가됨</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesOnly</key>
@@ -2676,10 +2658,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d file</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>%d개의 파일 추가됨</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -2692,10 +2672,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d folder</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>%d개의 폴더 추가됨</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -2708,10 +2686,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added %d file</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>%d개의 파일 추가됨</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -2724,10 +2700,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>and %d folder</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>그리고 %d개의 폴더</string>
       </dict>
     </dict>
   </dict>

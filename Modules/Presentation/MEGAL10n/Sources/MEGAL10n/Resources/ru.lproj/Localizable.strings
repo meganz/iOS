@@ -662,6 +662,8 @@
 "settingsTitle"="Настройки";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Загрузки из камеры";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Загрузки из камеры";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA имеет ограниченный доступ к вашей библиотеке фотографий и не может создавать резервные копии всех ваших медиафайлов. Нажмите, чтобы изменить разрешения.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Недавно просмотренные";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Нет недавней активности";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Видео будут удалены из этого списка, но останутся на Облачном диске";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Очистить список";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="В комнате ожидания никого нет";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4051,11 +4057,11 @@
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать и писать сообщения. Организатор может перейти на план Pro, чтобы снять это ограничение.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Только 100 участников могут присоединиться к звонку. Нужно больше? [A]Улучшите аккаунт[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Только 100 участников могут присоединиться к звонку. Попросите организатора перейти на Pro, чтобы снять это ограничение.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать чаты и делиться ссылками на них. Нужно больше? [A]Улучшите аккаунт[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Нужно больше времени? Перейдите на план Pro с неограниченными звонками.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4065,7 +4071,7 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Бесплатный звонок завершится через %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+"meetings.contact-picker.warning.over-limit.host"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать чаты и делиться ссылками на них. Нужно добавить больше участников? [A]Улучшите аккаунт.[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.non-host"="К звонку могут присоединиться до 100 участников. Остальные участники смогут только читать писать сообщения. Организатор может перейти на план Pro, чтобы снять эти ограничения.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="Жаль, что вы уходите! Можете рассказать нам, почему отменяете подписку?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Ваша подписка будет немедленно отменена, и вы будете переведены на бесплатный аккаунт MEGA, когда истечёт срок действия текущего плана. Примечание: При отмене подписки ваш аккаунт не удаляется.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Выберите все подходящие варианты";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Мне временно был нужен этот план, и я им больше не пользуюсь";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Новая метка";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Используйте метки, чтобы облегчить поиск и систематизацию данных. Попробуйте отметить год, место, проект или тему.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Метки не могут содержать пробелы или специальные символы. Метки будут отображаться в нижнем регистре. Допускаются нелатинские символы, например китайские или корейские.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Максимум 32 символа";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Добавить метку «#%@»";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Существующие метки";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Медиа";

@@ -2620,20 +2620,6 @@
         <string>ลบวิดีโอ %d รายการออกจาก “[A]” แล้ว</string>
       </dict>
     </dict>
-    <key>rewind.for.pro.users.maximumDays</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@maximumDays@</string>
-      <key>maximumDays</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string></string>
-      </dict>
-    </dict>
     <key>nodes.action.hideItems</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

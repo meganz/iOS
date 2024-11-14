@@ -662,6 +662,8 @@
 "settingsTitle"="設定";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相機上傳";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="相機上傳";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA對您的照片的存取權限有限，無法備份您的所有媒體。點選以更改權限。";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="近期觀看";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="沒有近期活動";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="影片將從此列表中刪除，但不會從您的雲端硬碟中刪除";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="清除列表";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室裡沒有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4051,11 +4057,11 @@
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這個限制。";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="此通話僅支援100位與會者。需要更多與會者嗎？[A]立即升級[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="此通話僅支援100位與會者。請求召集人升級到Pro版以移除這些限制。";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="此通話僅支援100位與會者。任何其他與會者只能發送和閱讀對話記錄。需要更多與會者嗎？[A]立即升級[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="需要更多時間嗎？Pro方案提供不受限制的通話。";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4065,7 +4071,7 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="此免費通話將在%@結束";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+"meetings.contact-picker.warning.over-limit.host"="此通話僅支援100位與會者。任何其他參與者只能發送和閱讀對話記錄。需要增加更多與會者嗎？[A]立即升級。[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.non-host"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"=" 我們很遺憾看到您離開MEGA！您能告訴我們您取消訂閱的原因嗎？";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="您的訂閱將立即取消，並且當您目前的方案到期時，您將轉回免費MEGA帳戶。注意：取消訂閱不會刪除您的帳戶。";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="選擇所有選項";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="我暫時需要這個方案，不再使用了";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="新增檟籤";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="使用標籤來幫助您尋找和整理資料。試著按年份、地點、項目或主題進行標記。";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="標籤不能包含空格或符號。標籤將以小寫字母顯示。允許使用非拉丁字元，例如中文或韓文。";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="最多32個字元（16個中文字）";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="新增「“#%@」標籤";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="現有標籤";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="媒體";

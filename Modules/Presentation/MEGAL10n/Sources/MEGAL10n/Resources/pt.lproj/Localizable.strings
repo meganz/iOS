@@ -662,6 +662,8 @@
 "settingsTitle"="Configurações";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Uploads da câmera";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Uploads da câmera";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ O MEGA tem acesso limitado à sua biblioteca de fotos e não pode fazer backup de todos os seus arquivos de mídia. Toque para alterar as permissões.";
 /* Navigation title for Photo Controller */
@@ -1109,7 +1111,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Compra interrompida";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Você cancelou a solicitação ou a Apple reportou um erro na transação. Por favor, tente novamente ou entre em contato com ios@mega.nz.";
+"failedPurchase_message"="Você cancelou a solicitação ou a Apple informou um erro na transação. Por favor, tente novamente ou entre em contato com ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Erro na restauração";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -2107,7 +2109,7 @@
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
 "Resume All"="Continuar todas as transferências";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
-"Clear All"="Limpar tudo";
+"Clear All"="Deletar tudo";
 /* Alert header for asking permission to resume transfers */
 "Resume Transfers?"="Continuar transferências?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
@@ -2899,7 +2901,7 @@
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Informar sobre um problema";
 /* Title of the dialog button to discard a report. */
-"help.reportIssue.discardReport"="Descartar Relatório";
+"help.reportIssue.discardReport"="Descartar informe";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describe"="O seus comentários nos ajudam a melhorar o MEGA. Descreva claramente o problema que você encontrou. Quanto mais detalhes você proporcionar, mais fácil será para nós resolvê-lo.";
 /* Label to indicate that users' input has not reached the required minimum characters */
@@ -2913,15 +2915,15 @@
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Obrigado. Analisaremos o erro e um membro de nossa equipe entrará em contato com você.";
 /* Error message shown when some error occurs during uploading a bug report. */
-"help.reportIssue.fail.message"="Não foi possível enviar o seu relatório. Por favor, tente novamente.";
+"help.reportIssue.fail.message"="Não foi possível enviar o seu informe. Por favor, tente novamente.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Você deve esperar 10 minutos antes de notificar outro problema";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.message"="Tente novamente mais tarde ou entre em contato com a nossa equipe de suporte em support@mega.nz se o problema persistir";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Você tem certeza de que quer cancelar a notificacao do problema?";
+"help.reportIssue.creating.cancel.title"="Você tem certeza de que quer cancelar a notificação do problema?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.message"="Este erro não será reportado se você cancelar o envio.";
+"help.reportIssue.creating.cancel.message"="Este erro não será informado se você cancelar a notificação do mesmo.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Descreva o problema usando um mínimo de 10 caracteres";
 /* Label shown when users lost the internet connection */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Assistido recentemente";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Não há atividade recente";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Os vídeos serão removidos desta lista, mas não serão excluídos da sua Nuvem de arquivos";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Deletar lista";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Não há ninguém na sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4051,9 +4057,9 @@
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Somente 100 participantes podem entrar na chamada. Precisa de mais? [A]Faça um upgrade[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Somente 100 participantes podem entrar na chamada. O organizador deve fazer o upgrade a um plano Pro para remover essa restrição.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
 "meetings.inCall.banner.limit100Participants.organizer-host"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Precisa de mais? [A]Faça um upgrade[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
@@ -4065,7 +4071,7 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Esta chamada gratuita vai terminar em %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+"meetings.contact-picker.warning.over-limit.host"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Precisa adicionar mais participantes? [A]Faça um upgrade[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.non-host"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e receber mensagens. O organizador pode fazer upgrade a um plano Pro para eliminar essa restrição.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="Sentimos muito ver você partir! Você poderia nos dizer por que está cancelando a sua assinatura?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="A sua assinatura será cancelada imediatamente e você passará a ter uma conta gratuita do MEGA quando o seu plano atual expirar. Aviso: cancelar a sua assinatura não vai fazer que a sua conta seja deletada.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Selecione todas as opções aplicáveis";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Eu só precisava deste plano por um tempo e já não o uso";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Adicionar etiquetas";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Use etiquetas para que seja mais fácil encontrar e organizar os seus dados. Você pode etiquetar por ano, localização, projeto ou assunto.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="As etiquetas não podem conter símbolos ou espaços, e serão mostradas em minúsculas. Caracteres não latinos, como chinês ou coreano, são permitidos.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Máximo de 32 caracteres";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Adicionar a etiqueta “#%@”";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Etiquetas existentes";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Imprensa";

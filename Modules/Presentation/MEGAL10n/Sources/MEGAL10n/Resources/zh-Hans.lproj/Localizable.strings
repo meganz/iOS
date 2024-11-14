@@ -662,6 +662,8 @@
 "settingsTitle"="设置";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相机上传";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="相机上传";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA对您的照片的访问受限，无法备份您的所有媒体。点击以更改权限。";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="最近观看";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="无近期动态";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="视频将从此列表中删除，但不会从您的云盘中删除";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="清除清单";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室里没有人";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4075,9 +4081,9 @@
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="立即升级";
 /* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除这些限制。";
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro方案以移除这些限制。";
 /* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除这些限制。";
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro方案以移除这些限制。";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="隐藏的文件和文件夹";
 /* Hidden files and folders onboarding content hide important title */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="我们很遗憾看到您离开！您能告诉我们您取消订阅的原因吗？";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="您的订阅将被立即取消，并且当您的目前会员方案到期后，您将被转为免费的MEGA帐户。请注意：取消订阅不会删除您的帐户。";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="选择所有适用的选项";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="我只是暂时需要这个方案，并且不再使用它";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="添加标签";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="使用标签来帮助您查找和整理数据。尝试按年份、位置、项目或主题进行标记。";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="标签不能包含空格或符号。标签将以小写字母显示。允许使用非拉丁字符，例如中文或韩语。";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="最多32个字符（16个中文字）";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="添加“#%@”标签";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="现有标签";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="媒体";
