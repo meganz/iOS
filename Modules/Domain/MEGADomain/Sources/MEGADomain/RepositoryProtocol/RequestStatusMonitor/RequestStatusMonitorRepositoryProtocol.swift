@@ -1,4 +1,4 @@
-public protocol RequestStatusMonitorRepositoryProtocol: RepositoryProtocol {
+public protocol RequestStatusMonitorRepositoryProtocol: RepositoryProtocol, Sendable {
     /// Enable or disable the request status monitor
     ///
     /// - Note: When it's enabled, the request status monitor generates events of type

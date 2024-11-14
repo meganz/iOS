@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockRequestStatusMonitorRepository: RequestStatusMonitorRepositoryProtocol {
+public final class MockRequestStatusMonitorRepository: RequestStatusMonitorRepositoryProtocol, @unchecked Sendable {
     public static var newRepo: MockRequestStatusMonitorRepository {
         MockRequestStatusMonitorRepository()
     }

@@ -1,4 +1,4 @@
-public protocol RequestStatusMonitorUseCaseProtocol {
+public protocol RequestStatusMonitorUseCaseProtocol: Sendable {
     /// Enable or disable the request status monitor
     ///
     /// - Note: When it's enabled, the request status monitor generates events of type
@@ -30,4 +30,3 @@ public struct RequestStatusMonitorUseCase<T: RequestStatusMonitorRepositoryProto
         repo.isRequestStatusMonitorEnabled()
     }
 }
-
