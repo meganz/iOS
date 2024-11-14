@@ -177,7 +177,7 @@ class NodeBrowserViewModel: ObservableObject {
 
         $viewMode
             .removeDuplicates()
-            .sink { viewMode in
+            .sink { [weak self] viewMode in
                 if viewMode == .list {
                     searchResultsViewModel.layout = .list
                 }
@@ -190,7 +190,7 @@ class NodeBrowserViewModel: ObservableObject {
                 // hide search bar if we are showing media disovery
                 onUpdateSearchBarVisibility(viewMode != .mediaDiscovery)
 
-                Task { await self.updateContextMenu() }
+                Task { await self?.updateContextMenu() }
             }
             .store(in: &subscriptions)
         

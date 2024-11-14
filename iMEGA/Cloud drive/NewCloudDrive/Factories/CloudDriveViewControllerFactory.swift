@@ -562,8 +562,8 @@ struct CloudDriveViewControllerFactory {
         )
         
         let searchControllerWrapper = SearchControllerWrapper(
-            onSearch: { searchResultsVM.bridge.queryChanged($0) },
-            onCancel: { searchResultsVM.bridge.queryCleaned() }
+            onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
+            onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() }
         )
         
         searchResultsVM.bridge.selectionChanged = { selectedNodes in
