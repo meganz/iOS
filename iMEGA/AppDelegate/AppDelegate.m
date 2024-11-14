@@ -574,6 +574,11 @@
             } else if (isFetchNodesDone) {
                 [self showLink:url];
             }
+        } else {
+            // Passcode exists and not immediately shows
+            if (!LTHPasscodeViewController.didPasscodeTimerEnd) {
+                [self showLink:url];
+            }
         }
     } else {
         switch ([url mnz_type]) {
