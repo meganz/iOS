@@ -96,6 +96,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
     
     func didSelectURL(_ url: URL) {
         MEGALogInfo("URL Selected: \(url)")
+        dismissKeyboardIfRequired()
         MEGALinkManager.linkURL = url
         MEGALinkManager.processLinkURL(url)
     }
@@ -241,6 +242,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                 photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
                 present(viewController: photoBrowserVC)
             } else {
+                dismissKeyboardIfRequired()
                 if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
                     viewController.chatId = chatRoom.chatId
                     viewController.messageId = megaMessage.messageId
