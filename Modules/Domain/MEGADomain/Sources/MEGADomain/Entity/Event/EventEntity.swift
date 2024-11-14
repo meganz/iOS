@@ -6,19 +6,22 @@ public struct EventEntity: Sendable {
     public let reason: ReasonError?
     public let storageState: StorageState?
     public let description: String?
+    public let number: Int
     
     public init(
-        type: EventEntity.EventType?,
-        text: String?,
-        reason: EventEntity.ReasonError?,
-        storageState: EventEntity.StorageState?,
-        description: String?
+        type: EventEntity.EventType? = nil,
+        text: String? = nil,
+        reason: EventEntity.ReasonError? = nil,
+        storageState: EventEntity.StorageState? = nil,
+        description: String? = nil,
+        number: Int
     ) {
         self.type = type
         self.text = text
         self.reason = reason
         self.storageState = storageState
         self.description = description
+        self.number = number
     }
     
     public enum EventType: Sendable {

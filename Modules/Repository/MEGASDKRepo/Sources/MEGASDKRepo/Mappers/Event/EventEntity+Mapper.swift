@@ -61,7 +61,8 @@ extension MEGAEvent {
             text: text,
             reason: mapCodeToReasonError(from: number),
             storageState: type == .storage ? mapCodeToStorageState(from: number) : nil,
-            description: eventString
+            description: eventString,
+            number: number
         )
     }
     
