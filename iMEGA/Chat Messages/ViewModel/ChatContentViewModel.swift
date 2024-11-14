@@ -158,7 +158,7 @@ final class ChatContentViewModel: ViewModelType {
         if isEditing {
             return .cancel
         } else if chatRoom.chatType != .oneToOne {
-            if chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled {
+            if (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && chatRoom.isActive {
                 return .addParticipantAndAudioCall
             } else {
                 return .audioCall
