@@ -102,11 +102,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
         
         viewModel.didAppear()
         pageTabViewModel.didAppear()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         configureAdsVisibility()
     }
     

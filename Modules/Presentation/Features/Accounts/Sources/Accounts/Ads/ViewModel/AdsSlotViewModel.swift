@@ -19,19 +19,22 @@ final public class AdsSlotViewModel: ObservableObject {
     
     @Published var isExternalAdsEnabled: Bool?
     @Published var displayAds: Bool = false
+    private(set) var onViewFirstAppeared: (() -> Void)?
     
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
-        accountUseCase: some AccountUseCaseProtocol
+        accountUseCase: some AccountUseCaseProtocol,
+        onViewFirstAppeared: (() -> Void)? = nil
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
         self.accountUseCase = accountUseCase
+        self.onViewFirstAppeared = onViewFirstAppeared
     }
 
     // MARK: Setup
