@@ -662,6 +662,8 @@
 "settingsTitle"="Einstellungen";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Kamera-Uploads";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Kamera-Uploads";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA hat nur eingeschränkten Zugriff auf Ihre Fotobibliothek und kann nicht alle Ihre Mediendateien sichern. Antippen, um die Berechtigungen zu ändern.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Kürzlich angesehen";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Keine Aktivität";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Die Videos werden aus dieser Liste entfernt, aber nicht aus Ihrem Cloud Drive gelöscht";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Liste leeren";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Der Warteraum ist leer";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="Es tut uns leid, dass Sie uns verlassen! Könnten Sie uns den Grund für die Kündigung Ihres Abonnements verraten?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Wenn Ihr aktuelles Abonnement ausläuft, wird das Abonnement sofort beendet, und Sie werden auf einen kostenlosen MEGA-Account umgestellt. Hinweis: Durch die Beendigung Ihres Abonnements wird Ihr Account nicht gelöscht.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Alles Zutreffende ankreuzen";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Ich habe dieses Abonnement vorübergehend benötigt und benutze es nicht mehr";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Tags hinzufügen";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Verwenden Sie Tags, um Ihre Daten zu finden und zu organisieren. Probieren Sie das Tagging nach Jahr, Ort, Projekt oder Thema aus.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags dürfen keine Leerzeichen oder Symbole enthalten. Tags werden in Kleinbuchstaben angezeigt. Nicht-lateinische Zeichen, wie z. B. Chinesisch oder Koreanisch, sind erlaubt.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Max. 32 Zeichen";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Tag „#%@“ hinzufügen";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Vorhandene Tags";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Medien";

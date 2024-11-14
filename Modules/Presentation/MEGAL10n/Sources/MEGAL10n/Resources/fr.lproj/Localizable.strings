@@ -662,6 +662,8 @@
 "settingsTitle"="Paramètres";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Téléversements de l’appareil photo";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Téléversements de l’appareil photo";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA a un accès limité à votre photothèque et ne peut pas sauvegarder tous vos médias. Touchez pour changer les autorisations.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Regardées récemment";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Aucune activité récente";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Les vidéos seront supprimées de cette liste, mais pas de votre Disque nuagique";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Effacer la liste";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="La salle d’attente est vide";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4051,11 +4057,11 @@
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever cette restriction.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
+"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Seuls 100 participants peuvent participer à l'appel. Vous en avez besoin de plus ? [A]Mettez à jour dès maintenant[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Seuls 100 participants peuvent participer à l'appel. Demandez à l'organisateur d'effectuer la mise à niveau vers la version Pro pour supprimer ces restrictions.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="Seuls 100 participants peuvent participer à l'appel. Les participants supplémentaires pourront uniquement envoyer et lire des conversations. Vous en avez besoin de plus ? [A]Mettez à jour dès maintenant[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Besoin de plus de temps ? Les abonnements Pro offrent des appels illimités.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4065,7 +4071,7 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Cet appel gratuit se terminera dans %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+"meetings.contact-picker.warning.over-limit.host"="Seuls 100 participants peuvent participer à l'appel. Les participants supplémentaires pourront uniquement envoyer et lire des conversations. Vous avez besoin d'ajouter d'autres participants ? [A]Effectuez une mise à niveau maintenant[/A]";
 /* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.non-host"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="Nous sommes désolés de vous voir partir. Pouvez-vous nous indiquer pourquoi vous annulez votre abonnement ?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Votre abonnement sera annulé immédiatement et votre compte sera transformé en compte MEGA gratuit après expiration de votre abonnement actuel. Note : l’annulation de votre abonnement ne supprimera pas votre compte.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Sélectionnez tout ce qui s'applique";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="J’avais besoin de cet abonnement temporairement et ne l’utilise plus";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Ajoutez des étiquettes";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Utilisez des étiquettes pour vous aider à trouver et à organiser vos données. Essayez d’étiqueter par année, emplacement, projet ou sujet.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Les étiquettes ne peuvent pas contenir de symboles ni d'espaces. Les étiquettes apparaîtront en lettres minuscules. Les caractères non latins, tels que le chinois ou le coréen, sont autorisés.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Maximum de 32[w]caractères";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Ajoutez « #%@» étiquette";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Étiquettes existantes";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Médias";

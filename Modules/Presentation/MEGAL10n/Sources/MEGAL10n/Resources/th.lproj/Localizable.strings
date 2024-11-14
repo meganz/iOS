@@ -662,6 +662,8 @@
 "settingsTitle"="ตั้งค่า";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="อัปโหลดจากกล้อง";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="อัปโหลดจากกล้อง";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA ถูกจำกัดการเข้าถึงไลบรารีรูปภาพของคุณและไม่สามารถสำรองสื่อทั้งหมดของคุณได้ แตะเพื่อเปลี่ยนการอนุญาต";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="ดูล่าสุด";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="ไม่มีกิจกรรมล่าสุด";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="ไม่มีใครอยู่ในห้องนั่งรอ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4075,9 +4081,9 @@
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="อัปเกรดตอนนี้";
 /* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="ซ่อนไฟล์และโฟลเดอร์";
 /* Hidden files and folders onboarding content hide important title */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="เรารู้สึกเสียใจที่คุณจะยกเลิกการสมัครใช้งาน! คุณช่วยบอกเราได้ไหมว่าอะไรเป็นเหตุผลที่คุณตัดสินใจยกเลิก";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="การสมัครใช้งานของคุณจะถูกยกเลิกทันที และคุณจะถูกย้ายไปใช้บัญชี MEGA ฟรี เมื่อแผนสมัครใช้งานปัจจุบันของคุณหมดอายุ โปรดทราบว่าการยกเลิกการสมัครใช้งานจะไม่ทำให้บัญชีของคุณถูกลบ";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="ฉันแค่ต้องการทดลองใช้แผนนี้ชั่วคราวและไม่ต้องการใช้แผนนี้อีกต่อไป";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="เพิ่มแท็ก";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="ใช้แท็กเพื่อช่วยค้นหาและจัดระเบียบข้อมูลของคุณ ลองใช้แท็กโดยแยกตามปี ตำแหน่งที่ตั้ง โครงการ หรือหัวข้อ";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags cannot contain spaces or symbols. Tags will appear in lowercase letters. Non-Latin characters, such as Chinese or Korean, are allowed.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="สูงสุด 32 ตัวอักษร";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="แท็กที่มีอยู่";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="สื่อ";

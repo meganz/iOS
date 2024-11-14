@@ -1058,6 +1058,8 @@
 "chooseYourAccountType"="Choose your account type";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Storage";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -4403,11 +4405,11 @@
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Use tags to help you find and organise your data. Try tagging by year, location, project, or subject.";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags must be lowercase, with no spaces or symbols.";
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags cannot contain spaces or symbols. Tags will appear in lowercase letters. Non-Latin characters, such as Chinese or Korean, are allowed.";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Maximum 32 characters";
 /* Button title shown to the user to add the tags in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add \"#%@\" tag";
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
 /* Section title that is shown over the existing tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Existing tags";
 /* Section title for visual media photos section */

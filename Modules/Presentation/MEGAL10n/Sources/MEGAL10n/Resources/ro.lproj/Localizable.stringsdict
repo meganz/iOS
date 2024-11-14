@@ -3368,24 +3368,6 @@
         <string>Au fost eliminate %d de videoclipuri din „[A]”</string>
       </dict>
     </dict>
-    <key>rewind.for.pro.users.maximumDays</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@maximumDays@</string>
-      <key>maximumDays</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Până la %d zi</string>
-        <key>few</key>
-        <string>Până la %d de zile</string>
-        <key>other</key>
-        <string>Până la %d de zile</string>
-      </dict>
-    </dict>
     <key>nodes.action.hideItems</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

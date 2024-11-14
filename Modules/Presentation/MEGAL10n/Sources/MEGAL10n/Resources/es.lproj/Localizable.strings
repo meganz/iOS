@@ -159,7 +159,7 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA necesita un mínimo de %@. Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados de tu galería. También puedes administrar lo que MEGA almacena en tu dispositivo.";
 /* Title for the file link view */
-"fileLink"="Enlace del Archivo";
+"fileLink"="Enlace de archivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Abrir";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -662,6 +662,8 @@
 "settingsTitle"="Ajustes";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Subidas de la cámara";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Subidas de la cámara";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA tiene acceso limitado a tu biblioteca de fotos y no puede hacer un backup de todos tus archivos multimedia. Pulsa para cambiar los permisos.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Visto recientemente";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="No hay actividad reciente";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="No hay nadie en la sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="¡Lamentamos que te vayas! ¿Puedes decirnos por qué cancelas tu suscripción?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Tu suscripción se cancelará de inmediato y volverás a tener una cuenta de MEGA gratuita en cuanto caduque tu plan actual. Aviso: Cancelar la suscripción no eliminará tu cuenta.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Necesitaba este plan temporalmente y ya no lo uso";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Usa las etiquetas para encontrar y organizar tus datos. Puedes etiquetar por año, ubicación, proyecto o tema.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags cannot contain spaces or symbols. Tags will appear in lowercase letters. Non-Latin characters, such as Chinese or Korean, are allowed.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Máximo 32 caracteres";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Etiquetas existentes";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Medios";

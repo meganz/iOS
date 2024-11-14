@@ -662,6 +662,8 @@
 "settingsTitle"="Thiết đặt";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Đăng tải camêra";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="Đăng tải camêra";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA bị giới hạn quyền truy cập vào thư viện ảnh và không thể sao lưu dự phòng tất cả phương tiện số của bạn. Chạm để thay đổi quyền hạn.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="Đã xem gần đây";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Không có hoạt động gần đây";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Không có ai ở trong phòng chờ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4075,9 +4081,9 @@
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Nâng cấp ngay";
 /* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Chỉ có 100 người mới có thể tham[w]gia cuộc gọi. Bất kỳ người tham[w]gia nào thêm sẽ chỉ có thể gửi và nhận tin[w]nhắn. Yêu[w]cầu ban tổ[w]chức nâng[w]cấp lên Pro để loại bỏ hạn[w]chế này.";
+"calls.freePlanLimitWarning.waitingRoom.alert.message"="Chỉ có 100 người mới có thể tham gia cuộc gọi. Bất kỳ người tham gia nào thêm sẽ chỉ có thể gửi và nhận tin nhắn. Yêu cầu ban tổ chức nâng cấp lên Pro để loại bỏ hạn chế này.";
 /* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Chỉ có 100 người mới có thể tham[w]gia cuộc gọi. Bất kỳ người tham[w]gia nào thêm sẽ chỉ có thể gửi và nhận tin[w]nhắn. Yêu[w]cầu ban tổ[w]chức nâng[w]cấp lên Pro để loại bỏ hạn[w]chế này.";
+"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Chỉ có 100 người mới có thể tham gia cuộc gọi. Bất kỳ người tham gia nào thêm sẽ chỉ có thể gửi và nhận tin nhắn. Yêu cầu ban tổ chức nâng cấp lên Pro để loại bỏ hạn chế này.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Tệp tin và thư mục ẩn";
 /* Hidden files and folders onboarding content hide important title */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="Chúng tôi rất tiếc khi thấy bạn rời khỏi dịch vụ! Bạn có thể cho chúng tôi biết lý do tại sao bạn hủy gói đăng ký được không?";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Gói đăng ký của bạn sẽ bị hủy ngay lập tức và bạn sẽ chuyển thành tài khoản MEGA miễn phí khi gói hiện tại của bạn hết hạn. Lưu ý: Việc hủy gói đăng ký sẽ không xóa tài khoản của bạn.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Tôi chỉ sử dụng cái này tạm thời và không còn nhu cầu nữa";
 /* Cancel subscription survey reason with id 2 */
@@ -4249,11 +4257,11 @@
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Nhập chi tiết";
 /* Cancel subscription confirmation alert title */
-"accounts.cancelSubscriptionConfirmationAlert.title"="Your subscription has been cancelled";
+"accounts.cancelSubscriptionConfirmationAlert.title"="Gói đăng ký dịch vụ của bạn đã được hủy";
 /* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
-"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="You will move to a free MEGA account when your current plan expires on %@.";
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="Bạn sẽ chuyển sang tài khoản MEGA miễn phí khi gói hiện tại của bạn hết hạn vào %@.";
 /* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
-"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Please ensure your storage amount is under the limit of %@ by this date. Your account may be locked if you are over the limit.";
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Vui lòng đảm bảo lượng lưu trữ của bạn ở dưới mức %@ vào ngày này. Tài khoản của bạn có thể bị khóa nếu bạn vượt quá giới hạn.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="OK, hiểu rồi";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
@@ -4391,8 +4399,18 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Chỉ cho hạng Pro";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Thêm thẻ";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Thêm thẻ";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Sử dụng gắn thẻ để giúp tìm và sắp xếp dữ liệu của mình. Hãy thử gắn thẻ theo năm, vị trí, dự án hoặc chủ đề.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Thẻ không thể chứa ký hiệu hoặc khoảng trắng. Thẻ sẽ hiện bằng chữ thường. Các ký tự không phải chữ Latinh như là tiếng Trung hoặc tiếng Hàn, được phép sử dụng.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Tối[w]đa 32 ký[w]tự";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Các thẻ hiện có";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="Truyền thông";

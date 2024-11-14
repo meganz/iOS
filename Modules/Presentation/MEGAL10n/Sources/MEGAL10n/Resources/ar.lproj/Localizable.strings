@@ -662,6 +662,8 @@
 "settingsTitle"="الاعدادات";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="ترفيعات الكاميرا";
+/* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
+"general.cameraUploads"="ترفيعات الكاميرا";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ لدى ميغا MEGA وصول محدود إلى مكتبة الصور الخاصة بك ولا يمكنها عمل نسخة احتياطية لجميع الوسائط الخاصة بك. انقر لتغيير الأذونات.";
 /* Navigation title for Photo Controller */
@@ -3984,6 +3986,10 @@
 "videos.recentlyWatched.navigationBarTitle"="تمت مشاهدتها مؤخرًا";
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="لا وجود لأي نشاط مؤخراً";
+/* Recently watched videos delete all alert title */
+"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+/* Recently watched videos delete all alert clear recently watched option */
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="لا يوجد أحد في غرفة الانتظار";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4220,6 +4226,8 @@
 "accounts.cancelSubscriptionSurvey.header.title"="نأسف لرؤيتك تغادر! هل يمكنك إخبارنا عن سبب إلغاء اشتراكك؟";
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="سيتم إلغاء اشتراكك على الفور وسيتم نقلك إلى حساب ميغا MEGA مجاني عند انتهاء باقتك الحالية. ملاحظة: لن يؤدي إلغاء اشتراكك إلى حذف حسابك.";
+/* Cancel subscription survey subHeader title */
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="كنت بحاجة إلى هذه الباقة مؤقتًا ولم أعد أستخدمها";
 /* Cancel subscription survey reason with id 2 */
@@ -4396,3 +4404,13 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="إضافة تاغات";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="استخدم العلامات لمساعدتك في العثور على بياناتك وتنظيمها. حاول وضع العلامات حسب السنة أو الموقع أو المشروع أو الموضوع.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags cannot contain spaces or symbols. Tags will appear in lowercase letters. Non-Latin characters, such as Chinese or Korean, are allowed.";
+/* Error shown to the user when a invalid tag name is entered in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="الحد الأقصى 32 محرفاً";
+/* Button title shown to the user to add the tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+/* Section title that is shown over the existing tags in the Add tags screen */
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="التاغات الموجودة";
+/* Section title for visual media photos section */
+"photos.searchResults.media.section.title"="الإعلام";
