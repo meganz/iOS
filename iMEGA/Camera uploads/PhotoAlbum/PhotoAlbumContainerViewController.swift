@@ -392,7 +392,17 @@ extension PhotoAlbumContainerViewController {
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             albumCoverUseCase: AlbumCoverUseCase(
                 nodeRepository: NodeRepository.newRepo),
-            monitorPhotosUseCase: makeMonitorPhotosUseCase())
+            monitorPhotosUseCase: makeMonitorPhotosUseCase(),
+            photoSearchResultRouter: PhotoSearchResultRouter(
+                navigationController: self.navigationController,
+                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                    viewController: self,
+                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+                ),
+                backupsUseCase: BackupsUseCase(
+                    backupsRepository: BackupsRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo)
+            ))
     }
     
     private func makeVisualMediaSearchHistoryUseCase() -> some VisualMediaSearchHistoryUseCaseProtocol {

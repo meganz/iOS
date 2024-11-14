@@ -181,6 +181,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol = MockMonitorPhotosUseCase(),
+        photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter(),
         contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
@@ -200,6 +201,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             albumCoverUseCase: albumCoverUseCase,
             monitorPhotosUseCase: monitorPhotosUseCase,
+            photoSearchResultRouter: photoSearchResultRouter,
             contentLibrariesConfiguration: contentLibrariesConfiguration,
             searchDebounceTime: searchDebounceTime)
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
@@ -239,7 +241,8 @@ private extension PhotoSearchResultItemViewModel {
     convenience init(photo: NodeEntity, searchText: String = "") {
         self.init(
             photo: photo,
+            searchText: searchText,
             thumbnailLoader: MockThumbnailLoader(),
-            searchText: searchText)
+            photoSearchResultRouter: MockPhotoSearchResultRouter())
     }
 }
