@@ -27,6 +27,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let monitorPhotosUseCase: any MonitorPhotosUseCaseProtocol
+    private let photoSearchResultRouter: any PhotoSearchResultRouterProtocol
     private let contentLibrariesConfiguration: ContentLibraries.Configuration
     private let searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride
     private let debounceQueue: DispatchQueue
@@ -46,6 +47,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol,
+        photoSearchResultRouter: some PhotoSearchResultRouterProtocol,
         contentLibrariesConfiguration: ContentLibraries.Configuration = ContentLibraries.configuration,
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(300),
         debounceQueue: DispatchQueue = DispatchQueue(label: "nz.mega.VisualMediaSearchDebounceQueue", qos: .userInitiated)
@@ -60,6 +62,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         self.albumCoverUseCase = albumCoverUseCase
         self.contentLibrariesConfiguration = contentLibrariesConfiguration
         self.monitorPhotosUseCase = monitorPhotosUseCase
+        self.photoSearchResultRouter = photoSearchResultRouter
         self.searchDebounceTime = searchDebounceTime
         self.debounceQueue = debounceQueue
         
@@ -190,8 +193,9 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                         try Task.checkCancellation()
                         return PhotoSearchResultItemViewModel(
                             photo: photo,
+                            searchText: searchText,
                             thumbnailLoader: thumbnailLoader,
-                            searchText: searchText)
+                            photoSearchResultRouter: photoSearchResultRouter)
                     }
             }
             .eraseToAnyAsyncSequence()

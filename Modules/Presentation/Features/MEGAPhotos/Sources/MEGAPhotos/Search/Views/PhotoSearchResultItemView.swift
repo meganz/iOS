@@ -29,16 +29,12 @@ struct PhotoSearchResultItemView: View {
                     .backgroundColor(TokenColors.Text.info.swiftUI)
             )
             .replaceTrailingView {
-                Button {
-                    // CC-8424 - Handle more button pressed
-                } label: {
-                    Image(uiImage: MEGAAssetsImageProvider.image(named: "moreList") ?? UIImage())
-                        .renderingMode(.template)
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                        .scaledToFit()
-                        .frame(width: 28, height: 28)
+                UIButtonWrapper(
+                    image: MEGAAssetsImageProvider.image(named: .moreList)
+                ) { button in
+                    viewModel.moreButtonPressed(button)
                 }
-                .buttonStyle(PlainButtonStyle())
+                .frame(width: 28, height: 28)
             }
             .background(TokenColors.Background.page.swiftUI)
             .frame(minHeight: 60)

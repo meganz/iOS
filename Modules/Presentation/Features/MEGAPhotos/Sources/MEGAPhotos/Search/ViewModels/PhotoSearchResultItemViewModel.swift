@@ -21,16 +21,19 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
     
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let photoSearchResultRouter: any PhotoSearchResultRouterProtocol
     
     nonisolated init(
         photo: NodeEntity,
+        searchText: String,
         thumbnailLoader: some ThumbnailLoaderProtocol,
-        searchText: String
+        photoSearchResultRouter: some PhotoSearchResultRouterProtocol
     ) {
         self.photo = photo
-        self.thumbnailLoader = thumbnailLoader
-        title = photo.name
         self.searchText = searchText
+        self.thumbnailLoader = thumbnailLoader
+        self.photoSearchResultRouter = photoSearchResultRouter
+        title = photo.name
     }
     
     func loadThumbnail() async {
@@ -38,6 +41,10 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
             return
         }
         loadedThumbnailContainer = imageContainer
+    }
+    
+    func moreButtonPressed(_ button: UIButton) {
+        photoSearchResultRouter.didTapMoreAction(on: photo.handle, button: button)
     }
 }
 

@@ -59,15 +59,34 @@ struct PhotoSearchResultItemViewModelTests {
         }
     }
     
+    @Suite("calls moreButtonPressed")
+    struct MoreButtonPressed {
+        @Test("When more button pressed it should call router to handle")
+        @MainActor
+        func initialImagePlaceholder() async {
+            let photo = NodeEntity(handle: 6)
+            let router = MockPhotoSearchResultRouter()
+            let sut = PhotoSearchResultItemViewModelTests
+                .makeSUT(photo: photo,
+                         photoSearchResultRouter: router)
+            
+            sut.moreButtonPressed(UIButton())
+            
+            #expect(router.moreActionOnNodeHandle == photo.handle)
+        }
+    }
+    
     @MainActor
     private static func makeSUT(
         photo: NodeEntity = .init(handle: 1),
+        searchText: String = "",
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        searchText: String = ""
+        photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter()
     ) -> PhotoSearchResultItemViewModel {
         PhotoSearchResultItemViewModel(
             photo: photo,
+            searchText: searchText,
             thumbnailLoader: thumbnailLoader,
-            searchText: searchText)
+            photoSearchResultRouter: photoSearchResultRouter)
     }
 }
