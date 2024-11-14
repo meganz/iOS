@@ -550,6 +550,27 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testDidTapNotificationCentre_shouldTrackNotificationCentreButtonPressedEvent() {
+        trackAnalyticsEventTest(
+            action: .didTapNotificationCentre,
+            expectedEvent: NotificationsEntryButtonPressedEvent()
+        )
+    }
+    
+    @MainActor
+    func testUnreadNotificationCount_shouldTrackNotificationCenterEvents() async {
+        await validateTrackingEvent(
+            unreadNotificationIDs: [NotificationIDEntity(1)],
+            expectedEvent: AccountNotificationCentreDisplayedWithUnreadNotificationsEvent()
+        )
+        
+        await validateTrackingEvent(
+            unreadNotificationIDs: [],
+            expectedEvent: AccountNotificationCentreDisplayedWithNoUnreadNotificationsEvent()
+        )
+    }
+    
+    @MainActor
     func testTransferUsed_shouldReturnCorrectValue() {
         let expectedTransferUsed: Int64 = 5000
         let accountDetails = AccountDetailsEntity.build(transferUsed: expectedTransferUsed)
@@ -655,11 +676,44 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertEqual(sut.rubbishBinFormattedStorageUsed, expectedFormattedString)
     }
     
+    @MainActor func testNavigateToProfile_shouldCallNavigateToProfileOnRouter() {
+        let (sut, router) = makeSUT()
+        
+        sut.dispatch(.navigateToProfile)
+        
+        XCTAssertEqual(router.navigateToProfile_calledTimes, 1, "navigateToProfile should be called once")
+    }
+    
+    @MainActor func testNavigateToUsage_shouldCallNavigateToUsageOnRouter() {
+        let (sut, router) = makeSUT()
+        
+        sut.dispatch(.navigateToUsage)
+        
+        XCTAssertEqual(router.navigateToUsage_calledTimes, 1, "navigateToUsage should be called once")
+    }
+    
+    @MainActor func testNavigateToSettings_shouldCallNavigateToSettingsOnRouter() {
+        let (sut, router) = makeSUT()
+        
+        sut.dispatch(.navigateToSettings)
+        
+        XCTAssertEqual(router.navigateToSettings_calledTimes, 1, "navigateToSettings should be called once")
+    }
+    
+    @MainActor func testNavigateToNotificationCentre_shouldCallNavigateToNotificationCentreOnRouter() {
+        let (sut, router) = makeSUT()
+        
+        sut.dispatch(.didTapNotificationCentre)
+        
+        XCTAssertEqual(router.navigateToNotificationCentre_calledTimes, 1, "navigateToNotificationCentre should be called once")
+    }
+    
     @MainActor
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
         isAchievementsEnabled: Bool = false,
         enabledNotifications: [NotificationIDEntity] = [],
+        unreadNotificationIDs: [NotificationIDEntity] = [],
         currentAccountDetails: AccountDetailsEntity? = nil,
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
         tracker: some AnalyticsTracking = MockTracker(),
@@ -681,7 +735,10 @@ final class MyAccountHallViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(rubbishBinStorage: rubbishBinStorage)
         let purchaseUseCase = MockAccountPlanPurchaseUseCase()
         let shareUseCase = MockShareUseCase()
-        let notificationUseCase = MockNotificationUseCase(enabledNotifications: enabledNotifications)
+        let notificationUseCase = MockNotificationUseCase(
+            enabledNotifications: enabledNotifications,
+            unreadNotificationIDs: unreadNotificationIDs
+        )
         let router = MockMyAccountHallRouter()
         
         return (
@@ -733,5 +790,25 @@ final class MyAccountHallViewModelTests: XCTestCase {
             list.append(ContactRequestEntity.random)
         }
         return list
+    }
+    
+    @MainActor
+    private func validateTrackingEvent(
+        unreadNotificationIDs: [NotificationIDEntity],
+        expectedEvent: any EventIdentifier
+    ) async {
+        let mockTracker = MockTracker()
+        let (sut, _) = makeSUT(
+            unreadNotificationIDs: unreadNotificationIDs,
+            tracker: mockTracker
+        )
+        
+        sut.dispatch(.load(.contentCounts))
+        await sut.loadContentTask?.value
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [expectedEvent]
+        )
     }
 }

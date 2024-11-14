@@ -3,12 +3,14 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwiftUI
 
 public protocol MyAccountHallRouting: Routing {
     func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterAssets: DeviceCenterAssets)
     func navigateToProfile()
     func navigateToUsage()
     func navigateToSettings()
+    func navigateToNotificationCentre()
     func didTapCameraUploadsAction(statusChanged: @escaping () -> Void)
     func didTapRenameAction(_ renameEntity: RenameActionEntity)
     func didTapInfoAction(_ infoModel: ResourceInfoModel)
@@ -208,6 +210,14 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     
     func navigateToSettings() {
         SettingViewRouter(presenter: navigationController).start()
+    }
+    
+    func navigateToNotificationCentre() {
+        NotificationsViewRouter(
+            navigationController: navigationController,
+            notificationsUseCase: notificationsUseCase,
+            imageLoader: ImageLoader()
+        ).start()
     }
     
     func didTapCameraUploadsAction(

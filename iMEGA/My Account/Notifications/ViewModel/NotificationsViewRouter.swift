@@ -25,7 +25,8 @@ struct NotificationsViewRouter: Routing {
         
         let viewModel = NotificationsViewModel(
             notificationsUseCase: notificationsUseCase,
-            imageLoader: imageLoader
+            imageLoader: imageLoader,
+            tracker: DIContainer.tracker
         )
         notificationsVC.viewModel = viewModel
         return notificationsVC
