@@ -1,7 +1,11 @@
 @preconcurrency import Combine
 import Foundation
 
-public final class Throttler: Sendable {
+public protocol Throttleable {
+    func start(action: @escaping () -> Void)
+}
+
+public final class Throttler: Sendable, Throttleable {
     public typealias Action = () -> Void
     private let subject = PassthroughSubject<Action, Never>()
     private let cancellable: AnyCancellable

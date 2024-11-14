@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAFoundation
 import MEGAPresentation
 
 enum OfflineViewAction: ActionType {
@@ -15,6 +16,7 @@ final class OfflineViewModel: NSObject, ViewModelType {
     }
     
     var invokeCommand: ((Command) -> Void)?
+    private let throttler: any Throttleable
     private let transferUseCase: any NodeTransferUseCaseProtocol
     private let offlineUseCase: any OfflineUseCaseProtocol
     private let megaStore: MEGAStore
@@ -32,13 +34,15 @@ final class OfflineViewModel: NSObject, ViewModelType {
         offlineUseCase: some OfflineUseCaseProtocol,
         megaStore: MEGAStore,
         fileManager: FileManager = FileManager.default,
-        documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+        documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first,
+        throttler: some Throttleable = Throttler(timeInterval: 1.0)
     ) {
         self.transferUseCase = transferUseCase
         self.offlineUseCase = offlineUseCase
         self.megaStore = megaStore
         self.fileManager = fileManager
         self.documentsDirectoryPath = documentsDirectoryPath
+        self.throttler = throttler
     }
     
     // MARK: - Dispatch actions
@@ -51,7 +55,6 @@ final class OfflineViewModel: NSObject, ViewModelType {
             stopMonitoringNodeDownloadCompletionUpdates()
         case .removeOfflineItems(let items):
             removeOfflineItems(items)
-            
         }
     }
     
@@ -59,9 +62,15 @@ final class OfflineViewModel: NSObject, ViewModelType {
     
     private func startMonitoringNodeDownloadCompletionUpdates() {
         nodeDownloadMonitoringTask = Task { [weak self, transferUseCase] in
-            for await _ in transferUseCase.nodeTransferCompletionUpdates.filter({ $0.type == .download }) {
+            for await _ in transferUseCase.nodeTransferCompletionUpdates.filter({
+                $0.type == .download
+            }) {
                 try Task.checkCancellation()
-                self?.invokeCommand?(.reloadUI)
+                self?.throttler.start { @Sendable in
+                    Task { @MainActor in
+                        self?.invokeCommand?(.reloadUI)
+                    }
+                }
             }
         }
     }
