@@ -45,14 +45,12 @@ enum CookieSettingsAction: ActionType {
 final class CookieSettingsViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case configCookieSettings(CookiesBitmap)
-        
-        case updateFooters(Array<String>)
-            
+        case updateFooters([String])
         case cookieSettingsSaved
-        
         case showSnackBar(String)
-        
         case showResult(ResultCommand)
+        case updateAutomaticallyAllVisibleSwitch(Bool)
+        
         enum ResultCommand: Equatable {
             case success(String)
             case error(String)
@@ -76,7 +74,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    private var cookiesConfigArray: [Cookie] = .default
+    private(set) var cookiesConfigArray: [Cookie] = .default
     private var currentCookiesConfigArray: [Cookie] = .default
     private var cookieSettingsSet: Bool = true
     private(set) var numberOfSection: Int = 0
@@ -122,6 +120,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             
         case .acceptCookiesSwitchValueChanged(let isOn):
             cookiesConfigArray = isOn ? .allTrue : .default
+            updateAutomaticallyAllVisibleSwitch(newState: isOn)
             
         case .performanceAndAnalyticsSwitchValueChanged(let isOn):
             cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue].value = isOn
@@ -144,6 +143,9 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     // MARK: - Private
+    private func updateAutomaticallyAllVisibleSwitch(newState: Bool) {
+        invokeCommand?(.updateAutomaticallyAllVisibleSwitch(newState))
+    }
     
     private func cookieSettings() async {
         do {
@@ -189,6 +191,9 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     private func setNumberOfSections() {
+        // The number of sections is fixed to the value of `externalAdsInactive` because we no longer show
+        // the advertising cookie switch. This change is due to the transition to Google Ads,
+        // which doesn't require this section anymore.
         numberOfSection = SectionType.externalAdsInactive.numberOfSections
     }
     
