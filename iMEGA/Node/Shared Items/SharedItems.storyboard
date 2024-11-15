@@ -100,12 +100,6 @@
                                                             </backgroundConfiguration>
                                                             <fontDescription key="titleFontDescription" style="UICTFontTextStyleCaption2"/>
                                                         </buttonConfiguration>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="caption2"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
-                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="outgoingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="EDT-nq-skb"/>
                                                         </connections>

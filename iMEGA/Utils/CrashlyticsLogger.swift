@@ -14,6 +14,7 @@ final class CrashlyticsLogger: NSObject {
         case appLifecycle
         case calls
         case nodeInfo
+        case sharedItems
         var rawValue: String {
             switch self {
             case .general: "General"
@@ -22,6 +23,7 @@ final class CrashlyticsLogger: NSObject {
             case .appLifecycle: "App Lifecycle"
             case .calls: "Calls"
             case .nodeInfo: "Node Info"
+            case .sharedItems: "Shared Items"
             }
         }
     }
