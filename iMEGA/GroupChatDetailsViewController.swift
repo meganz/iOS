@@ -1,5 +1,6 @@
 import ChatRepo
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -7,6 +8,14 @@ import MEGAPresentation
 import MEGASDKRepo
 
 extension GroupChatDetailsViewController {
+    
+    @objc func trackLeaveMeetingRowTapped() {
+        DIContainer.tracker.trackAnalyticsEvent(with: MeetingInfoLeaveMeetingButtonTappedEvent())
+    }
+    
+    @objc func trackAddParticipantsRowTapped() {
+        DIContainer.tracker.trackAnalyticsEvent(with: MeetingInfoAddParticipantButtonTappedEvent())
+    }
     
     @objc func addChatCallDelegate() {
         MEGAChatSdk.shared.add(self as (any MEGAChatCallDelegate))
