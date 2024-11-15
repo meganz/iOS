@@ -283,7 +283,11 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        switch AppearanceSection(rawValue: section) {
+        guard let appearanceSection = AppearanceSection(rawValue: section),
+              viewModel.isAppearanceSectionVisible(section: appearanceSection) else {
+            return nil
+        }
+        return switch appearanceSection {
         case .launch:
             Strings.Localizable.configureDefaultLaunchSection
         case .layout:
@@ -294,7 +298,7 @@ class AppearanceTableViewController: UITableViewController {
             Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
         case .hiddenItems:
             Strings.Localizable.Settings.UserInterface.HiddenItems.footer
-        case .appIcon, .mediaDiscovery, .none:
+        case .appIcon, .mediaDiscovery:
             nil
         }
     }
