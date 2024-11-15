@@ -902,6 +902,7 @@
                 break;
                 
             case GroupChatDetailsSectionLeaveGroup:
+                [self trackLeaveMeetingRowTapped];
                 if (self.chatRoom.isPreview) {
                     [MEGAChatSdk.shared closeChatPreview:self.chatRoom.chatId];
                     if (self.presentingViewController) {
@@ -949,6 +950,7 @@
                 
                 if ((indexPath.row == 0) && [self shouldShowAddParticipants]) {
                     [self addParticipant];
+                    [self trackAddParticipantsRowTapped];
                     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
                     return;
                 }
