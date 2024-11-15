@@ -3,7 +3,7 @@ import SwiftUI
 import UIKit
 
 extension SearchConfig {
-    static let example: SearchConfig = .init(
+    @MainActor static let example: SearchConfig = .init(
         chipAssets: .example,
         emptyViewAssetFactory: SearchConfig.EmptyViewAssets.exampleFactory,
         rowAssets: .example,
@@ -13,7 +13,7 @@ extension SearchConfig {
 }
 
 extension SearchConfig.ContextPreviewFactory {
-    static let example: Self = .init(
+    @MainActor static let example: Self = .init(
         previewContentForResult: { result in
             return .init(
                 actions: [],
@@ -26,8 +26,8 @@ extension SearchConfig.ContextPreviewFactory {
 }
 
 extension SearchConfig.ChipAssets {
-    static let example: Self = .init(
-        selectionIndicatorImage: UIImage(systemName: "ellipsis")!, 
+    @MainActor static let example: Self = .init(
+        selectionIndicatorImage: UIImage(systemName: "ellipsis")!,
         closeIcon: UIImage(systemName: "ellipsis")!,
         selectedForeground: .white,
         selectedBackground: .green,
@@ -38,7 +38,7 @@ extension SearchConfig.ChipAssets {
 
 extension SearchConfig.EmptyViewAssets {
     
-    static let exampleFactory: (SearchChipEntity?, SearchQuery) -> Self = { _, _ in
+    @MainActor static let exampleFactory: (SearchChipEntity?, SearchQuery) -> Self = { _, _ in
             .init(
                 image: Image(systemName: "magnifyingglass.circle.fill"),
                 title: "No results",
@@ -49,7 +49,7 @@ extension SearchConfig.EmptyViewAssets {
 }
 
 extension SearchConfig.RowAssets {
-    static let example: Self = .init(
+    @MainActor static let example: Self = .init(
         contextImage: UIImage(systemName: "ellipsis")!,
         itemSelected: UIImage(systemName: "checkmark.circle")!,
         itemUnselected: UIImage(systemName: "circle")!,
@@ -61,7 +61,7 @@ extension SearchConfig.RowAssets {
 }
 
 extension SearchConfig.ColorAssets {
-    static let example: Self = .init(
+    @MainActor static let example: Self = .init(
         unselectedBorderColor: Color("F7F7F7"),
         selectedBorderColor: Color("00A886"),
         titleTextColor: Color.primary,

@@ -56,7 +56,7 @@ public struct SearchResultThumbnailItemView: View {
 }
 
 extension PreviewContent {
-    static let example: Self = .init(
+    @MainActor static let example: Self = .init(
         actions: [.init(title: "Select", imageName: "checkmark.circle", handler: { })],
         previewMode: .preview({
             UIHostingController(rootView: Text("Hello world"))

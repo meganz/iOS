@@ -5,12 +5,7 @@ import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
 
-/// Dedicated actor to isolate critical data
-@globalActor actor SearchResultsViewModelActor {
-    static var shared = SearchResultsViewModelActor()
-    private init() {}
-}
-
+@MainActor
 public class SearchResultsViewModel: ObservableObject {
     @Published var listItems: [SearchResultRowViewModel]  = []
     @Published var bottomInset: CGFloat = 0.0
@@ -75,7 +70,7 @@ public class SearchResultsViewModel: ObservableObject {
     // this flag is used to indicate whether the data has been loaded for every triggered search
     
     @Atomic private var areNewSearchResultsLoaded = false
-    @SearchResultsViewModelActor private var canLoadMore = false
+    private var canLoadMore = false
 
     // data source for the results (result list, chips)
     private let resultsProvider: any SearchResultsProviding
@@ -184,17 +179,17 @@ public class SearchResultsViewModel: ObservableObject {
             }
 
         updatedSearchResultsPublisher
-            .publisher
-            .sink(receiveValue: { [weak self] signals in
-                guard let self else { return }
-                searchResultsUpdated(signals)
-            })
-            .store(in: &subscriptions)
+                    .publisher
+                    .sink(receiveValue: { @Sendable [weak self] signals in
+                        Task { @MainActor in
+                            self?.searchResultsUpdated(signals)
+                        }
+                    })
+                    .store(in: &subscriptions)
     }
 
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
-    @SearchResultsViewModelActor
     func task() async {
         canLoadMore = false
         await performInitialSearchOrRefresh()
@@ -244,7 +239,6 @@ public class SearchResultsViewModel: ObservableObject {
         debounceTask?.cancel()
     }
 
-    @MainActor
     func queryCleaned() async {
         // clearing query in the search bar
         // this should reset just query string but keep chips etc
@@ -259,7 +253,6 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    @MainActor
     func searchCancelled() async {
         // cancel button on the search bar was tapped
         // clear items, chips, initialLoadDone so that we load fresh
@@ -290,11 +283,10 @@ public class SearchResultsViewModel: ObservableObject {
         Task {
             try await Task.sleep(nanoseconds: UInt64(showLoadingPlaceholderDelay*1_000_000_000))
             guard !(areNewSearchResultsLoaded) else { return }
-            await updateLoadingPlaceholderVisibility(true)
+            updateLoadingPlaceholderVisibility(true)
         }
     }
 
-    @MainActor
     private func queryChanged(to query: SearchQuery) async {
         cancelSearchTask()
         cancelDebounceTask()
@@ -328,7 +320,7 @@ public class SearchResultsViewModel: ObservableObject {
         guard let results else { return }
 
         if lastItemIndex == nil {
-            await clearSearchResults()
+            clearSearchResults()
         }
 
         await prepareResults(results, query: query)
@@ -363,14 +355,12 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
     
-    @SearchResultsViewModelActor
     func onItemAppear(_ item: SearchResultRowViewModel) async {
-        guard canLoadMore else {return }
+        guard canLoadMore else { return }
         await loadMoreIfNeeded(item: item)
     }
 
     private func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
-
         let items = results.results.map { result in
             mapSearchResultToViewModel(result)
         }
@@ -437,24 +427,19 @@ public class SearchResultsViewModel: ObservableObject {
     }
 
     private func searchResultsUpdated(_ signals: [SearchResultUpdateSignal]) {
-        Task { [weak self] in
-            guard let self else { return }
-            // Any possible ongoing searching task is no longer relevant upon result updates,
-            // it should be replaced with the refreshing task
-            cancelSearchTask()
-            searchingTask = Task { [weak self] in
-                guard let self, !Task.isCancelled else { return }
-                switch SearchResultsUpdateManager(signals: signals).processSignals() {
-                case .generic:
-                    try await refreshSearchResults()
-                case .specificUpdateResults(let results):
-                    await searchResultsUpdated(results)
-                case .none:
-                    break
-                }
+        // Any possible ongoing searching task is no longer relevant upon result updates,
+        // it should be replaced with the refreshing task
+        cancelSearchTask()
+        searchingTask = Task { [weak self] in
+            guard let self, !Task.isCancelled else { return }
+            switch SearchResultsUpdateManager(signals: signals).processSignals() {
+            case .generic:
+                try await refreshSearchResults()
+            case .specificUpdateResults(let results):
+                await searchResultsUpdated(results)
+            case .none:
+                break
             }
-
-            try await searchingTask?.value
         }
     }
 
@@ -510,7 +495,7 @@ public class SearchResultsViewModel: ObservableObject {
     ) async {
         if Task.isCancelled { return }
         updateSearchResultsLoaded(true)
-        await updateLoadingPlaceholderVisibility(false)
+        updateLoadingPlaceholderVisibility(false)
 
         lastAvailableChips = results.availableChips
         await updateChipsFrom(appliedChips: results.appliedChips)
@@ -518,7 +503,7 @@ public class SearchResultsViewModel: ObservableObject {
         let selectedItems = items
             .filter { selectedResultIds.contains($0.result.id) }
         
-        Task { @MainActor in
+        Task {
             self.listItems.append(contentsOf: items)
             
             selectedRowIds.formUnion(selectedItems.map { $0.id })
@@ -558,7 +543,6 @@ public class SearchResultsViewModel: ObservableObject {
         return config.emptyViewAssetFactory(nil, query).emptyViewModel
     }
     
-    @MainActor
     private func tapped(_ chip: SearchChipEntity) async {
         let query = Self.makeQueryAfter(tappedChip: chip, currentQuery: currentQuery)
         // updating chips here as well to make selection visible before results are returned
@@ -596,7 +580,7 @@ public class SearchResultsViewModel: ObservableObject {
             )
         }
         
-        await updateChipsItems(with: updatedChips)
+        updateChipsItems(with: updatedChips)
     }
 
     private func subchipsFrom(
@@ -652,23 +636,19 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    @MainActor
     func showChipsGroupPicker(with id: String) async {
         guard let index = chipsItems.firstIndex(where: { $0.id == id }) else { return }
         presentedChipsPickerViewModel = chipsItems[index]
     }
 
-    @MainActor
     func dismissChipGroupPicker() async {
         presentedChipsPickerViewModel = nil
     }
 
-    @MainActor
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
         isLoadingPlaceholderShown = shown
     }
 
-    @MainActor
     private func clearSearchResults() {
         listItems = []
     }
@@ -686,7 +666,6 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    @MainActor
     private func updateChipsItems(with chipViewModels: [ChipViewModel]) {
         chipsItems = chipViewModels
     }
@@ -695,7 +674,6 @@ public class SearchResultsViewModel: ObservableObject {
         $areNewSearchResultsLoaded.mutate { $0 = loaded }
     }
     
-    @MainActor
     private func updateListItem(with newItems: [SearchResultRowViewModel]) {
         self.listItems = newItems
         withAnimation {
@@ -711,7 +689,7 @@ public class SearchResultsViewModel: ObservableObject {
     private func refreshSearchResults() async throws {
         try Task.checkCancellation()
         guard let searchResults = try await resultsProvider.refreshedSearchResults(queryRequest: currentQuery) else {
-            await updateListItem(with: [])
+            updateListItem(with: [])
             return
         }
         try Task.checkCancellation()
@@ -728,7 +706,7 @@ public class SearchResultsViewModel: ObservableObject {
         }
         
         try Task.checkCancellation()
-        await updateListItem(with: newResultViewModels)
+        updateListItem(with: newResultViewModels)
     }
 
     // when keyboard is shown we shouldn't add any additional bottom inset
@@ -859,7 +837,6 @@ public extension SearchResultsViewModel {
         }
     }
 
-    @MainActor
     func reloadResults() async {
         await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: currentQuery)

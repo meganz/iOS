@@ -21,6 +21,7 @@ func propertyIcon(placement: PropertyPlacement) -> ResultProperty {
     )
 }
 
+@MainActor
 func testableSearchResultsViewModel(
     properties: [ResultProperty] = [],
     thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
