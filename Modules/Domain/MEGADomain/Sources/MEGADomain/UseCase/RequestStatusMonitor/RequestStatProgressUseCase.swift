@@ -1,7 +1,7 @@
 import MEGASwift
 
 public protocol RequestStatProgressUseCaseProtocol: Sendable {
-    /// - Returns: an AsyncSequence that emits event updates related to reqStatProgress
+    /// - Returns: an AsyncSequence that emits event updates related to reqStatProgress, per mil progress or -1 in the EventEntity number property
     var requestStatsProgress: AnyAsyncSequence<EventEntity> { get }
 }
 
