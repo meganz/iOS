@@ -6,12 +6,14 @@ import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
 
+@MainActor
 class CookieSettingsViewModelTests: XCTestCase {
-    private let footersArray: [String] = [Strings.Localizable.Settings.Accept.Cookies.footer,
-                                               Strings.Localizable.Settings.Cookies.Essential.footer,
-                                               Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer]
+    private let footersArray: [String] = [
+        Strings.Localizable.Settings.Accept.Cookies.footer,
+        Strings.Localizable.Settings.Cookies.Essential.footer,
+        Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer
+    ]
     
-    @MainActor
     func testConfigViewTask_numberOfSection_shouldBeThree() async {
         let sut = makeSUT()
         
@@ -25,52 +27,56 @@ class CookieSettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsInactive.numberOfSections)
     }
     
-    @MainActor
     func testAction_configView_cookieSettings_success() {
         let sut = makeSUT(cookieSettings: .success(defaultCookieBits))
         
-        test(viewModel: sut,
-             action: .configView,
-             expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: defaultCookieBits)), .updateFooters(footersArray)])
+        test(
+            viewModel: sut,
+            action: .configView,
+            expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: defaultCookieBits)), .updateFooters(footersArray)]
+        )
     }
     
-    @MainActor
     func testAction_configView_cookieSettings_fail_bitmapNotSet() {
         let sut = makeSUT(cookieSettings: .failure(.bitmapNotSet))
         
-        test(viewModel: sut,
-             action: .configView,
-             expectedCommands: [.configCookieSettings(CookiesBitmap.essential), .updateFooters(footersArray)])
+        test(
+            viewModel: sut,
+            action: .configView,
+            expectedCommands: [.configCookieSettings(CookiesBitmap.essential), .updateFooters(footersArray)]
+        )
     }
     
-    @MainActor
     func testAction_configView_cookieSettings_fail_generic() {
         let sut = makeSUT(cookieSettings: .failure(.generic))
         
-        test(viewModel: sut,
-             action: .configView,
-             expectedCommands: [.updateFooters(footersArray)])
+        test(
+            viewModel: sut,
+            action: .configView,
+            expectedCommands: [.updateFooters(footersArray)]
+        )
     }
     
-    @MainActor
     func testAction_configView_cookieSettings_fail_invalidBitmap() {
         let sut = makeSUT(cookieSettings: .failure(.invalidBitmap))
         
-        test(viewModel: sut,
-             action: .configView,
-             expectedCommands: [.updateFooters(footersArray)])
+        test(
+            viewModel: sut,
+            action: .configView,
+            expectedCommands: [.updateFooters(footersArray)]
+        )
     }
     
-    @MainActor
     func testAction_save_setCookieSettings_success() {
         let sut = makeSUT(cookieSettings: .success(defaultCookieBits))
         
-        test(viewModel: sut,
-             action: .save,
-             expectedCommands: [.cookieSettingsSaved])
+        test(
+            viewModel: sut,
+            action: .save,
+            expectedCommands: [.cookieSettingsSaved]
+        )
     }
     
-    @MainActor
     func testAction_showCookiePolicy_showPolicyWithoutSession() async throws {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/cookie"))
         let mockRouter = MockCookieSettingsRouter()
@@ -83,7 +89,23 @@ class CookieSettingsViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor
+    func test_updateAutomaticallyAllVisibleSwitch_updatesCommand() {
+        let sut = makeSUT()
+        
+        test(
+            viewModel: sut,
+            action: .acceptCookiesSwitchValueChanged(true),
+            expectedCommands: [.updateAutomaticallyAllVisibleSwitch(true)]
+        )
+        
+        test(
+            viewModel: sut,
+            action: .acceptCookiesSwitchValueChanged(false),
+            expectedCommands: [.updateAutomaticallyAllVisibleSwitch(false)]
+        )
+    }
+    
+    // MARK: Helper
     private func checkCookiePolicyDispatchResult(
         sut: CookieSettingsViewModel,
         mockRouter: MockCookieSettingsRouter,
@@ -108,11 +130,9 @@ class CookieSettingsViewModelTests: XCTestCase {
         }
     }
     
-    // MARK: Helper
     // All Cookie bits: .essential, .preference, .analytics, .ads, .thirdparty
     private let defaultCookieBits = CookiesBitmap.all.rawValue // 31
     
-    @MainActor
     private func makeSUT(
         cookieBannerEnable: Bool = true,
         cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),

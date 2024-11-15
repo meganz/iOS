@@ -51,7 +51,10 @@ class CookieSettingsTableViewController: UITableViewController {
         switch command {
         case .configCookieSettings(let cookiesBitmap):
             performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
-            acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn
+            if visibleCookieTypeSwitches().contains(where: { $0 == advertisingCookiesSwitch }) {
+                advertisingCookiesSwitch.setOn(cookiesBitmap.contains(.ads), animated: false)
+            }
+            acceptCookiesSwitch.isOn = visibleCookieTypeSwitches().allSatisfy { $0.isOn }
             
         case .updateFooters(let array):
             footersArray = array
@@ -66,6 +69,13 @@ class CookieSettingsTableViewController: UITableViewController {
             
         case .showResult(let resultCommand):
             executeCommand(resultCommand)
+            
+        case .updateAutomaticallyAllVisibleSwitch(let currentState):
+            visibleCookieTypeSwitches().forEach { currentSwitch in
+                if currentSwitch.isHidden == false {
+                    currentSwitch.isOn = currentState
+                }
+            }
         }
     }
     
@@ -87,16 +97,16 @@ class CookieSettingsTableViewController: UITableViewController {
     
     @IBAction func acceptCookiesSwitchValueChanged(_ sender: UISwitch) {
         viewModel.dispatch(.acceptCookiesSwitchValueChanged(sender.isOn))
-        
-        performanceAndAnalyticsSwitch.setOn(sender.isOn, animated: true)
     }
     
     @IBAction func performanceAndAnalyticsSwitchValueChanged(_ sender: UISwitch) {
         viewModel.dispatch(.performanceAndAnalyticsSwitchValueChanged(sender.isOn))
+        updateAcceptCookiesSwitchIfNeeded(newState: sender.isOn)
     }
     
     @IBAction func advertisingSwitchValueChanged(_ sender: UISwitch) {
         viewModel.dispatch(.advertisingSwitchValueChanged(sender.isOn))
+        updateAcceptCookiesSwitchIfNeeded(newState: sender.isOn)
     }
     
     @IBAction func cookiePolicyTouchUpInside(_ sender: UIBarButtonItem) {
@@ -159,6 +169,24 @@ class CookieSettingsTableViewController: UITableViewController {
     
     private func updateAppearanceForTableViewHeaderFooterView(_ view: UITableViewHeaderFooterView) {
         view.textLabel?.textColor = TokenColors.Text.secondary
+    }
+    
+    private func visibleCookieTypeSwitches() -> [UISwitch] {
+        viewModel.numberOfSection == 3 ? [performanceAndAnalyticsSwitch] : [performanceAndAnalyticsSwitch, advertisingCookiesSwitch]
+    }
+    
+    private func updateAcceptCookiesSwitchIfNeeded(newState: Bool) {
+        let shouldUpdateAcceptCookiesSwitch: Bool
+        
+        if newState {
+            shouldUpdateAcceptCookiesSwitch = visibleCookieTypeSwitches().allSatisfy { $0.isOn == newState }
+        } else {
+            shouldUpdateAcceptCookiesSwitch = acceptCookiesSwitch.isOn
+        }
+        
+        if shouldUpdateAcceptCookiesSwitch {
+            acceptCookiesSwitch.isOn = newState
+        }
     }
     
     // MARK: - UITableViewDelegate
