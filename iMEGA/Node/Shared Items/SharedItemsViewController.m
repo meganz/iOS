@@ -259,6 +259,9 @@
     
     NSString *lastBase64Handle = @"";
     self.outgoingNodesMutableArray = NSMutableArray.alloc.init;
+    NSString *beforeUpdateMsg = [NSString stringWithFormat:@"Before - %ld", self.outgoingUnverifiedNodesMutableArray.count];
+    [CrashlyticsLogger logWithCategory:LogCategorySharedItems msg:beforeUpdateMsg file:@(__FILE__) function:@(__FUNCTION__)];
+    
     self.outgoingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
     
     NSInteger count = self.outgoingShareList.size;
@@ -287,6 +290,9 @@
     } else {
         [self addSearchBar];
     }
+    
+    NSString *afterUpdateMsg = [NSString stringWithFormat:@"After - %ld", self.outgoingUnverifiedNodesMutableArray.count];
+    [CrashlyticsLogger logWithCategory:LogCategorySharedItems msg:afterUpdateMsg file:@(__FILE__) function:@(__FUNCTION__)];
 }
 
 - (void)publicLinks {
@@ -368,7 +374,13 @@
             return self.incomingNodesMutableArray[indexPath.row];
         } else if (self.outgoingButton.selected) {
             if (indexPath.section == 0) {
-                return self.outgoingUnverifiedNodesMutableArray[indexPath.row];
+                if (0 <= indexPath.row && indexPath.row < self.outgoingUnverifiedNodesMutableArray.count) {
+                    return self.outgoingUnverifiedNodesMutableArray[indexPath.row];
+                } else {
+                    NSString *msg = [NSString stringWithFormat:@"%ld", self.outgoingUnverifiedNodesMutableArray.count];
+                    [CrashlyticsLogger logWithCategory:LogCategorySharedItems msg:msg file:@(__FILE__) function:@(__FUNCTION__)];
+                    return nil;
+                }
             }
             return self.outgoingNodesMutableArray[indexPath.row];
         } else if (self.linksButton.selected) {
@@ -889,6 +901,8 @@
             } else if (self.outgoingButton.selected) {
                 if (section == 0) {
                     numberOfRows = self.outgoingUnverifiedNodesMutableArray.count;
+                    NSString *msg = [NSString stringWithFormat:@"%ld", self.outgoingUnverifiedNodesMutableArray.count];
+                    [CrashlyticsLogger logWithCategory:LogCategorySharedItems msg:msg file:@(__FILE__) function:@(__FUNCTION__)];
                 } else {
                     numberOfRows = self.outgoingNodesMutableArray.count;
                 }
