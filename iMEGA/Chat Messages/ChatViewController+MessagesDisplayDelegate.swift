@@ -37,11 +37,11 @@ extension ChatViewController: MessagesDisplayDelegate {
             
         }
     }
-
+    
     func textColor(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? TokenColors.Text.inverse : TokenColors.Text.primary
+        return senderIsMyself(message: message) ? TokenColors.Text.inverse : TokenColors.Text.primary
     }
-
+    
     func messageStyle(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         return .custom { [weak self] containerView in
             guard let `self` = self else {
@@ -85,13 +85,13 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             
             if chatMessage.message.type == .containsMeta,
-                chatMessage.message.containsMeta?.type == .giphy {
+               chatMessage.message.containsMeta?.type == .giphy {
                 containerView.layer.borderColor = containerViewBorderColor
             }
             
         }
     }
-
+    
     func configureAccessoryView(_ accessoryView: UIView, for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         // Cells are reused, so only add a button here once. For real use you would need to
         // ensure any subviews are removed if not needed
@@ -120,21 +120,73 @@ extension ChatViewController: MessagesDisplayDelegate {
                              at indexPath: IndexPath,
                              in messagesCollectionView: MessagesCollectionView) {
         
+        guard let userHandle = UInt64(message.sender.senderId) else { return }
         guard let chatMessage = self.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
             return
         }
-        if !chatMessage.message.isManagementMessage && !isFromCurrentSender(message: message) {
-            if indexPath.section < messages.count - 1 {
-                guard messages[indexPath.section + 1].sender.senderId != message.sender.senderId else {
-                    avatarView.isHidden = true
-                    return
-                }
+        
+        guard !chatMessage.message.isManagementMessage else { return }
+        
+        if indexPath.section < messages.count - 1 {
+            // we show avatar only in the last message from user -
+            // basically only in the last cell (when there are multiple consecutive messages from single user),
+            // before the cell showing a message from another user
+            guard messages[indexPath.section + 1].sender.senderId != message.sender.senderId else {
+                avatarView.isHidden = true
+                return
             }
+        }
+        
+        let chatInitials = initials(for: message)
+        // if avatar is hidden we can skip the avatar loading logic
+        let hidden = senderIsMyself(message: message)
+        avatarView.isHidden = hidden
+        if !hidden {
+            // getting avatar is 2 stage process
+            // 1. if we have file saved to disk [generated or fetched], we return it immediately
+            // 2. if not, we generate avatar placeholder, save it to disk and kick off a request to SDK
+            //    to fetch proper image and then we save it to the same file, where we saved the generated image
+            // There are two problems with this
+            //  a. If we request the same avatar for few cells quickly one after another,
+            // they will all have generated avatar displayed and there's no mechanism to reload those avatars (with fetched image) once
+            // image is fetched by the SDK (this problem is solved below, by getting all cells that have avatar and reloading them)
+            //  b. There' seems to be no mechanism (in the iOS) for retrying the image fetching if it fails for some reason.
+            // Because we use presence of the image file at a given path as marker of needing to kick off the fetch, once avatar
+            // is generated, it will not be refetched
             
-            let chatInitials = initials(for: message)
-            let avatar = Avatar(image: avatarImage(for: message), initials: chatInitials)
+            let avatarLoaded = {[weak self] in
+                guard let self else { return }
+                let indexPaths = messagesCollectionView.visibleCells.compactMap { cell in
+                    cell as? MessageContentCell
+                }.compactMap { cell in
+                    if
+                        let ip = messagesCollectionView.indexPath(for: cell),
+                        let pathsToReload = self.avatarIndexPathsForUserHandle[userHandle]
+                    {
+                        return pathsToReload.contains(ip) ? ip : nil
+                    }
+                    return nil
+                }
+                // we reload only the cells that where displaying avatar for this user
+                messagesCollectionView.reloadItems(at: indexPaths)
+                avatarIndexPathsForUserHandle[userHandle] = nil
+            }
+            // we keep track of which cells were used to show avatar of given user,
+            // we remove those index paths once cells are removed from UICV (implemented in the didEndDisplaying method)
+            // so that once avatar is loaded, we reload ONLY visible cells for given user
+            addCell(indexPath: indexPath, userHandle: userHandle)
+            
+            let avatar = Avatar(image: avatarImage(for: message, avatarLoaded: avatarLoaded), initials: chatInitials)
             avatarView.set(avatar: avatar)
-            avatarView.isHidden = isFromCurrentSender(message: message)
+        }
+    }
+    
+    func addCell(indexPath: IndexPath, userHandle: UInt64) {
+        if var indexPaths = avatarIndexPathsForUserHandle[userHandle] {
+            indexPaths.insert(indexPath)
+            avatarIndexPathsForUserHandle[userHandle] = indexPaths
+        } else {
+            avatarIndexPathsForUserHandle[userHandle] = [indexPath]
         }
     }
     
@@ -169,15 +221,15 @@ extension ChatViewController: MessagesDisplayDelegate {
     
     private func shouldShowAccessoryView(for message: some MessageType) -> Bool {
         guard let chatMessage = message as? ChatMessage,
-            !isEditing
-            else { return false }
+              !isEditing
+        else { return false }
         
         return chatMessage.message.shouldShowForwardAccessory()
     }
     
     private func chatBubbleBackgroundColor(for message: any MessageType) -> UIColor {
         return isFromCurrentSender(message: message) ?
-            TokenColors.Background.surfaceInverseAccent :
-            TokenColors.Background.surface2
+        TokenColors.Background.surfaceInverseAccent :
+        TokenColors.Background.surface2
     }
 }
