@@ -172,6 +172,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
             didTapContainsMetaMessage(chatMessage, in: cell)
         default:
             if megaMessage.node != nil {
+                dismissKeyboardIfRequired()
                 MEGALinkManager.linkURL = megaMessage.megaLink
                 MEGALinkManager.processLinkURL(megaMessage.megaLink)
             }
