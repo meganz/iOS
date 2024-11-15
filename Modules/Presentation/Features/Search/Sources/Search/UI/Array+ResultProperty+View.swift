@@ -15,7 +15,7 @@ extension Array where Element == ResultProperty {
         .sorted()
     }
     
-    @ViewBuilder func propertyViewsFor(
+    @MainActor @ViewBuilder func propertyViewsFor(
         layout: ResultCellLayout,
         placement: PropertyPlacement, 
         colorAssets: SearchConfig.ColorAssets
@@ -28,7 +28,7 @@ extension Array where Element == ResultProperty {
         }
     }
     
-    @ViewBuilder func propertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
+    @MainActor @ViewBuilder func propertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
         switch property.content {
         case let .icon(image: image, scalable: scalable):
             property.resultPropertyImage(image: image, scalable: scalable, colorAssets: colorAssets, placement: placement)

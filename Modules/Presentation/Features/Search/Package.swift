@@ -1,6 +1,11 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
+
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "Search",
@@ -24,13 +29,12 @@ let package = Package(
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../../UI/MEGAUIKit"),
-        .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", from: "1.1.0"),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
             from: "1.12.0"
         ),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
-        .package(path: "../../../Infrastracture/MEGATest"),
+        .package(path: "../../../Infrastracture/MEGATest")
     ],
     targets: [
         .target(
@@ -42,12 +46,12 @@ let package = Package(
                 "MEGADesignToken",
                 "MEGAFoundation"
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .target(
             name: "SearchMock",
             dependencies: ["Search"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .testTarget(
             name: "SearchTests",
@@ -56,14 +60,13 @@ let package = Package(
                 "SearchMock",
                 "MEGAUIKit",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
                 "MEGATest"
             ],
             resources: [
                 .process("folder.png"),
                 .process("scenery.png")
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         )
     ]
 )

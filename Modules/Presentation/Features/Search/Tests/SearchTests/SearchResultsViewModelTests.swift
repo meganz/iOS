@@ -1,3 +1,4 @@
+@preconcurrency import Combine
 import MEGAFoundation
 import MEGASwift
 import MEGATest
@@ -15,11 +16,12 @@ extension SearchResultSelection: Equatable {
 }
 
 fileprivate extension Color {
-    static let deselectedColor = SearchConfig.testConfig.chipAssets.normalBackground
-    static let selectedColor = SearchConfig.testConfig.chipAssets.selectedBackground
+    @MainActor static let deselectedColor = SearchConfig.testConfig.chipAssets.normalBackground
+    @MainActor static let selectedColor = SearchConfig.testConfig.chipAssets.selectedBackground
 }
 
-final class SearchResultsViewModelTests: XCTestCase {
+final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
+    @MainActor
     class Harness {
         struct EmptyContent: Equatable {
             let chip: SearchChipEntity?
@@ -197,6 +199,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testListItems_onStart_hasNoItemsAndSingleChipShown() async {
         let harness = Harness(self)
         harness.resultsProvider.resultFactory = { _ in
@@ -207,6 +210,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.sut.chipsItems.map(\.id), ["chip_2"])
     }
     
+    @MainActor
     func testChangingQuery_asksResultsProviderToPerformSearch() async {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.task()
@@ -218,6 +222,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
     }
     
+    @MainActor
     func testListItems_onQueryChanged_returnsResultsFromResultsProvider() async {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
@@ -272,6 +277,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.sut.listItems.map(\.result), expectedListItems.map(\.result))
     }
     
+    @MainActor
     func testListItems_onQueryCleaned_sendsEmptyQuery_toProvider() async throws {
         let harness = Harness(self).withResultsPrepared(count: 10) // 10 results
         await harness.sut.task()
@@ -287,6 +293,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(lastQuery.chips, [])
     }
     
+    @MainActor
     func testListItems_onSearchCancelled_sendsEmptyQuery_toProvider() async throws {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
@@ -300,6 +307,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(lastQueryAfter.chips, [])
     }
     
+    @MainActor
     func testListItems_whenReAppear_shouldRefreshResults() async {
         // given
         let harness = Harness(self).withResultsPrepared(count: 5, startingId: 1)
@@ -317,6 +325,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.sut.listItems.map { $0.result.title }, ["refreshed 4", "refreshed 5", "refreshed 6", "refreshed 7"])
     }
     
+    @MainActor
     func testOnSelectionAction_passesSelectedResultViaBridge() async throws {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
@@ -325,14 +334,16 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.selectedResults, [.resultSelectionWith(id: 1, title: "title")])
     }
     
+    @MainActor
     func testOnContextAction_passesSelectedResultViaBridge() async throws {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let item = try XCTUnwrap(harness.sut.listItems.first)
-        await item.actions.contextAction(UIButton())
+        item.actions.contextAction(UIButton())
         XCTAssertEqual(harness.contextTriggeredResults, [.resultWith(id: 1, title: "title")])
     }
     
+    @MainActor
     func testListItems_showResultsTitleAndDescription() async {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
@@ -341,6 +352,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(result.result.description(.list), "Desc")
     }
 
+    @MainActor
     func testListItems_shouldBeUpdated_whenNodeChanges() async throws {
         let harness = Harness(self).withResultsPrepared(count: 5)
         await harness.sut.task()
@@ -363,6 +375,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertNotEqual(initialProperties, updatedProperties)
     }
 
+    @MainActor
     func testChipItems_byDefault_noChipsSelected() async {
         let harness = Harness(self).withChipsPrepared(chipTypes: [
             .nodeFormat(.photo),
@@ -377,6 +390,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertTrue(allDeselected)
     }
     
+    @MainActor
     func testChipItems_appliedChips_isSelected() async {
         let harness = Harness(self)
         harness.resultsProvider.resultFactory = { _ in .resultsWithSingleChipApplied }
@@ -389,12 +403,14 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(selectedChipItems.map(\.id), expectedIds)
     }
     
+    @MainActor
     func testEmptyView_isNil_whenItemsNotEmpty() async {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
         XCTAssertNil(harness.sut.emptyViewModel)
     }
     
+    @MainActor
     func testEmptyView_notNil_whenItemsEmpty() async throws {
         let harness = Harness(self)
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
@@ -404,6 +420,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(contentUnavailableVM.title, expectedContent.title)
     }
     
+    @MainActor
     func testEmptyView_isDefault_whenChipSelected_AndQueryNotEmpty() async throws {
         let harness = Harness(self).withChipsPrepared(chipTypes: [
             .nodeFormat(.photo),
@@ -416,6 +433,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.emptyContentRequested, [content, content])
     }
 
+    @MainActor
     func testEmptyView_isContextualBasedOnChip_whenChipSelected_AndQueryEmpty() async throws {
         let harness = Harness(self)
         await harness.sut.queryChanged(to: "", isSearchActive: false)
@@ -432,6 +450,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.emptyContentRequested, content)
     }
 
+    @MainActor
     func testOnProlongedLoading_shouldDisplayShimmerLoadingView() async {
         let harness = Harness(self).withSingleResultPrepared()
 
@@ -448,12 +467,14 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertFalse(harness.sut.isLoadingPlaceholderShown)
     }
     
+    @MainActor
     func testScrolled_callsBridgeResignKeyboard() {
         let harness = Harness(self)
         harness.sut.scrolled()
         XCTAssertEqual(harness.keyboardResignedCount, 1)
     }
     
+    @MainActor
     func testSelectAll_whenNoNodesAreSelected_shouldSelectAllNodes() {
         let currentNodes: [ResultId] = [1, 2, 3, 4]
         let harness = Harness(self).withSelectedNodes([], currentResults: currentNodes)
@@ -471,6 +492,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(selectionChangeResult?.sorted(), [1, 2, 3, 4])
     }
     
+    @MainActor
     func testSelectAll_whenSomeNodesAreSelected_shouldSelectAllNodes() {
         let currentNodes: [ResultId] = [1, 2, 3, 4]
         let harness = Harness(self).withSelectedNodes([1, 2], currentResults: currentNodes)
@@ -488,6 +510,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(selectionChangeResult?.sorted(), [1, 2, 3, 4])
     }
     
+    @MainActor
     func testSelectAll_whenAllNodesAreSelected_shouldDeselectAllNodes() {
         let currentNodes: [ResultId] = [1, 2, 3, 4]
         let harness = Harness(self).withSelectedNodes(currentNodes, currentResults: currentNodes)
@@ -508,6 +531,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertTrue(selectionChangeResult?.isEmpty == true)
     }
 
+    @MainActor
     func testChangeSortOrder_forAllCases_shouldMatchTheExpectation() async {
         let allCases: [(Search.SortOrderEntity, [SearchQuery]?)] = [
             (.nameAscending, [.initial]),
@@ -525,6 +549,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testReloadResults_whenPerformed_shouldReturnExpectedQueries() async {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.reloadResults()
@@ -534,6 +559,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
     }
     
+    @MainActor
     func disable_testOnSearchResultsUpdated_whenGenericUpdate_shouldReturnExpectedResults() async {
         // given
         let (stream, continuation) = AsyncStream.makeStream(of: SearchResultUpdateSignal.self)
@@ -570,15 +596,28 @@ final class SearchResultsViewModelTests: XCTestCase {
         continuation.finish()
     }
     
+    @MainActor
     func testOnSearchResultsUpdated_whenSpecificUpdate_shouldReturnExpectedResults() async {
         // given
         let (stream, continuation) = AsyncStream.makeStream(of: SearchResultUpdateSignal.self)
         let harness = Harness(self, searchResultUpdateSignalSequence: stream.eraseToAnyAsyncSequence())
             .withResultsPrepared(count: 10)
+        
+        XCTAssertTrue(harness.sut.listItems.isEmpty)
+        
+        let listItemsExpectation = expectation(description: "Wait for the listItems to be updated")
+        let cancellable = harness.sut.$listItems.first(where: { $0.count == 10 }).sink { _ in
+            listItemsExpectation.fulfill()
+        }
+        
         trackTaskCancellation {
             await harness.sut.task()
         }
-
+        
+        await fulfillment(of: [listItemsExpectation], timeout: 1)
+        
+        cancellable.cancel()
+        
         let thumbnailImage1 = UIImage(systemName: "square.and.arrow.up.fill")!.pngData()!
         let thumbnailImage2 = UIImage(systemName: "pencil.circle.fill")!.pngData()!
         let thumbnailImage3 = UIImage(systemName: "pencil.tip")!.pngData()!
@@ -612,6 +651,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         cancellable2.cancel()
     }
 
+    @MainActor
     func testSelectedRows_whenMultipleRowsSelected_shouldMatchResultsIds() {
         let harness = Harness(self)
         
@@ -653,11 +693,13 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, Array(1...150)) // 50 more results loaded, hence 150 in total
     }
 
+    @MainActor
     func testSelectedRowsCount_whenSelectedAll_shouldMatchTheResult() {
         let harness = makeHarnessWithAllItemsSelected(listItemCount: 10)
         XCTAssertEqual(harness.sut.selectedResultsCount, 10)
     }
 
+    @MainActor
     func testClearSelection_whenInvoked_shouldClearSelection() async {
         let harness = makeHarnessWithAllItemsSelected(listItemCount: 10)
         XCTAssertEqual(harness.sut.selectedResultsCount, 10)
@@ -670,7 +712,8 @@ final class SearchResultsViewModelTests: XCTestCase {
         harness.sut.clearSelection()
         XCTAssertEqual(harness.sut.selectedResultsCount, 0)
     }
-
+    
+    @MainActor
     private func makeHarnessWithAllItemsSelected(listItemCount count: Int) -> Harness {
         let harness = Harness(self)
         let listItems = Array(1...count).map { generateRandomSearchResultRowViewModel(id: $0) }
@@ -680,6 +723,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         return harness
     }
 
+    @MainActor
     private func generateRandomSearchResultRowViewModel(id: Int) -> SearchResultRowViewModel {
         .init(
             result: .init(
@@ -703,6 +747,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     private func assertChangeSortOrder(
         with sortOrder: Search.SortOrderEntity,
         expectedReceivedQueries: [SearchQuery]? = nil,

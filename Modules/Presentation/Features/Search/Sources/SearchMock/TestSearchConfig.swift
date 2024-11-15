@@ -4,7 +4,7 @@ import SwiftUI
 import UIKit
 
 extension SearchConfig {
-    public static var testConfig: Self {
+    @MainActor public static var testConfig: Self {
         .init(
             chipAssets: .init(
                 selectionIndicatorImage: UIImage(systemName: "ellipsis")!,
@@ -44,7 +44,7 @@ extension SearchConfig {
 }
 
 extension SearchConfig.ContextPreviewFactory {
-    static var test: Self {
+    @MainActor static var test: Self {
         SearchConfig.ContextPreviewFactory(
             previewContentForResult: { _ in
                     .init(

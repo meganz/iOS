@@ -14,6 +14,7 @@ extension SearchResultRowViewModel {
     }
 }
 
+@MainActor
 class SearchResultRowViewModel: Identifiable, ObservableObject {
     @Published var thumbnailImage: UIImage = UIImage()
     
@@ -98,7 +99,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         guard !Task.isCancelled else { return }
         guard let image = UIImage(data: data) else { return }
         
-        await update(thumbnailImage: image)
+        update(thumbnailImage: image)
     }
 
     func reload(with result: SearchResult) async {
@@ -107,8 +108,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         await loadThumbnail()
     }
     
-    @MainActor
-    private func update(thumbnailImage: UIImage) async {
+    private func update(thumbnailImage: UIImage) {
         self.thumbnailImage = thumbnailImage
         if !isThumbnailLoadedOnce {
             isThumbnailLoadedOnce = true
