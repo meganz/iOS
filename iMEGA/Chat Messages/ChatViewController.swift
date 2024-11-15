@@ -15,6 +15,7 @@ class ChatViewController: MessagesViewController {
     let spacePadding = "   "
     let sdk = MEGASdk.shared
     let chatContentViewModel: ChatContentViewModel
+    var avatarIndexPathsForUserHandle: [UInt64: Set<IndexPath>] = [:]
     
     private(set) var chatRoom: ChatRoomEntity
     @objc var chatId: ChatIdEntity {
@@ -439,6 +440,20 @@ class ChatViewController: MessagesViewController {
         return false
     }
     
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        avatarIndexPathsForUserHandle.forEach { (key: UInt64, setWithIndexPaths: Set<IndexPath>) in
+            if setWithIndexPaths.contains(indexPath) {
+                var _set = setWithIndexPaths
+                _set.remove(indexPath)
+                avatarIndexPathsForUserHandle[key] = _set
+            }
+        }
+    }
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 200 {
             guard !chatRoomDelegate.loadingState && !chatRoomDelegate.isFullChatHistoryLoaded else {
@@ -686,7 +701,7 @@ class ChatViewController: MessagesViewController {
     
     // MARK: - Internal methods used by the extension of this class
     
-    func isFromCurrentSender(message: any MessageType) -> Bool {
+    func senderIsMyself(message: any MessageType) -> Bool {
         return UInt64(message.sender.senderId) == MEGAChatSdk.shared.myUserHandle
     }
     
@@ -750,11 +765,23 @@ class ChatViewController: MessagesViewController {
         return currentSenderId == previousSenderId
     }
     
-    func avatarImage(for message: any MessageType) -> UIImage? {
+    func avatarImage(
+        for message: any MessageType,
+        avatarLoaded: @escaping () -> Void
+    ) -> UIImage? {
         guard let userHandle = UInt64(message.sender.senderId) else { return nil }
         
-        return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: RequestDelegate(completion: { _ in
-        }))
+        return UIImage.mnz_image(
+            forUserHandle: userHandle,
+            name: message.sender.displayName,
+            size: CGSize(width: 24, height: 24),
+            delegate: RequestDelegate(completion: { _ in
+                // `avatarLoaded` will reload all cells with avatars once fetch is finished
+                // to allow cells displayed with generated avatar to be reconfigured with the one that was fetched
+                MEGALogDebug("[AVATAR] loaded for \(userHandle)")
+                avatarLoaded()
+            })
+        )
     }
     
     func initials(for message: any MessageType) -> String {

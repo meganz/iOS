@@ -24,7 +24,7 @@ extension ChatViewController: MessagesDataSource {
         
         if isTimeLabelVisible(at: indexPath) {
             let dateString = chatMessage.sentDate.string(withDateFormat: "HH:mm")
-            let displayName = if !isFromCurrentSender(message: chatMessage) && chatRoom.isGroup {
+            let displayName = if !senderIsMyself(message: chatMessage) && chatRoom.isGroup {
                 !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
             } else {
                 ""
