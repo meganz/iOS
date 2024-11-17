@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -166,14 +166,9 @@
                         <barButtonItem key="rightBarButtonItem" id="e96-q3-UGc"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="actionBarButtonItem" destination="wpV-mF-Nm9" id="G5P-wD-QWj"/>
-                        <outlet property="deleteBarButtonItem" destination="bVv-a0-Fx7" id="BwD-Lu-tJf"/>
-                        <outlet property="downloadBarButtonItem" destination="mZb-63-wxw" id="I4p-73-knY"/>
-                        <outlet property="moveBarButtonItem" destination="k2g-A4-j6f" id="sR6-Zh-J43"/>
                         <outlet property="photoContainerView" destination="4Ta-Ix-lgL" id="IwW-Cr-dta"/>
                         <outlet property="photosCollectionView" destination="Isg-Gr-mnR" id="apN-It-bKY"/>
                         <outlet property="selectAllBarButtonItem" destination="gRA-OU-vS7" id="icK-jO-9bw"/>
-                        <outlet property="shareLinkBarButtonItem" destination="84D-T8-1ui" id="4Mx-PC-8YH"/>
                         <outlet property="toolbar" destination="qZy-vw-98U" id="kqk-6K-svX"/>
                     </connections>
                 </viewController>
@@ -181,37 +176,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <viewLayoutGuide key="safeArea" id="eob-wF-L81"/>
-                    <items>
-                        <barButtonItem enabled="NO" title="Item" image="offline" width="32" style="plain" id="mZb-63-wxw" userLabel="Download Bar Button Item">
-                            <connections>
-                                <action selector="downloadAction:" destination="3GS-cK-Hw6" id="osa-ls-637"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="mbb-fa-sBd"/>
-                        <barButtonItem enabled="NO" image="link" width="32" style="plain" id="84D-T8-1ui" userLabel="Share Link Bar Button Item">
-                            <connections>
-                                <action selector="shareLinkAction:" destination="3GS-cK-Hw6" id="0z0-Dw-LjO"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ujf-9f-8Qy"/>
-                        <barButtonItem enabled="NO" image="move" width="32" style="plain" id="k2g-A4-j6f" userLabel="Move Bar Button Item">
-                            <connections>
-                                <action selector="moveAction:" destination="3GS-cK-Hw6" id="6zf-ep-O1w"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3uD-Y8-6Q4"/>
-                        <barButtonItem enabled="NO" image="rubbishBin" width="32" style="plain" id="bVv-a0-Fx7" userLabel="Rubbish Bin Bar Button Item">
-                            <connections>
-                                <action selector="deleteAction:" destination="3GS-cK-Hw6" id="ofI-ck-r51"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="8tv-N6-uNs"/>
-                        <barButtonItem image="moreNavigationBar" style="plain" id="wpV-mF-Nm9" userLabel="Action Bar Button Item">
-                            <connections>
-                                <action selector="moreAction:" destination="3GS-cK-Hw6" id="VjT-fm-J9c"/>
-                            </connections>
-                        </barButtonItem>
-                    </items>
+                    <items/>
                 </toolbar>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUj-Pt-2Vj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem image="selectAllItems" style="plain" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
@@ -277,11 +242,6 @@
     </scenes>
     <resources>
         <image name="cameraUploadsIcon" width="27" height="20"/>
-        <image name="link" width="28" height="28"/>
-        <image name="moreNavigationBar" width="28" height="28"/>
-        <image name="move" width="28" height="28"/>
-        <image name="offline" width="28" height="28"/>
-        <image name="rubbishBin" width="28" height="28"/>
         <image name="selectAllItems" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">

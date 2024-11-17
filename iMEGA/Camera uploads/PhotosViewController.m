@@ -34,11 +34,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionBarButtonItem;
 
 @property (nonatomic) NSLayoutConstraint *stateViewHeightConstraint;
 @end
@@ -156,14 +151,6 @@
     self.objcWrapper_parent.navigationItem.title = LocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
 }
 
-- (void)setToolbarActionsEnabled:(BOOL)boolValue {
-    self.downloadBarButtonItem.enabled = boolValue;
-    self.shareLinkBarButtonItem.enabled = boolValue;
-    self.moveBarButtonItem.enabled = boolValue;
-    self.actionBarButtonItem.enabled = boolValue;
-    self.deleteBarButtonItem.enabled = boolValue;
-}
-
 #pragma mark - notifications
 
 - (void)didReceiveInternetConnectionChangedNotification {
@@ -193,6 +180,8 @@
         
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             [self.toolbar setAlpha:0.0];
+            
+            [self updateBarButtonItemsIn:self.toolbar];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
             [self.toolbar setBackgroundColor:[UIColor surface1Background]];
@@ -223,23 +212,7 @@
 
 - (void)didSelectedPhotoCountChange:(NSInteger)count {
     [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:count];
-    [self setToolbarActionsEnabled:count > 0];
-}
-
-- (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    [self handleDownloadActionFor:self.selection.nodes];
-}
-
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    [self handleShareLinkFor:self.selection.nodes];
-}
-
-- (IBAction)moveAction:(UIBarButtonItem *)sender {
-    [self showBrowserNavigationFor:self.selection.nodes action:BrowserActionMove];
-}
-
-- (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    [self handleDeleteActionFor:self.selection.nodes];
+    [self setToolbarActionsEnabledIn:self.toolbar isEnabled:count > 0];
 }
 
 #pragma mark - View transitions

@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) DefaultNodeAccessoryActionDelegate *defaultNodeAccessoryActionDelegate;
 
 - (void)reloadPhotos;
-- (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)didSelectedPhotoCountChange:(NSInteger)count;
 - (void)buttonTouchUpInsideEmptyState;
 
