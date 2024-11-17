@@ -15,13 +15,12 @@ extension PhotosViewController {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
     
-    @IBAction func moreAction(_ sender: UIBarButtonItem) {
-        let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .photosTimeline, sender: sender)
-        nodeActionsViewController.accessoryActionDelegate = defaultNodeAccessoryActionDelegate
-        present(nodeActionsViewController, animated: true, completion: nil)
+    var isAddToFeatureFlagEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .addToAlbumAndPlaylists)
     }
-    
-    @objc func handleDownloadAction(for nodes: [MEGANode]) {
+        
+    func handleDownloadAction(for nodes: [MEGANode]) {
+
         let transfers = nodes.map {
             CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download)
         }
@@ -29,7 +28,7 @@ extension PhotosViewController {
         toggleEditing()
     }
     
-    @objc func showBrowserNavigation(for nodes: [MEGANode], action: BrowserAction) {
+    func showBrowserNavigation(for nodes: [MEGANode], action: BrowserAction) {
         guard let navigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
               let browserVC = navigationController.viewControllers.first as? BrowserViewController else {
             return
@@ -40,14 +39,14 @@ extension PhotosViewController {
         present(navigationController, animated: true)
     }
     
-    @objc func handleShareLink(for nodes: [MEGANode]) {
+    func handleShareLink(for nodes: [MEGANode]) {
         guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
         GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
                       nodes: nodes).start()
         toggleEditing()
     }
     
-    @objc func handleDeleteAction(for nodes: [MEGANode]) {
+    func handleDeleteAction(for nodes: [MEGANode]) {
         guard let rubbish = MEGASdk.sharedSdk.rubbishNode else { return }
         let delegate = MEGAMoveRequestDelegate(toMoveToTheRubbishBinWithFiles: nodes.contentCounts().fileCount,
                                                folders: nodes.contentCounts().folderCount) { [weak self] in
