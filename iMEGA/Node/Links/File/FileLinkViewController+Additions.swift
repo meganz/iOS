@@ -37,6 +37,10 @@ extension FileLinkViewController {
 
         present(activityVC, animated: true)
     }
+    
+    func addToCloudDrive() {
+        self.node?.mnz_fileLinkImport(from: self, isFolderLink: false)
+    }
 }
 
 // MARK: - Ads

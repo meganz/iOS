@@ -765,7 +765,7 @@ public final class ContextMenuBuilder {
             fileLinkActions.append(restore)
         }
 
-        fileLinkActions.append(contentsOf: [importFromFiles, download, shareLink, sendToChat])
+        fileLinkActions.append(contentsOf: [importFolderLink, download, shareLink, sendToChat])
 
         if isMediaFile {
             fileLinkActions.append(saveToPhotos)
