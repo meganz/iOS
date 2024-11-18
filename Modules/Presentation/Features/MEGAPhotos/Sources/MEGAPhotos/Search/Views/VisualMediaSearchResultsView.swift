@@ -34,8 +34,7 @@ public struct VisualMediaSearchResultsView: View {
         case .searchResults(let albums, let photos):
             VisualMediaSearchResultFoundView(
                 albums: albums,
-                photos: photos,
-                searchText: $viewModel.searchText)
+                photos: photos)
         case .empty:
             EmptySearchView()
         default:
