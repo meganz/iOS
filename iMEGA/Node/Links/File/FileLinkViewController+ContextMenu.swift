@@ -49,6 +49,8 @@ extension FileLinkViewController: FileLinkContextMenuDelegate {
         switch action {
         case .importFrom:
             importFromFiles()
+        case .importFolderLink:
+            addToCloudDrive()
         default:
             break
         }
