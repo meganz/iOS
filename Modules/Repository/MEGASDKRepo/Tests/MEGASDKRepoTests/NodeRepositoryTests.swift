@@ -439,14 +439,24 @@ final class NodeRepositoryTests: XCTestCase {
         XCTAssertTrue(parents2.isEmpty, "The parents array should still be empty when the node is not owned and not found in the SDK.")
     }
     
-    func testParentsOfNode_whenNodeIsNotOursAndDoesNotHaveParents_returnsEmptyArray() async {
-        let node = MockNode(handle: 1, name: "Node 1", nodeType: .folder)
+    func testParentsOfNode_whenNodeIsNotOursDoesNotHaveParentsAndIsAFile_returnsEmptyArray() async {
+        let node = MockNode(handle: 1, name: "Node 1", nodeType: .file)
         let sut = makeSUT(
             sdkNodes: [node],
             accessLevel: .accessRead)
         
         let parents = await sut.parents(of: node.toNodeEntity())
         XCTAssertTrue(parents.isEmpty, "The parents array should be empty if the node has no accessible parents due to restricted access.")
+    }
+    
+    func testParentsOfNode_whenNodeIsNotOursDoesNotHaveParentsAndIsAFolder_returnsOneParent() async {
+        let node = MockNode(handle: 1, name: "Node 1", nodeType: .folder)
+        let sut = makeSUT(
+            sdkNodes: [node],
+            accessLevel: .accessRead)
+        
+        let parents = await sut.parents(of: node.toNodeEntity())
+        XCTAssertEqual(parents.count, 1, "The parents array should include the folder intself.")
     }
     
     func testParentsOfNode_whenNodeIsAFolder_includesItselfInParentList() async throws {
@@ -469,6 +479,31 @@ final class NodeRepositoryTests: XCTestCase {
 
         XCTAssertEqual(parents.count, 1, "Should not include the folder itself in the parent list.")
         XCTAssertEqual(parents.first?.name, parentNode.name, "The list should include the parent name: '\(String(describing: parentNode.name))'.")
+    }
+    
+    func testParentsOfNode_folderAndFile_returnsCorrectParentCounts() async throws {
+        let parentNode = defaultParentNode()
+        let childFolders = [MockNode(handle: 2, name: "child1", nodeType: .folder, parentHandle: parentNode.handle)]
+        let childFiles = [MockNode(handle: 3, name: "child1", nodeType: .file, parentHandle: parentNode.handle)]
+        
+        let sutOwner = makeSUT(sdkNodes: [parentNode] + childFolders + childFiles, accessLevel: .accessOwner)
+        let sutReadAccess = makeSUT(sdkNodes: [parentNode] + childFolders + childFiles, accessLevel: .accessRead)
+        let firstChildFolder = try XCTUnwrap(childFolders.first)
+        let firstChildFile = try XCTUnwrap(childFiles.first)
+        
+        // Folders
+        let ownerAccessFolderParents = await sutOwner.parents(of: firstChildFolder.toNodeEntity())
+        XCTAssertEqual(ownerAccessFolderParents.map(\.handle), [1, 2], "Should include the folder itself in the parent list.")
+        
+        let readAccessFolderParents = await sutReadAccess.parents(of: firstChildFolder.toNodeEntity())
+        XCTAssertEqual(readAccessFolderParents.map(\.handle), [1, 2], "Should include the folder itself in the parent list.")
+        
+        // Files
+        let ownerAccessFileParents = await sutOwner.parents(of: firstChildFile.toNodeEntity())
+        XCTAssertEqual(ownerAccessFileParents.map(\.handle), [1], "Should not include the folder itself in the parent list.")
+        
+        let readAccessFileParents = await sutReadAccess.parents(of: firstChildFile.toNodeEntity())
+        XCTAssertEqual(readAccessFileParents.map(\.handle), [1], "Should not include the folder itself in the parent list.")
     }
     
     // MARK: - Children of node

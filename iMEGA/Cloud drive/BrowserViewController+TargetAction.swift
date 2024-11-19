@@ -10,7 +10,7 @@ extension BrowserViewController {
     }
     
     @objc func navigateToCurrentTargetActionBrowser() {
-        if cloudDriveButton.isSelected, parentNode == nil {
+        if parentNode == nil {
             switch browserAction {
             case .copy, .move:
                 Task { @MainActor in
