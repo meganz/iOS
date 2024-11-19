@@ -257,15 +257,16 @@ final class AlbumCellViewModelTests: XCTestCase {
             let sut = makeAlbumCellViewModel(
                 album: album,
                 selection: selection,
-                tracker: tracker)
+                tracker: tracker,
+                onAlbumSelected: {_ in })
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             
-            await sut.onAlbumTap()
+            sut.onAlbumTap()
             
             XCTAssertTrue(sut.isSelected, "Failed on editMode: \(editMode)")
             
-            await sut.onAlbumTap()
+            sut.onAlbumTap()
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             
@@ -281,22 +282,17 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     @MainActor
     func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() async {
-        var selectedAlbum: AlbumEntity?
-        let selectedAlbumBinding = Binding(get: {
-            selectedAlbum
-        }, set: {
-            selectedAlbum = $0
-        })
         let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
         let tracker = MockTracker()
         let sut = makeAlbumCellViewModel(
             album: gifAlbum,
             tracker: tracker,
-            selectedAlbum: selectedAlbumBinding)
+            onAlbumSelected: {
+                XCTAssertEqual($0, gifAlbum)
+            })
         
-        await sut.onAlbumTap()
+        sut.onAlbumTap()
         
-        XCTAssertEqual(selectedAlbum, gifAlbum)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
@@ -320,7 +316,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             selection: selection,
             tracker: tracker)
         
-        await sut.onAlbumTap()
+        sut.onAlbumTap()
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
@@ -344,7 +340,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             
-            await sut.onAlbumTap()
+            sut.onAlbumTap()
             
             XCTAssertFalse(sut.isSelected, "Failed on editMode: \(editMode)")
             XCTAssertTrue(tracker.trackedEventIdentifiers.isEmpty, "Failed on editMode: \(editMode)")
@@ -393,7 +389,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         task.cancel()
         await fulfillment(of: [cancelledExp], timeout: 0.2)
         
-        await sut.onAlbumTap()
+        sut.onAlbumTap()
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
@@ -726,6 +722,22 @@ final class AlbumCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
+    func testIsGestureEnabled_onTappedProvided_shouldEnable() {
+        let testCases: [(((AlbumEntity) -> Void)?, Bool)] = [
+            (nil, false),
+            ({ _ in }, true),
+        ]
+        
+        for (onAlbumSelected, isEnabled) in testCases {
+            let sut = makeAlbumCellViewModel(
+                album: album,
+                onAlbumSelected: onAlbumSelected
+            )
+            XCTAssertEqual(sut.isOnTapGestureEnabled, isEnabled)
+        }
+    }
+    
     // MARK: - Helpers
     
     @MainActor
@@ -739,7 +751,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
-        selectedAlbum: Binding<AlbumEntity?> = .constant(nil),
+        onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         configuration: ContentLibraries.Configuration = .mockConfiguration(),
         file: StaticString = #filePath,
@@ -754,7 +766,7 @@ final class AlbumCellViewModelTests: XCTestCase {
                                      album: album,
                                      selection: selection,
                                      tracker: tracker,
-                                     selectedAlbum: selectedAlbum,
+                                     onAlbumSelected: onAlbumSelected,
                                      remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
                                      configuration: configuration)
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 500_000_000, file: file, line: line)

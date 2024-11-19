@@ -22,6 +22,9 @@ public struct VisualMediaSearchResultsView: View {
             .task {
                 await viewModel.monitorSearchResults()
             }
+            .task {
+                await viewModel.handleSelectedItemNavigation()
+            }
     }
     
     @ViewBuilder
@@ -34,7 +37,8 @@ public struct VisualMediaSearchResultsView: View {
         case .searchResults(let albums, let photos):
             VisualMediaSearchResultFoundView(
                 albums: albums,
-                photos: photos)
+                photos: photos,
+                selectedItem: $viewModel.selectedVisualMediaResult)
         case .empty:
             EmptySearchView()
         default:

@@ -14,7 +14,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         album.id
     }
     
-    let album: AlbumEntity
+    public let album: AlbumEntity
     let selection: AlbumSelection
     let isLinkShared: Bool
     
@@ -39,7 +39,10 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     
     @Published var shouldShowEditStateOpacity: Double = 0.0
     @Published var opacity: Double = 1.0
-    @Binding var selectedAlbum: AlbumEntity?
+    
+    var isOnTapGestureEnabled: Bool {
+        isEditing || onAlbumSelected != nil
+    }
     
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
@@ -49,6 +52,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let onAlbumSelected: ((AlbumEntity) -> Void)?
     private let configuration: ContentLibraries.Configuration
     
     private var subscriptions = Set<AnyCancellable>()
@@ -68,7 +72,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         album: AlbumEntity,
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        selectedAlbum: Binding<AlbumEntity?>,
+        onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
@@ -81,7 +85,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         self.album = album
         self.selection = selection
         self.tracker = tracker
-        _selectedAlbum = selectedAlbum
+        self.onAlbumSelected = onAlbumSelected
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
         
@@ -115,13 +119,13 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         await loadThumbnail(for: coverNode)
     }
     
-    func onAlbumTap() async {
+    func onAlbumTap() {
         guard !(isEditing && album.systemAlbum) else { return }
         
         if isEditing {
             isSelected.toggle()
         } else {
-            selectedAlbum = album
+            onAlbumSelected?(album)
         }
         
         trackAnalytics()

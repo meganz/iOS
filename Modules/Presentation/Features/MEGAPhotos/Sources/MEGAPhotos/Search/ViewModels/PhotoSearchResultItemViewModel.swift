@@ -5,12 +5,15 @@ import SwiftUI
 
 @MainActor
 final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
-    let title: String
+    let photo: NodeEntity
     let searchText: String
     @Published private var loadedThumbnailContainer: (any ImageContaining)?
     
     nonisolated var id: HandleEntity {
         photo.handle
+    }
+    var title: String {
+        photo.name
     }
     
     var thumbnailContainer: any ImageContaining {
@@ -19,7 +22,6 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
             type: .placeholder)
     }
     
-    private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let photoSearchResultRouter: any PhotoSearchResultRouterProtocol
     
@@ -33,7 +35,6 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
         self.searchText = searchText
         self.thumbnailLoader = thumbnailLoader
         self.photoSearchResultRouter = photoSearchResultRouter
-        title = photo.name
     }
     
     func loadThumbnail() async {

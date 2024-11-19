@@ -9,14 +9,14 @@ import SwiftUI
 
 @MainActor
 protocol AlbumListViewRouting {
-    func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell
+    func cell(album: AlbumEntity, selection: AlbumSelection, onAlbumSelected: @escaping (AlbumEntity) -> Void) -> AlbumCell
     func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
-    func cell(album: AlbumEntity, selectedAlbum: Binding<AlbumEntity?>, selection: AlbumSelection) -> AlbumCell {
+    func cell(album: AlbumEntity, selection: AlbumSelection, onAlbumSelected: @escaping (AlbumEntity) -> Void) -> AlbumCell {
         let nodeRepository = NodeRepository.newRepo
         let accountUseCase = AccountUseCase(
             repository: AccountRepository.newRepo)
@@ -40,7 +40,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             albumCoverUseCase: AlbumCoverUseCase(nodeRepository: nodeRepository),
             album: album,
             selection: selection,
-            selectedAlbum: selectedAlbum
+            onAlbumSelected: onAlbumSelected
         )
         return AlbumCell(viewModel: vm)
     }

@@ -170,6 +170,56 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testHandleNavigation_onAlbumSelection_shouldNavigateToAlbumContent() {
+        let expectedAlbum = AlbumEntity(id: 6, type: .user)
+        let router = MockPhotoSearchResultRouter()
+        let sut = makeSUT(photoSearchResultRouter: router)
+        
+        trackTaskCancellation { await sut.handleSelectedItemNavigation() }
+        
+        let exp = expectation(description: "did select album on router")
+        let subscription = router.$selectedAlbum
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, expectedAlbum)
+                exp.fulfill()
+            }
+        
+        sut.selectedVisualMediaResult = .init(
+            selectedItem: .album(.init(album: expectedAlbum)),
+            otherQueryItems: nil)
+        
+        wait(for: [exp], timeout: 0.5)
+        subscription.cancel()
+    }
+    
+    @MainActor
+    func testHandleNavigation_onPhotoSelection_shouldNavigateToPhotosWithOtherPhotos() {
+        let expectedPhoto = NodeEntity(handle: 1)
+        let expectedOtherPhotos = [NodeEntity(handle: 4), NodeEntity(handle: 5)]
+        let router = MockPhotoSearchResultRouter()
+        let sut = makeSUT(photoSearchResultRouter: router)
+        
+        trackTaskCancellation { await sut.handleSelectedItemNavigation() }
+        
+        let exp = expectation(description: "did select photo on router")
+        let subscription = router.$selectedPhoto
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0?.photo, expectedPhoto)
+                XCTAssertEqual($0?.otherPhotos, expectedOtherPhotos)
+                exp.fulfill()
+            }
+        
+        sut.selectedVisualMediaResult = .init(
+            selectedItem: .photo(.init(photo: expectedPhoto)),
+            otherQueryItems: expectedOtherPhotos.map { .photo(.init(photo: $0)) })
+        
+        wait(for: [exp], timeout: 0.5)
+        subscription.cancel()
+    }
+    
+    @MainActor
     private func makeSUT(
         searchBarTextFieldUpdater: SearchBarTextFieldUpdater = SearchBarTextFieldUpdater(),
         visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol = MockVisualMediaSearchHistoryUseCase(),

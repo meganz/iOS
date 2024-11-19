@@ -17,7 +17,6 @@ extension AlbumCellViewModel {
             album: album,
             selection: AlbumSelection(),
             tracker: MockTracker(),
-            selectedAlbum: .constant(nil),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             configuration: .init(sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
                                  nodeUseCase: MockNodeUseCase(),

@@ -7,6 +7,7 @@ import SwiftUI
 struct VisualMediaSearchResultFoundView: UIViewRepresentable {
     let albums: [AlbumCellViewModel]
     let photos: [PhotoSearchResultItemViewModel]
+    @Binding var selectedItem: VisualMediaSearchResultSelection?
     
     func makeUIView(context: Context) -> UICollectionView {
         let collectionView = UICollectionView(
