@@ -17,10 +17,15 @@ struct NodeTagsView: View {
     // Displays the tags in a grid-like structure
     private var visibleTagsGridView: some View {
         VStack(alignment: .leading, spacing: padding) {
-            ForEach(tagGrid, id: \.self) { rows in
+            ForEach(0..<tagGrid.count, id: \.self) { rowIndex in
+                let tagViewModels = tagGrid[rowIndex]
                 HStack(spacing: padding) {
-                    ForEach(rows, id: \.self) { tag in
-                        pillView(for: tag)
+                    ForEach(tagViewModels, id: \.tag) { tagViewModel in
+                        nodeTagView(for: tagViewModel)
+                            .allowsHitTesting(tagViewModel.isSelectionEnabled)
+                            .onTapGesture {
+                                tagViewModel.toggle()
+                            }
                     }
                 }
             }
@@ -38,37 +43,35 @@ struct NodeTagsView: View {
 
     // Tracks the width of each individual tag
     private var hiddenTagsWidthTrackerView: some View {
-        ForEach(tagGrid, id: \.self) { rows in
-            ForEach(rows, id: \.self) { tag in
-                pillView(for: tag)
+        ForEach(0..<tagGrid.count, id: \.self) { rowIndex in
+            let tagViewModels = tagGrid[rowIndex]
+            ForEach(tagViewModels, id: \.tag) { tagViewModel in
+                nodeTagView(for: tagViewModel)
                     .opacity(0)  // invisible, for measurement only
                     .trackWidth()
                     .onPreferenceChange(WidthPreferenceKey.self) { width in
-                        viewModel.update(tag, with: width)
+                        viewModel.update(tagViewModel.tag, with: width)
                     }
             }
         }
     }
 
-    private func pillView(for tag: String) -> some View {
-        PillView(
-            viewModel: PillViewModel(
-                title: tag,
-                icon: .none,
-                foreground: TokenColors.Text.primary.swiftUI,
-                background: TokenColors.Button.secondary.swiftUI,
-                font: .subheadline
-            )
-        )
+    @ViewBuilder
+    private func nodeTagView(for tagViewModel: NodeTagViewModel) -> some View {
+        if tagViewModel.isSelected {
+            NodeTagSelectedView(tag: tagViewModel.formattedTag)
+        } else {
+            NodeTagNormalView(tag: tagViewModel.formattedTag)
+        }
     }
 
     // Calculate how to arrange tags into rows based on the available width
-    private var tagGrid: [[String]] {
-        var grid: [[String]] = [[]]
+    private var tagGrid: [[NodeTagViewModel]] {
+        var grid: [[NodeTagViewModel]] = [[]]
         var remainingWidth = viewModel.viewWidth
 
-        for tag in viewModel.tags {
-            let tagWidth = viewModel.tagsWidth[tag] ?? viewModel.viewWidth
+        for tagViewModel in viewModel.tagViewModels {
+            let tagWidth = viewModel.tagsWidth[tagViewModel.tag] ?? viewModel.viewWidth
 
             // Check if the tag can fit in the current row
             if remainingWidth <= tagWidth {
@@ -79,7 +82,7 @@ struct NodeTagsView: View {
             }
 
             // Add the tag to the current row
-            grid[grid.count - 1].append(tag)
+            grid[grid.count - 1].append(tagViewModel)
             // Update remaining width after adding the tag
             remainingWidth -= (tagWidth + padding)
         }

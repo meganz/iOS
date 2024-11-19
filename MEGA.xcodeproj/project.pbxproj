@@ -2243,6 +2243,9 @@
 		BF6DF8582B9191160043A589 /* DocumentPickerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */; };
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
+		BF71BD152CED3B6F00C0622F /* NodeTagSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71BD142CED3B6F00C0622F /* NodeTagSelectedView.swift */; };
+		BF71BD162CED3B6F00C0622F /* NodeTagNormalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71BD132CED3B6F00C0622F /* NodeTagNormalView.swift */; };
+		BF71BD182CED3BC500C0622F /* NodeTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71BD172CED3BC500C0622F /* NodeTagViewModel.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF7A73862C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
@@ -2427,8 +2430,6 @@
 		BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */; };
 		BFDECEEC2CD2F062001B83E0 /* ManageTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDECEEB2CD2F062001B83E0 /* ManageTagsViewModel.swift */; };
 		BFDECEEE2CD2F17E001B83E0 /* ManageTagsViewNavigationBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDECEED2CD2F17E001B83E0 /* ManageTagsViewNavigationBarViewModel.swift */; };
-		BFDECF142CD42FAB001B83E0 /* NormalTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDECF132CD42FAB001B83E0 /* NormalTagView.swift */; };
-		BFDECF162CD42FD3001B83E0 /* SelectedTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDECF152CD42FD3001B83E0 /* SelectedTagView.swift */; };
 		BFDECF182CD42FF2001B83E0 /* ExistingTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDECF172CD42FF2001B83E0 /* ExistingTagsView.swift */; };
 		BFDECF1A2CD43010001B83E0 /* ExistingTagsOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDECF192CD43010001B83E0 /* ExistingTagsOverviewView.swift */; };
 		BFDECF202CD43285001B83E0 /* ExistingTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDECF1F2CD43285001B83E0 /* ExistingTagsViewModel.swift */; };
@@ -5006,6 +5007,9 @@
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
 		BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewRouter.swift; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
+		BF71BD132CED3B6F00C0622F /* NodeTagNormalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagNormalView.swift; sourceTree = "<group>"; };
+		BF71BD142CED3B6F00C0622F /* NodeTagSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagSelectedView.swift; sourceTree = "<group>"; };
+		BF71BD172CED3BC500C0622F /* NodeTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagViewModel.swift; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellControllerModelTests.swift; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
@@ -5180,8 +5184,6 @@
 		BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveEmptyViewAssetFactoryTests.swift; sourceTree = "<group>"; };
 		BFDECEEB2CD2F062001B83E0 /* ManageTagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTagsViewModel.swift; sourceTree = "<group>"; };
 		BFDECEED2CD2F17E001B83E0 /* ManageTagsViewNavigationBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTagsViewNavigationBarViewModel.swift; sourceTree = "<group>"; };
-		BFDECF132CD42FAB001B83E0 /* NormalTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalTagView.swift; sourceTree = "<group>"; };
-		BFDECF152CD42FD3001B83E0 /* SelectedTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTagView.swift; sourceTree = "<group>"; };
 		BFDECF172CD42FF2001B83E0 /* ExistingTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingTagsView.swift; sourceTree = "<group>"; };
 		BFDECF192CD43010001B83E0 /* ExistingTagsOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingTagsOverviewView.swift; sourceTree = "<group>"; };
 		BFDECF1F2CD43285001B83E0 /* ExistingTagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingTagsViewModel.swift; sourceTree = "<group>"; };
@@ -12584,8 +12586,8 @@
 				BFDECF172CD42FF2001B83E0 /* ExistingTagsView.swift */,
 				C49955AE2CB8D4B500771BC7 /* ManageTagsView.swift */,
 				C49955AF2CB8D4B500771BC7 /* ManageTagsViewNavigationBar.swift */,
-				BFDECF132CD42FAB001B83E0 /* NormalTagView.swift */,
-				BFDECF152CD42FD3001B83E0 /* SelectedTagView.swift */,
+				BF71BD132CED3B6F00C0622F /* NodeTagNormalView.swift */,
+				BF71BD142CED3B6F00C0622F /* NodeTagSelectedView.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -12615,6 +12617,7 @@
 				BFDECF1F2CD43285001B83E0 /* ExistingTagsViewModel.swift */,
 				BFDECEEB2CD2F062001B83E0 /* ManageTagsViewModel.swift */,
 				BFDECEED2CD2F17E001B83E0 /* ManageTagsViewNavigationBarViewModel.swift */,
+				BF71BD172CED3BC500C0622F /* NodeTagViewModel.swift */,
 				BF8625412CEC40A10003BA25 /* NodeTagsSearcher.swift */,
 			);
 			path = Detail;
@@ -15309,13 +15312,16 @@
 				B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */,
+				BF71BD162CED3B6F00C0622F /* NodeTagNormalView.swift in Sources */,
 				BFEE74D02CAE22DE007FA672 /* NodeTagsCellController.swift in Sources */,
 				BFD453072CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift in Sources */,
 				BF6C9BA02CB48408007FFE96 /* NodeTagsCellView.swift in Sources */,
 				BF9366232CB47B9B001BD0CD /* NodeTagsCellViewModel.swift in Sources */,
+				BF71BD152CED3B6F00C0622F /* NodeTagSelectedView.swift in Sources */,
 				BF8625422CEC40A10003BA25 /* NodeTagsSearcher.swift in Sources */,
 				BFBBD3712CC70C210004FD7A /* NodeTagsView.swift in Sources */,
 				BF8C60E72CC8620F000F5757 /* NodeTagsViewModel.swift in Sources */,
+				BF71BD182CED3BC500C0622F /* NodeTagViewModel.swift in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
 				25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */,
@@ -15323,7 +15329,6 @@
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
 				BF0B5E0B2BB2C88B00ADE274 /* NoInternetViewModel.swift in Sources */,
 				BF0B5E0D2BB2C98400ADE274 /* NoInternetViewModifier.swift in Sources */,
-				BFDECF142CD42FAB001B83E0 /* NormalTagView.swift in Sources */,
 				B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */,
 				BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
@@ -15639,7 +15644,6 @@
 				5DC0FD4B24D8FB94004DB649 /* SegmentTitleView.swift in Sources */,
 				A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */,
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
-				BFDECF162CD42FD3001B83E0 /* SelectedTagView.swift in Sources */,
 				B5D875372A04B501003F9380 /* SendFeedbackViewModel.swift in Sources */,
 				7288C2CE27F5D3D70010DC19 /* SendFeedbackViewRouter.swift in Sources */,
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,

@@ -7,7 +7,8 @@ final class NodeTagsCellViewModel: ObservableObject, Sendable {
     private let node: NodeEntity
     private let accountUseCase: any AccountUseCaseProtocol
     private let notificationCenter: NotificationCenter
-    
+    private let isSelectionAvailable: Bool = false
+
     /// Enum type to represent the status of the "Pro only" badge display
     /// Important notes::
     ///  - "Pro only" badge is shown to free user and is NOT shown to users with expired business or expired pro flexi plan
@@ -28,10 +29,14 @@ final class NodeTagsCellViewModel: ObservableObject, Sendable {
     
     // Checks if the user has non expired subscription.
     var hasValidSubscription: Bool { accountUseCase.hasValidSubscription }
-    var tags: [String] { nodeTagsViewModel.tags }
-    
+    var tags: [String] { node.tags }
+
     private(set) lazy var nodeTagsViewModel = {
-        NodeTagsViewModel(tags: node.tags.map { "#" + $0 })
+        NodeTagsViewModel(
+            tagViewModels: node.tags.map {
+                NodeTagViewModel(tag: $0, isSelectionEnabled: isSelectionAvailable, isSelected: isSelectionAvailable)
+            }
+        )
     }()
 
     init(node: NodeEntity, accountUseCase: some AccountUseCaseProtocol, notificationCenter: NotificationCenter) {

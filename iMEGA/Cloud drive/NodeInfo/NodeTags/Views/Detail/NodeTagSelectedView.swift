@@ -1,7 +1,7 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SelectedTagView: View {
+struct NodeTagSelectedView: View {
     let tag: String
 
     var body: some View {
