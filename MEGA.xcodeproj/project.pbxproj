@@ -2263,6 +2263,9 @@
 		BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */; };
 		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
 		BF825F532B872696007B0B53 /* ScanDocumentViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */; };
+		BF8625422CEC40A10003BA25 /* NodeTagsSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8625412CEC40A10003BA25 /* NodeTagsSearcher.swift */; };
+		BF8625462CEC49EF0003BA25 /* MockNodeTagsSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8625452CEC49EF0003BA25 /* MockNodeTagsSearcher.swift */; };
+		BF8625482CEC4A520003BA25 /* NodeTagsSearcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8625472CEC4A520003BA25 /* NodeTagsSearcherTests.swift */; };
 		BF875B472B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */; };
 		BF8895D42630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */; };
 		BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */; };
@@ -5023,6 +5026,9 @@
 		BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AddToChatMenus.plist; sourceTree = "<group>"; };
 		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
 		BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDocumentViewRouter.swift; sourceTree = "<group>"; };
+		BF8625412CEC40A10003BA25 /* NodeTagsSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsSearcher.swift; sourceTree = "<group>"; };
+		BF8625452CEC49EF0003BA25 /* MockNodeTagsSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeTagsSearcher.swift; sourceTree = "<group>"; };
+		BF8625472CEC4A520003BA25 /* NodeTagsSearcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTagsSearcherTests.swift; sourceTree = "<group>"; };
 		BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserContextMenuViewFactory.swift; sourceTree = "<group>"; };
 		BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewModelTests.swift; sourceTree = "<group>"; };
 		BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContainerViewModelTests.swift; sourceTree = "<group>"; };
@@ -6157,12 +6163,14 @@
 			children = (
 				BF14E5ED2CD4710800D7BF4D /* ExistingTagsViewModelTests.swift */,
 				BF14E5F02CD4775700D7BF4D /* ManageTagsViewModelTests.swift */,
+				BF8625452CEC49EF0003BA25 /* MockNodeTagsSearcher.swift */,
 				BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */,
 				BF07C4D22C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift */,
 				BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */,
 				245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */,
 				BFD453082CC1FBDB00C8FEE4 /* NodeTagsCellControllerModelTests.swift */,
 				BF6C9BA22CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift */,
+				BF8625472CEC4A520003BA25 /* NodeTagsSearcherTests.swift */,
 				BF8C60EA2CC86520000F5757 /* NodeTagsViewModelTests.swift */,
 			);
 			path = NodeInfo;
@@ -12607,6 +12615,7 @@
 				BFDECF1F2CD43285001B83E0 /* ExistingTagsViewModel.swift */,
 				BFDECEEB2CD2F062001B83E0 /* ManageTagsViewModel.swift */,
 				BFDECEED2CD2F17E001B83E0 /* ManageTagsViewNavigationBarViewModel.swift */,
+				BF8625412CEC40A10003BA25 /* NodeTagsSearcher.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -15304,6 +15313,7 @@
 				BFD453072CC1FBAD00C8FEE4 /* NodeTagsCellControllerModel.swift in Sources */,
 				BF6C9BA02CB48408007FFE96 /* NodeTagsCellView.swift in Sources */,
 				BF9366232CB47B9B001BD0CD /* NodeTagsCellViewModel.swift in Sources */,
+				BF8625422CEC40A10003BA25 /* NodeTagsSearcher.swift in Sources */,
 				BFBBD3712CC70C210004FD7A /* NodeTagsView.swift in Sources */,
 				BF8C60E72CC8620F000F5757 /* NodeTagsViewModel.swift in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
@@ -16443,6 +16453,7 @@
 				24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */,
 				94B09E702B84D0B6007D6B84 /* MockNodeInsertionRouter.swift in Sources */,
 				B5BA0E172CE1E75E00B01FC7 /* MockNodeLabelActionRepository.swift in Sources */,
+				BF8625462CEC49EF0003BA25 /* MockNodeTagsSearcher.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */,
 				8326E68C2BE50A5400481711 /* MockPasscodeManager.swift in Sources */,
@@ -16496,6 +16507,7 @@
 				25CF5EB62BDB7056005608F7 /* NodeTableViewCellViewModelTests.swift in Sources */,
 				BFD453092CC1FBE100C8FEE4 /* NodeTagsCellControllerModelTests.swift in Sources */,
 				BF6C9BA32CB4D2D9007FFE96 /* NodeTagsCellViewModelTests.swift in Sources */,
+				BF8625482CEC4A520003BA25 /* NodeTagsSearcherTests.swift in Sources */,
 				BF8C60EC2CC86526000F5757 /* NodeTagsViewModelTests.swift in Sources */,
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
