@@ -40,7 +40,7 @@ public struct ChatRoomEntity: Sendable {
     public let changeType: ChangeType?
 
     public let peerCount: UInt
-    public let authorizationToken: String
+    public let authorizationToken: String?
     public let title: String?
     public let unreadCount: Int
     public let userTypingHandle: HandleEntity
@@ -65,7 +65,7 @@ public struct ChatRoomEntity: Sendable {
         ownPrivilege: ChatRoomPrivilegeEntity,
         changeType: ChangeType?,
         peerCount: UInt,
-        authorizationToken: String,
+        authorizationToken: String?,
         title: String?,
         unreadCount: Int,
         userTypingHandle: HandleEntity,

@@ -196,8 +196,8 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
         let megaMessage = chatMessage.message
         if megaMessage.nodeList?.size == 1 {
             var node = megaMessage.nodeList?.node(at: 0)
-            if chatRoom.isPreview {
-                node = MEGASdk.shared.authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
+            if chatRoom.isPreview, let authorizationToken = chatRoom.authorizationToken {
+                node = MEGASdk.shared.authorizeChatNode(node!, cauth: authorizationToken)
             }
             
             if let name = node?.name,
@@ -215,7 +215,8 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                           }
                     
                     if chatRoom.isPreview {
-                        if let authorizedNode = MEGASdk.shared.authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
+                        if let authorizationToken = chatRoom.authorizationToken,
+                           let authorizedNode = MEGASdk.shared.authorizeChatNode(node, cauth: authorizationToken) {
                             if localChatMessage == chatMessage {
                                 foundIndex = mediaNodesArrayIndex
                             }

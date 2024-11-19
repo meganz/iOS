@@ -393,7 +393,9 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                     
                     if name.fileExtensionGroup.isVisualMedia {
                         if chatRoom.isPreview {
-                            guard let authNode = MEGASdk.shared.authorizeChatNode(node, cauth: chatRoom.authorizationToken) else { return }
+                            guard let authorizationToken = chatRoom.authorizationToken,
+                                  let authNode = MEGASdk.shared.authorizeChatNode(selectedNode, cauth: authorizationToken)
+                            else { return }
                             nodes.add(authNode)
                         } else {
                             nodes.add(node)
@@ -411,7 +413,10 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                 navigationController?.present(photoBrowserVC, animated: true, completion: nil)
             } else {
                 if chatRoom.isPreview {
-                    guard let authNode = MEGASdk.shared.authorizeChatNode(selectedNode, cauth: chatRoom.authorizationToken) else { return }
+                    guard let authorizationToken = chatRoom.authorizationToken,
+                          let authNode = MEGASdk.shared.authorizeChatNode(selectedNode, cauth: authorizationToken)
+                    else { return }
+                    
                     authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil)
                 } else {
                     selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, isFromSharedItem: false, allNodes: nil)
