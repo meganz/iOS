@@ -111,6 +111,9 @@ public struct NodeRepository: NodeRepositoryProtocol {
                 } while tempHandle != rootHandle
             } else {
                 var tempNode = sdk.node(forHandle: node.parentHandle)?.toNodeEntity()
+                if node.isFolder(), let nodeEntity = nodeForHandle(node.handle) {
+                    parentTreeArray.append(nodeEntity)
+                }
                 while tempNode != nil {
                     if let tempNode, tempNode.handle != sdk.rootNode?.handle { parentTreeArray.insert(tempNode, at: 0) }
                     tempNode = sdk.node(forHandle: tempNode!.parentHandle)?.toNodeEntity()

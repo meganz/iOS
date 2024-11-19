@@ -19,6 +19,17 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
                    type: NodeTypeEntity) async -> NodeEntity?
     func rubbishNode() -> NodeEntity?
     func rootNode() -> NodeEntity?
+    /// Retrieves the hierarchy of parent nodes for a given node in a directory tree.
+    ///
+    /// This function returns an array of `NodeEntity` objects representing the parent nodes of the provided node,
+    /// starting from the root directory and including the starting node if it is a folder. The function includes the starting node (if it is a folder)
+    ///   and traverses up to the root node.
+    ///
+    /// The function ensures that the resulting array represents the correct parent hierarchy while handling
+    /// different root node scenarios (e.g., rubbish bin).
+    ///
+    /// - Parameter node: The node for which the parent hierarchy is to be retrieved.
+    /// - Returns: An array of `NodeEntity` objects representing the parent nodes in the hierarchy.
     func parents(of node: NodeEntity) async -> [NodeEntity]
     func asyncChildren(of node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity?
     func children(of node: NodeEntity) -> NodeListEntity?
