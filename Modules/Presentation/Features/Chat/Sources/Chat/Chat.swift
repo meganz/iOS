@@ -3,12 +3,12 @@ import Foundation
 public typealias LogFunction = (_ message: String, _ file: String, _ line: Int) -> Void
 
 public struct Chat {
-    public static var logFatal: LogFunction?
-    public static var logError: LogFunction?
-    public static var logWarning: LogFunction?
-    public static var logInfo: LogFunction?
-    public static var logDebug: LogFunction?
-    public static var logMax: LogFunction?
+    nonisolated(unsafe) public static var logFatal: LogFunction?
+    nonisolated(unsafe) public static var logError: LogFunction?
+    nonisolated(unsafe) public static var logWarning: LogFunction?
+    nonisolated(unsafe) public static var logInfo: LogFunction?
+    nonisolated(unsafe) public static var logDebug: LogFunction?
+    nonisolated(unsafe) public static var logMax: LogFunction?
     
     static func logger(level: LogLevel) -> LogFunction? {
         switch level {
