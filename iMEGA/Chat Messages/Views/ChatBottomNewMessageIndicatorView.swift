@@ -11,12 +11,12 @@ class ChatBottomNewMessageIndicatorView: UIView {
         var config = UIButton.Configuration.plain()
         config.contentInsets = NSDirectionalEdgeInsets(top: 3, leading: 5, bottom: 3, trailing: 5)
         label.configuration = config
-        label.backgroundColor = UIColor.gray333333.withAlphaComponent(0.9)
+        label.backgroundColor = TokenColors.Icon.primary
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         label.layer.borderWidth = 1
         label.isUserInteractionEnabled = false
-        label.layer.borderColor = UIColor.whiteFFFFFF.cgColor
+        label.layer.borderColor = TokenColors.Text.inverseAccent.cgColor
         return label
     }()
     
@@ -39,7 +39,7 @@ class ChatBottomNewMessageIndicatorView: UIView {
                 badgeLabel.isHidden = false
                 var attributed = AttributedString((unreadNewMessagesCount > 99) ? "99+" : "\(unreadNewMessagesCount)")
                 attributed.font = .systemFont(ofSize: 11, weight: .medium)
-                attributed.foregroundColor = UIColor.label
+                attributed.foregroundColor = TokenColors.Text.inverseAccent
                 badgeLabel.configuration?.attributedTitle = attributed
                 badgeLabel.flex.markDirty()
                 rootFlexContainer.flex.layout()
@@ -58,6 +58,14 @@ class ChatBottomNewMessageIndicatorView: UIView {
         }
         backgroundView.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
         addSubview(rootFlexContainer)
+    }
+    
+    // This override is needed as CGColors do not update automatically when appearance changes
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            badgeLabel.layer.borderColor = TokenColors.Text.inverseAccent.cgColor
+        }
     }
     
     required init?(coder: NSCoder) {
