@@ -49,9 +49,10 @@ struct NodeTagsCellControllerModelTests {
     @MainActor
     @Test("Check for tags")
     func checkTags() {
-        let node = NodeEntity(tags: ["tag1", "tag2", "tag3"])
+        let tags = ["tag1", "tag2", "tag3"]
+        let node = NodeEntity(tags: tags)
         let sut = makeSUT(node: node)
-        #expect(sut.cellViewModel.tags == ["#tag1", "#tag2", "#tag3"])
+        #expect(sut.cellViewModel.tags == tags)
     }
 
     @MainActor

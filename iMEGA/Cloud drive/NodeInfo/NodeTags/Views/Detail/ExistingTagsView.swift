@@ -5,13 +5,11 @@ struct ExistingTagsView: View {
 
     var body: some View {
         ScrollView {
-            HStack {
-                ForEach(viewModel.formattedTags, id: \.self) { tag in
-                    if viewModel.isSelected(tag) {
-                        SelectedTagView(tag: tag)
-                    } else {
-                        NormalTagView(tag: tag)
-                    }
+            ForEach(viewModel.formattedTags, id: \.self) { tag in
+                if viewModel.isSelected(tag) {
+                    NodeTagSelectedView(tag: tag)
+                } else {
+                    NodeTagNormalView(tag: tag)
                 }
             }
         }

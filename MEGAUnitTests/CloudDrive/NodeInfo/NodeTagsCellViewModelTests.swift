@@ -60,9 +60,10 @@ struct NodeTagsCellViewModelTests {
 
     @Test("Check for tags")
     func checkTags() async {
-        let node = NodeEntity(tags: ["tag1", "tag2", "tag3"])
+        let tags = ["tag1", "tag2", "tag3"]
+        let node = NodeEntity(tags: tags)
         let sut = await makeSut(node: node)
-        #expect(await sut.tags == ["#tag1", "#tag2", "#tag3"])
+        #expect(await sut.tags == tags)
     }
     
     private func makeSut(
