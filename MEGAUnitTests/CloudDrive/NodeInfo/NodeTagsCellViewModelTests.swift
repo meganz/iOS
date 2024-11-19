@@ -15,11 +15,11 @@ struct NodeTagsCellViewModelTests {
         
         #expect(await sut.state == .notDetermined)
         
-        let task = Task { @MainActor in
+        let task: Task<(), Never> = Task { @MainActor in
             await sut.startMonitoringAccountDetails()
         }
         
-        let waitingTask = Task { @MainActor in
+        let waitingTask: Task<(), Never> = Task { @MainActor in
             accountUseCase.setCurrentAccountDetails(.build(proLevel: .free))
             
             NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: nil)
