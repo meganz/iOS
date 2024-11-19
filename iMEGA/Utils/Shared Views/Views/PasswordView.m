@@ -44,6 +44,7 @@
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self addGestureRecognizer:singleTap];
+    [self updateAppearance];
 }
 
 - (void)configureToggleSecureButton {
