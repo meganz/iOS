@@ -161,7 +161,9 @@ extension ChatViewController {
             if nodelist.size == 1,
                let node = nodelist.node(at: 0),
                node.name?.fileExtensionGroup.isVisualMedia == true {
-                if chatRoom.isPreview, let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
+                if chatRoom.isPreview,
+                   let authorizationToken = chatRoom.authorizationToken,
+                   let authorizedNode = sdk.authorizeChatNode(node, cauth: authorizationToken) {
                     saveToPhotos(node: authorizedNode, chatMessage: chatMessage, chatRoom: chatRoom)
                 } else {
                     saveToPhotos(node: node, chatMessage: chatMessage, chatRoom: chatRoom)
