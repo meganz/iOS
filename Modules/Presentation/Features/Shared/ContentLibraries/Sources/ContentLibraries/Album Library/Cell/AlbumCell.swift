@@ -67,12 +67,12 @@ public struct AlbumCell: View {
         .task {
             await viewModel.monitorAlbumPhotos()
         }
-        .onTapGesture {
-            Task {
-                await viewModel.onAlbumTap()
-            }
-        }
+        .gesture(viewModel.isOnTapGestureEnabled ? tap : nil)
     }
+    
+    private var tap: some Gesture { TapGesture().onEnded { _ in
+        viewModel.onAlbumTap()
+    }}
     
     private var checkMarkView: some View {
         CheckMarkView(
@@ -103,8 +103,7 @@ public struct AlbumCell: View {
                     videoCount: 12
                 )
             ),
-            selection: AlbumSelection(),
-            selectedAlbum: Binding.constant(nil)
+            selection: AlbumSelection()
         )
     )
 }

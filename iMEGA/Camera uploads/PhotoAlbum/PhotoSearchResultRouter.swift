@@ -33,4 +33,16 @@ final class PhotoSearchResultRouter: PhotoSearchResultRouterProtocol {
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
+    
+    func didSelectAlbum(_ album: AlbumEntity) {
+        let viewController = AlbumContentRouter(navigationController: navigationController, album: album, newAlbumPhotos: nil, existingAlbumNames: { [] }).build()
+        let nav = UINavigationController(rootViewController: viewController)
+        nav.modalPresentationStyle = .fullScreen
+        navigationController?.present(nav, animated: true, completion: nil)
+    }
+    
+    func didSelectPhoto(_ photo: NodeEntity, otherPhotos: [NodeEntity]) {
+        PhotoLibraryContentViewRouter()
+            .openPhotoBrowser(for: photo, allPhotos: otherPhotos)
+    }
 }

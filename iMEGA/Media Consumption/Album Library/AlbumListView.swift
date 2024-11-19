@@ -56,8 +56,10 @@ struct AlbumListView: View {
                         .opacity($editMode.wrappedValue.isEditing ? 0.5 : 1)
                     
                     ForEach(viewModel.albums, id: \.self) { album in
-                        router.cell(album: album, selectedAlbum: $viewModel.album, selection: viewModel.selection)
-                            .clipped()
+                        router.cell(album: album, selection: viewModel.selection) {
+                            viewModel.album = $0
+                        }
+                        .clipped()
                     }
                 }
             }

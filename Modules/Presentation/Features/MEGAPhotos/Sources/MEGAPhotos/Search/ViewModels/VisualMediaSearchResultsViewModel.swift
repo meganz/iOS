@@ -5,6 +5,7 @@ import Foundation
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
+import SwiftUI
 
 @MainActor
 public final class VisualMediaSearchResultsViewModel: ObservableObject {
@@ -17,6 +18,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     @Published private(set) var viewState: ViewState = .loading
     @Published var searchText = ""
     @Published var selectedRecentlySearched: String?
+    @Published var selectedVisualMediaResult: VisualMediaSearchResultSelection?
     
     private let visualMediaSearchHistoryUseCase: any VisualMediaSearchHistoryUseCaseProtocol
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
@@ -84,6 +86,35 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         guard searchText.isNotEmpty else { return }
         
         await visualMediaSearchHistoryUseCase.add(entry: .init(id: UUID(), query: searchText, searchDate: Date()))
+    }
+    
+    func handleSelectedItemNavigation() async {
+        let navigationResultSequence =  $selectedVisualMediaResult.values
+            .compactMap { selectedResult -> SelectedNavigationEntityResult? in
+                switch selectedResult?.selectedItem {
+                case .album(let albumViewModel):
+                    await SelectedNavigationEntityResult.album(albumViewModel.album)
+                case .photo(let photoViewModel):
+                        .photos(selectedPhoto: photoViewModel.photo,
+                                otherPhotos: selectedResult?.otherQueryItems?.compactMap({ item -> NodeEntity? in
+                            switch item {
+                            case .photo(let photoViewModel): photoViewModel.photo
+                            case .album: nil
+                            }
+                        }) ?? [])
+                case .none: nil
+                }
+            }
+    
+        for await navigationResult in navigationResultSequence {
+            switch navigationResult {
+            case .album(let album):
+                photoSearchResultRouter.didSelectAlbum(album)
+            case .photos(let selectedPhoto, let otherPhotos):
+                photoSearchResultRouter.didSelectPhoto(selectedPhoto, otherPhotos: otherPhotos)
+            }
+            selectedVisualMediaResult = nil
+        }
     }
     
     private func performSearch(searchText: String) {
@@ -166,7 +197,6 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                 albumCoverUseCase: albumCoverUseCase,
                 album: $0,
                 selection: AlbumSelection(),
-                selectedAlbum: .constant(nil),
                 configuration: contentLibrariesConfiguration
             )
         }
@@ -200,4 +230,9 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
             }
             .eraseToAnyAsyncSequence()
     }
+}
+
+private enum SelectedNavigationEntityResult {
+    case album(AlbumEntity)
+    case photos(selectedPhoto: NodeEntity, otherPhotos: [NodeEntity])
 }

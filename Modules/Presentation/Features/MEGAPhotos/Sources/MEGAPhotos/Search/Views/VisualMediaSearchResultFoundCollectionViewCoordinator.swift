@@ -1,5 +1,6 @@
 import ContentLibraries
 import MEGADesignToken
+import MEGADomain
 import SwiftUI
 import UIKit
 
@@ -9,12 +10,13 @@ enum VisualMediaSearchResultSupplementaryElementKind: String {
 }
 
 @MainActor
-final class VisualMediaSearchResultFoundCollectionViewCoordinator {
+final class VisualMediaSearchResultFoundCollectionViewCoordinator: NSObject {
     typealias DiffableDataSource = UICollectionViewDiffableDataSource<VisualMediaSearchResult.Section, VisualMediaSearchResult.Item>
     private typealias HeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>
     typealias AlbumCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, AlbumCellViewModel>
     typealias PhotoCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, PhotoSearchResultItemViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<VisualMediaSearchResult.Section, VisualMediaSearchResult.Item>
+    
     private let representer: VisualMediaSearchResultFoundView
     private(set) var dataSource: DiffableDataSource?
     private var reloadSnapshotTask: Task<Void, Never>? {
@@ -23,6 +25,7 @@ final class VisualMediaSearchResultFoundCollectionViewCoordinator {
     
     init(_ representer: VisualMediaSearchResultFoundView) {
         self.representer = representer
+        super.init()
     }
     
     deinit {
@@ -63,6 +66,7 @@ final class VisualMediaSearchResultFoundCollectionViewCoordinator {
         }
         self.dataSource = dataSource
         collectionView.dataSource = dataSource
+        collectionView.delegate = self
     }
     
     func reloadData(albums: [AlbumCellViewModel], photos: [PhotoSearchResultItemViewModel]) {
@@ -95,5 +99,22 @@ final class VisualMediaSearchResultFoundCollectionViewCoordinator {
             cell.contentView.addSubview(cellHostingController.view)
             cell.contentView.wrap(cellHostingController.view)
         }
+    }
+}
+
+extension VisualMediaSearchResultFoundCollectionViewCoordinator: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let dataSource,
+              let selectedItem = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        let sectionIdentifier = dataSource.sectionIdentifier(for: indexPath.section)
+        let otherQueryItems: [VisualMediaSearchResult.Item]? = if let sectionIdentifier {
+            dataSource.snapshot().itemIdentifiers(inSection: sectionIdentifier)
+        } else {
+            nil
+        }
+        representer.selectedItem = .init(
+            selectedItem: selectedItem,
+            otherQueryItems: otherQueryItems)
     }
 }
