@@ -4057,8 +4057,6 @@
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove this restriction.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
 "meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
@@ -4072,18 +4070,12 @@
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgrade to Pro to get unlimited calls";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Your call reached the 60-minute limit and has ended. Pro users have unlimited call duration and can invite up to 1000 participants.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade now";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Hidden files and folders";
 /* Hidden files and folders onboarding content hide important title */
@@ -4420,3 +4412,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Existing tags";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="Media";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";

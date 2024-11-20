@@ -1,6 +1,6 @@
+import Chat
 import ChatRepo
 import Combine
-import Chat
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -77,7 +77,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
         else { return nil}
         
         return .init(
-            copy: Strings.Localizable.Calls.FreePlanLimitWarning.WaitingRoomList.Banner.message,
+            copy: Strings.Localizable.Meetings.Warning.overParticipantLimit,
             underline: false,
             theme: .dark,
             closeAction: dismissLimitBanner,
