@@ -15,7 +15,11 @@ extension View {
             .opacity(0)
             .contextMenuWithPreview(
                 actions: actions,
-                sourcePreview: sourcePreview,
+                sourcePreview: {
+                    // We should disable accessibility for source sourcePreview
+                    // otherwise the accessibility labels will be duplicated
+                    sourcePreview().accessibilityHidden(true)
+                },
                 contentPreviewProvider: contentPreviewProvider,
                 didTapPreview: didTapPreview,
                 didSelect: didSelect
