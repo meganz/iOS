@@ -49,8 +49,8 @@ enum ChatContentRoutingStyle: Int {
         self.presenter = presenter
         self.publicLink = publicLink
         self.showShareLinkViewAfterOpenChat = showShareLinkViewAfterOpenChat
-        self.tracker = DIContainer.tracker
         self.chatContentRoutingStyle = chatContentRoutingStyle
+        self.tracker = DIContainer.tracker
     }
     
     @objc static func chatViewController(

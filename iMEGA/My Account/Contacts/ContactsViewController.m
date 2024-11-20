@@ -1048,7 +1048,12 @@
         return;
     }
     
-    [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:self.navigationController publicLink:nil showShareLinkViewAfterOpenChat:NO chatContentRoutingStyle:ChatContentRoutingStylePush] start];
+    [[ChatContentRouter.alloc initWithChatRoom:chatRoom
+                                     presenter:self.navigationController
+                                    publicLink:nil
+                showShareLinkViewAfterOpenChat:NO
+                       chatContentRoutingStyle:ChatContentRoutingStylePush
+     ] start];
 }
 
 - (void)setupContactsTableViewHeader {
