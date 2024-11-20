@@ -51,7 +51,7 @@ struct ManageTagsViewModelTests {
         viewModel.addTag()
 
         // Expectation checks
-        #expect(viewModel.existingTagsViewModel.tags.contains(updatedTagName) == expectedContainsTag)
+        #expect(viewModel.existingTagsViewModel.containsTags == expectedContainsTag)
         #expect(viewModel.tagName == expectedTagName)
         #expect(viewModel.containsExistingTags == expectedContainsExistingTags)
     }
@@ -69,10 +69,28 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
-    private func makeSUT() -> ManageTagsViewModel {
+    @Test(
+        "Verify loading all the tags from the account",
+        arguments: [
+            ([], false),
+            (["tag1"], true)
+        ]
+    )
+    func verifyLoadAllTags(tags: [String], containsExistingTags: Bool) async {
+        let sut = makeSUT(nodeSearcher: MockNodeTagsSearcher(tags: tags))
+        await sut.loadAllTags()
+        #expect(sut.containsExistingTags == containsExistingTags)
+    }
+
+    @MainActor
+    private func makeSUT(nodeSearcher: some NodeTagsSearching = MockNodeTagsSearcher()) -> ManageTagsViewModel {
         ManageTagsViewModel(
             navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
-            existingTagsViewModel: ExistingTagsViewModel()
+            existingTagsViewModel: ExistingTagsViewModel(
+                tagsViewModel: NodeTagsViewModel(tagViewModels: []),
+                nodeTagSearcher: nodeSearcher,
+                isSelectionEnabled: false
+            )
         )
     }
 }

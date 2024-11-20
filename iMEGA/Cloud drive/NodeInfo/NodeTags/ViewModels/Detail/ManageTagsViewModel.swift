@@ -19,12 +19,15 @@ final class ManageTagsViewModel: ObservableObject {
     @Published var containsExistingTags = false
     @Published var hasTextFieldFocus: Bool = false
     private var maxAllowedCharacterCount = 32
-    private var subscriptions: [AnyCancellable] = []
+    private var subscriptions: Set<AnyCancellable> = []
 
     init(navigationBarViewModel: ManageTagsViewNavigationBarViewModel, existingTagsViewModel: ExistingTagsViewModel) {
         self.navigationBarViewModel = navigationBarViewModel
         self.existingTagsViewModel = existingTagsViewModel
+        monitorTagsLoadingStatus()
     }
+
+    // MARK: - Interface methods.
 
     func addTag() {
         guard tagNameState == .valid else { return }
@@ -46,6 +49,12 @@ final class ManageTagsViewModel: ObservableObject {
         tagName = ""
         tagNameState = .empty
     }
+
+    func loadAllTags() async {
+        await existingTagsViewModel.searchTags(for: nil)
+    }
+
+    // MARK: - Private methods
 
     private func formatTagName(_ tagName: String) -> String {
         if tagName.hasPrefix("#") {
@@ -75,5 +84,15 @@ final class ManageTagsViewModel: ObservableObject {
 
     private func containsUpperCaseCharacters(in tagName: String) -> Bool {
         tagName.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil
+    }
+
+    private func monitorTagsLoadingStatus() {
+        existingTagsViewModel
+            .$isLoading
+            .sink { [weak self] isLoading in
+                guard let self, !isLoading, existingTagsViewModel.isLoading else { return }
+                containsExistingTags = existingTagsViewModel.containsTags
+            }
+            .store(in: &subscriptions)
     }
 }
