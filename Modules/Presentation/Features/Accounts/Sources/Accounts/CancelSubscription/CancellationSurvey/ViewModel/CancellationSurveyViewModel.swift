@@ -7,20 +7,25 @@ import SwiftUI
 
 @MainActor
 final class CancellationSurveyViewModel: ObservableObject {
+    enum SurveyFormError: Error, Equatable {
+        case noSelectedReason, noSelectedFollowUpReason(CancellationSurveyReason), none
+    }
+    
     @Published var shouldDismiss: Bool = false
     @Published var selectedReasons: Set<CancellationSurveyReason> = []
-    @Published var cancellationSurveyReasonList: [CancellationSurveyReason] = []
+    @Published var selectedFollowUpReasons: Set<CancellationSurveyFollowUpReason> = []
     @Published var showOtherField: Bool = false
     @Published var otherReasonText: String = ""
     @Published var isOtherFieldFocused: Bool = false
     @Published var allowToBeContacted: Bool = false
-    @Published var showNoReasonSelectedError: Bool = false
     @Published var showMinLimitOrEmptyOtherFieldError: Bool = false
     @Published var dismissKeyboard: Bool = false
+    @Published var surveyFormError: SurveyFormError = .none
     
-    let otherReasonID = CancellationSurveyReason.otherReason.id
+    let otherReasonID = CancellationSurveyReason.otherReasonID
     let minimumTextRequired = 10
     let maximumTextRequired = 120
+    private(set) var cancellationSurveyReasonList: [CancellationSurveyReason] = []
     private(set) var subscription: AccountSubscriptionEntity
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
@@ -34,6 +39,7 @@ final class CancellationSurveyViewModel: ObservableObject {
     @Published var selectedReason: CancellationSurveyReason?
     
     init(
+        cancellationSurveyReasonList: [CancellationSurveyReason] = CancellationSurveyReason.makeList(),
         subscription: AccountSubscriptionEntity,
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
@@ -42,6 +48,7 @@ final class CancellationSurveyViewModel: ObservableObject {
         logger: ((String) -> Void)? = nil,
         featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
+        self.cancellationSurveyReasonList = cancellationSurveyReasonList
         self.subscription = subscription
         self.subscriptionsUseCase = subscriptionsUseCase
         self.accountUseCase = accountUseCase
@@ -57,27 +64,17 @@ final class CancellationSurveyViewModel: ObservableObject {
     }
     
     // MARK: - Setup
-    func setupRandomizedReasonList() {
-        let otherReasonItem = CancellationSurveyReason.eight
-        let cancellationReasons = CancellationSurveyReason.allCases.filter({ $0 != otherReasonItem })
-        
-        var randomizedList = cancellationReasons.shuffled()
-        randomizedList.append(otherReasonItem)
-        
-        cancellationSurveyReasonList = randomizedList
-    }
-    
-    func trackViewOnAppear() {
-        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyScreenEvent())
-    }
-    
     var isMultipleSelectionEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .multipleOptionsForCancellationSurvey)
     }
     
+    var isFollowUpOptionEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .followUpOptionsForCancellationSurvey)
+    }
+    
     // MARK: - Reason selection
     func updateSelectedReason(_ reason: CancellationSurveyReason) {
-        showNoReasonSelectedError = false
+        surveyFormError = .none
         
         if isMultipleSelectionEnabled {
             if selectedReasons.contains(reason) {
@@ -110,6 +107,35 @@ final class CancellationSurveyViewModel: ObservableObject {
         return selectedReasons.contains(reason)
     }
     
+    var isOtherReasonSelected: Bool {
+        guard isMultipleSelectionEnabled else {
+            return selectedReason?.id == otherReasonID
+        }
+        
+        return selectedReasons.contains { $0.isOtherReason }
+    }
+    
+    // MARK: - Follow-up reason selection
+    func updateSelectedFollowUpReason(_ reason: CancellationSurveyFollowUpReason) {
+        guard selectedFollowUpReasons.notContains(reason) else { return }
+        
+        if let currentSelection = selectedFollowUpReasons.first(where: { $0.mainReasonID == reason.mainReasonID }) {
+            selectedFollowUpReasons.remove(currentSelection)
+        }
+        
+        selectedFollowUpReasons.insert(reason)
+        surveyFormError = .none
+    }
+    
+    func isFollowUpReasonSelected(_ reason: CancellationSurveyFollowUpReason) -> Bool {
+        selectedFollowUpReasons.contains(reason)
+    }
+    
+    func followUpReasons(_ reason: CancellationSurveyReason) -> [CancellationSurveyFollowUpReason]? {
+        guard isFollowUpOptionEnabled, reason.followUpReasons.isNotEmpty else { return nil }
+        return reason.followUpReasons
+    }
+
     // MARK: - Button action
     func setAllowToBeContacted(_ isAllowed: Bool ) {
         allowToBeContacted = isAllowed
@@ -127,32 +153,46 @@ final class CancellationSurveyViewModel: ObservableObject {
     }
     
     func didTapCancelSubscriptionButton() {
-        guard validateSelectedReason() else { return }
-        
-        if isReasonSelected(CancellationSurveyReason.otherReason) {
-            guard validateOtherReasonText() else { return }
-            dismissKeyboard = true
-        }
-        
-        trackCancelSubscriptionEvent()
-        
-        submitSurveyTask = Task { [weak self] in
-            guard let self else { return }
-            await handleSubscriptionCancellation()
+        do {
+            try validateSelectedReason()
+            
+            surveyFormError = .none
+            
+            if isOtherReasonSelected {
+                guard validateOtherReasonText() else { return }
+                dismissKeyboard = true
+            }
+            
+            trackCancelSubscriptionEvent()
+            
+            submitSurveyTask = Task { [weak self] in
+                guard let self else { return }
+                await handleSubscriptionCancellation()
+            }
+        } catch let error as SurveyFormError {
+            surveyFormError = error
+        } catch {
+            fatalError("Unexpected error: \(error)")
         }
     }
 
-    private func validateSelectedReason() -> Bool {
+    // MARK: - Survey form validation and action
+    private func validateSelectedReason() throws {
         if isMultipleSelectionEnabled {
-            let selectedReasonsNotEmpty = selectedReasons.isNotEmpty
-            showNoReasonSelectedError = !selectedReasonsNotEmpty
-            return selectedReasonsNotEmpty
+            guard selectedReasons.isEmpty else { return }
+            throw SurveyFormError.noSelectedReason
         } else {
-            guard selectedReason != nil else {
-                showNoReasonSelectedError = true
-                return false
+            guard let selectedReason else {
+                throw SurveyFormError.noSelectedReason
             }
-            return true
+            
+            guard isFollowUpOptionEnabled,
+                  selectedReason.followUpReasons.isNotEmpty,
+                  selectedFollowUpReasons.notContains(where: { $0.mainReasonID == selectedReason.id }) else {
+                return
+            }
+            
+            throw SurveyFormError.noSelectedFollowUpReason(selectedReason)
         }
     }
 
@@ -167,10 +207,6 @@ final class CancellationSurveyViewModel: ObservableObject {
         }
         
         return true
-    }
-
-    private func trackCancelSubscriptionEvent() {
-        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyCancelSubscriptionButtonEvent())
     }
 
     private func handleSubscriptionCancellation() async {
@@ -192,5 +228,15 @@ final class CancellationSurveyViewModel: ObservableObject {
             logger?("[Cancellation Survey] Error - \(error.localizedDescription)")
             cancelAccountPlanRouter.showAlert(.failure(error))
         }
+    }
+    
+    // MARK: - Analytics events
+    
+    func trackViewOnAppear() {
+        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyScreenEvent())
+    }
+    
+    private func trackCancelSubscriptionEvent() {
+        tracker.trackAnalyticsEvent(with: SubscriptionCancellationSurveyCancelSubscriptionButtonEvent())
     }
 }

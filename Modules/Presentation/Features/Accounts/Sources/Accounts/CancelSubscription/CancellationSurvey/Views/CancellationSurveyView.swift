@@ -25,8 +25,10 @@ struct CancellationSurveyView: View {
                         headerView
                             .padding(.bottom, 15)
                         
-                        noReasonSelectedErrorView
-                            .padding(.bottom, 15)
+                        if viewModel.surveyFormError == .noSelectedReason {
+                            noReasonSelectedErrorView
+                                .padding(.bottom, 15)
+                        }
                         
                         cancellationReasonListView
                         
@@ -57,7 +59,6 @@ struct CancellationSurveyView: View {
         .background(TokenColors.Background.surface1.swiftUI)
         .onAppear {
             viewModel.trackViewOnAppear()
-            viewModel.setupRandomizedReasonList()
         }
     }
     
@@ -103,14 +104,12 @@ struct CancellationSurveyView: View {
     
     @ViewBuilder
     private var noReasonSelectedErrorView: some View {
-        if viewModel.showNoReasonSelectedError {
-            Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.selectAReason)
-                .font(.footnote)
-                .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                .padding(15)
-                .frame(maxWidth: .infinity)
-                .background(TokenColors.Notifications.notificationError.swiftUI)
-        }
+        Text(Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.selectAReason)
+            .font(.footnote)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            .padding(15)
+            .frame(maxWidth: .infinity)
+            .background(TokenColors.Notifications.notificationError.swiftUI)
     }
     
     @ViewBuilder
@@ -119,7 +118,7 @@ struct CancellationSurveyView: View {
             ForEach(viewModel.cancellationSurveyReasonList, id: \.id) { reason in
                 CheckBoxWithTextButton(
                     isChecked: viewModel.isReasonSelected(reason),
-                    id: reason.id,
+                    id: reason.id.rawValue,
                     text: reason.title,
                     font: Font.subheadline
                 ) { _ in
@@ -129,11 +128,29 @@ struct CancellationSurveyView: View {
         } else {
             ForEach(viewModel.cancellationSurveyReasonList, id: \.id) { reason in
                 RadioButton(
-                    id: reason.id,
+                    id: String(reason.id.rawValue),
                     text: reason.title,
                     isSelected: viewModel.isReasonSelected(reason)
                 ) {
                     viewModel.updateSelectedReason(reason)
+                }
+                
+                if viewModel.surveyFormError == .noSelectedFollowUpReason(reason) {
+                    noReasonSelectedErrorView
+                }
+                
+                if let followUpReasons = viewModel.followUpReasons(reason), viewModel.isReasonSelected(reason) {
+                    VStack {
+                        ForEach(followUpReasons, id: \.id) { followUpReason in
+                            RadioButton(
+                                id: followUpReason.id.rawValue,
+                                text: followUpReason.title,
+                                isSelected: viewModel.isFollowUpReasonSelected(followUpReason)
+                            ) {
+                                viewModel.updateSelectedFollowUpReason(followUpReason)
+                            }
+                        }
+                    }.padding(.leading, 30)
                 }
             }
         }

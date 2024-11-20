@@ -2,14 +2,14 @@ import MEGADesignToken
 import SwiftUI
 
 public struct RadioButton: View {
-    let id: Int
+    let id: String
     private let text: String
     private let textFont: Font
     private let isSelected: Bool
     private let action: (() -> Void)
     
     public init(
-        id: Int,
+        id: String,
         text: String,
         textFont: Font = .subheadline,
         isSelected: Bool,
@@ -67,7 +67,7 @@ private struct RadioButtonIcon: View {
 
 #Preview {
     Group {
-        RadioButton(id: 1, text: "Test Item 1", isSelected: true, action: {})
-        RadioButton(id: 2, text: "Test Item 2", isSelected: false, action: {})
+        RadioButton(id: "1", text: "Test Item 1", isSelected: true, action: {})
+        RadioButton(id: "2", text: "Test Item 2", isSelected: false, action: {})
     }
 }

@@ -4230,6 +4230,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="I needed this plan temporarily and no longer use it";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="I found my plan too expensive";
 /* Cancel subscription survey reason with id 3 */
