@@ -128,16 +128,9 @@ struct ParticipantsAddingViewFactory {
         presentUpgrade: @escaping () -> Void
     ) -> BannerView.Config? {
         switch warningMode {
-        case .nonDismissibleWithUpgradeLink:
-                return .init(
-                    copy: Strings.Localizable.Meetings.ContactPicker.Warning.OverLimit.host,
-                    underline: true,
-                    theme: .dark,
-                    tapAction: presentUpgrade
-                )
         case .dismissible:
             return .init(
-                copy: Strings.Localizable.Meetings.ContactPicker.Warning.OverLimit.nonHost,
+                copy: Strings.Localizable.Meetings.Warning.overParticipantLimit,
                 theme: .dark,
                 closeAction: {} // close action handled inside ContactsViewController
             )

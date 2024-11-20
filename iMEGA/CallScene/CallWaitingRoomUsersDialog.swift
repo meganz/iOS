@@ -134,7 +134,7 @@ final class CallWaitingRoomUsersDialog {
         descriptionWhoWantsToJoin = descriptionWhoWantsToJoin
             .replacingOccurrences(of: "[UserName]", with: named)
         if shouldBlockAddingUsersToCall {
-            return (title: descriptionWhoWantsToJoin, message: Strings.Localizable.Calls.FreePlanLimitWarning.WaitingRoom.Alert.message)
+            return (title: descriptionWhoWantsToJoin, message: Strings.Localizable.Meetings.Warning.overParticipantLimit)
         } else {
             return (title: nil, message: descriptionWhoWantsToJoin)
         }
@@ -169,7 +169,7 @@ final class CallWaitingRoomUsersDialog {
         if shouldBlockAddingUsersToCall {
             return (
                 title: descriptionWhoWantsToJoin,
-                message: Strings.Localizable.Calls.FreePlanLimitWarning.WaitingRoom.Alert.message
+                message: Strings.Localizable.Meetings.Warning.overParticipantLimit
             )
         } else {
             return (

@@ -31,12 +31,6 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
         XCTAssertNil(result)
     }
     
-    func testNoBanner_InNotInCallTab_organizer() {
-        let harness = Harness()
-        let result = harness.result(tab: .notInCall, warningMode: .nonDismissibleWithUpgradeLink)
-        XCTAssertNil(result)
-    }
-    
     func testNoBanner_InNotInCallTab_moderator() {
         let harness = Harness()
         let result = harness.result(tab: .notInCall, warningMode: .dismissible)
@@ -63,32 +57,12 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
         XCTAssertNil(result)
     }
     
-    func testNoBanner_ifDidNotReachParticipantLimit_InCallTab_organizer() {
-        let harness = Harness()
-        let result = harness.result(
-            tab: .inCall,
-            freeTierInCallParticipantLimitReached: false,
-            warningMode: .nonDismissibleWithUpgradeLink
-        )
-        XCTAssertNil(result)
-    }
-    
     func testNoBanner_ifDidNotReachParticipantLimit_WaitingRoomTab_moderator() {
         let harness = Harness()
         let result = harness.result(
             tab: .waitingRoom,
             freeTierInCallParticipantLimitReached: false,
             warningMode: .dismissible
-        )
-        XCTAssertNil(result)
-    }
-    
-    func testNoBanner_ifDidNotReachParticipantLimit_WaitingRoomTab_organizer() {
-        let harness = Harness()
-        let result = harness.result(
-            tab: .waitingRoom,
-            freeTierInCallParticipantLimitReached: false,
-            warningMode: .nonDismissibleWithUpgradeLink
         )
         XCTAssertNil(result)
     }
@@ -115,18 +89,6 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
         XCTAssertNotNil(result.dismissTapped)
     }
     
-    func testBannerTitleAndDismiss_InCall_isOrganizer_hasReachedLimit() throws {
-        let harness = Harness()
-        let maybeResult = harness.result(
-            tab: .inCall,
-            freeTierInCallParticipantLimitReached: true,
-            warningMode: .nonDismissibleWithUpgradeLink
-        )
-        let result = try XCTUnwrap(maybeResult)
-        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.InCall.Banner.Limit100Participants.organizerHost)
-        XCTAssertNil(result.dismissTapped)
-    }
-    
     func testBannerTitleAndDismiss_waitingRoom_isModerator_hasPassedLimit() throws {
         let harness = Harness()
         let maybeResult = harness.result(
@@ -137,19 +99,6 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
         let result = try XCTUnwrap(maybeResult)
         XCTAssertEqual(result.copy, Strings.Localizable.Meetings.FloatingPanel.Banner.Limit100Participants.nonOrganizerHost)
         XCTAssertNotNil(result.dismissTapped)
-    }
-    
-    func testBannerTitleAndDismiss_waitingRoom_isOrganiser_didNotDismiss() throws {
-        let harness = Harness()
-        let maybeResult = harness.result(
-            tab: .waitingRoom,
-            freeTierInCallParticipantLimitReached: true,
-            warningMode: .nonDismissibleWithUpgradeLink,
-            hasDismissedBanner: false
-        )
-        let result = try XCTUnwrap(maybeResult)
-        XCTAssertEqual(result.copy, Strings.Localizable.Meetings.WaitingRoom.Banner.Limit100Participants.organizerHost)
-        XCTAssertNil(result.dismissTapped)
     }
     
     func testBannerNil_waitingRoom_isRegularParticipant_didNotDismiss() throws {
