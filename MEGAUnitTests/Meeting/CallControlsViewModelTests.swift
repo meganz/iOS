@@ -1,5 +1,4 @@
 import CombineSchedulers
-import ConcurrencyExtras
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -124,7 +123,7 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertFalse(harness.sut.speakerEnabled)
         XCTAssertFalse(harness.sut.routeViewVisible)
     }
-              
+    
     @MainActor
     func testMoreButtonShow_OneToOneCall_NotShown() {
         let harness = Harness(chatType: .oneToOne)
@@ -216,51 +215,52 @@ final class CallControlsViewModelTests: XCTestCase {
     
     @MainActor
     func testRaiseHandAction_TriggersCallUseCase() async throws {
-        await withMainSerialExecutor {
-            let harness = Harness.withMoreButtonEnabled().raisedHand(false)
-            let raiseHandAction = await harness.moreAction(button: .raiseHand)
-            raiseHandAction.actionHandler()
-            await Task.yield()
-            XCTAssertEqual(harness.callUseCase.raiseHand_CalledTimes, 1)
-        }
+        let harness = Harness.withMoreButtonEnabled().raisedHand(false)
+        let raiseHandAction = await harness.moreAction(button: .raiseHand)
+        raiseHandAction.actionHandler()
+        await Task.megaYield()
+        XCTAssertEqual(harness.callUseCase.raiseHand_CalledTimes, 1)
     }
     
+    @MainActor
     func testLowerHandAction_TriggersCallUseCase() async throws {
-        await withMainSerialExecutor {
-            let harness = Harness.withMoreButtonEnabled().raisedHand(true)
-            let raiseHandAction = await harness.moreAction(button: .raiseHand)
-            raiseHandAction.actionHandler()
-            await Task.yield()
-            XCTAssertEqual(harness.callUseCase.lowerHand_CalledTimes, 1)
-        }
+        let harness = Harness.withMoreButtonEnabled().raisedHand(true)
+        let raiseHandAction = await harness.moreAction(button: .raiseHand)
+        raiseHandAction.actionHandler()
+        await Task.megaYield()
+        XCTAssertEqual(harness.callUseCase.lowerHand_CalledTimes, 1)
     }
     
     @MainActor
     func testRaiseHandAction_TriggersRaiseHandEvent() async throws {
-        await withMainSerialExecutor {
-            let harness = Harness.withMoreButtonEnabled().raisedHand(false)
-            let raiseHandAction = await harness.moreAction(button: .raiseHand)
-            raiseHandAction.actionHandler()
-            await Task.yield()
-            XCTAssertTrackedAnalyticsEventsEqual(
-                harness.mockTracker.trackedEventIdentifiers,
-                [CallUIMoreButtonPressedEvent(), CallRaiseHandEvent()]
-            )
+        let harness = Harness.withMoreButtonEnabled().raisedHand(false)
+        let expectation = XCTestExpectation(description: "Raise hand action should trigger track events")
+        harness.callUseCase.lowerRaiseHandCalled = {
+            expectation.fulfill()
         }
+        let raiseHandAction = await harness.moreAction(button: .raiseHand)
+        raiseHandAction.actionHandler()
+        await fulfillment(of: [expectation], timeout: 1.0)
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.mockTracker.trackedEventIdentifiers,
+            [CallUIMoreButtonPressedEvent(), CallRaiseHandEvent()]
+        )
     }
     
     @MainActor
     func testLowerHandAction_TriggersLowerHandEvent() async throws {
-        await withMainSerialExecutor {
-            let harness = Harness.withMoreButtonEnabled().raisedHand(true)
-            let raiseHandAction = await harness.moreAction(button: .raiseHand)
-            raiseHandAction.actionHandler()
-            await Task.yield()
-            XCTAssertTrackedAnalyticsEventsEqual(
-                harness.mockTracker.trackedEventIdentifiers,
-                [CallUIMoreButtonPressedEvent(), CallLowerHandEvent()]
-            )
+        let harness = Harness.withMoreButtonEnabled().raisedHand(true)
+        let expectation = XCTestExpectation(description: "Lower hand action should trigger track events")
+        harness.callUseCase.lowerRaiseHandCalled = {
+            expectation.fulfill()
         }
+        let raiseHandAction = await harness.moreAction(button: .raiseHand)
+        raiseHandAction.actionHandler()
+        await fulfillment(of: [expectation], timeout: 1.0)
+        XCTAssertTrackedAnalyticsEventsEqual(
+            harness.mockTracker.trackedEventIdentifiers,
+            [CallUIMoreButtonPressedEvent(), CallLowerHandEvent()]
+        )
     }
     
     @MainActor
@@ -314,28 +314,34 @@ final class CallControlsViewModelTests: XCTestCase {
         XCTAssertTrue(harness.raiseHandBadgeStore.incrementRaiseHandBadgePresented_CallCount == 1)
     }
     
+    @MainActor
     func testMoreButtonTapped_raiseHandBadgeReachedMaxTimesPresented_badgeMustNotBeShownAndSaveRaiseHandPresentedNotCalled() async {
-        await withMainSerialExecutor {
-            let harness = Harness.withMoreButtonEnabled().raiseHandBadge(presented: false)
-            await harness.sut.checkRaiseHandBadge()
-            let raiseHandAction = await harness.moreAction(button: .raiseHand)
-            raiseHandAction.actionHandler()
-            await Task.yield()
-            XCTAssertFalse(harness.sut.showRaiseHandBadge)
-            XCTAssertTrue(harness.raiseHandBadgeStore.saveRaiseHandBadgeAsPresented_CallCount == 0)
-        }
+        let harness = Harness.withMoreButtonEnabled().raiseHandBadge(presented: false)
+        await harness.sut.checkRaiseHandBadge()
+        let raiseHandAction = await harness.moreAction(button: .raiseHand)
+        raiseHandAction.actionHandler()
+        await Task.yield()
+        XCTAssertFalse(harness.sut.showRaiseHandBadge)
+        XCTAssertTrue(harness.raiseHandBadgeStore.saveRaiseHandBadgeAsPresented_CallCount == 0)
     }
     
+    @MainActor
     func testRaiseHandSignal_raiseHandBadgeNotReachedMaxTimesPresented_badgeMustBeShownAndSaveRaiseHandPresentedCalled() async {
-        await withMainSerialExecutor {
-            let harness = Harness.withMoreButtonEnabled().raiseHandBadge(presented: true)
-            await harness.sut.checkRaiseHandBadge()
-            let raiseHandAction = await harness.moreAction(button: .raiseHand)
-            raiseHandAction.actionHandler()
-            await Task.yield()
-            XCTAssertTrue(harness.sut.showRaiseHandBadge)
-            XCTAssertTrue(harness.raiseHandBadgeStore.saveRaiseHandBadgeAsPresented_CallCount == 1)
+        let harness = Harness.withMoreButtonEnabled().raiseHandBadge(presented: true)
+        let expectation = XCTestExpectation(description: "SaveRaiseHandBadgeAsPresented should be called once")
+
+        harness.raiseHandBadgeStore.onSaveRaiseHandBadgeAsPresented = {
+            expectation.fulfill()
         }
+        
+        await harness.sut.checkRaiseHandBadge()
+        let raiseHandAction = await harness.moreAction(button: .raiseHand)
+        raiseHandAction.actionHandler()
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertTrue(harness.sut.showRaiseHandBadge)
+        XCTAssertTrue(harness.raiseHandBadgeStore.saveRaiseHandBadgeAsPresented_CallCount == 1)
     }
     
     @MainActor
@@ -386,7 +392,7 @@ final class CallControlsViewModelTests: XCTestCase {
                 callUseCase: callUseCase,
                 localVideoUseCase: localVideoUseCase,
                 containerViewModel: containerViewModel,
-                audioSessionUseCase: audioSessionUseCase, 
+                audioSessionUseCase: audioSessionUseCase,
                 permissionHandler: MockDevicePermissionHandler(
                     photoAuthorization: .authorized,
                     audioAuthorized: permissionsAuthorised,

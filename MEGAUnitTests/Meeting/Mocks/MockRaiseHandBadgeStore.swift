@@ -5,7 +5,8 @@ class MockRaiseHandBadgeStore: RaiseHandBadgeStoring, @unchecked Sendable {
     var incrementRaiseHandBadgePresented_CallCount = 0
     var saveRaiseHandBadgeAsPresented_CallCount = 0
     var shouldPresentRaiseHandBadge: Bool = false
-    
+    var onSaveRaiseHandBadgeAsPresented: (() -> Void)?
+
     func shouldPresentRaiseHandBadge() async -> Bool {
         shouldPresentRaiseHandBadge_CallCount += 1
         return shouldPresentRaiseHandBadge
@@ -17,5 +18,6 @@ class MockRaiseHandBadgeStore: RaiseHandBadgeStoring, @unchecked Sendable {
     
     func saveRaiseHandBadgeAsPresented() async {
         saveRaiseHandBadgeAsPresented_CallCount += 1
+        onSaveRaiseHandBadgeAsPresented?()
     }
 }

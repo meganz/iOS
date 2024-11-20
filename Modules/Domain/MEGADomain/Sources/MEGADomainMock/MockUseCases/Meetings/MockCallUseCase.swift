@@ -37,6 +37,8 @@ public final class MockCallUseCase: CallUseCaseProtocol, @unchecked Sendable {
     var muteParticipantCompletion: Result<Void, GenericErrorEntity>
     public var enableDisableAudioError: GenericErrorEntity?
     
+    public var lowerRaiseHandCalled: (() -> Void)?
+
     public init(
         call: CallEntity? = CallEntity(),
         callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
@@ -156,10 +158,12 @@ public final class MockCallUseCase: CallUseCaseProtocol, @unchecked Sendable {
     
     public func raiseHand(forCall call: MEGADomain.CallEntity) async throws {
         raiseHand_CalledTimes += 1
+        lowerRaiseHandCalled?()
     }
     
     public func lowerHand(forCall call: MEGADomain.CallEntity) async throws {
         lowerHand_CalledTimes += 1
+        lowerRaiseHandCalled?()
     }
     
     public func isParticipantRaisedHand(_ participantId: MEGADomain.HandleEntity, forCallInChatId chatId: MEGADomain.ChatIdEntity) -> Bool {
