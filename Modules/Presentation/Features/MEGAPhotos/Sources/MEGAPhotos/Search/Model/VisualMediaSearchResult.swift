@@ -1,7 +1,7 @@
 import ContentLibraries
 import MEGAL10n
 
-struct VisualMediaSearchResult: Equatable {
+struct VisualMediaSearchResults: Equatable {
     enum Section {
         case albums
         case photos
@@ -10,14 +10,19 @@ struct VisualMediaSearchResult: Equatable {
         case album(AlbumCellViewModel)
         case photo(PhotoSearchResultItemViewModel)
     }
-    let content: [Section: [Item]]
+    struct SectionContent: Equatable {
+        let section: Section
+        let items: [Item]
+    }
     
-    init(content: [Section: [Item]]) {
-        self.content = content
+    let sectionContents: [SectionContent]
+    
+    init(sectionContents: [SectionContent]) {
+        self.sectionContents = sectionContents
     }
 }
 
-extension VisualMediaSearchResult.Item: Hashable {
+extension VisualMediaSearchResults.Item: Hashable {
     func hash(into hasher: inout Hasher) {
         switch self {
         case .album(let item):
@@ -28,7 +33,7 @@ extension VisualMediaSearchResult.Item: Hashable {
     }
 }
 
-extension VisualMediaSearchResult.Section {
+extension VisualMediaSearchResults.Section {
     var title: String {
         switch self {
         case .albums:

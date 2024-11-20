@@ -11,11 +11,11 @@ enum VisualMediaSearchResultSupplementaryElementKind: String {
 
 @MainActor
 final class VisualMediaSearchResultFoundCollectionViewCoordinator: NSObject {
-    typealias DiffableDataSource = UICollectionViewDiffableDataSource<VisualMediaSearchResult.Section, VisualMediaSearchResult.Item>
+    typealias DiffableDataSource = UICollectionViewDiffableDataSource<VisualMediaSearchResults.Section, VisualMediaSearchResults.Item>
     private typealias HeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>
     typealias AlbumCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, AlbumCellViewModel>
     typealias PhotoCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, PhotoSearchResultItemViewModel>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<VisualMediaSearchResult.Section, VisualMediaSearchResult.Item>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<VisualMediaSearchResults.Section, VisualMediaSearchResults.Item>
     
     private let representer: VisualMediaSearchResultFoundView
     private(set) var dataSource: DiffableDataSource?
@@ -69,17 +69,13 @@ final class VisualMediaSearchResultFoundCollectionViewCoordinator: NSObject {
         collectionView.delegate = self
     }
     
-    func reloadData(albums: [AlbumCellViewModel], photos: [PhotoSearchResultItemViewModel]) {
+    func reloadData(results: VisualMediaSearchResults) {
         reloadSnapshotTask = Task {
             var snapshot = Snapshot()
             
-            if albums.isNotEmpty {
-                snapshot.appendSections([.albums])
-                snapshot.appendItems(albums.map { VisualMediaSearchResult.Item.album($0)}, toSection: .albums)
-            }
-            if photos.isNotEmpty {
-                snapshot.appendSections([.photos])
-                snapshot.appendItems(photos.map { VisualMediaSearchResult.Item.photo($0)}, toSection: .photos)
+            for sectionContent in results.sectionContents where sectionContent.items.isNotEmpty {
+                snapshot.appendSections([sectionContent.section])
+                snapshot.appendItems(sectionContent.items, toSection: sectionContent.section)
             }
             
             guard !Task.isCancelled else { return }
@@ -108,10 +104,10 @@ extension VisualMediaSearchResultFoundCollectionViewCoordinator: UICollectionVie
               let selectedItem = dataSource.itemIdentifier(for: indexPath) else { return }
         
         let sectionIdentifier = dataSource.sectionIdentifier(for: indexPath.section)
-        let otherQueryItems: [VisualMediaSearchResult.Item]? = if let sectionIdentifier {
+        let otherQueryItems: [VisualMediaSearchResults.Item] = if let sectionIdentifier {
             dataSource.snapshot().itemIdentifiers(inSection: sectionIdentifier)
         } else {
-            nil
+            []
         }
         representer.selectedItem = .init(
             selectedItem: selectedItem,

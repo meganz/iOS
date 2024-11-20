@@ -5,8 +5,7 @@ import MEGAPresentation
 import SwiftUI
 
 struct VisualMediaSearchResultFoundView: UIViewRepresentable {
-    let albums: [AlbumCellViewModel]
-    let photos: [PhotoSearchResultItemViewModel]
+    let results: VisualMediaSearchResults
     @Binding var selectedItem: VisualMediaSearchResultSelection?
     
     func makeUIView(context: Context) -> UICollectionView {
@@ -29,7 +28,7 @@ struct VisualMediaSearchResultFoundView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UICollectionView, context: Context) {
-        context.coordinator.reloadData(albums: albums, photos: photos)
+        context.coordinator.reloadData(results: results)
     }
     
     func makeCoordinator() -> VisualMediaSearchResultFoundCollectionViewCoordinator {
