@@ -72,18 +72,7 @@ extension SearchConfig.ColorAssets {
         verticalThumbnailFooterBackground: .black,
         verticalThumbnailPreviewBackground: .gray,
         verticalThumbnailTopIconsBackground: .white.opacity(0.4),
-        verticalThumbnailTopPropertyColor: .gray,
         listRowSeparator: .gray,
-        F7F7F7: Color("F7F7F7"),
-        _161616: Color("161616"),
-        _545458: Color("545458"),
-        CE0A11: Color("CE0A11"),
-        F30C14: Color("F30C14"),
-        F95C61: Color("F95C61"),
-        F7363D: Color("F7363D"),
-        _1C1C1E: Color("1C1C1E"),
-        _00A886: Color("00A886"),
-        _3C3C43: Color("3C3C43"), 
         checkmarkBackgroundTintColor: Color("00A886")
     )
 }

@@ -195,29 +195,13 @@ public struct SearchConfig {
         
         // Color for the background of the preview icon
         public let verticalThumbnailPreviewBackground: Color
-        
-        // Color for the properties in vertical thumbnail mode, specifically intended to be used only for .verticalTop placement mode
-        // To be removed after Semantic color is fully released . Ticket is [SAO-1482]
+
+        // Color for the background of the property icons in thumbnail mode
         public let verticalThumbnailTopIconsBackground: Color
-        
-        /// This property is used to dealt with backward-compatibility for FileNodeCollectionViewCell's icon colors (this layout uses a different color for where  other layouts  use a common color)
-        /// To be removed and replaced by resultPropertyColor after Semantic Color system is fully released
-        /// // To be removed after Semantic color is fully released . Ticket is [SAO-1482]
-        public let verticalThumbnailTopPropertyColor: Color
         
         // Important note: The correct source of truth for this color in Figma is the "Common UI" page, not "Cloud Drive" page
         public let listRowSeparator: Color
         
-        public let F7F7F7: Color
-        public let _161616: Color
-        public let _545458: Color
-        public let CE0A11: Color
-        public let F30C14: Color
-        public let F95C61: Color
-        public let F7363D: Color
-        public let _1C1C1E: Color
-        public let _00A886: Color
-        public let _3C3C43: Color
         public let checkmarkBackgroundTintColor: Color
 
         public init(
@@ -231,18 +215,7 @@ public struct SearchConfig {
             verticalThumbnailFooterBackground: Color,
             verticalThumbnailPreviewBackground: Color,
             verticalThumbnailTopIconsBackground: Color,
-            verticalThumbnailTopPropertyColor: Color,
             listRowSeparator: Color,
-            F7F7F7: Color,
-            _161616: Color,
-            _545458: Color,
-            CE0A11: Color,
-            F30C14: Color,
-            F95C61: Color,
-            F7363D: Color,
-            _1C1C1E: Color,
-            _00A886: Color,
-            _3C3C43: Color,
             checkmarkBackgroundTintColor: Color
         ) {
             self.unselectedBorderColor = unselectedBorderColor
@@ -256,20 +229,8 @@ public struct SearchConfig {
             self.verticalThumbnailFooterBackground = verticalThumbnailFooterBackground
             self.verticalThumbnailPreviewBackground = verticalThumbnailPreviewBackground
             self.verticalThumbnailTopIconsBackground = verticalThumbnailTopIconsBackground
-            self.verticalThumbnailTopPropertyColor = verticalThumbnailTopPropertyColor
             
             self.listRowSeparator = listRowSeparator
-            
-            self.F7F7F7 = F7F7F7
-            self._161616 = _161616
-            self._545458 = _545458
-            self.CE0A11 = CE0A11
-            self.F30C14 = F30C14
-            self.F95C61 = F95C61
-            self.F7363D = F7363D
-            self._1C1C1E = _1C1C1E
-            self._00A886 = _00A886
-            self._3C3C43 = _3C3C43
             self.checkmarkBackgroundTintColor = checkmarkBackgroundTintColor
         }
     }

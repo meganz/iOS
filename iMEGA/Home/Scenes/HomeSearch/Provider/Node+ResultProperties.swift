@@ -78,7 +78,7 @@ extension ResultProperty {
             case .list:
                 return .secondary(.leading)
             case .thumbnail(.vertical):
-                return .verticalTop
+                return .secondary(.trailingEdge)
             case .thumbnail(.horizontal):
                 return .secondary(.leading)
             }
@@ -95,7 +95,7 @@ extension ResultProperty {
             case .list:
                 return .prominent
             case .thumbnail(.vertical):
-                return .verticalTop
+                return .secondary(.trailingEdge)
             case .thumbnail(.horizontal):
                 return .secondary(.leading)
             }
@@ -113,7 +113,7 @@ extension ResultProperty {
                 case .list:
                     return .prominent
                 case .thumbnail(.vertical):
-                    return .verticalTop
+                    return .secondary(.trailingEdge)
                 case .thumbnail(.horizontal):
                     return .secondary(.trailing)
                 }

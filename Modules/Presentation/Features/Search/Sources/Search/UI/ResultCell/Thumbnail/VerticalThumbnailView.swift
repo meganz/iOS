@@ -4,7 +4,7 @@ import SwiftUI
 
 // ┌────────────────────────────────────────────────────┐
 // │┌─────────────────────────────────────────────────┐ │
-// ││                                    .verticalTop │ │
+// ││                       .secondary(.trailingEdge) │ │
 // │╠─────────────────────────────────────────────────╣ │
 // │║                                                 ║ │
 // │║                                                 ║ │
@@ -75,7 +75,7 @@ struct VerticalThumbnailView: View {
         .clipped()
     }
     
-    // hosts .verticalTop properties
+    // hosts .secondary(.trailingEdge) properties
     private var backgroundHeader: some View {
         HStack {
             Spacer()
@@ -85,7 +85,7 @@ struct VerticalThumbnailView: View {
                     .properties
                     .propertyViewsFor(
                         layout: layout,
-                        placement: .verticalTop,
+                        placement: .secondary(.trailingEdge),
                         colorAssets: viewModel.colorAssets
                     )
             }
@@ -104,7 +104,7 @@ struct VerticalThumbnailView: View {
             .properties
             .propertiesFor(
                 mode: layout,
-                placement: .verticalTop
+                placement: .secondary(.trailingEdge)
             ).isNotEmpty
     }
     
