@@ -122,6 +122,8 @@
     [self enableLogsIfNeeded];
     
     [self initialiseModules];
+    
+    [self enableRequestStatusMonitor];
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     

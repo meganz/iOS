@@ -36,10 +36,8 @@
     self.circularShapeLayer.strokeStart = 0.0f;
     self.circularShapeLayer.strokeEnd = 0.0f;
     [self.logoImageView.layer addSublayer:self.circularShapeLayer];
-
-    [self setupActivityIndicatorColor];
-
-    [self.activityIndicatorView startAnimating];
+    
+    [self addRequestStatusProgressView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -122,10 +120,6 @@
                 return;
             }
             
-            //Wait to stop the activity indicator until the beginning of the circular shape has been drawn.
-            if (self.activityIndicatorView.isAnimating && progress > 0.1) {
-                [self.activityIndicatorView stopAnimating];
-            }
             self.circularShapeLayer.strokeEnd = progress;
         }
     }

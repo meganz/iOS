@@ -24,6 +24,11 @@ extension AppDelegate {
         }
     }
     
+    @objc func enableRequestStatusMonitor() {
+        let useCase = RequestStatusMonitorUseCase(repo: RequestStatusMonitorRepository.newRepo)
+        useCase.enableRequestStatusMonitor(true)
+    }
+    
     private func postFavouriteUpdatesNotification(for nodes: [MEGANode]) {
         let updatedNodes = nodes.modifiedFavourites().toNodeEntities()
         if !updatedNodes.isEmpty {
