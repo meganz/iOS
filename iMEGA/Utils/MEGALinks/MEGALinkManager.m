@@ -308,7 +308,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         case URLTypeNewSignUpLink: {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 [MEGALinkManager resetLinkAndURLType];
-                
+
                 UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"error", @"") message:LocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
                 [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
                 
@@ -440,7 +440,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [mainTBC showAddContact];
             }
             break;
-            
+
         case URLTypePresentNode:
             self.nodeToPresentBase64Handle = [url.absoluteString componentsSeparatedByString:@"/"].lastObject;
             [self presentNode];
@@ -606,7 +606,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 photoBrowserVC.publicLink = fileLinkURLString;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 photoBrowserVC.needsReload = YES;
-                
+
                 [self presentViewControllerWithAds:photoBrowserVC adsSlotViewController:photoBrowserVC presentationStyle:UIModalPresentationAutomatic];
             } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && node.mnz_isPlayable) {
                 [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO isFromSharedItem:NO presenter:UIApplication.mnz_visibleViewController];
@@ -663,7 +663,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
     NSString *contactLinkHandle = [path substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
     uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
-    
+
     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
         [MEGALinkManager presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
@@ -674,7 +674,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     } onError:^(MEGAError *error) {
         [SVProgressHUD showErrorWithStatus:LocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
     }];
-    
+
     [MEGASdk.shared contactLinkQueryWithHandle:handle delegate:delegate];
 }
 
@@ -767,9 +767,22 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             }
         } else { // Chat link
             MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:request.chatHandle];
-            [MEGALinkManager autoRejoinAndOpenChatVCWithChatRoom:chatRoom
-                                          request: request
-                                      chatLinkUrl:chatLinkUrl];
+            if (!chatRoom.isPreview && !chatRoom.isActive) {
+                ChatRequestDelegate *autorejoinPublicChatDelegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                    if (error.type) {
+                        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
+                        return;
+                    }
+                    [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+                    [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+                }];
+                [MEGAChatSdk.shared autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+                [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+            } else {
+                [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+            }
+            
             [SVProgressHUD dismiss];
         }
     }];
@@ -822,30 +835,68 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         if ([self isHostInWaitingRoomWithRequest:request chatSdk:MEGAChatSdk.shared]) {
             [self joinCallWithRequest:request];
         } else {
-            [self createMeetingAndShowWithChatId:request.chatHandle userHandle:request.userHandle publicChatLink:chatLinkUrl];
+            [self createMeetingAndShow:request.chatHandle userHandle:request.userHandle publicChatLink:chatLinkUrl];
         }
-    }
-    else {
-        // [MEET-2619] we jump straight to chat for ended or not began meetings
+    } else {
+        // Meeting ended or not yet began
         [SVProgressHUD dismiss];
         MEGAChatRoom *chatRoom = [[MEGAChatSdk shared] chatRoomForChatId:request.chatHandle];
-        if (chatRoom == nil) {
-            MEGALogError(@"Cannot join chat, missing chat room %llu", request.chatHandle);
-            return;
+        if (!chatRoom.isPreview && !chatRoom.isActive) {
+            ChatRequestDelegate *autorejoinPublicChatDelegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                if (error.type) {
+                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
+                    return;
+                }
+                [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+                [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+            }];
+            [MEGAChatSdk.shared autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+            [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
+        } else {
+            [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
         }
-        [MEGALinkManager autoRejoinAndOpenChatVCWithChatRoom:chatRoom
-                                      request:request
-                                  chatLinkUrl:chatLinkUrl];
     }
 }
 
-+ (BOOL)isLoggedIn{
++ (void)createMeetingAndShow:(uint64_t)chatId userHandle:(uint64_t)userHandle publicChatLink:(NSURL *)publicChatLink {
+    
+    UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatId];
+    if (chatRoom == nil) {
+        return;
+    } else if (MEGAChatSdk.shared.mnz_existsActiveCall) {
+        [MeetingAlreadyExistsAlert showWithPresenter:rootViewController];
+        return;
+    }
     
     // If the application was deleted when the user is logged and then reinstalled.
     // The sdk says the user is logged in but the session is cleared.
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     BOOL isLoggedIn = MEGASdk.shared.isLoggedIn && sessionV3 != nil && !sessionV3.mnz_isEmpty;
-    return isLoggedIn;
+    MeetingConfigurationType type = isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin;
+    
+    if (UIApplication.mainTabBarRootViewController) {
+        MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
+        mainTBC.selectedIndex = TabTypeChat;
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:mainTBC
+                                                                                                          type:type
+                                                                                                          link:publicChatLink.absoluteString
+                                                                                                    userhandle:userHandle];
+        if (mainTBC.presentedViewController) {
+            [mainTBC dismissViewControllerAnimated:NO completion:^{
+                [router start];
+            }];
+        } else {
+            [router start];
+        }
+    } else {
+        MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:UIApplication.mnz_visibleViewController
+                                                                                                          type:type
+                                                                                                          link:publicChatLink.absoluteString
+                                                                                                    userhandle:userHandle];
+        [router start];
+  }
 }
 
 + (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink {
@@ -877,14 +928,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     } else {
         // there's no UINavigationController present when user is logged out
         // we do a present in that case
-        UIViewController *presenter = UIApplication.mnz_visibleViewController;
-        BOOL shouldPush = [presenter isKindOfClass:[UINavigationController class]];
-        ChatContentRouter *router = [[ChatContentRouter alloc] initWithChatRoom:chatRoom
-                                                                      presenter:presenter
-                                                                     publicLink:publicChatLink.absoluteString
-                                                 showShareLinkViewAfterOpenChat:NO
-                                                        chatContentRoutingStyle:shouldPush ? ChatContentRoutingStylePush : ChatContentRoutingStylePresent];
-        [router start];
+        [[ChatContentRouter.alloc initWithChatRoom:chatRoom
+                                         presenter:UIApplication.mnz_visibleViewController
+                                        publicLink:publicChatLink.absoluteString
+                    showShareLinkViewAfterOpenChat:NO
+                           chatContentRoutingStyle:ChatContentRoutingStylePresent
+         ] start];
     }
 }
 
@@ -899,7 +948,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
     
     [chatNC popToRootViewControllerAnimated:NO];
-    [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:chatNC publicLink:publicChatLink.absoluteString showShareLinkViewAfterOpenChat:NO chatContentRoutingStyle:ChatContentRoutingStylePush] start];
+    [[ChatContentRouter.alloc initWithChatRoom:chatRoom
+                                     presenter:chatNC
+                                    publicLink:publicChatLink.absoluteString
+                showShareLinkViewAfterOpenChat:NO
+                       chatContentRoutingStyle:ChatContentRoutingStylePush
+     ] start];
 }
 
 + (void)handleChatPeerOptionsLink {

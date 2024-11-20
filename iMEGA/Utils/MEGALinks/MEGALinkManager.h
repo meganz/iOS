@@ -50,8 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink;
 
-+ (BOOL)isLoggedIn;
-
 @end
 
 NS_ASSUME_NONNULL_END
