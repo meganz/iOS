@@ -114,19 +114,6 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         delegate?.didFinishSearchSessionOnSearchController(self)
     }
     
-    private func setupViewForLegacyColor(with trait: UITraitCollection) {
-        let backgroundStyler = trait.theme.customViewStyleFactory.styler(of: .searchController)
-        backgroundStyler(self)
-        backgroundStyler(contentView)
-
-        let searchFieldStyler = trait.theme.textFieldStyleFactory.styler(of: .searchBar)
-        searchFieldStyler(searchField)
-
-        let cancelButtonStyler = trait.theme.buttonStyle.styler(of: .searchControllerCancel)
-        cancelButtonStyler(cancelButton)
-        cancelButtonStyler(contextButton)
-    }
-    
     private func setupViewForDesignToken() {
         backgroundColor = TokenColors.Background.surface1
         contentView.backgroundColor = TokenColors.Background.surface1

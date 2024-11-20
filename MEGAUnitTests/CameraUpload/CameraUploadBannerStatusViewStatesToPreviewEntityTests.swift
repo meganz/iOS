@@ -11,8 +11,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntitty_ForAllUploadCompletedStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadCompleted,
-            legacyTextColor: (.primary, .primary),
-            legacyBackgroundColor: (UIColor.whiteFFFFFF.swiftUI, UIColor.gray1D1D1D.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
@@ -23,8 +21,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntity_ForAllInProgressStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadInProgress(numberOfFilesPending: 1),
-            legacyTextColor: (.primary, .primary),
-            legacyBackgroundColor: (UIColor.whiteFFFFFF.swiftUI, UIColor.gray1D1D1D.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
@@ -33,8 +29,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
 
         performPreviewComparisonTest(
             status: .uploadInProgress(numberOfFilesPending: 12),
-            legacyTextColor: (.primary, .primary),
-            legacyBackgroundColor: (UIColor.whiteFFFFFF.swiftUI, UIColor.gray1D1D1D.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
@@ -45,8 +39,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntity_ForAllInUploadPausedStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 1)),
-            legacyTextColor: (.primary, .primary),
-            legacyBackgroundColor: (UIColor.whiteFFFFFF.swiftUI, UIColor.gray1D1D1D.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
@@ -55,8 +47,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
 
         performPreviewComparisonTest(
             status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 13)),
-            legacyTextColor: (.primary, .primary),
-            legacyBackgroundColor: (UIColor.whiteFFFFFF.swiftUI, UIColor.gray1D1D1D.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
@@ -67,8 +57,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntity_ForAllInUploadPartiallyCompletedStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .photoLibraryLimitedAccess),
-            legacyTextColor: (UIColor.yellow9D8319.swiftUI, UIColor.yellowFFD60A.swiftUI),
-            legacyBackgroundColor: (UIColor.yellowFED42926.swiftUI, UIColor.yellowFED42926.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Notifications.notificationWarning.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
@@ -82,8 +70,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
 
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 1)),
-            legacyTextColor: (.primary, .primary),
-            legacyBackgroundColor: (UIColor.whiteFFFFFF.swiftUI, UIColor.gray1D1D1D.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
@@ -92,8 +78,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
 
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 42)),
-            legacyTextColor: (.primary, .primary),
-            legacyBackgroundColor: (UIColor.whiteFFFFFF.swiftUI, UIColor.gray1D1D1D.swiftUI),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
@@ -103,8 +87,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
 
     private func performPreviewComparisonTest(
         status: CameraUploadBannerStatusViewStates,
-        legacyTextColor: ColorSchemeColors,
-        legacyBackgroundColor: ColorSchemeColors,
         designTokenTextColor: Color,
         designTokenBackgroundColor: Color,
         expectedTitle: String,
@@ -112,7 +94,6 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        // Semantic Colors
         performPreviewComparisonTest(
             status: status,
             textColor: (designTokenTextColor, designTokenTextColor),
