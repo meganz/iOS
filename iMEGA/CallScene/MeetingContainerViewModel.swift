@@ -1,3 +1,4 @@
+import Chat
 import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -335,20 +336,19 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func presentShareLinkOptions(from sender: AnyObject) {
-        let shareLinkOptions = ShareLinkOptions(
-            sender: sender) { [weak self] in
-                self?.dispatch(.sendLinkToChatTapped)
-            } copyLinkAction: { [weak self] in
-                self?.dispatch(.copyLinkTapped)
-            } shareLinkAction: { [weak self] presenter in
-                self?.dispatch(
-                    .presentShareLinkActivity(
-                        presenter: presenter,
-                        sender: sender,
-                        completion: nil
-                    )
+        let shareLinkOptions = ShareLinkOptions { [weak self] in
+            self?.dispatch(.sendLinkToChatTapped)
+        } copyLinkAction: { [weak self] in
+            self?.dispatch(.copyLinkTapped)
+        } shareLinkAction: { [weak self] presenter in
+            self?.dispatch(
+                .presentShareLinkActivity(
+                    presenter: presenter,
+                    sender: sender,
+                    completion: nil
                 )
-            }
+            )
+        }
         router.showShareLinkOptionsAlert(shareLinkOptions)
     }
     
