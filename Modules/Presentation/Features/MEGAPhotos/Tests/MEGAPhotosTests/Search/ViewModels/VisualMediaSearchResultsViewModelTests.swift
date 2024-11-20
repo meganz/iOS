@@ -123,15 +123,20 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             monitorPhotosUseCase: monitorPhotosUseCase)
         
         let exp = expectation(description: "search results")
-        
         let subscription = viewStateUpdates(on: sut) {
             XCTAssertEqual($0, .searchResults(
-                albums: [AlbumCellViewModel(album: systemAlbum),
-                         AlbumCellViewModel(album: userAlbum)],
-                photos: [PhotoSearchResultItemViewModel(photo: photo3),
-                         PhotoSearchResultItemViewModel(photo: photo2),
-                         PhotoSearchResultItemViewModel(photo: photo1)])
-            )
+                .init(sectionContents: [
+                    .init(section: .albums, items: [
+                        .album(AlbumCellViewModel(album: systemAlbum)),
+                        .album(AlbumCellViewModel(album: userAlbum))
+                    ]),
+                    .init(section: .photos, items: [
+                        .photo(PhotoSearchResultItemViewModel(photo: photo3)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo2)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo1))
+                    ])
+                ])
+            ))
             exp.fulfill()
         }
         
@@ -187,7 +192,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         
         sut.selectedVisualMediaResult = .init(
             selectedItem: .album(.init(album: expectedAlbum)),
-            otherQueryItems: nil)
+            otherQueryItems: [])
         
         wait(for: [exp], timeout: 0.5)
         subscription.cancel()

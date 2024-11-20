@@ -2,7 +2,7 @@ import UIKit
 
 @MainActor
 struct VisualMediaSearchResultFoundCollectionSectionLayoutFactory {
-    func make(type: VisualMediaSearchResult.Section) -> NSCollectionLayoutSection {
+    func make(type: VisualMediaSearchResults.Section) -> NSCollectionLayoutSection {
         switch type {
         case .albums: makeAlbumsSection()
         case .photos: makePhotosSection()

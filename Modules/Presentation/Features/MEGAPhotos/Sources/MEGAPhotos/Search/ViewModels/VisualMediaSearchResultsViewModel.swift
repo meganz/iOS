@@ -13,7 +13,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         case loading
         case empty
         case recentlySearched(items: [SearchHistoryItem])
-        case searchResults(albums: [AlbumCellViewModel], photos: [PhotoSearchResultItemViewModel])
+        case searchResults(VisualMediaSearchResults)
     }
     @Published private(set) var viewState: ViewState = .loading
     @Published var searchText = ""
@@ -91,21 +91,22 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     func handleSelectedItemNavigation() async {
         let navigationResultSequence =  $selectedVisualMediaResult.values
             .compactMap { selectedResult -> SelectedNavigationEntityResult? in
-                switch selectedResult?.selectedItem {
+                guard let selectedResult else { return nil }
+                
+                return switch selectedResult.selectedItem {
                 case .album(let albumViewModel):
                     await SelectedNavigationEntityResult.album(albumViewModel.album)
                 case .photo(let photoViewModel):
                         .photos(selectedPhoto: photoViewModel.photo,
-                                otherPhotos: selectedResult?.otherQueryItems?.compactMap({ item -> NodeEntity? in
+                                otherPhotos: selectedResult.otherQueryItems.compactMap({ item -> NodeEntity? in
                             switch item {
                             case .photo(let photoViewModel): photoViewModel.photo
                             case .album: nil
                             }
-                        }) ?? [])
-                case .none: nil
+                        }))
                 }
             }
-    
+        
         for await navigationResult in navigationResultSequence {
             switch navigationResult {
             case .album(let album):
@@ -158,26 +159,30 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     private func loadVisualMedia(for searchText: String) async throws {
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         try Task.checkCancellation()
-        let albumsSequence = try await albumCellViewModelsSequence(
+        let albumsSequence = try await albumItemsSequence(
             excludeSensitives: excludeSensitives, searchText: searchText)
         try Task.checkCancellation()
-        let photosSequence = await photoSearchResultItemViewModelsSequence(
+        let photosSequence = await photosItemsSequence(
             excludeSensitives: excludeSensitives, searchText: searchText)
         try Task.checkCancellation()
         
-        for await (albumCellViewModels, photoSearchResultItemViewModels) in combineLatest(albumsSequence, photosSequence) {
-            viewState = .searchResults(albums: albumCellViewModels, photos: photoSearchResultItemViewModels)
+        for await (albumItems, photoItems) in combineLatest(albumsSequence, photosSequence) {
+            viewState = .searchResults(
+                .init(sectionContents: [
+                    .init(section: .albums, items: albumItems),
+                    .init(section: .photos, items: photoItems)
+                ]))
         }
     }
     
-    private func albumCellViewModelsSequence(
+    private func albumItemsSequence(
         excludeSensitives: Bool,
         searchText: String
-    ) async throws -> AnyAsyncSequence<[AlbumCellViewModel]> {
+    ) async throws -> AnyAsyncSequence<[VisualMediaSearchResults.Item]> {
         try await monitorAlbumsUseCase.monitorAlbums(
             excludeSensitives: excludeSensitives,
             searchText: searchText)
-        .compactMap { [weak self] albums -> [AlbumCellViewModel]? in
+        .compactMap { [weak self] albums -> [VisualMediaSearchResults.Item]? in
             try await self?.map(albums: albums)
         }
         .eraseToAnyAsyncSequence()
@@ -185,10 +190,10 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     
     private func map(
         albums: [AlbumEntity]
-    ) throws -> [AlbumCellViewModel] {
+    ) throws -> [VisualMediaSearchResults.Item] {
         try albums.map {
             try Task.checkCancellation()
-            return AlbumCellViewModel(
+            return .album(AlbumCellViewModel(
                 thumbnailLoader: thumbnailLoader,
                 monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                 nodeUseCase: nodeUseCase,
@@ -198,16 +203,16 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                 album: $0,
                 selection: AlbumSelection(),
                 configuration: contentLibrariesConfiguration
-            )
+            ))
         }
     }
     
-    private func photoSearchResultItemViewModelsSequence(
+    private func photosItemsSequence(
         excludeSensitives: Bool,
         searchText: String
-    ) async -> AnyAsyncSequence<[PhotoSearchResultItemViewModel]> {
+    ) async -> AnyAsyncSequence<[VisualMediaSearchResults.Item]> {
         await monitorPhotosUseCase.monitorPhotos(filterOptions: [.allLocations, .allMedia], excludeSensitive: excludeSensitives, searchText: searchText)
-            .compactMap { [weak self] photoResult -> [PhotoSearchResultItemViewModel]? in
+            .compactMap { [weak self] photoResult -> [VisualMediaSearchResults.Item]? in
                 guard let self else { return nil }
                 var photos = (try? photoResult.get()) ?? []
                 try photos.sort {
@@ -221,11 +226,11 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                 return try photos
                     .map { photo in
                         try Task.checkCancellation()
-                        return PhotoSearchResultItemViewModel(
+                        return .photo(PhotoSearchResultItemViewModel(
                             photo: photo,
                             searchText: searchText,
                             thumbnailLoader: thumbnailLoader,
-                            photoSearchResultRouter: photoSearchResultRouter)
+                            photoSearchResultRouter: photoSearchResultRouter))
                     }
             }
             .eraseToAnyAsyncSequence()
