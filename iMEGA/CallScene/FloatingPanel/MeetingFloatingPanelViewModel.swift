@@ -156,6 +156,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.tracker = tracker
     }
     
+    deinit {
+        seeWaitingRoomListNotificationTask?.cancel()
+    }
+    
     func dispatch(_ action: MeetingFloatingPanelAction) {
         switch action {
         case .onViewReady:
