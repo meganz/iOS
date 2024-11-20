@@ -13,4 +13,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case markdownSupport = "Markdown support"
     case webclientSubscribersCancelSubscription = "Webclient subscribers cancel subscription flow"
     case multipleOptionsForCancellationSurvey = "Multiple Options for Cancellation Survey"
+    case followUpOptionsForCancellationSurvey = "Follow up Options for Cancellation Survey"
 }
