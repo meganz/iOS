@@ -4,18 +4,6 @@ import MEGASwiftUI
 import Search
 import SwiftUI
 
-// Temporary colors catering for backward-compatibility with non-semantic color system
-// To be removed when Semantic Color is fully released . Ticket is [SAO-1482]
-fileprivate extension UIColor {
-    static let barButtonTextColor = UIColor(
-        dynamicProvider: {
-            $0.userInterfaceStyle == .light
-            ? UIColor.gray515151
-            : UIColor.grayD1D1D1
-        }
-    )
-}
-
 struct NodeBrowserView: View {
     
     @StateObject var viewModel: NodeBrowserViewModel

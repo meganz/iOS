@@ -47,18 +47,10 @@ extension ResultProperty {
     @ViewBuilder
     func resultPropertyImage(image: UIImage, scalable: Bool, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
         if scalable {
-            let propertyColor: Color = {
-                switch placement {
-                    // Should remove this after Semantic color is fully released . Ticket is [SAO-1482]
-                case .verticalTop: return colorAssets.verticalThumbnailTopPropertyColor
-                default: return colorAssets.resultPropertyColor
-                }
-            }()
-            
             Image(uiImage: image)
                 .renderingMode(.template)
                 .resizable()
-                .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : propertyColor)
+                .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : colorAssets.resultPropertyColor)
                 .scaledToFit()
         } else {
             Image(uiImage: image)

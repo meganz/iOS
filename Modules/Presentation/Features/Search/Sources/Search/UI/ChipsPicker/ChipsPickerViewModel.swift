@@ -34,11 +34,7 @@ final class ChipsPickerViewModel {
     }
 
     func separatorColor(for colorScheme: ColorScheme) -> Color {
-        if colorScheme == .light {
-            colorAssets._3C3C43.opacity(0.29)
-        } else {
-            colorAssets._545458.opacity(0.64)
-        }
+        colorAssets.listRowSeparator
     }
 
     func select(_ chip: ChipViewModel) {

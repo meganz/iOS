@@ -21,8 +21,4 @@ public enum PropertyPlacement: Equatable, Sendable {
     case auxLine
     /// supported in list mode only now
     case previewOverlay
-    
-    /// Temporary placement value for backward-compatibility of old cloud drive for properties (fav, link, versioned)  FILE NODES in THUMBNAIL mode
-    /// to be replaced with .secondary(.trailingEdge) after Semantic color is fully released . Ticket is [SAO-1482]
-    case verticalTop
 }
