@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="CRT-0R-cG9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="CRT-0R-cG9">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,35 +32,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="63R-NA-Whg">
-                                <rect key="frame" x="177.5" y="627" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="63R-NA-Whg" firstAttribute="centerX" secondItem="F07-sj-jc4" secondAttribute="centerX" id="5KU-cU-bcF"/>
                             <constraint firstItem="J4e-dJ-4Yg" firstAttribute="leading" secondItem="F07-sj-jc4" secondAttribute="leadingMargin" constant="20" id="8HA-9q-6Kx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="J4e-dJ-4Yg" secondAttribute="trailing" constant="20" id="A4H-IY-Yjh"/>
                             <constraint firstItem="J4e-dJ-4Yg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="RZs-sA-71b" secondAttribute="bottom" constant="20" id="FLZ-dh-fe2"/>
-                            <constraint firstItem="Y0z-pV-f0e" firstAttribute="top" secondItem="63R-NA-Whg" secondAttribute="bottom" constant="20" id="N9G-dd-P7k"/>
                             <constraint firstItem="RZs-sA-71b" firstAttribute="centerX" secondItem="F07-sj-jc4" secondAttribute="centerX" id="Pj8-iu-rWk"/>
-                            <constraint firstItem="63R-NA-Whg" firstAttribute="top" secondItem="J4e-dJ-4Yg" secondAttribute="bottom" constant="20" id="Po5-2q-nNi"/>
+                            <constraint firstItem="Y0z-pV-f0e" firstAttribute="top" secondItem="J4e-dJ-4Yg" secondAttribute="bottom" constant="60" id="Po5-2q-nNi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RZs-sA-71b" secondAttribute="trailing" constant="-40" id="dOY-kI-ATo"/>
                             <constraint firstItem="RZs-sA-71b" firstAttribute="leading" secondItem="F07-sj-jc4" secondAttribute="leadingMargin" constant="-40" id="fa8-yD-LMi"/>
                             <constraint firstItem="RZs-sA-71b" firstAttribute="centerY" secondItem="F07-sj-jc4" secondAttribute="centerY" id="gsD-fD-OGE"/>
-                            <constraint firstItem="J4e-dJ-4Yg" firstAttribute="centerX" secondItem="63R-NA-Whg" secondAttribute="centerX" id="lJl-57-yKf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="dOY-kI-ATo"/>
                                 <exclude reference="fa8-yD-LMi"/>
-                                <exclude reference="lJl-57-yKf"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="Peu-MD-ySU"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="63R-NA-Whg" id="wJ9-ib-PAF"/>
                         <outlet property="label" destination="J4e-dJ-4Yg" id="B6E-aw-TQt"/>
                         <outlet property="logoImageView" destination="RZs-sA-71b" id="XcH-44-9ac"/>
                     </connections>
@@ -97,8 +89,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="T3R-hw-li8"/>
                                 <exclude reference="wJn-nM-31z"/>
+                                <exclude reference="T3R-hw-li8"/>
                             </mask>
                         </variation>
                     </view>
@@ -132,7 +124,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDa-3y-k3V">
-                                        <rect key="frame" x="28" y="473.5" width="319" height="46"/>
+                                        <rect key="frame" x="28" y="480.5" width="319" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="Ldn-Lx-iio"/>
                                         </constraints>
@@ -141,10 +133,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="aA6-Q5-dr7">
-                                        <rect key="frame" x="177.5" y="539.5" width="20" height="20"/>
+                                        <rect key="frame" x="177.5" y="546.5" width="20" height="20"/>
                                     </activityIndicatorView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Jg-kL-uvV">
-                                        <rect key="frame" x="43.5" y="428.5" width="288" height="50"/>
+                                        <rect key="frame" x="43.5" y="435.5" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="4mO-s5-UkC"/>
                                             <constraint firstAttribute="width" constant="288" id="raM-Fc-dIP"/>
@@ -156,7 +148,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X9Q-KW-C7z">
-                                        <rect key="frame" x="43.5" y="494.5" width="288" height="50"/>
+                                        <rect key="frame" x="43.5" y="501.5" width="288" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="288" id="A5b-PC-mes"/>
                                             <constraint firstAttribute="height" constant="50" id="mRZ-rG-r0m"/>
@@ -168,13 +160,13 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lV2-dk-vSD">
-                                        <rect key="frame" x="43" y="335" width="289" height="20.5"/>
+                                        <rect key="frame" x="43" y="335" width="289" height="24"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l44-yx-5Pe">
-                                        <rect key="frame" x="43" y="383.5" width="289" height="17"/>
+                                        <rect key="frame" x="43" y="387" width="289" height="20.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
