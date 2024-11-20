@@ -1,4 +1,6 @@
+import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import SwiftUI
 
 protocol AddTagsViewRouting: Routing {}
@@ -6,7 +8,8 @@ protocol AddTagsViewRouting: Routing {}
 @MainActor
 struct AddTagsViewRouter: AddTagsViewRouting {
     private let presenter: UIViewController
-    
+    private let isSelectionEnabled = true
+
     init(presenter: UIViewController) {
         self.presenter = presenter
     }
@@ -19,7 +22,15 @@ struct AddTagsViewRouter: AddTagsViewRouting {
         let view = ManageTagsView(
             viewModel: ManageTagsViewModel(
                 navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
-                existingTagsViewModel: ExistingTagsViewModel()
+                existingTagsViewModel: ExistingTagsViewModel(
+                    tagsViewModel: NodeTagsViewModel(tagViewModels: []),
+                    nodeTagSearcher: NodeTagsSearcher(
+                        nodeTagsUseCase: NodeTagsUseCase(
+                            repository: NodeTagsRepository()
+                        )
+                    ),
+                    isSelectionEnabled: isSelectionEnabled
+                )
             )
         )
         return UIHostingController(rootView: view)

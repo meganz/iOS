@@ -3,32 +3,34 @@ import SwiftUI
 
 @MainActor
 final class ExistingTagsViewModel: ObservableObject {
-    @Published var tags: [String]
-    @Published var selectedTags: Set<String>
+    @Published var tagsViewModel: NodeTagsViewModel
+    @Published var isLoading: Bool = false
+    private let isSelectionEnabled: Bool
+    private let nodeTagSearcher: any NodeTagsSearching
 
-    init(tags: [String] = [], selectedTags: Set<String> = []) {
-        self.tags = tags
-        self.selectedTags = selectedTags
+    var containsTags: Bool {
+        tagsViewModel.tagViewModels.isNotEmpty
     }
 
-    var formattedTags: [String] {
-        tags.elementsPrepended(with: "#")
-    }
-
-    func toggle(tag: String) {
-        if selectedTags.contains(tag) {
-            selectedTags.remove(tag)
-        } else {
-            selectedTags.insert(tag)
-        }
+    init(tagsViewModel: NodeTagsViewModel, nodeTagSearcher: some NodeTagsSearching, isSelectionEnabled: Bool) {
+        self.tagsViewModel = tagsViewModel
+        self.nodeTagSearcher = nodeTagSearcher
+        self.isSelectionEnabled = isSelectionEnabled
     }
 
     func addAndSelectNewTag(_ tag: String) {
-        tags.append(tag)
-        selectedTags.insert(tag)
+        let tagViewModel = NodeTagViewModel(tag: tag, isSelectionEnabled: isSelectionEnabled, isSelected: true)
+        tagsViewModel.prepend(tagViewModel: tagViewModel)
     }
 
-    func isSelected(_ tag: String) -> Bool {
-       selectedTags.contains(tag.hasPrefix("#") ? String(tag.dropFirst()) : tag)
+    func searchTags(for searchText: String?) async {
+        isLoading = true
+        defer { isLoading = false }
+
+        guard let tags = await nodeTagSearcher.searchTags(for: searchText), !Task.isCancelled else { return }
+        let tagViewModels = tags.map {
+            NodeTagViewModel(tag: $0, isSelectionEnabled: isSelectionEnabled, isSelected: false)
+        }
+        tagsViewModel = NodeTagsViewModel(tagViewModels: tagViewModels)
     }
 }

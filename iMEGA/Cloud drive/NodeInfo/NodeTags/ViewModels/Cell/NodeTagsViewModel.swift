@@ -14,4 +14,8 @@ final class NodeTagsViewModel: ObservableObject {
         guard tagViewModels.contains(where: { $0.tag == tag }) else { return }
         tagsWidth[tag] = width
     }
+
+    func prepend(tagViewModel: NodeTagViewModel) {
+        tagViewModels.insert(tagViewModel, at: 0)
+    }
 }

@@ -20,6 +20,9 @@ struct ManageTagsView: View {
             .onChange(of: shouldDismiss) {
                 if $0 { dismiss() }
             }
+            .task {
+                await viewModel.loadAllTags()
+            }
     }
     
     var content: some View {

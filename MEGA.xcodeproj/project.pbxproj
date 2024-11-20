@@ -2311,6 +2311,7 @@
 		BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */ = {isa = PBXBuildFile; productRef = BFA275E627ED317600E15B92 /* SDAVAssetExportSession */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
 		BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */; };
+		BFA8BC7C2CED912D00DC4B10 /* ExistingTagsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA8BC7B2CED912D00DC4B10 /* ExistingTagsLoadingView.swift */; };
 		BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */; };
 		BFAB113823CEA5C300BCE72D /* PhotoGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */; };
 		BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */; };
@@ -5068,6 +5069,7 @@
 		BFA1EEE92A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingNewViewConfiguration.swift; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
 		BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewModelTests.swift; sourceTree = "<group>"; };
+		BFA8BC7B2CED912D00DC4B10 /* ExistingTagsLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingTagsLoadingView.swift; sourceTree = "<group>"; };
 		BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerListSourceProtocol.swift; sourceTree = "<group>"; };
 		BFAB110E23CEA5C300BCE72D /* PhotoGridViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewDelegate.swift; sourceTree = "<group>"; };
 		BFAB111023CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -12611,6 +12613,7 @@
 		BFDECF1E2CD4324B001B83E0 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				BFA8BC7B2CED912D00DC4B10 /* ExistingTagsLoadingView.swift */,
 				BFDECF1F2CD43285001B83E0 /* ExistingTagsViewModel.swift */,
 				BFDECEEB2CD2F062001B83E0 /* ManageTagsViewModel.swift */,
 				BFDECEED2CD2F17E001B83E0 /* ManageTagsViewNavigationBarViewModel.swift */,
@@ -14797,6 +14800,7 @@
 				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
 				2F9F11182508A3E800896DFF /* ErrorModel.swift in Sources */,
 				83DBDDE729D730EC00CF433B /* ErrorView.swift in Sources */,
+				BFA8BC7C2CED912D00DC4B10 /* ExistingTagsLoadingView.swift in Sources */,
 				BFDECF1A2CD43010001B83E0 /* ExistingTagsOverviewView.swift in Sources */,
 				BFDECF182CD42FF2001B83E0 /* ExistingTagsView.swift in Sources */,
 				BFDECF202CD43285001B83E0 /* ExistingTagsViewModel.swift in Sources */,
