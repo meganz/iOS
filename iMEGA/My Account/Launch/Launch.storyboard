@@ -132,9 +132,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="aA6-Q5-dr7">
-                                        <rect key="frame" x="177.5" y="546.5" width="20" height="20"/>
-                                    </activityIndicatorView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Jg-kL-uvV">
                                         <rect key="frame" x="43.5" y="435.5" width="288" height="50"/>
                                         <constraints>
@@ -173,12 +170,10 @@
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="aA6-Q5-dr7" firstAttribute="top" secondItem="kDa-3y-k3V" secondAttribute="bottom" constant="20" id="3Z5-3Q-fx0"/>
+                                    <constraint firstAttribute="bottom" secondItem="X9Q-KW-C7z" secondAttribute="bottom" constant="115.5" id="3CU-4r-UXB"/>
                                     <constraint firstItem="6Jg-kL-uvV" firstAttribute="centerX" secondItem="FtC-DE-v31" secondAttribute="centerX" id="8j0-QR-ChC"/>
                                     <constraint firstItem="l44-yx-5Pe" firstAttribute="leading" secondItem="FtC-DE-v31" secondAttribute="leadingMargin" constant="35" id="8pd-fE-nCB"/>
                                     <constraint firstItem="X9Q-KW-C7z" firstAttribute="centerX" secondItem="FtC-DE-v31" secondAttribute="centerX" id="Cy0-wm-9fm"/>
-                                    <constraint firstItem="aA6-Q5-dr7" firstAttribute="centerX" secondItem="FtC-DE-v31" secondAttribute="centerX" id="JYm-qR-aCE"/>
-                                    <constraint firstAttribute="bottom" secondItem="aA6-Q5-dr7" secondAttribute="bottom" constant="20" id="Je6-ED-5Mg"/>
                                     <constraint firstItem="kDa-3y-k3V" firstAttribute="top" secondItem="l44-yx-5Pe" secondAttribute="bottom" constant="73" id="KSh-zd-VLV"/>
                                     <constraint firstItem="lV2-dk-vSD" firstAttribute="top" secondItem="Dmz-EP-zAE" secondAttribute="bottom" constant="20" id="Na6-Ke-Nwp"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="kDa-3y-k3V" secondAttribute="trailing" constant="20" id="RSI-Ug-59j"/>
@@ -205,7 +200,6 @@
                     <navigationItem key="navigationItem" id="KAy-w1-6dw"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="aA6-Q5-dr7" id="cf2-4s-Uwn"/>
                         <outlet property="descriptionLabel" destination="l44-yx-5Pe" id="xxK-Gc-zfH"/>
                         <outlet property="label" destination="kDa-3y-k3V" id="nDy-rK-sLK"/>
                         <outlet property="logoImageView" destination="Dmz-EP-zAE" id="sSB-WR-wus"/>
