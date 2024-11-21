@@ -76,8 +76,6 @@ final class ToolbarActionFactoryTests: XCTestCase {
         )
         XCTAssertEqual(actions, [
             .restore,
-            .move,
-            .copy,
             .delete
         ])
     }
