@@ -109,8 +109,6 @@ struct ToolbarActionFactory: ToolbarActionFactoryProtocol {
         case .rubbishBin:
             [
                 .restore,
-                .move,
-                .copy,
                 .delete
             ]
         case .backup:
