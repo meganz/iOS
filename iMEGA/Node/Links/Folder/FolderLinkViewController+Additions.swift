@@ -1,6 +1,5 @@
 import Accounts
 import ChatRepo
-import Combine
 import Foundation
 import MEGADesignToken
 import MEGADomain
@@ -8,6 +7,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwift
 
 extension FolderLinkViewController {
     @objc func containsMediaFiles() -> Bool {
@@ -182,14 +182,14 @@ extension FolderLinkViewController {
 
 // MARK: - Ads
 extension FolderLinkViewController: AdsSlotViewControllerProtocol {
-    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
-        Just(
-            AdsSlotConfig(
+    public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
+        SingleItemAsyncSequence(
+            item: AdsSlotConfig(
                 adsSlot: .sharedLink,
                 displayAds: true,
                 isAdsCookieEnabled: calculateAdCookieStatus
             )
-        ).eraseToAnyPublisher()
+        ).eraseToAnyAsyncSequence()
     }
     
     private func calculateAdCookieStatus() async -> Bool {

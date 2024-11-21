@@ -1,9 +1,9 @@
 import Accounts
-import Combine
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import MEGASwift
 import UIKit
 
 class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNodeActionForwardingDelegate {
@@ -561,14 +561,14 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
 
 // MARK: - Ads
 extension AudioPlayerViewController: AdsSlotViewControllerProtocol {
-    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
-        Just(
-            AdsSlotConfig(
+    var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
+        SingleItemAsyncSequence(
+            item: AdsSlotConfig(
                 adsSlot: .sharedLink,
                 displayAds: true,
                 isAdsCookieEnabled: calculateAdCookieStatus
             )
-        ).eraseToAnyPublisher()
+        ).eraseToAnyAsyncSequence()
     }
     
     private func calculateAdCookieStatus() async -> Bool {

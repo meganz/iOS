@@ -1,11 +1,10 @@
-import Combine
 import MEGASwift
 import UIKit
 
 // This procotol is for ViewController where the ads slots will be added.
 // It will publish the new ads slot configuration of the ViewController.
 public protocol AdsSlotViewControllerProtocol {
-    var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> { get }
+    var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> { get }
 }
 
 // This protocol will handle sending new Ads Slot configuration changes.
@@ -19,9 +18,7 @@ public final class AdsSlotUpdatesProvider: AdsSlotUpdatesProviderProtocol {
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
 
     public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
-        adsSlotViewController.adsSlotPublisher
-            .values
-            .eraseToAnyAsyncSequence()
+        adsSlotViewController.adsSlotUpdates
     }
     
     public init(adsSlotViewController: some AdsSlotViewControllerProtocol) {

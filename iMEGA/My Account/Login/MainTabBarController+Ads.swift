@@ -1,11 +1,11 @@
 import Accounts
-import Combine
 import MEGADomain
 import MEGASDKRepo
+import MEGASwift
 
 extension MainTabBarController: AdsSlotViewControllerProtocol {
-    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
-        mainTabBarAdsViewModel.adsSlotConfigPublisher
+    public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
+        mainTabBarAdsViewModel.adsSlotConfigAsyncSequence
     }
     
     @objc func configureAdsVisibility() {
@@ -15,10 +15,10 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
     private func currentAdsSlotConfig() -> AdsSlotConfig? {
         switch selectedIndex {
         case TabType.cloudDrive.rawValue:
-            if let adsDipslayable = mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable {
+            if let adsDisplayable = mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable {
                 return AdsSlotConfig(
                     adsSlot: .files,
-                    displayAds: adsDipslayable.shouldDisplayAdsSlot,
+                    displayAds: adsDisplayable.shouldDisplayAdsSlot,
                     isAdsCookieEnabled: calculateAdCookieStatus
                 )
             }

@@ -1,7 +1,7 @@
 import Accounts
-import Combine
 import MEGADomain
 import MEGASDKRepo
+import MEGASwift
 
 extension FileLinkViewController {
     @objc func download() {
@@ -45,14 +45,14 @@ extension FileLinkViewController {
 
 // MARK: - Ads
 extension FileLinkViewController: AdsSlotViewControllerProtocol {
-    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
-        Just(
-            AdsSlotConfig(
+    public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
+        SingleItemAsyncSequence(
+            item: AdsSlotConfig(
                 adsSlot: .sharedLink,
                 displayAds: true,
                 isAdsCookieEnabled: calculateAdCookieStatus
             )
-        ).eraseToAnyPublisher()
+        ).eraseToAnyAsyncSequence()
     }
     
     private func calculateAdCookieStatus() async -> Bool {
