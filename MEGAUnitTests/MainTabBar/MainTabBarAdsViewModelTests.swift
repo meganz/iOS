@@ -1,32 +1,35 @@
-import Accounts
-import Combine
+@preconcurrency import Accounts
 @testable import MEGA
-import XCTest
+import Testing
 
-final class MainTabBarAdsViewModelTests: XCTestCase {
-    private var subscriptions = Set<AnyCancellable>()
+struct MainTabBarAdsViewModelTests {
+    private static func isAdsCookieEnabled() async -> Bool { true }
     
-    private func isAdsCookieEnabled() async -> Bool {
-        true
-    }
-    
-    func testAdsSlotConfigPublisher_shouldMatchPublishedConfig() throws {
-        var configList = [nil,
-                          AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),
-                          AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),
-                          nil,
-                          AdsSlotConfig(adsSlot: .photos, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),
-                          AdsSlotConfig(adsSlot: .sharedLink, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)]
-        let sut = MainTabBarAdsViewModel(adsSlotConfigSourcePublisher: PassthroughSubject<AdsSlotConfig?, Never>())
+    @Test("Should receive correct ads slot configs", .timeLimit(.minutes(1)))
+    func sendNewAdsConfig() async throws {
+        let sut = MainTabBarAdsViewModel()
+        let configs = [
+            AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: MainTabBarAdsViewModelTests.isAdsCookieEnabled),
+            AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: MainTabBarAdsViewModelTests.isAdsCookieEnabled),
+            nil
+        ]
         
-        sut.adsSlotConfigPublisher
-            .sink { config in
-                XCTAssertEqual(config, configList.removeFirst())
+        let task = Task {
+            var receivedConfigs: [AdsSlotConfig?] = []
+            for await config in sut.adsSlotConfigAsyncSequence {
+                receivedConfigs.append(config)
             }
-            .store(in: &subscriptions)
+            return receivedConfigs
+        }
         
-        configList.forEach { config in
+        // Send each ads config
+        for config in configs {
+            try await Task.sleep(nanoseconds: 100_000_000)
             sut.sendNewAdsConfig(config)
         }
+        task.cancel()
+        
+        let receivedConfigs = await task.value
+        #expect(receivedConfigs == configs)
     }
 }

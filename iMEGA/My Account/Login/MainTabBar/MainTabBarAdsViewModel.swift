@@ -1,16 +1,17 @@
 import Accounts
-import Combine
+import MEGASwift
 
 final class MainTabBarAdsViewModel {
-    private let adsSlotConfigSourcePublisher: PassthroughSubject<AdsSlotConfig?, Never>
-    let adsSlotConfigPublisher: AnyPublisher<AdsSlotConfig?, Never>
+    private var continuation: AsyncStream<AdsSlotConfig?>.Continuation?
     
-    init(adsSlotConfigSourcePublisher: PassthroughSubject<AdsSlotConfig?, Never>) {
-        self.adsSlotConfigSourcePublisher = adsSlotConfigSourcePublisher
-        self.adsSlotConfigPublisher = AnyPublisher(adsSlotConfigSourcePublisher).eraseToAnyPublisher()
+    var adsSlotConfigAsyncSequence: AnyAsyncSequence<AdsSlotConfig?> {
+        let (stream, continuation) = AsyncStream.makeStream(of: AdsSlotConfig?.self, bufferingPolicy: .bufferingNewest(1))
+        self.continuation?.finish()
+        self.continuation = continuation
+        return stream.eraseToAnyAsyncSequence()
     }
     
     func sendNewAdsConfig(_ config: AdsSlotConfig?) {
-        adsSlotConfigSourcePublisher.send(config)
+        continuation?.yield(config)
     }
 }

@@ -1,5 +1,4 @@
 import Accounts
-import Combine
 import FirebaseCrashlytics
 import MEGAAnalyticsiOS
 import MEGADesignToken
@@ -8,6 +7,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 import UIKit
@@ -565,14 +565,14 @@ extension MEGAPhotoBrowserViewController {
 
 // MARK: - Ads
 extension MEGAPhotoBrowserViewController: AdsSlotViewControllerProtocol {
-    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
-        Just(
-            AdsSlotConfig(
+    public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
+        SingleItemAsyncSequence(
+            item: AdsSlotConfig(
                 adsSlot: .sharedLink,
                 displayAds: true,
                 isAdsCookieEnabled: calculateAdCookieStatus
             )
-        ).eraseToAnyPublisher()
+        ).eraseToAnyAsyncSequence()
     }
     
     private func calculateAdCookieStatus() async -> Bool {

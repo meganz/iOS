@@ -34,7 +34,7 @@ extension MainTabBarController {
 
         addTabDelegate()
         mainTabBarViewModel = createMainTabBarViewModel()
-        mainTabBarAdsViewModel = createMainTabBarAdsViewModel()
+        mainTabBarAdsViewModel = MainTabBarAdsViewModel()
         configProgressView()
         showPSAViewIfNeeded()
         updateUI()
@@ -165,12 +165,6 @@ extension MainTabBarController {
         }
         
         return mainTabBarCallsViewModel
-    }
-    
-    func createMainTabBarAdsViewModel() -> MainTabBarAdsViewModel {
-        let sourcePublisher = PassthroughSubject<AdsSlotConfig?, Never>()
-        let viewModel = MainTabBarAdsViewModel(adsSlotConfigSourcePublisher: sourcePublisher)
-        return viewModel
     }
     
     private func executeCommand(_ command: MainTabBarCallsViewModel.Command) {
