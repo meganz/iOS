@@ -1821,6 +1821,7 @@
 #pragma mark - CNContactPickerDelegate
 
 -(void)contactPicker:(CNContactPickerViewController *)picker didSelectContacts:(NSArray<CNContact *> *)contacts {
+    if (contacts.count == 0) { return; }
     NSArray<NSString *> * values = [self extractEmails:contacts];
 
     if (self.childViewControllers.count == 0) {
