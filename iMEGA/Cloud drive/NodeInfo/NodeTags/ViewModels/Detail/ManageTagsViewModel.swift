@@ -16,7 +16,7 @@ final class ManageTagsViewModel: ObservableObject {
 
     @Published var tagName: String = ""
     @Published var tagNameState: TagNameState = .empty
-    @Published var containsExistingTags = false
+    @Published var containsExistingTags: Bool
     @Published var hasTextFieldFocus: Bool = false
     private var maxAllowedCharacterCount = 32
     private var subscriptions: Set<AnyCancellable> = []
@@ -24,6 +24,7 @@ final class ManageTagsViewModel: ObservableObject {
     init(navigationBarViewModel: ManageTagsViewNavigationBarViewModel, existingTagsViewModel: ExistingTagsViewModel) {
         self.navigationBarViewModel = navigationBarViewModel
         self.existingTagsViewModel = existingTagsViewModel
+        containsExistingTags = existingTagsViewModel.containsTags
         monitorTagsLoadingStatus()
     }
 

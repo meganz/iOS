@@ -18,4 +18,8 @@ final class NodeTagsViewModel: ObservableObject {
     func prepend(tagViewModel: NodeTagViewModel) {
         tagViewModels.insert(tagViewModel, at: 0)
     }
+
+    func updateTagsReorderedBySelection(_ tagViewModels: [NodeTagViewModel]) {
+        self.tagViewModels = tagViewModels.sorted { $0.isSelected && !$1.isSelected }
+    }
 }

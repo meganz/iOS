@@ -51,7 +51,7 @@ extension NodeTagsCellController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let controller else { return }
         if viewModel.hasValidSubscription {
-            let addTagsRouter = AddTagsViewRouter(presenter: controller)
+            let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
             addTagsRouter.start()
         } else if let accountDetails = viewModel.currentAccountDetails {
             let upgradeRouter = UpgradeAccountPlanRouter(presenter: controller, accountDetails: accountDetails)
