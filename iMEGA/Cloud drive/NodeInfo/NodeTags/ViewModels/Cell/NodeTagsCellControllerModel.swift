@@ -19,6 +19,10 @@ final class NodeTagsCellControllerModel {
         accountUseCase.currentAccountDetails
     }
 
+    var selectedTags: Set<String> {
+        Set(node.tags)
+    }
+
     init(node: NodeEntity, accountUseCase: some AccountUseCaseProtocol) {
         self.node = node
         self.accountUseCase = accountUseCase

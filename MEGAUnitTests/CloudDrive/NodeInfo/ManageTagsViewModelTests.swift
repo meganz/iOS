@@ -78,6 +78,7 @@ struct ManageTagsViewModelTests {
     )
     func verifyLoadAllTags(tags: [String], containsExistingTags: Bool) async {
         let sut = makeSUT(nodeSearcher: MockNodeTagsSearcher(tags: tags))
+        #expect(sut.containsExistingTags == false)
         await sut.loadAllTags()
         #expect(sut.containsExistingTags == containsExistingTags)
     }

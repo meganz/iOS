@@ -3,13 +3,15 @@ import MEGAL10n
 import SwiftUI
 
 struct ExistingTagsOverviewView: View {
-    let viewModel: ExistingTagsViewModel
+    @ObservedObject var viewModel: ExistingTagsViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
             Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.existingTagsTitle)
                 .font(.footnote)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .foregroundStyle(viewModel.isLoading ? .clear : TokenColors.Text.secondary.swiftUI)
+                .background(viewModel.isLoading ? TokenColors.Background.surface2.swiftUI : .clear)
+                .cornerRadius(TokenSpacing._5)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             ExistingTagsView(viewModel: viewModel)

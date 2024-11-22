@@ -28,9 +28,17 @@ final class ExistingTagsViewModel: ObservableObject {
         defer { isLoading = false }
 
         guard let tags = await nodeTagSearcher.searchTags(for: searchText), !Task.isCancelled else { return }
-        let tagViewModels = tags.map {
-            NodeTagViewModel(tag: $0, isSelectionEnabled: isSelectionEnabled, isSelected: false)
+        updateUI(for: tags)
+    }
+
+    private func updateUI(for tags: [String]) {
+        let tagViewModels = tags.map { tag in
+            guard let viewModel = tagsViewModel.tagViewModels.first(where: { $0.tag == tag }) else {
+                return NodeTagViewModel(tag: tag, isSelectionEnabled: isSelectionEnabled, isSelected: false)
+            }
+
+            return viewModel
         }
-        tagsViewModel = NodeTagsViewModel(tagViewModels: tagViewModels)
+        tagsViewModel.updateTagsReorderedBySelection(tagViewModels)
     }
 }

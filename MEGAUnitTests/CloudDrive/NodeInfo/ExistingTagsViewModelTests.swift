@@ -31,11 +31,15 @@ struct ExistingTagsViewModelTests {
     @MainActor
     @Test("Test the search for tags in the account.")
     func verifySearchTags() async {
-        let tags = ["tag1"]
+        let tags = ["tag1", "tag2", "tag3", "tag4"]
         let searcher = MockNodeTagsSearcher(tags: tags)
-        let sut = makeSUT(tagsViewModel: NodeTagsViewModel(tagViewModels: []), nodeTagSearcher: searcher)
+        let selectedTags = [
+            NodeTagViewModel(tag: "tag2", isSelectionEnabled: true, isSelected: true),
+            NodeTagViewModel(tag: "tag3", isSelectionEnabled: true, isSelected: true)
+        ]
+        let sut = makeSUT(tagsViewModel: NodeTagsViewModel(tagViewModels: selectedTags), nodeTagSearcher: searcher)
         await sut.searchTags(for: nil)
-        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == tags)
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag3", "tag1", "tag4"])
         #expect(sut.isLoading == false)
     }
 

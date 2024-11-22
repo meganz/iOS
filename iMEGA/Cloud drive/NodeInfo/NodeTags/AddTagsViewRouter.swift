@@ -9,9 +9,17 @@ protocol AddTagsViewRouting: Routing {}
 struct AddTagsViewRouter: AddTagsViewRouting {
     private let presenter: UIViewController
     private let isSelectionEnabled = true
+    private let selectedTags: Set<String>
 
-    init(presenter: UIViewController) {
+    private var selectedTagViewModels: [NodeTagViewModel] {
+        selectedTags.map {
+            NodeTagViewModel(tag: $0, isSelectionEnabled: isSelectionEnabled, isSelected: true)
+        }
+    }
+
+    init(presenter: UIViewController, selectedTags: Set<String>) {
         self.presenter = presenter
+        self.selectedTags = selectedTags
     }
     
     func start() {
@@ -23,7 +31,7 @@ struct AddTagsViewRouter: AddTagsViewRouting {
             viewModel: ManageTagsViewModel(
                 navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
                 existingTagsViewModel: ExistingTagsViewModel(
-                    tagsViewModel: NodeTagsViewModel(tagViewModels: []),
+                    tagsViewModel: NodeTagsViewModel(tagViewModels: selectedTagViewModels),
                     nodeTagSearcher: NodeTagsSearcher(
                         nodeTagsUseCase: NodeTagsUseCase(
                             repository: NodeTagsRepository()
