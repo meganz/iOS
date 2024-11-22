@@ -41,7 +41,8 @@ public struct NodeActionTargetUseCase<T: NodeRepositoryProtocol, U: PreferenceUs
         if let lastActionTargetPath, let lastActionTargetDate {
             let timeInterval = Date().timeIntervalSince(lastActionTargetDate)
             if timeInterval <= secondsInOneHour {
-                guard let targetNode = nodeRepo.nodeForHandle(lastActionTargetPath) else {
+                guard let targetNode = nodeRepo.nodeForHandle(lastActionTargetPath),
+                        !nodeRepo.isInRubbishBin(node: targetNode) else {
                     return nil
                 }
                 return await nodeRepo.parents(of: targetNode)

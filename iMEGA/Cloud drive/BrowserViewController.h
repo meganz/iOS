@@ -60,5 +60,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 - (void)updatePromptTitle;
 - (void)attachNodes;
 
+- (IBAction)cloudDriveTouchUpInside:(UIButton *)sender;
+- (IBAction)incomingTouchUpInside:(UIButton *)sender;
+
 @end
 
