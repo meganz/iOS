@@ -949,7 +949,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
 extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
     nonisolated func meetingContextMenu(didSelect action: MeetingActionEntity) {
         Task { @MainActor in
-            if chatUseCase.existsActiveCall() {
+            if shouldCancelActionIfCallInProgress(action) {
                 router.presentMeetingAlreadyExists()
                 return
             }
@@ -963,6 +963,11 @@ extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
                 scheduleMeeting()
             }
         }
+    }
+    
+    private func shouldCancelActionIfCallInProgress(_ action: MeetingActionEntity) -> Bool {
+        // It is not allowed to start o join with link another meeting if an active call is in progress
+        chatUseCase.existsActiveCall() && [.startMeeting, .joinMeeting].contains(action)
     }
 }
 

@@ -608,6 +608,84 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
+    func test_contextMenuStartMeetingAction_noActiveCall_shouldPresentCreateMeetingView() async {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(
+            router: router,
+            chatUseCase: MockChatUseCase(isExistingActiveCall: false)
+        )
+        
+        viewModel.meetingContextMenu(didSelect: .startMeeting)
+        await Task.megaYield()
+        XCTAssertEqual(router.presentCreateMeeting_calledTimes, 1)
+    }
+    
+    @MainActor
+    func test_contextMenuStartMeetingAction_activeCall_shouldNotPresentCreateMeetingView() async {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(
+            router: router,
+            chatUseCase: MockChatUseCase(isExistingActiveCall: true)
+        )
+        
+        viewModel.meetingContextMenu(didSelect: .startMeeting)
+        await Task.megaYield()
+        XCTAssertEqual(router.presentCreateMeeting_calledTimes, 0)
+    }
+    
+    @MainActor
+    func test_contextMenuJoinMeetingAction_noActiveCall_shouldPresentEnterMeetingView() async {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(
+            router: router,
+            chatUseCase: MockChatUseCase(isExistingActiveCall: false)
+        )
+        
+        viewModel.meetingContextMenu(didSelect: .joinMeeting)
+        await Task.megaYield()
+        XCTAssertEqual(router.presentEnterMeeting_calledTimes, 1)
+    }
+    
+    @MainActor
+    func test_contextMenuJoinMeetingAction_activeCall_shouldNotPresentEnterMeetingView() async {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(
+            router: router,
+            chatUseCase: MockChatUseCase(isExistingActiveCall: true)
+        )
+        
+        viewModel.meetingContextMenu(didSelect: .joinMeeting)
+        await Task.megaYield()
+        XCTAssertEqual(router.presentEnterMeeting_calledTimes, 0)
+    }
+    
+    @MainActor
+    func test_contextMenuScheduleMeetingAction_noActiveCall_shouldPresentScheduleMeetingView() async {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(
+            router: router,
+            chatUseCase: MockChatUseCase(isExistingActiveCall: false)
+        )
+        
+        viewModel.meetingContextMenu(didSelect: .scheduleMeeting)
+        await Task.megaYield()
+        XCTAssertEqual(router.presentScheduleMeeting_calledTimes, 1)
+    }
+    
+    @MainActor
+    func test_contextMenuScheduleMeetingAction_activeCall_shouldPresentScheduleMeetingView() async {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(
+            router: router,
+            chatUseCase: MockChatUseCase(isExistingActiveCall: true)
+        )
+        
+        viewModel.meetingContextMenu(didSelect: .scheduleMeeting)
+        await Task.megaYield()
+        XCTAssertEqual(router.presentScheduleMeeting_calledTimes, 1)
+    }
+    
     // MARK: - Private methods
     
     private func pastDate(bySubtractHours numberOfHours: Int) -> Date? {
