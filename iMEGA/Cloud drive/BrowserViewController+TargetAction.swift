@@ -18,6 +18,9 @@ extension BrowserViewController {
                     if let targetNodeTreeArray = await nodeActionTargetUC.lastTargetNodeTreeArray(for: browserAction == .copy ? .copy : .move), targetNodeTreeArray.isNotEmpty {
                         let currentTargetNodeHandle = nodeActionTargetUC.target(for: browserAction == .copy ? .copy : .move)
                         let targetNodeTreeControllers = self.browserControllers(for: targetNodeTreeArray, currentTargetNodeHandle: currentTargetNodeHandle)
+                        
+                        selectSegment(targetNodeTreeArray.contains(where: \.isInShare) ? .incoming: .cloud)
+                        
                         self.navigationController?.viewControllers.append(contentsOf: targetNodeTreeControllers)
                     }
                 }
@@ -47,6 +50,17 @@ extension BrowserViewController {
             nodeActionTargetUC.record(target: node.toNodeEntity(), for: .copy)
         } else if case .move = browserAction {
             nodeActionTargetUC.record(target: node.toNodeEntity(), for: .move)
+        }
+    }
+    
+    private enum BrowserSegments {
+        case cloud, incoming
+    }
+    
+    private func selectSegment(_ segment: BrowserSegments) {
+        switch segment {
+        case .cloud: cloudDriveTouchUp(inside: cloudDriveButton)
+        case .incoming: incomingTouchUp(inside: incomingButton)
         }
     }
 }
