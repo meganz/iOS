@@ -24,9 +24,10 @@ struct BannerView: View {
             // Meetings Floating panel only support dark mode
             static let darkMeetingsFloatingPanel: Self = .init(
                 background: TokenColors.Notifications.notificationWarning.swiftUI,
-                foregroundUIColor: TokenColors.Text.primary,
-                foreground: TokenColors.Text.primary.swiftUI,
-                link: TokenColors.Text.primary
+                foregroundUIColor: TokenColors.Text.inverseAccent,
+                foreground: TokenColors.Text.inverseAccent.swiftUI,
+                link: TokenColors.Text.inverseAccent
+                
             )
             
             static let dark: Self = .init(
