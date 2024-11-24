@@ -82,6 +82,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (assign, nonatomic, getter=areCredentialsVerified) BOOL credentialsVerified;
 
 @property (assign, nonatomic) MEGAChatRoomPrivilege peerPrivilege;
+@property (assign, nonatomic) BOOL didTapRemoveContact;
 
 @end
 
@@ -449,8 +450,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [MEGAStore.shareInstance updateUserWithHandle:self.user.handle interactedWith:NO];
             [self.navigationController popViewControllerAnimated:YES];
         }];
+        
+        self.didTapRemoveContact = YES;
         [MEGASdk.shared removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
+    
     [self presentViewController:removeContactAlertController animated:YES completion:nil];
 }
 
@@ -965,6 +969,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             
         case ContactDetailsSectionAddAndRemoveContact:
             if (self.user.visibility == MEGAUserVisibilityVisible) {
+                if (self.didTapRemoveContact) {
+                    break;
+                }
                 [self showRemoveContactConfirmationFromSender:[tableView cellForRowAtIndexPath:indexPath]];
             } else {
                 [self sendInviteContact];
