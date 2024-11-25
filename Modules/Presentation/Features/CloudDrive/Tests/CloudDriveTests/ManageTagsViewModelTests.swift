@@ -1,5 +1,5 @@
 import Combine
-@testable import MEGA
+@testable import CloudDrive
 import Testing
 
 @Suite("ManageTagsViewModel Tests")

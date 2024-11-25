@@ -1,4 +1,4 @@
-@testable import MEGA
+@testable import CloudDrive
 import Testing
 
 @Suite("ExistingTagsViewModel Tests")

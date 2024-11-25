@@ -1,25 +1,31 @@
-import Foundation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import UIKit
 
 @MainActor
-final class NodeTagsCellController: NSObject {
+public final class NodeTagsCellController: NSObject {
     private static let reuseIdentifier = "NodeTagsCellID"
 
     // A weak reference to the parent UIViewController that contains the table view.
     // The controller is responsible for managing the user interface or navigating when a row is selected.
     private weak var controller: UIViewController?
     private let viewModel: NodeTagsCellControllerModel
+    private let showUpgradeScreen: (AccountDetailsEntity) -> Void
 
-    init(controller: UIViewController, viewModel: NodeTagsCellControllerModel) {
+    public init(
+        controller: UIViewController,
+        viewModel: NodeTagsCellControllerModel,
+        showUpgradeScreen: @escaping (AccountDetailsEntity) -> Void
+    ) {
         self.controller = controller
         self.viewModel = viewModel
+        self.showUpgradeScreen = showUpgradeScreen
         super.init()
     }
 
-    static func registerCell(for tableView: UITableView) {
+    public static func registerCell(for tableView: UITableView) {
         tableView.register(
             HostingTableViewCell<NodeTagsCellView>.self,
             forCellReuseIdentifier: Self.reuseIdentifier
@@ -28,11 +34,11 @@ final class NodeTagsCellController: NSObject {
 }
 
 extension NodeTagsCellController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: Self.reuseIdentifier,
             for: indexPath
@@ -48,22 +54,21 @@ extension NodeTagsCellController: UITableViewDataSource {
 }
 
 extension NodeTagsCellController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let controller else { return }
         if viewModel.hasValidSubscription {
             let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
             addTagsRouter.start()
         } else if let accountDetails = viewModel.currentAccountDetails {
-            let upgradeRouter = UpgradeAccountPlanRouter(presenter: controller, accountDetails: accountDetails)
-            upgradeRouter.start()
+            showUpgradeScreen(accountDetails)
         }
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         NodeInfoCellHeaderView(title: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.header, topPadding: 10).toUIView()
     }
 
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         nil
     }
 }

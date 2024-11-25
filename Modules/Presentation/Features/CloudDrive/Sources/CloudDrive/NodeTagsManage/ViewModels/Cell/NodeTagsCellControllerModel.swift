@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 
 @MainActor
-final class NodeTagsCellControllerModel {
+public final class NodeTagsCellControllerModel {
     private let accountUseCase: any AccountUseCaseProtocol
     private let node: NodeEntity
     private(set) lazy var cellViewModel = NodeTagsCellViewModel(
@@ -23,7 +23,7 @@ final class NodeTagsCellControllerModel {
         Set(node.tags)
     }
 
-    init(node: NodeEntity, accountUseCase: some AccountUseCaseProtocol) {
+    public init(node: NodeEntity, accountUseCase: some AccountUseCaseProtocol) {
         self.node = node
         self.accountUseCase = accountUseCase
     }

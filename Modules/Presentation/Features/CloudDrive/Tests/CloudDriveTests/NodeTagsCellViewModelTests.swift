@@ -1,6 +1,7 @@
+import Foundation
 import AsyncAlgorithms
 @preconcurrency import Combine
-@testable import MEGA
+@testable import CloudDrive
 import MEGADomain
 import MEGADomainMock
 import Testing
@@ -71,5 +72,13 @@ struct NodeTagsCellViewModelTests {
         accountUseCase: MockAccountUseCase = MockAccountUseCase()
     ) async -> NodeTagsCellViewModel {
         await NodeTagsCellViewModel(node: node, accountUseCase: accountUseCase, notificationCenter: .default)
+    }
+}
+
+private extension Task where Success == Never, Failure == Never {
+    static func megaYield(count: Int = 20) async {
+        for _ in 0..<count {
+            await Task<Void, Never>.detached(priority: .background) { await Task.yield() }.value
+        }
     }
 }
