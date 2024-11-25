@@ -11,15 +11,16 @@ public class NWPathMonitorWrapper: NetworkMonitor, @unchecked Sendable {
     }
     
     public var networkPathStream: AsyncStream<NetworkPath> {
-        AsyncStream { continuation in
-            self.continuation = continuation
+        AsyncStream { [weak self] continuation in
+            self?.continuation = continuation
             
-            self.monitor.pathUpdateHandler = { path in
-                continuation.yield(path)
+            self?.monitor.pathUpdateHandler = { [weak self] path in
+                self?.continuation?.yield(path)
             }
 
-            continuation.onTermination = { @Sendable _ in
-                self.cancel()
+            continuation.onTermination = { @Sendable [weak self] _ in
+                self?.cancel()
+                self?.continuation = nil
             }
         }
     }
