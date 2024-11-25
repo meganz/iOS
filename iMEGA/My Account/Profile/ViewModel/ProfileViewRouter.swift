@@ -76,8 +76,20 @@ final class ProfileViewRouter: ProfileViewRouting {
                     expirationDate: expirationDate,
                     storageLimit: storageLimit
                 ).start()
-            }, onFailure: { error in
-                MEGALogError("[Cancel Subscription] Error: \(error.localizedDescription)")
+            },
+            onFailure: { actionCallback in
+                CustomModalAlertRouter(
+                    .cancelSubscriptionError,
+                    presenter: UIApplication.mnz_presentingViewController(),
+                    actionHandler: {
+                        ReportIssueViewRouter(
+                            presenter: UIApplication.mnz_visibleViewController(),
+                            onViewDismissed: {
+                                actionCallback()
+                            }
+                        ).start()
+                    }
+                ).start()
             },
             featureFlagProvider: DIContainer.featureFlagProvider,
             logger: { MEGALogError($0) }
