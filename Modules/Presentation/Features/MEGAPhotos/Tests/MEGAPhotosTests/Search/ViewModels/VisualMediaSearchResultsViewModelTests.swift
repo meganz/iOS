@@ -127,13 +127,13 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             XCTAssertEqual($0, .searchResults(
                 .init(sectionContents: [
                     .init(section: .albums, items: [
-                        .album(AlbumCellViewModel(album: systemAlbum)),
-                        .album(AlbumCellViewModel(album: userAlbum))
+                        .album(AlbumCellViewModel(album: systemAlbum, searchText: searchText)),
+                        .album(AlbumCellViewModel(album: userAlbum, searchText: searchText))
                     ]),
                     .init(section: .photos, items: [
-                        .photo(PhotoSearchResultItemViewModel(photo: photo3)),
-                        .photo(PhotoSearchResultItemViewModel(photo: photo2)),
-                        .photo(PhotoSearchResultItemViewModel(photo: photo1))
+                        .photo(PhotoSearchResultItemViewModel(photo: photo3, searchText: searchText)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo2, searchText: searchText)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo1, searchText: searchText))
                     ])
                 ])
             ))
