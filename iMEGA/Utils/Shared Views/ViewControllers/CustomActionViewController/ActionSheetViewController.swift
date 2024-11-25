@@ -244,7 +244,7 @@ extension ActionSheetViewController {
         super.loadView()
         view.backgroundColor = .clear
         
-        backgroundView.backgroundColor = .init(white: 0, alpha: 0.4)
+        backgroundView.backgroundColor = TokenColors.Background.blur
         
         indicator.isHidden = true
         
