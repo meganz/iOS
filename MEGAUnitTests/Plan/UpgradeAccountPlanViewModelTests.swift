@@ -663,7 +663,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         )
         
         await sut.cancelActiveCancellableSubscription()
-        XCTAssertTrue(mockSubscriptionsUseCase.cancelSubscriptions_calledTimes == 1)
+        XCTAssertTrue(mockSubscriptionsUseCase.cancelSubscriptionsWithReasonString_calledTimes == 1)
         
         do {
             try sut.validateActiveSubscriptions()

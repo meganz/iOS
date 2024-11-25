@@ -16,4 +16,8 @@ public struct MockSubscriptionRepository: SubscriptionRepositoryProtocol {
     public func cancelSubscriptions(reason: String?, subscriptionId: String?, canContact: Bool) async throws {
         try requestResult.get()
     }
+    
+    public func cancelSubscriptions(reasonList: [CancelSubscriptionReasonEntity]?, subscriptionId: String?, canContact: Bool) async throws {
+        try requestResult.get()
+    }
 }
