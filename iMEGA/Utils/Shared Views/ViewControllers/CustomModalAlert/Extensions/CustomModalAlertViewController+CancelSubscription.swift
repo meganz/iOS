@@ -1,4 +1,6 @@
+import Accounts
 import Foundation
+import MEGADomain
 import MEGAL10n
 
 extension CustomModalAlertViewController {
@@ -13,6 +15,23 @@ extension CustomModalAlertViewController {
         dismissButtonStyle = MEGACustomButtonStyle.primary.rawValue
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    func configureForCancelSubscriptionFailure(actionHandler: @escaping () -> Void) {
+        viewTitle = Strings.Localizable.somethingWentWrong
+        detail = Strings.Localizable.Accounts.CancelSubscriptionErrorAlert.message
+        firstButtonTitle = Strings.Localizable.Accounts.CancelSubscriptionErrorAlert.Button.ok
+        secondButtonTitle = Strings.Localizable.Accounts.CancelSubscriptionErrorAlert.Button.contactHelpdesk
+
+        firstCompletion = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+
+        secondCompletion = { [weak self] in
+            self?.dismiss(animated: true) {
+                actionHandler()
+            }
         }
     }
 }

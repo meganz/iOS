@@ -14,9 +14,18 @@ protocol ReportIssueViewRouting: Routing {
     
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
+    private var onViewDismissed: (() -> Void)?
     
     @objc init(presenter: UIViewController) {
         self.presenter = presenter
+    }
+    
+    init(
+        presenter: UIViewController,
+        onViewDismissed: (() -> Void)?
+    ) {
+        self.presenter = presenter
+        self.onViewDismissed = onViewDismissed
     }
     
     @objc func build() -> UIViewController {
@@ -61,6 +70,8 @@ protocol ReportIssueViewRouting: Routing {
     }
     
     func dismiss() {
-        baseViewController?.dismiss(animated: true)
+        baseViewController?.dismiss(animated: true) { [weak self] in
+            self?.onViewDismissed?()
+        }
     }
 }

@@ -34,16 +34,29 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         URL(string: "https://apps.apple.com/account/subscriptions")
     }
     
-    private let onSuccess: (_ expirationDate: Date, _ storageLimit: Int) -> Void
-    private let onFailure: (Error) -> Void
+    private let onSuccess: (
+        _ expirationDate: Date,
+        _ storageLimit: Int
+    ) -> Void
+    private let onFailure: (
+        _ onContactSupportTapped: @escaping () -> Void
+    ) -> Void
     
     /// CancelAccountPlanRouter is used to manage redirections of the cancel subscription flow
     /// - Parameters:
     ///   - currentSubscription: Holds the current active subscription details.
+    ///   - freeAccountStorageLimit: Specifies the storage limit (in GB or other units) available for free accounts after cancellation.
     ///   - accountUseCase: A use case handling account-related functionalities and actions.
     ///   - currentPlan: Contains the details of the user's current subscribed plan.
     ///   - assets: Holds the asset names (such as images) for display in the flow.
     ///   - navigationController: The navigation controller that manages presenting and dismissing the views related to the cancel account plan flow.
+    ///   - onSuccess: A closure that is called when the cancellation process is completed successfully, providing the expiration date of the subscription and the storage limit for the free account.
+    ///     - expirationDate: The date when the subscription will expire.
+    ///     - storageLimit: The storage limit assigned to the free account after the subscription expires.
+    ///   - onFailure: A closure that is called when the cancellation process fails. This closure includes another callback for when the user chooses to contact support.
+    ///     - onContactSupportTapped: A closure that is invoked when the user requests to contact support.
+    ///   - featureFlagProvider: A provider to check feature flags for enabling or disabling specific features related to the cancellation flow.
+    ///   - logger: An optional closure for logging debug or error messages during the cancellation flow.
     public init(
         currentSubscription: AccountSubscriptionEntity,
         freeAccountStorageLimit: Int,
@@ -52,7 +65,7 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
         assets: CancelAccountPlanAssets,
         navigationController: UINavigationController,
         onSuccess: @escaping (_ expirationDate: Date, _ storageLimit: Int) -> Void,
-        onFailure: @escaping (Error) -> Void,
+        onFailure: @escaping ( _ onContactSupportTapped: @escaping () -> Void) -> Void,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         logger: ((String) -> Void)? = nil
     ) {
@@ -127,13 +140,15 @@ public final class CancelAccountPlanRouter: CancelAccountPlanRouting {
     }
     
     public func showAlert(_ result: CancelSubscriptionResult) {
-        dismissCancellationFlow { [weak self] in
-            guard let self else { return }
-            switch result {
-            case .success(let expirationDate):
+        switch result {
+        case .success(let expirationDate):
+            dismissCancellationFlow { [weak self] in
+                guard let self else { return }
                 onSuccess(expirationDate, freeAccountStorageLimit)
-            case .failure(let error):
-                onFailure(error)
+            }
+        case .failure:
+            onFailure { [weak self] in
+                self?.dismissCancellationFlow()
             }
         }
     }

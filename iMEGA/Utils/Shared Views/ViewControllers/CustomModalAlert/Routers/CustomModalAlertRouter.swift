@@ -1,3 +1,4 @@
+import Accounts
 import Foundation
 import MEGADomain
 import MEGAPresentation
@@ -14,6 +15,7 @@ import MEGAPresentation
     case upgradeSecurity
     case pendingUnverifiedOutShare
     case cancelSubscription
+    case cancelSubscriptionError
 }
 
 @objc class CustomModalAlertRouter: NSObject, Routing {
@@ -30,6 +32,8 @@ import MEGAPresentation
     private var storageLimit: Int?
     
     private var transferQuotaDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode?
+    
+    private var actionHandler: (() -> Void)?
     
     @objc init(_ mode: CustomModalAlertMode, presenter: UIViewController) {
         self.mode = mode
@@ -68,6 +72,16 @@ import MEGAPresentation
         self.storageLimit = storageLimit
     }
     
+    init(
+        _ mode: CustomModalAlertMode,
+        presenter: UIViewController,
+        actionHandler: @escaping () -> Void
+    ) {
+        self.mode = mode
+        self.presenter = presenter
+        self.actionHandler = actionHandler
+    }
+    
     func build() -> UIViewController {
         let customModalAlertVC = CustomModalAlertViewController()
         switch mode {
@@ -95,6 +109,9 @@ import MEGAPresentation
         case .cancelSubscription:
             guard let expirationDate, let storageLimit else { return customModalAlertVC }
             customModalAlertVC.configureForCancelSubscriptionConfirmation(expirationDate: expirationDate, storageLimit: storageLimit)
+        case .cancelSubscriptionError:
+            guard let actionHandler else { return customModalAlertVC }
+            customModalAlertVC.configureForCancelSubscriptionFailure(actionHandler: actionHandler)
             
         default: break
         }
