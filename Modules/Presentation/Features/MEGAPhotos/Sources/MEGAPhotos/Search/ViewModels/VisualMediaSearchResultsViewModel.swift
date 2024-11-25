@@ -183,13 +183,14 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
             excludeSensitives: excludeSensitives,
             searchText: searchText)
         .compactMap { [weak self] albums -> [VisualMediaSearchResults.Item]? in
-            try await self?.map(albums: albums)
+            try await self?.map(albums: albums, searchText: searchText)
         }
         .eraseToAnyAsyncSequence()
     }
     
     private func map(
-        albums: [AlbumEntity]
+        albums: [AlbumEntity],
+        searchText: String
     ) throws -> [VisualMediaSearchResults.Item] {
         try albums.map {
             try Task.checkCancellation()
@@ -202,7 +203,8 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                 albumCoverUseCase: albumCoverUseCase,
                 album: $0,
                 selection: AlbumSelection(),
-                configuration: contentLibrariesConfiguration
+                configuration: contentLibrariesConfiguration,
+                searchText: searchText
             ))
         }
     }
