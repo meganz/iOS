@@ -28,4 +28,20 @@ public struct SubscriptionsRepository: SubscriptionRepositoryProtocol {
             )
         }
     }
+    
+    public func cancelSubscriptions(reasonList: [CancelSubscriptionReasonEntity]?, subscriptionId: String?, canContact: Bool) async throws {
+        try await withAsyncThrowingValue { completion in
+            sdk.creditCardCancelSubscriptions(
+                withReasons: reasonList.toMEGACancelSubscriptionReasonList(),
+                subscriptionId: subscriptionId,
+                canContact: canContact,
+                delegate: RequestDelegate(completion: { result in
+                    switch result {
+                    case .success: completion(.success)
+                    case .failure: completion(.failure(AccountErrorEntity.generic))
+                    }
+                })
+            )
+        }
+    }
 }

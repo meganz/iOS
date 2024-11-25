@@ -9,6 +9,17 @@ public protocol SubscriptionsUseCaseProtocol: Sendable {
     /// - Throws: An error if the cancellation fails.
     ///
     func cancelSubscriptions(reason: String?, subscriptionId: String?, canContact: Bool) async throws
+    
+    /// Cancels credit card subscriptions with optional parameters for providing a reason, subscription ID, and contact preference.
+    ///
+    /// - Default Values:
+    ///   - `reasonList`: `nil` (No reason is specified).
+    ///   - `subscriptionId`: `nil` (All active web subscriptions will be cancelled if no specific ID is provided).
+    ///   - `canContact`: `false` (The user will not be contacted, consistent with the value assigned in the old function to cancel subscriptions).
+    ///
+    /// - Throws: An error if the cancellation fails.
+    ///
+    func cancelSubscriptions(reasonList: [CancelSubscriptionReasonEntity]?, subscriptionId: String?, canContact: Bool) async throws
 }
 
 public extension SubscriptionsUseCaseProtocol {
@@ -53,6 +64,14 @@ public struct SubscriptionsUseCase: SubscriptionsUseCaseProtocol, Sendable {
     public func cancelSubscriptions(reason: String?, subscriptionId: String?, canContact: Bool) async throws {
         try await repo.cancelSubscriptions(
             reason: reason,
+            subscriptionId: subscriptionId,
+            canContact: canContact
+        )
+    }
+    
+    public func cancelSubscriptions(reasonList: [CancelSubscriptionReasonEntity]?, subscriptionId: String?, canContact: Bool) async throws {
+        try await repo.cancelSubscriptions(
+            reasonList: reasonList,
             subscriptionId: subscriptionId,
             canContact: canContact
         )
