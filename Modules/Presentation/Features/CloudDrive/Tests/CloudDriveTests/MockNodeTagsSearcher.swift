@@ -1,4 +1,4 @@
-@testable import MEGA
+@testable import CloudDrive
 
 actor MockNodeTagsSearcher: NodeTagsSearching {
     private let tags: [String]?

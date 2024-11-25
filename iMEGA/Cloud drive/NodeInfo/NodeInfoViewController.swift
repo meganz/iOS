@@ -1,3 +1,4 @@
+import CloudDrive
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -440,7 +441,12 @@ final class NodeInfoViewController: UITableViewController {
                             accountUseCase: AccountUseCase(
                                 repository: AccountRepository.newRepo
                             )
-                        )
+                        ),
+                        showUpgradeScreen: { [weak self] accountDetails in
+                            guard let self else { return }
+                            let upgradeRouter = UpgradeAccountPlanRouter(presenter: self, accountDetails: accountDetails)
+                            upgradeRouter.start()
+                        }
                     )
                 )
             )

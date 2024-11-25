@@ -110,7 +110,7 @@ private struct WidthModifier: ViewModifier {
     }
 }
 
-private struct WidthPreferenceKey: PreferenceKey {
+actor WidthPreferenceKey: PreferenceKey {
     static var defaultValue: CGFloat = 0
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {

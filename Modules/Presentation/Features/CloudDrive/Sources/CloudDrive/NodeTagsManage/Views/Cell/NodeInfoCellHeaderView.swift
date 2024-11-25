@@ -1,18 +1,18 @@
 import MEGADesignToken
 import SwiftUI
 
-struct NodeInfoCellHeaderView: View {
+public struct NodeInfoCellHeaderView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     private let title: String
     private let topPadding: CGFloat
 
-    init(title: String, topPadding: CGFloat = 30) {
+    public init(title: String, topPadding: CGFloat = 30) {
         self.title = title
         self.topPadding = topPadding
     }
 
-    var body: some View {
+    public var body: some View {
         VStack {
             Text(title)
                 .font(.footnote)
