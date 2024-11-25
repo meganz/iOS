@@ -187,6 +187,7 @@ public final class DeviceListViewModel: ObservableObject {
     private func monitorNetworkChanges() {
         let connectionSequence = networkMonitorUseCase.connectionSequence
         
+        networkMonitorTask?.cancel()
         networkMonitorTask = Task { [weak self] in
             for await isConnected in connectionSequence {
                 self?.hasNetworkConnection = isConnected
