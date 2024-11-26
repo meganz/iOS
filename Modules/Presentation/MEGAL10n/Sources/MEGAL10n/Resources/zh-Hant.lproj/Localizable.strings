@@ -3847,9 +3847,9 @@
 /* Upgrade account screen content title about pro plan's other benefits */
 "onboarding.upgradeAccount.content.plusBenefits.title"="此外還可獲得這些超棒的好處：";
 /* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 無限制的通話和會議";
+"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 不受限制的通話和會議";
 /* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 無限制的通話和會議\n• 無廣告";
+"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 不受限制的通話和會議\n• 無廣告";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="立即升級到Pro";
 /* Camera uploads banner enable state title */
@@ -4054,10 +4054,6 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話。需要新增更多與會者嗎？[A]立即升級[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這個限制。";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="此通話僅支援100位與會者。需要更多與會者嗎？[A]立即升級[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="此通話僅支援100位與會者。請求召集人升級到Pro版以移除這些限制。";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
@@ -4072,18 +4068,12 @@
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="此免費通話將在%@結束";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="此通話僅支援100位與會者。任何其他參與者只能發送和閱讀對話記錄。需要增加更多與會者嗎？[A]立即升級。[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="升級到Pro方案可獲得不受限制的通話時間";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="您的通話時間已達60分鐘的限制並已結束。Pro使用者的通話時間不受限制，最多可邀請1000位與會者。";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="立即升級";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="隱藏的檔案和資料夾";
 /* Hidden files and folders onboarding content hide important title */
@@ -4230,6 +4220,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="選擇所有選項";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="我暫時需要這個方案，不再使用了";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="我只用MEGA來進行下載";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="我需要暫時儲存檔案";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="我只用MEGA來共享檔案";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="我發現我的方案太貴了";
 /* Cancel subscription survey reason with id 3 */
@@ -4264,6 +4260,12 @@
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="請確保在此日期之前您的儲存用量在%@的範圍內。如果超過此限額，您的帳戶可能會被鎖定。";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="好的，明白了";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="我們現在無法處理您的取消訂閱。檢查您的連線，然後重試。如果問題仍然存在，請聯繫客服人員。";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="好的，明白了";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="聯繫客服";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="隱藏的項目";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4414,3 +4416,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="現有標籤";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="媒體";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";

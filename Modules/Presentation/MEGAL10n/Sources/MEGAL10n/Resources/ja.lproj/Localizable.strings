@@ -4054,10 +4054,6 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="はい、わかりました。";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="通話に参加できる参加者は100名のみです。追加の参加者は、チャットの送信と読み取りのみが可能になります。さらに参加者を追加する必要がありますか？[A]今すぐアップグレード[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="通話に参加できる参加者は100名のみです。追加の参加者は、メッセージの送受信のみが可能になります。主催者様はProにアップグレードして、この制限を解除できます。";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="通話に参加できる参加者は100名のみです。さらにご必要ですか？[A]今すぐアップグレード[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="通話に参加できる参加者は100名のみです。これらの制限を解除するには、Proにアップグレードするように主催者様にご依頼ください。";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
@@ -4072,18 +4068,12 @@
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="この無料通話は%@分後に終了します";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="通話に参加できる参加者は100名のみです。追加の参加者は、チャットの送信と読み取りのみが可能になります。さらに参加者を追加する必要がありますか？[A]今すぐアップグレード[/A]。";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="通話に参加できる参加者は100名のみです。追加の参加者は、メッセージの送受信のみが可能になります。主催者様はProにアップグレードして、これらの制限を解除できます。";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Proにアップグレードしていただく無制限に通話できるようになります";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="通話時間が60分の制限に達したため終了しました。Proユーザー様は通話時間が無制限で、最大1000人の参加者を招待できます。";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="今すぐアップグレード";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="通話に参加できる参加者は100名のみです。追加の参加者は、メッセージの送受信のみが可能になります。主催者様はProにアップグレードして、これらの制限を解除できます。";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="通話に参加できる参加者は100名のみです。追加の参加者は、メッセージの送受信のみが可能になります。主催者様はProにアップグレードして、これらの制限を解除できます。";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="ファイルとフォルダを隠す";
 /* Hidden files and folders onboarding content hide important title */
@@ -4230,6 +4220,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="該当するものをすべて選択してください";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="このプランは一時的に必要でしたが、もう使用しません";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="MEGAはダウンロード目的でのみ使用しました";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="一時的にファイルを保存する必要がありました";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="MEGAをファイル共有目的でのみ使用しました";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="プランが高すぎることがわかりました";
 /* Cancel subscription survey reason with id 3 */
@@ -4264,6 +4260,12 @@
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="この日までにストレージ量が%@の制限を超えていないことをご確認ください。制限を超えている場合、アカウントがロックされる可能性があります。";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="はい、わかりました。";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="現在キャンセルを処理できません。接続を確認して、もう一度お試しください。問題が解決しない場合は、サポートにご連絡ください。";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="はい、わかりました。";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="サポートに連絡する";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="非表示項目";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4414,3 +4416,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="既存のタグ";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="メディア";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="通話に参加できる参加者は100名のみです。追加の参加者は、メッセージの送受信のみが可能になります。主催者様は、Proにアップグレードしていただくと、これらの制限を解除できます。";

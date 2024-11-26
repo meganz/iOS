@@ -4054,10 +4054,6 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Bine, am înțeles";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Doar 100 de participanții se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Trebuie să adăugați mai mulți participanți? [A]Upgradați acum[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica această restricție.";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Doar 100 de participanți se pot alătura apelului. Ai nevoie de mai mult? [A]Actualizați acum[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Doar 100 de participanți se pot alătura apelului. Cereți organizatorului să upgradeze la Pro pentru a elimina aceste restricții.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
@@ -4072,18 +4068,12 @@
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Acest apel gratuit se va încheia în %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și citi doar chat-uri. Trebuie să adăugați mai mulți participanți? [A]Actualizați acum.[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica aceste restricții.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgradați la Pro pentru a primi apeluri nelimitate";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Apelul dvs. a atins limita de 60 de minute și s-a încheiat. Utilizatorii Pro au o durată nelimitată a apelului și pot invita până la 1000 de participanți.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgradați acum";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica aceste restricții.";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica aceste restricții.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Fișiere și foldere ascunse";
 /* Hidden files and folders onboarding content hide important title */
@@ -4230,6 +4220,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="Selectați toate cele care se aplică";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Aveam nevoie de acest abonament temporar și nu îl mai folosesc";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="Am folosit MEGA doar pentru descărcări";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="Trebuia să stoc temporar fișierele";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="Am folosit MEGA doar pentru partajarea fișierelor";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="Mi s-a părut abonamentul prea scump";
 /* Cancel subscription survey reason with id 3 */
@@ -4264,6 +4260,12 @@
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Vă rugăm să vă asigurați că cantitatea de spațiu de stocare este sub limita de %@ până la această dată. Contul dvs. poate fi blocat dacă depășiți limita.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="Închide";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="Nu putem procesa anularea dvs. chiar acum. Verificați conexiunea și încercați din nou. Dacă problema persistă, contactați Asistența.";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="Închide";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="Contactați Asistența";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Elemente ascunse";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4414,3 +4416,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Etichete existente";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="Mass-media";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="Doar 100 de participanți se pot alătura apelului. Orice participanți suplimentari vor putea trimite și primi mesaje. Persoana care organizează apelul poate încheia un abonament Pro pentru a ridica aceste restricții.";

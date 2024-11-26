@@ -3987,9 +3987,9 @@
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="لا وجود لأي نشاط مؤخراً";
 /* Recently watched videos delete all alert title */
-"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+"videos.recentlyWatched.deletion.alert.title"="ستتم إزالة مقاطع الفيديو من هذه القائمة ولكن لن يتم حذفهم من السواقة السحابية";
 /* Recently watched videos delete all alert clear recently watched option */
-"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="مسح القائمة";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="لا يوجد أحد في غرفة الانتظار";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4054,14 +4054,10 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="حسنًا، فهمت ذلك";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="يمكن لـ 100 مشارك الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. هل تحتاج إلى إضافة المزيد من المشاركين؟ [A]قم بالترقية الآن[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذا القيد.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. اطلب من المنظم الترقية إلى برو Pro لإزالة هذا القيد.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. هل تحتاج إلى المزيد؟ [A]قم بالترقية الآن[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="هل تحتاج إلى مزيد من الوقت؟ تحتوي باقات برو Pro على مكالمات غير محدودة المدة.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4071,19 +4067,13 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="ستنتهي هذه المكالمة المجانية في %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";
+"meetings.contact-picker.warning.over-limit.host"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. هل تحتاج إلى إضافة المزيد من المشاركين؟ [A]قم بالترقية الآن.[/A]";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="قم بالترقية إلى برو Pro للحصول على مكالمات غير محدودة";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="وصلت مكالمتك إلى حد 60 دقيقة وانتهت. يتمتع مستخدمو برو Pro بمدة مكالمات غير محدودة ويمكنهم دعوة ما يصل إلى 1000 مشارك.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="رق حسابك الآن";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="الملفات والمجلدات المخفية";
 /* Hidden files and folders onboarding content hide important title */
@@ -4227,9 +4217,15 @@
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="سيتم إلغاء اشتراكك على الفور وسيتم نقلك إلى حساب ميغا MEGA مجاني عند انتهاء باقتك الحالية. ملاحظة: لن يؤدي إلغاء اشتراكك إلى حذف حسابك.";
 /* Cancel subscription survey subHeader title */
-"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
+"accounts.cancelSubscriptionSurvey.subHeader.title"="حدد كل ما ينطبق";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="كنت بحاجة إلى هذه الباقة مؤقتًا ولم أعد أستخدمها";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="لقد وجدت باقتي غالية جداً";
 /* Cancel subscription survey reason with id 3 */
@@ -4257,13 +4253,19 @@
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="أدخل التفاصيل";
 /* Cancel subscription confirmation alert title */
-"accounts.cancelSubscriptionConfirmationAlert.title"="Your subscription has been cancelled";
+"accounts.cancelSubscriptionConfirmationAlert.title"="تم إلغاء اشتراكك";
 /* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
-"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="You will move to a free MEGA account when your current plan expires on %@.";
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="ستنتقل إلى حساب ميغا MEGA مجاني عندما تنتهي باقتك الحالية بتاريخ %@.";
 /* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
-"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Please ensure your storage amount is under the limit of %@ by this date. Your account may be locked if you are over the limit.";
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="يرجى التأكد من أن كمية التخزين الخاصة بك أقل من الحد %@ بحلول هذا التاريخ. قد يتم قفل حسابك إذا تجاوزت الحد.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="حسنًا، فهمت ذلك";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="حسنًا، فهمت ذلك";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="الاتصال بالدعم";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="عناصر مخفية";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4405,12 +4407,14 @@
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="استخدم العلامات لمساعدتك في العثور على بياناتك وتنظيمها. حاول وضع العلامات حسب السنة أو الموقع أو المشروع أو الموضوع.";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags cannot contain spaces or symbols. Tags will appear in lowercase letters. Non-Latin characters, such as Chinese or Korean, are allowed.";
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="لا يمكن أن تحتوي التاغات على مسافات أو رموز. ستظهر التاغات بأحرف صغيرة. يُسمح باستخدام الأحرف غير اللاتينية، مثل الصينية أو الكورية.";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="الحد الأقصى 32 محرفاً";
 /* Button title shown to the user to add the tags in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="أضف تاغ «#%@»";
 /* Section title that is shown over the existing tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="التاغات الموجودة";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="الإعلام";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";

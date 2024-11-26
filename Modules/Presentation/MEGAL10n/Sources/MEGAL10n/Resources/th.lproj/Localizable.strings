@@ -4054,12 +4054,8 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="โอเค เข้าใจแล้ว";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น ต้องการเพิ่มผู้เข้าร่วมเพิ่มเติมหรือไม่ [A]อัปเกรดแผนของคุณตอนนี้[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove this restriction.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
 "meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
@@ -4072,18 +4068,12 @@
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="การโทรฟรีนี้จะสิ้นสุดลงใน %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="อัปเกรดเป็นแผน Pro เพื่อโทรได้ไม่อั้น";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="การโทรของคุณใช้เวลาครบ 60 นาทีตามข้อจำกัดของระบบแล้ว ผู้ใช้บัญชี Pro นั้นสามารถโทรได้นานไม่จำกัด และสามารถเชิญผู้เข้าร่วมได้มากถึง 1000 คน";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="อัปเกรดตอนนี้";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="ซ่อนไฟล์และโฟลเดอร์";
 /* Hidden files and folders onboarding content hide important title */
@@ -4230,6 +4220,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="ฉันแค่ต้องการทดลองใช้แผนนี้ชั่วคราวและไม่ต้องการใช้แผนนี้อีกต่อไป";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="ฉันคิดว่าแผนของฉันแพงเกินไป";
 /* Cancel subscription survey reason with id 3 */
@@ -4264,6 +4260,12 @@
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="กรุณาตรวจสอบพื้นที่จัดเก็บของคุณให้เหลือไม่เกิน %@ ภายในวันที่กำหนด หากคุณมีข้อมูลเกินกว่าที่กำหนด บัญชีของคุณอาจถูกระงับการใช้งานชั่วคราวได้";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="โอเค เข้าใจแล้ว";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="โอเค เข้าใจแล้ว";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="ติดต่อฝ่ายสนับสนุน";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="รายการที่ถูกซ่อน";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4414,3 +4416,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="แท็กที่มีอยู่";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="สื่อ";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
