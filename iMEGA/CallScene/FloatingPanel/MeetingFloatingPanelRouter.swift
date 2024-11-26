@@ -95,6 +95,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             menuPresenter: presentMenu,
             chatRoom: chatRoom,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             containerViewModel: containerViewModel, 
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),

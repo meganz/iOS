@@ -15,6 +15,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private var chatRoom: ChatRoomEntity
     
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
@@ -29,8 +30,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private let raiseHandBadgeStoring: any RaiseHandBadgeStoring
     private let tracker: any AnalyticsTracking
 
-    private var subscriptions = Set<AnyCancellable>()
-
     @Published var micEnabled: Bool = false
     @Published var cameraEnabled: Bool = false
     @Published var speakerEnabled: Bool = false
@@ -44,6 +43,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         menuPresenter: @escaping ([ActionSheetAction]) -> Void,
         chatRoom: ChatRoomEntity,
         callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
         containerViewModel: MeetingContainerViewModel? = nil,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
@@ -62,6 +62,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.menuPresenter = menuPresenter
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.localVideoUseCase = localVideoUseCase
         self.containerViewModel = containerViewModel
         self.permissionHandler = permissionHandler
@@ -85,7 +86,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         
         registerForAudioRouteChanges()
         checkRouteViewAvailability()
-        listenToCallUpdates()
+        monitorOnCallUpdate()
         updateSpeakerIcon()
     }
     
@@ -304,16 +305,13 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         routeViewVisible = audioSessionUseCase.isBluetoothAudioRouteAvailable
     }
     
-    private func listenToCallUpdates() {
-        callUseCase.onCallUpdate()
-            .receive(on: scheduler)
-            .sink { @Sendable [weak self] call in
-                guard let self else { return }
-                Task {
-                    await self.onCallUpdate(call)
-                }
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
             }
-            .store(in: &subscriptions)
+        }
     }
     
     private func onCallUpdate(_ call: CallEntity) {
