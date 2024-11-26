@@ -361,7 +361,8 @@ final class CallControlsViewModelTests: XCTestCase {
         let cameraSwitcher = MockCameraSwitcher()
         let raiseHandBadgeStore = MockRaiseHandBadgeStore()
         let mockTracker = MockTracker()
-        
+        let callUpdateUseCase = MockCallUpdateUseCase()
+
         init(
             chatType: ChatRoomEntity.ChatType = .meeting,
             isModerator: Bool = true,
@@ -390,6 +391,7 @@ final class CallControlsViewModelTests: XCTestCase {
                 menuPresenter: { actions in menuPresenter(actions) },
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
+                callUpdateUseCase: callUpdateUseCase,
                 localVideoUseCase: localVideoUseCase,
                 containerViewModel: containerViewModel,
                 audioSessionUseCase: audioSessionUseCase,
@@ -518,9 +520,7 @@ final class CallControlsViewModelTests: XCTestCase {
         }
         
         func localAudioFlagUpdated(enabled: Bool) {
-            callUseCase
-                .callUpdateSubject
-                .send(.localCameraEnabled(enabled))
+            callUpdateUseCase.sendCallUpdate(.localCameraEnabled(enabled))
         }
     }
 }
