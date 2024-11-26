@@ -76,6 +76,9 @@ enum MEGASDKErrorType: Error {
     /// Not enough quota
     case notEnoughQuota(_ description: String)
 
+    /// A strongly-grouped request was rolled back
+    case rolledBack(_ description: String)
+
     /// Multi-factor authentication required
     case multiFactorAuthenticationRequired(_ description: String)
 
@@ -146,6 +149,7 @@ func transform(error: MEGAError) -> MEGASDKErrorType {
     case .apiEAppKey:               return .invalidApplicationKey(error.name)
     case .apiESSL:                  return .invalidSSLKey(error.name)
     case .apiEgoingOverquota:       return .notEnoughQuota(error.name)
+    case .apiERolledBack:           return .rolledBack(error.name)
     case .apiEMFARequired:          return .multiFactorAuthenticationRequired(error.name)
     case .apiEMasterOnly:           return .businessAccountAccessOnly(error.name)
     case .apiEBusinessPastDue:      return .businessAccountExpired(error.name)
