@@ -84,7 +84,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForRubbishBinRootFolder() -> SearchConfig.EmptyViewAssets {
         .init(
-            image: Image(.folderEmptyState),
+            image: Image(.rubbishEmptyState),
             title: Strings.Localizable.cloudDriveEmptyStateTitleRubbishBin,
             titleTextColor: titleTextColor
         )

@@ -60,7 +60,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             nodeUseCase: MockNodeDataUseCase(isARubbishBinRootNodeValue: true),
             nodeEntity: NodeEntity(nodeType: .rubbish),
             displayMode: .rubbishBin,
-            expectedImage: Image(.folderEmptyState),
+            expectedImage: Image(.rubbishEmptyState),
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitleRubbishBin
         )
     }
