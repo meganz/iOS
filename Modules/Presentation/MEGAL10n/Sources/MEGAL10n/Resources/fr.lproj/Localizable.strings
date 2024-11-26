@@ -4054,10 +4054,6 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="D’accord, j’ai compris";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et lire les conversations. Souhaitez-vous ajouter des participants ? [A]Surclassez votre compte maintenant[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever cette restriction.";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Seuls 100 participants peuvent participer à l'appel. Vous en avez besoin de plus ? [A]Mettez à jour dès maintenant[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
 "meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Seuls 100 participants peuvent participer à l'appel. Demandez à l'organisateur d'effectuer la mise à niveau vers la version Pro pour supprimer ces restrictions.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
@@ -4072,18 +4068,12 @@
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Cet appel gratuit se terminera dans %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Seuls 100 participants peuvent participer à l'appel. Les participants supplémentaires pourront uniquement envoyer et lire des conversations. Vous avez besoin d'ajouter d'autres participants ? [A]Effectuez une mise à niveau maintenant[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Passer à la version Pro pour bénéficier d’appels illimités";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Votre appel a atteint la limite de 60 minutes et s’est terminé. Les utilisateurs Pro bénéficient d’une durée d’appel illimitée et peuvent inviter jusqu’à 1 000 participants.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Surclasser le compte maintenant";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Fichiers et dossiers cachés";
 /* Hidden files and folders onboarding content hide important title */
@@ -4230,6 +4220,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="Sélectionnez tout ce qui s'applique";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="J’avais besoin de cet abonnement temporairement et ne l’utilise plus";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="J'ai utilisé MEGA pour les téléchargements uniquement";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="J'avais besoin de stocker temporairement des fichiers";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="J'ai utilisé MEGA pour partager des fichiers uniquement";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="J’ai trouvé mon abonnement trop cher";
 /* Cancel subscription survey reason with id 3 */
@@ -4264,6 +4260,12 @@
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Veuillez vous assurer que la quantité d'espace de stockage est inférieure à la limite de %@ à cette date. Votre compte peut être bloqué si vous dépassez la limite.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="D’accord, j’ai compris";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="Nous ne pouvons pas traiter votre annulation pour le moment. Vérifiez votre connexion et réessayez. Si le problème persiste, contactez le support.";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="D’accord, j’ai compris";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="Contacter l’assistance";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Éléments cachés";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4414,3 +4416,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Étiquettes existantes";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="Médias";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";

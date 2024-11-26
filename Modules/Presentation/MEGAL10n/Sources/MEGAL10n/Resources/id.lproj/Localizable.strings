@@ -4054,14 +4054,10 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, mengerti";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan membaca obrolan. Perlu menambahkan lebih banyak peserta? [A]Tingkatkan sekarang[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Hanya 100 peserta yang dapat bergabung dalam panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Minta penyelenggara untuk meningkatkan ke Pro untuk menghapus batasan ini.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan membaca obrolan. Butuh lebih banyak? [A]Tingkatkan sekarang[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="Butuh lebih banyak waktu? Paket Pro menawarkan panggilan tak terbatas.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4071,19 +4067,13 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Panggilan gratis ini akan berakhir dalam %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";
+"meetings.contact-picker.warning.over-limit.host"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan membaca obrolan. Perlu menambahkan lebih banyak peserta? [A]Tingkatkan sekarang.[/A]";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Tingkatkan ke Pro untuk mendapatkan panggilan tak terbatas";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Panggilan anda mencapai batas 60 menit dan telah berakhir. Pengguna Pro memiliki durasi panggilan tak terbatas dan dapat mengundang hingga 1000 peserta.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Tingkatkan sekarang";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="File dan folder tersembunyi";
 /* Hidden files and folders onboarding content hide important title */
@@ -4230,6 +4220,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="Pilih semua yang berlaku";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Saya membutuhkan paket ini untuk sementara dan tidak lagi menggunakannya";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="Saya menemukan paket saya terlalu mahal";
 /* Cancel subscription survey reason with id 3 */
@@ -4264,6 +4260,12 @@
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Harap pastikan jumlah penyimpanan anda di bawah batas %@ pada tanggal ini. Akun anda mungkin terkunci jika anda melebihi batas.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="Ok, mengerti";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="Ok, mengerti";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="Hubungi Bantuan";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Item tersembunyi";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4409,8 +4411,10 @@
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Maksimal 32 karakter";
 /* Button title shown to the user to add the tags in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Tambahkan tag “#%@”";
 /* Section title that is shown over the existing tags in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Existing tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Tag yang ada";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="Media";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan menerima pesan. Penyelenggara dapat meningkatkan ke Pro untuk menghapus batasan ini.";

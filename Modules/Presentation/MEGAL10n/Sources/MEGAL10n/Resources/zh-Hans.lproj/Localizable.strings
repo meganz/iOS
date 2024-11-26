@@ -4054,14 +4054,10 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="只有100位参与者可以加入通话。任何其他参与者将只能发送和阅读聊天记录。需要添加更多参与者吗？[A]立即升级[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro版以移除此限制。";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="只有100名参与者可以加入通话。要求组织者升级到Pro会员以移除此限制。";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="只有100名参与者可以加入通话。任何其他参与者只能发送和阅读聊天记录。需要更多？[A]立即升级[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="需要更多时间？Pro方案提供无限通话。";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4071,19 +4067,13 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="此免费通话将在%@结束";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro方案以移除这些限制。";
+"meetings.contact-picker.warning.over-limit.host"="只有100名参与者可以加入通话。任何其他参与者只能发送和阅读聊天记录。需要添加更多参与者吗？[A]立即升级。[/A]";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="升级到Pro版即可获得无限通话";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="您的通话已达到60分钟限制并已结束。Pro会员用户具有无限通话时长，并且可以邀请多达1000名参与者。";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="立即升级";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro方案以移除这些限制。";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro方案以移除这些限制。";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="隐藏的文件和文件夹";
 /* Hidden files and folders onboarding content hide important title */
@@ -4230,6 +4220,12 @@
 "accounts.cancelSubscriptionSurvey.subHeader.title"="选择所有适用的选项";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="我只是暂时需要这个方案，并且不再使用它";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="我发现我的方案太贵了";
 /* Cancel subscription survey reason with id 3 */
@@ -4264,6 +4260,12 @@
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="在到期之前，请确保您的存储用量在%@的限制内。如果您超过限制，您的帐户可能会被锁定。";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="好的，明白了";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="好的，明白了";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="联系支持";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="隐藏的项目";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4414,3 +4416,5 @@
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="现有标签";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="媒体";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro方案以移除这些限制。";

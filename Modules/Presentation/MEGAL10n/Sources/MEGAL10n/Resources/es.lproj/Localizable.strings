@@ -3987,9 +3987,9 @@
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="No hay actividad reciente";
 /* Recently watched videos delete all alert title */
-"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+"videos.recentlyWatched.deletion.alert.title"="Los vídeos se eliminarán de esta lista, pero no se eliminarán de tu Nube";
 /* Recently watched videos delete all alert clear recently watched option */
-"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Borrar lista";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="No hay nadie en la sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4054,14 +4054,10 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Entendido";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solamente podrán enviar y leer los chats. ¿Necesitas añadir a más participantes? [A]Amplía ahora[/A]";
-/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
-"meetings.floatingPanel.banner.limit100Participants.nonOrganizerHost"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solo podrán enviar y recibir mensajes. El organizador puede ampliar a Pro para eliminar esta restricción.";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Need more? [A]Upgrade now[/A]";
-/* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Esta llamada solo admite a 100 participantes. Pide al organizador que amplíe a Pro para eliminar esta restricción.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solamente podrán enviar y leer los chats. ¿Necesitas más? [A]Amplía ahora[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="¿Necesitas más tiempo? El plan Pro ofrece llamadas ilimitadas.";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4071,19 +4067,13 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="Esta llamada gratuita finalizará en %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
-/* Meetings: Warning banner shown for non-hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.non-host"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solo podrán enviar y recibir mensajes. El organizador puede ampliar a Pro para eliminar estas restricciones.";
+"meetings.contact-picker.warning.over-limit.host"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solamente podrán enviar y leer los chats. ¿Necesitas añadir a más participantes? [A]Amplía ahora.[/A]";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="Amplía a Pro para recibir llamadas ilimitadas";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="La llamada ha alcanzado el límite de 60 minutos y ha finalizado. Los usuarios Pro tienen llamadas de duración ilimitada y pueden invitar hasta 1000 participantes.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Ampliar cuenta";
-/* Calls: Free plan limit message shown the alert when somebody tries to join a full meeting */
-"calls.freePlanLimitWarning.waitingRoom.alert.message"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solo podrán enviar y recibir mensajes. El organizador puede ampliar a Pro para eliminar estas restricciones.";
-/* Calls: Free plan limit message when showing waiting list users but limit of call participants was reached */
-"calls.freePlanLimitWarning.waitingRoomList.banner.message"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solo podrán enviar y recibir mensajes. El organizador puede ampliar a Pro para eliminar estas restricciones.";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Archivos y carpetas ocultos";
 /* Hidden files and folders onboarding content hide important title */
@@ -4227,9 +4217,15 @@
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="Tu suscripción se cancelará de inmediato y volverás a tener una cuenta de MEGA gratuita en cuanto caduque tu plan actual. Aviso: Cancelar la suscripción no eliminará tu cuenta.";
 /* Cancel subscription survey subHeader title */
-"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
+"accounts.cancelSubscriptionSurvey.subHeader.title"="Selecciona uno o más motivos";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Necesitaba este plan temporalmente y ya no lo uso";
+/* Cancel subscription survey follow up reason with id 1.a */
+"accounts.cancelSubscriptionSurvey.reason.one.a"="He usado MEGA solo para descargar";
+/* Cancel subscription survey follow up reason with id 1.b */
+"accounts.cancelSubscriptionSurvey.reason.one.b"="Necesitaba almacenar archivos temporalmente";
+/* Cancel subscription survey follow up reason with id 1.c */
+"accounts.cancelSubscriptionSurvey.reason.one.c"="He usado MEGA solo para compartir unos archivos";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="El plan era demasiado caro";
 /* Cancel subscription survey reason with id 3 */
@@ -4257,13 +4253,19 @@
 /* Cancel subscription survey error message when field is empty */
 "accounts.cancelSubscriptionSurvey.error.enterDetails"="Introducir motivo";
 /* Cancel subscription confirmation alert title */
-"accounts.cancelSubscriptionConfirmationAlert.title"="Your subscription has been cancelled";
+"accounts.cancelSubscriptionConfirmationAlert.title"="Se ha cancelado tu suscripción";
 /* Cancel subscription confirmation alert description informing the user they will be downgraded to a free account on %@ (expiration date) */
-"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="You will move to a free MEGA account when your current plan expires on %@.";
+"accounts.cancelSubscriptionConfirmationAlert.description.currentPlanExpiration"="Pasarás a una cuenta de MEGA gratuita cuando tu plan actual caduque el %@.";
 /* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
-"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Please ensure your storage amount is under the limit of %@ by this date. Your account may be locked if you are over the limit.";
+"accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Asegúrate de que la cantidad de almacenamiento esté por debajo del límite de %@ antes de esta fecha. Tu cuenta podría ser bloqueada si superas el límite.";
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="Entendido";
+/* Error message displayed in the cancel subscription error alert */
+"accounts.cancelSubscriptionErrorAlert.message"="No se ha podido procesar la cancelación. Comprueba la conexión e inténtalo de nuevo. Si el problema persiste, contacta con el servicio de soporte.";
+/* Primary action button in the cancel subscription error alert to acknowledge the error */
+"accounts.cancelSubscriptionErrorAlert.button.ok"="Entendido";
+/* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="Contactar con soporte";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Elementos ocultos";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4399,18 +4401,20 @@
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
 "cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Exclusivo para Pro";
 /* Title for `Add tags` screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.title"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.title"="Añadir etiquetas";
 /* The placeholder of the input text in the Add Tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Add tags";
+"cloudDrive.nodeInfo.nodeTags.addTags.inputPlaceHolder"="Añade etiquetas";
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="Usa las etiquetas para encontrar y organizar tus datos. Puedes etiquetar por año, ubicación, proyecto o tema.";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags cannot contain spaces or symbols. Tags will appear in lowercase letters. Non-Latin characters, such as Chinese or Korean, are allowed.";
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Las etiquetas no pueden contener espacios ni símbolos y aparecerán siempre en minúsculas. Se permiten caracteres no latinos, como el chino o el coreano.";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Máximo 32 caracteres";
 /* Button title shown to the user to add the tags in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Añadir la etiqueta “%@”";
 /* Section title that is shown over the existing tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Etiquetas existentes";
 /* Section title for visual media photos section */
-"photos.searchResults.media.section.title"="Medios";
+"photos.searchResults.media.section.title"="Archivos multimedia";
+/* Meetings: Warning banner show in various places about 100 participant limit */
+"meetings.warning.overParticipantLimit"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solo podrán enviar y recibir mensajes. El organizador puede ampliar a Pro para eliminar estas restricciones.";
