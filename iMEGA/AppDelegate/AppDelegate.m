@@ -88,6 +88,9 @@
 @property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
 @property (nonatomic, strong) SpotlightIndexer *spotlightIndexer;
 
+@property (nonatomic) MEGAError * _Nullable temporaryTransferErrorToDisplayLater;
+@property (nonatomic) MEGATransfer * _Nullable temporaryTransferTypeToDisplayLater;
+
 @end
 
 @implementation AppDelegate
@@ -726,6 +729,17 @@
     [self showLaunchTabDialogIfNeeded];
     
     [self processGenericAppPushNotificationTapIfNeeded];
+    
+    [self showTemporaryTransferErrorDialogIfNeeded];
+}
+
+- (void)showTemporaryTransferErrorDialogIfNeeded {
+    if (self.temporaryTransferErrorToDisplayLater && self.temporaryTransferTypeToDisplayLater) {
+        [self handleTransferQuotaError:self.temporaryTransferErrorToDisplayLater
+                              transfer:self.temporaryTransferTypeToDisplayLater];
+        self.temporaryTransferErrorToDisplayLater = nil;
+        self.temporaryTransferTypeToDisplayLater = nil;
+    }
 }
 
 - (void)processGenericAppPushNotificationTapIfNeeded {
@@ -1689,7 +1703,14 @@
 - (void)onTransferTemporaryError:(MEGASdk *)sdk transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     MEGALogDebug(@"onTransferTemporaryError %td", error.type)
     if (!transfer.isForeignOverquota) {
-        [self handleTransferQuotaError:error transfer:transfer];
+        if (![LTHPasscodeViewController doesPasscodeExist] &&
+            ![[LTHPasscodeViewController sharedUser] isLockscreenPresent]) {
+            [self handleTransferQuotaError:error transfer:transfer];
+        } else {
+            // These are stored to be used when showing the dialog after successul passcode entry
+            self.temporaryTransferTypeToDisplayLater = transfer;
+            self.temporaryTransferErrorToDisplayLater = error;
+        }
     }
 }
 
