@@ -789,11 +789,9 @@ class GetLinkViewController: UIViewController {
     private func updateHeaderViewForSingleItem(forHeader header: inout GenericHeaderFooterView, forSection sectionType: GetLinkTableViewSection) {
         switch sectionType {
         case .link:
-            let attributedString = NSMutableAttributedString(string: Strings.Localizable.link, attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary as Any])
-            header.configure(attributedTitle: attributedString, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configureTitle(Strings.Localizable.link, color: TokenColors.Text.secondary, topDistance: 17, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .key:
-            let attributedString = NSMutableAttributedString(string: Strings.Localizable.key, attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary as Any])
-            header.configure(attributedTitle: attributedString, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configureTitle(Strings.Localizable.key, color: TokenColors.Text.secondary, topDistance: 17, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .decryptKeySeparate:
             header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .expiryDate:
@@ -984,14 +982,17 @@ extension GetLinkViewController: UITableViewDelegate {
             updateHeaderViewForAlbum(forHeader: &header, forSection: section)
         } else if getLinkVM.isMultiLink {
             guard section > 0 else {
-                return nil
+                let emptyHeaderView = UIView()
+                emptyHeaderView.backgroundColor = .clear
+                return emptyHeaderView
             }
             
             header.titleLabel.textAlignment = .left
-            header.configure(
-                title: Strings.Localizable.link,
-                topDistance: section == 1 ? 17.0 : 25.0, isTopSeparatorVisible: false,
-                isBottomSeparatorVisible: true
+            header.configureTitle(
+                Strings.Localizable.link,
+                color: TokenColors.Text.secondary,
+                topDistance: section == 1 ? 17.0 : 25.0,
+                isTopSeparatorVisible: false, isBottomSeparatorVisible: true
             )
         } else if let sectionType = sections()[safe: section] {
             updateHeaderViewForSingleItem(forHeader: &header, forSection: sectionType)
@@ -1131,5 +1132,18 @@ extension GetLinkViewController: MEGARestoreDelegate {
     func successfulRestore(_ megaPurchase: MEGAPurchase!) {
         justUpgradedToProAccount = true
         reloadProSections()
+    }
+}
+
+private extension GenericHeaderFooterView {
+    func configureTitle(
+        _ text: String,
+        color: UIColor,
+        topDistance: CGFloat,
+        isTopSeparatorVisible: Bool,
+        isBottomSeparatorVisible: Bool
+    ) {
+        let attributedString = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: color as Any])
+        configure(attributedTitle: attributedString, topDistance: topDistance, isTopSeparatorVisible: isTopSeparatorVisible, isBottomSeparatorVisible: isBottomSeparatorVisible)
     }
 }
