@@ -106,8 +106,10 @@ final class FileProviderExtension: NSFileProviderExtension {
             throw NSFileProviderError(.noSuchItem)
         }
         
-        if !FileManager.default.fileExists(atPath: url.path) {
-            _ = try await transferUseCase.download(node: node, to: url)
+        let fileProviderItem = try item(for: identifier)
+        
+        if !(fileProviderItem.isDownloaded ?? false) {
+            _ = try await transferUseCase.download(node: node, to: url, collisionResolution: .overwrite)
         }
     }
     
