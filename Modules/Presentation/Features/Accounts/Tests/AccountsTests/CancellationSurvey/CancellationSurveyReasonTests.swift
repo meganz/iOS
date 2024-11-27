@@ -12,7 +12,7 @@ struct CancellationSurveyReasonTests {
             let expectedTitle = "Test"
             let expectedFollowUpReasons = [
                 CancellationSurveyFollowUpReason(
-                    id: [.a, .b, .c].randomElement() ?? .a,
+                    id: CancellationSurveyFollowUpReason.ID.allCases.randomElement() ?? .a,
                     mainReasonID: expectedRandomID,
                     title: "Follow up reason"
                 )

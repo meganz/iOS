@@ -1,6 +1,5 @@
-
 struct CancellationSurveyFollowUpReason: Hashable {
-    enum ID: String {
+    enum ID: String, CaseIterable {
         case a, b, c
     }
     

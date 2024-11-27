@@ -91,13 +91,6 @@ final class CancellationSurveyViewModel: ObservableObject {
             isOtherFieldFocused = false
         }
     }
-
-    var formattedReasonString: String? {
-        guard !isMultipleSelectionEnabled else { return "" }
-        
-        guard let selectedReason else { return nil }
-        return selectedReason.isOtherReason ? otherReasonText : "\(selectedReason.id) - \(selectedReason.title)"
-    }
     
     func isReasonSelected(_ reason: CancellationSurveyReason) -> Bool {
         guard isMultipleSelectionEnabled else {
@@ -208,11 +201,77 @@ final class CancellationSurveyViewModel: ObservableObject {
         
         return true
     }
+    
+    private func reasonIndexPosition(_ reason: CancellationSurveyReason) -> String? {
+        guard let index = cancellationSurveyReasonList.firstIndex(of: reason) else { return nil }
+        return String(index + 1)
+    }
+    
+    private func makeMainCancelSubscriptionReasonEntity(_ reason: CancellationSurveyReason) -> CancelSubscriptionReasonEntity? {
+        guard let position = reasonIndexPosition(reason) else { return nil }
+        
+        let formattedReason = reason.isOtherReason ? "\(reason.id.rawValue) - \(otherReasonText)" : String(reason.id.rawValue)
+        return CancelSubscriptionReasonEntity(text: formattedReason, position: position)
+    }
+    
+    private func makeFollowUpCancelSubscriptionReasonEntity(from mainReason: CancellationSurveyReason, followUpReason: CancellationSurveyFollowUpReason) -> CancelSubscriptionReasonEntity? {
+        guard let mainReasonIndex = reasonIndexPosition(mainReason),
+              let selectedIndex = mainReason.followUpReasons.firstIndex(where: { $0.id == followUpReason.id }) else { return nil }
+        
+        let ids = CancellationSurveyFollowUpReason.ID.allCases.prefix(mainReason.followUpReasons.count)
+        let newID = ids[selectedIndex]
+        let position = "\(mainReasonIndex).\(newID.rawValue)"
+        
+        return CancelSubscriptionReasonEntity(text: followUpReason.formattedID, position: position)
+    }
+    
+    private func followUpReasonSelectionList(
+        from selectedMainReasons: [CancellationSurveyReason]
+    ) -> (
+        selectedFollowUpReasons: [CancelSubscriptionReasonEntity],
+        mainReasonIDs: [CancellationSurveyReason.ID]
+    ) {
+        guard isFollowUpOptionEnabled, selectedFollowUpReasons.isNotEmpty, selectedMainReasons.isNotEmpty else { return ([], []) }
+
+        let reasons = selectedFollowUpReasons.compactMap { followUpReason -> (CancelSubscriptionReasonEntity, CancellationSurveyReason.ID)? in
+            guard let mainReason = selectedMainReasons.first(where: { $0.id == followUpReason.mainReasonID }),
+                  let followUpReasonEntity = makeFollowUpCancelSubscriptionReasonEntity(from: mainReason, followUpReason: followUpReason) else {
+                return nil
+            }
+            return (followUpReasonEntity, mainReason.id)
+        }
+
+        return (selectedFollowUpReasons: reasons.map(\.0), mainReasonIDs: reasons.map(\.1))
+    }
+    
+    func cancelSubscriptionReasonSelectionList() -> [CancelSubscriptionReasonEntity] {
+        guard selectedReason != nil || selectedReasons.isNotEmpty else { return [] }
+        
+        // Get main reasons
+        var selectedMainReasons: [CancellationSurveyReason] = []
+        if isMultipleSelectionEnabled {
+            selectedMainReasons.append(contentsOf: selectedReasons)
+        } else {
+            guard let selectedReason else { return [] }
+            selectedMainReasons = [selectedReason]
+        }
+        
+        // Get the selected follow up reasons
+        let (selectedFollowUpReasons, mainReasonIDs) = followUpReasonSelectionList(from: selectedMainReasons)
+        
+        // Remove followup reason's main reason on the list. Main reason should not be included if it has followup options.
+        // Convert selected main reasons to entity
+        let mainReasonList = selectedMainReasons
+            .filter { !mainReasonIDs.contains($0.id) }
+            .compactMap(makeMainCancelSubscriptionReasonEntity)
+        
+        return mainReasonList + selectedFollowUpReasons
+    }
 
     private func handleSubscriptionCancellation() async {
         do {
             try await subscriptionsUseCase.cancelSubscriptions(
-                reason: formattedReasonString,
+                reasonList: cancelSubscriptionReasonSelectionList(),
                 subscriptionId: subscription.id,
                 canContact: allowToBeContacted
             )
