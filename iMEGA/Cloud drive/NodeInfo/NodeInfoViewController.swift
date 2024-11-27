@@ -432,24 +432,9 @@ final class NodeInfoViewController: UITableViewController {
         sections.append(descriptionSection)
 
         if viewModel.shouldShowNodeTags {
-            sections.append(
-                .tags(
-                    NodeTagsCellController(
-                        controller: self,
-                        viewModel: NodeTagsCellControllerModel(
-                            node: node.toNodeEntity(),
-                            accountUseCase: AccountUseCase(
-                                repository: AccountRepository.newRepo
-                            )
-                        ),
-                        showUpgradeScreen: { [weak self] accountDetails in
-                            guard let self else { return }
-                            let upgradeRouter = UpgradeAccountPlanRouter(presenter: self, accountDetails: accountDetails)
-                            upgradeRouter.start()
-                        }
-                    )
-                )
-            )
+            let viewModel = NodeTagsCellControllerModel(node: node.toNodeEntity())
+            let cellController =  NodeTagsCellController(controller: self, viewModel: viewModel)
+            sections.append(.tags(cellController))
         }
 
         if viewModel.nodeInfoLocationViewModel != nil {

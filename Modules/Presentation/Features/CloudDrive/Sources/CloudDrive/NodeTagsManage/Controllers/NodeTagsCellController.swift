@@ -12,16 +12,13 @@ public final class NodeTagsCellController: NSObject {
     // The controller is responsible for managing the user interface or navigating when a row is selected.
     private weak var controller: UIViewController?
     private let viewModel: NodeTagsCellControllerModel
-    private let showUpgradeScreen: (AccountDetailsEntity) -> Void
 
     public init(
         controller: UIViewController,
-        viewModel: NodeTagsCellControllerModel,
-        showUpgradeScreen: @escaping (AccountDetailsEntity) -> Void
+        viewModel: NodeTagsCellControllerModel
     ) {
         self.controller = controller
         self.viewModel = viewModel
-        self.showUpgradeScreen = showUpgradeScreen
         super.init()
     }
 
@@ -56,12 +53,8 @@ extension NodeTagsCellController: UITableViewDataSource {
 extension NodeTagsCellController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let controller else { return }
-        if viewModel.hasValidSubscription {
-            let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
-            addTagsRouter.start()
-        } else if let accountDetails = viewModel.currentAccountDetails {
-            showUpgradeScreen(accountDetails)
-        }
+        let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
+        addTagsRouter.start()
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
