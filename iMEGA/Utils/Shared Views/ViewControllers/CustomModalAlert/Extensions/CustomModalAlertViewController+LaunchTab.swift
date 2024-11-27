@@ -8,7 +8,7 @@ extension CustomModalAlertViewController {
         detail = Strings.Localizable.YouCanNowSelectWhichSectionTheAppOpensAtLaunch.chooseTheOneThatBetterSuitsYourNeedsWhetherItSChatCloudDriveOrHome
         
         firstButtonTitle = Strings.Localizable.changeSetting
-        firstButtonStyle = MEGACustomButtonStyle.basic.rawValue
+        firstButtonStyle = MEGACustomButtonStyle.primary.rawValue
         dismissButtonTitle = Strings.Localizable.dismiss
         dismissButtonStyle = MEGACustomButtonStyle.cancel.rawValue
 
