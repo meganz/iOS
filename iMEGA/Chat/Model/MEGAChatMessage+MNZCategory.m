@@ -313,8 +313,10 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
         fullNameDidAction = MEGAChatSdk.shared.myFullname;
     } else {
         fullNameDidAction = [self fullNameByHandle:self.userHandle];
+        if (fullNameDidAction.length == 0) {
+            fullNameDidAction = [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:self.userHandle];
+        }
     }
-    
     return fullNameDidAction;
 }
 
@@ -326,6 +328,9 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
         fullNameReceiveAction = MEGAChatSdk.shared.myFullname;
     } else {
         fullNameReceiveAction = [self fullNameByHandle:tempHandle];
+        if (fullNameReceiveAction.length == 0) {
+            fullNameReceiveAction = [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:self.userHandle];
+        }
     }
     
     return fullNameReceiveAction;
