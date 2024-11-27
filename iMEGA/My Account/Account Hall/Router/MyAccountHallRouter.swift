@@ -21,6 +21,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let shareUseCase: any ShareUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let notificationsUseCase: any NotificationsUseCaseProtocol
@@ -36,6 +37,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
         shareUseCase: some ShareUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         notificationsUseCase: some NotificationsUseCaseProtocol,
@@ -49,6 +51,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
         self.accountUseCase = accountUseCase
+        self.accountStorageUseCase = accountStorageUseCase
         self.shareUseCase = shareUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.notificationsUseCase = notificationsUseCase
@@ -204,6 +207,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     func navigateToUsage() {
         UsageViewRouter(
             accountUseCase: accountUseCase,
+            accountStorageUseCase: accountStorageUseCase,
             navigationController: navigationController
         ).start()
     }

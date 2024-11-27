@@ -213,6 +213,10 @@ final class HomeRouter: HomeRouterProtocol {
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
             shareUseCase: makeShareUseCase(),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
@@ -244,6 +248,10 @@ final class HomeRouter: HomeRouterProtocol {
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
             shareUseCase: makeShareUseCase(),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
