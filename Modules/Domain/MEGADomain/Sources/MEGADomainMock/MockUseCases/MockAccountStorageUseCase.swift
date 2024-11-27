@@ -6,6 +6,8 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
     private let _shouldShowStorageBanner: Bool
     private let _isUnlimitedStorageAccount: Bool
     public var _currentStorageStatus: StorageStatusEntity
+    public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
+    public var shouldRefreshStorageStatus: Bool
     
     public init(
         willStorageQuotaExceed: Bool = false,
@@ -23,13 +25,9 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
         _isUnlimitedStorageAccount = isUnlimitedStorageAccount
     }
     
-    public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
-    
     public var currentStorageStatus: StorageStatusEntity {
         _currentStorageStatus
     }
-    
-    public var shouldRefreshStorageStatus: Bool
     
     public func refreshCurrentStorageState() async throws -> StorageStatusEntity? {
         currentStorageStatus
@@ -39,7 +37,7 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
         _shouldShowStorageBanner
     }
     
-    public func refreshCurrentAccountDetails() async throws { }
+    public func refreshCurrentAccountDetails() async throws {}
     
     public func willStorageQuotaExceed(after nodes: some Sequence<NodeEntity>) -> Bool {
         willStorageQuotaExceed

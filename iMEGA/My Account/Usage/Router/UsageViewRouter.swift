@@ -3,14 +3,17 @@ import MEGAPresentation
 
 final class UsageViewRouter: Routing {
     private let accountUseCase: any AccountUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private weak var navigationController: UINavigationController?
     private weak var viewController: UIViewController?
     
     init(
         accountUseCase: some AccountUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
         navigationController: UINavigationController?
     ) {
         self.accountUseCase = accountUseCase
+        self.accountStorageUseCase = accountStorageUseCase
         self.navigationController = navigationController
     }
     
@@ -19,7 +22,10 @@ final class UsageViewRouter: Routing {
             return UIViewController()
         }
         
-        let viewModel = UsageViewModel(accountUseCase: accountUseCase)
+        let viewModel = UsageViewModel(
+            accountUseCase: accountUseCase,
+            accountStorageUseCase: accountStorageUseCase
+        )
         
         usageVC.viewModel = viewModel
         viewController = usageVC

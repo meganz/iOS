@@ -106,3 +106,18 @@ public enum StorageStatusEntity: Sendable {
     /// Most actions are now restricted, and the user must address the over-quota issue.
     case paywall
 }
+
+/// Represents the transfer state of an account.
+public enum TransferStatusEntity: Sendable {
+    /// There are no transfer problems.
+    /// The account has enough transfer quota and no issues have been detected.
+    case noTransferProblems
+
+    /// The transfer quota is almost full.
+    /// There is limited transfer quota remaining, and the user should consider reducing usage soon.
+    case almostFull
+
+    /// The transfer quota is full.
+    /// No more transfers are allowed as the quota has been fully consumed.
+    case full
+}

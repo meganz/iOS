@@ -56,6 +56,10 @@ import MEGASDKRepo
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
             shareUseCase: ShareUseCase(
                 shareRepository: ShareRepository.newRepo,
                 filesSearchRepository: FilesSearchRepository.newRepo,

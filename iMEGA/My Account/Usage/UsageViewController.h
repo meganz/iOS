@@ -4,6 +4,9 @@
 @class UsageViewModel;
 
 @interface UsageViewController: UIViewController
+@property (weak, nonatomic) IBOutlet UIView *chartContainerView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *chartActivityIndicator;
+
 @property (weak, nonatomic) IBOutlet UIView * _Nullable cloudDriveView;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable cloudDriveLabel;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable cloudDriveSizeLabel;

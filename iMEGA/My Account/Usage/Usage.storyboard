@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -132,6 +132,9 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="fHg-2E-O08">
+                                <rect key="frame" x="177.66666666666666" y="210" width="20" height="20"/>
+                            </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="FRx-Lz-Bq1">
                                 <rect key="frame" x="0.0" y="390.00000000000006" width="375" height="254.66666666666669"/>
                                 <subviews>
@@ -298,6 +301,7 @@
                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                         <constraints>
                             <constraint firstItem="A7h-xQ-tdl" firstAttribute="bottom" secondItem="3Bg-fv-i52" secondAttribute="bottom" id="0JM-kK-gzW"/>
+                            <constraint firstItem="fHg-2E-O08" firstAttribute="centerX" secondItem="3Bg-fv-i52" secondAttribute="centerX" id="0Qq-QK-muq"/>
                             <constraint firstItem="3Bg-fv-i52" firstAttribute="width" secondItem="985-4l-oeP" secondAttribute="width" multiplier="1:2" id="0s8-3r-8jE"/>
                             <constraint firstItem="A7h-xQ-tdl" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="FRx-Lz-Bq1" secondAttribute="bottom" id="6RY-dO-wjf"/>
                             <constraint firstItem="FRx-Lz-Bq1" firstAttribute="leading" secondItem="3Bg-fv-i52" secondAttribute="trailing" id="AGC-Zv-rKA"/>
@@ -307,23 +311,24 @@
                             <constraint firstItem="3Bg-fv-i52" firstAttribute="leading" secondItem="A7h-xQ-tdl" secondAttribute="leading" id="kpK-hd-tdR"/>
                             <constraint firstItem="A7h-xQ-tdl" firstAttribute="trailing" secondItem="3Bg-fv-i52" secondAttribute="trailing" id="lYs-uM-RRk"/>
                             <constraint firstItem="FRx-Lz-Bq1" firstAttribute="top" secondItem="3Bg-fv-i52" secondAttribute="bottom" id="nub-X9-5tX"/>
+                            <constraint firstItem="fHg-2E-O08" firstAttribute="centerY" secondItem="3Bg-fv-i52" secondAttribute="centerY" id="okf-iV-0Rk"/>
                             <constraint firstItem="FRx-Lz-Bq1" firstAttribute="top" secondItem="A7h-xQ-tdl" secondAttribute="top" id="uRH-I7-96l"/>
                             <constraint firstItem="FRx-Lz-Bq1" firstAttribute="leading" secondItem="A7h-xQ-tdl" secondAttribute="leading" id="wOP-if-bdA"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="0JM-kK-gzW"/>
                                 <exclude reference="0s8-3r-8jE"/>
+                                <exclude reference="0JM-kK-gzW"/>
                                 <exclude reference="AGC-Zv-rKA"/>
                                 <exclude reference="uRH-I7-96l"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <exclude reference="lYs-uM-RRk"/>
-                                <include reference="0JM-kK-gzW"/>
                                 <include reference="0s8-3r-8jE"/>
                                 <exclude reference="LiI-Gj-DqW"/>
+                                <exclude reference="lYs-uM-RRk"/>
+                                <include reference="0JM-kK-gzW"/>
                                 <include reference="AGC-Zv-rKA"/>
                                 <exclude reference="wOP-if-bdA"/>
                                 <include reference="uRH-I7-96l"/>
@@ -348,6 +353,8 @@
                         <outlet property="backupsLabel" destination="PQc-WS-bCQ" id="JQj-GH-Q4r"/>
                         <outlet property="backupsSizeLabel" destination="h2t-mR-0Cf" id="xvS-wG-NqD"/>
                         <outlet property="backupsView" destination="zB6-Fd-XCQ" id="zeO-T4-hXw"/>
+                        <outlet property="chartActivityIndicator" destination="fHg-2E-O08" id="LP4-Oa-HPe"/>
+                        <outlet property="chartContainerView" destination="3Bg-fv-i52" id="2nD-oH-OuP"/>
                         <outlet property="cloudDriveActivityIndicator" destination="J9M-Hq-qgY" id="Xec-8N-U35"/>
                         <outlet property="cloudDriveBottomSeparatorView" destination="FvS-gr-Fbb" id="UzG-mk-ld6"/>
                         <outlet property="cloudDriveLabel" destination="9M7-Oo-4Pc" id="49e-Up-ICc"/>
@@ -400,7 +407,7 @@
             <color red="0.0" green="0.6588235294117647" blue="0.52549019607843139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

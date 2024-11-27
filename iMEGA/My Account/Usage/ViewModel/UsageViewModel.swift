@@ -2,10 +2,11 @@ import MEGADomain
 import MEGAPresentation
 
 enum StorageType {
-    case cloud, backups, rubbishBin, incomingShares
+    case cloud, backups, rubbishBin, incomingShares, chart
 }
 
 enum UsageAction: ActionType {
+    case loadCurrentStorageStatus
     case loadRootNodeStorage
     case loadBackupStorage
     case loadRubbishBinStorage
@@ -18,6 +19,7 @@ final class UsageViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     private let accountUseCase: any AccountUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     var accountType: AccountTypeEntity?
     
     enum Command: CommandType, Equatable {
@@ -25,14 +27,20 @@ final class UsageViewModel: ViewModelType {
         case loadedStorage(used: Int64, max: Int64)
         case loadedTransfer(used: Int64, max: Int64)
         case startLoading(StorageType)
+        case stopLoading(StorageType)
     }
     
-    init(accountUseCase: some AccountUseCaseProtocol) {
+    init(
+        accountUseCase: some AccountUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol
+    ) {
         self.accountUseCase = accountUseCase
+        self.accountStorageUseCase = accountStorageUseCase
     }
     
     func dispatch(_ action: UsageAction) {
         switch action {
+        case .loadCurrentStorageStatus: loadCurrentStorageStatus()
         case .loadRootNodeStorage: updateRootNodeStorageUsed()
         case .loadBackupStorage: updateBackupNodeStorageUsed()
         case .loadRubbishBinStorage: updateRubbishBinStorageUsed()
@@ -124,5 +132,39 @@ final class UsageViewModel: ViewModelType {
     
     var isFreeAccount: Bool {
         accountUseCase.isAccountType(.free)
+    }
+    
+    var currentStorageStatus: StorageStatusEntity {
+        accountStorageUseCase.currentStorageStatus
+    }
+    
+    var currentTransferStatus: TransferStatusEntity {
+        return switch transferUsedPercentage {
+        case 0...80: .noTransferProblems
+        case 81..<100: .almostFull
+        default: .full
+        }
+    }
+    
+    var storageUsedPercentage: Float {
+        guard let used = accountUseCase.currentAccountDetails?.storageUsed,
+              let max = accountUseCase.currentAccountDetails?.storageMax,
+              max > 0 else { return 0 }
+        return (Float(used) / Float(max)) * 100
+    }
+    
+    var transferUsedPercentage: Float {
+        guard let used = accountUseCase.currentAccountDetails?.transferUsed,
+              let max = accountUseCase.currentAccountDetails?.transferMax,
+              max > 0 else { return 0 }
+        return (Float(used) / Float(max)) * 100
+    }
+    
+    func loadCurrentStorageStatus() {
+        Task {
+            invokeCommand?(.startLoading(.chart))
+            _ = try? await accountStorageUseCase.refreshCurrentStorageState()
+            invokeCommand?(.stopLoading(.chart))
+        }
     }
 }
