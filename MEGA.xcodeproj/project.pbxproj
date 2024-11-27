@@ -757,6 +757,7 @@
 		6D01A3CA2C084F4400089BA8 /* NodeInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */; };
 		6D01A3D12C097E3200089BA8 /* SharedItemsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */; };
 		6D1272B62B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */; };
+		6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
 		6D5A19B02A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */; };
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
@@ -775,6 +776,7 @@
 		6D98B0992C6318A600CF1558 /* PhotosBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D98B0982C6318A600CF1558 /* PhotosBrowserViewModelTests.swift */; };
 		6D9934B02C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9934AF2C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */; };
+		6DB5951E2CF6B75300088947 /* CallsSettingsSoundNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5951C2CF6B75300088947 /* CallsSettingsSoundNotificationsView.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DC1FCA22BAD11B40013E9BD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
@@ -915,7 +917,6 @@
 		833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */; };
 		8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99228882E12003E80DB /* CallsSettingsViewRouter.swift */; };
 		8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99628882E4A003E80DB /* CallsSettingsView.swift */; };
-		8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99928882E78003E80DB /* CallsSettingsSoundNotificationsView.swift */; };
 		8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99E2888479B003E80DB /* CallsSettingsViewModelTests.swift */; };
 		8331D8672BA32E5D0071BAD0 /* CallWillEndAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838116262BA32631001A2937 /* CallWillEndAlertViewModel.swift */; };
 		83337CAB21009494000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
@@ -3495,6 +3496,7 @@
 		6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModelTests.swift; sourceTree = "<group>"; };
 		6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordStrengthIndicatorView+Additions.swift"; sourceTree = "<group>"; };
 		6D18B4D02B44C75600E4ABA8 /* MEGAMacro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAMacro; sourceTree = "<group>"; };
+		6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCallsSettingsView.swift; sourceTree = "<group>"; };
 		6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModelTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
@@ -3507,6 +3509,7 @@
 		6D98B0982C6318A600CF1558 /* PhotosBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		6D9934AF2C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsViewController+PhotosBrowser.swift"; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+Filter.swift"; sourceTree = "<group>"; };
+		6DB5951C2CF6B75300088947 /* CallsSettingsSoundNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsSoundNotificationsView.swift; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
@@ -3648,7 +3651,6 @@
 		833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInWaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
 		8330A99228882E12003E80DB /* CallsSettingsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsViewRouter.swift; sourceTree = "<group>"; };
 		8330A99628882E4A003E80DB /* CallsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsView.swift; sourceTree = "<group>"; };
-		8330A99928882E78003E80DB /* CallsSettingsSoundNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsSoundNotificationsView.swift; sourceTree = "<group>"; };
 		8330A99E2888479B003E80DB /* CallsSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		83337CA921009494000F40A7 /* ItemListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListModel.h; sourceTree = "<group>"; };
 		83337CAA21009494000F40A7 /* ItemListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListModel.m; sourceTree = "<group>"; };
@@ -8441,6 +8443,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		6DB5951D2CF6B75300088947 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6DB5951C2CF6B75300088947 /* CallsSettingsSoundNotificationsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		6DB772CC28836A3F00B75A93 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -8785,14 +8795,6 @@
 				C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		8330A99828882E6B003E80DB /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				8330A99928882E78003E80DB /* CallsSettingsSoundNotificationsView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		83337CA821009476000F40A7 /* ItemList */ = {
@@ -9505,10 +9507,11 @@
 		83AE36BE2886CFCD002F1755 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
-				8330A99828882E6B003E80DB /* Views */,
+				6DB5951D2CF6B75300088947 /* Views */,
 				8330A99628882E4A003E80DB /* CallsSettingsView.swift */,
 				83AE36C12886D033002F1755 /* CallsSettingsViewModel.swift */,
 				8330A99228882E12003E80DB /* CallsSettingsViewRouter.swift */,
+				6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -14306,7 +14309,7 @@
 				8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */,
 				83CCA0D42BF782580072FC53 /* CallsCoordinator.swift in Sources */,
 				83E8097A2BC000EE00E1B3FF /* CallsCoordinatorProtocol.swift in Sources */,
-				8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */,
+				6DB5951E2CF6B75300088947 /* CallsSettingsSoundNotificationsView.swift in Sources */,
 				8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */,
 				83AE36C22886D033002F1755 /* CallsSettingsViewModel.swift in Sources */,
 				8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */,
@@ -14818,6 +14821,7 @@
 				99C0CE6D2C7BFEC100778F53 /* LaunchViewController+Addition.swift in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
+				6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */,
 				9439F10D2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift in Sources */,
 				5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */,
 				B642925E22277EDD007BB9DE /* LivePhotoScanner.m in Sources */,

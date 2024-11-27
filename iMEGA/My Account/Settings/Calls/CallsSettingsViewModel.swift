@@ -1,6 +1,9 @@
 import MEGADomain
+import MEGAPresentation
+import MEGAUIComponent
 
-final class CallsSettingsViewModel {
+final class CallsSettingsViewModel: ObservableObject {
+    @Published private(set) var isEnabled: Bool?
     
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
     var callsSoundNotificationPreference: Bool {
@@ -15,9 +18,16 @@ final class CallsSettingsViewModel {
     
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     
-    init(preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol) {
+    init(preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol) {
         self.analyticsEventUseCase = analyticsEventUseCase
         $callsSoundNotificationPreference.useCase = preferenceUseCase
+        
+        self.isEnabled = callsSoundNotificationPreference
+    }
+    
+    func toggle(_ toggleValue: Bool) {
+        isEnabled = toggleValue
+        callsSoundNotificationPreference = toggleValue
     }
 }
