@@ -3,16 +3,10 @@ import Foundation
 @MainActor
 final class NodeTagsViewModel: ObservableObject {
     @Published var tagViewModels: [NodeTagViewModel]
-    @Published var viewWidth: CGFloat = 0
-    @Published private(set) var tagsWidth: [String: CGFloat] = [:]
+    @Published var viewHeight: CGFloat = 0
 
     init(tagViewModels: [NodeTagViewModel] = []) {
         self.tagViewModels = tagViewModels
-    }
-
-    func update(_ tag: String, with width: CGFloat) {
-        guard tagViewModels.contains(where: { $0.tag == tag }) else { return }
-        tagsWidth[tag] = width
     }
 
     func prepend(tagViewModel: NodeTagViewModel) {

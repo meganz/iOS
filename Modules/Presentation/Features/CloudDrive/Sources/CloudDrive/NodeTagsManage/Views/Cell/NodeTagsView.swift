@@ -1,59 +1,125 @@
 import MEGADesignToken
-import MEGASwiftUI
+import MEGASwift
 import SwiftUI
 
 struct NodeTagsView: View {
-    @ObservedObject var viewModel: NodeTagsViewModel
+    // MARK: - LayoutState
+    /// A private class for managing layout state during the arrangement of tags.
+    ///
+    /// This class ensures thread-safe access to its properties using a
+    /// `@Atomic` property wrapper. It tracks the current position (`currentOffset`).
+    /// and the maximum height of the current row (`maxRowHeight`).
+    private final class LayoutState: @unchecked Sendable {
+        @Atomic var currentOffset: CGPoint = .zero
+        @Atomic var maxRowHeight: CGFloat = 0
+
+        func set(maxRowHeight: CGFloat) {
+            $maxRowHeight.mutate {  $0 = maxRowHeight }
+        }
+
+        func set(x: CGFloat? = nil, y: CGFloat? = nil) {
+            guard x != nil || y != nil else { return }
+            let updatedValue = CGPoint(x: x ?? currentOffset.x, y: y ?? currentOffset.y)
+            $currentOffset.mutate { $0 = updatedValue }
+        }
+    }
+
+    // MARK: - Properties
+    @ObservedObject private var viewModel: NodeTagsViewModel
     private let padding: CGFloat = TokenSpacing._3
 
+    init(viewModel: NodeTagsViewModel) {
+        self.viewModel = viewModel
+    }
+
+    // MARK: - Body
     var body: some View {
-        ZStack(alignment: .leading) {
-            hiddenTagsWidthTrackerView
-            widthTrackerView
-            visibleTagsGridView
+        GeometryReader { geometry in
+            arrangeContent(in: geometry)
         }
+        .frame(height: viewModel.viewHeight)
     }
 
-    // Displays the tags in a grid-like structure
-    private var visibleTagsGridView: some View {
-        VStack(alignment: .leading, spacing: padding) {
-            ForEach(0..<tagGrid.count, id: \.self) { rowIndex in
-                let tagViewModels = tagGrid[rowIndex]
-                HStack(spacing: padding) {
-                    ForEach(tagViewModels, id: \.tag) { tagViewModel in
-                        nodeTagView(for: tagViewModel)
-                            .allowsHitTesting(tagViewModel.isSelectionEnabled)
-                            .onTapGesture {
-                                tagViewModel.toggle()
-                            }
-                    }
-                }
+    // MARK: - Helper Methods
+    @ViewBuilder
+    private func arrangeContent(in geometry: GeometryProxy) -> some View {
+        ZStack {
+            let tagViewModels = viewModel.tagViewModels
+            let layoutState = LayoutState()
+            let containerWidth = geometry.size.width
+
+            ForEach(tagViewModels.indices, id: \.self) { index in
+                let tagViewModel = tagViewModels[index]
+                let isLastElement = index == tagViewModels.count - 1
+                createNodeTagView(
+                    for: tagViewModel,
+                    layoutState: layoutState,
+                    containerWidth: containerWidth,
+                    isLastElement: isLastElement
+                )
             }
         }
+        .background(updateHeight())
     }
 
-    // Tracks the total width of the view
-    private var widthTrackerView: some View {
-        Color.clear
-            .trackWidth()
-            .onPreferenceChange(WidthPreferenceKey.self) { newValue in
-                viewModel.viewWidth = newValue
+    @ViewBuilder
+    private func createNodeTagView(
+        for tagViewModel: NodeTagViewModel,
+        layoutState: LayoutState,
+        containerWidth: CGFloat,
+        isLastElement: Bool
+    ) -> some View {
+        nodeTagView(for: tagViewModel)
+            .allowsHitTesting(tagViewModel.isSelectionEnabled)
+            .onTapGesture {
+                tagViewModel.toggle()
+            }
+            .alignmentGuide(HorizontalAlignment.center) { dimension in
+                calculateHorizontalAlignment(
+                    dimension: dimension,
+                    layoutState: layoutState,
+                    containerWidth: containerWidth,
+                    isLastElement: isLastElement
+                )
+            }
+            .alignmentGuide(VerticalAlignment.center) { _ in
+                calculateVerticalAlignment(layoutState: layoutState, isLastElement: isLastElement)
             }
     }
 
-    // Tracks the width of each individual tag
-    private var hiddenTagsWidthTrackerView: some View {
-        ForEach(0..<tagGrid.count, id: \.self) { rowIndex in
-            let tagViewModels = tagGrid[rowIndex]
-            ForEach(tagViewModels, id: \.tag) { tagViewModel in
-                nodeTagView(for: tagViewModel)
-                    .opacity(0)  // invisible, for measurement only
-                    .trackWidth()
-                    .onPreferenceChange(WidthPreferenceKey.self) { width in
-                        viewModel.update(tagViewModel.tag, with: width)
-                    }
-            }
+    nonisolated private func calculateHorizontalAlignment(
+        dimension: ViewDimensions,
+        layoutState: LayoutState,
+        containerWidth: CGFloat,
+        isLastElement: Bool
+    ) -> CGFloat {
+        if (layoutState.currentOffset.x + dimension.width) > containerWidth {
+            layoutState.set(x: 0, y: (layoutState.currentOffset.y + layoutState.maxRowHeight + padding))
+            layoutState.set(maxRowHeight: 0)
         }
+
+        layoutState.set(maxRowHeight: max(layoutState.maxRowHeight, dimension.height))
+
+        let offsetX = layoutState.currentOffset.x
+        layoutState.set(x: (offsetX + dimension.width + padding))
+
+        if isLastElement {
+            layoutState.set(x: 0)
+            layoutState.set(maxRowHeight: 0)
+        }
+
+        return -offsetX
+    }
+
+    nonisolated private func calculateVerticalAlignment(layoutState: LayoutState, isLastElement: Bool) -> CGFloat {
+        let offsetY = layoutState.currentOffset.y
+
+        if isLastElement {
+            layoutState.set()
+            layoutState.set(x: layoutState.currentOffset.x, y: 0)
+        }
+
+        return -offsetY
     }
 
     @ViewBuilder
@@ -65,55 +131,15 @@ struct NodeTagsView: View {
         }
     }
 
-    // Calculate how to arrange tags into rows based on the available width
-    private var tagGrid: [[NodeTagViewModel]] {
-        var grid: [[NodeTagViewModel]] = [[]]
-        var remainingWidth = viewModel.viewWidth
-
-        for tagViewModel in viewModel.tagViewModels {
-            let tagWidth = viewModel.tagsWidth[tagViewModel.tag] ?? viewModel.viewWidth
-
-            // Check if the tag can fit in the current row
-            if remainingWidth <= tagWidth {
-                // Move to the next row if the current row can't fit the tag
-                grid.append([])
-                // Reset remaining width for the new row
-                remainingWidth = viewModel.viewWidth
-            }
-
-            // Add the tag to the current row
-            grid[grid.count - 1].append(tagViewModel)
-            // Update remaining width after adding the tag
-            remainingWidth -= (tagWidth + padding)
-        }
-        
-        return grid
-    }
-}
-
-private extension View {
-    func trackWidth() -> some View {
-        modifier(WidthModifier())
-    }
-}
-
-private struct WidthModifier: ViewModifier {
-    private var widthView: some View {
+    private func updateHeight() -> some View {
         GeometryReader { proxy in
             Color.clear
-                .preference(key: WidthPreferenceKey.self, value: proxy.size.width)
+                .onAppear {
+                    viewModel.viewHeight = proxy.size.height
+                }
+                .onChange(of: proxy.size.height) { newValue in
+                    viewModel.viewHeight = newValue
+                }
         }
-    }
-
-    func body(content: Content) -> some View {
-        content.background(widthView)
-    }
-}
-
-actor WidthPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
     }
 }
