@@ -15,6 +15,7 @@ public struct TransferRepository: TransferRepositoryProtocol {
     
     public func download(node: NodeEntity,
                          to localUrl: URL,
+                         collisionResolution: CollisionResolutionEntity = .renameNewWithSuffix,
                          startHandler: ((TransferEntity) -> Void)?,
                          progressHandler: ((TransferEntity) -> Void)?) async throws -> TransferEntity {
         guard let megaNode = sdk.node(forHandle: node.handle) else {
@@ -29,7 +30,7 @@ public struct TransferRepository: TransferRepositoryProtocol {
                 startFirst: true,
                 cancelToken: nil,
                 collisionCheck: CollisionCheck.fingerprint,
-                collisionResolution: CollisionResolution.newWithN,
+                collisionResolution: collisionResolution.toCollisionResolution(),
                 delegate: TransferDelegate(start: startHandler, progress: progressHandler) { result in
                     switch result {
                     case .success(let transfer):
