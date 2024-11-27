@@ -13,7 +13,7 @@ public final class PreferenceWrapper<T>: @unchecked Sendable {
         return value != nil
     }
     
-    public init(key: PreferenceKeyEntity, defaultValue: T, useCase: any PreferenceUseCaseProtocol = PreferenceUseCase.empty) {
+    public init(key: PreferenceKeyEntity, defaultValue: T, useCase: some PreferenceUseCaseProtocol = PreferenceUseCase.empty) {
         self.key = key
         self.defaultValue = defaultValue
         self.useCase = useCase

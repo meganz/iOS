@@ -14,8 +14,11 @@ final class CallsSettingsViewRouter: Routing {
     func build() -> UIViewController {
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.shared))
         let viewModel = CallsSettingsViewModel(analyticsEventUseCase: analyticsEventUseCase)
-        let callsSettingsView = CallsSettingsView(viewModel: viewModel)
-        let hostingController = UIHostingController(rootView: callsSettingsView)
+        let hostingController = if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newCallsSetting) {
+            UIHostingController(rootView: CallsSettingsView(viewModel: viewModel))
+        } else {
+            UIHostingController(rootView: LegacyCallsSettingsView(viewModel: viewModel))
+        }
         return hostingController
     }
     
