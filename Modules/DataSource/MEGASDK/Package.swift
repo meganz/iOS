@@ -33,7 +33,6 @@ let package = Package(
                 "bindings",
                 "cmake",
                 "contrib",
-                "doc",
                 "examples",
                 "src/fuse/common/client_adapter_with_sync.cpp",
                 "src/fuse/common/database_builder.cpp",
