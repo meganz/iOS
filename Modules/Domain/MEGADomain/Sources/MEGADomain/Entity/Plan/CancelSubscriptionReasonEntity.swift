@@ -1,4 +1,4 @@
-public struct CancelSubscriptionReasonEntity: Sendable {
+public struct CancelSubscriptionReasonEntity: Sendable, Equatable {
     public let text: String
     public let position: String
     

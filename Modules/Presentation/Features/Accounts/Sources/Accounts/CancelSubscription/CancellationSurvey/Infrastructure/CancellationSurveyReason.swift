@@ -2,7 +2,7 @@ import MEGAL10n
 
 struct CancellationSurveyReason: Hashable {
     enum ID: Int, CaseIterable {
-        case one, two, three, four, five, six, seven, eight, nine, ten
+        case one = 1, two, three, four, five, six, seven, eight, nine, ten
     }
     
     let id: ID

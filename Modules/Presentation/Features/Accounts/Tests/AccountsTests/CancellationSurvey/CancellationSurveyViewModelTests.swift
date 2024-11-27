@@ -8,9 +8,10 @@ import MEGAPresentationMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class CancellationSurveyViewModelTests: XCTestCase {
     // MARK: - Multiple selection
-    @MainActor func testUpdateSelectedReason_whenReasonIsNotOnTheList_shouldAddReasonAndHideReasonError() {
+    func testUpdateSelectedReason_whenReasonIsNotOnTheList_shouldAddReasonAndHideReasonError() {
         assertUpdateSelectedReason(
             currentSelectedReasons: [],
             newSelectedReason: randomCustomReason,
@@ -18,7 +19,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testUpdateSelectedReason_whenReasonIsOnTheList_shouldRemoveReason() {
+    func testUpdateSelectedReason_whenReasonIsOnTheList_shouldRemoveReason() {
         let selectedReason = randomCustomReason
         assertUpdateSelectedReason(
             currentSelectedReasons: [selectedReason],
@@ -27,7 +28,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testUpdateSelectedReason_whenAddedOtherReason_shouldShowOtherField() {
+    func testUpdateSelectedReason_whenAddedOtherReason_shouldShowOtherField() {
         let sut = makeSUT()
         sut.selectedReasons = []
         
@@ -36,7 +37,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showOtherField)
     }
     
-    @MainActor func testUpdateSelectedReason_whenOtherReasonIsOnTheListAndAddedNewReason_shouldShowOtherField() {
+    func testUpdateSelectedReason_whenOtherReasonIsOnTheListAndAddedNewReason_shouldShowOtherField() {
         let sut = makeSUT()
         sut.selectedReasons = []
         
@@ -49,7 +50,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showOtherField)
     }
     
-    @MainActor func testIsReasonSelected_whenReasonSelected_shouldReturnTrue() {
+    func testIsReasonSelected_whenReasonSelected_shouldReturnTrue() {
         let selectedReason = randomCustomReason
         
         let sut = makeSUT()
@@ -58,7 +59,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isReasonSelected(selectedReason))
     }
     
-    @MainActor func testIsReasonSelected_whenReasonNotSelected_shouldReturnFalse() {
+    func testIsReasonSelected_whenReasonNotSelected_shouldReturnFalse() {
         let reasonList = customReasonList
         let sut = makeSUT()
         sut.selectedReasons = Set(reasonList.prefix(2))
@@ -67,7 +68,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     }
     
     // MARK: - Single selection - reason validation
-    @MainActor func testSelectReason_isMultipleSelectionDisabled_shouldSetCorrectReasonAndHideReasonErrorAndKeyboard() {
+    func testSelectReason_whenIsMultipleSelectionDisabled_shouldSetCorrectReasonAndHideReasonErrorAndKeyboard() {
         let expectedReason = randomCustomReason
         let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.isOtherFieldFocused = Bool.random()
@@ -80,27 +81,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.surveyFormError, .none)
     }
     
-    @MainActor func testFormattedReasonString_isMultipleSelectionDisabled_forOtherReason_shouldReturnCorrectFormat() {
-        let expectedText = "This is a test reason"
-        
-        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
-        sut.selectedReason = customOtherReason
-        sut.otherReasonText = expectedText
-        
-        XCTAssertEqual(sut.formattedReasonString, expectedText)
-    }
-    
-    @MainActor func testFormattedReasonString_isMultipleSelectionDisabled_anyReasonExceptOtherReason_shouldReturnCorrectFormat() {
-        let randomReason = randomCustomReasonExceptOthers
-        let expectedText = "\(randomReason.id) - \(randomReason.title)"
-        
-        let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
-        sut.selectedReason = randomReason
-        
-        XCTAssertEqual(sut.formattedReasonString, expectedText)
-    }
-    
-    @MainActor func testIsReasonSelected_isMultipleSelectionDisabled_whenReasonSelected_shouldReturnTrue() {
+    func testIsReasonSelected_whenIsMultipleSelectionDisabledAndReasonSelected_shouldReturnTrue() {
         let selectedReason = randomCustomReason
         
         let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
@@ -109,7 +90,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isReasonSelected(selectedReason))
     }
     
-    @MainActor func testIsReasonSelected_isMultipleSelectionDisabled_whenReasonNotSelected_shouldReturnFalse() {
+    func testIsReasonSelected_whenIsMultipleSelectionDisabledAndReasonNotSelected_shouldReturnFalse() {
         let reasonList = customReasonList
         let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = reasonList[0]
@@ -118,7 +99,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     }
     
     // MARK: - Actions
-    @MainActor func testDidTapCancelButton_shouldDismissView() {
+    func testDidTapCancelButton_shouldDismissView() {
         let sut = makeSUT()
         
         sut.didTapCancelButton()
@@ -126,7 +107,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldDismiss)
     }
     
-    @MainActor func testDidTapDontCancelButton_shouldDismissViewAndDismissCancellationFlow() {
+    func testDidTapDontCancelButton_shouldDismissViewAndDismissCancellationFlow() {
         let mockRouter = MockCancelAccountPlanRouter()
         let sut = makeSUT(mockRouter: mockRouter)
         
@@ -136,7 +117,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissCancellationFlow_calledTimes, 1)
     }
     
-    @MainActor func testTracker_viewOnAppear_shouldTrackEvent() {
+    func testTracker_viewOnAppear_shouldTrackEvent() {
         let mockTracker = MockTracker()
         let sut = makeSUT(mockTracker: mockTracker)
         
@@ -148,7 +129,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testTracker_didTapCancelButton_shouldTrackEvent() {
+    func testTracker_didTapCancelButton_shouldTrackEvent() {
         let mockTracker = MockTracker()
         let sut = makeSUT(mockTracker: mockTracker)
         
@@ -160,7 +141,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testTracker_didTapDontCancelButton_shouldTrackEvent() {
+    func testTracker_didTapDontCancelButton_shouldTrackEvent() {
         let mockTracker = MockTracker()
         let sut = makeSUT(mockTracker: mockTracker)
         
@@ -174,7 +155,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     
     // MARK: - Multiple selection - Cancel subscription
     
-    @MainActor func testTracker_isMultipleSelectionDisabled_didTapCancelSubscriptionButton_shouldTrackEvent() {
+    func testTracker_isMultipleSelectionDisabled_didTapCancelSubscriptionButton_shouldTrackEvent() {
         let mockTracker = MockTracker()
         let sut = makeSUT(mockTracker: mockTracker)
         sut.selectedReasons = [randomCustomReason]
@@ -188,7 +169,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_noSelectedReason_shouldSetSurveyFormErrorToNoSelectedReason() {
+    func testDidTapCancelSubscriptionButton_whenNoSelectedReason_shouldSetSurveyFormErrorToNoSelectedReason() {
         let sut = makeSUT()
         sut.selectedReasons = []
         sut.surveyFormError = .none
@@ -198,7 +179,27 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.surveyFormError, .noSelectedReason)
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_otherReasonSelected_shouldHandleTextCountCorrectly() {
+    func testDidTapCancelSubscriptionButton_whenNoSelectedFollowUpReason_shouldSetSurveyFormErrorToNoSelectedFollowUpReason() throws {
+        let reasonList = reasonWithFollowUpOptionsList()
+        let selectedReason = try XCTUnwrap(reasonList.randomElement())
+        
+        let sut = makeSUT(
+            reasonList: reasonList,
+            featureFlagList: [
+                .multipleOptionsForCancellationSurvey: false,
+                .followUpOptionsForCancellationSurvey: true
+            ]
+        )
+        sut.selectedReason = selectedReason
+        sut.selectedFollowUpReasons = []
+        sut.surveyFormError = .none
+        
+        sut.didTapCancelSubscriptionButton()
+        
+        XCTAssertEqual(sut.surveyFormError, .noSelectedFollowUpReason(selectedReason))
+    }
+    
+    func testDidTapCancelSubscriptionButton_whenOtherReasonSelected_shouldHandleTextCountCorrectly() {
         let sut = makeSUT()
         sut.selectedReasons = [customOtherReason]
         
@@ -211,7 +212,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.dismissKeyboard, "The reason is within the 120-character limit. Should dismiss the keyboard and proceed with the submission.")
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestSuccessForItunesPaymentMethod_shouldShowManageSubscriptions() async {
+    func testDidTapCancelSubscriptionButton_whenReasonSelectedAndCancellationRequestSuccessForItunesPaymentMethod_shouldShowManageSubscriptions() async {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: .itunes,
             requestResult: .success,
@@ -220,7 +221,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestSuccessForRandomWebclientPaymentMethod_shouldShowSuccessAlert() async {
+    func testDidTapCancelSubscriptionButton_whenReasonSelectedAndCancellationRequestSuccessForRandomWebclientPaymentMethod_shouldShowSuccessAlert() async {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: randomWebclientPaymentMethod(),
             requestResult: .success,
@@ -229,7 +230,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestFailure_shouldShowFailureAlert() async {
+    func testDidTapCancelSubscriptionButton_whenReasonSelectedAndCancellationRequestFailure_shouldShowFailureAlert() async {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: randomWebclientPaymentMethod(),
             requestResult: .failure(.generic),
@@ -239,12 +240,14 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_reasonSelectedAndCancellationRequestSuccess_shouldShowSuccessAlertWithCorrectExpirationDate() async {
+    func testDidTapCancelSubscriptionButton_whenReasonSelectedAndCancellationRequestSuccess_shouldShowSuccessAlertWithCorrectExpirationDate() async {
         let expectedExpirationDate = Date().addingTimeInterval(24*60*60)
         let expectation = XCTestExpectation(description: "Success alert should display the correct expiration date")
         
         let mockRouter = MockCancelAccountPlanRouter { expirationDate in
-            self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
+            Task { @MainActor in
+                self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
+            }
         }
         
         let sut = makeSUT(
@@ -266,7 +269,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     
     // MARK: - Single selection - Cancel subscription
     
-    @MainActor func testTracker_didTapCancelSubscriptionButton_shouldTrackEvent() {
+    func testTracker_didTapCancelSubscriptionButton_shouldTrackEvent() {
         let mockTracker = MockTracker()
         let sut = makeSUT(mockTracker: mockTracker, featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = randomCustomReason
@@ -280,7 +283,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_noSelectedReason_shouldSetSurveyFormErrorToNoSelectedReason() {
+    func testDidTapCancelSubscriptionButton_whenIsMultipleSelectionDisabledAndNoSelectedReason_shouldSetSurveyFormErrorToNoSelectedReason() {
         let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = nil
         sut.surveyFormError = .none
@@ -290,15 +293,15 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.surveyFormError, .noSelectedReason)
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_otherReasonSelected_reasonTextIsEmpty_shouldSetIsOtherFieldFocusedToTrue() {
+    func testDidTapCancelSubscriptionButton_whenIsMultipleSelectionDisabled_otherReasonSelected_reasonTextIsEmpty_shouldSetIsOtherFieldFocusedToTrue() {
         assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "", isFeatureFlagEnabled: false)
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_otherReasonSelected_reasonTextIsLessThanMinLimit10_shouldSetIsOtherFieldFocusedToTrue() {
+    func testDidTapCancelSubscriptionButton_whenIsMultipleSelectionDisabled_otherReasonSelected_reasonTextIsLessThanMinLimit10_shouldSetIsOtherFieldFocusedToTrue() {
         assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(reasonText: "Test", isFeatureFlagEnabled: false)
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_otherReasonSelected_shouldHandleTextCountCorrectly() {
+    func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_otherReasonSelected_shouldHandleTextCountCorrectly() {
         let sut = makeSUT(featureFlagList: [.multipleOptionsForCancellationSurvey: false])
         sut.selectedReason = customOtherReason
         
@@ -311,7 +314,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertTrue(sut.dismissKeyboard, "The reason is within the 120-character limit. Should dismiss the keyboard and proceed with the submission.")
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccessForItunesPaymentMethod_shouldShowManageSubscriptions() async {
+    func testDidTapCancelSubscriptionButton_whenIsMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccessForItunesPaymentMethod_shouldShowManageSubscriptions() async {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: .itunes,
             requestResult: .success,
@@ -320,7 +323,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccessForRandomWebclientPaymentMethod_shouldShowSuccessAlert() async {
+    func testDidTapCancelSubscriptionButton_whenIsMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccessForRandomWebclientPaymentMethod_shouldShowSuccessAlert() async {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: randomWebclientPaymentMethod(),
             requestResult: .success,
@@ -329,7 +332,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestFailure_shouldShowFailureAlert() async {
+    func testDidTapCancelSubscriptionButton_whenIsMultipleSelectionDisabled_reasonSelectedAndCancellationRequestFailure_shouldShowFailureAlert() async {
         await assertDidTapCancelSubscriptionButtonWithValidForm(
             paymentMethod: randomWebclientPaymentMethod(),
             requestResult: .failure(.generic),
@@ -339,12 +342,14 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testDidTapCancelSubscriptionButton_isMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccess_shouldShowSuccessAlertWithCorrectExpirationDate() async {
+    @MainActor func testDidTapCancelSubscriptionButton_whenIsMultipleSelectionDisabled_reasonSelectedAndCancellationRequestSuccess_shouldShowSuccessAlertWithCorrectExpirationDate() async {
         let expectedExpirationDate = Date().addingTimeInterval(24*60*60)
         let expectation = XCTestExpectation(description: "Success alert should display the correct expiration date")
         
         let mockRouter = MockCancelAccountPlanRouter { expirationDate in
-            self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
+            Task { @MainActor in
+                self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
+            }
         }
         
         let sut = makeSUT(
@@ -366,7 +371,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     }
     
     // MARK: - Follow-up reasons
-    @MainActor func testUpdateSelectedFollowUpReason_whenOnTheList_shouldKeepItSelected() {
+    func testUpdateSelectedFollowUpReason_whenOnTheList_shouldKeepItSelected() {
         let selectedFollowUpReason = randomFollowUpReason
         assertUpdateFollowUpReason(
             selectedFollowUpReason: selectedFollowUpReason,
@@ -375,7 +380,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testUpdateSelectedFollowUpReason_whenNotOnTheList_shouldAddToSelectionList() {
+    func testUpdateSelectedFollowUpReason_whenNotOnTheList_shouldAddToSelectionList() {
         let selectedFollowUpReason = randomFollowUpReason
         assertUpdateFollowUpReason(
             selectedFollowUpReason: selectedFollowUpReason,
@@ -384,7 +389,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testUpdateFollowUpReason_whenNotOnTheListButSameMainReasonIdExist_shouldReplaceSelection() {
+    func testUpdateFollowUpReason_whenNotOnTheListButSameMainReasonIdExist_shouldReplaceSelection() {
         let randomMainReasonID = randomReasonID
         let selectedFollowUpReason = CancellationSurveyFollowUpReason(id: .a, mainReasonID: randomMainReasonID, title: "Follow up reason one")
         assertUpdateFollowUpReason(
@@ -394,16 +399,16 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testIsFollowUpReasonSelected_whenSelected_shouldReturnTrue() {
+    func testIsFollowUpReasonSelected_whenSelected_shouldReturnTrue() {
         let selectedFollowUpReason = randomFollowUpReason
         assertIsFollowUpReasonSelected(followUpReason: selectedFollowUpReason, currentSelectedList: [selectedFollowUpReason], expectedResult: true)
     }
     
-    @MainActor func testIsFollowUpReasonSelected_whenNotSelected_shouldReturnTrue() {
+    func testIsFollowUpReasonSelected_whenNotSelected_shouldReturnTrue() {
         assertIsFollowUpReasonSelected(followUpReason: randomFollowUpReason, currentSelectedList: [], expectedResult: false)
     }
     
-    @MainActor func testFollowUpReasons_isFollowUpFeatureFlagEnabled_hasFollowUpReason_shouldReturnList() {
+    func testFollowUpReasons_whenIsFollowUpFeatureFlagEnabledAndHasFollowUpReason_shouldReturnList() {
         let mainReasonID = randomReasonID
         let followUpReasons = customFollowUpReasons(with: mainReasonID)
         
@@ -415,7 +420,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testFollowUpReasons_isFollowUpFeatureFlagEnabled_hasNoFollowUpReason_shouldReturnNil() {
+    func testFollowUpReasons_whenIsFollowUpFeatureFlagEnabledAndHasNoFollowUpReason_shouldReturnNil() {
         assertFollowUpReasons(
             isFeatureFlagEnabled: true,
             followUpReasons: [],
@@ -424,7 +429,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor func testFollowUpReasons_isFollowUpFeatureFlagDisabled_hasFollowUpReason_shouldReturnNil() {
+    func testFollowUpReasons_whenIsFollowUpFeatureFlagDisabledAndHasFollowUpReason_shouldReturnNil() {
         let mainReasonID = randomReasonID
         assertFollowUpReasons(
             isFeatureFlagEnabled: false,
@@ -434,8 +439,81 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
+    // MARK: - CancelSubscriptionReasonSelectionList
+    func testCancelSubscriptionReasonSelectionList_whenSelectedReasonIsNilAndSelectedReasonsIsEmpty_shouldReturnEmptyList() {
+        assertCancelSubscriptionReasonSelectionList(selectedReason: nil, selectedReasons: [], expectedResult: [])
+    }
+    
+    func testCancelSubscriptionReasonSelectionList_whenMultipleOptionsIsEnabledAndHasSelectedReasons_shouldReturnList() throws {
+        let reasonList = reasonWithFollowUpOptionsList()
+        let (selectedReason, mainPositionIndex) = try XCTUnwrap(randomSelectedReason(from: reasonList))
+        
+        assertCancelSubscriptionReasonSelectionList(
+            reasonList: reasonList,
+            selectedReasons: [selectedReason],
+            isMultipleSelectionEnabled: true,
+            expectedResult: [CancelSubscriptionReasonEntity(text: String(selectedReason.id.rawValue), position: mainPositionIndex)]
+        )
+    }
+    
+    func testCancelSubscriptionReasonSelectionList_whenMultipleOptionsIsEnabledAndHasNoSelectedReasons_shouldReturnEmptyList() {
+        assertCancelSubscriptionReasonSelectionList(
+            selectedReasons: [],
+            isMultipleSelectionEnabled: true,
+            expectedResult: []
+        )
+    }
+    
+    func testCancelSubscriptionReasonSelectionList_whenMultipleOptionsIsDisabledAndHasNoSelectedReason_shouldReturnEmptyList() {
+        assertCancelSubscriptionReasonSelectionList(
+            selectedReason: nil,
+            isMultipleSelectionEnabled: false,
+            expectedResult: []
+        )
+    }
+    
+    func testCancelSubscriptionReasonSelectionList_whenFollowUpOptionIsEnabled_shouldReturnListWithoutTheMainReason() throws {
+        let reasonList = reasonWithFollowUpOptionsList()
+        let (selectedReason, mainPositionIndex) = try XCTUnwrap(randomSelectedReason(from: reasonList))
+        let (randomFollowUpReason, newPositionID) = try XCTUnwrap(randomSelectedFollowUpReason(from: selectedReason.followUpReasons))
+
+        assertCancelSubscriptionReasonSelectionList(
+            reasonList: reasonList,
+            selectedReason: selectedReason,
+            selectedReasons: [selectedReason],
+            isMultipleSelectionEnabled: Bool.random(),
+            isFollowUpOptionEnabled: true,
+            selectedFollowUpReasons: [randomFollowUpReason],
+            expectedResult: [
+                CancelSubscriptionReasonEntity(
+                    text: String(selectedReason.id.rawValue) + "." + randomFollowUpReason.id.rawValue, // ex. 1.a
+                    position: String(mainPositionIndex) + "." + newPositionID // Position on the list
+                )
+            ]
+        )
+    }
+    
+    func testCancelSubscriptionReasonSelectionList_whenOtherReasonsSelected_shouldReturnCorrectFormat() {
+        let reasonList = customReasonList
+        let selectedOtherReason = customOtherReason
+        let expectedOtherReasonText = "Test reason"
+        
+        assertCancelSubscriptionReasonSelectionList(
+            reasonList: reasonList,
+            selectedReason: selectedOtherReason,
+            otherReasonText: expectedOtherReasonText,
+            expectedResult: [
+                CancelSubscriptionReasonEntity(
+                    text: "\(selectedOtherReason.id.rawValue) - \(expectedOtherReasonText)",
+                    position: String(reasonList.count)
+                )
+            ]
+        )
+    }
+    
     // MARK: - Helper
-    @MainActor private func makeSUT(
+    private func makeSUT(
+        reasonList: [CancellationSurveyReason]? = nil,
         currentSubscription: AccountSubscriptionEntity = AccountSubscriptionEntity(),
         requestResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         paymentMethod: PaymentMethodEntity = .none,
@@ -450,7 +528,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let subscriptionsUseCase = MockSubscriptionsUseCase(requestResult: requestResult)
         let accountUseCase = MockAccountUseCase(currentProPlan: AccountPlanEntity(expirationTime: Int64(expirationDate.timeIntervalSince1970)))
         let sut = CancellationSurveyViewModel(
-            cancellationSurveyReasonList: customReasonList,
+            cancellationSurveyReasonList: reasonList ?? customReasonList,
             subscription: subscription,
             subscriptionsUseCase: subscriptionsUseCase,
             accountUseCase: accountUseCase,
@@ -470,6 +548,14 @@ final class CancellationSurveyViewModelTests: XCTestCase {
             CancellationSurveyReason(id: .three, title: "Reason three"),
             CancellationSurveyReason(id: .four, title: "Reason four"),
             customOtherReason
+        ]
+    }
+    
+    private func reasonWithFollowUpOptionsList() -> [CancellationSurveyReason] {
+        [
+            CancellationSurveyReason(id: .one, title: "Reason one", followUpReasons: customFollowUpReasons(with: .one)),
+            CancellationSurveyReason(id: .two, title: "Reason two", followUpReasons: customFollowUpReasons(with: .two)),
+            CancellationSurveyReason(id: .three, title: "Reason three", followUpReasons: customFollowUpReasons(with: .three))
         ]
     }
     
@@ -493,7 +579,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
     
     private var randomFollowUpReason: CancellationSurveyFollowUpReason {
         CancellationSurveyFollowUpReason(
-            id: [.a, .b, .c].randomElement() ?? .a,
+            id: CancellationSurveyFollowUpReason.ID.allCases.randomElement() ?? .a,
             mainReasonID: randomReasonID,
             title: "Follow up reason"
         )
@@ -507,6 +593,36 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         PaymentMethodEntity.allCases
             .filter { $0 != .itunes && $0 != .googleWallet }
             .randomElement() ?? .stripe
+    }
+    
+    private func randomSelectedReason(
+        from list: [CancellationSurveyReason]
+    ) -> (
+        reason: CancellationSurveyReason,
+        positionIndex: String
+    )? {
+        guard let randomReason = list.randomElement(),
+              let index = list.firstIndex(of: randomReason) else {
+            return nil
+            
+        }
+        return (reason: randomReason, positionIndex: String(index + 1))
+    }
+    
+    private func randomSelectedFollowUpReason(
+        from list: [CancellationSurveyFollowUpReason]
+    ) -> (
+        reason: CancellationSurveyFollowUpReason,
+        positionID: String
+    )? {
+        guard let randomReason = list.randomElement(),
+           let index = list.firstIndex(of: randomReason) else {
+            return nil
+        }
+        
+        let ids = CancellationSurveyFollowUpReason.ID.allCases.prefix(list.count)
+        let newID = ids[index]
+        return (reason: randomReason, positionID: newID.rawValue)
     }
     
     private func dateComponents(from date: Date) -> DateComponents {
@@ -528,7 +644,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         return errors.randomElement() ?? .noSelectedReason
     }
     
-    @MainActor private func assertUpdateSelectedReason(
+    private func assertUpdateSelectedReason(
         currentSelectedReasons: Set<CancellationSurveyReason>,
         newSelectedReason: CancellationSurveyReason,
         shouldAddSelectedReason: Bool
@@ -546,7 +662,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.surveyFormError, .none)
     }
     
-    @MainActor private func assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(
+    private func assertDidTapCancelSubscriptionButtonWithMinOrEmptyField(
         reasonText: String,
         isFeatureFlagEnabled: Bool,
         file: StaticString = #filePath,
@@ -568,7 +684,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertNil(sut.submitSurveyTask, file: file, line: line)
     }
     
-    @MainActor private func assertDidTapCancelSubscriptionButtonWithValidForm(
+    private func assertDidTapCancelSubscriptionButtonWithValidForm(
         paymentMethod: PaymentMethodEntity,
         requestResult: Result<Void, AccountErrorEntity>,
         shouldShowManageSubscriptions: Bool,
@@ -605,7 +721,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         }
     }
     
-    @MainActor private func assertUpdateFollowUpReason(
+    private func assertUpdateFollowUpReason(
         selectedFollowUpReason: CancellationSurveyFollowUpReason,
         currentSelectedList: Set<CancellationSurveyFollowUpReason>,
         expectedSelectedList: Set<CancellationSurveyFollowUpReason>,
@@ -621,7 +737,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.surveyFormError, .none, file: file, line: line)
     }
     
-    @MainActor func assertIsFollowUpReasonSelected(
+    func assertIsFollowUpReasonSelected(
         followUpReason: CancellationSurveyFollowUpReason,
         currentSelectedList: Set<CancellationSurveyFollowUpReason>,
         expectedResult: Bool,
@@ -634,7 +750,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isFollowUpReasonSelected(followUpReason), expectedResult, file: file, line: line)
     }
     
-    @MainActor private func assertFollowUpReasons(
+    private func assertFollowUpReasons(
         isFeatureFlagEnabled: Bool,
         followUpReasons: [CancellationSurveyFollowUpReason],
         selectedMainReasonID: CancellationSurveyReason.ID,
@@ -646,5 +762,33 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let reason = CancellationSurveyReason(id: selectedMainReasonID, title: "Reason", followUpReasons: followUpReasons)
         
         XCTAssertEqual(sut.followUpReasons(reason), expectedResult, file: file, line: line)
+    }
+    
+    private func assertCancelSubscriptionReasonSelectionList(
+        reasonList: [CancellationSurveyReason]? = nil,
+        selectedReason: CancellationSurveyReason? = nil,
+        selectedReasons: Set<CancellationSurveyReason> = [],
+        isMultipleSelectionEnabled: Bool = false,
+        isFollowUpOptionEnabled: Bool = false,
+        selectedFollowUpReasons: Set<CancellationSurveyFollowUpReason> = [],
+        otherReasonText: String = "",
+        expectedResult: [CancelSubscriptionReasonEntity]
+    ) {
+        let sut = makeSUT(
+            reasonList: reasonList,
+            featureFlagList: [
+                .multipleOptionsForCancellationSurvey: isMultipleSelectionEnabled,
+                .followUpOptionsForCancellationSurvey: isFollowUpOptionEnabled
+            ]
+        )
+        
+        sut.selectedReason = selectedReason // Used if multipleOptionsForCancellationSurvey is disabled
+        sut.selectedReasons = selectedReasons // Used if multipleOptionsForCancellationSurvey is enabled
+        sut.selectedFollowUpReasons = selectedFollowUpReasons
+        sut.otherReasonText = otherReasonText
+        
+        let resultReasonList = sut.cancelSubscriptionReasonSelectionList()
+
+        XCTAssertEqual(resultReasonList, expectedResult)
     }
 }

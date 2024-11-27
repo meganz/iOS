@@ -12,7 +12,7 @@ struct CancellationSurveyFollowUpReasonTests {
     struct CancellationSurveyFollowUpReasonInit {
         @Test("CancellationSurveyFollowUpReason should have correct values")
         func initializeACancellationSurveyFollowUpReason() {
-            let expectedRandomId: CancellationSurveyFollowUpReason.ID = [.a, .b, .c].randomElement() ?? .a
+            let expectedRandomId = CancellationSurveyFollowUpReason.ID.allCases.randomElement() ?? .a
             let expectedMainReasonID = randomMainReasonID
             let expectedTitle = "Follow up reason"
             
