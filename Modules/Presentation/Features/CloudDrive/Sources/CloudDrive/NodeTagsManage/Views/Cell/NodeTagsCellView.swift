@@ -9,15 +9,7 @@ struct NodeTagsCellView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.header)
-                    .font(.body)
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                proBagdeView
-                Spacer()
-                disclosureView
-            }
-
+            header
             if viewModel.tags.isNotEmpty {
                 NodeTagsView(viewModel: viewModel.nodeTagsViewModel)
                     .padding(.top, TokenSpacing._3)
@@ -31,35 +23,16 @@ struct NodeTagsCellView: View {
                 trailing: TokenSpacing._5
             )
         )
-        .task {
-            await viewModel.startMonitoringAccountDetails()
-        }
     }
-    
-    @ViewBuilder
-    private var proBagdeView: some View {
-        if viewModel.isLoading {
-            ProgressView()
-                .padding(.leading, TokenSpacing._2)
-        } else if viewModel.showsProTag {
-            AvailableForProOnlyView(
-                proOnlyText: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Feature.availableForProOnlyText,
-                foregroundColor: TokenColors.Button.brand.swiftUI,
-                borderColor: TokenColors.Button.brand.swiftUI,
-                cornerRadius: TokenRadius.extraSmall
-            )
-        } else {
-            EmptyView()
-        }
-    }
-    
-    @ViewBuilder
-    private var disclosureView: some View {
-        if !viewModel.isLoading && viewModel.hasValidSubscription {
+
+    private var header: some View {
+        HStack {
+            Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.header)
+                .font(.body)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            Spacer()
             Image(systemName: "chevron.right")
                 .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-        } else {
-            EmptyView()
         }
     }
 }
