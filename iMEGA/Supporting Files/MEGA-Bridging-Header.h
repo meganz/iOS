@@ -120,7 +120,6 @@
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAProcessAsset.h"
 #import "ShareLocationViewController.h"
-#import "ChatAttachedNodesViewController.h"
 #import "ChatAttachedContactsViewController.h"
 #import "MEGAChatMessage.h"
 #import "JoinViewState.h"

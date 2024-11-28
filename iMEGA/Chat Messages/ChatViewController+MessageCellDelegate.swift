@@ -194,72 +194,72 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
         in cell: MessageCollectionViewCell
     ) {
         let megaMessage = chatMessage.message
-        if megaMessage.nodeList?.size == 1 {
-            var node = megaMessage.nodeList?.node(at: 0)
-            if chatRoom.isPreview, let authorizationToken = chatRoom.authorizationToken {
-                node = MEGASdk.shared.authorizeChatNode(node!, cauth: authorizationToken)
-            }
-            
-            if let name = node?.name,
-               name.fileExtensionGroup.isVisualMedia {
-                var mediaNodesArrayIndex = 0
-                var foundIndex: Int?
-                var mediaMessagesArray = [HandleEntity]()
-                let mediaNodesArray = messages.compactMap { message -> MEGANode? in
-                    guard let localChatMessage = message as? ChatMessage,
-                          localChatMessage.message.type == .attachment,
-                          localChatMessage.message.nodeList?.size ?? 0 > 0,
-                          let node = localChatMessage.message.nodeList?.node(at: 0),
-                          name.fileExtensionGroup.isVisualMedia else {
-                              return nil
-                          }
-                    
-                    if chatRoom.isPreview {
-                        if let authorizationToken = chatRoom.authorizationToken,
-                           let authorizedNode = MEGASdk.shared.authorizeChatNode(node, cauth: authorizationToken) {
-                            if localChatMessage == chatMessage {
-                                foundIndex = mediaNodesArrayIndex
-                            }
-                            mediaNodesArrayIndex += 1
-                            mediaMessagesArray.append(localChatMessage.message.messageId)
-                            return authorizedNode
-                        } else {
-                            return nil
-                        }
-                    }
-                    
-                    if localChatMessage == chatMessage {
-                        foundIndex = mediaNodesArrayIndex
-                    }
-                    mediaNodesArrayIndex += 1
-                    mediaMessagesArray.append(localChatMessage.message.messageId)
-                    return node
+        guard
+            let size = megaMessage.nodeList?.size,
+            size > 0
+        else {
+            return
+        }
+        
+        var node = megaMessage.nodeList?.node(at: 0)
+        if chatRoom.isPreview, let authorizationToken = chatRoom.authorizationToken {
+            node = MEGASdk.shared.authorizeChatNode(node!, cauth: authorizationToken)
+        }
+        
+        if let name = node?.name,
+           name.fileExtensionGroup.isVisualMedia {
+            var mediaNodesArrayIndex = 0
+            var foundIndex: Int?
+            var mediaMessagesArray = [HandleEntity]()
+            let mediaNodesArray = messages.compactMap { message -> MEGANode? in
+                guard let localChatMessage = message as? ChatMessage,
+                      localChatMessage.message.type == .attachment,
+                      localChatMessage.message.nodeList?.size ?? 0 > 0,
+                      let node = localChatMessage.message.nodeList?.node(at: 0),
+                      name.fileExtensionGroup.isVisualMedia else {
+                    return nil
                 }
                 
-                let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
-                                                                                 api: MEGASdk.shared,
-                                                                                 displayMode: .chatAttachment, 
-                                                                                 isFromSharedItem: false,
-                                                                                 preferredIndex: UInt(foundIndex ?? 0))
-                photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
-                present(viewController: photoBrowserVC)
-            } else {
-                dismissKeyboardIfRequired()
-                if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
-                    viewController.chatId = chatRoom.chatId
-                    viewController.messageId = megaMessage.messageId
-                    navigationController?.present(navController, animated: true)
-                } else {
-                    let messageId = NSNumber(value: megaMessage.messageId)
-                    let chatId = NSNumber(value: chatRoom.chatId)
-                    node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, isFromSharedItem: false, allNodes: nil)
+                if chatRoom.isPreview {
+                    if let authorizationToken = chatRoom.authorizationToken,
+                       let authorizedNode = MEGASdk.shared.authorizeChatNode(node, cauth: authorizationToken) {
+                        if localChatMessage == chatMessage {
+                            foundIndex = mediaNodesArrayIndex
+                        }
+                        mediaNodesArrayIndex += 1
+                        mediaMessagesArray.append(localChatMessage.message.messageId)
+                        return authorizedNode
+                    } else {
+                        return nil
+                    }
                 }
+                
+                if localChatMessage == chatMessage {
+                    foundIndex = mediaNodesArrayIndex
+                }
+                mediaNodesArrayIndex += 1
+                mediaMessagesArray.append(localChatMessage.message.messageId)
+                return node
             }
+            
+            let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
+                                                                             api: MEGASdk.shared,
+                                                                             displayMode: .chatAttachment,
+                                                                             isFromSharedItem: false,
+                                                                             preferredIndex: UInt(foundIndex ?? 0))
+            photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
+            present(viewController: photoBrowserVC)
         } else {
-            let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedNodesViewControllerID") as! ChatAttachedNodesViewController
-            chatAttachedNodesVC.message = megaMessage
-            chatAttachedNodesVC.chatId = chatRoom.chatId
-            navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
+            dismissKeyboardIfRequired()
+            if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
+                viewController.chatId = chatRoom.chatId
+                viewController.messageId = megaMessage.messageId
+                navigationController?.present(navController, animated: true)
+            } else {
+                let messageId = NSNumber(value: megaMessage.messageId)
+                let chatId = NSNumber(value: chatRoom.chatId)
+                node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, isFromSharedItem: false, allNodes: nil)
+            }
         }
     }
     
