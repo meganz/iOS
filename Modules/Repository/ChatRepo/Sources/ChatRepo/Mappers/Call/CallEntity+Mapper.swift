@@ -9,7 +9,7 @@ public extension MEGAChatCall {
 
 fileprivate extension CallEntity {
     init(with call: MEGAChatCall) {
-        let sessionClientIds = (0..<call.sessionsClientId.size).map { call.sessionsClientId.megaHandle(at: $0) }
+        let sessionClientIds = (0..<(call.sessionsClientId?.size ?? 0)).compactMap { call.sessionsClientId?.megaHandle(at: $0) }
         self.init(
             status: call.status.toCallStatusType(),
             chatId: call.chatId,
@@ -34,11 +34,11 @@ fileprivate extension CallEntity {
             isOwnClientCaller: call.isOwnClientCaller,
             sessionClientIds: sessionClientIds,
             clientSessions: sessionClientIds.compactMap { call.session(forClientId: UInt64($0))?.toChatSessionEntity() },
-            participants: (0..<call.participants.size).map { call.participants.megaHandle(at: $0) },
+            participants: (0..<(call.participants?.size ?? 0)).compactMap { call.participants?.megaHandle(at: $0) },
             waitingRoomStatus: call.waitingRoomJoiningStatus.toWaitingRoomStatusEntity(),
-            waitingRoom: call.waitingRoom.toWaitingRoomEntity(),
-            waitingRoomHandleList: call.waitingRoomHandleList.toHandleEntityArray() ?? [],
-            raiseHandsList: call.raiseHandsList.toHandleEntityArray() ?? [],
+            waitingRoom: call.waitingRoom?.toWaitingRoomEntity(),
+            waitingRoomHandleList: call.waitingRoomHandleList?.toHandleEntityArray() ?? [],
+            raiseHandsList: call.raiseHandsList?.toHandleEntityArray() ?? [],
             auxHandle: call.auxHandle,
             networkQuality: call.networkQuality == .bad ? .bad : .good,
             peeridCallCompositionChange: call.peeridCallCompositionChange,
