@@ -789,9 +789,9 @@ class GetLinkViewController: UIViewController {
     private func updateHeaderViewForSingleItem(forHeader header: inout GenericHeaderFooterView, forSection sectionType: GetLinkTableViewSection) {
         switch sectionType {
         case .link:
-            header.configureTitle(Strings.Localizable.link, color: TokenColors.Text.secondary, topDistance: 17, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: Strings.Localizable.link, color: TokenColors.Text.secondary, topDistance: 17, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .key:
-            header.configureTitle(Strings.Localizable.key, color: TokenColors.Text.secondary, topDistance: 17, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(title: Strings.Localizable.key, color: TokenColors.Text.secondary, topDistance: 17, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .decryptKeySeparate:
             header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .expiryDate:
@@ -851,6 +851,7 @@ class GetLinkViewController: UIViewController {
         footer.titleLabel.textAlignment = .center
         footer.configure(
             title: Strings.Localizable.tapToCopy,
+            color: TokenColors.Text.secondary,
             topDistance: 4,
             isTopSeparatorVisible: true,
             isBottomSeparatorVisible: false
@@ -988,8 +989,8 @@ extension GetLinkViewController: UITableViewDelegate {
             }
             
             header.titleLabel.textAlignment = .left
-            header.configureTitle(
-                Strings.Localizable.link,
+            header.configure(
+                title: Strings.Localizable.link,
                 color: TokenColors.Text.secondary,
                 topDistance: section == 1 ? 17.0 : 25.0,
                 isTopSeparatorVisible: false, isBottomSeparatorVisible: true
@@ -1136,14 +1137,14 @@ extension GetLinkViewController: MEGARestoreDelegate {
 }
 
 private extension GenericHeaderFooterView {
-    func configureTitle(
-        _ text: String,
+    func configure(
+        title: String,
         color: UIColor,
         topDistance: CGFloat,
         isTopSeparatorVisible: Bool,
         isBottomSeparatorVisible: Bool
     ) {
-        let attributedString = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: color as Any])
+        let attributedString = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: color as Any])
         configure(attributedTitle: attributedString, topDistance: topDistance, isTopSeparatorVisible: isTopSeparatorVisible, isBottomSeparatorVisible: isBottomSeparatorVisible)
     }
 }
