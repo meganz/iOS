@@ -395,6 +395,15 @@
       }
     },
     {
+      "identity" : "swift-testing-expectation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dfed/swift-testing-expectation",
+      "state" : {
+        "revision" : "a436f33bd80eea2a98aea7497459c0487662ec91",
+        "version" : "0.1.1"
+      }
+    },
+    {
       "identity" : "swiftui-introspect",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/swiftui-introspect",

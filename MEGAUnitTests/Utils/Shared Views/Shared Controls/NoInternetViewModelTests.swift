@@ -1,4 +1,3 @@
-import ConcurrencyExtras
 @testable import MEGA
 import MEGADomainMock
 import MEGASwift
