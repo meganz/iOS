@@ -20,6 +20,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     @Published var selectedRecentlySearched: String?
     @Published var selectedVisualMediaResult: VisualMediaSearchResultSelection?
     
+    private let photoAlbumContainerInteractionManager: PhotoAlbumContainerInteractionManager
     private let visualMediaSearchHistoryUseCase: any VisualMediaSearchHistoryUseCaseProtocol
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let thumbnailLoader: any ThumbnailLoaderProtocol
@@ -39,7 +40,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     }
     
     public init(
-        searchBarTextFieldUpdater: SearchBarTextFieldUpdater,
+        photoAlbumContainerInteractionManager: PhotoAlbumContainerInteractionManager,
         visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol,
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
@@ -54,6 +55,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(300),
         debounceQueue: DispatchQueue = DispatchQueue(label: "nz.mega.VisualMediaSearchDebounceQueue", qos: .userInitiated)
     ) {
+        self.photoAlbumContainerInteractionManager = photoAlbumContainerInteractionManager
         self.visualMediaSearchHistoryUseCase = visualMediaSearchHistoryUseCase
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.thumbnailLoader = thumbnailLoader
@@ -69,7 +71,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         self.debounceQueue = debounceQueue
         
         $selectedRecentlySearched
-            .assign(to: &searchBarTextFieldUpdater.$searchBarText)
+            .assign(to: &photoAlbumContainerInteractionManager.$searchBarText)
     }
     
     func monitorSearchResults() async {
@@ -111,10 +113,13 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
             switch navigationResult {
             case .album(let album):
                 photoSearchResultRouter.didSelectAlbum(album)
+                photoAlbumContainerInteractionManager.changePage(to: .album)
             case .photos(let selectedPhoto, let otherPhotos):
                 photoSearchResultRouter.didSelectPhoto(selectedPhoto, otherPhotos: otherPhotos)
+                photoAlbumContainerInteractionManager.changePage(to: .timeline)
             }
             selectedVisualMediaResult = nil
+            break
         }
     }
     

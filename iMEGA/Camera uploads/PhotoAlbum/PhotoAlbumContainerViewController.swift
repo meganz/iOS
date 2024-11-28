@@ -25,7 +25,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         }
     }
     private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
-    private lazy var searchBarTextFieldUpdater = SearchBarTextFieldUpdater()
+    private lazy var photoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager()
     private lazy var searchController: UISearchController = {
         let resultController = VisualMediaSearchResultsViewControllerFactory
             .makeViewController(viewModel: makeVisualMediaSearchResultsViewModel())
@@ -197,13 +197,27 @@ final class PhotoAlbumContainerViewController: UIViewController {
         navigationItem.searchController = searchController
         extendedLayoutIncludesOpaqueBars = true
         
-        searchBarTextFieldUpdater.$searchBarText
+        photoAlbumContainerInteractionManager.$searchBarText
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] searchBarText in
                 guard let searchBar = self?.navigationItem.searchController?.searchBar,
                       searchBar.text != searchBarText else { return }
                 searchBar.text = searchBarText
+            }.store(in: &subscriptions)
+        
+        photoAlbumContainerInteractionManager.pageSwitchPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] page in
+                guard let self else { return }
+                if navigationItem.searchController?.isActive == true {
+                    navigationItem.searchController?.isActive = false
+                }
+                let selectedTab: PhotoLibraryTab = switch page {
+                case .timeline: .timeline
+                case .album: .album
+                }
+                pageTabViewModel.selectedTab = selectedTab
             }.store(in: &subscriptions)
     }
     
@@ -223,9 +237,17 @@ final class PhotoAlbumContainerViewController: UIViewController {
         pageTabViewModel.$selectedTab
             .debounce(for: .seconds(0.4), scheduler: DispatchQueue.main)
             .sink { [weak self] in
-                if let viewController = self?.showViewController(at: $0) {
-                    self?.pageController.setViewControllers([viewController], direction: $0 == .album ? .forward : .reverse, animated: true, completion: nil)
-                    self?.pageController.currentPage = $0
+                guard let self else { return }
+                if let viewController = showViewController(at: $0) {
+                    pageController.setViewControllers(
+                        [viewController], direction: $0 == .album ? .forward : .reverse,
+                        animated: self.presentedViewController == nil,
+                        completion: nil)
+                    
+                    pageController.currentPage = $0
+                }
+                if $0 == .album {
+                    updateRightBarButton()
                 }
             }
             .store(in: &subscriptions)
@@ -253,14 +275,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
             .filter { $0 >= 0 && $0 <= self.view.bounds.size.width / 2 }
             .sink { [weak self] in
                 self?.pageTabViewModel.tabOffset = $0
-            }
-            .store(in: &subscriptions)
-        
-        pageTabViewModel.$selectedTab
-            .filter { $0 == .album }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.updateRightBarButton()
             }
             .store(in: &subscriptions)
         
@@ -375,7 +389,7 @@ extension PhotoAlbumContainerViewController: UISearchControllerDelegate {
 extension PhotoAlbumContainerViewController {
     private func makeVisualMediaSearchResultsViewModel() -> VisualMediaSearchResultsViewModel {
         VisualMediaSearchResultsViewModel(
-            searchBarTextFieldUpdater: searchBarTextFieldUpdater,
+            photoAlbumContainerInteractionManager: photoAlbumContainerInteractionManager,
             visualMediaSearchHistoryUseCase: makeVisualMediaSearchHistoryUseCase(),
             monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),

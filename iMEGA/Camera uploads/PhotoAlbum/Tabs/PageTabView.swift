@@ -25,10 +25,7 @@ struct PageTabView: View {
             VStack(spacing: 10) {
                 HStack {
                     Button {
-                        withAnimation {
-                            viewModel.tabOffset = 0
-                            viewModel.selectedTab = .timeline
-                        }
+                        viewModel.selectedTab = .timeline
                     } label: {
                         Text(viewModel.timeLineTitle)
                             .font(Font.system(.subheadline, design: .default).weight(.medium))
@@ -37,11 +34,7 @@ struct PageTabView: View {
                     }
                     
                     Button {
-                        withAnimation {
-                            viewModel.tabOffset = proxy.size.width / 2
-                            viewModel.selectedTab = .album
-                        }
-                        
+                        viewModel.selectedTab = .album
                     } label: {
                         Text(viewModel.albumsTitle)
                             .font(Font.system(.subheadline, design: .default).weight(.medium))
@@ -57,6 +50,11 @@ struct PageTabView: View {
                 BottomIndicator(width: proxy.size.width, height: 1, offset: viewModel.tabOffset, color: TokenColors.Button.brand.swiftUI),
                 alignment: .bottom
             )
+            .onReceive(viewModel.$selectedTab) { selectedTab in
+                withAnimation {
+                    viewModel.tabOffset = selectedTab == .timeline ? 0 : proxy.size.width / 2
+                }
+            }
         }
         .ignoresSafeArea()
     }

@@ -178,7 +178,10 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
     func testHandleNavigation_onAlbumSelection_shouldNavigateToAlbumContent() {
         let expectedAlbum = AlbumEntity(id: 6, type: .user)
         let router = MockPhotoSearchResultRouter()
-        let sut = makeSUT(photoSearchResultRouter: router)
+        let photoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager()
+        let sut = makeSUT(
+            photoAlbumContainerInteractionManager: photoAlbumContainerInteractionManager,
+            photoSearchResultRouter: router)
         
         trackTaskCancellation { await sut.handleSelectedItemNavigation() }
         
@@ -190,12 +193,19 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
                 exp.fulfill()
             }
         
+        let tabSwitchExp = expectation(description: "switch to photo tab")
+        let tabSwitchSubscription = photoAlbumContainerInteractionManager.pageSwitchPublisher
+            .sink {
+                XCTAssertEqual($0, .album)
+                tabSwitchExp.fulfill()
+            }
+        
         sut.selectedVisualMediaResult = .init(
             selectedItem: .album(.init(album: expectedAlbum)),
             otherQueryItems: [])
         
-        wait(for: [exp], timeout: 0.5)
-        subscription.cancel()
+        wait(for: [exp, tabSwitchExp], timeout: 0.5)
+        [subscription, tabSwitchSubscription].forEach { $0.cancel() }
     }
     
     @MainActor
@@ -203,7 +213,10 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let expectedPhoto = NodeEntity(handle: 1)
         let expectedOtherPhotos = [NodeEntity(handle: 4), NodeEntity(handle: 5)]
         let router = MockPhotoSearchResultRouter()
-        let sut = makeSUT(photoSearchResultRouter: router)
+        let photoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager()
+        let sut = makeSUT(
+            photoAlbumContainerInteractionManager: photoAlbumContainerInteractionManager,
+            photoSearchResultRouter: router)
         
         trackTaskCancellation { await sut.handleSelectedItemNavigation() }
         
@@ -216,17 +229,24 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
                 exp.fulfill()
             }
         
+        let tabSwitchExp = expectation(description: "switch to photo tab")
+        let tabSwitchSubscription = photoAlbumContainerInteractionManager.pageSwitchPublisher
+            .sink {
+                XCTAssertEqual($0, .timeline)
+                tabSwitchExp.fulfill()
+            }
+        
         sut.selectedVisualMediaResult = .init(
             selectedItem: .photo(.init(photo: expectedPhoto)),
             otherQueryItems: expectedOtherPhotos.map { .photo(.init(photo: $0)) })
         
-        wait(for: [exp], timeout: 0.5)
-        subscription.cancel()
+        wait(for: [exp, tabSwitchExp], timeout: 0.5)
+        [subscription, tabSwitchSubscription].forEach { $0.cancel() }
     }
     
     @MainActor
     private func makeSUT(
-        searchBarTextFieldUpdater: SearchBarTextFieldUpdater = SearchBarTextFieldUpdater(),
+        photoAlbumContainerInteractionManager: PhotoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager(),
         visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol = MockVisualMediaSearchHistoryUseCase(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
@@ -246,7 +266,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> VisualMediaSearchResultsViewModel {
         let sut = VisualMediaSearchResultsViewModel(
-            searchBarTextFieldUpdater: searchBarTextFieldUpdater,
+            photoAlbumContainerInteractionManager: photoAlbumContainerInteractionManager,
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
             thumbnailLoader: thumbnailLoader,
