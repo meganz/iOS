@@ -851,7 +851,7 @@ class GetLinkViewController: UIViewController {
         footer.titleLabel.textAlignment = .center
         footer.configure(
             title: Strings.Localizable.tapToCopy,
-            color: TokenColors.Text.primary,
+            color: TokenColors.Text.secondary,
             topDistance: 4,
             isTopSeparatorVisible: true,
             isBottomSeparatorVisible: false
