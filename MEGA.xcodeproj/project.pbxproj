@@ -1413,6 +1413,7 @@
 		948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */; };
 		948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */; };
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
+		9490DE542CF4B49A00C0BAAD /* TestingExpectation in Frameworks */ = {isa = PBXBuildFile; productRef = 9490DE532CF4B49A00C0BAAD /* TestingExpectation */; };
 		9495DBB12A4086BF00FA22EE /* PermissionModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB02A4086BF00FA22EE /* PermissionModalModel.swift */; };
 		9495DBB32A4086DD00FA22EE /* UIAlertController+AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB22A4086DD00FA22EE /* UIAlertController+AlertModel.swift */; };
 		9495DBB72A40870C00FA22EE /* PermissionAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB62A40870C00FA22EE /* PermissionAlertRouter.swift */; };
@@ -2385,7 +2386,6 @@
 		BFCB32B62A0239A60013409C /* ScheduleMeetingPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */; };
 		BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */; };
 		BFCB81112505A8D90096BD57 /* FilesExplorerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB810F2505A8D90096BD57 /* FilesExplorerListViewController.swift */; };
-		BFCD7D872BAAC07B00D61DD1 /* ConcurrencyExtras in Frameworks */ = {isa = PBXBuildFile; productRef = BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */; };
 		BFCD7D8E2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCD7D8D2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift */; };
 		BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */; };
 		BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */; };
@@ -5549,10 +5549,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFCD7D872BAAC07B00D61DD1 /* ConcurrencyExtras in Frameworks */,
 				A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */,
 				A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */,
 				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
+				9490DE542CF4B49A00C0BAAD /* TestingExpectation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13518,8 +13518,8 @@
 			packageProductDependencies = (
 				1678D7F12A45487E00336C52 /* MEGATest */,
 				A8DEA5072B9F157000E8806C /* MEGADomainMock */,
-				BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */,
 				A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */,
+				9490DE532CF4B49A00C0BAAD /* TestingExpectation */,
 			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
@@ -13665,10 +13665,10 @@
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
 				9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */,
-				BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */,
 				0E12F20F2BBFA8950087D853 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				9462D4B62C2049810049B3CA /* XCRemoteSwiftPackageReference "combine-schedulers" */,
 				B5866BB32CA539E4009E0A1E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				9439CBDA2CF4B04C002456A5 /* XCRemoteSwiftPackageReference "swift-testing-expectation" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -18211,6 +18211,14 @@
 				kind = branch;
 			};
 		};
+		9439CBDA2CF4B04C002456A5 /* XCRemoteSwiftPackageReference "swift-testing-expectation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dfed/swift-testing-expectation";
+			requirement = {
+				kind = exactVersion;
+				version = 0.1.1;
+			};
+		};
 		943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios";
@@ -18371,14 +18379,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-concurrency-extras.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.1.0;
-			};
-		};
 		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/PieChart.git";
@@ -18509,6 +18509,11 @@
 		946ACCC8299C0B5700E6C0F5 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;
+		};
+		9490DE532CF4B49A00C0BAAD /* TestingExpectation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9439CBDA2CF4B04C002456A5 /* XCRemoteSwiftPackageReference "swift-testing-expectation" */;
+			productName = TestingExpectation;
 		};
 		94A220172A696502004130C4 /* MEGAAnalyticsiOS */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -18924,11 +18929,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
 			productName = SDAVAssetExportSession;
-		};
-		BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */;
-			productName = ConcurrencyExtras;
 		};
 		BFD2ED4C281228B30018C05A /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;

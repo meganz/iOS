@@ -1,10 +1,11 @@
 import CallKit
-import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
-import XCTest
+import Testing
+import TestingExpectation
 
-final class CallKitProviderDelegateTests: XCTestCase {
+@Suite("CallKitProviderDelegate")
+struct CallKitProviderDelegateTests {
     class MockStartAction: CXStartCallAction {
         
         init(callUUID: UUID) {
@@ -15,14 +16,14 @@ final class CallKitProviderDelegateTests: XCTestCase {
             fatalError("init(coder:) has not been implemented")
         }
         
-        var fulfillCalled = false
+        var fulfillCalled = Expectation()
         override func fulfill() {
-            fulfillCalled = true
+            fulfillCalled.fulfill()
         }
         
-        var failCalled = false
+        var failCalled = Expectation()
         override func fail() {
-            failCalled = true
+            failCalled.fulfill()
         }
     }
     class MockAnswerAction: CXAnswerCallAction {
@@ -35,14 +36,14 @@ final class CallKitProviderDelegateTests: XCTestCase {
             fatalError("init(coder:) has not been implemented")
         }
         
-        var fulfillCalled = false
+        var fulfillCalled = Expectation()
         override func fulfill() {
-            fulfillCalled = true
+            fulfillCalled.fulfill()
         }
         
-        var failCalled = false
+        var failCalled = Expectation()
         override func fail() {
-            failCalled = true
+            failCalled.fulfill()
         }
     }
     class MockEndAction: CXEndCallAction {
@@ -55,25 +56,26 @@ final class CallKitProviderDelegateTests: XCTestCase {
             fatalError("init(coder:) has not been implemented")
         }
         
-        var fulfillCalled = false
+        var fulfillCalled = Expectation()
         override func fulfill() {
-            fulfillCalled = true
+            fulfillCalled.fulfill()
         }
         
-        var failCalled = false
+        var failCalled = Expectation()
         override func fail() {
-            failCalled = true
+            failCalled.fulfill()
         }
     }
     class MockMutedAction: CXSetMutedCallAction {
-        var fulfillCalled = false
+
+        var fulfillCalled: TestingExpectation.Expectation!
         override func fulfill() {
-            fulfillCalled = true
+            fulfillCalled.fulfill()
         }
         
-        var failCalled = false
+        var failCalled: TestingExpectation.Expectation!
         override func fail() {
-            failCalled = true
+            failCalled.fulfill()
         }
     }
     
@@ -102,115 +104,109 @@ final class CallKitProviderDelegateTests: XCTestCase {
         }
     }
     
-    func test_DidReset_informesCallManager() {
+    @Test("Reset provider removes all calls from callManager")
+    func didReset_informesCallManager() {
         let harness = Harness()
         harness.sut.providerDidReset(harness.cxProvider)
-        XCTAssertEqual(harness.callManager.removeAllCalls_CalledTimes, 1)
+        #expect(harness.callManager.removeAllCalls_CalledTimes == 1)
     }
     
-    @MainActor
-    func test_performStartAction_callCoordinatorSucceeds_callStartCallInManager() async {
-        await withMainSerialExecutor {
+    @Suite("Start Call")
+    struct StartCall {
+        @Test("Perform Start call action succeeds")
+        func startCall_Succeeds() async {
             let harness = Harness()
             harness.callCoordinator.startCallResult_ToReturn = true
             let startAction = MockStartAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: startAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.startCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 1)
-            XCTAssertTrue(startAction.fulfillCalled)
+            await harness.callCoordinator.startCallCalled.fulfillment(within: .seconds(5))
+            await startAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 1)
         }
-    }
-    
-    func test_performStartAction_callCoordinatorFaild_callStartCallInManager() async {
-        await withMainSerialExecutor {
+        @Test("Perform Start call action fails")
+        func startCall_Fails() async {
             let harness = Harness()
             harness.callCoordinator.startCallResult_ToReturn = false
             let startAction = MockStartAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: startAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.startCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 0)
-            XCTAssertTrue(startAction.failCalled)
+            await harness.callCoordinator.startCallCalled.fulfillment(within: .seconds(5))
+            await startAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
     
-    func test_performAnswerAction_succeeded_callCoordinatorCalled() async {
-        await withMainSerialExecutor {
+    @Suite("Answer Call")
+    struct AnswerCall {
+        @Test("Performs answer call action, succeeds")
+        func answerAction_succeeds() async {
             let harness = Harness()
             harness.callManager.callForUUIDToReturn = .init(chatRoom: ChatRoomEntity())
             harness.callCoordinator.answerCallResult_ToReturn = true
             let answerAction = MockAnswerAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: answerAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.answerCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 1)
-            XCTAssertTrue(answerAction.fulfillCalled)
+            await harness.callCoordinator.answerCallCalled.fulfillment(within: .seconds(5))
+            await answerAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 1)
+            
         }
-    }
-    
-    func test_performAnswerAction_failed_callCoordinatorCalled() async {
-        await withMainSerialExecutor {
+        @Test("Performs answer call action, fails")
+        func answerAction_fails() async {
             let harness = Harness()
             harness.callCoordinator.answerCallResult_ToReturn = false
             let answerAction = MockAnswerAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: answerAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.answerCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 0)
-            XCTAssertTrue(answerAction.failCalled)
+            await harness.callCoordinator.answerCallCalled.fulfillment(within: .seconds(5))
+            await answerAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
-    
-    func test_performEndAction_succeeded_callCoordinatorCalled() async {
-        await withMainSerialExecutor {
+    @Suite("End Call")
+    struct EndCall {
+        @Test("Perform end call action, succeed")
+        func endCall_succeeded() async {
             let harness = Harness()
             harness.callCoordinator.endCallResult_ToReturn = true
             let endAction = MockEndAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: endAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.endCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 0)
-            XCTAssertTrue(endAction.fulfillCalled)
+            await harness.callCoordinator.endCallCalled.fulfillment(within: .seconds(5))
+            await endAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
-    }
-    
-    func test_performEndAction_failed_callCoordinatorCalled() async {
-        await withMainSerialExecutor {
+        
+        @Test("Perform end call action, fails")
+        func endCall_failed() async {
             let harness = Harness()
             harness.callCoordinator.endCallResult_ToReturn = false
             let endAction = MockEndAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: endAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.endCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 0)
-            XCTAssertTrue(endAction.failCalled)
+            await harness.callCoordinator.endCallCalled.fulfillment(within: .seconds(5))
+            await endAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
-    
-    func test_performMuteAction_succeeded_callCoordinatorCalled() async {
-        await withMainSerialExecutor {
+    @Suite("Mute call")
+    struct MuteCall {
+        @Test("Perform mute action succeeds")
+        func muteCall_succeeded() async {
             let harness = Harness()
             harness.callCoordinator.muteCallResult_ToReturn = true
             let muteAction = MockMutedAction(call: .init(), muted: true)
+            muteAction.fulfillCalled = Expectation()
             harness.sut.provider(harness.cxProvider, perform: muteAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.muteCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 0)
-            XCTAssertTrue(muteAction.fulfillCalled)
+            await harness.callCoordinator.muteCallCalled.fulfillment(within: .seconds(5))
+            await muteAction.fulfillCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
-    }
-    
-    func test_performMuteAction_failed_callCoordinatorCalled() async {
-        await withMainSerialExecutor {
+        @Test("Perform mute action fails")
+        func muteCall_failed() async {
             let harness = Harness()
             harness.callCoordinator.muteCallResult_ToReturn = false
             let muteAction = MockMutedAction(call: .init(), muted: true)
+            muteAction.failCalled = Expectation()
             harness.sut.provider(harness.cxProvider, perform: muteAction)
-            await Task.megaYield()
-            XCTAssertEqual(harness.callCoordinator.muteCall_CalledTimes, 1)
-            XCTAssertEqual(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes, 0)
-            XCTAssertTrue(muteAction.failCalled)
+            await harness.callCoordinator.muteCallCalled.fulfillment(within: .seconds(5))
+            await muteAction.failCalled.fulfillment(within: .seconds(5))
+            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
 }

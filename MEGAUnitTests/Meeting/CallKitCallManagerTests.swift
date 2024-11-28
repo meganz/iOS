@@ -1,8 +1,7 @@
 import CallKit
-import ConcurrencyExtras
 @testable import MEGA
 import MEGADomain
-import XCTest
+import Testing
 
 extension ChatRoomEntity {
     static var testEntity: ChatRoomEntity {
@@ -18,7 +17,8 @@ extension String {
     static let testChatIdBase64 = "base"
 }
 
-final class CallKitCallManagerTests: XCTestCase {
+@Suite("CallKitCallManager")
+struct CallKitCallManagerTests {
     class MockCallController: CallControlling {
         var requestedTransactions: [CXTransaction] = []
         var errorToReturn: (any Error)?
@@ -69,38 +69,58 @@ final class CallKitCallManagerTests: XCTestCase {
         }
     }
     
-    func test_StartCall_isVideo_true_notifiesCallController() throws {
-        let isVideo = true
-        let action = Harness()
-            .startCall(hasVideo: isVideo)
-            .firstReceivedAction()
-        let startAction = try XCTUnwrap(action as? CXStartCallAction)
-        XCTAssertEqual(startAction.isVideo, isVideo)
-        XCTAssertEqual(startAction.contactIdentifier, "TITLE")
-        XCTAssertEqual(startAction.handle.type, .generic)
-        XCTAssertEqual(startAction.handle.value, "base")
+    @Suite("Start call")
+    struct StartCall {
+        
+        @Test("Start call notifies controller", arguments: [false, true])
+        func startCall_isVideo_notifiesCallController(isVideo: Bool) throws {
+            
+            let action = Harness()
+                .startCall(hasVideo: isVideo)
+                .firstReceivedAction()
+            let startAction = try #require(action as? CXStartCallAction)
+            #expect(startAction.isVideo == isVideo)
+            #expect(startAction.contactIdentifier == "TITLE")
+            #expect(startAction.handle.type == .generic)
+            #expect(startAction.handle.value == "base")
+        }
+        
+        @Test("Start call and read data")
+        func startCall_thenReadingCallData() throws {
+            let harness = Harness().startCall()
+            let callAction = try #require(harness.sut.call(forUUID: .testUUID))
+            #expect(callAction.chatRoom == .testEntity)
+        }
     }
     
-    func test_StartCall_isVideo_false_notifiesCallController() throws {
-        let isVideo = false
-        let action = Harness()
-            .startCall(hasVideo: isVideo)
-            .firstReceivedAction()
-        let startAction = try XCTUnwrap(action as? CXStartCallAction)
-        XCTAssertEqual(startAction.isVideo, isVideo)
-        XCTAssertEqual(startAction.contactIdentifier, "TITLE")
-        XCTAssertEqual(startAction.handle.type, .generic)
-        XCTAssertEqual(startAction.handle.value, "base")
+    @Suite("Remove Call")
+    struct RemoveCall {
+        
+        @Test("Removing call cleans storage")
+        func removeCall_cleansStorage() throws {
+            let harness = Harness().startCall()
+            harness.sut.removeCall(withUUID: .testUUID)
+            #expect(harness.sut.call(forUUID: .testUUID) == nil)
+        }
+        
+        @Test("Removing all calls cleans storage")
+        func removeAllCalls_cleansStorage() throws {
+            let harness = Harness().startCall()
+            harness.sut.removeAllCalls()
+            #expect(harness.sut.call(forUUID: .testUUID) == nil)
+        }
     }
     
-    func test_AnswerCall_notifiesCallController() throws {
+    @Test
+    func answerCall_notifiesCallController() throws {
         let harness = Harness()
         harness.sut.answerCall(in: .testEntity, withUUID: .testUUID)
-        let action = try XCTUnwrap(harness.firstReceivedAction() as? CXAnswerCallAction)
-        XCTAssertEqual(action.callUUID, .testUUID)
+        let action = try #require(harness.firstReceivedAction() as? CXAnswerCallAction)
+        #expect(action.callUUID == .testUUID)
     }
     
-    func test_endCall_notifiesCallController() throws {
+    @Test
+    func endCall_notifiesCallController() throws {
         let harness = Harness()
         harness.sut.startCall(
             with: CallActionSync(
@@ -108,35 +128,18 @@ final class CallKitCallManagerTests: XCTestCase {
             )
         )
         harness.sut.endCall(in: .testEntity, endForAll: true)
-        let action = try XCTUnwrap(harness.lastReceivedAction() as? CXEndCallAction)
-        XCTAssertEqual(action.callUUID, .testUUID)
+        let action = try #require(harness.lastReceivedAction() as? CXEndCallAction)
+        #expect(action.callUUID == .testUUID)
     }
     
-    func test_StartCall_thenReadingCallData() throws {
-        let harness = Harness().startCall()
-        let callAction = try XCTUnwrap(harness.sut.call(forUUID: .testUUID))
-        XCTAssertEqual(callAction.chatRoom, .testEntity)
-    }
-    
-    func test_removeCall_cleansStorage() throws {
-        let harness = Harness().startCall()
-        harness.sut.removeCall(withUUID: .testUUID)
-        XCTAssertNil(harness.sut.call(forUUID: .testUUID))
-    }
-    
-    func test_removeAllCalls_cleansStorage() throws {
-        let harness = Harness().startCall()
-        harness.sut.removeAllCalls()
-        XCTAssertNil(harness.sut.call(forUUID: .testUUID))
-    }
-    
-    func test_updateCall_updatesStorage() throws {
+    @Test
+    func updateCall_updatesStorage() throws {
         let harness = Harness().startCall()
         harness.sut.updateCall(withUUID: .testUUID, muted: true)
-        let callMuted = try XCTUnwrap(harness.sut.call(forUUID: .testUUID))
-        XCTAssertFalse(callMuted.audioEnabled)
+        let callMuted = try #require(harness.sut.call(forUUID: .testUUID))
+        #expect(callMuted.audioEnabled == false)
         harness.sut.updateCall(withUUID: .testUUID, muted: false)
-        let callUnmuted = try XCTUnwrap(harness.sut.call(forUUID: .testUUID))
-        XCTAssertTrue(callUnmuted.audioEnabled)
+        let callUnmuted = try #require(harness.sut.call(forUUID: .testUUID))
+        #expect(callUnmuted.audioEnabled == true)
     }
 }

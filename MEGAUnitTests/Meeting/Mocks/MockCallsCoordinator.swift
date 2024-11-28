@@ -1,5 +1,7 @@
 @testable import MEGA
 import MEGADomain
+import Testing
+import TestingExpectation
 
 final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable {
     var startCall_CalledTimes = 0
@@ -14,7 +16,10 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
     var endCallResult_ToReturn = false
     var muteCallResult_ToReturn = false
     var configureWebRTCAudioSession_CalledTimes = 0
-    
+    var endCallCalled = Expectation()
+    var muteCallCalled = Expectation()
+    var answerCallCalled = Expectation()
+    var startCallCalled = Expectation()
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
     var reportIncomingCallExpectationClosure: (() -> Void)?
 
@@ -22,21 +27,25 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
     
     func startCall(_ callActionSync: CallActionSync) async -> Bool {
         startCall_CalledTimes += 1
+        startCallCalled.fulfill()
         return startCallResult_ToReturn
     }
     
     func answerCall(_ callActionSync: CallActionSync) async -> Bool {
         answerCall_CalledTimes += 1
+        answerCallCalled.fulfill()
         return answerCallResult_ToReturn
     }
     
     func endCall(_ callActionSync: CallActionSync) async -> Bool {
         endCall_CalledTimes += 1
+        endCallCalled.fulfill()
         return endCallResult_ToReturn
     }
     
     func muteCall(_ callActionSync: CallActionSync) async -> Bool {
         muteCall_CalledTimes += 1
+        muteCallCalled.fulfill()
         return muteCallResult_ToReturn
     }
     
