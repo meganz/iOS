@@ -54,6 +54,7 @@ final class ChatContentViewModel: ViewModelType {
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
@@ -89,6 +90,7 @@ final class ChatContentViewModel: ViewModelType {
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
+         callUpdateUseCase: some CallUpdateUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
          router: some ChatContentRouting,
@@ -103,6 +105,7 @@ final class ChatContentViewModel: ViewModelType {
         self.chatUseCase = chatUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.router = router
@@ -113,7 +116,7 @@ final class ChatContentViewModel: ViewModelType {
         self.callManager = callManager
         self.featureFlagProvider = featureFlagProvider
         
-        subscribeToOnCallUpdate()
+        monitorOnCallUpdate()
         subscribeToNoUserJoinedNotification()
         monitorOnChatConnectionStateUpdate()
         monitorOnChatOnlineStatusUpdate()
@@ -187,7 +190,7 @@ final class ChatContentViewModel: ViewModelType {
         }
     }
     
-    private func onChatCallUpdate(for call: CallEntity) {
+    private func onCallUpdate(_ call: CallEntity) {
         chatCallUpdateTask?.cancel()
         chatCallUpdateTask = Task {
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
@@ -489,11 +492,13 @@ final class ChatContentViewModel: ViewModelType {
             }
     }
     
-    private func subscribeToOnCallUpdate() {
-        callUpdateSubscription = callUseCase.onCallUpdate()
-            .sink { [weak self] call in
-                self?.onChatCallUpdate(for: call)
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
             }
+        }
     }
     
     // MARK: Chat connection state update
