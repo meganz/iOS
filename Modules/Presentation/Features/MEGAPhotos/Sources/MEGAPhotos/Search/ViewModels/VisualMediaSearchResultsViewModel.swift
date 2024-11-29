@@ -165,10 +165,10 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         try Task.checkCancellation()
         let albumsSequence = try await albumItemsSequence(
-            excludeSensitives: excludeSensitives, searchText: searchText)
+            excludeSensitives: excludeSensitives)
         try Task.checkCancellation()
         let photosSequence = await photosItemsSequence(
-            excludeSensitives: excludeSensitives, searchText: searchText)
+            excludeSensitives: excludeSensitives)
         try Task.checkCancellation()
         
         for await (albumItems, photoItems) in combineLatest(albumsSequence, photosSequence) {
@@ -181,21 +181,19 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
     }
     
     private func albumItemsSequence(
-        excludeSensitives: Bool,
-        searchText: String
+        excludeSensitives: Bool
     ) async throws -> AnyAsyncSequence<[VisualMediaSearchResults.Item]> {
         try await monitorAlbumsUseCase.monitorAlbums(
             excludeSensitives: excludeSensitives,
             searchText: searchText)
         .compactMap { [weak self] albums -> [VisualMediaSearchResults.Item]? in
-            try await self?.map(albums: albums, searchText: searchText)
+            try await self?.map(albums: albums)
         }
         .eraseToAnyAsyncSequence()
     }
     
     private func map(
-        albums: [AlbumEntity],
-        searchText: String
+        albums: [AlbumEntity]
     ) throws -> [VisualMediaSearchResults.Item] {
         try albums.map {
             try Task.checkCancellation()
@@ -208,15 +206,13 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                 albumCoverUseCase: albumCoverUseCase,
                 album: $0,
                 selection: AlbumSelection(),
-                configuration: contentLibrariesConfiguration,
-                searchText: searchText
+                configuration: contentLibrariesConfiguration
             ))
         }
     }
     
     private func photosItemsSequence(
-        excludeSensitives: Bool,
-        searchText: String
+        excludeSensitives: Bool
     ) async -> AnyAsyncSequence<[VisualMediaSearchResults.Item]> {
         await monitorPhotosUseCase.monitorPhotos(filterOptions: [.allLocations, .allMedia], excludeSensitive: excludeSensitives, searchText: searchText)
             .compactMap { [weak self] photoResult -> [VisualMediaSearchResults.Item]? in
@@ -235,7 +231,6 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                         try Task.checkCancellation()
                         return .photo(PhotoSearchResultItemViewModel(
                             photo: photo,
-                            searchText: searchText,
                             thumbnailLoader: thumbnailLoader,
                             photoSearchResultRouter: photoSearchResultRouter))
                     }

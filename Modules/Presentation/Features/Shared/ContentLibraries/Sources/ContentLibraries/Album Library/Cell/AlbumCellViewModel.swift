@@ -17,7 +17,6 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     public let album: AlbumEntity
     let selection: AlbumSelection
     let isLinkShared: Bool
-    let searchText: String?
     
     @Published var numberOfNodes: Int = 0
     @Published var thumbnailContainer: any ImageContaining
@@ -75,8 +74,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         tracker: some AnalyticsTracking = DIContainer.tracker,
         onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        configuration: ContentLibraries.Configuration = ContentLibraries.configuration,
-        searchText: String? = nil
+        configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
         self.thumbnailLoader = thumbnailLoader
         self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
@@ -90,7 +88,6 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         self.onAlbumSelected = onAlbumSelected
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
-        self.searchText = searchText
         
         title = album.name
         numberOfNodes = album.count
@@ -231,7 +228,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
 
 extension AlbumCellViewModel: Equatable {
     nonisolated public static func == (lhs: AlbumCellViewModel, rhs: AlbumCellViewModel) -> Bool {
-        lhs.album == rhs.album && lhs.searchText == rhs.searchText
+        lhs.album == rhs.album
     }
 }
 

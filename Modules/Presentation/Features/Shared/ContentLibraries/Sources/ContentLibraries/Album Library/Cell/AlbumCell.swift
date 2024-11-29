@@ -48,15 +48,11 @@ public struct AlbumCell: View {
             }
             
             VStack(alignment: .leading, spacing: 6) {
-                AttributedTextView(
-                    stringAttribute: .init(
-                        text: viewModel.title,
-                        attributes: AttributeContainer()
-                            .font(.caption)
-                            .foregroundColor(TokenColors.Text.primary.swiftUI)),
-                    substringAttributeList: titleSubstringAttributes(),
-                    truncationMode: .middle,
-                    lineLimit: 1)
+                Text(viewModel.title)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .font(.caption)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Text("\(viewModel.numberOfNodes)")
                     .font(.footnote)
@@ -85,21 +81,6 @@ public struct AlbumCell: View {
             markedSelected: viewModel.isSelected,
             foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
         )
-    }
-    
-    private func titleSubstringAttributes() -> [SubstringAttribute] {
-        if let searchText = viewModel.searchText {
-            [SubstringAttribute(
-                text: searchText,
-                compareOptions: .caseInsensitive,
-                attributes: AttributeContainer()
-                    .font(.caption)
-                    .foregroundColor(TokenColors.Text.primary.swiftUI)
-                    .backgroundColor(TokenColors.Text.info.swiftUI))
-            ]
-        } else {
-            []
-        }
     }
 }
 

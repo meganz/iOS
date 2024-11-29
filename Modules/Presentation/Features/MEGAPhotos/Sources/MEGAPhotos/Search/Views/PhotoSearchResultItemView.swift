@@ -22,12 +22,6 @@ struct PhotoSearchResultItemView: View {
                         await viewModel.loadThumbnail()
                     }
             }
-            .titleSubstringAttribute(
-                viewModel.searchText,
-                compareOptions: .caseInsensitive,
-                attributes: AttributeContainer()
-                    .backgroundColor(TokenColors.Text.info.swiftUI)
-            )
             .replaceTrailingView {
                 UIButtonWrapper(
                     image: MEGAAssetsImageProvider.image(named: .moreList)
