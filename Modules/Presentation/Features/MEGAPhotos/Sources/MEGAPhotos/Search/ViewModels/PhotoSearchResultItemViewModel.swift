@@ -6,7 +6,6 @@ import SwiftUI
 @MainActor
 final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
     let photo: NodeEntity
-    let searchText: String
     @Published private var loadedThumbnailContainer: (any ImageContaining)?
     
     nonisolated var id: HandleEntity {
@@ -27,12 +26,10 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
     
     nonisolated init(
         photo: NodeEntity,
-        searchText: String,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         photoSearchResultRouter: some PhotoSearchResultRouterProtocol
     ) {
         self.photo = photo
-        self.searchText = searchText
         self.thumbnailLoader = thumbnailLoader
         self.photoSearchResultRouter = photoSearchResultRouter
     }
@@ -51,6 +48,6 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
 
 extension PhotoSearchResultItemViewModel: Equatable {
     nonisolated static func == (lhs: PhotoSearchResultItemViewModel, rhs: PhotoSearchResultItemViewModel) -> Bool {
-        lhs.photo == rhs.photo && lhs.searchText == rhs.searchText
+        lhs.photo == rhs.photo
     }
 }

@@ -127,13 +127,13 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             XCTAssertEqual($0, .searchResults(
                 .init(sectionContents: [
                     .init(section: .albums, items: [
-                        .album(AlbumCellViewModel(album: systemAlbum, searchText: searchText)),
-                        .album(AlbumCellViewModel(album: userAlbum, searchText: searchText))
+                        .album(AlbumCellViewModel(album: systemAlbum)),
+                        .album(AlbumCellViewModel(album: userAlbum))
                     ]),
                     .init(section: .photos, items: [
-                        .photo(PhotoSearchResultItemViewModel(photo: photo3, searchText: searchText)),
-                        .photo(PhotoSearchResultItemViewModel(photo: photo2, searchText: searchText)),
-                        .photo(PhotoSearchResultItemViewModel(photo: photo1, searchText: searchText))
+                        .photo(PhotoSearchResultItemViewModel(photo: photo3)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo2)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo1))
                     ])
                 ])
             ))
@@ -313,10 +313,9 @@ private extension Sequence where Element == SearchTextHistoryEntryEntity {
 }
 
 private extension PhotoSearchResultItemViewModel {
-    convenience init(photo: NodeEntity, searchText: String = "") {
+    convenience init(photo: NodeEntity) {
         self.init(
             photo: photo,
-            searchText: searchText,
             thumbnailLoader: MockThumbnailLoader(),
             photoSearchResultRouter: MockPhotoSearchResultRouter())
     }

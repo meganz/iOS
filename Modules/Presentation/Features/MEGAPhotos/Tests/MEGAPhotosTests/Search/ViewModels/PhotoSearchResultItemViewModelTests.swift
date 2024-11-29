@@ -23,16 +23,6 @@ struct PhotoSearchResultItemViewModelTests {
             #expect(sut.title == expectedTitle)
         }
         
-        @Test("ensure search text is set to binding")
-        @MainActor
-        func searchText() {
-            let expected = "Search me"
-            let sut = PhotoSearchResultItemViewModelTests
-                .makeSUT(searchText: expected)
-            
-            #expect(sut.searchText == expected)
-        }
-        
         @Test("Initial image found for photo should set thumbnail container")
         @MainActor
         func initialImageFound() async throws {
@@ -79,13 +69,11 @@ struct PhotoSearchResultItemViewModelTests {
     @MainActor
     private static func makeSUT(
         photo: NodeEntity = .init(handle: 1),
-        searchText: String = "",
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter()
     ) -> PhotoSearchResultItemViewModel {
         PhotoSearchResultItemViewModel(
             photo: photo,
-            searchText: searchText,
             thumbnailLoader: thumbnailLoader,
             photoSearchResultRouter: photoSearchResultRouter)
     }

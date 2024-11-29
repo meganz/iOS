@@ -6,7 +6,7 @@ import MEGAPresentationMock
 import SwiftUI
 
 extension AlbumCellViewModel {
-    convenience init(album: AlbumEntity, searchText: String? = nil) {
+    convenience init(album: AlbumEntity) {
         self.init(
             thumbnailLoader: MockThumbnailLoader(initialImage: ImageContainer(image: Image(systemName: "square"), type: .thumbnail)),
             monitorUserAlbumPhotosUseCase: MockMonitorUserAlbumPhotosUseCase(),
@@ -21,8 +21,7 @@ extension AlbumCellViewModel {
             configuration: .init(
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
                 nodeUseCase: MockNodeUseCase(),
-                isAlbumPerformanceImprovementsEnabled: { false }),
-            searchText: searchText
+                isAlbumPerformanceImprovementsEnabled: { false })
         )
     }
 }
