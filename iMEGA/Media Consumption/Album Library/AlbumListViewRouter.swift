@@ -10,7 +10,7 @@ import SwiftUI
 @MainActor
 protocol AlbumListViewRouting {
     func cell(album: AlbumEntity, selection: AlbumSelection, onAlbumSelected: @escaping (AlbumEntity) -> Void) -> AlbumCell
-    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
+    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
@@ -45,8 +45,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return AlbumCell(viewModel: vm)
     }
     
-    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper {
-        return AlbumContainerWrapper(album: album, newAlbumPhotos: newAlbumPhotosToAdd, existingAlbumNames: existingAlbumNames)
+    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?) -> AlbumContainerWrapper {
+        AlbumContainerWrapper(album: album, newAlbumPhotos: newAlbumPhotosToAdd)
     }
     
     func build() -> UIViewController {

@@ -35,7 +35,7 @@ final class PhotoSearchResultRouter: PhotoSearchResultRouterProtocol {
     }
     
     func didSelectAlbum(_ album: AlbumEntity) {
-        let viewController = AlbumContentRouter(navigationController: navigationController, album: album, newAlbumPhotos: nil, existingAlbumNames: { [] }).build()
+        let viewController = AlbumContentRouter(navigationController: navigationController, album: album, newAlbumPhotos: nil).build()
         let nav = UINavigationController(rootViewController: viewController)
         nav.modalPresentationStyle = .fullScreen
         navigationController?.present(nav, animated: true, completion: nil)

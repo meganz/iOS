@@ -155,6 +155,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
             showAlbumDeleteConfirmation()
         case .configureRightBarButtons(let config, let canAddPhotos):
             configureRightBarButtons(contextMenuConfiguration: config, canAddPhotosToAlbum: canAddPhotos)
+        case .showRenameAlbumAlert(viewModel: let viewModel):
+            present(UIAlertController(alert: viewModel), animated: true)
         }
     }
     

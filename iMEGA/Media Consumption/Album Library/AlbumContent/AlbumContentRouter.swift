@@ -19,13 +19,11 @@ struct AlbumContentRouter: AlbumContentRouting {
     private weak var navigationController: UINavigationController?
     private let album: AlbumEntity
     private let newAlbumPhotos: [NodeEntity]?
-    private let existingAlbumNames: () -> [String]
-        
-    init(navigationController: UINavigationController?, album: AlbumEntity, newAlbumPhotos: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) {
+    
+    init(navigationController: UINavigationController?, album: AlbumEntity, newAlbumPhotos: [NodeEntity]?) {
         self.navigationController = navigationController
         self.album = album
         self.newAlbumPhotos = newAlbumPhotos
-        self.existingAlbumNames = existingAlbumNames
     }
     
     func build() -> UIViewController {
@@ -53,20 +51,11 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                       sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
                                                       hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
         
-        let alertViewModel = TextFieldAlertViewModel(textString: album.name,
-                                                     title: Strings.Localizable.rename,
-                                                     placeholderText: "",
-                                                     affirmativeButtonTitle: Strings.Localizable.rename,
-                                                     affirmativeButtonInitiallyEnabled: false,
-                                                     destructiveButtonTitle: Strings.Localizable.cancel,
-                                                     highlightInitialText: true,
-                                                     message: Strings.Localizable.renameNodeMessage,
-                                                     validator: AlbumNameValidator(existingAlbumNames: existingAlbumNames).rename)
-        
         let viewModel = AlbumContentViewModel(
             album: album,
             albumContentsUseCase: albumContentsUseCase,
-            albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
+            albumModificationUseCase: AlbumModificationUseCase(
+                userAlbumRepo: userAlbumRepo),
             photoLibraryUseCase: photoLibraryUseCase,
             shareCollectionUseCase: ShareCollectionUseCase(
                 shareAlbumRepository: ShareCollectionRepository.newRepo,
@@ -74,9 +63,10 @@ struct AlbumContentRouter: AlbumContentRouting {
                 nodeRepository: NodeRepository.newRepo
             ),
             monitorAlbumPhotosUseCase: makeMonitorAlbumPhotosUseCase(),
+            albumNameUseCase: AlbumNameUseCase(
+                userAlbumRepository: userAlbumRepo),
             router: self,
-            newAlbumPhotosToAdd: newAlbumPhotos,
-            alertViewModel: alertViewModel)
+            newAlbumPhotosToAdd: newAlbumPhotos)
         return AlbumContentViewController(viewModel: viewModel)
     }
     
@@ -97,7 +87,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                     configuration: PhotoLibraryContentConfiguration(
                                                         selectLimit: 150,
                                                         scaleFactor: UIDevice().iPadDevice ? .five : .three)
-                                                    )
+        )
         let content = AlbumContentPickerView(viewModel: viewModel)
         navigationController?.present(UIHostingController(rootView: content),
                                       animated: true)
@@ -121,7 +111,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         
         let viewModel = AlbumCoverPickerViewModel(album: album,
                                                   albumContentsUseCase: albumContentsUseCase, router: self,
-                                                    completion: completion)
+                                                  completion: completion)
         let content = AlbumCoverPickerView(viewModel: viewModel)
         navigationController?.present(UIHostingController(rootView: content),
                                       animated: true)

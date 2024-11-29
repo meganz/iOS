@@ -603,59 +603,42 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testRenameAlbum_whenUserRenameAlbum_shouldUpdateAlbumNameAndNavigationTitle() {
         let photo = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let albumModificationUseCase = MockAlbumModificationUseCase()
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
-                                            albumModificationUseCase: albumModificationUseCase)
-        
-        let exp = expectation(description: "Should update navigation title")
-        sut.invokeCommand = {
-            switch $0 {
-            case .updateNavigationTitle:
-                exp.fulfill()
-            default:
-                XCTFail("Invoked unexpected command: \($0)")
-            }
-        }
-        
-        let expectedName = "Hey there"
-        sut.renameAlbum(with: expectedName)
-        
-        wait(for: [exp], timeout: 1)
-        XCTAssertEqual(sut.albumName, expectedName)
-    }
-    
-    @MainActor
-    func testUpdateAlertViewModel_whenUserRenamesStaysSamePageAndRenameAgain_shouldShowLatestRenamedAlbumName() {
-        let photo = [NodeEntity(name: "a.jpg", handle: 1)]
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
-        let albumModificationUseCase = MockAlbumModificationUseCase()
-        let alertViewModel = TextFieldAlertViewModel(textString: "Old Album", title: "Hey there", placeholderText: "",
-                                                     affirmativeButtonTitle: "Rename", affirmativeButtonInitiallyEnabled: true,
-                                                     destructiveButtonTitle: Strings.Localizable.cancel,
-                                                     message: "", action: nil, validator: nil)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
-                                            albumModificationUseCase: albumModificationUseCase,
-                                            router: albumContentRouter,
-                                            alertViewModel: alertViewModel)
+        let expectedAlertViewModel = TextFieldAlertViewModel(
+            textString: album.name,
+            title: Strings.Localizable.rename,
+            placeholderText: "",
+            affirmativeButtonTitle: Strings.Localizable.rename,
+            affirmativeButtonInitiallyEnabled: false,
+            destructiveButtonTitle: Strings.Localizable.cancel,
+            highlightInitialText: true,
+            message: Strings.Localizable.renameNodeMessage,
+            action: nil,
+            validator: nil)
         
         let expectedName = "New Album"
+        let sut = makeAlbumContentViewModel(
+            album: album,
+            albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
+            albumNameUseCase: MockAlbumNameUseCase(userAlbumNames: ["User Album"]),
+            router: albumContentRouter)
+        
         let exp = expectation(description: "Should update navigation title")
         sut.invokeCommand = {
             switch $0 {
+            case .showRenameAlbumAlert(let viewModel):
+                XCTAssertEqual(viewModel, expectedAlertViewModel)
+                viewModel.action?(expectedName)
             case .updateNavigationTitle:
-                sut.updateAlertViewModel()
                 exp.fulfill()
             default:
                 XCTFail("Invoked unexpected command: \($0)")
             }
         }
-        sut.renameAlbum(with: expectedName)
+        
+        sut.dispatch(.renameAlbum)
         
         wait(for: [exp], timeout: 1)
-        XCTAssertEqual(sut.alertViewModel.textString, "New Album")
     }
     
     @MainActor 
@@ -1002,23 +985,24 @@ final class AlbumContentViewModelTests: XCTestCase {
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
         shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
         monitorAlbumPhotosUseCase: some MonitorAlbumPhotosUseCaseProtocol = MockMonitorAlbumPhotosUseCase(),
+        albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
         router: some AlbumContentRouting = MockAlbumContentRouting(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
-        alertViewModel: TextFieldAlertViewModel? = nil,
         tracker: some AnalyticsTracking = MockTracker(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
     ) -> AlbumContentViewModel {
-        AlbumContentViewModel(album: album,
-                              albumContentsUseCase: albumContentsUseCase,
-                              albumModificationUseCase: albumModificationUseCase,
-                              photoLibraryUseCase: photoLibraryUseCase,
-                              shareCollectionUseCase: shareCollectionUseCase,
-                              monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-                              router: router,
-                              newAlbumPhotosToAdd: newAlbumPhotosToAdd,
-                              alertViewModel: alertViewModel ?? makeAlertViewModel(),
-                              tracker: tracker,
-                              albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+        AlbumContentViewModel(
+            album: album,
+            albumContentsUseCase: albumContentsUseCase,
+            albumModificationUseCase: albumModificationUseCase,
+            photoLibraryUseCase: photoLibraryUseCase,
+            shareCollectionUseCase: shareCollectionUseCase,
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
+            albumNameUseCase: albumNameUseCase,
+            router: router,
+            newAlbumPhotosToAdd: newAlbumPhotosToAdd,
+            tracker: tracker,
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
     }
     
     private func makeAlertViewModel() -> TextFieldAlertViewModel {
@@ -1124,10 +1108,12 @@ private extension AlbumContentViewModel.Command {
             lhsContextMenuConfiguration?.isEmptyState == rhsContextMenuConfiguration?.isEmptyState &&
             lhsContextMenuConfiguration?.sharedLinkStatus == rhsContextMenuConfiguration?.sharedLinkStatus &&
                 lhsCanAddPhotosToAlbum == rhsCanAddPhotosToAlbum
+        case (.showRenameAlbumAlert(let lhsViewModel), .showRenameAlbumAlert(let rhsViewModel)):
+            lhsViewModel == rhsViewModel
         case (.dismissAlbum, .dismissAlbum),
             (.updateNavigationTitle, .updateNavigationTitle),
             (.startLoading, .startLoading),
-             (.finishLoading, .finishLoading):
+            (.finishLoading, .finishLoading):
             true
         default:
             false

@@ -19,6 +19,7 @@ enum AlbumContentAction: ActionType {
     case shareLink
     case removeLink
     case hideNodes
+    case renameAlbum
 }
 
 @MainActor
@@ -32,6 +33,7 @@ final class AlbumContentViewModel: ViewModelType {
         case updateNavigationTitle
         case showDeleteAlbumAlert
         case configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?, canAddPhotosToAlbum: Bool)
+        case showRenameAlbumAlert(viewModel: TextFieldAlertViewModel)
         enum MessageType: Equatable {
             case success(String)
             case custom(UIImage, String)
@@ -47,8 +49,8 @@ final class AlbumContentViewModel: ViewModelType {
     private let monitorAlbumPhotosUseCase: any MonitorAlbumPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
-    
     private let albumContentDataProvider: any AlbumContentPhotoLibraryDataProviderProtocol
+    private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     private var selectedSortOrder: SortOrderType = .newest
@@ -73,8 +75,12 @@ final class AlbumContentViewModel: ViewModelType {
     private var retrieveUserAlbumCover: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
-    
-    private(set) var alertViewModel: TextFieldAlertViewModel
+    private var retrieveAlbumNamesTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private var renameAlbumNamesTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     
     var invokeCommand: ((Command) -> Void)?
     var isPhotoSelectionHidden = false
@@ -92,9 +98,9 @@ final class AlbumContentViewModel: ViewModelType {
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
         monitorAlbumPhotosUseCase: some MonitorAlbumPhotosUseCaseProtocol,
+        albumNameUseCase: some AlbumNameUseCaseProtocol,
         router: some AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
-        alertViewModel: TextFieldAlertViewModel,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
@@ -106,13 +112,11 @@ final class AlbumContentViewModel: ViewModelType {
         self.photoLibraryUseCase = photoLibraryUseCase
         self.shareCollectionUseCase = shareCollectionUseCase
         self.monitorAlbumPhotosUseCase = monitorAlbumPhotosUseCase
+        self.albumNameUseCase = albumNameUseCase
         self.router = router
-        self.alertViewModel = alertViewModel
         self.tracker = tracker
         self.albumContentDataProvider = albumContentDataProvider
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
-        
-        setupAlbumModification()
     }
     
     // MARK: - Dispatch action
@@ -147,6 +151,8 @@ final class AlbumContentViewModel: ViewModelType {
             removeSharedLink()
         case .hideNodes:
             tracker.trackAnalyticsEvent(with: AlbumContentHideNodeMenuItemEvent())
+        case .renameAlbum:
+            showRenameAlbumAlert()
         default:
             break
         }
@@ -174,21 +180,6 @@ final class AlbumContentViewModel: ViewModelType {
         router.showAlbumContentPicker(album: album, completion: { [weak self] _, albumPhotos in
             self?.addAdditionalPhotos(albumPhotos)
         })
-    }
-    
-    func renameAlbum(with name: String) {
-        Task {
-            do {
-                let newName = try await albumModificationUseCase.rename(album: album.id, with: name)
-                onAlbumRenameSuccess(with: newName)
-            } catch {
-                MEGALogError("Error renaming user album: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func updateAlertViewModel() {
-        alertViewModel.textString = albumName
     }
     
     // MARK: Private
@@ -342,18 +333,6 @@ final class AlbumContentViewModel: ViewModelType {
         Strings.Localizable.CameraUploads.Albums.addedItemTo(Int(num)).replacingOccurrences(of: "[A]", with: "\(name)")
     }
     
-    private func setupAlbumModification() {
-        alertViewModel.action = { [weak self] newName in
-            guard let newName = newName else { return }
-            self?.renameAlbum(with: newName)
-        }
-    }
-    
-    private func onAlbumRenameSuccess(with newName: String) {
-        album.name = newName
-        invokeCommand?(.updateNavigationTitle)
-    }
-    
     private func updateAlbumCover(albumPhoto: AlbumPhotoEntity) {
         Task { [weak self] in
             guard let self else { return }
@@ -459,6 +438,8 @@ final class AlbumContentViewModel: ViewModelType {
         updateRightBarButtonsTask = nil
         retrieveUserAlbumCover = nil
         reloadAlbumTask = nil
+        retrieveAlbumNamesTask = nil
+        renameAlbumNamesTask = nil
     }
     
     private func updateRightBarButtons() {
@@ -499,5 +480,44 @@ final class AlbumContentViewModel: ViewModelType {
             return false
         }
         return await albumContentDataProvider.isFilterEnabled(for: selectedFilter)
+    }
+    
+    private func showRenameAlbumAlert() {
+        retrieveAlbumNamesTask = Task { @MainActor in
+            let userAlbumNames = await albumNameUseCase.userAlbumNames()
+            
+            guard !Task.isCancelled else { return }
+            
+            let alertViewModel = TextFieldAlertViewModel(
+                textString: album.name,
+                title: Strings.Localizable.rename,
+                placeholderText: "",
+                affirmativeButtonTitle: Strings.Localizable.rename,
+                affirmativeButtonInitiallyEnabled: false,
+                destructiveButtonTitle: Strings.Localizable.cancel,
+                highlightInitialText: true,
+                message: Strings.Localizable.renameNodeMessage,
+                action: { [weak self] newName in
+                    guard let newName else { return }
+                    self?.renameAlbum(with: newName)
+                },
+                validator: AlbumNameValidator(
+                    existingAlbumNames: { userAlbumNames }).rename)
+            
+            invokeCommand?(.showRenameAlbumAlert(viewModel: alertViewModel))
+        }
+    }
+    
+    private func renameAlbum(with name: String) {
+        renameAlbumNamesTask = Task {
+            do {
+                let newName = try await albumModificationUseCase.rename(album: album.id, with: name)
+                guard !Task.isCancelled else { return }
+                album.name = newName
+                invokeCommand?(.updateNavigationTitle)
+            } catch {
+                MEGALogError("Error renaming user album: \(error.localizedDescription)")
+            }
+        }
     }
 }
