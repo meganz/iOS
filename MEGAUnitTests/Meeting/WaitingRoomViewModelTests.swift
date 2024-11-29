@@ -54,14 +54,19 @@ final class WaitingRoomViewModelTests: XCTestCase {
     func testViewState_onMeetingNotStartTransitsToMeetingDidStart_shouldChangeFromWaitForHostToStartToWaitForHostToLetIn() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let callEntity = CallEntity(status: .connecting, chatId: 100)
-        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
-        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(callEntity), callUpdateSubject: callUpdateSubject)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()), callUseCase: callUseCase)
+        let callUseCase = MockCallUseCase(call: nil)
+        let callUpdateUseCase = MockCallUpdateUseCase()
+        let sut = WaitingRoomViewModel(
+            scheduledMeeting: scheduledMeeting,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
+            callUseCase: callUseCase,
+            callUpdateUseCase: callUpdateUseCase
+        )
         
         XCTAssertEqual(sut.viewState, .waitForHostToStart)
         
         callUseCase.call = callEntity
-        callUpdateSubject.send(callEntity)
+        callUpdateUseCase.sendCallUpdate(callEntity)
         
         evaluate {
             sut.viewState == .waitForHostToLetIn
@@ -72,14 +77,20 @@ final class WaitingRoomViewModelTests: XCTestCase {
     func testViewState_onMeetingDidStartTransitsToMeetingNotStart_shouldChangeFromWaitForHostToLetInToWaitForHostToStart() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let chatUseCase = MockChatUseCase(isActiveWaitingRoom: true)
-        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
-        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatUseCase: chatUseCase, callUseCase: callUseCase)
+        let callUseCase = MockCallUseCase()
+        let callUpdateUseCase = MockCallUpdateUseCase()
+
+        let sut = WaitingRoomViewModel(
+            scheduledMeeting: scheduledMeeting,
+            chatUseCase: chatUseCase,
+            callUseCase: callUseCase,
+            callUpdateUseCase: callUpdateUseCase
+        )
         
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
         
         callUseCase.call = nil
-        callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, chatId: 100))
+        callUpdateUseCase.sendCallUpdate(CallEntity(status: .terminatingUserParticipation, chatId: 100))
         
         evaluate {
             sut.viewState == .waitForHostToStart
@@ -360,13 +371,17 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let router = MockWaitingRoomViewRouter()
         let callEntity = CallEntity(status: .waitingRoom, chatId: 100, termCodeType: .kicked, waitingRoomStatus: .notAllowed)
-        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
-        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, callUseCase: callUseCase)
+        let callUpdateUseCase = MockCallUpdateUseCase()
+
+        let sut = WaitingRoomViewModel(
+            scheduledMeeting: scheduledMeeting,
+            router: router,
+            callUpdateUseCase: callUpdateUseCase
+        )
 
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
 
-        callUpdateSubject.send(callEntity)
+        callUpdateUseCase.sendCallUpdate(callEntity)
         
         evaluate {
             router.showHostDenyAlert_calledTimes == 1
@@ -378,14 +393,17 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let router = MockWaitingRoomViewRouter()
         let callEntity = CallEntity(status: .waitingRoom, chatId: 100, termCodeType: .waitingRoomTimeout, waitingRoomStatus: .notAllowed)
-        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
-        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, callUseCase: callUseCase)
+        let callUpdateUseCase = MockCallUpdateUseCase()
+        let sut = WaitingRoomViewModel(
+            scheduledMeeting: scheduledMeeting,
+            router: router,
+            callUpdateUseCase: callUpdateUseCase
+        )
 
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
         
-        callUpdateSubject.send(callEntity)
-        
+        callUpdateUseCase.sendCallUpdate(callEntity)
+
         evaluate {
             router.showHostDidNotRespondAlert_calledTimes == 1
         }
@@ -397,14 +415,18 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let router = MockWaitingRoomViewRouter()
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let callEntity = CallEntity(chatId: 100, changeType: .waitingRoomAllow)
-        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
-        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, chatRoomUseCase: chatRoomUseCase, callUseCase: callUseCase)
+        let callUpdateUseCase = MockCallUpdateUseCase()
+        let sut = WaitingRoomViewModel(
+            scheduledMeeting: scheduledMeeting,
+            router: router,
+            chatRoomUseCase: chatRoomUseCase,
+            callUpdateUseCase: callUpdateUseCase
+        )
         
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
         
-        callUpdateSubject.send(callEntity)
-        
+        callUpdateUseCase.sendCallUpdate(callEntity)
+
         evaluate {
             router.openCallUI_calledTimes == 1
         }
@@ -416,14 +438,18 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let router = MockWaitingRoomViewRouter()
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let callEntity = CallEntity(status: .inProgress, chatId: 100, changeType: .status)
-        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
-        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, chatRoomUseCase: chatRoomUseCase, callUseCase: callUseCase)
+        let callUpdateUseCase = MockCallUpdateUseCase()
+        let sut = WaitingRoomViewModel(
+            scheduledMeeting: scheduledMeeting,
+            router: router,
+            chatRoomUseCase: chatRoomUseCase,
+            callUpdateUseCase: callUpdateUseCase
+        )
         
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
         
-        callUpdateSubject.send(callEntity)
-        
+        callUpdateUseCase.sendCallUpdate(callEntity)
+
         evaluate {
             router.openCallUI_calledTimes == 1
         }
@@ -574,29 +600,22 @@ final class WaitingRoomViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testShowHostDidNotRespondAlert_onTimeout_shouldTrackerEvent() {
+    func testShowHostDidNotRespondAlert_onTimeout_shouldTrackerEvent() async {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let callEntity = CallEntity(status: .waitingRoom, chatId: 100, termCodeType: .waitingRoomTimeout)
-        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
-        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
         let tracker = MockTracker()
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, callUseCase: callUseCase, tracker: tracker)
+        let callUpdateUseCase = MockCallUpdateUseCase()
+        let sut = WaitingRoomViewModel(
+            scheduledMeeting: scheduledMeeting,
+            callUpdateUseCase: callUpdateUseCase,
+            tracker: tracker
+        )
 
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
         
-        let exp = expectation(description: "Should receive waiting room timeout change")
-        
-        callUseCase
-            .onCallUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                exp.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        callUpdateSubject.send(callEntity)
-        
-        wait(for: [exp], timeout: 0.5)
+        callUpdateUseCase.sendCallUpdate(callEntity)
+
+        await Task.megaYield()
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
