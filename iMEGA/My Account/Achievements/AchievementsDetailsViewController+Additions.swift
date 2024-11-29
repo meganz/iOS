@@ -54,7 +54,7 @@ extension AchievementsDetailsViewController {
             howItWorksCompletedExplanation = Strings.Localizable.Account.Achievement.MobileApp.Complete.Explaination.label(storageRewardString)
         case .addPhone:
             howItWorksCompletedExplanation = Strings.Localizable.Account.Achievement.PhoneNumber.Complete.Explaination.label(storageRewardString)
-            self.addPhoneNumberButton?.isHidden = true
+            updateAddPhoneNumberStatus(isHidden: true)
         default:
             break
         }
@@ -80,7 +80,7 @@ extension AchievementsDetailsViewController {
         case .mobileInstall:
             howItWorksExplanation = Strings.Localizable.Account.Achievement.MobileApp.Incomplete.Explaination.label(storageString)
         case .addPhone:
-            self.addPhoneNumberButton?.isHidden = false
+            updateAddPhoneNumberStatus(isHidden: false)
             howItWorksExplanation = Strings.Localizable.Account.Achievement.PhoneNumber.Incomplete.Explaination.label(storageString)
         default:
             break
@@ -118,5 +118,11 @@ extension AchievementsDetailsViewController {
 
     @objc var separatorColor: UIColor {
         TokenColors.Border.strong
+    }
+    
+    private func updateAddPhoneNumberStatus(isHidden: Bool) {
+        addPhoneNumberButton?.isHidden = isHidden
+        scrollViewBottomSpacingConstraint?.isActive = !isHidden
+        scrollViewBottonConstraint?.isActive = isHidden
     }
 }

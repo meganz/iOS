@@ -13,8 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIView *howItWorksTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIView *howItWorksView;
 
-@property (weak, nonatomic) IBOutlet UILabel *howItWorksCompletedExplanationLabel;
-
 @end
 
 @implementation AchievementsDetailsViewController
