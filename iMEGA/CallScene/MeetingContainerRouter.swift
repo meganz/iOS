@@ -98,6 +98,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             router: self,
             chatRoom: chatRoom,
             callUseCase: createCallUseCase,
+            callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),

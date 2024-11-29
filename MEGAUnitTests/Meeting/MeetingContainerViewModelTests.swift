@@ -12,7 +12,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     @MainActor final class Harness {
         
         var sut: MeetingContainerViewModel
-        let callUseCase: MockCallUseCase
+        let callUpdateUseCase: MockCallUpdateUseCase
         let tracker = MockTracker()
         let router = MockMeetingContainerRouter()
         let callManager = MockCallManager()
@@ -21,6 +21,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         init(
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
             callUseCase: MockCallUseCase = MockCallUseCase(call: CallEntity()),
+            callupdateUseCase: MockCallUpdateUseCase = MockCallUpdateUseCase(),
             chatRoomUseCase: MockChatRoomUseCase = MockChatRoomUseCase(),
             chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
             scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
@@ -30,11 +31,12 @@ final class MeetingContainerViewModelTests: XCTestCase {
             megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase()
         ) {
             
-            self.callUseCase = callUseCase
+            self.callUpdateUseCase = callupdateUseCase
             sut = .init(
                 router: router,
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
+                callUpdateUseCase: callupdateUseCase,
                 chatRoomUseCase: chatRoomUseCase,
                 chatUseCase: chatUseCase,
                 scheduledMeetingUseCase: scheduledMeetingUseCase,
@@ -283,7 +285,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let harness = Harness(
             callUseCase: MockCallUseCase(call: .connecting)
         )
-        harness.callUseCase.callUpdateSubject.send(.protocolVersionTermination)
+        harness.callUpdateUseCase.sendCallUpdate(.protocolVersionTermination)
         evaluate {
             harness.router.showProtocolErrorAlert_calledTimes == 1
         }
@@ -291,20 +293,22 @@ final class MeetingContainerViewModelTests: XCTestCase {
     
     @MainActor func testUsersLimitErrorReceived_loggedUser_shouldShowFreeAccountLimitAlert() {
         let harness = Harness(callUseCase: MockCallUseCase(call: .connecting))
-        harness.callUseCase.callUpdateSubject.send(.callUsersLimit)
+        harness.callUpdateUseCase.sendCallUpdate(.callUsersLimit)
         evaluate {
             harness.router.showUsersLimitErrorAlert_calledTimes == 1
         }
     }
     
-    @MainActor func testUsersLimitErrorReceived_isGuestUser_shouldShowFreeAccountLimitAlertAndTrackEvent() {
+    @MainActor func testUsersLimitErrorReceived_isGuestUser_shouldShowFreeAccountLimitAlertAndTrackEvent() async {
         
         let harness = Harness(
             callUseCase: MockCallUseCase(call: .connecting),
             accountUseCase: MockAccountUseCase(isGuest: true)
         )
         
-        harness.callUseCase.callUpdateSubject.send(.callUsersLimit)
+        harness.callUpdateUseCase.sendCallUpdate(.callUsersLimit)
+        
+        await Task.megaYield()
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: harness.tracker.trackedEventIdentifiers,
@@ -321,7 +325,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             callUseCase: MockCallUseCase(call: CallEntity(status: .connecting, changeType: .status, numberOfParticipants: 1, participants: [100]))
         )
         
-        harness.callUseCase.callUpdateSubject.send(.tooManyParticipants)
+        harness.callUpdateUseCase.sendCallUpdate(.tooManyParticipants)
         evaluate {
             harness.router.dismiss_calledTimes == 1
         }
@@ -345,7 +349,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build())
         )
         
-        harness.callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit, isOwnClientCaller: true))
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit, isOwnClientCaller: true))
         
         evaluate {
             harness.router.showUpgradeToProDialog_calledTimes == 1
@@ -354,7 +358,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     
     @MainActor func testCallUpdate_callDestroyedUserIsNotCaller_shouldNotShowUpgradeToPro() {
         let harness = Harness()
-        harness.callUseCase.callUpdateSubject.send(.callTerminatedDueToLimits)
+        harness.callUpdateUseCase.sendCallUpdate(.callTerminatedDueToLimits)
         
         evaluate {
             harness.router.showUpgradeToProDialog_calledTimes == 0 &&
