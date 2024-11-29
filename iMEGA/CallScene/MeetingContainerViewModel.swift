@@ -70,6 +70,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let router: any MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
@@ -99,6 +100,7 @@ final class MeetingContainerViewModel: ViewModelType {
         router: some MeetingContainerRouting,
         chatRoom: ChatRoomEntity,
         callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
@@ -113,6 +115,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
@@ -125,7 +128,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.tracker = tracker
         
         subscribeToSeeWaitingRoomListNotification()
-        subscribeToOnCallUpdate()
+        monitorOnCallUpdate()
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -430,14 +433,16 @@ final class MeetingContainerViewModel: ViewModelType {
         )
     }
     
-    private func subscribeToOnCallUpdate() {
-        callUpdateSubscription = callUseCase.onCallUpdate()
-            .sink { [weak self] call in
-                self?.onChatCallUpdate(for: call)
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
             }
+        }
     }
     
-    private func onChatCallUpdate(for call: CallEntity) {
+    private func onCallUpdate(_ call: CallEntity) {
         guard call.changeType == .status else { return }
         switch call.status {
         case .terminatingUserParticipation, .destroyed:
