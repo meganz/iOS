@@ -148,6 +148,7 @@ extension MainTabBarController {
             router: router,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo),
             sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),

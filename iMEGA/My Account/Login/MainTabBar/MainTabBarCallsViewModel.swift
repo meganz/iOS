@@ -101,6 +101,7 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let router: any MainTabBarCallsRouting
     private let chatUseCase: any ChatUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
@@ -109,7 +110,6 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let callManager: any CallManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
-    private var callUpdateSubscription: AnyCancellable?
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
     private(set) var callSessionUpdateTask: Task<Void, Never>?
 
@@ -139,6 +139,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         router: some MainTabBarCallsRouting,
         chatUseCase: some ChatUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
@@ -152,6 +153,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.router = router
         self.chatUseCase = chatUseCase
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.sessionUpdateUseCase = sessionUpdateUseCase
@@ -162,7 +164,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         
-        onCallUpdateListener()
+        monitorOnCallUpdate()
     }
     
     // MARK: - Dispatch actions
@@ -180,12 +182,13 @@ class MainTabBarCallsViewModel: ViewModelType {
     
     // MARK: - Private
 
-    private func onCallUpdateListener() {
-        callUpdateSubscription = callUseCase.onCallUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] call in
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
                 self?.onCallUpdate(call)
             }
+        }
     }
     
     private func configureCallSessionsListener(forCall call: CallEntity) {
