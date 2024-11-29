@@ -111,7 +111,7 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         photos: [AlbumPhotoEntity] = [AlbumPhotoEntity(photo: NodeEntity(handle: 2)), AlbumPhotoEntity(photo: NodeEntity(handle: 3))],
         completion: ((AlbumEntity, AlbumPhotoEntity) -> Void)? = nil ) -> AlbumCoverPickerViewModel {
         let album = AlbumEntity(id: 1, name: "User album", coverNode: coverNode, count: 2, type: .user, modificationTime: nil)
-        let router = AlbumContentRouter(navigationController: nil, album: album, newAlbumPhotos: [], existingAlbumNames: {[]})
+        let router = AlbumContentRouter(navigationController: nil, album: album, newAlbumPhotos: [])
         
         return AlbumCoverPickerViewModel(album: album, albumContentsUseCase: MockAlbumContentUseCase(photos: photos), router: router, completion: completion ?? { _, _ in })
     }
