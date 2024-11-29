@@ -16,7 +16,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private(set) var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
     private(set) var nodeAccessoryActionDelegate: (any NodeAccessoryActionDelegate)?
     
-    var baseViewController: UIViewController?
+    weak var baseViewController: UIViewController?
     
     init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController, audioPlaylistViewRouter: some AudioPlaylistViewRouting, tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.configEntity = configEntity
