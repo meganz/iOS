@@ -10,7 +10,8 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     
     @MainActor
     func testBuild_whenNodeIsFolderLink_configCorrectDelegate() {
-        let (sut, _, _, _, _, _, _) = makeSUT(nodeOriginType: .folderLink)
+        let audioPlayerViewController = MockViewController()
+        let (sut, _, _, _, _, _, _) = makeSUT(nodeOriginType: .folderLink, audioPlayerViewController: audioPlayerViewController)
         
         _ = sut.build()
         
@@ -19,7 +20,13 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     
     @MainActor
     func testBuild_whenNodeIsFileLink_configCorrectDelegate() {
-        let (sut, _, _, _, _, _, _) = makeSUT(nodeOriginType: .fileLink, fileLink: anyFileLink())
+        let audioPlayerViewController = MockViewController()
+        
+        let (sut, _, _, _, _, _, _) = makeSUT(
+            nodeOriginType: .fileLink,
+            fileLink: anyFileLink(),
+            audioPlayerViewController: audioPlayerViewController
+        )
         
         _ = sut.build()
         
@@ -28,9 +35,15 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     
     @MainActor
     func testBuild_whenNodeIsFromChat_configCorrectDelegate() {
+        let audioPlayerViewController = MockViewController()
         let expectedChatId = anyHandleEntity()
         let expectedMessageId = anyHandleEntity()
-        let (sut, _, _, _, _, _, _) = makeSUT(nodeOriginType: .chat, messageId: expectedMessageId, chatId: expectedChatId)
+        let (sut, _, _, _, _, _, _) = makeSUT(
+            nodeOriginType: .chat,
+            messageId: expectedMessageId,
+            chatId: expectedChatId,
+            audioPlayerViewController: audioPlayerViewController
+        )
         
         _ = sut.build()
         
@@ -98,7 +111,8 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     }
     
     @MainActor func testHideActionSelected_shouldTrackEvent() {
-        let (sut, _, _, _, _, _, tracker) = makeSUT(audioPlayerViewController: MockViewController())
+        let audioPlayerViewController = MockViewController()
+        let (sut, _, _, _, _, _, tracker) = makeSUT(audioPlayerViewController: audioPlayerViewController)
         
         _ = sut.build()
         
