@@ -24,6 +24,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let callManager: any CallManagerProtocol
     private let meetingUseCase: any MeetingCreatingUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
@@ -87,7 +88,6 @@ final class WaitingRoomViewModel: ObservableObject {
     private var isActiveWaitingRoom: Bool { chatUseCase.isActiveWaitingRoom(for: scheduledMeeting.chatId) }
     private var chatId: HandleEntity { scheduledMeeting.chatId }
     
-    private var onCallUpdateSubscription: AnyCancellable?
     private var subscriptions = Set<AnyCancellable>()
     
     init(scheduledMeeting: ScheduledMeetingEntity,
@@ -95,6 +95,7 @@ final class WaitingRoomViewModel: ObservableObject {
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
+         callUpdateUseCase: some CallUpdateUseCaseProtocol,
          callManager: some CallManagerProtocol,
          meetingUseCase: some MeetingCreatingUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
@@ -114,6 +115,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.chatUseCase = chatUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.callManager = callManager
         self.meetingUseCase = meetingUseCase
         self.authUseCase = authUseCase
@@ -266,24 +268,7 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func initSubscriptions() {
-        onCallUpdateSubscription = callUseCase
-            .onCallUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] call in
-                guard let self,
-                      call.chatId == chatId,
-                      viewState != .guestUserSetup && !isJoining else { return }
-                if call.changeType == .waitingRoomAllow || (call.changeType == .status && call.status == .inProgress) {
-                    goToCallUI(for: call)
-                } else if call.termCodeType == .kicked {
-                    showHostDenyAlert()
-                } else if call.termCodeType == .waitingRoomTimeout {
-                    showHostDidNotRespondAlert()
-                } else {
-                    updateCallStatus()
-                }
-            }
-        onCallUpdateSubscription?.store(in: &subscriptions)
+        monitorOnCallUpdate()
                 
         audioSessionUseCase
             .onAudioSessionRouteChange()
@@ -293,6 +278,29 @@ final class WaitingRoomViewModel: ObservableObject {
                 updateSpeakerInfo()
             }
             .store(in: &subscriptions)
+    }
+    
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
+            }
+        }
+    }
+    
+    private func onCallUpdate(_ call: CallEntity) {
+        guard call.chatId == chatId,
+              viewState != .guestUserSetup && !isJoining else { return }
+        if call.changeType == .waitingRoomAllow || (call.changeType == .status && call.status == .inProgress) {
+            goToCallUI(for: call)
+        } else if call.termCodeType == .kicked {
+            showHostDenyAlert()
+        } else if call.termCodeType == .waitingRoomTimeout {
+            showHostDidNotRespondAlert()
+        } else {
+            updateCallStatus()
+        }
     }
     
     private func fetchInitialValues() {
@@ -405,7 +413,6 @@ final class WaitingRoomViewModel: ObservableObject {
     }
 
     private func showRespondAlert(_ block: (@escaping () -> Void) -> Void) {
-        onCallUpdateSubscription?.cancel()
         dismissCall()
         block { [weak self] in
             guard let self else { return }
@@ -500,7 +507,6 @@ final class WaitingRoomViewModel: ObservableObject {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
         router.openCallUI(for: call, in: chatRoom, isSpeakerEnabled: isSpeakerEnabled)
         callManager.muteCall(in: chatRoom, muted: !isMicrophoneMuted)
-        onCallUpdateSubscription?.cancel()
     }
 }
 
