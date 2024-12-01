@@ -14,11 +14,7 @@ struct CallsSettingsView: View {
                 subtitle: Strings.Localizable.Settings.Section.Calls.SoundNotifications.description
             ).replaceTrailingView {
                 MEGAToggle(state: .init(isOn: viewModel.isEnabled ?? false)) { state in
-                    switch state {
-                    case .on: viewModel.toggle(false)
-                    case .off: viewModel.toggle(true)
-                    default: break
-                    }
+                    viewModel.toggle(state != .on)
                 }
             }
             .edgesIgnoringSafeArea(.horizontal)

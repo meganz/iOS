@@ -18,6 +18,8 @@ final class CallsSettingsViewModel: ObservableObject {
     
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     
+    // MARK: - Life cycle
+    
     init(preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol) {
         self.analyticsEventUseCase = analyticsEventUseCase
@@ -25,6 +27,8 @@ final class CallsSettingsViewModel: ObservableObject {
         
         self.isEnabled = callsSoundNotificationPreference
     }
+    
+    // MARK: - Internal
     
     func toggle(_ toggleValue: Bool) {
         isEnabled = toggleValue
