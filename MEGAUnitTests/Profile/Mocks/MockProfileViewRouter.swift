@@ -15,7 +15,7 @@ final class MockProfileViewRouter: ProfileViewRouting {
         showCancellationSteps_calledTimes += 1
     }
     
-    func showRecoveryKey() {
+    func showRecoveryKey(saveMasterKeyCompletion: @escaping () -> Void) {
         showRecoveryKey_calledTimes += 1
     }
 }

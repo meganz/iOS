@@ -12,15 +12,18 @@ final class RecoveryKeyViewRouter: RecoveryKeyViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
     private weak var presenter: UIViewController?
+    private let saveMasterKeyCompletion: (() -> Void)?
     
     private let securityURLLink = NSURL(string: "https://mega.nz/security")
     
     init(
         navigationController: UINavigationController? = nil,
-        presenter: UIViewController? = nil
+        presenter: UIViewController? = nil,
+        saveMasterKeyCompletion: (() -> Void)? = nil
     ) {
         self.navigationController = navigationController
         self.presenter = presenter
+        self.saveMasterKeyCompletion = saveMasterKeyCompletion
     }
     
     func build() -> UIViewController {
@@ -29,6 +32,7 @@ final class RecoveryKeyViewRouter: RecoveryKeyViewRouting {
         }
         viewController.viewModel = RecoveryKeyViewModel(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            saveMasterKeyCompletion: saveMasterKeyCompletion,
             router: self
         )
         baseViewController = viewController

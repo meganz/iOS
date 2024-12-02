@@ -16,6 +16,7 @@ final class RecoveryKeyViewModel: NSObject, ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     private let accountUseCase: any AccountUseCaseProtocol
+    private let saveMasterKeyCompletion: (() -> Void)?
     private let tracker: any AnalyticsTracking
     private let router: any RecoveryKeyViewRouting
     
@@ -28,10 +29,12 @@ final class RecoveryKeyViewModel: NSObject, ViewModelType {
     
     init(
         accountUseCase: some AccountUseCaseProtocol,
+        saveMasterKeyCompletion: (() -> Void)?,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         router: some RecoveryKeyViewRouting
     ) {
         self.accountUseCase = accountUseCase
+        self.saveMasterKeyCompletion = saveMasterKeyCompletion
         self.tracker = tracker
         self.router = router
     }
@@ -52,7 +55,7 @@ final class RecoveryKeyViewModel: NSObject, ViewModelType {
             tracker.trackAnalyticsEvent(with: RecoveryKeyCopyOkButtonPressedEvent())
         case .didTapSaveButton:
             tracker.trackAnalyticsEvent(with: RecoveryKeySaveButtonPressedEvent())
-            saveMasterKey()
+            saveMasterKey(completion: saveMasterKeyCompletion)
         case .didTapSaveOkAlertButton:
             tracker.trackAnalyticsEvent(with: RecoveryKeySaveOkButtonPressedEvent())
         case .didTapWhyDoINeedARecoveryKey:
@@ -74,7 +77,7 @@ final class RecoveryKeyViewModel: NSObject, ViewModelType {
         }
     }
     
-    private func saveMasterKey() {
+    private func saveMasterKey(completion: (() -> Void)?) {
         guard MEGAReachabilityManager.isReachableHUDIfNot(),
               accountUseCase.isLoggedIn(),
               let viewController = router.recoveryKeyViewController else {
@@ -83,7 +86,10 @@ final class RecoveryKeyViewModel: NSObject, ViewModelType {
         
         saveMasterKeyTask = Task { @MainActor [weak self] in
             guard let self else { return }
-            await Helper.showExportMasterKey(inView: viewController)
+            await Helper.showExportMasterKey(
+                inView: viewController
+            )
+            completion?()
             dispatch(.didTapSaveOkAlertButton)
         }
     }

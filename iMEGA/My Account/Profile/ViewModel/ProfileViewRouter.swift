@@ -11,7 +11,7 @@ protocol ProfileViewRouting: Routing {
         assets: CancelAccountPlanAssets
     )
     func showCancellationSteps()
-    func showRecoveryKey()
+    func showRecoveryKey(saveMasterKeyCompletion: @escaping () -> Void)
 }
 
 final class ProfileViewRouter: ProfileViewRouting {
@@ -105,7 +105,10 @@ final class ProfileViewRouter: ProfileViewRouting {
         ).start()
     }
     
-    func showRecoveryKey() {
-        RecoveryKeyViewRouter(navigationController: navigationController).start()
+    func showRecoveryKey(saveMasterKeyCompletion: @escaping () -> Void) {
+        RecoveryKeyViewRouter(
+            navigationController: navigationController,
+            saveMasterKeyCompletion: saveMasterKeyCompletion
+        ).start()
     }
 }
