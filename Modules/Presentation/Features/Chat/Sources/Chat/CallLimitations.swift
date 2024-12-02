@@ -20,8 +20,10 @@ import MEGAPresentation
 /// To respond to conditions above changing subscribe to limitsChangedPublisher so that
 /// UI can be dynamically reloaded.
 /// related story: [MEET-3421]
+
+@MainActor
 public class CallLimitations {
-    private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     // users can be upgraded to moderator/host or degraded so we need to check
     // that dynamically via observing chat rooms own priviledge
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
@@ -46,11 +48,11 @@ public class CallLimitations {
     public init(
         initialLimit: Int,
         chatRoom: ChatRoomEntity,
-        callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol
     ) {
         self.limitOfFreeTierUsers = initialLimit
-        self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.chatRoomUseCase = chatRoomUseCase
         isMyselfModerator = chatRoom.ownPrivilege == .moderator
         self.chatRoom = chatRoom
@@ -70,12 +72,7 @@ public class CallLimitations {
         // limits banner in the contactsViewController
         // need to be dynamically shown/hidden when we are hitting the limit
         // [MEET-3401]
-        callUseCase.onCallUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] call in
-                self?.onCallUpdate(call)
-            }
-            .store(in: &subscriptions)
+        monitorOnCallUpdate()
         
         // Subscription is used to listen when
         // user has been added or removed a host privilege.
@@ -97,6 +94,15 @@ public class CallLimitations {
             if isMyselfModerator != previousValue {
                 logDebug("[CallLimitations] did change privilege host: \(chatRoom.ownPrivilege == .moderator)")
                 _limitsChanged.send()
+            }
+        }
+    }
+    
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
             }
         }
     }

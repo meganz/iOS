@@ -6,6 +6,7 @@ import MEGAL10n
 import MEGASDKRepoMock
 import XCTest
 
+@MainActor
 final class ContactsViewModelTests: XCTestCase {
     func testShouldShowContactsNotVerifiedBanner_whenSharingFolder_contactVerficationOff_shouldBeHidden() {
         let sut = makeSUT(isContactVerificationWarningEnabled: false, isSharedFolderOwnerVerified: true)

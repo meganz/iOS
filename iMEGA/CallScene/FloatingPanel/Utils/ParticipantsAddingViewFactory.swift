@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
+@MainActor
 struct ParticipantsAddingViewFactory {
     let accountUseCase: any AccountUseCaseProtocol
     let chatRoomUseCase: any ChatRoomUseCaseProtocol

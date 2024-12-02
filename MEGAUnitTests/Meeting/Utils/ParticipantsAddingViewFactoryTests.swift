@@ -4,6 +4,7 @@ import MEGADomainMock
 import MEGAPresentationMock
 import XCTest
 
+@MainActor
 final class ParticipantsAddingViewFactoryTests: XCTestCase {
 
     func test_shouldShowAddParticipantsScreen_hasNoVisibleContacts() {
