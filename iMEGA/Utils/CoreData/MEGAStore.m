@@ -235,7 +235,11 @@
 
 #pragma mark - MOUser entity
 
-- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname nickname:(NSString *)nickname email:(NSString *)email {
+- (void)insertUserWithUserHandle:(uint64_t)userHandle
+                       firstname:(NSString *)firstname
+                        lastname:(NSString *)lastname
+                        nickname:(NSString *)nickname
+                           email:(NSString *)email {
     NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:userHandle];
     
     if (!base64userHandle) return;

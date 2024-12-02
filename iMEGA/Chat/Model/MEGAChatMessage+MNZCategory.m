@@ -307,36 +307,29 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
 }
 
 - (NSString *)fullNameDidAction {
-    NSString *fullNameDidAction;
-    
-    if (MEGAChatSdk.shared.myUserHandle == self.userHandle) {
-        fullNameDidAction = MEGAChatSdk.shared.myFullname;
-    } else {
-        fullNameDidAction = [self fullNameByHandle:self.userHandle];
-        if (fullNameDidAction.length == 0) {
-            fullNameDidAction = [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:self.userHandle];
-        }
-    }
-    return fullNameDidAction;
+    return [self fullNameForUserWithHandle:self.userHandle];
 }
 
 - (NSString *)fullNameReceiveAction {
-    NSString *fullNameReceiveAction;
     uint64_t tempHandle = [self userHandleReceiveAction];
-    
-    if (MEGAChatSdk.shared.myUserHandle == tempHandle) {
-        fullNameReceiveAction = MEGAChatSdk.shared.myFullname;
-    } else {
-        fullNameReceiveAction = [self fullNameByHandle:tempHandle];
-        if (fullNameReceiveAction.length == 0) {
-            fullNameReceiveAction = [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:self.userHandle];
-        }
-    }
-    
-    return fullNameReceiveAction;
+    return [self fullNameForUserWithHandle:tempHandle];
 }
 
-- (NSString *)fullNameByHandle:(uint64_t)handle {
+- (NSString *)fullNameForUserWithHandle:(uint64_t)handle {
+    
+    if (MEGAChatSdk.shared.myUserHandle == handle) {
+        return MEGAChatSdk.shared.myFullname;
+    }
+    
+    NSString *fullName = [self fullNameFromCoreDataByHandle:handle];
+    if (fullName.length > 0) {
+        return fullName;
+    }
+    
+    return [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:handle];
+}
+
+- (NSString *)fullNameFromCoreDataByHandle:(uint64_t)handle {
     NSString *fullName = @"";
     
     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
