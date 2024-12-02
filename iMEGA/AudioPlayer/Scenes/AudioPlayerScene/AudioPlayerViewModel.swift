@@ -485,8 +485,8 @@ final class AudioPlayerViewModel: ViewModelType {
         if !configEntity.playerHandler.isPlayerDefined() {
             streamingInfoUseCase?.stopServer()
         }
-        Task { [weak audioPlayerUseCase] in
-            await audioPlayerUseCase?.unregisterMEGADelegate()
+        Task { [audioPlayerUseCase] in
+            await audioPlayerUseCase.unregisterMEGADelegate()
         }
     }
 }
