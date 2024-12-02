@@ -1781,6 +1781,7 @@
 		B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */; };
 		B52CE0DD2CD094DF0083889E /* TestPasswordViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CE0DC2CD094DF0083889E /* TestPasswordViewModelTests.swift */; };
 		B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */; };
+		B5316F982CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5316F972CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift */; };
 		B53A57CE2B5E8B4E00B18519 /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */; };
 		B54081142AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */; };
@@ -1796,6 +1797,7 @@
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
+		B55E756F2CFD5DA80011FE14 /* OverDiskQuotaViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55E756E2CFD5DA70011FE14 /* OverDiskQuotaViewRouter.swift */; };
 		B55EC7152A08A515000F19DA /* SendFeedbackViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */; };
 		B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */; };
 		B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */; };
@@ -1833,6 +1835,8 @@
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
 		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
 		B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */; };
+		B59FC7712CF97B1700D88580 /* OverDiskQuotaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */; };
+		B59FC7752CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC7742CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift */; };
 		B5A00ECB2C6DD91900F12863 /* ContactRequestsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A00ECA2C6DD91900F12863 /* ContactRequestsViewController+Additions.swift */; };
 		B5A00ECE2C6DD9B800F12863 /* ContactRequestsTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A00ECD2C6DD9B800F12863 /* ContactRequestsTableViewCell+Additions.swift */; };
 		B5A5F0702B7A19F600B31ABD /* TransferTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5F06F2B7A19F600B31ABD /* TransferTableViewCell+Additions.swift */; };
@@ -4495,6 +4499,7 @@
 		B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModel.swift; sourceTree = "<group>"; };
 		B52CE0DC2CD094DF0083889E /* TestPasswordViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPasswordViewModelTests.swift; sourceTree = "<group>"; };
 		B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagUseCase+Additions.swift"; sourceTree = "<group>"; };
+		B5316F972CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOverDiskQuotaViewRouter.swift; sourceTree = "<group>"; };
 		B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+PromotedPlan.swift"; sourceTree = "<group>"; };
 		B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModel.swift; sourceTree = "<group>"; };
 		B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModelTests.swift; sourceTree = "<group>"; };
@@ -4507,6 +4512,7 @@
 		B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerTests.swift; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
+		B55E756E2CFD5DA70011FE14 /* OverDiskQuotaViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewRouter.swift; sourceTree = "<group>"; };
 		B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModelTests.swift; sourceTree = "<group>"; };
 		B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGAPurchase.swift; sourceTree = "<group>"; };
 		B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSKProduct.swift; sourceTree = "<group>"; };
@@ -4544,6 +4550,8 @@
 		B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModel.swift; sourceTree = "<group>"; };
 		B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModel.swift; sourceTree = "<group>"; };
 		B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourageGuestUserToJoinMegaViewModelTests.swift; sourceTree = "<group>"; };
+		B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewModel.swift; sourceTree = "<group>"; };
+		B59FC7742CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewModelTests.swift; sourceTree = "<group>"; };
 		B5A00ECA2C6DD91900F12863 /* ContactRequestsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactRequestsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5A00ECD2C6DD9B800F12863 /* ContactRequestsTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactRequestsTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B5A5F06F2B7A19F600B31ABD /* TransferTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferTableViewCell+Additions.swift"; sourceTree = "<group>"; };
@@ -5692,6 +5700,7 @@
 		0EE5AC142B1E930C00BCDD88 /* SharedViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B5914B812CFD7C9A00722518 /* OverDiskQuota */,
 				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
 				0EE396F72B87E4B200927E7E /* NodeActionViewModelTests.swift */,
 				250B11A32CBC840C00E2743E /* NodeActionViewModelTestSuite.swift */,
@@ -8276,6 +8285,8 @@
 			children = (
 				5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */,
 				5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */,
+				B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */,
+				B55E756E2CFD5DA70011FE14 /* OverDiskQuotaViewRouter.swift */,
 				5DBAC840248778DA0050996E /* OverDiskQuotaWarningView.swift */,
 				5DBAC8432487B8A10050996E /* OverDiskQuotaWarningView.xib */,
 			);
@@ -10271,6 +10282,7 @@
 				943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */,
 				94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */,
 				949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */,
+				B5316F972CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift */,
 				94A1445F2C9DE50500C34A98 /* MockPasteImagePreviewRouter.swift */,
 				B575517C2CCB7EBC00E65123 /* MockRecoveryKeyViewRouter.swift */,
 				949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */,
@@ -10934,6 +10946,14 @@
 				B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */,
 			);
 			path = Transfers;
+			sourceTree = "<group>";
+		};
+		B5914B812CFD7C9A00722518 /* OverDiskQuota */ = {
+			isa = PBXGroup;
+			children = (
+				B59FC7742CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift */,
+			);
+			path = OverDiskQuota;
 			sourceTree = "<group>";
 		};
 		B594599B2CCF9CD10061A34C /* ViewModel */ = {
@@ -15200,6 +15220,8 @@
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
 				5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */,
+				B59FC7712CF97B1700D88580 /* OverDiskQuotaViewModel.swift in Sources */,
+				B55E756F2CFD5DA80011FE14 /* OverDiskQuotaViewRouter.swift in Sources */,
 				5DBAC841248778DA0050996E /* OverDiskQuotaWarningView.swift in Sources */,
 				5D66F8C824E510510088E5FF /* PaddingLabel.swift in Sources */,
 				5DF9910925789B5400DDDA83 /* PageControlStyleFactoory.swift in Sources */,
@@ -16279,6 +16301,7 @@
 				B5BA0E172CE1E75E00B01FC7 /* MockNodeLabelActionRepository.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */,
+				B5316F982CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift in Sources */,
 				8326E68C2BE50A5400481711 /* MockPasscodeManager.swift in Sources */,
 				94A144602C9DE50800C34A98 /* MockPasteImagePreviewRouter.swift in Sources */,
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
@@ -16334,6 +16357,7 @@
 				94EF2DCE2CAD9FC00061071E /* OfflineFileEntity.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
+				B59FC7752CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift in Sources */,
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
 				833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */,

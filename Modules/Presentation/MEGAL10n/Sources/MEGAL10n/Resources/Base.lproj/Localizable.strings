@@ -4418,3 +4418,7 @@
 "photos.searchResults.media.section.title"="Media";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="Only 100 participants can join the call. Any additional participants will only be able to send and receive messages. The organiser can upgrade to Pro to remove these restrictions.";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="Upgrade now";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";

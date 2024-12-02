@@ -46,23 +46,24 @@ final class OverDiskQuotaViewController: UIViewController {
         }
 
         func overDiskQuotaMessage(with traitCollection: UITraitCollection) -> NSAttributedString {
-            var message: String
-            
             if isFinalWarning {
-                message = Strings.Localizable.Dialog.Storage.Paywall.Final.detail
+                let message = Strings.Localizable.Dialog.Storage.Paywall.Final.detail
+                let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadlineMedium)]
+                return message.attributedString(with: styleMarks, attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
             } else {
-                var warningPeriod = ""
-                if let firstWarningDate = overDiskQuotaData.warningDates.first {
-                    warningPeriod = daysBetweenLocalized(from: firstWarningDate, to: Date())
-                }
-                message = Strings.Localizable.Dialog.Storage.Paywall.NotFinal.detail(warningPeriod,
-                                                                                     overDiskQuotaData.email,
-                                                                                     overDiskQuotaData.formattedWarningDates(with: dateFormatter),
-                                                                                     overDiskQuotaData.takingUpStorage(with: byteCountFormatter))
+                let message = paywallNotFinalWarningMessage()
+                let tappableString = message.subString(from: "[A]", to: "[/A]")
+                let warningMessage = message
+                    .replacingOccurrences(of: "[A]", with: "")
+                    .replacingOccurrences(of: "[/A]", with: "")
+                return NSAttributedString(
+                    paywallAttributedString(
+                        warningMessage,
+                        tappableString: tappableString,
+                        url: URL(string: "https://help.mega.io/plans-storage/space-storage/storage-exceeded")
+                    )
+                )
             }
-
-            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadlineMedium)]
-            return message.attributedString(with: styleMarks, attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
         }
 
         func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
@@ -90,6 +91,58 @@ final class OverDiskQuotaViewController: UIViewController {
                 return Strings.Localizable.Dialog.Storage.Paywall.NotFinal.warning(daysBetweenLocalized(from: Date(), to: deadline))
             }
         }
+        
+        private func paywallNotFinalWarningMessage() -> String {
+            let numberOfFiles = Int(overDiskQuotaData.numberOfFilesOnCloud)
+            let warningDates = overDiskQuotaData.warningDates
+            var message: String
+            
+            switch warningDates.count {
+            case 0: // unknown times email was sent
+                message = Strings.Localizable.OverDiskQuota.Paywall.NotFinalWarning.UnknownTimesEmailWasSent.message(numberOfFiles)
+                
+            case 1: // received one email
+                let warningPeriod = warningDates.first.map {
+                    dateFormatter.localisedString(from: $0)
+                } ?? ""
+                message = Strings.Localizable.OverDiskQuota.Paywall.NotFinalWarning.OneEmailSent.message(numberOfFiles)
+                    .replacingOccurrences(of: "[date]", with: warningPeriod)
+                
+            default: // received more than one email
+                message = Strings.Localizable.OverDiskQuota.Paywall.NotFinalWarning.MultipleEmailsSent.message(numberOfFiles)
+            }
+            
+            message = message
+                .replacingOccurrences(of: "[storageSpace]", with: overDiskQuotaData.takingUpStorage(with: byteCountFormatter))
+                .replacingOccurrences(of: "[plan]", with: overDiskQuotaData.plan ?? "")
+            
+            return message
+        }
+
+        private func paywallAttributedString(
+            _ message: String,
+            tappableString: String? = nil,
+            url: URL? = nil
+        ) -> AttributedString {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 8
+            paragraphStyle.alignment = .center
+
+            var attributedString = AttributedString(
+                message,
+                attributes: AttributeContainer([
+                    .paragraphStyle: paragraphStyle,
+                    .font: UIFont.preferredFont(forTextStyle: .subheadline),
+                    .foregroundColor: TokenColors.Text.secondary
+                ])
+            )
+            
+            if let tappableString, let url, let range = attributedString.range(of: tappableString) {
+                attributedString[range].link = url
+            }
+            
+            return attributedString
+        }
     }
 
     // MARK: - Views
@@ -99,26 +152,41 @@ final class OverDiskQuotaViewController: UIViewController {
     
     @IBOutlet weak var storageFullLabel: UILabel!
     @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var warningParagaphLabel: UILabel!
+    @IBOutlet private var warningParagraphTextView: UITextView!
 
     @IBOutlet private var upgradeButton: UIButton!
-    @IBOutlet private var dismissButton: UIButton!
+    @IBOutlet private var makeSomeSpaceButton: UIButton!
 
     @IBOutlet weak var warningView: OverDiskQuotaWarningView!
 
     // MARK: - In / Out properties
 
-    @objc var dismissAction: (() -> Void)?
-
     private var overDiskQuota: OverDiskQuotaInternal!
 
     private var overDiskQuotaAdvicer: OverDiskQuotaAdviceGenerator!
 
+    private var viewModel: OverDiskQuotaViewModel?
+    
     // MARK: - ViewController Lifecycles
 
+    init(
+        viewModel: OverDiskQuotaViewModel,
+        overDiskQuotaData: any OverDiskQuotaInfomationProtocol
+    ) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        setup(with: overDiskQuotaData)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTraitCollectionAwareView(with: traitCollection)
+        
+        viewModel?.dispatch(.onViewDidLoad)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -131,17 +199,17 @@ final class OverDiskQuotaViewController: UIViewController {
         setupContentView(contentView, with: traitCollection)
         setupStorageFullLabel(storageFullLabel, with: traitCollection)
         setupTitleLabel(titleLabel, with: traitCollection)
-        setupMessageLabel(warningParagaphLabel,
+        setupMessageTextView(warningParagraphTextView,
                           withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage(with: traitCollection))
         setupWarningView(warningView,
                          with: overDiskQuotaAdvicer.warningActionTitle(with: traitCollection))
-        setupUpgradeButton(upgradeButton, with: traitCollection)
-        setupDismissButton(dismissButton, with: traitCollection)
+        setupUpgradeButton(with: traitCollection)
+        setupMakeSomeSpaceButton(with: traitCollection)
     }
 
     // MARK: - Setup MEGA UserData
 
-    @objc func setup(with overDiskQuotaData: any OverDiskQuotaInfomationProtocol) {
+    private func setup(with overDiskQuotaData: any OverDiskQuotaInfomationProtocol) {
         overDiskQuota = OverDiskQuotaInternal(email: overDiskQuotaData.email,
                                               deadline: overDiskQuotaData.deadline,
                                               warningDates: overDiskQuotaData.warningDates,
@@ -151,7 +219,7 @@ final class OverDiskQuotaViewController: UIViewController {
                                               plan: overDiskQuotaData.suggestedPlanName)
         overDiskQuotaAdvicer = OverDiskQuotaAdviceGenerator(overDiskQuota)
     }
-
+    
     // MARK: - UI Customize
 
     private func setupNavigationController(_ navigationController: UINavigationController?,
@@ -184,36 +252,31 @@ final class OverDiskQuotaViewController: UIViewController {
         storageFullLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     }
 
-    private func setupMessageLabel(_ descriptionLabel: UILabel, withMessage message: NSAttributedString) {
-        descriptionLabel.attributedText = message
-        descriptionLabel.textColor = TokenColors.Text.secondary
+    private func setupMessageTextView(_ descriptionTextView: UITextView, withMessage message: NSAttributedString) {
+        descriptionTextView.attributedText = message
+        descriptionTextView.linkTextAttributes = [.foregroundColor: TokenColors.Link.primary]
     }
 
-    private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
-        button.setTitle(Strings.Localizable.upgrade, for: .normal)
-        button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
-        button.mnz_setupPrimary(trait)
+    private func setupUpgradeButton(with trait: UITraitCollection) {
+        upgradeButton.setTitle(Strings.Localizable.OverDiskQuota.Paywall.Button.upgradeNow, for: .normal)
+        upgradeButton.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
+        upgradeButton.mnz_setupPrimary(trait)
     }
 
-    private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
-        button.setTitle(Strings.Localizable.dismiss, for: .normal)
-        button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
-        button.mnz_setupSecondary(trait)
+    private func setupMakeSomeSpaceButton(with trait: UITraitCollection) {
+        makeSomeSpaceButton.setTitle(Strings.Localizable.OverDiskQuota.Paywall.Button.makeSomeSpace, for: .normal)
+        makeSomeSpaceButton.addTarget(self, action: .didTapMakeSomeSpaceButton, for: .touchUpInside)
+        makeSomeSpaceButton.mnz_setupSecondary(trait)
     }
 
     // MARK: - Button Actions
 
-    @objc fileprivate func didTapUpgradeButton(button: UIButton) {
-        guard let navigationController = navigationController else { return }
-        let upgradeViewController = UIStoryboard(name: "UpgradeAccount", bundle: nil)
-            .instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
-            AppearanceManager.forceNavigationBarUpdate(navigationController.navigationBar,
-                                                       traitCollection: traitCollection)
-        navigationController.pushViewController(upgradeViewController, animated: true)
+    @objc fileprivate func didTapUpgradeButton() {
+        viewModel?.dispatch(.didTapUpgradeButton)
     }
 
-    @objc fileprivate func didTapDismissButton(button: UIButton) {
-        dismissAction?()
+    @objc fileprivate func didTapMakeSomeSpaceButton() {
+        viewModel?.dispatch(.didTapMakeSomeSpaceButton)
     }
 
     // MARK: - Internal Data Structure
@@ -255,8 +318,8 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 // MARK: - Binding Button Action's
 
 private extension Selector {
-    static let didTapUpgradeButton = #selector(OverDiskQuotaViewController.didTapUpgradeButton(button:))
-    static let didTapDismissButton = #selector(OverDiskQuotaViewController.didTapDismissButton(button:))
+    static let didTapUpgradeButton = #selector(OverDiskQuotaViewController.didTapUpgradeButton)
+    static let didTapMakeSomeSpaceButton = #selector(OverDiskQuotaViewController.didTapMakeSomeSpaceButton)
 }
 
 // MARK: - TraitEnvironmentAware

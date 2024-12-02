@@ -247,6 +247,20 @@ extension AppDelegate {
             newValue: newValue
         )
     }
+    
+    @objc func showOverDiskQuotaView(
+        overDiskQuotaInfomation: any OverDiskQuotaInfomationProtocol,
+        dismissCompletionAction: (() -> Void)?,
+        presentCompletionAction: (() -> Void)?
+    ) {
+        OverDiskQuotaViewRouter(
+            presenter: UIApplication.mnz_presentingViewController(),
+            mainTabBar: mainTBC,
+            overDiskQuotaInfomation: overDiskQuotaInfomation,
+            dismissCompletionAction: dismissCompletionAction,
+            presentCompletionAction: presentCompletionAction
+        ).start()
+    }
 }
 
 // MARK: - Config Cookie Settings

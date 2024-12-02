@@ -924,22 +924,11 @@
         return;
     }
 
-    OverDiskQuotaViewController *overDiskQuotaViewController = OverDiskQuotaViewController.new;
-    [overDiskQuotaViewController setupWith:overDiskQuotaInformation];
-
     __weak typeof(self) weakSelf = self;
-    __weak typeof(OverDiskQuotaViewController) *weakOverDiskQuotaViewController = overDiskQuotaViewController;
-    overDiskQuotaViewController.dismissAction = ^{
-        [weakOverDiskQuotaViewController dismissViewControllerAnimated:YES completion:^{
-            weakSelf.overDiskQuotaPresented = NO;
-        }];
-    };
+    [self showOverDiskQuotaViewWithOverDiskQuotaInfomation:overDiskQuotaInformation
+                                   dismissCompletionAction:^{ weakSelf.overDiskQuotaPresented = NO; }
+                                   presentCompletionAction:^{ weakSelf.overDiskQuotaPresented = YES; }];
 
-    UINavigationController *navigationController = [UINavigationController.alloc initWithRootViewController:overDiskQuotaViewController];
-    navigationController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:^{
-        weakSelf.overDiskQuotaPresented = YES;
-    }];
 }
 
 - (void)handleTransferQuotaError:(MEGAError *)error transfer:(MEGATransfer *)transfer {
