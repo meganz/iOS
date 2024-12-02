@@ -143,6 +143,8 @@ import UIKit
         switch command {
         case let .changeProfile(changeType, isTwoFactorAuthenticationEnabled):
             presentChangeViewController(changeType: changeType, isTwoFactorAuthenticationEnabled: isTwoFactorAuthenticationEnabled)
+        case .refreshTableView:
+            tableView.reloadData()
         }
     }
     

@@ -15,6 +15,7 @@ struct RecoveryKeyViewModelTests {
     ) -> RecoveryKeyViewModel {
         let sut = RecoveryKeyViewModel(
             accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn),
+            saveMasterKeyCompletion: nil,
             tracker: tracker,
             router: router
         )

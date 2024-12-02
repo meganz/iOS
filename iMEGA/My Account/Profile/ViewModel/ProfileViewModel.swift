@@ -32,6 +32,7 @@ final class ProfileViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable {
         case changeProfile(requestedChangeType: ChangeType, isTwoFactorAuthenticationEnabled: Bool)
+        case refreshTableView
     }
     
     struct SectionCellDataSource: Equatable {
@@ -165,10 +166,14 @@ extension ProfileViewModel {
             initCancelSubscriptionFlow()
         case .didTapBackUpRecoveryKey:
             tracker.trackAnalyticsEvent(with: BackupRecoveryKeyButtonPressedEvent())
-            router.showRecoveryKey()
+            router.showRecoveryKey(saveMasterKeyCompletion: refreshTableView)
         case .didTapLogout:
             tracker.trackAnalyticsEvent(with: LogoutButtonPressedEvent())
         }
+    }
+    
+    func refreshTableView() {
+        invokeCommand?(.refreshTableView)
     }
     
     private func handleChangeProfileAction(requestedChangeType: ChangeType) {
