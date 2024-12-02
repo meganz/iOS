@@ -288,8 +288,8 @@ final class MiniPlayerViewModel: ViewModelType {
             nodeInfoUseCase?.folderLinkLogout()
         }
         
-        Task.detached { [weak audioPlayerUseCase] in
-            await audioPlayerUseCase?.unregisterMEGADelegate()
+        Task { [audioPlayerUseCase] in
+            await audioPlayerUseCase.unregisterMEGADelegate()
         }
     }
 }
