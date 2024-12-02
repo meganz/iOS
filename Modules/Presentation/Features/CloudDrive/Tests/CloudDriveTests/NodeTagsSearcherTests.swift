@@ -14,12 +14,28 @@ struct NodeTagsSearcherTests {
         let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
         let initialResult = await sut.searchTags(for: nil)
         #expect(initialResult == tags)
-        #expect(useCase.numberOfCalls == 1)
+        #expect(useCase.searchTexts == [nil])
         let updatedResult = await sut.searchTags(for: "tag1")
         #expect(updatedResult == ["tag1"])
-        #expect(useCase.numberOfCalls == 1)
+        #expect(useCase.searchTexts == [nil])
         let finalResult = await sut.searchTags(for: nil)
         #expect(finalResult == tags)
-        #expect(useCase.numberOfCalls == 1)
+        #expect(useCase.searchTexts == [nil])
+    }
+
+    @MainActor
+    @Test("Verify the debounce")
+    func verifyDebounce() async {
+        let tags = ["tag1", "tag2", "tag3"]
+        let useCase = MockNodeTagsUseCase(tags: tags)
+        let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
+        let task1 = Task {
+            _ = await sut.searchTags(for: "tag1")
+        }
+        let task2 = Task(priority: .background) {
+            _ = await sut.searchTags(for: "tag2")
+        }
+        _ = await [task1.value, task2.value]
+        #expect(useCase.searchTexts == ["tag2"])
     }
 }

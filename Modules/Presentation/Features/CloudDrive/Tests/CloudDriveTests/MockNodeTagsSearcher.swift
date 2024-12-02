@@ -2,12 +2,23 @@
 
 actor MockNodeTagsSearcher: NodeTagsSearching {
     private let tags: [String]?
+    var continuation: CheckedContinuation<[String]?, Never>?
 
-    init(tags: [String]? = nil) {
+    init(tags: [String]? = []) {
         self.tags = tags
     }
 
     func searchTags(for searchText: String?) async -> [String]? {
-        tags
+        if let tags {
+            guard let searchText else {
+                return tags
+            }
+
+            return tags.filter { $0.contains(searchText) }
+        } else {
+            return await withCheckedContinuation { continuation in
+                self.continuation = continuation
+            }
+        }
     }
 }

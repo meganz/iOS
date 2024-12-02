@@ -93,16 +93,24 @@ struct NodeTagsView: View {
         containerWidth: CGFloat,
         isLastElement: Bool
     ) -> CGFloat {
+        // Check if placing the current element exceeds the container's width
         if (layoutState.currentOffset.x + dimension.width) > containerWidth {
+            // Move to the next row:
+            // - Reset horizontal (x) offset to 0
+            // - Increase vertical (y) offset by the max height of the current row plus padding
             layoutState.set(x: 0, y: (layoutState.currentOffset.y + layoutState.maxRowHeight + padding))
+            // Reset the maximum row height since we are starting a new row
             layoutState.set(maxRowHeight: 0)
         }
 
+        // Update the maximum row height to ensure enough vertical space for the row
         layoutState.set(maxRowHeight: max(layoutState.maxRowHeight, dimension.height))
 
         let offsetX = layoutState.currentOffset.x
+        // Update the horizontal (x) offset for the next element by adding the current element's width and padding
         layoutState.set(x: (offsetX + dimension.width + padding))
 
+        // If this is the last element, reset layout state to initial values
         if isLastElement {
             layoutState.set(x: 0)
             layoutState.set(maxRowHeight: 0)
@@ -114,8 +122,9 @@ struct NodeTagsView: View {
     nonisolated private func calculateVerticalAlignment(layoutState: LayoutState, isLastElement: Bool) -> CGFloat {
         let offsetY = layoutState.currentOffset.y
 
+        // If this is the last element, reset layout state to initial values
         if isLastElement {
-            layoutState.set()
+            // Reset y-offset while keeping the current x-offset
             layoutState.set(x: layoutState.currentOffset.x, y: 0)
         }
 

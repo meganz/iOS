@@ -12,6 +12,7 @@ public struct NodeTagsRepository: NodeTagsRepositoryProtocol {
     public func searchTags(for searchText: String?) async -> [String]? {
         let cancelToken = ThreadSafeCancelToken()
         return await withTaskCancellationHandler {
+            guard !cancelToken.value.isCancelled else { return nil }
             return sdk.nodeTags(forSearch: searchText, cancelToken: cancelToken.value)
         } onCancel: {
             if !cancelToken.value.isCancelled {
