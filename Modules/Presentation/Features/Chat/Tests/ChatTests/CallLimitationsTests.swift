@@ -1,5 +1,5 @@
-import Combine
 import Chat
+import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -11,11 +11,13 @@ extension Int {
     static let testLimit = 10
 }
 
+@MainActor
 final class CallLimitationsTests: XCTestCase {
     
+    @MainActor
     class Harness {
         let sut: CallLimitations
-        let callUseCase = MockCallUseCase()
+        let callUpdateUseCase = MockCallUpdateUseCase()
         var subscriptions = Set<AnyCancellable>()
         var limitsUpdatedCount = 0
         init(
@@ -32,7 +34,7 @@ final class CallLimitationsTests: XCTestCase {
             sut = .init(
                 initialLimit: initialLimit,
                 chatRoom: ChatRoomEntity(ownPrivilege: ownPrivilege),
-                callUseCase: callUseCase,
+                callUpdateUseCase: callUpdateUseCase,
                 chatRoomUseCase: MockChatRoomUseCase()
             )
             
@@ -44,7 +46,7 @@ final class CallLimitationsTests: XCTestCase {
         }
         
         func callStarted(maxUsers: Int) {
-            callUseCase.callUpdateSubject.send(
+            callUpdateUseCase.sendCallUpdate(
                 .init(
                     status: .inProgress,
                     changeType: .status,

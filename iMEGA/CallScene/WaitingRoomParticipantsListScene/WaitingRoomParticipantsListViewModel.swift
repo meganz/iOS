@@ -52,7 +52,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
             let limitations = CallLimitations(
                 initialLimit: call.callLimits.maxUsers,
                 chatRoom: chatRoom,
-                callUseCase: callUseCase,
+                callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
                 chatRoomUseCase: chatRoomUseCase
             )
             

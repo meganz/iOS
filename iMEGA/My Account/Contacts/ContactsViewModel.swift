@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
+@MainActor
 @objc final class ContactsViewModel: NSObject {
     private let sdk: MEGASdk
     private let contactsMode: ContactsMode
