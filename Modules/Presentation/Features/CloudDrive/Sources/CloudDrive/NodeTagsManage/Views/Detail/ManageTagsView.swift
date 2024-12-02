@@ -62,10 +62,10 @@ struct ManageTagsView: View {
                 viewModel.addTag()
             }
             .onChange(of: viewModel.tagName) { updatedTagName in
-                viewModel.validateAndUpdateTagNameStateIfRequired(with: updatedTagName)
+                viewModel.onTagNameChanged(with: updatedTagName)
             }
             .padding(.vertical, TokenSpacing._3)
-            if hasFocus {
+            if hasFocus, viewModel.tagName.isNotEmpty {
                 Button {
                     viewModel.clearTextField()
                 } label: {
@@ -95,18 +95,7 @@ struct ManageTagsView: View {
     
     private var bottomView: some View {
         VStack {
-            switch viewModel.tagNameState {
-            case .empty where viewModel.containsExistingTags:
-                EmptyView()
-            case .empty:
-                hintView
-            case .invalid:
-                errorView(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.invalidTagName)
-            case .tooLong:
-                errorView(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.tagNameTooLong)
-            case .valid:
-                addTagView
-            }
+            searchTagStatusView
 
             if viewModel.containsExistingTags {
                 ExistingTagsOverviewView(viewModel: viewModel.existingTagsViewModel)
@@ -116,13 +105,36 @@ struct ManageTagsView: View {
         }
     }
 
+    @ViewBuilder
+    private var searchTagStatusView: some View {
+        switch viewModel.tagNameState {
+        case .empty where viewModel.containsExistingTags:
+            EmptyView()
+        case .empty:
+            hintView
+        case .invalid:
+            errorView(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.invalidTagName)
+        case .tooLong:
+            errorView(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.tagNameTooLong)
+        case .valid where viewModel.canAddNewTag:
+            addTagView
+        case .valid:
+            EmptyView()
+        }
+    }
+
     private var addTagView: some View {
         Button {
             viewModel.addTag()
         } label: {
-            Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.buttonTitle(viewModel.tagName))
-                .font(.body)
-                .foregroundStyle(TokenColors.Button.primary.swiftUI)
+            HStack(spacing: TokenSpacing._3) {
+                Image(systemName: "plus")
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+
+                Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.buttonTitle(viewModel.tagName))
+                    .font(.body)
+                    .foregroundStyle(TokenColors.Button.primary.swiftUI)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, TokenSpacing._5)

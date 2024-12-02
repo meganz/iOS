@@ -1,5 +1,5 @@
-import Combine
 @testable import CloudDrive
+import Combine
 import Testing
 
 @Suite("ManageTagsViewModel Tests")
@@ -24,7 +24,7 @@ struct ManageTagsViewModelTests {
     func validateAndUpdateTagNameState(updatedTagName: String, expectedTagName: String, expectedState: ManageTagsViewModel.TagNameState) async {
         let viewModel = makeSUT()
         viewModel.tagName = ""
-        viewModel.validateAndUpdateTagNameStateIfRequired(with: updatedTagName)
+        viewModel.onTagNameChanged(with: updatedTagName)
         #expect(viewModel.tagName == expectedTagName)
         #expect(viewModel.tagNameState == expectedState)
     }
@@ -33,27 +33,26 @@ struct ManageTagsViewModelTests {
     @Test(
         "Verify addTag only adds valid tag names and clears tagName",
         arguments: [
-            ("tag1", true, "", true),
-            ("invalid@tag!", false, "invalid@tag!", false)
+            ("tag1", true, false),
+            ("invalid@tag!", false, false)
         ]
     )
     func verifyAddTag(
         updatedTagName: String,
-        expectedContainsTag: Bool,
-        expectedTagName: String,
-        expectedContainsExistingTags: Bool
+        containsTag: Bool,
+        canAddNewTag: Bool
     ) {
         let viewModel = makeSUT()
 
         // Set the initial tag name and add it
         viewModel.tagName = updatedTagName
-        viewModel.validateAndUpdateTagNameStateIfRequired(with: updatedTagName)
+        viewModel.onTagNameChanged(with: updatedTagName)
         viewModel.addTag()
 
         // Expectation checks
-        #expect(viewModel.existingTagsViewModel.containsTags == expectedContainsTag)
-        #expect(viewModel.tagName == expectedTagName)
-        #expect(viewModel.containsExistingTags == expectedContainsExistingTags)
+        #expect(viewModel.existingTagsViewModel.containsTags == containsTag)
+        #expect(viewModel.containsExistingTags == containsTag)
+        #expect(viewModel.canAddNewTag == canAddNewTag)
     }
 
     @MainActor
@@ -81,6 +80,26 @@ struct ManageTagsViewModelTests {
         #expect(sut.containsExistingTags == false)
         await sut.loadAllTags()
         #expect(sut.containsExistingTags == containsExistingTags)
+    }
+
+    @MainActor
+    @Test("test", arguments: [
+        (nil, true),
+        (["test"], false)
+    ])
+    func verifyCanAddNewTags(result: [String]?, expectedCanAddNewTag: Bool) async {
+        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.tagName = "test"
+        sut.onTagNameChanged(with: "test")
+        while await nodeSearcher.continuation == nil {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+        await nodeSearcher.continuation?.resume(with: .success(result))
+        for await canAddNewTag in sut.$canAddNewTag.dropFirst().values {
+            #expect(canAddNewTag == expectedCanAddNewTag)
+            break
+        }
     }
 
     @MainActor

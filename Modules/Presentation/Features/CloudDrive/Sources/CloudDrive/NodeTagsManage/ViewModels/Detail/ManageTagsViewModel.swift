@@ -18,8 +18,10 @@ final class ManageTagsViewModel: ObservableObject {
     @Published var tagNameState: TagNameState = .empty
     @Published var containsExistingTags: Bool
     @Published var hasTextFieldFocus: Bool = false
+    @Published var canAddNewTag: Bool = false
     private var maxAllowedCharacterCount = 32
     private var subscriptions: Set<AnyCancellable> = []
+    private var searchingTask: Task<Void, Never>?
 
     init(navigationBarViewModel: ManageTagsViewNavigationBarViewModel, existingTagsViewModel: ExistingTagsViewModel) {
         self.navigationBarViewModel = navigationBarViewModel
@@ -33,14 +35,19 @@ final class ManageTagsViewModel: ObservableObject {
     func addTag() {
         guard tagNameState == .valid else { return }
         existingTagsViewModel.addAndSelectNewTag(tagName)
-        tagName = ""
         containsExistingTags = true
+        canAddNewTag = false
         hasTextFieldFocus = false
     }
 
-    func validateAndUpdateTagNameStateIfRequired(with updatedTagName: String) {
+    func onTagNameChanged(with updatedTagName: String) {
         let formattedTagName = formatTagName(updatedTagName)
         updateTagNameState(for: formattedTagName)
+
+        if tagNameState == .valid || tagNameState == .empty {
+            canAddNewTag = false
+            searchTags(for: formattedTagName == "" ? nil : formattedTagName)
+        }
 
         guard updatedTagName != formattedTagName else { return }
         tagName = formattedTagName
@@ -52,10 +59,22 @@ final class ManageTagsViewModel: ObservableObject {
     }
 
     func loadAllTags() async {
-        await existingTagsViewModel.searchTags(for: nil)
+        await searchTags(for: nil).value
     }
 
     // MARK: - Private methods
+
+    @discardableResult
+    private func searchTags(for text: String?) -> Task<Void, Never> {
+        searchingTask?.cancel()
+
+        let task = Task {
+            await existingTagsViewModel.searchTags(for: text)
+        }
+
+        searchingTask = task
+        return task
+    }
 
     private func formatTagName(_ tagName: String) -> String {
         if tagName.hasPrefix("#") {
@@ -93,6 +112,7 @@ final class ManageTagsViewModel: ObservableObject {
             .sink { [weak self] isLoading in
                 guard let self, !isLoading, existingTagsViewModel.isLoading else { return }
                 containsExistingTags = existingTagsViewModel.containsTags
+                canAddNewTag = !existingTagsViewModel.contains(tagName)
             }
             .store(in: &subscriptions)
     }

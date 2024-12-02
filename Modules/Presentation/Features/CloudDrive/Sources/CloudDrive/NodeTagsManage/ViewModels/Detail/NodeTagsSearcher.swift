@@ -8,6 +8,8 @@ protocol NodeTagsSearching: Actor {
 actor NodeTagsSearcher: NodeTagsSearching {
     private var allTags: [String] = []
     private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
+    private let delay: TimeInterval = 0.5
+    private var searchTask: Task<[String]?, any Error>?
 
     init(nodeTagsUseCase: some NodeTagsUseCaseProtocol) {
         self.nodeTagsUseCase = nodeTagsUseCase
@@ -19,13 +21,36 @@ actor NodeTagsSearcher: NodeTagsSearching {
             return filterAllTags(for: searchText)
         }
 
-        guard let tags = await nodeTagsUseCase.searchTags(for: searchText), !Task.isCancelled else { return nil }
-        updateAllTagsIfSearchTextIsNil(with: tags, searchText: searchText)
-        return tags
+        searchTask?.cancel()
+        do {
+            let task = searchTask(for: searchText)
+            self.searchTask = task
+            
+            let tags = try await task.value
+            updateAllTagsIfSearchTextIsNil(with: tags, searchText: searchText)
+            return tags
+        } catch {
+            return nil
+        }
     }
 
-    private func updateAllTagsIfSearchTextIsNil(with tags: [String], searchText: String?) {
-        guard searchText == nil else { return }
+    private func searchTask(for searchText: String?) -> Task<[String]?, any Error> {
+        Task {
+            // Implements debounce functionality with a specified delay.
+            // If a new search request is initiated within `delay` seconds,
+            // the current request is canceled, and the delay timer restarts for the new request.
+            // This debounce is applied only when searching for specific tags (i.e., `searchText` is not nil).
+            // Because after all tags have been fetched, no further requests are made to the SDK.
+            if searchText != nil {
+                try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            }
+
+            return await nodeTagsUseCase.searchTags(for: searchText)
+        }
+    }
+
+    private func updateAllTagsIfSearchTextIsNil(with tags: [String]?, searchText: String?) {
+        guard searchText == nil, let tags else { return }
         allTags = tags
     }
 

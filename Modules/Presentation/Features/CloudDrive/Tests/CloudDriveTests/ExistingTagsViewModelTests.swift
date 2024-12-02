@@ -43,6 +43,37 @@ struct ExistingTagsViewModelTests {
         #expect(sut.isLoading == false)
     }
 
+    @MainActor
+    @Test("Test adding the tags and then searching for tags in the account.")
+    func verifyAddAndSearchTags() async {
+        let tags = ["tag1", "tag2", "tag3", "tag4"]
+        let searcher = MockNodeTagsSearcher(tags: tags)
+        let sut = makeSUT(tagsViewModel: NodeTagsViewModel(tagViewModels: []), nodeTagSearcher: searcher)
+        sut.addAndSelectNewTag("newTag")
+        await sut.searchTags(for: "ta")
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == tags)
+        await sut.searchTags(for: nil)
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["newTag"] + tags)
+        #expect(sut.isLoading == false)
+    }
+
+    @MainActor
+    @Test("Test searching for non selected tag and then searching for selected tag and see if the selection is preserved.")
+    func verifySearchingOfSelectedTags() async {
+        let tags = ["tag1", "tag2", "tag3", "tag4"]
+        let searcher = MockNodeTagsSearcher(tags: tags)
+        let selectedTagViewModel = NodeTagViewModel(tag: "tag2", isSelectionEnabled: true, isSelected: true)
+        let sut = makeSUT(
+            tagsViewModel: NodeTagsViewModel(tagViewModels: [selectedTagViewModel]),
+            nodeTagSearcher: searcher
+        )
+        await sut.searchTags(for: "tag3")
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag3"])
+        await sut.searchTags(for: nil)
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag1", "tag3", "tag4"])
+        #expect(sut.tagsViewModel.tagViewModels.first?.isSelected == true)
+    }
+
     // MARK: - Helpers
 
     private typealias SUT = ExistingTagsViewModel
