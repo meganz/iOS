@@ -14,6 +14,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private var chatUseCase: any ChatUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
+    private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private var chatRoom: ChatRoomEntity
     private var invitedUserIdsToBypassWaitingRoom = Set<HandleEntity>()
     private var subscriptions = Set<AnyCancellable>()
@@ -32,6 +33,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         chatUseCase: some ChatUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
+        callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoom: ChatRoomEntity,
         tracker: some AnalyticsTracking
     ) {
@@ -41,6 +43,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         self.chatUseCase = chatUseCase
         self.accountUseCase = accountUseCase
         self.callUseCase = callUseCase
+        self.callUpdateUseCase = callUpdateUseCase
         self.chatRoom = chatRoom
         self.tracker = tracker
         
@@ -57,7 +60,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         updateParticipants()
         listenToInviteChanges()
         listenToParticipantsUpdate()
-        listenToWaitingRoomUsersAllowUpdate()
+        monitorOnCallUpdate()
     }
     
     @MainActor
@@ -206,22 +209,29 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func listenToWaitingRoomUsersAllowUpdate() {
-        callUseCase
-            .onCallUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] call in
-                guard let self,
-                      call.chatId == chatRoom.chatId,
-                      call.changeType == .waitingRoomUsersAllow else {
-                    return
-                }
-                allowWaitingRoomUsers(call.waitingRoomHandleList, for: call)
+    private func monitorOnCallUpdate() {
+        let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
+        Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
             }
-            .store(in: &subscriptions)
+        }
     }
     
-    private func allowWaitingRoomUsers(_ userHandles: [HandleEntity], for call: CallEntity) {
+    private func onCallUpdate(_ call: CallEntity) {
+        guard call.chatId == chatRoom.chatId  else {
+            return
+        }
+        switch call.changeType {
+        case .waitingRoomAllow:
+            allowWaitingRoomUsersIfPreviouslyInvited(call.waitingRoomHandleList, for: call)
+        default:
+            break
+        }
+    }
+    
+    private func allowWaitingRoomUsersIfPreviouslyInvited(_ userHandles: [HandleEntity], for call: CallEntity) {
+        // Adding a participant outside call UI using the 'Add participant' button, should bypass waiting room when call is active
         for userId in userHandles where invitedUserIdsToBypassWaitingRoom.contains(userId) {
             chatRoomUseCase.invite(toChat: chatRoom, userId: userId)
             invitedUserIdsToBypassWaitingRoom.remove(userId)

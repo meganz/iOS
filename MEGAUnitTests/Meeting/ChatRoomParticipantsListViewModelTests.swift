@@ -111,6 +111,7 @@ final class ChatRoomParticipantsListViewModelTests: XCTestCase {
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         tracker: MockTracker = .init(),
         file: StaticString = #file,
@@ -123,6 +124,7 @@ final class ChatRoomParticipantsListViewModelTests: XCTestCase {
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             callUseCase: callUseCase,
+            callUpdateUseCase: callUpdateUseCase,
             chatRoom: chatRoom,
             tracker: tracker
         )
