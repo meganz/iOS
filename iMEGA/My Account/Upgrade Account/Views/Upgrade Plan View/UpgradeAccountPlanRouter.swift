@@ -18,7 +18,7 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
     private let viewType: UpgradeAccountPlanViewType
     
     init(
-        presenter: UIViewController,
+        presenter: UIViewController?,
         accountDetails: AccountDetailsEntity,
         viewType: UpgradeAccountPlanViewType = .upgrade
     ) {
