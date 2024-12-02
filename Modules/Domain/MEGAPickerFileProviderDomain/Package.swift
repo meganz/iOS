@@ -1,10 +1,11 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
-let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]),
-                                .enableExperimentalFeature("ExistentialAny"),
-                                .enableExperimentalFeature("StrictConcurrency=targeted")]
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "MEGAPickerFileProviderDomain",
@@ -31,5 +32,6 @@ let package = Package(
             dependencies: ["MEGAPickerFileProviderDomain"],
             swiftSettings: settings
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
