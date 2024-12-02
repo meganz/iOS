@@ -221,7 +221,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
                UIApplication.mnz_visibleViewController() == chatViewController,
                let chatViewController = chatViewController,
                !chatViewController.previewMode {
-                MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
+                api.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
             } else if let chatRoom = api.chatRoom(forChatId: chatRoom.chatId) {
                 self.chatRoom = chatRoom.toChatRoomEntity()
             }
@@ -231,7 +231,28 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
                 updateUnreadMessagesLabel(unreads: 0)
                 chatViewController?.messagesCollectionView.reloadData()
             }
-            insertMessage(message)
+            
+            // [MEET-522]
+            // Loading user attributes here, so that later when rendering the message,
+            // we always have first and last name to show. It's possible that upon receiving the message,
+            // SDK returns nil in `getUserFullnameFromCache`
+            let userHandles = [
+                NSNumber(value: message.userHandle)
+            ]
+            
+            // if full name is nil, then loadUserAttributes, else just insert message
+            guard api.userFullnameFromCache(byUserHandle: message.userHandle) == nil else {
+                insertMessage(message)
+                return
+            }
+            
+            api.loadUserAttributes(
+                forChatId: chatRoom.chatId,
+                usersHandles: userHandles,
+                delegate: ChatRequestDelegate(completion: {[weak self] _, _ in
+                    self?.insertMessage(message)
+                })
+            )
         }
     }
     
