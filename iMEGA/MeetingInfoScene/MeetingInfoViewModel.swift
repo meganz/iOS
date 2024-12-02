@@ -152,6 +152,7 @@ final class MeetingInfoViewModel: ObservableObject {
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             chatRoom: chatRoom,
             tracker: tracker
         )
