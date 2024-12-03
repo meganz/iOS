@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 import MEGAPresentation
 
+@MainActor
 final public class TermsAndPoliciesViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
@@ -23,7 +24,6 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     }
     
     // MARK: - Cookie policy
-    @MainActor
     func setupCookiePolicyURL() async {
         guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return }
 
