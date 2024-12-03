@@ -337,6 +337,7 @@ extension ChatViewController {
         let videoURL = URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: path))
         
         let processAsset = MEGAProcessAsset(toShareThroughChatWithVideoURL: videoURL,
+                                            presenter: self,
                                             filePath: { [weak self] path in
             guard let filePath = path,
                 let `self` = self else {
@@ -360,11 +361,12 @@ extension ChatViewController {
             }
         })
         
-        processAsset?.prepare()
+        processAsset.prepare()
     }
     
     private nonisolated func uploadingAssets(assets: [PHAsset], parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
         let processAsset = MEGAProcessAsset(toShareThroughChatWith: assets,
+                                            presenter: self,
                                             filePaths: { [weak self] filePaths in
             
             guard let self, let filePaths else { return }
@@ -396,8 +398,8 @@ extension ChatViewController {
         })
         
         DispatchQueue.global(qos: .background).async {
-            processAsset?.isOriginalName = true
-            processAsset?.prepare()
+            processAsset.isOriginalName = true
+            processAsset.prepare()
         }
     }
     

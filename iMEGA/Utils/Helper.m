@@ -169,7 +169,9 @@
     
     MEGANode *parentNode = [MEGASdk.shared nodeForHandle:transferRecordDTO.parentNodeHandle.unsignedLongLongValue];
     
-    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset filePath:^(NSString *filePath) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset
+                                                                   presenter: nil
+                                                                    filePath:^(NSString *filePath) {
         NSString *name = [FileExtensionOCWrapper fileNameWithLowercaseExtensionFrom:filePath.lastPathComponent];
         NSString *newName = [name mnz_sequentialFileNameInParentNode:parentNode];
         

@@ -55,7 +55,10 @@ static const float BPS_MEDIUM = 3000000.0f;
 
 @implementation MEGAProcessAsset
 
-- (instancetype)initWithAsset:(PHAsset *)asset filePath:(void (^)(NSString *filePath))filePath error:(void (^)(NSError *error))error {
+- (instancetype)initWithAsset:(PHAsset *)asset
+                    presenter:(nullable UIViewController *)presenter
+                     filePath:(void (^)(NSString *filePath))filePath
+                        error:(void (^)(NSError *error))error {
     self = [super init];
     
     if (self) {
@@ -63,12 +66,16 @@ static const float BPS_MEDIUM = 3000000.0f;
         _filePath = filePath;
         _error = error;
         _retries = 0;
+        _presenter = presenter;
     }
     
     return self;
 }
 
-- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets filePaths:(void (^)(NSArray<NSString *> *))filePaths errors:(void (^)(NSArray<NSError *> *))errors {
+- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets
+                                       presenter:(UIViewController *)presenter
+                                       filePaths:(void (^)(NSArray<NSString *> *))filePaths
+                                          errors:(void (^)(NSArray<NSError *> *))errors{
     self = [super init];
     
     if (self) {
@@ -80,6 +87,7 @@ static const float BPS_MEDIUM = 3000000.0f;
         _filePathsArray = [[NSMutableArray alloc] init];
         _errorsArray = [[NSMutableArray alloc] init];
         _shareThroughChat = YES;
+        _presenter = presenter;
         for (PHAsset *asset in assets) {
             if (asset.mediaType == PHAssetMediaTypeVideo) {
                 _totalDuration += asset.duration;
@@ -91,7 +99,10 @@ static const float BPS_MEDIUM = 3000000.0f;
     
 }
 
-- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *))filePath error:(void (^)(NSError *))error {
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL
+                                         presenter:(UIViewController *)presenter
+                                          filePath:(void (^)(NSString *))filePath
+                                             error:(void (^)(NSError *))error {
     self = [super init];
     
     if (self) {
@@ -100,6 +111,7 @@ static const float BPS_MEDIUM = 3000000.0f;
         _error = error;
         _retries = 0;
         _shareThroughChat = YES;
+        _presenter = presenter;
         _totalDuration = CMTimeGetSeconds(self.avAsset.duration);
     }
     
@@ -107,7 +119,10 @@ static const float BPS_MEDIUM = 3000000.0f;
     
 }
 
-- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *))filePath error:(void (^)(NSError *))error presenter:(UIViewController *)presenter {
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL
+                                          filePath:(void (^)(NSString *))filePath
+                                             error:(void (^)(NSError *))error
+                                         presenter:(UIViewController *)presenter {
     self = [super init];
     
     if (self) {
@@ -259,16 +274,16 @@ static const float BPS_MEDIUM = 3000000.0f;
      requestImageDataAndOrientationForAsset:asset
      options:options
      resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, CGImagePropertyOrientation orientation, NSDictionary * _Nullable info) {
-         NSData *data;
-         if (self.shareThroughChat && [dataUTI isEqualToString:@"public.heic"]) {
-             UIImage *image = [UIImage imageWithData:imageData];
-             data = UIImageJPEGRepresentation(image, 0.75);
-         } else {
-             data = imageData;
-         }
-         
-         [self proccessImageData:data asset:asset withInfo:info];
-     }];
+        NSData *data;
+        if (self.shareThroughChat && [dataUTI isEqualToString:@"public.heic"]) {
+            UIImage *image = [UIImage imageWithData:imageData];
+            data = UIImageJPEGRepresentation(image, 0.75);
+        } else {
+            data = imageData;
+        }
+        
+        [self proccessImageData:data asset:asset withInfo:info];
+    }];
 }
 
 - (void)requestVideoAsset:(PHAsset *)asset {
@@ -279,87 +294,87 @@ static const float BPS_MEDIUM = 3000000.0f;
     [[PHImageManager defaultManager]
      requestAVAssetForVideo:asset
      options:options resultHandler:^(AVAsset *avAsset, AVAudioMix *audioMix, NSDictionary *info) {
-         if (avAsset) {
-             if ([avAsset isKindOfClass:[AVURLAsset class]]) {
-                 NSURL *avassetUrl = [(AVURLAsset *)avAsset URL];
-                 NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
-                 __block NSString *filePath = [self filePathWithInfo:info asset:asset];
-                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
-                 long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
-                 
-                 if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
-                     ChatVideoUploadQuality videoQuality = [self chatVideoUploadQuality];
-                     
-                     AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
-                     
-                     BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:filePath.pathExtension];
-                     
-                     if (shouldEncodeVideo) {
-                         SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:avAsset videoQuality:videoQuality filePath:filePath];
-                         [self downscaleVideoAsset:asset encoder:encoder];
-                     } else {
-                         NSError *error;
-                         self.currentProgress += asset.duration;
-                         if ([[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
-                             if (asset.creationDate != nil) {
-                                 NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
-                                 if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                                     MEGALogError(@"[PA] Set attributes failed with error: %@", error);
-                                 }
-                             }
-                             
-                             if (self.filePath) {
-                                 filePath = filePath.mnz_relativeLocalPath;
-                                 self.filePath(filePath);
-                             }
-                             if (self.filePaths) {
-                                 filePath = filePath.mnz_relativeLocalPath;
-                                 [self.filePathsArray addObject:filePath];
-                                 dispatch_semaphore_signal(self.semaphore);
-                             }
-                         } else {
-                             MEGALogError(@"[PA] Copy item at path failed with error: %@", error);
-                             if (self.error) {
-                                 self.error(error);
-                             }
-                             if (self.errors) {
-                                 MEGALogDebug(@"[PA] Max attempts reached");
-                                 [self.errorsArray addObject:error];
-                                 dispatch_semaphore_signal(self.semaphore);
-                             }
-                         }
-                     }
-                 }
-             } else if ([avAsset isKindOfClass:[AVComposition class]]) {
-                 float realDuration = [self realDurationForAVAsset:avAsset];
-                 self.totalDuration = self.totalDuration - asset.duration + realDuration;
-                 NSString *filePath = [self filePathWithInfo:info asset:asset];
-                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
-                 ChatVideoUploadQuality videoQuality = [self chatVideoUploadQuality];
-                 
-                 SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:avAsset videoQuality:videoQuality filePath:filePath];
-                 [self downscaleVideoAsset:asset encoder:encoder];
-                 
-             }
-         } else {
-             NSError *error = [info objectForKey:@"PHImageErrorKey"];
-             MEGALogError(@"[PA] Request AVAsset %@ failed with error: %@", asset, error);
-             if (self.retries < 10) {
-                 self.retries++;
-                 [self requestVideoAsset:asset];
-             } else {
-                 if (self.error) {
-                     MEGALogDebug(@"[PA] Max attempts reached");
-                     self.error(error);
-                 }
-                 if (self.errors) {
-                     MEGALogDebug(@"[PA] Max attempts reached");
-                     [self.errorsArray addObject:error];
-                     dispatch_semaphore_signal(self.semaphore);
-                 }
-             }
-         }
-     }];
+        if (avAsset) {
+            if ([avAsset isKindOfClass:[AVURLAsset class]]) {
+                NSURL *avassetUrl = [(AVURLAsset *)avAsset URL];
+                NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
+                __block NSString *filePath = [self filePathWithInfo:info asset:asset];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
+                long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
+                
+                if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
+                    ChatVideoUploadQuality videoQuality = [self chatVideoUploadQuality];
+                    
+                    AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
+                    
+                    BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:filePath.pathExtension];
+                    
+                    if (shouldEncodeVideo) {
+                        SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:avAsset videoQuality:videoQuality filePath:filePath];
+                        [self downscaleVideoAsset:asset encoder:encoder];
+                    } else {
+                        NSError *error;
+                        self.currentProgress += asset.duration;
+                        if ([[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
+                            if (asset.creationDate != nil) {
+                                NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
+                                if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                                    MEGALogError(@"[PA] Set attributes failed with error: %@", error);
+                                }
+                            }
+                            
+                            if (self.filePath) {
+                                filePath = filePath.mnz_relativeLocalPath;
+                                self.filePath(filePath);
+                            }
+                            if (self.filePaths) {
+                                filePath = filePath.mnz_relativeLocalPath;
+                                [self.filePathsArray addObject:filePath];
+                                dispatch_semaphore_signal(self.semaphore);
+                            }
+                        } else {
+                            MEGALogError(@"[PA] Copy item at path failed with error: %@", error);
+                            if (self.error) {
+                                self.error(error);
+                            }
+                            if (self.errors) {
+                                MEGALogDebug(@"[PA] Max attempts reached");
+                                [self.errorsArray addObject:error];
+                                dispatch_semaphore_signal(self.semaphore);
+                            }
+                        }
+                    }
+                }
+            } else if ([avAsset isKindOfClass:[AVComposition class]]) {
+                float realDuration = [self realDurationForAVAsset:avAsset];
+                self.totalDuration = self.totalDuration - asset.duration + realDuration;
+                NSString *filePath = [self filePathWithInfo:info asset:asset];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
+                ChatVideoUploadQuality videoQuality = [self chatVideoUploadQuality];
+                
+                SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:avAsset videoQuality:videoQuality filePath:filePath];
+                [self downscaleVideoAsset:asset encoder:encoder];
+                
+            }
+        } else {
+            NSError *error = [info objectForKey:@"PHImageErrorKey"];
+            MEGALogError(@"[PA] Request AVAsset %@ failed with error: %@", asset, error);
+            if (self.retries < 10) {
+                self.retries++;
+                [self requestVideoAsset:asset];
+            } else {
+                if (self.error) {
+                    MEGALogDebug(@"[PA] Max attempts reached");
+                    self.error(error);
+                }
+                if (self.errors) {
+                    MEGALogDebug(@"[PA] Max attempts reached");
+                    [self.errorsArray addObject:error];
+                    dispatch_semaphore_signal(self.semaphore);
+                }
+            }
+        }
+    }];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -411,7 +426,7 @@ static const float BPS_MEDIUM = 3000000.0f;
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
                     if (self.filePath) {
-                        if (self.presenter) {                            
+                        if (self.presenter) {
                             self.filePath(filePath);
                         } else {
                             filePath = encoder.outputURL.path.mnz_relativeLocalPath;
@@ -453,7 +468,7 @@ static const float BPS_MEDIUM = 3000000.0f;
 
 - (BOOL)hasFreeSpaceOnDiskForWriteFile:(long long)fileSize {
     uint64_t freeSpace = NSFileManager.defaultManager.mnz_fileSystemFreeSize;
-     
+    
     if (fileSize > freeSpace) {
         NSDictionary *dict = @{NSLocalizedDescriptionKey:LocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")};
         NSError *error = [NSError errorWithDomain:MEGAProcessAssetErrorDomain code:-2 userInfo:dict];
@@ -567,7 +582,7 @@ static const float BPS_MEDIUM = 3000000.0f;
     }
 }
 
-- (CGSize)sizeByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {    
+- (CGSize)sizeByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
     CGAffineTransform transform = videoTrack.preferredTransform;
     
     CGFloat width, height;
@@ -614,7 +629,7 @@ static const float BPS_MEDIUM = 3000000.0f;
         }
     }
     
-    return NO;    
+    return NO;
 }
 
 - (float)bpsByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
@@ -675,11 +690,11 @@ static const float BPS_MEDIUM = 3000000.0f;
     
     encoder.audioSettings = @
     {
-    AVFormatIDKey:@(kAudioFormatMPEG4AAC),
-    AVNumberOfChannelsKey:@1,
-    AVSampleRateKey:@44100,
-    AVEncoderBitRateKey:@128000,
-    AVEncoderBitRateStrategyKey:AVAudioBitRateStrategy_Variable,
+        AVFormatIDKey:@(kAudioFormatMPEG4AAC),
+        AVNumberOfChannelsKey:@1,
+        AVSampleRateKey:@44100,
+        AVEncoderBitRateKey:@128000,
+        AVEncoderBitRateStrategyKey:AVAudioBitRateStrategy_Variable,
     };
     
     [encoder addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:ProcessAssetProgressContext];
@@ -736,9 +751,6 @@ static const float BPS_MEDIUM = 3000000.0f;
             self.exportAssetFailed = YES;
         }
         [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            [self.alertController dismissViewControllerAnimated:YES completion:nil];
-        });
     }];
     
     
