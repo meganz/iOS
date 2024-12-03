@@ -59,6 +59,72 @@ final class AlbumSelectionTests: XCTestCase {
         XCTAssertTrue(sut.albums.isEmpty)
     }
     
+    func testSingleSelectionMode_setSelectedAlbum_singleSelection() {
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        let sut = AlbumSelection(mode: .single)
+        
+        sut.setSelectedAlbums([userAlbum])
+        
+        XCTAssertTrue(sut.isAlbumSelected(userAlbum))
+        
+        sut.setSelectedAlbums([])
+        
+        XCTAssertFalse(sut.isAlbumSelected(userAlbum))
+    }
+    
+    func testToggle_singleSelection_shouldSetIsSelectedCorrectly() {
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        let sut = AlbumSelection(mode: .single)
+        
+        sut.toggle(userAlbum)
+        
+        XCTAssertTrue(sut.isAlbumSelected(userAlbum))
+        
+        sut.toggle(userAlbum)
+        
+        XCTAssertFalse(sut.isAlbumSelected(userAlbum))
+    }
+    
+    func testToggle_multiSelection_shouldSetIsSelectedCorrectly() throws {
+        let sut = AlbumSelection(mode: .multiple)
+        let firstUserAlbum = AlbumEntity(id: 1, type: .user)
+        let secondUserAlbum = AlbumEntity(id: 2, type: .user)
+        for album in [firstUserAlbum, secondUserAlbum] {
+            sut.toggle(album)
+            XCTAssertTrue(sut.isAlbumSelected(album))
+        }
+       
+        sut.toggle(firstUserAlbum)
+        
+        XCTAssertFalse(sut.isAlbumSelected(firstUserAlbum))
+        XCTAssertTrue(sut.isAlbumSelected(secondUserAlbum))
+    }
+    
+    func testIsAlbumSelectedPublisher_onAllSelectedOrItemSelected_shouldPublishCorrectResult() {
+        let album = AlbumEntity(id: 1, type: .user)
+        let sut = AlbumSelection()
+        
+        var results = [true, false, true, false, true, false]
+        let exp = expectation(description: "is album selected published")
+        exp.expectedFulfillmentCount = results.count
+        let subscription = sut.isAlbumSelectedPublisher(album: album)
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, results.removeFirst())
+                exp.fulfill()
+            }
+       
+        sut.toggle(album)
+        sut.toggle(album)
+        sut.allSelected = true
+        sut.allSelected = false
+        sut.toggle(album)
+        sut.allSelected = false
+        
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
+    }
+    
     private func userAlbums() -> [AlbumEntity] {
         [
             AlbumEntity(id: 1, name: "Album 1", coverNode: NodeEntity(handle: 1), count: 1, type: .user, modificationTime: nil),

@@ -25,7 +25,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     @Published var isSelected: Bool = false {
         didSet {
             if isSelected != oldValue && selection.isAlbumSelected(album) != isSelected {
-                selection.albums[album.id] = isSelected ? album : nil
+                selection.toggle(album)
             }
         }
     }
@@ -175,9 +175,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     }
     
     private func configSelection() {
-        selection
-            .$allSelected
-            .dropFirst()
+        selection.isAlbumSelectedPublisher(album: album)
             .filter { [weak self] in
                 self?.isSelected != $0
             }
@@ -226,7 +224,11 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     }
 }
 
-extension AlbumCellViewModel: Equatable {
+extension AlbumCellViewModel: Hashable {
+    nonisolated public func hash(into hasher: inout Hasher) {
+        hasher.combine(album.id)
+    }
+    
     nonisolated public static func == (lhs: AlbumCellViewModel, rhs: AlbumCellViewModel) -> Bool {
         lhs.album == rhs.album
     }

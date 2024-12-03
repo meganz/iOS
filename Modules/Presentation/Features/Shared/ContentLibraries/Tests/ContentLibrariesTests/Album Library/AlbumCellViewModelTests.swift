@@ -135,13 +135,18 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     @MainActor
     func testIsSelected_whenUserTapOnAlbum_shouldBeSelected() {
-        let selection = AlbumSelection()
-        let sut = makeAlbumCellViewModel(album: album,
-                                         selection: selection)
-        
-        sut.isSelected = true
-        
-        XCTAssertTrue(selection.isAlbumSelected(album))
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        for (album, isSelected) in [(userAlbum, true),
+                                    (album, false)] {
+            let selection = AlbumSelection()
+            let sut = makeAlbumCellViewModel(album: album,
+                                             selection: selection)
+            selection.editMode = .active
+            
+            sut.onAlbumTap()
+            
+            XCTAssertEqual(selection.isAlbumSelected(album), isSelected)
+        }
     }
     
     @MainActor
@@ -473,7 +478,6 @@ final class AlbumCellViewModelTests: XCTestCase {
             monitorUserAlbumPhotosAsyncSequence: monitorUserAlbumPhotos)
         let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: coverNode)
         
-        
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: thumbnailLoader,
@@ -726,7 +730,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     func testIsGestureEnabled_onTappedProvided_shouldEnable() {
         let testCases: [(((AlbumEntity) -> Void)?, Bool)] = [
             (nil, false),
-            ({ _ in }, true),
+            ({ _ in }, true)
         ]
         
         for (onAlbumSelected, isEnabled) in testCases {
