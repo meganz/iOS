@@ -11,6 +11,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
 
     private let cookieURL = URL(string: "https://mega.nz/cookie")!
     
+    @MainActor
     func testSetupCookiePolicyURL_adsFlagEnabled_successSessionTransferURL_shouldReturnSessionURL() async throws {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/testCookie"))
         let sut = makeSUT(
@@ -23,6 +24,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cookieUrl, expectedURL)
     }
     
+    @MainActor
     func testSetupCookiePolicyURL_adsFlagEnabled_failedSessionTransferURL_shouldReturnDefaultURL() async throws {
         let sut = makeSUT(
             sessionTransferURLResult: .failure(.generic),
@@ -34,6 +36,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cookieUrl, URL(fileURLWithPath: ""))
     }
     
+    @MainActor
     func testSetupCookiePolicyURL_notUnderAdsExperiment_shouldReturnCookieURL() async throws {
         let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/testCookie"))
         let sut = makeSUT(
@@ -47,6 +50,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
     }
 
     // MARK: Helper
+    @MainActor
     private func makeSUT(
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .success(URL(fileURLWithPath: "")),
         isExternalAdsFlagEnabled: Bool = true,
