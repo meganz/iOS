@@ -1,5 +1,4 @@
 import CallKit
-import CombineSchedulers
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -21,7 +20,6 @@ final class CallsCoordinatorTests: XCTestCase {
         
         @MainActor
         init(
-            scheduler: AnySchedulerOf<DispatchQueue> = .main,
             chatRoomEntity: ChatRoomEntity? = nil,
             call: CallEntity? = nil
         ) {
@@ -30,7 +28,6 @@ final class CallsCoordinatorTests: XCTestCase {
             callUpdateUseCase = MockCallUpdateUseCase()
             audioSessionUseCase = MockAudioSessionUseCase()
             sut = CallsCoordinator(
-                scheduler: scheduler,
                 callUseCase: callUseCase,
                 callUpdateUseCase: callUpdateUseCase,
                 chatRoomUseCase: chatRoomUseCase,

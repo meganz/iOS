@@ -1,4 +1,3 @@
-import CombineSchedulers
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock

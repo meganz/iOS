@@ -1,6 +1,5 @@
 import Chat
 @preconcurrency import Combine
-import CombineSchedulers
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -225,11 +224,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     private var layoutUpdateChannel: ParticipantLayoutUpdateChannel
     let cameraSwitcher: any CameraSwitching
-    let scheduler: AnySchedulerOf<DispatchQueue>
     let tracker: any AnalyticsTracking
     init(
         containerViewModel: MeetingContainerViewModel,
-        scheduler: AnySchedulerOf<DispatchQueue>,
         chatUseCase: some ChatUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
@@ -255,7 +252,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         tracker: some AnalyticsTracking
     ) {
         self.chatUseCase = chatUseCase
-        self.scheduler = scheduler
         self.containerViewModel = containerViewModel
         self.callUseCase = callUseCase
         self.captureDeviceUseCase = captureDeviceUseCase

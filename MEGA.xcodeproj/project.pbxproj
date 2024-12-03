@@ -1354,7 +1354,6 @@
 		94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		9462D4B22C203A090049B3CA /* CameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9462D4B12C203A090049B3CA /* CameraSwitcher.swift */; };
-		9462D4BC2C204A9D0049B3CA /* CombineSchedulers in Frameworks */ = {isa = PBXBuildFile; productRef = 9462D4BB2C204A9D0049B3CA /* CombineSchedulers */; };
 		9463EEDB2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */; };
 		9464E0E62C8A2C8700D139A9 /* WarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464E0E12C8A2C8600D139A9 /* WarningBannerView.swift */; };
 		9464E0E72C8A2C8700D139A9 /* WarningBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464E0E22C8A2C8600D139A9 /* WarningBannerViewModel.swift */; };
@@ -5380,7 +5379,6 @@
 				99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
 				BF27E3F42CF3FDD5002C892B /* CloudDrive in Frameworks */,
-				9462D4BC2C204A9D0049B3CA /* CombineSchedulers in Frameworks */,
 				256428552CC7927D005DA9B1 /* ContentLibraries in Frameworks */,
 				940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
@@ -13296,7 +13294,6 @@
 				B67D44E02B605F7600738E04 /* SearchMock */,
 				B51616482B83361900C6E842 /* Notifications */,
 				0E12F2102BBFA8950087D853 /* AsyncAlgorithms */,
-				9462D4BB2C204A9D0049B3CA /* CombineSchedulers */,
 				6D797BA62C6117CC004D95F4 /* PhotosBrowser */,
 				0E119ACB2C7C3CBC0091BF06 /* MEGAPhotos */,
 				9444FA8B2C94672B005C240B /* Chat */,
@@ -13678,7 +13675,6 @@
 				943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
 				9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */,
 				0E12F20F2BBFA8950087D853 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
-				9462D4B62C2049810049B3CA /* XCRemoteSwiftPackageReference "combine-schedulers" */,
 				B5866BB32CA539E4009E0A1E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				9439CBDA2CF4B04C002456A5 /* XCRemoteSwiftPackageReference "swift-testing-expectation" */,
 			);
@@ -18241,14 +18237,6 @@
 				kind = branch;
 			};
 		};
-		9462D4B62C2049810049B3CA /* XCRemoteSwiftPackageReference "combine-schedulers" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/combine-schedulers.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -18502,11 +18490,6 @@
 		94621F992AFD3C5000BEBB55 /* SwiftLint */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftLint";
-		};
-		9462D4BB2C204A9D0049B3CA /* CombineSchedulers */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9462D4B62C2049810049B3CA /* XCRemoteSwiftPackageReference "combine-schedulers" */;
-			productName = CombineSchedulers;
 		};
 		946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;

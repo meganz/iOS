@@ -1,5 +1,4 @@
 import Combine
-import CombineSchedulers
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
@@ -10,7 +9,6 @@ import MEGAPresentation
 final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     private let router: any MeetingFloatingPanelRouting
-    private let scheduler: AnySchedulerOf<DispatchQueue>
     private let menuPresenter: ([ActionSheetAction]) -> Void
     private var chatRoom: ChatRoomEntity
     
@@ -39,7 +37,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     
     init(
         router: some MeetingFloatingPanelRouting,
-        scheduler: AnySchedulerOf<DispatchQueue>,
         menuPresenter: @escaping ([ActionSheetAction]) -> Void,
         chatRoom: ChatRoomEntity,
         callUseCase: some CallUseCaseProtocol,
@@ -58,7 +55,6 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         tracker: some AnalyticsTracking
     ) {
         self.router = router
-        self.scheduler = scheduler
         self.menuPresenter = menuPresenter
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase

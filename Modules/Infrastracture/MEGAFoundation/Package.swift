@@ -18,8 +18,7 @@ let package = Package(
             targets: ["MEGAFoundation"])
     ],
     dependencies: [
-        .package(path: "../MEGASwift"),
-        .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", from: "1.1.0")
+        .package(path: "../MEGASwift")
     ],
     targets: [
         .target(
@@ -29,8 +28,7 @@ let package = Package(
         .testTarget(
             name: "MEGAFoundationTests",
             dependencies: [
-                "MEGAFoundation",
-                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras")
+                "MEGAFoundation"
             ],
             swiftSettings: settings)
     ],
