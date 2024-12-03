@@ -1,7 +1,6 @@
 import CallKit
 import ChatRepo
 import Combine
-import CombineSchedulers
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -9,7 +8,6 @@ import MEGASwift
 
 protocol CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
-        scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
@@ -27,7 +25,6 @@ protocol CallsCoordinatorFactoryProtocol {
 
 @objc class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
-        scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
@@ -42,7 +39,6 @@ protocol CallsCoordinatorFactoryProtocol {
         callUpdateFactory: CXCallUpdateFactory
     ) -> CallsCoordinator {
         CallsCoordinator(
-            scheduler: scheduler,
             callUseCase: callUseCase,
             callUpdateUseCase: callUpdateUseCase,
             chatRoomUseCase: chatRoomUseCase,
@@ -102,14 +98,11 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     @Atomic private var callSessionUpdateTask: Task<Void, Never>?
     
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
-    
-    let scheduler: AnySchedulerOf<DispatchQueue>
 
     @PreferenceWrapper(key: .presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
     var presentPasscodeLater: Bool
     
     init(
-        scheduler: AnySchedulerOf<DispatchQueue>,
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
@@ -124,7 +117,6 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         callUpdateFactory: CXCallUpdateFactory,
         callKitProviderDelegateFactory: some CallKitProviderDelegateProviding
     ) {
-        self.scheduler = scheduler
         self.callUseCase = callUseCase
         self.callUpdateUseCase = callUpdateUseCase
         self.chatRoomUseCase = chatRoomUseCase

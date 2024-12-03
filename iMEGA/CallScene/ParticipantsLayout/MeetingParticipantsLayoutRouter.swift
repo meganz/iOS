@@ -49,7 +49,6 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
 
         let vm = MeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel, 
-            scheduler: .main,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: .sharedChatSdk)),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),

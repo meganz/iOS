@@ -1,4 +1,3 @@
-import CombineSchedulers
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -1310,7 +1309,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
 
     @MainActor final class Harness: Sendable {
-        let scheduler: AnySchedulerOf<DispatchQueue>
         let callUpdateUseCase: MockCallUpdateUseCase
         let sessionUpdateUseCase: MockSessionUpdateUseCase
         let callManager: MockCallManager
@@ -1318,7 +1316,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let sut: MeetingParticipantsLayoutViewModel
         init(
             containerViewModel: MeetingContainerViewModel? = nil,
-            scheduler: AnySchedulerOf<DispatchQueue> = .main,
             callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
             chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
             captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
@@ -1340,13 +1337,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
             cameraSwitcher: some CameraSwitching = MockCameraSwitcher()
         ) {
-            self.scheduler = scheduler
             self.callUpdateUseCase = callUpdateUseCase
             self.sessionUpdateUseCase = sessionUpdateUseCase
             self.callManager = callManager
             self.sut = .init(
                 containerViewModel: containerViewModel ?? MeetingContainerViewModel(),
-                scheduler: scheduler,
                 chatUseCase: chatUseCase,
                 callUseCase: callUseCase,
                 captureDeviceUseCase: captureDeviceUseCase,

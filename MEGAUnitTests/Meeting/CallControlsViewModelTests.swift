@@ -1,4 +1,3 @@
-import CombineSchedulers
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -387,7 +386,6 @@ final class CallControlsViewModelTests: XCTestCase {
             
             sut = CallControlsViewModel(
                 router: router,
-                scheduler: .immediate,
                 menuPresenter: { actions in menuPresenter(actions) },
                 chatRoom: chatRoom,
                 callUseCase: callUseCase,
