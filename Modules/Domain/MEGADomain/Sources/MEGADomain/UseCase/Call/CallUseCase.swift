@@ -16,7 +16,6 @@ public protocol CallUseCaseProtocol: Sendable {
     func makePeerAModerator(inCall call: CallEntity, peerId: HandleEntity)
     func removePeerAsModerator(inCall call: CallEntity, peerId: HandleEntity)
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
-    func onCallUpdate() -> AnyPublisher<CallEntity, Never>
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
     func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws
     func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws
@@ -85,10 +84,6 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol, 
     
     public func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
         repository.callWaitingRoomUsersUpdate(forCall: call)
-    }
-    
-    public func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
-        repository.onCallUpdate()
     }
     
     public func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {

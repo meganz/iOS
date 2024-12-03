@@ -63,10 +63,6 @@ final class MockCallRepository: CallRepositoryProtocol, @unchecked Sendable {
         Just(CallEntity()).eraseToAnyPublisher()
     }
     
-    func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
-        Just(CallEntity()).eraseToAnyPublisher()
-    }
-    
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
         
     }
