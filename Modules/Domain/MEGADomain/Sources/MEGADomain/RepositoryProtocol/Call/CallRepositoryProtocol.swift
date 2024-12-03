@@ -16,7 +16,6 @@ public protocol CallRepositoryProtocol: Sendable {
     func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
     func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
-    func onCallUpdate() -> AnyPublisher<CallEntity, Never>
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
     func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws
     func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws

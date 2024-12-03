@@ -33,7 +33,6 @@ public final class MockCallUseCase: CallUseCaseProtocol, @unchecked Sendable {
     var chatSession: ChatSessionEntity?
     var participantHandle: HandleEntity = .invalid
     public var callWaitingRoomUsersUpdateSubject = PassthroughSubject<CallEntity, Never>()
-    public var callUpdateSubject: PassthroughSubject<CallEntity, Never>
     var muteParticipantCompletion: Result<Void, GenericErrorEntity>
     public var enableDisableAudioError: GenericErrorEntity?
     
@@ -43,13 +42,11 @@ public final class MockCallUseCase: CallUseCaseProtocol, @unchecked Sendable {
         call: CallEntity? = CallEntity(),
         callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
         answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
-        callUpdateSubject: PassthroughSubject<CallEntity, Never> = .init(),
         muteParticipantCompletion: Result<Void, GenericErrorEntity> = .success(())
     ) {
         self.call = call
         self.callCompletion = callCompletion
         self.answerCallCompletion = answerCallCompletion
-        self.callUpdateSubject = callUpdateSubject
         self.muteParticipantCompletion = muteParticipantCompletion
     }
     
@@ -113,10 +110,6 @@ public final class MockCallUseCase: CallUseCaseProtocol, @unchecked Sendable {
     }
     public func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
         callWaitingRoomUsersUpdateSubject.eraseToAnyPublisher()
-    }
-    
-    public func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
-        callUpdateSubject.eraseToAnyPublisher()
     }
     
     public func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {

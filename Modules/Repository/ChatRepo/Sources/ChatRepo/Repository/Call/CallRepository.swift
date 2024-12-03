@@ -16,7 +16,6 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, @unchecked 
     
     @Atomic private var callUpdateListeners = [CallUpdateListener]()
     @Atomic private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
-    @Atomic private var onCallUpdateListener: OnCallUpdateListener?
     
     @Atomic private var callAvailabilityListener: CallAvailabilityListener?
     @Atomic private var chatOnlineListener: ChatOnlineListener?
@@ -137,14 +136,6 @@ public final class CallRepository: NSObject, CallRepositoryProtocol, @unchecked 
         $callWaitingRoomUsersUpdateListener.mutate { $0 = callWaitingRoomUsersUpdate }
         
         return callWaitingRoomUsersUpdate
-            .monitor
-    }
-    
-    public func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
-        let onCallUpdate = OnCallUpdateListener(sdk: chatSdk)
-        $onCallUpdateListener.mutate { $0 = onCallUpdate }
-        
-        return onCallUpdate
             .monitor
     }
     
@@ -343,29 +334,6 @@ private final class CallWaitingRoomUsersUpdateListener: NSObject, MEGAChatCallDe
            waitingRoomChanges.contains(true) {
             source.send(call.toCallEntity())
         }
-    }
-}
-
-private final class OnCallUpdateListener: NSObject, MEGAChatCallDelegate {
-    private let sdk: MEGAChatSdk
-    private let source = PassthroughSubject<CallEntity, Never>()
-    
-    var monitor: AnyPublisher<CallEntity, Never> {
-        source.eraseToAnyPublisher()
-    }
-    
-    init(sdk: MEGAChatSdk) {
-        self.sdk = sdk
-        super.init()
-        sdk.add(self, queueType: .globalBackground)
-    }
-    
-    deinit {
-        sdk.remove(self)
-    }
-    
-    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
-        source.send(call.toCallEntity())
     }
 }
 
