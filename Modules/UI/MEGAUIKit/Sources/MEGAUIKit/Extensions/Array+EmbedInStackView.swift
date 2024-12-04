@@ -1,7 +1,8 @@
 import UIKit
 
-public extension Array where Iterator.Element: UIView {
+public extension [UIView] {
 
+    @MainActor
     func embedInStackView(
         axis: NSLayoutConstraint.Axis = .horizontal,
         distribution: UIStackView.Distribution = .fill,
@@ -20,6 +21,7 @@ public extension Array where Iterator.Element: UIView {
         return stackView
     }
 
+    @MainActor
     private func embedInHorizontalStackView(
         distribution: UIStackView.Distribution,
         alignment: UIStackView.Alignment = .fill,
@@ -36,6 +38,7 @@ public extension Array where Iterator.Element: UIView {
         )
     }
 
+    @MainActor
     private func embedInVerticalStackView(
         distribution: UIStackView.Distribution,
         alignment: UIStackView.Alignment = .fill,

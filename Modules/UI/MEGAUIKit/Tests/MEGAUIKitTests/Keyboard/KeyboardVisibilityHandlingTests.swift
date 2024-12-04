@@ -33,9 +33,9 @@ final class KeyboardVisibilityHandlerTests: XCTestCase {
 
         notificationCenter.post(name: UIResponder.keyboardWillShowNotification, object: nil)
 
-        waitForExpectations(timeout: 1.0) { _ in
-            XCTAssertEqual(result, true)
-        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(result, true)
     }
 
     func testKeyboardPublisher_whenKeyboardWillHideNotificationIsPosted_shouldPublishFalse() {
@@ -50,8 +50,8 @@ final class KeyboardVisibilityHandlerTests: XCTestCase {
 
         notificationCenter.post(name: UIResponder.keyboardWillHideNotification, object: nil)
 
-        waitForExpectations(timeout: 1.0) { _ in
-            XCTAssertEqual(result, false)
-        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(result, false)
     }
 }
