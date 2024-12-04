@@ -28,6 +28,7 @@ struct InteractionView<Content: View>: UIViewRepresentable {
         view.addSubview(hostView.view)
         view.addConstraints(constraints)
         view.addInteraction(menuInteraction)
+        view.isAccessibilityElement = false
         context.coordinator.interaction = menuInteraction
         context.coordinator.hosting = hostView
         context.coordinator.addGestureRecognizer()
