@@ -34,7 +34,9 @@ struct ScheduleMeetingView: View {
                     ScheduleMeetingCreationInvitationView(viewModel: viewModel)
                     ScheduleMeetingCreationWaitingRoomView(
                         waitingRoomEnabled: $viewModel.waitingRoomEnabled.onChange { enabled in
-                            viewModel.onWaitingRoomEnabledChange(enabled)
+                            Task { @MainActor in
+                                viewModel.onWaitingRoomEnabledChange(enabled)
+                            }
                         },
                         shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom
                     )

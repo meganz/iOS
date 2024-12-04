@@ -12,7 +12,9 @@ struct ScheduleMeetingCreationOpenInviteView: View {
                 .foregroundStyle(TokenColors.Border.subtle.swiftUI)
             
             Toggle(isOn: $viewModel.allowNonHostsToAddParticipantsEnabled.onChange { enabled in
-                viewModel.onAllowNonHostsToAddParticipantsEnabledChange(enabled)
+                Task { @MainActor in
+                    viewModel.onAllowNonHostsToAddParticipantsEnabledChange(enabled)
+                }
             }) {
                 Text(Strings.Localizable.Meetings.ScheduleMeeting.openInvite)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)

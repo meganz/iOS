@@ -88,11 +88,11 @@ public struct ActionSheetButton: View, Hashable {
         self.action = action
     }
     
-    public static func == (lhs: ActionSheetButton, rhs: ActionSheetButton) -> Bool {
+    nonisolated public static func == (lhs: ActionSheetButton, rhs: ActionSheetButton) -> Bool {
         lhs.icon == rhs.icon && lhs.title == rhs.title && lhs.subtitle == rhs.subtitle
     }
     
-    public func hash(into hasher: inout Hasher) {
+    nonisolated public func hash(into hasher: inout Hasher) {
         hasher.combine(icon)
         hasher.combine(title)
         hasher.combine(subtitle)

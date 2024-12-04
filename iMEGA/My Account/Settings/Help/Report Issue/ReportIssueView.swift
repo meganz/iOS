@@ -24,7 +24,9 @@ struct ReportIssueView: View {
                 TextEditorView(
                     text: $viewModel.details
                         .onChange({ _ in
-                            viewModel.isNotReachingMinimumCharacter = false
+                            Task { @MainActor in
+                                viewModel.isNotReachingMinimumCharacter = false
+                            }
                         }),
                     placeholder: Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
                 )

@@ -27,6 +27,7 @@ public struct UIButtonWrapper: UIViewRepresentable {
     
     public func updateUIView(_ uiView: UIButton, context: Self.Context) {}
     
+    @MainActor
     public final class Coordinator: NSObject {
         var parent: UIButtonWrapper
         var uiButton = UIButton()

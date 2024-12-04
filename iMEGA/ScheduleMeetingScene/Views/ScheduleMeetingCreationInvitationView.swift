@@ -26,7 +26,9 @@ struct ScheduleMeetingCreationInvitationView: View {
                     .padding(.leading)
                 
                 Toggle(isOn: $viewModel.calendarInviteEnabled.onChange { enabled in
-                    viewModel.onCalendarInviteEnabledChange(enabled)
+                    Task { @MainActor in
+                        viewModel.onCalendarInviteEnabledChange(enabled)
+                    }
                 }) {
                     Text(Strings.Localizable.Meetings.ScheduleMeeting.sendCalendarInvite)
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)

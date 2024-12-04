@@ -381,8 +381,10 @@ public class SearchResultsViewModel: ObservableObject {
                         title: action.title,
                         imageName: action.imageName,
                         handler: { [weak self] in
-                            self?.actionPressedOn(result)
-                            action.handler()
+                            Task { @MainActor in
+                                self?.actionPressedOn(result)
+                                action.handler()
+                            }
                         }
                     )
                 }),
