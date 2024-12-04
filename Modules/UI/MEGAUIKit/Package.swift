@@ -1,6 +1,11 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
+
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "MEGAUIKit",
@@ -20,10 +25,13 @@ let package = Package(
         .target(
             name: "MEGAUIKit",
             dependencies: ["MEGAUI", "MEGASwift"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+            swiftSettings: settings
+        ),
         .testTarget(
             name: "MEGAUIKitTests",
             dependencies: ["MEGAUIKit"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
-    ]
+            swiftSettings: settings
+        )
+    ],
+    swiftLanguageModes: [.v6]
 )
