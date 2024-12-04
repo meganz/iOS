@@ -711,6 +711,8 @@
     if (self.presentInviteContactVCLater) {
         [self presentInviteContactCustomAlertViewController];
     }
+    
+    [self initializeCameraUploadsNode];
 }
 
 - (void)processActionsAfterSetRootVC {

@@ -44,6 +44,8 @@
     [self registerCustomCells];
     
     self.chatReady = MEGAChatSdk.shared.initState == MEGAChatInitOnlineSession && MEGAChatSdk.shared.activeChatListItems.size == 0;
+    
+    [self initializeCameraUploadsNode];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
