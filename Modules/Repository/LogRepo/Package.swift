@@ -1,10 +1,9 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 import PackageDescription
 
 let settings: [SwiftSetting] = [
     .unsafeFlags(["-warnings-as-errors"]),
-    .enableExperimentalFeature("ExistentialAny"),
-    .enableExperimentalFeature("StrictConcurrency=targeted")
+    .enableExperimentalFeature("ExistentialAny")
 ]
 
 let package = Package(
@@ -15,7 +14,7 @@ let package = Package(
     products: [
         .library(
             name: "LogRepo",
-            targets: ["LogRepo"]),
+            targets: ["LogRepo"])
     ],
     dependencies: [
         .package(path: "../../DataSource/MEGAChatSdk"),
@@ -33,5 +32,6 @@ let package = Package(
             ],
             swiftSettings: settings
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
