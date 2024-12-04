@@ -66,14 +66,20 @@ struct WaitingRoomView: View {
         VStack(spacing: 0) {
             WaitingRoomControlsView(
                 isVideoEnabled: $viewModel.isVideoEnabled.onChange { enable in
-                    viewModel.enableLocalVideo(enabled: enable)
+                    Task { @MainActor in
+                        viewModel.enableLocalVideo(enabled: enable)
+                    }
                 },
                 isMicrophoneMuted: $viewModel.isMicrophoneMuted.onChange { mute in
-                    viewModel.muteLocalMicrophone(mute: mute)
+                    Task { @MainActor in
+                        viewModel.muteLocalMicrophone(mute: mute)
+                    }
                 },
                 isSpeakerEnabled: $viewModel.isSpeakerEnabled.onChange { enable in
-                    viewModel.enableLoudSpeaker(enabled: enable)
-                }, 
+                    Task { @MainActor in
+                        viewModel.enableLoudSpeaker(enabled: enable)
+                    }
+                },
                 speakerOnIcon: $viewModel.speakerOnIcon, 
                 isBluetoothAudioRouteAvailable: $viewModel.isBluetoothAudioRouteAvailable
             )

@@ -10,7 +10,9 @@ struct ScheduleMeetingCreationPropertiesView: View {
             VStack(spacing: 0) {
                 ScheduleMeetingCreationDateAndRecurrenceView(viewModel: viewModel)
                 Toggle(isOn: $viewModel.meetingLinkEnabled.onChange { enabled in
-                    viewModel.onMeetingLinkEnabledChange(enabled)
+                    Task { @MainActor in
+                        viewModel.onMeetingLinkEnabledChange(enabled)
+                    }
                 }) {
                     Text(Strings.Localizable.Meetings.ScheduleMeeting.link)
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)

@@ -1,7 +1,7 @@
 import SwiftUI
 
 public struct OffsetPreferenceKey: PreferenceKey {
-    public static var defaultValue = CGFloat.zero
+    public static let defaultValue = CGFloat.zero
     
     public static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value += nextValue()

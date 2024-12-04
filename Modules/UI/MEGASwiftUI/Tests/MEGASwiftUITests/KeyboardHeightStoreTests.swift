@@ -31,14 +31,17 @@ final class KeyboardHeightStoreTests: XCTestCase {
         wait(for: [exp], timeout: 0.5)
     }
     
+    @MainActor
     func testUpdateBottomPadding_keyboardIsHidden_shouldBeZero() async {
         await testBottomPadding(newKeyboardHeight: 0)
     }
     
+    @MainActor
     func testUpdateBottomPadding_keyboardIsActive_shouldBeZero() async {
         await testBottomPadding(newKeyboardHeight: sampleActiveKeyboardHeight)
     }
     
+    @MainActor
     private func testBottomPadding(
         newKeyboardHeight: CGFloat,
         file: StaticString = #filePath,
@@ -57,7 +60,7 @@ final class KeyboardHeightStoreTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        await sut.updateBottomPadding(
+        sut.updateBottomPadding(
             bottomViewInset: bottomViewInset,
             newKeyboardHeight: newKeyboardHeight
         )

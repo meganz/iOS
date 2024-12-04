@@ -13,7 +13,9 @@ struct ChatRoomLinkView: View {
                 image: nil,
                 text: Strings.Localizable.Meetings.Info.meetingLink,
                 isOn: $viewModel.isMeetingLinkOn.onChange { isMeetingLinkOn in
-                    viewModel.update(enableMeetingLinkTo: isMeetingLinkOn)
+                    Task { @MainActor in
+                        viewModel.update(enableMeetingLinkTo: isMeetingLinkOn)
+                    }
                 }
             )
             .disabled(!viewModel.isMeetingLinkUIEnabled)

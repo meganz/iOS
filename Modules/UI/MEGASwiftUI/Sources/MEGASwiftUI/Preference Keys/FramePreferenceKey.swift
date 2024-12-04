@@ -1,7 +1,7 @@
 import SwiftUI
 
 public struct FramePreferenceKey: PreferenceKey {
-    public static var defaultValue = CGRect.zero
+    public static let defaultValue = CGRect.zero
     
     public static func reduce(value: inout CGRect, nextValue: () -> CGRect) { }
 }

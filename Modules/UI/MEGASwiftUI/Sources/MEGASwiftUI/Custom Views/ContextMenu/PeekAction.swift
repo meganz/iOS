@@ -1,11 +1,11 @@
 import SwiftUI
 import UIKit
 
-public struct PeekAction {
+public struct PeekAction: Sendable {
     public  init(
         title: String,
         imageName: String,
-        handler: @escaping () -> Void
+        handler: @Sendable @escaping () -> Void
     ) {
         self.title = title
         self.imageName = imageName
@@ -14,10 +14,11 @@ public struct PeekAction {
     
     public let title: String
     public let imageName: String
-    public let handler: () -> Void
+    public let handler: @Sendable () -> Void
 }
 
 extension Array where Element == PeekAction {
+    @MainActor
     public var toUIActions: [UIAction] {
         self.map { peekAction in
             UIAction(
