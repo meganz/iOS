@@ -81,6 +81,14 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if ([identifier isEqual:@"showRubbishBinPage"] && [self isNewFileManagementSettingsEnabled]) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
 #pragma mark - Private
 
 - (void)setupColors {
@@ -260,7 +268,9 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         }
 
         case FileManagementTableSectionOnMEGA:
+            [self showRubbishBinSettings];
             break;
+        
         case FileManagementTableSectionFileVersioning:
             [[FileVersioningViewRouter.alloc initWithNavigationController:self.navigationController] start];
 

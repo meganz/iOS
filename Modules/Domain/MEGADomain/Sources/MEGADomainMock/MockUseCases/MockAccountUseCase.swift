@@ -13,6 +13,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _bandwidthOverquotaDelay: Int64
     private let _currentUser: UserEntity?
     private let _isGuest: Bool
+    private let _isProAccount: Bool
     private let _isNewAccount: Bool
     private let _accountCreationDate: Date?
     private let _isLoggedIn: Bool
@@ -42,6 +43,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
         isGuest: Bool = false,
+        isProAccount: Bool = false,
         isNewAccount: Bool = false,
         isLoggedIn: Bool = true,
         hasValidProAccount: Bool = false,
@@ -79,6 +81,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
+        _isProAccount = isProAccount
         _isNewAccount = isNewAccount
         _isLoggedIn = isLoggedIn
         _hasValidProAccount = hasValidProAccount
@@ -122,6 +125,10 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     
     public var isGuest: Bool {
         _isGuest
+    }
+    
+    public var isProAccount: Bool {
+        _isProAccount
     }
     
     public var isNewAccount: Bool {

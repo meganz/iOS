@@ -6,6 +6,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     // MARK: - User Authentication Details
     let currentUser: UserEntity?
     public let isGuest: Bool
+    public let isProAccount: Bool
+    
     private let _isLoggedIn: Bool
     private let _myEmail: String?
     private let _isNewAccount: Bool
@@ -59,6 +61,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public init(
         currentUser: UserEntity? = nil,
         isGuest: Bool = false,
+        isProAccount: Bool = false,
         isNewAccount: Bool = false,
         accountCreationDate: Date? = nil,
         myEmail: String? = nil,
@@ -100,6 +103,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
+        self.isProAccount = isProAccount
+        
         _isLoggedIn = isLoggedIn
         _myEmail = myEmail
         _isNewAccount = isNewAccount
@@ -120,6 +125,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
         _bandwidthOverquotaDelay = bandwidthOverquotaDelay
+        
         self.nodesCount = nodesCount
         self.contactsRequestsCount = contactsRequestsCount
         self.unseenUserAlertsCount = unseenUserAlertsCount

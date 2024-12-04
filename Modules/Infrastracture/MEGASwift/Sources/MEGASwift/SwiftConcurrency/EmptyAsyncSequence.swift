@@ -1,6 +1,6 @@
 import Foundation
 
-/// An async sequence that emits emits no items.
+/// An async sequence that emits no items.
 public struct EmptyAsyncSequence<Element>: AsyncSequence {
     public init() { }
     

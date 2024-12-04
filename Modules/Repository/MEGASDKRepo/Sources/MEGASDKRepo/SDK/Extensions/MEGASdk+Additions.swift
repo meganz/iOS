@@ -47,11 +47,17 @@ public extension MEGASdk {
     
     @objc func removeMEGARequestDelegateAsync(_ delegate: any MEGARequestDelegate & Sendable) {
         sdkDelegateQueue.async { [weak self] in
-            self?.add(delegate)
+            self?.remove(delegate)
         }
     }
     
     @objc func addMEGAGlobalDelegateAsync(_ delegate: any MEGAGlobalDelegate & Sendable, queueType: ListenerQueueType) {
+        sdkDelegateQueue.async { [weak self] in
+            self?.add(delegate, queueType: queueType)
+        }
+    }
+    
+    @objc func addMEGARequestDelegateAsync(_ delegate: any MEGARequestDelegate & Sendable, queueType: ListenerQueueType) {
         sdkDelegateQueue.async { [weak self] in
             self?.add(delegate, queueType: queueType)
         }

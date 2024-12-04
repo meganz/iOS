@@ -8,21 +8,21 @@ extension InterfaceStyle {
     }
 }
 
-enum MEGAButtonStyle {
+enum LegacyMEGAButtonStyle {
     case segmentTitleButton
     case searchControllerCancel
 }
 
 protocol ButtonStyleFactory {
 
-    func styler(of buttonStyle: MEGAButtonStyle) -> ButtonStyler
+    func styler(of buttonStyle: LegacyMEGAButtonStyle) -> ButtonStyler
 }
 
 private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
     let colorFactory: any ColorFactory
     let textStyleFactory: any TextStyleFactory
 
-    func styler(of buttonStyle: MEGAButtonStyle) -> ButtonStyler {
+    func styler(of buttonStyle: LegacyMEGAButtonStyle) -> ButtonStyler {
 
         switch buttonStyle {
         case .segmentTitleButton:
@@ -43,7 +43,7 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
         }
     }
 
-    func buttonColorStyle(of buttonStyle: MEGAButtonStyle) -> ButtonStatedStyle<ColorStyle> {
+    func buttonColorStyle(of buttonStyle: LegacyMEGAButtonStyle) -> ButtonStatedStyle<ColorStyle> {
         switch buttonStyle {
         case .segmentTitleButton:
             let normalTextColor = colorFactory.textColor(.secondary).asTextColorStyle
@@ -61,7 +61,7 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
         }
     }
 
-    func buttonTextStyle(of buttonStyle: MEGAButtonStyle) -> ButtonStatedStyle<TextStyle> {
+    func buttonTextStyle(of buttonStyle: LegacyMEGAButtonStyle) -> ButtonStatedStyle<TextStyle> {
         switch buttonStyle {
         case .segmentTitleButton:
             return ButtonStatedStyle<TextStyle>(stated: [
@@ -77,7 +77,7 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
         }
     }
 
-    func buttonBackgroundStyle(of buttonStyle: MEGAButtonStyle) -> ButtonStatedStyle<ColorStyle> {
+    func buttonBackgroundStyle(of buttonStyle: LegacyMEGAButtonStyle) -> ButtonStatedStyle<ColorStyle> {
         switch buttonStyle {
         case .segmentTitleButton:
             let clearColor = colorFactory.independent(.clear).asBackgroundColorStyle

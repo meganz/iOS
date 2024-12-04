@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGASDKRepo
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class RubbishBinRepositoryTests: XCTestCase {
@@ -17,7 +18,7 @@ final class RubbishBinRepositoryTests: XCTestCase {
                                         MockNode(handle: 8, name: "SyncDebris3Child", nodeType: .folder, parentHandle: 4, nodePath: "//bin/SyncDebris"),
                                         MockNode(handle: 9, name: "SyncDebris3Child", nodeType: .folder, parentHandle: 8, nodePath: "//bin/SyncDebris"),
                                         MockNode(handle: 10, name: "SyncDebris3Child", nodeType: .folder, parentHandle: 9, nodePath: "//bin/SyncDebris")]
-        
+    
     override func setUpWithError() throws {
         var testNodesArray = syncDebrisNodes
         testNodesArray.append(contentsOf: [rubbishBinNode, rubbishBinChildNode])
@@ -25,6 +26,7 @@ final class RubbishBinRepositoryTests: XCTestCase {
         sdk = MockSdk(nodes: testNodesArray,
                       syncDebrisNodes: syncDebrisNodes,
                       rubbishBinNode: rubbishBinNode)
+        
         repo = RubbishBinRepository(sdk: sdk)
     }
     

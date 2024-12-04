@@ -60,7 +60,7 @@
     
     self.removeFilesOlderThanLabel.text = LocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.");
     
-    [MEGASdk.shared getRubbishBinAutopurgePeriodWithDelegate:self];
+     [MEGASdk.shared getRubbishBinAutopurgePeriodWithDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

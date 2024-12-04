@@ -5,6 +5,7 @@ public protocol AccountUseCaseProtocol: Sendable {
     // User authentication status and identifiers
     var currentUserHandle: HandleEntity? { get }
     var isGuest: Bool { get }
+    var isProAccount: Bool { get }
     var isNewAccount: Bool { get }
     var myEmail: String? { get }
     /// Indicates whether the current account has an active subscription that is not expired.
@@ -85,6 +86,10 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
 
     public var isGuest: Bool {
         repository.isGuest
+    }
+    
+    public var isProAccount: Bool {
+        repository.isProAccount
     }
 
     public var isNewAccount: Bool {
