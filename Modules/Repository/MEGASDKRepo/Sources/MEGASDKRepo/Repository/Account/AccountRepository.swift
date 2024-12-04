@@ -29,6 +29,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         currentUserSource.currentUserHandle
     }
     
+    public var isProAccount: Bool {
+        !isAccountType(.free)
+    }
+    
     public var isGuest: Bool {
         currentUserSource.isGuest
     }

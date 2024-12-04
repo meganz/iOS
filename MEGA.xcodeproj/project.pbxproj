@@ -754,6 +754,8 @@
 		6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */; };
 		6D01A3CA2C084F4400089BA8 /* NodeInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */; };
 		6D01A3D12C097E3200089BA8 /* SharedItemsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */; };
+		6D0D7F6C2CF919CF00817D62 /* RubbishBinSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0D7F6B2CF919CF00817D62 /* RubbishBinSettingView.swift */; };
+		6D0D7F6E2CF91A1500817D62 /* RubbishBinSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0D7F6D2CF91A1500817D62 /* RubbishBinSettingViewModel.swift */; };
 		6D1272B62B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */; };
 		6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
@@ -3492,6 +3494,8 @@
 		6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLocalisationTests.swift; sourceTree = "<group>"; };
 		6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModelTests.swift; sourceTree = "<group>"; };
 		6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModelTests.swift; sourceTree = "<group>"; };
+		6D0D7F6B2CF919CF00817D62 /* RubbishBinSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingView.swift; sourceTree = "<group>"; };
+		6D0D7F6D2CF91A1500817D62 /* RubbishBinSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingViewModel.swift; sourceTree = "<group>"; };
 		6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordStrengthIndicatorView+Additions.swift"; sourceTree = "<group>"; };
 		6D18B4D02B44C75600E4ABA8 /* MEGAMacro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAMacro; sourceTree = "<group>"; };
 		6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCallsSettingsView.swift; sourceTree = "<group>"; };
@@ -7434,6 +7438,7 @@
 			isa = PBXGroup;
 			children = (
 				A873E85526E21DF700CBB174 /* File versioning */,
+				6D0D7F6A2CF9199B00817D62 /* RubbishBin */,
 				9D3563CD28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift */,
 				94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */,
 				5B00B6E6210745BF0076D5BB /* FileManagementTableViewController.h */,
@@ -8407,6 +8412,15 @@
 				6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */,
 			);
 			path = NodeInfo;
+			sourceTree = "<group>";
+		};
+		6D0D7F6A2CF9199B00817D62 /* RubbishBin */ = {
+			isa = PBXGroup;
+			children = (
+				6D0D7F6B2CF919CF00817D62 /* RubbishBinSettingView.swift */,
+				6D0D7F6D2CF91A1500817D62 /* RubbishBinSettingViewModel.swift */,
+			);
+			path = RubbishBin;
 			sourceTree = "<group>";
 		};
 		6D39A57729EF455B00348D1C /* ViewModel */ = {
@@ -15406,6 +15420,8 @@
 				2F09867A2511BA8900E959C2 /* RichPreviewDialogView.swift in Sources */,
 				C4EDB73826655229006A114F /* RoundedView.swift in Sources */,
 				94B09E692B84CC87007D6B84 /* RubbishBinMenuDelegateHandler.swift in Sources */,
+				6D0D7F6C2CF919CF00817D62 /* RubbishBinSettingView.swift in Sources */,
+				6D0D7F6E2CF91A1500817D62 /* RubbishBinSettingViewModel.swift in Sources */,
 				B52021782A8BA5F8001B66C7 /* RubbishBinTableViewController+Additions.swift in Sources */,
 				5B5A983C212EF29500FDBC79 /* RubbishBinTableViewController.m in Sources */,
 				B68BAEC6221DEB4E00FF6FCD /* SavedIdentifierParser.m in Sources */,

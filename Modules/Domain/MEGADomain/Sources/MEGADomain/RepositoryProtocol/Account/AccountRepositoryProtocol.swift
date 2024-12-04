@@ -7,6 +7,7 @@ public protocol AccountRepositoryProtocol: Sendable {
     var isGuest: Bool { get }
     var isNewAccount: Bool { get }
     var myEmail: String? { get }
+    var isProAccount: Bool { get }
 
     // Account characteristics
     var accountCreationDate: Date? { get }

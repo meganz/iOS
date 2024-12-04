@@ -1,12 +1,14 @@
-public protocol RubbishBinUseCaseProtocol {
+import MEGASwift
+
+public protocol RubbishBinUseCaseProtocol: Sendable {
     func isSyncDebrisNode(_ node: NodeEntity) -> Bool
-    func cleanRubbishBin() 
+    func cleanRubbishBin()
 }
 
-public struct RubbishBinUseCase<T: RubbishBinRepositoryProtocol>: RubbishBinUseCaseProtocol {
-    private let rubbishBinRepository: T
+public struct RubbishBinUseCase<R: RubbishBinRepositoryProtocol>: RubbishBinUseCaseProtocol {
+    private let rubbishBinRepository: R
     
-    public init(rubbishBinRepository: T) {
+    public init(rubbishBinRepository: R) {
         self.rubbishBinRepository = rubbishBinRepository
     }
     
