@@ -53,8 +53,12 @@ extension NodeTagsCellController: UITableViewDataSource {
 extension NodeTagsCellController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let controller else { return }
-        let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
-        addTagsRouter.start()
+        if viewModel.isExpiredBusinessOrProFlexiAccount {
+            showFeatureUnavailabilityAlert(with: viewModel.featureUnavailableDescription, in: controller)
+        } else {
+            let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
+            addTagsRouter.start()
+        }
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -63,5 +67,22 @@ extension NodeTagsCellController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         nil
+    }
+}
+
+private extension NodeTagsCellController {
+    func showFeatureUnavailabilityAlert(with description: String, in controller: UIViewController) {
+        let alertController = UIAlertController(
+            title: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.FeatureUnavailable.Popup.title,
+            message: description,
+            preferredStyle: .alert
+        )
+
+        let buttonAction = UIAlertAction(
+            title: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.FeatureUnavailable.Popup.buttonTitle,
+            style: .cancel
+        )
+        alertController.addAction(buttonAction)
+        controller.present(alertController, animated: true)
     }
 }

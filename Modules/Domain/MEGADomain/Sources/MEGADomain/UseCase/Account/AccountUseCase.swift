@@ -40,7 +40,15 @@ public protocol AccountUseCaseProtocol: Sendable {
     /// Check if the current account has an active Pro Flexi account
     /// - Returns: `true` if the account is Pro Flexi and neither expired nor in grace period, `false` otherwise.
     func hasActiveProFlexiAccount() -> Bool
-    
+
+    /// Check if the current account has a Business account plan that is expired
+    /// - Returns: `true` if the account is Business account that is expired, `false` otherwise.
+    func hasExpiredBusinessAccount() -> Bool
+
+    /// Check if the current account has a Pro Flexi plan that is expired
+    /// - Returns: `true` if the account is Pro flexi that is expired, `false` otherwise.
+    func hasExpiredProFlexiAccount() -> Bool
+
     /// Check if the current Pro Plan is associated with any subscription.
     /// - Returns: `true` if the current Pro Plan is associated with an active subscription.
     func isBilledProPlan() -> Bool
@@ -194,7 +202,15 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     public func hasActiveProFlexiAccount() -> Bool {
         isValidProFlexiAccount() && !repository.isInGracePeriod()
     }
-    
+
+    public func hasExpiredBusinessAccount() -> Bool {
+        repository.isAccountType(.business) && repository.isExpiredAccount()
+    }
+
+    public func hasExpiredProFlexiAccount() -> Bool {
+        repository.isAccountType(.proFlexi) && repository.isExpiredAccount()
+    }
+
     // MARK: - Account operations
     public func contacts() -> [UserEntity] {
         repository.contacts()

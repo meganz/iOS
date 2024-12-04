@@ -432,9 +432,19 @@ final class NodeInfoViewController: UITableViewController {
         sections.append(descriptionSection)
 
         if viewModel.shouldShowNodeTags {
-            let viewModel = NodeTagsCellControllerModel(node: node.toNodeEntity())
-            let cellController =  NodeTagsCellController(controller: self, viewModel: viewModel)
-            sections.append(.tags(cellController))
+            sections.append(
+                .tags(
+                    NodeTagsCellController(
+                        controller: self,
+                        viewModel: NodeTagsCellControllerModel(
+                            node: node.toNodeEntity(),
+                            accountUseCase: AccountUseCase(
+                                repository: AccountRepository.newRepo
+                            )
+                        )
+                    )
+                )
+            )
         }
 
         if viewModel.nodeInfoLocationViewModel != nil {
