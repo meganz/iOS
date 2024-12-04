@@ -1773,6 +1773,8 @@
 		B513F0452B7E1CBC002DC6F7 /* NotificationsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B513F0442B7E1CBB002DC6F7 /* NotificationsViewRouter.swift */; };
 		B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514C5942C730F5000659719 /* MockLinkManager.swift */; };
 		B51616492B83361900C6E842 /* Notifications in Frameworks */ = {isa = PBXBuildFile; productRef = B51616482B83361900C6E842 /* Notifications */; };
+		B51AA81F2CFFEA6F001B0AF9 /* CameraUploadNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */; };
+		B51AA8232CFFEECF001B0AF9 /* ShareDestinationTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AA8222CFFEEC9001B0AF9 /* ShareDestinationTableViewController+Additions.swift */; };
 		B51C370A2CAEB17C00AAEC84 /* MEGARecentActionBucket+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C37092CAEB17C00AAEC84 /* MEGARecentActionBucket+Addition.swift */; };
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
 		B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */; };
@@ -4493,6 +4495,7 @@
 		B5120F4B2A16053A00A56354 /* ShareAttachmentCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellViewModel.swift; sourceTree = "<group>"; };
 		B513F0442B7E1CBB002DC6F7 /* NotificationsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewRouter.swift; sourceTree = "<group>"; };
 		B514C5942C730F5000659719 /* MockLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLinkManager.swift; sourceTree = "<group>"; };
+		B51AA8222CFFEEC9001B0AF9 /* ShareDestinationTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareDestinationTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B51C37092CAEB17C00AAEC84 /* MEGARecentActionBucket+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGARecentActionBucket+Addition.swift"; sourceTree = "<group>"; };
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
 		B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+SharedItem.swift"; sourceTree = "<group>"; };
@@ -10070,6 +10073,7 @@
 				949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */,
 				949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */,
 				94598D741F0CD53A00B57144 /* Share.storyboard */,
+				B51AA8222CFFEEC9001B0AF9 /* ShareDestinationTableViewController+Additions.swift */,
 				B56675992A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift */,
 				77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */,
 				77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */,
@@ -15901,6 +15905,7 @@
 				942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				0EB584822C3CC0AD00EEBD99 /* BrowserViewModel.swift in Sources */,
+				B51AA81F2CFFEA6F001B0AF9 /* CameraUploadNodeAccess+Additions.swift in Sources */,
 				83A2894F27F5BC070063CA8C /* CancellableTransfer+Shared.swift in Sources */,
 				83BA006B2798709200498493 /* CancellableTransfer.swift in Sources */,
 				83A2895027F5C04B0063CA8C /* CancellableTransferControllerWrapper.swift in Sources */,
@@ -16036,6 +16041,7 @@
 				B5120F4A2A16050A00A56354 /* ShareAttachmentCellView.swift in Sources */,
 				B5120F4C2A16053A00A56354 /* ShareAttachmentCellViewModel.swift in Sources */,
 				B56717502A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift in Sources */,
+				B51AA8232CFFEECF001B0AF9 /* ShareDestinationTableViewController+Additions.swift in Sources */,
 				B566759A2A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift in Sources */,
 				77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */,
 				83A4E47727F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift in Sources */,

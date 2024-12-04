@@ -5,6 +5,10 @@ import MEGARepo
 import MEGASDKRepo
 
 extension AppDelegate {
+    @objc func initializeCameraUploadsNode() {
+        CameraUploadNodeAccess.shared.loadNode()
+    }
+    
     @objc func postNodeUpdatesNotifications(for nodeList: MEGANodeList) {
         let nodes = nodeList.toNodeArray()
         postFavouriteUpdatesNotification(for: nodes)

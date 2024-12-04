@@ -20,10 +20,11 @@ import MEGASDKRepo
             if MyChatFilesFolderNodeAccess.shared.isTargetNode(for: node) {
                 return UIImage.folderChat
             }
-#if MAIN_APP_TARGET
             if CameraUploadNodeAccess.shared.isTargetNode(for: node) {
                 return UIImage.filetypeFolderCamera
-            } else if BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupDeviceFolder(node.toNodeEntity()) {
+            }
+#if MAIN_APP_TARGET
+            if BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupDeviceFolder(node.toNodeEntity()) {
                 return backupDeviceIcon(for: node)
             }
 #endif
