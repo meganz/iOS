@@ -18,7 +18,8 @@ extension View {
                 sourcePreview: {
                     // We should disable accessibility for source sourcePreview
                     // otherwise the accessibility labels will be duplicated
-                    sourcePreview().accessibilityHidden(true)
+                    sourcePreview()
+                        .accessibilityElement(children: .ignore)
                 },
                 contentPreviewProvider: contentPreviewProvider,
                 didTapPreview: didTapPreview,
