@@ -13,18 +13,18 @@ public protocol RubbishBinSettingsUpdateProviderProtocol: Sendable {
 
 public struct RubbishBinSettingsUpdateProvider: RubbishBinSettingsUpdateProviderProtocol {
     private let sdk: MEGASdk
-    private let isProUser: Bool
+    private let isPaidAccount: Bool
     private let serverSideRubbishBinAutopurgeEnabled: Bool
     
-    public init(sdk: MEGASdk = MEGASdk.sharedSdk, isProUser: Bool, serverSideRubbishBinAutopurgeEnabled: Bool) {
+    public init(sdk: MEGASdk = MEGASdk.sharedSdk, isPaidAccount: Bool, serverSideRubbishBinAutopurgeEnabled: Bool) {
         self.sdk = sdk
-        self.isProUser = isProUser
+        self.isPaidAccount = isPaidAccount
         self.serverSideRubbishBinAutopurgeEnabled = serverSideRubbishBinAutopurgeEnabled
     }
     
     public var onRubbishBinSettingsRequestFinish: AnyAsyncSequence<Result<RubbishBinSettingsEntity, any Error>> {
         AsyncStream { continuation in
-            let delegate = RubbishBingSettingsRequestDelegate(isProUser: isProUser,
+            let delegate = RubbishBingSettingsRequestDelegate(isPaidAccount: isPaidAccount,
                                                               serverSideRubbishBinAutopurgeEnabled: serverSideRubbishBinAutopurgeEnabled, onRequestFinish: { requestResult in
                 continuation.yield(requestResult)
             })
@@ -32,7 +32,7 @@ public struct RubbishBinSettingsUpdateProvider: RubbishBinSettingsUpdateProvider
             sdk.getRubbishBinAutopurgePeriod(with: delegate)
             
             continuation.onTermination = { @Sendable _ in
-                sdk.removeMEGARequestDelegateAsync(delegate )
+                sdk.removeMEGARequestDelegateAsync(delegate)
             }
         }
         .eraseToAnyAsyncSequence()
@@ -40,15 +40,15 @@ public struct RubbishBinSettingsUpdateProvider: RubbishBinSettingsUpdateProvider
 }
 
 private final class RubbishBingSettingsRequestDelegate: NSObject, Sendable {
-    private let isProUser: Bool
+    private let isPaidAccount: Bool
     private let serverSideRubbishBinAutopurgeEnabled: Bool
     private let onRequestFinish: @Sendable (Result<RubbishBinSettingsEntity, any Error>) -> Void
     
-    init(isProUser: Bool,
+    init(isPaidAccount: Bool,
          serverSideRubbishBinAutopurgeEnabled: Bool,
          onRequestFinish: @Sendable @escaping (Result<RubbishBinSettingsEntity, any Error>) -> Void = { _ in }) {
         self.onRequestFinish = onRequestFinish
-        self.isProUser = isProUser
+        self.isPaidAccount = isPaidAccount
         self.serverSideRubbishBinAutopurgeEnabled = serverSideRubbishBinAutopurgeEnabled
         
         super.init()
@@ -61,7 +61,7 @@ extension RubbishBingSettingsRequestDelegate: MEGARequestDelegate {
                 && (request.paramType == MEGAUserAttribute.rubbishTime.rawValue ) else { return }
         
         if error.type == .apiENoent {
-            let rubbishBinAutopurgePeriod = isProUser ? 90 : 14
+            let rubbishBinAutopurgePeriod = isPaidAccount ? 90 : 14
             let result = RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: Int64(rubbishBinAutopurgePeriod),
                                                   rubbishBinCleaningSchedulerEnabled: serverSideRubbishBinAutopurgeEnabled)
             

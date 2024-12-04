@@ -6,7 +6,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     // MARK: - User Authentication Details
     let currentUser: UserEntity?
     public let isGuest: Bool
-    public let isProAccount: Bool
+    public let isPaidAccount: Bool
     
     private let _isLoggedIn: Bool
     private let _myEmail: String?
@@ -103,7 +103,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
-        self.isProAccount = isProAccount
+        self.isPaidAccount = isProAccount
         
         _isLoggedIn = isLoggedIn
         _myEmail = myEmail

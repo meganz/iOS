@@ -10,7 +10,7 @@ struct RubbishBinSettingView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            if !viewModel.isProAccount {
+            if !viewModel.isPaidAccount {
                 MEGABanner(
                     subtitle: "Rubbish bin is automatically emptied every \(viewModel.selectedAutoPurgePeriod.displayName). If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.",
                     buttonText: "Upgrade",
@@ -32,7 +32,7 @@ struct RubbishBinSettingView: View {
                 }
                 .bottomSheet(
                     isPresented: $viewModel.isBottomSheetPresented,
-                    detents: [.fixed(viewModel.isProAccount ? 540 : 230)],
+                    detents: [.fixed(viewModel.isPaidAccount ? 540 : 230)],
                     showDragIndicator: true,
                     cornerRadius: TokenRadius.large) {
                         autoPurgePeriodListView

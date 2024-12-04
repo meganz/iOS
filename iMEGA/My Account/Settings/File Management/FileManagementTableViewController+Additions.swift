@@ -35,7 +35,7 @@ extension FileManagementTableViewController {
         
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         let rubbishBinRepo = RubbishBinRepository.newRepo
-        let rubbishBinSettingsUpdatesProvider = RubbishBinSettingsUpdateProvider(isProUser: accountUseCase.isProAccount, serverSideRubbishBinAutopurgeEnabled: rubbishBinRepo.serverSideRubbishBinAutopurgeEnabled())
+        let rubbishBinSettingsUpdatesProvider = RubbishBinSettingsUpdateProvider(isPaidAccount: accountUseCase.isPaidAccount, serverSideRubbishBinAutopurgeEnabled: rubbishBinRepo.serverSideRubbishBinAutopurgeEnabled())
         let rubbishBinSettingRepo = RubbishBinSettingsRepository(rubbishBinSettingsUpdatesProvider: rubbishBinSettingsUpdatesProvider)
         let rubbishBinSettingsUseCase = RubbishBinSettingsUseCase(rubbishBinSettingsRepository: rubbishBinSettingRepo)
         let hostingVC = UIHostingController(rootView: RubbishBinSettingView(viewModel: RubbishBinSettingViewModel(accountUseCase: accountUseCase, rubbishBinSettingsUseCase: rubbishBinSettingsUseCase)))

@@ -1,0 +1,3 @@
+import Testing
+
+struct RubbishBinSettingsUpdateProviderTests {}
