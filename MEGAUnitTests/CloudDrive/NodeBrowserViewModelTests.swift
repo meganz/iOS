@@ -76,8 +76,6 @@ class NodeBrowserViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence()
                 .eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-            isFullSOQBannerEnabled: @escaping () -> Bool = { true },
-            isAlmostFullSOQBannerEnabled: @escaping () -> Bool = { true },
             tempWarningBannerViewModel: WarningBannerViewModel? = nil
         ) {
             let nodeSource = NodeSource.node { node }
@@ -163,9 +161,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onEditingChanged: { _ in },
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,
-                onNodeStructureChanged: onNodeStructureChanged,
-                isFullSOQBannerEnabled: isFullSOQBannerEnabled,
-                isAlmostFullSOQBannerEnabled: isAlmostFullSOQBannerEnabled
+                onNodeStructureChanged: onNodeStructureChanged
             )
             
             saver = { self.savedViewModes.append($0) }

@@ -80,12 +80,9 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
 public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     private let accountRepository: any AccountRepositoryProtocol
     private var storageBannerDismissDuration: TimeInterval {
-        almostFullSOQBannerFeatureFlagEnabled() ?
-        3 * 60 :// 3 minutes in seconds. A Temporary dismissed period for testing which will be removed when the almost full SOQ Banner feature flag is also removed.
         24 * 60 * 60 // 24 hours in seconds.
     }
     private let currentDate: @Sendable () -> Date
-    private let almostFullSOQBannerFeatureFlagEnabled: @Sendable () -> Bool
     
     @PreferenceWrapper(key: .lastStorageBannerDismissedDate, defaultValue: nil)
     private var lastStorageBannerDismissedDate: Date?
@@ -93,12 +90,10 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     public init(
         accountRepository: some AccountRepositoryProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol,
-        currentDate: @escaping @Sendable () -> Date = { Date() },
-        almostFullSOQBannerFeatureFlagEnabled: @escaping @Sendable () -> Bool = { false }
+        currentDate: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.accountRepository = accountRepository
         self.currentDate = currentDate
-        self.almostFullSOQBannerFeatureFlagEnabled = almostFullSOQBannerFeatureFlagEnabled
         
         $lastStorageBannerDismissedDate.useCase = preferenceUseCase
     }

@@ -32,8 +32,6 @@ class NodeBrowserViewModel: ObservableObject {
     // Making actual property private removes logic of checking this from the view, allows to cover this by tests with high confidence
     private let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
     
-    private let isFullSOQBannerEnabled: () -> Bool
-    private let isAlmostFullSOQBannerEnabled: () -> Bool
     // The banner passed during initialization (can be nil).
     // This represents a static warning that does not change state during the display of the current Cloud Drive screen.
     // It is defined once when the view model is created and remains unchanged throughout the lifecycle of this view.
@@ -138,13 +136,7 @@ class NodeBrowserViewModel: ObservableObject {
         onEditingChanged: @escaping (Bool) -> Void,
         updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
-        onNodeStructureChanged: @escaping () -> Void,
-        isFullSOQBannerEnabled: @escaping () -> Bool = {
-            true
-        },
-        isAlmostFullSOQBannerEnabled: @escaping () -> Bool = {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .almostFullStorageOverQuotaBanner)
-        }
+        onNodeStructureChanged: @escaping () -> Void
     ) {
         self.viewMode = viewMode
         self.searchResultsViewModel = searchResultsViewModel
@@ -172,8 +164,6 @@ class NodeBrowserViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
-        self.isFullSOQBannerEnabled = isFullSOQBannerEnabled
-        self.isAlmostFullSOQBannerEnabled = isAlmostFullSOQBannerEnabled
 
         $viewMode
             .removeDuplicates()
@@ -528,8 +518,7 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     private func monitorStorageStatusUpdates() {
-        guard isFullSOQBannerEnabled() || isAlmostFullSOQBannerEnabled(),
-              config.isFromSharedItem != true,
+        guard config.isFromSharedItem != true,
               let displayMode = config.displayMode,
               displayMode == .cloudDrive else { return }
         
@@ -547,24 +536,23 @@ class NodeBrowserViewModel: ObservableObject {
         MEGALogDebug("[StorageBanner] updateTemporaryBanner, current warning type: \(String(describing: temporaryBannerViewModel?.warningType)), new storage status: \(status)")
         switch status {
         case .full:
-            if isFullSOQBannerEnabled(), temporaryBannerViewModel?.warningType != .fullStorageOverQuota {
+            if temporaryBannerViewModel?.warningType != .fullStorageOverQuota {
                 temporaryBannerViewModel = makeSOQBanerViewModel(.fullStorageOverQuota)
             }
         case .almostFull:
-            let shouldShowStorageBanner = accountStorageUseCase.shouldShowStorageBanner
-            if isAlmostFullSOQBannerEnabled(), shouldShowStorageBanner {
-                temporaryBannerViewModel = makeSOQBanerViewModel(
-                    .almostFullStorageOverQuota,
-                    shouldShowCloseButton: true,
-                    closeButtonAction: { [weak self] in
-                        self?.resetTemporaryBanner()
-                        self?.objectWillChange.send()
-                        self?.accountStorageUseCase.updateLastStorageBannerDismissDate()
-                    }
-                )
-            } else {
+            guard accountStorageUseCase.shouldShowStorageBanner else {
                 resetTemporaryBanner()
+                return
             }
+            temporaryBannerViewModel = makeSOQBanerViewModel(
+                .almostFullStorageOverQuota,
+                shouldShowCloseButton: true,
+                closeButtonAction: { [weak self] in
+                    self?.resetTemporaryBanner()
+                    self?.objectWillChange.send()
+                    self?.accountStorageUseCase.updateLastStorageBannerDismissDate()
+                }
+            )
         default:
             resetTemporaryBanner()
         }
@@ -572,15 +560,9 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     func refreshStorageBanners() {
-        guard isFullSOQBannerEnabled() || isAlmostFullSOQBannerEnabled(),
-              config.isFromSharedItem != true,
+        guard config.isFromSharedItem != true,
               let displayMode = config.displayMode,
               displayMode == .cloudDrive else {
-            
-            if !(isFullSOQBannerEnabled() && isAlmostFullSOQBannerEnabled()) {
-                resetTemporaryBanner()
-                objectWillChange.send()
-            }
             return
         }
         MEGALogDebug("[StorageBanner] refreshStorageBanners - storage status: \(accountStorageUseCase.currentStorageStatus)")
