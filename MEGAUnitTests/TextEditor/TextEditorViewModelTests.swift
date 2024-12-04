@@ -8,7 +8,7 @@ import MEGASDKRepoMock
 import XCTest
 
 final class TextEditorViewModelTests: XCTestCase {
-
+    
     @MainActor func testAction_setUpView_View_Create_Edit() {
         let textFile = TextFile(fileName: "testAction_setUpView_View_Create_Edit")
         let mockRouter = MockTextEditorViewRouter()
@@ -18,7 +18,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
-                
+        
         var textEditorModel: TextEditorModel
         var navbarItemsModel: TextEditorNavbarItemsModel
         
@@ -111,7 +111,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        let tracker = MockTracker()
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -120,11 +121,12 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
-            nodeEntity: mockNode
+            nodeEntity: mockNode,
+            tracker: tracker
         )
-
+        
         let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
-
+        
         let content = "test"
         do {
             try content.write(toFile: testPath, atomically: true, encoding: .utf8)
@@ -140,7 +142,10 @@ final class TextEditorViewModelTests: XCTestCase {
                     .setupNavbarItems(navbarItemsViewModel)
                  ]
             )
-
+            
+            assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                                            with: [TextEditorScreenEvent(), TextEditorScreenEvent()])
+            
             try FileManager.default.removeItem(atPath: testPath)
         } catch {
             return
@@ -175,7 +180,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -186,17 +191,17 @@ final class TextEditorViewModelTests: XCTestCase {
             backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
-
+        
         let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
-
+        
         await test(viewModel: viewModel,
-             action: .setUpView,
-             expectedCommands: [
-                .setupLoadViews,
-                .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false, isBackupNode: false),
-                .setupNavbarItems(navbarItemsModel),
-                .updateProgressView(progress: percentage)
-             ]
+                   action: .setUpView,
+                   expectedCommands: [
+                    .setupLoadViews,
+                    .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false, isBackupNode: false),
+                    .setupNavbarItems(navbarItemsModel),
+                    .updateProgressView(progress: percentage)
+                   ]
         )
     }
     
@@ -227,7 +232,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -238,18 +243,18 @@ final class TextEditorViewModelTests: XCTestCase {
             backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
-
+        
         await test(viewModel: viewModel,
-             action: .setUpView,
-             expectedCommands: [
-                .setupLoadViews,
-                .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false, isBackupNode: false),
-                .setupNavbarItems(navbarItemsModel),
-                .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download)
-             ]
+                   action: .setUpView,
+                   expectedCommands: [
+                    .setupLoadViews,
+                    .configView(textEditorLoadModel, shallUpdateContent: false, isInRubbishBin: false, isBackupNode: false),
+                    .setupNavbarItems(navbarItemsModel),
+                    .showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download)
+                   ]
         )
     }
-
+    
     @MainActor func testAction_saveText_edit_success() {
         let textFile = TextFile(
             fileName: "testAction_saveText_edit_success",
@@ -266,7 +271,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let mockParentHandle: HandleEntity = 123
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -278,9 +283,9 @@ final class TextEditorViewModelTests: XCTestCase {
             parentHandle: mockParentHandle,
             nodeEntity: mockNode
         )
-
+        
         let editContent = "edit content"
-
+        
         let textEditorViewModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .view,
@@ -318,7 +323,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockBackupsUC = MockBackupsUseCase()
         
         let mockParentHandle: HandleEntity = 123
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -329,9 +334,9 @@ final class TextEditorViewModelTests: XCTestCase {
             backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle
         )
-
+        
         let editContent = "edit content"
-
+        
         test(viewModel: viewModel,
              action: .saveText(content: editContent),
              expectedCommands: [.startLoading,
@@ -358,7 +363,7 @@ final class TextEditorViewModelTests: XCTestCase {
             replaceButtonTitle: Strings.Localizable.replace,
             renameButtonTitle: Strings.Localizable.rename
         )
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -371,7 +376,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let createContent = "create content"
-
+        
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
              expectedCommands: [.showDuplicateNameAlert(duplicateNameAlertModel)]
@@ -388,7 +393,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         let mockParentHandle: HandleEntity = 123
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -401,7 +406,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let createContent = "create content"
-
+        
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
              expectedCommands: []
@@ -420,7 +425,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         let mockParentHandle: HandleEntity = 123
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -433,7 +438,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let createContent = "create content"
-
+        
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
              expectedCommands: [.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
@@ -442,7 +447,7 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, 1)
         XCTAssertEqual(mockRouter.dismissBrowserVC_calledTimes, 1)
     }
-
+    
     @MainActor func testAction_saveText_create_noParent_duplicateName() {
         let textFile = TextFile(fileName: "testAction_saveText_create_noParent_duplicateName")
         let mockRouter = MockTextEditorViewRouter()
@@ -459,7 +464,7 @@ final class TextEditorViewModelTests: XCTestCase {
             replaceButtonTitle: Strings.Localizable.replace,
             renameButtonTitle: Strings.Localizable.rename
         )
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -471,7 +476,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let createContent = "create content"
-
+        
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
              expectedCommands: [.showDuplicateNameAlert(duplicateNameAlertModel)]
@@ -487,7 +492,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -499,7 +504,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let createContent = "create content"
-
+        
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
              expectedCommands: []
@@ -517,7 +522,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -529,7 +534,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let createContent = "create content"
-
+        
         test(viewModel: viewModel,
              action: .saveText(content: createContent),
              expectedCommands: [.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload)]
@@ -555,7 +560,7 @@ final class TextEditorViewModelTests: XCTestCase {
             renameButtonTitle: Strings.Localizable.rename,
             textFileName: textFile.fileName
         )
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -565,7 +570,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC
         )
-
+        
         test(viewModel: viewModel,
              action: .renameFile,
              expectedCommands: [.showRenameAlert(renameAlertModel)]
@@ -583,7 +588,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockParentHandle: HandleEntity = 123
         
         let newName = "new name"
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -594,7 +599,7 @@ final class TextEditorViewModelTests: XCTestCase {
             backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle
         )
-
+        
         test(viewModel: viewModel,
              action: .renameFileTo(newInputName: newName),
              expectedCommands: []
@@ -602,7 +607,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         XCTAssertEqual(mockUploadFileUC.newName, newName)
     }
-
+    
     @MainActor func testAction_dismissTextEditorVC() {
         let textFile = TextFile(fileName: "testAction_dismissTextEditorVC")
         let mockRouter = MockTextEditorViewRouter()
@@ -610,7 +615,9 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        let tracker = MockTracker()
+        var events = [TextEditorCloseMenuToolbarEvent]()
+        
         for (index, textEditorMode) in TextEditorMode.allCases.enumerated() {
             let viewModel = TextEditorViewModel(
                 router: mockRouter,
@@ -619,14 +626,19 @@ final class TextEditorViewModelTests: XCTestCase {
                 uploadFileUseCase: mockUploadFileUC,
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
-                backupsUseCase: mockBackupsUC
+                backupsUseCase: mockBackupsUC,
+                tracker: tracker
             )
-
+            
             test(viewModel: viewModel,
                  action: .dismissTextEditorVC,
                  expectedCommands: []
             )
+            
             XCTAssertEqual(mockRouter.dismissTextEditorVC_calledTimes, index + 1)
+            events.append(TextEditorCloseMenuToolbarEvent())
+            assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                                            with: events)
         }
     }
     
@@ -643,7 +655,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -665,7 +677,7 @@ final class TextEditorViewModelTests: XCTestCase {
             rightItem: NavbarItemModel(title: Strings.Localizable.save, image: nil),
             textEditorMode: .edit
         )
-
+        
         test(viewModel: viewModel,
              action: .editFile,
              expectedCommands: [
@@ -687,7 +699,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        let tracker = MockTracker()
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -695,13 +708,16 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            backupsUseCase: mockBackupsUC
+            backupsUseCase: mockBackupsUC,
+            tracker: tracker
         )
-
+        
         test(viewModel: viewModel,
              action: .editFile,
              expectedCommands: [.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)]
         )
+        
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorEditMenuToolbarEvent()])
     }
     
     @MainActor func testAction_editAfterOpen_view_editableSize() {
@@ -717,7 +733,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -739,7 +755,7 @@ final class TextEditorViewModelTests: XCTestCase {
             rightItem: NavbarItemModel(title: Strings.Localizable.save, image: nil),
             textEditorMode: .edit
         )
-
+        
         test(viewModel: viewModel,
              action: .editAfterOpen,
              expectedCommands: [
@@ -761,7 +777,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -771,7 +787,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC
         )
-
+        
         test(viewModel: viewModel,
              action: .editAfterOpen,
              expectedCommands: [.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)]
@@ -790,7 +806,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -800,7 +816,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC
         )
-
+        
         test(viewModel: viewModel,
              action: .editAfterOpen,
              expectedCommands: []
@@ -815,7 +831,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -826,7 +842,7 @@ final class TextEditorViewModelTests: XCTestCase {
             backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
-
+        
         test(viewModel: viewModel,
              action: .showActions(sender: UIButton()),
              expectedCommands: []
@@ -841,7 +857,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-    
+        
         let newContent = "new content"
         
         let testModes: [TextEditorMode] = [.create, .edit]
@@ -855,7 +871,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 nodeUseCase: mockNodeDataUC,
                 backupsUseCase: mockBackupsUC
             )
-
+            
             test(viewModel: viewModel,
                  action: .cancelText(content: newContent),
                  expectedCommands: [.showDiscardChangeAlert]
@@ -870,7 +886,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -880,7 +896,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC
         )
-
+        
         test(viewModel: viewModel,
              action: .cancelText(content: textFile.content),
              expectedCommands: []
@@ -896,9 +912,9 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
-         
+        
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -909,7 +925,7 @@ final class TextEditorViewModelTests: XCTestCase {
             backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
-
+        
         let textEditorViewModel = TextEditorModel(
             textFile: textFile,
             textEditorMode: .view,
@@ -939,7 +955,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        let tracker = MockTracker()
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -948,14 +965,17 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
-            nodeEntity: mockNode
+            nodeEntity: mockNode,
+            tracker: tracker
         )
-
+        
         test(viewModel: viewModel,
              action: .downloadToOffline,
              expectedCommands: []
         )
+        
         XCTAssertEqual(mockRouter.showDownloadTransfer_calledTimes, 1)
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorMakeAvailableOfflineMenuToolbarEvent()])
     }
     
     @MainActor func testAction_importNode_view() {
@@ -965,7 +985,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -975,7 +995,7 @@ final class TextEditorViewModelTests: XCTestCase {
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC
         )
-
+        
         test(viewModel: viewModel,
              action: .importNode,
              expectedCommands: []
@@ -991,7 +1011,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        let tracker = MockTracker()
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -1000,13 +1021,16 @@ final class TextEditorViewModelTests: XCTestCase {
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
             backupsUseCase: mockBackupsUC,
-            nodeEntity: mockNode
+            nodeEntity: mockNode,
+            tracker: tracker
         )
         
         test(viewModel: viewModel,
              action: .exportFile(sender: UIButton()),
              expectedCommands: [])
         XCTAssertEqual(mockRouter.exportFile_calledTimes, 1)
+        
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorExportFileMenuToolbarEvent()])
     }
     
     @MainActor
@@ -1019,7 +1043,7 @@ final class TextEditorViewModelTests: XCTestCase {
             router: mockRouter,
             tracker: tracker
         )
-
+        
         viewModel.nodeAction(
             mockNodeActionViewController(),
             didSelect: .hide,
@@ -1031,6 +1055,86 @@ final class TextEditorViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testAction_download() {
+        let textFile = TextFile(fileName: "testAction_download")
+        let mockRouter = MockTextEditorViewRouter()
+        let tracker = MockTracker()
+        let viewModel = sut(
+            textFile: textFile,
+            router: mockRouter,
+            tracker: tracker
+        )
+        
+        viewModel.nodeAction(
+            mockNodeActionViewController(),
+            didSelect: .download,
+            for: MockNode(handle: 1),
+            from: "any-sender")
+        
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorMakeAvailableOfflineMenuItemEvent()])
+    }
+    
+    @MainActor
+    func testAction_editTextFile() {
+        let textFile = TextFile(fileName: "testAction_editTextFile")
+        let mockRouter = MockTextEditorViewRouter()
+        let tracker = MockTracker()
+        let viewModel = sut(
+            textFile: textFile,
+            router: mockRouter,
+            tracker: tracker
+        )
+        
+        viewModel.nodeAction(
+            mockNodeActionViewController(),
+            didSelect: .editTextFile,
+            for: MockNode(handle: 1),
+            from: "any-sender")
+        
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorEditMenuItemEvent(), TextEditorScreenEvent()])
+    }
+    
+    @MainActor
+    func testAction_sendToChat() {
+        let textFile = TextFile(fileName: "testAction_sendToChat")
+        let mockRouter = MockTextEditorViewRouter()
+        let tracker = MockTracker()
+        let viewModel = sut(
+            textFile: textFile,
+            router: mockRouter,
+            tracker: tracker
+        )
+        
+        viewModel.nodeAction(
+            mockNodeActionViewController(),
+            didSelect: .sendToChat,
+            for: MockNode(handle: 1),
+            from: "any-sender")
+        
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorSendToChatMenuItemEvent()])
+    }
+    
+    @MainActor
+    func testAction_shareLink() {
+        let textFile = TextFile(fileName: "testAction_shareLink")
+        let mockRouter = MockTextEditorViewRouter()
+        let tracker = MockTracker()
+        let viewModel = sut(
+            textFile: textFile,
+            router: mockRouter,
+            tracker: tracker
+        )
+        
+        viewModel.nodeAction(
+            mockNodeActionViewController(),
+            didSelect: .shareLink,
+            for: MockNode(handle: 1),
+            from: "any-sender")
+        
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorShareLinkMenuItemEvent()])
+    }
+    
+    @MainActor
     func testAction_UnhideNode() {
         let textFile = TextFile(fileName: "testAction_hideNode")
         let mockRouter = MockTextEditorViewRouter()
@@ -1039,7 +1143,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
         let mockNode = NodeEntity(handle: 123, isFile: true)
-
+        
         let viewModel = TextEditorViewModel(
             router: mockRouter,
             textFile: textFile,
@@ -1050,7 +1154,7 @@ final class TextEditorViewModelTests: XCTestCase {
             backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
-
+        
         viewModel.nodeAction(
             mockNodeActionViewController(),
             didSelect: .unhide,

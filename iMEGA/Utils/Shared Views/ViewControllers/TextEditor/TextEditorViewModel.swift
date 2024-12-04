@@ -119,8 +119,10 @@ final class TextEditorViewModel: ViewModelType {
         case .uploadFile:
             uploadFile()
         case .dismissTextEditorVC:
+            tracker.trackAnalyticsEvent(with: TextEditorCloseMenuToolbarEvent())
             router.dismissTextEditorVC()
         case .editFile:
+            tracker.trackAnalyticsEvent(with: TextEditorEditMenuToolbarEvent())
             editFile(shallUpdateContent: false)
         case .editAfterOpen:
             editAfterOpen()
@@ -136,12 +138,15 @@ final class TextEditorViewModel: ViewModelType {
         case .importNode:
             router.importNode(nodeHandle: nodeEntity?.handle)
         case .exportFile(sender: let button):
+            tracker.trackAnalyticsEvent(with: TextEditorExportFileMenuToolbarEvent())
             exportFile(sender: button)
         }
     }
     
     // MARK: - Private functions
     private func setupView(shallUpdateContent: Bool) {
+        tracker.trackAnalyticsEvent(with: TextEditorScreenEvent())
+        
         var isNodeInRubbishBin = false
         if let nodeHandle = nodeEntity?.handle {
             isNodeInRubbishBin = nodeUseCase.isInRubbishBin(nodeHandle: nodeHandle)
@@ -269,6 +274,7 @@ final class TextEditorViewModel: ViewModelType {
             return
         }
         
+        tracker.trackAnalyticsEvent(with: TextEditorMakeAvailableOfflineMenuToolbarEvent())
         router.showDownloadTransfer(node: nodeEntity)
     }
     
@@ -402,14 +408,18 @@ extension TextEditorViewModel: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         switch action {
         case .editTextFile:
+            tracker.trackAnalyticsEvent(with: TextEditorEditMenuItemEvent())
             editFile(shallUpdateContent: false)
         case .download:
+            tracker.trackAnalyticsEvent(with: TextEditorMakeAvailableOfflineMenuItemEvent())
             router.showDownloadTransfer(node: node.toNodeEntity())
         case .import:
             router.importNode(nodeHandle: node.handle)
         case .sendToChat:
+            tracker.trackAnalyticsEvent(with: TextEditorSendToChatMenuItemEvent())
             router.sendToChat(node: node)
         case .exportFile:
+            tracker.trackAnalyticsEvent(with: TextEditorExportFileMenuItemEvent())
             exportFile(sender: sender)
         case .restore:
             router.restoreTextFile(node: node)
@@ -419,7 +429,10 @@ extension TextEditorViewModel: NodeActionViewControllerDelegate {
             router.viewVersions(node: node)
         case .remove:
             router.removeTextFile(node: node)
-        case .shareLink, .manageLink:
+        case .shareLink:
+            tracker.trackAnalyticsEvent(with: TextEditorShareLinkMenuItemEvent())
+            router.shareLink(from: node.handle)
+        case .manageLink:
             router.shareLink(from: node.handle)
         case .removeLink:
             router.removeLink(from: node.handle)
