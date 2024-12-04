@@ -136,9 +136,7 @@ extension TextEditorViewController: ViewType {
             navigationController?.setToolbarHidden(true, animated: true)
         }
         
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .markdownSupport) {
-            configureMarkdownSupportText(textEditorModel)
-        }
+        configureMarkdownSupportText(textEditorModel)
     }
     
     private func setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel) {
