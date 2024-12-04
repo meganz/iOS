@@ -29,7 +29,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         currentUserSource.currentUserHandle
     }
     
-    public var isProAccount: Bool {
+    public var isPaidAccount: Bool {
         !isAccountType(.free)
     }
     

@@ -6,9 +6,8 @@ import MEGAUIComponent
 final class RubbishBinSettingViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let rubbishBinSettingsUseCase: any RubbishBinSettingsUseCaseProtocol
-    private var onRubbishBinSettingsRequestFinishUpdatesTask: Task<Void, any Error>?
     
-    @Published private(set) var isProAccount: Bool = false
+    @Published private(set) var isPaidAccount: Bool = false
     @Published private(set) var rubbishBinAutopurgePeriod: Int64 = 0
     @Published private(set) var isLoading = false
     @Published private(set) var selectedAutoPurgePeriod: AutoPurgePeriod = .sevenDays
@@ -22,21 +21,17 @@ final class RubbishBinSettingViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.rubbishBinSettingsUseCase = rubbishBinSettingsUseCase
         
-        isProAccount = accountUseCase.isProAccount
-        autoPurgePeriods = AutoPurgePeriod.options(forProUser: isProAccount)
+        isPaidAccount = accountUseCase.isPaidAccount
+        autoPurgePeriods = AutoPurgePeriod.options(forPaidAccount: isPaidAccount)
     }
     
     // MARK: Monitor Settings Change
     
     func startRubbishBinSettingsUpdatesMonitoring() async {
-        onRubbishBinSettingsRequestFinishUpdatesTask?.cancel()
-        onRubbishBinSettingsRequestFinishUpdatesTask = Task { [weak self, rubbishBinSettingsUseCase] in
-            for await resultRequest in rubbishBinSettingsUseCase.onRubbishBinSettinghsRequestFinish {
-                guard let self else { return }
-                try Task.checkCancellation()
-                
-                handleRequestResult(resultRequest)
-            }
+        for await resultRequest in rubbishBinSettingsUseCase.onRubbishBinSettinghsRequestFinish {
+            try? Task.checkCancellation()
+            
+            handleRequestResult(resultRequest)
         }
     }
     

@@ -45,8 +45,8 @@ public enum AutoPurgePeriod: Identifiable, Equatable {
     public static let fiveYears = AutoPurgePeriod.years(5)
     public static let tenYears = AutoPurgePeriod.years(10)
     
-    public static func options(forProUser isPro: Bool) -> [AutoPurgePeriod] {
-        if isPro {
+    public static func options(forPaidAccount isPaid: Bool) -> [AutoPurgePeriod] {
+        if isPaid {
             return [.sevenDays, .fourteenDays, .thirtyDays, .sixtyDays, .oneYear, .fiveYears, .tenYears, .never]
         } else {
             return [.sevenDays, .fourteenDays, .thirtyDays]
