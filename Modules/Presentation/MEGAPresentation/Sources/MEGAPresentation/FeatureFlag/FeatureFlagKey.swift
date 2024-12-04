@@ -10,7 +10,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case reorderVideosInVideoPlaylistContent = "Reorder videos in video playlist content"
     case addToAlbumAndPlaylists = "Add to Album and Playlists"
     case nodeTags = "Node Tags"
-    case markdownSupport = "Markdown support"
     case webclientSubscribersCancelSubscription = "Webclient subscribers cancel subscription flow"
     case multipleOptionsForCancellationSurvey = "Multiple Options for Cancellation Survey"
     case followUpOptionsForCancellationSurvey = "Follow up Options for Cancellation Survey"
