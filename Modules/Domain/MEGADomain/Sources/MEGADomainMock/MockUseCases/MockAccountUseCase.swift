@@ -39,6 +39,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private var _hasValidSubscription: Bool
     private let _hasActiveBusinessAccount: Bool
     private let _hasActiveProFlexiAccount: Bool
+    private let _hasExpiredBusinessAccount: Bool
+    private let _hasExpiredProFlexiAccount: Bool
 
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -77,7 +79,9 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         currentSubscription: AccountSubscriptionEntity? = nil,
         hasValidSubscription: Bool = false,
         hasActiveBusinessAccount: Bool = false,
-        hasActiveProFlexiAccount: Bool = false
+        hasActiveProFlexiAccount: Bool = false,
+        hasExpiredBusinessAccount: Bool = false,
+        hasExpiredProFlexiAccount: Bool = false
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -116,6 +120,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         _hasValidSubscription = hasValidSubscription
         _hasActiveBusinessAccount = hasActiveBusinessAccount
         _hasActiveProFlexiAccount = hasActiveProFlexiAccount
+        _hasExpiredBusinessAccount = hasExpiredBusinessAccount
+        _hasExpiredProFlexiAccount = hasExpiredProFlexiAccount
     }
     
     // MARK: - User authentication status and identifiers
@@ -225,6 +231,14 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         _hasActiveProFlexiAccount
     }
     
+    public func hasExpiredBusinessAccount() -> Bool {
+        _hasExpiredBusinessAccount
+    }
+
+    public func hasExpiredProFlexiAccount() -> Bool {
+        _hasExpiredProFlexiAccount
+    }
+
     // MARK: - Account operations
     public func contacts() -> [UserEntity] {
         _contacts
