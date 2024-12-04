@@ -1,12 +1,12 @@
-import CocoaLumberjackSwift
+@preconcurrency import CocoaLumberjackSwift
 import Foundation
 import MEGAChatSdk
 import MEGASdk
 
-@objc public final class Logger: NSObject {
+@objc public final class Logger: NSObject, Sendable {
     private let fileLogger: DDFileLogger
     
-    @objc public lazy var logsDirectoryUrl = URL(fileURLWithPath: fileLogger.logFileManager.logsDirectory)
+    @objc public let logsDirectoryUrl: URL
     
     @objc public class func shared() -> Logger {
         return sharedLogger
@@ -29,6 +29,7 @@ import MEGASdk
     
     private init(fileLogger: DDFileLogger) {
         self.fileLogger = fileLogger
+        self.logsDirectoryUrl = URL(fileURLWithPath: fileLogger.logFileManager.logsDirectory)
     }
     
     @objc public func removeLogsDirectory( _ file: String = #file, _ line: Int = #line) {
