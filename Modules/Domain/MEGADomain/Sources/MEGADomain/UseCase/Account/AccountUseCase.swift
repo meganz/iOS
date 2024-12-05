@@ -40,15 +40,31 @@ public protocol AccountUseCaseProtocol: Sendable {
     /// Check if the current account has an active Pro Flexi account
     /// - Returns: `true` if the account is Pro Flexi and neither expired nor in grace period, `false` otherwise.
     func hasActiveProFlexiAccount() -> Bool
-
+    /// Retrieves the current status of the Business account.
+    ///
+    /// This method determines the status of the current user's Business account.
+    /// The possible statuses are:
+    /// - `.active`: The Business account is valid and active.
+    /// - `.gracePeriod`: The Business account is in a grace period, indicating that it is temporarily extended despite non-payment.
+    /// - `.overdue`: The Business account is overdue and not active.
+    ///
+    /// - Returns: An `AccountStatusEntity` representing the status of the Business account.
+    func businessAccountStatus() -> AccountStatusEntity
+    /// Retrieves the current status of the Pro Flexi account.
+    ///
+    /// This method checks whether the current user's Pro Flexi account is active or overdue.
+    /// The possible statuses are:
+    /// - `.active`: The Pro Flexi account is valid and active.
+    /// - `.overdue`: The Pro Flexi account is overdue and no longer active.
+    ///
+    /// - Returns: An `AccountStatusEntity` representing the status of the Pro Flexi account.
+    func proFlexiAccountStatus() -> AccountStatusEntity
     /// Check if the current account has a Business account plan that is expired
     /// - Returns: `true` if the account is Business account that is expired, `false` otherwise.
     func hasExpiredBusinessAccount() -> Bool
-
     /// Check if the current account has a Pro Flexi plan that is expired
     /// - Returns: `true` if the account is Pro flexi that is expired, `false` otherwise.
     func hasExpiredProFlexiAccount() -> Bool
-
     /// Check if the current Pro Plan is associated with any subscription.
     /// - Returns: `true` if the current Pro Plan is associated with an active subscription.
     func isBilledProPlan() -> Bool
@@ -199,6 +215,26 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
         isBusinessAccountNotExpired() && !repository.isInGracePeriod()
     }
     
+    public func businessAccountStatus() -> AccountStatusEntity {
+        guard repository.isAccountType(.business) else {
+            return .none
+        }
+        
+        if hasActiveBusinessAccount() {
+            return .active
+        } else if hasBusinessAccountInGracePeriod() {
+            return .gracePeriod
+        }
+        return .overdue
+    }
+    
+    public func proFlexiAccountStatus() -> AccountStatusEntity {
+        guard repository.isAccountType(.proFlexi) else {
+            return .none
+        }
+        return hasActiveProFlexiAccount() ? .active : .overdue
+    }
+    
     public func hasActiveProFlexiAccount() -> Bool {
         isValidProFlexiAccount() && !repository.isInGracePeriod()
     }
@@ -266,5 +302,10 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     private func isBusinessAccountNotExpired() -> Bool {
         repository.isAccountType(.business) &&
         !repository.isExpiredAccount()
+    }
+    
+    // MARK: - Account Status
+    private func hasBusinessAccountInGracePeriod() -> Bool {
+        isBusinessAccountNotExpired() && repository.isInGracePeriod()
     }
 }

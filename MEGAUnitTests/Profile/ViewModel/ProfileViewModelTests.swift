@@ -301,6 +301,40 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(sut.accountDetails, AccountDetailsEntity.build(proLevel: expectedAccountType))
     }
     
+    func testDetermineBusinessAccountState_whenAccountIsActive_shouldReturnActive() {
+        let (sut, _) = makeSUT(
+            hasActiveBusinessAccount: true,
+            hasBusinessAccountInGracePeriod: false
+        )
+        XCTAssertEqual(sut.businessAccountStatus, .active, "Expected account state to be active when the business account is active.")
+    }
+
+    func testDetermineBusinessAccountState_whenAccountInGracePeriod_shouldReturnGracePeriod() {
+        let (sut, _) = makeSUT(
+            hasActiveBusinessAccount: false,
+            hasBusinessAccountInGracePeriod: true
+        )
+        XCTAssertEqual(sut.businessAccountStatus, .gracePeriod, "Expected account state to be in grace period when the business account is not active but in grace period.")
+    }
+
+    func testDetermineBusinessAccountState_whenAccountExpiredWithoutGracePeriod_shouldReturnOverdue() {
+        let (sut, _) = makeSUT(
+            hasActiveBusinessAccount: false,
+            hasBusinessAccountInGracePeriod: false
+        )
+        XCTAssertEqual(sut.businessAccountStatus, .overdue, "Expected account state to be overdue when the business account is expired and not in grace period.")
+    }
+
+    func testDetermineProFlexiAccountState_whenAccountIsActive_shouldReturnActive() {
+        let (sut, _) = makeSUT(hasActiveProFlexiAccount: true)
+        XCTAssertEqual(sut.proFlexiAccountStatus, .active, "Expected Pro Flexi account state to be active when the account is active.")
+    }
+
+    func testDetermineProFlexiAccountState_whenAccountExpired_shouldReturnOverdue() {
+        let (sut, _) = makeSUT(hasActiveProFlexiAccount: false)
+        XCTAssertEqual(sut.proFlexiAccountStatus, .overdue, "Expected Pro Flexi account state to be overdue when the account is expired.")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -317,6 +351,7 @@ final class ProfileViewModelTests: XCTestCase {
         hasActiveBusinessAccount: Bool = false,
         hasActiveProFlexiAccount: Bool = false,
         tracker: some AnalyticsTracking = MockTracker(),
+        hasBusinessAccountInGracePeriod: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
@@ -332,6 +367,7 @@ final class ProfileViewModelTests: XCTestCase {
             smsState: smsState,
             multiFactorAuthCheckResult: multiFactorAuthCheckResult,
             multiFactorAuthCheckDelay: 1.0,
+            hasBusinessAccountInGracePeriod: hasBusinessAccountInGracePeriod,
             accountPlan: accountPlan,
             currentSubscription: currentSubscription,
             hasActiveBusinessAccount: hasActiveBusinessAccount,

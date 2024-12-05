@@ -119,10 +119,15 @@ final class ProfileTableViewDataSource {
             switch accountDetails.proLevel {
             case .business:
                 cell.nameLabel.text = Strings.Localizable.business
-                cell.detailLabel.text = viewModel.hasActiveBusinessAccount ? Strings.Localizable.active : Strings.Localizable.paymentOverdue
+                cell.detailLabel.text = switch viewModel.businessAccountStatus {
+                case .active: Strings.Localizable.Account.Profile.AccountStatus.active
+                case .gracePeriod: Strings.Localizable.Account.Profile.AccountStatus.gracePeriod
+                case .overdue: Strings.Localizable.Account.Profile.AccountStatus.expired
+                default: ""
+                }
             case .proFlexi:
                 cell.nameLabel.text = accountDetails.proLevel.toAccountTypeDisplayName()
-                cell.detailLabel.text = viewModel.hasActiveProFlexiAccount ? "" : Strings.Localizable.paymentOverdue
+                cell.detailLabel.text = viewModel.proFlexiAccountStatus == .overdue ? Strings.Localizable.Account.Profile.AccountStatus.expired : ""
             default:
                 cell.detailLabel.text = "..."
             }

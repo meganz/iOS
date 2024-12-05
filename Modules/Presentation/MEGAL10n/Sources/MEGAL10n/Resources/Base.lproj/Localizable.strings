@@ -2668,6 +2668,12 @@
 "account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the account. Please enter your password below.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Change profile image";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active" = "Active";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod" = "Payment Required";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired" = "Payment Overdue";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */

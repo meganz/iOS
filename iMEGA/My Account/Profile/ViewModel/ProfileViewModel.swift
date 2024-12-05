@@ -138,12 +138,20 @@ final class ProfileViewModel: ViewModelType {
         accountUseCase.hasActiveBusinessAccount()
     }
     
+    var businessAccountStatus: AccountStatusEntity {
+        accountUseCase.businessAccountStatus()
+    }
+    
     var hasActiveProFlexiAccount: Bool {
         accountUseCase.hasActiveProFlexiAccount()
     }
     
     var accountDetails: AccountDetailsEntity? {
         accountUseCase.currentAccountDetails
+    }
+    
+    var proFlexiAccountStatus: AccountStatusEntity {
+        accountUseCase.proFlexiAccountStatus()
     }
 }
 

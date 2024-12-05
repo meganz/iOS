@@ -492,6 +492,50 @@ final class AccountUseCaseTests: XCTestCase {
             }
     }
     
+    func testBusinessAccountStatus_whenAccountIsNotBusiness_shouldReturnNone() {
+        let nonBusinessAccountTypes = AccountTypeEntity.allCases.filter { $0 != .business }
+        for accountType in nonBusinessAccountTypes {
+            let sut = makeSUT(accountType: accountType)
+            XCTAssertEqual(sut.businessAccountStatus(), .none, "Expected status to be .none for account type \(accountType), but got a different result.")
+        }
+    }
+
+    func testBusinessAccountStatus_whenAccountIsBusiness_shouldReturnCorrectStatus() {
+        [(isExpired: false, inGrace: false, expectedStatus: AccountStatusEntity.active),
+         (isExpired: true, inGrace: false, expectedStatus: AccountStatusEntity.overdue),
+         (isExpired: false, inGrace: true, expectedStatus: AccountStatusEntity.gracePeriod)]
+        .forEach { testCase in
+            let sut = makeSUT(
+                isExpiredAccount: testCase.isExpired,
+                isInGracePeriod: testCase.inGrace,
+                accountType: .business
+            )
+            XCTAssertEqual(sut.businessAccountStatus(), testCase.expectedStatus, "Expected status to be \(testCase.expectedStatus), but got a different result.")
+        }
+    }
+    
+    func testProFlexiAccountStatus_whenAccountIsNotProFlexi_shouldReturnNone() {
+        let nonProFlexiAccountTypes = AccountTypeEntity.allCases.filter { $0 != .proFlexi }
+        for accountType in nonProFlexiAccountTypes {
+            let sut = makeSUT(accountType: accountType)
+            XCTAssertEqual(sut.proFlexiAccountStatus(), .none, "Expected status to be .none for account type \(accountType), but got a different result.")
+        }
+    }
+
+    func testProFlexiAccountStatus_whenAccountIsProFlexi_shouldReturnCorrectStatus() {
+        [(isExpired: false, inGrace: false, expectedStatus: AccountStatusEntity.active),
+         (isExpired: true, inGrace: false, expectedStatus: AccountStatusEntity.overdue),
+         (isExpired: false, inGrace: true, expectedStatus: AccountStatusEntity.overdue)]
+        .forEach { testCase in
+            let sut = makeSUT(
+                isExpiredAccount: testCase.isExpired,
+                isInGracePeriod: testCase.inGrace,
+                accountType: .proFlexi
+            )
+            XCTAssertEqual(sut.proFlexiAccountStatus(), testCase.expectedStatus, "Expected status to be \(testCase.expectedStatus), but got a different result.")
+        }
+    }
+    
     private func accountTypeStatusTestCases(
         expectedAccountType: AccountTypeEntity,
         unexpectedAccountType: AccountTypeEntity
