@@ -31,6 +31,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _isAchievementsEnabled: Bool
     private let smsState: SMSStateEntity
     private let _hasValidProOrUnexpiredBusinessAccount: Bool
+    private let _hasBusinessAccountInGracePeriod: Bool
     private let _rootStorage: Int64
     private let _rubbishBinStorage: Int64
     private let _incomingSharesStorage: Int64
@@ -70,6 +71,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         multiFactorAuthCheckResult: Bool = false,
         multiFactorAuthCheckDelay: TimeInterval = 0,
         hasValidProOrUnexpiredBusinessAccount: Bool = false,
+        hasBusinessAccountInGracePeriod: Bool = false,
         rootStorage: Int64 = 0,
         rubbishBinStorage: Int64 = 0,
         incomingSharesStorage: Int64 = 0,
@@ -120,6 +122,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         _hasValidSubscription = hasValidSubscription
         _hasActiveBusinessAccount = hasActiveBusinessAccount
         _hasActiveProFlexiAccount = hasActiveProFlexiAccount
+        _hasBusinessAccountInGracePeriod = hasBusinessAccountInGracePeriod
         _hasExpiredBusinessAccount = hasExpiredBusinessAccount
         _hasExpiredProFlexiAccount = hasExpiredProFlexiAccount
     }
@@ -201,6 +204,10 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     
     public func hasValidProOrUnexpiredBusinessAccount() -> Bool {
         _hasValidProOrUnexpiredBusinessAccount
+    }
+    
+    public func hasBusinessAccountInGracePeriod() -> Bool {
+        _hasBusinessAccountInGracePeriod
     }
     
     public func isBilledProPlan() -> Bool {
@@ -302,5 +309,18 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     
     public func setCurrentAccountDetails(_ details: AccountDetailsEntity?) {
         _currentAccountDetails = details
+    }
+    
+    public func businessAccountStatus() -> AccountStatusEntity {
+        if _hasActiveBusinessAccount {
+            return .active
+        } else if _hasBusinessAccountInGracePeriod {
+            return .gracePeriod
+        }
+        return .overdue
+    }
+    
+    public func proFlexiAccountStatus() -> AccountStatusEntity {
+        _hasActiveProFlexiAccount ? .active : .overdue
     }
 }
