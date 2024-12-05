@@ -33,14 +33,15 @@ struct ManageTagsViewModelTests {
     @Test(
         "Verify addTag only adds valid tag names and clears tagName",
         arguments: [
-            ("tag1", true, false),
-            ("invalid@tag!", false, false)
+            ("tag1", true, false, ""),
+            ("invalid@tag!", false, false, "invalid@tag!")
         ]
     )
     func verifyAddTag(
         updatedTagName: String,
         containsTag: Bool,
-        canAddNewTag: Bool
+        canAddNewTag: Bool,
+        resultingTagName: String
     ) {
         let viewModel = makeSUT()
 
@@ -53,6 +54,7 @@ struct ManageTagsViewModelTests {
         #expect(viewModel.existingTagsViewModel.containsTags == containsTag)
         #expect(viewModel.containsExistingTags == containsTag)
         #expect(viewModel.canAddNewTag == canAddNewTag)
+        #expect(viewModel.tagName == resultingTagName)
     }
 
     @MainActor

@@ -36,8 +36,8 @@ final class ManageTagsViewModel: ObservableObject {
         guard tagNameState == .valid else { return }
         existingTagsViewModel.addAndSelectNewTag(tagName)
         containsExistingTags = true
-        canAddNewTag = false
         hasTextFieldFocus = false
+        tagName = ""
     }
 
     func onTagNameChanged(with updatedTagName: String) {
