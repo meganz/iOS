@@ -314,6 +314,7 @@ final class ChatContentViewModel: ViewModelType {
         || scheduledMeetings.isEmpty
         || chatUseCase.isCallInProgress(for: chatRoom.chatId)
         || !chatRoom.ownPrivilege.isUserInChat
+        || (chatRoom.ownPrivilege == .readOnly && !chatUseCase.isCallInProgress(for: chatRoom.chatId))
     }
     
     private func inviteParticipants(_ userHandles: [HandleEntity]) {
@@ -377,6 +378,10 @@ final class ChatContentViewModel: ViewModelType {
             openWaitingRoom()
         } else {
             if callUseCase.call(for: chatRoom.chatId) != nil {
+                /// If there is a call notification in CallKit call can be answered,
+                /// but if notification and therefore call has been missed (timeout or by user action),
+                /// call must be reported to CallKit as start call (setting joining to true for connecting management),
+                /// as CallKit can not longer answer a missed call.
                 if let incomingCallUUID = uuidForActiveCallKitCall() {
                     callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
                 } else {

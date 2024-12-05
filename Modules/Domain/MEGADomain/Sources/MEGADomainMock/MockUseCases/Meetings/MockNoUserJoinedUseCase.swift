@@ -2,9 +2,10 @@ import Combine
 import Foundation
 import MEGADomain
 
-public struct MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
+public class MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
     private let passthroughSubject = PassthroughSubject<Void, Never>()
-    
+    public var startTimer_calledTimes = 0
+
     public init() {}
 
     public var monitor: AnyPublisher<Void, Never> {
@@ -12,6 +13,7 @@ public struct MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
     }
     
     public func start(timerDuration duration: TimeInterval, chatId: HandleEntity) {
+        startTimer_calledTimes += 1
         passthroughSubject.send()
     }
 }

@@ -17,6 +17,7 @@ final class CallsCoordinatorTests: XCTestCase {
         let audioSessionUseCase: MockAudioSessionUseCase
         let callManager = MockCallManager()
         let callKitProviderDelegateFactory = MockCallKitProviderDelegateFactory()
+        let meetingNoUserJoinedUseCase = MockMeetingNoUserJoinedUseCase()
         
         @MainActor
         init(
@@ -33,7 +34,7 @@ final class CallsCoordinatorTests: XCTestCase {
                 chatRoomUseCase: chatRoomUseCase,
                 chatUseCase: MockChatUseCase(myUserHandle: 101),
                 sessionUpdateUseCase: MockSessionUpdateUseCase(),
-                noUserJoinedUseCase: MockMeetingNoUserJoinedUseCase(),
+                noUserJoinedUseCase: meetingNoUserJoinedUseCase,
                 captureDeviceUseCase: MockCaptureDeviceUseCase(),
                 audioSessionUseCase: audioSessionUseCase,
                 callManager: callManager,
@@ -154,18 +155,9 @@ final class CallsCoordinatorTests: XCTestCase {
     }
     
     @MainActor
-    func testStartCall_withSpeakerEnabled_shouldCallEnableSpeaker() async throws {
-        let harness = Harness()
-        harness.callUseCase.callCompletion = .success(CallEntity())
-        
-        _ = await harness.sut.startCall(.speakerEnabled(true))
-        XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 1)
-    }
-    
-    @MainActor
     func testAnswerCall_withSpeakerDisabled_shouldNotCallEnableSpeaker() async throws {
         let harness = Harness()
-        harness.callUseCase.callCompletion = .success(CallEntity())
+        harness.callUseCase.answerCallCompletion = .success(CallEntity())
         
         _ = await harness.sut.answerCall(.speakerEnabled(false))
         XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 0)
@@ -181,12 +173,39 @@ final class CallsCoordinatorTests: XCTestCase {
     }
     
     @MainActor
+    func testStartCall_withSpeakerEnabled_shouldCallEnableSpeaker() async throws {
+        let harness = Harness()
+        harness.callUseCase.callCompletion = .success(CallEntity())
+        
+        _ = await harness.sut.startCall(.speakerEnabled(true))
+        XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 1)
+    }
+    
+    @MainActor
     func testStartCall_withSpeakerDisabled_shouldNotCallEnableSpeaker() async throws {
         let harness = Harness()
-        harness.callUseCase.answerCallCompletion = .success(CallEntity())
+        harness.callUseCase.callCompletion = .success(CallEntity())
         
         _ = await harness.sut.startCall(.speakerEnabled(false))
         XCTAssertEqual(harness.audioSessionUseCase.enableLoudSpeaker_calledTimes, 0)
+    }
+    
+    @MainActor
+    func testStartCall_joiningActiveCall_shouldNotCallStartNoUserJoinedCountdown() async throws {
+        let harness = Harness()
+        harness.callUseCase.callCompletion = .success(CallEntity())
+        
+        _ = await harness.sut.startCall(.isJoiningActiveCall(true))
+        XCTAssertEqual(harness.meetingNoUserJoinedUseCase.startTimer_calledTimes, 0)
+    }
+    
+    @MainActor
+    func testStartCall_notJoiningActiveCall_shouldCallStartNoUserJoinedCountdown() async throws {
+        let harness = Harness()
+        harness.callUseCase.callCompletion = .success(CallEntity())
+        
+        _ = await harness.sut.startCall(.isJoiningActiveCall(false))
+        XCTAssertEqual(harness.meetingNoUserJoinedUseCase.startTimer_calledTimes, 1)
     }
 }
 
@@ -199,6 +218,10 @@ extension ChatRoomEntity {
 extension CallActionSync {
     static func speakerEnabled(_ enabled: Bool) -> Self {
         CallActionSync(chatRoom: .testChatRoomEntity, speakerEnabled: enabled)
+    }
+    
+    static func isJoiningActiveCall(_ activeCall: Bool) -> Self {
+        CallActionSync(chatRoom: .testChatRoomEntity, isJoiningActiveCall: activeCall)
     }
 }
 
