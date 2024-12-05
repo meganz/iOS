@@ -1,5 +1,7 @@
 import ChatRepo
 import Foundation
+import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
 import MessageKit
@@ -46,12 +48,18 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         let megaMessage = chatMessage.message
         richPreviewContentView.isHidden = true
         richPreviewContentView.message = megaMessage
+        let senderIsMyself = ChatUseCase(chatRepo: ChatRepository.newRepo).myUserHandle() == UInt64(message.sender.senderId)
 
         let dummyMessage = ConcreteMessageType(
             sender: message.sender,
             messageId: message.messageId,
             sentDate: message.sentDate,
-            kind: .attributedText(createAttributedContent(from: megaMessage.content ?? ""))
+            kind: .attributedText(
+                createAttributedContent(
+                    from: megaMessage.content ?? "",
+                    senderIsMyself: senderIsMyself
+                )
+            )
         )
         super.configure(with: dummyMessage, at: indexPath, and: messagesCollectionView)
 
@@ -166,11 +174,14 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         }
     }
     
-    private func createAttributedContent(from text: String) -> NSAttributedString {
+    private func createAttributedContent(from text: String, senderIsMyself: Bool) -> NSAttributedString {
         NSAttributedString(
             string: text,
             attributes: [
-                NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)
+                NSAttributedString.Key.font:
+                    UIFont.preferredFont(forTextStyle: .subheadline),
+                NSAttributedString.Key.foregroundColor:
+                    senderIsMyself ? TokenColors.Text.inverse : TokenColors.Text.primary
             ]
         )
     }
