@@ -366,19 +366,38 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
             reportEndCall(call)
         }
     }
-}
-
-extension CallsCoordinator: CallsCoordinatorProtocol {
-    func startCall(_ callActionSync: CallActionSync) async -> Bool {
-        do {
-            let call = try await callUseCase.startCall(
+    
+    /// Obtains the call object from ChatSDK after performing a start call in CallKit.
+    /// If user privilege is read only, means that call must be answered/joined as start call is not allowed,
+    /// this happens because we allow through app UI to join a call after VoIP notification has been missed.
+    /// In this scenario, call must be reported as start call to CallKit but as answer call to ChatSDK.
+    private func callForAction(_ callActionSync: CallActionSync) async throws -> CallEntity {
+        if callActionSync.chatRoom.ownPrivilege == .readOnly {
+            return try await callUseCase.answerCall(
+                for: callActionSync.chatRoom.chatId,
+                enableVideo: callActionSync.videoEnabled,
+                enableAudio: callActionSync.audioEnabled,
+                localizedCameraName: localizedCameraName
+            )
+        } else {
+            return try await callUseCase.startCall(
                 for: callActionSync.chatRoom.chatId,
                 enableVideo: callActionSync.videoEnabled,
                 enableAudio: callActionSync.audioEnabled,
                 notRinging: callActionSync.notRinging,
                 localizedCameraName: localizedCameraName
             )
-            noUserJoinedUseCase.start(timerDuration: 60*5, chatId: callActionSync.chatRoom.chatId)
+        }
+    }
+}
+
+extension CallsCoordinator: CallsCoordinatorProtocol {
+    func startCall(_ callActionSync: CallActionSync) async -> Bool {
+        do {
+            let call = try await callForAction(callActionSync)
+            if !callActionSync.isJoiningActiveCall {
+                noUserJoinedUseCase.start(timerDuration: 60*5, chatId: callActionSync.chatRoom.chatId)
+            }
             if callActionSync.speakerEnabled {
                 audioSessionUseCase.enableLoudSpeaker(completion: nil)
             }
