@@ -11,6 +11,7 @@ enum OnboardingUpgradeAccountEvent {
     case proIIIPlanCardDisplayed
 }
 
+@MainActor
 public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
@@ -34,8 +35,6 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private var planList: [PlanEntity] = []
     private(set) var recommendedPlanType: AccountTypeEntity?
     
-    private(set) var registerDelegateTask: Task<Void, Never>?
-    private(set) var purchasePlanTask: Task<Void, Never>?
     private(set) var alertType: UpgradeAccountPlanAlertType?
     
     @Published var isLoading = false
@@ -63,28 +62,20 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         self.router = router
         
         registerDelegates()
+        setupSubscriptions()
     }
     
     deinit {
-        deRegisterDelegates()
-        registerDelegateTask?.cancel()
-        purchasePlanTask?.cancel()
-        registerDelegateTask = nil
-        purchasePlanTask = nil
-    }
-    
-    private func registerDelegates() {
-        registerDelegateTask = Task {
-            await purchaseUseCase.registerRestoreDelegate()
-            await purchaseUseCase.registerPurchaseDelegate()
-            setupSubscriptions()
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.deRegisterRestoreDelegate()
+            await purchaseUseCase.deRegisterPurchaseDelegate()
         }
     }
     
-    private func deRegisterDelegates() {
-        Task { [weak self] in
-            await self?.purchaseUseCase.deRegisterRestoreDelegate()
-            await self?.purchaseUseCase.deRegisterPurchaseDelegate()
+    private func registerDelegates() {
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.registerRestoreDelegate()
+            await purchaseUseCase.registerPurchaseDelegate()
         }
     }
 
@@ -169,9 +160,8 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
    
     // MARK: - Variant A with View Pro Plans
     
-    @MainActor
     public func setUpLowestProPlan() async {
-        let planList = await self.purchaseUseCase.accountPlanProducts()
+        let planList = await purchaseUseCase.accountPlanProducts()
         lowestProPlan = lowestPlan(planList: planList)
     }
     
@@ -183,7 +173,6 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     
     // MARK: - Variant B with list of free and all Pro Plans
     
-    @MainActor
     func setupPlans() async {
         planList = await purchaseUseCase.accountPlanProducts()
         
@@ -304,7 +293,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         router.showTermsAndPolicies()
     }
     
-    func purchaseSelectedPlan() {
+    func purchaseSelectedPlan() async {
         trackSelectedPlanEvent()
         guard let selectedPlan = filteredPlanList.first(where: { $0.type == selectedPlanType }) else { return }
         
@@ -313,17 +302,8 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
             return
         }
         
-        purchasePlanTask = Task { [weak self] in
-            guard let self else { return }
-            
-            await startLoading()
-            await purchaseUseCase.purchasePlan(selectedPlan)
-        }
-    }
-    
-    @MainActor
-    private func startLoading() {
         isLoading = true
+        await purchaseUseCase.purchasePlan(selectedPlan)
     }
     
     // MARK: - Helper

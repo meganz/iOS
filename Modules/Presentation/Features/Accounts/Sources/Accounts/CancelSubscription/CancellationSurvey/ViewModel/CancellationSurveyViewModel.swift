@@ -263,7 +263,7 @@ final class CancellationSurveyViewModel: ObservableObject {
         // Convert selected main reasons to entity
         let mainReasonList = selectedMainReasons
             .filter { !mainReasonIDs.contains($0.id) }
-            .compactMap(makeMainCancelSubscriptionReasonEntity)
+            .compactMap { makeMainCancelSubscriptionReasonEntity($0) }
         
         return mainReasonList + selectedFollowUpReasons
     }

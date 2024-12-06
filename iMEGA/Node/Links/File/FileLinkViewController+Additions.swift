@@ -47,23 +47,7 @@ extension FileLinkViewController {
 extension FileLinkViewController: AdsSlotViewControllerProtocol {
     public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
         SingleItemAsyncSequence(
-            item: AdsSlotConfig(
-                adsSlot: .sharedLink,
-                displayAds: true,
-                isAdsCookieEnabled: calculateAdCookieStatus
-            )
+            item: AdsSlotConfig(adsSlot: .sharedLink, displayAds: true)
         ).eraseToAnyAsyncSequence()
-    }
-    
-    private func calculateAdCookieStatus() async -> Bool {
-        do {
-            let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
-            let bitmap = try await cookieSettingsUseCase.cookieSettings()
-            
-            let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
-            return cookiesBitmap.contains(.ads) && cookiesBitmap.contains(.adsCheckCookie)
-        } catch {
-            return false
-        }
     }
 }

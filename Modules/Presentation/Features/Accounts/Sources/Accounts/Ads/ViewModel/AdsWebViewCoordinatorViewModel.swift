@@ -1,5 +1,6 @@
 import WebKit
 
+@MainActor
 struct AdsWebViewCoordinatorViewModel {
     func shouldHandleAdsTap(
         currentDomain: String,

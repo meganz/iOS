@@ -245,9 +245,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Success alert should display the correct expiration date")
         
         let mockRouter = MockCancelAccountPlanRouter { expirationDate in
-            Task { @MainActor in
-                self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
-            }
+            self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
         }
         
         let sut = makeSUT(
@@ -347,9 +345,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Success alert should display the correct expiration date")
         
         let mockRouter = MockCancelAccountPlanRouter { expirationDate in
-            Task { @MainActor in
-                self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
-            }
+            self.assertExpirationDate(expirationDate, matches: expectedExpirationDate, expectation: expectation)
         }
         
         let sut = makeSUT(
@@ -625,11 +621,11 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         return (reason: randomReason, positionID: newID.rawValue)
     }
     
-    private func dateComponents(from date: Date) -> DateComponents {
+    nonisolated private func dateComponents(from date: Date) -> DateComponents {
         Calendar.current.dateComponents([.year, .month, .day], from: date)
     }
     
-    private func assertExpirationDate(_ expirationDate: Date, matches expectedDate: Date, expectation: XCTestExpectation) {
+    nonisolated private func assertExpirationDate(_ expirationDate: Date, matches expectedDate: Date, expectation: XCTestExpectation) {
         let actualDateComponents = dateComponents(from: expirationDate)
         let expectedDateComponents = dateComponents(from: expectedDate)
         XCTAssertEqual(actualDateComponents, expectedDateComponents, "Success alert should display the correct expiration date without considering time.")

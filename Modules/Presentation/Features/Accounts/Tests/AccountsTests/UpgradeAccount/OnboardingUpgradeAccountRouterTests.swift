@@ -6,6 +6,7 @@ import XCTest
 
 final class OnboardingUpgradeAccountRouterTests: XCTestCase {
 
+    @MainActor
     func testBuild_variantA_shouldBeOnboardingWithViewProPlansView() {
         let sut = makeSUT(onboardingVariant: .variantA)
         
@@ -15,6 +16,7 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
         XCTAssert(viewController is UIHostingController<OnboardingWithViewProPlansView>)
     }
     
+    @MainActor
     func testBuild_variantB_shouldBeOnboardingWithViewProPlansView() {
         let sut = makeSUT(onboardingVariant: .variantB)
         
@@ -24,12 +26,14 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
         XCTAssert(viewController is UIHostingController<OnboardingWithProPlanListView>)
     }
     
+    @MainActor
     func testBuild_baseline_shouldReturnNil() {
         let sut = makeSUT(onboardingVariant: .baseline)
         
         XCTAssertNil(sut.build())
     }
 
+    @MainActor
     func makeSUT(
         onboardingVariant: ABTestVariant,
         isAdsEnabled: Bool = false,

@@ -6,7 +6,7 @@ import Testing
 @Suite("Feature List Helper Tests Suite - Verifies the feature list generation for various account types.")
 struct FeatureListHelperTestSuite {
     
-    struct FeatureTestCase {
+    struct FeatureTestCase: Sendable {
         let type: FeatureType
         let title: String
         let freeText: String?

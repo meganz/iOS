@@ -13,18 +13,18 @@ import XCTest
 final class AdsSlotViewModelTests: XCTestCase {
     var subscriptions = Set<AnyCancellable>()
     
-    private var adsCookieEnabled: Bool = false
-    
     override func tearDown() {
         subscriptions.removeAll()
         super.tearDown()
     }
     
     // MARK: - Subscription
+    @MainActor
     func testAccountDidPurchasedPlanNotif_purchasedAccountSuccessAndExternalAdsIsEnabled_shouldHideAds() async {
         await assertAccountDidPurchasedPlanNotif(isExternalAdsFlagEnabled: true)
     }
     
+    @MainActor
     func testAccountDidPurchasedPlanNotif_purchasedAccountSuccessAndExternalAdsIsDisabled_shouldDoNothing() async {
         await assertAccountDidPurchasedPlanNotif(isExternalAdsFlagEnabled: false)
     }
@@ -76,14 +76,17 @@ final class AdsSlotViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSetupAdsRemoteFlag_whenAccountIsFreeWithSuccessAccountDetailsResult_shouldMatchExternalAdsValue() async {
         await assertSetupAdsRemoteFlag(isLoggedIn: true, accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: .free)))
     }
-                                       
+              
+    @MainActor
     func testSetupAdsRemoteFlag_whenAccountIsFreeWithFailedAccountDetailsResult_shouldMatchExternalAdsValue() async {
         await assertSetupAdsRemoteFlag(isLoggedIn: true, accountDetailsResult: .failure(.generic))
     }
-                                       
+    
+    @MainActor
     func testSetupAdsRemoteFlag_whenNoLoggedInUser_shouldMatchExternalAdsValue() async {
         await assertSetupAdsRemoteFlag(isLoggedIn: false)
     }
@@ -130,17 +133,18 @@ final class AdsSlotViewModelTests: XCTestCase {
     
     @MainActor func testUpdateAdsSlot_externalAdsEnabledAndReceivedSameAdsSlot_withDifferentDisplayAdsValue_shouldHaveLatestDisplayAds() async {
         let randomAdSlot = randomAdsSlotConfig
-        let expectedConfig = AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)
+        let expectedConfig = AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: true)
         
         await assertUpdateAdsSlotShouldDisplayAds(
             adsSlots: [
-                AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled),
+                AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: false),
                 expectedConfig
             ],
             expectedLatestAdsSlotConfig: expectedConfig
         )
     }
     
+    @MainActor
     func testUpdateAdsSlot_externalAdsEnabledAndReceivedSameAdsSlot_withSameDisplayAdsValue_shouldHaveTheSameDisplayAdsValue() async {
         let randomAdSlot = randomAdsSlotConfig
         
@@ -150,6 +154,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testUpdateAdsSlot_externalAdsEnabledAndReceivedNewAdSlot_withSameDisplayAdsValues_shouldDisplayAds() async {
         let randomAdSlot = randomAdsSlotConfig
         
@@ -191,10 +196,12 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertTrue(sut.monitorAdsSlotUpdatesTask?.isCancelled ?? false)
     }
     
+    @MainActor
     func testInitializeGoogleAds_externalAdsEnabled_shouldInitialize() async {
         await assertInitializingGoogleAds(isExternalAdsFlagEnabled: true, expectedCallCount: 1)
     }
     
+    @MainActor
     func testInitializeGoogleAds_externalAdsDisabled_shouldNotInitialize() async {
         await assertInitializingGoogleAds(isExternalAdsFlagEnabled: false, expectedCallCount: 0)
     }
@@ -276,10 +283,6 @@ final class AdsSlotViewModelTests: XCTestCase {
 
     private var randomAdsSlotConfig: AdsSlotConfig {
         let adsSlot: AdsSlotEntity = [.files, .home, .photos, .sharedLink].randomElement() ?? .files
-        return AdsSlotConfig(adsSlot: adsSlot, displayAds: Bool.random(), isAdsCookieEnabled: isAdsCookieEnabled)
-    }
-    
-    private func isAdsCookieEnabled() async -> Bool {
-        adsCookieEnabled
+        return AdsSlotConfig(adsSlot: adsSlot, displayAds: Bool.random())
     }
 }

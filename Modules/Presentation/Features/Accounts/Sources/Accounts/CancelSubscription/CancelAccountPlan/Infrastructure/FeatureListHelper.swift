@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGAL10n
 
-public enum FeatureType {
+public enum FeatureType: Sendable {
     case storage, transfer, passwordProtectedLinks, linksWithExpiryDate, transferSharing, rewind, vpn, callsAndMeetingsDuration, callsAndMeetingsParticipants
 }
 

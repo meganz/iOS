@@ -2,12 +2,12 @@ import GoogleMobileAds
 import MEGASwift
 import UserMessagingPlatform
 
-public protocol GoogleMobileAdsConsentManagerProtocol {
+public protocol GoogleMobileAdsConsentManagerProtocol: Sendable {
     func gatherConsent() async throws
     func initializeGoogleMobileAdsSDK() async
 }
 
-public protocol AdMobConsentInformationProtocol {
+public protocol AdMobConsentInformationProtocol: Sendable {
     var canRequestAds: Bool { get }
     func requestConsentInfoUpdate(with parameters: UMPRequestParameters?) async throws
 }
@@ -16,7 +16,7 @@ public protocol AdMobConsentFormProtocol {
     static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws
 }
 
-public protocol MobileAdsProtocol {
+public protocol MobileAdsProtocol: Sendable {
     func startAds() async
 }
 
@@ -85,10 +85,13 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     }
 }
 
+extension UMPConsentInformation: @retroactive @unchecked Sendable {}
 extension UMPConsentInformation: AdMobConsentInformationProtocol {}
 
+extension UMPConsentForm: @retroactive @unchecked Sendable {}
 extension UMPConsentForm: AdMobConsentFormProtocol {}
 
+extension GADMobileAds: @retroactive @unchecked Sendable {}
 extension GADMobileAds: MobileAdsProtocol {
     public func startAds() async {
         await start()

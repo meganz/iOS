@@ -22,17 +22,16 @@ struct AdsSlotUpdatesProviderTests {
         }
     }
     
-    private static func isAdsCookieEnabled() async -> Bool { true }
-    
     // MARK: - Test
+    @MainActor
     @Test("Should provide correct ads slot updates")
     func adsSlotUpdates() async throws {
         let controller = TestAdsSlotViewController()
         let sut = AdsSlotUpdatesProvider(adsSlotViewController: controller)
         
         let configs = [
-            AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: AdsSlotUpdatesProviderTests.isAdsCookieEnabled),
-            AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: AdsSlotUpdatesProviderTests.isAdsCookieEnabled),
+            AdsSlotConfig(adsSlot: .files, displayAds: true),
+            AdsSlotConfig(adsSlot: .home, displayAds: true),
             nil
         ]
         

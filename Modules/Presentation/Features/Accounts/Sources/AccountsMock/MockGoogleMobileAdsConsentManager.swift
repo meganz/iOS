@@ -5,7 +5,7 @@ public enum AdMobError: Error {
     case genericError
 }
 
-public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtocol {
+public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtocol, @unchecked Sendable {
     public private(set) var gatherConsentCalledCount = 0
     public private(set) var initializeGoogleMobileAdsSDKCalledCount = 0
     
@@ -20,7 +20,7 @@ public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentMana
     }
 }
 
-public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol {
+public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol, @unchecked Sendable {
     public private(set) var canRequestAds: Bool
     public private(set) var didRequestConsentInfoUpdate = false
     private let shouldThrowError: Bool
@@ -45,8 +45,8 @@ public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol 
     }
 }
 
-public final class MockAdMobConsentForm: AdMobConsentFormProtocol {
-    public static private(set) var didLoadAndPresent = false
+public final class MockAdMobConsentForm: AdMobConsentFormProtocol, @unchecked Sendable {
+    nonisolated(unsafe) public static private(set) var didLoadAndPresent = false
     
     public static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws {
         didLoadAndPresent = true
@@ -56,7 +56,7 @@ public final class MockAdMobConsentForm: AdMobConsentFormProtocol {
     }
 }
 
-public final class MockMobileAds: MobileAdsProtocol {
+public final class MockMobileAds: MobileAdsProtocol, @unchecked Sendable {
     public private(set) var startAdsCalledCount = 0
 
     public init() {}
