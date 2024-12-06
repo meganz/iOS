@@ -5,6 +5,7 @@ import Settings
 import SwiftUI
 import UIKit
 
+@MainActor
 public protocol OnboardingUpgradeAccountRouting {
     func showTermsAndPolicies()
 }

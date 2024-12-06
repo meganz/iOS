@@ -3,6 +3,7 @@ import MEGAAssets
 
 extension AccountsConfig {
     
+    @MainActor
     static let preview: AccountsConfig = AccountsConfig(
         onboardingViewAssets: OnboardingViewAssets(
             storageImage: MEGAAssetsImageProvider.image(named: "storage"),

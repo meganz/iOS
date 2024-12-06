@@ -1,6 +1,11 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
+
+private let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "Accounts",
@@ -36,11 +41,13 @@ let package = Package(
                            "MEGASwiftUI",
                            "MEGAAssets",
                            "MEGAUI",
-                           "Settings"]
+                           "Settings"],
+            swiftSettings: settings
         ),
         .target(
             name: "AccountsMock",
-            dependencies: ["Accounts"]
+            dependencies: ["Accounts"],
+            swiftSettings: settings
         ),
         .testTarget(
             name: "AccountsTests",
@@ -52,7 +59,9 @@ let package = Package(
                            .product(name: "MEGAPresentationMock", package: "MEGAPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
                            .product(name: "MEGASDKRepoMock", package: "MEGASDKRepo"),
-                           .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")]
+                           .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")],
+            swiftSettings: settings
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

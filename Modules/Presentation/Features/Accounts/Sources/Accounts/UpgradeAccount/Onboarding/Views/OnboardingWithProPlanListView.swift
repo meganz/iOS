@@ -47,7 +47,9 @@ public struct OnboardingWithProPlanListView: View {
                     }
                     
                     PrimaryActionButtonView(title: Strings.Localizable.continue) {
-                        viewModel.purchaseSelectedPlan()
+                        Task {
+                            await viewModel.purchaseSelectedPlan()
+                        }
                     }
                     .padding(.vertical)
                     .frame(maxWidth: .infinity)

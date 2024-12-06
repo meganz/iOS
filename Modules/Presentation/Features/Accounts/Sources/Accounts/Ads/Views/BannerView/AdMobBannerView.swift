@@ -53,6 +53,7 @@ struct AdMobBannerContentView: UIViewRepresentable {
         AdMobBannerCoordinator(self)
     }
     
+    @MainActor
     final class AdMobBannerCoordinator: NSObject {
         private(set) lazy var bannerView: GADBannerView = {
             let banner = GADBannerView(adSize: parent.adSize)

@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 final class CancelSubscriptionStepsViewModel: ObservableObject {
     private let cancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol
     @Published var shouldDismiss: Bool = false
@@ -11,7 +12,6 @@ final class CancelSubscriptionStepsViewModel: ObservableObject {
         self.cancelSubscriptionStepsHelper = helper
     }
     
-    @MainActor
     func setupStepList() {
         let cancellationData = cancelSubscriptionStepsHelper.loadCancellationData()
         title = cancellationData.title
@@ -19,7 +19,6 @@ final class CancelSubscriptionStepsViewModel: ObservableObject {
         sections = cancellationData.sections
     }
     
-    @MainActor
     func dismiss() {
         shouldDismiss = true
     }

@@ -11,11 +11,13 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func makeSUT(data: CancelSubscriptionData) -> CancelSubscriptionStepsViewModel {
         CancelSubscriptionStepsViewModel(helper: MockCancelSubscriptionStepsHelper(data: data))
     }
 
-    func testSetupStepList_setsCorrectData() async {
+    @MainActor
+    func testSetupStepList_setsCorrectData() {
         let expectedTitle = "Test Title"
         let expectedMessage = "Test Message"
         let expectedStep = Step(text: "Step 1")
@@ -28,7 +30,7 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
         
         let sut = makeSUT(data: cancelSubscriptionData)
 
-        await sut.setupStepList()
+        sut.setupStepList()
 
         XCTAssertEqual(sut.title, expectedTitle)
         XCTAssertEqual(sut.message, expectedMessage)
@@ -38,6 +40,7 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.sections.first?.steps.first?.text, expectedStep.text)
     }
 
+    @MainActor
     func testDismiss_shouldDismissReturnTrue() async {
         let sut = makeSUT(data: emptyData)
         let exp = expectation(description: "Should dismiss view")
@@ -48,7 +51,7 @@ final class CancelSubscriptionStepsViewModelTests: XCTestCase {
                 exp.fulfill()
             }
         
-        await sut.dismiss()
+        sut.dismiss()
         
         await fulfillment(of: [exp], timeout: 0.5)
         shouldDismissSubscription.cancel()

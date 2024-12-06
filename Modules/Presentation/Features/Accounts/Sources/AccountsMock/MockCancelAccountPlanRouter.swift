@@ -9,9 +9,9 @@ public final class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
     public var lastShownSuccessAlertExpirationDate: Date?
     public var lastShownFailureAlertError: Error?
 
-    private let onSuccess: @Sendable (_ expirationDate: Date) -> Void
+    private let onSuccess: (_ expirationDate: Date) -> Void
     
-    public nonisolated init(onSuccess: @Sendable @escaping (_ expirationDate: Date) -> Void = {_ in }) {
+    public init(onSuccess: @escaping (_ expirationDate: Date) -> Void = {_ in }) {
         self.onSuccess = onSuccess
     }
 

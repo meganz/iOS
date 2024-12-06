@@ -15,31 +15,26 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
     private func currentAdsSlotConfig() -> AdsSlotConfig? {
         switch selectedIndex {
         case TabType.cloudDrive.rawValue:
-            if let adsDisplayable = mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable {
-                return AdsSlotConfig(
-                    adsSlot: .files,
-                    displayAds: adsDisplayable.shouldDisplayAdsSlot,
-                    isAdsCookieEnabled: calculateAdCookieStatus
-                )
+            let displayAds = if let adsDisplayable = mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable {
+                adsDisplayable.shouldDisplayAdsSlot
+            } else {
+                false
             }
             
             return AdsSlotConfig(
                 adsSlot: .files,
-                displayAds: false,
-                isAdsCookieEnabled: calculateAdCookieStatus
+                displayAds: displayAds
             )
         case TabType.cameraUploads.rawValue:
             return AdsSlotConfig(
                 adsSlot: .photos,
-                displayAds: isVisibleController(type: PhotoAlbumContainerViewController.self), 
-                isAdsCookieEnabled: calculateAdCookieStatus
+                displayAds: isVisibleController(type: PhotoAlbumContainerViewController.self)
             )
             
         case TabType.home.rawValue:
             return AdsSlotConfig(
                 adsSlot: .home,
-                displayAds: isVisibleController(type: HomeViewController.self), 
-                isAdsCookieEnabled: calculateAdCookieStatus
+                displayAds: isVisibleController(type: HomeViewController.self)
             )
             
         case TabType.chat.rawValue, TabType.sharedItems.rawValue:

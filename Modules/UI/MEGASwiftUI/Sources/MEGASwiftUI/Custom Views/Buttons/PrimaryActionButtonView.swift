@@ -4,9 +4,9 @@ import SwiftUI
 
 public struct PrimaryActionButtonView: View {
     private let title: String
-    private let action: (() -> Void)
+    private let action: @MainActor () -> Void
     
-    public init(title: String, action: @escaping () -> Void) {
+    public init(title: String, action: @escaping @MainActor () -> Void) {
         self.title = title
         self.action = action
     }

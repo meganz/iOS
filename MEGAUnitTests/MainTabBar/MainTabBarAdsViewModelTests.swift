@@ -3,14 +3,12 @@
 import Testing
 
 struct MainTabBarAdsViewModelTests {
-    private static func isAdsCookieEnabled() async -> Bool { true }
-    
     @Test("Should receive correct ads slot configs", .timeLimit(.minutes(1)))
     func sendNewAdsConfig() async throws {
         let sut = MainTabBarAdsViewModel()
         let configs = [
-            AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: MainTabBarAdsViewModelTests.isAdsCookieEnabled),
-            AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: MainTabBarAdsViewModelTests.isAdsCookieEnabled),
+            AdsSlotConfig(adsSlot: .files, displayAds: true),
+            AdsSlotConfig(adsSlot: .home, displayAds: true),
             nil
         ]
         
