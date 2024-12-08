@@ -1,21 +1,13 @@
 import MEGADomain
-import MEGASwift
 
 public struct MockRubbishBinRepository: RubbishBinRepositoryProtocol {
     private let syncDebrisNode: NodeEntity?
     private let syncDebrisChildNodes: [NodeEntity]?
-    private let rubbishBinAutopurgeEnabled: Bool?
-    
-    public let onRubbishBinSettinghsRequestFinish: AnyAsyncSequence<Result<RubbishBinSettingsEntity, any Error>>
     
     public init(syncDebrisNode: NodeEntity? = nil,
-                syncDebrisChildNodes: [NodeEntity]? = nil,
-                rubbishBinAutopurgeEnabled: Bool? = nil,
-                onRubbishBinSettinghsRequestFinish: AnyAsyncSequence<Result<RubbishBinSettingsEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence()) {
+                syncDebrisChildNodes: [NodeEntity]? = nil) {
         self.syncDebrisNode = syncDebrisNode
         self.syncDebrisChildNodes = syncDebrisChildNodes
-        self.rubbishBinAutopurgeEnabled = rubbishBinAutopurgeEnabled
-        self.onRubbishBinSettinghsRequestFinish = onRubbishBinSettinghsRequestFinish
     }
     
     private func isSyncDebrisRootNode(_ node: NodeEntity) -> Bool {
@@ -32,10 +24,6 @@ public struct MockRubbishBinRepository: RubbishBinRepositoryProtocol {
         } else {
             return isSyncDebrisChild(node)
         }
-    }
-    
-    public func serverSideRubbishBinAutopurgeEnabled() -> Bool {
-        rubbishBinAutopurgeEnabled ?? false
     }
     
     public func cleanRubbishBin() {}

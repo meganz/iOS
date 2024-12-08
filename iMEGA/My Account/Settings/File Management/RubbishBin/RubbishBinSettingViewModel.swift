@@ -6,6 +6,7 @@ import MEGAUIComponent
 final class RubbishBinSettingViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let rubbishBinSettingsUseCase: any RubbishBinSettingsUseCaseProtocol
+    private let upgradeAccountRouter: any UpgradeAccountRouting
     
     @Published private(set) var isPaidAccount: Bool = false
     @Published private(set) var rubbishBinAutopurgePeriod: Int64 = 0
@@ -17,9 +18,12 @@ final class RubbishBinSettingViewModel: ObservableObject {
     
     // MARK: - Life Cycle
     
-    init(accountUseCase: some AccountUseCaseProtocol, rubbishBinSettingsUseCase: some RubbishBinSettingsUseCaseProtocol) {
+    init(accountUseCase: some AccountUseCaseProtocol,
+         rubbishBinSettingsUseCase: some RubbishBinSettingsUseCaseProtocol,
+         upgradeAccountRouter: some UpgradeAccountRouting = UpgradeAccountRouter()) {
         self.accountUseCase = accountUseCase
         self.rubbishBinSettingsUseCase = rubbishBinSettingsUseCase
+        self.upgradeAccountRouter = upgradeAccountRouter
         
         isPaidAccount = accountUseCase.isPaidAccount
         autoPurgePeriods = AutoPurgePeriod.options(forPaidAccount: isPaidAccount)
@@ -38,7 +42,7 @@ final class RubbishBinSettingViewModel: ObservableObject {
     // MARK: Actions
     
     func onTapUpgradeButtton() {
-        UpgradeAccountRouter().presentUpgradeTVC()
+        upgradeAccountRouter.presentUpgradeTVC()
     }
     
     func onTapAutoPurgeCell() {
@@ -54,6 +58,8 @@ final class RubbishBinSettingViewModel: ObservableObject {
         guard MEGAReachabilityManager.isReachableHUDIfNot(), !isLoading else { return }
         
         isLoading = true
+        
+        rubbishBinSettingsUseCase.cleanRubbishBin()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             self?.isLoading = false

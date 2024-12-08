@@ -760,6 +760,7 @@
 		6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
 		6D5A19B02A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */; };
+		6D5B40732D0420DC0088E7CC /* RubbishBinSettingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5B40722D0420D80088E7CC /* RubbishBinSettingViewModelTests.swift */; };
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */; };
@@ -3503,6 +3504,7 @@
 		6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCallsSettingsView.swift; sourceTree = "<group>"; };
 		6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModelTests.swift; sourceTree = "<group>"; };
+		6D5B40722D0420D80088E7CC /* RubbishBinSettingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingViewModelTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
@@ -7693,6 +7695,7 @@
 				A81F9BB327EA023A00D47C0D /* CookieSettingsViewModelTests.swift */,
 				B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */,
 				B5D861472CCB3F7D00A2685C /* RecoveryKeyViewModelTests.swift */,
+				6D5B40722D0420D80088E7CC /* RubbishBinSettingViewModelTests.swift */,
 				53A255282C3418EC00E7F10C /* SecuritySettingsViewRouterTests.swift */,
 				B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */,
 				9D68BBC028B6A135006FCBC5 /* SettingCellViewModelTests.swift */,
@@ -16410,6 +16413,7 @@
 				94227F6D2B6D481B009D586F /* ResourceInfoViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
 				947CA1FB2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift in Sources */,
+				6D5B40732D0420DC0088E7CC /* RubbishBinSettingViewModelTests.swift in Sources */,
 				BF418B7E2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift in Sources */,
 				83522FCA2A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift in Sources */,
 				BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */,

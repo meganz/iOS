@@ -16,6 +16,9 @@ public struct RubbishBinSettingsUpdateProvider: RubbishBinSettingsUpdateProvider
     private let isPaidAccount: Bool
     private let serverSideRubbishBinAutopurgeEnabled: Bool
     
+    public static let autopurgePeriodForPaidAccount = 90
+    public static let autopurgePeriodForFreeAccount = 14
+    
     public init(sdk: MEGASdk = MEGASdk.sharedSdk, isPaidAccount: Bool, serverSideRubbishBinAutopurgeEnabled: Bool) {
         self.sdk = sdk
         self.isPaidAccount = isPaidAccount
@@ -61,7 +64,9 @@ extension RubbishBingSettingsRequestDelegate: MEGARequestDelegate {
                 && (request.paramType == MEGAUserAttribute.rubbishTime.rawValue ) else { return }
         
         if error.type == .apiENoent {
-            let rubbishBinAutopurgePeriod = isPaidAccount ? 90 : 14
+            let rubbishBinAutopurgePeriod = isPaidAccount ?
+            RubbishBinSettingsUpdateProvider.autopurgePeriodForPaidAccount :
+            RubbishBinSettingsUpdateProvider.autopurgePeriodForFreeAccount
             let result = RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: Int64(rubbishBinAutopurgePeriod),
                                                   rubbishBinCleaningSchedulerEnabled: serverSideRubbishBinAutopurgeEnabled)
             
