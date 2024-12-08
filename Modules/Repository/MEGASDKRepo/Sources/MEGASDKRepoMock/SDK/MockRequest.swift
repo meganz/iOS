@@ -3,6 +3,9 @@ import MEGASDKRepo
 
 public final class MockRequest: MEGARequest {
     private let handle: MEGAHandle
+    private let requestType: MEGARequestType
+    private let parameterType: MEGAUserAttribute
+    
     private let _set: MEGASet?
     private let _text: String?
     private let _parentHandle: UInt64
@@ -24,6 +27,8 @@ public final class MockRequest: MEGARequest {
     
     public init(
         handle: MEGAHandle,
+        requestType: MEGARequestType = .MEGARequestTypeLogin,
+        parameterType: MEGAUserAttribute = .avatar,
         set: MEGASet? = nil,
         text: String? = nil,
         parentHandle: MEGAHandle = .invalidHandle,
@@ -44,6 +49,9 @@ public final class MockRequest: MEGARequest {
         folderInfo: MEGAFolderInfo? = nil
     ) {
         self.handle = handle
+        self.requestType = requestType
+        self.parameterType = parameterType
+        
         _set = set
         _text = text
         _parentHandle = parentHandle
@@ -62,9 +70,12 @@ public final class MockRequest: MEGARequest {
         _recentActionsBuckets = recentActionsBuckets
         _name = name
         _folderInfo = folderInfo
+        
         super.init()
     }
     
+    public override var type: MEGARequestType { requestType }
+    public override var paramType: Int { parameterType.rawValue }
     public override var nodeHandle: MEGAHandle { handle }
     public override var set: MEGASet? { _set }
     public override var text: String? { _text }

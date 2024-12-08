@@ -2,6 +2,8 @@ import MEGASwift
 
 public protocol RubbishBinSettingsUseCaseProtocol: Sendable {
     var onRubbishBinSettinghsRequestFinish: AnyAsyncSequence<Result<RubbishBinSettingsEntity, any Error>> { get }
+    
+    func cleanRubbishBin()
 }
 
 public struct RubbishBinSettingsUseCase<R: RubbishBinSettingsRepositoryProtocol>: RubbishBinSettingsUseCaseProtocol {
@@ -14,4 +16,6 @@ public struct RubbishBinSettingsUseCase<R: RubbishBinSettingsRepositoryProtocol>
     public init(rubbishBinSettingsRepository: R) {
         self.rubbishBinSettingsRepository = rubbishBinSettingsRepository
     }
+    
+    public func cleanRubbishBin() {}
 }
