@@ -3,16 +3,20 @@ import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 
-struct AlbumNameValidator {
-    let existingAlbumNames: () -> [String]
+public struct AlbumNameValidator {
+    private let existingAlbumNames: () -> [String]
     
-    func create(_ name: String?) -> TextFieldAlertError? {
+    public init(existingAlbumNames: @escaping () -> [String]) {
+        self.existingAlbumNames = existingAlbumNames
+    }
+    
+    public func create(_ name: String?) -> TextFieldAlertError? {
         guard let name = name, name.isNotEmpty else { return nil }
        
         return validate(name)
     }
     
-    func rename(_ name: String?) -> TextFieldAlertError? {
+    public func rename(_ name: String?) -> TextFieldAlertError? {
         guard let name = name, name.isNotEmpty else {
             return TextFieldAlertError(title: "", description: "")
         }
@@ -25,7 +29,7 @@ struct AlbumNameValidator {
             return TextFieldAlertError(title: "", description: "")
         }
         
-        if name.mnz_containsInvalidChars() {
+        if name.containsInvalidFileFolderNameCharacters {
             return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
         }
         if isReservedAlbumName(name: name) {

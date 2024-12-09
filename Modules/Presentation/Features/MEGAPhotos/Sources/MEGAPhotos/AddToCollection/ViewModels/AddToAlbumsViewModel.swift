@@ -1,14 +1,18 @@
 import ContentLibraries
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
+import MEGASwiftUI
 import SwiftUI
 
 @MainActor
 final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
     @Published var albums = [AlbumCellViewModel]()
     @Published var editMode: EditMode = .active
+    @Published var showCreateAlbumAlert = false
+    @Published var newAlbumName = ""
     public let createButtonOpacity: Double = 1.0
     
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
@@ -18,6 +22,7 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
+    private let albumListUseCase: any AlbumListUseCaseProtocol
     private let contentLibrariesConfiguration: ContentLibraries.Configuration
     
     private let albumSelection = AlbumSelection(mode: .single)
@@ -30,6 +35,7 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
+        albumListUseCase: some AlbumListUseCaseProtocol,
         contentLibrariesConfiguration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
@@ -39,6 +45,7 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.albumCoverUseCase = albumCoverUseCase
+        self.albumListUseCase = albumListUseCase
         self.contentLibrariesConfiguration = contentLibrariesConfiguration
         
         $editMode
@@ -83,6 +90,28 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
     }
     
     func onCreateAlbumTapped() {
-        // CC-8484: Handle create album alert with validation
+        showCreateAlbumAlert.toggle()
+    }
+    
+    func alertViewModel() -> TextFieldAlertViewModel {
+        .init(
+            title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
+            placeholderText: albums.map(\.album.name).newAlbumName(),
+            affirmativeButtonTitle: Strings.Localizable.createFolderButton,
+            destructiveButtonTitle: Strings.Localizable.cancel,
+            action: { [weak self] newAlbumName in
+                guard let self else { return }
+                let albumName = if let newAlbumName, newAlbumName.isNotEmpty {
+                    newAlbumName
+                } else {
+                    albums.map(\.album.name).newAlbumName()
+                }
+                Task {
+                    _ = try? await albumListUseCase.createUserAlbum(with: albumName)
+                }
+            },
+            validator: AlbumNameValidator(
+                existingAlbumNames: { [weak self] in self?.albums.map(\.album.name) ?? [] }).create
+        )
     }
 }
