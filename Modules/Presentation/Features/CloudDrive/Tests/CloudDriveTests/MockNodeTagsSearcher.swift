@@ -2,7 +2,7 @@
 
 actor MockNodeTagsSearcher: NodeTagsSearching {
     private let tags: [String]?
-    var continuation: CheckedContinuation<[String]?, Never>?
+    var continuations: [CheckedContinuation<[String]?, Never>] = []
 
     init(tags: [String]? = []) {
         self.tags = tags
@@ -17,7 +17,7 @@ actor MockNodeTagsSearcher: NodeTagsSearching {
             return tags.filter { $0.contains(searchText) }
         } else {
             return await withCheckedContinuation { continuation in
-                self.continuation = continuation
+                continuations.append(continuation)
             }
         }
     }

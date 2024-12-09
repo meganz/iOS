@@ -85,23 +85,62 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
-    @Test("test", arguments: [
-        (nil, true),
-        (["test"], false)
-    ])
+    @Test(
+        "Verify the canAddNewTag property based on the results returned by the search API call",
+        arguments: [
+            (nil, true),
+            (["test"], false)
+        ]
+    )
     func verifyCanAddNewTags(result: [String]?, expectedCanAddNewTag: Bool) async {
         let nodeSearcher = MockNodeTagsSearcher(tags: nil)
         let sut = makeSUT(nodeSearcher: nodeSearcher)
         sut.tagName = "test"
         sut.onTagNameChanged(with: "test")
-        while await nodeSearcher.continuation == nil {
+        while await nodeSearcher.continuations.first == nil {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
-        await nodeSearcher.continuation?.resume(with: .success(result))
+        await nodeSearcher.continuations.first?.resume(with: .success(result))
         for await canAddNewTag in sut.$canAddNewTag.dropFirst().values {
             #expect(canAddNewTag == expectedCanAddNewTag)
             break
         }
+    }
+
+    @MainActor
+    @Test("Verify the containsExistingTags when the first search call is cancelled and the second one is successful")
+    func verifyContainsExistingTagsWithMultipleSearchCallsInProgress() async {
+        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.tagName = "test"
+
+        var isLoadingValuesList = [Bool]()
+        let cancellable = sut.existingTagsViewModel
+            .$isLoading
+            .dropFirst()
+            .sink { updatedValue in
+                isLoadingValuesList.append(updatedValue)
+            }
+
+        sut.onTagNameChanged(with: "test")
+        while await nodeSearcher.continuations.first == nil {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+
+        sut.onTagNameChanged(with: "tester")
+        while await nodeSearcher.continuations.count == 2 {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+
+        await nodeSearcher.continuations.first?.resume(with: .success(["test"]))
+        await nodeSearcher.continuations.last?.resume(with: .success([]))
+
+        for await canAddNewTag in sut.$canAddNewTag.dropFirst().values {
+            #expect(canAddNewTag == true)
+            break
+        }
+        #expect(isLoadingValuesList == [true, true, false])
+        cancellable.cancel()
     }
 
     @MainActor
