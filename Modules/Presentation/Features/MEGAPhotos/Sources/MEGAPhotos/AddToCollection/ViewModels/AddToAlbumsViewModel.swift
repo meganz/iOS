@@ -1,3 +1,4 @@
+import Combine
 import ContentLibraries
 import MEGADomain
 import MEGAL10n
@@ -8,8 +9,8 @@ import MEGASwiftUI
 import SwiftUI
 
 @MainActor
-final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
-    @Published var albums = [AlbumCellViewModel]()
+public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
+    @Published public var albums = [AlbumCellViewModel]()
     @Published var editMode: EditMode = .active
     @Published var showCreateAlbumAlert = false
     @Published var newAlbumName = ""
@@ -23,11 +24,11 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let albumListUseCase: any AlbumListUseCaseProtocol
+    private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
     private let contentLibrariesConfiguration: ContentLibraries.Configuration
+    private let albumSelection: AlbumSelection
     
-    private let albumSelection = AlbumSelection(mode: .single)
-    
-    init(
+    public init(
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
@@ -36,7 +37,9 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         albumListUseCase: some AlbumListUseCaseProtocol,
-        contentLibrariesConfiguration: ContentLibraries.Configuration = ContentLibraries.configuration
+        albumModificationUseCase: some AlbumModificationUseCaseProtocol,
+        contentLibrariesConfiguration: ContentLibraries.Configuration = ContentLibraries.configuration,
+        albumSelection: AlbumSelection = AlbumSelection(mode: .single)
     ) {
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.thumbnailLoader = thumbnailLoader
@@ -46,13 +49,15 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.albumCoverUseCase = albumCoverUseCase
         self.albumListUseCase = albumListUseCase
+        self.albumModificationUseCase = albumModificationUseCase
         self.contentLibrariesConfiguration = contentLibrariesConfiguration
+        self.albumSelection = albumSelection
         
         $editMode
             .assign(to: &albumSelection.$editMode)
     }
     
-    func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
+    public func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
         let count = if let horizontalSizeClass {
             horizontalSizeClass == .compact  ? 3 : 5
         } else {
@@ -62,6 +67,10 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
             repeating: .init(.flexible(), spacing: 10),
             count: count
         )
+    }
+    
+    public func onCreateAlbumTapped() {
+        showCreateAlbumAlert.toggle()
     }
     
     func monitorUserAlbums() async {
@@ -89,10 +98,6 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         }
     }
     
-    func onCreateAlbumTapped() {
-        showCreateAlbumAlert.toggle()
-    }
-    
     func alertViewModel() -> TextFieldAlertViewModel {
         .init(
             title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
@@ -113,5 +118,21 @@ final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
             validator: AlbumNameValidator(
                 existingAlbumNames: { [weak self] in self?.albums.map(\.album.name) ?? [] }).create
         )
+    }
+}
+
+extension AddToAlbumsViewModel: AddItemsToCollectionViewModelProtocol {
+    var isAddButtonDisabled: AnyPublisher<Bool, Never> {
+        albumSelection.isAlbumSelectedPublisher.map { !$0 }.eraseToAnyPublisher()
+    }
+    
+    func addItems(_ photos: [NodeEntity]) {
+        guard let album = albumSelection.albums.values.first,
+              photos.isNotEmpty else { return }
+        
+        Task { [albumModificationUseCase] in
+            try await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photos)
+            // CC-8497 Handle toast messages
+        }
     }
 }

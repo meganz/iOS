@@ -4438,3 +4438,5 @@
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your admin.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="OK, got it";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="Add";

@@ -135,6 +135,74 @@ struct AddToAlbumsViewModelTests {
             }
         }
     }
+    
+    @Suite("Add photos to album")
+    @MainActor
+    struct AddPhotosToAlbum {
+        
+        @Test(arguments: [false, true])
+        func addButtonDisabled(isSelected: Bool) async throws {
+            let albumSelection = AlbumSelection(mode: .single)
+            albumSelection.setSelectedAlbums(isSelected ? [.init(id: 1, type: .user)] : [])
+            
+            let sut = AddToAlbumsViewModelTests
+                .makeSUT(albumSelection: albumSelection)
+            
+            var cancellable: AnyCancellable?
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                cancellable = sut.isAddButtonDisabled
+                    .setFailureType(to: TestError.self)
+                    .timeout(.milliseconds(500), scheduler: DispatchQueue.main, customError: {
+                        TestError.timeout
+                    })
+                    .sink(receiveCompletion: {
+                        cancellable?.cancel()
+                        switch $0 {
+                        case .finished:
+                            continuation.resume()
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
+                    }, receiveValue: {
+                        #expect($0 == !isSelected)
+                        continuation.resume()
+                        cancellable?.cancel()
+                    })
+            }
+        }
+        
+        @Test
+        func addItems() async {
+            let album = AlbumEntity(id: 3, type: .user)
+            let albumSelection = AlbumSelection(mode: .single)
+            albumSelection.setSelectedAlbums([album])
+            
+            let photos = [NodeEntity(handle: 1)]
+            let albumModificationUseCase = MockAlbumModificationUseCase()
+            let sut = AddToAlbumsViewModelTests
+                .makeSUT(
+                    albumModificationUseCase: albumModificationUseCase,
+                    albumSelection: albumSelection)
+            
+            await confirmation("Ensure create user album created") { addAlbumItems in
+                let invocationTask = Task {
+                    for await invocation in albumModificationUseCase.invocationSequence {
+                        #expect(invocation == .addPhotosToAlbum(id: album.id, nodes: photos))
+                        addAlbumItems()
+                        break
+                    }
+                }
+                sut.addItems(photos)
+                
+                Task {
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    invocationTask.cancel()
+                }
+                await invocationTask.value
+            }
+            
+        }
+    }
 
     @MainActor
     private static func makeSUT(
@@ -146,10 +214,12 @@ struct AddToAlbumsViewModelTests {
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         albumListUseCase: some AlbumListUseCaseProtocol = MockAlbumListUseCase(),
+        albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
         contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: { true })
+            isAlbumPerformanceImprovementsEnabled: { true }),
+        albumSelection: AlbumSelection = AlbumSelection(mode: .single)
     ) -> AddToAlbumsViewModel {
         .init(
             monitorAlbumsUseCase: monitorAlbumsUseCase,
@@ -160,6 +230,8 @@ struct AddToAlbumsViewModelTests {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             albumCoverUseCase: albumCoverUseCase,
             albumListUseCase: albumListUseCase,
-            contentLibrariesConfiguration: contentLibrariesConfiguration)
+            albumModificationUseCase: albumModificationUseCase,
+            contentLibrariesConfiguration: contentLibrariesConfiguration,
+            albumSelection: albumSelection)
     }
 }
