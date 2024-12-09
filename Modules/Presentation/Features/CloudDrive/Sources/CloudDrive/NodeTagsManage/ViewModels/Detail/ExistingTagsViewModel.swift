@@ -43,7 +43,13 @@ final class ExistingTagsViewModel: ObservableObject {
 
     func searchTags(for searchText: String?) async {
         isLoading = true
-        defer { isLoading = false }
+        defer {
+            /// If a task is cancelled, it means there a new task in progress.
+            /// We do not want to reset the isLoading while there is request in progress.
+            if !Task.isCancelled {
+                isLoading = false
+            }
+        }
 
         guard let tags = await nodeTagSearcher.searchTags(for: searchText), !Task.isCancelled else { return }
         tagsViewModel.updateTagsReorderedBySelection(
