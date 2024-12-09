@@ -264,19 +264,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func newAlbumName() -> String {
-        let newAlbumName = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder
-        let names = Set(albums.filter { $0.name.hasPrefix(newAlbumName) }.map { $0.name })
-        
-        guard names.count > 0 else { return newAlbumName }
-        guard names.contains(newAlbumName) else { return newAlbumName }
-        
-        for i in 1...names.count {
-            let newName = "\(newAlbumName) (\(i))"
-            if !names.contains(newName) {
-                return newName
-            }
-        }
-        return newAlbumName
+        albums.map(\.name)
+            .newAlbumName()
     }
     
     func onNewAlbumContentAdded(_ album: AlbumEntity, photos: [NodeEntity]) {

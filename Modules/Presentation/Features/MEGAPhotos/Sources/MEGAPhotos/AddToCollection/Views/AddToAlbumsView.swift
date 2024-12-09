@@ -7,6 +7,7 @@ struct AddToAlbumsView: View {
     var body: some View {
         AlbumListContentView(viewModel: viewModel)
             .environment(\.editMode, $viewModel.editMode)
+            .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel())
             .task {
                 await viewModel.monitorUserAlbums()
             }

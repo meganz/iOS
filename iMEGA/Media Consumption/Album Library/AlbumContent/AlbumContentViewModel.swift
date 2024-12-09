@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain

@@ -1,8 +1,12 @@
 @preconcurrency import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 
 public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
+    public enum Invocation: Sendable, Equatable {
+        case createUserAlbum(name: String?)
+    }
     private let cameraUploadNode: NodeEntity?
     private let albums: [AlbumEntity]
     private let createdUserAlbums: [String: AlbumEntity]
@@ -12,6 +16,13 @@ public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
         AlbumEntity(id: 4, name: name, coverNode: NodeEntity(handle: 4), count: 0, type: .user)
     }
     
+    public var invocationSequence: AnyAsyncSequence<Invocation> {
+        invocationStream.eraseToAnyAsyncSequence()
+    }
+
+    private let invocationStream: AsyncStream<Invocation>
+    private let invocationContinuation: AsyncStream<Invocation>.Continuation
+    
     public init(cameraUploadNode: NodeEntity? = nil,
                 albums: [AlbumEntity] = [],
                 createdUserAlbums: [String: AlbumEntity] = [:],
@@ -20,6 +31,7 @@ public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
         self.albums = albums
         self.createdUserAlbums = createdUserAlbums
         self.albumsUpdatedPublisher = albumsUpdatedPublisher
+        (invocationStream, invocationContinuation) = AsyncStream.makeStream(of: Invocation.self)
     }
     
     public func loadCameraUploadNode() async throws -> NodeEntity? {
@@ -35,7 +47,8 @@ public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
     }
     
     public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
-        createdUserAlbums[name ?? ""] ?? MockAlbumListUseCase.sampleUserAlbum(name: name ?? "Custom Name")
+        invocationContinuation.yield(.createUserAlbum(name: name))
+        return createdUserAlbums[name ?? ""] ?? MockAlbumListUseCase.sampleUserAlbum(name: name ?? "Custom Name")
     }
     
     public func hasNoVisualMedia() async -> Bool {
