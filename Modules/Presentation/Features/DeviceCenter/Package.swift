@@ -1,11 +1,17 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
+
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "DeviceCenter",
     platforms: [
-        .macOS(.v10_15), .iOS(.v15)
+        .macOS(.v10_15),
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -27,24 +33,34 @@ let package = Package(
     targets: [
         .target(
             name: "DeviceCenter",
-            dependencies: ["MEGADomain",
-                           "MEGAPresentation",
-                           "MEGASwiftUI",
-                           "MEGAL10n",
-                           "MEGAUIKit",
-                           "MEGADesignToken"]
+            dependencies: [
+                "MEGADomain",
+                "MEGAPresentation",
+                "MEGASwiftUI",
+                "MEGAL10n",
+                "MEGAUIKit",
+                "MEGADesignToken"
+            ],
+            swiftSettings: settings
         ),
         .target(
             name: "DeviceCenterMocks",
-            dependencies: ["DeviceCenter"]
+            dependencies: [
+                "DeviceCenter"
+            ],
+            swiftSettings: settings
         ),
         .testTarget(
             name: "DeviceCenterTests",
-            dependencies: ["DeviceCenter",
-                           "DeviceCenterMocks",
-                           "MEGADomain",
-                           "MEGATest",
-                           .product(name: "MEGADomainMock", package: "MEGADomain")]
+            dependencies: [
+                "DeviceCenter",
+                "DeviceCenterMocks",
+                "MEGADomain",
+                "MEGATest",
+                .product(name: "MEGADomainMock", package: "MEGADomain")
+            ],
+            swiftSettings: settings
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

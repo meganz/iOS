@@ -12,6 +12,7 @@ final class BackupListViewModelTests: XCTestCase {
     let mockAuxDeviceId = "2"
     let mockAuxDeviceName = "device2"
     
+    @MainActor
     func test_loadAssets_matchesBackupStatuses() {
         var backup = BackupEntity(
             id: 1,
@@ -32,6 +33,7 @@ final class BackupListViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testLoadBackupsModels_backupsWithDifferentStatus_loadsBackupModels() {
         let backups = backups()
         let viewModel = makeSUT(
@@ -51,6 +53,7 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
     }
     
+    @MainActor
     func testFilterBackups_withSearchText_matchingPartialBackupName() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "backup")
         
@@ -64,6 +67,7 @@ final class BackupListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
+    @MainActor
     func testFilterBackups_withSearchText_matchingBackupName() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "backup1")
         
@@ -77,6 +81,7 @@ final class BackupListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
+    @MainActor
     func testFilterBackups_withSearchText_whenNoMatchFound() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "fake_name")
         
@@ -87,6 +92,7 @@ final class BackupListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
     
+    @MainActor
     func testFilterBackups_withEmptySearchText_shouldReturnTheSameBackups() {
         let backups = backups()
         let viewModel = makeSUT(
@@ -104,6 +110,7 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
     }
     
+    @MainActor
     func testFilterAndLoadCurrentDeviceBackups_loadsBackupsForCurrentDevice() async {
         let backups = backups()
         let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
@@ -119,7 +126,7 @@ final class BackupListViewModelTests: XCTestCase {
         let expectedBackupNames = userGroupedBackups[mockCurrentDeviceId]?.map(\.name)
         let foundBackupNames = viewModel.selectedDevice.backups.map(\.name)
         
-        await viewModel.updateCurrentDevice(devices())
+        viewModel.updateCurrentDevice(devices())
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
         
         let viewModel2 = makeSUT(
@@ -130,7 +137,7 @@ final class BackupListViewModelTests: XCTestCase {
             )
         )
         
-        await viewModel2.updateCurrentDevice(devices())
+        viewModel2.updateCurrentDevice(devices())
         
         let expectedBackupNames2 = userGroupedBackups[mockAuxDeviceId]?.map(\.name)
         let foundBackupNames2 = viewModel2.selectedDevice.backups.map(\.name)
@@ -138,6 +145,7 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(foundBackupNames2, expectedBackupNames2)
     }
     
+    @MainActor
     func testUpdateDeviceStatusesAndNotify_fetchesAndUpdateDevices() async {
         let backups = backups()
         let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
@@ -159,6 +167,7 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
     }
     
+    @MainActor
     func testUpdateDeviceStatusesAndNotify_cancellation() async throws {
         let backups = backups()
         let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
@@ -178,13 +187,16 @@ final class BackupListViewModelTests: XCTestCase {
             try await viewModel.updateDeviceStatusesAndNotify()
         }
         
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
         
         task.cancel()
         
-        XCTAssertTrue(task.isCancelled, "Task should be cancelled")
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        XCTAssertTrue(task.isCancelled, "Task should be cancelled.")
     }
     
+    @MainActor
     func testActionsForDevice_currentDeviceWithoutCameraUpload_returnsCorrectActions() {
         let actionsType = makeSUTForDevices(
             deviceId: mockCurrentDeviceId,
@@ -198,6 +210,7 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(actionsType, expectedActions, "The actions for the current device, where the CU has never been activated, are incorrect.")
     }
     
+    @MainActor
     func testActionsForDevice_currentDeviceWithCameraUpload_returnsCorrectActions() {
         let actionsType = makeSUTForDevices(
             deviceId: mockCurrentDeviceId,
@@ -210,6 +223,7 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(actionsType, expectedActions, "The actions for the current device, where the CU has been activated are incorrect.")
     }
 
+    @MainActor
     func testActionsForDevice_anotherDevice_returnsCorrectActions() {
         let actionsType = makeSUTForDevices(
             deviceId: mockAuxDeviceId,
@@ -221,10 +235,12 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(actionsType, expectedActions, "Actions for another device than the current one, where the CU has never been activated are incorrect")
     }
     
+    @MainActor
     func testNetworkConnectivity_whenNotReachable_updatesHasNetworkConnectionToFalse() async {
         await verifyNetworkConnectivity(isConnected: false)
     }
-
+    
+    @MainActor
     func testNetworkConnectivity_whenReachable_updatesHasNetworkConnectionToTrue() async {
         await verifyNetworkConnectivity(isConnected: true)
     }
@@ -316,12 +332,14 @@ final class BackupListViewModelTests: XCTestCase {
         [.backupUpload, .cameraUpload, .mediaUpload, .twoWay, .downSync, .upSync, .invalid]
     }
     
+    @MainActor
     private func validateCurrentStatus(_ viewModel: BackupListViewModel, _ backupEntity: BackupEntity) {
         let assets = viewModel.loadAssets(for: backupEntity)
         XCTAssertNotNil(assets)
         XCTAssertEqual(assets?.backupStatus.status, backupEntity.backupStatus)
     }
     
+    @MainActor
     private func makeSUTForDevices(
         deviceId: String,
         deviceName: String,
@@ -347,6 +365,7 @@ final class BackupListViewModelTests: XCTestCase {
         return actions.map { $0.type }
     }
     
+    @MainActor
     private func makeSUTForSearch(
         searchText: String? = nil
     ) async -> (
@@ -383,13 +402,12 @@ final class BackupListViewModelTests: XCTestCase {
         return (viewModel, expectation, cancellables)
     }
     
+    @MainActor
     private func makeSUT(
         selectedDevice: SelectedDevice,
         deviceCenterUseCase: MockDeviceCenterUseCase = MockDeviceCenterUseCase(),
         updateInterval: UInt64 = 1,
-        networkMonitorUseCase: NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
-        file: StaticString = #file,
-        line: UInt = #line
+        networkMonitorUseCase: NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase()
     ) -> BackupListViewModel {
         
         let node = NodeEntity(handle: 1)
@@ -441,7 +459,7 @@ final class BackupListViewModelTests: XCTestCase {
             ]
         )
         
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        trackForMemoryLeaks(on: sut)
         return sut
     }
 }

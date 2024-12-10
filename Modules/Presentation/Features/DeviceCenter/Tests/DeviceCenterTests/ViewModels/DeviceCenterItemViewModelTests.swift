@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class DeviceCenterItemViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
     
@@ -164,9 +165,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
         itemType: DeviceCenterItemType,
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
         isCUActionAvailable: Bool = false,
-        currentDeviceUUID: String = "device",
-        file: StaticString = #file,
-        line: UInt = #line
+        currentDeviceUUID: String = "device"
     ) -> DeviceCenterItemViewModel {
         let node = NodeEntity(
             handle: 1
@@ -220,7 +219,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             }
         )
         
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        trackForMemoryLeaks(on: sut)
         return sut
     }
 }

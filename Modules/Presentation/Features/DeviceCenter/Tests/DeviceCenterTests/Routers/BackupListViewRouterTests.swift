@@ -7,7 +7,7 @@ import SwiftUI
 import XCTest
 
 final class BackupListsViewRouterTests: XCTestCase {
-    
+    @MainActor
     func testBuild_rendersCorrectViewController() throws {
         let (sut, _) = try makeSUT()
         
@@ -16,6 +16,7 @@ final class BackupListsViewRouterTests: XCTestCase {
         XCTAssert(resultViewController is UIHostingController<BackupListView>)
     }
     
+    @MainActor
     func testStart_pushCorrectViewController() throws {
         let (sut, mockPresenter) = try makeSUT()
         
@@ -28,6 +29,7 @@ final class BackupListsViewRouterTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeSUT(
         file: StaticString = #filePath,
         line: UInt = #line

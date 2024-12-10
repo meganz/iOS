@@ -12,6 +12,7 @@ enum SortType: Int {
     case ascending = 0, descending, largest, smallest, newest, oldest, label, favourite
 }
 
+@MainActor
 public final class BackupListViewModel: ObservableObject {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
@@ -38,6 +39,7 @@ public final class BackupListViewModel: ObservableObject {
     private var searchCancellable: AnyCancellable?
     private var backupNameChangeObserver: Any?
     private var networkMonitorTask: Task<Void, Never>?
+    private var shouldChangeCUBackupNameTask: Task<Void, Never>?
     
     private var sortTypeSelected: SortType = .ascending
     
@@ -108,40 +110,26 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     deinit {
-        if let observer = backupNameChangeObserver {
-            notificationCenter.removeObserver(
-                observer
-            )
-        }
-        
-        cancelNetworkMonitorTask()
-    }
-    
-    private func cancelNetworkMonitorTask() {
         networkMonitorTask?.cancel()
-        networkMonitorTask = nil
+        shouldChangeCUBackupNameTask?.cancel()
     }
     
     private func addObservers() {
         if selectedDevice.isCurrent && selectedDevice.isMobile {
-            backupNameChangeObserver = notificationCenter.addObserver(
-                forName: Notification.Name.shouldChangeCameraUploadsBackupName,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                self?.handleShouldChangeCameraUploadsBackupName()
+            shouldChangeCUBackupNameTask = Task { [weak self, notificationCenter] in
+                for await _ in notificationCenter.notifications(named: .shouldChangeCameraUploadsBackupName) {
+                    await self?.handleShouldChangeCameraUploadsBackupName()
+                }
             }
         }
     }
     
-    private func handleShouldChangeCameraUploadsBackupName() {
-        Task {
-            if self.showEmptyStateView,
-               let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
-                self.selectedDevice.id = currentDeviceId
-            }
-            await syncDevicesAndLoadBackups()
+    private func handleShouldChangeCameraUploadsBackupName() async {
+        if self.showEmptyStateView,
+           let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
+            self.selectedDevice.id = currentDeviceId
         }
+        await syncDevicesAndLoadBackups()
     }
     
     private func setupSearchCancellable() {
@@ -174,7 +162,6 @@ public final class BackupListViewModel: ObservableObject {
         handleSortAction(sortTypeSelected)
     }
     
-    @MainActor
     private func monitorNetworkChanges() {
         let connectionSequence = networkMonitorUseCase.connectionSequence
         
@@ -186,7 +173,6 @@ public final class BackupListViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func updateInternetConnectionStatus() {
         hasNetworkConnection = networkMonitorUseCase.isConnected()
         monitorNetworkChanges()
@@ -203,11 +189,10 @@ public final class BackupListViewModel: ObservableObject {
     
     func syncDevicesAndLoadBackups() async {
         let devices = await deviceCenterUseCase.fetchUserDevices()
-        await updateCurrentDevice(devices)
+        updateCurrentDevice(devices)
         devicesUpdatePublisher.send(devices)
     }
     
-    @MainActor
     func updateCurrentDevice(_ devices: [DeviceEntity]) {
         guard let currentDevice = devices.first(where: {$0.id == selectedDevice.id}) else {
             showEmptyStateView = true
@@ -234,7 +219,8 @@ public final class BackupListViewModel: ObservableObject {
                         itemType: .backup(backup),
                         sortedAvailableActions: sortedAvailableActions,
                         isCUActionAvailable: selectedDevice.isCurrent && selectedDevice.isMobile,
-                        assets: assets
+                        assets: assets,
+                        currentDeviceUUID: { UIDevice.current.identifierForVendor?.uuidString ?? "" }
                     )
                 }
                 return nil
@@ -284,7 +270,6 @@ public final class BackupListViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func executeDeviceAction(type: ContextAction.Category) async {
         switch type {
         case .cameraUploads:

@@ -5,6 +5,7 @@ import MEGASwift
 import MEGAUI
 import SwiftUI
 
+@MainActor
 public final class DeviceListViewModel: ObservableObject {
     private let router: any DeviceListRouting
     private let deviceCenterBridge: DeviceCenterBridge
@@ -63,7 +64,8 @@ public final class DeviceListViewModel: ObservableObject {
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus],
         deviceCenterActions: [ContextAction],
-        deviceIconNames: [BackupDeviceTypeEntity: String]
+        deviceIconNames: [BackupDeviceTypeEntity: String],
+        currentDeviceUUID: String
     ) {
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.refreshDevicesPublisher = refreshDevicesPublisher
@@ -81,7 +83,7 @@ public final class DeviceListViewModel: ObservableObject {
         self.deviceIconNames = deviceIconNames
         self.isSearchActive = false
         self.searchText = ""
-        self.currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
+        self.currentDeviceUUID = currentDeviceUUID
         
         setupSearchCancellable()
         setupDevicesUpdateSubscription()
@@ -91,12 +93,15 @@ public final class DeviceListViewModel: ObservableObject {
     
     deinit {
         networkMonitorTask?.cancel()
-        networkMonitorTask = nil
     }
     
     private func showLoadingPlaceholder() {
-        Task {
-            await updateLoadingPlaceholderVisibility(true)
+        updateLoadingPlaceholderVisibility(true)
+    }
+    
+    private func hideLoadingPlaceholder() {
+        if isLoadingPlaceholderVisible {
+            updateLoadingPlaceholderVisibility(false)
         }
     }
     
@@ -111,7 +116,7 @@ public final class DeviceListViewModel: ObservableObject {
     private func loadUserDevices() {
         Task {
             let userDevices = await fetchUserDevices()
-            await arrangeDevices(userDevices)
+            arrangeDevices(userDevices)
         }
     }
     
@@ -150,7 +155,8 @@ public final class DeviceListViewModel: ObservableObject {
             itemType: .device(device),
             sortedAvailableActions: sortedAvailableActions,
             isCUActionAvailable: isCUActionAvailable,
-            assets: deviceAssets
+            assets: deviceAssets,
+            currentDeviceUUID: { UIDevice.current.identifierForVendor?.uuidString ?? "" }
         )
     }
     
@@ -222,9 +228,7 @@ public final class DeviceListViewModel: ObservableObject {
         devicesUpdatePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] devices in
-                Task {
-                    await self?.arrangeDevices(devices)
-                }
+                self?.arrangeDevices(devices)
             }
             .store(in: &cancellable)
     }
@@ -253,13 +257,14 @@ public final class DeviceListViewModel: ObservableObject {
             loadDefaultDevice()
         }
         
-        otherDevices = devices
-            .filter { $0.id != currentDeviceId }
-            .compactMap(loadDeviceViewModel)
-            .sorted {$0.name < $1.name}
-        
-        if isLoadingPlaceholderVisible {
-            updateLoadingPlaceholderVisibility(false)
+        do {
+            otherDevices = try devices
+                .filter { $0.id != currentDeviceId }
+                .compactMap(loadDeviceViewModel)
+                .sorted {$0.name < $1.name}
+        } catch {
+            debugPrint("[Device Center] Error while arranging devices: \(error.localizedDescription)")
         }
+        hideLoadingPlaceholder()
     }
 }

@@ -4,7 +4,8 @@ import MEGAL10n
 import MEGAUI
 import SwiftUI
 
-public class DeviceCenterItemViewModel: ObservableObject, Identifiable {    
+@MainActor
+public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let router: (any DeviceListRouting)?
     private let refreshDevicesPublisher: PassthroughSubject<Void, Never>?
     private let deviceCenterUseCase: DeviceCenterUseCaseProtocol
@@ -51,9 +52,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         sortedAvailableActions: [ContextAction.Category: [ContextAction]],
         isCUActionAvailable: Bool,
         assets: ItemAssets,
-        currentDeviceUUID: () -> String = {
-            UIDevice.current.identifierForVendor?.uuidString ?? ""
-        }
+        currentDeviceUUID: () -> String
     ) {
         self.router = router
         self.refreshDevicesPublisher = refreshDevicesPublisher
@@ -110,8 +109,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         return [.info, .rename]
     }
     
-    @MainActor
-    private func handleRenameCompletion() async {
+    private func handleRenameCompletion() {
         refreshDevicesPublisher?.send()
     }
     
@@ -136,7 +134,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 .none: Strings.Localizable.renameNodeMessage
             ],
             alertPlaceholder: Strings.Localizable.Device.Center.Rename.Device.title) { [weak self] in
-                Task { [weak self] in
+                Task {
                     await self?.handleRenameCompletion()
                 }
             }
@@ -187,7 +185,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private func handleDeviceAction(_ type: ContextAction.Category, device: DeviceEntity) async {
         switch type {
         case .cameraUploads:
-            await handleCameraUploadAction()
+            handleCameraUploadAction()
         case .rename:
             await handleRenameDeviceAction(device)
         case .info:
@@ -197,7 +195,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
-    @MainActor
     private func handleCameraUploadAction() {
         deviceCenterBridge.cameraUploadActionTapped { [weak self] in
             Task {
@@ -291,7 +288,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
-    @MainActor
     func executeAction(_ type: ContextAction.Category) async {
         if case .device(let device) = itemType {
             await handleDeviceAction(type, device: device)
