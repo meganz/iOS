@@ -4,13 +4,7 @@ import MEGADomainMock
 import XCTest
 
 final class DeviceCenterItemViewModelSortingTests: XCTestCase {
-    private var sut: [DeviceCenterItemViewModel]!
-
-    override func setUp() {
-        super.setUp()
-        sut = makeSUT()
-    }
-
+    @MainActor
     func testSortedByName_ascending_correctOrder() {
         validateSortingOrder(
             for: .ascending,
@@ -18,6 +12,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testSortedByName_descending_correctOrder() {
         validateSortingOrder(
             for: .descending,
@@ -25,6 +20,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testSortedByNodeSize_largestFirst_correctOrder() {
         validateSortingOrder(
             for: .largest,
@@ -32,6 +28,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testSortedByNodeSize_smallestFirst_correctOrder() {
         validateSortingOrder(
             for: .smallest,
@@ -39,6 +36,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testSortedByCreationTime_newestFirst_correctOrder() {
         validateSortingOrder(
             for: .newest,
@@ -46,6 +44,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testSortedByCreationTime_oldestFirst_correctOrder() {
         validateSortingOrder(
             for: .oldest,
@@ -53,6 +52,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testSortedByLabel_correctOrder() {
         validateSortingOrder(
             for: .label,
@@ -60,6 +60,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testSortedByFavourite_correctOrder() {
         validateSortingOrder(
             for: .favourite,
@@ -67,10 +68,12 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         )
     }
 
+    @MainActor
     private func validateSortingOrder(
         for sortingCriteria: SortType,
         expectedOrder: [String]
     ) {
+        let sut = makeSUT()
         let sortedNames = sut.sorted(
             by: sortingCriteria
         ).map(\.name)
@@ -78,6 +81,7 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
         XCTAssertEqual(sortedNames, expectedOrder)
     }
 
+    @MainActor
     private func makeSUT() -> [DeviceCenterItemViewModel] {
         let mockCurrentDeviceId = "1"
         let oneDayInSeconds = 86400.0
@@ -171,7 +175,8 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
                 itemType: .backup(backup),
                 sortedAvailableActions: [:],
                 isCUActionAvailable: false,
-                assets: assets
+                assets: assets,
+                currentDeviceUUID: { "" }
             )
         }
     }

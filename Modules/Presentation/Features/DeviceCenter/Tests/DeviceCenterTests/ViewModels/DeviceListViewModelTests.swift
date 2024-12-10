@@ -3,6 +3,7 @@ import Combine
 import DeviceCenterMocks
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import MEGATest
 import SwiftUI
 import XCTest
@@ -11,6 +12,7 @@ final class DeviceListViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
     let mockAuxDeviceId = "2"
     
+    @MainActor
     func testLoadUserDevices_returnsUserDevices() async throws {
         let sourceDevices = devices()
         let viewModel = makeSUT(
@@ -29,6 +31,7 @@ final class DeviceListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
     
+    @MainActor
     func testArrangeDevices_withCurrentDeviceId_loadsCurrentDevice() async throws {
         let devices = devices()
         let currentDevice = devices.first {$0.id == mockCurrentDeviceId}
@@ -47,6 +50,7 @@ final class DeviceListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
     
+    @MainActor
     func testFilterDevices_withSearchText_matchingPartialDeviceName() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "device")
         
@@ -60,6 +64,7 @@ final class DeviceListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
+    @MainActor
     func testFilterDevices_withSearchText_matchingDeviceName() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "device1")
         
@@ -73,6 +78,7 @@ final class DeviceListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
+    @MainActor
     func testFilterDevices_withSearchText_whenNoMatchFound() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "fake_name")
         
@@ -83,6 +89,7 @@ final class DeviceListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
     
+    @MainActor
     func testIsFiltered_withEmptySearchText_shouldReturnFalse() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "device1")
         
@@ -102,6 +109,7 @@ final class DeviceListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
     
+    @MainActor
     func testStartAutoRefreshUserDevices_cancellation() async throws {
         let devices = devices()
         
@@ -112,164 +120,84 @@ final class DeviceListViewModelTests: XCTestCase {
         )
         
         let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
+        viewModel.arrangeDevices(userDevices)
         
         let task = Task {
             try await viewModel.startAutoRefreshUserDevices()
         }
         
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
     
         task.cancel()
+        
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         XCTAssertTrue(task.isCancelled, "Task should be cancelled")
     }
 
+    @MainActor
     func testDeviceIconName_knownUserAgent_expectedIconName() async throws {
-        var backup1 = BackupEntity(id: 1, name: "backup1", userAgent: "MEGAiOS/11.2 MEGAEnv/Dev (Darwin 22.6.0 iPhone11,2) MegaClient/4.28.2/64", type: .cameraUpload)
-        backup1.backupStatus = .upToDate
-        var backup2 = BackupEntity(id: 2, name: "backup2", userAgent: "Mozilla/5.0 (Android 13; M2101K6G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36", type: .upSync)
-        backup2.backupStatus = .upToDate
-        var backup3 = BackupEntity(id: 3, name: "backup1", userAgent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1", type: .cameraUpload)
-        backup3.backupStatus = .upToDate
-        var backup4 = BackupEntity(id: 4, name: "backup2", userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246", type: .upSync)
-        backup4.backupStatus = .upToDate
-        var backup5 = BackupEntity(id: 5, name: "backup1", userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9", type: .cameraUpload)
-        backup5.backupStatus = .upToDate
+        let testData = [
+            ("device1", "MEGAiOS/11.2 MEGAEnv/Dev (Darwin 22.6.0 iPhone11,2) MegaClient/4.28.2/64", true, "iphone"),
+            ("device2", "Mozilla/5.0 (Android 13; M2101K6G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36", true, "android"),
+            ("device3", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1", false, "pcLinux"),
+            ("device4", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246", false, "pcWindows"),
+            ("device5", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9", false, "pcMac"),
+            ("device6", "Mozilla/5.0", true, "mobile"),
+            ("device7", "Mozilla/5.0", false, "pc")
+        ]
         
-        var backup6 = BackupEntity(id: 6, name: "backup1", userAgent: "Mozilla/5.0", type: .cameraUpload)
-        backup6.backupStatus = .upToDate
-        var backup7 = BackupEntity(id: 7, name: "backup1", userAgent: "Mozilla/5.0", type: .upSync)
-        backup7.backupStatus = .upToDate
+        let devices = makeTestDevices(testData)
+        let viewModel = makeSUT(devices: devices, currentDeviceId: mockCurrentDeviceId)
         
-        let device1 = DeviceEntity(
-            id: mockCurrentDeviceId,
-            name: "device1",
-            backups: [backup1],
-            status: .upToDate
-        )
+        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
+            viewModel: viewModel
+        ) { _ in
+            for (deviceName, _, isMobile, expectedIconName) in testData {
+                do {
+                    let userAgent = try XCTUnwrap(devices.first(where: { $0.name == deviceName })?.backups?.first?.userAgent)
+                    let foundIconName = viewModel.deviceIconName(userAgent: userAgent, isMobile: isMobile)
+                    XCTAssertEqual(foundIconName, expectedIconName, "Icon name for \(deviceName) was incorrect.")
+                } catch {
+                    XCTFail("Failed to unwrap userAgent for \(deviceName): \(error)")
+                }
+            }
+        }
         
-        let device2 = DeviceEntity(
-            id: mockAuxDeviceId,
-            name: "device2",
-            backups: [backup2],
-            status: .upToDate
-        )
-        
-        let device3 = DeviceEntity(
-            id: mockCurrentDeviceId,
-            name: "device3",
-            backups: [backup3],
-            status: .upToDate
-        )
-        
-        let device4 = DeviceEntity(
-            id: mockAuxDeviceId,
-            name: "device4",
-            backups: [backup4],
-            status: .upToDate
-        )
-        
-        let device5 = DeviceEntity(
-            id: mockCurrentDeviceId,
-            name: "device5",
-            backups: [backup5],
-            status: .upToDate
-        )
-        
-        let device6 = DeviceEntity(
-            id: mockCurrentDeviceId,
-            name: "device6",
-            backups: [backup6],
-            status: .upToDate
-        )
-        
-        let device7 = DeviceEntity(
-            id: mockCurrentDeviceId,
-            name: "device7",
-            backups: [backup7],
-            status: .upToDate
-        )
-        
-        let viewModel = makeSUT(
-            devices: [device1, device2, device3, device4, device5, device6, device7],
-            currentDeviceId: mockCurrentDeviceId
-        )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        let userAgent = try XCTUnwrap(device1.backups?.first?.userAgent)
-        let foundIconName = viewModel.deviceIconName(userAgent: userAgent, isMobile: true)
-        let expectedIconName = "iphone"
-        
-        XCTAssertEqual(foundIconName, expectedIconName)
-        
-        let userAgent2 = try XCTUnwrap(device2.backups?.first?.userAgent)
-        let foundIconName2 = viewModel.deviceIconName(userAgent: userAgent2, isMobile: true)
-        let expectedIconName2 = "android"
-        
-        XCTAssertEqual(foundIconName2, expectedIconName2)
-        
-        let userAgent3 = try XCTUnwrap(device3.backups?.first?.userAgent)
-        let foundIconName3 = viewModel.deviceIconName(userAgent: userAgent3, isMobile: false)
-        let expectedIconName3 = "pcLinux"
-        
-        XCTAssertEqual(foundIconName3, expectedIconName3)
-        
-        let userAgent4 = try XCTUnwrap(device4.backups?.first?.userAgent)
-        let foundIconName4 = viewModel.deviceIconName(userAgent: userAgent4, isMobile: false)
-        let expectedIconName4 = "pcWindows"
-        
-        XCTAssertEqual(foundIconName4, expectedIconName4)
-        
-        let userAgent5 = try XCTUnwrap(device5.backups?.first?.userAgent)
-        let foundIconName5 = viewModel.deviceIconName(userAgent: userAgent5, isMobile: false)
-        let expectedIconName5 = "pcMac"
-        
-        XCTAssertEqual(foundIconName5, expectedIconName5)
-        
-        let userAgent6 = try XCTUnwrap(device6.backups?.first?.userAgent)
-        let foundIconName6 = viewModel.deviceIconName(userAgent: userAgent6, isMobile: true)
-        let expectedIconName6 = "mobile"
-        
-        XCTAssertEqual(foundIconName6, expectedIconName6)
-        
-        let userAgent7 = try XCTUnwrap(device7.backups?.first?.userAgent)
-        let foundIconName7 = viewModel.deviceIconName(userAgent: userAgent7, isMobile: false)
-        let expectedIconName7 = "pc"
-        
-        XCTAssertEqual(foundIconName7, expectedIconName7)
+        cancellables.forEach { $0.cancel() }
     }
     
+    @MainActor
     func testHasNetworkConnection_whenConnected_shouldReturnTrue() async throws {
-        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(connected: true)
-        let viewModel = makeSUT(
-            networkMonitorUseCase: mockNetworkMonitorUseCase
+        let connectionSequence = makeConnectionSequence([true])
+        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(
+            connected: true,
+            connectionSequence: connectionSequence
         )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        await viewModel.updateInternetConnectionStatus()
-        
+        let viewModel = makeSUT(networkMonitorUseCase: mockNetworkMonitorUseCase)
+
+        viewModel.updateInternetConnectionStatus()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
         XCTAssertTrue(viewModel.hasNetworkConnection)
     }
     
+    @MainActor
     func testHasNetworkConnection_whenDisconnected_shouldReturnFalse() async throws {
-        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(connected: false)
-        let viewModel = makeSUT(
-            networkMonitorUseCase: mockNetworkMonitorUseCase
+        let connectionSequence = makeConnectionSequence([false])
+        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(
+            connected: false,
+            connectionSequence: connectionSequence
         )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        await viewModel.updateInternetConnectionStatus()
-        
+        let viewModel = makeSUT(networkMonitorUseCase: mockNetworkMonitorUseCase)
+
+        viewModel.updateInternetConnectionStatus()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
         XCTAssertFalse(viewModel.hasNetworkConnection)
     }
 
+    @MainActor
     func testHasNetworkConnection_whenConnectionChanges_shouldUpdateDynamically() async throws {
         let expectation = XCTestExpectation(description: "Connection status should change dynamically")
         let connectionSequence = AsyncStream<Bool> { continuation in
@@ -281,7 +209,7 @@ final class DeviceListViewModelTests: XCTestCase {
         let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(connected: false, connectionSequence: connectionSequence)
         let viewModel = makeSUT(networkMonitorUseCase: mockNetworkMonitorUseCase)
         
-        await viewModel.updateInternetConnectionStatus()
+        viewModel.updateInternetConnectionStatus()
         
         XCTAssertFalse(viewModel.hasNetworkConnection)
         
@@ -298,7 +226,7 @@ final class DeviceListViewModelTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func setUpSubscriptionAndAwaitExpectation(
         viewModel: DeviceListViewModel,
         completion: @escaping ([DeviceCenterItemViewModel]) -> Void
@@ -316,7 +244,7 @@ final class DeviceListViewModelTests: XCTestCase {
            .store(in: &cancellables)
         
         let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
+        viewModel.arrangeDevices(userDevices)
         
         await fulfillment(of: [expectation], timeout: 1.0)
         
@@ -379,6 +307,7 @@ final class DeviceListViewModelTests: XCTestCase {
         .defaultPc: "pc"
     ]
     
+    @MainActor
     private func makeSUTForSearch(
         searchText: String? = nil
     ) async -> (
@@ -392,7 +321,7 @@ final class DeviceListViewModelTests: XCTestCase {
             currentDeviceId: mockCurrentDeviceId
         )
         let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
+        viewModel.arrangeDevices(userDevices)
         
         var cancellable = Set<AnyCancellable>()
         var expectationDescription = "Filtered devices should update"
@@ -414,13 +343,35 @@ final class DeviceListViewModelTests: XCTestCase {
         return (viewModel, expectation, cancellable)
     }
     
+    private func makeConnectionSequence(_ states: [Bool]) -> AnyAsyncSequence<Bool> {
+        AsyncStream<Bool> { continuation in
+            for state in states {
+                continuation.yield(state)
+            }
+            continuation.finish()
+        }.eraseToAnyAsyncSequence()
+    }
+    
+    private func makeTestDevices(_ testData: [(name: String, userAgent: String, isMobile: Bool, expectedIconName: String)]) -> [DeviceEntity] {
+        testData.enumerated().map { index, data in
+            var backup = BackupEntity(id: index + 1, name: "backup\(index + 1)", userAgent: data.userAgent, type: .cameraUpload)
+            backup.backupStatus = .upToDate
+            
+            return DeviceEntity(
+                id: "\(index + 1)",
+                name: data.name,
+                backups: [backup],
+                status: .upToDate
+            )
+        }
+    }
+    
+    @MainActor
     private func makeSUT(
         devices: [DeviceEntity] = [],
         currentDeviceId: String = "",
         updateInterval: UInt64 = 1,
-        networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
-        file: StaticString = #file,
-        line: UInt = #line
+        networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase()
     ) -> DeviceListViewModel {
         let backupStatusEntities = backupStatusEntities()
         let sut = DeviceListViewModel(
@@ -440,10 +391,11 @@ final class DeviceListViewModelTests: XCTestCase {
             searchAssets: defaultSearchAssets,
             backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
             deviceCenterActions: defaultActions,
-            deviceIconNames: defaultIconNames
+            deviceIconNames: defaultIconNames,
+            currentDeviceUUID: ""
         )
         
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        trackForMemoryLeaks(on: sut)
         return sut
     }
 }

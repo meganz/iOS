@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol DeviceCenterUseCaseProtocol {
+public protocol DeviceCenterUseCaseProtocol: Sendable {
     func fetchUserDevices() async -> [DeviceEntity]
     func fetchDeviceNames() async -> [String]
     func loadCurrentDeviceId() -> String?

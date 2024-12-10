@@ -1,6 +1,7 @@
 import Foundation
 
-extension Array where Element == DeviceCenterItemViewModel {
+@MainActor
+extension [DeviceCenterItemViewModel] {
     func sorted(by sortType: SortType) -> [DeviceCenterItemViewModel] {
         switch sortType {
         case .ascending, .descending: sortedByName(ascending: sortType == .ascending)
