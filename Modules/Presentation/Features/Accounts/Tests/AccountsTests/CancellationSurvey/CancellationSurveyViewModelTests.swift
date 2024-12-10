@@ -186,8 +186,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let sut = makeSUT(
             reasonList: reasonList,
             featureFlagList: [
-                .multipleOptionsForCancellationSurvey: false,
-                .followUpOptionsForCancellationSurvey: true
+                .multipleOptionsForCancellationSurvey: false
             ]
         )
         sut.selectedReason = selectedReason
@@ -404,34 +403,27 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         assertIsFollowUpReasonSelected(followUpReason: randomFollowUpReason, currentSelectedList: [], expectedResult: false)
     }
     
-    func testFollowUpReasons_whenIsFollowUpFeatureFlagEnabledAndHasFollowUpReason_shouldReturnList() {
-        let mainReasonID = randomReasonID
-        let followUpReasons = customFollowUpReasons(with: mainReasonID)
-        
-        assertFollowUpReasons(
-            isFeatureFlagEnabled: true,
-            followUpReasons: followUpReasons,
-            selectedMainReasonID: mainReasonID,
-            expectedResult: followUpReasons
+    func testShouldShowFollowUpReasons_whenReasonIsSelectedAndHasFollowUpReasons_shouldReturnTrue() {
+        assertShouldShowFollowUpReasons(
+            hasFollowUpReasons: true,
+            isMainReasonSelected: true,
+            expectedResult: true
         )
     }
     
-    func testFollowUpReasons_whenIsFollowUpFeatureFlagEnabledAndHasNoFollowUpReason_shouldReturnNil() {
-        assertFollowUpReasons(
-            isFeatureFlagEnabled: true,
-            followUpReasons: [],
-            selectedMainReasonID: randomReasonID,
-            expectedResult: nil
+    func testShouldShowFollowUpReasons_whenReasonIsSelectedButHasNoFollowUpReasons_shouldReturnFalse() {
+        assertShouldShowFollowUpReasons(
+            hasFollowUpReasons: false,
+            isMainReasonSelected: true,
+            expectedResult: false
         )
     }
     
-    func testFollowUpReasons_whenIsFollowUpFeatureFlagDisabledAndHasFollowUpReason_shouldReturnNil() {
-        let mainReasonID = randomReasonID
-        assertFollowUpReasons(
-            isFeatureFlagEnabled: false,
-            followUpReasons: customFollowUpReasons(with: mainReasonID),
-            selectedMainReasonID: mainReasonID,
-            expectedResult: nil
+    func testShouldShowFollowUpReasons_whenReasonNotSelected_shouldReturnFalse() {
+        assertShouldShowFollowUpReasons(
+            hasFollowUpReasons: true,
+            isMainReasonSelected: false,
+            expectedResult: false
         )
     }
     
@@ -468,7 +460,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         )
     }
     
-    func testCancelSubscriptionReasonSelectionList_whenFollowUpOptionIsEnabled_shouldReturnListWithoutTheMainReason() throws {
+    func testCancelSubscriptionReasonSelectionList_hasSelectedFollowUpOptions_shouldReturnListWithoutTheMainReason() throws {
         let reasonList = reasonWithFollowUpOptionsList()
         let (selectedReason, mainPositionIndex) = try XCTUnwrap(randomSelectedReason(from: reasonList))
         let (randomFollowUpReason, newPositionID) = try XCTUnwrap(randomSelectedFollowUpReason(from: selectedReason.followUpReasons))
@@ -478,7 +470,6 @@ final class CancellationSurveyViewModelTests: XCTestCase {
             selectedReason: selectedReason,
             selectedReasons: [selectedReason],
             isMultipleSelectionEnabled: Bool.random(),
-            isFollowUpOptionEnabled: true,
             selectedFollowUpReasons: [randomFollowUpReason],
             expectedResult: [
                 CancelSubscriptionReasonEntity(
@@ -746,18 +737,21 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isFollowUpReasonSelected(followUpReason), expectedResult, file: file, line: line)
     }
     
-    private func assertFollowUpReasons(
-        isFeatureFlagEnabled: Bool,
-        followUpReasons: [CancellationSurveyFollowUpReason],
-        selectedMainReasonID: CancellationSurveyReason.ID,
-        expectedResult: [CancellationSurveyFollowUpReason]?,
+    private func assertShouldShowFollowUpReasons(
+        hasFollowUpReasons: Bool,
+        isMainReasonSelected: Bool,
+        expectedResult: Bool,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        let sut = makeSUT(featureFlagList: [.followUpOptionsForCancellationSurvey: isFeatureFlagEnabled])
-        let reason = CancellationSurveyReason(id: selectedMainReasonID, title: "Reason", followUpReasons: followUpReasons)
+        let sut = makeSUT()
+        let mainReasonID = randomReasonID
+        let followUpReasons = hasFollowUpReasons ? customFollowUpReasons(with: mainReasonID) : []
+        let reason = CancellationSurveyReason(id: mainReasonID, title: "Reason", followUpReasons: followUpReasons)
         
-        XCTAssertEqual(sut.followUpReasons(reason), expectedResult, file: file, line: line)
+        sut.selectedReasons = isMainReasonSelected ? [reason] : []
+        
+        XCTAssertEqual(sut.shouldShowFollowUpReasons(for: reason), expectedResult, file: file, line: line)
     }
     
     private func assertCancelSubscriptionReasonSelectionList(
@@ -765,7 +759,6 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         selectedReason: CancellationSurveyReason? = nil,
         selectedReasons: Set<CancellationSurveyReason> = [],
         isMultipleSelectionEnabled: Bool = false,
-        isFollowUpOptionEnabled: Bool = false,
         selectedFollowUpReasons: Set<CancellationSurveyFollowUpReason> = [],
         otherReasonText: String = "",
         expectedResult: [CancelSubscriptionReasonEntity]
@@ -773,8 +766,7 @@ final class CancellationSurveyViewModelTests: XCTestCase {
         let sut = makeSUT(
             reasonList: reasonList,
             featureFlagList: [
-                .multipleOptionsForCancellationSurvey: isMultipleSelectionEnabled,
-                .followUpOptionsForCancellationSurvey: isFollowUpOptionEnabled
+                .multipleOptionsForCancellationSurvey: isMultipleSelectionEnabled
             ]
         )
         

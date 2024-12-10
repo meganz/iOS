@@ -68,10 +68,6 @@ final class CancellationSurveyViewModel: ObservableObject {
         featureFlagProvider.isFeatureFlagEnabled(for: .multipleOptionsForCancellationSurvey)
     }
     
-    var isFollowUpOptionEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .followUpOptionsForCancellationSurvey)
-    }
-    
     // MARK: - Reason selection
     func updateSelectedReason(_ reason: CancellationSurveyReason) {
         surveyFormError = .none
@@ -124,9 +120,8 @@ final class CancellationSurveyViewModel: ObservableObject {
         selectedFollowUpReasons.contains(reason)
     }
     
-    func followUpReasons(_ reason: CancellationSurveyReason) -> [CancellationSurveyFollowUpReason]? {
-        guard isFollowUpOptionEnabled, reason.followUpReasons.isNotEmpty else { return nil }
-        return reason.followUpReasons
+    func shouldShowFollowUpReasons(for reason: CancellationSurveyReason) -> Bool {
+        isReasonSelected(reason) && reason.followUpReasons.isNotEmpty
     }
 
     // MARK: - Button action
@@ -179,8 +174,7 @@ final class CancellationSurveyViewModel: ObservableObject {
                 throw SurveyFormError.noSelectedReason
             }
             
-            guard isFollowUpOptionEnabled,
-                  selectedReason.followUpReasons.isNotEmpty,
+            guard selectedReason.followUpReasons.isNotEmpty,
                   selectedFollowUpReasons.notContains(where: { $0.mainReasonID == selectedReason.id }) else {
                 return
             }
@@ -231,7 +225,7 @@ final class CancellationSurveyViewModel: ObservableObject {
         selectedFollowUpReasons: [CancelSubscriptionReasonEntity],
         mainReasonIDs: [CancellationSurveyReason.ID]
     ) {
-        guard isFollowUpOptionEnabled, selectedFollowUpReasons.isNotEmpty, selectedMainReasons.isNotEmpty else { return ([], []) }
+        guard selectedFollowUpReasons.isNotEmpty, selectedMainReasons.isNotEmpty else { return ([], []) }
 
         let reasons = selectedFollowUpReasons.compactMap { followUpReason -> (CancelSubscriptionReasonEntity, CancellationSurveyReason.ID)? in
             guard let mainReason = selectedMainReasons.first(where: { $0.id == followUpReason.mainReasonID }),
