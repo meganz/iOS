@@ -33,7 +33,9 @@ extension MEGANavigationController {
                 MEGALogError("[Navigation] we should have a title always")
                 continue
             }
-            let action = UIAction(title: menuTitle) { _ in
+            
+            let action = UIAction(title: menuTitle) { [weak self, weak navigationItem] _ in
+                guard let self, let navigationItem else { return }
                 if let viewController = self.viewControllers.first(where: { $0.navigationItem == navigationItem }) {
                     self.popToViewController(viewController, animated: true)
                 }
