@@ -144,6 +144,32 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
+    @Test("Verify onTagNameChanged with valid state first and then invalid state")
+    func verifyOnTagNameChangedWithValidStateAndThenInvalidState() async {
+        // setup
+        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.tagName = "ta"
+
+        // Test for valid state
+        sut.onTagNameChanged(with: "tag")
+        while await nodeSearcher.continuations.first == nil {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+        await nodeSearcher.continuations.first?.resume(with: .success(["tag1", "tag2"]))
+        for await canAddNewTag in sut.$canAddNewTag.dropFirst().values {
+            #expect(canAddNewTag == true)
+            break
+        }
+        #expect(sut.containsExistingTags == true)
+
+        // Test for invalid state
+        sut.onTagNameChanged(with: "tag1😄")
+        #expect(sut.canAddNewTag == false)
+        #expect(sut.containsExistingTags == false)
+    }
+
+    @MainActor
     private func makeSUT(nodeSearcher: some NodeTagsSearching = MockNodeTagsSearcher()) -> ManageTagsViewModel {
         ManageTagsViewModel(
             navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),

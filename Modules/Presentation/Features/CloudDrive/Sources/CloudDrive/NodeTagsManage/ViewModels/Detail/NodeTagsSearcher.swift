@@ -56,7 +56,9 @@ actor NodeTagsSearcher: NodeTagsSearching {
 
     private func filterAllTags(for searchText: String?) -> [String] {
         if let searchText {
-            return allTags.filter { $0.contains(searchText) }
+            return allTags.filter {
+                $0.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) != nil
+            }
         } else {
             return allTags
         }

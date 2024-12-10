@@ -49,11 +49,12 @@ struct ExistingTagsViewModelTests {
         let tags = ["tag1", "tag2", "tag3", "tag4"]
         let searcher = MockNodeTagsSearcher(tags: tags)
         let sut = makeSUT(tagsViewModel: NodeTagsViewModel(tagViewModels: []), nodeTagSearcher: searcher)
-        sut.addAndSelectNewTag("newTag")
+        let newTagName = "zero"
+        sut.addAndSelectNewTag(newTagName)
         await sut.searchTags(for: "ta")
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == tags)
         await sut.searchTags(for: nil)
-        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["newTag"] + tags)
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == [newTagName] + tags)
         #expect(sut.isLoading == false)
     }
 
@@ -72,6 +73,19 @@ struct ExistingTagsViewModelTests {
         await sut.searchTags(for: nil)
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag1", "tag3", "tag4"])
         #expect(sut.tagsViewModel.tagViewModels.first?.isSelected == true)
+    }
+
+    @MainActor
+    @Test("Test adding tags with diacritics and then searching for tags with diacritics.")
+    func verifyAddAndSearchTagsWithDiacritic() async {
+        let tagViewModel = NodeTagViewModel(tag: "tag2", isSelectionEnabled: false, isSelected: false)
+        let sut = makeSUT(tagsViewModel: NodeTagsViewModel(tagViewModels: [tagViewModel]))
+        sut.addAndSelectNewTag("holešovice")
+        sut.addAndSelectNewTag("holesovice")
+        await sut.searchTags(for: "sov")
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["holešovice", "holesovice"])
+        await sut.searchTags(for: "šov")
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["holešovice", "holesovice"])
     }
 
     // MARK: - Helpers
