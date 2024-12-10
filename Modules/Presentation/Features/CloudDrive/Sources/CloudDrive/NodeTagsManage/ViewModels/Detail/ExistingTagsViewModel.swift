@@ -73,7 +73,9 @@ final class ExistingTagsViewModel: ObservableObject {
 
     private func filterNewlyAddedTagViewModels(for searchText: String?) -> [NodeTagViewModel] {
         if let searchText {
-            return newlyAddedTagViewModels.filter { $0.tag.contains(searchText) }
+            return newlyAddedTagViewModels.filter {
+                $0.tag.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) != nil
+            }
         } else {
             return newlyAddedTagViewModels
         }

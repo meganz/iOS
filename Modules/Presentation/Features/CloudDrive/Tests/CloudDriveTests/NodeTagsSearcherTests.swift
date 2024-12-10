@@ -38,4 +38,17 @@ struct NodeTagsSearcherTests {
         _ = await [task1.value, task2.value]
         #expect(useCase.searchTexts == ["tag2"])
     }
+
+    @MainActor
+    @Test("Verify search when diacritics are present")
+    func verifySearchForDiacritic() async {
+        let tags = ["holesovice", "tag1", "tag2", "holešovice"]
+        let useCase = MockNodeTagsUseCase(tags: tags)
+        let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
+        _ = await sut.searchTags(for: nil)
+        var results = await sut.searchTags(for: "sovi")
+        #expect(results == ["holesovice", "holešovice"])
+        results = await sut.searchTags(for: "šovi")
+        #expect(results == ["holesovice", "holešovice"])
+    }
 }

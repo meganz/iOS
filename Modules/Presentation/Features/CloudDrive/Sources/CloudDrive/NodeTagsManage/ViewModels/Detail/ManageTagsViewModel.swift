@@ -44,9 +44,12 @@ final class ManageTagsViewModel: ObservableObject {
         let formattedTagName = formatTagName(updatedTagName)
         updateTagNameState(for: formattedTagName)
 
+        canAddNewTag = false
+
         if tagNameState == .valid || tagNameState == .empty {
-            canAddNewTag = false
             searchTags(for: formattedTagName == "" ? nil : formattedTagName)
+        } else if tagNameState == .invalid || tagNameState == .tooLong {
+            containsExistingTags = false
         }
 
         guard updatedTagName != formattedTagName else { return }
