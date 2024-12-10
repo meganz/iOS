@@ -13,6 +13,7 @@ extension AppDelegate {
         AdsSlotRouter(
             adsSlotViewController: tabBar,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            featureFlagProvider: DIContainer.featureFlagProvider,
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
         ).build(onViewFirstAppeared: onViewFirstAppeared)
     }

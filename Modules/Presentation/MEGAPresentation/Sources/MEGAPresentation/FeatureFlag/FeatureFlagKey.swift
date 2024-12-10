@@ -14,4 +14,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case followUpOptionsForCancellationSurvey = "Follow up Options for Cancellation Survey"
     case newCallsSetting = "New Calls Setting"
     case newFileManagementSettings = "New File Management Settings"
+    case googleAdsPhase2 = "Google Ads Phase 2"
 }

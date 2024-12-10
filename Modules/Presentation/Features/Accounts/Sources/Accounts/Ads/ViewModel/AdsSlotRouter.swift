@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
@@ -9,18 +10,21 @@ public struct AdsSlotRouter<T: View> {
     private weak var presenter: UIViewController?
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let featureFlagProvider: FeatureFlagProviderProtocol
     private let contentView: T
     private let presentationStyle: UIModalPresentationStyle
     
     public init(
         adsSlotViewController: some AdsSlotViewControllerProtocol,
         accountUseCase: some AccountUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         contentView: T,
         presenter: UIViewController? = nil,
         presentationStyle: UIModalPresentationStyle = .automatic
     ) {
         self.adsSlotViewController = adsSlotViewController
         self.accountUseCase = accountUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.contentView = contentView
         self.presenter = presenter
         self.presentationStyle = presentationStyle
@@ -29,6 +33,7 @@ public struct AdsSlotRouter<T: View> {
     public func build(onViewFirstAppeared: (() -> Void)? = nil) -> UIViewController {
         let viewModel = AdsSlotViewModel(
             adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
+            localFeatureFlagProvider: featureFlagProvider,
             accountUseCase: accountUseCase,
             onViewFirstAppeared: onViewFirstAppeared
         )
