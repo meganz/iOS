@@ -139,9 +139,9 @@ struct CancellationSurveyView: View {
                     noReasonSelectedErrorView
                 }
                 
-                if let followUpReasons = viewModel.followUpReasons(reason), viewModel.isReasonSelected(reason) {
+                if viewModel.shouldShowFollowUpReasons(for: reason) {
                     VStack {
-                        ForEach(followUpReasons, id: \.id) { followUpReason in
+                        ForEach(reason.followUpReasons, id: \.id) { followUpReason in
                             RadioButton(
                                 id: followUpReason.id.rawValue,
                                 text: followUpReason.title,
