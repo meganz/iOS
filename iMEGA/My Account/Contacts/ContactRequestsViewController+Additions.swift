@@ -6,4 +6,10 @@ extension ContactRequestsViewController {
         tableView?.backgroundColor = TokenColors.Background.page
         tableView?.separatorColor = TokenColors.Border.strong
     }
+    
+    @objc func dismissHUD() {
+        if SVProgressHUD.isVisible() {
+            SVProgressHUD.dismiss()
+        }
+    }
 }
