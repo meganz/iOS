@@ -1,3 +1,4 @@
+import GoogleMobileAds
 import MEGADesignToken
 import MEGAPresentation
 import MEGASwiftUI
@@ -9,6 +10,7 @@ import SwiftUI
 public struct AdsSlotView<T: View>: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject var viewModel: AdsSlotViewModel
+    private let adSize = GADAdSizeBanner
     public let contentView: T
 
     public var body: some View {
@@ -16,10 +18,29 @@ public struct AdsSlotView<T: View>: View {
             contentView
             
             if viewModel.isExternalAdsEnabled == true {
-                AdMobBannerView(adMob: viewModel.adMob)
-                    .background()
-                    .frame(height: shouldHideAds ? 0 : 50)
-                    .opacity(shouldHideAds ? 0 : 1)
+                HStack(alignment: .top, spacing: 0) {
+                    AdMobBannerView(
+                        adSize: adSize,
+                        adMob: viewModel.adMob,
+                        bannerViewDidReceiveAdAction: { [weak viewModel] in
+                            viewModel?.bannerViewDidReceiveAd()
+                        }
+                    )
+                    .frame(
+                        width: adSize.size.width,
+                        height: adSize.size.height
+                    )
+                    
+                    if viewModel.isPhaseTwoEnabled && viewModel.showCloseButton {
+                        closeButton
+                            .frame(width: 16, height: 16)
+                    }
+                }
+                .padding(.top, 5)
+                .frame(maxWidth: .infinity)
+                .frame(height: shouldHideAds ? 0 : 50)
+                .background(TokenColors.Background.surface1.swiftUI)
+                .opacity(shouldHideAds ? 0 : 1)
             }
         }
         .onFirstAppear(perform: {
@@ -38,6 +59,17 @@ public struct AdsSlotView<T: View>: View {
         }
         .ignoresSafeArea(.keyboard)
         .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) ? .all : [.top])
+    }
+    
+    private var closeButton: some View {
+        Button {
+        } label: {
+            Image("close")
+                .resizable(capInsets: EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2))
+                .renderingMode(.template)
+                .foregroundStyle(TokenColors.Button.primary.swiftUI)
+        }
+        .background(TokenColors.Background.page.swiftUI)
     }
     
     private var shouldHideAds: Bool {

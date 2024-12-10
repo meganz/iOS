@@ -248,11 +248,24 @@ final class AdsSlotViewModelTests: XCTestCase {
         }
     }
     
+    // MARK: - Close button
+    
+    @MainActor func testBannerViewDidReceiveAd_shouldSetShowCloseButton() {
+        let sut = makeSUT(isAdsPhase2Enabled: true)
+        
+        XCTAssertFalse(sut.showCloseButton)
+        
+        sut.bannerViewDidReceiveAd()
+        
+        XCTAssertTrue(sut.showCloseButton)
+    }
+    
     // MARK: Helper
     @MainActor private func makeSUT(
         adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol = MockAdsSlotUpdatesProvider(),
         adsList: [String: String] = [:],
         isExternalAdsFlagEnabled: Bool = true,
+        isAdsPhase2Enabled: Bool = false,
         adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = MockAppEnvironmentUseCase(),
         isNewAccount: Bool = false,
@@ -264,6 +277,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         let sut = AdsSlotViewModel(
             adsSlotUpdatesProvider: adsSlotUpdatesProvider,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
+            localFeatureFlagProvider: MockFeatureFlagProvider(list: [.googleAdsPhase2: isAdsPhase2Enabled]),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult)

@@ -60,6 +60,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 audioPlayerViewController = AdsSlotRouter(
                     adsSlotViewController: adsSlotViewController,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                    featureFlagProvider: DIContainer.featureFlagProvider,
                     contentView: AdsViewWrapper(viewController: audioPlayerViewController)
                 ).build()
             }

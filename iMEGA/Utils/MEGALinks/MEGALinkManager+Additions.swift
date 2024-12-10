@@ -286,6 +286,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
          AdsSlotRouter(
             adsSlotViewController: adsSlotViewController,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            featureFlagProvider: DIContainer.featureFlagProvider,
             contentView: AdsViewWrapper(viewController: containerController),
             presenter: UIApplication.mnz_visibleViewController(),
             presentationStyle: presentationStyle

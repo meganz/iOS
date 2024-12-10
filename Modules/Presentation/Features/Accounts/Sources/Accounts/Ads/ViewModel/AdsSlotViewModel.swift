@@ -8,6 +8,7 @@ import SwiftUI
 @MainActor
 final public class AdsSlotViewModel: ObservableObject {
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let localFeatureFlagProvider: any FeatureFlagProviderProtocol
     private let adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
@@ -19,11 +20,13 @@ final public class AdsSlotViewModel: ObservableObject {
     
     @Published var isExternalAdsEnabled: Bool?
     @Published var displayAds: Bool = false
+    @Published var showCloseButton: Bool = false
     private(set) var onViewFirstAppeared: (() -> Void)?
     
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        localFeatureFlagProvider: some FeatureFlagProviderProtocol,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
         accountUseCase: some AccountUseCaseProtocol,
@@ -31,6 +34,7 @@ final public class AdsSlotViewModel: ObservableObject {
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.localFeatureFlagProvider = localFeatureFlagProvider
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
         self.accountUseCase = accountUseCase
@@ -59,7 +63,7 @@ final public class AdsSlotViewModel: ObservableObject {
         await adMobConsentManager.initializeGoogleMobileAdsSDK()
     }
 
-    // MARK: Remote Flag
+    // MARK: Remote Feature Flag
     func setupAdsRemoteFlag() async {
         // Check for enabled external ads only if there is no logged in user or the account type is free
         if accountUseCase.isLoggedIn(),
@@ -69,6 +73,10 @@ final public class AdsSlotViewModel: ObservableObject {
             return
         }
         isExternalAdsEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+    }
+    
+    var isPhaseTwoEnabled: Bool {
+        localFeatureFlagProvider.isFeatureFlagEnabled(for: .googleAdsPhase2)
     }
     
     // MARK: Ads Slot changes
@@ -105,5 +113,10 @@ final public class AdsSlotViewModel: ObservableObject {
     /// In the future, AdMob will have multiple unit ids per adSlot
     public var adMob: AdMob {
         appEnvironmentUseCase.configuration == .production ? AdMob.live : AdMob.test
+    }
+    
+    // MARK: Close button
+    func bannerViewDidReceiveAd() {
+        showCloseButton = true
     }
 }

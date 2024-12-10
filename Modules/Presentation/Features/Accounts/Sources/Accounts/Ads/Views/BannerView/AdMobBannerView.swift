@@ -1,33 +1,19 @@
 import GoogleMobileAds
 import SwiftUI
 
-struct AdMobBannerView: View {
-    private let adMob: AdMob
-    private let adSize = GADAdSizeBanner
-    
-    init(adMob: AdMob) {
-        self.adMob = adMob
-    }
-    
-    var body: some View {
-        AdMobBannerContentView(
-            adSize: adSize,
-            adMob: adMob
-        )
-        .frame(height: adSize.size.height)
-    }
-}
-
-struct AdMobBannerContentView: UIViewRepresentable {
+struct AdMobBannerView: UIViewRepresentable {
     private let adMob: AdMob
     let adSize: GADAdSize
+    private var bannerViewDidReceiveAdAction: (() -> Void)?
     
     init(
         adSize: GADAdSize,
-        adMob: AdMob
+        adMob: AdMob,
+        bannerViewDidReceiveAdAction: (() -> Void)? = nil
     ) {
         self.adSize = adSize
         self.adMob = adMob
+        self.bannerViewDidReceiveAdAction = bannerViewDidReceiveAdAction
     }
     
     func makeUIView(context: Context) -> some UIView {
@@ -54,19 +40,24 @@ struct AdMobBannerContentView: UIViewRepresentable {
     }
     
     @MainActor
-    final class AdMobBannerCoordinator: NSObject {
+    final class AdMobBannerCoordinator: NSObject, @preconcurrency GADBannerViewDelegate {
         private(set) lazy var bannerView: GADBannerView = {
             let banner = GADBannerView(adSize: parent.adSize)
             banner.adUnitID = parent.adMob.unitID
             banner.load(GADRequest())
+            banner.delegate = self
             return banner
         }()
         
-        private let parent: AdMobBannerContentView
+        private let parent: AdMobBannerView
         
-        init(_ parent: AdMobBannerContentView) {
+        init(_ parent: AdMobBannerView) {
             self.parent = parent
             super.init()
+        }
+        
+        func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+            parent.bannerViewDidReceiveAdAction?()
         }
     }
 }
