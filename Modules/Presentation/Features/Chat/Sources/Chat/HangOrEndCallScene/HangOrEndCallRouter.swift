@@ -1,30 +1,33 @@
 import MEGADomain
 import MEGAPresentation
-import MEGASDKRepo
 import SwiftUI
+import UIKit
 
-protocol HangOrEndCallRouting: AnyObject, Routing {
+@MainActor
+protocol HangOrEndCallRouting: AnyObject {
     func leaveCall()
     func endCallForAll()
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
-final class HangOrEndCallRouter: HangOrEndCallRouting {
+public final class HangOrEndCallRouter: HangOrEndCallRouting {
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
-    private weak var meetingContainerViewModel: MeetingContainerViewModel?
+    private let completion: (HangOrEndCallAction) -> Void
     
-    init(presenter: UIViewController,
-         meetingContainerViewModel: MeetingContainerViewModel) {
+    public init(
+        presenter: UIViewController,
+        completion: @escaping (HangOrEndCallAction) -> Void
+    ) {
         self.presenter = presenter
-        self.meetingContainerViewModel = meetingContainerViewModel
+        self.completion = completion
     }
     
-    func build() -> UIViewController {
-        let analyticsEventUseCase = AnalyticsEventUseCase(
-            repository: AnalyticsRepository(sdk: MEGASdk.shared)
+    public func build() -> UIViewController {
+        let viewModel = HangOrEndCallViewModel(
+            router: self,
+            tracker: DIContainer.tracker
         )
-        let viewModel = HangOrEndCallViewModel(router: self, analyticsEventUseCase: analyticsEventUseCase)
         let hangOrEndCallView = HangOrEndCallView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: hangOrEndCallView)
         hostingController.view.backgroundColor = .clear
@@ -32,21 +35,21 @@ final class HangOrEndCallRouter: HangOrEndCallRouting {
         return hostingController
     }
     
-    func start() {
+    public func start() {
         let viewController = build()
         baseViewController = viewController
         presenter?.present(viewController, animated: true)
     }
     
     func leaveCall() {
-        baseViewController?.dismiss(animated: true, completion: {
-            self.meetingContainerViewModel?.dispatch(.hangCall(presenter: nil, sender: nil))
+        baseViewController?.dismiss(animated: true, completion: { [weak self] in
+            self?.completion(.leaveCall)
         })
     }
     
     func endCallForAll() {
-        baseViewController?.dismiss(animated: true, completion: {
-            self.meetingContainerViewModel?.dispatch(.endCallForAll)
+        baseViewController?.dismiss(animated: true, completion: { [weak self] in
+            self?.completion(.endCallForAll)
         })
     }
     

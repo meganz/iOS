@@ -1,9 +1,9 @@
 import MEGADomain
+import Chat
 import MEGADomainMock
 import MEGAL10n
 import MEGASwiftUI
 import XCTest
-import Chat
 
 final class RaiseHandSnackBarFactoryTests: XCTestCase {
     class Harness {
