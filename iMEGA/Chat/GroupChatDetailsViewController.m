@@ -426,7 +426,7 @@
             break;
             
         case GroupChatDetailsSectionGetChatLink:
-            numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo && self.chatRoom.isPublicChat && !self.chatRoom.isPreview) ? 1 : 0;
+            numberOfRows = [self shouldShowGetChatLinkButton] ? 1 : 0;
             break;
             
         case GroupChatDetailsSectionManageChatHistory:
@@ -785,7 +785,7 @@
             break;
             
         case GroupChatDetailsSectionGetChatLink:
-            [footerView configureWithTitle:nil topDistance:(self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat && !self.chatRoom.isPreview ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+            [footerView configureWithTitle:nil topDistance:[self shouldShowGetChatLinkButton] ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         case GroupChatDetailsSectionManageChatHistory:
@@ -876,7 +876,7 @@
                         }]];
                         [self presentViewController:alertController animated:YES completion:nil];
                     }
-                } else if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
+                } else if ([self userPrivilegeIsAboveReadOnly]) {
                     if (self.chatRoom.hasCustomTitle) {
                         ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                             if (error.type == MEGAChatErrorTypeOk) {
