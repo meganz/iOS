@@ -139,6 +139,14 @@ extension PhotosViewController {
     @objc func isTimelineActive() -> Bool {
         parentPhotoAlbumsController?.isTimelineActive() ?? false
     }
+    
+    private func addToAlbum(nodes: [NodeEntity]) {
+        AddToCollectionRouter(
+            presenter: self,
+            selectedPhotos: nodes).start()
+        
+        toggleEditing()
+    }
 }
 
 // MARK: - NodeActionViewControllerDelegate
@@ -175,6 +183,8 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
             hide(nodes: nodes.toNodeEntities())
         case .unhide:
             unhide(nodes: nodes.toNodeEntities())
+        case .addToAlbum:
+            addToAlbum(nodes: nodes.toNodeEntities())
         default:
             break
         }

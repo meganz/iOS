@@ -36,6 +36,7 @@ extension NodeActionsDelegateHandler {
             disputeTakedown: { _ in },
             hide: { _ in },
             unhide: { _ in },
+            addToAlbum: { _ in },
             toggleEditMode: { _ in }
         )
     }

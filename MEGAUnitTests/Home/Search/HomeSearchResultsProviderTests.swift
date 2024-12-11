@@ -939,7 +939,8 @@ extension NodeActions {
             restoreFromRubbishBin: { _ in },
             removeFromRubbishBin: { _ in },
             hide: { _ in },
-            unhide: { _ in }
+            unhide: { _ in },
+            addToAlbum: { _ in }
         )
     }
 }

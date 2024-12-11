@@ -41,6 +41,8 @@ struct NodeActions {
     
     var hide: ([NodeEntity]) -> Void
     var unhide: ([NodeEntity]) -> Void
+    
+    var addToAlbum: ([NodeEntity]) -> Void
 }
 
 // Disabling cyclomatic check as this right now
@@ -312,6 +314,11 @@ extension NodeActions {
                 Task {
                     _ = await nodeActionUseCase.unhide(nodes: nodes)
                 }
+            },
+            addToAlbum: {
+                AddToCollectionRouter(
+                    presenter: navigationController,
+                    selectedPhotos: $0).start()
             }
         )
     }

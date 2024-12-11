@@ -16,6 +16,7 @@
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
 		0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */; };
 		0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */ = {isa = PBXBuildFile; productRef = 0E119ACB2C7C3CBC0091BF06 /* MEGAPhotos */; };
+		0E11AFA32D067937000A7E68 /* AddToCollectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */; };
 		0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 0E12F2102BBFA8950087D853 /* AsyncAlgorithms */; };
 		0E2085742C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */; };
 		0E2586F52C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */; };
@@ -2698,6 +2699,7 @@
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
 		0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E119ACA2C7C3CAF0091BF06 /* MEGAPhotos */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPhotos; sourceTree = "<group>"; };
+		0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCollectionRouter.swift; sourceTree = "<group>"; };
 		0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveNodeUseCase.swift; sourceTree = "<group>"; };
 		0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsLinkViewModelTests.swift; sourceTree = "<group>"; };
@@ -5590,6 +5592,14 @@
 				5D2AF57E24F4A711000B2F29 /* UploadPhotoAssetsRepository.swift */,
 			);
 			path = Transfer;
+			sourceTree = "<group>";
+		};
+		0E11AFA12D067929000A7E68 /* AddToCollection */ = {
+			isa = PBXGroup;
+			children = (
+				0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */,
+			);
+			path = AddToCollection;
 			sourceTree = "<group>";
 		};
 		0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */ = {
@@ -11546,6 +11556,7 @@
 		B69A1765270B756F00AAD334 /* Media Consumption */ = {
 			isa = PBXGroup;
 			children = (
+				0E11AFA12D067929000A7E68 /* AddToCollection */,
 				12397E1A2820C43E00A30CCC /* Album Library */,
 				328C15342A3974B2002499CE /* Links */,
 				B6C444E0274A28AA00268D9A /* Photo Library */,
@@ -14164,6 +14175,7 @@
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
 				BF7EBD2E244E916F0015255F /* AddToChatViewController.swift in Sources */,
+				0E11AFA32D067937000A7E68 /* AddToCollectionRouter.swift in Sources */,
 				C4F638602BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift in Sources */,
 				246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
