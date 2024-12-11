@@ -1,5 +1,7 @@
 import Foundation
 import MEGADomain
+import MEGAL10n
+import MEGASwiftUI
 import MEGAUIComponent
 
 @MainActor
@@ -9,10 +11,15 @@ final class RubbishBinSettingViewModel: ObservableObject {
     private let upgradeAccountRouter: any UpgradeAccountRouting
     
     @Published private(set) var isPaidAccount: Bool = false
-    @Published private(set) var rubbishBinAutopurgePeriod: Int64 = 0
+    @Published private(set) var rubbishBinAutopurgePeriod = 0
     @Published private(set) var isLoading = false
-    @Published private(set) var selectedAutoPurgePeriod: AutoPurgePeriod = .sevenDays
+    @Published private(set) var selectedAutoPurgePeriod: AutoPurgePeriod = .none
+    @Published private(set) var autoPurgePeriodDisplayName = ""
     @Published private(set) var autoPurgePeriods = [AutoPurgePeriod]()
+    @Published var snackBar: SnackBar?
+    
+    var emptyRubbishBinTask: Task<Void, Never>?
+    var updateAutoPurgeTask: Task<Void, Never>?
     
     @Published var isBottomSheetPresented = false
     
@@ -29,6 +36,11 @@ final class RubbishBinSettingViewModel: ObservableObject {
         autoPurgePeriods = AutoPurgePeriod.options(forPaidAccount: isPaidAccount)
     }
     
+    deinit {
+        emptyRubbishBinTask?.cancel()
+        updateAutoPurgeTask?.cancel()
+    }
+    
     // MARK: Monitor Settings Change
     
     func startRubbishBinSettingsUpdatesMonitoring() async {
@@ -36,6 +48,20 @@ final class RubbishBinSettingViewModel: ObservableObject {
             try? Task.checkCancellation()
             
             handleRequestResult(resultRequest)
+        }
+    }
+    
+    // MARK: Internal
+    
+    func displayName(of period: AutoPurgePeriod) -> String {
+        switch period {
+        case .days(let days):
+            Strings.Localizable.Settings.FileManagement.RubbishBin.AutoPurge.days(days)
+        case .years(let years):
+            Strings.Localizable.General.Format.RetentionPeriod.year(years)
+        case .never:
+            Strings.Localizable.never
+        case .none: ""
         }
     }
     
@@ -52,6 +78,17 @@ final class RubbishBinSettingViewModel: ObservableObject {
     func onTapAutoPurgeRow(with period: AutoPurgePeriod) {
         selectedAutoPurgePeriod = period
         isBottomSheetPresented = false
+        
+        updateAutoPurgeTask?.cancel()
+        updateAutoPurgeTask = Task { [weak self] in
+            guard let self else { return }
+            
+            let days = period.durationInDays ?? 7
+            await rubbishBinSettingsUseCase.setRubbishBinAutopurgePeriod(in: days)
+            
+            rubbishBinAutopurgePeriod = days
+            autoPurgePeriodDisplayName = displayName(of: period)
+        }
     }
     
     func onTapEmptyBinButton() {
@@ -59,18 +96,40 @@ final class RubbishBinSettingViewModel: ObservableObject {
         
         isLoading = true
         
-        rubbishBinSettingsUseCase.cleanRubbishBin()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.isLoading = false
+        emptyRubbishBinTask?.cancel()
+        emptyRubbishBinTask = Task { [weak self] in
+            guard let self else { return }
+            
+            do {
+                try await rubbishBinSettingsUseCase.cleanRubbishBin()
+                try await rubbishBinSettingsUseCase.catchupWithSDK()
+                
+                try Task.checkCancellation()
+                
+                showSnackBar(message: Strings.Localizable.Settings.FileManagement.RubbishBin.Snackbar.message)
+            } catch {
+                CrashlyticsLogger.log(category: .general, "Empty Rubbish Bin had error.")
+            }
+            
+            isLoading = false
         }
     }
     
     // MARK: - Private
     
+    private func showSnackBar(message: String) {
+        snackBar = .init(message: message)
+    }
+    
     private func handleRequestResult(_ result: Result<RubbishBinSettingsEntity, any Error>) {
-        if case .success(let result) = result {
-            self.rubbishBinAutopurgePeriod = result.rubbishBinAutopurgePeriod
-        }
+        guard case .success(let entity) = result else { return }
+        
+        rubbishBinAutopurgePeriod = entity.rubbishBinAutopurgePeriod
+        let autoPurgePeriod = AutoPurgePeriod(fromDays: Int(rubbishBinAutopurgePeriod))
+        selectedAutoPurgePeriod = autoPurgePeriod
+        
+        autoPurgePeriodDisplayName = autoPurgePeriod == .none
+        ? Strings.Localizable.Settings.FileManagement.RubbishBin.AutoPurge.days(rubbishBinAutopurgePeriod)
+        : displayName(of: autoPurgePeriod)
     }
 }

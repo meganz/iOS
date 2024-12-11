@@ -1,8 +1,8 @@
 public struct RubbishBinSettingsEntity: Sendable {
-    public let rubbishBinAutopurgePeriod: Int64
+    public let rubbishBinAutopurgePeriod: Int
     public let rubbishBinCleaningSchedulerEnabled: Bool
     
-    public init(rubbishBinAutopurgePeriod: Int64, rubbishBinCleaningSchedulerEnabled: Bool) {
+    public init(rubbishBinAutopurgePeriod: Int, rubbishBinCleaningSchedulerEnabled: Bool) {
         self.rubbishBinAutopurgePeriod = rubbishBinAutopurgePeriod
         self.rubbishBinCleaningSchedulerEnabled = rubbishBinCleaningSchedulerEnabled
     }

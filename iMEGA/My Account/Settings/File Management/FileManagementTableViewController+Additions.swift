@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
@@ -39,7 +40,7 @@ extension FileManagementTableViewController {
         let rubbishBinSettingRepo = RubbishBinSettingsRepository(rubbishBinSettingsUpdatesProvider: rubbishBinSettingsUpdatesProvider)
         let rubbishBinSettingsUseCase = RubbishBinSettingsUseCase(rubbishBinSettingsRepository: rubbishBinSettingRepo)
         let hostingVC = UIHostingController(rootView: RubbishBinSettingView(viewModel: RubbishBinSettingViewModel(accountUseCase: accountUseCase, rubbishBinSettingsUseCase: rubbishBinSettingsUseCase)))
-        hostingVC.title = "Rubbish Bin Settings"
+        hostingVC.title = Strings.Localizable.Settings.FileManagement.RubbishBin.Navigation.title
         navigationController?.pushViewController(hostingVC, animated: true)
     }
 }

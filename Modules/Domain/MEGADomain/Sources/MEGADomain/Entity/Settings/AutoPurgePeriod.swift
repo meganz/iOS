@@ -2,38 +2,29 @@ import Foundation
 
 @MainActor
 public enum AutoPurgePeriod: Identifiable, Equatable {
+    case none
+    case never
     case days(Int)
     case years(Int)
-    case never
     
     public nonisolated var id: Int {
         switch self {
-        case .never:
-            return -1 // Use `-1` to represent `never`
-        default:
-            return durationInDays ?? -1 // Fallback to `-1` if nil (unlikely for other cases)
+        case .none: -2
+        case .never: -1
+        default: durationInDays ?? -1
         }
     }
     
     public nonisolated var durationInDays: Int? {
         switch self {
-        case .days(let days):
-            return days
-        case .years(let years):
-            return years * 365
+        case .none:
+            nil
         case .never:
-            return nil
-        }
-    }
-    
-    public var displayName: String {
-        switch self {
+            0
         case .days(let days):
-            return "\(days) days"
+            days
         case .years(let years):
-            return years == 1 ? "1 year" : "\(years) years"
-        case .never:
-            return "Never"
+            years * 365
         }
     }
     
@@ -50,6 +41,34 @@ public enum AutoPurgePeriod: Identifiable, Equatable {
             return [.sevenDays, .fourteenDays, .thirtyDays, .sixtyDays, .oneYear, .fiveYears, .tenYears, .never]
         } else {
             return [.sevenDays, .fourteenDays, .thirtyDays]
+        }
+    }
+}
+
+public extension AutoPurgePeriod {
+    /// Creates an `AutoPurgePeriod` from a given number of days.
+    /// If the value doesn't match a defined option, returns `.none`.
+    /// - Parameter days: The number of days to initialize the `AutoPurgePeriod`.
+    init(fromDays days: Int) {
+        switch days {
+        case 0:
+            self = .never
+        case 7:
+            self = .sevenDays
+        case 14:
+            self = .fourteenDays
+        case 30:
+            self = .thirtyDays
+        case 60:
+            self = .sixtyDays
+        case 365:
+            self = .oneYear
+        case 1825:
+            self = .fiveYears
+        case 3650:
+            self = .tenYears
+        default:
+            self = .none
         }
     }
 }
