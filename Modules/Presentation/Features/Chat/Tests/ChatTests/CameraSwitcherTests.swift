@@ -1,4 +1,4 @@
-@testable import MEGA
+import Chat
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n

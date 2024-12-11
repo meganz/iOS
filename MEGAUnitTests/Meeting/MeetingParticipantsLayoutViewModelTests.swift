@@ -1,3 +1,4 @@
+import Chat
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain

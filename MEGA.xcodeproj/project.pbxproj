@@ -1352,7 +1352,6 @@
 		94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C742910554200503174 /* TransferNodeTableViewCell.xib */; };
 		94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
-		9462D4B22C203A090049B3CA /* CameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9462D4B12C203A090049B3CA /* CameraSwitcher.swift */; };
 		9463EEDB2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */; };
 		9464E0E62C8A2C8700D139A9 /* WarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464E0E12C8A2C8600D139A9 /* WarningBannerView.swift */; };
 		9464E0E72C8A2C8700D139A9 /* WarningBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464E0E22C8A2C8600D139A9 /* WarningBannerViewModel.swift */; };
@@ -1407,7 +1406,6 @@
 		948AE4A42C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */; };
 		948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948B29492CA1671D00428787 /* MockFileManager.swift */; };
 		948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */; };
-		948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */; };
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
 		9490DE542CF4B49A00C0BAAD /* TestingExpectation in Frameworks */ = {isa = PBXBuildFile; productRef = 9490DE532CF4B49A00C0BAAD /* TestingExpectation */; };
 		9495DBB12A4086BF00FA22EE /* PermissionModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB02A4086BF00FA22EE /* PermissionModalModel.swift */; };
@@ -4082,7 +4080,6 @@
 		94614C742910554200503174 /* TransferNodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferNodeTableViewCell.xib; sourceTree = "<group>"; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAExportRequestDelegate.h; path = API/Requests/MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAExportRequestDelegate.m; path = API/Requests/MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
-		9462D4B12C203A090049B3CA /* CameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcher.swift; sourceTree = "<group>"; };
 		9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatRoomPrivilegeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9464E0E12C8A2C8600D139A9 /* WarningBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningBannerView.swift; sourceTree = "<group>"; };
 		9464E0E22C8A2C8600D139A9 /* WarningBannerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningBannerViewModel.swift; sourceTree = "<group>"; };
@@ -4128,7 +4125,6 @@
 		948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactory.swift; sourceTree = "<group>"; };
 		948B29492CA1671D00428787 /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
-		948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSwitcherTests.swift; sourceTree = "<group>"; };
 		948D92672B2373CE0020E894 /* DisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
@@ -9833,7 +9829,6 @@
 				9911BA892A8B209F00B88F28 /* WaitingRoom */,
 				83CB60EB2AC58EC600042EBD /* WaitingRoomParticipantsListScene */,
 				831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */,
-				9462D4B12C203A090049B3CA /* CameraSwitcher.swift */,
 				BF66E00826140BE900066F35 /* MeetingContainerRouter.swift */,
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
 				BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */,
@@ -12571,7 +12566,6 @@
 				8310847E2C3C1648004E1E5F /* CallParticipantsSortingTests.swift */,
 				94B503A62C357E320064270D /* CallsCoordinatorTests.swift */,
 				838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */,
-				948BCE052C20704D00B719B2 /* CameraSwitcherTests.swift */,
 				990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */,
 				998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */,
 				998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */,
@@ -14332,7 +14326,6 @@
 				838F27C72BA1E68700F267BC /* CallWillEndAlertRouter.swift in Sources */,
 				8331D8672BA32E5D0071BAD0 /* CallWillEndAlertViewModel.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
-				9462D4B22C203A090049B3CA /* CameraSwitcher.swift in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
@@ -16147,7 +16140,6 @@
 				94B503A72C357E320064270D /* CallsCoordinatorTests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */,
-				948BCE062C20704D00B719B2 /* CameraSwitcherTests.swift in Sources */,
 				25A58F902B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
 				25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */,

@@ -3,7 +3,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 
-protocol CameraSwitching: Sendable {
+public protocol CameraSwitching: Sendable {
     func switchCamera() async
 }
 
@@ -11,19 +11,27 @@ protocol CameraSwitching: Sendable {
 /// used in
 ///   * CallControlsViewModel - when more button is not shown (switching is possible in the call UI)
 ///   * NavBar in MeetingParticipantsLayoutViewModel - when more button is show
-struct CameraSwitcher: CameraSwitching {
+public struct CameraSwitcher: CameraSwitching {
     var captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     var localVideoUseCase: any CallLocalVideoUseCaseProtocol
     
-    func switchCamera() async {
+    public init(
+        captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
+        localVideoUseCase: any CallLocalVideoUseCaseProtocol
+    ) {
+        self.captureDeviceUseCase = captureDeviceUseCase
+        self.localVideoUseCase = localVideoUseCase
+    }
+    
+    public func switchCamera() async {
         guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: isBackCameraSelected() ? .front : .back) else {
-            MEGALogError("Error getting camera localised name")
+            logError("Error getting camera localised name")
             return
         }
         do {
             try await localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
         } catch {
-            MEGALogError("Error selecting camera: \(error.localizedDescription)")
+            logError("Error selecting camera: \(error.localizedDescription)")
         }
     }
     
