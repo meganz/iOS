@@ -1,4 +1,4 @@
-@testable import MEGA
+import Chat
 
 class MockCameraSwitcher: CameraSwitching, @unchecked Sendable {
     var switchCamera_CallCount = 0

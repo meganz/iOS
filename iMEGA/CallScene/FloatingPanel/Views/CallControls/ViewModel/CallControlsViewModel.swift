@@ -1,3 +1,4 @@
+import Chat
 import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
