@@ -1,7 +1,7 @@
 import MEGADomain
+import Chat
 import MEGASwiftUI
 import XCTest
-import Chat
 
 final class RaiseHandUpdaterTests: XCTestCase {
     class Harness {

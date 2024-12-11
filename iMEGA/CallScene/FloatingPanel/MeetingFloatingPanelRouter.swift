@@ -1,3 +1,4 @@
+import Chat
 import ChatRepo
 import MEGADomain
 import MEGAL10n
@@ -327,7 +328,17 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
-        let hangOrEndCallRouter = HangOrEndCallRouter(presenter: UIApplication.mnz_presentingViewController(), meetingContainerViewModel: containerViewModel)
+        let hangOrEndCallRouter = HangOrEndCallRouter(
+            presenter: UIApplication.mnz_presentingViewController(),
+            completion: {[weak containerViewModel] action in
+                switch action {
+                case .endCallForAll:
+                    containerViewModel?.dispatch(.endCallForAll)
+                case .leaveCall:
+                    containerViewModel?.dispatch(.hangCall(presenter: nil, sender: nil))
+                }
+            }
+        )
         hangOrEndCallRouter.start()
     }
     

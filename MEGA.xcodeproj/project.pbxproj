@@ -880,7 +880,6 @@
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
 		8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */; };
-		83135B2A2862123B0015AE2F /* HangOrEndCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83135B292862123B0015AE2F /* HangOrEndCallView.swift */; };
 		83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83139148293511F300E20170 /* UserAvatarViewModel.swift */; };
 		8313914B293519F900E20170 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313914A293519F900E20170 /* UserAvatarView.swift */; };
 		8313914D29351A2800E20170 /* ChatRoomParticipantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313914C29351A2800E20170 /* ChatRoomParticipantsListView.swift */; };
@@ -906,8 +905,6 @@
 		8326E68C2BE50A5400481711 /* MockPasscodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */; };
 		8327EE21283391D400068856 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		83293C5A2806CB7800369A86 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
-		832CAEEF2864857D0069409D /* HangOrEndCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */; };
-		832CAEF3286485A40069409D /* HangOrEndCallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832CAEF2286485A40069409D /* HangOrEndCallRouter.swift */; };
 		832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832DEFE82AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift */; };
 		832DEFEB2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */; };
 		832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */; };
@@ -2215,7 +2212,6 @@
 		BF61496C2A9FF39500AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61496B2A9FF39500AB051A /* MEGAL10nObjc */; };
 		BF65423C2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */; };
 		BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */; };
-		BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */; };
 		BF66DFC82613E6AC00066F35 /* MeetingFloatingPanelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */; };
 		BF66DFD22613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66DFD12613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift */; };
 		BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66DFDE2613E7BE00066F35 /* MeetingParticipantViewModel.swift */; };
@@ -3612,7 +3608,6 @@
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteContactViewController.swift; sourceTree = "<group>"; };
-		83135B292862123B0015AE2F /* HangOrEndCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallView.swift; sourceTree = "<group>"; };
 		83139148293511F300E20170 /* UserAvatarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarViewModel.swift; sourceTree = "<group>"; };
 		8313914A293519F900E20170 /* UserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
 		8313914C29351A2800E20170 /* ChatRoomParticipantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantsListView.swift; sourceTree = "<group>"; };
@@ -3642,8 +3637,6 @@
 		8326E6852BE5040400481711 /* PasscodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeManager.swift; sourceTree = "<group>"; };
 		8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPasscodeManager.swift; sourceTree = "<group>"; };
 		83293C592806CB7800369A86 /* NameCollisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCollisionView.swift; sourceTree = "<group>"; };
-		832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallViewModel.swift; sourceTree = "<group>"; };
-		832CAEF2286485A40069409D /* HangOrEndCallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallRouter.swift; sourceTree = "<group>"; };
 		832DEFE82AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowNonHostToInviteTableViewCell.swift; sourceTree = "<group>"; };
 		832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllowNonHostToInviteTableViewCell.xib; sourceTree = "<group>"; };
 		832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodePropertyTableViewCell.h; sourceTree = "<group>"; };
@@ -4957,7 +4950,6 @@
 		BF61494F2A9FF30000AB051A /* MEGAL10n */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAL10n; sourceTree = "<group>"; };
 		BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringService.swift; sourceTree = "<group>"; };
 		BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringServiceTests.swift; sourceTree = "<group>"; };
-		BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallViewModelTests.swift; sourceTree = "<group>"; };
 		BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelRouter.swift; sourceTree = "<group>"; };
 		BF66DFD12613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewModel.swift; sourceTree = "<group>"; };
 		BF66DFDE2613E7BE00066F35 /* MeetingParticipantViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantViewModel.swift; sourceTree = "<group>"; };
@@ -8660,16 +8652,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		83135B262862120F0015AE2F /* HangOrEndCallScene */ = {
-			isa = PBXGroup;
-			children = (
-				832CAEF2286485A40069409D /* HangOrEndCallRouter.swift */,
-				83135B292862123B0015AE2F /* HangOrEndCallView.swift */,
-				832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */,
-			);
-			path = HangOrEndCallScene;
-			sourceTree = "<group>";
-		};
 		831391472934C08C00E20170 /* ChatRoomParticipants */ = {
 			isa = PBXGroup;
 			children = (
@@ -9845,7 +9827,6 @@
 				831889532ADEC5A600658277 /* EndCallDialog */,
 				83850A3B26B2AACC00C62304 /* EnterMeetingLinkScene */,
 				BF66DFDB2613E73E00066F35 /* FloatingPanel */,
-				83135B262862120F0015AE2F /* HangOrEndCallScene */,
 				83B944762C5B959B00F8D6B6 /* Model */,
 				836651272649374B00BC02F0 /* ParticipantsLayout */,
 				2FFCF39E25FB1A1500E1718D /* StartMeetingScene */,
@@ -12597,7 +12578,6 @@
 				BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */,
 				BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */,
 				BFC9B6B62A282151009AA403 /* FutureMeetingSectionTests.swift */,
-				BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */,
 				BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */,
 				2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */,
 				94CC24BC2BA0434A002BEA9C /* MeetingFloatingPanelBannerFactoryTests.swift */,
@@ -14791,9 +14771,6 @@
 				991754F12B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift in Sources */,
 				839108C72C63C5DB00B4E4A9 /* HandleConverter.swift in Sources */,
 				5DD91D2F24D7EE62001C72DB /* HandlerView.swift in Sources */,
-				832CAEF3286485A40069409D /* HangOrEndCallRouter.swift in Sources */,
-				83135B2A2862123B0015AE2F /* HangOrEndCallView.swift in Sources */,
-				832CAEEF2864857D0069409D /* HangOrEndCallViewModel.swift in Sources */,
 				8340CAEF284E222D007C3B39 /* HeaderView.swift in Sources */,
 				8340CAF2284E28F5007C3B39 /* HeaderViewModel.swift in Sources */,
 				B6472E082581D35D0040B2DB /* HeartbeatRequestDelegate.swift in Sources */,
@@ -16247,7 +16224,6 @@
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
 				25E319F52C11178500E292CF /* GetLinkViewModelCommand+isEqual.swift in Sources */,
 				2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */,
-				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
 				0E2085742C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift in Sources */,
 				0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */,
