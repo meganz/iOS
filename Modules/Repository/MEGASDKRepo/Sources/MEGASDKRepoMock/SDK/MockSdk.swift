@@ -82,6 +82,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public private(set) var copyNodeWithSameNameCallCount = 0
     public private(set) var moveNodeWithNewNameCallCount = 0
     public private(set) var moveNodeWithSameNameCallCount = 0
+    public private(set) var cleanRubbishBinCallCount = 0
+    public private(set) var catchupWithSDKCallCount = 0
+    public private(set) var setRubbishBinAutopurgePeriodCallCount = 0
+    public private(set) var rubbishBinAutopurgePeriodDays = 0
     
     public enum Message: Equatable, Hashable {
         case publicNodeForMegaFileLink(String)
@@ -292,6 +296,21 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public override func childNode(forParent parent: MEGANode, name: String) -> MEGANode? {
         nodes.first(where: { $0.name == name && $0.parentHandle == parent.handle })
+    }
+    
+    public override func cleanRubbishBin(with delegate: any MEGARequestDelegate) {
+        cleanRubbishBinCallCount += 1
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func catchup(with delegate: any MEGARequestDelegate) {
+        catchupWithSDKCallCount += 1
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func setRubbishBinAutopurgePeriodInDays(_ days: Int) {
+        setRubbishBinAutopurgePeriodCallCount += 1
+        rubbishBinAutopurgePeriodDays = days
     }
     
     public override func contacts() -> MEGAUserList { myContacts }

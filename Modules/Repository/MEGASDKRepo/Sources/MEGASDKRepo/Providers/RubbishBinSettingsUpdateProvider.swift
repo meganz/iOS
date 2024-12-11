@@ -6,7 +6,7 @@ import MEGASwift
 public protocol RubbishBinSettingsUpdateProviderProtocol: Sendable {
     /// Rubbish Bin Settings updates from `MEGARequestDelegate` `onRequestFinish` as an `AnyAsyncSequence`
     ///
-    /// - Returns: `AnyAsyncSequence` that will call sdk.add on creation and sdk.remove onTermination of `AsyncStream`.
+    /// - Returns: `AnyAsyncSequence` that will call sdk.getRubbishBinAutopurgePeriod on creation and sdk.remove onTermination of `AsyncStream`.
     /// It will yield `Result<RubbishBinSettingsEntity, any Error>` until sequence terminated
     var onRubbishBinSettingsRequestFinish: AnyAsyncSequence<Result<RubbishBinSettingsEntity, any Error>> { get }
 }
@@ -67,7 +67,7 @@ extension RubbishBingSettingsRequestDelegate: MEGARequestDelegate {
             let rubbishBinAutopurgePeriod = isPaidAccount ?
             RubbishBinSettingsUpdateProvider.autopurgePeriodForPaidAccount :
             RubbishBinSettingsUpdateProvider.autopurgePeriodForFreeAccount
-            let result = RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: Int64(rubbishBinAutopurgePeriod),
+            let result = RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: rubbishBinAutopurgePeriod,
                                                   rubbishBinCleaningSchedulerEnabled: serverSideRubbishBinAutopurgeEnabled)
             
             onRequestFinish(.success(result))
@@ -76,7 +76,7 @@ extension RubbishBingSettingsRequestDelegate: MEGARequestDelegate {
             guard request.number >= 0 else { return }
             
             let rubbishBinAutopurgePeriod = request.number
-            let result = RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: rubbishBinAutopurgePeriod,
+            let result = RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: Int(rubbishBinAutopurgePeriod),
                                                   rubbishBinCleaningSchedulerEnabled: rubbishBinAutopurgePeriod == 0 ? false : true)
             
             onRequestFinish(.success(result))

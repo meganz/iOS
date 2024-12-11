@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
@@ -12,8 +13,8 @@ struct RubbishBinSettingView: View {
         ScrollView(showsIndicators: false) {
             if !viewModel.isPaidAccount {
                 MEGABanner(
-                    subtitle: "Rubbish bin is automatically emptied every \(viewModel.selectedAutoPurgePeriod.displayName). If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.",
-                    buttonText: "Upgrade",
+                    subtitle: Strings.Localizable.Settings.FileManagement.RubbishBin.Upgrade.Info.title(viewModel.rubbishBinAutopurgePeriod),
+                    buttonText: Strings.Localizable.upgrade,
                     state: .info,
                     type: .topAlert,
                     buttonAction: {
@@ -25,8 +26,8 @@ struct RubbishBinSettingView: View {
             VStack {
                 Button(action: viewModel.onTapAutoPurgeCell) {
                     MEGAList(
-                        title: "Automatically empty Rubbish bin",
-                        subtitle: viewModel.selectedAutoPurgePeriod.displayName
+                        title: Strings.Localizable.Settings.FileManagement.RubbishBin.AutoPurge.title,
+                        subtitle: viewModel.autoPurgePeriodDisplayName
                     )
                     .trailingChevron()
                 }
@@ -42,7 +43,7 @@ struct RubbishBinSettingView: View {
                     isPresented = viewModel.isLoading ? false : true
                 } label: {
                     MEGAList(
-                        title: "Empty Rubbish Bin"
+                        title: Strings.Localizable.emptyRubbishBin
                     )
                     .titleColor(TokenColors.Text.error.swiftUI)
                     .replaceTrailingView {
@@ -51,14 +52,14 @@ struct RubbishBinSettingView: View {
                 }
                 .alert(isPresented: $isPresented) {
                     Alert(
-                        title: Text("Empty Rubbish bin?"),
-                        message: Text("All items in Rubbish bin will be deleted."),
+                        title: Text(Strings.Localizable.Settings.FileManagement.RubbishBin.Clean.Warning.title),
+                        message: Text(Strings.Localizable.emptyRubbishBinAlertTitle),
                         primaryButton: .cancel(
-                            Text("Cancel"),
+                            Text(Strings.Localizable.cancel),
                             action: { }
                         ),
                         secondaryButton: .default(
-                            Text("Empty"),
+                            Text(Strings.Localizable.Settings.FileManagement.RubbishBin.Clean.Warning.empty),
                             action: {
                                 viewModel.onTapEmptyBinButton()
                             }
@@ -67,6 +68,7 @@ struct RubbishBinSettingView: View {
                 }
             }
         }
+        .snackBar($viewModel.snackBar)
         .pageBackground()
         .task {
             await viewModel.startRubbishBinSettingsUpdatesMonitoring()
@@ -88,7 +90,7 @@ struct RubbishBinSettingView: View {
     private var autoPurgePeriodListView: some View {
         VStack(spacing: TokenSpacing._2) {
             // Title View
-            Text("Automatically empty Rubbish bin")
+            Text(Strings.Localizable.Settings.FileManagement.RubbishBin.AutoPurge.title)
                 .font(.headline)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .padding(.top, TokenSpacing._12)
@@ -118,7 +120,7 @@ struct RubbishBinSettingView: View {
         _ period: AutoPurgePeriod
     ) -> some View {
         HStack(spacing: .zero) {
-            Text(period.displayName)
+            Text(viewModel.displayName(of: period))
                 .font(.body)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
             

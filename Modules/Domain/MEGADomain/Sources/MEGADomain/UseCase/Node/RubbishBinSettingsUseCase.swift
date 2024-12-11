@@ -3,7 +3,9 @@ import MEGASwift
 public protocol RubbishBinSettingsUseCaseProtocol: Sendable {
     var onRubbishBinSettinghsRequestFinish: AnyAsyncSequence<Result<RubbishBinSettingsEntity, any Error>> { get }
     
-    func cleanRubbishBin()
+    func cleanRubbishBin() async throws
+    func catchupWithSDK() async throws
+    func setRubbishBinAutopurgePeriod(in days: Int) async
 }
 
 public struct RubbishBinSettingsUseCase<R: RubbishBinSettingsRepositoryProtocol>: RubbishBinSettingsUseCaseProtocol {
@@ -17,5 +19,15 @@ public struct RubbishBinSettingsUseCase<R: RubbishBinSettingsRepositoryProtocol>
         self.rubbishBinSettingsRepository = rubbishBinSettingsRepository
     }
     
-    public func cleanRubbishBin() {}
+    public func cleanRubbishBin() async throws {
+        try await rubbishBinSettingsRepository.cleanRubbishBin()
+    }
+    
+    public func catchupWithSDK() async throws {
+        try await rubbishBinSettingsRepository.catchupWithSDK()
+    }
+    
+    public func setRubbishBinAutopurgePeriod(in days: Int) async {
+        await rubbishBinSettingsRepository.setRubbishBinAutopurgePeriod(in: days)
+    }
 }

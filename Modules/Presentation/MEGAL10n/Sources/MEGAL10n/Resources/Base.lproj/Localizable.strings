@@ -808,6 +808,22 @@
 "emptyRubbishBin"="Empty Rubbish bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="Rubbish bin emptied";
+/* Upgrade to paid account title*/
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title*/
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days*/
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d days";
+/*Empty Rubbish Bin Warning Title*/
+"settings.fileManagement.rubbishBin.clean.warning.title"="Empty Rubbish bin?";
+/*Empty Rubbish Bin Cell Title*/
+"settings.fileManagement.rubbishBin.clean.title"="Empty Rubbish Bin";
+/*Rubbish Bin Settings Navigation Title*/
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button*/
+"settings.fileManagement.rubbishBin.clean.warning.empty"="Empty";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Don’t use HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */

@@ -47,27 +47,36 @@ struct RubbishBinSettingViewModelTests {
         
         @Test("Tap Empty Bin Button")
         @MainActor
-        func onTapEmptyBinButton() {
+        func onTapEmptyBinButton() async {
             let mockRubbishbinSettingUseCase = MockRubbishBinSettingsUseCase()
             
             let sut = makeSUT(rubbishBinSettingsUseCase: mockRubbishbinSettingUseCase)
             
             sut.onTapEmptyBinButton()
+            await sut.emptyRubbishBinTask?.value
             
             #expect(mockRubbishbinSettingUseCase.cleanRubbishBinCalled)
+            #expect(mockRubbishbinSettingUseCase.catchupWithSDKCalled)
+            #expect(sut.snackBar != nil)
+            
+            sut.emptyRubbishBinTask?.cancel()
         }
         
         @Test("Tap one of auto purge options such as 7 days")
         @MainActor
-        func onTapAutoPurgeRow() {
+        func onTapAutoPurgeRow() async {
             let mockRubbishbinSettingUseCase = MockRubbishBinSettingsUseCase()
             let mockRouter = MockUpgradeAccountRouter()
             
             let sut = makeSUT(rubbishBinSettingsUseCase: mockRubbishbinSettingUseCase, upgradeAccountRouter: mockRouter)
             
             sut.onTapAutoPurgeRow(with: .oneYear)
+            await sut.updateAutoPurgeTask?.value
             
             #expect(sut.selectedAutoPurgePeriod == .oneYear)
+            #expect(mockRubbishbinSettingUseCase.setRubbishBinAutopurgePeriod)
+            
+            sut.updateAutoPurgeTask?.cancel()
         }
     }
     
