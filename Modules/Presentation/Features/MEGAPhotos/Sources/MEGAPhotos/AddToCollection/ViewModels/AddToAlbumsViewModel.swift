@@ -25,6 +25,7 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let albumListUseCase: any AlbumListUseCaseProtocol
     private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
+    private let addToCollectionRouter: any AddToCollectionRouting
     private let contentLibrariesConfiguration: ContentLibraries.Configuration
     private let albumSelection: AlbumSelection
     
@@ -38,6 +39,7 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         albumListUseCase: some AlbumListUseCaseProtocol,
         albumModificationUseCase: some AlbumModificationUseCaseProtocol,
+        addToCollectionRouter: some AddToCollectionRouting,
         contentLibrariesConfiguration: ContentLibraries.Configuration = ContentLibraries.configuration,
         albumSelection: AlbumSelection = AlbumSelection(mode: .single)
     ) {
@@ -50,6 +52,7 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         self.albumCoverUseCase = albumCoverUseCase
         self.albumListUseCase = albumListUseCase
         self.albumModificationUseCase = albumModificationUseCase
+        self.addToCollectionRouter = addToCollectionRouter
         self.contentLibrariesConfiguration = contentLibrariesConfiguration
         self.albumSelection = albumSelection
         
@@ -130,9 +133,12 @@ extension AddToAlbumsViewModel: AddItemsToCollectionViewModelProtocol {
         guard let album = albumSelection.albums.values.first,
               photos.isNotEmpty else { return }
         
-        Task { [albumModificationUseCase] in
-            try await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photos)
-            // CC-8497 Handle toast messages
+        Task { [albumModificationUseCase, addToCollectionRouter] in
+            let result = try await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photos)
+            
+            let message = Strings.Localizable.Set.AddTo.AddedToSet.Snack.message(Int(result.success))
+                .replacingOccurrences(of: "[A]", with: album.name)
+            addToCollectionRouter.showSnackBar(message: message)
         }
     }
 }

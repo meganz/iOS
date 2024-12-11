@@ -30,6 +30,7 @@ extension NodeActions {
             disputeTakedown: disputeTakedown,
             hide: hide,
             unhide: unhide,
+            addToAlbum: addToAlbum,
             toggleEditMode: toggleEditMode
         )
     }

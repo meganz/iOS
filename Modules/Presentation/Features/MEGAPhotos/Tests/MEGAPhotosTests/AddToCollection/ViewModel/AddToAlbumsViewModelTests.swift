@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import ContentLibraries
 import MEGADomain
@@ -177,17 +178,26 @@ struct AddToAlbumsViewModelTests {
             let albumSelection = AlbumSelection(mode: .single)
             albumSelection.setSelectedAlbums([album])
             
-            let photos = [NodeEntity(handle: 1)]
-            let albumModificationUseCase = MockAlbumModificationUseCase()
+            let photos = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
+            let addedPhotoCount = 1
+            let albumModificationUseCase = MockAlbumModificationUseCase(
+                addPhotosResult: .success(.init(success: UInt(addedPhotoCount), failure: 0))
+            )
+            let router = MockAddToCollectionRouter()
             let sut = AddToAlbumsViewModelTests
                 .makeSUT(
                     albumModificationUseCase: albumModificationUseCase,
+                    addToCollectionRouter: router,
                     albumSelection: albumSelection)
             
+            let message = Strings.Localizable.Set.AddTo.AddedToSet.Snack.message(addedPhotoCount)
+                .replacingOccurrences(of: "[A]", with: album.name)
             await confirmation("Ensure create user album created") { addAlbumItems in
                 let invocationTask = Task {
-                    for await invocation in albumModificationUseCase.invocationSequence {
-                        #expect(invocation == .addPhotosToAlbum(id: album.id, nodes: photos))
+                    for await (useCaseInvocation, routerInvocation) in combineLatest(albumModificationUseCase.invocationSequence,
+                                                                                     router.invocationSequence) {
+                        #expect(useCaseInvocation == .addPhotosToAlbum(id: album.id, nodes: photos))
+                        #expect(routerInvocation == .showSnackBar(message: message))
                         addAlbumItems()
                         break
                     }
@@ -215,6 +225,7 @@ struct AddToAlbumsViewModelTests {
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         albumListUseCase: some AlbumListUseCaseProtocol = MockAlbumListUseCase(),
         albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
+        addToCollectionRouter: some AddToCollectionRouting = MockAddToCollectionRouter(),
         contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
@@ -231,7 +242,35 @@ struct AddToAlbumsViewModelTests {
             albumCoverUseCase: albumCoverUseCase,
             albumListUseCase: albumListUseCase,
             albumModificationUseCase: albumModificationUseCase,
+            addToCollectionRouter: addToCollectionRouter,
             contentLibrariesConfiguration: contentLibrariesConfiguration,
             albumSelection: albumSelection)
+    }
+}
+
+private class MockAddToCollectionRouter: AddToCollectionRouting {
+    public enum Invocation: Sendable, Equatable {
+        case showSnackBar(message: String)
+    }
+    public var invocationSequence: AnyAsyncSequence<Invocation> {
+        invocationStream.eraseToAnyAsyncSequence()
+    }
+    private let invocationStream: AsyncStream<Invocation>
+    private let invocationContinuation: AsyncStream<Invocation>.Continuation
+    
+    init() {
+        (invocationStream, invocationContinuation) = AsyncStream.makeStream(of: Invocation.self)
+    }
+    
+    func build() -> UIViewController {
+        UIViewController()
+    }
+    
+    func start() {
+        
+    }
+    
+    func showSnackBar(message: String) {
+        invocationContinuation.yield(.showSnackBar(message: message))
     }
 }
