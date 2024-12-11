@@ -749,6 +749,7 @@
 		5DF249DF24F381C8003FED76 /* DispatchFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF249DE24F381C8003FED76 /* DispatchFunction.swift */; };
 		5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF44CCB251369E000E9F0BC /* NodeDetailsUseCase.swift */; };
 		5DF9910925789B5400DDDA83 /* PageControlStyleFactoory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */; };
+		6D004FE92D0A46360039ADF9 /* MEGAConnectivity in Frameworks */ = {isa = PBXBuildFile; productRef = 6D004FE82D0A46360039ADF9 /* MEGAConnectivity */; };
 		6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */; };
 		6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */; };
 		6D01A3CA2C084F4400089BA8 /* NodeInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */; };
@@ -3485,6 +3486,7 @@
 		5DF249DE24F381C8003FED76 /* DispatchFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchFunction.swift; sourceTree = "<group>"; };
 		5DF44CCB251369E000E9F0BC /* NodeDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDetailsUseCase.swift; sourceTree = "<group>"; };
 		5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlStyleFactoory.swift; sourceTree = "<group>"; };
+		6D004FE72D0A46220039ADF9 /* MEGAConnectivity */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAConnectivity; path = Modules/MEGASharedRepo/MEGAConnectivity; sourceTree = SOURCE_ROOT; };
 		6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Photos.swift"; sourceTree = "<group>"; };
 		6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLocalisationTests.swift; sourceTree = "<group>"; };
 		6D01A3C92C084F4400089BA8 /* NodeInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -5391,6 +5393,7 @@
 				BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
+				6D004FE92D0A46360039ADF9 /* MEGAConnectivity in Frameworks */,
 				9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
@@ -11974,6 +11977,7 @@
 		B6FDEF772A204E6700276DD6 /* Infrastracture */ = {
 			isa = PBXGroup;
 			children = (
+				6D004FE72D0A46220039ADF9 /* MEGAConnectivity */,
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
 				6D18B4D02B44C75600E4ABA8 /* MEGAMacro */,
 				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
@@ -13302,6 +13306,7 @@
 				256428542CC7927D005DA9B1 /* ContentLibraries */,
 				A87F09182CCFE65100A1B03C /* MEGAUIMock */,
 				BF27E3F32CF3FDD5002C892B /* CloudDrive */,
+				6D004FE82D0A46360039ADF9 /* MEGAConnectivity */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -18422,6 +18427,10 @@
 		327717B429FB82C4004DE295 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;
+		};
+		6D004FE82D0A46360039ADF9 /* MEGAConnectivity */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAConnectivity;
 		};
 		6D797BA62C6117CC004D95F4 /* PhotosBrowser */ = {
 			isa = XCSwiftPackageProductDependency;
