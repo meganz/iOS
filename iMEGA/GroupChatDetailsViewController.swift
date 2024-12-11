@@ -8,7 +8,14 @@ import MEGAPresentation
 import MEGASDKRepo
 
 extension GroupChatDetailsViewController {
+    @objc var userPrivilegeIsAboveReadOnly: Bool {
+        chatRoom.ownPrivilege.rawValue > MEGAChatRoomPrivilege.ro.rawValue
+    }
     
+    @objc var shouldShowGetChatLinkButton: Bool {
+        userPrivilegeIsAboveReadOnly && chatRoom.isPublicChat && !chatRoom.isPreview
+    }
+
     @objc func trackLeaveMeetingRowTapped() {
         DIContainer.tracker.trackAnalyticsEvent(with: MeetingInfoLeaveMeetingButtonTappedEvent())
     }
