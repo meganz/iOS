@@ -207,10 +207,17 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             return plan.type == type && plan.subscriptionCycle == cycle
         }
     }
+    
+    private func currentAccountTypeDisplayName() -> String {
+        accountDetails.proLevel.toAccountTypeDisplayName()
+    }
 
     // MARK: - Public
     var currentPlanName: String {
-        currentPlan?.name ?? ""
+        // The user might have a plan that is not available for purchase on the Apple Store.
+        // In such cases, the current plan name could be nil.
+        // To handle this, we fall back to the user's pro level to determine the plan's name.
+        currentPlan?.name ?? currentAccountTypeDisplayName()
     }
     
     var selectedPlanName: String {
