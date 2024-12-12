@@ -1,4 +1,5 @@
 import ISEmojiView
+import MEGADesignToken
 import PanModal
 import UIKit
 
@@ -13,6 +14,7 @@ class ReactionPickerViewController: UIViewController {
         let emojiView = EmojiView(keyboardSettings: keyboardSettings)
         emojiView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 300)
         emojiView.delegate = self
+        emojiView.backgroundColor = TokenColors.Background.page
         
         view.backgroundColor = .systemBackground
         return emojiView
