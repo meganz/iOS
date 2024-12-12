@@ -2094,8 +2094,8 @@
 		BF085CA529E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085CA429E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift */; };
 		BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */; };
 		BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
-		BF0B5E0B2BB2C88B00ADE274 /* NoInternetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B5E0A2BB2C88B00ADE274 /* NoInternetViewModel.swift */; };
-		BF0B5E0D2BB2C98400ADE274 /* NoInternetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B5E0C2BB2C98400ADE274 /* NoInternetViewModifier.swift */; };
+		BF0B5E0B2BB2C88B00ADE274 /* LegacyNoInternetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B5E0A2BB2C88B00ADE274 /* LegacyNoInternetViewModel.swift */; };
+		BF0B5E0D2BB2C98400ADE274 /* LegacyNoInternetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B5E0C2BB2C98400ADE274 /* LegacyNoInternetViewModifier.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BF0BD6042C530704003E608A /* NodeDescriptionCellControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BD6032C530704003E608A /* NodeDescriptionCellControllerModel.swift */; };
 		BF0BD6082C530748003E608A /* NodeDescriptionCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BD6072C530748003E608A /* NodeDescriptionCellController.swift */; };
@@ -4865,8 +4865,8 @@
 		BF085CA429E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationNameView.swift; sourceTree = "<group>"; };
 		BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputTextBackgroundView.swift; sourceTree = "<group>"; };
 		BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatListItem+Additions.swift"; sourceTree = "<group>"; };
-		BF0B5E0A2BB2C88B00ADE274 /* NoInternetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetViewModel.swift; sourceTree = "<group>"; };
-		BF0B5E0C2BB2C98400ADE274 /* NoInternetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetViewModifier.swift; sourceTree = "<group>"; };
+		BF0B5E0A2BB2C88B00ADE274 /* LegacyNoInternetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyNoInternetViewModel.swift; sourceTree = "<group>"; };
+		BF0B5E0C2BB2C98400ADE274 /* LegacyNoInternetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyNoInternetViewModifier.swift; sourceTree = "<group>"; };
 		BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		BF0BD6032C530704003E608A /* NodeDescriptionCellControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellControllerModel.swift; sourceTree = "<group>"; };
@@ -12078,8 +12078,8 @@
 		BF0B5E092BB2C86700ADE274 /* NoInternetViewModifier */ = {
 			isa = PBXGroup;
 			children = (
-				BF0B5E0A2BB2C88B00ADE274 /* NoInternetViewModel.swift */,
-				BF0B5E0C2BB2C98400ADE274 /* NoInternetViewModifier.swift */,
+				BF0B5E0A2BB2C88B00ADE274 /* LegacyNoInternetViewModel.swift */,
+				BF0B5E0C2BB2C98400ADE274 /* LegacyNoInternetViewModifier.swift */,
 			);
 			path = NoInternetViewModifier;
 			sourceTree = "<group>";
@@ -14830,6 +14830,8 @@
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
 				6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */,
 				9439F10D2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift in Sources */,
+				BF0B5E0B2BB2C88B00ADE274 /* LegacyNoInternetViewModel.swift in Sources */,
+				BF0B5E0D2BB2C98400ADE274 /* LegacyNoInternetViewModifier.swift in Sources */,
 				5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */,
 				B642925E22277EDD007BB9DE /* LivePhotoScanner.m in Sources */,
 				B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */,
@@ -15167,8 +15169,6 @@
 				25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
-				BF0B5E0B2BB2C88B00ADE274 /* NoInternetViewModel.swift in Sources */,
-				BF0B5E0D2BB2C98400ADE274 /* NoInternetViewModifier.swift in Sources */,
 				B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */,
 				BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,

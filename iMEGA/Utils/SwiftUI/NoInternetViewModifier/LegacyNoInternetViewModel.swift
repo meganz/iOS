@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-final class NoInternetViewModel: ObservableObject {
+final class LegacyNoInternetViewModel: ObservableObject {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
 
     @Published private(set) var isConnected = true

@@ -1,3 +1,4 @@
+import MEGAConnectivity
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -68,6 +69,7 @@ struct RubbishBinSettingView: View {
                 }
             }
         }
+        .noInternetViewModifier()
         .snackBar($viewModel.snackBar)
         .pageBackground()
         .task {

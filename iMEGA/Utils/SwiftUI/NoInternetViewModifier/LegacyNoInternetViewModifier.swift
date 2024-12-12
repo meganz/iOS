@@ -4,11 +4,11 @@ import MEGAL10n
 import MEGASDKRepo
 import SwiftUI
 
-struct NoInternetViewModifier: ViewModifier {
-    @StateObject private var viewModel: NoInternetViewModel
+struct LegacyNoInternetViewModifier: ViewModifier {
+    @StateObject private var viewModel: LegacyNoInternetViewModel
 
     init(
-        viewModel: NoInternetViewModel
+        viewModel: LegacyNoInternetViewModel
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -38,33 +38,33 @@ struct NoInternetViewModifier: ViewModifier {
 }
 
 extension View {
-    /// Applies the `NoInternetViewModifier` to the view, simplifying its usage.
+    /// Applies the `LegacyNoInternetViewModifier` to the view, simplifying its usage.
     ///
-    /// This method provides a convenient way to apply the `NoInternetViewModifier` to a SwiftUI view.
+    /// This method provides a convenient way to apply the `LegacyNoInternetViewModifier` to a SwiftUI view.
     ///
     /// - Parameters:
-    ///   - viewModel: ViewModel for the modifier. Defaults to an instance of `NoInternetViewModel` with `networkConnectionStateChanged` set to nil.
+    ///   - viewModel: ViewModel for the modifier. Defaults to an instance of `LegacyNoInternetViewModel` with `networkConnectionStateChanged` set to nil.
     ///
     /// - Returns: A view modified to display no-internet when there is no internet connection.
     ///
     /// - Example Usage:
     ///   ```swift
     ///   MyContentView()
-    ///       .noInternetViewModifier()
+    ///       .legacyNoInternetViewModifier()
     ///   ```
     ///
-    func noInternetViewModifier(
-        viewModel: NoInternetViewModel = NoInternetViewModel(
+    func legacyNoInternetViewModifier(
+        viewModel: LegacyNoInternetViewModel = LegacyNoInternetViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(
                 repo: NetworkMonitorRepository.newRepo
             )
         )
     ) -> some View {
-        modifier(NoInternetViewModifier(viewModel: viewModel))
+        modifier(LegacyNoInternetViewModifier(viewModel: viewModel))
     }
 }
 
 #Preview {
     Text("Hello world")
-        .noInternetViewModifier()
+        .legacyNoInternetViewModifier()
 }

@@ -135,7 +135,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     userImageUseCase: MockUserImageUseCase(),
                     megaHandleUseCase: MockMEGAHandleUseCase()
                 ),
-                noInternetViewModel: NoInternetViewModel(
+                noInternetViewModel: LegacyNoInternetViewModel(
                     networkMonitorUseCase: MockNetworkMonitorUseCase(),
                     networkConnectionStateChanged: { _ in }
                 ),

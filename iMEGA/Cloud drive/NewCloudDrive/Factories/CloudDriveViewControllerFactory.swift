@@ -279,7 +279,7 @@ struct CloudDriveViewControllerFactory {
         initialViewMode: ViewModePreferenceEntity,
         nodeSource: NodeSource,
         searchResultsViewModel: SearchResultsViewModel,
-        noInternetViewModel: NoInternetViewModel,
+        noInternetViewModel: LegacyNoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodesUpdateListener: some NodesUpdateListenerProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
@@ -606,7 +606,7 @@ struct CloudDriveViewControllerFactory {
             }
         }
 
-        let noInternetViewModel = NoInternetViewModel(
+        let noInternetViewModel = LegacyNoInternetViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
         
