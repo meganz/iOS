@@ -1,23 +1,26 @@
+import Combine
 import SwiftUI
 
 @MainActor
-final class NodeTagViewModel: ObservableObject {
+final class NodeTagViewModel {
     let tag: String
-    let isSelectionEnabled: Bool
-    @Published private(set) var isSelected: Bool
+    let isSelected: Bool
+    private let toggleSubject = PassthroughSubject<String, Never>()
 
     var formattedTag: String {
         "#" + tag
     }
 
-    init(tag: String, isSelectionEnabled: Bool, isSelected: Bool) {
+    init(tag: String, isSelected: Bool) {
         self.tag = tag
-        self.isSelectionEnabled = isSelectionEnabled
         self.isSelected = isSelected
     }
 
     func toggle() {
-        guard isSelectionEnabled else { return }
-        isSelected.toggle()
+        toggleSubject.send(tag)
+    }
+
+    func observeToggles() -> AnyPublisher<String, Never> {
+        toggleSubject.eraseToAnyPublisher()
     }
 }

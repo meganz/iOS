@@ -2,11 +2,13 @@ import Foundation
 
 @MainActor
 final class NodeTagsViewModel: ObservableObject {
-    @Published var tagViewModels: [NodeTagViewModel]
+    @Published private(set) var tagViewModels: [NodeTagViewModel]
     @Published var viewHeight: CGFloat = 0
+    let isSelectionEnabled: Bool
 
-    init(tagViewModels: [NodeTagViewModel] = []) {
+    init(tagViewModels: [NodeTagViewModel] = [], isSelectionEnabled: Bool) {
         self.tagViewModels = tagViewModels
+        self.isSelectionEnabled = isSelectionEnabled
     }
 
     func prepend(tagViewModel: NodeTagViewModel) {
