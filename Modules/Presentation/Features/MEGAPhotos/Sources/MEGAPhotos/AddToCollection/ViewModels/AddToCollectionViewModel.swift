@@ -4,6 +4,7 @@ import MEGADomain
 @MainActor
 public final class AddToCollectionViewModel: ObservableObject {
     @Published public var isAddButtonDisabled: Bool = true
+    @Published public var showBottomBar: Bool = false
     
     let addToAlbumsViewModel: AddToAlbumsViewModel
     
@@ -18,6 +19,8 @@ public final class AddToCollectionViewModel: ObservableObject {
         
         addToAlbumsViewModel.isAddButtonDisabled
             .assign(to: &$isAddButtonDisabled)
+        addToAlbumsViewModel.isItemsLoadedPublisher
+            .assign(to: &$showBottomBar)
     }
     
     public func addToCollectionTapped() {

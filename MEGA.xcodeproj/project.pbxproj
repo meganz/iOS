@@ -294,7 +294,6 @@
 		25A58FAF2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */; };
 		25A58FB52B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */; };
 		25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A990FB2C8968AA00992256 /* TimeLineViewModel.swift */; };
-		25AA545F2B27E1640094F2A2 /* AlbunListPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */; };
 		25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */; };
 		25AD36E92BD8848E004DCF3B /* NodeValidationRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */; };
 		25AD36EB2BD88539004DCF3B /* AccountRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */; };
@@ -2960,7 +2959,6 @@
 		25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerViewModel.swift; sourceTree = "<group>"; };
 		25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadStatusProvider.swift; sourceTree = "<group>"; };
 		25A990FB2C8968AA00992256 /* TimeLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewModel.swift; sourceTree = "<group>"; };
-		25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbunListPlaceholderView.swift; sourceTree = "<group>"; };
 		25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeValidationRepository+Additions.swift"; sourceTree = "<group>"; };
 		25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentView.swift; sourceTree = "<group>"; };
 		25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentMenuAction.swift; sourceTree = "<group>"; };
@@ -5765,7 +5763,6 @@
 				12397E222820C4BC00A30CCC /* AlbumListViewModel.swift */,
 				127053A32822216800D64C21 /* AlbumListViewRouter.swift */,
 				0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */,
-				25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */,
 			);
 			path = "Album Library";
 			sourceTree = "<group>";
@@ -14194,7 +14191,6 @@
 				32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */,
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
-				25AA545F2B27E1640094F2A2 /* AlbunListPlaceholderView.swift in Sources */,
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
 				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
 				94AF8A132CE4C4E6009B27A9 /* AnalyticsTracking+ShareLink.swift in Sources */,

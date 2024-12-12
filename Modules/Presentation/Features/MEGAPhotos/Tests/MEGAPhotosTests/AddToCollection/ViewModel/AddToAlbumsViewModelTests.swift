@@ -54,6 +54,7 @@ struct AddToAlbumsViewModelTests {
             let sut = AddToAlbumsViewModelTests.makeSUT(
                 monitorAlbumsUseCase: monitorAlbumsUseCase)
             
+            #expect(sut.isAlbumsLoaded == false)
             await confirmation("Album view models loaded in correct order") { albumViewModelsLoaded in
                 let subscription = sut.$albums
                     .dropFirst()
@@ -66,6 +67,7 @@ struct AddToAlbumsViewModelTests {
                 await sut.monitorUserAlbums()
                 subscription.cancel()
             }
+            #expect(sut.isAlbumsLoaded == true)
         }
     }
     
@@ -137,7 +139,7 @@ struct AddToAlbumsViewModelTests {
         }
     }
     
-    @Suite("Add photos to album")
+    @Suite("Add items to album protocol conformance")
     @MainActor
     struct AddPhotosToAlbum {
         
@@ -169,6 +171,37 @@ struct AddToAlbumsViewModelTests {
                         continuation.resume()
                         cancellable?.cancel()
                     })
+            }
+        }
+        
+        @Test
+        func isLoadedPublisher() async throws {
+            let sut = AddToAlbumsViewModelTests
+                .makeSUT()
+            
+            try await confirmation("isLoaded match publisher") { confirmation in
+                let invocationTask = Task {
+                    var expectations = [false, true]
+                    for await isLoaded in sut.isItemsLoadedPublisher.values {
+                        #expect(isLoaded == expectations.removeFirst())
+                        if expectations.isEmpty {
+                            confirmation()
+                            break
+                        }
+                        
+                    }
+                }
+                // Ensure task started
+                try await Task.sleep(nanoseconds: 50_000_000)
+                
+                sut.isAlbumsLoaded = true
+                sut.isAlbumsLoaded = true
+                
+                Task {
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    invocationTask.cancel()
+                }
+                await invocationTask.value
             }
         }
         

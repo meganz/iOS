@@ -10,6 +10,7 @@ import SwiftUI
 
 @MainActor
 public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
+    @Published var isAlbumsLoaded = false
     @Published public var albums = [AlbumCellViewModel]()
     @Published var editMode: EditMode = .active
     @Published var showCreateAlbumAlert = false
@@ -98,6 +99,9 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
                         configuration: contentLibrariesConfiguration
                     )
                 }
+            
+            guard !isAlbumsLoaded else { return }
+            isAlbumsLoaded.toggle()
         }
     }
     
@@ -127,6 +131,12 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
 extension AddToAlbumsViewModel: AddItemsToCollectionViewModelProtocol {
     var isAddButtonDisabled: AnyPublisher<Bool, Never> {
         albumSelection.isAlbumSelectedPublisher.map { !$0 }.eraseToAnyPublisher()
+    }
+    
+    var isItemsLoadedPublisher: AnyPublisher<Bool, Never> {
+        $isAlbumsLoaded
+            .removeDuplicates()
+            .eraseToAnyPublisher()
     }
     
     func addItems(_ photos: [NodeEntity]) {
