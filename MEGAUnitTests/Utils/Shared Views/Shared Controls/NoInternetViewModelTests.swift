@@ -9,8 +9,8 @@ final class NoInternetViewModelTests: XCTestCase {
         connected: Bool = true,
         connectionSequence: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         networkConnectionStateChanged: ((Bool) -> Void)? = nil
-    ) -> NoInternetViewModel {
-        NoInternetViewModel(
+    ) -> LegacyNoInternetViewModel {
+        LegacyNoInternetViewModel(
             networkMonitorUseCase: MockNetworkMonitorUseCase(
                 connected: connected,
                 connectionSequence: connectionSequence

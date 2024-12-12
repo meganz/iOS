@@ -1,3 +1,4 @@
+import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
@@ -20,5 +21,6 @@ struct CallsSettingsView: View {
             .edgesIgnoringSafeArea(.horizontal)
             .padding(.top)
         }
+        .noInternetViewModifier()
     }
 }

@@ -72,7 +72,7 @@ class NodeBrowserViewModel: ObservableObject {
     var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
     let avatarViewModel: MyAvatarViewModel
-    let noInternetViewModel: NoInternetViewModel
+    let noInternetViewModel: LegacyNoInternetViewModel
     private let storageFullModalAlertViewRouter: any StorageFullModalAlertViewRouting
 
     @Published var nodeSource: NodeSource
@@ -116,7 +116,7 @@ class NodeBrowserViewModel: ObservableObject {
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
         avatarViewModel: MyAvatarViewModel,
-        noInternetViewModel: NoInternetViewModel,
+        noInternetViewModel: LegacyNoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodesUpdateListener: some NodesUpdateListenerProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
