@@ -6,6 +6,8 @@ struct AddToAlbumsView: View {
     
     var body: some View {
         AlbumListContentView(viewModel: viewModel)
+            .overlay(AlbumListPlaceholderView(
+                isActive: !viewModel.isAlbumsLoaded))
             .environment(\.editMode, $viewModel.editMode)
             .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel())
             .task {

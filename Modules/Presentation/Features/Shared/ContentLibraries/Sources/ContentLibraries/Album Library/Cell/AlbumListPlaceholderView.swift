@@ -1,25 +1,35 @@
-import ContentLibraries
 import MEGASwiftUI
 import SwiftUI
 
-struct AlbumListPlaceholderView: View {
-    let isActive: Bool
-    let onCreateTapHandler: (() -> Void)
+public struct AlbumListPlaceholderView: View {
+    private let isActive: Bool
+    private let onCreateTapHandler: (() -> Void)?
     private let placeholderCount = 15
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass: UserInterfaceSizeClass?
     
-    var body: some View {
+    public init(
+        isActive: Bool,
+        onCreateTapHandler: (() -> Void)? = nil
+    ) {
+        self.isActive = isActive
+        self.onCreateTapHandler = onCreateTapHandler
+    }
+    
+    public var body: some View {
         ScrollView(.vertical) {
             ZStack(alignment: .topLeading) {
                 LazyVGrid(columns: columns) {
                     ForEach(0..<placeholderCount, id: \.self) { index in
                         placeholderCell
-                            .opacity(index == 0 ? 0 : 1)
+                            .opacity(index == 0 && onCreateTapHandler != nil ? 0 : 1)
                     }
                 }
                 .shimmering(active: isActive)
-                LazyVGrid(columns: columns) {
-                    CreateAlbumCell(onTapHandler: onCreateTapHandler)
+                
+                if let onCreateTapHandler {
+                    LazyVGrid(columns: columns) {
+                        CreateAlbumCell(onTapHandler: onCreateTapHandler)
+                    }
                 }
             }
             .padding(.horizontal, 8)
@@ -48,7 +58,7 @@ struct AlbumListPlaceholderView: View {
     }
     
     private var columns: [GridItem] {
-        let count = 
+        let count =
         switch horizontalSizeClass {
         case .compact, nil: 3
         default: 5

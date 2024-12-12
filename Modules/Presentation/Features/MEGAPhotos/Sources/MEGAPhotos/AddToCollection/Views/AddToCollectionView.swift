@@ -22,24 +22,26 @@ public struct AddToCollectionView: View {
                         } label: {
                             Text(Strings.Localizable.cancel)
                                 .font(.body)
-                                .foregroundColor(TokenColors.Text.secondary.swiftUI)
+                                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                         }
                     }
                     ToolbarItemGroup(placement: .bottomBar) {
-                        Spacer()
-                        
-                        Button {
-                            viewModel.addToCollectionTapped()
-                            dismiss()
-                        } label: {
-                            Text(Strings.Localizable.Photos.AddTo.Button.Title.add)
-                                .font(.body)
-                                .foregroundColor(
-                                    viewModel.isAddButtonDisabled ?
-                                    TokenColors.Text.disabled.swiftUI :
-                                        TokenColors.Text.secondary.swiftUI)
+                        if viewModel.showBottomBar {
+                            Spacer()
+                            
+                            Button {
+                                viewModel.addToCollectionTapped()
+                                dismiss()
+                            } label: {
+                                Text(Strings.Localizable.Photos.AddTo.Button.Title.add)
+                                    .font(.body)
+                                    .foregroundStyle(
+                                        viewModel.isAddButtonDisabled ?
+                                        TokenColors.Text.disabled.swiftUI :
+                                            TokenColors.Text.secondary.swiftUI)
+                            }
+                            .disabled(viewModel.isAddButtonDisabled)
                         }
-                        .disabled(viewModel.isAddButtonDisabled)
                     }
                 }
                 .navigationBarTitleDisplayMode(.inline)
