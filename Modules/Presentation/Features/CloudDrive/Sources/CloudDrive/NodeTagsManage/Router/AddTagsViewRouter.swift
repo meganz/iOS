@@ -13,7 +13,7 @@ struct AddTagsViewRouter: AddTagsViewRouting {
 
     private var selectedTagViewModels: [NodeTagViewModel] {
         selectedTags.map {
-            NodeTagViewModel(tag: $0, isSelectionEnabled: isSelectionEnabled, isSelected: true)
+            NodeTagViewModel(tag: $0, isSelected: true)
         }
     }
 
@@ -31,13 +31,15 @@ struct AddTagsViewRouter: AddTagsViewRouting {
             viewModel: ManageTagsViewModel(
                 navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
                 existingTagsViewModel: ExistingTagsViewModel(
-                    tagsViewModel: NodeTagsViewModel(tagViewModels: selectedTagViewModels),
+                    tagsViewModel: NodeTagsViewModel(
+                        tagViewModels: selectedTagViewModels,
+                        isSelectionEnabled: isSelectionEnabled
+                    ),
                     nodeTagSearcher: NodeTagsSearcher(
                         nodeTagsUseCase: NodeTagsUseCase(
                             repository: NodeTagsRepository()
                         )
-                    ),
-                    isSelectionEnabled: isSelectionEnabled
+                    )
                 )
             )
         )

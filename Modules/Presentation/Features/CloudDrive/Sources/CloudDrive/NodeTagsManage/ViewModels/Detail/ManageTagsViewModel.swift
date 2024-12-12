@@ -44,10 +44,11 @@ final class ManageTagsViewModel: ObservableObject {
         let formattedTagName = formatTagName(updatedTagName)
         updateTagNameState(for: formattedTagName)
 
+        searchingTask?.cancel()
         canAddNewTag = false
 
         if tagNameState == .valid || tagNameState == .empty {
-            searchTags(for: formattedTagName == "" ? nil : formattedTagName)
+            searchingTask = searchTags(for: formattedTagName == "" ? nil : formattedTagName)
         } else if tagNameState == .invalid || tagNameState == .tooLong {
             containsExistingTags = false
         }
@@ -65,18 +66,16 @@ final class ManageTagsViewModel: ObservableObject {
         await searchTags(for: nil).value
     }
 
+    func cancelSearchingIfNeeded() {
+        searchingTask?.cancel()
+    }
+
     // MARK: - Private methods
 
-    @discardableResult
     private func searchTags(for text: String?) -> Task<Void, Never> {
-        searchingTask?.cancel()
-
-        let task = Task {
+        Task {
             await existingTagsViewModel.searchTags(for: text)
         }
-
-        searchingTask = task
-        return task
     }
 
     private func formatTagName(_ tagName: String) -> String {

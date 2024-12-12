@@ -70,7 +70,7 @@ struct NodeTagsView: View {
         isLastElement: Bool
     ) -> some View {
         nodeTagView(for: tagViewModel)
-            .allowsHitTesting(tagViewModel.isSelectionEnabled)
+            .allowsHitTesting(viewModel.isSelectionEnabled)
             .onTapGesture {
                 tagViewModel.toggle()
             }

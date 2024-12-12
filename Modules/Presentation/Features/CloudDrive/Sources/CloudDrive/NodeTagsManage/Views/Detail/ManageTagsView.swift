@@ -23,6 +23,9 @@ struct ManageTagsView: View {
             .task {
                 await viewModel.loadAllTags()
             }
+            .onDisappear {
+                viewModel.cancelSearchingIfNeeded()
+            }
     }
     
     var content: some View {

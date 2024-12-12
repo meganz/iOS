@@ -170,13 +170,58 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
+    @Test("Verify valid search followed by invalid text field entry")
+    func verifyValidSearchFollowedByInvalidTextFieldEntry() async {
+        // setup
+        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.tagName = "ta"
+
+        // Test for valid search Entry first
+        sut.onTagNameChanged(with: "tag")
+        // Next, Test for invalid search Entry next
+        sut.onTagNameChanged(with: "tag1😄")
+
+        // Next, fulfill the search for the first entry
+        while await nodeSearcher.continuations.first == nil {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+        await nodeSearcher.continuations.first?.resume(with: .success(["tag1", "tag2"]))
+
+        // The app should not allow to add new tag and also no existing tags should be shown
+        #expect(sut.canAddNewTag == false)
+        #expect(sut.containsExistingTags == false)
+    }
+
+    @MainActor
+    @Test("Verify cancel searching")
+    func verifySearchingCancellationWhenViewDisappears() async {
+        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.tagName = "ta"
+
+        sut.onTagNameChanged(with: "tag")
+
+        // Cancel the searching task
+        sut.cancelSearchingIfNeeded()
+
+        // Next, fulfill the search for the first entry
+        while await nodeSearcher.continuations.first == nil {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+        await nodeSearcher.continuations.first?.resume(with: .success(["tag1", "tag2"]))
+
+        #expect(sut.canAddNewTag == false)
+        #expect(sut.containsExistingTags == false)
+    }
+
+    @MainActor
     private func makeSUT(nodeSearcher: some NodeTagsSearching = MockNodeTagsSearcher()) -> ManageTagsViewModel {
         ManageTagsViewModel(
             navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
             existingTagsViewModel: ExistingTagsViewModel(
-                tagsViewModel: NodeTagsViewModel(tagViewModels: []),
-                nodeTagSearcher: nodeSearcher,
-                isSelectionEnabled: false
+                tagsViewModel: NodeTagsViewModel(tagViewModels: [], isSelectionEnabled: false),
+                nodeTagSearcher: nodeSearcher
             )
         )
     }

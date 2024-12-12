@@ -17,8 +17,9 @@ final class NodeTagsCellViewModel: ObservableObject, Sendable {
     private(set) lazy var nodeTagsViewModel = {
         NodeTagsViewModel(
             tagViewModels: node.tags.map {
-                NodeTagViewModel(tag: $0, isSelectionEnabled: isSelectionAvailable, isSelected: isSelectionAvailable)
-            }
+                NodeTagViewModel(tag: $0, isSelected: isSelectionAvailable)
+            },
+            isSelectionEnabled: isSelectionAvailable
         )
     }()
 

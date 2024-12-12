@@ -1,3 +1,4 @@
+import Combine
 import MEGASwift
 import SwiftUI
 
@@ -5,35 +6,35 @@ import SwiftUI
 final class ExistingTagsViewModel: ObservableObject {
     @Published var tagsViewModel: NodeTagsViewModel
     @Published var isLoading: Bool = false
-    private let isSelectionEnabled: Bool
     private let nodeTagSearcher: any NodeTagsSearching
+    private var subscriptions: Set<AnyCancellable> = []
 
-    // Holds the tag view models that were already selected at the time of initialization.
-    // These are stored separately because during a search operation, these models
-    // might be removed from the main search list but should still be tracked and preserved.
-    private var selectedTagViewModels: [NodeTagViewModel]
-
-    // Keeps track of the newly added tag view models that were created during the lifecycle of this view model.
-    // These are stored separately because during a search operation, these models
-    // might be removed from the main search list but should still be tracked and preserved.
-    private var newlyAddedTagViewModels: [NodeTagViewModel] = []
+    /// A set of selected tags.
+    private var selectedTags: Set<String>
+    /// A list of newly added tags.
+    private var newlyAddedTags: [String] = []
+    /// A snapshot of the current tags before sorting is applied.
+    private var tagsSnapshot: [String]
 
     var containsTags: Bool {
         tagsViewModel.tagViewModels.isNotEmpty
     }
 
-    init(tagsViewModel: NodeTagsViewModel, nodeTagSearcher: some NodeTagsSearching, isSelectionEnabled: Bool) {
+    init(tagsViewModel: NodeTagsViewModel, nodeTagSearcher: some NodeTagsSearching) {
         self.tagsViewModel = tagsViewModel
-        self.selectedTagViewModels = tagsViewModel.tagViewModels.filter(\.isSelected)
+        let tagViewModels = tagsViewModel.tagViewModels
+        self.selectedTags = Set(tagViewModels.compactMap { $0.isSelected ? $0.tag : nil })
+        self.tagsSnapshot = tagViewModels.map(\.tag)
         self.nodeTagSearcher = nodeTagSearcher
-        self.isSelectionEnabled = isSelectionEnabled
+        observeTogglesIfRequired(for: tagViewModels)
     }
 
     // MARK: - Interface methods.
     
     func addAndSelectNewTag(_ tag: String) {
-        let tagViewModel = NodeTagViewModel(tag: tag, isSelectionEnabled: isSelectionEnabled, isSelected: true)
-        newlyAddedTagViewModels.append(tagViewModel)
+        newlyAddedTags.insert(tag, at: 0)
+
+        let tagViewModel = makeNodeTagViewModel(with: tag, isSelected: true)
         tagsViewModel.prepend(tagViewModel: tagViewModel)
     }
 
@@ -52,32 +53,100 @@ final class ExistingTagsViewModel: ObservableObject {
         }
 
         guard let tags = await nodeTagSearcher.searchTags(for: searchText), !Task.isCancelled else { return }
-        tagsViewModel.updateTagsReorderedBySelection(
-            filterNewlyAddedTagViewModels(for: searchText) + tagViewModels(for: tags)
-        )
+        tagsSnapshot = tags
+        let newlyAddedTagsViewModel = filterNewlyAddedTags(for: searchText)
+            .map { makeNodeTagViewModel(with: $0, isSelected: true) }
+        tagsViewModel.updateTagsReorderedBySelection(newlyAddedTagsViewModel + tagViewModels(for: tags))
     }
 
     // MARK: - Private methods.
 
     private func tagViewModels(for tags: [String]) -> [NodeTagViewModel] {
         tags.map { tag in
-            if let viewModel = selectedTagViewModels.first(where: { $0.tag == tag }) {
-                return viewModel
-            } else if let viewModel = tagsViewModel.tagViewModels.first(where: { $0.tag == tag }) {
-                return viewModel
+            if let viewModel = tagsViewModel.tagViewModels.first(where: { $0.tag == tag }) {
+                viewModel
             } else {
-                return NodeTagViewModel(tag: tag, isSelectionEnabled: isSelectionEnabled, isSelected: false)
+                makeNodeTagViewModel(with: tag, isSelected: selectedTags.contains(tag))
             }
         }
     }
 
-    private func filterNewlyAddedTagViewModels(for searchText: String?) -> [NodeTagViewModel] {
+    private func filterNewlyAddedTags(for searchText: String?) -> [String] {
         if let searchText {
-            return newlyAddedTagViewModels.filter {
-                $0.tag.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) != nil
+            newlyAddedTags.filter {
+                $0.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) != nil
             }
         } else {
-            return newlyAddedTagViewModels
+            newlyAddedTags
         }
+    }
+
+    private func observeTogglesIfRequired(for tagViewModels: [NodeTagViewModel]) {
+        guard tagsViewModel.isSelectionEnabled else { return }
+        tagViewModels.forEach { observeToggles(for: $0) }
+    }
+
+    private func observeToggles(for tagViewModel: NodeTagViewModel) {
+        tagViewModel
+            .observeToggles()
+            .sink { [weak self, weak tagViewModel] tag in
+                guard let self, let tagViewModel else { return }
+
+                if newlyAddedTags.contains(tag) {
+                    removeDeselectedNewlyAddedTags(tagViewModel: tagViewModel)
+                } else if selectedTags.contains(tag) {
+                    removeDeselectedTagsFromSelectedTags(tagViewModel: tagViewModel)
+                } else {
+                    toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
+                }
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func removeDeselectedNewlyAddedTags(tagViewModel: NodeTagViewModel) {
+        newlyAddedTags.removeAll(where: { $0 == tagViewModel.tag })
+
+        var tagViewModels = tagsViewModel.tagViewModels
+        tagViewModels.removeAll(where: { $0.tag == tagViewModel.tag })
+        tagsViewModel.updateTagsReorderedBySelection(tagViewModels)
+    }
+
+    private func removeDeselectedTagsFromSelectedTags(tagViewModel: NodeTagViewModel) {
+        selectedTags.remove(tagViewModel.tag)
+        toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
+    }
+
+    private func selected(tagViewModel: NodeTagViewModel) {
+        selectedTags.insert(tagViewModel.tag)
+        toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
+    }
+
+    private func toggleTagSelectionAndRearrange(tagViewModel: NodeTagViewModel) {
+        let displayedTagViewModels = tagsViewModel.tagViewModels
+
+        let filteredNewlyAddedTagViewModels = newlyAddedTags.compactMap { newlyAddedTag in
+            displayedTagViewModels.first(where: { $0.tag == newlyAddedTag })
+        }
+
+        let searchSnapshotTagViewModels = tagsSnapshot.compactMap { tag in
+            if let viewModel = displayedTagViewModels.first(where: { $0.tag == tag }) {
+                if viewModel.tag == tagViewModel.tag {
+                    return makeNodeTagViewModel(with: tag, isSelected: !tagViewModel.isSelected)
+                } else {
+                    return viewModel
+                }
+            } else {
+                assertionFailure("Unsuccessful finding the tag view model and this should never happen")
+                return nil
+            }
+        }
+
+        tagsViewModel.updateTagsReorderedBySelection(filteredNewlyAddedTagViewModels + searchSnapshotTagViewModels)
+    }
+
+    private func makeNodeTagViewModel(with tag: String, isSelected: Bool) -> NodeTagViewModel {
+        let viewModel = NodeTagViewModel(tag: tag, isSelected: isSelected)
+        observeToggles(for: viewModel)
+        return viewModel
     }
 }
