@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Le format de l’adresse courriel est invalide";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="Saisissez un mot de passe valide";
+"passwordInvalidFormat"="Saisissez votre mot de passe";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Adresse courriel";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="Mémoriser les préférences";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Téléversements des vidéos";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Le téléversement est en pause, car il n’y a pas de connexion Wi-Fi, 1 fichier est en attente";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Le téléversement est en pause, car il n’y a pas de connexion Wi-Fi, %lu fichiers sont en attente";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Les photos ont été téléversées, les téléversements des vidéos sont désactivés ; 1 vidéo n’a pas été téléversée";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Les photos ont été téléversées, les téléversements des vidéos sont désactivés ; %lu vidéos n’ont pas été téléversées";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 est sélectionné";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Vider la Corbeille";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Tous les éléments dans la Corbeille seront supprimés";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="La Corbeille a été vidée";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d jours";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="Vider la Corbeille ?";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="La Corbeille est vide";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="Vide";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Ne pas utiliser HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="Supprimer le pseudonyme";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias ou pseudonyme";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="Le paiement est en retard";
-/* Business account status */
-"Active"="Active";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rôle :";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="Voici la dernière étape pour supprimer votre compte. Votre compte et votre abonnement seront tous deux supprimés et vous perdrez irrémédiablement toutes les données stockées dans le compte. Saisissez votre mot de passe ci-dessous.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Changer votre image de profil";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="Active";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="Le paiement est exigé";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="Le paiement est en retard";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un autre appel est en cours. Veuillez mettre fin à cet appel avant d’en faire un autre.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="D’accord, j’ai compris";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="Nous ne pouvons pas traiter votre annulation pour le moment. Vérifiez votre connexion et réessayez. Si le problème persiste, contactez le support.";
+"accounts.cancelSubscriptionErrorAlert.message"="Votre annulation ne peut pas être traitée pour le moment. Vérifiez votre connexion et réessayez. Si le problème persiste, contactez le support.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="D’accord, j’ai compris";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="Médias";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="Seuls 100 participants peuvent participer à l’appel. Tout participant supplémentaire ne pourra qu’envoyer et recevoir des messages. La personne qui organise l’appel peut souscrire un abonnement Pro pour lever ces restrictions.";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="Surclasser le compte maintenant";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Libérer de l'espace";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="D’accord, j’ai compris";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="Ajouter";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="Espace de stockage généreux";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="Partage des transferts";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="Les personnes avec qui vous partagez des données peuvent utiliser votre quota de transfert pour télécharger les éléments que vous avez partagés.";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="Sécurité supplémentaire lors de partages";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="Définissez des mots de passe et des dates d’expiration pour les liens de fichier et de dossier.";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="Afficher les abonnements Pro";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="Ignorer";

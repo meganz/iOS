@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="صيغة عنوان البريد الإلكتروني غير صالحة";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="أدخل كلمة مرور صالحة";
+"passwordInvalidFormat"="أدخل كلمة السر الخاصة بك";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="البريد الإلكتروني";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="تذكر التفضيلات";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="ترفيعات الفيديو";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="تم إيقاف الترفيع مؤقتاً نظراً لعدم وجود اتصال واي فاي Wi-Fi، وهناك 1 ملف معلق";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="تم إيقاف الترفيع مؤقتاً نظراً لعدم وجود اتصال واي فاي Wi-Fi، وهناك %lu ملف معلق";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع 1 فيديو";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %lu فيديو";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="تم تحديد 1";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="إفراغ سلة المحذوفات";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="سيتم حذف جميع العناصر الموجودة في سلة المحذوفات";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="تم إفراغ سلة المحذوفات";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d يوم";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="إفراغ سلة المحذوفات؟";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="سلة المحذوفات فارغة";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="إفراغ";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="لا تستخدم بروتوكول HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="إزالة الاسم مستعار";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="اسم المستعار أو لقب";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="متأخر بالدفع";
-/* Business account status */
-"Active"="نشط";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="الدور:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="هذه هي الخطوة الأخيرة لحذف حسابك. سيتم حذف كل من حسابك واشتراكك وستفقد جميع البيانات المخزنة في الحساب بشكل دائم. الرجاء إدخال كلمة المرور الخاصة بك أدناه.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="تغيير صورة الملف الشخصي";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="نشط";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="الدفعة المالية مستحقة";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="متأخر بالدفع";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="مكالمة أخرى جارية. يرجى إنهاء مكالمتك الحالية قبل إجراء أخرى.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="حسنًا، فهمت ذلك";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="حسنًا، فهمت ذلك";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="الإعلام";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="يمكن لـ 100 مشارك فقط الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال الرسائل وتلقيها. يمكن للمنظم الترقية إلى برو Pro لإزالة هذه القيود.";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="رق حسابك الآن";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="حسنًا، فهمت ذلك";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="إضافة";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="مساحة تخزين سخية";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="تشارك تراسل المعطيات";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="يمكن للأشخاص الذين تشارك البيانات معهم استخدام حجم تراسل المعطيات المتاح لك لتنزيل العناصر التي قمت بمشاركتها.";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="أمان إضافي عند المشاركة";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="قم بتعيين كلمات المرور وتواريخ انتهاء الصلاحية لروابط الملفات والمجلدات.";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="عرض باقات برو Pro";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="تخطى";

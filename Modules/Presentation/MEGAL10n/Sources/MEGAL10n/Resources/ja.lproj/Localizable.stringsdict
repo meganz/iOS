@@ -2704,5 +2704,47 @@
         <string>と%d個のフォルダを追加</string>
       </dict>
     </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[date]にメールでご連絡しましたが、ストレージはまだいっぱいです。アカウント内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、スペースを空けるか、[plan]プランにアップグレードしていただくご必要があります。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>メールで複数回ご連絡しましたが、ストレージはまだいっぱいです。アカウント内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、スペースを空けるか、[plan]プランにアップグレードしていただくご必要があります。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>メールでご連絡しましたが、ストレージはまだいっぱいです。アカウント内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、スペースを空けるか、[plan]プランにアップグレードしていただくご必要があります。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

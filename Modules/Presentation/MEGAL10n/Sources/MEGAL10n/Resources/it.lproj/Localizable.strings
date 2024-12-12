@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Sembra che si tratti di una e-mail non valida";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="Inserisci una password valida";
+"passwordInvalidFormat"="Inserisci la tua password";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="Ricorda queste preference";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Caricamento dei video";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Caricamento messo in pausa a causa di nessuna connessione Wi-Fi disponibile, 1 file in attesa";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Caricamento messo in pausa a causa di nessuna connessione WiFi disponibile, %lu file in attesa";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Foto caricate, i caricamenti dei video sono disattivati; 1 video non caricato";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Foto caricate, i caricamenti dei video sono disattivati; %lu video non caricati";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 selezionato";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Svuota il cestino";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Tutti gli elementi nel cestino verranno cancellati";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="Cestino pulito";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d giorni";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="Svuotare il Cestino?";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="Svuota il Cestino";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="Svuota";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Non usare HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="Rimuovi il soprannome";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias o soprannome";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="Pagamento in ritardo";
-/* Business account status */
-"Active"="Attiva";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Ruolo:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="Questo è l'ultimo step per eliminare il tuo account. Sia il tuo account che il tuo abbonamento verranno eliminati e perderai permanentemente tutti i dati archiviati nell'account. Per favore, inserisci la tua password qui sotto.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Cambia l'immagine del profilo";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="Attiva";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="Pagamento necessario";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="Pagamento in ritardo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un'altra chiamata in corso. Per favore, termina la chiamata corrente prima di iniziarne un'altra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="OK, capito";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="OK, capito";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="Media";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="Solo 100 partecipanti possono partecipare alla chiamata. Eventuali partecipanti aggiuntivi potranno solo inviare e ricevere messaggi. L'organizzatore può effettuare l'upgrade a Pro per rimuovere queste restrizioni.";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="Effettua l'upgrade ora";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="OK, capito";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="Aggiungi";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="Grande archivio";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="Condivisione della banda di trasferimento";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="Sicurezza addizionale nella condivisione";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="Imposta password e date di scadenza per i link di file e cartelle.";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="Vedi i piani Pro";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="Salta";

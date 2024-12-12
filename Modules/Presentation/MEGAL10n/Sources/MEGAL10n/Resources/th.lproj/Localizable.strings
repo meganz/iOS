@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="รูปแบบอีเมลไม่ถูกต้อง";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="กรอกรหัสผ่านให้ถูกต้อง";
+"passwordInvalidFormat"="กรอกรหัสผ่านของคุณ";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="อีเมล";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="จำตัวเลือกการตั้งค่านี้ไว้";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="อัปโหลดวิดีโอ";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="การอัปโหลดหยุดชั่วคราว เนื่องจากไม่มีการเชื่อมต่อ Wi-Fi ตอนนี้รออยู่ 1 ไฟล์";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="การอัปโหลดหยุดชั่วคราว เนื่องจากไม่มีการเชื่อมต่อ Wi-Fi ตอนนี้รออยู่ %lu ไฟล์";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="อัปโหลดรูปภาพ, การอัปโหลดวิดีโอ ถูกปิด; ไม่ได้อัปโหลดวิดีโอ 1 รายการ";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="อัปโหลดรูปภาพ, การอัปโหลดวิดีโอ ถูกปิด; ไม่ได้อัปโหลดวิดีโอ %lu รายการ";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="เลือก 1 รายการ";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="ล้างข้อมูลในถังขยะ";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="ทุกรายการในถังขยะจะถูกลบ";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="เคลียร์ถังขยะเสร็จแล้ว";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d วัน";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="ล้างข้อมูลในถังขยะหรือไม่";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="ล้างข้อมูลในถังขยะ";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="ว่างเปล่า";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="อย่าใช้ HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="ลบชื่อเล่นออก";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="นามแฝงหรือชื่อเล่น";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="การชำระเงินล่าช้า";
-/* Business account status */
-"Active"="กำลังใช้งาน";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="บทบาท:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="นี่เป็นขั้นตอนสุดท้ายในการลบบัญชีของคุณ ทั้งบัญชีและการสมัครใช้งานของคุณจะถูกลบออก พร้อมทั้งคุณจะสูญเสียข้อมูลทั้งหมดที่เก็บไว้ในบัญชีอย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="เปลี่ยนรูปโปรไฟล์";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="กำลังใช้งาน";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="ต้องชำระเงิน";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="การชำระเงินล่าช้า";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="อยู่ระหว่างดำเนินการโทรอีก กรุณาวางสายปัจจุบันของคุณก่อนที่จะโทรออกอีกครั้ง";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3987,9 +3997,9 @@
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="ไม่มีกิจกรรมล่าสุด";
 /* Recently watched videos delete all alert title */
-"videos.recentlyWatched.deletion.alert.title"="Videos will be removed from this list, but not deleted from your Cloud drive";
+"videos.recentlyWatched.deletion.alert.title"="วิดีโอจะถูกลบออกจากรายการนี้ แต่จะไม่ถูกลบออกจากคลาวด์ไดรฟ์ของคุณ";
 /* Recently watched videos delete all alert clear recently watched option */
-"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Clear list";
+"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="ล้างรายการออก";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="ไม่มีใครอยู่ในห้องนั่งรอ";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
@@ -4055,9 +4065,9 @@
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น ต้องการเพิ่มผู้เข้าร่วมเพิ่มเติมหรือไม่ [A]อัปเกรดแผนของคุณตอนนี้[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Only 100 participants can join the call. Ask the organiser to upgrade to Pro to remove this restriction.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากต้องการเพิ่มจำนวนผู้เข้าร่วม กรุณาแจ้งให้ผู้จัดประชุมอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
-"meetings.inCall.banner.limit100Participants.organizer-host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need more? [A]Upgrade now[/A]";
+"meetings.inCall.banner.limit100Participants.organizer-host"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น ต้องการมากกว่านี้หรือไม่ [A]อัปเกรดแผนของคุณตอนนี้[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitAlert.message"="ต้องการคุยต่อนานกว่านี้หรือไม่ สมัครใช้งานแผน Pro จะสามารถโทรได้ไม่อั้น";
 /* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
@@ -4067,7 +4077,7 @@
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="การโทรฟรีนี้จะสิ้นสุดลงใน %@";
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
-"meetings.contact-picker.warning.over-limit.host"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now.[/A]";
+"meetings.contact-picker.warning.over-limit.host"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น ต้องการเพิ่มผู้เข้าร่วมเพิ่มเติมหรือไม่ [A]อัปเกรดแผนของคุณตอนนี้[/A]";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.title"="อัปเกรดเป็นแผน Pro เพื่อโทรได้ไม่อั้น";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
@@ -4217,15 +4227,15 @@
 /* Cancel subscription survey header subtitle */
 "accounts.cancelSubscriptionSurvey.header.subtitle"="การสมัครใช้งานของคุณจะถูกยกเลิกทันที และคุณจะถูกย้ายไปใช้บัญชี MEGA ฟรี เมื่อแผนสมัครใช้งานปัจจุบันของคุณหมดอายุ โปรดทราบว่าการยกเลิกการสมัครใช้งานจะไม่ทำให้บัญชีของคุณถูกลบ";
 /* Cancel subscription survey subHeader title */
-"accounts.cancelSubscriptionSurvey.subHeader.title"="Select all that apply";
+"accounts.cancelSubscriptionSurvey.subHeader.title"="เลือกทั้งหมดที่ตรงกับเหตุผลของคุณ";
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="ฉันแค่ต้องการทดลองใช้แผนนี้ชั่วคราวและไม่ต้องการใช้แผนนี้อีกต่อไป";
 /* Cancel subscription survey follow up reason with id 1.a */
-"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+"accounts.cancelSubscriptionSurvey.reason.one.a"="ฉันใช้ MEGA เพื่อดาวน์โหลดไฟล์เท่านั้น";
 /* Cancel subscription survey follow up reason with id 1.b */
-"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+"accounts.cancelSubscriptionSurvey.reason.one.b"="ฉันต้องการเก็บไฟล์ไว้ชั่วคราว";
 /* Cancel subscription survey follow up reason with id 1.c */
-"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
+"accounts.cancelSubscriptionSurvey.reason.one.c"="ฉันใช้ MEGA เพื่อแชร์ไฟล์เท่านั้น";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="ฉันคิดว่าแผนของฉันแพงเกินไป";
 /* Cancel subscription survey reason with id 3 */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="โอเค เข้าใจแล้ว";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="โอเค เข้าใจแล้ว";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4407,14 +4417,50 @@
 /* The hint for user input in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.hint"="ใช้แท็กเพื่อช่วยค้นหาและจัดระเบียบข้อมูลของคุณ ลองใช้แท็กโดยแยกตามปี ตำแหน่งที่ตั้ง โครงการ หรือหัวข้อ";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Tags cannot contain spaces or symbols. Tags will appear in lowercase letters. Non-Latin characters, such as Chinese or Korean, are allowed.";
+"cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="แท็กไม่สามารถมีช่องว่างหรือสัญลักษณ์พิเศษได้ และจะถูกแปลงเป็นตัวพิมพ์เล็กโดยอัตโนมัติ ตัวอักษรที่ไม่ใช่อักษรละติน เช่น ภาษาจีนหรือเกาหลี สามารถใช้ได้";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="สูงสุด 32 ตัวอักษร";
 /* Button title shown to the user to add the tags in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="เพิ่มแท็ก “#%@”";
 /* Section title that is shown over the existing tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="แท็กที่มีอยู่";
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="สื่อ";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมมากกว่านั้น จะสามารถส่งและรับข้อความได้อย่างเดียว ผู้จัดการประชุมสามารถอัปเกรดเป็นแผน Pro เพื่อยกเลิกข้อจำกัดนี้ได้";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="อัปเกรดตอนนี้";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="โอเค เข้าใจแล้ว";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="เพิ่ม";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="พื้นที่เก็บข้อมูลจุได้ไม่อั้น";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="แชร์การถ่ายโอนของคุณให้คนอื่นได้";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="เพิ่มความปลอดภัยเมื่อแชร์ข้อมูล";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="ลิงก์ไฟล์และโฟลเดอร์สามารถตั้งรหัสผ่านและวันหมดอายุได้";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="ดูแผน Pro";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="ข้าม";

@@ -3090,5 +3090,53 @@
         <string>en %d mappen</string>
       </dict>
     </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], uw opslag is nog steeds vol. U heeft %d bestand die neemt[storageSpace]beslag in uw account, wat betekent dat u wat ruimte moet wissen of moet upgraden naar een [plan] abonnement. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <key>other</key>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag nog steeds vol. U heeft %d bestanden die in beslag  [storageSpace] nemen in uw account, wat betekent dat u wat ruimte moet wissen of moet upgraden naar een [plan] abonnement. Als u  niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestand die[storageSpace] beslag neemt in uw account, wat betekent dat u wat ruimte moet wissen of moet upgraden naar een [plan] abonnement. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <key>other</key>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die  [storageSpace]beslag nemen in uw account, wat betekent dat u wat ruimte moet wissen of moet upgraden naar een [plan] abonnement. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestand die [storageSpace] beslag neemt in uw account, wat betekent dat u wat ruimte moet wissen of moet upgraden naar een [plan] abonnement. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <key>other</key>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen, welke u moet wissen of moet upgraden naar een [plan] abonnement. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+      </dict>
+    </dict>
   </dict>
 </plist>

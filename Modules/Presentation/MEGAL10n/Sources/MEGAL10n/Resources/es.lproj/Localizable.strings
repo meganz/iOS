@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="El formato del correo electrónico es incorrecto";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="Introduce una contraseña válida";
+"passwordInvalidFormat"="Introduce tu contraseña";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Correo electrónico";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="Recordar preferencias";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Subida de vídeos";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Subida pausada debido a que no hay conexión Wi-Fi, 1 archivo pendiente";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Subida pausada debido a que no hay conexión Wi-Fi, %lu archivos pendientes";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Fotos subidas, las subidas de vídeos están desactivadas; 1 vídeo no subido";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Fotos subidas, las subidas de videos están desactivadas; %lu videos no subidos";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 seleccionado";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Vaciar Papelera";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Todos los elementos de la Papelera se eliminarán";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="La Papelera se ha vaciado correctamente";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d días";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="¿Vaciar Papelera?";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="No tienes archivos en la Papelera";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="Vacío";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="No usar HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="Eliminar alias";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="Pago vencido";
-/* Business account status */
-"Active"="Activa";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="Este es el último paso para eliminar tu cuenta. Tu suscripción se eliminará junto con tu cuenta y perderás de forma permanente todos los datos almacenados allí. Por favor, introduce tu contraseña a continuación.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Cambiar imagen del perfil";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="Activa";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="Pago requerido";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="Pago vencido";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Hay otra llamada en curso. Termina esa llamada para hacer otra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="Archivos multimedia";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solo podrán enviar y recibir mensajes. El organizador puede ampliar a Pro para eliminar estas restricciones.";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="Ampliar cuenta";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Liberar espacio";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="No se pueden gestionar las etiquetas";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Tu plan Pro Flexi ha caducado. Reactiva tu suscripción para añadir etiquetas. Puedes gestionarlo en la página web de MEGA.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Se ha desactivado tu cuenta Business. Para gestionar tus etiquetas, reactiva tu suscripción en la página web de MEGA desde tu equipo.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Se ha desactivado tu cuenta Business. Para gestionar tus etiquetas, contacta con el administrador de la cuenta.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="Entendido";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="Añadir";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="Almacenamiento generoso";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="Transferencia compartida";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="Seguridad adicional al compartir";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="Establece contraseñas y fechas de caducidad para los enlaces a carpetas y archivos.";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="Descubre los planes Pro";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="Saltar";

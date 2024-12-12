@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="無效的電子郵件地址格式";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="請輸入有效的密碼";
+"passwordInvalidFormat"="輸入您的密碼";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="電子郵件";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="記住偏好設定";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="影片上傳";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="由於沒有Wi-Fi連線，上傳暫停，1個檔案待處理";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="由於沒有Wi-Fi連線，上傳暫停，%lu個檔案待處理";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="相片已上傳，影片上傳關閉；1個影片未上傳";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="照片已上傳，影片上傳關閉；%lu個影片未上傳";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="已選取1個";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="清空垃圾筒";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="所有垃圾筒中的項目將被刪除";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="垃圾筒已清空";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d天";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="是否清空垃圾筒？";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="空的垃圾筒";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="清空";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="移除暱稱";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="別名或暱稱";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="付款逾期";
-/* Business account status */
-"Active"="有效的";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="職稱：";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="這是刪除帳戶的最後一個步驟。您的帳戶和訂閱都將被刪除，而且您將永久遺失帳戶中儲存的所有資料。請在下方輸入您的密碼。";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="更改個人資料相片";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="有效的";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="應付款";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="付款逾期";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一個通話正在進行中。請先結束目前通話才能撥打另一通。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="好的，明白了";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="我們現在無法處理您的取消訂閱。檢查您的連線，然後重試。如果問題仍然存在，請聯繫客服人員。";
+"accounts.cancelSubscriptionErrorAlert.message"="目前無法處理您的取消訂閱。檢查您的連線，然後重試。如果問題仍然存在，請聯繫客服人員。";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="好的，明白了";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="媒體";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="立即升級";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="釋出一些空間";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="無法管理標籤";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="您的Pro Flexi方案已過期。重新啟用您的訂閱來新增標籤。您可以在MEGA網站上進行管理。";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="您的商業帳戶已停用。若要管理您的標籤，請使用您的電腦在MEGA網站上重新啟用您的訂閱。";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="您的商業帳戶已停用。若要管理您的標籤，請聯繫您的商業帳戶管理員。";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="好的，明白了";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="新增";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="大容量空間";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="傳輸流量共享";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="與您共享資料的人可以使用您的傳輸配額來下載您共享的項目。";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="共享時的額外安全性";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="設定檔案和資料夾連結的密碼和到期日期。";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="查看Pro方案";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="略過";

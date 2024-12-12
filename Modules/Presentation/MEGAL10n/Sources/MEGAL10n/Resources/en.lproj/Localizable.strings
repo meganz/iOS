@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="The email address format is invalid";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="Enter a valid password";
+"passwordInvalidFormat"="Enter your password";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email address";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="Remember preferences";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Video uploads";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off; %lu videos not uploaded";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 selected";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Empty Rubbish bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="Rubbish bin emptied";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d days";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="Empty Rubbish bin?";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="Empty Rubbish Bin";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="Empty";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Don’t use HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="Remove nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias or nickname";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="Payment overdue";
-/* Business account status */
-"Active"="Active";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Role:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2669,11 +2673,11 @@
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Change profile image";
 /* Displayed when the user's Business account subscription is active. */
-"account.profile.accountStatus.active" = "Active";
+"account.profile.accountStatus.active"="Active";
 /* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
-"account.profile.accountStatus.gracePeriod" = "Payment Required";
+"account.profile.accountStatus.gracePeriod"="Payment required";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
-"account.profile.accountStatus.expired" = "Payment Overdue";
+"account.profile.accountStatus.expired"="Payment overdue";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4267,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="OK, got it";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="OK, got it";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4431,11 +4435,11 @@
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
 /* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage tags, reactivate your subscription on the MEGA website using your computer.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your admin.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="OK, got it";
 /* Add to collection button title to add items */

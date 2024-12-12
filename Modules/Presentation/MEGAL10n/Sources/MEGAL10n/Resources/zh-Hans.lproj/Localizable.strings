@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="电子邮件地址格式无效";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="请输入一个有效的密码";
+"passwordInvalidFormat"="请输入您的密码";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="电子邮件地址";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="记住偏好设置";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="视频上传";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="由于无Wi-Fi连接，上传已暂停，1个文件待处理";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="由于无Wi-Fi连接，上传已暂停，%lu个文件待处理";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="照片已上传，视频上传已关闭；1个视频未上传";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="照片已上传，视频上传已关闭； %lu个视频未上传";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="已选择1个";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="清空回收站";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="回收站中的所有项目都将被删除";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="已清空回收站";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d 天";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="是否清空回收站？";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="回收站为空";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="清空";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="移除昵称";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="别名或昵称";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="逾期付款";
-/* Business account status */
-"Active"="活跃";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="职称：";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="这是删除您帐户的最后一步。您的帐户和订阅都将被删除，您将永久丢失该帐户中存储的所有数据。请在下方输入您的密码。";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="更改个人资料图片";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="活跃";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="需要付款";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="逾期付款";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一个通话正在进行中。请先结束您的当前通话后才能加入另一个。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4221,11 +4231,11 @@
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="我只是暂时需要这个方案，并且不再使用它";
 /* Cancel subscription survey follow up reason with id 1.a */
-"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+"accounts.cancelSubscriptionSurvey.reason.one.a"="我仅使用MEGA下载";
 /* Cancel subscription survey follow up reason with id 1.b */
-"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+"accounts.cancelSubscriptionSurvey.reason.one.b"="我需要临时存储文件";
 /* Cancel subscription survey follow up reason with id 1.c */
-"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
+"accounts.cancelSubscriptionSurvey.reason.one.c"="我仅使用MEGA共享文件";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="我发现我的方案太贵了";
 /* Cancel subscription survey reason with id 3 */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="好的，明白了";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="目前无法处理您的取消订阅请求。请检查您的连接，然后重试。如果问题仍然存在，请联系客服支持。";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="好的，明白了";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="媒体";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="只有100位参与者可以加入通话。任何其他参与者只能发送和接收消息。组织者可以升级到Pro方案以移除这些限制。";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="立即升级";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="释放一些空间";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="好的，明白了";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="添加";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="大容量存储空间";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="传输流量共享";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="与您共享数据的人可以使用您的传输流量来下载您共享的项目。";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="共享时的额外安全性";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="为文件和文件夹链接设置密码和到期日期。";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="查看Pro方案";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="跳过";

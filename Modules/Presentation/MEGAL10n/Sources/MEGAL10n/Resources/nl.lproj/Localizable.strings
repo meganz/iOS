@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Het e-mailadres is ongeldig";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="Voer een geldig wachtwoord in";
+"passwordInvalidFormat"="Voer uw wachtwoord in";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="Voorkeuren onthouden";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Videouploads";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload gepauzeerd doordat er geen Wi-Fi connectie is, 1 bestand wachtend";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload gepauzeerd doordat er geen Wi-Fi connectie is, %lu bestanden in afwachting";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Foto's geüpload, video uploads staan uitgeschakeld; 1 video niet geüpload";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Foto's geüpload, video uploads staan uitgeschakeld; %lu video's niet geüpload";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 geselecteerd";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Prullenbak leegmaken";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Alle items in de Prullenbak worden verwijderd";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="Prullenbak leeggemaakt";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d dagen";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="Prullenbak leegmaken?";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="Lege Prullenbak";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="Leegmaken";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Gebruik geen HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="Bijnaam verwijderen";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias of bijnaam";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="Betaling over tijd";
-/* Business account status */
-"Active"="Actief";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="Dit is de laatste stap om uw account te verwijderen. Zowel uw account als uw abonnement worden verwijderd en u verliest permanent alle gegevens die in de cloud zijn opgeslagen. Voer hieronder uw wachtwoord in.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Profielafbeelding wijzigen";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="Actief";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="Betaling verplicht";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="Betaling over tijd";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Een andere oproep is in behandeling. Beëindig uw huidige oproep voordat u een andere maakt.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="Ok, ik snap het";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="We kunnen je annulering op dit moment niet verwerken. Controleer je verbinding en probeer het opnieuw. Als het probleem zich blijft voordoen, neem contact op met de Klantenservice.";
+"accounts.cancelSubscriptionErrorAlert.message"="Uw annulering kan op dit moment niet worden verwerkt. Controleer uw verbinding en probeer het opnieuw. Als het probleem zich blijft voordoen, neem contact op met de klantenservice.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="Ok, ik snap het";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="Media";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="Er kunnen slechts 100 deelnemers deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen berichten verzenden en ontvangen. De organisator kan upgraden naar Pro om deze beperkingen op te heffen.";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="Nu upgraden";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Maak wat ruimte vrij";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Kan tags niet beheren";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Uw Pro Flexi-abonnement is verlopen. Activeer uw abonnement opnieuw om tags toe te voegen. U kunt dit beheren op de MEGA-website.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Uw Zakelijke account is gedeactiveerd. Om uw tags te beheren, moet u uw abonnement op de MEGA-website opnieuw activeren met uw computer.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Uw Zakelijke account is gedeactiveerd. Om uw tags te beheren, neem contact op met de beheerder van uw Zakelijke account.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="Ok, ik snap het";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="Toevoegen";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="Vrijgevige opslag";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="Overdracht deling";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="De mensen met wie u gegevens deelt, kunnen uw overdrachtstegoed gebruiken om de items te downloaden.";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="Extra veiligheid bij het delen";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="Stel wachtwoorden en vervaldata in voor bestands- en mapkoppelingen.";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="Bekijk Pro abonnementen";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="Overslaan";
