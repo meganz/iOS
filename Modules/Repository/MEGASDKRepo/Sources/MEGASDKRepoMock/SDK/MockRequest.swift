@@ -24,6 +24,8 @@ public final class MockRequest: MEGARequest {
     private let _recentActionsBuckets: [MEGARecentActionBucket]?
     private let _name: String?
     private let _folderInfo: MEGAFolderInfo?
+    private let _transferredBytes: Int64
+    private let _totalBytes: Int64
     
     public init(
         handle: MEGAHandle,
@@ -46,7 +48,9 @@ public final class MockRequest: MEGARequest {
         notifications: MEGANotificationList? = nil,
         recentActionsBuckets: [MEGARecentActionBucket] = [],
         name: String? = nil,
-        folderInfo: MEGAFolderInfo? = nil
+        folderInfo: MEGAFolderInfo? = nil,
+        transferredBytes: Int64 = 0,
+        totalBytes: Int64 = 0
     ) {
         self.handle = handle
         self.requestType = requestType
@@ -70,6 +74,8 @@ public final class MockRequest: MEGARequest {
         _recentActionsBuckets = recentActionsBuckets
         _name = name
         _folderInfo = folderInfo
+        _transferredBytes = transferredBytes
+        _totalBytes = totalBytes
         
         super.init()
     }
@@ -95,4 +101,6 @@ public final class MockRequest: MEGARequest {
     public override var name: String? { _name }
     public override var megaFolderInfo: MEGAFolderInfo? { _folderInfo }
     public override var megaStringListDictionary: [String: MEGAStringList]? { stringListDictionary }
+    public override var transferredBytes: Int64 { _transferredBytes }
+    public override var totalBytes: Int64 { _totalBytes }
 }

@@ -62,6 +62,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private var globalDelegates: [any MEGAGlobalDelegate] = []
     private let storageState: StorageState?
     private let verifiedPhoneNumber: String?
+    private let fetchNodesTotalBytes: Int64
+    private let fetchNodesErrorType: MEGAErrorType
+    private let retryReason: Retry
+    private let fetchNodesProgressSteps: [Double]
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -175,7 +179,11 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         shouldListGlobalDelegates: Bool = false,
         storageState: StorageState? = nil,
         verifiedPhoneNumber: String? = nil,
-        isRequestStatusMonitorEnabled: Bool = false
+        isRequestStatusMonitorEnabled: Bool = false,
+        fetchNodesTotalBytes: Int64 = 0,
+        fetchNodesProgressSteps: [Double] = [],
+        fetchNodesErrorType: MEGAErrorType = .apiOk,
+        retryReason: Retry = .none
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -236,6 +244,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.storageState = storageState
         self.verifiedPhoneNumber = verifiedPhoneNumber
         _isRequestStatusMonitorEnabled = isRequestStatusMonitorEnabled
+        self.fetchNodesTotalBytes = fetchNodesTotalBytes
+        self.fetchNodesProgressSteps = fetchNodesProgressSteps
+        self.fetchNodesErrorType = fetchNodesErrorType
+        self.retryReason = retryReason
         super.init()
     }
     
@@ -917,6 +929,85 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public override var isRequestStatusMonitorEnabled: Bool {
         _isRequestStatusMonitorEnabled
+    }
+    
+    public override func fetchNodes(with delegate: any MEGARequestDelegate) {
+        guard fetchNodesErrorType == .apiOk else {
+            simulateRequestStart(delegate: delegate)
+            simulateRequestTemporaryError(delegate: delegate)
+            simulateRequestFinish(
+                delegate: delegate,
+                error: MockError(errorType: fetchNodesErrorType)
+            )
+            return
+        }
+        
+        fetchNodesProgressSteps.forEach { progress in
+            switch progress {
+            case 0: simulateRequestStart(delegate: delegate)
+            case 1:
+                simulateRequestFinish(
+                    delegate: delegate,
+                    error: MockError(errorType: .apiOk)
+                )
+            default:
+                simulateRequestUpdate(
+                    delegate: delegate,
+                    progress: progress
+                )
+            }
+        }
+    }
+
+    private func simulateRequestStart(delegate: any MEGARequestDelegate) {
+        delegate.onRequestStart?(self, request: MockRequest(
+            handle: 1,
+            requestType: .MEGARequestTypeFetchNodes,
+            transferredBytes: 0,
+            totalBytes: fetchNodesTotalBytes
+        ))
+    }
+
+    private func simulateRequestUpdate(delegate: any MEGARequestDelegate, progress: Double) {
+        let transferredBytes = Int64(Double(fetchNodesTotalBytes) * progress)
+        delegate.onRequestUpdate?(self, request: MockRequest(
+            handle: 1,
+            requestType: .MEGARequestTypeFetchNodes,
+            transferredBytes: transferredBytes,
+            totalBytes: fetchNodesTotalBytes
+        ))
+    }
+
+    private func simulateRequestTemporaryError(delegate: any MEGARequestDelegate) {
+        delegate.onRequestTemporaryError?(self, request: MockRequest(
+            handle: 1,
+            requestType: .MEGARequestTypeFetchNodes
+        ), error: MockError(errorType: fetchNodesErrorType))
+    }
+
+    private func simulateRequestFinish(delegate: any MEGARequestDelegate, error: MockError) {
+        delegate.onRequestFinish?(self, request: MockRequest(
+            handle: 1,
+            requestType: .MEGARequestTypeFetchNodes,
+            transferredBytes: fetchNodesTotalBytes,
+            totalBytes: fetchNodesTotalBytes
+        ), error: error)
+    }
+    
+    public override var waiting: Retry {
+        retryReason
+    }
+    
+    private static func makeFetchNodesRequest(
+        transferredBytes: Int64 = 0,
+        totalBytes: Int64 = 0
+    ) -> MockRequest {
+        MockRequest(
+            handle: 1,
+            requestType: .MEGARequestTypeFetchNodes,
+            transferredBytes: transferredBytes,
+            totalBytes: totalBytes
+        )
     }
 }
 
