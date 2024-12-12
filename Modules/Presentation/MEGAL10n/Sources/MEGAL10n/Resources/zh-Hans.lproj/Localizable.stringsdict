@@ -2704,5 +2704,47 @@
         <string>和%d个文件夹</string>
       </dict>
     </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>尽管我们已于[date]通过电子邮件与您联系，但您的存储空间仍然已满。您的帐户中有%d个文件，占用了[storageSpace]，这意味着您必须释放一些空间或升级到[plan]方案。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]详细了解您的存储限制[/A]。</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>尽管我们已通过电子邮件多次与您联系，但您的存储空间仍然已满。您的帐户中有%d个文件，占用了[storageSpace]，这意味着您必须释放一些空间或升级到[plan]方案。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]详细了解您的存储限制[/A]。</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>尽管我们已通过电子邮件与您联系，但您的存储空间仍然已满。您的帐户中有%d个文件，占用了[storageSpace]，这意味着您必须释放一些空间或升级到[plan]方案。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]详细了解您的存储限制[/A]。</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

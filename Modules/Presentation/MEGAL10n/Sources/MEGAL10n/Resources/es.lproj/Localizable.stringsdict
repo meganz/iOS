@@ -3476,5 +3476,59 @@
         <string>y %d carpetas</string>
       </dict>
     </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Aunque te hemos contactado por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace]en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <key>many</key>
+        <string>Aunque te hemos contactado por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace]en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <key>other</key>
+        <string>Aunque te hemos contactado por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Aunque te hemos contactado por correo electrónico el varias veces, tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace]en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <key>many</key>
+        <string>Aunque te hemos contactado por correo electrónico varias veces, tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace]en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <key>other</key>
+        <string>Aunque te hemos contactado por correo electrónico varias veces, tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Aunque te hemos contactado por correo electrónico, tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace]en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <key>many</key>
+        <string>Aunque te hemos contactado por correo electrónico, tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace]en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <key>other</key>
+        <string>Aunque te hemos contactado por correo electrónico, tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

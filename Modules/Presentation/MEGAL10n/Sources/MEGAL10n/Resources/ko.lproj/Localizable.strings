@@ -103,7 +103,7 @@
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="이메일 주소 형식이 올바르지 않습니다";
 /* Message shown when the user enters a wrong password */
-"passwordInvalidFormat"="올바른 암호를 입력하세요";
+"passwordInvalidFormat"="암호를 입력하세요";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="이메일";
 /* Hint text to suggest that the user has to write his password */
@@ -560,14 +560,6 @@
 "cameraUploads.timeline.filter.rememberPreferences"="설정 기억하기";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="동영상 업로드";
-/* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Wi-Fi 연결이 없어서 업로드가 일시정지 되었습니다, 파일 1개 보류 중";
-/* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 %lu개 보류중";
-/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져 있습니다; 동영상 1개가 업로드 되지 않았습니다";
-/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져 있습니다; 동영상 %lu개가 업로드 되지 않았습니다";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1개 선택됨";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -807,7 +799,23 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="휴지통 비우기";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="휴지통의 모든 항목이 삭제됩니다";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+/* Rubbish bin setting snack bar message' */
+"settings.fileManagement.rubbishBin.snackbar.message"="휴지통이 비워졌습니다";
+/* Upgrade to paid account title */
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+/* Rubbish bin auto purge title */
+"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+/* Rubbish bin auto purge days */
+"settings.fileManagement.rubbishBin.autoPurge.days"="%d일";
+/* Empty Rubbish Bin Warning Title */
+"settings.fileManagement.rubbishBin.clean.warning.title"="휴지통을 비울까요?";
+/* Empty Rubbish Bin Cell Title */
+"settings.fileManagement.rubbishBin.clean.title"="휴지통 비우기";
+/* Rubbish Bin Settings Navigation Title */
+"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+/* Empty Rubbish Bin Warning Empty button */
+"settings.fileManagement.rubbishBin.clean.warning.empty"="비우기";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="HTTP 사용 안함";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2036,10 +2044,6 @@
 "Remove Nickname"="별명 삭제";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="별칭 또는 별명";
-/* Business expired account Overdue payment page header. */
-"Payment overdue"="결제 기한 초과";
-/* Business account status */
-"Active"="활성";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="역할:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2668,6 +2672,12 @@
 "account.delete.subscription.webClient"="계정을 삭제하는 마지막 단계입니다. 당신의 계정과 구독 모두 삭제되며 계정에 저장된 모든 데이터를 영구적으로 잃게 됩니다. 아래에 암호를 입력하세요.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="프로필 이미지 변경";
+/* Displayed when the user's Business account subscription is active. */
+"account.profile.accountStatus.active"="활성";
+/* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
+"account.profile.accountStatus.gracePeriod"="결제 필요";
+/* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
+"account.profile.accountStatus.expired"="결제 기한 초과";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="다른 통화가 진행 중입니다. 다른 통화를 하기 전에 현재 통화를 종료하세요.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4221,11 +4231,11 @@
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="이 요금제가 일시적으로 필요했고 더 이상 필요하지 않습니다";
 /* Cancel subscription survey follow up reason with id 1.a */
-"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+"accounts.cancelSubscriptionSurvey.reason.one.a"="MEGA를 다운로드에만 썼습니다";
 /* Cancel subscription survey follow up reason with id 1.b */
-"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+"accounts.cancelSubscriptionSurvey.reason.one.b"="임시로 파일을 저장할 곳이 필요했습니다";
 /* Cancel subscription survey follow up reason with id 1.c */
-"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
+"accounts.cancelSubscriptionSurvey.reason.one.c"="MEGA를 파일 공유에만 썼습니다";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="요금제가 너무 비쌉니다";
 /* Cancel subscription survey reason with id 3 */
@@ -4261,7 +4271,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="알겠습니다";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="We can’t process your cancellation right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="알겠습니다";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4418,3 +4428,39 @@
 "photos.searchResults.media.section.title"="미디어";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="100명의 참여자만 통화에 참여할 수 있습니다. 모든 추가 참여자는 메시지를 보내고 받을 수만 있습니다. 주최자는 Pro로 업그레이드하여 이러한 제한을 없앨 수 있습니다.";
+/* Over Disk Quota paywall Upgrade button title */
+"overDiskQuota.paywall.button.upgradeNow"="지금 업그레이드";
+/* Over Disk Quota paywall Make some space button title */
+"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";
+/* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+/* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+/* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+/* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+/* Text of the button in the popup that confirms the user has acknowledged the message. */
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="알겠습니다";
+/* Add to collection button title to add items */
+"photos.addTo.button.title.add"="추가";
+/* Ad-free experience screen header title */
+"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+/* Ad-free experience screen header subTitle */
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+/* Ad-free experience screen content title about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.title"="넉넉한 저장소";
+/* Ad-free experience screen content message about pro plan featuring as Generous Storage */
+"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+/* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.title"="전송 공유";
+/* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
+"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+/* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.title"="공유할 때 추가 보안";
+/* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
+"ads.adFree.content.additionalSecurity.message"="파일과 폴더 링크에 암호와 만료일을 설정";
+/* Ad-free experience screen button title that will direct to Upgrade plan page */
+"ads.adFree.button.viewProPlans"="Pro 요금제 보기";
+/* Ad-free experience screen button title that will dismiss page */
+"ads.adFree.button.skip"="건너뛰기";

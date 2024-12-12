@@ -3476,5 +3476,59 @@
         <string>și %d foldere</string>
       </dict>
     </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Aveți %d fișier preluate [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să eliberați spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <key>few</key>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să goliți un spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <key>other</key>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să goliți un spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul de stocare este încă plin. Aveți %d fișier care ocupă [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să eliberați spațiu sau să faceți upgrade la un [plan]abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <key>few</key>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să goliți un spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <key>other</key>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să goliți un spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deși v-am contactat prin e-mail, spațiul de stocare este încă plin. Aveți %d fișier care ocupă [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să eliberați spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <key>few</key>
+        <string>Deși v-am contactat prin e-mail, spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să goliți un spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <key>other</key>
+        <string>Deși v-am contactat prin e-mail, spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să goliți un spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+      </dict>
+    </dict>
   </dict>
 </plist>

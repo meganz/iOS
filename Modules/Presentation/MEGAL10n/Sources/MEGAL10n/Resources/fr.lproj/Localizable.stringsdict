@@ -3476,5 +3476,59 @@
         <string>et %d dossiers</string>
       </dict>
     </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] espaces sur votre compte, ce qui signifie que vous devez libérer de l'espace ou passer à un forfait [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>many</key>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>other</key>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] espaces sur votre compte, ce qui signifie que vous devez libérer de l'espace ou passer à un forfait [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>many</key>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>other</key>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>many</key>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>other</key>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+      </dict>
+    </dict>
   </dict>
 </plist>
