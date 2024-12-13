@@ -27,7 +27,7 @@ final class ManageTagsViewModel: ObservableObject {
         self.navigationBarViewModel = navigationBarViewModel
         self.existingTagsViewModel = existingTagsViewModel
         containsExistingTags = existingTagsViewModel.containsTags
-        monitorTagsLoadingStatus()
+        monitorTagViewModelListUpdates()
     }
 
     // MARK: - Interface methods.
@@ -108,13 +108,15 @@ final class ManageTagsViewModel: ObservableObject {
         tagName.rangeOfCharacter(from: CharacterSet.uppercaseLetters) != nil
     }
 
-    private func monitorTagsLoadingStatus() {
+    private func monitorTagViewModelListUpdates() {
         existingTagsViewModel
-            .$isLoading
-            .sink { [weak self] isLoading in
-                guard let self, !isLoading, existingTagsViewModel.isLoading else { return }
-                containsExistingTags = existingTagsViewModel.containsTags
-                canAddNewTag = !existingTagsViewModel.contains(tagName)
+            .tagsViewModel
+            .$tagViewModels
+            .dropFirst()
+            .sink { [weak self] tagViewModels in
+                guard let self else { return }
+                containsExistingTags = tagViewModels.isNotEmpty
+                canAddNewTag = tagViewModels.notContains { $0.tag == tagName }
             }
             .store(in: &subscriptions)
     }
