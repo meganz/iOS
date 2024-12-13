@@ -276,6 +276,18 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         guard Helper.hasSession_alertIfNot() else { return }
         RecoveryKeyViewRouter(presenter: UIApplication.mnz_visibleViewController()).presentView()
     }
+    
+    @objc class func processUpgradeLink() {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        
+        if accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) {
+            delegate.showMyAccountHall()
+        } else {
+            delegate.showUpgradeAccount()
+        }
+    }
 }
 
 // MARK: - Ads
