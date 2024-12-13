@@ -20,8 +20,7 @@ public struct AlbumCell: View {
                     container: viewModel.thumbnailContainer,
                     bgColor: TokenColors.Background.surface2.swiftUI
                 )
-                /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
-                .overlay(Color.black.opacity(viewModel.isSelected ? 0.2 : 0.0))
+                .overlay(viewModel.photoOverlay())
                 .cornerRadius(6)
                 
                 GeometryReader { geo in
@@ -52,11 +51,11 @@ public struct AlbumCell: View {
                     .lineLimit(1)
                     .truncationMode(.middle)
                     .font(.caption)
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .foregroundStyle(!viewModel.isDisabled ? TokenColors.Text.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
                 
                 Text("\(viewModel.numberOfNodes)")
                     .font(.footnote)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .foregroundStyle(!viewModel.isDisabled ?  TokenColors.Text.secondary.swiftUI : TokenColors.Text.disabled.swiftUI)
             }
         }
         .opacity(viewModel.opacity)
@@ -79,7 +78,7 @@ public struct AlbumCell: View {
     private var checkMarkView: some View {
         CheckMarkView(
             markedSelected: viewModel.isSelected,
-            foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+            foregroundColor: viewModel.isSelected ? TokenColors.Button.primary.swiftUI : TokenColors.Icon.onColor.swiftUI
         )
     }
 }

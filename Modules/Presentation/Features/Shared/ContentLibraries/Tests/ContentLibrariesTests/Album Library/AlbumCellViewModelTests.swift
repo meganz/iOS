@@ -742,6 +742,30 @@ final class AlbumCellViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
+    func testIsDisabled_singleSelection_shouldUpdateDisabledStatus() {
+        let selection = AlbumSelection(mode: .single)
+        let album = AlbumEntity(id: 5, type: .user)
+        let sut = makeAlbumCellViewModel(
+            album: album,
+            selection: selection)
+        
+        var expectedValues = [false, true]
+        let exp = expectation(description: "Should update disabled state")
+        exp.expectedFulfillmentCount = expectedValues.count
+        let cancellable = sut.$isDisabled
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, expectedValues.removeFirst())
+                exp.fulfill()
+            }
+        
+        selection.setSelectedAlbums([.init(id: 1, type: .user)])
+        
+        wait(for: [exp], timeout: 0.5)
+        cancellable.cancel()
+    }
+    
     // MARK: - Helpers
     
     @MainActor
