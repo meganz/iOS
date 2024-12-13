@@ -12,8 +12,10 @@ struct PhotoLibraryModeAllGridView: View {
                 ScrollViewReader { scrollProxy in
                     PhotoLibraryModeView(viewModel: viewModel) {
                         EnableCameraUploadsBannerButtonView { router.openCameraUploadSettings(viewModel: viewModel) }
-                            .determineViewSize { size in
-                                viewModel.photoZoomControlPositionTracker.update(viewSpace: size.height + 8)
+                            .determineViewSize { @Sendable size in
+                                MainActor.assumeIsolated {
+                                    viewModel.photoZoomControlPositionTracker.update(viewSpace: size.height + 8)
+                                }
                             }
                             .opacity(viewModel.showEnableCameraUpload ? 1 : 0)
                             .frame(maxHeight: viewModel.showEnableCameraUpload ? .infinity : 0)
@@ -29,8 +31,10 @@ struct PhotoLibraryModeAllGridView: View {
                     .background(PhotoAutoScrollView(viewModel:
                                                         PhotoAutoScrollViewModel(viewModel: viewModel),
                                                     scrollProxy: scrollProxy))
-                    .onPreferenceChange(OffsetPreferenceKey.self) {
-                        viewModel.photoZoomControlPositionTracker.trackContentOffset($0)
+                    .onPreferenceChange(OffsetPreferenceKey.self) { @Sendable offset in
+                        MainActor.assumeIsolated {
+                            viewModel.photoZoomControlPositionTracker.trackContentOffset(offset)
+                        }
                     }
                 }
             }
@@ -54,8 +58,10 @@ struct PhotoLibraryModeAllGridView: View {
                     .id(photo.position)
                     .background(Color(white: 0, opacity: 0.1))
                     .frame(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
-                    .onPreferenceChange(FramePreferenceKey.self) {
-                        viewModel.scrollTracker.trackFrame($0, for: photo, inViewPort: viewPortSize)
+                    .onPreferenceChange(FramePreferenceKey.self) { @Sendable frame in
+                        MainActor.assumeIsolated {
+                            viewModel.scrollTracker.trackFrame(frame, for: photo, inViewPort: viewPortSize)
+                        }
                     }
                     .onAppear {
                         viewModel.scrollTracker.trackAppearedPosition(photo.position)

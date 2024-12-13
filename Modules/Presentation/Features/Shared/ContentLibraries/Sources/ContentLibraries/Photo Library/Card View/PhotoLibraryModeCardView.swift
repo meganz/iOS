@@ -44,8 +44,10 @@ struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: Pho
             .id(category.position)
             .buttonStyle(.plain)
             .frame(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
-            .onPreferenceChange(FramePreferenceKey.self) {
-                viewModel.scrollTracker.trackFrame($0, for: category, inViewPort: viewPortSize)
+            .onPreferenceChange(FramePreferenceKey.self) { @Sendable frame in
+                MainActor.assumeIsolated {
+                    viewModel.scrollTracker.trackFrame(frame, for: category, inViewPort: viewPortSize)
+                }
             }
             .onAppear {
                 viewModel.scrollTracker.trackAppearedPosition(category.position)
