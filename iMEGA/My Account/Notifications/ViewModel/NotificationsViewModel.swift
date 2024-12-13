@@ -1,6 +1,6 @@
 import Foundation
-import MEGADesignToken
 import MEGAAnalyticsiOS
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -128,6 +128,12 @@ enum NotificationAction: ActionType {
         tracker.trackAnalyticsEvent(with: NotificationCentreItemTappedEvent())
     }
     
+    private func imageLoaderClearCache() {
+        Task {
+            await imageLoader.clearCache()
+        }
+    }
+    
     func dispatch(_ action: NotificationAction) {
         switch action {
         case .onViewDidLoad:
@@ -140,7 +146,7 @@ enum NotificationAction: ActionType {
             trackNotificationCentreItemTapped()
             invokeCommand?(.presentURLLink(urlLink))
         case .clearImageCache:
-            imageLoader.clearCache()
+            imageLoaderClearCache()
         }
     }
     

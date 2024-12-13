@@ -1,6 +1,11 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
+
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "Notifications",
@@ -26,7 +31,24 @@ let package = Package(
                 "MEGAPresentation",
                 "MEGASwiftUI",
                 "MEGADesignToken"
-            ]
+            ],
+            swiftSettings: settings
+        ),
+        .target(
+            name: "NotificationsMocks",
+            dependencies: ["Notifications"]
+        ),
+        .testTarget(
+            name: "NotificationsTests",
+            dependencies: [
+                "Notifications",
+                "NotificationsMocks",
+                "MEGAL10n",
+                "MEGASwiftUI",
+                .product(name: "MEGASwiftUIMock", package: "MEGASwiftUI")
+            ],
+            swiftSettings: settings
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

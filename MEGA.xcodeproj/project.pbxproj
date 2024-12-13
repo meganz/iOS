@@ -1418,7 +1418,6 @@
 		949B0C792AAFA8E90090CA84 /* RenameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C782AAFA8E90090CA84 /* RenameRouter.swift */; };
 		949B0C7C2AAFA8F40090CA84 /* RenameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */; };
 		949B0C7E2AAFA9070090CA84 /* RenameAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */; };
-		949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B86E52BBC205D00CB8ADF /* MockImageLoader.swift */; };
 		949CC1552B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CC1542B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift */; };
 		949CC15D2B0FD5230047D581 /* MockMyAccountHallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
@@ -1832,6 +1831,7 @@
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
 		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
+		B598F73B2D01E0B600B2B6EB /* MEGASwiftUIMock in Frameworks */ = {isa = PBXBuildFile; productRef = B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */; };
 		B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */; };
 		B59FC7712CF97B1700D88580 /* OverDiskQuotaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */; };
 		B59FC7752CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC7742CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift */; };
@@ -4139,7 +4139,6 @@
 		949B0C782AAFA8E90090CA84 /* RenameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameRouter.swift; sourceTree = "<group>"; };
 		949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModel.swift; sourceTree = "<group>"; };
 		949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameAlertController.swift; sourceTree = "<group>"; };
-		949B86E52BBC205D00CB8ADF /* MockImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockImageLoader.swift; sourceTree = "<group>"; };
 		949CC1542B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewModel+DeviceCenter.swift"; sourceTree = "<group>"; };
 		949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMyAccountHallRouter.swift; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenAppRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.h; sourceTree = SOURCE_ROOT; };
@@ -5406,6 +5405,7 @@
 				A8BC1C332A600F8D001B30F0 /* MEGASDKRepoMock in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
+				B598F73B2D01E0B600B2B6EB /* MEGASwiftUIMock in Frameworks */,
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
 				6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
@@ -10305,7 +10305,6 @@
 			isa = PBXGroup;
 			children = (
 				943FA1DF2CBEF3FE0021EAC3 /* UserAttributes */,
-				949B86E52BBC205D00CB8ADF /* MockImageLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -13304,6 +13303,7 @@
 				A87F09182CCFE65100A1B03C /* MEGAUIMock */,
 				BF27E3F32CF3FDD5002C892B /* CloudDrive */,
 				6D004FE82D0A46360039ADF9 /* MEGAConnectivity */,
+				B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -16278,7 +16278,6 @@
 				948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */,
-				949B86E62BBC205D00CB8ADF /* MockImageLoader.swift in Sources */,
 				B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
@@ -18710,6 +18709,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B5866BB32CA539E4009E0A1E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
+		};
+		B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASwiftUIMock;
 		};
 		B5D58D542AC67C89004ECD36 /* Accounts */ = {
 			isa = XCSwiftPackageProductDependency;
