@@ -57,12 +57,22 @@ public struct AdsSlotView<T: View>: View {
         .onDisappear {
             viewModel.stopMonitoringAdsSlotUpdates()
         }
+        .adaptiveSheetModal(isPresented: $viewModel.showAdsFreeView) {
+            AdsFreeView(
+                viewModel: AdsFreeViewModel(
+                    purchaseUseCase: viewModel.purchaseUseCase,
+                    viewProPlanAction: viewModel.viewProPlanAction
+                )
+            )
+            .interactiveDismissDisabled()
+        }
         .ignoresSafeArea(.keyboard)
         .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) ? .all : [.top])
     }
     
     private var closeButton: some View {
         Button {
+            viewModel.didTapCloseAdsButton()
         } label: {
             Image("close")
                 .resizable(capInsets: EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2))

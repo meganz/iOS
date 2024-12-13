@@ -25,10 +25,10 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
     }
     
     private var monthlyPlans: [PlanEntity] {
-        [PlanEntity(type: .proI, subscriptionCycle: .monthly),
-         PlanEntity(type: .proII, subscriptionCycle: .monthly),
-         PlanEntity(type: .proIII, subscriptionCycle: .monthly),
-         PlanEntity(type: .lite, subscriptionCycle: .monthly)]
+        [PlanEntity(type: .lite, subscriptionCycle: .monthly, price: 1),
+         PlanEntity(type: .proI, subscriptionCycle: .monthly, price: 2),
+         PlanEntity(type: .proII, subscriptionCycle: .monthly, price: 3),
+         PlanEntity(type: .proIII, subscriptionCycle: .monthly, price: 4)]
     }
     
     private var yearlyPlans: [PlanEntity] {
@@ -59,6 +59,23 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
         let (sut, _) = makeSUT(plans: allPlans)
         let products = await sut.accountPlanProducts()
         XCTAssertTrue(products == allPlans)
+    }
+
+    func testLowestPlan_whenThereIsProLite_shouldReturnCorrectPlan() async {
+        await assertLowestPlan(plans: monthlyPlans, expectedPlanType: .lite)
+    }
+    
+    func testLowestPlan_whenThereIsNoProLite_shouldReturnCorrectPlan() async {
+        let plans = monthlyPlans.filter { $0.type != .lite }
+        await assertLowestPlan(plans: plans, expectedPlanType: .proI)
+    }
+    
+    private func assertLowestPlan(plans: [PlanEntity], expectedPlanType: AccountTypeEntity) async {
+        let (sut, _) = makeSUT(plans: plans)
+        
+        let lowestPlan = await sut.lowestPlan()
+        
+        XCTAssertTrue(lowestPlan.type == expectedPlanType)
     }
     
     // MARK: - Restore purchase

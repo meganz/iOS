@@ -13,9 +13,24 @@ extension AppDelegate {
         AdsSlotRouter(
             adsSlotViewController: tabBar,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             featureFlagProvider: DIContainer.featureFlagProvider,
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
-        ).build(onViewFirstAppeared: onViewFirstAppeared)
+        ).build(
+            onViewFirstAppeared: onViewFirstAppeared,
+            viewProPlanAction: { [weak self] in
+                self?.showUpgradeAccountPlan()
+            }
+        )
+    }
+    
+    @objc func showUpgradeAccountPlan() {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        guard let accountDetails = accountUseCase.currentAccountDetails else { return }
+        UpgradeAccountPlanRouter(
+            presenter: UIApplication.mnz_visibleViewController(),
+            accountDetails: accountDetails
+        ).start()
     }
     
     func showAdMobConsentIfNeeded(isFromCookieDialog: Bool = false) async {

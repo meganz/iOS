@@ -10,6 +10,7 @@ public struct AdsSlotRouter<T: View> {
     private weak var presenter: UIViewController?
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let featureFlagProvider: FeatureFlagProviderProtocol
     private let contentView: T
     private let presentationStyle: UIModalPresentationStyle
@@ -17,6 +18,7 @@ public struct AdsSlotRouter<T: View> {
     public init(
         adsSlotViewController: some AdsSlotViewControllerProtocol,
         accountUseCase: some AccountUseCaseProtocol,
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         contentView: T,
         presenter: UIViewController? = nil,
@@ -24,18 +26,24 @@ public struct AdsSlotRouter<T: View> {
     ) {
         self.adsSlotViewController = adsSlotViewController
         self.accountUseCase = accountUseCase
+        self.purchaseUseCase = purchaseUseCase
         self.featureFlagProvider = featureFlagProvider
         self.contentView = contentView
         self.presenter = presenter
         self.presentationStyle = presentationStyle
     }
     
-    public func build(onViewFirstAppeared: (() -> Void)? = nil) -> UIViewController {
+    public func build(
+        onViewFirstAppeared: (() -> Void)? = nil,
+        viewProPlanAction: (() -> Void)? = nil
+    ) -> UIViewController {
         let viewModel = AdsSlotViewModel(
             adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
             localFeatureFlagProvider: featureFlagProvider,
             accountUseCase: accountUseCase,
-            onViewFirstAppeared: onViewFirstAppeared
+            purchaseUseCase: purchaseUseCase,
+            onViewFirstAppeared: onViewFirstAppeared,
+            viewProPlanAction: viewProPlanAction
         )
         
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)

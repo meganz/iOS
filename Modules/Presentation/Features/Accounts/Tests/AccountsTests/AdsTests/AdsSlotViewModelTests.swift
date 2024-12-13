@@ -49,7 +49,7 @@ final class AdsSlotViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        let displayAdsExp = expectation(description: "displayAds should should be \(expectedAdsFlag)")
+        let displayAdsExp = expectation(description: "displayAds should be \(expectedAdsFlag)")
         displayAdsExp.isInverted = !isExternalAdsFlagEnabled
         sut.$displayAds
             .dropFirst()
@@ -58,11 +58,21 @@ final class AdsSlotViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
+        let showAdsFreeViewExp = expectation(description: "showAdsFreeView should be \(expectedAdsFlag)")
+        showAdsFreeViewExp.isInverted = !isExternalAdsFlagEnabled
+        sut.$showAdsFreeView
+            .dropFirst()
+            .sink { _ in
+                showAdsFreeViewExp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
-        await fulfillment(of: [isExternalAdsEnabledExp, displayAdsExp], timeout: 1.0)
+        await fulfillment(of: [isExternalAdsEnabledExp, displayAdsExp, showAdsFreeViewExp], timeout: 1.0)
 
         XCTAssertEqual(sut.isExternalAdsEnabled, expectedAdsFlag, file: file, line: line)
         XCTAssertEqual(sut.displayAds, expectedAdsFlag, file: file, line: line)
+        XCTAssertEqual(sut.showAdsFreeView, expectedAdsFlag, file: file, line: line)
     }
     
     // MARK: - Ads slot
@@ -250,14 +260,30 @@ final class AdsSlotViewModelTests: XCTestCase {
     
     // MARK: - Close button
     
-    @MainActor func testBannerViewDidReceiveAd_shouldSetShowCloseButton() {
-        let sut = makeSUT(isAdsPhase2Enabled: true)
+    @MainActor func testBannerViewDidReceiveAd_whenNoLoggedInUser_shouldSetShowCloseButtonToFalse() {
+        assertShowCloseButton(isLoggedIn: false)
+    }
+    
+    @MainActor func testBannerViewDidReceiveAd_whenUserIsLoggedIn_shouldSetShowCloseButtonToTrue() {
+        assertShowCloseButton(isLoggedIn: true)
+    }
+    
+    @MainActor private func assertShowCloseButton(isLoggedIn: Bool) {
+        let sut = makeSUT(isAdsPhase2Enabled: true, isLoggedIn: isLoggedIn)
         
         XCTAssertFalse(sut.showCloseButton)
         
         sut.bannerViewDidReceiveAd()
         
-        XCTAssertTrue(sut.showCloseButton)
+        XCTAssertEqual(sut.showCloseButton, isLoggedIn)
+    }
+    
+    @MainActor func testDidTapCloseAdsButton_shouldSetShowAdsFreeViewToTrue() {
+        let sut = makeSUT()
+        
+        sut.didTapCloseAdsButton()
+        
+        XCTAssertTrue(sut.showAdsFreeView)
     }
     
     // MARK: Helper
@@ -280,7 +306,9 @@ final class AdsSlotViewModelTests: XCTestCase {
             localFeatureFlagProvider: MockFeatureFlagProvider(list: [.googleAdsPhase2: isAdsPhase2Enabled]),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
-            accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult)
+            accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult),
+            purchaseUseCase: MockAccountPlanPurchaseUseCase(),
+            viewProPlanAction: {}
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

@@ -3,6 +3,7 @@ import MEGADomain
 
 final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCaseProtocol, @unchecked Sendable {
     private var accountPlanProducts: [PlanEntity]
+    private let _lowestPlan: PlanEntity
     private let _successfulRestorePublisher: PassthroughSubject<Void, Never>
     private let _incompleteRestorePublisher: PassthroughSubject<Void, Never>
     private let _failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never>
@@ -16,11 +17,13 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     public var deRegisterPurchaseDelegateCalled = 0
     
     public init(accountPlanProducts: [PlanEntity] = [],
+                lowestPlan: PlanEntity = PlanEntity(),
                 successfulRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 incompleteRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never> = PassthroughSubject<AccountPlanErrorEntity, Never>(),
                 purchasePlanResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never> = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()) {
         self.accountPlanProducts = accountPlanProducts
+        _lowestPlan = lowestPlan
         _successfulRestorePublisher = successfulRestorePublisher
         _incompleteRestorePublisher = incompleteRestorePublisher
         _failedRestorePublisher = failedRestorePublisher
@@ -29,6 +32,10 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     
     public func accountPlanProducts() async -> [PlanEntity] {
         accountPlanProducts
+    }
+    
+    public func lowestPlan() async -> PlanEntity {
+        _lowestPlan
     }
     
     public var successfulRestorePublisher: AnyPublisher<Void, Never> {
