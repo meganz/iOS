@@ -13,6 +13,7 @@ final public class AdsSlotViewModel: ObservableObject {
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    public let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     
     private(set) var adsSlotConfig: AdsSlotConfig?
     private(set) var monitorAdsSlotUpdatesTask: Task<Void, Never>?
@@ -21,7 +22,9 @@ final public class AdsSlotViewModel: ObservableObject {
     @Published var isExternalAdsEnabled: Bool?
     @Published var displayAds: Bool = false
     @Published var showCloseButton: Bool = false
+    @Published var showAdsFreeView: Bool = false
     private(set) var onViewFirstAppeared: (() -> Void)?
+    public let viewProPlanAction: (() -> Void)?
     
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
@@ -30,7 +33,9 @@ final public class AdsSlotViewModel: ObservableObject {
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
         accountUseCase: some AccountUseCaseProtocol,
-        onViewFirstAppeared: (() -> Void)? = nil
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        onViewFirstAppeared: (() -> Void)? = nil,
+        viewProPlanAction: (() -> Void)? = nil
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
@@ -38,7 +43,9 @@ final public class AdsSlotViewModel: ObservableObject {
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
         self.accountUseCase = accountUseCase
+        self.purchaseUseCase = purchaseUseCase
         self.onViewFirstAppeared = onViewFirstAppeared
+        self.viewProPlanAction = viewProPlanAction
     }
 
     // MARK: Setup
@@ -52,6 +59,7 @@ final public class AdsSlotViewModel: ObservableObject {
                 Task { @MainActor [weak self] in
                     guard let self else { return }
                     isExternalAdsEnabled = false
+                    showAdsFreeView = false
                     updateAdsSlot()
                 }
             }
@@ -115,8 +123,13 @@ final public class AdsSlotViewModel: ObservableObject {
         appEnvironmentUseCase.configuration == .production ? AdMob.live : AdMob.test
     }
     
-    // MARK: Close button
+    // MARK: Close Ads button
     func bannerViewDidReceiveAd() {
-        showCloseButton = true
+        /// Show close button only when a user is logged in, otherwise, hide button
+        showCloseButton = accountUseCase.isLoggedIn()
+    }
+    
+    func didTapCloseAdsButton() {
+        showAdsFreeView = true
     }
 }

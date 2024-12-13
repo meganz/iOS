@@ -2,6 +2,7 @@ import Combine
 
 public protocol AccountPlanPurchaseUseCaseProtocol: Sendable {
     func accountPlanProducts() async -> [PlanEntity]
+    func lowestPlan() async -> PlanEntity
     func restorePurchase()
     func purchasePlan(_ plan: PlanEntity) async
     
@@ -26,6 +27,11 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
     
     public func accountPlanProducts() async -> [PlanEntity] {
         await repo.accountPlanProducts()
+    }
+    
+    public func lowestPlan() async -> PlanEntity {
+        let plans = await repo.accountPlanProducts()
+        return plans.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
     }
     
     public func restorePurchase() {

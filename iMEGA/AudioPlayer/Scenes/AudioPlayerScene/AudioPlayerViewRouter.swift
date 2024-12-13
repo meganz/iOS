@@ -60,9 +60,13 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 audioPlayerViewController = AdsSlotRouter(
                     adsSlotViewController: adsSlotViewController,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                    purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
                     featureFlagProvider: DIContainer.featureFlagProvider,
                     contentView: AdsViewWrapper(viewController: audioPlayerViewController)
-                ).build()
+                ).build(viewProPlanAction: {
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    appDelegate?.showUpgradeAccountPlan()
+                })
             }
             presenter.present(audioPlayerViewController, animated: true, completion: nil)
         default:
