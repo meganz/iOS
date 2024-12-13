@@ -43,7 +43,7 @@ struct TimelineView: View {
         .offset(y: cameraUploadStatusBannerViewModel.cameraUploadStatusShown ? 0 : -cameraUploadBannerStatusSize.height)
         .animation(.bouncy(duration: 1), value: cameraUploadStatusBannerViewModel.cameraUploadStatusShown)
         .alertPhotosPermission(isPresented: $cameraUploadStatusBannerViewModel.showPhotoPermissionAlert)
-        .determineViewSize { cameraUploadBannerStatusSize = $0 }
+        .determineViewSize { @Sendable in cameraUploadBannerStatusSize = $0 }
         .throwingTask { try await cameraUploadStatusBannerViewModel.monitorCameraUploadStatus() }
         .throwingTask { try await cameraUploadStatusBannerViewModel.handleCameraUploadAutoDismissal() }
     }

@@ -15,8 +15,10 @@ struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, C
         ScrollView {
             content
                 .offset(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
-                .onPreferenceChange(OffsetPreferenceKey.self) {
-                    viewModel.scrollTracker.trackContentOffset($0)
+                .onPreferenceChange(OffsetPreferenceKey.self) { @Sendable offset in
+                    MainActor.assumeIsolated {
+                        viewModel.scrollTracker.trackContentOffset(offset)
+                    }
                 }
         }
         .coordinateSpace(name: PhotoLibraryConstants.scrollViewCoordinateSpaceName)
