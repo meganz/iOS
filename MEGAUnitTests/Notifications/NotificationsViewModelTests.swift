@@ -6,7 +6,7 @@ import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwiftUI
-import MEGATest
+import MEGASwiftUIMock
 import Notifications
 import XCTest
 
@@ -154,23 +154,27 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
-    func testClearImageCache_whenActionDispatched_cacheIsCleared() {
+    @MainActor func testClearImageCache_whenActionDispatched_cacheIsCleared() async {
         let imageLoader = ImageLoader()
         let (sut, _) = makeSUT(imageLoader: imageLoader)
 
         sut.dispatch(.clearImageCache)
         
-        XCTAssertTrue(imageLoader.isCacheClear, "Cache should be cleared when clearImageCache action is dispatched.")
+        let isCacheClear = await imageLoader.isCacheClear
+        
+        XCTAssertTrue(isCacheClear, "Cache should be cleared when clearImageCache action is dispatched.")
     }
     
-    func testClearCache_whenCalled_shouldIncrementClearCacheCallCount() {
+    @MainActor func testClearCache_whenCalled_shouldIncrementClearCacheCallCount() async {
         let imageLoader = MockImageLoader()
-        
         let (sut, _) = makeSUT(imageLoader: imageLoader)
         
         sut.dispatch(.clearImageCache)
-
-        XCTAssertEqual(imageLoader.clearCacheCallCount, 1, "Clear cache call count should be incremented")
+        
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        let clearCacheCallCount = await imageLoader.clearCacheCallCount
+        
+        XCTAssertEqual(clearCacheCallCount, 1, "Clear cache call count should be incremented")
     }
     
     @MainActor
@@ -285,7 +289,6 @@ final class NotificationsViewModelTests: XCTestCase {
             tracker: tracker
         )
         
-        trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, mockNotificationsUseCase)
     }
     

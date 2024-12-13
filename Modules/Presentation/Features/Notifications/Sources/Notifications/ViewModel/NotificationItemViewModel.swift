@@ -4,10 +4,11 @@ import MEGAPresentation
 import MEGASwiftUI
 import UIKit
 
+@MainActor
 public final class NotificationItemViewModel: ObservableObject {
     let notification: NotificationItem
-    private let imageLoader: ImageLoadingProtocol
-    // Assign a transparent image to `imageBanner` and `icon` to prevent layout shifts 
+    private let imageLoader: any ImageLoadingProtocol
+    // Assign a transparent image to `imageBanner` and `icon` to prevent layout shifts
     // or flickers as images load. These placeholders maintain the UI's structure for a
     // smooth visual transition until the actual images are displayed.
     @Published var imageBanner: UIImage = UIImage.transparent
@@ -20,15 +21,15 @@ public final class NotificationItemViewModel: ObservableObject {
     var hasIcon: Bool {
         notification.iconURL != nil
     }
-
+    
     public init(
         notification: NotificationItem,
-        imageLoader: ImageLoadingProtocol
+        imageLoader: some ImageLoadingProtocol
     ) {
         self.notification = notification
         self.imageLoader = imageLoader
     }
-
+    
     func footerText() -> String? {
         switch notification.tag {
         case .promo:
@@ -47,21 +48,16 @@ public final class NotificationItemViewModel: ObservableObject {
     // Therefore, if both elements are available, the UI prioritizes displaying the banner over
     // the icon due to design constraints.
     func preloadImages() async {
-        if let bannerURL = notification.bannerImageURL {
-            if let loadedImage = await imageLoader.loadImage(from: bannerURL) {
-                await MainActor.run {
-                    self.imageBanner = loadedImage
-                }
-                return
-            }
+        if let bannerURL = notification.bannerImageURL,
+           let loadedBanner = await imageLoader.loadImage(from: bannerURL) {
+            imageBanner = loadedBanner
+            return
         }
         
-        if let iconURL = notification.iconURL {
-            if let loadedImage = await imageLoader.loadImage(from: iconURL) {
-                await MainActor.run {
-                    self.icon = loadedImage
-                }
-            }
+        if let iconURL = notification.iconURL,
+           let loadedImage = await imageLoader.loadImage(from: iconURL) {
+            icon = loadedImage
+            return
         }
     }
 }
