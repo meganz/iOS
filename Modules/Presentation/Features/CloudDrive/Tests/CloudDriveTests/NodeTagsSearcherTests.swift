@@ -51,4 +51,38 @@ struct NodeTagsSearcherTests {
         results = await sut.searchTags(for: "šovi")
         #expect(results == ["holesovice", "holešovice"])
     }
+
+    @MainActor
+    @Test("verify search for new accounts")
+    func verifySearchForNewAccounts() async {
+        let tags: [String] = []
+        let useCase = MockNodeTagsUseCase(tags: tags)
+        let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
+        _ = await sut.searchTags(for: nil)
+        _ = await sut.searchTags(for: "tag")
+        #expect(useCase.searchTexts == [nil])
+    }
+    @MainActor
+    @Test("verify the task cancellation")
+    func verifyTaskCancellationShouldReturnNil() async {
+        let useCase = MockNodeTagsUseCase(tags: nil)
+        let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
+        let task1 = Task {
+            let result = await sut.searchTags(for: nil)
+            #expect(result == nil)
+        }
+
+        let task2 = Task {
+            _ = await sut.searchTags(for: "te")
+        }
+
+        let task3 = Task(priority: .background) {
+            while useCase.continuation == nil {
+                try? await Task.sleep(nanoseconds: 50_000_000)
+            }
+            useCase.continuation?.resume(with: .success(["tag1", "tag2"]))
+        }
+        _ = await [task1.value, task3.value]
+        task2.cancel()
+    }
 }

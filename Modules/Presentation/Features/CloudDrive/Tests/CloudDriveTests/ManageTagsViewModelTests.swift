@@ -88,7 +88,7 @@ struct ManageTagsViewModelTests {
     @Test(
         "Verify the canAddNewTag property based on the results returned by the search API call",
         arguments: [
-            (nil, true),
+            ([], true),
             (["test"], false)
         ]
     )
@@ -212,6 +212,21 @@ struct ManageTagsViewModelTests {
         await nodeSearcher.continuations.first?.resume(with: .success(["tag1", "tag2"]))
 
         #expect(sut.canAddNewTag == false)
+        #expect(sut.containsExistingTags == false)
+    }
+
+    @MainActor
+    @Test("Verify adding a new tag and remove it given it is a new account")
+    func verifyAddingNewTagAndRemovingItGivenItIsANewAccount() async throws {
+        let nodeSearcher = MockNodeTagsSearcher(tags: [])
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.tagName = ""
+        sut.onTagNameChanged(with: "")
+        sut.tagName = "tag"
+        sut.onTagNameChanged(with: "tag")
+        sut.addTag()
+        #expect(sut.containsExistingTags == true)
+        sut.existingTagsViewModel.tagsViewModel.tagViewModels.first?.toggle()
         #expect(sut.containsExistingTags == false)
     }
 

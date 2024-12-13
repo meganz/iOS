@@ -121,6 +121,8 @@ struct ManageTagsView: View {
             errorView(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.tagNameTooLong)
         case .valid where viewModel.canAddNewTag:
             addTagView
+        case .valid where !viewModel.containsExistingTags:
+            ExistingTagsLoadingView()
         case .valid:
             EmptyView()
         }

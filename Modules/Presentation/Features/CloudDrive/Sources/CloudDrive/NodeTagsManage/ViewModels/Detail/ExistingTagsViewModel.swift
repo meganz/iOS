@@ -38,25 +38,14 @@ final class ExistingTagsViewModel: ObservableObject {
         tagsViewModel.prepend(tagViewModel: tagViewModel)
     }
 
-    func contains(_ tagName: String) -> Bool {
-        tagsViewModel.tagViewModels.contains { $0.tag == tagName }
-    }
-
     func searchTags(for searchText: String?) async {
         isLoading = true
-        defer {
-            /// If a task is cancelled, it means there a new task in progress.
-            /// We do not want to reset the isLoading while there is request in progress.
-            if !Task.isCancelled {
-                isLoading = false
-            }
-        }
-
         guard let tags = await nodeTagSearcher.searchTags(for: searchText), !Task.isCancelled else { return }
         tagsSnapshot = tags
         let newlyAddedTagsViewModel = filterNewlyAddedTags(for: searchText)
             .map { makeNodeTagViewModel(with: $0, isSelected: true) }
         tagsViewModel.updateTagsReorderedBySelection(newlyAddedTagsViewModel + tagViewModels(for: tags))
+        isLoading = false
     }
 
     // MARK: - Private methods.

@@ -6,7 +6,7 @@ protocol NodeTagsSearching: Actor {
 }
 
 actor NodeTagsSearcher: NodeTagsSearching {
-    private var allTags: [String] = []
+    private var allTags: [String]?
     private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
     private let delay: TimeInterval = 0.5
     private var searchTask: Task<[String]?, any Error>?
@@ -17,7 +17,7 @@ actor NodeTagsSearcher: NodeTagsSearching {
 
     func searchTags(for searchText: String?) async -> [String]? {
         // Searching the repository is unnecessary if all tags have already been fetched.
-        guard allTags.isEmpty else {
+        guard allTags == nil else {
             return filterAllTags(for: searchText)
         }
 
@@ -45,7 +45,9 @@ actor NodeTagsSearcher: NodeTagsSearching {
                 try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
             }
 
-            return await nodeTagsUseCase.searchTags(for: searchText)
+            let result = await nodeTagsUseCase.searchTags(for: searchText)
+            try Task.checkCancellation()
+            return result
         }
     }
 
@@ -55,6 +57,7 @@ actor NodeTagsSearcher: NodeTagsSearching {
     }
 
     private func filterAllTags(for searchText: String?) -> [String] {
+        guard let allTags else { return [] }
         if let searchText {
             return allTags.filter {
                 $0.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) != nil
