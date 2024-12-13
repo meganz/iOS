@@ -7,11 +7,11 @@ import XCTest
 final class AlbumSelectionTests: XCTestCase {
     private let sut = AlbumSelection()
     private var subscriptions = Set<AnyCancellable>()
-
+    
     override func tearDownWithError() throws {
         subscriptions = []
     }
-
+    
     func testEditMode_status() {
         let statuses: [EditMode] = [.active, .inactive, .transient]
         
@@ -38,13 +38,13 @@ final class AlbumSelectionTests: XCTestCase {
     func testIsAlbumSelected() {
         let albums = userAlbums()
         sut.setSelectedAlbums(albums)
-
+        
         for album in albums {
             XCTAssertTrue(sut.isAlbumSelected(album))
         }
         
         let anotherAlbum = AlbumEntity(id: 4, name: "Album 4", coverNode: NodeEntity(handle: 4), count: 1, type: .user, modificationTime: nil)
-
+        
         XCTAssertFalse(sut.isAlbumSelected(anotherAlbum))
     }
     
@@ -52,9 +52,9 @@ final class AlbumSelectionTests: XCTestCase {
         let albums = userAlbums()
         
         sut.setSelectedAlbums(albums)
-
+        
         XCTAssertEqual(sut.albums.count, 3)
-
+        
         sut.allSelected = false
         XCTAssertTrue(sut.albums.isEmpty)
     }
@@ -93,7 +93,7 @@ final class AlbumSelectionTests: XCTestCase {
             sut.toggle(album)
             XCTAssertTrue(sut.isAlbumSelected(album))
         }
-       
+        
         sut.toggle(firstUserAlbum)
         
         XCTAssertFalse(sut.isAlbumSelected(firstUserAlbum))
@@ -113,7 +113,7 @@ final class AlbumSelectionTests: XCTestCase {
                 XCTAssertEqual($0, results.removeFirst())
                 exp.fulfill()
             }
-       
+        
         sut.toggle(album)
         sut.toggle(album)
         sut.allSelected = true
@@ -122,6 +122,44 @@ final class AlbumSelectionTests: XCTestCase {
         sut.allSelected = false
         
         wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
+    }
+    
+    func testShouldShowDisabled_onMulitiSelection_shouldAlwaysReturnFalse() {
+        let album = AlbumEntity(id: 5, type: .user)
+        let sut = AlbumSelection(mode: .multiple)
+        
+        let exp = expectation(description: "Should always return false")
+        let subscription = sut.shouldShowDisabled(for: album)
+            .sink {
+                XCTAssertFalse($0)
+                exp.fulfill()
+            }
+        sut.toggle(album)
+        sut.toggle(album)
+        
+        wait(for: [exp], timeout: 1.0)
+        subscription.cancel()
+    }
+    
+    func testShouldShowDisabled_onSingleSelection_shouldReturnFalseIfNothingIsSelectedAndTrueIfSpecificAlbumIsNotSelected() async throws {
+        let album = AlbumEntity(id: 5, type: .user)
+        let sut = AlbumSelection(mode: .single)
+        
+        var results = [false, true, false]
+        let exp = expectation(description: "Should set correct disabled state")
+        exp.expectedFulfillmentCount = results.count
+        let subscription = sut.shouldShowDisabled(for: album)
+            .sink {
+                XCTAssertEqual($0, results.removeFirst())
+                exp.fulfill()
+            }
+        
+        sut.toggle(.init(id: 1, type: .user))
+        try await Task.sleep(nanoseconds: 150_000_000)
+        sut.toggle(album)
+        
+        await fulfillment(of: [exp], timeout: 1.0)
         subscription.cancel()
     }
     

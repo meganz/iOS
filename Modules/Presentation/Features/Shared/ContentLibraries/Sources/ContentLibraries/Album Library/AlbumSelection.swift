@@ -26,7 +26,7 @@ public final class AlbumSelection: ObservableObject {
         }
     }
     
-    private let mode: SelectionMode
+    let mode: SelectionMode
     
     public init(mode: SelectionMode = .multiple) {
         self.mode = mode
@@ -103,6 +103,26 @@ public extension AlbumSelection {
             .map { isAllSelected, isAlbumSelected in
                 isAllSelected || isAlbumSelected
             }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
+    ///  Determine if the album should show disabled for single selection mode
+    /// - Parameter album: album to observe disabled state
+    /// - Returns: `true` if album should show disabled state and false if not in disabled state
+    func shouldShowDisabled(for album: AlbumEntity) -> AnyPublisher<Bool, Never> {
+        guard mode == .single else {
+            return Just(false).eraseToAnyPublisher()
+        }
+        return $albums
+            .map(\.isNotEmpty)
+            .removeDuplicates()
+            .combineLatest(isAlbumSelectedPublisher(album: album))
+            .map {
+                guard $0 else { return false}
+                return !$1
+            }
+            .debounceImmediate(for: .milliseconds(100), scheduler: DispatchQueue.main)
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

@@ -2,6 +2,7 @@ import AsyncAlgorithms
 @preconcurrency import Combine
 import MEGAAnalyticsiOS
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
@@ -39,6 +40,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     
     @Published var shouldShowEditStateOpacity: Double = 0.0
     @Published var opacity: Double = 1.0
+    @Published var isDisabled = false
     
     var isOnTapGestureEnabled: Bool {
         isEditing || onAlbumSelected != nil
@@ -162,6 +164,16 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         }
     }
     
+    @ViewBuilder
+    func photoOverlay() -> some View {
+        if selection.mode == .multiple {
+            /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
+            Color.black.opacity(isSelected ? 0.2 : 0.0)
+        } else if isDisabled {
+            TokenColors.Background.page.swiftUI.opacity(0.8)
+        }
+    }
+    
     // MARK: Private
     
     private func loadThumbnail(for node: NodeEntity) async {
@@ -180,6 +192,10 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
                 self?.isSelected != $0
             }
             .assign(to: &$isSelected)
+        
+        selection.shouldShowDisabled(for: album)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isDisabled)
     }
     
     private func subscribeToEditMode() {
