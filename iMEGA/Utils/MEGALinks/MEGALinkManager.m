@@ -491,8 +491,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
         case URLTypeUpgrade:
         {
-            AppDelegate *delegate = (AppDelegate *)UIApplication.sharedApplication.delegate;
-            [delegate showUpgradeAccount];
+            [MEGALinkManager processUpgradeLink];
             break;
         }
         case URLTypeVpn:
