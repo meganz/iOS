@@ -56,8 +56,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
                     guard let self else { return }
                     router.openCameraUploadSettings(viewModel: viewModel)
                 }
-                .determineViewSize { @Sendable [weak self] size in
-                    MainActor.assumeIsolated {
+                .determineViewSize { [weak self] size in
+                    Task { @MainActor in
                         self?.viewModel
                             .photoZoomControlPositionTracker
                             .update(viewSpace: size.height)

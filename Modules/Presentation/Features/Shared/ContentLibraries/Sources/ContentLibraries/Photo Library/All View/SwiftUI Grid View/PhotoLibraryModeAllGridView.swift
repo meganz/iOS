@@ -31,8 +31,8 @@ struct PhotoLibraryModeAllGridView: View {
                     .background(PhotoAutoScrollView(viewModel:
                                                         PhotoAutoScrollViewModel(viewModel: viewModel),
                                                     scrollProxy: scrollProxy))
-                    .onPreferenceChange(OffsetPreferenceKey.self) { @Sendable offset in
-                        MainActor.assumeIsolated {
+                    .onPreferenceChange(OffsetPreferenceKey.self) { offset in
+                        Task { @MainActor in
                             viewModel.photoZoomControlPositionTracker.trackContentOffset(offset)
                         }
                     }
