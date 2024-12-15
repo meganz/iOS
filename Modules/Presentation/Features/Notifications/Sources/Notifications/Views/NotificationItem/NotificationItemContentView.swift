@@ -59,8 +59,8 @@ struct NotificationItemContentView: View {
             await viewModel.preloadImages()
         }
         .fixedSize(horizontal: false, vertical: true)
-        .onPreferenceChange(FramePreferenceKey.self) {
-            iconImageHeight = $0.height
+        .onPreferenceChange(FramePreferenceKey.self) { [$iconImageHeight] value in
+            $iconImageHeight.wrappedValue = value.height
         }
     }
     
