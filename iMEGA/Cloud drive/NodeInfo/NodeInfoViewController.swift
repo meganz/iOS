@@ -183,17 +183,28 @@ final class NodeInfoViewController: UITableViewController {
         logDebug(message: "Reload data for node \(node.handle) upon updates")
         cacheNodePropertiesSoThatTableViewChangesAreAtomic()
         handleNodeDescriptionUpdateIfNeeded()
-        
-        // We reload all the sections in the tableview, except for the `description` section
-        // because the built-in reloadSections will cause the sections to lose its first responder status
-        // while in fact we need to keep the first responder as is.
-        guard tableView.numberOfSections > 0, let (_, descSection) = nodeDescriptionCellControllerWithSection() else {
+
+        guard cachedSections.isNotEmpty else {
+            MEGALogError("[Node Info] No caches section created after node update")
+            return
+        }
+
+        // In case the number of sections changed after node update, we'll need to reload the whole tableView
+        // E.g: When user remove all the contacts in the .sharing section
+        guard cachedSections.count == tableView.numberOfSections else {
             tableView.reloadData()
             return
         }
-        let sectionsToReload = (tableView.indexPathsForVisibleRows ?? []).filter { $0.section != descSection }.map(\.section)
-        logDebug(message: "Sections to reload: \(sectionsToReload)")
-        
+
+        // We reload all the sections in the tableview, except for the `description` section
+        // because the built-in reloadSections will cause the sections to lose its first responder status
+        // while in fact we need to keep the first responder as is.
+        guard let (_, descSection) = nodeDescriptionCellControllerWithSection() else {
+            tableView.reloadData()
+            return
+        }
+
+        let sectionsToReload = (0 ..< cachedSections.count).filter { $0 != descSection }
         tableView.reloadSections(.init(sectionsToReload), with: .automatic)
     }
     
