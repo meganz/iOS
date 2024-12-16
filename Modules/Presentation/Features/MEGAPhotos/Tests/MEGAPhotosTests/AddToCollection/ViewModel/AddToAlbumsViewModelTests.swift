@@ -175,15 +175,15 @@ struct AddToAlbumsViewModelTests {
         }
         
         @Test
-        func isLoadedPublisher() async throws {
+        func isItemsNotEmptyPublisher() async throws {
             let sut = AddToAlbumsViewModelTests
                 .makeSUT()
             
-            try await confirmation("isLoaded match publisher") { confirmation in
+            try await confirmation("isItemsNotEmpty match publisher") { confirmation in
                 let invocationTask = Task {
                     var expectations = [false, true]
-                    for await isLoaded in sut.isItemsLoadedPublisher.values {
-                        #expect(isLoaded == expectations.removeFirst())
+                    for await isNotEmpty in sut.isItemsNotEmptyPublisher.values {
+                        #expect(isNotEmpty == expectations.removeFirst())
                         if expectations.isEmpty {
                             confirmation()
                             break
@@ -194,8 +194,8 @@ struct AddToAlbumsViewModelTests {
                 // Ensure task started
                 try await Task.sleep(nanoseconds: 50_000_000)
                 
-                sut.isAlbumsLoaded = true
-                sut.isAlbumsLoaded = true
+                sut.albums = [AlbumCellViewModel(album: .init(id: 5, type: .user))]
+                sut.albums = []
                 
                 Task {
                     try? await Task.sleep(nanoseconds: 500_000_000)
@@ -278,32 +278,5 @@ struct AddToAlbumsViewModelTests {
             addToCollectionRouter: addToCollectionRouter,
             contentLibrariesConfiguration: contentLibrariesConfiguration,
             albumSelection: albumSelection)
-    }
-}
-
-private class MockAddToCollectionRouter: AddToCollectionRouting {
-    public enum Invocation: Sendable, Equatable {
-        case showSnackBar(message: String)
-    }
-    public var invocationSequence: AnyAsyncSequence<Invocation> {
-        invocationStream.eraseToAnyAsyncSequence()
-    }
-    private let invocationStream: AsyncStream<Invocation>
-    private let invocationContinuation: AsyncStream<Invocation>.Continuation
-    
-    init() {
-        (invocationStream, invocationContinuation) = AsyncStream.makeStream(of: Invocation.self)
-    }
-    
-    func build() -> UIViewController {
-        UIViewController()
-    }
-    
-    func start() {
-        
-    }
-    
-    func showSnackBar(message: String) {
-        invocationContinuation.yield(.showSnackBar(message: message))
     }
 }

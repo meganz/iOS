@@ -4464,3 +4464,5 @@
 "ads.adFree.button.viewProPlans"="View Pro plans";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Skip";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="No Albums";

@@ -133,8 +133,9 @@ extension AddToAlbumsViewModel: AddItemsToCollectionViewModelProtocol {
         albumSelection.isAlbumSelectedPublisher.map { !$0 }.eraseToAnyPublisher()
     }
     
-    var isItemsLoadedPublisher: AnyPublisher<Bool, Never> {
-        $isAlbumsLoaded
+    var isItemsNotEmptyPublisher: AnyPublisher<Bool, Never> {
+        $albums
+            .map(\.isNotEmpty)
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

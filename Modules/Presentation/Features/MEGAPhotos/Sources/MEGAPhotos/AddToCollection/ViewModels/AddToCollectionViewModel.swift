@@ -19,7 +19,7 @@ public final class AddToCollectionViewModel: ObservableObject {
         
         addToAlbumsViewModel.isAddButtonDisabled
             .assign(to: &$isAddButtonDisabled)
-        addToAlbumsViewModel.isItemsLoadedPublisher
+        addToAlbumsViewModel.isItemsNotEmptyPublisher
             .assign(to: &$showBottomBar)
     }
     
