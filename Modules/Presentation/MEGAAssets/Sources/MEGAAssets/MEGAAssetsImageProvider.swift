@@ -110,5 +110,6 @@ public enum MEGAAssetsImageName: String, CaseIterable, Sendable {
          folderOutgoing = "folder_outgoing",
          folderChat = "folder_chat",
          placeholder,
-         moreList
+         moreList,
+         playlist
 }
