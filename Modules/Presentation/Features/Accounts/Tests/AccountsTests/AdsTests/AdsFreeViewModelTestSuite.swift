@@ -1,6 +1,10 @@
 @testable import Accounts
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
+import MEGATest
 import Testing
 
 struct AdsFreeViewModelTestSuite {
@@ -8,10 +12,12 @@ struct AdsFreeViewModelTestSuite {
     @MainActor
     private static func makeSUT(
         lowestPlan: PlanEntity = PlanEntity(),
-        viewProPlanAction: (() -> Void)? = nil
+        viewProPlanAction: (() -> Void)? = nil,
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> AdsFreeViewModel {
         AdsFreeViewModel(
             purchaseUseCase: MockAccountPlanPurchaseUseCase(lowestPlan: lowestPlan),
+            tracker: tracker,
             viewProPlanAction: viewProPlanAction
         )
     }
@@ -51,6 +57,49 @@ struct AdsFreeViewModelTestSuite {
             sut.didTapViewProPlansButton()
             
             #expect(buttonTapped, "Expected to call viewProPlanAction on tapping the button")
+        }
+    }
+    
+    @Suite("Track analytics events")
+    struct AdsFreeViewEvents {
+        @MainActor
+        private func assertTrackEvent(
+            sutAction: (AdsFreeViewModel) -> Void,
+            expectedEvent: any EventIdentifier
+        ) {
+            let tracker = MockTracker()
+            let sut = makeSUT(tracker: tracker)
+            
+            sutAction(sut)
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [expectedEvent]
+            )
+        }
+        
+        @MainActor
+        @Test func trackOnAppear() {
+            assertTrackEvent(
+                sutAction: { $0.onAppear() },
+                expectedEvent: AdFreeDialogScreenEvent()
+            )
+        }
+        
+        @MainActor
+        @Test func trackViewProPlansButtonTap() {
+            assertTrackEvent(
+                sutAction: { $0.didTapViewProPlansButton() },
+                expectedEvent: AdFreeDialogScreenViewProPlansButtonPressedEvent()
+            )
+        }
+        
+        @MainActor
+        @Test func trackSkipButtonTap() {
+            assertTrackEvent(
+                sutAction: { $0.didTapSkipButton() },
+                expectedEvent: AdFreeDialogScreenSkipButtonPressedEvent()
+            )
         }
     }
 }

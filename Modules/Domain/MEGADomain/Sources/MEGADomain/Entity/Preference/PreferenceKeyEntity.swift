@@ -40,4 +40,5 @@ public enum PreferenceKeyEntity: String {
     case isSaveMediaCapturedToGalleryEnabled
     case presentPasscodeLater = "presentPasscodeLater"
     case lastStorageBannerDismissedDate = "lastStorageBannerDismissedDate"
+    case lastCloseAdsButtonTappedDate
 }

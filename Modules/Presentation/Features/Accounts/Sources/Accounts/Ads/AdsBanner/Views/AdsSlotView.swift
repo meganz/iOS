@@ -61,7 +61,7 @@ public struct AdsSlotView<T: View>: View {
             AdsFreeView(
                 viewModel: AdsFreeViewModel(
                     purchaseUseCase: viewModel.purchaseUseCase,
-                    viewProPlanAction: viewModel.viewProPlanAction
+                    viewProPlanAction: viewModel.adsFreeViewProPlanAction
                 )
             )
             .interactiveDismissDisabled()

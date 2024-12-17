@@ -26,6 +26,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let localFeatureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
     private var planList: [PlanEntity] = []
@@ -59,12 +60,17 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var buyPlanTask: Task<Void, Never>?
     private(set) var cancelActivePlanAndBuyNewPlanTask: Task<Void, Never>?
     
+    @PreferenceWrapper(key: .lastCloseAdsButtonTappedDate, defaultValue: nil)
+    private var lastCloseAdsDate: Date?
+    
     init(
         accountDetails: AccountDetailsEntity,
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        localFeatureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
         router: any UpgradeAccountPlanRouting
@@ -74,11 +80,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.subscriptionsUseCase = subscriptionsUseCase
         self.accountDetails = accountDetails
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.localFeatureFlagProvider = localFeatureFlagProvider
         self.tracker = tracker
         self.viewType = viewType
         self.router = router
         isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
-        
+        $lastCloseAdsDate.useCase = preferenceUseCase
         registerDelegates()
         setupPlans()
     }
@@ -370,6 +377,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     private func trackEventBuyPlan(_ currentSelectedPlan: PlanEntity) {
+        // Track buy event for Ads flow
+        if isExternalAdsActive && isAdsPhase2Enabled {
+            trackEventBuyPlanForAds()
+        }
+        
+        // Track buy event for specific pro plan
         switch currentSelectedPlan.type {
         case .proI:
             tracker.trackAnalyticsEvent(with: BuyProIEvent())
@@ -443,6 +456,40 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         } catch {
             MEGALogError("[Upgrade Account] Unable to cancel active subscription")
         }
+    }
+    
+    // MARK: - Ads
+    private var isAdsPhase2Enabled: Bool {
+        localFeatureFlagProvider.isFeatureFlagEnabled(for: .googleAdsPhase2)
+    }
+    
+    private func trackEventBuyPlanForAds() {
+        if router.isFromAds {
+            // User buys a plan coming from the Ad-free flow
+            tracker.trackAnalyticsEvent(with: AdFreeDialogUpgradeAccountPlanPageBuyButtonPressedEvent())
+        } else {
+            // User buys a plan without going through the Ad-free flow but matches these requirements:
+            // - The user is using less that 50% of their storage quota
+            // - The timestamp on close ads button tap is within the last 2 days
+            guard isAdsClosedWithinLastTwoDays() &&
+                    hasUsedLessThanHalfQuota(used: accountDetails.storageUsed, quota: accountDetails.storageMax) else {
+                return
+            }
+            
+            tracker.trackAnalyticsEvent(with: AdsUpgradeAccountPlanPageBuyButtonPressedEvent())
+        }
+    }
+    
+    private func isAdsClosedWithinLastTwoDays() -> Bool {
+        guard let lastCloseAdsDate,
+              let daysOfDistance = Date().dayDistance(toPastDate: lastCloseAdsDate, on: Calendar.current) else {
+            return false
+        }
+        return daysOfDistance <= 2
+    }
+    
+    private func hasUsedLessThanHalfQuota(used: Int64, quota: Int64) -> Bool {
+        used < (quota / 2)
     }
     
     // MARK: - Account details
