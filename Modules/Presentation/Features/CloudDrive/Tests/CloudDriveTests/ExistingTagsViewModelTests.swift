@@ -1,4 +1,5 @@
 @testable import CloudDrive
+import MEGAL10n
 import Testing
 
 @Suite("ExistingTagsViewModel Tests")
@@ -157,6 +158,37 @@ struct ExistingTagsViewModelTests {
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag3", "tag1", "tag2"])
         sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag3" })?.toggle()
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag1", "tag2", "tag3"])
+    }
+
+    @MainActor
+    @Test("Test node tags selection has reached max limit")
+    func verifyHasReachedMaxLimit() {
+        let selectedTags = [
+            NodeTagViewModel(tag: "tag1", isSelected: true),
+            NodeTagViewModel(tag: "tag2", isSelected: true),
+            NodeTagViewModel(tag: "tag3", isSelected: true),
+            NodeTagViewModel(tag: "tag4", isSelected: true),
+            NodeTagViewModel(tag: "tag5", isSelected: true),
+            NodeTagViewModel(tag: "tag6", isSelected: true),
+            NodeTagViewModel(tag: "tag7", isSelected: true),
+            NodeTagViewModel(tag: "tag8", isSelected: true),
+            NodeTagViewModel(tag: "tag9", isSelected: true),
+            NodeTagViewModel(tag: "tag10", isSelected: true)
+        ]
+        let sut = makeSUT(
+            tagsViewModel: NodeTagsViewModel(tagViewModels: selectedTags, isSelectionEnabled: true)
+        )
+
+        let bannerMessage = Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Selection.maxLimitReachedAlertMessage
+        #expect(sut.hasReachedMaxLimit)
+        #expect(sut.maxLimitReachedAlertMessage == bannerMessage)
+
+        sut.tagsViewModel.tagViewModels.first?.toggle()
+        #expect(sut.hasReachedMaxLimit == false)
+
+        sut.tagsViewModel.tagViewModels.last?.toggle()
+        #expect(sut.hasReachedMaxLimit)
+        #expect(sut.maxLimitReachedAlertMessage == bannerMessage)
     }
 
     // MARK: - Helpers

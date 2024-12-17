@@ -4494,3 +4494,5 @@
 "ads.adFree.button.skip"="Skip";
 /* Add to album empty message */
 "photos.addToAlbum.empty.message"="No Albums";
+/*  Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="The maximum number of tags is 10";

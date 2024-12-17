@@ -1,11 +1,25 @@
 import Combine
+import MEGAL10n
 import MEGASwift
 import SwiftUI
 
 @MainActor
 final class ExistingTagsViewModel: ObservableObject {
+    private struct TagSelectionLimit {
+        let maxTagsAllowed: Int
+        let alertMessage: String
+
+        static var instance: TagSelectionLimit {
+            .init(
+                maxTagsAllowed: 10,
+                alertMessage: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Selection.maxLimitReachedAlertMessage
+            )
+        }
+    }
+
     @Published var tagsViewModel: NodeTagsViewModel
-    @Published var isLoading: Bool = false
+    @Published var isLoading = false
+    @Published var hasReachedMaxLimit: Bool
     private let nodeTagSearcher: any NodeTagsSearching
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -16,16 +30,24 @@ final class ExistingTagsViewModel: ObservableObject {
     /// A snapshot of the current tags before sorting is applied.
     private var tagsSnapshot: [String]
 
+    private let tagSelectionLimit: TagSelectionLimit = .instance
+
     var containsTags: Bool {
         tagsViewModel.tagViewModels.isNotEmpty
+    }
+
+    var maxLimitReachedAlertMessage: String {
+        tagSelectionLimit.alertMessage
     }
 
     init(tagsViewModel: NodeTagsViewModel, nodeTagSearcher: some NodeTagsSearching) {
         self.tagsViewModel = tagsViewModel
         let tagViewModels = tagsViewModel.tagViewModels
-        self.selectedTags = Set(tagViewModels.compactMap { $0.isSelected ? $0.tag : nil })
+        let selectedTags = Set(tagViewModels.compactMap { $0.isSelected ? $0.tag : nil })
+        self.selectedTags = selectedTags
         self.tagsSnapshot = tagViewModels.map(\.tag)
         self.nodeTagSearcher = nodeTagSearcher
+        hasReachedMaxLimit = selectedTags.count >= tagSelectionLimit.maxTagsAllowed
         observeTogglesIfRequired(for: tagViewModels)
     }
 
@@ -36,6 +58,7 @@ final class ExistingTagsViewModel: ObservableObject {
 
         let tagViewModel = makeNodeTagViewModel(with: tag, isSelected: true)
         tagsViewModel.prepend(tagViewModel: tagViewModel)
+        updateMaxSelectedTagsStatus()
     }
 
     func searchTags(for searchText: String?) async {
@@ -86,6 +109,8 @@ final class ExistingTagsViewModel: ObservableObject {
                 } else {
                     toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
                 }
+
+                updateMaxSelectedTagsStatus()
             }
             .store(in: &subscriptions)
     }
@@ -144,6 +169,12 @@ final class ExistingTagsViewModel: ObservableObject {
             selectedTags.insert(tag)
         } else {
             selectedTags.remove(tag)
+        }
+    }
+
+    private func updateMaxSelectedTagsStatus() {
+        withAnimation {
+            hasReachedMaxLimit = (selectedTags.count + newlyAddedTags.count) >= tagSelectionLimit.maxTagsAllowed
         }
     }
 }
