@@ -25,6 +25,9 @@ struct AdsFreeView: View {
             .task {
                 await viewModel.setUpLowestProPlan()
             }
+            .onAppear {
+                viewModel.onAppear()
+            }
             .padding(.horizontal)
             .frame(maxWidth: 768)
         }
@@ -74,6 +77,7 @@ struct AdsFreeView: View {
             }
             
             SecondaryActionButtonView(title: Strings.Localizable.Ads.AdFree.Button.skip) {
+                viewModel.didTapSkipButton()
                 dismiss()
             }
         }

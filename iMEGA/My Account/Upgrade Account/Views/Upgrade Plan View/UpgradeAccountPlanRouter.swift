@@ -8,6 +8,7 @@ import SwiftUI
 
 protocol UpgradeAccountPlanRouting: Routing {
     func showTermsAndPolicies()
+    var isFromAds: Bool { get }
 }
 
 final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
@@ -16,15 +17,18 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
     private var accountDetails: AccountDetailsEntity
     private let accountUseCase: any AccountUseCaseProtocol
     private let viewType: UpgradeAccountPlanViewType
+    let isFromAds: Bool
     
     init(
         presenter: UIViewController?,
         accountDetails: AccountDetailsEntity,
-        viewType: UpgradeAccountPlanViewType = .upgrade
+        viewType: UpgradeAccountPlanViewType = .upgrade,
+        isFromAds: Bool = false
     ) {
         self.presenter = presenter
         self.accountDetails = accountDetails
         self.viewType = viewType
+        self.isFromAds = isFromAds
         accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
     }
     

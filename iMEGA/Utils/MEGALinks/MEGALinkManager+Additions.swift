@@ -304,9 +304,9 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             contentView: AdsViewWrapper(viewController: containerController),
             presenter: visibleViewController,
             presentationStyle: presentationStyle
-         ).build(viewProPlanAction: {
+         ).build(adsFreeViewProPlanAction: {
              let appDelegate = UIApplication.shared.delegate as? AppDelegate
-             appDelegate?.showUpgradeAccountPlan()
+             appDelegate?.showUpgradePlanPageFromAds()
          })
          visibleViewController.present(controller, animated: true, completion: nil)
      }

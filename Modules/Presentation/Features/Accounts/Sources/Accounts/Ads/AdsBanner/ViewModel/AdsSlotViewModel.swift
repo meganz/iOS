@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -14,6 +15,7 @@ final public class AdsSlotViewModel: ObservableObject {
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     public let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     
     private(set) var adsSlotConfig: AdsSlotConfig?
     private(set) var monitorAdsSlotUpdatesTask: Task<Void, Never>?
@@ -24,7 +26,11 @@ final public class AdsSlotViewModel: ObservableObject {
     @Published var showCloseButton: Bool = false
     @Published var showAdsFreeView: Bool = false
     private(set) var onViewFirstAppeared: (() -> Void)?
-    public let viewProPlanAction: (() -> Void)?
+    public let adsFreeViewProPlanAction: (() -> Void)?
+    
+    @PreferenceWrapper(key: .lastCloseAdsButtonTappedDate, defaultValue: nil)
+    private(set) var lastCloseAdsDate: Date?
+    private let currentDate: @Sendable () -> Date
     
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
@@ -34,8 +40,11 @@ final public class AdsSlotViewModel: ObservableObject {
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        preferenceUseCase: some PreferenceUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         onViewFirstAppeared: (() -> Void)? = nil,
-        viewProPlanAction: (() -> Void)? = nil
+        adsFreeViewProPlanAction: (() -> Void)? = nil,
+        currentDate: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
@@ -44,8 +53,12 @@ final public class AdsSlotViewModel: ObservableObject {
         self.appEnvironmentUseCase = appEnvironmentUseCase
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
+        self.tracker = tracker
         self.onViewFirstAppeared = onViewFirstAppeared
-        self.viewProPlanAction = viewProPlanAction
+        self.adsFreeViewProPlanAction = adsFreeViewProPlanAction
+        self.currentDate = currentDate
+        
+        $lastCloseAdsDate.useCase = preferenceUseCase
     }
 
     // MARK: Setup
@@ -130,6 +143,8 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func didTapCloseAdsButton() {
+        lastCloseAdsDate = currentDate()
         showAdsFreeView = true
+        tracker.trackAnalyticsEvent(with: AdsBannerCloseAdsButtonPressedEvent())
     }
 }

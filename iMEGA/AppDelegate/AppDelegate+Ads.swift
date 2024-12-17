@@ -18,18 +18,19 @@ extension AppDelegate {
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
         ).build(
             onViewFirstAppeared: onViewFirstAppeared,
-            viewProPlanAction: { [weak self] in
-                self?.showUpgradeAccountPlan()
+            adsFreeViewProPlanAction: { [weak self] in
+                self?.showUpgradePlanPageFromAds()
             }
         )
     }
     
-    @objc func showUpgradeAccountPlan() {
+    @objc func showUpgradePlanPageFromAds() {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         guard let accountDetails = accountUseCase.currentAccountDetails else { return }
         UpgradeAccountPlanRouter(
             presenter: UIApplication.mnz_visibleViewController(),
-            accountDetails: accountDetails
+            accountDetails: accountDetails,
+            isFromAds: true
         ).start()
     }
     

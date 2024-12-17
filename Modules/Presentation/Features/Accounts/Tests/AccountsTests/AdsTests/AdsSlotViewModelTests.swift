@@ -1,6 +1,7 @@
 @testable import Accounts
 import AccountsMock
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -286,6 +287,27 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showAdsFreeView)
     }
     
+    @MainActor func testDidTapCloseAdsButton_shouldSaveLastTappedDate() {
+        let currentTestDate = Date()
+        let sut = makeSUT(expectedCloseAdsButtonTappedDate: currentTestDate)
+        
+        sut.didTapCloseAdsButton()
+        
+        XCTAssertEqual(sut.lastCloseAdsDate, currentTestDate, "Expected close ads button last tapped date should be the current date")
+    }
+    
+    @MainActor func testDidTapCloseAdsButton_shouldTrackButtonTapEvent() {
+        let mockTracker = MockTracker()
+        let sut = makeSUT(tracker: mockTracker)
+        
+        sut.didTapCloseAdsButton()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [AdsBannerCloseAdsButtonPressedEvent()]
+        )
+    }
+    
     // MARK: Helper
     @MainActor private func makeSUT(
         adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol = MockAdsSlotUpdatesProvider(),
@@ -296,6 +318,8 @@ final class AdsSlotViewModelTests: XCTestCase {
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = MockAppEnvironmentUseCase(),
         isNewAccount: Bool = false,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .success(AccountDetailsEntity.build(proLevel: .free)),
+        expectedCloseAdsButtonTappedDate: Date = Date(),
+        tracker: some AnalyticsTracking = MockTracker(),
         isLoggedIn: Bool = true,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -308,7 +332,10 @@ final class AdsSlotViewModelTests: XCTestCase {
             appEnvironmentUseCase: appEnvironmentUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult),
             purchaseUseCase: MockAccountPlanPurchaseUseCase(),
-            viewProPlanAction: {}
+            preferenceUseCase: MockPreferenceUseCase(),
+            tracker: tracker,
+            adsFreeViewProPlanAction: {},
+            currentDate: { expectedCloseAdsButtonTappedDate }
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

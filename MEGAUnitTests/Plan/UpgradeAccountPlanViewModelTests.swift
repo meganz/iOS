@@ -10,6 +10,7 @@ import XCTest
 
 final class UpgradeAccountPlanViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
+    private let storageMax = 20
     
     // MARK: - Init
     @MainActor
@@ -753,25 +754,25 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     @MainActor
     func testPurchasePlan_purchaseProI_shouldTrackEvent() async {
         let harness = Harness()
-        await harness.testBuyPlan(.proI_yearly, shouldTrack: BuyProIEvent())
+        await harness.testBuyPlan(.proI_yearly, shouldTrack: [BuyProIEvent()])
     }
     
     @MainActor
     func testPurchasePlan_purchaseProII_shouldTrackEvent() async {
         let harness = Harness()
-        await harness.testBuyPlan(.proII_yearly, shouldTrack: BuyProIIEvent())
+        await harness.testBuyPlan(.proII_yearly, shouldTrack: [BuyProIIEvent()])
     }
     
     @MainActor
     func testPurchasePlan_purchaseProIII_shouldTrackEvent() async {
         let harness = Harness()
-        await harness.testBuyPlan(.proIII_yearly, shouldTrack: BuyProIIIEvent())
+        await harness.testBuyPlan(.proIII_yearly, shouldTrack: [BuyProIIIEvent()])
     }
     
     @MainActor
     func testPurchasePlan_purchaseProLite_shouldTrackEvent() async {
         let harness = Harness()
-        await harness.testBuyPlan(.proLite_yearly, shouldTrack: BuyProLiteEvent())
+        await harness.testBuyPlan(.proLite_yearly, shouldTrack: [BuyProLiteEvent()])
     }
     
     @MainActor
@@ -786,6 +787,66 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         harness.testViewOnLoad()
     }
     
+    @MainActor func testPurchasePlan_whenIsFromAdsIsTrue_shouldTrackButtonTapEventForAdsSurePath() async {
+        let harness = Harness(isFromAds: true)
+        
+        await harness.testBuyPlan(
+            .proLite_yearly,
+            shouldTrack: [
+                AdFreeDialogUpgradeAccountPlanPageBuyButtonPressedEvent(),
+                BuyProLiteEvent()
+            ]
+        )
+    }
+    
+    @MainActor func testPurchasePlan_whenIsFromAdsIsFalseAndEligibleForAdsEvent_shouldTrackButtonTapEventForAdsMaybePath() async {
+        // Ads was closed within the last two days and
+        // only less than half of storage quota is used
+        let lessThanHalfOfStorage = Int.random(in: 0...(storageMax / 2))
+        await assertAdsEventForMaybePath(
+            storageMax: storageMax,
+            storageUsed: lessThanHalfOfStorage,
+            lastCloseAdsDate: Date(),
+            expectedAdsEvent: AdsUpgradeAccountPlanPageBuyButtonPressedEvent()
+        )
+    }
+    
+    @MainActor func testPurchasePlan_whenIsFromAdsIsFalseButAdsIsClosedMoreThanTwoDays_shouldNotTrackButtonTapEventForAdsMaybePath() async throws {
+        let threeDaysAgo = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -3, to: Date()))
+        
+        await assertAdsEventForMaybePath(lastCloseAdsDate: threeDaysAgo, expectedAdsEvent: nil)
+    }
+    
+    @MainActor func testPurchasePlan_whenIsFromAdsIsFalseButHasUsedMoreThanHalfOfStorage_shouldNotTrackButtonTapEventForAdsMaybePath() async throws {
+        let moreThanHalfOfStorage = Int.random(in: (storageMax / 2)...storageMax)
+        await assertAdsEventForMaybePath(storageMax: storageMax, storageUsed: moreThanHalfOfStorage, expectedAdsEvent: nil)
+    }
+    
+    @MainActor private func assertAdsEventForMaybePath(
+        storageMax: Int = 20,
+        storageUsed: Int = 0,
+        lastCloseAdsDate: Date = Date(),
+        expectedAdsEvent: (any EventIdentifier)?
+    ) async {
+        let accountDetails = AccountDetailsEntity.build(
+            storageUsed: Int64(storageUsed),
+            storageMax: Int64(storageMax),
+            proLevel: .free
+        )
+        let harness = Harness(details: accountDetails, lastCloseAdsDate: lastCloseAdsDate, isFromAds: false)
+        var events: [any EventIdentifier] = []
+        
+        if let expectedAdsEvent {
+            events.append(expectedAdsEvent)
+        }
+        events.append(BuyProLiteEvent())
+        
+        await harness.testBuyPlan(
+            .proLite_yearly,
+            shouldTrack: events
+        )
+    }
+    
     // MARK: - Helper
     @MainActor
     func makeSUT(
@@ -794,18 +855,27 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],
         isExternalAdsFlagEnabled: Bool = true,
+        isGoogleAdsPhase2: Bool = true,
         tracker: MockTracker = MockTracker(),
-        viewType: UpgradeAccountPlanViewType = .upgrade
+        viewType: UpgradeAccountPlanViewType = .upgrade,
+        isFromAds: Bool = false,
+        lastCloseAdsDate: Date? = nil
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         let mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
-        let router = MockUpgradeAccountPlanRouter()
+        let router = MockUpgradeAccountPlanRouter(isFromAds: isFromAds)
+        let preferenceUseCase = MockPreferenceUseCase()
+        if let lastCloseAdsDate {
+            preferenceUseCase.dict[.lastCloseAdsButtonTappedDate] = lastCloseAdsDate
+        }
         let sut = UpgradeAccountPlanViewModel(
             accountDetails: accountDetails,
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
+            localFeatureFlagProvider: MockFeatureFlagProvider(list: [.googleAdsPhase2: isGoogleAdsPhase2]),
+            preferenceUseCase: preferenceUseCase,
             tracker: tracker,
             viewType: viewType,
             router: router
@@ -831,17 +901,21 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         
         init(
             details: AccountDetailsEntity = AccountDetailsEntity.build(proLevel: .free),
-            planList: [PlanEntity] = [.freePlan, .proI_yearly, .proII_yearly, .proIII_yearly, .proLite_yearly]
+            planList: [PlanEntity] = [.freePlan, .proI_yearly, .proII_yearly, .proIII_yearly, .proLite_yearly],
+            lastCloseAdsDate: Date? = nil,
+            isFromAds: Bool = false
         ) {
             let (sut, _) = UpgradeAccountPlanViewModelTests().makeSUT(
                 accountDetails: details,
                 planList: planList,
-                tracker: tracker
+                tracker: tracker,
+                isFromAds: isFromAds,
+                lastCloseAdsDate: lastCloseAdsDate
             )
             self.sut = sut
         }
         
-        func testBuyPlan(_ plan: PlanEntity, shouldTrack event: any EventIdentifier) async {
+        func testBuyPlan(_ plan: PlanEntity, shouldTrack events: [any EventIdentifier]) async {
             await sut.setUpPlanTask?.value
             sut.setSelectedPlan(plan)
             
@@ -850,7 +924,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             
             XCTestCase().assertTrackAnalyticsEventCalled(
                 trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-                with: [event]
+                with: events
             )
         }
         
