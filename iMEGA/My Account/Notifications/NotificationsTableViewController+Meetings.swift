@@ -101,7 +101,7 @@ extension NotificationsTableViewController {
             }
         }
         
-        return useDefaultMessage ? NSAttributedString(string: alert.title ?? "") : nil
+        return contentForOneOffScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: scheduledMeetingEntity, chatId: alert.nodeHandle, email: alert.email ?? "")
     }
     
     @objc func scheduledMeeting(withScheduleMeetingId meetingId: ChatIdEntity, chatId: ChatIdEntity) -> MEGAChatScheduledMeeting? {
