@@ -128,6 +128,37 @@ struct ExistingTagsViewModelTests {
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag1"])
     }
 
+    @MainActor
+    @Test("Test selecting the NodeTagViewModel first and then deselecting it")
+    func testSelectingTheNodeFirstAndDeselectingItLater() async {
+        let tagViewModel1 = NodeTagViewModel(tag: "tag1", isSelected: false)
+        let tagViewModel2 = NodeTagViewModel(tag: "tag2", isSelected: false)
+        let tagViewModel3 = NodeTagViewModel(tag: "tag3", isSelected: false)
+
+        let searcher = MockNodeTagsSearcher(tags: [])
+        let sut = makeSUT(
+            tagsViewModel: NodeTagsViewModel(
+                tagViewModels: [tagViewModel1, tagViewModel2, tagViewModel3],
+                isSelectionEnabled: true
+            ),
+            nodeTagSearcher: searcher
+        )
+
+        sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag2" })?.toggle()
+        sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag3" })?.toggle()
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag3", "tag1"])
+
+        await searcher.update(tags: ["tag2"])
+        await sut.searchTags(for: "tag2")
+        sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag2" })?.toggle()
+
+        await searcher.update(tags: ["tag1", "tag2", "tag3"])
+        await sut.searchTags(for: nil)
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag3", "tag1", "tag2"])
+        sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag3" })?.toggle()
+        #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag1", "tag2", "tag3"])
+    }
+
     // MARK: - Helpers
 
     private typealias SUT = ExistingTagsViewModel

@@ -62,13 +62,14 @@ struct ManageTagsView: View {
             .focused($hasFocus)
             .textInputAutocapitalization(.never)
             .onSubmit {
-                viewModel.addTag()
+                hasFocus = false
             }
             .onChange(of: viewModel.tagName) { updatedTagName in
                 viewModel.onTagNameChanged(with: updatedTagName)
             }
             .padding(.vertical, TokenSpacing._3)
-            if hasFocus, viewModel.tagName.isNotEmpty {
+            
+            if viewModel.tagName.isNotEmpty {
                 Button {
                     viewModel.clearTextField()
                 } label: {
@@ -83,9 +84,6 @@ struct ManageTagsView: View {
         .foregroundStyle(TokenColors.Text.primary.swiftUI)
         .background(TokenColors.Background.surface2.swiftUI)
         .cornerRadius(TokenRadius.medium)
-        .onAppear { self.hasFocus = viewModel.hasTextFieldFocus }
-        .onChange(of: hasFocus) { viewModel.hasTextFieldFocus = $0 }
-        .onChange(of: viewModel.hasTextFieldFocus) { hasFocus = $0 }
     }
     
     private var textViewPlaceHolder: Text {
