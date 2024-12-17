@@ -17,7 +17,6 @@ final class ManageTagsViewModel: ObservableObject {
     @Published var tagName: String = ""
     @Published var tagNameState: TagNameState = .empty
     @Published var containsExistingTags: Bool
-    @Published var hasTextFieldFocus: Bool = false
     @Published var canAddNewTag: Bool = false
     private var maxAllowedCharacterCount = 32
     private var subscriptions: Set<AnyCancellable> = []
@@ -36,7 +35,6 @@ final class ManageTagsViewModel: ObservableObject {
         guard tagNameState == .valid else { return }
         existingTagsViewModel.addAndSelectNewTag(tagName)
         containsExistingTags = true
-        hasTextFieldFocus = false
         tagName = ""
     }
 

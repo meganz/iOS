@@ -1,10 +1,14 @@
 @testable import CloudDrive
 
 actor MockNodeTagsSearcher: NodeTagsSearching {
-    private let tags: [String]?
+    private var tags: [String]?
     var continuations: [CheckedContinuation<[String]?, Never>] = []
 
     init(tags: [String]? = []) {
+        self.tags = tags
+    }
+
+    func update(tags: [String]?) {
         self.tags = tags
     }
 

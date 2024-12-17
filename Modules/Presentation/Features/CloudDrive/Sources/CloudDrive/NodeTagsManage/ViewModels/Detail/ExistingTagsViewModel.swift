@@ -83,8 +83,6 @@ final class ExistingTagsViewModel: ObservableObject {
 
                 if newlyAddedTags.contains(tag) {
                     removeDeselectedNewlyAddedTags(tagViewModel: tagViewModel)
-                } else if selectedTags.contains(tag) {
-                    removeDeselectedTagsFromSelectedTags(tagViewModel: tagViewModel)
                 } else {
                     toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
                 }
@@ -120,7 +118,9 @@ final class ExistingTagsViewModel: ObservableObject {
         let searchSnapshotTagViewModels = tagsSnapshot.compactMap { tag in
             if let viewModel = displayedTagViewModels.first(where: { $0.tag == tag }) {
                 if viewModel.tag == tagViewModel.tag {
-                    return makeNodeTagViewModel(with: tag, isSelected: !tagViewModel.isSelected)
+                    let newSelectionState = !tagViewModel.isSelected
+                    updateTagSelection(for: tagViewModel.tag, isSelected: newSelectionState)
+                    return makeNodeTagViewModel(with: tag, isSelected: newSelectionState)
                 } else {
                     return viewModel
                 }
@@ -137,5 +137,13 @@ final class ExistingTagsViewModel: ObservableObject {
         let viewModel = NodeTagViewModel(tag: tag, isSelected: isSelected)
         observeToggles(for: viewModel)
         return viewModel
+    }
+
+    private func updateTagSelection(for tag: String, isSelected: Bool) {
+        if isSelected {
+            selectedTags.insert(tag)
+        } else {
+            selectedTags.remove(tag)
+        }
     }
 }
