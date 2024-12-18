@@ -143,6 +143,7 @@ extension PhotosViewController {
     private func addToAlbum(nodes: [NodeEntity]) {
         AddToCollectionRouter(
             presenter: self,
+            mode: .album,
             selectedPhotos: nodes).start()
         
         toggleEditing()

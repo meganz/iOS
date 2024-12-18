@@ -37,6 +37,7 @@ extension NodeActionsDelegateHandler {
             hide: { _ in },
             unhide: { _ in },
             addToAlbum: { _ in },
+            addTo: { _ in },
             toggleEditMode: { _ in }
         )
     }

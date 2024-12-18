@@ -1,6 +1,7 @@
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 public struct AddToCollectionView: View {
@@ -49,7 +50,41 @@ public struct AddToCollectionView: View {
         }
     }
     
+    @ViewBuilder
     private var content: some View {
+        switch viewModel.mode {
+        case .album: albumsContent
+        case .collection: collectionsContent
+        }
+    }
+    
+    private var albumsContent: some View {
         AddToAlbumsView(viewModel: viewModel.addToAlbumsViewModel)
+    }
+    
+    private var collectionsContent: some View {
+        GeometryReader { geometry in
+            // This check is required for the `onAppear` screen widths to set properly in `MEGATopBar`
+            if geometry.size != .zero {
+                MEGATopBar(
+                    tabs: [
+                        .init(
+                            title: Strings.Localizable.CameraUploads.Albums.title,
+                            content: AnyView(
+                                albumsContent)
+                        ),
+                        .init(
+                            title: Strings.Localizable.Videos.Tab.Title.playlist,
+                            content: AnyView(
+                                TokenColors.Background.page.swiftUI
+                            )
+                        )
+                    ],
+                    fillScreenWidth: true,
+                    header: {
+                        EmptyView()
+                    })
+            }
+        }
     }
 }

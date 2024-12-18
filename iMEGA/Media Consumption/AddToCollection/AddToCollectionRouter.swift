@@ -7,13 +7,16 @@ import SwiftUI
 
 public struct AddToCollectionRouter: AddToCollectionRouting {
     private weak var presenter: UIViewController?
+    private let mode: AddToMode
     private let selectedPhotos: [NodeEntity]
     
     public init(
         presenter: UIViewController?,
+        mode: AddToMode,
         selectedPhotos: [NodeEntity]
     ) {
         self.presenter = presenter
+        self.mode = mode
         self.selectedPhotos = selectedPhotos
     }
     
@@ -37,6 +40,7 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
         let userAlbumRepo = UserAlbumCacheRepository.newRepo
         
         let content = AddToCollectionView(viewModel: .init(
+            mode: mode,
             selectedPhotos: selectedPhotos,
             addToAlbumsViewModel: .init(
                 monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),

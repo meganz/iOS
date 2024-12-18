@@ -1,6 +1,7 @@
 import ChatRepo
 import Foundation
 import MEGADomain
+import MEGAPhotos
 import MEGAPresentation
 import MEGASDKRepo
 
@@ -63,6 +64,10 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             hide(nodes: nodes.toNodeEntities())
         case .unhide:
             unhide(nodes: nodes.toNodeEntities())
+        case .addToAlbum:
+            addTo(mode: .album, nodes: nodes.toNodeEntities())
+        case .addTo:
+            addTo(mode: .collection, nodes: nodes.toNodeEntities())
         default:
             break
         }
@@ -161,7 +166,12 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             
         case .unhide:
             unhide(nodes: [node.toNodeEntity()])
-            
+        
+        case .addToAlbum:
+            addTo(mode: .album, nodes: [node.toNodeEntity()])
+        
+        case .addTo:
+            addTo(mode: .collection, nodes: [node.toNodeEntity()])
         default:
             break
         }
@@ -346,6 +356,15 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         Task {
             _ = await nodeActionUseCase.unhide(nodes: nodes)
         }
+    }
+    
+    private func addTo(mode: AddToMode, nodes: [NodeEntity]) {
+        guard let viewController = viewController else { return }
+        
+        AddToCollectionRouter(
+            presenter: viewController,
+            mode: mode,
+            selectedPhotos: nodes).start()
     }
 }
 

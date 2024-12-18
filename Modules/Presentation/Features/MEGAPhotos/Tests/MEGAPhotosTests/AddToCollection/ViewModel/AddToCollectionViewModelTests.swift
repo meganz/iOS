@@ -77,10 +77,12 @@ struct AddToCollectionViewModelTests {
 
     @MainActor
     private static func makeSUT(
+        mode: AddToMode = .album,
         selectedPhotos: [NodeEntity] = [],
         addToAlbumsViewModel: AddToAlbumsViewModel = .init()
     ) -> AddToCollectionViewModel {
         .init(
+            mode: mode,
             selectedPhotos: selectedPhotos,
             addToAlbumsViewModel: addToAlbumsViewModel)
     }
