@@ -7,10 +7,17 @@ protocol StorageFullModalAlertViewRouting: Sendable {
 @MainActor
 final class StorageFullModalAlertViewModel {
     private let userDefaultsKey = "MEGAStorageFullNotification"
-    private let limitedSpace = 100 * 1024 * 1024
-    private let duration = 2
+
     private let routing: any StorageFullModalAlertViewRouting
+
+    // We use this to show how much storage needed for the app to run smoothly
     private let requiredStorage: Int64
+    // The amount of storage to compare with available disk space.
+    // We use this to calculate whether the Storage Full should be show to users or not
+    private let limitedSpace: Int64
+    // The amount of days apart for the Storage Full page to show
+    private let duration = 2
+
     private let userDefaults: UserDefaults
     private let fileManager: FileManager
 
@@ -21,16 +28,19 @@ final class StorageFullModalAlertViewModel {
     init(
         routing: some StorageFullModalAlertViewRouting,
         requiredStorage: Int64,
+        limitedSpace: Int64,
         fileManager: FileManager = .default,
         userDefaults: UserDefaults = .standard
     ) {
         self.routing = routing
         self.requiredStorage = requiredStorage
+        self.limitedSpace = limitedSpace
         self.fileManager = fileManager
         self.userDefaults = userDefaults
     }
 
     nonisolated func shouldShowAlert() async -> Bool {
+        guard limitedSpace <= requiredStorage else { return false }
         let lastStoredDate = Date(
             timeIntervalSince1970: TimeInterval(
                 userDefaults.double(

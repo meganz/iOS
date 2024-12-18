@@ -4,9 +4,40 @@ import XCTest
 final class StorageFullModalAlertViewModelTests: XCTestCase {
 
     @MainActor
-    func testRequiredStorageMemoryStyleString_whenInvoked_shouldMatchResults() {
-        let sut = makeSUT()
+    func testRequiredStorageMemoryStyleString__with100Bytes_shouldMatchResults() {
+        let sut = makeSUT(requiredStorage: 100)
         XCTAssertEqual(sut.requiredStorageMemoryStyleString, "100 bytes")
+    }
+
+    @MainActor
+    func testRequiredStorageMemoryStyleString__with100KiloBytes_shouldMatchResults() {
+        let sut = makeSUT(requiredStorage: 100 * 1024)
+        XCTAssertEqual(sut.requiredStorageMemoryStyleString, "100 KB")
+    }
+
+    @MainActor
+    func testRequiredStorageMemoryStyleString__with1MegaByte_shouldMatchResults() {
+        let sut = makeSUT(requiredStorage: 1024 * 1024)
+        XCTAssertEqual(sut.requiredStorageMemoryStyleString, "1 MB")
+    }
+
+    @MainActor
+    func testRequiredStorageMemoryStyleString__with100MegaBytes_shouldMatchResults() {
+        let sut = makeSUT(requiredStorage: 100 * 1024 * 1024)
+        XCTAssertEqual(sut.requiredStorageMemoryStyleString, "100 MB")
+    }
+
+    @MainActor
+    func testRequiredStorageMemoryStyleString__with1GigaByte_shouldMatchResults() {
+        let sut = makeSUT(requiredStorage: 1024 * 1024 * 1024)
+        XCTAssertEqual(sut.requiredStorageMemoryStyleString, "1 GB")
+    }
+
+    @MainActor
+    func testShouldShowAlert_whenLimitedSpaceAndRequiredStorageIsInconsistent_shouldReturnFalse() async {
+        let sut = makeSUT(requiredStorage: 100, limitedSpace: 200)
+        let result = await sut.shouldShowAlert()
+        XCTAssertFalse(result)
     }
 
     @MainActor
@@ -29,7 +60,7 @@ final class StorageFullModalAlertViewModelTests: XCTestCase {
     func testShouldShowAlert_freeSizeDoesNotExceedAndlastSaveGreaterThanTwo_shouldReturnTrue() async {
         let yesterday = Calendar.current.date(byAdding: .day, value: -3, to: .now)!
         let userDefaults = MockUserDefaults(doubleValue: yesterday.timeIntervalSince1970)!
-        let sut = makeSUT(fileManager: MockFileManager(freeSize: 1000), userDefaults: userDefaults)
+        let sut = makeSUT(fileManager: MockFileManager(freeSize: 100), userDefaults: userDefaults)
         let result = await sut.shouldShowAlert()
         XCTAssertTrue(result)
     }
@@ -48,13 +79,15 @@ final class StorageFullModalAlertViewModelTests: XCTestCase {
     @MainActor
     private func makeSUT(
         routing: some StorageFullModalAlertViewRouting = MockStorageFullModalAlertViewRouter(),
-        requiredStorage: Int64 = 100,
+        requiredStorage: Int64 = 1000,
+        limitedSpace: Int64 = 750,
         fileManager: FileManager = MockFileManager(),
         userDefaults: UserDefaults = MockUserDefaults() ?? .standard
     ) -> StorageFullModalAlertViewModel {
         let sut = StorageFullModalAlertViewModel(
             routing: routing,
             requiredStorage: requiredStorage,
+            limitedSpace: limitedSpace,
             fileManager: fileManager,
             userDefaults: userDefaults
         )

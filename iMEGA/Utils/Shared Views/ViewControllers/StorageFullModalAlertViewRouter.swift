@@ -2,16 +2,22 @@ import Foundation
 
 struct StorageFullModalAlertViewRouter: StorageFullModalAlertViewRouting {
     private let requiredStorage: Int64
+    private let limitedSpace: Int64
 
-    init(requiredStorage: Int64 = Int64(100 * 1024 * 1024)) {
+    init(
+        requiredStorage: Int64 = Int64(1024 * 1024 * 1024),
+        limitedSpace: Int64 = Int64(512 * 1024 * 1024)
+    ) {
         self.requiredStorage = requiredStorage
+        self.limitedSpace = limitedSpace
     }
 
     func startIfNeeded() {
         Task { @MainActor in
             let viewModel = StorageFullModalAlertViewModel(
                 routing: self,
-                requiredStorage: requiredStorage
+                requiredStorage: requiredStorage,
+                limitedSpace: limitedSpace
             )
             if await viewModel.shouldShowAlert() {
                 start(viewModel: viewModel)
