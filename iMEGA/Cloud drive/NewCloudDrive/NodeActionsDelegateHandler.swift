@@ -27,6 +27,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
     var hide: ([NodeEntity]) -> Void
     var unhide: ([NodeEntity]) -> Void
     var addToAlbum: ([NodeEntity]) -> Void
+    var addTo: ([NodeEntity]) -> Void
     
     // This closure could be used to implement finishing up and disabling edit mode
     // when each node action was finished, to be implemented in [SAO-190]
@@ -58,6 +59,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         hide: @escaping ([NodeEntity]) -> Void,
         unhide: @escaping ([NodeEntity]) -> Void,
         addToAlbum: @escaping ([NodeEntity]) -> Void,
+        addTo: @escaping ([NodeEntity]) -> Void,
         toggleEditMode: @escaping (_ editModeActive: Bool) -> Void
     ) {
         self.download = download
@@ -86,6 +88,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         self.hide = hide
         self.unhide = unhide
         self.addToAlbum = addToAlbum
+        self.addTo = addTo
     }
     
     func nodeAction(
@@ -124,6 +127,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             unhide(nodeEntities)
         case .addToAlbum:
             addToAlbum(nodeEntities)
+        case .addTo:
+            addTo(nodeEntities)
         default:
             break
         }
@@ -191,6 +196,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             unhide([nodeEntity])
         case .addToAlbum:
             addToAlbum([nodeEntity])
+        case .addTo:
+            addTo([nodeEntity])
         default:
             break
         }

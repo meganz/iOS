@@ -31,6 +31,7 @@ extension NodeActions {
             hide: hide,
             unhide: unhide,
             addToAlbum: addToAlbum,
+            addTo: addTo,
             toggleEditMode: toggleEditMode
         )
     }
