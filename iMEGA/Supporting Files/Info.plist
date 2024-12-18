@@ -153,6 +153,8 @@
 	<string>MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera uploads is enabled.</string>
 	<key>NSSiriUsageDescription</key>
 	<string>NSSiriUsageDescription</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This will be used to personalise the ads you see</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>SelectShortcutIntent</string>

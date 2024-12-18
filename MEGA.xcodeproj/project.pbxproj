@@ -1757,6 +1757,8 @@
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */; };
 		A8FA953D2BD2C2BA0009F43D /* MEGAUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = A8FA953C2BD2C2BA0009F43D /* MEGAUIKit */; };
+		B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
+		B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */; };
 		B5120F4A2A16050A00A56354 /* ShareAttachmentCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */; };
@@ -4471,6 +4473,7 @@
 		A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAttributeGeneratorTests.swift; sourceTree = "<group>"; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
 		B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ads.swift"; sourceTree = "<group>"; };
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
@@ -5361,6 +5364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */,
+				B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */,
 				9444FA8C2C94672B005C240B /* Chat in Frameworks */,
 				A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */,
@@ -5487,6 +5491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D58D582AC67D0D004ECD36 /* Accounts in Frameworks */,
+				B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				A855D23E2A796634001D2168 /* ChatRepo in Frameworks */,
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
@@ -7054,6 +7059,7 @@
 			isa = PBXGroup;
 			children = (
 				2FA6DA61243E919D007A8E81 /* Accelerate.framework */,
+				B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */,
 				9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */,
 				A8C262971FA0B4A2006172CE /* AudioToolbox.framework */,
 				943229191EDD83B0007DB542 /* AVFoundation.framework */,
