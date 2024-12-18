@@ -816,6 +816,34 @@
 "settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="Empty";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title" = "File management";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA" = "On MEGA";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution" = "Use mobile data to load high resolution images";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description" = "If disabled, the high resolution image will only be loaded when you zoom in.";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings" = "Rubbish bin settings";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning" = "File versioning";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice" = "On your device";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache" = "Clear cache";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message" = "Cache cleared";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles" = "Clear offline files";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title" = "Clear offline files?";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description" = "If you would like to view these files, an internet connection will be required.";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton" = "Clear";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message" = "Offline files cleared";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Don’t use HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
