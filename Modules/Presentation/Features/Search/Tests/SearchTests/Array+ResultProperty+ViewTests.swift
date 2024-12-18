@@ -1,6 +1,5 @@
 @testable import Search
 import SearchMock
-import SnapshotTesting
 import XCTest
 
 final class Array_ResultProperty_ViewTests: XCTestCase {

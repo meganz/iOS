@@ -29,10 +29,6 @@ let package = Package(
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../../UI/MEGAUIKit"),
-        .package(
-            url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            from: "1.12.0"
-        ),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
         .package(path: "../../../Infrastracture/MEGATest")
     ],
@@ -59,7 +55,6 @@ let package = Package(
                 "Search", 
                 "SearchMock",
                 "MEGAUIKit",
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 "MEGATest"
             ],
             resources: [

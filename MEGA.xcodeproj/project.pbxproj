@@ -1227,9 +1227,6 @@
 		83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */; };
 		83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */; };
 		83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */; };
-		83F388EA2C245B33000AF96F /* RaiseHandBadgeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F388E92C245B33000AF96F /* RaiseHandBadgeStore.swift */; };
-		83F388EF2C246B0D000AF96F /* MockRaiseHandBadgeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F388EE2C246B0D000AF96F /* MockRaiseHandBadgeStore.swift */; };
-		83F388F32C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F388F22C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift */; };
 		83F58E952BD29D7A001DB6EC /* VoIPPushDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F58E942BD29D7A001DB6EC /* VoIPPushDelegateTests.swift */; };
 		83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */; };
 		83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */; };
@@ -3952,9 +3949,6 @@
 		83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupsViewController.swift; sourceTree = "<group>"; };
 		83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsGroups.storyboard; sourceTree = "<group>"; };
 		83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupTableViewCell.swift; sourceTree = "<group>"; };
-		83F388E92C245B33000AF96F /* RaiseHandBadgeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandBadgeStore.swift; sourceTree = "<group>"; };
-		83F388EE2C246B0D000AF96F /* MockRaiseHandBadgeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRaiseHandBadgeStore.swift; sourceTree = "<group>"; };
-		83F388F22C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiseHandBadgeStoreTests.swift; sourceTree = "<group>"; };
 		83F58E942BD29D7A001DB6EC /* VoIPPushDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushDelegateTests.swift; sourceTree = "<group>"; };
 		83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsRouter.swift; sourceTree = "<group>"; };
 		83FB142F219AC7CD00418BE6 /* OfflineTableViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewViewController.h; sourceTree = "<group>"; };
@@ -9832,7 +9826,6 @@
 				BF66E00826140BE900066F35 /* MeetingContainerRouter.swift */,
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
 				BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */,
-				83F388E92C245B33000AF96F /* RaiseHandBadgeStore.swift */,
 				834B518D2C9D8ADC002E46FB /* TimerSequenceFactory.swift */,
 			);
 			path = CallScene;
@@ -12253,7 +12246,6 @@
 				948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */,
 				8326E68B2BE50A5400481711 /* MockPasscodeManager.swift */,
 				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
-				83F388EE2C246B0D000AF96F /* MockRaiseHandBadgeStore.swift */,
 				BFCA570E2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift */,
 				BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */,
 			);
@@ -12585,7 +12577,6 @@
 				945A90C72C3D611500E10BBF /* MockMeetingContainerRouter.swift */,
 				833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */,
 				83DAF93B2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift */,
-				83F388F22C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift */,
 				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
 				83522FC92A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift */,
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
@@ -15348,7 +15339,6 @@
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				83C1B25225A7349000814074 /* QuickAccessWidgetViewModel.swift in Sources */,
 				94B09E652B84CC87007D6B84 /* QuickActionsMenuDelegateHandler.swift in Sources */,
-				83F388EA2C245B33000AF96F /* RaiseHandBadgeStore.swift in Sources */,
 				C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */,
 				B6C95969268561EF00CF73A8 /* RatingRequestMonitor.swift in Sources */,
 				B6C9CB0927FBBB9D0073BA1A /* RawPhotoUploadOperation.swift in Sources */,
@@ -16301,7 +16291,6 @@
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				940C19A82BFF74A80061BD88 /* MockProfileViewRouter.swift in Sources */,
 				9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */,
-				83F388EF2C246B0D000AF96F /* MockRaiseHandBadgeStore.swift in Sources */,
 				C4A016BD2B674DE100492185 /* MockRandomNumberGenerator.swift in Sources */,
 				B575517D2CCB7EBF00E65123 /* MockRecoveryKeyViewRouter.swift in Sources */,
 				949704B72AB427BE00B2CA3A /* MockRenameViewRouter.swift in Sources */,
@@ -16374,7 +16363,6 @@
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
 				9437CEC12CAFFE7F0051F947 /* QuickAccessWidgetViewModelTests.swift in Sources */,
-				83F388F32C2475B1000AF96F /* RaiseHandBadgeStoreTests.swift in Sources */,
 				C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */,
 				24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */,
 				B5D861482CCB3F7D00A2685C /* RecoveryKeyViewModelTests.swift in Sources */,

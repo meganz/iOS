@@ -1,19 +1,25 @@
 import MEGADomain
 
-protocol RaiseHandBadgeStoring: Sendable {
+public protocol RaiseHandBadgeStoring: Sendable {
     func shouldPresentRaiseHandBadge() async -> Bool
     func incrementRaiseHandBadgePresented() async
     func saveRaiseHandBadgeAsPresented() async
 }
 
-struct RaiseHandBadgeStore: RaiseHandBadgeStoring {
+public struct RaiseHandBadgeStore: RaiseHandBadgeStoring {
+    public init(
+        userAttributeUseCase: any UserAttributeUseCaseProtocol
+    ) {
+        self.userAttributeUseCase = userAttributeUseCase
+    }
+    
     let userAttributeUseCase: any UserAttributeUseCaseProtocol
 
     enum Constants {
         static let raiseHandBadgeMaxPresentedCount = 5
     }
     
-    func shouldPresentRaiseHandBadge() async -> Bool {
+    public func shouldPresentRaiseHandBadge() async -> Bool {
         do {
             if let raiseHandBadgePresentedTimeAttribute = try await userAttributeUseCase.retrieveRaiseHandAttribute() {
                 return raiseHandBadgePresentedTimeAttribute.presentedCount < Constants.raiseHandBadgeMaxPresentedCount
@@ -21,12 +27,12 @@ struct RaiseHandBadgeStore: RaiseHandBadgeStoring {
                 return true
             }
         } catch {
-            MEGALogError("Error getting raise hand badge attribute: \(error)")
+            logError("Error getting raise hand badge attribute: \(error)")
             return false
         }
     }
     
-    func incrementRaiseHandBadgePresented() async {
+    public func incrementRaiseHandBadgePresented() async {
         do {
             if let raiseHandBadgePresentedTimeAttribute = try await userAttributeUseCase.retrieveRaiseHandAttribute() {
                 try await userAttributeUseCase.saveRaiseHandNewFeatureBadge(presentedTimes: raiseHandBadgePresentedTimeAttribute.presentedCount + 1)
@@ -34,15 +40,15 @@ struct RaiseHandBadgeStore: RaiseHandBadgeStoring {
                 try await userAttributeUseCase.saveRaiseHandNewFeatureBadge(presentedTimes: 1)
             }
         } catch {
-            MEGALogError("[Calls] Unable to increment raise hand badge presented times. \(error.localizedDescription)")
+            logError("[Calls] Unable to increment raise hand badge presented times. \(error.localizedDescription)")
         }
     }
     
-    func saveRaiseHandBadgeAsPresented() async {
+    public func saveRaiseHandBadgeAsPresented() async {
         do {
             try await userAttributeUseCase.saveRaiseHandNewFeatureBadge(presentedTimes: Constants.raiseHandBadgeMaxPresentedCount)
         } catch {
-            MEGALogError("[Calls] Unable to save raise hand badge presented. \(error.localizedDescription)")
+            logError("[Calls] Unable to save raise hand badge presented. \(error.localizedDescription)")
         }
     }
 }
