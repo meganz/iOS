@@ -66,8 +66,11 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     @MainActor
     public func gatherConsent() async throws {
         do {
+            let parameters = UMPRequestParameters()
+            parameters.tagForUnderAgeOfConsent = false
+            
             // Requesting an update to consent information should be called on every app launch.
-            try await consentInformation.requestConsentInfoUpdate(with: nil)
+            try await consentInformation.requestConsentInfoUpdate(with: parameters)
             try await consentFormType.loadAndPresentIfRequired(from: nil)
         } catch {
             throw error
