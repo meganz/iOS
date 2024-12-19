@@ -42,6 +42,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _hasActiveProFlexiAccount: Bool
     private let _hasExpiredBusinessAccount: Bool
     private let _hasExpiredProFlexiAccount: Bool
+    public private(set) var refreshAccountDetails_calledCount: Int = 0
 
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -260,6 +261,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     }
     
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
+        refreshAccountDetails_calledCount += 1
+        
         switch accountDetailsResult {
         case .success(let details): return details
         case .failure(let error): throw error

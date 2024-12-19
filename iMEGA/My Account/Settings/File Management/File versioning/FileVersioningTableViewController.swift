@@ -21,7 +21,7 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
     
     private var fileVersionSize = ""
     
-    var viewModel: FileVersioningViewModel!
+    var viewModel: LegacyFileVersioningViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +63,7 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
     }
     
     // MARK: - Execute command
-    func executeCommand(_ command: FileVersioningViewModel.Command) {
+    func executeCommand(_ command: LegacyFileVersioningViewModel.Command) {
         switch command {
         case .updateSwitch(let enable):
             fileVersioningSwitch.setOn(enable, animated: false)

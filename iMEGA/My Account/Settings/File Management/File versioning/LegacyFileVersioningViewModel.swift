@@ -13,7 +13,7 @@ protocol FileVersioningViewRouting: Routing {
     func showDeletePreviousVersionsAlert(completion: @escaping (Bool) -> Void)
 }
 
-final class FileVersioningViewModel: ViewModelType {
+final class LegacyFileVersioningViewModel: ViewModelType {
     
     private let fileVersionsUseCase: any FileVersionsUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol

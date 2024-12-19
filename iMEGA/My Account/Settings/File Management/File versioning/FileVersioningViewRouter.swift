@@ -1,6 +1,9 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
+import Settings
+import SwiftUI
 
 final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     private weak var baseViewController: UIViewController?
@@ -11,16 +14,26 @@ final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdk.shared
-        let repo = FileVersionsRepository(sdk: sdk)
-        let useCase = FileVersionsUseCase(repo: repo)
-        let accountRepo = AccountRepository.newRepo
-        let accounUseCase = AccountUseCase(repository: accountRepo)
-        let vm = FileVersioningViewModel(router: self, fileVersionsUseCase: useCase, accountUseCase: accounUseCase)
-        let vc = UIStoryboard(name: "FileVersioning", bundle: nil).instantiateViewController(withIdentifier: "FileVersioningTableViewControllerID") as! FileVersioningTableViewController
-        baseViewController = vc
-        vc.viewModel = vm
-        return vc
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFileManagementSettings) {
+            let viewModel = FileVersioningViewModel(
+                fileVersionsUseCase: FileVersionsUseCase(repo: FileVersionsRepository.newRepo),
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+            )
+            let hostingVC = UIHostingController(
+                rootView: FileVersioningView(viewModel: viewModel)
+            )
+            baseViewController = hostingVC
+            return hostingVC
+        } else {
+            let vc = UIStoryboard(name: "FileVersioning", bundle: nil).instantiateViewController(withIdentifier: "FileVersioningTableViewControllerID") as! FileVersioningTableViewController
+            vc.viewModel = LegacyFileVersioningViewModel(
+                router: self,
+                fileVersionsUseCase: FileVersionsUseCase(repo: FileVersionsRepository.newRepo),
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+            )
+            baseViewController = vc
+            return vc
+        }
     }
     
     @objc func start() {
