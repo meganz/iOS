@@ -16,7 +16,9 @@ public protocol NodeUseCaseProtocol: Sendable {
     func isDownloaded(nodeHandle: HandleEntity) -> Bool
     func isARubbishBinRootNode(nodeHandle: HandleEntity) -> Bool
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
+    /// This will be deprecated soon, please use async version instead to avoid app hang due to sdkMutex.
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
+    func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]?
     func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity?
@@ -91,13 +93,17 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
         nodeDataRepository.nodeForHandle(handle)
     }
+
+    public func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity? {
+        await nodeDataRepository.nodeForHandle(handle)
+    }
     
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
         nodeDataRepository.parentForHandle(handle)
     }
     
     public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
-        guard let node = nodeForHandle(handle) else { return nil }
+        guard let node = await nodeForHandle(handle) else { return nil }
         return await nodeRepository.parents(of: node)
     }
     

@@ -10,7 +10,7 @@ struct FolderInfoFactory {
     
     /// Asynchronously generates `FolderInfo` for a single backup entity, detailing its file and folder contents, total size, and creation time.
     func info(from backup: BackupEntity) async -> FolderInfo {
-        guard let node = nodeUseCase.nodeForHandle(backup.rootHandle),
+        guard let node = await nodeUseCase.nodeForHandle(backup.rootHandle),
               let folderInfo = try? await nodeUseCase.folderInfo(node: node) else {
             return FolderInfo.emptyFolder
         }

@@ -65,6 +65,10 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
         node
     }
     
+    public func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity? {
+        node
+    }
+    
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
         parentNode
     }

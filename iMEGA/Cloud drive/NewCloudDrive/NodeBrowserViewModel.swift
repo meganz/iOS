@@ -375,7 +375,7 @@ class NodeBrowserViewModel: ObservableObject {
 
             do {
                 for try await _ in sensitiveNodeUseCase.mergeInheritedAndDirectSensitivityChanges(for: parentNode) {
-                    if let updatedNode = nodeUseCase.nodeForHandle(parentNode.handle) {
+                    if let updatedNode = await nodeUseCase.nodeForHandle(parentNode.handle) {
                         await refreshMenuWithUpdatedNodeSource(.node({ updatedNode }))
                         await refreshAndReloadResults()
                     }

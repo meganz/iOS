@@ -95,6 +95,10 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
         sdk.node(forHandle: handle)?.toNodeEntity()
     }
     
+    public func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity? {
+        await sdk.node(for: handle)?.toNodeEntity()
+    }
+    
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
         guard let nodeEntity = nodeForHandle(handle),
               let node = nodeEntity.toMEGANode(in: sdk) else { return nil }
