@@ -61,27 +61,6 @@ struct NodeTagsCellControllerModelTests {
     }
 
     @MainActor
-    @Test(
-        "Check for feature unavailable description",
-        arguments: [
-            (proLevel: AccountTypeEntity.business, isMasterBusinessAccount: true, isExpiredAccount: true,
-             result: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.FeatureUnavailable.Popup.Description.AccountType.masterBusiness),
-            (proLevel: AccountTypeEntity.business, isMasterBusinessAccount: false, isExpiredAccount: true,
-             result: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.FeatureUnavailable.Popup.Description.AccountType.memberBusiness),
-            (proLevel: AccountTypeEntity.proFlexi, isMasterBusinessAccount: false, isExpiredAccount: true,
-             result: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.FeatureUnavailable.Popup.Description.AccountType.proFlexi)
-        ]
-    )
-    func test(proLevel: AccountTypeEntity, isMasterBusinessAccount: Bool, isExpiredAccount: Bool, result: String) {
-        let sut = makeSUT(
-            proLevel: proLevel,
-            isMasterBusinessAccount: isMasterBusinessAccount,
-            isExpiredAccount: isExpiredAccount
-        )
-        #expect(sut.featureUnavailableDescription == result)
-    }
-
-    @MainActor
     @Test("Check for tags")
     func checkTags() {
         let tags = ["tag1", "tag2", "tag3"]

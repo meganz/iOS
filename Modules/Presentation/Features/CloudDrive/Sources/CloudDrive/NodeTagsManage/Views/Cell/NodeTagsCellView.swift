@@ -33,7 +33,6 @@ struct NodeTagsCellView: View {
             Spacer()
             Image(systemName: "chevron.right")
                 .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                .opacity(viewModel.isExpiredBusinessOrProFlexiAccount ? 0 : 1)
         }
     }
 }

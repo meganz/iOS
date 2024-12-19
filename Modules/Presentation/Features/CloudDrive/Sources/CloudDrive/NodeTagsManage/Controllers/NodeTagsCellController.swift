@@ -4,6 +4,10 @@ import MEGAL10n
 import MEGASwiftUI
 import UIKit
 
+public protocol ExpiredAccountAlertPresenting {
+    func presentAccountExpiredAlertIfNeeded()
+}
+
 @MainActor
 public final class NodeTagsCellController: NSObject {
     private static let reuseIdentifier = "NodeTagsCellID"
@@ -12,13 +16,16 @@ public final class NodeTagsCellController: NSObject {
     // The controller is responsible for managing the user interface or navigating when a row is selected.
     private weak var controller: UIViewController?
     private let viewModel: NodeTagsCellControllerModel
+    private let expiredAccountAlertPresenter: (any ExpiredAccountAlertPresenting)?
 
     public init(
         controller: UIViewController,
-        viewModel: NodeTagsCellControllerModel
+        viewModel: NodeTagsCellControllerModel,
+        expiredAccountAlertPresenter: (some ExpiredAccountAlertPresenting)?
     ) {
         self.controller = controller
         self.viewModel = viewModel
+        self.expiredAccountAlertPresenter = expiredAccountAlertPresenter
         super.init()
     }
 
@@ -54,7 +61,7 @@ extension NodeTagsCellController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let controller else { return }
         if viewModel.isExpiredBusinessOrProFlexiAccount {
-            showFeatureUnavailabilityAlert(with: viewModel.featureUnavailableDescription, in: controller)
+            showFeatureUnavailabilityAlert()
         } else {
             let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
             addTagsRouter.start()
@@ -71,18 +78,7 @@ extension NodeTagsCellController: UITableViewDelegate {
 }
 
 private extension NodeTagsCellController {
-    func showFeatureUnavailabilityAlert(with description: String, in controller: UIViewController) {
-        let alertController = UIAlertController(
-            title: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.FeatureUnavailable.Popup.title,
-            message: description,
-            preferredStyle: .alert
-        )
-
-        let buttonAction = UIAlertAction(
-            title: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.FeatureUnavailable.Popup.buttonTitle,
-            style: .cancel
-        )
-        alertController.addAction(buttonAction)
-        controller.present(alertController, animated: true)
+    func showFeatureUnavailabilityAlert() {
+        expiredAccountAlertPresenter?.presentAccountExpiredAlertIfNeeded()
     }
 }
