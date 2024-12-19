@@ -13,9 +13,13 @@ import MEGASDKRepo
     }
     
     @objc func icon(for node: MEGANode) -> UIImage {
-        switch node.type {
+        icon(for: node.toNodeEntity())
+    }
+    
+    func icon(for node: NodeEntity) -> UIImage {
+        switch node.nodeType {
         case .file:
-            return image(for: ((node.name ?? "") as NSString).pathExtension)
+            return image(for: node.name.pathExtension)
         case .folder:
             if MyChatFilesFolderNodeAccess.shared.isTargetNode(for: node) {
                 return UIImage.folderChat
@@ -25,7 +29,7 @@ import MEGASDKRepo
             }
             return commonFolderImage(for: node)
         case .incoming:
-            return node.isFolder() ? commonFolderImage(for: node) : UIImage(resource: .filetypeGeneric)
+            return node.isFolder ? commonFolderImage(for: node) : UIImage(resource: .filetypeGeneric)
         default:
             return UIImage(resource: .filetypeGeneric)
         }
@@ -35,10 +39,10 @@ import MEGASDKRepo
         MEGAAssetsImageProvider.fileTypeResource(forFileExtension: `extension`)
     }
             
-    private func commonFolderImage(for node: MEGANode) -> UIImage {
-        if node.isInShare() {
+    private func commonFolderImage(for node: NodeEntity) -> UIImage {
+        if node.isInShare {
             return UIImage.folderIncoming
-        } else if node.isOutShare() {
+        } else if node.isOutShare {
             return UIImage.folderOutgoing
         } else {
             return UIImage(resource: .filetypeFolder)
@@ -48,8 +52,7 @@ import MEGASDKRepo
 
 extension NodeAssetsManager: NodeIconRepositoryProtocol {
     func iconData(for node: MEGADomain.NodeEntity) -> Data {
-        guard let megaNode = node.toMEGANode(in: sdk),
-              let icon = icon(for: megaNode).pngData() else {
+        guard let icon = icon(for: node).pngData() else {
             return Data()
         }
         return icon
