@@ -228,7 +228,6 @@ struct PlaylistView: View {
         VideoPlaylistsCollectionViewRepresenter(
             thumbnailLoader: viewModel.thumbnailLoader,
             viewModel: viewModel,
-            videoConfig: videoConfig,
             router: router,
             didSelectMoreOptionForItem: { viewModel.didSelectMoreOptionForItem($0) }
         )

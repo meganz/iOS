@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
@@ -132,7 +133,7 @@ final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
     }
     
     private var fallbackImage: Image {
-        Image(uiImage: VideoConfig.preview.playlistContentAssets.videoPlaylistThumbnailFallbackImage)
+        MEGAAssetsImageProvider.image(named: .videoPlaylistThumbnailFallback)
     }
     
     private func anyImageURL() -> URL {

@@ -70,27 +70,6 @@ extension VideoConfig {
             emptyView: .init(
                 recentsEmptyStateImage: UIImage.recentlyWatchedVideosEmptyState
             )
-        ),
-        playlistContentAssets: PlaylistContentAssets(
-            headerView: .init(
-                image: .init(
-                    dotSeparatorImage: UIImage(systemName: "circle.fill")!,
-                    publicLinkImage: UIImage.linked,
-                    addButtonImage: UIImage(systemName: "plus")!,
-                    playButtonImage: UIImage(systemName: "play.fill")!
-                ),
-                color: .init(
-                    pageBackgroundColor: TokenColors.Background.surface1.swiftUI,
-                    thumbnailBackgroundColor: TokenColors.Background.surface2.swiftUI,
-                    primaryTextColor: TokenColors.Text.primary.swiftUI,
-                    secondaryTextColor: TokenColors.Text.secondary.swiftUI,
-                    secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
-                    buttonTintColor: TokenColors.Icon.accent.swiftUI
-                )
-            ),
-            favouritesEmptyStateImage: UIImage.favouritesEmptyState,
-            noResultVideoPlaylistImage: UIImage.rectangleVideoStackOutline,
-            videoPlaylistThumbnailFallbackImage: UIImage.videoPlaylistThumbnailFallback
         )
     )}
 }

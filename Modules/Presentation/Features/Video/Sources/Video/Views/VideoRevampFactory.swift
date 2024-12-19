@@ -1,4 +1,5 @@
 import Combine
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -132,7 +133,7 @@ public class VideoRevampFactory {
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
                 thumbnailLoader: thumbnailLoader,
                 fallbackImageContainer: ImageContainer(
-                    image: Image(uiImage: videoConfig.playlistContentAssets.videoPlaylistThumbnailFallbackImage),
+                    image: MEGAAssetsImageProvider.image(named: .videoPlaylistThumbnailFallback),
                     type: .thumbnail
                 )
             ),
