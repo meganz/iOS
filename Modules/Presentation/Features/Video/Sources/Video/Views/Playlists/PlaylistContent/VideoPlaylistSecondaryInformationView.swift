@@ -1,8 +1,8 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
 struct VideoPlaylistSecondaryInformationView: View {
-    let videoConfig: VideoConfig
     let videosCount: String
     let totalDuration: String
     let isPublicLink: Bool
@@ -37,8 +37,8 @@ struct VideoPlaylistSecondaryInformationView: View {
             circleSeparatorImage
                 .opacity(isPublicLink ? 1 : 0)
             
-            Image(uiImage: videoConfig.rowAssets.publicLinkImage)
-                .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
+            MEGAAssetsImageProvider.image(named: .linked)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .opacity(isPublicLink ? 1 : 0)
         }
     }
@@ -49,8 +49,8 @@ struct VideoPlaylistSecondaryInformationView: View {
             
             secondaryText(text: totalDuration)
             
-            Image(uiImage: videoConfig.rowAssets.publicLinkImage)
-                .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
+            MEGAAssetsImageProvider.image(named: .linked)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .opacity(isPublicLink ? 1 : 0)
         }
     }
@@ -58,20 +58,20 @@ struct VideoPlaylistSecondaryInformationView: View {
     private func secondaryText(text: String) -> some View {
         Text(text)
             .font(.caption)
-            .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryTextColor)
+            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
     }
     
     private var circleSeparatorImage: some View {
-        Image(uiImage: videoConfig.playlistContentAssets.headerView.image.dotSeparatorImage.withRenderingMode(.alwaysTemplate))
+        Image(systemName: "circle.fill")
+            .renderingMode(.template)
             .resizable()
             .frame(width: 4, height: 4)
-            .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.secondaryIconColor)
+            .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
     }
 }
 
 #Preview {
     VideoPlaylistSecondaryInformationView(
-        videoConfig: .preview,
         videosCount: "24 videos",
         totalDuration: "3:05:20",
         isPublicLink: true,
@@ -81,7 +81,6 @@ struct VideoPlaylistSecondaryInformationView: View {
 
 #Preview {
     VideoPlaylistSecondaryInformationView(
-        videoConfig: .preview,
         videosCount: "24 videos",
         totalDuration: "3:05:20",
         isPublicLink: false,
@@ -93,7 +92,6 @@ struct VideoPlaylistSecondaryInformationView: View {
 @available(iOS 17.0, *)
 #Preview(traits: .landscapeLeft) {
     VideoPlaylistSecondaryInformationView(
-        videoConfig: .preview,
         videosCount: "24 videos",
         totalDuration: "3:05:20",
         isPublicLink: false,

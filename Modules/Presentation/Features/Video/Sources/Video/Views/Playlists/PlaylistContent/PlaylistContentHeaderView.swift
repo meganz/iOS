@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -6,7 +7,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct PlaylistContentHeaderView: View {
-    let videoConfig: VideoConfig
     let viewState: VideoPlaylistContentViewModel.ViewState
     let previewEntity: VideoPlaylistCellPreviewEntity
     let onTapAddButton: () -> Void
@@ -23,7 +23,7 @@ struct PlaylistContentHeaderView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-        .background(videoConfig.playlistContentAssets.headerView.color.pageBackgroundColor)
+        .background(TokenColors.Background.surface1.swiftUI)
     }
     
     private var contentView: some View {
@@ -35,7 +35,7 @@ struct PlaylistContentHeaderView: View {
                     Text(previewEntity.title)
                         .font(.headline)
                         .lineLimit(2)
-                        .foregroundStyle(videoConfig.playlistContentAssets.headerView.color.primaryTextColor)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     
                     secondaryInformationView
                 }
@@ -72,7 +72,6 @@ struct PlaylistContentHeaderView: View {
                 allVideosHasNoThumbnailsThumbnailView()
             case .normal:
                 VideoPlaylistThumbnailView(
-                    videoConfig: videoConfig,
                     viewContext: .playlistContentHeader,
                     imageContainers: previewEntity.thumbnail.imageContainers
                 )
@@ -82,13 +81,13 @@ struct PlaylistContentHeaderView: View {
     }
     
     private var emptyThumbnailImage: Image {
-        let image = switch previewEntity.type {
+        let image: Image = switch previewEntity.type {
         case .favourite:
-            videoConfig.rowAssets.favouritePlaylistThumbnailImage
+            MEGAAssetsImageProvider.image(named: .favouritePlaylistThumbnail)
         case .user:
-            videoConfig.rowAssets.rectangleVideoStackPlaylistImage
+            MEGAAssetsImageProvider.image(named: .rectangleVideoStack)
         }
-        return Image(uiImage: image.withRenderingMode(.alwaysTemplate))
+        return image.renderingMode(.template)
     }
     
     @ViewBuilder
@@ -107,10 +106,10 @@ struct PlaylistContentHeaderView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 32, height: 32)
-                .foregroundStyle(videoConfig.colorAssets.emptyFavoriteThumbnaillImageForegroundColor)
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
         }
         .frame(width: 142, height: 80)
-        .background(videoConfig.colorAssets.emptyFavoriteThumbnailBackgroundColor.cornerRadius(4))
+        .background(TokenColors.Background.surface3.swiftUI.cornerRadius(4))
     }
     
     private var textVStackSpacing: CGFloat {
@@ -122,10 +121,9 @@ struct PlaylistContentHeaderView: View {
         if previewEntity.isEmpty {
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                 .font(.caption)
-                .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         } else {
             VideoPlaylistSecondaryInformationView(
-                videoConfig: videoConfig,
                 videosCount: previewEntity.count,
                 totalDuration: previewEntity.duration,
                 isPublicLink: previewEntity.isExported,
@@ -139,7 +137,7 @@ struct PlaylistContentHeaderView: View {
         PillView(
             viewModel: .init(
                 title: Strings.Localizable.Videos.Tab.Playlist.Content.Header.Button.Title.add,
-                icon: .leading(Image(uiImage: videoConfig.playlistContentAssets.headerView.image.addButtonImage.withRenderingMode(.alwaysTemplate))),
+                icon: .leading(Image(systemName: "plus").renderingMode(.template)),
                 foreground: TokenColors.Text.accent.swiftUI,
                 background: TokenColors.Button.secondary.swiftUI,
                 shape: .capsule
@@ -233,7 +231,6 @@ private func view(
     playlistName: String = "A playlist name"
 ) -> some View {
     PlaylistContentHeaderView(
-        videoConfig: .preview,
         viewState: viewState,
         previewEntity: VideoPlaylistCellPreviewEntity(
             thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: imageContainers),

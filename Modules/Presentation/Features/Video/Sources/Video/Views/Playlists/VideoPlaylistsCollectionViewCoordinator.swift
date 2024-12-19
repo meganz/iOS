@@ -1,3 +1,5 @@
+import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import SwiftUI
@@ -31,7 +33,6 @@ final class VideoPlaylistsCollectionViewCoordinator {
         }
     }
     
-    private let videoConfig: VideoConfig
     private let representer: VideoPlaylistsCollectionViewRepresenter
     
     private var dataSource: DiffableDataSource?
@@ -49,7 +50,6 @@ final class VideoPlaylistsCollectionViewCoordinator {
     
     init(_ representer: VideoPlaylistsCollectionViewRepresenter) {
         self.representer = representer
-        self.videoConfig = representer.videoConfig
     }
     
     func configureDataSource(for collectionView: UICollectionView) {
@@ -104,7 +104,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
         cellHostingController.view.backgroundColor = .clear
         cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(cellHostingController.view)
-        cell.contentView.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)
+        cell.contentView.backgroundColor = TokenColors.Background.page
         
         NSLayoutConstraint.activate([
             cellHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
@@ -127,16 +127,14 @@ final class VideoPlaylistsCollectionViewCoordinator {
         if rowItem.videoPlaylist.isSystemVideoPlaylist {
             FavoritePlaylistCell(
                 viewModel: self.cellViewModel(for: rowItem),
-                videoConfig: videoConfig, 
                 router: representer.router
             )
         } else {
             UserPlaylistCell(
                 viewModel: self.cellViewModel(for: rowItem),
-                videoConfig: videoConfig,
                 router: representer.router
             )
-            .background(videoConfig.colorAssets.pageBackgroundColor)
+            .background(TokenColors.Background.page.swiftUI)
         }
     }
     
@@ -145,7 +143,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
                 thumbnailLoader: representer.viewModel.thumbnailLoader,
                 fallbackImageContainer: ImageContainer(
-                    image: Image(uiImage: videoConfig.playlistContentAssets.videoPlaylistThumbnailFallbackImage),
+                    image: MEGAAssetsImageProvider.image(named: .videoPlaylistThumbnailFallback),
                     type: .thumbnail
                 )
             ),

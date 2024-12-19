@@ -1,3 +1,5 @@
+import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -6,16 +8,13 @@ import SwiftUI
 struct FavoritePlaylistCell: View {
     
     @StateObject private var viewModel: VideoPlaylistCellViewModel
-    private let videoConfig: VideoConfig
     private let router: any VideoRevampRouting
     
     init(
         viewModel: @autoclosure @escaping () -> VideoPlaylistCellViewModel,
-        videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
-        self.videoConfig = videoConfig
         self.router = router
     }
     
@@ -24,7 +23,7 @@ struct FavoritePlaylistCell: View {
             content
         }
         .padding(0)
-        .background(videoConfig.colorAssets.pageBackgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
         .task {
             await viewModel.onViewAppear()
         }
@@ -40,7 +39,6 @@ struct FavoritePlaylistCell: View {
                 .shimmering(active: viewModel.isLoading)
         } else {
             ThumbnailLayerView(
-                videoConfig: videoConfig,
                 thumbnail: viewModel.previewEntity.thumbnail,
                 videoPlaylistType: viewModel.previewEntity.type
             )
@@ -50,7 +48,7 @@ struct FavoritePlaylistCell: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(viewModel.previewEntity.title)
                     .font(.subheadline)
-                    .foregroundColor(videoConfig.colorAssets.primaryTextColor)
+                    .foregroundColor(TokenColors.Icon.primary.swiftUI)
                 
                 secondaryInformationView()
                     .frame(maxHeight: .infinity, alignment: .top)
@@ -65,10 +63,9 @@ struct FavoritePlaylistCell: View {
         case .emptyPlaylist:
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                 .font(.caption)
-                .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         case .information:
             VideoPlaylistSecondaryInformationView(
-                videoConfig: videoConfig,
                 videosCount: viewModel.previewEntity.count,
                 totalDuration: viewModel.previewEntity.duration,
                 isPublicLink: viewModel.previewEntity.isExported,
@@ -80,13 +77,12 @@ struct FavoritePlaylistCell: View {
 
 struct ThumbnailLayerView: View {
     
-    let videoConfig: VideoConfig
     let thumbnail: VideoPlaylistThumbnail
     let videoPlaylistType: VideoPlaylistEntityType
     
     var body: some View {
         ZStack {
-            videoConfig.colorAssets.emptyFavoriteThumbnailBackgroundColor
+            TokenColors.Background.surface3.swiftUI
             
             switch thumbnail.type {
             case .empty:
@@ -95,7 +91,6 @@ struct ThumbnailLayerView: View {
                 allVideosHasNoThumbnailsThumbnailView()
             case .normal:
                 VideoPlaylistThumbnailView(
-                    videoConfig: videoConfig,
                     viewContext: .playlistCell,
                     imageContainers: thumbnail.imageContainers
                 )
@@ -130,7 +125,7 @@ struct ThumbnailLayerView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 32, height: 32)
-                .foregroundStyle(videoConfig.colorAssets.emptyFavoriteThumbnaillImageForegroundColor)
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
         }
         .padding(0)
     }
@@ -138,61 +133,63 @@ struct ThumbnailLayerView: View {
     private var centerBackgroundImage: Image {
         switch videoPlaylistType {
         case .favourite:
-            Image(uiImage: videoConfig.rowAssets.favouritePlaylistThumbnailImage)
+            MEGAAssetsImageProvider.image(named: .favouritePlaylistThumbnail)
         case .user:
-            Image(uiImage: videoConfig.rowAssets.rectangleVideoStackPlaylistImage)
+            MEGAAssetsImageProvider.image(named: .rectangleVideoStack)
         }
     }
     
     private func playlistIcon() -> some View {
-        Image(uiImage: videoConfig.rowAssets.rectangleVideoStackPlaylistImage)
+        MEGAAssetsImageProvider.image(named: .rectangleVideoStack)
             .resizable()
-            .foregroundStyle(videoConfig.colorAssets.whiteColor)
+            .foregroundStyle(TokenColors.Text.onColor.swiftUI)
             .frame(width: 16, height: 16)
     }
 }
 
 #Preview {
-    @MainActor
-    func makeNullViewModel() -> VideoPlaylistCellViewModel {
-        VideoPlaylistCellViewModel(
-            videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
-                thumbnailLoader: Preview_ThumbnailLoader(),
-                fallbackImageContainer: ImageContainer(image: Image("square"), type: .thumbnail)
-            ),
-            videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
-            sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
-            videoPlaylistEntity: videoPlaylistEntity(),
-            onTapMoreOptions: { _ in }
-        )
-    }
-    
-    @MainActor
-    func videoPlaylistEntity() -> VideoPlaylistEntity {
-        VideoPlaylistEntity(
-            setIdentifier: SetIdentifier(handle: 1),
-            name: "Favorites",
-            count: 15,
-            type: .favourite,
-            creationTime: Date(),
-            modificationTime: Date()
-        )
-    }
-    
-    return Group {
-        FavoritePlaylistCell(
-            viewModel: makeNullViewModel(),
-            videoConfig: .preview,
-            router: Preview_VideoRevampRouter()
-        )
-        .frame(height: 80, alignment: .center)
+    struct FavoritePlaylistCellPreview: View {
+        var body: some View {
+            FavoritePlaylistCell(
+                viewModel: makeNullViewModel(),
+                router: Preview_VideoRevampRouter()
+            )
+            .frame(height: 80, alignment: .center)
+            
+            FavoritePlaylistCell(
+                viewModel: makeNullViewModel(),
+                router: Preview_VideoRevampRouter()
+            )
+            .frame(height: 80, alignment: .center)
+            .preferredColorScheme(.dark)
+        }
         
-        FavoritePlaylistCell(
-            viewModel: makeNullViewModel(),
-            videoConfig: .preview,
-            router: Preview_VideoRevampRouter()
-        )
-        .frame(height: 80, alignment: .center)
-        .preferredColorScheme(.dark)
+        @MainActor
+        func makeNullViewModel() -> VideoPlaylistCellViewModel {
+            VideoPlaylistCellViewModel(
+                videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
+                    thumbnailLoader: Preview_ThumbnailLoader(),
+                    fallbackImageContainer: ImageContainer(image: Image("square"), type: .thumbnail)
+                ),
+                videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
+                sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
+                videoPlaylistEntity: videoPlaylistEntity(),
+                onTapMoreOptions: { _ in }
+            )
+        }
+        
+        @MainActor
+        func videoPlaylistEntity() -> VideoPlaylistEntity {
+            VideoPlaylistEntity(
+                setIdentifier: SetIdentifier(handle: 1),
+                name: "Favorites",
+                count: 15,
+                type: .favourite,
+                creationTime: Date(),
+                modificationTime: Date()
+            )
+        }
     }
+    
+    return FavoritePlaylistCellPreview()
 }

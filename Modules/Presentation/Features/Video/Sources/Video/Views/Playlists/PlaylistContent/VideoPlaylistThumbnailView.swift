@@ -4,7 +4,6 @@ import SwiftUI
 
 struct VideoPlaylistThumbnailView: View {
 
-    private let videoConfig: VideoConfig
     private let topLeftImage: (any ImageContaining)?
     private let topRightImage: (any ImageContaining)?
     private let bottomLeftImage: (any ImageContaining)?
@@ -26,11 +25,9 @@ struct VideoPlaylistThumbnailView: View {
     private let cornerRadius: CGFloat = 4
     
     init(
-        videoConfig: VideoConfig,
         viewContext: ThumbnailViewContext,
         imageContainers: [any ImageContaining]
     ) {
-        self.videoConfig = videoConfig
         self.viewContext = viewContext
         self.topLeftImage = imageContainers[safe: 0]
         self.topRightImage = imageContainers[safe: 1]
@@ -54,13 +51,7 @@ struct VideoPlaylistThumbnailView: View {
     }
     
     private var thumbnailBackgroundColor: Color {
-        switch viewContext {
-        case .playlistCell:
-            TokenColors.Background.surface2.swiftUI
-        case .playlistContentHeader:
-            videoConfig.playlistContentAssets.headerView.color.thumbnailBackgroundColor
-        }
-        
+        TokenColors.Background.surface2.swiftUI
     }
     
     private var multipleThumbnailLayout: some View {
@@ -140,7 +131,7 @@ private func renderPreviews() -> some View {
         
         // MARK: - All Thumbnails
         
-        VideoPlaylistThumbnailView(videoConfig: .preview, viewContext: .playlistContentHeader, imageContainers: [
+        VideoPlaylistThumbnailView(viewContext: .playlistContentHeader, imageContainers: [
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail),
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail),
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail),
@@ -148,20 +139,20 @@ private func renderPreviews() -> some View {
         ])
         
         // MARK: - 3 thumbnails
-        VideoPlaylistThumbnailView(videoConfig: .preview, viewContext: .playlistContentHeader, imageContainers: [
+        VideoPlaylistThumbnailView(viewContext: .playlistContentHeader, imageContainers: [
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail),
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail),
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail)
         ])
         
         // MARK: - 2 thumbnails
-        VideoPlaylistThumbnailView(videoConfig: .preview, viewContext: .playlistContentHeader, imageContainers: [
+        VideoPlaylistThumbnailView(viewContext: .playlistContentHeader, imageContainers: [
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail),
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail)
         ])
         
         // MARK: - 1 thumbnail
-        VideoPlaylistThumbnailView(videoConfig: .preview, viewContext: .playlistContentHeader, imageContainers: [
+        VideoPlaylistThumbnailView(viewContext: .playlistContentHeader, imageContainers: [
             ImageContainer(image: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 200, height: 200)).image, type: .thumbnail)
         ])
     }

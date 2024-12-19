@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -155,7 +156,6 @@ struct PlaylistContentView: View {
             
             if !videoSelection.editMode.isEditing {
                 PlaylistContentHeaderView(
-                    videoConfig: videoConfig,
                     viewState: viewState,
                     previewEntity: previewEntity,
                     onTapAddButton: onTapAddButton
@@ -194,7 +194,7 @@ struct PlaylistContentView: View {
     private func videoEmptyViewImage(for previewEntity: VideoPlaylistCellPreviewEntity) -> UIImage {
         switch previewEntity.type {
         case .favourite:
-            videoConfig.playlistContentAssets.favouritesEmptyStateImage
+            MEGAAssetsImageProvider.image(named: .favouritesEmptyState)
         case .user:
             videoConfig.videoListAssets.noResultVideoImage
         }

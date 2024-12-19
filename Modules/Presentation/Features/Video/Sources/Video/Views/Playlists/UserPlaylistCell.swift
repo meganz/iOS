@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
@@ -6,22 +7,18 @@ import SwiftUI
 
 struct UserPlaylistCell: View {
     @StateObject private var viewModel: VideoPlaylistCellViewModel
-    private let videoConfig: VideoConfig
     private let router: any VideoRevampRouting
     
     init(
         viewModel: @autoclosure @escaping () -> VideoPlaylistCellViewModel,
-        videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
-        self.videoConfig = videoConfig
         self.router = router
     }
     
     var body: some View {
         UserPlaylistCellContent(
-            videoConfig: videoConfig,
             previewEntity: viewModel.previewEntity,
             secondaryInformationViewType: viewModel.secondaryInformationViewType,
             isLoading: viewModel.isLoading,
@@ -38,7 +35,6 @@ struct UserPlaylistCell: View {
 
 struct UserPlaylistCellContent: View {
     
-    let videoConfig: VideoConfig
     let previewEntity: VideoPlaylistCellPreviewEntity
     let secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType
     let isLoading: Bool
@@ -49,7 +45,7 @@ struct UserPlaylistCellContent: View {
             content
         }
         .padding(0)
-        .background(videoConfig.colorAssets.pageBackgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
     }
     
     @ViewBuilder
@@ -59,7 +55,6 @@ struct UserPlaylistCellContent: View {
                 .shimmering(active: isLoading)
         } else {
             ThumbnailLayerView(
-                videoConfig: videoConfig,
                 thumbnail: previewEntity.thumbnail,
                 videoPlaylistType: previewEntity.type
             )
@@ -69,15 +64,15 @@ struct UserPlaylistCellContent: View {
             VStack(alignment: .leading, spacing: TokenSpacing._3) {
                 Text(previewEntity.title)
                     .font(.subheadline)
-                    .foregroundStyle(videoConfig.colorAssets.primaryTextColor)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 secondaryInformationView()
                     .frame(maxHeight: .infinity, alignment: .top)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             
-            Image(uiImage: videoConfig.rowAssets.moreImage)
-                .foregroundStyle(videoConfig.colorAssets.secondaryIconColor)
+            MEGAAssetsImageProvider.image(named: .moreList)
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                 .onTapGesture { onTappedMoreOptions() }
         }
     }
@@ -88,10 +83,9 @@ struct UserPlaylistCellContent: View {
         case .emptyPlaylist:
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                 .font(.caption)
-                .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         case .information:
             VideoPlaylistSecondaryInformationView(
-                videoConfig: videoConfig,
                 videosCount: previewEntity.count,
                 totalDuration: previewEntity.duration,
                 isPublicLink: previewEntity.isExported,
@@ -103,7 +97,6 @@ struct UserPlaylistCellContent: View {
 
 #Preview {
     UserPlaylistCellContent(
-        videoConfig: .preview,
         previewEntity: .preview(isExported: false),
         secondaryInformationViewType: .emptyPlaylist,
         isLoading: false,
@@ -114,7 +107,6 @@ struct UserPlaylistCellContent: View {
 
 #Preview {
     UserPlaylistCellContent(
-        videoConfig: .preview,
         previewEntity: .preview(isExported: true),
         secondaryInformationViewType: .emptyPlaylist,
         isLoading: false,
@@ -126,7 +118,6 @@ struct UserPlaylistCellContent: View {
 
 #Preview {
     UserPlaylistCellContent(
-        videoConfig: .preview,
         previewEntity: .preview(
             isExported: false,
             imageContainers: [

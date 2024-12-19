@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
@@ -8,7 +9,7 @@ struct VideoPlaylistEmptyView: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            Image(uiImage: videoConfig.playlistContentAssets.noResultVideoPlaylistImage)
+            MEGAAssetsImageProvider.image(named: .rectangleVideoStackOutline)
                 .foregroundStyle(videoConfig.colorAssets.secondaryIconColor)
                 .frame(width: 120, height: 120)
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.emptyState)
