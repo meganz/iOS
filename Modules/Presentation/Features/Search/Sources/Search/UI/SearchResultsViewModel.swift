@@ -395,7 +395,7 @@ public class SearchResultsViewModel: ObservableObject {
         )
     }
 
-    func actionPressedOn(_ result: SearchResult) {
+    private func actionPressedOn(_ result: SearchResult) {
         if !editing {
             handleEditingChanged(true)
         }
@@ -446,7 +446,7 @@ public class SearchResultsViewModel: ObservableObject {
     }
 
     private func rowViewModel(for result: SearchResult) -> SearchResultRowViewModel? {
-        listItems.first { $0.result == result }
+        listItems.first { $0.result.id == result.id }
     }
 
     private func toggleSelected(_ row: SearchResultRowViewModel) {
