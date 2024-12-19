@@ -8,6 +8,8 @@ public protocol NodeDataRepositoryProtocol: RepositoryProtocol, Sendable {
     func sizeForNode(handle: HandleEntity) -> UInt64?
     func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity?
     func creationDateForNode(handle: HandleEntity) -> Date?
+    /// This one will be deprecated soon, please use the async version instead to avoid app hang due to sdkMutex
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
+    func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
 }

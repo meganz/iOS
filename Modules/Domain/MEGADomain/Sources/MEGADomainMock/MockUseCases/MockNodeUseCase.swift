@@ -79,6 +79,10 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         nodes[handle]
     }
     
+    public func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity? {
+        nodes[handle]
+    }
+    
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
         nil
     }

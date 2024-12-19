@@ -81,18 +81,20 @@ final class HomeSearchResultRouter: NodeRouting {
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
-        guard let node = nodeUseCase.nodeForHandle(nodeHandle) else { return }
-        if node.isTakenDown {
-            showTakenDownAlert(isFolder: node.isFolder)
-        } else {
-            nodeOpener.openNode(
-                nodeHandle: nodeHandle,
-                allNodes: allNodeHandles,
-                config: .init(
-                    displayMode: displayMode,
-                    isFromSharedItem: isFromSharedItem,
-                    warningViewModel: warningViewModel)
-            )
+        Task {
+            guard let node = await nodeUseCase.nodeForHandle(nodeHandle) else { return }
+            if node.isTakenDown {
+                showTakenDownAlert(isFolder: node.isFolder)
+            } else {
+                nodeOpener.openNode(
+                    nodeHandle: nodeHandle,
+                    allNodes: allNodeHandles,
+                    config: .init(
+                        displayMode: displayMode,
+                        isFromSharedItem: isFromSharedItem,
+                        warningViewModel: warningViewModel)
+                )
+            }
         }
     }
     
