@@ -229,7 +229,9 @@ final class NodeInfoViewController: UITableViewController {
                 case .success(let request) = result,
                 let folderInfo = request.megaFolderInfo
             else {
-                fatalError("Could not fetch MEGAFolderInfo")
+                MEGALogError("Could not fetch MEGAFolderInfo")
+                self?.presentingViewController?.dismiss(animated: true)
+                return
             }
             self.folderInfo = folderInfo
             cacheNodePropertiesSoThatTableViewChangesAreAtomic()
