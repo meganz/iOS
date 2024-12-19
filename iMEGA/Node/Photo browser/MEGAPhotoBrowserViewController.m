@@ -323,13 +323,20 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.view.superview.superview.backgroundColor = transparent ? UIColor.clearColor : UIColor.systemBackgroundColor;
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
-    MEGANode *node = self.dataProvider.currentPhoto;
-    if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
-        if (zoomableView) {
-            zoomableView.subviews.lastObject.hidden = transparent;
-        }
-    }
+    __weak typeof(self) weakSelf = self;
+    [self.dataProvider currentPhotoWithCompletionHandler:^(MEGANode * _Nullable node) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) { return; }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
+                UIScrollView *zoomableView = [strongSelf.imageViewsCache objectForKey:@(strongSelf.dataProvider.currentIndex)];
+                if (zoomableView) {
+                    zoomableView.subviews.lastObject.hidden = transparent;
+                }
+            }
+        });
+    }];
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {

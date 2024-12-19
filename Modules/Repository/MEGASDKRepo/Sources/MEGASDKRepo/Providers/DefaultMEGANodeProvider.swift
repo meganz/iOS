@@ -10,6 +10,6 @@ public struct DefaultMEGANodeProvider: MEGANodeProviderProtocol {
     }
     
     public func node(for handle: HandleEntity) async -> MEGANode? {
-        sdk.node(forHandle: handle)
+        await sdk.node(for: handle)
     }
 }

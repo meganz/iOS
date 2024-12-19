@@ -1,7 +1,7 @@
 import MEGASdk
 import MEGASwift
 
-private let sdkDelegateQueue = DispatchQueue(label: "nz.mega.MEGASDKRepo.MEGASdkAdditions")
+private let sdkQueue = DispatchQueue(label: "nz.mega.MEGASDKRepo.MEGASdkAdditions")
 private let sdkCompletedTransfersProcessingQueue = DispatchQueue(label: "nz.mega.MEGASDKRepo.completedTransfersProcessingQueue")
 
 public extension MEGASdk {
@@ -40,37 +40,37 @@ public extension MEGASdk {
     }
     
     @objc func removeMEGADelegateAsync(_ delegate: any MEGADelegate & Sendable) {
-        sdkDelegateQueue.async { [weak self] in
+        sdkQueue.async { [weak self] in
             self?.remove(delegate)
         }
     }
     
     @objc func removeMEGARequestDelegateAsync(_ delegate: any MEGARequestDelegate & Sendable) {
-        sdkDelegateQueue.async { [weak self] in
+        sdkQueue.async { [weak self] in
             self?.remove(delegate)
         }
     }
     
     @objc func addMEGAGlobalDelegateAsync(_ delegate: any MEGAGlobalDelegate & Sendable, queueType: ListenerQueueType) {
-        sdkDelegateQueue.async { [weak self] in
+        sdkQueue.async { [weak self] in
             self?.add(delegate, queueType: queueType)
         }
     }
     
     @objc func addMEGARequestDelegateAsync(_ delegate: any MEGARequestDelegate & Sendable, queueType: ListenerQueueType) {
-        sdkDelegateQueue.async { [weak self] in
+        sdkQueue.async { [weak self] in
             self?.add(delegate, queueType: queueType)
         }
     }
     
     @objc func removeMEGAGlobalDelegateAsync(_ delegate: any MEGAGlobalDelegate & Sendable) {
-        sdkDelegateQueue.async { [weak self] in
+        sdkQueue.async { [weak self] in
             self?.remove(delegate)
         }
     }
     
     @objc func removeMEGATransferDelegateAsync(_ delegate: any MEGATransferDelegate & Sendable) {
-        sdkDelegateQueue.async { [weak self] in
+        sdkQueue.async { [weak self] in
             self?.remove(delegate)
         }
     }
@@ -84,5 +84,16 @@ public extension MEGASdk {
         let completedTransfers = NSMutableArray()
         MEGASdk.completedTransfers.mutate { $0[key] = completedTransfers }
         return completedTransfers
+    }
+}
+
+public extension MEGASdk {
+    func node(for handle: UInt64) async -> MEGANode? {
+        await withCheckedContinuation { continuation in
+            sdkQueue.async {
+                let node = self.node(forHandle: handle)
+                continuation.resume(returning: node)
+            }
+        }
     }
 }
