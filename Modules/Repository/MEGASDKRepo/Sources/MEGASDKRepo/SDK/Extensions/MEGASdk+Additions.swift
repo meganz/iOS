@@ -88,7 +88,7 @@ public extension MEGASdk {
 }
 
 public extension MEGASdk {
-    func node(for handle: UInt64) async -> MEGANode? {
+    @objc func node(for handle: UInt64) async -> MEGANode? {
         await withCheckedContinuation { continuation in
             sdkQueue.async {
                 let node = self.node(forHandle: handle)
