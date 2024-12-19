@@ -452,7 +452,7 @@ final class NodeInfoViewController: UITableViewController {
                             accountUseCase: AccountUseCase(
                                 repository: AccountRepository.newRepo
                             )
-                        )
+                        ), expiredAccountAlertPresenter: UIApplication.shared.delegate as? AppDelegate
                     )
                 )
             )
@@ -968,3 +968,5 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
         CrashlyticsLogger.log(category: .nodeInfo, message)
     }
 }
+
+extension AppDelegate: CloudDrive.ExpiredAccountAlertPresenting {}
