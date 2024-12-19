@@ -394,11 +394,19 @@
 }
 
 - (void)presentMediaNode:(MEGANode *)node {
-    MEGANode *parentNode = [MEGASdk.sharedFolderLink nodeForHandle:node.parentHandle];
-    MEGANodeList *nodeList = [MEGASdk.sharedFolderLink childrenForParent:parentNode];
-    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:MEGASdk.sharedFolderLink];
-    
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.sharedFolderLink displayMode:DisplayModeNodeInsideFolderLink isFromSharedItem:NO presentingNode:node];
+    __weak typeof(self) weakSelf = self;
+    [MEGASdk.sharedFolderLink nodeFor:node.parentHandle completionHandler:^(MEGANode * _Nullable parentNode) {
+        MEGANodeList *nodeList = [MEGASdk.sharedFolderLink childrenForParent:parentNode];
+        NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:MEGASdk.sharedFolderLink];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf presentPhotoBrowser:mediaNodesArray presentingNode:node];
+        });
+    }];
+}
+
+- (void)presentPhotoBrowser:(NSMutableArray<MEGANode *> *)nodes presentingNode:(MEGANode *)node {
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodes api:MEGASdk.sharedFolderLink displayMode:DisplayModeNodeInsideFolderLink isFromSharedItem:NO presentingNode:node];
     
     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
