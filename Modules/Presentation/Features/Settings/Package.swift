@@ -24,13 +24,25 @@ let package = Package(
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../Repository/ChatRepo"),
         .package(path: "../../../UI/MEGASwiftUI"),
-        .package(path: "../../Repository/LogRepo")
+        .package(path: "../../Repository/LogRepo"),
+        .package(path: "../../../UI/MEGAUIComponent"),
+        .package(path: "../../../Infrastracture/MEGAConnectivity")
     ],
     targets: [
         .target(
             name: "Settings",
-            dependencies: ["MEGADomain", "MEGAPresentation", "MEGAL10n", "ChatRepo", "LogRepo", "MEGASwiftUI"],
-            swiftSettings: settings),
+            dependencies: [
+                "MEGADomain",
+                "MEGAPresentation",
+                "MEGAL10n",
+                "ChatRepo",
+                "LogRepo",
+                "MEGASwiftUI",
+                "MEGAUIComponent",
+                "MEGAConnectivity"
+            ],
+            swiftSettings: settings
+        ),
         .testTarget(
             name: "SettingsTests",
             dependencies: ["Settings",

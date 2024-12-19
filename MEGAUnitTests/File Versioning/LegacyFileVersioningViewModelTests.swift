@@ -3,14 +3,14 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
-final class FileVersioningViewModelTests: XCTestCase {
+final class LegacyFileVersioningViewModelTests: XCTestCase {
     let mockRouter = MockFileVersioningViewRouter()
     
     @MainActor func testAction_onViewLoaded() {
         let fileVersionsUseCase = MockFileVersionsUseCase(versions: 4,
                                                           versionsSize: 360000,
                                                           isFileVersionsEnabled: .success(true))
-        let sut = FileVersioningViewModel(router: mockRouter,
+        let sut = LegacyFileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
                                           accountUseCase: MockAccountUseCase())
         
@@ -21,7 +21,7 @@ final class FileVersioningViewModelTests: XCTestCase {
     
     @MainActor func testAction_enableFileVersions() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(false), enableFileVersions: .success(true))
-        let sut = FileVersioningViewModel(router: mockRouter,
+        let sut = LegacyFileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
                                           accountUseCase: MockAccountUseCase())
         
@@ -33,7 +33,7 @@ final class FileVersioningViewModelTests: XCTestCase {
     @MainActor func testAction_disableFileVersions_user_taps_yes_in_the_alert() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true),
                                                           enableFileVersions: .success(false))
-        let sut = FileVersioningViewModel(router: mockRouter,
+        let sut = LegacyFileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
                                           accountUseCase: MockAccountUseCase())
         
@@ -46,7 +46,7 @@ final class FileVersioningViewModelTests: XCTestCase {
     @MainActor func testAction_disableFileVersions_user_taps_no_in_the_alert() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true))
         mockRouter.tapYesDisableAlert = false
-        let sut = FileVersioningViewModel(router: mockRouter,
+        let sut = LegacyFileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
                                           accountUseCase: MockAccountUseCase())
         
@@ -59,7 +59,7 @@ final class FileVersioningViewModelTests: XCTestCase {
     @MainActor func testAction_deletePreviousVersions_user_taps_yes_in_the_alert() {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true),
                                                           deletePreviousFileVersions: .success(true))
-        let sut = FileVersioningViewModel(router: mockRouter,
+        let sut = LegacyFileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
                                           accountUseCase: MockAccountUseCase(accountDetailsResult: .success(AccountDetailsEntity.build())))
         
@@ -72,7 +72,7 @@ final class FileVersioningViewModelTests: XCTestCase {
     @MainActor func testAction_deletePreviousVersions_user_taps_no_in_the_alert() {
         mockRouter.tapYesDeletePreviousVersionsAlert = false
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true))
-        let sut = FileVersioningViewModel(router: mockRouter,
+        let sut = LegacyFileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
                                           accountUseCase: MockAccountUseCase())
         

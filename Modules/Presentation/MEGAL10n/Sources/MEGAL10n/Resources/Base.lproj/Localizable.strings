@@ -844,6 +844,24 @@
 "settings.fileManagement.clearOfflineFiles.alert.confirmationButton" = "Clear";
 /* Confirmation message displayed after clearing offline files */
 "settings.fileManagement.clearOfflineFiles.done.message" = "Offline files cleared";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="Create multiple versions of your files. Disabling this setting does not stop your contacts from creating new versions.";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Delete all older version of files";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Delete older versions of files?";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Any file version shared to you from a contact will need to be deleted by them. Current version of files won’t be deleted.";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="File versions deleted";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Disable File versioning?";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, the current version will be replaced once a file is updated.";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Disable";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="All current files will remain. Only historic versions of your files will be deleted.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Don’t use HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
