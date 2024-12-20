@@ -61,6 +61,7 @@ struct ManageTagsView: View {
             )
             .focused($hasFocus)
             .textInputAutocapitalization(.never)
+            .disableAutocorrection(true)
             .onSubmit {
                 hasFocus = false
             }
@@ -98,7 +99,7 @@ struct ManageTagsView: View {
         VStack {
             searchTagStatusView
 
-            if viewModel.containsExistingTags {
+            if viewModel.shouldShowOverviewView {
                 ExistingTagsOverviewView(viewModel: viewModel.existingTagsViewModel)
             } else {
                 Spacer()
@@ -119,8 +120,6 @@ struct ManageTagsView: View {
             errorView(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.tagNameTooLong)
         case .valid where viewModel.canAddNewTag:
             addTagView
-        case .valid where !viewModel.containsExistingTags:
-            ExistingTagsLoadingView()
         case .valid:
             EmptyView()
         }

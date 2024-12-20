@@ -22,6 +22,14 @@ final class ManageTagsViewModel: ObservableObject {
     private var subscriptions: Set<AnyCancellable> = []
     private var searchingTask: Task<Void, Never>?
 
+    var shouldShowOverviewView: Bool {
+        containsExistingTags
+        || (!existingTagsViewModel.isLoading
+            && !containsExistingTags
+            && !canAddNewTag
+            && existingTagsViewModel.hasReachedMaxLimit)
+    }
+
     init(navigationBarViewModel: ManageTagsViewNavigationBarViewModel, existingTagsViewModel: ExistingTagsViewModel) {
         self.navigationBarViewModel = navigationBarViewModel
         self.existingTagsViewModel = existingTagsViewModel
@@ -114,7 +122,9 @@ final class ManageTagsViewModel: ObservableObject {
             .sink { [weak self] tagViewModels in
                 guard let self else { return }
                 containsExistingTags = tagViewModels.isNotEmpty
-                canAddNewTag = tagViewModels.notContains { $0.tag == tagName }
+                if !existingTagsViewModel.hasReachedMaxLimit {
+                    canAddNewTag = tagViewModels.notContains { $0.tag == tagName }
+                }
             }
             .store(in: &subscriptions)
     }

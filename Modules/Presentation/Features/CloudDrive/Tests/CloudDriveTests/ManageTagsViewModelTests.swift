@@ -231,6 +231,45 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
+    @Test("Verify should show overview")
+    func verifyShouldShowOverviewView() {
+        let sut = makeSUT()
+        sut.existingTagsViewModel.hasReachedMaxLimit = true
+        #expect(sut.shouldShowOverviewView == true)
+        sut.existingTagsViewModel.isLoading = true
+        #expect(sut.shouldShowOverviewView == false)
+        sut.existingTagsViewModel.isLoading = false
+        sut.canAddNewTag = true
+        #expect(sut.shouldShowOverviewView == false)
+        sut.canAddNewTag = false
+        sut.existingTagsViewModel.hasReachedMaxLimit = false
+        #expect(sut.shouldShowOverviewView == false)
+    }
+
+    @MainActor
+    @Test("Verify Add tag button should not be shown when max limit reached")
+    func verifyAddTagButtonWhenMaxLimitReached() async {
+        let nodeSearcher = MockNodeTagsSearcher(tags: [
+            "tag1",
+            "tag2",
+            "tag3",
+            "tag4",
+            "tag5",
+            "tag6",
+            "tag7",
+            "tag8",
+            "tag9"
+        ])
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.canAddNewTag = true
+        await sut.loadAllTags()
+        sut.tagNameState = .valid
+        sut.tagName = "tag10"
+        sut.addTag()
+        #expect(sut.canAddNewTag == false)
+    }
+
+    @MainActor
     private func makeSUT(nodeSearcher: some NodeTagsSearching = MockNodeTagsSearcher()) -> ManageTagsViewModel {
         ManageTagsViewModel(
             navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
