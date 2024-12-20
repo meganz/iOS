@@ -1,6 +1,7 @@
 import Combine
 import MEGAL10n
 import MEGASwift
+import MEGASwiftUI
 import SwiftUI
 
 @MainActor
@@ -20,6 +21,8 @@ final class ExistingTagsViewModel: ObservableObject {
     @Published var tagsViewModel: NodeTagsViewModel
     @Published var isLoading = false
     @Published var hasReachedMaxLimit: Bool
+    @Published var snackBar: SnackBar?
+
     private let nodeTagSearcher: any NodeTagsSearching
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -104,6 +107,10 @@ final class ExistingTagsViewModel: ObservableObject {
             .sink { [weak self, weak tagViewModel] tag in
                 guard let self, let tagViewModel else { return }
 
+                if showSelectedTagsMaxLimitReachedToastIfNeeded(for: tag) {
+                    return
+                }
+
                 if newlyAddedTags.contains(tag) {
                     removeDeselectedNewlyAddedTags(tagViewModel: tagViewModel)
                 } else {
@@ -176,5 +183,17 @@ final class ExistingTagsViewModel: ObservableObject {
         withAnimation {
             hasReachedMaxLimit = (selectedTags.count + newlyAddedTags.count) >= tagSelectionLimit.maxTagsAllowed
         }
+    }
+
+    private func showSelectedTagsMaxLimitReachedToastIfNeeded(for tag: String) -> Bool {
+        guard hasReachedMaxLimit, selectedTags.notContains(tag), newlyAddedTags.notContains(tag) else {
+            snackBar = nil
+            return false
+        }
+
+        snackBar = SnackBar(
+            message: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Selection.maxLimitReachedAlertMessage
+        )
+        return true
     }
 }

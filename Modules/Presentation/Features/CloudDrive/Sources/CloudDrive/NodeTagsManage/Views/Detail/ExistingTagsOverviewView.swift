@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct ExistingTagsOverviewView: View {
@@ -21,6 +22,7 @@ struct ExistingTagsOverviewView: View {
             ExistingTagsView(viewModel: viewModel)
                 .padding(.top, viewModel.hasReachedMaxLimit ? TokenSpacing._3 : TokenSpacing._5)
         }
+        .snackBar($viewModel.snackBar)
         .padding(
             EdgeInsets(top: TokenSpacing._5, leading: TokenSpacing._5, bottom: 0, trailing: TokenSpacing._5)
         )

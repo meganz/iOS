@@ -47,6 +47,7 @@ let package = Package(
             dependencies: [
                 "CloudDrive",
                 "MEGAL10n",
+                "MEGASwiftUI",
                 .product(
                     name: "MEGADomainMock",
                     package: "MEGADomain"

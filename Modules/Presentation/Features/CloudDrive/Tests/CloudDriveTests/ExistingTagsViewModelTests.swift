@@ -1,5 +1,6 @@
 @testable import CloudDrive
 import MEGAL10n
+import MEGASwiftUI
 import Testing
 
 @Suite("ExistingTagsViewModel Tests")
@@ -186,9 +187,12 @@ struct ExistingTagsViewModelTests {
         sut.tagsViewModel.tagViewModels.first?.toggle()
         #expect(sut.hasReachedMaxLimit == false)
 
+        sut.addAndSelectNewTag("tag11")
+
         sut.tagsViewModel.tagViewModels.last?.toggle()
         #expect(sut.hasReachedMaxLimit)
         #expect(sut.maxLimitReachedAlertMessage == bannerMessage)
+        #expect(sut.snackBar == SnackBar(message: bannerMessage))
     }
 
     // MARK: - Helpers
