@@ -1,4 +1,5 @@
 import Accounts
+import GoogleMobileAds
 import UserMessagingPlatform
 
 public enum AdMobError: Error {
@@ -33,14 +34,12 @@ public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol,
         self.shouldThrowError = shouldThrowError
     }
     
-    public func requestConsentInfoUpdate(with parameters: UMPRequestParameters?) async throws {
+    public func requestConsentInfoUpdate(with parameters: UMPRequestParameters?, completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler) {
         didRequestConsentInfoUpdate = true
-        
-        // Simulate async operation
-        try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-        
         if shouldThrowError {
-            throw AdMobError.genericError
+            completionHandler(AdMobError.genericError)
+        } else {
+            completionHandler(nil)
         }
     }
 }
@@ -48,11 +47,9 @@ public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol,
 public final class MockAdMobConsentForm: AdMobConsentFormProtocol, @unchecked Sendable {
     nonisolated(unsafe) public static private(set) var didLoadAndPresent = false
     
-    public static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws {
+    public static func loadAndPresentIfRequired(from viewController: UIViewController?, completionHandler: UMPConsentFormPresentCompletionHandler?) {
         didLoadAndPresent = true
-        
-        // Simulate async operation
-        try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+        completionHandler?(nil)
     }
 }
 
@@ -61,7 +58,7 @@ public final class MockMobileAds: MobileAdsProtocol, @unchecked Sendable {
 
     public init() {}
     
-    public func startAds() {
+    public func start(completionHandler: GADInitializationCompletionHandler?) {
         startAdsCalledCount += 1
     }
 }
