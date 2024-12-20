@@ -40,7 +40,7 @@ extension ColorFactory {
     
     func independent(_ style: MEGAColor.Independent) -> UIColor {
         switch style {
-        case .bright: return UIColor.whiteFFFFFF
+        case .bright: return TokenColors.Text.onColor
         case .dark: return TokenColors.Text.primary
         case .clear: return UIColor.whiteFFFFFF00
         case .warning: return UIColor.redFF3B30

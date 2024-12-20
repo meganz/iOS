@@ -17,7 +17,7 @@ struct DarkColorThemeFactory: ColorFactory {
         case .disabled: return UIColor.gray999999
         case .highlighted: return UIColor.green00A88680
         case .searchTextField: return UIColor.black29292C
-        case .homeTopSide: return TokenColors.Text.primary
+        case .homeTopSide: return TokenColors.Background.page
         }
     }
     
