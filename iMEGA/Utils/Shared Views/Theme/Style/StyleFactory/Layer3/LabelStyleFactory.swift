@@ -129,7 +129,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
     }
 
     private func homeBannerStyler() -> LabelStyler {
-        let textColorStyler = colorFactory.independent(.dark).asTextColorStyle
+        let textColorStyler = colorFactory.independent(.bright).asTextColorStyle
         let titleMediumTextStyler = textStyleFactory.textStyle(of: .footnoteBold)
         return { label in
             titleMediumTextStyler
@@ -139,7 +139,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
     }
 
     private func homeBannerSubtitleStyler() -> LabelStyler {
-        let textColorStyler = colorFactory.independent(.dark).asTextColorStyle
+        let textColorStyler = colorFactory.independent(.bright).asTextColorStyle
         let titleMediumTextStyler = textStyleFactory.textStyle(of: .caption2)
         let multilineTextStyler = paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping)
         return { label in
