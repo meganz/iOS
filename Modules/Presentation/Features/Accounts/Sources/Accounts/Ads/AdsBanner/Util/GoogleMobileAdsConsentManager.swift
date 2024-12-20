@@ -9,15 +9,21 @@ public protocol GoogleMobileAdsConsentManagerProtocol: Sendable {
 
 public protocol AdMobConsentInformationProtocol: Sendable {
     var canRequestAds: Bool { get }
-    func requestConsentInfoUpdate(with parameters: UMPRequestParameters?) async throws
+    func requestConsentInfoUpdate(
+        with parameters: UMPRequestParameters?,
+        completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler
+    )
 }
 
 public protocol AdMobConsentFormProtocol {
-    static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws
+    static func loadAndPresentIfRequired(
+        from viewController: UIViewController?,
+        completionHandler: UMPConsentFormPresentCompletionHandler?
+    )
 }
 
 public protocol MobileAdsProtocol: Sendable {
-    func startAds() async
+    func start(completionHandler: GADInitializationCompletionHandler?)
 }
 
 /// AdMob contains all the unit ids for AdMob.
@@ -66,12 +72,9 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     @MainActor
     public func gatherConsent() async throws {
         do {
-            let parameters = UMPRequestParameters()
-            parameters.tagForUnderAgeOfConsent = false
-            
             // Requesting an update to consent information should be called on every app launch.
-            try await consentInformation.requestConsentInfoUpdate(with: parameters)
-            try await consentFormType.loadAndPresentIfRequired(from: nil)
+            try await requestConsentInfoUpdate()
+            try await loadAndPresentIfRequired()
         } catch {
             throw error
         }
@@ -79,12 +82,44 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     
     /// Initializes the Google Mobile Ads SDK. The SDK should only be initialized once.
     @MainActor
-    public func initializeGoogleMobileAdsSDK() async {
+    public func initializeGoogleMobileAdsSDK() {
         guard canRequestAds, !isMobileAdsInitialized else { return }
         
         $isMobileAdsInitialized.mutate { $0 = true }
         
-        await mobileAds.startAds()
+        mobileAds.start(completionHandler: nil)
+    }
+    
+    // MARK: - Private
+    @discardableResult
+    private func requestConsentInfoUpdate() async throws -> Bool {
+        try await withAsyncThrowingValue { completion in
+            let parameters = UMPRequestParameters()
+            parameters.tagForUnderAgeOfConsent = false
+            
+            consentInformation.requestConsentInfoUpdate(with: parameters) { requestConsentError in
+                if let requestConsentError {
+                    completion(.failure(requestConsentError))
+                    return
+                }
+                completion(.success(true))
+            }
+        }
+    }
+   
+    @discardableResult
+    private func loadAndPresentIfRequired(
+        from viewController: UIViewController? = nil
+    ) async throws -> Bool {
+        try await withAsyncThrowingValue { completion in
+            consentFormType.loadAndPresentIfRequired(from: viewController) { error in
+                if let error {
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(true))
+            }
+        }
     }
 }
 
@@ -95,8 +130,4 @@ extension UMPConsentForm: @retroactive @unchecked Sendable {}
 extension UMPConsentForm: AdMobConsentFormProtocol {}
 
 extension GADMobileAds: @retroactive @unchecked Sendable {}
-extension GADMobileAds: MobileAdsProtocol {
-    public func startAds() async {
-        await start()
-    }
-}
+extension GADMobileAds: MobileAdsProtocol {}
