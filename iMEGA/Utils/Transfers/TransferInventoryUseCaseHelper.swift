@@ -3,7 +3,7 @@ import MEGARepo
 import MEGASDKRepo
 
 @objc final class TransferInventoryUseCaseHelper: NSObject {
-    private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
+    private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo)
     private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.sharedFolderLink), fileSystemRepository: FileSystemRepository.newRepo)
     
     @objc func completedTransfers() -> [MEGATransfer] {

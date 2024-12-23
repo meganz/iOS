@@ -2,6 +2,10 @@ import MEGADomain
 import MEGASdk
 
 public struct TransferInventoryRepository: TransferInventoryRepositoryProtocol {
+    public static var newRepo: TransferInventoryRepository {
+        TransferInventoryRepository(sdk: MEGASdk.sharedSdk)
+    }
+    
     private let sdk: MEGASdk
     private let queue = DispatchQueue(label: "nz.mega.MEGASDKRepo.TransferInventoryRepository")
     

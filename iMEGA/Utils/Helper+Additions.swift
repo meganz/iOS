@@ -1,6 +1,7 @@
 import Foundation
 import LogRepo
 import MEGADomain
+import MEGARepo
 import MEGASDKRepo
 
 extension Helper {
@@ -34,7 +35,7 @@ extension Helper {
     }
 }
 
-// - MARK: Feature Flags
+// MARK: - Feature Flags
 
 extension Helper {
     // As we're using the same MEGA group identifier for both preferences and as a
@@ -56,5 +57,18 @@ extension Helper {
         }
 
         cachedFeatureFlags = featureFlags
+    }
+}
+
+// MARK: - Transfers
+
+extension Helper {
+    @objc static func areQueuedTransfersPaused() -> Bool {
+        let transfersListenerUseCase = TransfersListenerUseCase(
+            repo: TransfersListenerRepository.newRepo,
+            preferenceUseCase: PreferenceUseCase.default
+        )
+        
+        return transfersListenerUseCase.areQueuedTransfersPaused()
     }
 }

@@ -1486,6 +1486,7 @@
 		94D362752C761DF40043621D /* NewChatEmptyCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D362742C761DF40043621D /* NewChatEmptyCenterView.swift */; };
 		94D362772C761E2D0043621D /* NewChatEmptyButonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D362762C761E2D0043621D /* NewChatEmptyButonView.swift */; };
 		94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D4E9EA2C359F7100B07C3B /* MockCXProvider.swift */; };
+		94D5DA9D2D15DC760031C2CD /* TransfersWidgetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D5DA9C2D15DC6D0031C2CD /* TransfersWidgetViewModelTests.swift */; };
 		94DC6A8B2C3DACB60069E604 /* ContactsGroupCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */; };
 		94DCA6C82CAADEBD00F28AA2 /* SimpleDialogConfigFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */; };
 		94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */; };
@@ -1504,6 +1505,7 @@
 		94FABD152ADE95A9003E8894 /* CameraUploadsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */; };
 		94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */; };
 		94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */; };
+		94FCE01B2D15C327000C63A4 /* TransfersWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FCE01A2D15C321000C63A4 /* TransfersWidgetViewModel.swift */; };
 		94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */; };
@@ -4203,6 +4205,7 @@
 		94D362742C761DF40043621D /* NewChatEmptyCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatEmptyCenterView.swift; sourceTree = "<group>"; };
 		94D362762C761E2D0043621D /* NewChatEmptyButonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatEmptyButonView.swift; sourceTree = "<group>"; };
 		94D4E9EA2C359F7100B07C3B /* MockCXProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCXProvider.swift; sourceTree = "<group>"; };
+		94D5DA9C2D15DC6D0031C2CD /* TransfersWidgetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersWidgetViewModelTests.swift; sourceTree = "<group>"; };
 		94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupCellViewModel.swift; sourceTree = "<group>"; };
 		94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDialogConfigFactoryTests.swift; sourceTree = "<group>"; };
 		94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Permissions.swift"; sourceTree = "<group>"; };
@@ -4223,6 +4226,7 @@
 		94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraUploadsRepository.swift; sourceTree = "<group>"; };
 		94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+ResultProperties.swift"; sourceTree = "<group>"; };
 		94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucketProvider.swift; sourceTree = "<group>"; };
+		94FCE01A2D15C321000C63A4 /* TransfersWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersWidgetViewModel.swift; sourceTree = "<group>"; };
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
 		9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewRouter.swift; sourceTree = "<group>"; };
 		9911BA8D2A8B20CD00B88F28 /* WaitingRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewController.swift; sourceTree = "<group>"; };
@@ -9551,17 +9555,10 @@
 		83B5E87527F6F8300073C870 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
-				83B5E87A27F6FB750073C870 /* Mocks */,
 				83B5E87827F6F8F50073C870 /* CancellableTransferViewModelTests.swift */,
+				94D5DA9C2D15DC6D0031C2CD /* TransfersWidgetViewModelTests.swift */,
 			);
 			path = Transfers;
-			sourceTree = "<group>";
-		};
-		83B5E87A27F6FB750073C870 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Mocks;
 			sourceTree = "<group>";
 		};
 		83B804C52AB89772006B356F /* ParticipantNotInCall */ = {
@@ -10412,6 +10409,14 @@
 				94F92EB72CAAD6DE00966A0F /* ShareLinkDialogRouter.swift */,
 			);
 			path = ShareLink;
+			sourceTree = "<group>";
+		};
+		94FCE0192D15C302000C63A4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				94FCE01A2D15C321000C63A4 /* TransfersWidgetViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		9911BA892A8B209F00B88F28 /* WaitingRoom */ = {
@@ -13162,6 +13167,7 @@
 			isa = PBXGroup;
 			children = (
 				83A2894C27F5B7B60063CA8C /* CancellableTransfers */,
+				94FCE0192D15C302000C63A4 /* ViewModel */,
 				2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */,
 				2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */,
 				94614C742910554200503174 /* TransferNodeTableViewCell.xib */,
@@ -15625,6 +15631,7 @@
 				83A4E47327F49AE000A429F4 /* TransferStage.swift in Sources */,
 				5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */,
 				2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */,
+				94FCE01B2D15C327000C63A4 /* TransfersWidgetViewModel.swift in Sources */,
 				B5A5F0702B7A19F600B31ABD /* TransferTableViewCell+Additions.swift in Sources */,
 				2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */,
 				A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */,
@@ -16426,6 +16433,7 @@
 				25CF5EBE2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift in Sources */,
 				9402EF522B70DE69002F7714 /* ToolbarActionFactoryTests.swift in Sources */,
 				947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */,
+				94D5DA9D2D15DC760031C2CD /* TransfersWidgetViewModelTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,

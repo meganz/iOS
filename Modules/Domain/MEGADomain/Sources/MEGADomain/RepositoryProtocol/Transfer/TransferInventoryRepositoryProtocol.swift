@@ -1,4 +1,4 @@
-public protocol TransferInventoryRepositoryProtocol: Sendable {
+public protocol TransferInventoryRepositoryProtocol: RepositoryProtocol, Sendable {
     /// This function is deprecated, please use async version instead
     func transfers() -> [TransferEntity]
     func transfers() async -> [TransferEntity]
