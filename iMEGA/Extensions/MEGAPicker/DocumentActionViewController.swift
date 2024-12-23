@@ -34,7 +34,9 @@ final class DocumentActionViewController: FPUIActionExtensionViewController {
         }
         
         extensionContext.open(url) { [weak self] _ in
-            self?.extensionContext.completeRequest()
+            Task { @MainActor in
+                self?.extensionContext.completeRequest()
+            }
         }
     }
     
