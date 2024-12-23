@@ -153,10 +153,14 @@ final class HomeScreenFactory: NSObject {
     }
 
     private func makeDownloadedNodesListener() -> some DownloadedNodesListening {
-        CloudDriveDownloadedNodesListener(subListeners: [
-            CloudDriveDownloadTransfersListener(
-                sdk: sdk,
-                transfersListenerUsecase: TransfersListenerUseCase(repo: TransfersListenerRepository.newRepo),
+        CloudDriveDownloadedNodesListener(
+            subListeners: [
+                CloudDriveDownloadTransfersListener(
+                    sdk: sdk,
+                    transfersListenerUsecase: TransfersListenerUseCase(
+                        repo: TransfersListenerRepository.newRepo,
+                        preferenceUseCase: PreferenceUseCase.default
+                    ),
                 fileSystemRepo: FileSystemRepository.newRepo
             ),
             NodesSavedToOfflineListener(notificationCenter: .default)

@@ -46,9 +46,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *clearAllButton;
 
 @property (strong, nonatomic) TransferInventoryUseCaseHelper *transferInventoryUseCaseHelper;
-@property (strong, nonatomic) NSMutableArray<MEGATransfer *> *transfers;
-@property (strong, nonatomic) NSMutableArray<NSString *> *uploadTransfersQueued;
-@property (strong, nonatomic) NSMutableArray<MEGATransfer *> *completedTransfers;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *selectedTransfers;
 
 @property (nonatomic, getter=areTransfersPaused) BOOL transfersPaused;
@@ -80,7 +77,7 @@ static TransfersWidgetViewController* instance = nil;
     [super viewDidLoad];
     
     self.title = LocalizedString(@"transfers", @"Transfers");
-    self.uploadTransfersQueued = NSMutableArray.new;
+    self.queuedUploadTransfers = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
     self.transferInventoryUseCaseHelper = [[TransferInventoryUseCaseHelper alloc] init];
     
@@ -107,8 +104,7 @@ static TransfersWidgetViewController* instance = nil;
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [MEGASdk.sharedFolderLink retryPendingConnections];
     
-    [self reloadView];
-    
+    [self handleTransferSelectionForTag:self.inProgressButton.tag];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -159,6 +155,14 @@ static TransfersWidgetViewController* instance = nil;
     }
 }
 
+- (TransfersWidgetViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self createTransfersWidgetViewModel];
+    }
+    
+    return _viewModel;
+}
+
 - (void)updateSelector {
     self.inProgressButton.backgroundColor = self.completedButton.backgroundColor = [UIColor surface1Background];
     
@@ -193,18 +197,18 @@ static TransfersWidgetViewController* instance = nil;
     
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll: {
-            BOOL ongoingTransfers = self.transfers.count > 0;
-            self.editBarButtonItem.enabled = ongoingTransfers;
-            self.cancelBarButtonItem.enabled = ongoingTransfers;
-            self.toolbar.hidden = !ongoingTransfers;
+            BOOL hasActiveTransfers = [self hasActiveTransfers];
+            self.editBarButtonItem.enabled = hasActiveTransfers;
+            self.cancelBarButtonItem.enabled = hasActiveTransfers;
+            self.toolbar.hidden = !hasActiveTransfers;
             break;
         }
             
         case TransfersWidgetSelectedCompleted: {
-            BOOL completedTransfers = self.completedTransfers.count > 0;
-            self.editBarButtonItem.enabled = completedTransfers;
-            self.toolbar.hidden = !completedTransfers;
-            self.clearAllButton.enabled = !self.tableView.isEditing || (completedTransfers && self.selectedTransfers.count > 0);
+            BOOL hasCompletedTransfers = [self hasCompletedTransfers];
+            self.editBarButtonItem.enabled = hasCompletedTransfers;
+            self.toolbar.hidden = !hasCompletedTransfers;
+            self.clearAllButton.enabled = !self.tableView.isEditing || (hasCompletedTransfers && self.selectedTransfers.count > 0);
             break;
         }
     }
@@ -286,7 +290,7 @@ static TransfersWidgetViewController* instance = nil;
             }
                 
             case 1: {
-                NSString *uploadTransferLocalIdentifier = [self.uploadTransfersQueued objectOrNilAtIndex:indexPath.row];
+                NSString *uploadTransferLocalIdentifier = [self.queuedUploadTransfers objectOrNilAtIndex:indexPath.row];
                 [cell configureCellForQueuedTransfer:uploadTransferLocalIdentifier delegate:self];
                 break;
             }
@@ -336,7 +340,7 @@ static TransfersWidgetViewController* instance = nil;
                 break;
                 
             case 1:
-                numberOfRows = self.uploadTransfersQueued.count;
+                numberOfRows = self.queuedUploadTransfers.count;
                 
                 break;
             default:
@@ -509,19 +513,19 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)getQueuedUploadTransfers {
-    NSArray *tempUploadTransfersQueued = [[MEGAStore shareInstance] fetchUploadTransfers];
+    NSArray *tempqueuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
     
-    NSMutableArray *uploadTransfersQueued = NSMutableArray.new;
-    for (MOUploadTransfer *uploadQueuedTransfer in tempUploadTransfersQueued) {
-        [uploadTransfersQueued addObject:uploadQueuedTransfer.localIdentifier];
+    NSMutableArray *queuedUploadTransfers = NSMutableArray.new;
+    for (MOUploadTransfer *uploadQueuedTransfer in tempqueuedUploadTransfers) {
+        [queuedUploadTransfers addObject:uploadQueuedTransfer.localIdentifier];
     }
     
-    self.uploadTransfersQueued = uploadTransfersQueued;
+    self.queuedUploadTransfers = queuedUploadTransfers;
 }
 
 - (void)cleanTransfersList {
     [self.transfers removeAllObjects];
-    [self.uploadTransfersQueued removeAllObjects];
+    [self.queuedUploadTransfers removeAllObjects];
 }
 
 - (void)cancelTransfersForDirection:(NSInteger)direction {
@@ -565,8 +569,8 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (NSIndexPath *)indexPathForUploadTransferQueuedWithLocalIdentifier:(NSString *)localIdentifier {
-    for (int i = 0; i < self.uploadTransfersQueued.count; i++) {
-        NSString *tempLocalIndentifier = [self.uploadTransfersQueued objectOrNilAtIndex:i];
+    for (int i = 0; i < self.queuedUploadTransfers.count; i++) {
+        NSString *tempLocalIndentifier = [self.queuedUploadTransfers objectOrNilAtIndex:i];
         if ([localIdentifier isEqualToString:tempLocalIndentifier]) {
             return [NSIndexPath indexPathForRow:i inSection:1];
         }
@@ -633,7 +637,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)deleteUploadQueuedTransferWithLocalIdentifier:(NSString *)localIdentifier {
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (indexPath) {
-        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+        [self.queuedUploadTransfers removeObjectAtIndex:indexPath.row];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
@@ -641,7 +645,6 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
-    
     NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
     
     if (self.inProgressButton.selected) {
@@ -652,13 +655,11 @@ static TransfersWidgetViewController* instance = nil;
                 [self.progressView configureData];
                 self.toolbar.hidden = YES;
             }
-            
         }
     } else {
         [self.tableView debounce:@selector(reloadData) delay:0.1];
         self.toolbar.hidden = NO;
     }
-    
 }
 
 - (NSInteger)numberOfActiveTransfers {
@@ -702,11 +703,15 @@ static TransfersWidgetViewController* instance = nil;
 #pragma mark - IBActions
 
 - (IBAction)selectTransfersTouchUpInside:(UIButton *)sender {
-    if (sender.tag == self.transfersSelected) {
+    [self handleTransferSelectionForTag:sender.tag];
+}
+
+- (void)handleTransferSelectionForTag:(NSInteger)tag {
+    if (tag == self.transfersSelected) {
         return;
     }
     
-    self.transfersSelected = sender.tag;
+    self.transfersSelected = tag;
     
     switch (self.transfersSelected) {
         default:
@@ -721,9 +726,7 @@ static TransfersWidgetViewController* instance = nil;
             self.completedButton.selected = YES;
             [self.clearAllButton setTitle:self.tableView.isEditing ? LocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : LocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
             break;
-            
     }
-    
     
     [self updateRightBarButtonItems];
     [self reloadView];
@@ -773,15 +776,19 @@ static TransfersWidgetViewController* instance = nil;
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
     [MEGASdk.shared pauseTransfers:YES];
     [MEGASdk.sharedFolderLink pauseTransfers:YES delegate:self];
+    
+    [self pauseQueuedTransfers];
 }
 
 - (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
     [MEGASdk.shared pauseTransfers:NO];
     [MEGASdk.sharedFolderLink pauseTransfers:NO delegate:self];
+    
+    [self resumeQueuedTransfers];
 }
 
 - (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
-    if ((self.transfers.count == 0) && (self.uploadTransfersQueued.count == 0)) {
+    if (![self hasActiveTransfers]) {
         return;
     }
     
@@ -885,8 +892,7 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (NSMutableArray *)completedTransfers {
-    _completedTransfers = [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper completedTransfers]];
-    return _completedTransfers;
+    return [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper completedTransfers]];
 }
 
 #pragma mark - MEGATransferDelegate
@@ -957,7 +963,7 @@ static TransfersWidgetViewController* instance = nil;
     if (localIdentifier && indexPath) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
         
-        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+        [self.queuedUploadTransfers removeObjectAtIndex:indexPath.row];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
         [self.tableView reloadData];
     }
@@ -1035,9 +1041,9 @@ static TransfersWidgetViewController* instance = nil;
 - (BOOL)isEditing {
     BOOL isEditing = false;
     if (self.inProgressButton.selected) {
-        isEditing = self.transfers.count > 0 ? !self.tableView.editing : false;
+        isEditing = [self hasActiveTransfers] ? !self.tableView.editing : false;
     } else {
-        isEditing = self.completedTransfers.count > 0 ? !self.tableView.editing : false;
+        isEditing = [self hasCompletedTransfers] ? !self.tableView.editing : false;
     }
     return isEditing;
 }

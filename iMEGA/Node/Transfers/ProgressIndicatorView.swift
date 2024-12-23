@@ -8,7 +8,7 @@ import UIKit
 final class ProgressIndicatorView: UIView {
     private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     private let transferInventoryUseCase = TransferInventoryUseCase(
-        transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared),
+        transferInventoryRepository: TransferInventoryRepository.newRepo,
         fileSystemRepository: FileSystemRepository.newRepo
     )
     private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(

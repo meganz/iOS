@@ -207,6 +207,8 @@
 }
 
 + (void)startPendingUploadTransferIfNeeded {
+    if ([Helper areQueuedTransfersPaused]) { return; }
+    
     BOOL allUploadTransfersPaused = YES;
     
     MEGATransferList *transferList = [MEGASdk.shared uploadTransfers];
@@ -221,10 +223,14 @@
     }
     
     if (allUploadTransfersPaused) {
-        TransferRecordDTO *transferRecordDTO = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
-        if (transferRecordDTO != nil) {
-            [self startUploadTransferWithTransferRecordDTO:transferRecordDTO];
-        }
+        [self startFirstPendingUploadTransfer];
+    }
+}
+
++ (void)startFirstPendingUploadTransfer {
+    TransferRecordDTO *transferRecordDTO = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
+    if (transferRecordDTO != nil) {
+        [self startUploadTransferWithTransferRecordDTO:transferRecordDTO];
     }
 }
 

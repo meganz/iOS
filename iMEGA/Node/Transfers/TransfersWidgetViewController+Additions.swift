@@ -1,11 +1,28 @@
 import Foundation
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
+import MEGARepo
+import MEGASDKRepo
 import UIKit
 
 extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     private enum Constants {
         static let defaultBottomAnchor: CGFloat = -60
+    }
+    
+    @objc
+    func createTransfersWidgetViewModel() -> TransfersWidgetViewModel {
+        TransfersWidgetViewModel(
+            transfersListenerUseCase: TransfersListenerUseCase(
+                repo: TransfersListenerRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            transfersInventoryUseCase: TransferInventoryUseCase(
+                transferInventoryRepository: TransferInventoryRepository.newRepo,
+                fileSystemRepository: FileSystemRepository.newRepo
+            )
+        )
     }
     
     @objc
@@ -107,6 +124,16 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         tableView?.separatorColor = TokenColors.Border.strong
     }
     
+    @objc
+    func pauseQueuedTransfers() {
+        viewModel.pauseQueuedTransfers()
+    }
+    
+    @objc
+    func resumeQueuedTransfers() {
+        viewModel.resumeQueuedTransfers()
+    }
+    
     // MARK: - Private
     
     @objc
@@ -167,6 +194,17 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         let transferHasPrefix = transfer.path?.hasPrefix(FileManager.default.temporaryDirectory.path) ?? false
 
         return !transferHasPrefix || transfer.appData != nil
+    }
+    
+    @objc
+    func hasActiveTransfers() -> Bool {
+        // Active transfers include ongoing transfers and queued uploads
+        transfers.count > 0 || queuedUploadTransfers.count > 0
+    }
+    
+    @objc
+    func hasCompletedTransfers() -> Bool {
+        completedTransfers.count > 0
     }
     
     // MARK: - NavigationBarButtons

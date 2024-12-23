@@ -14,7 +14,7 @@ import MEGASDKRepo
             photosLibraryRepository: PhotosLibraryRepository.newRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             preferenceUseCase: PreferenceUseCase.default,
-            transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo,
+            transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo,
             saveMediaToPhotoFailureHandler: saveMediaToPhotoFailureHandler
         )
         super.init()
@@ -29,7 +29,7 @@ import MEGASDKRepo
     
     private func handleSaveNode(_ savedToPhotos: Bool) async {
         let transferInventoryUseCase = TransferInventoryUseCase(
-            transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
+            transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo)
         let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
         if savedToPhotos, !anyPendingSavePhotosTransfer {
             await SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
