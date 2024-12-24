@@ -74,6 +74,11 @@ class CallCollectionView: UICollectionView {
     /// This function inserts and reloads but we do reloads manually to avoid flashing of cells when reconfiguring
     /// Check updateParticipantMic, updateParticipantAudioDetected and updateParticipantRaiseHand for update without reloading cells
     private func updateCells(with participants: [CallParticipantEntity]) {
+        guard Set(participants).count == participants.count else {
+            CrashlyticsLogger.log(category: .calls, "[CallCollectionView] Duplicated call participants found: \(participants)")
+            return
+        }
+        
         callParticipants = participants
         
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, CallParticipantEntity>()

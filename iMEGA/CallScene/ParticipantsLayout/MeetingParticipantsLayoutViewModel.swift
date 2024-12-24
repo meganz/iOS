@@ -326,15 +326,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     /// This method returns the index for a participant inside the callParticipants
-    /// Participants has participantId and clientId as unique identifiers inside a call. When participants share screen, a fake participant is duplicated with property isScreenShareCell = true, to differentiate the participant from the share screen stream. For that reason we need to check isScreenShareCell for getting correct index.
     private func index(for participant: CallParticipantEntity) -> Int? {
-        callParticipants.firstIndex(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell})
+        callParticipants.firstIndex(where: {$0 == participant})
     }
     
     /// Participant changes are received with a new full CallParticipantEntity object. This method find same participant in the callParticipants array in order to update it.
     /// isScreenShareCell must be false, as those fake participants are duplicated from the original one just to stream the share screen video, but never updated.
     private func participantToUpdate(from participant: CallParticipantEntity) -> CallParticipantEntity? {
-        guard let participantToUpdate = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else {
+        guard let participantToUpdate = callParticipants.first(where: {$0 == participant}) else {
             MEGALogError("Error getting participant updated")
             return nil
         }
@@ -365,8 +364,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func isParticipantCurrentSpeakerParticipant(_ participant: CallParticipantEntity) -> Bool {
-        speakerParticipant == participant &&
-        speakerParticipant?.isScreenShareCell == participant.isScreenShareCell
+        speakerParticipant == participant
     }
     
     private func requestRemoteScreenShareVideo(for participant: CallParticipantEntity) {
@@ -1134,14 +1132,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func firstCallParticipant(
         _ participant: CallParticipantEntity,
-        in callParticipants: [CallParticipantEntity],
-        shouldCheckScreenShareCell: Bool = false
+        in callParticipants: [CallParticipantEntity]
     ) -> CallParticipantEntity? {
-        if shouldCheckScreenShareCell {
-            return callParticipants.first(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell})
-        } else {
-            return callParticipants.first(where: {$0 == participant})
-        }
+        callParticipants.first(where: {$0 == participant})
     }
     
     private func updateActiveSpeakIndicator(for participant: CallParticipantEntity) {

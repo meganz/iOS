@@ -386,6 +386,9 @@ public final class CallParticipantEntity: @unchecked Sendable {
 }
 
 extension CallParticipantEntity: Equatable {
+    /// Two call participants must have same participantId, clientId and isScreenShareCell to be equal
+    /// participantId (aka user handle) and clientId (same participant could join from different devices at same time) are SDK values
+    /// isScreenShareCell is a property for a copy of a participant that renders sharing screen stream
     public static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
         guard lhs.clientId != .invalid && rhs.clientId != .invalid else {
             // Participant is not in call so clientId does not exists, for 'Not in Call' tab
