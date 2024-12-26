@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol TransferUseCaseProtocol {
+public protocol TransferUseCaseProtocol: Sendable {
     func download(
         node: NodeEntity,
         to localUrl: URL,

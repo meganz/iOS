@@ -1,9 +1,9 @@
-import FileProvider
+@preconcurrency import FileProvider
 import MEGADomain
 import MEGAPickerFileProviderDomain
 import MEGASDKRepo
 
-final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
+final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator, Sendable {
     
     private let identifier: NSFileProviderItemIdentifier
     private let fileProviderEnumeratorUseCase: any FileProviderEnumeratorUseCaseProtocol
