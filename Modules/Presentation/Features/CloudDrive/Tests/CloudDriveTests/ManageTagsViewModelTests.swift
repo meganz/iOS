@@ -270,6 +270,31 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
+    @Test("Verify adding new tag as the 10th tag and then removing it should show the add tag button")
+    func verifyAddingNewTagAsThe10thTagAndThenRemovingItShouldShowTheAddTagButton() async throws {
+        let nodeSearcher = MockNodeTagsSearcher(tags: [
+            "tag1",
+            "tag2",
+            "tag3",
+            "tag4",
+            "tag5",
+            "tag6",
+            "tag7",
+            "tag8",
+            "tag9"
+        ])
+        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        sut.canAddNewTag = true
+        await sut.loadAllTags()
+        sut.tagNameState = .valid
+        sut.tagName = "amo"
+        sut.addTag()
+        sut.tagName = "amo"
+        sut.existingTagsViewModel.tagsViewModel.tagViewModels.filter({ $0.tag == "amo" }).first?.toggle()
+        #expect(sut.canAddNewTag == true)
+    }
+
+    @MainActor
     private func makeSUT(nodeSearcher: some NodeTagsSearching = MockNodeTagsSearcher()) -> ManageTagsViewModel {
         ManageTagsViewModel(
             navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
