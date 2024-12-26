@@ -13,7 +13,8 @@ struct BackupListView: View {
             isEditing: $viewModel.isSearchActive,
             isFilteredListEmpty: viewModel.isFilteredBackupsEmpty,
             searchAssets: viewModel.searchAssets,
-            emptyStateAssets: viewModel.emptyStateAssets
+            emptyStateAssets: viewModel.emptyStateAssets,
+            hasNetworkConnection: $viewModel.hasNetworkConnection
         )
     }
 }
