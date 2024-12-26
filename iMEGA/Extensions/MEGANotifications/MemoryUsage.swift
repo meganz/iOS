@@ -1,3 +1,5 @@
+@preconcurrency import Darwin
+
 struct MemoryUsage {
     
     private init(
