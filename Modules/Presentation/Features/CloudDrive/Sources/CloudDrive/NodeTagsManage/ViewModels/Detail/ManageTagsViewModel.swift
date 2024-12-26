@@ -122,9 +122,7 @@ final class ManageTagsViewModel: ObservableObject {
             .sink { [weak self] tagViewModels in
                 guard let self else { return }
                 containsExistingTags = tagViewModels.isNotEmpty
-                if !existingTagsViewModel.hasReachedMaxLimit {
-                    canAddNewTag = tagViewModels.notContains { $0.tag == tagName }
-                }
+                canAddNewTag = tagName.isNotEmpty ? tagViewModels.notContains { $0.tag == tagName } : false
             }
             .store(in: &subscriptions)
     }
