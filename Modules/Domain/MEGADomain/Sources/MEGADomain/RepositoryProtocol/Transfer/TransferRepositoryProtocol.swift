@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol TransferRepositoryProtocol: RepositoryProtocol {
+public protocol TransferRepositoryProtocol: RepositoryProtocol, Sendable {
     func download(
         node: NodeEntity,
         to localUrl: URL,

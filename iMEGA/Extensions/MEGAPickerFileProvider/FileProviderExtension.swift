@@ -1,4 +1,4 @@
-import FileProvider
+@preconcurrency import FileProvider
 import MEGADomain
 import MEGAPickerFileProviderDomain
 import MEGAPresentation
@@ -121,15 +121,18 @@ final class FileProviderExtension: NSFileProviderExtension {
             return
         }
         
-        Task {
-            let fileProviderItem = try item(for: identifier)
+        guard let parentItemIdentifier = try? item(for: identifier).parentItemIdentifier else {
+            return
+        }
+        
+        Task { [transferUseCase] in
             _ = try await transferUseCase.uploadFile(at: url, to: parentNode.toNodeEntity(), startHandler: {  _ in
                 NSFileProviderManager.default.signalEnumerator(for: identifier) { error in
                     if let error {
                         MEGALogError("Error signaling item: \(error)")
                     }
                 }
-                NSFileProviderManager.default.signalEnumerator(for: fileProviderItem.parentItemIdentifier) { error in
+                NSFileProviderManager.default.signalEnumerator(for: parentItemIdentifier) { error in
                     if let error {
                         MEGALogError("Error signaling item: \(error)")
                     }
@@ -138,11 +141,10 @@ final class FileProviderExtension: NSFileProviderExtension {
             
             do {
                 try await NSFileProviderManager.default.signalEnumerator(for: identifier)
-                try await NSFileProviderManager.default.signalEnumerator(for: fileProviderItem.parentItemIdentifier)
+                try await NSFileProviderManager.default.signalEnumerator(for: parentItemIdentifier)
             } catch {
                 MEGALogError("Error signaling item: \(error)")
             }
-            
         }
     }
     
@@ -260,8 +262,8 @@ final class FileProviderExtension: NSFileProviderExtension {
     
     override func fetchThumbnails(for itemIdentifiers: [NSFileProviderItemIdentifier],
                                   requestedSize size: CGSize,
-                                  perThumbnailCompletionHandler: @escaping (NSFileProviderItemIdentifier, Data?, (any Error)?) -> Void,
-                                  completionHandler: @escaping ((any Error)?) -> Void) -> Progress {
+                                  perThumbnailCompletionHandler: @Sendable @escaping (NSFileProviderItemIdentifier, Data?, (any Error)?) -> Void,
+                                  completionHandler: @Sendable @escaping ((any Error)?) -> Void) -> Progress {
         
         let progress = Progress(totalUnitCount: Int64(itemIdentifiers.count))
         
@@ -272,7 +274,7 @@ final class FileProviderExtension: NSFileProviderExtension {
                 continue
             }
             
-            Task {
+            Task { [thumbnailUseCase] in
                 var error: (any Error)?
                 var data: Data?
                 do {
