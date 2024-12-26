@@ -8,6 +8,7 @@ struct SearchableView<WrappedView: View>: View {
     let wrappedView: WrappedView
     @Binding private var searchText: String
     @Binding private var isEditing: Bool
+    @Binding private var hasNetworkConnection: Bool
     
     var isFilteredListEmpty: Bool
     var searchAssets: SearchAssets
@@ -28,23 +29,36 @@ struct SearchableView<WrappedView: View>: View {
         .background()
     }
     
-    public init(wrappedView: WrappedView, searchText: Binding<String>, isEditing: Binding<Bool>, isFilteredListEmpty: Bool, searchAssets: SearchAssets, emptyStateAssets: EmptyStateAssets) {
+    public init(
+        wrappedView: WrappedView,
+        searchText: Binding<String>,
+        isEditing: Binding<Bool>,
+        isFilteredListEmpty: Bool,
+        searchAssets: SearchAssets,
+        emptyStateAssets: EmptyStateAssets,
+        hasNetworkConnection: Binding<Bool>
+    ) {
         self.wrappedView = wrappedView
         self._searchText = searchText
         self._isEditing = isEditing
         self.isFilteredListEmpty = isFilteredListEmpty
         self.searchAssets = searchAssets
         self.emptyStateAssets = emptyStateAssets
+        self._hasNetworkConnection = hasNetworkConnection
     }
     
     var body: some View {
-       contentView
-            .emptyStateOverlay(
-                isSearchActive: isEditing,
-                isFilteredListEmpty: isFilteredListEmpty,
-                emptyStateImage: emptyStateAssets.image,
-                emptyStateTitle: emptyStateAssets.title
-            )
+        if hasNetworkConnection {
+            contentView
+                 .emptyStateOverlay(
+                     isSearchActive: isEditing,
+                     isFilteredListEmpty: isFilteredListEmpty,
+                     emptyStateImage: emptyStateAssets.image,
+                     emptyStateTitle: emptyStateAssets.title
+                 )
+        } else {
+            contentView
+        }
     }
 }
 

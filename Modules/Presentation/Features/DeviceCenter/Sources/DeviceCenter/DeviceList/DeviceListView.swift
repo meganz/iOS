@@ -12,7 +12,8 @@ struct DeviceListView: View {
             isEditing: $viewModel.isSearchActive,
             isFilteredListEmpty: viewModel.isFilteredDevicesEmpty,
             searchAssets: viewModel.searchAssets,
-            emptyStateAssets: viewModel.emptyStateAssets
+            emptyStateAssets: viewModel.emptyStateAssets,
+            hasNetworkConnection: $viewModel.hasNetworkConnection
         )
     }
 }
