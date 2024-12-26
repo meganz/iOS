@@ -3,12 +3,14 @@ import Firebase
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import MEGASwift
 import SAMKeychain
 import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
-    private static var session: String?
-    private static var setLogToConsole = false
+    private static let session = Atomic<String?>(wrappedValue: nil)
+    private static let setLogToConsole = Atomic<Bool>(wrappedValue: false)
+    
     private static let genericBody = Strings.Localizable.youMayHaveNewMessages
     private let memoryPressureSource = DispatchSource.makeMemoryPressureSource(
         eventMask: .all,
@@ -63,7 +65,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
-        if let currentSession = NotificationService.session {
+        if let currentSession = NotificationService.session.wrappedValue {
             guard currentSession == session else {
                 MEGALogDebug("Restart extension process: NSE session != Keychain session")
                 restartExtensionProcess(with: session)
@@ -80,7 +82,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             guard NotificationService.initExtensionProcess(with: session) else {
                 return
             }
-            NotificationService.session = session
+            NotificationService.session.mutate { $0 = session }
         }
         
         processNotification()
@@ -281,7 +283,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private func restartExtensionProcess(with session: String) {
-        NotificationService.session = nil
+        NotificationService.session.mutate { $0 = nil }
         MEGASdk.sharedNSE.localLogout(with: RequestDelegate { result in
             guard case .success = result else {
                 if case let .failure(error) = result {
@@ -297,7 +299,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                     return
                 }
                 if NotificationService.initExtensionProcess(with: session) {
-                    NotificationService.session = session
+                    NotificationService.session.mutate { $0 = session }
                     self.processNotification()
                 }
             })
@@ -397,8 +399,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private static func setupLogging() {
-        if !setLogToConsole {
-            setLogToConsole = true
+        if !setLogToConsole.wrappedValue {
+            setLogToConsole.mutate { $0 = true }
 #if DEBUG
             MEGASdk.setLogLevel(.max)
             MEGAChatSdk.setCatchException(false)
