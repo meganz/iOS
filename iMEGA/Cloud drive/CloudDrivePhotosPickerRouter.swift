@@ -38,6 +38,7 @@ struct CloudDrivePhotosPickerRouter {
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
 
+    @MainActor
     func start() {
         permissionHandler.photosPermissionWithCompletionHandler { granted in
             if granted {

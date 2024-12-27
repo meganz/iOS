@@ -189,7 +189,7 @@
             OnboardingView *currentView = self.scrollView.subviews.firstObject.subviews[self.pageControl.currentPage];
             switch (currentView.type) {
                 case OnboardingViewTypePhotosPermission: {
-                    [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
+                    [handler requestPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
                         [self nextPageOrDismiss];
                     }];
                     break;

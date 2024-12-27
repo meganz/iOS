@@ -79,6 +79,7 @@ final class PermissionAlertRouterTests: XCTestCase {
             return alertModel
         }
         
+        @MainActor
         func callAudioPermissions(modal: Bool, incomingCall: Bool) {
             let exp = testcase!.expectation(description: "testExpectation_callAudioPermissions")
             sut.audioPermission(modal: modal, incomingCall: incomingCall, completion: { _ in
@@ -88,14 +89,16 @@ final class PermissionAlertRouterTests: XCTestCase {
         }
     }
     
-    func testAlertVideoPermisson_onCall_asksPresenterToShowAlert() throws {
+    @MainActor
+    func testAlertVideoPermission_onCall_asksPresenterToShowAlert() throws {
         let harness = Harness(self)
         harness.sut.alertVideoPermission()
         XCTAssert(harness.presentedModals.count == 1)
         XCTAssertNotNil(harness.lastPresentedModalAlert)
     }
     
-    func testAlertVideoPermisson_tappingSecondAlertButton_opensSettings() throws {
+    @MainActor
+    func testAlertVideoPermission_tappingSecondAlertButton_opensSettings() throws {
         let harness = Harness(self)
         harness.sut.alertVideoPermission()
         let alertModel = try XCTUnwrap(harness.lastPresentedModalAlert)
@@ -103,7 +106,8 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertEqual(harness.settingsOpenedCount, 1)
     }
     
-    func testAlertVideoPermisson_tappingFirstAlertButton_doesNotOpenSettings() throws {
+    @MainActor
+    func testAlertVideoPermission_tappingFirstAlertButton_doesNotOpenSettings() throws {
         let harness = Harness(self)
         harness.sut.alertVideoPermission()
         let alertModel = try XCTUnwrap(harness.lastPresentedModalAlert)
@@ -111,7 +115,8 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertEqual(harness.settingsOpenedCount, 0)
     }
     
-    func testAlertPhotosPermisson_onCall_asksPresenterToShowCorrectAlert() throws {
+    @MainActor
+    func testAlertPhotosPermission_onCall_asksPresenterToShowCorrectAlert() throws {
         let harness = Harness(self)
         harness.sut.alertPhotosPermission()
         XCTAssert(harness.presentedModals.count == 1)
@@ -119,7 +124,8 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertEqual(alert, .photo(completion: {}))
     }
     
-    func testAlertPhotosPermisson_tappingSecondAlertButton_opensSettings() throws {
+    @MainActor
+    func testAlertPhotosPermission_tappingSecondAlertButton_opensSettings() throws {
         let harness = Harness(self)
         harness.sut.alertPhotosPermission()
         let alertModel = try XCTUnwrap(harness.lastPresentedModalAlert)
@@ -127,7 +133,8 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertEqual(harness.settingsOpenedCount, 1)
     }
     
-    func testAlertPhotosPermisson_tappingFirstAlertButton_doesNotOpenSettings() throws {
+    @MainActor
+    func testAlertPhotosPermission_tappingFirstAlertButton_doesNotOpenSettings() throws {
         let harness = Harness(self)
         harness.sut.alertPhotosPermission()
         let alertModel = try XCTUnwrap(harness.lastPresentedModalAlert)
@@ -135,6 +142,7 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertEqual(harness.settingsOpenedCount, 0)
     }
     
+    @MainActor
     func testAlertAudioModalPermission_nonModal_shouldNotAskPermission_presentsDevicePermission() throws {
         let harness = Harness(self)
         harness.deviceHandler.shouldAskForAudioPermissions = false
@@ -143,6 +151,7 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertEqual(harness.deviceHandler.requestPermissionsMediaTypes, [.audio])
     }
     
+    @MainActor
     func testAlertAudioModalPermission_modal_shouldAskPermission_presentsCustomModal() throws {
         let harness = Harness(self)
         harness.deviceHandler.shouldAskForAudioPermissions = true
@@ -151,6 +160,7 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertNotNil(harness.lastPresentedCustomModalModel)
     }
     
+    @MainActor
     func testRequestPermissionsForAudioCall_whenDenied_showAlert_doesNotCallGranted() throws {
         let harness = Harness(self)
         var grantedCalled = false
@@ -176,6 +186,7 @@ final class PermissionAlertRouterTests: XCTestCase {
         XCTAssertFalse(grantedCalled)
     }
     
+    @MainActor
     func testRequestPermissionsForAudioCall_whenApproved_doesCallGranted() throws {
         let harness = Harness(self)
         harness.deviceHandler.shouldAskForAudioPermissions = true

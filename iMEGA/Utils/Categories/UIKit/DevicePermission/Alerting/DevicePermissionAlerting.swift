@@ -1,6 +1,7 @@
 import Foundation
 import MEGAPermissions
 
+@MainActor
 protocol DevicePermissionAlerting {
 
     func showVideoAccessAlert(withCompletion completion: (() -> Void)?)
@@ -17,20 +18,14 @@ extension DevicePermissionAlerting {
     }
 
     func showVideoAccessAlert(withCompletion completion: (() -> Void)? = nil) {
-        asyncOnMain {
-            permissionRouter.alertVideoPermission()
-        }
+        permissionRouter.alertVideoPermission()
     }
 
     func showAudioAccessAlert(forIncomingCall incomingCall: Bool) {
-        asyncOnMain {
-            permissionRouter.alertAudioPermission(incomingCall: incomingCall)
-        }
+        permissionRouter.alertAudioPermission(incomingCall: incomingCall)
     }
 
     func showPhotoAccessAlert() {
-        asyncOnMain {
-            permissionRouter.alertPhotosPermission()
-        }
+        permissionRouter.alertPhotosPermission()
     }
 }

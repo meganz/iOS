@@ -1,5 +1,6 @@
 @testable import MEGA
 
+@MainActor
 final class MockPermissionAlertRouter: PermissionAlertRouting {
     
     let isAudioPermissionGranted: Bool
@@ -15,7 +16,7 @@ final class MockPermissionAlertRouter: PermissionAlertRouting {
     func audioPermission(
         modal: Bool,
         incomingCall: Bool,
-        completion: @escaping (Bool) -> Void
+        completion: @escaping @MainActor @Sendable (Bool) -> Void
     ) {
         completion(isAudioPermissionGranted)
     }
@@ -32,7 +33,7 @@ final class MockPermissionAlertRouter: PermissionAlertRouting {
     
     func requestPermissionsFor(
         videoCall: Bool,
-        granted: @escaping () -> Void
+        granted: @escaping @MainActor () -> Void
     ) {
         guard isAudioPermissionGranted else { return }
         if videoCall {

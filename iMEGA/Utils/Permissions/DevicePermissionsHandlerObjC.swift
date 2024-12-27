@@ -2,12 +2,13 @@
 // Use this class only from legacy ObjC, for
 // Swift code use DevicePermissionsHandling protocol and PermissionAlertRouter instead
 // Using this wrapper class instead of making DevicePermissionsHandling protocol visible
-// to ObjC, to make it's Swift implementation pure without any knowlege
-// of objC, to make it safe and easy to remove interface ObjC->Swift once ech file and class
+// to ObjC, to make it's Swift implementation pure without any knowledge
+// of objC, to make it safe and easy to remove interface ObjC->Swift once each file and class
 // is converted to Swift.
 import MEGAPermissions
 
-class DevicePermissionsHandlerObjC: NSObject {
+@MainActor
+final class DevicePermissionsHandlerObjC: NSObject {
     
     private let permissionHandler: any DevicePermissionsHandling
     
@@ -21,7 +22,7 @@ class DevicePermissionsHandlerObjC: NSObject {
     }
     
     @objc
-    func shouldAskForNotificationsPermissions(with handler: @escaping (Bool) -> Void) {
+    func shouldAskForNotificationsPermissions(with handler: @Sendable @escaping (Bool) -> Void) {
         permissionHandler.shouldAskForNotificationsPermissions(handler: handler)
     }
     
@@ -31,7 +32,7 @@ class DevicePermissionsHandlerObjC: NSObject {
     }
     
     @objc
-    func notificationsPermission(with handler: @escaping (Bool) -> Void) {
+    func notificationsPermission(with handler: @Sendable @escaping (Bool) -> Void) {
         permissionHandler.notificationsPermission(with: handler)
     }
     
@@ -50,8 +51,9 @@ class DevicePermissionsHandlerObjC: NSObject {
             completion(granted)
         }
     }
+    
     @objc
-    func requstPhotoAlbumAccessPermissionsWithGrantedHandler(_ grantedHandler: @escaping () -> Void) {
+    func requestPhotoAlbumAccessPermissionsWithGrantedHandler(_ grantedHandler: @escaping () -> Void) {
         permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
             if granted {
                 grantedHandler()
@@ -67,16 +69,17 @@ class DevicePermissionsHandlerObjC: NSObject {
     }
     
     @objc
-    func requstPhotoAlbumAccessPermissionsWithHandler(_ handler: @escaping (Bool) -> Void) {
+    func requestPhotoAlbumAccessPermissionsWithHandler(_ handler: @Sendable @escaping (Bool) -> Void) {
         permissionHandler.photosPermissionWithCompletionHandler(handler: handler)
     }
     
     @objc
-    func requestVideoPermissionWithHandler(_ handler: @escaping (Bool) -> Void) {
+    func requestVideoPermissionWithHandler(_ handler: @Sendable @escaping (Bool) -> Void) {
         permissionHandler.requestVideoPermission(handler: handler)
     }
+    
     @objc
-    func requestAudioPermissionWithHandler(_ handler: @escaping (Bool) -> Void) {
+    func requestAudioPermissionWithHandler(_ handler: @Sendable @escaping (Bool) -> Void) {
         permissionHandler.requestAudioPermission(handler: handler)
     }
     
@@ -96,9 +99,10 @@ class DevicePermissionsHandlerObjC: NSObject {
     }
     
     @objc
-    func shouldAskForNotificationsPermissionsWithHandler(_ handler: @escaping (Bool) -> Void) {
+    func shouldAskForNotificationsPermissionsWithHandler(_ handler: @Sendable @escaping (Bool) -> Void) {
         permissionHandler.shouldAskForNotificationsPermissions(handler: handler)
     }
+    
     @objc
     func shouldSetupPermissionsWithCompletion(_ completion: @Sendable @escaping (Bool) -> Void) {
         Task { @MainActor in

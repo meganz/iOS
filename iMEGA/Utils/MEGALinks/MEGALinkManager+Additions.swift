@@ -120,7 +120,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         return components.url
     }
     
-    @objc
+    @objc @MainActor
     class func continueWith(
         chatId: UInt64,
         chatTitle: String,
@@ -139,18 +139,20 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             return
         }
         
-        permissionHandler.notificationsPermission {granted in
-            if !granted {
-                SVProgressHUD.showSuccess(withStatus: notificationText)
+        permissionHandler.notificationsPermission { granted in
+            Task { @MainActor in
+                if !granted {
+                    SVProgressHUD.showSuccess(withStatus: notificationText)
+                }
+                
+                MEGALinkManager.createChatAndShow(chatId, publicChatLink: chatLink)
+                
+                addNotification(
+                    notificationText: notificationText,
+                    chatId: chatId,
+                    identifier: identifier
+                )
             }
-            
-            MEGALinkManager.createChatAndShow(chatId, publicChatLink: chatLink)
-            
-            addNotification(
-                notificationText: notificationText,
-                chatId: chatId,
-                identifier: identifier
-            )
         }
     }
     

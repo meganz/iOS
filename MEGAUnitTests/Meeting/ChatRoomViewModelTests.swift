@@ -135,12 +135,17 @@ class ChatRoomViewModelFactory {
         audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         chatNotificationControl: ChatNotificationControl? = nil,
-        permissionRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        permissionRouter: MockPermissionAlertRouter? = nil,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         chatListItemDescription: ChatListItemDescriptionEntity? = nil,
         chatListItemAvatar: ChatListItemAvatarEntity? = nil
     ) -> ChatRoomViewModel {
-        ChatRoomViewModel(
+        let _permissionRouter = if let permissionRouter {
+            permissionRouter
+        } else {
+            MockPermissionAlertRouter()
+        }
+        return .init(
             chatListItem: chatListItem,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
@@ -154,7 +159,7 @@ class ChatRoomViewModelFactory {
             audioSessionUseCase: audioSessionUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl ?? ChatNotificationControl(delegate: MockPushNotificationControl()),
-            permissionRouter: permissionRouter,
+            permissionRouter: _permissionRouter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             chatListItemDescription: chatListItemDescription,
             chatListItemAvatar: chatListItemAvatar

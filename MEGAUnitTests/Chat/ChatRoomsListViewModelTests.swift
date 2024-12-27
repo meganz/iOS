@@ -716,11 +716,16 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
-        permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        permissionAlertRouter: MockPermissionAlertRouter? = nil,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol = MockRetryPendingConnectionsUseCase(),
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) -> ChatRoomsListViewModel {
+        let _permissionHandler: MockPermissionAlertRouter = if let permissionAlertRouter {
+            permissionAlertRouter
+        } else {
+            MockPermissionAlertRouter()
+        }
         let sut = ChatRoomsListViewModel(
             router: router,
             chatUseCase: chatUseCase,
@@ -732,7 +737,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatType: chatType,
             chatViewMode: chatViewMode,
             permissionHandler: permissionHandler,
-            permissionAlertRouter: permissionAlertRouter,
+            permissionAlertRouter: _permissionHandler,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
             tracker: tracker,
