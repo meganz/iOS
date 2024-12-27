@@ -1,6 +1,7 @@
 import MEGADesignToken
 import MEGAPresentation
 
+@MainActor
 class AppearanceManager: NSObject {
     
 #if MAIN_APP_TARGET

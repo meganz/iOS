@@ -4,7 +4,7 @@ import MEGARepo
 import MEGASDKRepo
 
 @objc final class NodeAssetsManager: NSObject {
-    @objc static var shared = NodeAssetsManager(sdk: .shared)
+    @objc static let shared = NodeAssetsManager(sdk: .shared)
     
     private let sdk: MEGASdk
     

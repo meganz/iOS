@@ -3,6 +3,7 @@ import LogRepo
 import MEGADomain
 import MEGARepo
 import MEGASDKRepo
+import MEGASwift
 
 extension Helper {
     /// Temporary method to cache value of the AB test, we need this immediately after app is launched
@@ -41,8 +42,12 @@ extension Helper {
     // As we're using the same MEGA group identifier for both preferences and as a
     // mean to cache FFs (currently only used in Development and QA) in UserDefaults
     // upon a logout, we need to re-inject them in the shared defaults again
-    private static var cachedFeatureFlags: [String: Any] = [:]
-
+    private static let _cachedFeatureFlags = Atomic<[String: Any]>(wrappedValue: [:])
+    private static var cachedFeatureFlags: [String: Any] {
+        get { _cachedFeatureFlags.wrappedValue }
+        set { _cachedFeatureFlags.mutate { $0 = newValue } }
+    }
+    
     @objc static func injectCachedFeatureFlags() {
         let userDefaults = UserDefaults(suiteName: MEGAGroupIdentifier)
         userDefaults?.set(cachedFeatureFlags, forKey: MEGAFeatureFlagsUserDefaultsKey)

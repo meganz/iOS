@@ -7,11 +7,13 @@ protocol DynamicTypeComponentProtocol where Self: UIView {
 extension DynamicTypeComponentProtocol {
     func observeContentSizeUpdates() {
         NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.applyFontSizes()
+            Task { @MainActor in
+                self?.applyFontSizes()
+            }
         }
     }
     
-    func removeObserver() {
+    nonisolated func removeObserver() {
         NotificationCenter.default.removeObserver(self)
     }
 }
