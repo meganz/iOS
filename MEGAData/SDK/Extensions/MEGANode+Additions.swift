@@ -3,6 +3,7 @@ import MEGAL10n
 
 extension MEGANode {
     
+    @MainActor
     @objc func showRenameNodeConfirmationAlert(from vc: UIViewController, completion: @escaping () -> Void) {
         let alert = UIAlertController(
             title: Strings.Localizable.Rename.ConfirmationAlert.title,
@@ -23,6 +24,7 @@ extension MEGANode {
         vc.present(alert, animated: true)
     }
     
+    @MainActor
     @objc func textFieldChanged(_ textField: UITextField) {
         guard let renameAlertController = UIApplication.mnz_visibleViewController() as? UIAlertController,
               let textFieldText = textField.text else { return }

@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 final class NodeActionBuilder {
     private var displayMode: DisplayMode = .unknown
     private var accessLevel: MEGAShareType = .accessUnknown

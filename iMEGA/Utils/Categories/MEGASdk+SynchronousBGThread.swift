@@ -3,7 +3,7 @@ extension MEGASdk {
     /// - Parameters:
     ///   - completion: Callback closure upon completion. The completion closure will be called from an arbitrary background thread.
     @objc(areTherePendingTransfersWithCompletion:)
-    func areTherePendingTransfers(completion: @escaping (Bool) -> Void) {
+    func areTherePendingTransfers(completion: @Sendable @escaping (Bool) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self else {
                 completion(false)
@@ -19,7 +19,7 @@ extension MEGASdk {
     ///   - node: node to check
     ///   - completion: Callback closure upon completion. The completion closure will be called from an arbitrary background thread.
     @objc(hasVersionsForNode:completion:)
-    func hasVersions(node: MEGANode, completion: @escaping (Bool) -> Void) {
+    func hasVersions(node: MEGANode, completion: @Sendable @escaping (Bool) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             var result = false
             if let self = self {

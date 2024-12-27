@@ -134,10 +134,12 @@ class ActionSheetSwitchAction: ActionSheetAction {
         self.switchView = switchView
     }
     
+    @MainActor
     @objc func change(state: Bool) {
         switchView?.isOn = state
     }
     
+    @MainActor
     @objc func switchStatus() -> Bool {
         switchView?.isOn ?? false
     }
@@ -332,6 +334,7 @@ extension NodeAction {
         NodeAction(title: isFavourite ? Strings.Localizable.removeFavourite : Strings.Localizable.favourite, image: isFavourite ? UIImage.removeFavourite : UIImage.favourite, type: .favourite)
     }
     
+    @MainActor
     class func labelAction(label: MEGANodeLabel) -> NodeAction {
         let labelString = MEGANode.string(for: label)
         let detailText = Strings.localized(labelString!, comment: "")
@@ -365,6 +368,7 @@ extension NodeAction {
                    image: UIImage.mediaDiscovery, type: .mediaDiscovery)
     }
     
+    @MainActor
     class func hideAction(showProTag: Bool = false) -> NodeAction {
         let helpButton = {
             let accessoryButton = UIButton(frame: .init(x: 0, y: 0, width: 24, height: 24))

@@ -24,7 +24,9 @@ final class MEGALabel: UILabel, DynamicTypeComponentProtocol {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        applyFontSizes()
+        Task { @MainActor in
+            applyFontSizes()
+        }
     }
     
     func applyFontSizes() {

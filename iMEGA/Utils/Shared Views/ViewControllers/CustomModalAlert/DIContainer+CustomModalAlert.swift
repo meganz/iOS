@@ -1,4 +1,4 @@
-import MEGAAnalyticsiOS
+@preconcurrency import MEGAAnalyticsiOS
 import MEGAPresentation
 
 extension DIContainer {

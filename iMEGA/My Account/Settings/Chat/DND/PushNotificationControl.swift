@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+@preconcurrency import MEGASdk
 import UIKit
 
 /// A protocol to manage PushNotifications based on user preferences
@@ -15,6 +16,7 @@ import UIKit
     @objc optional func pushNotificationSettingsLoaded()
 }
 
+@MainActor
 protocol DNDTurnOnAlertControllerAction {
     var cancelAction: ((UIAlertAction) -> Void)? { get }
     func action(for dndTurnOnOption: DNDTurnOnOption, identifier: ChatIdEntity?) -> (((UIAlertAction) -> Void)?)

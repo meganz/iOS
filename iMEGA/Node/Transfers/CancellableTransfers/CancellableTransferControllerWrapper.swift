@@ -2,6 +2,7 @@ import MEGAL10n
 import MEGAPresentation
 import UIKit
 
+@MainActor
 final class CancellableTransferControllerWrapper<U: ViewModelType>: NSObject {
     private var viewModel: U
     private var cancelTransferAlertController = UIAlertController(
