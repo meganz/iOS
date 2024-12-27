@@ -67,8 +67,8 @@ public protocol DevicePermissionsHandling: Sendable {
 public extension DevicePermissionsHandling {
     
     private func request(
-        asker: @escaping () async -> Bool,
-        handler: @escaping (Bool) -> Void
+        asker: @MainActor @escaping () async -> Bool,
+        handler: @MainActor  @escaping (Bool) -> Void
     ) {
         Task { @MainActor in 
             let granted = await asker()
@@ -76,31 +76,31 @@ public extension DevicePermissionsHandling {
         }
     }
     
-    func requestAudioPermission(handler: @escaping (Bool) -> Void = { _ in }) {
+    func requestAudioPermission(handler: @MainActor  @escaping (Bool) -> Void = { _ in }) {
         requestMediaPermission(mediaType: .audio, handler: handler)
     }
     
-    func requestVideoPermission(handler: @escaping (Bool) -> Void = { _ in }) {
+    func requestVideoPermission(handler: @MainActor  @escaping (Bool) -> Void = { _ in }) {
         requestMediaPermission(mediaType: .video, handler: handler)
     }
     
-    private func requestMediaPermission(mediaType: AVMediaType, handler: @escaping (Bool) -> Void) {
+    private func requestMediaPermission(mediaType: AVMediaType, handler: @MainActor @escaping (Bool) -> Void) {
         request(asker: { await requestPermission(for: mediaType) }, handler: handler)
     }
     
-    func photosPermissionWithCompletionHandler(handler: @escaping (Bool) -> Void) {
+    func photosPermissionWithCompletionHandler(handler: @MainActor @escaping (Bool) -> Void) {
         request(asker: { await requestPhotoLibraryAccessPermissions() }, handler: handler)
     }
     
-    func notificationsPermission(with handler: @escaping (Bool) -> Void) {
+    func notificationsPermission(with handler: @MainActor @escaping (Bool) -> Void) {
         request(asker: { await requestNotificationsPermission() }, handler: handler)
     }
     
-    func shouldAskForNotificationsPermissions(handler: @escaping (Bool) -> Void) {
+    func shouldAskForNotificationsPermissions(handler: @MainActor @escaping (Bool) -> Void) {
         request(asker: { await shouldAskForNotificationPermission() }, handler: handler)
     }
         
-    func notificationsPermissionsStatusDenied(handler: @escaping (Bool) -> Void) {
+    func notificationsPermissionsStatusDenied(handler: @MainActor @escaping (Bool) -> Void) {
         request(asker: { await notificationPermissionStatus() == .denied }, handler: handler)
     }
 }

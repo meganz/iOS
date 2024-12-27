@@ -1,8 +1,9 @@
+@MainActor
 protocol PermissionAlertRouting {
     func audioPermission(
         modal: Bool,
         incomingCall: Bool,
-        completion: @escaping (Bool) -> Void
+        completion: @Sendable @MainActor @escaping (Bool) -> Void
     )
     
     func alertAudioPermission(incomingCall: Bool)
@@ -15,6 +16,6 @@ protocol PermissionAlertRouting {
     
     func requestPermissionsFor(
         videoCall: Bool,
-        granted: @escaping () -> Void
+        granted: @MainActor @escaping () -> Void
     )
 }

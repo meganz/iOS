@@ -1,10 +1,9 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]),
-                                .enableExperimentalFeature("ExistentialAny"),
-                                .enableExperimentalFeature("StrictConcurrency=targeted")]
+                                .enableExperimentalFeature("ExistentialAny")]
 
 let package = Package(
     name: "MEGAPermissions",
@@ -22,6 +21,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(path: "../../Infrastracture/MEGASwift")
     ],
     targets: [
         .target(
@@ -36,8 +36,13 @@ let package = Package(
         ),
         .testTarget(
             name: "MEGAPermissionsTests",
-            dependencies: ["MEGAPermissions", "MEGAPermissionsMock"],
+            dependencies: [
+                "MEGAPermissions",
+                "MEGAPermissionsMock",
+                "MEGASwift"
+            ],
             swiftSettings: settings
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

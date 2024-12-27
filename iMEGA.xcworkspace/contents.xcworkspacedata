@@ -4,10 +4,4 @@
    <FileRef
       location = "group:MEGA.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Modules/Infrastracture/MEGAPermissions/MEGAPermissions.xctestplan">
-   </FileRef>
-   <FileRef
-      location = "group:Modules/Presentation/MEGAPresentation/MEGAPresentation.xctestplan">
-   </FileRef>
 </Workspace>

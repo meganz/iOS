@@ -717,7 +717,7 @@ final class ChatContentViewModelTests: XCTestCase {
         callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
-        permissionRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        permissionRouter: MockPermissionAlertRouter? = nil,
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
         meetingNoUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
@@ -725,6 +725,12 @@ final class ChatContentViewModelTests: XCTestCase {
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> (ChatContentViewModel, MockChatContentRouter) {
         let router = MockChatContentRouter()
+        
+        let _permissionRouter: any PermissionAlertRouting = if let permissionRouter {
+            permissionRouter
+        } else {
+            MockPermissionAlertRouter()
+        }
 
         let sut = ChatContentViewModel(
             chatRoom: chatRoom,
@@ -735,7 +741,7 @@ final class ChatContentViewModelTests: XCTestCase {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             audioSessionUseCase: audioSessionUseCase,
             router: router,
-            permissionRouter: permissionRouter,
+            permissionRouter: _permissionRouter,
             analyticsEventUseCase: analyticsEventUseCase,
             meetingNoUserJoinedUseCase: meetingNoUserJoinedUseCase,
             handleUseCase: handleUseCase,

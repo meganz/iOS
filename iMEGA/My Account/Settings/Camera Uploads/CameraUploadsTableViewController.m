@@ -221,7 +221,7 @@
             [sender setOn:NO];
         } else {
             DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
-            [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
+            [handler requestPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
                 if (granted) {
                     if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] &&
                         !MEGASdk.shared.isMasterBusinessAccount) {

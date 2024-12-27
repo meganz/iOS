@@ -51,7 +51,7 @@ extension PermissionAlertRouter: PermissionAlertRouting {
     func audioPermission(
         modal: Bool,
         incomingCall: Bool,
-        completion: @escaping (Bool) -> Void = { _ in }
+        completion: @Sendable @MainActor @escaping (Bool) -> Void = { _ in }
     ) {
         
         if modal && deviceHandler.shouldAskForAudioPermissions {
@@ -95,7 +95,7 @@ extension PermissionAlertRouter: PermissionAlertRouting {
     // if user gives audio and video permission for video call, `granted` is called
     func requestPermissionsFor(
         videoCall: Bool,
-        granted: @escaping () -> Void
+        granted: @MainActor @escaping () -> Void
     ) {
         let incomingCall = false
         audioPermission(

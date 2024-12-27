@@ -86,7 +86,7 @@
 
 - (void)checkPhotosPermissionForUserDefaultSetting:(NSString *)userDefaultSetting settingSwitch:(UISwitch *)settingSwitch {
     DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
-    [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
+    [handler requestPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
         if (granted) {
             [settingSwitch setOn:!settingSwitch.isOn animated:YES];
         } else {
@@ -100,7 +100,7 @@
 
 - (void)checkPhotosPermissionForSettingSwitch:(UISwitch *)settingSwitch completion:(void (^)(void))completionHandler {
     DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
-    [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
+    [handler requestPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
         if (granted) {
             [settingSwitch setOn:!settingSwitch.isOn animated:YES];
         } else {

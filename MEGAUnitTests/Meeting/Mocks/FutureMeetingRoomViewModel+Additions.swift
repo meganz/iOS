@@ -19,7 +19,7 @@ extension FutureMeetingRoomViewModel {
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callManager: some CallManagerProtocol = MockCallManager(),
-        permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        permissionAlertRouter: MockPermissionAlertRouter? = nil,
         tracker: some AnalyticsTracking = MockTracker(),
         chatNotificationControl: ChatNotificationControl? = nil,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
@@ -27,6 +27,11 @@ extension FutureMeetingRoomViewModel {
         callInProgressTimeReporter: some CallInProgressTimeReporting = MockCallInProgressTimeReporter(),
         isTesting: Bool = true
     ) {
+        let _permissionAlertRouter = if let permissionAlertRouter {
+            permissionAlertRouter
+        } else {
+            MockPermissionAlertRouter()
+        }
         self.init(
             scheduledMeeting: scheduledMeeting,
             nextOccurrence: nextOccurrence,
@@ -41,7 +46,7 @@ extension FutureMeetingRoomViewModel {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             megaHandleUseCase: megaHandleUseCase,
             callManager: callManager,
-            permissionAlertRouter: permissionAlertRouter,
+            permissionAlertRouter: _permissionAlertRouter,
             tracker: tracker,
             chatNotificationControl: chatNotificationControl ?? ChatNotificationControl(delegate: MockPushNotificationControl()),
             chatListItemCacheUseCase: chatListItemCacheUseCase,
