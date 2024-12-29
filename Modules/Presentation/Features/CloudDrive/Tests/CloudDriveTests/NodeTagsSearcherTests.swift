@@ -10,7 +10,7 @@ struct NodeTagsSearcherTests {
     @Test("Test to make sure the search tags function caches the all tags")
     func verifySearchTags() async {
         let tags = ["tag1", "tag2", "tag3"]
-        let useCase = MockNodeTagsUseCase(tags: tags)
+        let useCase = MockNodeTagsUseCase(searchTags: tags)
         let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
         let initialResult = await sut.searchTags(for: nil)
         #expect(initialResult == tags)
@@ -27,7 +27,7 @@ struct NodeTagsSearcherTests {
     @Test("Verify the debounce")
     func verifyDebounce() async {
         let tags = ["tag1", "tag2", "tag3"]
-        let useCase = MockNodeTagsUseCase(tags: tags)
+        let useCase = MockNodeTagsUseCase(searchTags: tags)
         let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
         let task1 = Task {
             _ = await sut.searchTags(for: "tag1")
@@ -43,7 +43,7 @@ struct NodeTagsSearcherTests {
     @Test("Verify search when diacritics are present")
     func verifySearchForDiacritic() async {
         let tags = ["holesovice", "tag1", "tag2", "holešovice"]
-        let useCase = MockNodeTagsUseCase(tags: tags)
+        let useCase = MockNodeTagsUseCase(searchTags: tags)
         let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
         _ = await sut.searchTags(for: nil)
         var results = await sut.searchTags(for: "sovi")
@@ -56,7 +56,7 @@ struct NodeTagsSearcherTests {
     @Test("verify search for new accounts")
     func verifySearchForNewAccounts() async {
         let tags: [String] = []
-        let useCase = MockNodeTagsUseCase(tags: tags)
+        let useCase = MockNodeTagsUseCase(searchTags: tags)
         let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
         _ = await sut.searchTags(for: nil)
         _ = await sut.searchTags(for: "tag")
@@ -65,7 +65,7 @@ struct NodeTagsSearcherTests {
     @MainActor
     @Test("verify the task cancellation")
     func verifyTaskCancellationShouldReturnNil() async {
-        let useCase = MockNodeTagsUseCase(tags: nil)
+        let useCase = MockNodeTagsUseCase(searchTags: nil)
         let sut = NodeTagsSearcher(nodeTagsUseCase: useCase)
         let task1 = Task {
             let result = await sut.searchTags(for: nil)

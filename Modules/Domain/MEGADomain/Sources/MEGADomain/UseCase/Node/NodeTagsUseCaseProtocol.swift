@@ -1,7 +1,9 @@
 import Foundation
+import MEGASwift
 
 public protocol NodeTagsUseCaseProtocol: Sendable {
     func searchTags(for searchText: String?) async -> [String]?
+    func getTags(for node: NodeEntity) async -> [String]?
 }
 
 public struct NodeTagsUseCase: NodeTagsUseCaseProtocol {
@@ -13,5 +15,9 @@ public struct NodeTagsUseCase: NodeTagsUseCaseProtocol {
     
     public func searchTags(for searchText: String?) async -> [String]? {
         await repository.searchTags(for: searchText)
+    }
+
+    public func getTags(for node: NodeEntity) async -> [String]? {
+        await repository.getTags(for: node)
     }
 }
