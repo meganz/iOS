@@ -3,6 +3,11 @@ import MEGADomain
 import MEGASdk
 
 public struct NodeTagsRepository: NodeTagsRepositoryProtocol {
+
+    public static var newRepo: NodeTagsRepository {
+        NodeTagsRepository()
+    }
+
     private let sdk: MEGASdk
 
     public init(sdk: MEGASdk = .sharedSdk) {
@@ -19,5 +24,9 @@ public struct NodeTagsRepository: NodeTagsRepositoryProtocol {
                 cancelToken.value.cancel()
             }
         }
+    }
+
+    public func getTags(for node: NodeEntity) async -> [String]? {
+        await sdk.node(for: node.handle)?.toNodeEntity().tags
     }
 }

@@ -37,7 +37,7 @@ struct AddTagsViewRouter: AddTagsViewRouting {
                     ),
                     nodeTagSearcher: NodeTagsSearcher(
                         nodeTagsUseCase: NodeTagsUseCase(
-                            repository: NodeTagsRepository()
+                            repository: NodeTagsRepository.newRepo
                         )
                     )
                 )
