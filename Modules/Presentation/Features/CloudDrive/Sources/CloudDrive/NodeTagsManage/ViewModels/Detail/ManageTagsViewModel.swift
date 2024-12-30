@@ -22,10 +22,15 @@ final class ManageTagsViewModel: ObservableObject {
     @Published var tagNameState: TagNameState = .empty
     @Published var containsExistingTags: Bool
     @Published var canAddNewTag: Bool = false
+    @Published var shouldDismiss: Bool = false
+    @Published var isCurrentlySavingTags: Bool = false
+    private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
     private var nodeEntity: NodeEntity
     private var maxAllowedCharacterCount = 32
     private var subscriptions: Set<AnyCancellable> = []
     private var searchingTask: Task<Void, Never>?
+    private var currentNodeTagsUpdatesSequenceTask: Task<Void, Never>?
+    private var monitorDoneButtonTask: Task<Void, Never>?
 
     var shouldShowOverviewView: Bool {
         containsExistingTags
@@ -41,14 +46,25 @@ final class ManageTagsViewModel: ObservableObject {
         nodeEntity: NodeEntity,
         navigationBarViewModel: ManageTagsViewNavigationBarViewModel,
         existingTagsViewModel: ExistingTagsViewModel,
-        tagsUpdatesUseCase: some NodeTagsUpdatesUseCaseProtocol
+        tagsUpdatesUseCase: some NodeTagsUpdatesUseCaseProtocol,
+        nodeTagsUseCase: some NodeTagsUseCaseProtocol
     ) {
         self.nodeEntity = nodeEntity
         self.navigationBarViewModel = navigationBarViewModel
         self.existingTagsViewModel = existingTagsViewModel
+        self.nodeTagsUseCase = nodeTagsUseCase
         containsExistingTags = existingTagsViewModel.containsTags
         self.tagsUpdatesUseCase = tagsUpdatesUseCase
         monitorTagViewModelListUpdates()
+        monitorCancelButtonTap()
+        monitorDoneButtonTap()
+        updateDoneButtonStatus()
+        monitorHasReachedMaxLimitUpdates()
+    }
+
+    deinit {
+        currentNodeTagsUpdatesSequenceTask?.cancel()
+        monitorDoneButtonTask?.cancel()
     }
 
     // MARK: - Interface methods.
@@ -147,8 +163,78 @@ final class ManageTagsViewModel: ObservableObject {
             .sink { [weak self] tagViewModels in
                 guard let self else { return }
                 containsExistingTags = tagViewModels.isNotEmpty
-                canAddNewTag = tagName.isNotEmpty ? tagViewModels.notContains { $0.tag == tagName } : false
+                updateCanAddNewTag(with: tagViewModels, isUnderLimit: !existingTagsViewModel.hasReachedMaxLimit)
             }
             .store(in: &subscriptions)
+    }
+
+    private func monitorHasReachedMaxLimitUpdates() {
+        existingTagsViewModel
+            .$hasReachedMaxLimit
+            .dropFirst()
+            .sink { [weak self] newValue in
+                guard let self else { return }
+                updateCanAddNewTag(with: existingTagsViewModel.tagsViewModel.tagViewModels, isUnderLimit: !newValue)
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func updateCanAddNewTag(with tagViewModels: [NodeTagViewModel], isUnderLimit: Bool) {
+        let isNotEmpty = !tagName.isEmpty
+        let isUnique = !tagViewModels.contains { $0.tag == tagName }
+        canAddNewTag = isNotEmpty && isUnderLimit && isUnique
+    }
+
+    private func monitorCancelButtonTap() {
+        navigationBarViewModel
+            .$cancelButtonTapped
+            .sink { [weak self] cancelButtonTapped in
+                guard let self else { return }
+                shouldDismiss = cancelButtonTapped
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func monitorDoneButtonTap() {
+        monitorDoneButtonTask = Task { [weak self, navigationBarViewModel] in
+            for await _ in navigationBarViewModel.$doneButtonTapped.values.dropFirst() {
+                await self?.commitTagUpdates()
+            }
+        }
+    }
+
+    private func commitTagUpdates() async {
+        isCurrentlySavingTags = true
+        navigationBarViewModel.doneButtonDisabled = true
+
+        let removedTags = existingTagsViewModel.currentlyAttachedTags.subtracting(existingTagsViewModel.currentNodeTags)
+        let addedTags = existingTagsViewModel.currentNodeTags.subtracting(existingTagsViewModel.currentlyAttachedTags)
+
+        for addedTag in addedTags {
+            do {
+                try await nodeTagsUseCase.add(tag: addedTag, to: nodeEntity)
+            } catch {
+                // Todo: Show error if saving failed.
+            }
+        }
+
+        for removedTag in removedTags {
+            do {
+                try await nodeTagsUseCase.remove(tag: removedTag, from: nodeEntity)
+            } catch {
+                // Todo: Show error if saving failed.
+            }
+        }
+
+        isCurrentlySavingTags = false
+        shouldDismiss = true
+    }
+
+    private func updateDoneButtonStatus() {
+        currentNodeTagsUpdatesSequenceTask = Task { [existingTagsViewModel, navigationBarViewModel] in
+            for await hasChanges in existingTagsViewModel.hasUnsavedNodeTagsChangesSequence {
+                navigationBarViewModel.doneButtonDisabled = !hasChanges
+            }
+        }
     }
 }

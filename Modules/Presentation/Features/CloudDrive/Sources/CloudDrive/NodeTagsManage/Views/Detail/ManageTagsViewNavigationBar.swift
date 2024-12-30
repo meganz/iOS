@@ -5,11 +5,9 @@ import SwiftUI
 
 struct ManageTagsViewNavigationBar: View {
     @StateObject private var viewModel: ManageTagsViewNavigationBarViewModel
-    @Binding var cancelButtonTapped: Bool
 
-    init(viewModel: @autoclosure @escaping () -> ManageTagsViewNavigationBarViewModel, cancelButtonTapped: Binding<Bool>) {
+    init(viewModel: @autoclosure @escaping () -> ManageTagsViewNavigationBarViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
-        _cancelButtonTapped = cancelButtonTapped
     }
 
     var body: some View {
@@ -20,9 +18,6 @@ struct ManageTagsViewNavigationBar: View {
             backgroundColor: TokenColors.Background.surface1.swiftUI
         )
         .padding(.top, TokenSpacing._5)
-        .onChange(of: viewModel.cancelButtonTapped) {
-            cancelButtonTapped = $0
-        }
     }
 
     private var cancelButton: some View {
@@ -37,7 +32,7 @@ struct ManageTagsViewNavigationBar: View {
 
     private var doneButton: some View {
         Button {
-            // To be done in [SAO-1819]
+            viewModel.doneButtonTapped = true
         } label: {
             Text(Strings.Localizable.done)
                 .font(.body)

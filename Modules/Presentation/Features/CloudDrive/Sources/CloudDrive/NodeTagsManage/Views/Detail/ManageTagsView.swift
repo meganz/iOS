@@ -5,7 +5,6 @@ import SwiftUI
 
 struct ManageTagsView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var shouldDismiss = false
     @FocusState private var hasFocus
 
     @StateObject private var viewModel: ManageTagsViewModel
@@ -15,18 +14,28 @@ struct ManageTagsView: View {
     }
 
     public var body: some View {
-        content
-            .background(TokenColors.Background.page.swiftUI)
-            .onChange(of: shouldDismiss) {
-                if $0 { dismiss() }
+        ZStack {
+            content
+                .background(TokenColors.Background.page.swiftUI)
+                .onChange(of: viewModel.shouldDismiss) {
+                    if $0 { dismiss() }
+                }
+                .task {
+                    await viewModel.loadAllTags()
+                    await viewModel.observeTagsUpdates()
+                }
+                .onDisappear {
+                    viewModel.cancelSearchingIfNeeded()
+                }
+
+            if viewModel.isCurrentlySavingTags {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .controlSize(.large)
             }
-            .task {
-                await viewModel.loadAllTags()
-                await viewModel.observeTagsUpdates()
-            }
-            .onDisappear {
-                viewModel.cancelSearchingIfNeeded()
-            }
+        }
+        .allowsHitTesting(!viewModel.isCurrentlySavingTags)
+        .interactiveDismissDisabled(viewModel.isCurrentlySavingTags)
     }
     
     var content: some View {
@@ -48,7 +57,7 @@ struct ManageTagsView: View {
     }
     
     var navigationBar: some View {
-        ManageTagsViewNavigationBar(viewModel: viewModel.navigationBarViewModel, cancelButtonTapped: $shouldDismiss)
+        ManageTagsViewNavigationBar(viewModel: viewModel.navigationBarViewModel)
     }
 
     private var textField: some View {

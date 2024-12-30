@@ -24,14 +24,53 @@ final class ExistingTagsViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var hasReachedMaxLimit: Bool
     @Published var snackBar: SnackBar?
-    private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
-    private var subscriptions: Set<AnyCancellable> = []
+
+    private(set) var currentlyAttachedTags: Set<String>
+
+    private var currentNodeTagsUpdatesContinuation: AsyncStream<Set<String>>.Continuation?
+
+    /// An asynchronous sequence that emits a `Bool` indicating whether there are unsaved changes
+    /// or modifications to the current node's tags.
+    ///
+    /// The sequence evaluates the difference between the currently attached tags and the latest
+    /// updates to determine if any changes have been made. It emits:
+    /// - `true`: If there are unsaved changes.
+    /// - `false`: If there are no unsaved changes.
+    ///
+    var hasUnsavedNodeTagsChangesSequence: AnyAsyncSequence<Bool> {
+        AsyncStream { continuation in
+            currentNodeTagsUpdatesContinuation = continuation
+        }
+        .compactMap { [weak self] in
+            guard let self else { return nil }
+            return await currentlyAttachedTags.symmetricDifference($0).isNotEmpty
+        }
+        .removeDuplicates()
+        .eraseToAnyAsyncSequence()
+    }
+
+    var currentNodeTags: Set<String> {
+        selectedTags.union(newlyAddedTags)
+    }
 
     /// A set of selected tags.
-    private var selectedTags: Set<String>
-    /// A list of newly added tags: Tags that were not original present in the account's tags
-    /// and then got added by the user.
-    private var newlyAddedTags: [String] = []
+    private var selectedTags: Set<String> {
+        didSet {
+            currentNodeTagsUpdatesContinuation?.yield(currentNodeTags)
+        }
+    }
+    /// A list of newly added tags.
+    private var newlyAddedTags: [String] = [] {
+        didSet {
+            currentNodeTagsUpdatesContinuation?.yield(currentNodeTags)
+        }
+    }
+
+    private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
+
+    private var tagViewModelsChangeSubscription: AnyCancellable?
+    private var subscriptions: Set<AnyCancellable> = []
+    
     /// A snapshot of the current tags before sorting is applied.
     private var tagsSnapshot: [String]
 
@@ -53,6 +92,7 @@ final class ExistingTagsViewModel: ObservableObject {
         nodeTagsUseCase: some NodeTagsUseCaseProtocol
     ) {
         self.nodeEntity = nodeEntity
+        self.currentlyAttachedTags = Set(nodeEntity.tags)
         self.tagsViewModel = tagsViewModel
         let tagViewModels = tagsViewModel.tagViewModels
         let selectedTags = Set(tagViewModels.compactMap { $0.isSelected ? $0.tag : nil })
@@ -60,7 +100,7 @@ final class ExistingTagsViewModel: ObservableObject {
         self.tagsSnapshot = tagViewModels.map(\.tag)
         self.nodeTagsUseCase = nodeTagsUseCase
         hasReachedMaxLimit = selectedTags.count >= tagSelectionLimit.maxTagsAllowed
-        observeTogglesIfRequired(for: tagViewModels)
+        monitorTagViewModelsChanges()
     }
 
     func addAndSelectNewTag(_ tag: String) {
@@ -72,8 +112,9 @@ final class ExistingTagsViewModel: ObservableObject {
     }
 
     func reloadData() async {
-        let updatedSelectedTags = (await nodeTagsUseCase.getTags(for: nodeEntity) ?? [])
-            .map { makeNodeTagViewModel(with: $0, isSelected: true) }
+        let updatedTagsList = await nodeTagsUseCase.getTags(for: nodeEntity) ?? []
+        currentlyAttachedTags = Set(updatedTagsList)
+        let updatedSelectedTags = updatedTagsList.map { makeNodeTagViewModel(with: $0, isSelected: true) }
         tagsViewModel.updateTagsReorderedBySelection(updatedSelectedTags)
         newlyAddedTags.removeAll()
         selectedTags = Set(updatedSelectedTags.map(\.tag))
@@ -110,11 +151,6 @@ final class ExistingTagsViewModel: ObservableObject {
         } else {
             newlyAddedTags
         }
-    }
-
-    private func observeTogglesIfRequired(for tagViewModels: [NodeTagViewModel]) {
-        guard tagsViewModel.isSelectionEnabled else { return }
-        tagViewModels.forEach { observeToggles(for: $0) }
     }
 
     private func observeToggles(for tagViewModel: NodeTagViewModel) {
@@ -177,9 +213,7 @@ final class ExistingTagsViewModel: ObservableObject {
     }
 
     private func makeNodeTagViewModel(with tag: String, isSelected: Bool) -> NodeTagViewModel {
-        let viewModel = NodeTagViewModel(tag: tag, isSelected: isSelected)
-        observeToggles(for: viewModel)
-        return viewModel
+        NodeTagViewModel(tag: tag, isSelected: isSelected)
     }
 
     private func updateTagSelection(for tag: String, isSelected: Bool) {
@@ -206,5 +240,18 @@ final class ExistingTagsViewModel: ObservableObject {
             message: Strings.Localizable.CloudDrive.NodeInfo.NodeTags.Selection.maxLimitReachedAlertMessage
         )
         return true
+    }
+
+    private func monitorTagViewModelsChanges() {
+        guard tagsViewModel.isSelectionEnabled else { return }
+
+        tagViewModelsChangeSubscription = tagsViewModel
+            .$tagViewModels
+            .sink { [weak self] tagViewModels in
+                guard let self else { return }
+                subscriptions.forEach { $0.cancel() }
+                subscriptions.removeAll()
+                tagViewModels.forEach { observeToggles(for: $0) }
+            }
     }
 }

@@ -1,6 +1,7 @@
 @testable import CloudDrive
 import Combine
 import MEGADomain
+import MEGADomainMock
 import MEGASwift
 import Testing
 
@@ -219,7 +220,7 @@ struct ManageTagsViewModelTests {
 
     @MainActor
     @Test("Verify adding a new tag and remove it given it is a new account")
-    func verifyAddingNewTagAndRemovingItGivenItIsANewAccount() async throws {
+    func verifyAddingNewTagAndRemovingItGivenItIsANewAccount() {
         let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: [])
         let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.tagName = ""
@@ -273,7 +274,7 @@ struct ManageTagsViewModelTests {
 
     @MainActor
     @Test("Verify adding new tag as the 10th tag and then removing it should show the add tag button")
-    func verifyAddingNewTagAsThe10thTagAndThenRemovingItShouldShowTheAddTagButton() async throws {
+    func verifyAddingNewTagAsThe10thTagAndThenRemovingItShouldShowTheAddTagButton() async {
         let nodeSearcher = PrivateMockNodeTagsUseCase(tags: [
             "tag1",
             "tag2",
@@ -297,16 +298,75 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
-    private func makeSUT(nodeTagsUseCase: PrivateMockNodeTagsUseCase = PrivateMockNodeTagsUseCase()) -> ManageTagsViewModel {
+    @Test("Verify the done button status")
+    func verifyUpdateDoneButtonStatus() async {
+        let nodeTagsUseCase = MockNodeTagsUseCase(searchTags: ["tag1"])
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
+        await sut.loadAllTags()
+        #expect(sut.navigationBarViewModel.doneButtonDisabled)
+        sut.tagNameState = .valid
+        sut.tagName = "amo"
+        sut.addTag()
+        for await doneButtonDisabled in sut.navigationBarViewModel.$doneButtonDisabled.dropFirst().values {
+            #expect(doneButtonDisabled == false)
+            break
+        }
+    }
+
+    @MainActor
+    @Test("Verify the cancel button tap")
+    func verifyCancelButtonTap() {
+        let sut = makeSUT()
+        #expect(sut.shouldDismiss == false)
+        sut.navigationBarViewModel.cancelButtonTapped = true
+        #expect(sut.shouldDismiss)
+    }
+
+    @MainActor
+    @Test("Verify the done button tap")
+    func verifyDoneButtonTap() async {
+        let nodeTagsUseCase = MockNodeTagsUseCase(
+            searchTags: [
+                "tag1",
+                "tag2",
+                "tag3",
+                "tag4"
+            ]
+        )
+        let node = NodeEntity(tags: ["tag1", "tag2", "tag3", "tag4"])
+        let sut = makeSUT(node: node, nodeTagsUseCase: nodeTagsUseCase)
+        await sut.loadAllTags()
+        sut.existingTagsViewModel.tagsViewModel.tagViewModels.filter({ $0.tag == "tag2" }).first?.toggle()
+        sut.tagNameState = .valid
+        sut.tagName = "tag10"
+        sut.addTag()
+        sut.navigationBarViewModel.doneButtonTapped = true
+        for await shouldDismiss in sut.$shouldDismiss.dropFirst().values {
+            #expect(shouldDismiss == true)
+            break
+        }
+        #expect(nodeTagsUseCase.addedTags == ["tag10"])
+        #expect(nodeTagsUseCase.removedTags == ["tag2"])
+    }
+
+    @MainActor
+    private func makeSUT(
+        node: NodeEntity = .init(),
+        nodeTagsUseCase: some NodeTagsUseCaseProtocol = MockNodeTagsUseCase()
+    ) -> ManageTagsViewModel {
         ManageTagsViewModel(
-            nodeEntity: .init(),
-            navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
+            nodeEntity: node,
+            navigationBarViewModel: ManageTagsViewNavigationBarViewModel(),
             existingTagsViewModel: ExistingTagsViewModel(
-                nodeEntity: .init(),
-                tagsViewModel: NodeTagsViewModel(tagViewModels: [], isSelectionEnabled: false),
+                nodeEntity: node,
+                tagsViewModel: NodeTagsViewModel(
+                    tagViewModels: node.tags.map { NodeTagViewModel(tag: $0, isSelected: true) },
+                    isSelectionEnabled: true
+                ),
                 nodeTagsUseCase: nodeTagsUseCase
             ),
-            tagsUpdatesUseCase: MockTagsUpdatesUseCase()
+            tagsUpdatesUseCase: MockTagsUpdatesUseCase(),
+            nodeTagsUseCase: nodeTagsUseCase
         )
     }
 }
@@ -338,6 +398,10 @@ private actor PrivateMockNodeTagsUseCase: NodeTagsUseCaseProtocol, @unchecked Se
             }
         }
     }
+
+    func add(tag: String, to node: MEGADomain.NodeEntity) async throws {}
+
+    func remove(tag: String, from node: MEGADomain.NodeEntity) async throws {}
 }
 
 private final class MockTagsUpdatesUseCase: NodeTagsUpdatesUseCaseProtocol {

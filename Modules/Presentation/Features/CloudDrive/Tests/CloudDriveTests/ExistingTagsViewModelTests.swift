@@ -201,6 +201,42 @@ struct ExistingTagsViewModelTests {
         #expect(sut.snackBar == SnackBar(message: bannerMessage))
     }
 
+    @MainActor
+    @Test("Test the currentNodeTagsUpdatesSequence")
+    func verifyCurrentNodeTagsPublisher() async {
+        let tagViewModel1 = NodeTagViewModel(tag: "tag1", isSelected: true)
+        let tagViewModel2 = NodeTagViewModel(tag: "tag2", isSelected: true)
+        let sut = makeSUT(
+            tagsViewModel: NodeTagsViewModel(tagViewModels: [tagViewModel1, tagViewModel2], isSelectionEnabled: true)
+        )
+
+        let task1 = Task {
+            for await result in sut.hasUnsavedNodeTagsChangesSequence {
+                #expect(result)
+                break
+            }
+        }
+
+        let task2 = Task(priority: .low) {
+            sut.tagsViewModel.tagViewModels.last?.toggle()
+        }
+
+        _ = await [task1.value, task2.value]
+
+        let task3 = Task {
+            for await result in sut.hasUnsavedNodeTagsChangesSequence {
+                #expect(result)
+                break
+            }
+        }
+
+        let task4 = Task(priority: .low) {
+            sut.addAndSelectNewTag("tag11")
+        }
+
+        _ = await [task3.value, task4.value]
+    }
+
     // MARK: - Helpers
 
     private typealias SUT = ExistingTagsViewModel

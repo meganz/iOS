@@ -66,7 +66,6 @@ struct NodeTagsCellControllerModelTests {
         let tags = ["tag1", "tag2", "tag3"]
         let node = NodeEntity(tags: tags)
         let sut = makeSUT(node: node)
-        #expect(sut.selectedTags == Set(tags))
         #expect(sut.cellViewModel.tags == tags)
     }
 

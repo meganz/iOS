@@ -30,7 +30,7 @@ struct AddTagsViewRouter: AddTagsViewRouting {
         let view = ManageTagsView(
             viewModel: ManageTagsViewModel(
                 nodeEntity: nodeEntity,
-                navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
+                navigationBarViewModel: ManageTagsViewNavigationBarViewModel(),
                 existingTagsViewModel: ExistingTagsViewModel(
                     nodeEntity: nodeEntity,
                     tagsViewModel: NodeTagsViewModel(
@@ -44,7 +44,8 @@ struct AddTagsViewRouter: AddTagsViewRouting {
                 tagsUpdatesUseCase: NodeTagsUpdatesUseCase(
                     nodeRepository: NodeRepository.newRepo,
                     nodeTagsRepository: NodeTagsRepository.newRepo
-                )
+                ),
+                nodeTagsUseCase: NodeTagsUseCase(repository: NodeTagsRepository.newRepo)
             )
         )
         return UIHostingController(rootView: view)
