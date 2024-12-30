@@ -6,6 +6,8 @@ public final class MockNodeTagsUseCase: NodeTagsUseCaseProtocol {
     public var _getTags: [String]?
     public private(set) var searchTexts: [String?] = []
     public private(set) var continuation: CheckedContinuation<[String]?, Never>?
+    public private(set) var addedTags: [String] = []
+    public private(set) var removedTags: [String] = []
 
     public init(searchTags: [String]? = nil, getTags: [String]? = nil) {
         _searchTags = searchTags
@@ -27,4 +29,11 @@ public final class MockNodeTagsUseCase: NodeTagsUseCaseProtocol {
         _getTags
     }
 
+    public func add(tag: String, to node: NodeEntity) async throws {
+        addedTags.append(tag)
+    }
+
+    public func remove(tag: String, from node: NodeEntity) async throws {
+        removedTags.append(tag)
+    }
 }
