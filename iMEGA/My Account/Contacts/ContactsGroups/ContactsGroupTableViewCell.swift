@@ -37,6 +37,17 @@ class ContactsGroupTableViewCell: UITableViewCell {
     }
     
     private func updateStyle() {
+        backgroundColor = TokenColors.Background.page
         titleLabel.textColor = TokenColors.Text.primary
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        updateStyle()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        updateStyle()
     }
 }

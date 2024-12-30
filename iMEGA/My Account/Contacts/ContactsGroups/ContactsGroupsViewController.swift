@@ -5,8 +5,8 @@ import MEGAUIKit
 import UIKit
 
 class ContactsGroupsViewController: UIViewController {
-
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var newGroupChatView: UIView!
     @IBOutlet weak var newGroupChatImageView: UIImageView!
     @IBOutlet weak var newGroupChatLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
@@ -44,6 +44,7 @@ class ContactsGroupsViewController: UIViewController {
     private func setupColors() {
         newGroupChatLabel.textColor = TokenColors.Text.primary
         view.backgroundColor = TokenColors.Background.page
+        newGroupChatView.backgroundColor = TokenColors.Background.page
         separatorView.backgroundColor = TokenColors.Border.strong
         tableView.separatorColor = TokenColors.Border.strong
         disclosureIndicatorImageView.image =  UIImage(resource: .disclosure)
