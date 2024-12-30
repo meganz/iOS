@@ -1,5 +1,7 @@
 import Combine
+import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -22,13 +24,13 @@ final class ExistingTagsViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var hasReachedMaxLimit: Bool
     @Published var snackBar: SnackBar?
-
-    private let nodeTagSearcher: any NodeTagsSearching
+    private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
     private var subscriptions: Set<AnyCancellable> = []
 
     /// A set of selected tags.
     private var selectedTags: Set<String>
-    /// A list of newly added tags.
+    /// A list of newly added tags: Tags that were not original present in the account's tags
+    /// and then got added by the user.
     private var newlyAddedTags: [String] = []
     /// A snapshot of the current tags before sorting is applied.
     private var tagsSnapshot: [String]
@@ -43,19 +45,24 @@ final class ExistingTagsViewModel: ObservableObject {
         tagSelectionLimit.alertMessage
     }
 
-    init(tagsViewModel: NodeTagsViewModel, nodeTagSearcher: some NodeTagsSearching) {
+    private let nodeEntity: NodeEntity
+
+    init(
+        nodeEntity: NodeEntity,
+        tagsViewModel: NodeTagsViewModel,
+        nodeTagsUseCase: some NodeTagsUseCaseProtocol
+    ) {
+        self.nodeEntity = nodeEntity
         self.tagsViewModel = tagsViewModel
         let tagViewModels = tagsViewModel.tagViewModels
         let selectedTags = Set(tagViewModels.compactMap { $0.isSelected ? $0.tag : nil })
         self.selectedTags = selectedTags
         self.tagsSnapshot = tagViewModels.map(\.tag)
-        self.nodeTagSearcher = nodeTagSearcher
+        self.nodeTagsUseCase = nodeTagsUseCase
         hasReachedMaxLimit = selectedTags.count >= tagSelectionLimit.maxTagsAllowed
         observeTogglesIfRequired(for: tagViewModels)
     }
 
-    // MARK: - Interface methods.
-    
     func addAndSelectNewTag(_ tag: String) {
         newlyAddedTags.insert(tag, at: 0)
 
@@ -64,9 +71,18 @@ final class ExistingTagsViewModel: ObservableObject {
         updateMaxSelectedTagsStatus()
     }
 
+    func reloadData() async {
+        let updatedSelectedTags = (await nodeTagsUseCase.getTags(for: nodeEntity) ?? [])
+            .map { makeNodeTagViewModel(with: $0, isSelected: true) }
+        tagsViewModel.updateTagsReorderedBySelection(updatedSelectedTags)
+        newlyAddedTags.removeAll()
+        selectedTags = Set(updatedSelectedTags.map(\.tag))
+        hasReachedMaxLimit = selectedTags.count >= tagSelectionLimit.maxTagsAllowed
+    }
+
     func searchTags(for searchText: String?) async {
         isLoading = true
-        guard let tags = await nodeTagSearcher.searchTags(for: searchText), !Task.isCancelled else { return }
+        guard let tags = await nodeTagsUseCase.searchTags(for: searchText), !Task.isCancelled else { return }
         tagsSnapshot = tags
         let newlyAddedTagsViewModel = filterNewlyAddedTags(for: searchText)
             .map { makeNodeTagViewModel(with: $0, isSelected: true) }
@@ -132,11 +148,6 @@ final class ExistingTagsViewModel: ObservableObject {
 
     private func removeDeselectedTagsFromSelectedTags(tagViewModel: NodeTagViewModel) {
         selectedTags.remove(tagViewModel.tag)
-        toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
-    }
-
-    private func selected(tagViewModel: NodeTagViewModel) {
-        selectedTags.insert(tagViewModel.tag)
         toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
     }
 

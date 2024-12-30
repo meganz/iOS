@@ -22,6 +22,7 @@ struct ManageTagsView: View {
             }
             .task {
                 await viewModel.loadAllTags()
+                await viewModel.observeTagsUpdates()
             }
             .onDisappear {
                 viewModel.cancelSearchingIfNeeded()
@@ -69,7 +70,7 @@ struct ManageTagsView: View {
                 viewModel.onTagNameChanged(with: updatedTagName)
             }
             .padding(.vertical, TokenSpacing._3)
-            
+
             if viewModel.tagName.isNotEmpty {
                 Button {
                     viewModel.clearTextField()

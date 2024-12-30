@@ -1,4 +1,7 @@
 import Combine
+import MEGADomain
+import MEGASDKRepo
+import MEGASwift
 import SwiftUI
 
 @MainActor
@@ -15,9 +18,11 @@ final class ManageTagsViewModel: ObservableObject {
     let existingTagsViewModel: ExistingTagsViewModel
 
     @Published var tagName: String = ""
+
     @Published var tagNameState: TagNameState = .empty
     @Published var containsExistingTags: Bool
     @Published var canAddNewTag: Bool = false
+    private var nodeEntity: NodeEntity
     private var maxAllowedCharacterCount = 32
     private var subscriptions: Set<AnyCancellable> = []
     private var searchingTask: Task<Void, Never>?
@@ -30,14 +35,34 @@ final class ManageTagsViewModel: ObservableObject {
             && existingTagsViewModel.hasReachedMaxLimit)
     }
 
-    init(navigationBarViewModel: ManageTagsViewNavigationBarViewModel, existingTagsViewModel: ExistingTagsViewModel) {
+    private let tagsUpdatesUseCase: any NodeTagsUpdatesUseCaseProtocol
+
+    init(
+        nodeEntity: NodeEntity,
+        navigationBarViewModel: ManageTagsViewNavigationBarViewModel,
+        existingTagsViewModel: ExistingTagsViewModel,
+        tagsUpdatesUseCase: some NodeTagsUpdatesUseCaseProtocol
+    ) {
+        self.nodeEntity = nodeEntity
         self.navigationBarViewModel = navigationBarViewModel
         self.existingTagsViewModel = existingTagsViewModel
         containsExistingTags = existingTagsViewModel.containsTags
+        self.tagsUpdatesUseCase = tagsUpdatesUseCase
         monitorTagViewModelListUpdates()
     }
 
     // MARK: - Interface methods.
+    func observeTagsUpdates() async {
+        for await event in tagsUpdatesUseCase.tagsUpdates(for: nodeEntity) {
+            switch event {
+            case .tagsUpdated:
+                await existingTagsViewModel.reloadData()
+                onTagNameChanged(with: tagName)
+            case .tagsInvalidated:
+                navigationBarViewModel.cancelButtonTapped = true
+            }
+        }
+    }
 
     func addTag() {
         guard tagNameState == .valid else { return }
