@@ -1,5 +1,7 @@
 @testable import CloudDrive
 import Combine
+import MEGADomain
+import MEGASwift
 import Testing
 
 @Suite("ManageTagsViewModel Tests")
@@ -78,7 +80,7 @@ struct ManageTagsViewModelTests {
         ]
     )
     func verifyLoadAllTags(tags: [String], containsExistingTags: Bool) async {
-        let sut = makeSUT(nodeSearcher: MockNodeTagsSearcher(tags: tags))
+        let sut = makeSUT(nodeTagsUseCase: PrivateMockNodeTagsUseCase(tags: tags))
         #expect(sut.containsExistingTags == false)
         await sut.loadAllTags()
         #expect(sut.containsExistingTags == containsExistingTags)
@@ -93,14 +95,14 @@ struct ManageTagsViewModelTests {
         ]
     )
     func verifyCanAddNewTags(result: [String]?, expectedCanAddNewTag: Bool) async {
-        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: nil)
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.tagName = "test"
         sut.onTagNameChanged(with: "test")
-        while await nodeSearcher.continuations.first == nil {
+        while await nodeTagsUseCase.continuations.first == nil {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
-        await nodeSearcher.continuations.first?.resume(with: .success(result))
+        await nodeTagsUseCase.continuations.first?.resume(with: .success(result))
         for await canAddNewTag in sut.$canAddNewTag.dropFirst().values {
             #expect(canAddNewTag == expectedCanAddNewTag)
             break
@@ -110,8 +112,8 @@ struct ManageTagsViewModelTests {
     @MainActor
     @Test("Verify the containsExistingTags when the first search call is cancelled and the second one is successful")
     func verifyContainsExistingTagsWithMultipleSearchCallsInProgress() async {
-        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: nil)
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.tagName = "test"
 
         var isLoadingValuesList = [Bool]()
@@ -123,17 +125,17 @@ struct ManageTagsViewModelTests {
             }
 
         sut.onTagNameChanged(with: "test")
-        while await nodeSearcher.continuations.first == nil {
+        while await nodeTagsUseCase.continuations.first == nil {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
 
         sut.onTagNameChanged(with: "tester")
-        while await nodeSearcher.continuations.count == 2 {
+        while await nodeTagsUseCase.continuations.count == 2 {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
 
-        await nodeSearcher.continuations.first?.resume(with: .success(["test"]))
-        await nodeSearcher.continuations.last?.resume(with: .success([]))
+        await nodeTagsUseCase.continuations.first?.resume(with: .success(["test"]))
+        await nodeTagsUseCase.continuations.last?.resume(with: .success([]))
 
         for await canAddNewTag in sut.$canAddNewTag.dropFirst().values {
             #expect(canAddNewTag == true)
@@ -147,16 +149,16 @@ struct ManageTagsViewModelTests {
     @Test("Verify onTagNameChanged with valid state first and then invalid state")
     func verifyOnTagNameChangedWithValidStateAndThenInvalidState() async {
         // setup
-        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: nil)
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.tagName = "ta"
 
         // Test for valid state
         sut.onTagNameChanged(with: "tag")
-        while await nodeSearcher.continuations.first == nil {
+        while await nodeTagsUseCase.continuations.first == nil {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
-        await nodeSearcher.continuations.first?.resume(with: .success(["tag1", "tag2"]))
+        await nodeTagsUseCase.continuations.first?.resume(with: .success(["tag1", "tag2"]))
         for await canAddNewTag in sut.$canAddNewTag.dropFirst().values {
             #expect(canAddNewTag == true)
             break
@@ -173,8 +175,8 @@ struct ManageTagsViewModelTests {
     @Test("Verify valid search followed by invalid text field entry")
     func verifyValidSearchFollowedByInvalidTextFieldEntry() async {
         // setup
-        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: nil)
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.tagName = "ta"
 
         // Test for valid search Entry first
@@ -183,10 +185,10 @@ struct ManageTagsViewModelTests {
         sut.onTagNameChanged(with: "tag1😄")
 
         // Next, fulfill the search for the first entry
-        while await nodeSearcher.continuations.first == nil {
+        while await nodeTagsUseCase.continuations.first == nil {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
-        await nodeSearcher.continuations.first?.resume(with: .success(["tag1", "tag2"]))
+        await nodeTagsUseCase.continuations.first?.resume(with: .success(["tag1", "tag2"]))
 
         // The app should not allow to add new tag and also no existing tags should be shown
         #expect(sut.canAddNewTag == false)
@@ -196,8 +198,8 @@ struct ManageTagsViewModelTests {
     @MainActor
     @Test("Verify cancel searching")
     func verifySearchingCancellationWhenViewDisappears() async {
-        let nodeSearcher = MockNodeTagsSearcher(tags: nil)
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: nil)
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.tagName = "ta"
 
         sut.onTagNameChanged(with: "tag")
@@ -206,10 +208,10 @@ struct ManageTagsViewModelTests {
         sut.cancelSearchingIfNeeded()
 
         // Next, fulfill the search for the first entry
-        while await nodeSearcher.continuations.first == nil {
+        while await nodeTagsUseCase.continuations.first == nil {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
-        await nodeSearcher.continuations.first?.resume(with: .success(["tag1", "tag2"]))
+        await nodeTagsUseCase.continuations.first?.resume(with: .success(["tag1", "tag2"]))
 
         #expect(sut.canAddNewTag == false)
         #expect(sut.containsExistingTags == false)
@@ -218,8 +220,8 @@ struct ManageTagsViewModelTests {
     @MainActor
     @Test("Verify adding a new tag and remove it given it is a new account")
     func verifyAddingNewTagAndRemovingItGivenItIsANewAccount() async throws {
-        let nodeSearcher = MockNodeTagsSearcher(tags: [])
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: [])
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.tagName = ""
         sut.onTagNameChanged(with: "")
         sut.tagName = "tag"
@@ -249,7 +251,7 @@ struct ManageTagsViewModelTests {
     @MainActor
     @Test("Verify Add tag button should not be shown when max limit reached")
     func verifyAddTagButtonWhenMaxLimitReached() async {
-        let nodeSearcher = MockNodeTagsSearcher(tags: [
+        let nodeTagsUseCase = PrivateMockNodeTagsUseCase(tags: [
             "tag1",
             "tag2",
             "tag3",
@@ -260,7 +262,7 @@ struct ManageTagsViewModelTests {
             "tag8",
             "tag9"
         ])
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let sut = makeSUT(nodeTagsUseCase: nodeTagsUseCase)
         sut.canAddNewTag = true
         await sut.loadAllTags()
         sut.tagNameState = .valid
@@ -272,7 +274,7 @@ struct ManageTagsViewModelTests {
     @MainActor
     @Test("Verify adding new tag as the 10th tag and then removing it should show the add tag button")
     func verifyAddingNewTagAsThe10thTagAndThenRemovingItShouldShowTheAddTagButton() async throws {
-        let nodeSearcher = MockNodeTagsSearcher(tags: [
+        let nodeSearcher = PrivateMockNodeTagsUseCase(tags: [
             "tag1",
             "tag2",
             "tag3",
@@ -283,7 +285,7 @@ struct ManageTagsViewModelTests {
             "tag8",
             "tag9"
         ])
-        let sut = makeSUT(nodeSearcher: nodeSearcher)
+        let sut = makeSUT(nodeTagsUseCase: nodeSearcher)
         sut.canAddNewTag = true
         await sut.loadAllTags()
         sut.tagNameState = .valid
@@ -295,13 +297,51 @@ struct ManageTagsViewModelTests {
     }
 
     @MainActor
-    private func makeSUT(nodeSearcher: some NodeTagsSearching = MockNodeTagsSearcher()) -> ManageTagsViewModel {
+    private func makeSUT(nodeTagsUseCase: PrivateMockNodeTagsUseCase = PrivateMockNodeTagsUseCase()) -> ManageTagsViewModel {
         ManageTagsViewModel(
+            nodeEntity: .init(),
             navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
             existingTagsViewModel: ExistingTagsViewModel(
+                nodeEntity: .init(),
                 tagsViewModel: NodeTagsViewModel(tagViewModels: [], isSelectionEnabled: false),
-                nodeTagSearcher: nodeSearcher
-            )
+                nodeTagsUseCase: nodeTagsUseCase
+            ),
+            tagsUpdatesUseCase: MockTagsUpdatesUseCase()
         )
+    }
+}
+
+private actor PrivateMockNodeTagsUseCase: NodeTagsUseCaseProtocol, @unchecked Sendable {
+    func getTags(for node: NodeEntity) async -> [String]? { nil }
+
+    private var tags: [String]?
+    var continuations: [CheckedContinuation<[String]?, Never>] = []
+
+    init(tags: [String]? = []) {
+        self.tags = tags
+    }
+
+    func update(tags: [String]?) {
+        self.tags = tags
+    }
+
+    func searchTags(for searchText: String?) async -> [String]? {
+        if let tags {
+            guard let searchText else {
+                return tags
+            }
+
+            return tags.filter { $0.contains(searchText) }
+        } else {
+            return await withCheckedContinuation { continuation in
+                continuations.append(continuation)
+            }
+        }
+    }
+}
+
+private final class MockTagsUpdatesUseCase: NodeTagsUpdatesUseCaseProtocol {
+    func tagsUpdates(for node: MEGADomain.NodeEntity) -> AnyAsyncSequence<MEGADomain.TagsUpdatesEntity> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
 }

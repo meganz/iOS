@@ -5,7 +5,7 @@ import MEGAL10n
 @MainActor
 public final class NodeTagsCellControllerModel {
     private let accountUseCase: any AccountUseCaseProtocol
-    private let node: NodeEntity
+    let node: NodeEntity
     private(set) lazy var cellViewModel = NodeTagsCellViewModel(node: node, accountUseCase: accountUseCase)
 
     var selectedTags: Set<String> {

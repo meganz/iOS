@@ -2,8 +2,8 @@ import MEGADomain
 
 @MainActor
 public final class MockNodeTagsUseCase: NodeTagsUseCaseProtocol {
-    private let _searchTags: [String]?
-    private let _getTags: [String]?
+    public var _searchTags: [String]?
+    public var _getTags: [String]?
     public private(set) var searchTexts: [String?] = []
     public private(set) var continuation: CheckedContinuation<[String]?, Never>?
 

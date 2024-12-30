@@ -63,7 +63,7 @@ extension NodeTagsCellController: UITableViewDelegate {
         if viewModel.isExpiredBusinessOrProFlexiAccount {
             showFeatureUnavailabilityAlert()
         } else {
-            let addTagsRouter = AddTagsViewRouter(presenter: controller, selectedTags: viewModel.selectedTags)
+            let addTagsRouter = AddTagsViewRouter(nodeEntity: viewModel.node, presenter: controller)
             addTagsRouter.start()
         }
     }

@@ -7,19 +7,19 @@ protocol AddTagsViewRouting: Routing {}
 
 @MainActor
 struct AddTagsViewRouter: AddTagsViewRouting {
+    private let nodeEntity: NodeEntity
     private let presenter: UIViewController
     private let isSelectionEnabled = true
-    private let selectedTags: Set<String>
 
     private var selectedTagViewModels: [NodeTagViewModel] {
-        selectedTags.map {
+        nodeEntity.tags.map {
             NodeTagViewModel(tag: $0, isSelected: true)
         }
     }
 
-    init(presenter: UIViewController, selectedTags: Set<String>) {
+    init(nodeEntity: NodeEntity, presenter: UIViewController) {
+        self.nodeEntity = nodeEntity
         self.presenter = presenter
-        self.selectedTags = selectedTags
     }
     
     func start() {
@@ -29,17 +29,21 @@ struct AddTagsViewRouter: AddTagsViewRouting {
     func build() -> UIViewController {
         let view = ManageTagsView(
             viewModel: ManageTagsViewModel(
+                nodeEntity: nodeEntity,
                 navigationBarViewModel: ManageTagsViewNavigationBarViewModel(doneButtonDisabled: .constant(true)),
                 existingTagsViewModel: ExistingTagsViewModel(
+                    nodeEntity: nodeEntity,
                     tagsViewModel: NodeTagsViewModel(
                         tagViewModels: selectedTagViewModels,
                         isSelectionEnabled: isSelectionEnabled
                     ),
-                    nodeTagSearcher: NodeTagsSearcher(
-                        nodeTagsUseCase: NodeTagsUseCase(
-                            repository: NodeTagsRepository.newRepo
-                        )
+                    nodeTagsUseCase: NodeTagsUseCase(
+                        repository: NodeTagsRepository.newRepo
                     )
+                ),
+                tagsUpdatesUseCase: NodeTagsUpdatesUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    nodeTagsRepository: NodeTagsRepository.newRepo
                 )
             )
         )

@@ -1,4 +1,5 @@
 @testable import CloudDrive
+import MEGADomainMock
 import MEGAL10n
 import MEGASwiftUI
 import Testing
@@ -34,14 +35,14 @@ struct ExistingTagsViewModelTests {
     @Test("Test the search for tags in the account.")
     func verifySearchTags() async {
         let tags = ["tag1", "tag2", "tag3", "tag4"]
-        let searcher = MockNodeTagsSearcher(tags: tags)
+        let useCase = MockNodeTagsUseCase(searchTags: tags)
         let selectedTags = [
             NodeTagViewModel(tag: "tag2", isSelected: true),
             NodeTagViewModel(tag: "tag3", isSelected: true)
         ]
         let sut = makeSUT(
             tagsViewModel: NodeTagsViewModel(tagViewModels: selectedTags, isSelectionEnabled: true),
-            nodeTagSearcher: searcher
+            nodeTagsUseCase: useCase
         )
         await sut.searchTags(for: nil)
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag3", "tag1", "tag4"])
@@ -52,10 +53,10 @@ struct ExistingTagsViewModelTests {
     @Test("Test adding the tags and then searching for tags in the account.")
     func verifyAddAndSearchTags() async {
         let tags = ["tag1", "tag2", "tag3", "tag4"]
-        let searcher = MockNodeTagsSearcher(tags: tags)
+        let useCase = MockNodeTagsUseCase(searchTags: tags)
         let sut = makeSUT(
             tagsViewModel: NodeTagsViewModel(tagViewModels: [], isSelectionEnabled: true),
-            nodeTagSearcher: searcher
+            nodeTagsUseCase: useCase
         )
         let newTagName = "zero"
         sut.addAndSelectNewTag(newTagName)
@@ -69,15 +70,16 @@ struct ExistingTagsViewModelTests {
     @MainActor
     @Test("Test searching for non selected tag and then searching for selected tag and see if the selection is preserved.")
     func verifySearchingOfSelectedTags() async {
-        let tags = ["tag1", "tag2", "tag3", "tag4"]
-        let searcher = MockNodeTagsSearcher(tags: tags)
+        let tags = ["tag3"]
+        let useCase = MockNodeTagsUseCase(searchTags: tags)
         let selectedTagViewModel = NodeTagViewModel(tag: "tag2", isSelected: true)
         let sut = makeSUT(
             tagsViewModel: NodeTagsViewModel(tagViewModels: [selectedTagViewModel], isSelectionEnabled: true),
-            nodeTagSearcher: searcher
+            nodeTagsUseCase: useCase
         )
         await sut.searchTags(for: "tag3")
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag3"])
+        useCase._searchTags = ["tag1", "tag2", "tag3", "tag4"]
         await sut.searchTags(for: nil)
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag1", "tag3", "tag4"])
         #expect(sut.tagsViewModel.tagViewModels.first?.isSelected == true)
@@ -86,8 +88,12 @@ struct ExistingTagsViewModelTests {
     @MainActor
     @Test("Test adding tags with diacritics and then searching for tags with diacritics.")
     func verifyAddAndSearchTagsWithDiacritic() async {
+        let useCase = MockNodeTagsUseCase(searchTags: [])
         let tagViewModel = NodeTagViewModel(tag: "tag2", isSelected: false)
-        let sut = makeSUT(tagsViewModel: NodeTagsViewModel(tagViewModels: [tagViewModel], isSelectionEnabled: false))
+        let sut = makeSUT(
+            tagsViewModel: NodeTagsViewModel(tagViewModels: [tagViewModel], isSelectionEnabled: false),
+            nodeTagsUseCase: useCase
+        )
         sut.addAndSelectNewTag("holešovice")
         sut.addAndSelectNewTag("holesovice")
         await sut.searchTags(for: "sov")
@@ -137,24 +143,24 @@ struct ExistingTagsViewModelTests {
         let tagViewModel2 = NodeTagViewModel(tag: "tag2", isSelected: false)
         let tagViewModel3 = NodeTagViewModel(tag: "tag3", isSelected: false)
 
-        let searcher = MockNodeTagsSearcher(tags: [])
+        let useCase = MockNodeTagsUseCase(searchTags: [])
         let sut = makeSUT(
             tagsViewModel: NodeTagsViewModel(
                 tagViewModels: [tagViewModel1, tagViewModel2, tagViewModel3],
                 isSelectionEnabled: true
             ),
-            nodeTagSearcher: searcher
+            nodeTagsUseCase: useCase
         )
 
         sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag2" })?.toggle()
         sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag3" })?.toggle()
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag2", "tag3", "tag1"])
 
-        await searcher.update(tags: ["tag2"])
+        useCase._searchTags = ["tag2"]
         await sut.searchTags(for: "tag2")
         sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag2" })?.toggle()
 
-        await searcher.update(tags: ["tag1", "tag2", "tag3"])
+        useCase._searchTags = ["tag1", "tag2", "tag3"]
         await sut.searchTags(for: nil)
         #expect(sut.tagsViewModel.tagViewModels.map(\.tag) == ["tag3", "tag1", "tag2"])
         sut.tagsViewModel.tagViewModels.first(where: { $0.tag == "tag3" })?.toggle()
@@ -202,11 +208,12 @@ struct ExistingTagsViewModelTests {
     @MainActor
     private func makeSUT(
         tagsViewModel: NodeTagsViewModel,
-        nodeTagSearcher: some NodeTagsSearching = MockNodeTagsSearcher()
+        nodeTagsUseCase: MockNodeTagsUseCase = .init()
     ) -> SUT {
         ExistingTagsViewModel(
+            nodeEntity: .init(),
             tagsViewModel: tagsViewModel,
-            nodeTagSearcher: nodeTagSearcher
+            nodeTagsUseCase: nodeTagsUseCase
         )
     }
 }
