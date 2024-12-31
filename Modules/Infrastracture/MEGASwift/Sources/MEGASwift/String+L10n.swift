@@ -52,4 +52,13 @@ public extension String {
     static func inject(plurals: [Plural], intoLocalized stringGenerator: (Any) -> String) -> String {
         stringGenerator(concatenate(plurals: plurals))
     }
+
+    /// For a string to be display in left-to-right direction
+    /// For strings and tags that are bi-directional, iOS will use Unicode BIDI algorithm (https://www.unicode.org/reports/tr9/)
+    /// to render the output string onto the UI. This algorithm will mess up strings that are supposed to be strictly Left-to-right
+    /// such as node names and tags. This function will add a LTR mark to force the string to be displayed in LTR direction.
+    /// - Returns: The forced-LTR version of the string
+    func forceLeftToRight() -> String {
+        "\u{200e}\(self)"
+    }
 }

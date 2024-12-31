@@ -1,4 +1,5 @@
 @testable import CloudDrive
+import MEGASwift
 import Testing
 
 @Suite("NodeTagViewModel Tests")
@@ -18,8 +19,9 @@ struct NodeTagViewModelTests {
     @MainActor
     @Test("Test the formatted tag method")
     func verifyFormattedTag() {
-        let sut = NodeTagViewModel(tag: "tag1", isSelected: false)
-        #expect(sut.formattedTag == "#tag1")
+        let input = "tag1"
+        let sut = NodeTagViewModel(tag: input, isSelected: false)
+        #expect(sut.formattedTag == "\u{200e}#\(input)")
     }
 
     @MainActor
