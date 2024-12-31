@@ -1,4 +1,5 @@
 import Combine
+import MEGASwift
 import SwiftUI
 
 @MainActor
@@ -8,7 +9,7 @@ final class NodeTagViewModel {
     private let toggleSubject = PassthroughSubject<String, Never>()
 
     var formattedTag: String {
-        "#" + tag
+        ("#" + tag).forceLeftToRight()
     }
 
     init(tag: String, isSelected: Bool) {
