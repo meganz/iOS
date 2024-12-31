@@ -31,10 +31,10 @@ public struct ChatListItemUpdateProvider: ChatListItemUpdateProviderProtocol {
     }
 }
 
-private final class ChatListItemUpdateGlobalDelegate: NSObject, MEGAChatDelegate {
-    private let onChatListItemUpdate: (ChatListItemEntity) -> Void
+private final class ChatListItemUpdateGlobalDelegate: NSObject, MEGAChatDelegate, Sendable {
+    private let onChatListItemUpdate: @Sendable (ChatListItemEntity) -> Void
     
-    public init(onUpdate: @escaping (ChatListItemEntity) -> Void) {
+    public init(onUpdate: @Sendable @escaping (ChatListItemEntity) -> Void) {
         self.onChatListItemUpdate = onUpdate
         super.init()
     }

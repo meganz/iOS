@@ -70,10 +70,10 @@ public struct ChatUpdatesProvider: ChatUpdatesProviderProtocol {
     }
 }
 
-private class ChatConnectionStateUpdateGlobalDelegate: NSObject, MEGAChatDelegate {
-    private let onChatConnectionStateUpdate: (HandleEntity, ChatConnectionStatus) -> Void
+private final class ChatConnectionStateUpdateGlobalDelegate: NSObject, MEGAChatDelegate, Sendable {
+    private let onChatConnectionStateUpdate: @Sendable (HandleEntity, ChatConnectionStatus) -> Void
     
-    init(onUpdate: @escaping (HandleEntity, ChatConnectionStatus) -> Void) {
+    init(onUpdate: @Sendable @escaping (HandleEntity, ChatConnectionStatus) -> Void) {
         self.onChatConnectionStateUpdate = onUpdate
         super.init()
     }
@@ -86,10 +86,10 @@ private class ChatConnectionStateUpdateGlobalDelegate: NSObject, MEGAChatDelegat
     }
 }
     
-private class ChatOnlineStatusUpdateGlobalDelegate: NSObject, MEGAChatDelegate {
-    private let onChatOnlineStatusUpdate: (HandleEntity, ChatStatusEntity, Bool) -> Void
+private final class ChatOnlineStatusUpdateGlobalDelegate: NSObject, MEGAChatDelegate, Sendable {
+    private let onChatOnlineStatusUpdate: @Sendable (HandleEntity, ChatStatusEntity, Bool) -> Void
     
-    init(onChatOnlineStatusUpdate: @escaping (HandleEntity, ChatStatusEntity, Bool) -> Void) {
+    init(onChatOnlineStatusUpdate: @Sendable @escaping (HandleEntity, ChatStatusEntity, Bool) -> Void) {
         self.onChatOnlineStatusUpdate = onChatOnlineStatusUpdate
         super.init()
     }
@@ -99,10 +99,10 @@ private class ChatOnlineStatusUpdateGlobalDelegate: NSObject, MEGAChatDelegate {
     }
 }
 
-private class ChatPresenceLastGreenUpdateGlobalDelegate: NSObject, MEGAChatDelegate {
-    private let onChatPresenceLastGreenUpdate: (HandleEntity, Int) -> Void
+private final class ChatPresenceLastGreenUpdateGlobalDelegate: NSObject, MEGAChatDelegate, Sendable {
+    private let onChatPresenceLastGreenUpdate: @Sendable (HandleEntity, Int) -> Void
     
-    init(onChatPresenceLastGreenUpdate: @escaping (HandleEntity, Int) -> Void) {
+    init(onChatPresenceLastGreenUpdate: @Sendable @escaping (HandleEntity, Int) -> Void) {
         self.onChatPresenceLastGreenUpdate = onChatPresenceLastGreenUpdate
         super.init()
     }

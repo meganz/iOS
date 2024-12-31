@@ -1,7 +1,7 @@
 import MEGAChatSdk
 import MEGADomain
 
-extension MEGAChatError: @retroactive Error {
+extension MEGAChatError: @retroactive Error, @unchecked Sendable{
     func toAllowNonHostToAddParticipantsErrorEntity() -> AllowNonHostToAddParticipantsErrorEntity {
         switch type {
         case .MEGAChatErrorTypeNoEnt:

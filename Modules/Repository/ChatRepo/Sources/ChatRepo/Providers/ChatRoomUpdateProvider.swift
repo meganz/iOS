@@ -33,10 +33,10 @@ public struct ChatRoomUpdateProvider: ChatRoomUpdateProviderProtocol {
     }
 }
 
-private final class ChatRoomUpdateGlobalDelegate: NSObject, MEGAChatRoomDelegate {
-    private let onChatRoomUpdate: (ChatRoomEntity) -> Void
+private final class ChatRoomUpdateGlobalDelegate: NSObject, MEGAChatRoomDelegate, Sendable {
+    private let onChatRoomUpdate: @Sendable (ChatRoomEntity) -> Void
     
-    public init(onUpdate: @escaping (ChatRoomEntity) -> Void) {
+    public init(onUpdate: @Sendable @escaping (ChatRoomEntity) -> Void) {
         self.onChatRoomUpdate = onUpdate
         super.init()
     }

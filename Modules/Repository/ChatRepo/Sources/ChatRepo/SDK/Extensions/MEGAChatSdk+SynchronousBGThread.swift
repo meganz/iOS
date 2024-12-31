@@ -2,6 +2,8 @@ import MEGAChatSdk
 
 private let messageQueue = DispatchQueue(label: "com.mega.getMessageQueue", qos: .userInitiated)
 
+extension MEGAChatMessage: @retroactive @unchecked Sendable { }
+
 extension MEGAChatSdk {
     /// Retrieves a specific chat message from the MEGAChatSdk in a background thread.
     /// - Parameters:
@@ -14,7 +16,7 @@ extension MEGAChatSdk {
     ///
     /// - Important:
     ///     The `completion` closure is called with the retrieved message or `nil` if the message is not found.
-    func message(chatId: MEGAHandle, messageId: MEGAHandle, completion: @escaping (MEGAChatMessage?) -> Void) {
+    func message(chatId: MEGAHandle, messageId: MEGAHandle, completion: @Sendable @escaping (MEGAChatMessage?) -> Void) {
         messageQueue.async { [weak self] in
             completion(self?.message(forChat: chatId, messageId: messageId))
         }
@@ -44,7 +46,7 @@ extension MEGAChatSdk {
     ///
     /// - Important:
     ///     The `completion` closure is called with the retrieved message or `nil` if the message is not found.
-    func messageFromNodeHistory(chatId: MEGAHandle, messageId: MEGAHandle, completion: @escaping (MEGAChatMessage?) -> Void) {
+    func messageFromNodeHistory(chatId: MEGAHandle, messageId: MEGAHandle, completion: @Sendable @escaping (MEGAChatMessage?) -> Void) {
         messageQueue.async { [weak self] in
             completion(self?.messageFromNodeHistory(forChat: chatId, messageId: messageId))
         }

@@ -1,10 +1,17 @@
-import Combine
+@preconcurrency import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 
-public class MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
+public final class MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol, @unchecked Sendable {
     private let passthroughSubject = PassthroughSubject<Void, Never>()
-    public var startTimer_calledTimes = 0
+    
+    @Atomic
+    public var _startTimer_calledTimes = 0
+    
+    public var startTimer_calledTimes: Int {
+        $_startTimer_calledTimes.wrappedValue
+    }
 
     public init() {}
 
@@ -13,7 +20,7 @@ public class MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol 
     }
     
     public func start(timerDuration duration: TimeInterval, chatId: HandleEntity) {
-        startTimer_calledTimes += 1
+        $_startTimer_calledTimes.mutate { $0 += 1 }
         passthroughSubject.send()
     }
 }
