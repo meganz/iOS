@@ -31,10 +31,10 @@ public struct SessionUpdateProvider: SessionUpdateProviderProtocol {
     }
 }
 
-private final class SessionUpdateGlobalDelegate: NSObject, MEGAChatCallDelegate {
-    private let onSessionUpdate: (ChatSessionEntity, CallEntity) -> Void
+private final class SessionUpdateGlobalDelegate: NSObject, MEGAChatCallDelegate, Sendable {
+    private let onSessionUpdate: @Sendable (ChatSessionEntity, CallEntity) -> Void
     
-    public init(onUpdate: @escaping (ChatSessionEntity, CallEntity) -> Void) {
+    public init(onUpdate: @Sendable @escaping (ChatSessionEntity, CallEntity) -> Void) {
         self.onSessionUpdate = onUpdate
         super.init()
     }

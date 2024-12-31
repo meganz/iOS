@@ -31,10 +31,10 @@ public struct CallUpdateProvider: CallUpdateProviderProtocol {
     }
 }
 
-private class CallUpdateGlobalDelegate: NSObject, MEGAChatCallDelegate {
-    private let onCallUpdate: (CallEntity) -> Void
+private final class CallUpdateGlobalDelegate: NSObject, MEGAChatCallDelegate, Sendable {
+    private let onCallUpdate: @Sendable (CallEntity) -> Void
     
-    public init(onUpdate: @escaping (CallEntity) -> Void) {
+    public init(onUpdate: @Sendable @escaping (CallEntity) -> Void) {
         self.onCallUpdate = onUpdate
         super.init()
     }

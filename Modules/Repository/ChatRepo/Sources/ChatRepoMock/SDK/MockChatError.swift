@@ -1,6 +1,6 @@
 import MEGAChatSdk
 
-public final class MockChatError: MEGAChatError {
+public final class MockChatError: MEGAChatError, @unchecked Sendable {
     
     private let megaChatErrorType: MEGAChatErrorType
     
