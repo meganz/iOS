@@ -13,7 +13,14 @@ import XCTest
 
 final class PhotoCellViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
-    private var allViewModel: PhotoLibraryModeAllGridViewModel!
+    
+    @MainActor
+    private lazy var allViewModel: PhotoLibraryModeAllGridViewModel = {
+        let library = try! testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library)
+        libraryViewModel.selectedMode = .all
+        return PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+    }()
     
     private var testNodes: [NodeEntity] {
         get throws {
@@ -30,14 +37,6 @@ final class PhotoCellViewModelTests: XCTestCase {
                 NodeEntity(name: "g.mp4", handle: 8, modificationTime: try "2017-12-31T01:01:04Z".date)
             ]
         }
-    }
-    
-    @MainActor
-    override func setUpWithError() throws {
-        let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
-        let libraryViewModel = PhotoLibraryContentViewModel(library: library)
-        libraryViewModel.selectedMode = .all
-        allViewModel = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
     }
     
     override func tearDownWithError() throws {

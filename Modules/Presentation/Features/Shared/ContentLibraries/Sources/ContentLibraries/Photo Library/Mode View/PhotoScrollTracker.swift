@@ -25,8 +25,8 @@ public final class PhotoScrollTracker {
             .store(in: &subscriptions)
     }
     
-    func trackFrame<T: PhotoChronologicalCategory>(_ frame: CGRect, for category: T, inViewPort size: CGSize) {
-        positionRecordDict[category.position] = frame
+    func trackFrame(_ frame: CGRect, for position: PhotoScrollPosition?, inViewPort size: CGSize) {
+        positionRecordDict[position] = frame
         viewPortSize = size
     }
     

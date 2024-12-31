@@ -13,7 +13,7 @@ public struct PhotoCell: View {
 }
 
 extension PhotoCell: Equatable {
-     public static func == (lhs: PhotoCell, rhs: PhotoCell) -> Bool {
+    nonisolated public static func == (lhs: PhotoCell, rhs: PhotoCell) -> Bool {
         true // we are taking over the update of the view
     }
 }

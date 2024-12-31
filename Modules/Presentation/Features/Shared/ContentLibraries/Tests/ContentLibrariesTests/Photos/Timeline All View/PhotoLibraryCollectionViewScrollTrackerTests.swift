@@ -8,8 +8,7 @@ final class PhotoLibraryCollectionViewScrollTrackerTests: XCTestCase {
     private var tracker: PhotoLibraryCollectionViewScrollTracker!
 
     @MainActor
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    private func makeSUT() {
         delegate = MockPhotoLibraryCollectionViewScroller()
         libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
         tracker = PhotoLibraryCollectionViewScrollTracker(
@@ -23,6 +22,7 @@ final class PhotoLibraryCollectionViewScrollTrackerTests: XCTestCase {
 
     @MainActor
     func testScroll_noCardPositionAndNoPhotoPosition_scrollToTop() throws {
+        makeSUT()
         libraryViewModel.cardScrollPosition = nil
         libraryViewModel.photoScrollPosition = nil
         
@@ -32,6 +32,7 @@ final class PhotoLibraryCollectionViewScrollTrackerTests: XCTestCase {
     
     @MainActor
     func testScroll_hasCardPositionAndNoPhotoPosition_scrollToCardPosition() throws {
+        makeSUT()
         let position = PhotoScrollPosition(handle: 1, date: Date())
         libraryViewModel.cardScrollPosition = position
         libraryViewModel.photoScrollPosition = nil
@@ -42,6 +43,7 @@ final class PhotoLibraryCollectionViewScrollTrackerTests: XCTestCase {
     
     @MainActor
     func testScroll_noCardPositionAndhasPhotoPosition_scrollToPhotoPosition() throws {
+        makeSUT()
         let position = PhotoScrollPosition(handle: 1, date: Date())
         libraryViewModel.cardScrollPosition = nil
         libraryViewModel.photoScrollPosition = position
@@ -52,6 +54,7 @@ final class PhotoLibraryCollectionViewScrollTrackerTests: XCTestCase {
     
     @MainActor
     func testScroll_hasCardPositionAndhasPhotoPositionAndSameDay_noScroll() throws {
+        makeSUT()
         libraryViewModel.cardScrollPosition = PhotoScrollPosition(handle: 1, date: try "2020-04-18T12:01:04Z".date)
         libraryViewModel.photoScrollPosition = PhotoScrollPosition(handle: 10, date: try "2020-04-18T09:41:54Z".date)
         
@@ -61,6 +64,7 @@ final class PhotoLibraryCollectionViewScrollTrackerTests: XCTestCase {
     
     @MainActor
     func testScroll_hasCardPositionAndhasPhotoPositionAndDifferentDay_scrollToCardPosition() throws {
+        makeSUT()
         libraryViewModel.cardScrollPosition = PhotoScrollPosition(handle: 1, date: try "2020-09-13T12:01:04Z".date)
         libraryViewModel.photoScrollPosition = PhotoScrollPosition(handle: 10, date: try "2020-04-18T09:41:54Z".date)
         
