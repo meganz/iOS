@@ -5,11 +5,10 @@ import MEGADomainMock
 import XCTest
 
 final class PhotoLibraryMonthViewModelTests: XCTestCase {
-    private var sut: PhotoLibraryMonthViewModel!
     private var subscriptions = Set<AnyCancellable>()
     
     @MainActor
-    override func setUpWithError() throws {
+    private func makeSUT() throws -> PhotoLibraryMonthViewModel {
         let nodes =  [
             NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
             NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2021-07-18T22:01:04Z".date),
@@ -19,11 +18,12 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
         let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .month
-        sut = PhotoLibraryMonthViewModel(libraryViewModel: libraryViewModel)
+        return PhotoLibraryMonthViewModel(libraryViewModel: libraryViewModel)
     }
     
     @MainActor
     func testInit_defaultValue() throws {
+        let sut = try makeSUT()
         XCTAssertEqual(sut.photoCategoryList, sut.libraryViewModel.library.photosByMonthList)
         XCTAssertEqual(sut.photoCategoryList.count, 3)
         XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-08-18T22:01:04Z".date.removeDay(timeZone: .GMT))
@@ -35,6 +35,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
     
     @MainActor
     func testDidTapCategory_tappingMonthCard_goToDayMode() throws {
+        let sut = try makeSUT()
         let category = sut.photoCategoryList[2]
         XCTAssertEqual(category.categoryDate, try "2020-04-17T22:01:04Z".date.removeDay(timeZone: .GMT))
         XCTAssertEqual(category.contentList.count, 2)
@@ -46,6 +47,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
     
     @MainActor
     func testChangingSelectedMode_switchingFromMonthToYearMode_goToYearMode() throws {
+        let sut = try makeSUT()
         sut.libraryViewModel.selectedMode = .year
         XCTAssertNil(sut.libraryViewModel.cardScrollPosition)
         XCTAssertNil(sut.libraryViewModel.photoScrollPosition)
@@ -53,6 +55,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
     
     @MainActor
     func testChangingSelectedMode_switchingFromMonthToDayMode_goToDayMode() throws {
+        let sut = try makeSUT()
         sut.libraryViewModel.selectedMode = .day
         XCTAssertNil(sut.libraryViewModel.cardScrollPosition)
         XCTAssertNil(sut.libraryViewModel.photoScrollPosition)
@@ -60,6 +63,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
     
     @MainActor
     func testChangingSelectedMode_switchingFromMonthToAllMode_goToAllMode() throws {
+        let sut = try makeSUT()
         var didFinishPhotoCardScrollPositionCalculationNotificationCount = 0
         
         NotificationCenter

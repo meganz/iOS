@@ -58,9 +58,9 @@ struct PhotoLibraryModeAllGridView: View {
                     .id(photo.position)
                     .background(Color(white: 0, opacity: 0.1))
                     .frame(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
-                    .onPreferenceChange(FramePreferenceKey.self) { @Sendable frame in
-                        MainActor.assumeIsolated {
-                            viewModel.scrollTracker.trackFrame(frame, for: photo, inViewPort: viewPortSize)
+                    .onPreferenceChange(FramePreferenceKey.self) { [position = photo.position] frame in
+                        Task { @MainActor in
+                            viewModel.scrollTracker.trackFrame(frame, for: position, inViewPort: viewPortSize)
                         }
                     }
                     .onAppear {

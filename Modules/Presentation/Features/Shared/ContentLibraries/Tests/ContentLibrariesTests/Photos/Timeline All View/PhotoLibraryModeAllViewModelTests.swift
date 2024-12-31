@@ -8,10 +8,8 @@ import SwiftUI
 import XCTest
 
 final class PhotoLibraryModeAllViewModelTests: XCTestCase {
-    private var sut: PhotoLibraryModeAllGridViewModel!
-
     @MainActor
-    override func setUpWithError() throws {
+    private func makeSUT() throws -> PhotoLibraryModeAllGridViewModel {
         let nodes =  [
             NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2022-09-01T22:01:04Z".date),
             NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
@@ -23,11 +21,12 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        sut = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+        return PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
     }
     
     @MainActor
     func testInit_defaultValue() throws {
+        let sut = try makeSUT()
         XCTAssertEqual(sut.photoCategoryList.count, 3)
         XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-09-01T22:01:04Z".date.removeDay(timeZone: .GMT))
         XCTAssertEqual(sut.photoCategoryList[0].contentList,
@@ -62,6 +61,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     
     @MainActor
     func testZoomState_zoomInOneTime_daySection() throws {
+        let sut = try makeSUT()
         sut.zoomState.zoom(.in)
         
         XCTAssertEqual(sut.photoCategoryList.count, 4)
@@ -101,12 +101,14 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomInTwoTimes_daySection() throws {
+        let sut = try makeSUT()
         sut.zoomState.zoom(.in)
         try testZoomState_zoomInOneTime_daySection()
     }
     
     @MainActor
     func testZoomState_zoomOutOneTime_monthSection() throws {
+        let sut = try makeSUT()
         sut.zoomState.zoom(.out)
         
         XCTAssertEqual(sut.photoCategoryList.count, 3)
@@ -143,6 +145,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     
     @MainActor
     func testZoomState_zoomOutTwoTimes_monthSection() throws {
+        let sut = try makeSUT()
         sut.zoomState.zoom(.out)
         try testZoomState_zoomOutOneTime_monthSection()
     }

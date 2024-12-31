@@ -85,14 +85,15 @@ open class PhotoCellViewModel: ObservableObject {
     
     // MARK: Thumbnail/Preview Loading
     public func startLoadingThumbnail() async {
-        let thumbnailTypePublisher: some Publisher<ThumbnailTypeEntity, Never> = $currentZoomScaleFactor
+        let thumbnailTypeSequence = $currentZoomScaleFactor
+            .values
             .map { zoomScaleFactor -> ThumbnailTypeEntity in
                 zoomScaleFactor == .one ? .preview : .thumbnail
             }
             .removeDuplicates()
         
         do {
-            for await thumbnailType in thumbnailTypePublisher.values {
+            for await thumbnailType in thumbnailTypeSequence {
                 try Task.checkCancellation()
                 switch (thumbnailType, thumbnailContainer.type) {
                 case (.thumbnail, .thumbnail), (.preview, .preview):

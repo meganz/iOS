@@ -1,14 +1,12 @@
-// swift-tools-version: 5.10
-// To get this to Swift 6, we need to resolve a similar issue as
-// https://forums.swift.org/t/ongeometrychange-assertion-failed-block-was-expected-to-execute-on-queue/74827
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let settings: [SwiftSetting] = [
     .unsafeFlags(["-warnings-as-errors"]),
-    .enableExperimentalFeature("ExistentialAny"),
-    .enableExperimentalFeature("StrictConcurrency=targeted")
+    .enableExperimentalFeature("ExistentialAny")
 ]
+
 let package = Package(
     name: "ContentLibraries",
     platforms: [
@@ -63,5 +61,6 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ],
             swiftSettings: settings)
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

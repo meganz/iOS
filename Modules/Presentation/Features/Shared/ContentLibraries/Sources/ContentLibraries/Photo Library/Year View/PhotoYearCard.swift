@@ -16,7 +16,7 @@ public struct PhotoYearCard: View {
 }
 
 extension PhotoYearCard: Equatable {
-    public static func == (lhs: PhotoYearCard, rhs: PhotoYearCard) -> Bool {
+    nonisolated public static func == (lhs: PhotoYearCard, rhs: PhotoYearCard) -> Bool {
         true // we are taking over the update of the view
     }
 }

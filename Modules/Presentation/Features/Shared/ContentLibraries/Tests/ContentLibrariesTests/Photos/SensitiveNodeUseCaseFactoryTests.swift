@@ -49,7 +49,7 @@ struct SensitiveNodeUseCaseFactoryTests {
 }
 
 extension PhotoLibraryContentMode {
-    static var allCases: [PhotoLibraryContentMode] = [
+    static let allCases: [PhotoLibraryContentMode] = [
         .library,
         .album,
         .albumLink,
