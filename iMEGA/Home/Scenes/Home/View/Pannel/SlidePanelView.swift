@@ -17,7 +17,7 @@ protocol SlidePanelDelegate: AnyObject {
     
     func shouldEnablePanGestureScrollingDown(inSlidePanel slidePanel: SlidePanelView) -> Bool
     
-    func loadOffline()
+    func offlineTabSelected(isFirstLoad: Bool)
 }
 
 final class SlidePanelView: UIView, NibOwnerLoadable {
@@ -39,9 +39,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     @IBOutlet private var offlineContainerView: UIView!
     
     public var offlineScrollView: UIScrollView?
-    
-    private var subscriptions = Set<AnyCancellable>()
-    
+
     // MARK: - Tab Control
     
     private var currentDisplayTab: DisplayTab = .recents {
@@ -54,9 +52,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             case .offline:
                 recentsContainerView.isHidden = true
                 offlineContainerView.isHidden = false
-                if offlineScrollView == nil {
-                    delegate?.loadOffline()
-                }
+                delegate?.offlineTabSelected(isFirstLoad: offlineScrollView == nil)
             }
         }
     }

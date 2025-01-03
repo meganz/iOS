@@ -582,8 +582,12 @@ extension HomeViewController: SlidePanelDelegate {
         return false
     }
     
-    func loadOffline() {
-        addOfflineViewController()
+    func offlineTabSelected(isFirstLoad: Bool) {
+        if isFirstLoad {
+            addOfflineViewController()
+        } else {
+            offlineViewController.reloadUI()
+        }
     }
 }
 
