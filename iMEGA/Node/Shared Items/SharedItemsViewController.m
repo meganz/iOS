@@ -561,7 +561,7 @@
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
-    if (index == 0) {
+    if (index == 0 && self.incomingButton.enabled) {
         [self incomingTouchUpInside:self.incomingButton];
     } else if (index == 1) {
         [self outgoingTouchUpInside:self.outgoingButton];
@@ -613,9 +613,10 @@
     [self.tableView setEditing:editing animated:animated];
     
     [self updateNavigationBarTitle];
-    
     [self setNavigationBarButtons];
-    
+
+    [self updateSegmentedButtonsForEditingState:editing];
+
     if (editing) {
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             [self.toolbar setAlpha:0.0];
