@@ -907,8 +907,6 @@
 		83293C5A2806CB7800369A86 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
 		832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832DEFE82AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift */; };
 		832DEFEB2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */; };
-		832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */; };
-		832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */; };
 		833003A424DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833003A324DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift */; };
 		833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833003A524DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift */; };
 		833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */; };
@@ -3635,10 +3633,6 @@
 		83293C592806CB7800369A86 /* NameCollisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCollisionView.swift; sourceTree = "<group>"; };
 		832DEFE82AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowNonHostToInviteTableViewCell.swift; sourceTree = "<group>"; };
 		832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllowNonHostToInviteTableViewCell.xib; sourceTree = "<group>"; };
-		832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodePropertyTableViewCell.h; sourceTree = "<group>"; };
-		832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodePropertyTableViewCell.m; sourceTree = "<group>"; };
-		832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeTappablePropertyTableViewCell.h; sourceTree = "<group>"; };
-		832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeTappablePropertyTableViewCell.m; sourceTree = "<group>"; };
 		833003A324DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoDetailTableViewCell.swift; sourceTree = "<group>"; };
 		833003A524DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoActionTableViewCell.swift; sourceTree = "<group>"; };
 		833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInWaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
@@ -8774,15 +8768,11 @@
 				83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */,
 				83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */,
 				B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */,
-				832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */,
-				832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */,
 				B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */,
 				415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */,
 				415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */,
 				BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */,
 				25A4E4E82BD8B83700B3F308 /* NodeTableViewCellViewModel.swift */,
-				832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */,
-				832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */,
 				C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */,
 				5B16A736220D6E0900085F61 /* ThumbnailViewerTableViewCell.h */,
 				5B16A737220D6E0900085F61 /* ThumbnailViewerTableViewCell.m */,
@@ -15115,7 +15105,6 @@
 				5D0B42B8250654080057D49B /* NodeManagementRouter.swift in Sources */,
 				5BC609E226B9475D002F12A4 /* NodeOpener.swift in Sources */,
 				C4575F34265FEC3100D527DC /* NodeOwnerInfoTableViewCell.swift in Sources */,
-				832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */,
 				83BFA3AC27CFC2FB00BDF997 /* NodeSelectionType.swift in Sources */,
 				BF8CB0402C34F63900119979 /* NodeSensitivityChecker.swift in Sources */,
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
@@ -15124,7 +15113,6 @@
 				B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */,
-				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
 				25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
