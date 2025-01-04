@@ -9,7 +9,6 @@ enum MiniPlayerAction: ActionType {
     case onPlayPause
     case playItem(AudioPlayerItem)
     case onClose
-    case `deinit`
     case showPlayer(MEGANode?, String?)
 }
 
@@ -80,7 +79,6 @@ final class MiniPlayerViewModel: ViewModelType {
                 let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
                 if isTakenDown {
                     await closeMiniPlayer()
-                    await deInitActions()
                     return
                 }
                 
@@ -98,8 +96,6 @@ final class MiniPlayerViewModel: ViewModelType {
             configEntity.playerHandler.play(item: item)
         case .onClose:
             closeMiniPlayer()
-        case .deinit:
-            deInitActions()
         case .showPlayer(let node, let filePath):
             showFullScreenPlayer(node, path: filePath)
         }
@@ -274,19 +270,13 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     private func closeMiniPlayer() {
+        configEntity.playerHandler.removePlayer(listener: self)
+        
         streamingInfoUseCase?.stopServer()
         if configEntity.isFolderLink, !router.isAFolderLinkPresenter() {
             nodeInfoUseCase?.folderLinkLogout()
         }
         router.dismiss()
-    }
-    
-    private func deInitActions() {
-        configEntity.playerHandler.removePlayer(listener: self)
-        
-        if configEntity.isFolderLink, !router.isAFolderLinkPresenter() {
-            nodeInfoUseCase?.folderLinkLogout()
-        }
         
         Task { [audioPlayerUseCase] in
             await audioPlayerUseCase.unregisterMEGADelegate()

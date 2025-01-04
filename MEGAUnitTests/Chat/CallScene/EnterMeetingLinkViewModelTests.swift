@@ -4,6 +4,7 @@ import XCTest
 
 final class EnterMeetingLinkViewModelTests: XCTestCase {
     
+    @MainActor
     func testDidTapJoinButton_whenMeetingURLIsValid_shouldUpdateLinkURL() {
         // Given
         let urlString = "https://mock.mega.co.nz/chat"
@@ -19,6 +20,7 @@ final class EnterMeetingLinkViewModelTests: XCTestCase {
         XCTAssertEqual((mockLinkManager.adapterLinkURL! as NSURL).mnz_type(), .publicChatLink)
     }
     
+    @MainActor
     func testDidTapJoinButton_whenMeetingURLIsInValid_shouldShowLinkError() {
         // Given
         let urlString = "malformed_string_url"
@@ -31,6 +33,7 @@ final class EnterMeetingLinkViewModelTests: XCTestCase {
         XCTAssertTrue(mockRouter.showLinkErrorCalled)
     }
     
+    @MainActor
     private func makeSUT(
         file: StaticString = #file,
         line: UInt = #line

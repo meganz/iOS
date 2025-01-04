@@ -91,6 +91,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
+    @MainActor
     func testDispatch_onViewReadyAndNodeContainsSensitiveDescendantAndTapsContinueOnAlert_returnCorrectCommands() {
         let nodes: [MEGANode] = [
             MockNode(handle: 1, isNodeExported: true),
@@ -125,6 +126,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
+    @MainActor
     func testDispatch_onViewReadyAndNodeContainsSensitiveDescendantAndTapsCancelOnAlert_returnCorrectCommands() {
         let nodes: [MEGANode] = [
             MockNode(handle: 1, isNodeExported: true),
@@ -156,6 +158,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
+    @MainActor
     func testLinkWithoutKey_shouldReturnExpectedLink() {
         
         let scenarios = [
@@ -173,6 +176,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testKey_shouldReturnExpectedKey() {
         
         let scenarios = [
@@ -193,7 +197,8 @@ final class GetNodeLinkViewModelTests: XCTestCase {
 }
 
 extension GetNodeLinkViewModelTests {
-    private func sut(nodes: [MEGANode] = [], 
+    @MainActor
+    private func sut(nodes: [MEGANode] = [],
                      shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
                      hiddenNodesFeatureFlagActive: Bool = false
     ) -> GetNodeLinkViewModel {

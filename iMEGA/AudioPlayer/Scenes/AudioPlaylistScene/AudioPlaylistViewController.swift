@@ -50,8 +50,9 @@ final class AudioPlaylistViewController: UIViewController {
         playlistDelegate = AudioPlaylistIndexedDelegate(delegate: self, traitCollection: traitCollection)
     }
     
-    deinit {
-        viewModel.dispatch(.deinit)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.dispatch(.onViewWillDisappear)
     }
     
     // MARK: - Private functions

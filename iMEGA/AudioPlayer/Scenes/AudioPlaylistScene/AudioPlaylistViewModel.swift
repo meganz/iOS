@@ -10,7 +10,7 @@ enum AudioPlaylistAction: ActionType {
     case willDraggBegin
     case didDraggEnd
     case dismiss
-    case `deinit`
+    case onViewWillDisappear
 }
 
 protocol AudioPlaylistViewRouting: Routing {
@@ -117,7 +117,7 @@ final class AudioPlaylistViewModel: ViewModelType {
             }
         case .dismiss:
             router.dismiss()
-        case .deinit:
+        case .onViewWillDisappear:
             configEntity.playerHandler.removePlayer(listener: self)
         case .willDraggBegin:
             isDataReloadingEnabled = false

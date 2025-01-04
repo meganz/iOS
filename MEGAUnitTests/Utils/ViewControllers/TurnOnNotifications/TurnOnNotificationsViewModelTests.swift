@@ -50,6 +50,7 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.dismiss_calledTimes, 1)
     }
     
+    @MainActor
     func testShoudlShowTurnOnNotifications_moreThanSevenDaysHasPassed() {
         mockPreference.dict[.lastDateTurnOnNotificationsShowed] = Date.init(timeIntervalSince1970: 0)
         let sut = TurnOnNotificationsViewModel(router: mockRouter, preferenceUseCase: mockPreference,
@@ -57,6 +58,7 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowTurnOnNotifications())
     }
     
+    @MainActor
     func testShoudlShowTurnOnNotifications_moreThanSevenDaysHasPassed_userLoggedIn() {
         mockPreference.dict[.lastDateTurnOnNotificationsShowed] = Date.init(timeIntervalSince1970: 0)
         let sut = TurnOnNotificationsViewModel(router: mockRouter, preferenceUseCase: mockPreference,
@@ -64,6 +66,7 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowTurnOnNotifications())
     }
     
+    @MainActor
     func testShoudlShowTurnOnNotifications_lessThanSevenDaysHasPassed() {
         mockPreference.dict[.lastDateTurnOnNotificationsShowed] = Date()
         let sut = TurnOnNotificationsViewModel(router: mockRouter, preferenceUseCase: mockPreference,
@@ -71,6 +74,7 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowTurnOnNotifications())
     }
     
+    @MainActor
     func testShoudlShowTurnOnNotifications_equalOrMoreThanThreeTimesShown() {
         mockPreference.dict[.timesTurnOnNotificationsShowed] = 3
         let sut = TurnOnNotificationsViewModel(router: mockRouter, preferenceUseCase: mockPreference,
@@ -78,6 +82,7 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowTurnOnNotifications())
     }
     
+    @MainActor
     func testShoudlShowTurnOnNotifications_lessThanThreeTimesShown() {
         mockPreference.dict[.timesTurnOnNotificationsShowed] = 2
         let sut = TurnOnNotificationsViewModel(router: mockRouter, preferenceUseCase: mockPreference,
@@ -85,6 +90,7 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowTurnOnNotifications())
     }
     
+    @MainActor
     func testShoudlShowTurnOnNotifications_lessThanThreeTimesShown_userLoggedI() {
         mockPreference.dict[.timesTurnOnNotificationsShowed] = 2
         let sut = TurnOnNotificationsViewModel(router: mockRouter, preferenceUseCase: mockPreference,

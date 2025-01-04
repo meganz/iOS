@@ -1,33 +1,31 @@
 @testable import MEGA
 import MEGAPresentation
-import XCTest
+import Testing
 
-class SettingCellViewModelTests: XCTestCase {
-    var sut: SettingCellViewModel!
+@MainActor
+struct SettingCellViewModelTests {
+    let sut: SettingCellViewModel = SettingCellViewModel(image: nil, title: "", isDestructive: Bool.random(), displayValue: "", router: nil)
     
-    override func setUpWithError() throws {
-        sut = SettingCellViewModel(image: nil, title: "", isDestructive: Bool.random(), displayValue: "", router: nil)
-    }
-
+    @Test
     func testUpdateDisplayValue() {
-        XCTAssertEqual(sut.displayValue, "")
-        XCTAssertNil(sut.invokeCommand)
+        #expect(sut.displayValue == "")
+        #expect(sut.invokeCommand == nil)
         var value: Bool?
-        XCTAssertNil(value)
         sut.invokeCommand = { cmd in
             if cmd == .reloadData {
                 value = true
             }
         }
-        sut.updateDisplayValue(self.description)
-        XCTAssertEqual(sut.displayValue, self.description)
-        XCTAssertNotNil(value)
+        sut.updateDisplayValue("some updated display value")
+        #expect(sut.displayValue == "some updated display value")
+        #expect(value != nil)
     }
 
+    @Test
     func testUpdateRouter() {
-        XCTAssertNil(sut.router)
+        #expect(sut.router == nil)
         sut.updateRouter(router: MockRouter())
-        XCTAssertNotNil(sut.router)
+        #expect(sut.router != nil)
     }
     
     private struct MockRouter: Routing {}

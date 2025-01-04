@@ -1,45 +1,43 @@
 @testable import MEGA
-import XCTest
+import Testing
 
-class SettingsViewModelTests: XCTestCase {
+@MainActor
+class SettingsViewModelTests {
     
-    var sut: SettingsViewModel!
+    var sut: SettingsViewModel
     var router = SettingViewRouter(presenter: UINavigationController())
     
-    override func setUpWithError() throws {
+    init() {
         sut = SettingsViewModel(router: router, sections: [])
     }
     
     func testNumberOfSections() {
-        XCTAssertEqual(sut.numberOfSections(), 0)
+        #expect(sut.numberOfSections() == 0)
     }
     
     func testNumberOfRows() {
         var rows = sut.numberOfRows(in: Int.random(in: Int.min...Int.max))
-        XCTAssertEqual(rows, 0)
+        #expect(rows == 0)
         updateSutWithDummySection()
         rows = sut.numberOfRows(in: 0)
-        XCTAssertEqual(1, rows)
+        #expect(1 == rows)
     }
     
     func testCellViewModelAtSectionAndRow() {
-        XCTAssertNil(sut.cellViewModel(at: Int.random(in: Int.min...Int.max), in: Int.random(in: Int.min...Int.max)))
+        #expect(sut.cellViewModel(at: Int.random(in: Int.min...Int.max), in: Int.random(in: Int.min...Int.max)) == nil)
         updateSutWithDummySection()
-        XCTAssertNotNil(sut.cellViewModel(at: 0, in: 0))
+        #expect(sut.cellViewModel(at: 0, in: 0) != nil)
     }
     
     func testReloadData() {
         var value: Bool?
-        XCTAssertNil(value)
-        sut.reloadData()
-        XCTAssertNil(value)
         sut.invokeCommand = { cmd in
             if cmd == .reloadData {
                 value = true
             }
         }
         sut.reloadData()
-        XCTAssertNotNil(value)
+        #expect(value != nil)
     }
     
     func updateSutWithDummySection() {

@@ -41,6 +41,7 @@ enum DetailsSectionRow {
     case linkCreationDate
 }
 
+@MainActor
 @objc protocol NodeInfoViewControllerDelegate {
     func nodeInfoViewController(_ nodeInfoViewController: NodeInfoViewController, presentParentNode node: MEGANode)
 }

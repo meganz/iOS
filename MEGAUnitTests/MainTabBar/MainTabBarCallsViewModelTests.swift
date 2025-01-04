@@ -11,6 +11,7 @@ import XCTest
 final class MainTabBarCallsViewModelTests: XCTestCase {
     private let router = MockMainTabBarCallsRouter()
 
+    @MainActor
     func testCallUpdate_onCallUpdateInProgressAndBeingModerator_waitingRoomListenerExists() {
         let callUpdateUseCase = MockCallUpdateUseCase()
         let viewModel = makeMainTabBarCallsViewModel(
@@ -25,6 +26,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_onCallUpdateJoining_callSessionListenerExists() {
         let callUpdateUseCase = MockCallUpdateUseCase()
         
@@ -140,6 +142,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         evaluate { self.router.showScreenRecordingNotification_calledTimes == 1 }
     }
 
+    @MainActor
     func testCallUpdate_onCallUpdateInProgressAndNotBeingModerator_waitingRoomListenerNotExists() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let callUpdateUseCase = MockCallUpdateUseCase()
@@ -156,6 +159,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testCallUpdate_onCallUpdateInProgressAndWaitingRoomNotEnabled_waitingRoomListenerNotExists() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: false), peerPrivilege: .standard)
         let callUpdateUseCase = MockCallUpdateUseCase()
@@ -398,6 +402,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func test_didTapCloudDriveTab_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapCloudDriveTab,
@@ -405,6 +410,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_didTapChatRoomsTab_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapChatRoomsTab,
@@ -420,6 +426,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
     
+    @MainActor
     private func makeMainTabBarCallsViewModel(
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         callUseCase: some CallUseCaseProtocol =  MockCallUseCase(),
@@ -450,6 +457,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func trackAnalyticsEventTest(
         action: MainTabBarCallsAction,
         expectedEvent: some EventIdentifier

@@ -10,6 +10,7 @@ import XCTest
 
 final class GetCollectionsLinkViewModelTests: XCTestCase {
 
+    @MainActor
     func testNumberOfSections_init_isCorrect() {
         let album = SetEntity(handle: 1, setType: .album)
         let sections = [
@@ -21,6 +22,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSections, sections.count)
     }
     
+    @MainActor
     func testNumberRowsInSection_init_isCorrect() {
         let album = SetEntity(handle: 1, setType: .album)
         let cellViewModels = [GetLinkStringCellViewModel(link: "Test link")]
@@ -36,6 +38,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
                        cellViewModels.count)
     }
     
+    @MainActor
     func testCellViewModel_init_forIndexPath_isCorrect() {
         let album = SetEntity(handle: 1, setType: .album)
         let cellViewModels = [GetLinkStringCellViewModel(link: "Test link")]
@@ -53,6 +56,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testCellViewModel_init_sectionTypeRetrievalIsCorrect() {
         let album = SetEntity(handle: 1, setType: .album)
         let section = GetLinkSectionViewModel(sectionType: .info,
@@ -286,6 +290,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsContinue_shouldLoadLinks() throws {
         let albums = [SetEntity(handle: 1, setType: .album), SetEntity(handle: 2, setType: .album)]
         let sections = albums.map {
@@ -366,6 +371,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
+    @MainActor
     func testDispatch_onViewReadyAndAlbumContainsSensitiveElementAndContinuesAndTapsCancel_shouldDismissView() throws {
         let albums = [SetEntity(handle: 1, setType: .album), SetEntity(handle: 2, setType: .album)]
         let tracker = MockTracker()
@@ -408,6 +414,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
         ], expectationValidation: ==)
     }
     
+    @MainActor
     private func makeCollectionsLinkViewModel(
         setEntities: [SetEntity] = [],
         shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),

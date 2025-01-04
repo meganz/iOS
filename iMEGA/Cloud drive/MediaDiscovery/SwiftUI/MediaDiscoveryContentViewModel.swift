@@ -188,24 +188,28 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         mediaDiscoveryUseCase
             .nodeUpdatesPublisher
             .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
-            .sink { [weak self] updatedNodes in
-                guard let self else { return }
-                
-                let nodes = photoLibraryContentViewModel.library.allPhotos
-                
-                guard
-                    let parentNode = parentNodeProvider(),
-                    mediaDiscoveryUseCase.shouldReload(
-                        parentNode: parentNode,
-                        loadedNodes: nodes,
-                        updatedNodes: updatedNodes
-                    )
-                else {
-                    return
+            .sink { @Sendable [weak self] updatedNodes in
+                Task {
+                    await self?.handleNodeChanges(updatedNodes)
                 }
-                
-                Task { await self.loadPhotos() }
             }.store(in: &subscriptions)
+    }
+    
+    func handleNodeChanges(_ updatedNodes: [NodeEntity]) async {
+        let nodes = photoLibraryContentViewModel.library.allPhotos
+        
+        guard
+            let parentNode = parentNodeProvider(),
+            mediaDiscoveryUseCase.shouldReload(
+                parentNode: parentNode,
+                loadedNodes: nodes,
+                updatedNodes: updatedNodes
+            )
+        else {
+            return
+        }
+        
+        await self.loadPhotos()
     }
     
     private func shouldExcludeSensitiveItems() async -> Bool {

@@ -12,6 +12,7 @@ import XCTest
 
 final class NotificationsViewModelTests: XCTestCase {
     
+    @MainActor
     func testNumberOfSections_shouldBeTwoSections() {
         let (sut, _) = makeSUT()
         XCTAssertEqual(sut.numberOfSections, 2)
@@ -196,6 +197,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.promoList.count, expectedPromoListCount, file: file, line: line)
     }
     
+    @MainActor
     func testSharedItemNotificationMessage_withFilesOnly_shouldReturnCorrectMessage() {
         let fileCount = randomItemCount
         
@@ -205,6 +207,7 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testSharedItemNotificationMessage_withFoldersOnly_shouldReturnCorrectMessage() {
         let folderCount = randomItemCount
  
@@ -214,6 +217,7 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testSharedItemNotificationMessage_withFileAndFolders_shouldReturnCorrectMessage() {
         let folderCount = randomItemCount
         let fileCount = randomItemCount
@@ -255,6 +259,7 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func assertSharedItemNotificationMessage(
         folderCount: Int = 0,
         fileCount: Int = 0,
@@ -266,6 +271,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.sharedItemNotificationMessage(folderCount: folderCount, fileCount: fileCount), expectedMessage, file: file, line: line)
     }
     
+    @MainActor
     private func makeSUT(
         lastReadNotification: NotificationIDEntity = NotificationIDEntity(0),
         notifications: [NotificationEntity] = [],

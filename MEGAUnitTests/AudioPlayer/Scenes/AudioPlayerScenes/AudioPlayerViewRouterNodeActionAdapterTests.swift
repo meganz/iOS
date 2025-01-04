@@ -68,6 +68,7 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
         return (sut, audioPlayerViewController)
     }
     
+    @MainActor
     private func mockNodeActionViewController() -> NodeActionViewController {
         NodeActionViewController(
             node: MockNode(handle: 1),

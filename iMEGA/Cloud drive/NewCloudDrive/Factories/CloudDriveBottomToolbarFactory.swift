@@ -19,6 +19,8 @@ struct BottomToolbarConfig {
 // to implement handling of the actions, both ones visible as buttons in the tool bar, as well as those
 // found when tapping on "more" (ellipsis,···) button. This is done via injected instance of NodeActionsDelegateHandler
 // When "more" is tapped, we present NodeActionViewController modally on the parent
+
+@MainActor
 struct CloudDriveBottomToolbarItemsFactory {
     
     let sdk: MEGASdk

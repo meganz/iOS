@@ -12,6 +12,7 @@ import XCTest
 
 class CloudDriveViewModelTests: XCTestCase {
     
+    @MainActor
     func testUpdateEditModeActive_changeActiveToTrueWhenCurrentlyActive_shouldInvokeOnlyOnce() {
         
         // Arrange
@@ -30,6 +31,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertEqual(commands, [.enterSelectionMode])
     }
     
+    @MainActor
     func testUpdateEditModeActive_changeActiveToFalseWhenCurrentlyNotActive_shouldInvokeNotInvoke() {
         
         // Arrange
@@ -48,6 +50,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertEqual(commands, [])
     }
     
+    @MainActor
     func testUpdateEditModeActive_changeActiveToFalseWhenCurrentlyActive_shouldInvokeEnterAndExitCommands() {
         
         // Arrange
@@ -66,6 +69,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertEqual(commands, [.enterSelectionMode, .exitSelectionMode])
     }
     
+    @MainActor
     func testShouldShowMediaDiscoveryAutomatically_containsNonMediaFiles_shouldReturnFalse() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: true])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -75,6 +79,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowMediaDiscoveryAutomatically(forNodes: nodes))
     }
     
+    @MainActor
     func testShouldShowMediaDiscoveryAutomatically_containsOnlyMediaFiles_shouldReturnTrue() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: true])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -84,6 +89,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowMediaDiscoveryAutomatically(forNodes: nodes))
     }
     
+    @MainActor
     func testShouldShowMediaDiscoveryAutomatically_preferenceOff_shouldReturnFalse() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: false])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
@@ -92,6 +98,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowMediaDiscoveryAutomatically(forNodes: nodes))
     }
     
+    @MainActor
     func testHasMediaFiles_nodesContainVisualMediaFile_shouldReturnTrue() {
         let sut = makeSUT()
         
@@ -100,6 +107,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertTrue(sut.hasMediaFiles(nodes: nodes))
     }
     
+    @MainActor
     func testHasMediaFiles_nodesDoesNotContainVisualMediaFile_shouldReturnFalse() {
         let sut = makeSUT()
         
@@ -108,6 +116,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(sut.hasMediaFiles(nodes: nodes))
     }
     
+    @MainActor
     func testSortOrder_whereViewModeIsMediaDiscovery_shouldReturnEitherNewestOrOldest() throws {
         
         let expectations: [(SortOrderEntity, SortOrderType)] = [
@@ -127,6 +136,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSortOrder_whereViewModeIsList_shouldReturnMatchingSortOrder() throws {
         
         SortOrderEntity.allCases.forEach { sortOrder in
@@ -139,6 +149,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSortOrder_whereViewModeIsThumbnail_shouldReturnMatchingSortOrder() throws {
         
         SortOrderEntity.allCases.forEach { sortOrder in
@@ -151,6 +162,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testSortOrder_whereViewModeIsPerFolder_shouldReturnMatchingSortOrder() throws {
         
         SortOrderEntity.allCases.forEach { sortOrder in
@@ -163,6 +175,7 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testShouldShowConfirmationAlertForRemovedFiles() {
         let sut = makeSUT()
         
@@ -347,6 +360,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(isHidden))
     }
     
+    @MainActor
     func testAction_moveNodeToRubbishBin_handledByMoveToRubbishBinViewModel() throws {
         // given
         let node = MockNode(handle: 1)
@@ -402,6 +416,7 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(shouldExcludeSecondCall)
     }
     
+    @MainActor
     func test_didTapChooseFromPhotos_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapChooseFromPhotos,
@@ -409,6 +424,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func test_didTapImportFromFiles_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapImportFromFiles,
@@ -416,6 +432,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_didTapNewFolder_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapNewFolder,
@@ -423,6 +440,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func test_didTapNewTextFile_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapNewTextFile,
@@ -430,6 +448,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func test_didOpenAddMenu_tracksAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didOpenAddMenu,
@@ -437,6 +456,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func tests_didTapHideNodes_trackAnalyticsEvent() {
         trackAnalyticsEventTest(
             action: .didTapHideNodes,
@@ -555,6 +575,7 @@ class CloudDriveViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func makeSUT(
         parentNode: MEGANode? = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
@@ -593,6 +614,7 @@ class CloudDriveViewModelTests: XCTestCase {
         return sut
     }
     
+    @MainActor
     private func trackAnalyticsEventTest(
         action: CloudDriveAction,
         expectedEvent: some EventIdentifier,

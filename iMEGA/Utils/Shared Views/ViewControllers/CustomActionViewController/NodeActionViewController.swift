@@ -5,6 +5,7 @@ import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 
+@MainActor
 @objc protocol NodeActionViewControllerDelegate {
     // Method that handles selected node action for a single node. It may have an action specifically for single nodes. e.g Info, Versions
     // Don't remove this method.

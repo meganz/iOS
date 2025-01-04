@@ -54,10 +54,6 @@ final class MiniPlayerViewController: UIViewController {
         progressBarView.setNeedsDisplay()
     }
     
-    deinit {
-        viewModel.dispatch(.deinit)
-    }
-    
     // MARK: - Private functions
     private func updatePlayback(_ percentage: Float, _ isPlaying: Bool) {
         progressBarView.setProgress(progress: CGFloat(percentage), animated: false)

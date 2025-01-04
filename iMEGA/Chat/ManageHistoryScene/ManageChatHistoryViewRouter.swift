@@ -2,6 +2,7 @@ import ChatRepo
 import Foundation
 import MEGADomain
 
+@MainActor
 protocol ManageChatHistoryProtocol {
     func didTap(on source: ManageChatHistoryRoutingSource)
 }

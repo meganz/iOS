@@ -16,7 +16,7 @@ Defines actions to be dispatched from `ViewType`  to `ViewModelType`.
  
 You usually define actions with `Enum` type.
 */
-@preconcurrency @MainActor
+@MainActor
 public protocol ActionType { }
 
 /**
@@ -35,7 +35,7 @@ Defines commands to be invoked by a `ViewModelType` and executed by a `ViewType`
 
 You usually define commands with `Enum` type.
 */
-@preconcurrency @MainActor
+@MainActor
 public protocol CommandType { }
 
 /**
@@ -53,7 +53,7 @@ By using the actions and commands, we make the a unidirectional flow between `Vi
         invokeCommand?(command)
      }
 */
-@preconcurrency @MainActor
+@MainActor
 public protocol ViewModelType {
     associatedtype Action: ActionType
     associatedtype Command: CommandType
@@ -83,7 +83,7 @@ Defines a view which subscribes `CommandType` and executes `CommandType` when it
 
 You usually define `UIViewController` as a `ViewType`
 */
-@preconcurrency @MainActor
+@MainActor
 public protocol ViewType {
     associatedtype Command: CommandType
     

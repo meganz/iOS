@@ -4,6 +4,7 @@ import XCTest
 
 extension XCTestCase {
     
+    @MainActor
     func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 3.0, file: StaticString = #filePath, line: UInt = #line) where T.Command: Equatable {
         test(
             viewModel: viewModel,
@@ -16,6 +17,7 @@ extension XCTestCase {
         )
     }
     
+    @MainActor
     func test<T: ViewModelType>(viewModel: T, actions: [T.Action], expectedCommands: [T.Command], timeout: TimeInterval = 3.0, file: StaticString = #filePath, line: UInt = #line) where T.Command: Equatable {
         test(
             viewModel: viewModel,
@@ -28,6 +30,7 @@ extension XCTestCase {
         )
     }
     
+    @MainActor
     func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 3.0, expectationValidation: @escaping (T.Command, T.Command) -> Bool, file: StaticString = #filePath, line: UInt = #line) {
         test(
             viewModel: viewModel,
@@ -40,6 +43,7 @@ extension XCTestCase {
         )
     }
     
+    @MainActor
     func test<T: ViewModelType>(viewModel: T, actions: [T.Action], expectedCommands: [T.Command], timeout: TimeInterval = 3.0, expectationValidation: @escaping (T.Command, T.Command) -> Bool, file: StaticString = #filePath, line: UInt = #line) {
         var expectedCommands = expectedCommands
         var viewModel = viewModel
@@ -154,6 +158,7 @@ extension XCTestCase {
         await fulfillment(of: [commandExpectation], timeout: timeout)
     }
     
+    @MainActor
     func test<T: ViewModelType>(viewModel: T, trigger: () -> Void, expectedCommands: [T.Command], timeout: TimeInterval = 3.0, expectationValidation: @escaping (T.Command, T.Command) -> Bool, file: StaticString = #filePath, line: UInt = #line) {
         var expectedCommands = expectedCommands
         var viewModel = viewModel
@@ -184,6 +189,7 @@ extension XCTestCase {
         wait(for: [commandExpectation], timeout: timeout)
     }
     
+    @MainActor
     func test<T: ViewModelType>(viewModel: T, actions: [T.Action], relaysCommand: T.Command, timeout: TimeInterval = 3.0) where T.Command: Equatable {
         var viewModel = viewModel
         let commandExpectation = expectation(description: "relays command")
