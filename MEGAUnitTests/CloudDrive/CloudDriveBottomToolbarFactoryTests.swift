@@ -44,6 +44,7 @@ extension NodeActionsDelegateHandler {
 }
 
 final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
+    @MainActor
     class Harness {
         class MockToolbarActionFactory: ToolbarActionFactoryProtocol {
             var receivedAccessType: NodeAccessTypeEntity?
@@ -73,14 +74,15 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         let parent = UIViewController()
 
         init(
-            actionHandler: NodeActionsDelegateHandler = .testingInstance,
+            actionHandler: NodeActionsDelegateHandler? = nil,
             nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase()
         ) {
-            self.actionHandler = actionHandler
+            let handler = actionHandler ?? .testingInstance
+            self.actionHandler = handler
             self.nodeUseCase = nodeUseCase
             sut = CloudDriveBottomToolbarItemsFactory(
                 sdk: MockSdk(),
-                nodeActionHandler: actionHandler,
+                nodeActionHandler: handler,
                 actionFactory: actionFactory,
                 nodeUseCase: nodeUseCase,
                 nodeAccessoryActionDelegate: MockNodeAccessoryActionDelegate()
@@ -136,6 +138,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         }
       }
     
+    @MainActor
     func testCloudDriveActions_requestsCorrectButtonFromFactory() {
         let harness = Harness()
         _ = harness.buildOwnerCloudDrive()
@@ -144,6 +147,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(harness.actionFactory.receivedDisplayMode, .cloudDrive)
     }
     
+    @MainActor
     func testRubbishBinActions_requestsCorrectButtonFromFactory() {
         let harness = Harness()
         _ = harness.buildOwnerRubbishBin()
@@ -152,6 +156,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(harness.actionFactory.receivedDisplayMode, .rubbishBin)
     }
     
+    @MainActor
     func testBackupsActions_requestsCorrectButtonFromFactory() {
         let harness = Harness()
         _ = harness.buildOwnerBackups()
@@ -160,6 +165,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(harness.actionFactory.receivedDisplayMode, .backup)
     }
     
+    @MainActor
     func testDownloadAction_whenTriggered_CallsCorrectNodeActionClosure() throws {
         let harness = Harness()
         var downloadCalled = false
@@ -177,6 +183,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
     
+    @MainActor
     func testShareLinkAction_whenTriggered_CallsCorrectNodeActionClosure() throws {
         let harness = Harness()
         var shareOrManageLinkCalled = false
@@ -194,6 +201,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
     
+    @MainActor
     func testMoveAction_whenTriggered_CallsCorrectNodeActionClosure() throws {
         let harness = Harness()
         var browserAction: BrowserActionEntity?
@@ -211,6 +219,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
     
+    @MainActor
     func testCopyAction_whenTriggered_CallsCorrectNodeActionClosure() throws {
         let harness = Harness()
         var browserAction: BrowserActionEntity?
@@ -228,6 +237,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
     
+    @MainActor
     func testRestoreAction_whenTriggered_CallsCorrectNodeActionClosure() throws {
         let harness = Harness()
         var restoreCalled = false
@@ -245,6 +255,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
     
+    @MainActor
     func testDeleteAction_whenTriggered_CallsRemoveFromRubbishBinIfInRubbishBin() throws {
         let harness = Harness()
         var removeFromRubbishBinCalled = false
@@ -269,6 +280,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
     
+    @MainActor
     func testDeleteAction_whenTriggered_CallsMoveToRubbishBinCalledIfInCloudDrive() throws {
         let harness = Harness()
         var moveToRubbishBinCalled = false
@@ -293,6 +305,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertEqual(passedInNodes, harness.selectedNodes)
     }
     
+    @MainActor
     func testBarButtonItem_whenSelectedNodesIsEmpty_itShouldBeDisabled() {
         // given
         let harness = Harness()
@@ -319,6 +332,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testBarButton_whenSelectedNodesContainDisputedNode_itShouldBeDisabled() {
         // given
         let harness = Harness()
@@ -348,6 +362,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testBarButton_whenSelectedNodesAreNotDisputed_itShouldBeEnabled() {
         // given
         let harness = Harness()
@@ -377,6 +392,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testBarButton_whenDisplayModeIsRubbishBin_andNodeIsNotDisputedButNotRestorable_itShouldBeDisable() throws {
         // given
         let harness = Harness(
@@ -397,6 +413,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
         XCTAssertFalse(item.isEnabled)
     }
     
+    @MainActor
     func testBarButton_whenDisplayModeIsRubbishBin_andNodeIsNotDisputedAndIsRestorable_itShouldBeEnabled() throws {
         // given
         let harness = Harness(

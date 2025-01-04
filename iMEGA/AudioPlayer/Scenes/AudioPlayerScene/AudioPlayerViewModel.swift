@@ -40,7 +40,6 @@ enum AudioPlayerAction: ActionType {
     case showActionsforCurrentNode(sender: Any)
     case onSelectResumePlaybackContinuationDialog(playbackTime: TimeInterval)
     case onSelectRestartPlaybackContinuationDialog
-    case `deinit`
     case onTermsOfServiceViolationAlertDismissAction
 }
 
@@ -463,12 +462,11 @@ final class AudioPlayerViewModel: ViewModelType {
         case .onSelectRestartPlaybackContinuationDialog:
             playbackContinuationUseCase.setPreference(to: .restartFromBeginning)
             configEntity.playerHandler.playerPlay()
-        case .deinit:
-            onDeinit()
         case .onTermsOfServiceViolationAlertDismissAction:
             configEntity.playerHandler.closePlayer()
             router.dismiss()
         case .viewDidDissapear(let reason):
+            removeDelegates()
             switch reason {
             case .userInitiatedDismissal:
                 accountUseCase.isLoggedIn() ? initMiniPlayer() : requestStopAudioPlayerSession()
@@ -480,7 +478,7 @@ final class AudioPlayerViewModel: ViewModelType {
         }
     }
     
-    private func onDeinit() {
+    private func removeDelegates() {
         configEntity.playerHandler.removePlayer(listener: self)
         if !configEntity.playerHandler.isPlayerDefined() {
             streamingInfoUseCase?.stopServer()

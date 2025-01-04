@@ -5,7 +5,7 @@ final class MockRecoveryKeyViewRouter: RecoveryKeyViewRouting {
     private(set) var presentView_calledTimes = 0
     private let _recoveryKeyViewController: UIViewController?
     
-    init(recoveryKeyViewController: UIViewController? = nil) {
+    nonisolated init(recoveryKeyViewController: UIViewController? = nil) {
         _recoveryKeyViewController = recoveryKeyViewController
     }
     

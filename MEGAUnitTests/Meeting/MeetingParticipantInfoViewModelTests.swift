@@ -164,14 +164,14 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
              ])
     }
     
-    func testAction_showInfo() {
+    @MainActor func testAction_showInfo() {
         let router = MockMeetingParticipantInfoViewRouter()
         let viewModel = makeSUT(router: router)
         viewModel.dispatch(.showInfo)
         XCTAssert(router.showInfo_calledTimes == 1)
     }
     
-    func testSendMessage_chatRoomExists_shouldOpenChatRoom() {
+    @MainActor func testSendMessage_chatRoomExists_shouldOpenChatRoom() {
         let chatRoomEntity = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
         let router = MockMeetingParticipantInfoViewRouter()
@@ -183,7 +183,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         XCTAssert(router.openChatRoom_calledTimes == 1)
     }
     
-    func testSendMessage_noChatRoomExists_shouldCreateAndOpenNewChatRoom() {
+    @MainActor func testSendMessage_noChatRoomExists_shouldCreateAndOpenNewChatRoom() {
         let chatRoomEntity = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let chatRoomUseCase = MockChatRoomUseCase(createChatRoomResult: .success(chatRoomEntity))
         let router = MockMeetingParticipantInfoViewRouter()
@@ -199,7 +199,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func testAction_makeModerator() {
+    @MainActor func testAction_makeModerator() {
         let router = MockMeetingParticipantInfoViewRouter()
         
         let viewModel = makeSUT(router: router)
@@ -207,7 +207,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         XCTAssert(router.makeParticipantAsModerator_calledTimes == 1)
     }
     
-    func testAction_removeParticipant() {
+    @MainActor func testAction_removeParticipant() {
         let router = MockMeetingParticipantInfoViewRouter()
         let viewModel = makeSUT(router: router)
         
@@ -215,7 +215,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         XCTAssert(router.removeParticipant_calledTimes == 1)
     }
     
-    func testAction_displayInMainView() {
+    @MainActor func testAction_displayInMainView() {
         let router = MockMeetingParticipantInfoViewRouter()
         let viewModel = makeSUT(router: router)
         
@@ -223,7 +223,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         XCTAssert(router.displayInMainView_calledTimes == 1)
     }
     
-    func testAction_muteParticipant_shouldShowActionSheetForMuteParticipant() {
+    @MainActor func testAction_muteParticipant_shouldShowActionSheetForMuteParticipant() {
         let router = MockMeetingParticipantInfoViewRouter()
         let viewModel = makeSUT(router: router)
         
@@ -271,7 +271,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
     }
     
-    private func makeSUT(
+    @MainActor private func makeSUT(
         participant: CallParticipantEntity = mockParticipant(isModerator: false),
         userImageUseCase: some UserImageUseCaseProtocol = MockUserImageUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
@@ -365,6 +365,8 @@ final class MockMeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRout
     
     var createChatRoomCompletion: ((ChatRoomEntity) -> Void)?
 
+    nonisolated init() {}
+    
     func showInfo(withEmail email: String?) {
         showInfo_calledTimes += 1
     }

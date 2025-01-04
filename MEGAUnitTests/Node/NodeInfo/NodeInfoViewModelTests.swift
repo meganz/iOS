@@ -9,6 +9,7 @@ import XCTest
 
 final class NodeInfoViewModelTests: XCTestCase {
     
+    @MainActor
     func testIsContactVerified_Verified() {
         let mockUser = MockUser()
         let mockShareUseCase = MockShareUseCase(areUserCredentialsVerified: true, user: mockUser.toUserEntity())
@@ -18,6 +19,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isContactVerified())
     }
     
+    @MainActor
     func testIsContactVerified_NotVerified() {
         let mockShareUseCase = MockShareUseCase(areUserCredentialsVerified: false)
         let sut = makeSUT(shareUseCase: mockShareUseCase)
@@ -25,6 +27,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isContactVerified())
     }
     
+    @MainActor
     func testOpenVerifyCredentials_methodCalled() {
         let mockShareUseCase = MockShareUseCase()
         let sut = makeSUT(shareUseCase: mockShareUseCase)
@@ -54,6 +57,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         XCTAssertFalse(mockShareUseCase.createShareKeyFunctionHasBeenCalled)
     }
     
+    @MainActor
     func testNodeInfoLocationViewModel_whenNodeIsNotVisualMedia_shouldReturnNil() {
         let node = MockNode(handle: 1, name: "test.txt")
         let sut = makeSUT(node: node)
@@ -106,31 +110,37 @@ final class NodeInfoViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testShouldShowNodeTags_whenNodeInCloudDriveAndFeatureToggleOn_shouldReturnTrue() {
         assertShouldShowNodeTags(whenFeatureToggleIsOn: true, shouldReturn: true)
     }
 
+    @MainActor
     func testShouldShowNodeTags_whenFeatureToggleIsOff_shouldReturnFalse() {
         assertShouldShowNodeTags(whenFeatureToggleIsOn: false, shouldReturn: false)
     }
 
+    @MainActor
     func testShouldShowNodeTags_whenNodeInRubbishBin_shouldReturnFalse() {
         let nodeUseCase = MockNodeUseCase(isNodeInRubbishBin: true)
         let sut = makeSUT(nodeUseCase: nodeUseCase)
         XCTAssertFalse(sut.shouldShowNodeTags)
     }
 
+    @MainActor
     func testShouldShowNodeTags_whenNodeInBackup_shouldReturnFalse() {
         let backupUseCase = MockBackupsUseCase(isBackupsNode: true)
         let sut = makeSUT(backupUseCase: backupUseCase)
         XCTAssertFalse(sut.shouldShowNodeTags)
     }
 
+    @MainActor
     func testShouldShowNodeTags_whenNodeIsIncomingShareRoot_shouldReturnFalse() {
         let sut = makeSUT(node: MockNode(handle: 100, isInShare: true))
         XCTAssertFalse(sut.shouldShowNodeTags)
     }
 
+    @MainActor
     func testShouldShowNodeTags_whenNodeIsIncomingShareChild_shouldReturnFalse() {
         let rootNode = MockNode(handle: 100, isInShare: true)
         let childNode = MockNode(handle: 101, parentHandle: 100, isInShare: false)
@@ -139,6 +149,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         XCTAssertFalse(sut.shouldShowNodeTags)
     }
 
+    @MainActor
     private func assertShouldShowNodeTags(
         whenFeatureToggleIsOn flag: Bool,
         shouldReturn expectedResult: Bool,
@@ -150,6 +161,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         XCTAssertEqual(sut.shouldShowNodeTags, expectedResult, file: file, line: line)
     }
 
+    @MainActor
     private func makeSUT(
         node: MockNode = MockNode(handle: 0),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),

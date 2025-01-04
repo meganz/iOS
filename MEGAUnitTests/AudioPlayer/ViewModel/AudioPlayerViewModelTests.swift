@@ -59,7 +59,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         await test(viewModel: onlineSUT, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .none)])
         XCTAssertEqual(playerHandler.onRepeatDisabled_calledTimes, 1)
         
-        await test(viewModel: onlineSUT, action: .deinit, expectedCommands: [])
+        await test(viewModel: onlineSUT, action: .viewDidDissapear(reason: .userInitiatedDismissal), expectedCommands: [])
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
         
         await test(viewModel: onlineSUT, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .oneAndAHalf)])
@@ -256,7 +256,6 @@ final class AudioPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
         XCTAssertEqual(playerHandler.pause_calledTimes, 1)
         XCTAssertEqual(playerHandler.closePlayer_calledTimes, 1)
-        XCTAssertEqual(streamingInfoUseCase.stopServer_calledTimes, 1)
     }
     
     @MainActor
@@ -280,7 +279,6 @@ final class AudioPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
         XCTAssertEqual(playerHandler.pause_calledTimes, 0)
         XCTAssertEqual(playerHandler.closePlayer_calledTimes, 0)
-        XCTAssertEqual(streamingInfoUseCase.stopServer_calledTimes, 0)
     }
     
     // MARK: - initMiniPlayer
@@ -379,6 +377,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         return (sut, playbackUseCase, configEntity.playerHandler as! MockAudioPlayerHandler, router)
     }
     
+    @MainActor
     private func assert(
         _ viewModel: AudioPlayerViewModel,
         when action: (AudioPlayerViewModel) -> Void,

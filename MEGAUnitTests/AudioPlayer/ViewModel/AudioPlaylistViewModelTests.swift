@@ -5,6 +5,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     let router = MockAudioPlaylistViewRouter()
     let playerHandler = MockAudioPlayerHandler()
     
+    @MainActor
     lazy var viewModel = AudioPlaylistViewModel(configEntity: AudioPlayerConfigEntity(parentNode: MEGANode(), playerHandler: playerHandler),
                                                 router: router)
     
@@ -29,7 +30,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         
         test(viewModel: viewModel, action: .didDeselect(mockPlayerCurrentItem), expectedCommands: [.hideToolbar])
         
-        test(viewModel: viewModel, action: .deinit, expectedCommands: [])
+        test(viewModel: viewModel, action: .onViewWillDisappear, expectedCommands: [])
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
         
         test(viewModel: viewModel, action: .willDraggBegin, expectedCommands: [])

@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 
+@MainActor
 final class NodeInfoRouter: NSObject {
 
     private weak var navigationController: UINavigationController?

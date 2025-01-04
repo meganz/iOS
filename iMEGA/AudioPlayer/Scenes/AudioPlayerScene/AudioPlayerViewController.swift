@@ -90,7 +90,6 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     deinit {
-        viewModel.dispatch(.deinit)
         removeDelegates()
     }
     

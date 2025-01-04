@@ -4,6 +4,7 @@ import XCTest
 
 final class PhotosBrowserViewModelXCTests: XCTestCase {
     
+    @MainActor
     func testPhotosBrower_onPageIndexChange_onCurrentIndexChangeCommandShouldBeCalledTwice() {
         let expectation = expectation(description: "invokeCommand should be called with .onCurrentIndexChange")
         expectation.expectedFulfillmentCount = 2

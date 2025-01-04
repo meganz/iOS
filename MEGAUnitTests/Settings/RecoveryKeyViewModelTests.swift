@@ -8,6 +8,7 @@ import Testing
 
 struct RecoveryKeyViewModelTests {
     // MARK: - Helper
+    @MainActor
     private static func makeSUT(
         isLoggedIn: Bool = true,
         tracker: some AnalyticsTracking = MockTracker(),

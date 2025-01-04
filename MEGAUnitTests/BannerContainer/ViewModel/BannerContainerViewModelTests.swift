@@ -48,6 +48,7 @@ final class BannerContainerViewModelTests: XCTestCase {
     
     // MARK: - Private methods
     
+    @MainActor
     private func makeSUT(
         withOfflineLogOutWarningDismissed offlineLogOutWarningDismissed: Bool? = nil
     ) -> (viewModel: BannerContainerViewModel, preference: some PreferenceUseCaseProtocol) {

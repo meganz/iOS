@@ -17,7 +17,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         await test(viewModel: viewModel, action: .playItem(AudioPlayerItem.mockItem), expectedCommands: [])
         XCTAssertEqual(mockPlayerHandler.playItem_calledTimes, 1)
         
-        await test(viewModel: viewModel, action: .deinit, expectedCommands: [])
+        await test(viewModel: viewModel, action: .onClose, expectedCommands: [])
         XCTAssertEqual(mockPlayerHandler.removePlayerListener_calledTimes, 1)
     }
 
@@ -115,14 +115,6 @@ final class MiniPlayerViewModelTests: XCTestCase {
                 
                 wait(for: [expectation], timeout: 1)
             }
-    }
-    
-    @MainActor func testDispatch_deinit_logoutFolderLink() async {
-        let (viewModel, _, _, _, mockNodeInfouseCase, _) = makeSUT(playerType: .folderLink, isRouterFolderLinkPresenter: false)
-        
-        await test(viewModel: viewModel, action: .deinit, expectedCommands: [])
-        
-        XCTAssertEqual(mockNodeInfouseCase.folderLinkLogout_callTimes, 1)
     }
     
     @MainActor

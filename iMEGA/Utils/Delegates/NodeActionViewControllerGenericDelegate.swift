@@ -339,14 +339,14 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     
     private func exportFile(nodes: [MEGANode], sender: Any) {
         guard let viewController = viewController else { return }
-        Task { @MainActor in
+        Task {
             ExportFileRouter(presenter: viewController, sender: sender).export(nodes: nodes.toNodeEntities())
         }
     }
     
     private func hide(nodes: [NodeEntity]) {
         guard let viewController = viewController else { return }
-        Task { @MainActor in
+        Task {
             HideFilesAndFoldersRouter(presenter: viewController).hideNodes(nodes)
         }
     }

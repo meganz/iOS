@@ -49,6 +49,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         XCTAssertEqual(router.showDownloadCalled, 1)
     }
     
+    @MainActor
     func testAction_downloadPhotosWithNothingSelected_shouldNotDoAnything() {
         let sut = makeMediaDiscoveryViewModel()
         let exp = expectation(description: "Should not call any action")
@@ -60,6 +61,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    @MainActor
     func testAction_downloadPhotos_noCurrentSessionShouldShowOnboardingWithImportLinkOption() {
         let router = MockMediaDiscoveryRouter()
         let sut = makeMediaDiscoveryViewModel(router: router)
@@ -89,6 +91,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         ])
     }
     
+    @MainActor
     func testAction_saveToPhotos_shouldDoNothingIfThereAreNoPhotosToSave() {
         let sut = makeMediaDiscoveryViewModel()
         let exp = expectation(description: "Should not call any action")
@@ -108,6 +111,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         XCTAssertEqual(router.showImportLocationCalled, 1)
     }
     
+    @MainActor
     func testAction_importPhotos_shouldDoNothingIfThereAreNoPhotosToImport() {
         let sut = makeMediaDiscoveryViewModel()
         let exp = expectation(description: "Should not call any action")
@@ -119,6 +123,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    @MainActor
     func testAction_importPhotos_noCurrentSessionShouldShowOnboardingWithImportLinkOption() {
         let router = MockMediaDiscoveryRouter()
         let sut = makeMediaDiscoveryViewModel(router: router)
@@ -140,6 +145,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     
     // MARK: - Node updates tests
     
+    @MainActor
     func testSubscription_onNodesUpdate_shouldReload() throws {
         let expectedNodes = [NodeEntity(handle: 1)]
         let nodeUpdatesPublisher = PassthroughSubject<[NodeEntity], Never>()
@@ -168,6 +174,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         XCTAssertEqual(results.last, expectedNodes)
     }
     
+    @MainActor
     func testSubscription_onNodesUpdate_shouldDoNothingIfReloadIsNotRequired() throws {
         let expectedNodes = [NodeEntity(handle: 1)]
         let nodeUpdatesPublisher = PassthroughSubject<[NodeEntity], Never>()
@@ -193,6 +200,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     
     // MARK: Private
     
+    @MainActor
     private func makeMediaDiscoveryViewModel(parentNode: NodeEntity = NodeEntity(),
                                              router: some MediaDiscoveryRouting = MockMediaDiscoveryRouter(),
                                              analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol = MockMediaDiscoveryAnalyticsUseCase(),
@@ -218,6 +226,8 @@ final class MockMediaDiscoveryRouter: MediaDiscoveryRouting {
     var showShareLinkCalled = 0
     var showDownloadCalled = 0
     var showOnboardingCalled: ShowOnboardingResult?
+    
+    nonisolated init() {}
     
     func showImportLocation(photos: [NodeEntity]) {
        showImportLocationCalled += 1

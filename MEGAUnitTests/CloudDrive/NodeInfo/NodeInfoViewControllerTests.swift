@@ -6,6 +6,7 @@ import XCTest
 
 final class NodeInfoViewControllerTests: XCTestCase {
 
+    @MainActor
     func testDisplay_whenTeardown_doesNotHaveMemoryLeak() {
         let anyMegaNode = MockNode(handle: 1)
         let anyViewController = UIViewController()

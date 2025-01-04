@@ -5,12 +5,14 @@ import XCTest
 
 final class NodeActionViewControllerGenericDelegateTests: XCTestCase {
 
+    @MainActor
     func testInit_whenTearDown_doesNotHaveMemoryLeak() {
         let sut = makeSUT(viewController: anyViewController())
         
         trackForMemoryLeaks(on: sut)
     }
     
+    @MainActor
     func testNodeActionDidSelectInfo_whenTeardown_doesNotHaveMemoryLeak() {
         let sut = makeSUT(viewController: anyViewController())
         
@@ -21,6 +23,7 @@ final class NodeActionViewControllerGenericDelegateTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeSUT(
         viewController: UIViewController,
         moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel()
@@ -32,6 +35,7 @@ final class NodeActionViewControllerGenericDelegateTests: XCTestCase {
         return sut
     }
     
+    @MainActor
     private func anyNodeActionViewController() -> NodeActionViewController {
         NodeActionViewController(node: anyMegaNode(), delegate: MockNodeActionViewController(), displayMode: .nodeInfo,
                                  viewMode: .thumbnail, isBackupNode: false, containsMediaFiles: false, sender: anySender())

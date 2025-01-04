@@ -105,9 +105,11 @@ extension NodeActions {
                     nodes: nodes.compactMap { sdk.node(forHandle: $0.handle) }
                 ).start()
             },
-            showNodeInfo: {
-                let nodeInfoRouter = NodeInfoRouter(navigationController: navigationController, contacstUseCase: ContactsUseCase(repository: ContactsRepository.newRepo))
-                nodeInfoRouter.showInformation(for: $0)
+            showNodeInfo: { node in
+                Task { @MainActor in
+                    let nodeInfoRouter = NodeInfoRouter(navigationController: navigationController, contacstUseCase: ContactsUseCase(repository: ContactsRepository.newRepo))
+                    nodeInfoRouter.showInformation(for: node)
+                }
             },
             assignLabel: { node in
                 guard let megaNode = sdk.node(forHandle: node.handle) else { return }

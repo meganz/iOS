@@ -6,6 +6,7 @@ import Testing
 struct QuickAccessWidgetViewModelTestSuite {
     // MARK: - Test Methods
     @Suite("Dispatch Action Tests")
+    @MainActor
     struct DispatchAction {
         static let anyBase64Handle = "someBase64Handle"
         static let anyLocalPath = "/path/to/file"
@@ -35,6 +36,7 @@ struct QuickAccessWidgetViewModelTestSuite {
         }
         
         @Suite("Pending Action Dispatch")
+        @MainActor
         struct PendingActionDispatch {
             
             @Test("Will trigger .selectRecentsTab when dispatching pending action")
@@ -49,6 +51,7 @@ struct QuickAccessWidgetViewModelTestSuite {
         }
         
         @Suite("Show Tab Actions")
+        @MainActor
         struct ShowTabActions {
             
             @Test("Will trigger .selectOfflineTab command")
@@ -80,6 +83,7 @@ struct QuickAccessWidgetViewModelTestSuite {
         }
         
         @Suite("Show Favourites Node Actions")
+        @MainActor
         struct ShowFavouritesNodeActions {
             
             @Test("Will trigger .presentFavouritesNode command with base64 handle")
@@ -93,6 +97,7 @@ struct QuickAccessWidgetViewModelTestSuite {
         }
         
         @Suite("Show Offline File Actions")
+        @MainActor
         struct ShowOfflineFileActions {
             
             @Test("Will trigger .selectOfflineTab and .presentOfflineFileWithPath commands")

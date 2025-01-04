@@ -215,6 +215,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         .max
     }
     
+    @MainActor
     private func mockNodeActionViewController() -> NodeActionViewController {
         NodeActionViewController(
             node: MockNode(handle: 1),

@@ -4,6 +4,7 @@ import MEGATest
 import Testing
 
 @Suite("OverDiskQuotaViewModelTests")
+@MainActor
 struct OverDiskQuotaViewModelTests {
     // MARK: - Helper
     private static func makeSUT(
@@ -15,21 +16,23 @@ struct OverDiskQuotaViewModelTests {
     
     // MARK: - Tests
     @Suite("OverDiskQuota subscribed notification")
+    @MainActor
     struct OverDiskQuotaSubscribedNotification {
         @Test("Dismiss ODQ view when accountDidPurchasedPlan is received")
         func accountDidPurchasedPlanNotification() async throws {
             let notification = NotificationCenter()
             let (sut, router) = makeSUT(notificationCenter: notification)
 
-            await sut.dispatch(.onViewDidLoad)
+            sut.dispatch(.onViewDidLoad)
             notification.post(name: .accountDidPurchasedPlan, object: nil)
             
             try await Task.sleep(nanoseconds: 1_500_000_000)
-            await #expect(router.dismiss_calledTimes == 1)
+            #expect(router.dismiss_calledTimes == 1)
         }
     }
     
     @Suite("OverDiskQuota button actions")
+    @MainActor
     struct OverDiskQuotaButtons {
         @Test("Call showUpgradePlanPage when Upgrade button is tapped")
         func upgradeButton() {

@@ -92,6 +92,7 @@ final class PSAViewModelTests: XCTestCase {
     
     // MARK: - Private helper methods
     
+    @MainActor
     private func makeSUT(psaResult: Result<PSAEntity, PSAErrorEntity>) -> (PSAViewModel, MockPSAViewRouter, MockPreferenceUseCase) {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: psaResult))
         let router = MockPSAViewRouter()

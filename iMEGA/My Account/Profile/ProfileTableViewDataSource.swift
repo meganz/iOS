@@ -7,6 +7,7 @@ import MEGASwiftUI
 import PhoneNumberKit
 import UIKit
 
+@MainActor
 final class ProfileTableViewDataSource {
     private weak var tableView: UITableView?
     private weak var viewModel: ProfileViewModel?

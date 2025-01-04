@@ -17,6 +17,7 @@ final class ProfileViewModelTests: XCTestCase {
         super.tearDown()
     }
     
+    @MainActor
     func testAction_onViewDidLoad_defaultValue() {
         let isStandardProAccount = true
         let isBilledProPlan = true
@@ -37,6 +38,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(result, expectedSections)
     }
     
+    @MainActor
     func testAction_onViewDidLoad_shouldTrackAnalyticsEvent() {
         assertActionTracker(
             action: .onViewDidLoad,
@@ -44,6 +46,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_didTapBackUpRecoveryKey_shouldTrackAnalyticsEvent() {
         assertActionTracker(
             action: .didTapBackUpRecoveryKey,
@@ -51,6 +54,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_didTapLogout_shouldTrackAnalyticsEvent() {
         assertActionTracker(
             action: .didTapLogout,
@@ -58,6 +62,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testSectionsVisibility_withoutValidProAccount_shouldNotShowSubscriptionSection() {
         let (sut, _) = makeSUT()
         sut.dispatch(.onViewDidLoad)
@@ -66,6 +71,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertFalse(result?.sectionOrder.contains(.subscription) ?? true, "Subscription section should not appear for non-valid Pro accounts")
     }
     
+    @MainActor
     func testAction_onViewDidLoadWithoutValidProAccount_shouldShowCorrectSectionsAndRows() {
         let (sut, _) = makeSUT()
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
@@ -76,6 +82,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(result, expectedSections)
     }
     
+    @MainActor
     func testAction_onViewDidLoad_whenSmsIsAllowed() {
         let isStandardProAccount = true
         let isBilledProPlan = true
@@ -98,6 +105,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(result, expectedResult)
     }
     
+    @MainActor
     func testSectionCells_whenAccountIsNotProFlexiBusinessNorMasterBusinessAccount_shouldNotIncludePlanSection() {
         testSectionCellsForAccountType(.free)
         testSectionCellsForAccountType(.proI)
@@ -106,18 +114,22 @@ final class ProfileViewModelTests: XCTestCase {
         testSectionCellsForAccountType(.lite)
     }
     
+    @MainActor
     func testSectionCells_whenAccountIsProFlexiAccount_shouldIncludePlanSection() {
        testSectionCellsForAccountType(.proFlexi, isPlanHidden: false)
     }
     
+    @MainActor
     func testSectionCells_whenAccountIsBusinessAccount_shouldIncludePlanSection() {
         testSectionCellsForAccountType(.business, isPlanHidden: false)
     }
     
+    @MainActor
     func testSectionCells_whenAccountIsMasterBusinessAccount_shouldIncludePlanSection() {
         testSectionCellsForAccountType(.business, isPlanHidden: false, isMasterBusinessAccount: true)
     }
     
+    @MainActor
     func testAction_changeEmail_emailCellShouldBeLoading() {
         let (sut, _) = makeSUT()
         sut.dispatch(.onViewDidLoad)
@@ -144,6 +156,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testAction_changePassword_passwordCellShouldBeLoading() {
         let (sut, _) = makeSUT()
         sut.dispatch(.onViewDidLoad)
@@ -214,6 +227,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(router.showCancelAccountPlan_calledTimes, 1, "Expected showCancelAccountPlan to be called once.")
     }
     
+    @MainActor
     func testAction_cancelSubscription_shouldTrackAnalyticsEvent() {
         assertActionTracker(
             action: .cancelSubscription,
@@ -221,6 +235,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testShouldShowPlanSection_whenAccountIsProFlexi_shouldIncludePlanSection() {
         testPlanSectionVisibility(
             accountType: .proFlexi,
@@ -228,6 +243,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testShouldShowPlanSection_whenAccountIsBusiness_shouldIncludePlanSection() {
         testPlanSectionVisibility(
             accountType: .business,
@@ -235,6 +251,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testShouldShowPlanSection_whenAccountIsMasterBusiness_shouldIncludePlanSection() {
         testPlanSectionVisibility(
             accountType: .business,
@@ -243,6 +260,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testShouldShowPlanSection_whenAccountIsFree_shouldNotIncludePlanSection() {
         testPlanSectionVisibility(
             accountType: .free,
@@ -250,6 +268,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testShouldShowCancelSubscriptionSection_whenStandardProAccountAndSubscription_shouldIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(
             isStandardProAccount: true,
@@ -258,6 +277,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testShouldShowCancelSubscriptionSection_whenStandardProAccountAndInvalidSubscription_shouldIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(
             isStandardProAccount: true,
@@ -265,6 +285,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testShouldShowCancelSubscriptionSection_whenNotStandardProAccount_shouldNotIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(
             isBilledProPlan: true,
@@ -272,6 +293,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testShouldShowCancelSubscriptionSection_whenCurrentUserHasMultipleBilledProPlans_shouldNotIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(
             hasMultipleBilledProPlan: true,
@@ -279,28 +301,33 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testShouldShowCancelSubscriptionSection_whenNotStandardProAccountAndSubscription_shouldNotIncludeSubscriptionSection() {
         testSubscriptionSectionVisibility(shouldBeShown: false)
     }
     
+    @MainActor
     func testHasActiveBusinessAccount_shouldReturnCorrectValue() {
         let expectedValue = Bool.random()
         let (sut, _) = makeSUT(hasActiveBusinessAccount: expectedValue)
         XCTAssertEqual(sut.hasActiveBusinessAccount, expectedValue)
     }
     
+    @MainActor
     func testHasActiveProFlexiAccount_shouldReturnCorrectValue() {
         let expectedValue = Bool.random()
         let (sut, _) = makeSUT(hasActiveProFlexiAccount: expectedValue)
         XCTAssertEqual(sut.hasActiveProFlexiAccount, expectedValue)
     }
     
+    @MainActor
     func testAccountDetails_shouldReturnCorrectAccountDetails() {
         let expectedAccountType = AccountTypeEntity.allCases.randomElement() ?? .free
         let (sut, _) = makeSUT(accountType: expectedAccountType)
         XCTAssertEqual(sut.accountDetails, AccountDetailsEntity.build(proLevel: expectedAccountType))
     }
     
+    @MainActor
     func testDetermineBusinessAccountState_whenAccountIsActive_shouldReturnActive() {
         let (sut, _) = makeSUT(
             hasActiveBusinessAccount: true,
@@ -309,6 +336,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(sut.businessAccountStatus, .active, "Expected account state to be active when the business account is active.")
     }
 
+    @MainActor
     func testDetermineBusinessAccountState_whenAccountInGracePeriod_shouldReturnGracePeriod() {
         let (sut, _) = makeSUT(
             hasActiveBusinessAccount: false,
@@ -317,6 +345,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(sut.businessAccountStatus, .gracePeriod, "Expected account state to be in grace period when the business account is not active but in grace period.")
     }
 
+    @MainActor
     func testDetermineBusinessAccountState_whenAccountExpiredWithoutGracePeriod_shouldReturnOverdue() {
         let (sut, _) = makeSUT(
             hasActiveBusinessAccount: false,
@@ -325,11 +354,13 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(sut.businessAccountStatus, .overdue, "Expected account state to be overdue when the business account is expired and not in grace period.")
     }
 
+    @MainActor
     func testDetermineProFlexiAccountState_whenAccountIsActive_shouldReturnActive() {
         let (sut, _) = makeSUT(hasActiveProFlexiAccount: true)
         XCTAssertEqual(sut.proFlexiAccountStatus, .active, "Expected Pro Flexi account state to be active when the account is active.")
     }
 
+    @MainActor
     func testDetermineProFlexiAccountState_whenAccountExpired_shouldReturnOverdue() {
         let (sut, _) = makeSUT(hasActiveProFlexiAccount: false)
         XCTAssertEqual(sut.proFlexiAccountStatus, .overdue, "Expected Pro Flexi account state to be overdue when the account is expired.")
@@ -337,6 +368,7 @@ final class ProfileViewModelTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeSUT(
         accountType: AccountTypeEntity = .free,
         currentSubscription: AccountSubscriptionEntity? = nil,
@@ -386,6 +418,7 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
     private func receivedSectionDataSource(
         from sut: ProfileViewModel,
         after action: ProfileAction
@@ -406,6 +439,7 @@ final class ProfileViewModelTests: XCTestCase {
         return result
     }
     
+    @MainActor
     private func testSectionCellsForAccountType(
         _ accountType: AccountTypeEntity,
         isPlanHidden: Bool = true,
@@ -487,6 +521,7 @@ final class ProfileViewModelTests: XCTestCase {
         return sections
     }
     
+    @MainActor
     private func testPlanSectionVisibility(
         accountType: AccountTypeEntity,
         isMasterBusinessAccount: Bool = false,
@@ -506,6 +541,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(containsPlanSection, shouldBeShown, "Plan section visibility does not match expectation for account type \(accountType)", file: file, line: line)
     }
 
+    @MainActor
     private func testSubscriptionSectionVisibility(
         isStandardProAccount: Bool = false,
         isBilledProPlan: Bool = false,
@@ -526,6 +562,7 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(containsSubscriptionSection, shouldBeShown, "Subscription section visibility does not match expectation for standard pro account state \(isStandardProAccount)", file: file, line: line)
     }
     
+    @MainActor
     private func assertActionTracker(action: ProfileAction, expectedEventIdentifiers: [any EventIdentifier]) {
         let tracker = MockTracker()
         let (sut, _) = makeSUT(tracker: tracker)

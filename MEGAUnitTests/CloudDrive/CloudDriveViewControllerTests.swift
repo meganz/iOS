@@ -24,6 +24,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     
     // MARK: - NodeAction favorite
     
+    @MainActor
     func testNodeAction_whenSelectFavoriteOnViewModePreferenceEntityThumbnailAndHasFolderTypeOnly_reloadCollectionAtIndexPath() {
         let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
@@ -50,6 +51,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testNodeAction_whenSelectFavoriteOnViewModePreferenceEntityThumbnailAndHasFileTypeOnly_reloadCollectionAtIndexPath() {
         let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
@@ -77,6 +79,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     
     // MARK: - NodeAction Remove
     
+    @MainActor
     func testNodeAction_whenSelectRubbishBinOnRubbishBinPage_reloadCollection() {
         let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
@@ -546,6 +549,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
         MockNode.init(handle: handle, nodeType: nodeType, isFavourite: false)
     }
     
+    @MainActor
     private func makeNodeActionViewController(nodes: [MockNode], displayMode: DisplayMode) -> NodeActionViewController {
         let mockNodeActionViewController = NodeActionViewController(
             nodes: nodes,

@@ -4,6 +4,8 @@ extension NodeActions {
     /// action on any nodes.
     /// NodeActionsDelegateHandler implements NodeActionViewControllerDelegate protocol used and required by
     /// NodeActionViewController
+    
+    @MainActor
     func makeNodeActionsHandler(toggleEditMode: @escaping (Bool) -> Void) -> NodeActionsDelegateHandler {
         .init(
             download: nodeDownloader,
