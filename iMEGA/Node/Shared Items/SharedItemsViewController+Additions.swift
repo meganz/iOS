@@ -501,13 +501,6 @@ extension SharedItemsViewController {
             selectedNodesArray: selectedNodesArray.map { $0.toNodeEntity() }
         )
     }
-
-    @objc func updateSegmentedButtonsForEditingState(_ isEditing: Bool) {
-        for button in [incomingButton, outgoingButton, linksButton].compactMap({ $0 }) where !button.isSelected {
-            button.isEnabled = !isEditing
-        }
-
-    }
 }
 
 extension SharedItemsViewController {
