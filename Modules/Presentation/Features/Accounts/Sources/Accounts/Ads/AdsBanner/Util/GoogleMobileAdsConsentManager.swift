@@ -112,12 +112,14 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
         from viewController: UIViewController? = nil
     ) async throws -> Bool {
         try await withAsyncThrowingValue { completion in
-            consentFormType.loadAndPresentIfRequired(from: viewController) { error in
-                if let error {
-                    completion(.failure(error))
-                    return
+            Task { @MainActor in
+                consentFormType.loadAndPresentIfRequired(from: viewController) { error in
+                    if let error {
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(true))
                 }
-                completion(.success(true))
             }
         }
     }
