@@ -47,9 +47,8 @@ public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol,
 public final class MockAdMobConsentForm: AdMobConsentFormProtocol, @unchecked Sendable {
     nonisolated(unsafe) public static private(set) var didLoadAndPresent = false
     
-    public static func loadAndPresentIfRequired(from viewController: UIViewController?, completionHandler: UMPConsentFormPresentCompletionHandler?) {
+    public static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws {
         didLoadAndPresent = true
-        completionHandler?(nil)
     }
 }
 
