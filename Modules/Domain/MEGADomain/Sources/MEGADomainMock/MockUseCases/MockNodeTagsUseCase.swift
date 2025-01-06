@@ -2,12 +2,15 @@ import MEGADomain
 
 @MainActor
 public final class MockNodeTagsUseCase: NodeTagsUseCaseProtocol {
+    public enum TagOperation: Equatable {
+        case add(String)
+        case remove(String)
+    }
     public var _searchTags: [String]?
     public var _getTags: [String]?
     public private(set) var searchTexts: [String?] = []
     public private(set) var continuation: CheckedContinuation<[String]?, Never>?
-    public private(set) var addedTags: [String] = []
-    public private(set) var removedTags: [String] = []
+    public private(set) var tagOperations: [TagOperation]  = []
 
     public init(searchTags: [String]? = nil, getTags: [String]? = nil) {
         _searchTags = searchTags
@@ -30,10 +33,10 @@ public final class MockNodeTagsUseCase: NodeTagsUseCaseProtocol {
     }
 
     public func add(tag: String, to node: NodeEntity) async throws {
-        addedTags.append(tag)
+        tagOperations.append(.add(tag))
     }
 
     public func remove(tag: String, from node: NodeEntity) async throws {
-        removedTags.append(tag)
+        tagOperations.append(.remove(tag))
     }
 }

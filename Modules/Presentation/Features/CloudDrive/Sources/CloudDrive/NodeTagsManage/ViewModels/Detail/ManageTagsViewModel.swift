@@ -210,17 +210,18 @@ final class ManageTagsViewModel: ObservableObject {
         let removedTags = existingTagsViewModel.currentlyAttachedTags.subtracting(existingTagsViewModel.currentNodeTags)
         let addedTags = existingTagsViewModel.currentNodeTags.subtracting(existingTagsViewModel.currentlyAttachedTags)
 
-        for addedTag in addedTags {
+        // Remove existing tags first, then add new tags to avoid errors when the tag limit is reached.
+        for removedTag in removedTags {
             do {
-                try await nodeTagsUseCase.add(tag: addedTag, to: nodeEntity)
+                try await nodeTagsUseCase.remove(tag: removedTag, from: nodeEntity)
             } catch {
                 // Todo: Show error if saving failed.
             }
         }
 
-        for removedTag in removedTags {
+        for addedTag in addedTags {
             do {
-                try await nodeTagsUseCase.remove(tag: removedTag, from: nodeEntity)
+                try await nodeTagsUseCase.add(tag: addedTag, to: nodeEntity)
             } catch {
                 // Todo: Show error if saving failed.
             }
