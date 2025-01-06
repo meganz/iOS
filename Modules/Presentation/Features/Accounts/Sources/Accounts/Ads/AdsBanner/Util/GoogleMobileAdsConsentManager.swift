@@ -17,9 +17,8 @@ public protocol AdMobConsentInformationProtocol: Sendable {
 
 public protocol AdMobConsentFormProtocol {
     static func loadAndPresentIfRequired(
-        from viewController: UIViewController?,
-        completionHandler: UMPConsentFormPresentCompletionHandler?
-    )
+        from viewController: UIViewController?
+    ) async throws
 }
 
 public protocol MobileAdsProtocol: Sendable {
@@ -74,7 +73,7 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
         do {
             // Requesting an update to consent information should be called on every app launch.
             try await requestConsentInfoUpdate()
-            try await loadAndPresentIfRequired()
+            try await consentFormType.loadAndPresentIfRequired(from: nil)
         } catch {
             throw error
         }
@@ -103,23 +102,6 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
                     return
                 }
                 completion(.success(true))
-            }
-        }
-    }
-   
-    @discardableResult
-    private func loadAndPresentIfRequired(
-        from viewController: UIViewController? = nil
-    ) async throws -> Bool {
-        try await withAsyncThrowingValue { completion in
-            Task { @MainActor in
-                consentFormType.loadAndPresentIfRequired(from: viewController) { error in
-                    if let error {
-                        completion(.failure(error))
-                        return
-                    }
-                    completion(.success(true))
-                }
             }
         }
     }
