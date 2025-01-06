@@ -336,17 +336,47 @@ struct ManageTagsViewModelTests {
         let node = NodeEntity(tags: ["tag1", "tag2", "tag3", "tag4"])
         let sut = makeSUT(node: node, nodeTagsUseCase: nodeTagsUseCase)
         await sut.loadAllTags()
-        sut.existingTagsViewModel.tagsViewModel.tagViewModels.filter({ $0.tag == "tag2" }).first?.toggle()
+        sut.existingTagsViewModel.tagsViewModel.tagViewModels.filter({ $0.tag == "tag1" }).first?.toggle()
         sut.tagNameState = .valid
-        sut.tagName = "tag10"
+        sut.tagName = "tag5"
         sut.addTag()
         sut.navigationBarViewModel.doneButtonTapped = true
         for await shouldDismiss in sut.$shouldDismiss.dropFirst().values {
             #expect(shouldDismiss == true)
             break
         }
-        #expect(nodeTagsUseCase.addedTags == ["tag10"])
-        #expect(nodeTagsUseCase.removedTags == ["tag2"])
+        #expect(nodeTagsUseCase.tagOperations == [.remove("tag1"), .add("tag5")])
+    }
+
+    @MainActor
+    @Test("Verify remove tags first followed by adding tags")
+    func verifyRemoveTagsFirstFollowedByAddingTagsWhenDoneButtonIsTapped() async {
+        let tags = [
+            "tag1",
+            "tag2",
+            "tag3",
+            "tag4",
+            "tag5",
+            "tag6",
+            "tag7",
+            "tag8",
+            "tag9",
+            "tag10"
+        ]
+        let nodeTagsUseCase = MockNodeTagsUseCase(searchTags: tags)
+        let node = NodeEntity(tags: tags)
+        let sut = makeSUT(node: node, nodeTagsUseCase: nodeTagsUseCase)
+        await sut.loadAllTags()
+        sut.existingTagsViewModel.tagsViewModel.tagViewModels.filter({ $0.tag == "tag10" }).first?.toggle()
+        sut.tagNameState = .valid
+        sut.tagName = "tag11"
+        sut.addTag()
+        sut.navigationBarViewModel.doneButtonTapped = true
+        for await shouldDismiss in sut.$shouldDismiss.dropFirst().values {
+            #expect(shouldDismiss == true)
+            break
+        }
+        #expect(nodeTagsUseCase.tagOperations == [.remove("tag10"), .add("tag11")])
     }
 
     @MainActor
