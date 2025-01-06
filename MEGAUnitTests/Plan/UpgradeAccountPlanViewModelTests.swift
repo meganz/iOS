@@ -802,7 +802,8 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     @MainActor func testPurchasePlan_whenIsFromAdsIsFalseAndEligibleForAdsEvent_shouldTrackButtonTapEventForAdsMaybePath() async {
         // Ads was closed within the last two days and
         // only less than half of storage quota is used
-        let lessThanHalfOfStorage = Int.random(in: 0...(storageMax / 2))
+        let largestValidSize = (storageMax - 1) / 2
+        let lessThanHalfOfStorage = Int.random(in: 0...largestValidSize)
         await assertAdsEventForMaybePath(
             storageMax: storageMax,
             storageUsed: lessThanHalfOfStorage,
