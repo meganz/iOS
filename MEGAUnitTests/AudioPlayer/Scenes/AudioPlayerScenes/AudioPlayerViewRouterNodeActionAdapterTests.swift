@@ -1,4 +1,4 @@
-@testable import MEGA
+@preconcurrency @testable import MEGA
 import MEGADomain
 import MEGADomainMock
 import MEGASDKRepoMock

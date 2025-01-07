@@ -13,6 +13,7 @@ final class KeyboardHeightStoreTests: XCTestCase {
         super.tearDown()
     }
     
+    @MainActor
     func testNewKeyboardHeight_shouldHaveCorrectValue() {
         let mockKeyboardHandler = MockKeyboardHeightHandling()
         let sut = makeSUT(keyboardHeightHandling: mockKeyboardHandler)
@@ -68,6 +69,7 @@ final class KeyboardHeightStoreTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 0.5)
     }
     
+    @MainActor
     private func makeSUT(
         keyboardHeightHandling: some KeyboardHeightHandlingProtocol,
         file: StaticString = #filePath,

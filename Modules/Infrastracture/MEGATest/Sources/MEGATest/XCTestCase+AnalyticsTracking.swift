@@ -6,7 +6,7 @@ public extension XCTestCase {
         trackedEventIdentifiers: [EventIdentifier],
         with expectedEventIdentifiers: [EventIdentifier],
         message: String = "",
-        file: StaticString = #file, line: UInt = #line
+        file: StaticString = #filePath, line: UInt = #line
     ) {
         XCTAssertEqual(
             trackedEventIdentifiers.count,

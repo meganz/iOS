@@ -5,7 +5,7 @@ import MEGAL10n
 import MEGAPresentationMock
 import MEGASwiftUI
 import MEGATest
-@testable import Video
+@preconcurrency @testable import Video
 import XCTest
 
 final class VideoPlaylistsViewModelTests: XCTestCase {
