@@ -378,7 +378,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     private func trackEventBuyPlan(_ currentSelectedPlan: PlanEntity) {
         // Track buy event for Ads flow
-        if isExternalAdsActive && isAdsPhase2Enabled {
+        if isExternalAdsActive {
             trackEventBuyPlanForAds()
         }
         
@@ -459,10 +459,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     // MARK: - Ads
-    private var isAdsPhase2Enabled: Bool {
-        localFeatureFlagProvider.isFeatureFlagEnabled(for: .googleAdsPhase2)
-    }
-    
     private func trackEventBuyPlanForAds() {
         if router.isFromAds {
             // User buys a plan coming from the Ad-free flow

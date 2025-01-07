@@ -9,7 +9,6 @@ import SwiftUI
 @MainActor
 final public class AdsSlotViewModel: ObservableObject {
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
-    private let localFeatureFlagProvider: any FeatureFlagProviderProtocol
     private let adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let appEnvironmentUseCase: any AppEnvironmentUseCaseProtocol
@@ -35,7 +34,6 @@ final public class AdsSlotViewModel: ObservableObject {
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        localFeatureFlagProvider: some FeatureFlagProviderProtocol,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
         accountUseCase: some AccountUseCaseProtocol,
@@ -48,7 +46,6 @@ final public class AdsSlotViewModel: ObservableObject {
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
-        self.localFeatureFlagProvider = localFeatureFlagProvider
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
         self.accountUseCase = accountUseCase
@@ -94,10 +91,6 @@ final public class AdsSlotViewModel: ObservableObject {
             return
         }
         isExternalAdsEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
-    }
-    
-    var isPhaseTwoEnabled: Bool {
-        localFeatureFlagProvider.isFeatureFlagEnabled(for: .googleAdsPhase2)
     }
     
     // MARK: Ads Slot changes

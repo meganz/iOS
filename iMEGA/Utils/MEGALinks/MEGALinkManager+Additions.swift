@@ -302,7 +302,6 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             adsSlotViewController: adsSlotViewController,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            featureFlagProvider: DIContainer.featureFlagProvider,
             contentView: AdsViewWrapper(viewController: containerController),
             presenter: visibleViewController,
             presentationStyle: presentationStyle
