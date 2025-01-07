@@ -69,7 +69,7 @@ final class ManageTagsViewModel: ObservableObject {
 
     // MARK: - Interface methods.
     func observeTagsUpdates() async {
-        for await event in tagsUpdatesUseCase.tagsUpdates(for: nodeEntity) {
+        for await event in tagsUpdatesUseCase.tagsUpdates(for: nodeEntity) where !isCurrentlySavingTags {
             switch event {
             case .tagsUpdated:
                 await existingTagsViewModel.reloadData()
