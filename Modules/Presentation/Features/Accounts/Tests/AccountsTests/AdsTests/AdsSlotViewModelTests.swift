@@ -270,7 +270,7 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     @MainActor private func assertShowCloseButton(isLoggedIn: Bool) {
-        let sut = makeSUT(isAdsPhase2Enabled: true, isLoggedIn: isLoggedIn)
+        let sut = makeSUT(isLoggedIn: isLoggedIn)
         
         XCTAssertFalse(sut.showCloseButton)
         
@@ -313,7 +313,6 @@ final class AdsSlotViewModelTests: XCTestCase {
         adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol = MockAdsSlotUpdatesProvider(),
         adsList: [String: String] = [:],
         isExternalAdsFlagEnabled: Bool = true,
-        isAdsPhase2Enabled: Bool = false,
         adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = MockAppEnvironmentUseCase(),
         isNewAccount: Bool = false,
@@ -327,7 +326,6 @@ final class AdsSlotViewModelTests: XCTestCase {
         let sut = AdsSlotViewModel(
             adsSlotUpdatesProvider: adsSlotUpdatesProvider,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
-            localFeatureFlagProvider: MockFeatureFlagProvider(list: [.googleAdsPhase2: isAdsPhase2Enabled]),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult),

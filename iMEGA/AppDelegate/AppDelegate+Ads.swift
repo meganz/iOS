@@ -14,7 +14,6 @@ extension AppDelegate {
             adsSlotViewController: tabBar,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            featureFlagProvider: DIContainer.featureFlagProvider,
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
         ).build(
             onViewFirstAppeared: onViewFirstAppeared,

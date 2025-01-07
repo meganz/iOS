@@ -31,7 +31,7 @@ public struct AdsSlotView<T: View>: View {
                         height: adSize.size.height
                     )
                     
-                    if viewModel.isPhaseTwoEnabled && viewModel.showCloseButton {
+                    if viewModel.showCloseButton {
                         closeButton
                             .frame(width: 16, height: 16)
                     }

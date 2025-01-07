@@ -12,7 +12,6 @@ public struct AdsSlotRouter<T: View> {
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let contentView: T
     private let presentationStyle: UIModalPresentationStyle
     
@@ -20,7 +19,6 @@ public struct AdsSlotRouter<T: View> {
         adsSlotViewController: some AdsSlotViewControllerProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol,
         contentView: T,
         presenter: UIViewController? = nil,
         presentationStyle: UIModalPresentationStyle = .automatic
@@ -28,7 +26,6 @@ public struct AdsSlotRouter<T: View> {
         self.adsSlotViewController = adsSlotViewController
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
-        self.featureFlagProvider = featureFlagProvider
         self.contentView = contentView
         self.presenter = presenter
         self.presentationStyle = presentationStyle
@@ -40,7 +37,6 @@ public struct AdsSlotRouter<T: View> {
     ) -> UIViewController {
         let viewModel = AdsSlotViewModel(
             adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
-            localFeatureFlagProvider: featureFlagProvider,
             accountUseCase: accountUseCase,
             purchaseUseCase: purchaseUseCase,
             preferenceUseCase: PreferenceUseCase(repository: PreferenceRepository.newRepo),
