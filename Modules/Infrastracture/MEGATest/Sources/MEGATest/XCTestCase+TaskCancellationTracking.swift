@@ -7,11 +7,13 @@ public extension XCTestCase {
     /// - Parameters:
     ///   - nanoseconds: timeout duration in nanoseconds
     ///   - action: Task to run
-    func trackTaskCancellation(timeout nanoseconds: UInt64 = 1_000_000_000, 
-                               description: String = "Expected task to cancel during test case tearDown",
-                               action: @escaping () async throws -> Void,
-                               file: StaticString = #filePath, 
-                               line: UInt = #line) {
+    func trackTaskCancellation(
+        timeout nanoseconds: UInt64 = 1_000_000_000,
+        description: String = "Expected task to cancel during test case tearDown",
+        action: @Sendable @escaping () async throws -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
         
         let (stream, continuation) = AsyncStream.makeStream(of: Bool.self, bufferingPolicy: .bufferingNewest(1))
         
@@ -23,19 +25,22 @@ public extension XCTestCase {
         
         addTeardownBlock {
             task.cancel()
-
+            
             // Timeout task
             Task {
                 try await Task.sleep(nanoseconds: nanoseconds)
                 continuation.finish()
             }
-                        
+            
             let isCancelled = await stream.first(where: { $0 }) ?? false
             XCTAssertTrue(isCancelled, description, file: file, line: line)
         }
     }
     
-    func expectationTaskStarted(timeout: TimeInterval = 0.5, task: @escaping @Sendable(XCTestExpectation) async -> Void) async -> Task<Void, Never> {
+    func expectationTaskStarted(
+        timeout: TimeInterval = 0.5,
+        task: @escaping @Sendable(XCTestExpectation) async -> Void
+    ) async -> Task<Void, Never> {
         let taskStartExpectation = expectation(description: "Expected task to start")
         
         let startedTask = Task {

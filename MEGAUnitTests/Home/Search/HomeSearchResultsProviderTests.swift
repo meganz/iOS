@@ -11,7 +11,7 @@ import MEGATest
 import Search
 import SearchMock
 import SwiftUI
-import XCTest
+@preconcurrency import XCTest
 
 extension Locale {
     static var testLocale: Locale {
@@ -63,9 +63,9 @@ fileprivate extension Date {
     }
 }
 
-class HomeSearchResultsProviderTests: XCTestCase {
+final class HomeSearchResultsProviderTests: XCTestCase {
     
-    class Harness {
+    final class Harness: @unchecked Sendable {
         static let parentNodeHandle: HandleEntity = 999
         let filesSearchUseCase: MockFilesSearchUseCase
         let nodeDetails: MockNodeDetailUseCase
@@ -721,7 +721,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(resultIds?.count, 100)
     }
     
-    func testSearchResultUpdateSignalSequence_whenNodeUpdateIsNotNeeded_shouldNotProcessNodeUpdates() {
+    func testSearchResultUpdateSignalSequence_whenNodeUpdateIsNotNeeded_shouldNotProcessNodeUpdates() async {
         // given
         let nodes = NodeEntity.entities(startHandle: 1, endHandle: 3)
         
@@ -742,7 +742,7 @@ class HomeSearchResultsProviderTests: XCTestCase {
         continuation.finish()
         
         // then
-        wait(for: [exp], timeout: 1.0)
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testSearchResultUpdateSignalSequence_whenShouldProcessNodesUpdate_shouldProcessNodeUpdates() async throws {
@@ -751,13 +751,16 @@ class HomeSearchResultsProviderTests: XCTestCase {
         let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
         let harness = Harness(self, nodes: nodes, nodeUpdates: stream.eraseToAnyAsyncSequence())
         
+        @Atomic
         var nodeUpdatesSignals = [SearchResultUpdateSignal]()
         let exp = expectation(description: "wait for update signals")
         exp.expectedFulfillmentCount = 2
         
         trackTaskCancellation {
             for await nodeUpdatesSignal in harness.sut.searchResultUpdateSignalSequence() {
-                nodeUpdatesSignals.append(nodeUpdatesSignal)
+                $nodeUpdatesSignals.mutate {
+                    $0.append(nodeUpdatesSignal)
+                }
                 exp.fulfill()
             }
         }

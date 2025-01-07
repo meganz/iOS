@@ -3,7 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentationMock
 import MEGATest
-@testable import Video
+@preconcurrency @testable import Video
 import XCTest
 
 final class VideoListViewModelTests: XCTestCase {

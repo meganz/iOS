@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 
+@MainActor
 public final class CancelAccountPlanViewModel: ObservableObject {
     let currentPlanName: String
     let currentPlanStorageUsed: String

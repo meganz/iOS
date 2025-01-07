@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import SwiftUI
 
 public protocol KeyboardHeightHandlingProtocol {
@@ -33,6 +33,7 @@ public struct KeyboardHeightHandling: KeyboardHeightHandlingProtocol {
     }
 }
 
+@MainActor
 public final class KeyboardHeightStore: ObservableObject {
     @Published private(set) var newKeyboardHeight: CGFloat = 0
     @Published private(set) var bottomPadding: CGFloat = 0
