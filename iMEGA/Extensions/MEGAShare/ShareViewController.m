@@ -801,7 +801,7 @@
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile {
     if (self.users || self.chats) {
         NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
-        [MEGASdk.shared startUploadWithLocalPath:localPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil delegate:self];
+        [MEGASdk.shared startUploadForChatWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES fileName:nil delegate:self];
     } else {
         [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:localPath] name:nil appData:[NSString.new mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo] priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
         [self onePendingLess];
