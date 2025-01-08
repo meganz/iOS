@@ -144,12 +144,15 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self configureAds];
+    
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
     [AudioPlayerManager.shared addDelegate:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [self configureAds];
     
     if (self.shouldRemovePlayerDelegate) {
         [AudioPlayerManager.shared removeDelegate:self];

@@ -15,33 +15,39 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
     private func currentAdsSlotConfig() -> AdsSlotConfig? {
         switch selectedIndex {
         case TabType.cloudDrive.rawValue:
-            let displayAds = if let adsDisplayable = mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable {
-                adsDisplayable.shouldDisplayAdsSlot
-            } else {
-                false
-            }
-            
-            return AdsSlotConfig(
+            AdsSlotConfig(
                 adsSlot: .files,
-                displayAds: displayAds
+                displayAds: (mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable)?.shouldDisplayAdsSlot ?? false
             )
         case TabType.cameraUploads.rawValue:
-            return AdsSlotConfig(
+            AdsSlotConfig(
                 adsSlot: .photos,
                 displayAds: isVisibleController(type: PhotoAlbumContainerViewController.self)
             )
             
         case TabType.home.rawValue:
-            return AdsSlotConfig(
+            AdsSlotConfig(
                 adsSlot: .home,
-                displayAds: isVisibleController(type: HomeViewController.self)
+                displayAds: isVisibleController(type: HomeViewController.self) ||
+                isVisibleController(type: FilesExplorerContainerViewController.self) ||
+                isVisibleController(type: VideoRevampTabContainerViewController.self)
             )
             
-        case TabType.chat.rawValue, TabType.sharedItems.rawValue:
-            return nil
+        case TabType.chat.rawValue:
+            AdsSlotConfig(
+                adsSlot: .chat,
+                displayAds: isVisibleController(type: ChatRoomsListViewController.self)
+            )
+            
+        case TabType.sharedItems.rawValue:
+            AdsSlotConfig(
+                adsSlot: .sharedItems,
+                displayAds: isVisibleController(type: SharedItemsViewController.self) ||
+                isVisibleController(type: NewCloudDriveViewController.self)
+            )
             
         default:
-            return nil
+            nil
         }
     }
     
@@ -56,17 +62,5 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
             return nil
         }
         return topViewController
-    }
-    
-    private func calculateAdCookieStatus() async -> Bool {
-        do {
-            let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
-            let bitmap = try await cookieSettingsUseCase.cookieSettings()
-            
-            let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
-            return cookiesBitmap.contains(.ads) && cookiesBitmap.contains(.adsCheckCookie)
-        } catch {
-            return false
-        }
     }
 }

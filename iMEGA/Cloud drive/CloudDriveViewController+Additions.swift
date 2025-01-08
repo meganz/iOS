@@ -556,14 +556,6 @@ extension CloudDriveViewController {
     }
 }
 
-// MARK: - Ads
-extension CloudDriveViewController {
-    @objc func configureAdsVisibility() {
-        guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
-        mainTabBar.configureAdsVisibility()
-    }
-}
-
 // MARK: - Node Info
 extension CloudDriveViewController {
     @objc func showNodeInfo(_ node: MEGANode) {

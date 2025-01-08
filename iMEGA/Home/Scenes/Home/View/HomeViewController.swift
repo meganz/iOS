@@ -834,14 +834,9 @@ extension HomeViewController: AudioPlayerPresenterProtocol {
 }
 
 // MARK: - Ads
+extension HomeViewController: AdsSlotDisplayable {}
 
-extension HomeViewController {
-    func configureAdsVisibility() {
-        guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
-        mainTabBar.configureAdsVisibility()
-    }
-}
-
+// MARK: - Page layout
 extension ViewModePreferenceEntity {
     var pageLayout: PageLayout? {
         switch self {

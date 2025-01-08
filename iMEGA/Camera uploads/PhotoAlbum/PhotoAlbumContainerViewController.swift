@@ -369,12 +369,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
 }
 
 // MARK: - Ads
-extension PhotoAlbumContainerViewController {
-    @objc func configureAdsVisibility() {
-        guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
-        mainTabBar.configureAdsVisibility()
-    }
-}
+extension PhotoAlbumContainerViewController: AdsSlotDisplayable {}
 
 // MARK: - UISearchControllerDelegate
 

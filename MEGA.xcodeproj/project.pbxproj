@@ -1824,6 +1824,7 @@
 		B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */; };
 		B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */; };
 		B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */; };
+		B5960EFA2D2D261B0060F623 /* AdsSlotDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5960EF92D2D261B0060F623 /* AdsSlotDisplayable.swift */; };
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
 		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
@@ -4547,6 +4548,7 @@
 		B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanView.swift; sourceTree = "<group>"; };
 		B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionHeaderView.swift; sourceTree = "<group>"; };
 		B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionFeatureOfProView.swift; sourceTree = "<group>"; };
+		B5960EF92D2D261B0060F623 /* AdsSlotDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsSlotDisplayable.swift; sourceTree = "<group>"; };
 		B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModel.swift; sourceTree = "<group>"; };
 		B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModel.swift; sourceTree = "<group>"; };
@@ -9902,6 +9904,7 @@
 		83F79CC42AA7789E00D2DE64 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
+				B5960EF82D2D25FA0060F623 /* AdsSlot */,
 				B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */,
 				83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */,
 				83663F5F2AA63869000A1115 /* MainTabBarCallsViewModel.swift */,
@@ -10974,6 +10977,14 @@
 				B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		B5960EF82D2D25FA0060F623 /* AdsSlot */ = {
+			isa = PBXGroup;
+			children = (
+				B5960EF92D2D261B0060F623 /* AdsSlotDisplayable.swift */,
+			);
+			path = AdsSlot;
 			sourceTree = "<group>";
 		};
 		B5AF2F122CCA4DB80094CE20 /* ViewModel */ = {
@@ -14107,6 +14118,7 @@
 				BF7EBD2E244E916F0015255F /* AddToChatViewController.swift in Sources */,
 				0E11AFA32D067937000A7E68 /* AddToCollectionRouter.swift in Sources */,
 				C4F638602BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift in Sources */,
+				B5960EFA2D2D261B0060F623 /* AdsSlotDisplayable.swift in Sources */,
 				246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */,
