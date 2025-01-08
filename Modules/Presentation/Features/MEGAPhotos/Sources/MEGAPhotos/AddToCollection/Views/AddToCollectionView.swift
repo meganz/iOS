@@ -46,7 +46,7 @@ public struct AddToCollectionView: View {
                     }
                 }
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle(Strings.Localizable.Set.addTo)
+                .navigationTitle(viewModel.title)
         }
     }
     

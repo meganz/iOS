@@ -24,6 +24,7 @@ struct AddToAlbumsView: View {
     private var content: some View {
         if viewModel.albums.isNotEmpty {
             AlbumListContentView(viewModel: viewModel)
+                .padding(.top, TokenSpacing._3)
         } else {
             empty
         }

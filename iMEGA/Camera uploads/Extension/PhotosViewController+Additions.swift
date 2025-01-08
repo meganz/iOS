@@ -140,7 +140,7 @@ extension PhotosViewController {
         parentPhotoAlbumsController?.isTimelineActive() ?? false
     }
     
-    private func addToAlbum(nodes: [NodeEntity]) {
+    func addToAlbum(nodes: [NodeEntity]) {
         AddToCollectionRouter(
             presenter: self,
             mode: .album,

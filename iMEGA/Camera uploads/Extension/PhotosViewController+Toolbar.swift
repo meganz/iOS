@@ -1,4 +1,3 @@
-
 extension PhotosViewController {
     
     @objc func setToolbarActionsEnabled(in toolbar: UIToolbar?, isEnabled: Bool) {
@@ -54,7 +53,7 @@ extension PhotosViewController {
     }
     
     @objc private func addToAction(_ sender: UIBarButtonItem) {
-        
+        addToAlbum(nodes: selection.nodes.toNodeEntities())
     }
 
     @objc private func deleteAction(_ sender: UIBarButtonItem) {
