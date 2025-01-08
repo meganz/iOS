@@ -509,3 +509,10 @@ extension SharedItemsViewController {
         setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.sharedItems)
     }
 }
+
+// MARK: - Ads
+extension SharedItemsViewController: AdsSlotDisplayable {
+    @objc func configureAds() {
+        configureAdsVisibility()
+    }
+}

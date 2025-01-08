@@ -36,10 +36,17 @@ final class ChatRoomsListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        configureAdsVisibility()
+        
         AudioPlayerManager.shared.addDelegate(self)
         Task { @MainActor in
             await viewModel.askForNotificationsPermissionsIfNeeded()
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        configureAdsVisibility()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -142,3 +149,6 @@ extension ChatRoomsListViewController: AudioPlayerPresenterProtocol {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
     }
 }
+
+// MARK: - Ads
+extension ChatRoomsListViewController: AdsSlotDisplayable {}
