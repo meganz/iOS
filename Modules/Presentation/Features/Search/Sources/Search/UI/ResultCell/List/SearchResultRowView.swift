@@ -109,6 +109,7 @@ struct SearchResultRowView: View {
                 .fontWeight(.medium)
                 .lineLimit(1)
                 .foregroundStyle(viewModel.titleTextColor)
+                .accessibilityLabel(viewModel.accessibilityIdentifier)
             propertyViewsFor(placement: .prominent)
         }
     }

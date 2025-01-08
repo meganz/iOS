@@ -23,9 +23,13 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     @Published var isThumbnailLoadedOnce = false
 
     var title: String {
+        result.title.forceLeftToRight()
+    }
+
+    var accessibilityIdentifier: String {
         result.title
     }
-    
+
     var isSensitive: Bool {
         result.isSensitive
     }

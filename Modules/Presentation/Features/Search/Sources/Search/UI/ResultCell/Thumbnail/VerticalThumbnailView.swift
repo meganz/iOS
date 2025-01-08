@@ -176,11 +176,12 @@ struct VerticalThumbnailView: View {
     // hosts title and .prominent properties
     private var topLine: some View {
         HStack(spacing: 4) {
-            Text(viewModel.result.title)
+            Text(viewModel.title)
                 .foregroundStyle(viewModel.titleTextColor)
                 .font(.system(.caption).weight(.medium))
                 .lineLimit(1)
-            
+                .accessibilityLabel(viewModel.accessibilityIdentifier)
+
             viewModel
                 .result
                 .properties

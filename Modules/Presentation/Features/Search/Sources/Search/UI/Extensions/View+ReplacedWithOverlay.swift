@@ -16,10 +16,14 @@ extension View {
             .contextMenuWithPreview(
                 actions: actions,
                 sourcePreview: {
-                    // We should disable accessibility for source sourcePreview
-                    // otherwise the accessibility labels will be duplicated
                     sourcePreview()
-                        .accessibilityElement(children: .ignore)
+                    // Our QA uses Appium to run automation test, the overlay will cause duplicated accessibility identifiers
+                    // and mess up the result of Appium's search query.
+                    // In order to avoid such issue, we override the `identifier` of the
+                    // elements inside the overlay so that Appium can still locate the elements correctly.
+                        .accessibilityIdentifier("--overlayId--")
+                    // We also need to disable accessibility for the overlay so that its accessibility labels will not be read out.
+                        .accessibilityHidden(true)
                 },
                 contentPreviewProvider: contentPreviewProvider,
                 didTapPreview: didTapPreview,
