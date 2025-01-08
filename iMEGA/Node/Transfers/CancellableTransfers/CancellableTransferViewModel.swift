@@ -293,7 +293,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     }
 
     private func startFileDownloads() async {
-        for transferViewEntity in fileTransfers {
+        fileTransfers.forEach { transferViewEntity in
             do {
                 let downloadStream = try downloadNodeUseCase.downloadFileToOffline(
                     forNodeHandle: transferViewEntity.handle,
@@ -301,16 +301,18 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                     appData: transferViewEntity.appData,
                     startFirst: transferViewEntity.priority
                 )
-                for await event in downloadStream {
-                    guard !Task.isCancelled else { return }
-                    switch event {
-                    case .start(let transferEntity):
-                        transferViewEntity.setState(transferEntity.state)
-                        continueFolderTransfersIfNeeded()
-                    case .update, .folderUpdate:
-                        break
-                    case .finish(let transferEntity):
-                        transferViewEntity.setState(transferEntity.state)
+                Task {
+                    for await event in downloadStream {
+                        guard !Task.isCancelled else { return }
+                        switch event {
+                        case .start(let transferEntity):
+                            transferViewEntity.setState(transferEntity.state)
+                            continueFolderTransfersIfNeeded()
+                        case .update, .folderUpdate:
+                            break
+                        case .finish(let transferEntity):
+                            transferViewEntity.setState(transferEntity.state)
+                        }
                     }
                 }
             } catch {
@@ -362,7 +364,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     
     private func startFolderDownloads() async {
         
-        for transferViewEntity in folderTransfers {
+        folderTransfers.forEach { transferViewEntity in
             do {
                 let downloadStream = try downloadNodeUseCase.downloadFileToOffline(
                     forNodeHandle: transferViewEntity.handle,
@@ -371,22 +373,24 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                     startFirst: transferViewEntity.priority
                 )
                 
-                for await event in downloadStream {
-                    guard !Task.isCancelled else { return }
-                    switch event {
-                    case .start:
-                        break
-                    case .folderUpdate(let folderTransferUpdateEntity):
-                        handleFolderUpdateWhileDownloadingFolder(folderTransferUpdateEntity)
-                    case .update(let transferEntity):
-                        if case .transferringFiles = transferEntity.stage {
-                            transferViewEntity.setStage(transferEntity.stage)
+                Task {
+                    for await event in downloadStream {
+                        guard !Task.isCancelled else { return }
+                        switch event {
+                        case .start:
+                            break
+                        case .folderUpdate(let folderTransferUpdateEntity):
+                            handleFolderUpdateWhileDownloadingFolder(folderTransferUpdateEntity)
+                        case .update(let transferEntity):
+                            if case .transferringFiles = transferEntity.stage {
+                                transferViewEntity.setStage(transferEntity.stage)
+                                transferViewEntity.setState(transferEntity.state)
+                                checkIfAllTransfersStartedTransferring()
+                            }
+                        case .finish(let transferEntity):
                             transferViewEntity.setState(transferEntity.state)
                             checkIfAllTransfersStartedTransferring()
                         }
-                    case .finish(let transferEntity):
-                        transferViewEntity.setState(transferEntity.state)
-                        checkIfAllTransfersStartedTransferring()
                     }
                 }
                 
