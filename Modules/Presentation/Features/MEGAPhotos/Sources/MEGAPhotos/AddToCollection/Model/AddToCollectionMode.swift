@@ -1,4 +1,4 @@
-public enum AddToMode {
+public enum AddToMode: Sendable {
     case album
     case collection
 }

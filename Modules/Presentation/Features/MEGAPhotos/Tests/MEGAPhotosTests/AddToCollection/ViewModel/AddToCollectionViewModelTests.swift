@@ -1,6 +1,7 @@
 import ContentLibraries
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 @testable import MEGAPhotos
 import MEGAPresentationMock
 import Testing
@@ -72,6 +73,16 @@ struct AddToCollectionViewModelTests {
                 }
                 await invocationTask.value
             }
+        }
+        
+        @Test("Ensure title is correct for mode",
+              arguments: [(AddToMode.album, Strings.Localizable.Set.AddTo.album),
+                          (.collection, Strings.Localizable.Set.addTo)])
+        func title(mode: AddToMode, expectedTitle: String) {
+            let sut = AddToCollectionViewModelTests
+                .makeSUT(mode: mode)
+            
+            #expect(sut.title == expectedTitle)
         }
     }
 

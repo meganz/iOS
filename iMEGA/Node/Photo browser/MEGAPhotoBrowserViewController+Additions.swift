@@ -5,6 +5,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPhotos
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
@@ -329,6 +330,14 @@ extension MEGAPhotoBrowserViewController {
             let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
             _ = await nodeActionUseCase.unhide(nodes: [node].toNodeEntities())
         }
+    }
+    
+    @objc func addToAlbum(node: MEGANode) {
+        AddToCollectionRouter(
+            presenter: self,
+            mode: .album,
+            selectedPhotos: [node.toNodeEntity()])
+        .start()
     }
 }
 

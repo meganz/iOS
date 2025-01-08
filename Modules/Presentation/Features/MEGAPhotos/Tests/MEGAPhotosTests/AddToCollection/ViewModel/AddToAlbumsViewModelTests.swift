@@ -106,9 +106,8 @@ struct AddToAlbumsViewModelTests {
         
         @Test("when create alert is shown and action is triggered then it should create album", arguments: [
             ("My Album", "My Album"),
-            ("", Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder),
-            (String?.none, Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)])
-        func createAlertView(albumName: String?, expectedName: String) async {
+            ("", Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)])
+        func createAlertView(albumName: String, expectedName: String) async {
             let albumListUseCase = MockAlbumListUseCase()
             let sut = AddToAlbumsViewModelTests
                 .makeSUT(albumListUseCase: albumListUseCase)
@@ -129,6 +128,29 @@ struct AddToAlbumsViewModelTests {
                     }
                 }
                 alertViewModel.action?(albumName)
+                
+                Task {
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    invocationTask.cancel()
+                }
+                await invocationTask.value
+            }
+        }
+        
+        @Test("When nil action passed then it should not create an album")
+        func nilAction() async {
+            let albumListUseCase = MockAlbumListUseCase()
+            let sut = AddToAlbumsViewModelTests
+                .makeSUT(albumListUseCase: albumListUseCase)
+            let alertViewModel = sut.alertViewModel()
+            
+            await confirmation("Ensure album is not created", expectedCount: 0) { createdConfirmation in
+                let invocationTask = Task {
+                    for await _ in albumListUseCase.invocationSequence {
+                        createdConfirmation()
+                    }
+                }
+                alertViewModel.action?(nil)
                 
                 Task {
                     try? await Task.sleep(nanoseconds: 500_000_000)

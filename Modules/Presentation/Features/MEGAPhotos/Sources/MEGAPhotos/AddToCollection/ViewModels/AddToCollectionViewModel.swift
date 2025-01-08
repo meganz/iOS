@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 
 @MainActor
 public final class AddToCollectionViewModel: ObservableObject {
@@ -10,6 +11,13 @@ public final class AddToCollectionViewModel: ObservableObject {
     let addToAlbumsViewModel: AddToAlbumsViewModel
     
     private let selectedPhotos: [NodeEntity]
+    
+    public var title: String {
+        switch mode {
+        case .album: Strings.Localizable.Set.AddTo.album
+        case .collection: Strings.Localizable.Set.addTo
+        }
+    }
     
     public init(
         mode: AddToMode,

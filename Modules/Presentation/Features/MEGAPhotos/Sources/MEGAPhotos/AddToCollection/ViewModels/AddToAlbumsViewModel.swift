@@ -112,8 +112,8 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
             affirmativeButtonTitle: Strings.Localizable.createFolderButton,
             destructiveButtonTitle: Strings.Localizable.cancel,
             action: { [weak self] newAlbumName in
-                guard let self else { return }
-                let albumName = if let newAlbumName, newAlbumName.isNotEmpty {
+                guard let self, let newAlbumName else { return }
+                let albumName = if newAlbumName.isNotEmpty {
                     newAlbumName
                 } else {
                     albums.map(\.album.name).newAlbumName()

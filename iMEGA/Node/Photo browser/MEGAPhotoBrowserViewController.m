@@ -1211,6 +1211,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case MegaNodeActionTypeUnhide:
             [self unhideWithNode:node];
             break;
+        case MegaNodeActionTypeAddToAlbum:
+            [self addToAlbumWithNode:node];
+            break;
         default:
             break;
     }
