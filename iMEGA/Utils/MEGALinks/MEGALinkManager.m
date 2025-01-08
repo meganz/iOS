@@ -501,6 +501,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot]) {
                 [MEGALinkManager navigateToCameraUploadsSettings];
             }
+        case URLTypePwm:
+            [MEGALinkManager openPWMApp];
         default:
             break;
     }

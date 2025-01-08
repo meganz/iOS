@@ -427,6 +427,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>megavpn</string>
+		<string>megapass</string>
 	</array>
 </dict>
 </plist>

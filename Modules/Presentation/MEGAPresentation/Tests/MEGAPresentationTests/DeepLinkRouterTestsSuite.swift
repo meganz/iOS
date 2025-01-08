@@ -50,7 +50,8 @@ struct DeepLinkRouterTestSuite {
         
         @MainActor
         @Test("App scheme should open the app if installed", arguments: [
-            MEGAApp.vpn
+            MEGAApp.vpn,
+            MEGAApp.pwm
         ])
         func vpnLinkShouldOpenVPNAppIfInstalled(app: MEGAApp) {
             let (router, mockAppLauncher) = makeSUTForExternalNavigation(
@@ -68,7 +69,8 @@ struct DeepLinkRouterTestSuite {
         
         @MainActor
         @Test("App scheme should open the App Store if the selected app is not installed", arguments: [
-            MEGAApp.vpn
+            MEGAApp.vpn,
+            MEGAApp.pwm
         ])
         func vpnLinkShouldOpenAppStoreIfAppNotInstalled(app: MEGAApp) {
             let (router, mockAppLauncher) = makeSUTForExternalNavigation(
