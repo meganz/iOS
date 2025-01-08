@@ -799,13 +799,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Thùng Rác Trống";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="Tất cả các mục trong Thùng Rác sẽ bị xóa.";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="Đã hoàn tất dọn sạch Thùng Rác";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Thùng Rác được tự động dọn sạch mỗi %d ngày. Nếu bạn muốn tắt tính năng tự động dọn Thùng Rác, hãy nâng cấp lên gói trả phí.";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="Tự động dọn Thùng Rác";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d ngày";
 /* Empty Rubbish Bin Warning Title */
@@ -813,9 +813,55 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="Thùng Rác Trống";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="Thiết đặt Thùng Rác";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="Dọn rác";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title"="Quản lý tệp tin";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA"="Trên mạng MEGA";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution"="Dùng mạng di động để tải ảnh ở độ phân giải cao";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description"="Nếu tắt đi, độ phân giải cao sẽ chỉ được tải khi bạn phóng vào hình ảnh để xem.";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings"="Thiết đặt Thùng Rác";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning"="Nhật ký phiên bản tệp tin";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice"="Trong điện thoại";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache"="Dọn bộ nhớ tạm";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message"="Đã dọn bộ nhớ tạm";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles"="Dọn các tệp tin lưu ngoại tuyến";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title"="Dọn các tệp tin lưu ngoại tuyến?";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description"="Nếu bạn muốn xem các tệp tin này, bạn cần có kết nối internet.";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="Dọn sạch";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message"="Đã dọn các tệp tin lưu ngoại tuyến";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="Lưu trữ nhiều phiên bản cho tệp tin của bạn. Vô hiệu tùy chọn này không có ngăn cản các tên liên lạc của bạn thêm vào phiên bản mới.";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Xóa hết tất cả các phiên bản cũ đang có";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Xóa hết tất cả các phiên bản cũ đang có?";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Bất kỳ phiên bản tệp tin nào được chia sẻ cho bạn từ một tên liên lạc sẽ cần bạn phải nói người đó xóa. Các phiên bản mới nhất hiện tại của tệp tin sẽ không bị xóa.";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="Đã xóa các phiên bản tệp tin";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Tắt lập phiên bản tệp tin?";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="Khi lập phiên bản tệp tin bị vô hiệu hóa, các phiên bản hiện tại sẽ được thay thế sau khi tệp tin được cập nhật.";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Tắt";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="Tất cả các tệp tin đều được giữ nguyên. Chỉ có các nội dung ghi phiên bản lưu sẽ bị xoá.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Không dùng HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2022,8 +2068,6 @@
 "Mute chat Notifications for"="Tắt tiếng tất cả các âm báo chát trong";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Tất cả các thông báo sẽ im lặng cho đến ngày mai, %@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Tất cả các thông báo sẽ tắt tiếng cho đến %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Âm báo chát";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4231,11 +4275,11 @@
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Tôi chỉ sử dụng cái này tạm thời và không còn nhu cầu nữa";
 /* Cancel subscription survey follow up reason with id 1.a */
-"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+"accounts.cancelSubscriptionSurvey.reason.one.a"="Tôi chỉ dùng MEGA để tải tệp tin";
 /* Cancel subscription survey follow up reason with id 1.b */
-"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+"accounts.cancelSubscriptionSurvey.reason.one.b"="Tôi chỉ tạm thời cần lưu trữ tệp tin ";
 /* Cancel subscription survey follow up reason with id 1.c */
-"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
+"accounts.cancelSubscriptionSurvey.reason.one.c"="Tôi chỉ dùng MEGA để chia sẻ tệp tin";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="Tôi cảm thấy gói của tôi quá đắt";
 /* Cancel subscription survey reason with id 3 */
@@ -4271,7 +4315,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="OK, hiểu rồi";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="Việc hủy bỏ của bạn không thể xử lý được ngay bây giờ. Kiểm tra kết nối mạng của bạn rồi thử lại. Nếu sự cố vẫn tiếp diễn, hãy liên hệ với bộ phận Hỗ trợ.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="OK, hiểu rồi";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4431,31 +4475,31 @@
 /* Over Disk Quota paywall Upgrade button title */
 "overDiskQuota.paywall.button.upgradeNow"="Nâng cấp ngay";
 /* Over Disk Quota paywall Make some space button title */
-"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";
+"overDiskQuota.paywall.button.makeSomeSpace"="Dọn dẹp không gian";
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Không thể quản lý thẻ";
 /* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Gói Pro Flexi của quý khách đã hết hạn. Xin kích hoạt lại gói đăng ký để có thể thêm thẻ. Quý khách cũng có thể quản lý việc này trên trang web MEGA.";
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Tài khoản Doanh Nghiệp MEGA của quý khách đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin kích hoạt lại gói đăng ký trên trang web MEGA bằng máy tính.";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Tài khoản Doanh Nghiệp MEGA của bạn đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin liên hệ với quản trị viên tài khoản Doanh Nghiệp của bạn.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="OK, hiểu rồi";
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Thêm";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Không gian hào phóng";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="Lưu trữ dữ liệu không giới hạn, bắt đầu từ %@.";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="Chia sẻ lượng truyền tải";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
-"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+"ads.adFree.content.transferSharing.message"="Những người bạn chia sẻ dữ liệu có thể sử dụng băng thông truyền tải của bạn để tải xuống các mục bạn đã chia sẻ.";
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Lớp bảo mật bổ sung khi chia sẻ";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
@@ -4464,3 +4508,7 @@
 "ads.adFree.button.viewProPlans"="Xem các gói Pro";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Bỏ qua";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="Không có album nào";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Số lượng thẻ tối đa là 10";

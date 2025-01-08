@@ -3922,5 +3922,45 @@
         <string>Chociaż skontaktowaliśmy się z Tobą e-mailem, Twoja pojemność jest nadal pełna. Masz %d pojemności [storageSpace] na swoim konto, co oznacza, że musisz wyczyścić trochę miejsca lub uaktualnić do [plan] plan. Jeśli wkrótce nie podejmiesz żadnych działań, Twoje dane zostaną usunięte. Uaktualnij teraz, aby chronić swoje plik. [A]Dowiedz się więcej o ograniczeniach pojemność masowej[/A]. </string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d wersja pliku.</string>
+        <key>few</key>
+        <string>%d wersje pliku.</string>
+        <key>many</key>
+        <string>%d wersje pliku.</string>
+        <key>other</key>
+        <string>%d wersje pliku.</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Całkowity rozmiar używany przez wersję pliku: [storageSpace]</string>
+        <key>few</key>
+        <string>Całkowity rozmiar używany przez wersje pliku: [storageSpace]</string>
+        <key>many</key>
+        <string>Całkowity rozmiar używany przez wersje pliku: [storageSpace]</string>
+        <key>other</key>
+        <string>Całkowity rozmiar używany przez wersje pliku: [storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

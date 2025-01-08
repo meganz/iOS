@@ -2746,5 +2746,33 @@
         <string>メールでご連絡しましたが、ストレージはまだいっぱいです。アカウント内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、スペースを空けるか、[plan]プランにアップグレードしていただくご必要があります。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個のファイルバージョン。</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ファイルバージョンによって使用される合計サイズ：[storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -3149,9 +3149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d File version.</string>
+        <string>%d file version.</string>
         <key>other</key>
-        <string>%d File versions.</string>
+        <string>%d file versions.</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
@@ -3165,9 +3165,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Total size taken by file version: [storageSpace]</string>
+        <string>Total size used by file version: [storageSpace]</string>
         <key>other</key>
-        <string>Total size taken by file versions: [storageSpace]</string>
+        <string>Total size used by file versions: [storageSpace]</string>
       </dict>
     </dict>
   </dict>

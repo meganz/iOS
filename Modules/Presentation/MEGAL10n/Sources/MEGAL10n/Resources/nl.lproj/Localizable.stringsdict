@@ -3138,5 +3138,37 @@
         <string>Hoewel we per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen, welke u moet wissen of moet upgraden naar een [plan] abonnement. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d bestandsversie.</string>
+        <key>other</key>
+        <string>%d bestandsversies.</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Totale grootte gebruikt door de bestandsversie: [storageSpace]</string>
+        <key>other</key>
+        <string>Totale grootte die door de bestandsversies wordt gebruikt: [storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

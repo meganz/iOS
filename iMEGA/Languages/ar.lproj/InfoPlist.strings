@@ -20,3 +20,5 @@
 "NSLocationWhenInUseUsageDescription"="يصل ميغا MEGA إلى موقعك عندما تشاركه مع جهات الاتصال الخاصة بك في محادثة.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
 "NSLocalNetworkUsageDescription"="سيتيح لك ذلك استخدام ميغا MEGA لإجراء مكالمات واستقبالها من خلال الأجهزة الموجودة على نفس شبكة الواي فاي Wi-Fi أو شبكة الوصول المحلية.";
+/* User tracking usage description. In order to protect user's privacy, Apple requires a specific string explaining why user tracking will be enabled. */
+"NSUserTrackingUsageDescription"="سيتم استخدام هذا لتخصيص الإعلانات التي تراها";

@@ -2746,5 +2746,33 @@
         <string>尽管我们已通过电子邮件与您联系，但您的存储空间仍然已满。您的帐户中有%d个文件，占用了[storageSpace]，这意味着您必须释放一些空间或升级到[plan]方案。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]详细了解您的存储限制[/A]。</string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d个文件版本。</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>文件版本使用的总空间大小：[storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

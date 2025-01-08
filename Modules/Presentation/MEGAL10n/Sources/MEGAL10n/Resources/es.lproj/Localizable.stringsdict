@@ -3530,5 +3530,41 @@
         <string>Aunque te hemos contactado por correo electrónico, tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu cuenta, lo que significa que debes liberar espacio o ampliar a un plan [plan]. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d versión del archivo.</string>
+        <key>many</key>
+        <string>%d versiones de archivos.</string>
+        <key>other</key>
+        <string>%d versiones de archivos.</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Espacio ocupado por la versión del archivo: [storageSpace]</string>
+        <key>many</key>
+        <string>Espacio ocupado por las versiones archivos: [storageSpace]</string>
+        <key>other</key>
+        <string>Espacio ocupado por las versiones archivos: [storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
