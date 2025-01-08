@@ -191,6 +191,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
         configureViewMode()
         configureAdsVisibility()
+        bannerCollectionView?.refreshContainer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -322,9 +323,8 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { [weak self] (_) in
-            guard let bannerCollectionView = self?.bannerCollectionView else { return }
-            bannerCollectionView.refreshContainer()
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.bannerCollectionView.refreshContainer()
         }, completion: nil)
     }
 

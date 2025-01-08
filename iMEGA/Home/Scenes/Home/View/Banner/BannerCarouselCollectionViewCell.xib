@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,16 +32,16 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xQ3-cT-Enu">
-                                <rect key="frame" x="20" y="18" width="159" height="80"/>
+                                <rect key="frame" x="20" y="18" width="184" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="LabelLabelLabelLa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfM-2K-890">
-                                        <rect key="frame" x="0.0" y="0.0" width="159" height="23.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="184" height="23.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="LabelLabelLabelLabelLabel" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5k-u9-6zv">
-                                        <rect key="frame" x="0.0" y="31.5" width="159" height="48.5"/>
+                                        <rect key="frame" x="0.0" y="31.5" width="184" height="48.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -65,7 +65,7 @@
                             <constraint firstItem="xQ3-cT-Enu" firstAttribute="leading" secondItem="6gG-jK-W1x" secondAttribute="leadingMargin" constant="12" id="NvM-cI-iFR"/>
                             <constraint firstAttribute="trailing" secondItem="tWm-eR-DAe" secondAttribute="trailing" constant="12" id="VIe-QX-St3"/>
                             <constraint firstItem="xQ3-cT-Enu" firstAttribute="top" secondItem="6gG-jK-W1x" secondAttribute="top" constant="18" id="YxR-4P-50g"/>
-                            <constraint firstItem="F0k-rd-cAP" firstAttribute="leading" secondItem="xQ3-cT-Enu" secondAttribute="trailing" constant="30" id="biS-zx-22J"/>
+                            <constraint firstItem="F0k-rd-cAP" firstAttribute="leading" secondItem="xQ3-cT-Enu" secondAttribute="trailing" constant="5" id="biS-zx-22J"/>
                             <constraint firstItem="tWm-eR-DAe" firstAttribute="leading" secondItem="F0k-rd-cAP" secondAttribute="trailing" constant="12" id="dDJ-OI-BTE"/>
                             <constraint firstAttribute="bottom" secondItem="h2K-JS-Kj6" secondAttribute="bottom" id="dMp-ZV-mHT"/>
                             <constraint firstAttribute="trailing" secondItem="h2K-JS-Kj6" secondAttribute="trailing" id="nUu-Pa-uE7"/>
@@ -98,7 +98,7 @@
     <resources>
         <image name="closeBanner" width="32" height="32"/>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
