@@ -336,14 +336,15 @@ struct DeepLinkingTestSuite {
         }
     }
     
-    // MARK: - VPN App Link Tests
-    @Suite("VPN App Link Tests - Verifies correct type is returned for VPN URLs.")
-    struct VPNLinkTests {
-        @Test("VPN NSURL should return .vpn", arguments: [
-            "mega://vpn"
+    // MARK: - App Links Tests
+    @Suite("Specialized App Links Tests - Verifies links for VPN and PWM.")
+    struct SpecializedAppLinksTests {
+        @Test("VPN and PWM NSURL should return correct types", arguments: [
+            ("mega://vpn", URLType.vpn),
+            ("mega://pwm", URLType.pwm)
         ])
-        func upgradeLinkShouldReturnUpgradeLinkType(url: String) {
-            assertDeepLinkType(urlString: url, expectedType: .vpn)
+        func specializedAppLinksShouldReturnCorrectType(url: String, expectedType: URLType) {
+            assertDeepLinkType(urlString: url, expectedType: expectedType)
         }
     }
     

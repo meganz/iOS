@@ -66,6 +66,7 @@ enum DeeplinkHostKey: String {
     case handle
     case vpn
     case settings
+    case pwm
 }
 
 enum DeeplinkSchemeKey: String {
@@ -74,6 +75,7 @@ enum DeeplinkSchemeKey: String {
     case http = "https"
     case appsettings = "app-settings"
     case vpn = "megavpn"
+    case pwm = "megapass"
 }
 
 extension NSURL {
@@ -91,6 +93,8 @@ extension NSURL {
             return .appSettings
         case .vpn:
             return .vpn
+        case .pwm:
+            return .pwm
         case .none:
             return .default
         }
@@ -162,6 +166,8 @@ extension NSURL {
         case DeeplinkHostKey.settings.rawValue:
             guard let path, !path.isEmpty, path.hasPrefix(DeeplinkPathKey.cameraUploadsSettings.rawValue) else { return .default }
             return .cameraUploadsSettings
+        case DeeplinkHostKey.pwm.rawValue:
+            return .pwm
         default:
             if fragment != nil {
                 return parseFragmentType()

@@ -260,9 +260,19 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
     
     @MainActor
     @objc class func openVPNApp() {
+        openApp(.vpn)
+    }
+    
+    @MainActor
+    @objc class func openPWMApp() {
+        openApp(.pwm)
+    }
+    
+    @MainActor
+    private class func openApp(_ app: MEGAApp) {
         DeepLinkRouter(
             appOpener: AppOpener(
-                app: .vpn,
+                app: app,
                 logHandler: { MEGALogDebug($0) }
             )
         ).openApp()
