@@ -3530,5 +3530,37 @@
         <string>Deși v-am contactat prin e-mail, spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în contul dvs., ceea ce înseamnă că trebuie să goliți un spațiu sau să faceți upgrade la un [plan] abonament. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file version.</string>
+        <key>other</key>
+        <string>%d file versions.</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Total size used by file version: [storageSpace]</string>
+        <key>other</key>
+        <string>Total size used by file versions: [storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

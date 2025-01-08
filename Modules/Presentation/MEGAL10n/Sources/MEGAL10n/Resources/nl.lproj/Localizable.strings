@@ -799,13 +799,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Prullenbak leegmaken";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="Alle items in de Prullenbak worden verwijderd.";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="Prullenbak leeggemaakt";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Prullenbak wordt elke keer automatisch geleegd %d dagen. Als u het automatisch legen van de Prullenbak wilt uitschakelen, kunt u upgraden naar een betaald abonnement.";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="Prullenbak automatisch legen";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d dagen";
 /* Empty Rubbish Bin Warning Title */
@@ -813,9 +813,55 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="Lege Prullenbak";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="Prullenbakinstellingen";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="Leegmaken";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title"="Bestandsbeheer";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA"="Bij MEGA";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution"="Mobiele gegevens gebruiken om afbeeldingen met een hoge resolutie te laden";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description"="Indien uitgeschakeld, wordt de afbeelding met hoge resolutie alleen geladen als u inzoomt.";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings"="Prullenbakinstellingen";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning"="Bestand Versiebeheer";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice"="Op uw apparaat";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache"="Cache Wissen";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message"="Cache gewist";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles"="Offline bestanden wissen";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title"="Offline bestanden wissen?";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description"="Als u deze bestanden wilt bekijken, is een internetverbinding vereist.";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="Wissen";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message"="Offline bestanden gewist";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="Sla meerdere versies van je bestanden op. Als u deze instelling uitschakelt, zullen uw contactpersonen niet stoppen met het toevoegen van nieuwe versies.";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Alle oudere versies van bestanden verwijderen";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Oudere versies van bestanden verwijderen?";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Alle bestandsversies die door een contact met u worden gedeeld, moeten door deze persoon worden verwijderd. De huidige versies van bestanden worden niet verwijderd.";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="Bestandsversies verwijderd";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Versiebeheer van bestanden uitschakelen?";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="Als het versiebeheer van bestanden is uitgeschakeld, wordt de huidige versie vervangen zodra een bestand is bijgewerkt.";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Uitschakelen";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="Alle huidige bestanden blijven behouden. Alleen oudere versies van uw bestanden worden verwijderd.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Gebruik geen HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2022,8 +2068,6 @@
 "Mute chat Notifications for"="Demp gespreksmeldingen voor";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Meldingen worden gedempt tot en met morgen, %@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Meldingen worden gedempt tot en met %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Gesprekmeldingen";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4445,13 +4489,13 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Toevoegen";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Vrijgevige opslag";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="Sla ongelimiteerde gegevens op, vanaf %@.";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="Overdracht deling";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
@@ -4464,3 +4508,7 @@
 "ads.adFree.button.viewProPlans"="Bekijk Pro abonnementen";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Overslaan";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="Geen albums";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Het maximum aantal tags is 10";

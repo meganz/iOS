@@ -817,45 +817,45 @@
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="Empty";
 /* Title for the File Management settings screen */
-"settings.fileManagement.title" = "File management";
+"settings.fileManagement.title"="File management";
 /* Section header for settings related to MEGA cloud storage */
-"settings.fileManagement.header.onMEGA" = "On MEGA";
+"settings.fileManagement.header.onMEGA"="On MEGA";
 /* Toggle option for enabling mobile data to load high-resolution images */
-"settings.fileManagement.useMobileDataForHighResolution" = "Use mobile data to load high resolution images";
+"settings.fileManagement.useMobileDataForHighResolution"="Use mobile data to load high resolution images";
 /* Description explaining the behavior when the toggle is disabled */
-"settings.fileManagement.useMobileDataForHighResolution.description" = "If disabled, the high resolution image will only be loaded when you zoom in.";
+"settings.fileManagement.useMobileDataForHighResolution.description"="If disabled, the high resolution image will only be loaded when you zoom in.";
 /* Option to open settings related to the Rubbish Bin */
-"settings.fileManagement.rubbishBinSettings" = "Rubbish bin settings";
+"settings.fileManagement.rubbishBinSettings"="Rubbish bin settings";
 /* Option for managing file versioning settings */
-"settings.fileManagement.fileVersioning" = "File versioning";
+"settings.fileManagement.fileVersioning"="File versioning";
 /* Section header for settings related to device storage */
-"settings.fileManagement.header.onYourDevice" = "On your device";
+"settings.fileManagement.header.onYourDevice"="On your device";
 /* Option to clear cached files stored on the device */
-"settings.fileManagement.clearCache" = "Clear cache";
+"settings.fileManagement.clearCache"="Clear cache";
 /* Confirmation message displayed after clearing cached files */
-"settings.fileManagement.clearCache.done.message" = "Cache cleared";
+"settings.fileManagement.clearCache.done.message"="Cache cleared";
 /* Option to clear offline files stored on the device */
-"settings.fileManagement.clearOfflineFiles" = "Clear offline files";
+"settings.fileManagement.clearOfflineFiles"="Clear offline files";
 /* Alert title shown when clearing offline files */
-"settings.fileManagement.clearOfflineFiles.alert.title" = "Clear offline files?";
+"settings.fileManagement.clearOfflineFiles.alert.title"="Clear offline files?";
 /* Alert description explaining the impact of clearing offline files */
-"settings.fileManagement.clearOfflineFiles.alert.description" = "If you would like to view these files, an internet connection will be required.";
+"settings.fileManagement.clearOfflineFiles.alert.description"="If you would like to view these files, an internet connection will be required.";
 /* Button label to confirm clearing offline files */
-"settings.fileManagement.clearOfflineFiles.alert.confirmationButton" = "Clear";
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="Clear";
 /* Confirmation message displayed after clearing offline files */
-"settings.fileManagement.clearOfflineFiles.done.message" = "Offline files cleared";
+"settings.fileManagement.clearOfflineFiles.done.message"="Offline files cleared";
 /* File versioning menu subTitle */
-"settings.fileManagement.fileVersioning.menu.subtitle"="Create multiple versions of your files. Disabling this setting does not stop your contacts from creating new versions.";
+"settings.fileManagement.fileVersioning.menu.subtitle"="Store multiple versions of your files. Disabling this setting does not stop your contacts from adding new versions.";
 /* File versioning button title to delete all older version of files */
-"settings.fileManagement.fileVersioning.deleteAllOlderVersion.button"="Delete all older version of files";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Delete all older versions of files";
 /* File versioning alert title for deleting older versions of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Delete older versions of files?";
 /* File versioning alert message for deleting older versions of files */
-"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Any file version shared to you from a contact will need to be deleted by them. Current version of files won’t be deleted.";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Any file versions shared to you from a contact will need to be deleted by them. Current versions of files won’t be deleted.";
 /* File versioning snackbar message after deleting older versions of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="File versions deleted";
 /* File versioning alert title for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Disable File versioning?";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Disable file versioning?";
 /* File versioning alert message for disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, the current version will be replaced once a file is updated.";
 /* File versioning alert button title to proceed disabling file versioning */
@@ -2068,8 +2068,6 @@
 "Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat notifications";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4491,9 +4489,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Add";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Generous storage";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4503,14 +4501,14 @@
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.title"="Additional security when sharing";
+"ads.adFree.content.additionalSecurity.title"="MEGA Pass and MEGA VPN";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Set passwords and expiry dates for file and folder links.";
+"ads.adFree.content.additionalSecurity.message"="Make your online life safer, faster, and easier with our password manager and high speed VPN";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="View Pro plans";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Skip";
 /* Add to album empty message */
-"photos.addToAlbum.empty.message"="No Albums";
-/*  Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"photos.addToAlbum.empty.message"="No albums";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="The maximum number of tags is 10";

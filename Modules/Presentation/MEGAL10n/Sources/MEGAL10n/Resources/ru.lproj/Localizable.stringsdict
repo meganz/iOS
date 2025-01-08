@@ -3922,5 +3922,45 @@
         <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. В вашем аккаунте хранится %d файла, занимающих [storageSpace]. Это означает, что вам необходимо освободить место или перейти на план [plan]. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d версия файлов</string>
+        <key>few</key>
+        <string>%d версии файлов</string>
+        <key>many</key>
+        <string>%d версий файлов</string>
+        <key>other</key>
+        <string>%d версии файлов</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Общий размер, используемый в зависимости от версии файла: [storageSpace]</string>
+        <key>few</key>
+        <string>Общий размер, используемый версиями файла: [storageSpace]</string>
+        <key>many</key>
+        <string>Общий размер, используемый версиями файла: [storageSpace]</string>
+        <key>other</key>
+        <string>Общий объём, занимаемый версиями файлов: [storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

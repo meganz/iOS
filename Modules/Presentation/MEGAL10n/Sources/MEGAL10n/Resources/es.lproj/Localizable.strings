@@ -799,13 +799,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Vaciar Papelera";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="Se eliminarán todos los elementos de la Papelera.";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="La Papelera se ha vaciado correctamente";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="La papelera se vacía automáticamente cada %d días. Si quieres desactivar la limpieza automática de la papelera, amplía a un plan de pago.";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="Vaciar automáticamente la papelera";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d días";
 /* Empty Rubbish Bin Warning Title */
@@ -813,9 +813,55 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="No tienes archivos en la Papelera";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="Ajustes de la papelera";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="Vacío";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title"="Gestión de archivos";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA"="En MEGA";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution"="Usar datos móviles para cargar imágenes de alta resolución";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description"="Si desactivas esta opción, la imagen de alta resolución solo se cargará al ampliarla.";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings"="Ajustes de la papelera";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning"="Control de versiones";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice"="En el dispositivo";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache"="Borrar caché";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message"="Caché borrado";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles"="Eliminar archivos sin conexión";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title"="¿Eliminar archivos sin conexión?";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description"="Si deseas ver estos archivos, necesitarás una conexión a internet.";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="Eliminar";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message"="Archivos sin conexión eliminados";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="Almacena varias versiones de tus archivos. Aunque desactives esta opción, tus contactos podrán añadir nuevas versiones.";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Eliminar las versiones anteriores de los archivos";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="¿Eliminar versiones anteriores?";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Cualquier versión de archivo compartida contigo por un contacto deberá ser eliminada por ellos. Las versiones actuales de los archivos no se eliminarán.";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="Versiones anteriores eliminadas";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="¿Desactivar el control de versiones?";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="Cuando el control de versiones está desactivado, la versión actual se reemplazará una vez que se actualice el archivo.";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Desactivar";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="Los archivos actuales serán conservados. Solo se borrará el histórico de versiones de tus archivos.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="No usar HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2022,8 +2068,6 @@
 "Mute chat Notifications for"="Silenciar las notificaciones del chat durante";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Las notificaciones se silenciarán hasta mañana, %@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Las notificaciones estarán silenciadas hasta las %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificaciones del chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4089,7 +4133,7 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Oculta archivos y carpetas importantes";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puedes ocultar archivos y carpetas confidenciales por motivos de privacidad. Solo tú puedes enseñarlos, ya sea de forma individual o mostrando temporalmente los elementos ocultos desde los ajustes.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puedes ocultar archivos y carpetas confidenciales por motivos de privacidad. Solo tú podrás verlos, ya sea de forma individual o mostrando temporalmente los elementos ocultos desde los ajustes.";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Excluye de la cronología";
 /* Hidden files and folders onboarding content exclude from timeline section message */
@@ -4445,17 +4489,17 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Añadir";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Almacenamiento generoso";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="Almacena datos ilimitados, a partir de %@.";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="Transferencia compartida";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
-"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+"ads.adFree.content.transferSharing.message"="Las personas con las que compartes datos pueden usar tu cuota de transferencia para descargar lo que has compartido.";
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Seguridad adicional al compartir";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
@@ -4464,3 +4508,7 @@
 "ads.adFree.button.viewProPlans"="Descubre los planes Pro";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Saltar";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="No hay álbumes";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="El número máximo de etiquetas es 10";

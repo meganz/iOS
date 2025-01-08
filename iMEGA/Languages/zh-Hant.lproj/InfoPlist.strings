@@ -20,3 +20,5 @@
 "NSLocationWhenInUseUsageDescription"="當您在對話中共享您的位置給您的聯絡人時，MEGA會存取您的位置資訊。";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
 "NSLocalNetworkUsageDescription"="這將讓您可以透過在同一個Wi-Fi或區域網路上的裝置使用MEGA撥打和接聽電話。";
+/* User tracking usage description. In order to protect user's privacy, Apple requires a specific string explaining why user tracking will be enabled. */
+"NSUserTrackingUsageDescription"="這將用於個人化您看到的廣告";

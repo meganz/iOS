@@ -20,3 +20,5 @@
 "NSLocationWhenInUseUsageDescription"="MEGA accede a tu ubicación cuando la compartes con tus contactos en el chat.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
 "NSLocalNetworkUsageDescription"="Esto te permitirá usar MEGA para realizar y recibir llamadas a través de dispositivos que estén conectados a la misma Wi-Fi o red local.";
+/* User tracking usage description. In order to protect user's privacy, Apple requires a specific string explaining why user tracking will be enabled. */
+"NSUserTrackingUsageDescription"="Esto se usará para personalizar los anuncios que ves.";

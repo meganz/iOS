@@ -3530,5 +3530,37 @@
         <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] dans votre compte, ce qui signifie que vous devez effacer de l'espace ou effectuer une mise à niveau vers [plan] abonnement. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file version.</string>
+        <key>other</key>
+        <string>%d file versions.</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Total size used by file version: [storageSpace]</string>
+        <key>other</key>
+        <string>Total size used by file versions: [storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

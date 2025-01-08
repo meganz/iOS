@@ -799,13 +799,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="清空垃圾筒";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="垃圾筒中的所有項目將被刪除。";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="垃圾筒已清空";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="垃圾筒每%d天自動清空一次。如果您想停用自動清空垃圾筒功能，請升級到付費方案。";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="自動清空垃圾筒";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d天";
 /* Empty Rubbish Bin Warning Title */
@@ -813,9 +813,55 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="空的垃圾筒";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="垃圾筒設定";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="清空";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title"="檔案管理";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA"="於MEGA上";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution"="使用行動數據加載高解析度影像";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description"="如果停用，則僅在放大觀看時才會載入高解析度圖像。";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings"="垃圾筒設定";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning"="檔案版本控制";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice"="在您的裝置上";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache"="清除快取";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message"="快取已清除";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles"="清除離線檔案";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title"="要清除離線檔案嗎？";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description"="如果您想查看這些檔案，需要網路連線。";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="清除";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message"="離線檔案已清除";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="將您的檔案儲存為多個版本。停用此設定不會阻止您的聯絡人加入新版本。";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="刪除所有舊版本的檔案";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="刪除舊版本的檔案？";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="聯絡人共享給您的任何版本檔案都需要由他們刪除。目前版本的檔案不會被刪除。";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="已刪除檔案版本";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="停用檔案版本控制？";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="停用檔案版本控制後，一旦檔案更新，當前版本將被取代。";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="停用";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="所有當前版本檔案將保留。僅歷史版本的檔案會被刪除。";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2022,8 +2068,6 @@
 "Mute chat Notifications for"="對話通知靜音";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="通知將保持靜音直到明天，%@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="通知將保持靜音直到%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="訊息通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4445,13 +4489,13 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="新增";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="大容量空間";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="儲存無限資料，從%@起。";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="傳輸流量共享";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
@@ -4464,3 +4508,7 @@
 "ads.adFree.button.viewProPlans"="查看Pro方案";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="略過";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="沒有相簿";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="標籤最大數量為10";

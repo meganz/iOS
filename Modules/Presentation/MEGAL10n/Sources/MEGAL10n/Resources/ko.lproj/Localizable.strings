@@ -799,13 +799,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="휴지통 비우기";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="휴지통의 모든 항목이 삭제됩니다.";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="휴지통이 비워졌습니다";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="휴지통이 %d일마다 자동으로 비워집니다. 만약 휴지통 자동 비우기를 비활성화하고 싶다면, 유료 요금제로 업그레이드 하세요.";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="자동으로 휴지통 비우기";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d일";
 /* Empty Rubbish Bin Warning Title */
@@ -813,9 +813,55 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="휴지통 비우기";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="휴지통 설정";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="비우기";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title"="파일 관리";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA"="MEGA에서";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution"="고해상도 이미지를 불러오는데에 모바일 데이터 사용";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description"="비활성화 하면, 고해상도 이미지는 확대할 때만 불러옵니다.";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings"="휴지통 설정";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning"="파일 버전 관리";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice"="기기에서";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache"="캐시 지우기";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message"="캐시 비움";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles"="오프라인 파일 삭제";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title"="오프라인 파일을 삭제할까요?";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description"="이 파일들을 보려면, 인터넷 연결이 필요합니다.";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="비우기";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message"="오프라인 파일 삭제함";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="파일의 여러 버전을 보관합니다. 이 설정을 비활성화하면 당신의 연락처가 새 버전을 추가하는 것을 멈출 수 없습니다.";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="파일의 모든 이전 버전 삭제";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="파일의 이전 버전을 삭제할까요?";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="연락처로부터 공유 받은 모든 파일 버전은 연락처가 지워야 합니다. 파일의 현재 버전은 지워지지 않습니다.";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="파일 버전 삭제됨";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="파일 버전 관리를 비활성화 할까요?";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="파일 버전 관리를 비활성화 하면, 파일이 업데이트 되면 현재 버전이 교체됩니다.";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="해제";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="소유하고 계신 모든 현재 버전의 파일들은 남습니다. 오직 오래된 구 버전의 파일 기록만이 제거됩니다.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="HTTP 사용 안함";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2022,8 +2068,6 @@
 "Mute chat Notifications for"="대화 알림 끄기";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="알림을 내일, %@까지 알리지 않습니다";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="%@까지 알림 울리지 않기";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4271,7 +4315,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="알겠습니다";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="지금 취소를 진행할 수 없습니다. 연결을 확인하고 다시 시도하세요. 만약 문제가 계속 되면, 지원에 연락하세요.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="알겠습니다";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4431,31 +4475,31 @@
 /* Over Disk Quota paywall Upgrade button title */
 "overDiskQuota.paywall.button.upgradeNow"="지금 업그레이드";
 /* Over Disk Quota paywall Make some space button title */
-"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";
+"overDiskQuota.paywall.button.makeSomeSpace"="공간 확보";
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="태그를 관리할 수 없음";
 /* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="당신의 Pro Flexi 요금제가 만료되었습니다. 태그를 추가하려면 구독을 재활성화 하세요. 이것을 MEGA 웹사이트에서 관리할 수 있습니다.";
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="비즈니스 계정이 비활성화 되었습니다. 태그를 관리하려면 컴퓨터를 이용하여 MEGA 웹사이트에서 구독을 재활성화 하세요.";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="비즈니스 계정이 비활성화 되었습니다. 태그를 관리하려면, 비즈니스 계정 관리자에게 연락하세요.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="알겠습니다";
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="추가";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="넉넉한 저장소";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="무제한 데이터 보관, %@부터 시작";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="전송 공유";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
-"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+"ads.adFree.content.transferSharing.message"="당신이 데이터를 공유해준 사람들이 당신이 공유해준 것을 다운로드하기 위해 당신의 전송 할당량을 이용할 수 있습니다.";
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="공유할 때 추가 보안";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
@@ -4464,3 +4508,7 @@
 "ads.adFree.button.viewProPlans"="Pro 요금제 보기";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="건너뛰기";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="사진첩 없음";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="최대 태그 수는 10개입니다";

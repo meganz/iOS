@@ -799,13 +799,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="إفراغ سلة المحذوفات";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="سيتم حذف جميع العناصر الموجودة في سلة المحذوفات.";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="تم إفراغ سلة المحذوفات";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="يتم تفريغ سلة المحذوفات تلقائيًا كل %d أيام. إذا كنت ترغب في تعطيل التفريغ التلقائي لسلة المحذوفات، قم بالترقية إلى باقة مدفوعة.";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="قم بإفراغ سلة المحذوفات تلقائيًا";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d يوم";
 /* Empty Rubbish Bin Warning Title */
@@ -813,9 +813,55 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="سلة المحذوفات فارغة";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="إعدادات سلة المحذوفات";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="إفراغ";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title"="إدارة الملفات";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA"="على ميغا MEGA";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution"="استخدم بيانات الهاتف المحمول لترفيع صور عالية الدقة";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description"="في حالة التعطيل، لن يتم ترفيع الصورة عالية الدقة إلا عند التكبير.";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings"="إعدادات سلة المحذوفات";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning"="النسخ المعدلة للملفات";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice"="على جهازك";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache"="مسح التخزين المؤقت";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message"="تم مسح ذاكرة التخزين المؤقت";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles"="مسح الملفات في دون اتصال بالانترنت";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title"="مسح الملفات في دون اتصال بالانترنت؟";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description"="إذا كنت ترغب في عرض هذه الملفات، فستكون هناك حاجة إلى الاتصال بالإنترنت.";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="مسح";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message"="تم مسح الملفات في دون اتصال بالانترنت";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="قم بتخزين نسخ متعددة من ملفاتك. لا يؤدي تعطيل هذا الإعداد إلى إيقاف جهات الاتصال الخاصة بك من إضافة نسخ جديدة.";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="احذف جميع النسخ القديمة من الملفات";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="حذف النسخ القديمة من الملفات؟";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="يجب حذف أي نسخ ملفات تمت مشاركتها معك من جهة اتصال من قبلهم. لن يتم حذف النسخ الحالية من الملفات.";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="حذف نسخ الملف";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="تعطيل نَسخْ الملف؟";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="عند تعطيل نسخ الملف، سيتم استبدال النسخة الحالية بمجرد بالملف محدث.";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="تعطيل";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="لا تستخدم بروتوكول HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2022,8 +2068,6 @@
 "Mute chat Notifications for"="كتم صوت الإشعارات لمدة";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="ستكون الإشعارات صامتة حتى الغد، %@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="سيتم كتم الإشعارات حتى %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="إشعارات المحادثة";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4231,11 +4275,11 @@
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="كنت بحاجة إلى هذه الباقة مؤقتًا ولم أعد أستخدمها";
 /* Cancel subscription survey follow up reason with id 1.a */
-"accounts.cancelSubscriptionSurvey.reason.one.a"="I used MEGA for downloads only";
+"accounts.cancelSubscriptionSurvey.reason.one.a"="لقد استخدمت ميغا MEGA للتنزيلات فقط";
 /* Cancel subscription survey follow up reason with id 1.b */
-"accounts.cancelSubscriptionSurvey.reason.one.b"="I needed to store files temporarily";
+"accounts.cancelSubscriptionSurvey.reason.one.b"="كنت بحاجة لتخزين الملفات مؤقتًا";
 /* Cancel subscription survey follow up reason with id 1.c */
-"accounts.cancelSubscriptionSurvey.reason.one.c"="I used MEGA to share files only";
+"accounts.cancelSubscriptionSurvey.reason.one.c"="لقد استخدمت ميغا MEGA لمشاركة الملفات فقط";
 /* Cancel subscription survey reason with id 2 */
 "accounts.cancelSubscriptionSurvey.reason.two"="لقد وجدت باقتي غالية جداً";
 /* Cancel subscription survey reason with id 3 */
@@ -4271,7 +4315,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="حسنًا، فهمت ذلك";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="Your cancellation can’t be processed right now. Check your connection and try again. If the issue persists, contact Support.";
+"accounts.cancelSubscriptionErrorAlert.message"="لا يمكن معالجة الإلغاء الخاص بك الآن. تحقق من الاتصال وحاول مرة أخرى. في حالة استمرار المشكلة تواصل مع الدعم.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="حسنًا، فهمت ذلك";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4431,27 +4475,27 @@
 /* Over Disk Quota paywall Upgrade button title */
 "overDiskQuota.paywall.button.upgradeNow"="رق حسابك الآن";
 /* Over Disk Quota paywall Make some space button title */
-"overDiskQuota.paywall.button.makeSomeSpace"="Make some space";
+"overDiskQuota.paywall.button.makeSomeSpace"="اصنع بعض المساحة";
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="لا يمكن إدارة التاغات";
 /* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="انتهت صلاحية باقة برو فليكسي Pro Flexi. أعد تفعيل اشتراكك لإضافة تاغات. يمكنك إدارة هذا على موقع ميغا MEGA الإلكتروني.";
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="تم إلغاء تفعيل حساب الأعمال الخاص بك. لإدارة التاغات الخاصة بك، قم بإعادة تفعيل اشتراكك على موقع ميغا MEGA باستخدام حاسوبك.";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="تم إلغاء تفعيل حساب الأعمال Business الخاص بك. لإدارة التاغات الخاصة بك، اتصل بمسؤول حساب الأعمال Business الخاص بك.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="حسنًا، فهمت ذلك";
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="إضافة";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="مساحة تخزين سخية";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="قم بتخزين بيانات غير محدودة، بدءًا من %@.";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="تشارك تراسل المعطيات";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
@@ -4464,3 +4508,7 @@
 "ads.adFree.button.viewProPlans"="عرض باقات برو Pro";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="تخطى";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="لا يوجد ألبومات";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="الحد الأقصى لعدد للتاغات هو 10";

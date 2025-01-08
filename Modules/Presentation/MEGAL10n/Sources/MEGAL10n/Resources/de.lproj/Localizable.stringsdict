@@ -3138,5 +3138,37 @@
         <string>Obwohl wir Sie per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Dateien belegen [storageSpace] in Ihrem Account. Dies bedeutet, dass Sie Speicherplatz freigeben oder auf ein [plan]-Paket upgraden müssen. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
       </dict>
     </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d Dateiversion.</string>
+        <key>other</key>
+        <string>%d Dateiversionen.</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Durch Dateiversion belegter Speicher: [storageSpace]</string>
+        <key>other</key>
+        <string>Durch Dateiversionen belegter Speicher: [storageSpace]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

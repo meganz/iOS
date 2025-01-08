@@ -799,13 +799,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="清空回收站";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="回收站中的所有项目都将被删除。";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="已清空回收站";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="每%d天回收站将会被自动清空。如果您想禁用自动清空回收站的功能，请升级到付费方案。";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="自动清空回收站";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d 天";
 /* Empty Rubbish Bin Warning Title */
@@ -813,9 +813,55 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="回收站为空";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="回收站设置";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="清空";
+/* Title for the File Management settings screen */
+"settings.fileManagement.title"="文件管理";
+/* Section header for settings related to MEGA cloud storage */
+"settings.fileManagement.header.onMEGA"="在MEGA上";
+/* Toggle option for enabling mobile data to load high-resolution images */
+"settings.fileManagement.useMobileDataForHighResolution"="使用移动数据加载高分辨率图像";
+/* Description explaining the behavior when the toggle is disabled */
+"settings.fileManagement.useMobileDataForHighResolution.description"="如果已禁用，则只有在放大时才会加载高分辨率图片。";
+/* Option to open settings related to the Rubbish Bin */
+"settings.fileManagement.rubbishBinSettings"="回收站设置";
+/* Option for managing file versioning settings */
+"settings.fileManagement.fileVersioning"="文件历史版本";
+/* Section header for settings related to device storage */
+"settings.fileManagement.header.onYourDevice"="在您的设备上";
+/* Option to clear cached files stored on the device */
+"settings.fileManagement.clearCache"="清除缓存";
+/* Confirmation message displayed after clearing cached files */
+"settings.fileManagement.clearCache.done.message"="缓存已清除";
+/* Option to clear offline files stored on the device */
+"settings.fileManagement.clearOfflineFiles"="清除离线文件";
+/* Alert title shown when clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.title"="清除离线文件？";
+/* Alert description explaining the impact of clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.description"="如果您想查看这些文件，则需要互联网连接。";
+/* Button label to confirm clearing offline files */
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="清除";
+/* Confirmation message displayed after clearing offline files */
+"settings.fileManagement.clearOfflineFiles.done.message"="离线文件已清除";
+/* File versioning menu subTitle */
+"settings.fileManagement.fileVersioning.menu.subtitle"="以多个版本存储您的文件。禁用此设置不会阻止您的联系人添加新版本。";
+/* File versioning button title to delete all older version of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="删除所有文件的旧版本";
+/* File versioning alert title for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="删除文件的旧版本？";
+/* File versioning alert message for deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="联系人共享给您的任何文件版本都需要由他们删除。当前版本的文件不会被删除。";
+/* File versioning snackbar message after deleting older versions of files */
+"settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="已删除文件历史版本";
+/* File versioning alert title for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="禁用文件版本功能？";
+/* File versioning alert message for disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="当文件版本功能被禁用时，一旦文件更新后，当前版本将被替换。";
+/* File versioning alert button title to proceed disabling file versioning */
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="禁用";
+/* File versioning footer message */
+"settings.fileManagement.fileVersioning.footer.title"="当前所有文件将被保留。仅删除文件的历史版本。";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -2022,8 +2068,6 @@
 "Mute chat Notifications for"="静音聊天通知";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="通知将保持静音直到明天，%@";
-/* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="通知将保持静音直到%@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="聊天通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -4433,25 +4477,25 @@
 /* Over Disk Quota paywall Make some space button title */
 "overDiskQuota.paywall.button.makeSomeSpace"="释放一些空间";
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Cannot manage tags";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="无法管理标签";
 /* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="您的Pro Flexi方案已过期。重新激活您的订阅以添加标签。您可以在MEGA网站上进行管理。";
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="您的企业帐户已停用。要管理您的标签，请使用您的计算机在MEGA网站上重新激活您的订阅。";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="您的企业帐户已停用。要管理您的标签，请联系您的企业帐户管理员。";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="好的，明白了";
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="添加";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Looking to enjoy an ad-free experience?";
+"ads.adFree.header.title"="Want MEGA without the ads?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan for lots of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="大容量存储空间";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="存储无限的数据，从%@起。";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="传输流量共享";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
@@ -4464,3 +4508,7 @@
 "ads.adFree.button.viewProPlans"="查看Pro方案";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="跳过";
+/* Add to album empty message */
+"photos.addToAlbum.empty.message"="没有相册";
+/* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="标签的最大数量为10";
