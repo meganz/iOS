@@ -250,7 +250,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
             viewModel.dispatch(.deletePhotos(photos))
             endEditingMode()
         })
-        alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.removeToRubbishBinItem
+        alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.moreItem
         present(alertController, animated: true)
     }
     
