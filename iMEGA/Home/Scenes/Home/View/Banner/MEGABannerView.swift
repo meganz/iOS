@@ -101,6 +101,11 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         carouselCollectionViewLayout.delegate = self
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        refreshContainer()
+    }
+    
     // MARK: - Public Interface
     
     func reloadBanners(_ bannerDisplayModels: [HomeBannerDisplayModel.Banner]) {
