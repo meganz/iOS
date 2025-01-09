@@ -477,8 +477,9 @@ static NSString *kisDirectory = @"kisDirectory";
     return [[items sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
 }
 
-- (nullable MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
-    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
+- (nullable MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath isMultimedia:(BOOL)isMultimedia {
+    NSArray *filesArray = isMultimedia ? self.offlineMultimediaFiles : self.offlineFiles;
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:filesArray];
     NSMutableArray *items = self.viewModePreference == ViewModePreferenceEntityThumbnail ? self.offlineSortedFileItems : self.offlineSortedItems;
     NSDictionary *item = [items objectOrNilAtIndex:indexPath.row];
     if (item == nil) {
@@ -693,7 +694,7 @@ static NSString *kisDirectory = @"kisDirectory";
                 }
             }
         } else {
-            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath isMultimedia: YES];
             if (previewController == nil) {
                 return;
             }
@@ -703,7 +704,7 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || [FileExtensionGroupOCWrapper verifyIsEditableText:self.previewDocumentPath]) {
         [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
     } else {
-        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath isMultimedia: NO];
         if (previewController == nil) {
             return;
         }
