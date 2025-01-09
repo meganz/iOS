@@ -1,14 +1,18 @@
 import Foundation
 import MEGADomain
 
-public struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
+public final class MockOfflineFilesRepository: OfflineFilesRepositoryProtocol, @unchecked Sendable {
     public static let newRepo = MockOfflineFilesRepository()
     
     private let offlineFileEntities: [OfflineFileEntity]
     private let offlineFileEntity: OfflineFileEntity?
     
-    public init(offlineFileEntities: [OfflineFileEntity] = [],
-                offlineFileEntity: OfflineFileEntity? = nil) {
+    public var removeAllOfflineNodesCalledTimes = 0
+    
+    public init(
+        offlineFileEntities: [OfflineFileEntity] = [],
+        offlineFileEntity: OfflineFileEntity? = nil
+    ) {
         self.offlineFileEntities = offlineFileEntities
         self.offlineFileEntity = offlineFileEntity
     }
@@ -23,5 +27,9 @@ public struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
         offlineFileEntity
     }
     
-    public func createOfflineFile(name: String, for handle: HandleEntity) {    }
+    public func createOfflineFile(name: String, for handle: HandleEntity) {}
+    
+    public func removeAllStoredOfflineNodes() {
+        removeAllOfflineNodesCalledTimes += 1
+    }
 }

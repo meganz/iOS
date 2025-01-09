@@ -7,19 +7,18 @@ public protocol OfflineFilesUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-public struct OfflineFilesUseCase<T: OfflineFileFetcherRepositoryProtocol>: OfflineFilesUseCaseProtocol {
-
-    private let repo: T
-
-    public init(repo: T) {
+public struct OfflineFilesUseCase: OfflineFilesUseCaseProtocol {
+    private let repo: any OfflineFileFetcherRepositoryProtocol
+    
+    public init(repo: some OfflineFileFetcherRepositoryProtocol) {
         self.repo = repo
     }
     
     public func offlineFiles() -> [OfflineFileEntity] {
-        return repo.offlineFiles()
+        repo.offlineFiles()
     }
     
     public func offlineFile(for base64Handle: String) -> OfflineFileEntity? {
-        return repo.offlineFile(for: base64Handle)
+        repo.offlineFile(for: base64Handle)
     }
 }

@@ -8,12 +8,16 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     
     private let store: MEGAStore
     private let sdk: MEGASdk
-        
-    let offlineURL: URL? = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? "")
+    let offlineURL: URL?
     
-    init(store: MEGAStore, sdk: MEGASdk) {
+    init(
+        store: MEGAStore,
+        offlineURL: URL? = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""),
+        sdk: MEGASdk
+    ) {
         self.store = store
         self.sdk = sdk
+        self.offlineURL =  offlineURL
     }
     
     func createOfflineFile(name: String, for handle: HandleEntity) {
@@ -21,5 +25,9 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
             return
         }
         store.insertOfflineNode(node, api: sdk, path: name)
+    }
+    
+    func removeAllStoredOfflineNodes() {
+        store.removeAllOfflineNodes()
     }
 }

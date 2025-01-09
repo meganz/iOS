@@ -7,7 +7,10 @@ extension OfflineViewController {
     @objc func createOfflineViewModel() -> OfflineViewModel {
         OfflineViewModel(
             transferUseCase: NodeTransferUseCase(repo: NodeTransferRepository.newRepo(includesSharedFolder: true)),
-            offlineUseCase: OfflineUseCase(fileSystemRepository: FileSystemRepository.newRepo),
+            offlineUseCase: OfflineUseCase(
+                fileSystemRepository: FileSystemRepository.newRepo,
+                offlineFilesRepository: OfflineFilesRepository.newRepo
+            ),
             megaStore: MEGAStore.shareInstance()
         )
     }

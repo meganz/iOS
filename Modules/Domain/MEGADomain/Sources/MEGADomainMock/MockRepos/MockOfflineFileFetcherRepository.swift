@@ -19,4 +19,6 @@ public struct MockOfflineFileFetcherRepository: OfflineFileFetcherRepositoryProt
     public func offlineFile(for base64Handle: String) -> OfflineFileEntity? {
         offlineFileEntity
     }
+    
+    public func removeAllOfflineNodes() {}
 }
