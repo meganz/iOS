@@ -537,8 +537,6 @@
 		5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */; };
 		5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */; };
 		5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */; };
-		5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
-		5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689AE2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
 		5B3B0D152684B24800479A68 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3B0D142684B24700479A68 /* ShareViewController.m */; };
@@ -1714,6 +1712,7 @@
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
 		A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		A8C6494B2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C6494A2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift */; };
+		A8C894452D27F48200F18E40 /* SendToChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C894442D27F47500F18E40 /* SendToChatActivity.swift */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
 		A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */; };
 		A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */; };
@@ -3263,8 +3262,6 @@
 		5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CookieSettings.storyboard; sourceTree = "<group>"; };
 		5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieSettingsRouter.swift; sourceTree = "<group>"; };
 		5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieSettingsTableViewController.swift; sourceTree = "<group>"; };
-		5B367574204FFBF60087362D /* SendToChatActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendToChatActivity.m; sourceTree = "<group>"; };
-		5B367575204FFBF60087362D /* SendToChatActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendToChatActivity.h; sourceTree = "<group>"; };
 		5B3740CC2421600B00BA75EA /* MEGACD 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 5.xcdatamodel"; sourceTree = "<group>"; };
 		5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedContactsViewController.h; path = Chat/ChatAttachedContactsViewController.h; sourceTree = "<group>"; };
 		5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedContactsViewController.m; path = Chat/ChatAttachedContactsViewController.m; sourceTree = "<group>"; };
@@ -4457,6 +4454,7 @@
 		A8C47591299D02B70074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C47593299D02E60074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C6494A2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadOperation+Additions.swift"; sourceTree = "<group>"; };
+		A8C894442D27F47500F18E40 /* SendToChatActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToChatActivity.swift; sourceTree = "<group>"; };
 		A8C8E6B82A5F0E4100A00A57 /* MEGASDKRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDKRepo; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyTableViewCell.swift; sourceTree = "<group>"; };
@@ -13212,8 +13210,7 @@
 		E8F791731BC5754A00C58676 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
-				5B367575204FFBF60087362D /* SendToChatActivity.h */,
-				5B367574204FFBF60087362D /* SendToChatActivity.m */,
+				A8C894442D27F47500F18E40 /* SendToChatActivity.swift */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -15454,7 +15451,7 @@
 				B5D875372A04B501003F9380 /* SendFeedbackViewModel.swift in Sources */,
 				7288C2CE27F5D3D70010DC19 /* SendFeedbackViewRouter.swift in Sources */,
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
-				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
+				A8C894452D27F48200F18E40 /* SendToChatActivity.swift in Sources */,
 				83A66D222C590E6D00047F24 /* SendToChatWrapper.swift in Sources */,
 				9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
@@ -15975,7 +15972,6 @@
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
 				A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */,
-				5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */,
 				9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
 				775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */,
