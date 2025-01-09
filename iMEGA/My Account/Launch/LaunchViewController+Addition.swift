@@ -19,7 +19,7 @@ extension LaunchViewController {
         let trailingConstraint = hostingController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         let horizontalConstraint = hostingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let heightConstraint = hostingController.view.heightAnchor.constraint(equalToConstant: 4)
-        let topConstraint = hostingController.view.topAnchor.constraint(equalTo: label.topAnchor, constant: 20)
+        let topConstraint = hostingController.view.bottomAnchor.constraint(equalTo: label.topAnchor, constant: -20)
         NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, horizontalConstraint, heightConstraint, topConstraint])
         hostingController.didMove(toParent: self)
     }
