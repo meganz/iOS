@@ -1538,8 +1538,8 @@
 "Added"="Added";
 /* used for example when a folder is shared with 2 or more users */
 "users"="users";
-/* user (singular) label indicating is receiving some info, for example shared folders */
-"user"="user";
+/* Business role for sub-business account type named as User */
+"user"="User";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Do you want to delete this version?";
 /* Message to notify user the file version will be permanently removed */
