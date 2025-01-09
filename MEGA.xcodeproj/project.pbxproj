@@ -1208,6 +1208,7 @@
 		83E135F8292E5209004EAA0D /* ChatRoomNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E135F6292E5209004EAA0D /* ChatRoomNotificationsView.swift */; };
 		83E135F9292E520A004EAA0D /* ChatRoomNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E135F7292E5209004EAA0D /* ChatRoomNotificationsViewModel.swift */; };
 		83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */; };
+		83E2A0142D1AC137002B85A9 /* audioClipSent.wav in Resources */ = {isa = PBXBuildFile; fileRef = 83E2A0132D1AC137002B85A9 /* audioClipSent.wav */; };
 		83E3443C2BCE9F45006A2E3D /* VoIPPushDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3443B2BCE9F45006A2E3D /* VoIPPushDelegate.swift */; };
 		83E3454E25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */; };
 		83E3454F25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */; };
@@ -3934,6 +3935,7 @@
 		83E135F6292E5209004EAA0D /* ChatRoomNotificationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomNotificationsView.swift; sourceTree = "<group>"; };
 		83E135F7292E5209004EAA0D /* ChatRoomNotificationsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomNotificationsViewModel.swift; sourceTree = "<group>"; };
 		83E27AE927ABD8640086E11E /* MeetingCreatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingCreatingViewController.xib; sourceTree = "<group>"; };
+		83E2A0132D1AC137002B85A9 /* audioClipSent.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = audioClipSent.wav; sourceTree = "<group>"; };
 		83E3443B2BCE9F45006A2E3D /* VoIPPushDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushDelegate.swift; sourceTree = "<group>"; };
 		83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -10802,6 +10804,7 @@
 		A8BB54191FB9ABBD004FD03B /* Audios */ = {
 			isa = PBXGroup;
 			children = (
+				83E2A0132D1AC137002B85A9 /* audioClipSent.wav */,
 				BF8B02EB28359EDD009AC794 /* callEnded.wav */,
 				A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */,
 				A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */,
@@ -13699,6 +13702,7 @@
 				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				5B727385240D1682005816AB /* Appearance.storyboard in Resources */,
 				A882981D29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
+				83E2A0142D1AC137002B85A9 /* audioClipSent.wav in Resources */,
 				C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */,
 				BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */,
 				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,

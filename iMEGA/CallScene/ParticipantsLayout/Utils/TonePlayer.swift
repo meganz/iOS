@@ -1,3 +1,4 @@
+import AudioToolbox
 import Foundation
 import MEGADomain
 
@@ -9,6 +10,7 @@ final class TonePlayer: NSObject {
         case reconnecting
         case waitingRoomEvent
         case outgoingTone
+        case audioClipSent
         
         fileprivate var fileURL: URL? {
             Bundle.main.url(forResource: rawValue, withExtension: "wav")
@@ -37,6 +39,24 @@ final class TonePlayer: NSObject {
         if let audioPlayer = audioPlayer {
             audioPlayer.stop()
             resetAudioPlayer()
+        }
+    }
+    
+    func playSystemSound(_ tone: ToneType, vibrate: Bool = false) {
+        guard let tonePath = tone.fileURL else {
+            MEGALogDebug("\(tone.rawValue) file not found")
+            return
+        }
+        
+        if vibrate {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        }
+        
+        var soundID: SystemSoundID = 0
+        AudioServicesCreateSystemSoundID(tonePath as CFURL, &soundID)
+
+        AudioServicesPlaySystemSoundWithCompletion(soundID) {
+            AudioServicesDisposeSystemSoundID(soundID)
         }
     }
     

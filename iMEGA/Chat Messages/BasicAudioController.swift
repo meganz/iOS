@@ -264,7 +264,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     func isPlayingSameMessage(_ message: any MessageType) -> Bool {
         if let playingMessage = playingMessage as? ChatMessage,
            let currentMessage = message as? ChatMessage,
-           (playingMessage.messageId == currentMessage.messageId || currentMessage.message.nodeList?.node(at: 0)?.name == playingMessage.transfer?.fileName) {
+           playingMessage.messageId == currentMessage.messageId || currentMessage.message.nodeList?.node(at: 0)?.name == playingMessage.transfer?.fileName {
             return true
         }
         return false

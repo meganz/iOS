@@ -527,6 +527,7 @@ extension ChatViewController: ChatInputBarDelegate {
                 MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
                 guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else { return }
                 uploadAudio(path: path, parentNode: myChatFilesFolderNode, chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
+                TonePlayer().playSystemSound(.audioClipSent)
             } catch {
                 MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
             }
