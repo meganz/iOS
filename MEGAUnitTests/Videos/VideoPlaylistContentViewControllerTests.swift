@@ -1,3 +1,4 @@
+import ContentLibraries
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock

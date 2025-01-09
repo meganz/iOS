@@ -4,7 +4,7 @@ import MEGASwiftUI
 import SwiftUI
 
 @MainActor
-final class VideoPlaylistCellViewModel: ObservableObject {
+public final class VideoPlaylistCellViewModel: ObservableObject {
     
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private(set) var videoPlaylistEntity: VideoPlaylistEntity
@@ -57,7 +57,7 @@ final class VideoPlaylistCellViewModel: ObservableObject {
         onTapMoreOptions(videoPlaylistEntity)
     }
     
-    enum SecondaryInformationViewType: Equatable {
+    public enum SecondaryInformationViewType: Equatable {
         case emptyPlaylist
         case information
     }

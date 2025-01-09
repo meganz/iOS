@@ -1,18 +1,18 @@
 import MEGADomain
 import MEGAPresentation
 
-protocol VideoPlaylistThumbnailLoaderProtocol: Sendable {
+public protocol VideoPlaylistThumbnailLoaderProtocol: Sendable {
     func loadThumbnails(for videos: [NodeEntity]) async -> VideoPlaylistThumbnail
 }
 
-struct VideoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoaderProtocol {
+public struct VideoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoaderProtocol {
     
     private let maxThumbnailToBeDisplayedCount = 4
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let fallbackImageContainer: (any ImageContaining)
     private typealias TaskGroupThumbnails = TaskGroup<(order: Int, imageContainer: (any ImageContaining)?)>
     
-    init(
+    public init(
         thumbnailLoader: some ThumbnailLoaderProtocol,
         fallbackImageContainer: some ImageContaining
     ) {
@@ -20,7 +20,7 @@ struct VideoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoaderProtocol {
         self.fallbackImageContainer = fallbackImageContainer
     }
     
-    func loadThumbnails(for videos: [NodeEntity]) async -> VideoPlaylistThumbnail {
+    public func loadThumbnails(for videos: [NodeEntity]) async -> VideoPlaylistThumbnail {
         if videos.isEmpty {
             return VideoPlaylistThumbnail(type: .empty, imageContainers: [])
         }

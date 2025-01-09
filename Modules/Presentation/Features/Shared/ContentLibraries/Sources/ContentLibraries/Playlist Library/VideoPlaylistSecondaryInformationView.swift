@@ -2,15 +2,27 @@ import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
-struct VideoPlaylistSecondaryInformationView: View {
-    let videosCount: String
-    let totalDuration: String
-    let isPublicLink: Bool
-    let layoutIgnoringOrientation: Bool
+public struct VideoPlaylistSecondaryInformationView: View {
+    private let videosCount: String
+    private let totalDuration: String
+    private let isPublicLink: Bool
+    private let layoutIgnoringOrientation: Bool
     
     @State private var isPortrait = true
     
-    var body: some View {
+    public init(
+        videosCount: String,
+        totalDuration: String,
+        isPublicLink: Bool,
+        layoutIgnoringOrientation: Bool
+    ) {
+        self.videosCount = videosCount
+        self.totalDuration = totalDuration
+        self.isPublicLink = isPublicLink
+        self.layoutIgnoringOrientation = layoutIgnoringOrientation
+    }
+    
+    public var body: some View {
         content
             .onOrientationChanged { newOrientation in
                 isPortrait = newOrientation.isPortrait

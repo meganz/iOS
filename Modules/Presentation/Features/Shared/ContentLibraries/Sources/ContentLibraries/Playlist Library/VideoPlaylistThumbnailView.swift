@@ -2,7 +2,7 @@ import MEGADesignToken
 import MEGAPresentation
 import SwiftUI
 
-struct VideoPlaylistThumbnailView: View {
+public struct VideoPlaylistThumbnailView: View {
 
     private let topLeftImage: (any ImageContaining)?
     private let topRightImage: (any ImageContaining)?
@@ -17,14 +17,14 @@ struct VideoPlaylistThumbnailView: View {
         case multiple
     }
     
-    enum ThumbnailViewContext {
+    public enum ThumbnailViewContext {
         case playlistCell
         case playlistContentHeader
     }
     
     private let cornerRadius: CGFloat = 4
     
-    init(
+    public init(
         viewContext: ThumbnailViewContext,
         imageContainers: [any ImageContaining]
     ) {
@@ -37,7 +37,7 @@ struct VideoPlaylistThumbnailView: View {
         self.thumbnailType = imageContainers.count > 1 ? .multiple : .single
     }
     
-    var body: some View {
+    public var body: some View {
         Group {
             switch thumbnailType {
             case .single:
@@ -126,6 +126,7 @@ struct VideoPlaylistThumbnailView: View {
         .preferredColorScheme(.dark)
 }
 
+@MainActor
 private func renderPreviews() -> some View {
     Group {
         

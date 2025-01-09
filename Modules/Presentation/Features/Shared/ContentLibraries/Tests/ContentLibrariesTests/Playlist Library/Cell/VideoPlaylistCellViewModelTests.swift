@@ -1,10 +1,10 @@
 import AsyncAlgorithms
+@testable import ContentLibraries
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentationMock
 import MEGATest
 import SwiftUI
-@testable import Video
 import XCTest
 
 final class VideoPlaylistCellViewModelTests: XCTestCase {

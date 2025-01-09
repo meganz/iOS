@@ -1,9 +1,8 @@
-import ContentLibraries
 import MEGADomain
 import SwiftUI
-import Video
+import UIKit
 
-struct MockVideoRevampRouter: VideoRevampRouting {
+struct Preview_VideoRevampRouter: VideoRevampRouting {
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity]) { }
     
     func openMoreOptions(for video: NodeEntity, sender: Any) { }
@@ -12,9 +11,9 @@ struct MockVideoRevampRouter: VideoRevampRouting {
     
     func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void) { }
     
-    func openRecentlyWatchedVideos() { }
-    
     func popScreen() { }
+    
+    func openRecentlyWatchedVideos() { }
     
     func showShareLink(videoPlaylist: VideoPlaylistEntity) -> some View { EmptyView() }
     

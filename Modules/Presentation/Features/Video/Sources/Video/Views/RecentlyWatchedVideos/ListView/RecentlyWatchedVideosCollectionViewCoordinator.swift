@@ -1,12 +1,8 @@
+import ContentLibraries
 import Foundation
 import MEGADomain
 import SwiftUI
 import UIKit
-
-enum RecentlyWatchedVideosSupplementaryElementKind: String {
-    case recentlyWatchedVideosDateSectionHeader = "recently-watched-videos-date-section-header-kind"
-    var elementKind: String { rawValue }
-}
 
 @MainActor
 final class RecentlyWatchedVideosCollectionViewCoordinator: NSObject {

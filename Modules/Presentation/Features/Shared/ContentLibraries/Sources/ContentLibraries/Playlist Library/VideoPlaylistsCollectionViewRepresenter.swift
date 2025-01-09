@@ -3,25 +3,22 @@ import MEGADomain
 import MEGAPresentation
 import SwiftUI
 
-struct VideoPlaylistsCollectionViewRepresenter: UIViewRepresentable {
-    let thumbnailLoader: any ThumbnailLoaderProtocol
-    @StateObject var viewModel: VideoPlaylistsViewModel
+public struct VideoPlaylistsCollectionViewRepresenter<ViewModel: VideoPlaylistsContentViewModelProtocol>: UIViewRepresentable {
+    @StateObject var viewModel: ViewModel
     let router: any VideoRevampRouting
     let didSelectMoreOptionForItem: (VideoPlaylistEntity) -> Void
     
-    init(
-        thumbnailLoader: some ThumbnailLoaderProtocol,
-        viewModel: @autoclosure @escaping () -> VideoPlaylistsViewModel,
+    public init(
+        viewModel: @autoclosure @escaping () -> ViewModel,
         router: some VideoRevampRouting,
         didSelectMoreOptionForItem: @escaping (VideoPlaylistEntity) -> Void
     ) {
-        self.thumbnailLoader = thumbnailLoader
         _viewModel = StateObject(wrappedValue: viewModel())
         self.router = router
         self.didSelectMoreOptionForItem = didSelectMoreOptionForItem
     }
     
-    func makeUIView(context: Context) -> UICollectionView {
+    public func makeUIView(context: Context) -> UICollectionView {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: AllVideosViewControllerCollectionViewLayoutBuilder(viewType: .playlists).build()
@@ -32,11 +29,11 @@ struct VideoPlaylistsCollectionViewRepresenter: UIViewRepresentable {
         return collectionView
     }
     
-    func updateUIView(_ uiView: UICollectionView, context: Context) {
+    public func updateUIView(_ uiView: UICollectionView, context: Context) {
         context.coordinator.reloadData(with: viewModel.videoPlaylists)
     }
     
-    func makeCoordinator() -> VideoPlaylistsCollectionViewCoordinator {
+    public func makeCoordinator() -> VideoPlaylistsCollectionViewCoordinator<ViewModel> {
         VideoPlaylistsCollectionViewCoordinator(self)
     }
 }

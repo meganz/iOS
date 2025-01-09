@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -11,7 +12,7 @@ enum ShareLinkActionMenuMode: Equatable {
     case manageAndRemoveLink
 }
 
-final class VideoPlaylistsViewModel: ObservableObject {
+final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     
     enum ViewState: Equatable {
         case partial

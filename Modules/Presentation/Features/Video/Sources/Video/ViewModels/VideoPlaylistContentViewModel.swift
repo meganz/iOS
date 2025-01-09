@@ -1,5 +1,6 @@
 import AsyncAlgorithms
 @preconcurrency import Combine
+import ContentLibraries
 import Foundation
 import MEGADomain
 import MEGAL10n

@@ -1,10 +1,22 @@
+import MEGADomain
 import UIKit
 
-struct AllVideosViewControllerCollectionViewLayoutBuilder {
+@MainActor
+public struct AllVideosViewControllerCollectionViewLayoutBuilder {
+    public enum ViewType: Equatable {
+        case allVideos
+        case playlists
+        case playlistContent(type: VideoPlaylistEntityType)
+        case recentlyWatchedVideos
+    }
     
-    let viewType: AllVideosCollectionViewRepresenter.ViewType
+    private let viewType: ViewType
     
-    func build() -> UICollectionViewLayout {
+    public init(viewType: ViewType) {
+        self.viewType = viewType
+    }
+    
+    public func build() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout(
             sectionProvider: { makeCollectionViewLayoutSection(for: $1, viewType: viewType) },
             configuration: UICollectionViewCompositionalLayoutConfiguration()
@@ -13,7 +25,7 @@ struct AllVideosViewControllerCollectionViewLayoutBuilder {
     
     private func makeCollectionViewLayoutSection(
         for layoutEnvironment: some NSCollectionLayoutEnvironment,
-        viewType: AllVideosCollectionViewRepresenter.ViewType
+        viewType: ViewType
     ) -> NSCollectionLayoutSection {
         switch viewType {
         case .allVideos, .playlists, .recentlyWatchedVideos:

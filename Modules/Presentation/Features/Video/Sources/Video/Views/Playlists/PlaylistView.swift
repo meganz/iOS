@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -226,7 +227,6 @@ struct PlaylistView: View {
         
     private var listView: some View {
         VideoPlaylistsCollectionViewRepresenter(
-            thumbnailLoader: viewModel.thumbnailLoader,
             viewModel: viewModel,
             router: router,
             didSelectMoreOptionForItem: { viewModel.didSelectMoreOptionForItem($0) }
@@ -236,7 +236,7 @@ struct PlaylistView: View {
     }
     
     private var placeholder: some View {
-        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.viewState == .loading)
+        VideoListPlaceholderView(isActive: viewModel.viewState == .loading)
     }
 }
 

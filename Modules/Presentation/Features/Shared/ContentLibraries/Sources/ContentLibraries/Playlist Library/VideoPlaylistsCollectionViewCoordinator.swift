@@ -6,7 +6,7 @@ import SwiftUI
 import UIKit
 
 @MainActor
-final class VideoPlaylistsCollectionViewCoordinator {
+public final class VideoPlaylistsCollectionViewCoordinator<ViewModel: VideoPlaylistsContentViewModelProtocol> {
     
     private enum Section {
         case videoPlaylists
@@ -33,7 +33,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
         }
     }
     
-    private let representer: VideoPlaylistsCollectionViewRepresenter
+    private let representer: VideoPlaylistsCollectionViewRepresenter<ViewModel>
     
     private var dataSource: DiffableDataSource?
     private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item>
@@ -48,7 +48,7 @@ final class VideoPlaylistsCollectionViewCoordinator {
         reloadSnapshotTask?.cancel()
     }
     
-    init(_ representer: VideoPlaylistsCollectionViewRepresenter) {
+    public init(_ representer: VideoPlaylistsCollectionViewRepresenter<ViewModel>) {
         self.representer = representer
     }
     
