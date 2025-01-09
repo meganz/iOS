@@ -1,5 +1,5 @@
+@testable import ContentLibraries
 import MEGADomain
-@testable import Video
 import XCTest
 
 final class VideoPlaylistCellPreviewEntityTests: XCTestCase {

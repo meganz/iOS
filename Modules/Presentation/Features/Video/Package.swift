@@ -27,6 +27,7 @@ let package = Package(
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Presentation/MEGAPresentation"),
         .package(path: "../../Infrastracture/MEGATest"),
+        .package(path: "../Shared/ContentLibraries"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
     targets: [
@@ -37,6 +38,7 @@ let package = Package(
                 "MEGAAssets",
                 "MEGAL10n",
                 "MEGAPresentation",
+                "ContentLibraries",
                 .product(
                     name: "AsyncAlgorithms",
                     package: "swift-async-algorithms"

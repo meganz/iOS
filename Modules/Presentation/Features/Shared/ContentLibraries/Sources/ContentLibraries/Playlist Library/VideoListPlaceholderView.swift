@@ -1,13 +1,17 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
-struct VideoListPlaceholderView: View {
-    let videoConfig: VideoConfig
-    let isActive: Bool
+public struct VideoListPlaceholderView: View {
+    private let isActive: Bool
     
     private let placeholderCount = 30
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    
+    public init(isActive: Bool) {
+        self.isActive = isActive
+    }
     
     private var interfaceOrientation: UIInterfaceOrientation {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
@@ -22,7 +26,7 @@ struct VideoListPlaceholderView: View {
         interfaceOrientation.isLandscape || orientation.isLandscape
     }
     
-    var body: some View {
+    public var body: some View {
         ScrollView {
             Group {
                 if let columns = columns() {
@@ -37,7 +41,7 @@ struct VideoListPlaceholderView: View {
             }
             .padding()
         }
-        .background(videoConfig.colorAssets.pageBackgroundColor)
+        .background(TokenColors.Background.page.swiftUI)
         .opacity(isActive ? 1 : 0)
         .animation(.smooth, value: isActive)
         .onRotate { newOrientation in
@@ -87,5 +91,5 @@ struct VideoListPlaceholderCell: View {
 }
 
 #Preview {
-    VideoListPlaceholderView(videoConfig: .preview, isActive: true)
+    VideoListPlaceholderView(isActive: true)
 }

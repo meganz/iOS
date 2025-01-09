@@ -3,8 +3,8 @@ import MEGAPresentation
 import SwiftUI
 
 public struct VideoPlaylistContentSnackBarPresentationConfig {
-    let shouldShowSnackBar: Bool
-    let text: String?
+    public let shouldShowSnackBar: Bool
+    public let text: String?
     
     public init(shouldShowSnackBar: Bool = false, text: String?) {
         self.shouldShowSnackBar = shouldShowSnackBar

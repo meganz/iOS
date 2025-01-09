@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGADomain
 import MEGAPresentation
 import SwiftUI
@@ -7,22 +8,15 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     let videoConfig: VideoConfig
     let selection: VideoSelection
     let router: any VideoRevampRouting
-    let viewType: ViewType
+    let viewType: AllVideosViewControllerCollectionViewLayoutBuilder.ViewType
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
-    enum ViewType: Equatable {
-        case allVideos
-        case playlists
-        case playlistContent(type: VideoPlaylistEntityType)
-        case recentlyWatchedVideos
-    }
     
     init(
         videos: [NodeEntity],
         videoConfig: VideoConfig,
         selection: VideoSelection,
         router: some VideoRevampRouting,
-        viewType: ViewType,
+        viewType: AllVideosViewControllerCollectionViewLayoutBuilder.ViewType,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,

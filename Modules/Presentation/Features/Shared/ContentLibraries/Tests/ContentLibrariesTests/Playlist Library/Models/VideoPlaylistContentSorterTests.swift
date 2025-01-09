@@ -1,6 +1,6 @@
+@testable import ContentLibraries
 import MEGADomain
 import MEGATest
-@testable import Video
 import XCTest
 
 final class VideoPlaylistContentSorterTests: XCTestCase {

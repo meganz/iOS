@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -153,7 +154,7 @@ struct VideoListView: View {
     }
     
     private var placeholder: some View {
-        VideoListPlaceholderView(videoConfig: videoConfig, isActive: viewModel.viewState == .loading)
+        VideoListPlaceholderView(isActive: viewModel.viewState == .loading)
     }
 }
 

@@ -1,3 +1,4 @@
+@testable import ContentLibraries
 import MEGAAssets
 import MEGADomain
 import MEGADomainMock
@@ -5,7 +6,6 @@ import MEGAPresentation
 import MEGAPresentationMock
 import MEGATest
 import SwiftUI
-@testable import Video
 import XCTest
 
 final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
