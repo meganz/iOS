@@ -147,7 +147,7 @@ extension AddToAlbumsViewModel: AddItemsToCollectionViewModelProtocol {
         Task { [albumModificationUseCase, addToCollectionRouter] in
             let result = try await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photos)
             
-            let message = Strings.Localizable.Set.AddTo.AddedToSet.Snack.message(Int(result.success))
+            let message = Strings.Localizable.Set.AddTo.Snackbar.message(Int(result.success))
                 .replacingOccurrences(of: "[A]", with: album.name)
             addToCollectionRouter.showSnackBar(message: message)
         }

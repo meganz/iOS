@@ -245,7 +245,7 @@ struct AddToAlbumsViewModelTests {
                     addToCollectionRouter: router,
                     albumSelection: albumSelection)
             
-            let message = Strings.Localizable.Set.AddTo.AddedToSet.Snack.message(addedPhotoCount)
+            let message = Strings.Localizable.Set.AddTo.Snackbar.message(addedPhotoCount)
                 .replacingOccurrences(of: "[A]", with: album.name)
             await confirmation("Ensure create user album created") { addAlbumItems in
                 let invocationTask = Task {
