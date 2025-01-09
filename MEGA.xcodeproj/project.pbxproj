@@ -642,7 +642,6 @@
 		5D0B42B6250618070057D49B /* NodeLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0B42B5250618070057D49B /* NodeLinkRouter.swift */; };
 		5D0B42B8250654080057D49B /* NodeManagementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0B42B7250654070057D49B /* NodeManagementRouter.swift */; };
 		5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0E254F25073404005848F3 /* LocalFileSystemFolders.swift */; };
-		5D11B73E2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D11B73D2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift */; };
 		5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D166B78252196D8004F4F4A /* HomeSearchResultRouter.swift */; };
 		5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */; };
 		5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */; };
@@ -3378,7 +3377,6 @@
 		5D0B42B5250618070057D49B /* NodeLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeLinkRouter.swift; sourceTree = "<group>"; };
 		5D0B42B7250654070057D49B /* NodeManagementRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeManagementRouter.swift; sourceTree = "<group>"; };
 		5D0E254F25073404005848F3 /* LocalFileSystemFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileSystemFolders.swift; sourceTree = "<group>"; };
-		5D11B73D2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFileHistoryUseCase.swift; sourceTree = "<group>"; };
 		5D166B78252196D8004F4F4A /* HomeSearchResultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultRouter.swift; sourceTree = "<group>"; };
 		5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegate.swift; sourceTree = "<group>"; };
 		5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartConversationViewModel.swift; sourceTree = "<group>"; };
@@ -7898,14 +7896,6 @@
 			path = Layer3;
 			sourceTree = "<group>";
 		};
-		5D1E3C182531F2BE00BD7A07 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				5D11B73D2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift */,
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
 		5D1F73B12537DD0F00E34D7A /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -8094,7 +8084,6 @@
 			isa = PBXGroup;
 			children = (
 				94712EF72A9C9F4000B5F2C9 /* NodeDetails */,
-				5D1E3C182531F2BE00BD7A07 /* Search */,
 				5D6092A5255D609F005FA3E4 /* NodeLabelActionUseCase.swift */,
 				B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */,
 			);
@@ -15433,7 +15422,6 @@
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
 				94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */,
 				940DE0272AB46245008C9DB5 /* SearchConfig+Home.swift in Sources */,
-				5D11B73E2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				949829CF2B470AB500D1686F /* SearchResultMapper.swift in Sources */,
 				947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */,

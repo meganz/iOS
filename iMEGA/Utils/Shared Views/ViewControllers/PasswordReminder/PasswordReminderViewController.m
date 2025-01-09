@@ -126,7 +126,6 @@
         [MEGASdk.shared passwordReminderDialogSkippedWithDelegate:delegate];
     }
     [OverDiskQuotaService.sharedService invalidate];
-    [[SearchFileUseCase.alloc init] clearFileSearchHistoryEntries];
     [self requestStopAudioPlayerSession];
 }
 
