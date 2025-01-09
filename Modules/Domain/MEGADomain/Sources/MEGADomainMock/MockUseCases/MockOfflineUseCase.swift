@@ -6,6 +6,7 @@ public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendab
     private let _relativePathToDocumentsDirectory: String
     
     public var removeItem_calledTimes = 0
+    public var removeAllOfflineFiles_calledTimes = 0
     public var stubbedError: Error?
     public var stubbedRelativePath: String
 
@@ -28,5 +29,9 @@ public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendab
        if let error = stubbedError {
            throw error
        }
+    }
+    
+    public func removeAllOfflineFiles() async {
+        removeAllOfflineFiles_calledTimes += 1
     }
 }

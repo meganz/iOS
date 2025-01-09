@@ -9,17 +9,23 @@ final class MockFileManager: FileManager, @unchecked Sendable {
     
     var errorToThrow: (any Error)?
     var lastRemovedPath: String?
+
+    var removeFolderContents_calledTimes = 0
+    
+    var contentsOfDirectory: [String]?
     
     init(
         freeSize: UInt64 = 100,
         tempURL: URL = MockFileManager.anyURL,
         containerURL: URL = MockFileManager.anyURL,
+        contentsOfDirectory: [String]? = nil,
         errorToThrow: (any Error)? = nil
     ) {
         self.tempURL = tempURL
         self.freeSize = freeSize
         self.containerURL = containerURL
         self.errorToThrow = errorToThrow
+        self.contentsOfDirectory = contentsOfDirectory
         super.init()
     }
     
@@ -36,9 +42,18 @@ final class MockFileManager: FileManager, @unchecked Sendable {
     }
     
     override func removeItem(atPath path: String) throws {
+        removeFolderContents_calledTimes += 1
+        
         lastRemovedPath = path
         if let error = errorToThrow {
             throw error
         }
+    }
+    
+    override func contentsOfDirectory(atPath path: String) throws -> [String] {
+        guard let contentsOfDirectory else {
+            return try super.contentsOfDirectory(atPath: path)
+        }
+        return contentsOfDirectory
     }
 }

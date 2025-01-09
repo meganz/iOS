@@ -62,4 +62,6 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     public func relativePathToDocumentsDirectory(for url: URL) -> String {
         relativePath
     }
+    
+    public func removeFolderContents(atURL url: URL) async throws {}
 }

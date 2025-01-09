@@ -58,6 +58,14 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
         }
     }
     
+    public func removeFolderContents(atURL url: URL) async throws {
+        let directoryContents = try fileManager.contentsOfDirectory(atPath: url.path)
+        for item in directoryContents {
+            let itemURL = url.appendingPathComponent(item)
+            try await removeItem(at: itemURL)
+        }
+    }
+    
     // MARK: - File attributes
     public func fileSize(at url: URL) -> UInt64? {
         url.attributes?[.size] as? UInt64

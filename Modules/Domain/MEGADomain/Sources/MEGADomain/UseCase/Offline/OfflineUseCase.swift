@@ -13,14 +13,23 @@ public protocol OfflineUseCaseProtocol: Sendable {
     /// Removes the item at the specified URL (async version)
     /// - Parameter url: The URL of the item to remove.
     func removeItem(at url: URL) async throws
+    
+    /// Removes all offline files stored in the offline directory.
+    ///
+    /// This method deletes all files and folders within the offline directory, ensuring no offline data remains.
+    func removeAllOfflineFiles() async throws
 }
 
-public struct OfflineUseCase<T: FileSystemRepositoryProtocol>: OfflineUseCaseProtocol {
+public struct OfflineUseCase: OfflineUseCaseProtocol {
+    private let fileSystemRepository: any FileSystemRepositoryProtocol
+    private let offlineFilesRepository: any OfflineFilesRepositoryProtocol
     
-    private let fileSystemRepository: T
-    
-    public init(fileSystemRepository: T) {
+    public init(
+        fileSystemRepository: some FileSystemRepositoryProtocol,
+        offlineFilesRepository: some OfflineFilesRepositoryProtocol
+    ) {
         self.fileSystemRepository = fileSystemRepository
+        self.offlineFilesRepository = offlineFilesRepository
     }
     
     public func relativePathToDocumentsDirectory(for url: URL) -> String {
@@ -29,5 +38,11 @@ public struct OfflineUseCase<T: FileSystemRepositoryProtocol>: OfflineUseCasePro
     
     public func removeItem(at url: URL) async throws {
         try await fileSystemRepository.removeItem(at: url)
+    }
+    
+    public func removeAllOfflineFiles() async throws {
+        try await fileSystemRepository.removeFolderContents(atURL: fileSystemRepository.documentsDirectory())
+        
+        offlineFilesRepository.removeAllStoredOfflineNodes()
     }
 }
