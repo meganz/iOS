@@ -44,23 +44,27 @@ struct AddToAlbumsViewModelTests {
         func userAlbumLoaded() async throws {
             let userAlbum1 = AlbumEntity(id: 4, type: .user, creationTime: try "2024-04-04T22:01:04Z".date)
             let userAlbum2 = AlbumEntity(id: 5, type: .user, creationTime: try "2024-04-05T10:02:04Z".date)
-            let userAlbums = [userAlbum1, userAlbum2]
-            let monitorUserAlbumsAsyncSequence = SingleItemAsyncSequence(item: userAlbums)
-                .eraseToAnyAsyncSequence()
-            
+            let (stream, continuation) = AsyncStream.makeStream(of: [AlbumEntity].self)
+            continuation.yield([userAlbum1, userAlbum2])
+            continuation.yield([userAlbum2])
+            continuation.finish()
             let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-                monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
+                monitorUserAlbumsSequence: stream.eraseToAnyAsyncSequence()
             )
             let sut = AddToAlbumsViewModelTests.makeSUT(
                 monitorAlbumsUseCase: monitorAlbumsUseCase)
             
             #expect(sut.isAlbumsLoaded == false)
-            await confirmation("Album view models loaded in correct order") { albumViewModelsLoaded in
+            await confirmation("Album view models loaded in correct order", expectedCount: 2) { albumViewModelsLoaded in
+                var expectations = [
+                    [AlbumCellViewModel(album: userAlbum2),
+                     AlbumCellViewModel(album: userAlbum1)],
+                    [AlbumCellViewModel(album: userAlbum2)]
+                ]
                 let subscription = sut.$albums
                     .dropFirst()
                     .sink {
-                        #expect($0 == [AlbumCellViewModel(album: userAlbum2),
-                                       AlbumCellViewModel(album: userAlbum1)])
+                        #expect($0 == expectations.removeFirst())
                         albumViewModelsLoaded()
                     }
                 

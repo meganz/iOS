@@ -82,7 +82,7 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
             excludeSensitives: false,
             by: { $0.creationTime ?? Date.distantPast > $1.creationTime ?? Date.distantPast }) {
             
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled else { break }
             
             albums = userAlbums
                 .compactMap { [weak self] album -> AlbumCellViewModel? in
@@ -100,7 +100,7 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
                     )
                 }
             
-            guard !isAlbumsLoaded else { return }
+            guard !isAlbumsLoaded else { continue }
             isAlbumsLoaded.toggle()
         }
     }
