@@ -38,6 +38,10 @@ public struct SearchFilterEntity: Sendable, Equatable {
     
     /// Set option for filtering by name. Contains a name or an expression using wildcard. If nil set, it will return all results ignoring the name.
     public let searchText: String?
+
+    /// Set option for filtering by contains in description
+    public let searchDescription: String?
+
     /// Location to which the search will be restricted to. If an ancestor was explicitly set via parentNode, search under that particular ancestor.
     public let searchTargetLocation: SearchTargetLocation
     /// Indicates if results should be found recursively through child nodes or focus only at the top level location of passed parent node or root.
@@ -60,9 +64,15 @@ public struct SearchFilterEntity: Sendable, Equatable {
     public let nodeTypeEntity: NodeTypeEntity
     
     public let modificationTimeFrame: TimeFrame?
-    
+
+    /// Set the logical operator for filtering text related conditions (name, tags and description)
+    /// - If set to `true`, the query will use AND for quering the texts
+    /// - If set to `true`, the query will use OR for quering the texts
+    public let useAndForTextQuery: Bool
+
     private init(
         searchText: String? = nil,
+        searchDescription: String? = nil,
         searchTargetLocation: SearchTargetLocation,
         recursive: Bool,
         supportCancel: Bool,
@@ -71,9 +81,11 @@ public struct SearchFilterEntity: Sendable, Equatable {
         sensitiveFilterOption: SensitiveFilterOption = .disabled,
         favouriteFilterOption: FavouriteFilterOption = .disabled,
         nodeTypeEntity: NodeTypeEntity = .unknown,
-        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
+        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil,
+        useAndForTextQuery: Bool = false
     ) {
         self.searchText = searchText
+        self.searchDescription = searchDescription
         self.searchTargetLocation = searchTargetLocation
         self.recursive = recursive
         self.supportCancel = supportCancel
@@ -83,12 +95,14 @@ public struct SearchFilterEntity: Sendable, Equatable {
         self.favouriteFilterOption = favouriteFilterOption
         self.nodeTypeEntity = nodeTypeEntity
         self.modificationTimeFrame = modificationTimeFrame
+        self.useAndForTextQuery = useAndForTextQuery
     }
     
     /// Creates a SearchFilterEntity with a focus on creating a request to recursively search based on the params provided
     /// - Returns: SearchFilterEntity - To recursively search for results
     public static func recursive(
         searchText: String? = nil,
+        searchDescription: String? = nil,
         searchTargetLocation: SearchTargetLocation,
         supportCancel: Bool,
         sortOrderType: SortOrderEntity,
@@ -96,9 +110,11 @@ public struct SearchFilterEntity: Sendable, Equatable {
         sensitiveFilterOption: SensitiveFilterOption = .disabled,
         favouriteFilterOption: FavouriteFilterOption = .disabled,
         nodeTypeEntity: NodeTypeEntity = .unknown,
-        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
+        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil,
+        useAndForTextQuery: Bool = false
     ) -> Self {
         self.init(searchText: searchText,
+                  searchDescription: searchDescription,
                   searchTargetLocation: searchTargetLocation,
                   recursive: true,
                   supportCancel: supportCancel,
@@ -107,7 +123,8 @@ public struct SearchFilterEntity: Sendable, Equatable {
                   sensitiveFilterOption: sensitiveFilterOption,
                   favouriteFilterOption: favouriteFilterOption,
                   nodeTypeEntity: nodeTypeEntity,
-                  modificationTimeFrame: modificationTimeFrame)
+                  modificationTimeFrame: modificationTimeFrame,
+                  useAndForTextQuery: useAndForTextQuery)
     }
     
     /// Creates a SearchFilterEntity with a focus on creating a request to non-recursively search based on the params provided.
@@ -115,6 +132,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     /// - Returns: SearchFilterEntity - To non-recursively search for results
     public static func nonRecursive(
         searchText: String? = nil,
+        searchDescription: String? = nil,
         searchTargetNode: NodeEntity,
         supportCancel: Bool,
         sortOrderType: SortOrderEntity,
@@ -122,10 +140,12 @@ public struct SearchFilterEntity: Sendable, Equatable {
         sensitiveFilterOption: SensitiveFilterOption = .disabled,
         favouriteFilterOption: FavouriteFilterOption = .disabled,
         nodeTypeEntity: NodeTypeEntity = .unknown,
-        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil
+        modificationTimeFrame: SearchFilterEntity.TimeFrame? = nil,
+        useAndForTextQuery: Bool = false
     ) -> Self {
         self.init(searchText: searchText,
-                  searchTargetLocation: .parentNode(searchTargetNode), 
+                  searchDescription: searchDescription,
+                  searchTargetLocation: .parentNode(searchTargetNode),
                   recursive: false,
                   supportCancel: supportCancel,
                   sortOrderType: sortOrderType, 
@@ -133,6 +153,8 @@ public struct SearchFilterEntity: Sendable, Equatable {
                   sensitiveFilterOption: sensitiveFilterOption, 
                   favouriteFilterOption: favouriteFilterOption,
                   nodeTypeEntity: nodeTypeEntity,
-                  modificationTimeFrame: modificationTimeFrame)
+                  modificationTimeFrame: modificationTimeFrame,
+                  useAndForTextQuery: useAndForTextQuery
+        )
     }
 }

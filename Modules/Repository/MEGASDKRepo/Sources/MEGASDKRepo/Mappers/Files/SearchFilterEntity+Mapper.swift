@@ -24,24 +24,28 @@ extension SearchFilterEntity {
         case .parentNode(let parentNode):
             MEGASearchFilter(
                 term: term,
+                description: searchDescription,
                 parentNodeHandle: parentNode.handle,
                 nodeType: nodeType,
                 category: category,
                 sensitiveFilter: sensitiveFilter,
                 favouriteFilter: favouriteFilter,
                 creationTimeFrame: nil,
-                modificationTimeFrame: timeFrame
+                modificationTimeFrame: timeFrame,
+                useAndForTextQuery: useAndForTextQuery
             )
         case .folderTarget(let folderTargetEntity):
             MEGASearchFilter(
                 term: term,
+                description: searchDescription,
                 nodeType: nodeType,
                 category: category,
                 sensitiveFilter: sensitiveFilter,
                 favouriteFilter: favouriteFilter,
                 locationType: folderTargetEntity.toInt32(),
                 creationTimeFrame: nil,
-                modificationTimeFrame: timeFrame
+                modificationTimeFrame: timeFrame,
+                useAndForTextQuery: useAndForTextQuery
             )
         }
     }

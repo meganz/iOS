@@ -34,7 +34,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     @Atomic private var subscriptions = Set<AnyCancellable>()
 
     private let hiddenNodesFeatureEnabled: Bool
-    
+    private let searchByDescriptionEnabled: Bool
+
     // The node from which we want start searching from,
     // root node can be nil in case when we start app in offline
     private let parentNodeProvider: () -> NodeEntity?
@@ -54,7 +55,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
-        hiddenNodesFeatureEnabled: Bool
+        hiddenNodesFeatureEnabled: Bool,
+        searchByDescriptionEnabled: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.filesSearchUseCase = filesSearchUseCase
@@ -65,7 +67,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.availableChips = allChips
         self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
-        
+        self.searchByDescriptionEnabled = searchByDescriptionEnabled
+
         mapper = SearchResultMapper(
             sdk: sdk,
             nodeIconUsecase: nodeIconUsecase,
@@ -185,24 +188,28 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         return if recursive {
             .recursive(
                 searchText: searchQuery.query,
+                searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
                 searchTargetLocation: { if let parentNode { .parentNode(parentNode) } else { .folderTarget(.rootNode) } }(),
                 supportCancel: true,
                 sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
                 formatType: searchQuery.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
                 sensitiveFilterOption: await shouldExcludeSensitive() ? .nonSensitiveOnly : .disabled,
                 nodeTypeEntity: searchQuery.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
-                modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame()
+                modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame(),
+                useAndForTextQuery: false
             )
         } else if let node = parentNode ?? nodeUseCase.rootNode() {
             .nonRecursive(
                searchText: searchQuery.query,
+               searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
                searchTargetNode: node,
                supportCancel: true,
                sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
                formatType: searchQuery.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
                sensitiveFilterOption: await shouldExcludeSensitive() ? .nonSensitiveOnly : .disabled,
                nodeTypeEntity: searchQuery.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
-               modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame()
+               modificationTimeFrame: searchQuery.selectedModificationTimeFrame?.toSearchFilterTimeFrame(),
+               useAndForTextQuery: false
            )
         } else {
             nil

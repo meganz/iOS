@@ -82,6 +82,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             nodes: [NodeEntity] = [],
             excludeSensitives: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
+            searchByDescriptionEnabled: Bool = false,
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             file: StaticString = #filePath,
             line: UInt = #line
@@ -124,7 +125,8 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                 ),
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
-                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
+                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
+                searchByDescriptionEnabled: searchByDescriptionEnabled
             )
             
             testCase.trackForMemoryLeaks(on: sut, timeoutNanoseconds: 100_000_000, file: file, line: line)
@@ -206,7 +208,23 @@ final class HomeSearchResultsProviderTests: XCTestCase {
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
         XCTAssertTrue(filter.recursive)
     }
-    
+
+    func testSearch_whenSearchWithDescriptionEnabled_shouldHaveCorrectFilterProperty() async throws {
+        for enabled in [false, true] {
+            // given
+            let harness = Harness.init(self, searchByDescriptionEnabled: enabled)
+
+            // when
+            _ = await harness.sut.search(queryRequest: .userSupplied(.query("foo", isSearchActive: false)))
+
+            // then
+            XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+            let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+            XCTAssertEqual(filter.searchDescription == nil, !enabled)
+            XCTAssertFalse(filter.useAndForTextQuery)
+        }
+    }
+
     func testSearch_whenHiddenNodesFeatureEnabledAndShowHiddenNodesSettingIsOn_shouldNotExcludeHiddenNodes() async throws {
         // given
         let harness = Harness(self, excludeSensitives: false)
