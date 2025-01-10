@@ -13,12 +13,6 @@ extension MyAccountHallViewController: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == MyAccountSection.other.rawValue {
-            showSettings()
-            tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
-        
         switch indexPath.row {
         case MyAccountMegaSection.storage.rawValue:
             guard viewModel.accountDetails != nil else {
@@ -70,6 +64,9 @@ extension MyAccountHallViewController: UITableViewDelegate {
             if let cloudDriveVC {
                 navigationController?.pushViewController(cloudDriveVC, animated: true)
             }
+            
+        case MyAccountMegaSection.settings.rawValue:
+            showSettings()
             
         default:
             break
