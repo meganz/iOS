@@ -80,7 +80,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 layout: .list,
                 showLoadingPlaceholderDelay: 0.1,
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
-                viewDisplayMode: .unknown
+                viewDisplayMode: .unknown,
+                isSearchByNodeDescriptionFeatureEnabled: true
             )
             selection = {
                 self.selectedResults.append($0)
@@ -233,6 +234,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     title: "title",
                     backgroundDisplayMode: .preview
                 ),
+                query: { nil },
                 rowAssets: .init(
                     contextImage: UIImage(systemName: "ellipsis")!,
                     itemSelected: UIImage(systemName: "ellipsis")!,
@@ -247,6 +249,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     selectedBorderColor: .green,
                     titleTextColor: Color.primary,
                     subtitleTextColor: Color.secondary,
+                    nodeDescriptionTextNormalColor: Color.secondary,
                     vibrantColor: .red,
                     resultPropertyColor: .gray,
                     verticalThumbnailFooterText: .white,
@@ -712,7 +715,31 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         harness.sut.clearSelection()
         XCTAssertEqual(harness.sut.selectedResultsCount, 0)
     }
-    
+
+    @MainActor
+    func testNodeDescription_whenEmpty_shouldReturnNil() async {
+        let harness = generateRandomSearchResultRowViewModel(id: 1)
+        XCTAssertNil(harness.note)
+    }
+
+    @MainActor
+    func testNodeDescription_whenQueryIsNil_shouldReturnNil() async {
+        let harness = generateRandomSearchResultRowViewModel(id: 1, note: "foo", query: { nil })
+        XCTAssertNil(harness.note)
+    }
+
+    @MainActor
+    func testNodeDescription_whenDescriptionIsNilAndQueryIsNotEmpty_shouldReturnNil() async {
+        let harness = generateRandomSearchResultRowViewModel(id: 1, note: nil, query: { "test" })
+        XCTAssertNil(harness.note)
+    }
+
+    @MainActor
+    func testNodeDescription_whenDescriptionIsNotEmptyAndQueryIsAlsoNotEmpty_shouldReturnNil() async {
+        let harness = generateRandomSearchResultRowViewModel(id: 1, note: "This is test", query: { "test" })
+        XCTAssertEqual(harness.note, "This is test")
+    }
+
     @MainActor
     private func makeHarnessWithAllItemsSelected(listItemCount count: Int) -> Harness {
         let harness = Harness(self)
@@ -724,13 +751,18 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
-    private func generateRandomSearchResultRowViewModel(id: Int) -> SearchResultRowViewModel {
+    private func generateRandomSearchResultRowViewModel(
+        id: Int,
+        note: String? = nil,
+        query: @escaping () -> String? = { nil }
+    ) -> SearchResultRowViewModel {
         .init(
             result: .init(
                 id: UInt64(id),
                 thumbnailDisplayMode: .horizontal,
                 backgroundDisplayMode: .icon,
                 title: "Title",
+                note: note,
                 isSensitive: false,
                 hasThumbnail: false,
                 description: { _ in ""},
@@ -739,6 +771,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 thumbnailImageData: { Data() },
                 swipeActions: { _ in [] }
             ),
+            query: query,
             rowAssets: .example,
             colorAssets: .example,
             previewContent: .example,

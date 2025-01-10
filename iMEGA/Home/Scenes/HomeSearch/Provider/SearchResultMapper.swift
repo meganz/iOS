@@ -27,6 +27,7 @@ struct SearchResultMapper: Sendable {
             thumbnailDisplayMode: node.isFile ? .vertical : .horizontal,
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
             title: node.name,
+            note: node.description,
             isSensitive: isSensitive(node: node),
             hasThumbnail: node.hasThumbnail,
             description: info(for: node),

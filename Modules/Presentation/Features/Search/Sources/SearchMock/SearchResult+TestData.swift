@@ -18,6 +18,7 @@ extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: title,
+            note: nil,
             isSensitive: isSensitive,
             hasThumbnail: hasThumbnail,
             description: { _ in "Desc" },

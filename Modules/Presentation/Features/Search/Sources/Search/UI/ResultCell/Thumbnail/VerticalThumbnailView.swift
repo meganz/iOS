@@ -245,6 +245,7 @@ struct VerticalThumbnailView: View {
                 backgroundDisplayMode: .preview,
                 properties: [.play, .duration, .someProminentIcon, .someTopIcon]
             ),
+            query: { nil },
             rowAssets: .example,
             colorAssets: .example,
             previewContent: .example,
@@ -270,6 +271,7 @@ struct VerticalThumbnailView: View {
                 backgroundDisplayMode: .preview,
                 properties: []
             ),
+            query: { nil },
             rowAssets: .example,
             colorAssets: .example,
             previewContent: .example,
@@ -295,6 +297,7 @@ struct VerticalThumbnailView: View {
                 backgroundDisplayMode: .icon,
                 properties: []
             ),
+            query: { nil },
             rowAssets: .example,
             colorAssets: .example,
             previewContent: .example,

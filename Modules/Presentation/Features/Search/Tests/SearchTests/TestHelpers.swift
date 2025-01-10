@@ -34,6 +34,7 @@ func testableSearchResultsViewModel(
             backgroundDisplayMode: backgroundDisplayMode,
             properties: properties
         ),
+        query: { nil },
         rowAssets: .example,
         colorAssets: .example,
         previewContent: .example,
