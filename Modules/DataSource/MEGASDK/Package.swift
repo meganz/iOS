@@ -60,6 +60,7 @@ let package = Package(
                 .headerSearchPath("include/mega/posix"),
                 .headerSearchPath("bindings/ios/3rdparty/webrtc/third_party/boringssl/src/include"),
                 .headerSearchPath("src/fuse/unsupported"),
+                .headerSearchPath("third_party/ccronexpr"),
                 .define("ENABLE_CHAT"),
                 .define("HAVE_LIBUV"),
                 .define("NDEBUG", .when(configuration: .release))
