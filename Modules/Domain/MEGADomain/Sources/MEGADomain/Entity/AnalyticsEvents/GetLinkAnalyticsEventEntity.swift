@@ -1,6 +1,6 @@
 import Foundation
 
-public enum GetLinkAnalyticsEventEntity {
+public enum GetLinkAnalyticsEventEntity: Sendable {
     case sendDecriptionKeySeparateForFolder
     case sendDecriptionKeySeparateForFile
     case setExpiryDateForFolder

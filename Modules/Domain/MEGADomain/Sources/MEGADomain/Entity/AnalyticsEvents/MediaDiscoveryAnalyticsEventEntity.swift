@@ -1,4 +1,4 @@
-public enum MediaDiscoveryAnalyticsEventEntity {
+public enum MediaDiscoveryAnalyticsEventEntity: Sendable {
     case clickMediaDiscovery
     case stayOnMediaDiscoveryOver10s
     case stayOnMediaDiscoveryOver30s

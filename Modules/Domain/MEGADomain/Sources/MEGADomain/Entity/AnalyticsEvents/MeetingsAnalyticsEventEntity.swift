@@ -1,4 +1,4 @@
-public enum MeetingsAnalyticsEventEntity {
+public enum MeetingsAnalyticsEventEntity: Sendable {
     case endCallForAll
     case endCallInNoParticipantsPopup
     case stayOnCallInNoParticipantsPopup

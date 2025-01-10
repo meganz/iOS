@@ -679,7 +679,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
             // MARK: Save && Download
             case .saveToPhotos:
-                self.recentsViewModel?.inputs.saveToPhotoAlbum(of: node)
+                recentsViewModel?.inputs.saveToPhotoAlbum(of: node.toNodeEntity())
             case .download:
                 router?.showDownloadTransfer(node: node)
 
@@ -703,7 +703,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
             // MARK: Favourite
             case .favourite:
-                self.recentsViewModel?.inputs.toggleFavourite(of: node)
+                recentsViewModel?.inputs.toggleFavourite(of: node.toNodeEntity())
 
             case .label:
                 self.router.didTap(on: .setLabel(node))

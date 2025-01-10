@@ -690,7 +690,7 @@
 		5D66F8C824E510510088E5FF /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D66F8C724E510510088E5FF /* PaddingLabel.swift */; };
 		5D6D95C0252039CD0098BCAC /* FileSearchHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6D95BF252039CD0098BCAC /* FileSearchHistoryRepository.swift */; };
 		5D73F50E24F74F850041D9FB /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D73F50D24F74F850041D9FB /* ImagePickerViewController.swift */; };
-		5D7792DA2506116100378D87 /* RecentActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7792D92506116100378D87 /* RecentActionViewModel.swift */; };
+		5D7792DA2506116100378D87 /* HomeRecentActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7792D92506116100378D87 /* HomeRecentActionViewModel.swift */; };
 		5D7792DC250613B200378D87 /* NodeInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7792DB250613B200378D87 /* NodeInfoRouter.swift */; };
 		5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D79B51C2498471E0070FECD /* Scanner+Compatible.swift */; };
 		5D79B51F249849580070FECD /* String+MarkedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D79B51E249849580070FECD /* String+MarkedString.swift */; };
@@ -1847,6 +1847,7 @@
 		B5BA0E172CE1E75E00B01FC7 /* MockNodeLabelActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BA0E162CE1E75700B01FC7 /* MockNodeLabelActionRepository.swift */; };
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
+		B5CB50902D2E549000EC933E /* HomeRecentActionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB508F2D2E549000EC933E /* HomeRecentActionViewModelTests.swift */; };
 		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */; };
 		B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */; };
@@ -3426,7 +3427,7 @@
 		5D66F8C724E510510088E5FF /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		5D6D95BF252039CD0098BCAC /* FileSearchHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchHistoryRepository.swift; sourceTree = "<group>"; };
 		5D73F50D24F74F850041D9FB /* ImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
-		5D7792D92506116100378D87 /* RecentActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionViewModel.swift; sourceTree = "<group>"; };
+		5D7792D92506116100378D87 /* HomeRecentActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecentActionViewModel.swift; sourceTree = "<group>"; };
 		5D7792DB250613B200378D87 /* NodeInfoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRouter.swift; sourceTree = "<group>"; };
 		5D79B51C2498471E0070FECD /* Scanner+Compatible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Scanner+Compatible.swift"; sourceTree = "<group>"; };
 		5D79B51E249849580070FECD /* String+MarkedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MarkedString.swift"; sourceTree = "<group>"; };
@@ -4571,6 +4572,7 @@
 		B5BA0E162CE1E75700B01FC7 /* MockNodeLabelActionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeLabelActionRepository.swift; sourceTree = "<group>"; };
 		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
+		B5CB508F2D2E549000EC933E /* HomeRecentActionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecentActionViewModelTests.swift; sourceTree = "<group>"; };
 		B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositoryTests.swift; sourceTree = "<group>"; };
 		B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModel.swift; sourceTree = "<group>"; };
 		B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewRouter.swift; sourceTree = "<group>"; };
@@ -8288,10 +8290,10 @@
 			children = (
 				5D6092BC256219E1005FA3E4 /* BannerViewModel.swift */,
 				5D8C5AB424EF974800EDD7A9 /* FileUploadingViewModel.swift */,
+				5D7792D92506116100378D87 /* HomeRecentActionViewModel.swift */,
 				B5E4EBD729795A10009C5578 /* HomeViewModel.swift */,
 				5D48593B2526C3F1007BF705 /* MyAvatarViewModel.swift */,
 				83C1B25125A7349000814074 /* QuickAccessWidgetViewModel.swift */,
-				5D7792D92506116100378D87 /* RecentActionViewModel.swift */,
 				5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */,
 			);
 			path = ViewModel;
@@ -8374,6 +8376,7 @@
 				534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */,
 				94BF690F2CAFD3BC0052F1D5 /* HomeBannerViewModelTests.swift */,
 				6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */,
+				B5CB508F2D2E549000EC933E /* HomeRecentActionViewModelTests.swift */,
 				94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */,
 				943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */,
 				5D62093724ED1511004648A1 /* MEGANotificationUseCaseTests.swift */,
@@ -14740,6 +14743,7 @@
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
 				947DC5DF2AC1C7F5002C1D7C /* HomeChips.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
+				5D7792DA2506116100378D87 /* HomeRecentActionViewModel.swift in Sources */,
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
 				5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */,
@@ -15314,7 +15318,6 @@
 				2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */,
 				5DD6B17024D6D51D00F14515 /* Reader.swift in Sources */,
 				94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */,
-				5D7792DA2506116100378D87 /* RecentActionViewModel.swift in Sources */,
 				83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */,
 				24B101822C6B38E7006193CF /* RecentlyWatchedVideosViewController.swift in Sources */,
 				5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */,
@@ -16170,6 +16173,7 @@
 				94BF69102CAFD3C40052F1D5 /* HomeBannerViewModelTests.swift in Sources */,
 				947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */,
 				6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */,
+				B5CB50902D2E549000EC933E /* HomeRecentActionViewModelTests.swift in Sources */,
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
 				94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */,
 				943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */,
