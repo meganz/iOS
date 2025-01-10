@@ -184,6 +184,7 @@ public struct SearchConfig {
         
         public let titleTextColor: Color
         public let subtitleTextColor: Color
+        public let nodeDescriptionTextNormalColor: Color
         public let vibrantColor: Color
         public let resultPropertyColor: Color
         
@@ -209,6 +210,7 @@ public struct SearchConfig {
             selectedBorderColor: Color,
             titleTextColor: Color,
             subtitleTextColor: Color,
+            nodeDescriptionTextNormalColor: Color,
             vibrantColor: Color,
             resultPropertyColor: Color,
             verticalThumbnailFooterText: Color,
@@ -222,6 +224,7 @@ public struct SearchConfig {
             self.selectedBorderColor = selectedBorderColor
             self.titleTextColor = titleTextColor
             self.subtitleTextColor = subtitleTextColor
+            self.nodeDescriptionTextNormalColor = nodeDescriptionTextNormalColor
             self.vibrantColor = vibrantColor
             self.resultPropertyColor = resultPropertyColor
             

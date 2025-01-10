@@ -110,6 +110,7 @@ extension SearchConfig {
                 selectedBorderColor: TokenColors.Support.success.swiftUI,
                 titleTextColor: UIColor.primaryTextColor().swiftUI,
                 subtitleTextColor: TokenColors.Text.secondary.swiftUI,
+                nodeDescriptionTextNormalColor: TokenColors.Text.secondary.swiftUI,
                 vibrantColor: TokenColors.Text.error.swiftUI,
                 resultPropertyColor: TokenColors.Icon.secondary.swiftUI,
                 verticalThumbnailFooterText: TokenColors.Text.primary.swiftUI,

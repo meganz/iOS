@@ -72,6 +72,7 @@ extension PreviewContent {
                 thumbnailDisplayMode: .horizontal,
                 backgroundDisplayMode: .preview
             ),
+            query: { nil },
             rowAssets: .example,
             colorAssets: .example,
             previewContent: .example,
@@ -96,6 +97,7 @@ extension PreviewContent {
                 thumbnailDisplayMode: .vertical,
                 backgroundDisplayMode: .preview
             ),
+            query: { nil },
             rowAssets: .example,
             colorAssets: .example,
             previewContent: .example,

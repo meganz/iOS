@@ -99,6 +99,7 @@ struct SearchResultRowView: View {
             titleLine
             auxTitleLine
             subtitleLine
+            note
         }
     }
     
@@ -140,7 +141,19 @@ struct SearchResultRowView: View {
             propertyViewsFor(placement: .secondary(.trailingEdge))
         }
     }
-    
+
+    @ViewBuilder
+    private var note: some View {
+        if let note = viewModel.note {
+            Text(note)
+                .font(.caption)
+                .lineLimit(1)
+                .foregroundStyle(viewModel.colorAssets.nodeDescriptionTextNormalColor)
+        } else {
+            EmptyView()
+        }
+    }
+
     @ViewBuilder
     private var moreButton: some View {
         if editMode?.wrappedValue.isEditing != true {
@@ -159,6 +172,7 @@ struct SearchResultRowView: View {
         Array(0...9).map {
             .init(
                 result: result(for: $0),
+                query: { nil },
                 rowAssets: .example,
                 colorAssets: .example,
                 previewContent: .example,
@@ -209,6 +223,7 @@ extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "title\(idx)",
+            note: nil,
             isSensitive: false,
             hasThumbnail: false,
             description: { _ in "desc\(idx)" },

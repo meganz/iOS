@@ -265,7 +265,8 @@ final class HomeScreenFactory: NSObject {
             ),
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
-            viewDisplayMode: .home
+            viewDisplayMode: .home,
+            isSearchByNodeDescriptionFeatureEnabled: makeFeatureFlagProvider().isFeatureFlagEnabled(for: .searchUsingNodeDescription)
         )
         return UIHostingController(
             rootView: SearchResultsView(viewModel: vm)

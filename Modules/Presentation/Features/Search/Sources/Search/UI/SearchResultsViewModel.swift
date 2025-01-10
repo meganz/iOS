@@ -93,6 +93,8 @@ public class SearchResultsViewModel: ObservableObject {
 
     private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
 
+    private let isSearchByNodeDescriptionFeatureEnabled: Bool
+
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
@@ -102,7 +104,8 @@ public class SearchResultsViewModel: ObservableObject {
         searchInputDebounceDelay: Double = 0.5,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling,
         viewDisplayMode: ViewDisplayMode,
-        updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1) // Emits search result updates as a batch every 1 seconds
+        updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
+        isSearchByNodeDescriptionFeatureEnabled: Bool
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -113,6 +116,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.viewDisplayMode = viewDisplayMode
         self.layout = layout
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
+        self.isSearchByNodeDescriptionFeatureEnabled = isSearchByNodeDescriptionFeatureEnabled
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -373,6 +377,10 @@ public class SearchResultsViewModel: ObservableObject {
         let swipeActions = result.swipeActions(viewDisplayMode)
         return SearchResultRowViewModel(
             result: result,
+            query: { [weak self] in
+                guard let self, isSearchByNodeDescriptionFeatureEnabled else { return nil }
+                return currentQuery.query
+            },
             rowAssets: config.rowAssets,
             colorAssets: config.colorAssets,
             previewContent: .init(

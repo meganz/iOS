@@ -178,6 +178,7 @@ fileprivate extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "\(prefix) \(idx)",
+            note: nil,
             isSensitive: false,
             hasThumbnail: false,
             description: { _ in "Parent folder" },

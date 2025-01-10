@@ -26,6 +26,16 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         result.title.forceLeftToRight()
     }
 
+    var note: String? {
+        if let nodeDescription = result.note,
+            let query = query(),
+           nodeDescription.range(of: query, options: [.diacriticInsensitive, .caseInsensitive]) != nil {
+            nodeDescription
+        } else {
+            nil
+        }
+    }
+
     var accessibilityIdentifier: String {
         result.title
     }
@@ -73,7 +83,15 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     }
 
     var result: SearchResult
-    
+
+    /// A closure that provides the current search text used as a query.
+    ///
+    /// The `query` property is a function that, when called, returns an optional `String` representing the user's current search input.
+    /// It is used to highlight relevant content in note.
+    ///
+    /// - Returns: A `String?` containing the search query if available, or `nil` if no query is set.
+    let query: () -> String?
+
     let colorAssets: SearchConfig.ColorAssets
     let previewContent: PreviewContent
     let actions: UserActions
@@ -82,6 +100,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
 
     init(
         result: SearchResult,
+        query: @escaping () -> String?,
         rowAssets: SearchConfig.RowAssets,
         colorAssets: SearchConfig.ColorAssets,
         previewContent: PreviewContent,
@@ -89,6 +108,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         swipeActions: [SearchResultSwipeAction]
     ) {
         self.result = result
+        self.query = query
         self.colorAssets = colorAssets
         self.previewContent = previewContent
         self.actions = actions

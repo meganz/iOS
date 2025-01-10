@@ -877,7 +877,8 @@ struct CloudDriveViewControllerFactory {
             ),
             layout: layout,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
-            viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown
+            viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
+            isSearchByNodeDescriptionFeatureEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
         )
     }
 
