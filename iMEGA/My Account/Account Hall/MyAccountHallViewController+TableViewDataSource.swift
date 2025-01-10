@@ -151,7 +151,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == MyAccountSection.mega.rawValue ? MyAccountMegaSection.allCases.count : MyAccountOtherSection.allCases.count
+        MyAccountMegaSection.allCases.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -177,11 +177,6 @@ extension MyAccountHallViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? MyAccountHallTableViewCell ?? MyAccountHallTableViewCell(style: .default, reuseIdentifier: identifier)
         
-        if indexPath.section == MyAccountSection.other.rawValue {
-            cell.setup(data: settingsSetupData())
-            return cell
-        }
-        
         switch MyAccountMegaSection(rawValue: indexPath.row) {
         case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
         case .contacts: cell.setup(data: contactsSetupData(existsPendingView: cell.pendingView != nil))
@@ -191,6 +186,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         case .deviceCenter: cell.setup(data: makeDeviceCenterCellData())
         case .offline: cell.setup(data: offlineSetupData())
         case .rubbishBin: cell.setup(data: rubbishBinSetupData())
+        case .settings: cell.setup(data: settingsSetupData())
         default: break
         }
         

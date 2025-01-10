@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,7 +33,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="LES-4h-z56">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYn-oF-AZu">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
@@ -153,7 +152,7 @@
                                         </connections>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorInsetReference="fromAutomaticInsets" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="-1" sectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Yui-UF-WIL">
-                                        <rect key="frame" x="0.0" y="233" width="414" height="537"/>
+                                        <rect key="frame" x="0.0" y="233" width="414" height="571"/>
                                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                                         <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <view key="tableFooterView" contentMode="scaleToFill" id="JUo-jI-gO6">
@@ -379,11 +378,10 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Ecu-rh-paC"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="LES-4h-z56" secondAttribute="trailing" constant="-20" id="BLp-dp-SpQ"/>
-                            <constraint firstItem="LES-4h-z56" firstAttribute="bottom" secondItem="Ecu-rh-paC" secondAttribute="bottom" id="Fv2-Rw-5Ln"/>
-                            <constraint firstItem="LES-4h-z56" firstAttribute="top" secondItem="Ecu-rh-paC" secondAttribute="top" id="h4F-8M-3Sg"/>
+                            <constraint firstItem="LES-4h-z56" firstAttribute="bottom" secondItem="HQg-ZC-hNP" secondAttribute="bottom" id="Fv2-Rw-5Ln"/>
+                            <constraint firstItem="LES-4h-z56" firstAttribute="top" secondItem="HQg-ZC-hNP" secondAttribute="top" id="h4F-8M-3Sg"/>
                             <constraint firstItem="LES-4h-z56" firstAttribute="leading" secondItem="HQg-ZC-hNP" secondAttribute="leadingMargin" constant="-20" id="jW0-Xg-hC3"/>
                         </constraints>
                     </view>

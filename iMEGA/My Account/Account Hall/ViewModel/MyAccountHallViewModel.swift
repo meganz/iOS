@@ -8,15 +8,11 @@ import MEGASDKRepo
 import MEGASwift
 
 enum MyAccountSection: Int, CaseIterable {
-    case mega = 0, other
+    case mega = 0
 }
 
 enum MyAccountMegaSection: Int, CaseIterable {
-    case plan = 0, storage, myAccount, contacts, notifications, achievements, transfers, deviceCenter, offline, rubbishBin
-}
-
-enum MyAccountOtherSection: Int, CaseIterable {
-    case settings
+    case plan = 0, storage, myAccount, contacts, notifications, achievements, transfers, deviceCenter, offline, rubbishBin, settings
 }
 
 enum MyAccountHallLoadTarget {
@@ -239,10 +235,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     func calculateCellHeight(at indexPath: IndexPath) -> CGFloat {
-        guard indexPath.section != MyAccountSection.other.rawValue else {
-            return UITableView.automaticDimension
-        }
-        
         var shouldShowCell = true
         switch MyAccountMegaSection(rawValue: indexPath.row) {
         case .plan:
