@@ -17235,7 +17235,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MEGAPickerFileProvider;
+				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -17282,7 +17282,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MEGAPickerFileProvider;
+				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -17325,7 +17325,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MEGAPickerFileProvider;
+				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
