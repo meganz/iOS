@@ -227,7 +227,7 @@
             [self setIsSaveMediaCapturedToGalleryEnabled:YES];
         }
         
-        if ([self getIsSaveMediaCapturedToGalleryEnabled]) {
+        if (self.sourceType == UIImagePickerControllerSourceTypeCamera && [self getIsSaveMediaCapturedToGalleryEnabled]) {
             [self createAssetType:PHAssetResourceTypePhoto filePath:imagePath];
         } else {
             [self actionForImagePath:imagePath];
