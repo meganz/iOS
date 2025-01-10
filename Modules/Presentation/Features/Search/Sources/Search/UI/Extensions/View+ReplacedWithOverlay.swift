@@ -13,18 +13,16 @@ extension View {
     ) -> some View {
         self
             .opacity(0)
+        // Our QA uses Appium to run automation test, the overlay will cause duplicated accessibility identifiers
+        // and mess up the result of Appium's search query.
+        // In order to avoid such issue, we override the `identifier` of the
+        // elements of the original sourcePreview so that Appium can still locate the elements correctly.
+        // We also need to disable accessibility for the sourcePreview so that its accessibility labels will not be read out.
+            .accessibilityIdentifier("--overlayId--")
+            .accessibilityHidden(true)
             .contextMenuWithPreview(
                 actions: actions,
-                sourcePreview: {
-                    sourcePreview()
-                    // Our QA uses Appium to run automation test, the overlay will cause duplicated accessibility identifiers
-                    // and mess up the result of Appium's search query.
-                    // In order to avoid such issue, we override the `identifier` of the
-                    // elements inside the overlay so that Appium can still locate the elements correctly.
-                        .accessibilityIdentifier("--overlayId--")
-                    // We also need to disable accessibility for the overlay so that its accessibility labels will not be read out.
-                        .accessibilityHidden(true)
-                },
+                sourcePreview: sourcePreview,
                 contentPreviewProvider: contentPreviewProvider,
                 didTapPreview: didTapPreview,
                 didSelect: didSelect
