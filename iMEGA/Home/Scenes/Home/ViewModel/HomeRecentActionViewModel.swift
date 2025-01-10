@@ -3,11 +3,11 @@ import MEGADomain
 import MEGAPermissions
 import MEGASDKRepo
 
-protocol HomeRecentActionViewModelInputs {
+protocol HomeRecentActionViewModelInputs: AnyObject {
     
-    func saveToPhotoAlbum(of node: MEGANode)
+    func saveToPhotoAlbum(of node: NodeEntity)
     
-    func toggleFavourite(of node: MEGANode)
+    func toggleFavourite(of node: NodeEntity)
 }
 
 protocol HomeRecentActionViewModelOutputs {
@@ -28,29 +28,32 @@ final class HomeRecentActionViewModel:
     HomeRecentActionViewModelType,
     HomeRecentActionViewModelInputs,
     HomeRecentActionViewModelOutputs {
-    // MARK: - HomeRecentActionViewModelInputs
     
-    func saveToPhotoAlbum(of node: MEGANode) {
-        
+    // MARK: - HomeRecentActionViewModelInputs
+    func saveToPhotoAlbum(of node: NodeEntity) {
         permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
             guard let self else { return }
             if granted {
-                self.handleAuthorized(node: node)
+                handleAuthorized(node: node)
             } else {
-                self.error = .photos
-                self.notifyUpdate?(self.outputs)
+                error = .photos
+                notifyUpdate?(outputs)
             }
         }
     }
     
-    func handleAuthorized(node: MEGANode) {
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+    private func handleAuthorized(node: NodeEntity) {
+        transferWidgetResponder?.bringProgressToFrontKeyWindowIfNeeded()
+        
         Task { @MainActor in
             do {
-                try await self.saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+                try await saveMediaToPhotosUseCase.saveToPhotos(nodes: [node])
             } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                    AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity,
+                    errorEntity != .cancelled {
+                    
+                    analyticsEventUseCase.sendAnalyticsEvent(.download(.saveToPhotos))
+                    
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
                         UIImage.saveToPhotos,
@@ -58,21 +61,20 @@ final class HomeRecentActionViewModel:
                     )
                 }
             }
-            
         }
     }
     
-    func toggleFavourite(of node: MEGANode) {
-        if node.isFavourite {
-            Task {
-                try await nodeFavouriteActionUseCase.unFavourite(node: node.toNodeEntity())
-            }
-        } else {
-            Task { 
-                try await nodeFavouriteActionUseCase.favourite(node: node.toNodeEntity())
-            }
+    func toggleFavourite(of node: NodeEntity) {
+        toggleFavouriteTask = Task {
+            try await node.isFavourite
+                ? nodeFavouriteActionUseCase.unFavourite(node: node)
+                : nodeFavouriteActionUseCase.favourite(node: node)
         }
     }
+    
+    // MARK: - Task
+    
+    private(set) var toggleFavouriteTask: Task<Void, any Error>?
     
     // MARK: - HomeRecentActionViewModelOutputs
     
@@ -94,16 +96,23 @@ final class HomeRecentActionViewModel:
     
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     
+    private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
+    
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
+    
     init(
         permissionHandler: some DevicePermissionsHandling,
-        nodeFavouriteActionUseCase: any NodeFavouriteActionUseCaseProtocol,
-        saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
+        nodeFavouriteActionUseCase: some NodeFavouriteActionUseCaseProtocol,
+        saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
+        transferWidgetResponder: (some TransferWidgetResponderProtocol)?,
+        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol
     ) {
         self.permissionHandler = permissionHandler
         self.nodeFavouriteActionUseCase = nodeFavouriteActionUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
+        self.transferWidgetResponder = transferWidgetResponder
+        self.analyticsEventUseCase = analyticsEventUseCase
     }
-    
 }
 
 // MARK: - View Error

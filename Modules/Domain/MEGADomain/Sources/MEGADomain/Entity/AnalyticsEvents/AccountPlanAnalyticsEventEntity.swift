@@ -1,4 +1,4 @@
-public enum AccountPlanAnalyticsEventEntity {
+public enum AccountPlanAnalyticsEventEntity: Sendable {
     case tapAccountPlanFreePlan
     case tapAccountPlanProLite
     case tapAccountPlanProI

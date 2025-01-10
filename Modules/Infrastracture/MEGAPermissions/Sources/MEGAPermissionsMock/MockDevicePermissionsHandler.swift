@@ -10,9 +10,9 @@ public final class MockDevicePermissionHandler: DevicePermissionsHandling, @unch
     public init() { }
     
     public convenience init(
-        photoAuthorization: PHAuthorizationStatus,
-        audioAuthorized: Bool,
-        videoAuthorized: Bool,
+        photoAuthorization: PHAuthorizationStatus = .notDetermined,
+        audioAuthorized: Bool = false,
+        videoAuthorized: Bool = false,
         requestPhotoLibraryAccessPermissionsGranted: Bool = false
     ) {
         self.init()

@@ -1,4 +1,4 @@
-public enum AnalyticsEventEntity: Equatable {
+public enum AnalyticsEventEntity: Equatable, Sendable {
     case mediaDiscovery(MediaDiscoveryAnalyticsEventEntity)
     case meetings(MeetingsAnalyticsEventEntity)
     case nse(NSEAnalyticsEventEntity)

@@ -91,6 +91,10 @@ final class HomeScreenFactory: NSObject {
                 nodeRepository: makeNodeRepo(),
                 chatNodeRepository: ChatNodeRepository.newRepo,
                 downloadChatRepository: DownloadChatRepository.newRepo
+            ),
+            transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),
+            analyticsEventUseCase: AnalyticsEventUseCase(
+                repository: AnalyticsRepository.newRepo
             )
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(

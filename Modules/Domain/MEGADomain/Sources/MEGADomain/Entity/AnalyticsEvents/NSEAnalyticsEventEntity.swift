@@ -1,4 +1,4 @@
-public enum NSEAnalyticsEventEntity {
+public enum NSEAnalyticsEventEntity: Sendable {
     case delayBetweenChatdAndApi
     case delayBetweenApiAndPushserver
     case delayBetweenPushserverAndNSE
