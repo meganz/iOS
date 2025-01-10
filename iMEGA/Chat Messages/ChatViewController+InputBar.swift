@@ -46,6 +46,7 @@ extension ChatViewController {
         joinInputBar.buttonTappedHandler = { [weak self] button in
             self?.join(button: button)
         }
+        joinInputBar.backgroundColor = TokenColors.Background.page
         return joinInputBar
     }
     
