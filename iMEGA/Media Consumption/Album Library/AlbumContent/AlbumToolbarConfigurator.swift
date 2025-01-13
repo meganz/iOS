@@ -14,7 +14,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         albumType == .favourite ? UIImage.removeFavourite : UIImage.favourite
     }
     
-    private var isHiddenNodesEnabled: Bool {
+    var isHiddenNodesEnabled: Bool {
         remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
     }
     

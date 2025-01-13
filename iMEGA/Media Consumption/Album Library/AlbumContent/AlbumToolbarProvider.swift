@@ -250,7 +250,8 @@ extension AlbumContentViewController: AlbumToolbarProvider {
             viewModel.dispatch(.deletePhotos(photos))
             endEditingMode()
         })
-        alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.moreItem
+        let isHiddenNodesEnabled = albumToolbarConfigurator?.isHiddenNodesEnabled ?? false
+        alertController.popoverPresentationController?.barButtonItem =  isHiddenNodesEnabled ? albumToolbarConfigurator?.moreItem : albumToolbarConfigurator?.removeToRubbishBinItem
         present(alertController, animated: true)
     }
     
