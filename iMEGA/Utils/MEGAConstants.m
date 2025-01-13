@@ -135,12 +135,6 @@ NSString * const MEGAUIActivityTypeImportToCloudDrive = @"MEGAUIActivityTypeImpo
 
 NSString * const MEGAAllUsersNicknameLoaded = @"MEGAAllUsersNicknameLoaded";
 
-#pragma mark - MEGA Affiliate program
-
-NSString * const MEGALastPublicHandleAccessed = @"kLastPublicHandleAccessed";
-NSString * const MEGALastPublicTypeAccessed = @"kLastPublicTypeAccessed";
-NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccessed";
-
 #pragma mark - MEGA Contact Nickname change Notification
 
 NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";

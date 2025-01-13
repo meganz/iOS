@@ -189,16 +189,8 @@
                 
             case SKPaymentTransactionStatePurchased: {
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
-                
-                NSTimeInterval lastPublicTimestampAccessed = [NSUserDefaults.standardUserDefaults doubleForKey:MEGALastPublicTimestampAccessed];
-                uint64_t lastPublicHandleAccessed = [[NSUserDefaults.standardUserDefaults objectForKey:MEGALastPublicHandleAccessed] unsignedLongLongValue];
-                NSInteger lastPublicTypeAccessed = [NSUserDefaults.standardUserDefaults integerForKey:MEGALastPublicTypeAccessed];
-                if (lastPublicTimestampAccessed && lastPublicHandleAccessed && lastPublicTypeAccessed && receipt) {
-                    [MEGASdk.shared submitPurchase:MEGAPaymentMethodItunes receipt:receipt lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:self];
-                } else {
-                    if (receipt) {
-                        [MEGASdk.shared submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
-                    }
+                if (receipt) {
+                    [MEGASdk.shared submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
                 }
                 
                 MEGALogDebug(@"[StoreKit] Transaction purchased");
