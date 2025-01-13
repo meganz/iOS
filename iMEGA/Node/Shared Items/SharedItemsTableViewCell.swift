@@ -27,13 +27,18 @@ final class SharedItemsTableViewCell: UITableViewCell {
         updateAppearance()
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        infoButton.isHidden = editing
+    }
+    
     @IBAction func infoButtonTouchUpInside(_ sender: UIButton) {
         delegate?.didTapInfoButton(sender: sender)
     }
     
     // Pragma mark: - Private
     
-    func updateAppearance() {
+    private func updateAppearance() {
         nameLabel.tintColor = TokenColors.Text.primary
         infoLabel.textColor = TokenColors.Text.secondary
         backgroundColor = TokenColors.Background.page
