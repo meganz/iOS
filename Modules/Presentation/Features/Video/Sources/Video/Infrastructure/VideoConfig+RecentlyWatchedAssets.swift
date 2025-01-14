@@ -2,7 +2,7 @@ import SwiftUI
 
 extension VideoConfig {
     
-    public struct RecentlyWatchedAssets: Equatable {
+    public struct RecentlyWatchedAssets: Equatable, Sendable {
         let emptyView: EmptyView
         public init(
             emptyView: EmptyView
@@ -10,7 +10,7 @@ extension VideoConfig {
             self.emptyView = emptyView
         }
         
-        public struct EmptyView: Equatable {
+        public struct EmptyView: Equatable, Sendable {
             let recentsEmptyStateImage: UIImage
             
             public init(

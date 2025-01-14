@@ -5,7 +5,7 @@ import MEGAL10n
 import MEGASwiftUI
 import Testing
 
-@Suite("AlbumNameValidator Tests")
+@MainActor @Suite("AlbumNameValidator Tests")
 struct AlbumNameValidatorTests {
 
     @Test

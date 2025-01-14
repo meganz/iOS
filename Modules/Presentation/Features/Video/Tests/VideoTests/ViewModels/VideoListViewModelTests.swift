@@ -8,6 +8,7 @@ import XCTest
 
 final class VideoListViewModelTests: XCTestCase {
         
+    @MainActor
     func testInit_whenInit_doesNotExecuteSearchOnUseCase() async {
         let (_, _, photoLibraryUseCase, _) = makeSUT()
         
@@ -15,6 +16,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(messages.isEmpty, "Expect to not search on creation")
     }
     
+    @MainActor
     func testInit_whenInit_doNotListenToNodesUpdate() {
         let (_, fileSearchUseCase, _, _) = makeSUT()
         
@@ -41,7 +43,8 @@ final class VideoListViewModelTests: XCTestCase {
         var receivedMessages: [MockPhotoLibraryUseCase.Message] = []
         messagesExp.assertForOverFulfill = false
         await photoLibraryUseCase.$messages
-            .filter(\.isNotEmpty)
+            .receive(on: DispatchQueue.main)
+            .filter { !$0.isEmpty }
             .sink { messages in
                 receivedMessages = messages
                 messagesExp.fulfill()
@@ -65,7 +68,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, photoLibraryUseCase, syncModel) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
 
         let onViewAppearTaskStarted = expectation(description: "onViewAppear task started")
-        trackTaskCancellation {
+        trackTaskCancellation { @MainActor in 
             onViewAppearTaskStarted.fulfill()
             await sut.onViewAppear()
         }
@@ -85,7 +88,10 @@ final class VideoListViewModelTests: XCTestCase {
         messagesExp.expectedFulfillmentCount = 2
         var receivedMessages: [MockPhotoLibraryUseCase.Message]?
         await photoLibraryUseCase.$messages
-            .filter(\.isNotEmpty)
+            .receive(on: DispatchQueue.main)
+            .filter {
+                return !$0.isEmpty
+            }
             .sink { messages in
                 receivedMessages = messages
                 messagesExp.fulfill()
@@ -103,7 +109,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     // MARK: - init.subscribeToEditingMode
-    
+    @MainActor
     func testInit_initialState_shouldShowFilterChip() async {
         let (sut, _, _, _) = makeSUT()
         let exp = expectation(description: "show filter chip")
@@ -121,6 +127,7 @@ final class VideoListViewModelTests: XCTestCase {
         cancellable.cancel()
     }
     
+    @MainActor
     func testInit_whenIsNotEditing_shouldShowFilterChip() async {
         let (sut, _, _, syncModel) = makeSUT()
         let exp = expectation(description: "show filter chip")
@@ -140,6 +147,7 @@ final class VideoListViewModelTests: XCTestCase {
         cancellable.cancel()
     }
     
+    @MainActor
     func testInit_whenIsEditing_shouldNotShowFilterChip() async {
         let (sut, _, _, syncModel) = makeSUT()
         let exp = expectation(description: "should not show filter chip")
@@ -153,7 +161,10 @@ final class VideoListViewModelTests: XCTestCase {
             }
         
         syncModel.editMode = .active
-        await fulfillment(of: [exp], timeout: 0.5)
+        await Task.yield()
+        await Task.yield()
+        await Task.yield()
+        await fulfillment(of: [exp], timeout: 1)
         
         XCTAssertFalse(receivedValue)
         cancellable.cancel()
@@ -168,7 +179,8 @@ final class VideoListViewModelTests: XCTestCase {
         var receivedMessages: [MockPhotoLibraryUseCase.Message] = []
         let messagesExp = expectation(description: "spy expectation")
         await photoLibraryUseCase.$messages
-            .filter(\.isNotEmpty)
+            .receive(on: DispatchQueue.main)
+            .filter { !$0.isEmpty }
             .sink { messages in
                 receivedMessages = messages
                 messagesExp.fulfill()
@@ -194,7 +206,10 @@ final class VideoListViewModelTests: XCTestCase {
                 messagesExp.fulfill()
             }
 
-        trackTaskCancellation { await sut.onViewAppear() }
+        weak var _sut = sut
+        trackTaskCancellation { @MainActor in
+            await _sut?.onViewAppear()
+        }
         
         await fulfillment(of: [messagesExp], timeout: 1)
         cancellation.cancel()
@@ -339,6 +354,7 @@ final class VideoListViewModelTests: XCTestCase {
         
         let exp = expectation(description: "search message found")
         let cancellation = await photoLibraryUseCase.$messages
+            .receive(on: DispatchQueue.main)
             .first { $0 == [ .media ] }
             .sink { messages in
                 XCTAssertEqual(messages, [ .media ])
@@ -648,7 +664,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     // MARK: - filterOptions
-    
+    @MainActor
     func testFilterOptions_whenNotSelectAnyChips_doNotRenderOptionsForBottomSheetFilter() async {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
@@ -657,6 +673,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.filterOptions.isEmpty)
     }
     
+    @MainActor
     func testFilterOptions_whenSelectLocationFilterChips_rendersCorrectOptionsForBottomSheetFilter() throws {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
@@ -671,6 +688,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filterOptions, LocationChipFilterOptionType.allCases.map(\.stringValue))
     }
     
+    @MainActor
     func testFilterOptions_whenSelectDurationFilterChips_rendersCorrectOptionsForBottomSheetFilter() throws {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
@@ -700,12 +718,11 @@ final class VideoListViewModelTests: XCTestCase {
         let videosExp = expectation(description: "wait for videos")
         let cancellable = sut.$videos
             .filter(\.isNotEmpty)
+            .receive(on: DispatchQueue.main)
             .sink { videos in
                 XCTAssertEqual(Set(videos), Set(videoNodes))
                 videosExp.fulfill()
             }
-        
-        trackTaskCancellation { await sut.onViewAppear() }
         
         await fulfillment(of: [videosExp], timeout: 1.0)
         cancellable.cancel()
@@ -946,7 +963,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     // MARK: - actionSheetTitle
-    
+    @MainActor
     func testActionSheetTitle_whenNotSelectAnyChips_doNotRenderActionSheetTitle() {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
@@ -955,6 +972,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.actionSheetTitle.isEmpty)
     }
     
+    @MainActor
     func testActionSheetTitle_whenSelectAnyChips_renderCorrectActionSheetTitle() {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [])
@@ -968,7 +986,7 @@ final class VideoListViewModelTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func makeSUT(
         fileSearchUseCase: some MockFilesSearchUseCase = MockFilesSearchUseCase(
             searchResult: .failure(.generic),

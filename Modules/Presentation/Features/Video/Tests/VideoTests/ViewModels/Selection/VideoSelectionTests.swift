@@ -8,7 +8,7 @@ final class VideoSelectionTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - EditMode
-    
+    @MainActor
     func testEditMode_whenValueChanged_shouldSubscribeToValueChanged() {
         let sut = makeSUT()
         let exp = expectation(description: "Should change statuses")
@@ -31,6 +31,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(capturedEditModes, statuses)
     }
     
+    @MainActor
     func testEditMode_whenSetsToInactive_deselectAllVideos() {
         let sut = makeSUT()
         sut.allSelected = true
@@ -41,7 +42,7 @@ final class VideoSelectionTests: XCTestCase {
     }
     
     // MARK: - isVideoSelected
-    
+    @MainActor
     func testIsVideoSelected_whenSelectNodes_shouldSelectNodes() {
         let nodes = [
             NodeEntity(handle: 1),
@@ -57,7 +58,7 @@ final class VideoSelectionTests: XCTestCase {
             XCTAssertTrue(sut.isVideoSelected(node), "Expect to select a node at index: \(index)")
         }
     }
-    
+    @MainActor
     func testIsVideoSelected_whenSelectNodes_shouldNotSelectUnrelevantNode() {
         let sut = makeSUT()
         let nodes = [
@@ -72,7 +73,7 @@ final class VideoSelectionTests: XCTestCase {
     }
     
     // MARK: - setSelectedVideos
-    
+    @MainActor
     func testSetSelectedVideos_whenSelectNodes_shouldSelectVideos() {
         let nodes = [
             NodeEntity(handle: 11),
@@ -87,7 +88,7 @@ final class VideoSelectionTests: XCTestCase {
     }
     
     // MARK: - allSelected
-    
+    @MainActor
     func testAllSelected_whenSetsToFalse_shouldRemoveAllSelectedVideos() {
         let nodes = [
             NodeEntity(handle: 11),
@@ -103,7 +104,7 @@ final class VideoSelectionTests: XCTestCase {
     }
     
     // MARK: - toggleSelection
-    
+    @MainActor
     func testToggleSelection_whenHasSingleNodeNoSelectedNode_shouldToggleNodeToSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -117,6 +118,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(sut.videos.count, nodes.count)
     }
     
+    @MainActor
     func testToggleSelection_whenHasMoreThanOneNodeNoSelectedNode_shouldToggleFirstNodeOnlyToSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -133,6 +135,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(sut.videos.count, nodes.count - 1)
     }
     
+    @MainActor
     func testToggleSelection_whenHasMoreThanOneNodeNoSelectedNode_shouldToggleLastNodeOnlyToSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -149,6 +152,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(sut.videos.count, nodes.count - 1)
     }
     
+    @MainActor
     func testToggleSelection_whenHasMoreThanOneNodeNoSelectedNode_shouldSetAllNodesToSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -165,6 +169,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(sut.videos.count, nodes.count)
     }
     
+    @MainActor
     func testToggleSelection_whenOneNodeIsSelected_shouldToggleNodeToNotSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -178,6 +183,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertFalse(sut.isVideoSelected(firstNode))
     }
     
+    @MainActor
     func testToggleSelection_whenMoreThanOneNodeIsSelected_shouldToggleFirstNodeOnlyToNotSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -195,6 +201,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(sut.videos.count, 1)
     }
     
+    @MainActor
     func testToggleSelection_whenMoreThanOneNodeIsSelected_shouldToggleLastNodeOnlyToNotSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -212,6 +219,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(sut.videos.count, 1)
     }
     
+    @MainActor
     func testToggleSelection_whenHasMoreThanOneNodeSelectedNode_shouldSetAllNodesToNotSelected() {
         let sut = makeSUT()
         let firstNode = NodeEntity(handle: 1)
@@ -231,6 +239,7 @@ final class VideoSelectionTests: XCTestCase {
     
     // MARK: - isVideoSelectedPublisher
     
+    @MainActor
     func testIsVideoSelectedPublisher_whenToggledOnce_shouldSelectNode() {
         let node1 = NodeEntity(handle: 1)
         let sut = makeSUT()
@@ -251,6 +260,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(receivedValues, [false, true])
     }
     
+    @MainActor
     func testIsVideoSelectedPublisher_whenToggledTwice_shouldUnselectNode() {
         let node1 = NodeEntity(handle: 1)
         let sut = makeSUT()
@@ -272,6 +282,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(receivedValues, [false, true, false])
     }
     
+    @MainActor
     func testIsVideoSelectedPublisher_whenhasMoreThanOneNode_shouldChangeSelectedStateOfToggledNodeOnly() {
         let node1 = NodeEntity(handle: 1)
         let node2 = NodeEntity(handle: 2)
@@ -305,7 +316,7 @@ final class VideoSelectionTests: XCTestCase {
     }
     
     // MARK: - onTappedCheckMark
-    
+    @MainActor
     func testOnTappedCheckMark_whenIsSelectionDisabled_shouldNotToggleSelection() {
         let node1 = NodeEntity(handle: 1)
         let sut = makeSUT()
@@ -316,6 +327,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertTrue(sut.videos.isEmpty)
     }
     
+    @MainActor
     func testOnTappedCheckMark_whenIsNotInEditingState_shouldNotToggleSelection() {
         let node1 = NodeEntity(handle: 1)
         let sut = makeSUT()
@@ -326,6 +338,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertTrue(sut.videos.isEmpty)
     }
     
+    @MainActor
     func testOnTappedCheckMark_whenIsSelectionEnabledButNotInEditingMode_shouldNotToggleSelection() {
         let node1 = NodeEntity(handle: 1)
         let sut = makeSUT()
@@ -337,6 +350,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertTrue(sut.videos.isEmpty)
     }
     
+    @MainActor
     func testOnTappedCheckMark_whenEligibleForEditingMode_shouldToggleSelection() {
         let node1 = NodeEntity(handle: 1)
         let sut = makeSUT()
@@ -350,6 +364,7 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(sut.videos.first?.value, node1)
     }
     
+    @MainActor
     func testOnTappedCheckMark_whenEligibleForEditingModeAndTappedTwice_shouldToggleSelection() {
         let node1 = NodeEntity(handle: 1)
         let sut = makeSUT()
@@ -363,7 +378,7 @@ final class VideoSelectionTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func makeSUT(
         file: StaticString = #filePath,
         line: UInt = #line

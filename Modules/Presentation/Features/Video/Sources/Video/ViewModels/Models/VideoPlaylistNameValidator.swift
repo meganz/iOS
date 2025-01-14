@@ -3,8 +3,9 @@ import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 
+@MainActor
 struct VideoPlaylistNameValidator {
-    let existingVideoPlaylistNames: () -> [String]
+    let existingVideoPlaylistNames: @MainActor () -> [String]
     
     enum ValidatorError: Error {
         case emptyName

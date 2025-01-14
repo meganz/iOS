@@ -5,7 +5,7 @@ import MEGATest
 import XCTest
 
 final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
-    
+    @MainActor
     func testDidChangeAllSelectedValue_AllSelectedTrue_selectsAllVideos() {
         let videos = videos()
         let videoSelection = VideoSelection()
@@ -14,6 +14,7 @@ final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
         simulateSelectAllVideos(on: sut, videoSelection: videoSelection, videos: videos)
     }
     
+    @MainActor
     func testDidChangeAllSelectedValue_AllSelectedFalse_deselectsAllVideos() {
         let videos = videos()
         let videoSelection = VideoSelection()
@@ -28,6 +29,7 @@ final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
         
     }
     
+    @MainActor
     func testDidChangeAllSelectedValue_selectAndDeselect_runsCorrectSelection() {
         let videos = videos()
         let videoSelection = VideoSelection()
@@ -41,7 +43,7 @@ final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func makeSUT(
         videoSelection: VideoSelection,
         file: StaticString = #filePath,
@@ -52,6 +54,7 @@ final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
         return sut
     }
     
+    @MainActor
     private func simulateSelectAllVideos(
         on sut: VideoPlaylistContentViewModelSelectionAdapter,
         videoSelection: VideoSelection,
@@ -65,6 +68,7 @@ final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
         XCTAssertEqual(videoSelection.videos.count, videos.count, file: file, line: line)
     }
     
+    @MainActor
     private func simualateDeselectAllVideos(
         on sut: VideoPlaylistContentViewModelSelectionAdapter,
         videoSelection: VideoSelection,
@@ -78,6 +82,7 @@ final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
         XCTAssertTrue(videoSelection.videos.isEmpty)
     }
     
+    @MainActor
     private func videos() -> [NodeEntity] {
         [
             video(handle: 1),
@@ -85,6 +90,7 @@ final class VideoPlaylistContentViewModelSelectionAdapterTests: XCTestCase {
         ]
     }
     
+    @MainActor
     private func video(handle: HandleEntity) -> NodeEntity {
         NodeEntity(name: "video-\(handle).mp4", handle: handle, mediaType: .video)
     }

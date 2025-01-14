@@ -489,6 +489,10 @@ final class AlbumContentViewModel: ViewModelType {
             
             guard !Task.isCancelled else { return }
             
+            let validator = AlbumNameValidator(
+                existingAlbumNames: { userAlbumNames }
+            )
+            
             let alertViewModel = TextFieldAlertViewModel(
                 textString: album.name,
                 title: Strings.Localizable.rename,
@@ -502,8 +506,8 @@ final class AlbumContentViewModel: ViewModelType {
                     guard let newName else { return }
                     self?.renameAlbum(with: newName)
                 },
-                validator: AlbumNameValidator(
-                    existingAlbumNames: { userAlbumNames }).rename)
+                validator: validator.rename
+            )
             
             invokeCommand?(.showRenameAlbumAlert(viewModel: alertViewModel))
         }

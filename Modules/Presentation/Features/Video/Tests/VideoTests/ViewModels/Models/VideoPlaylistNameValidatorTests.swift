@@ -7,6 +7,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
     
     // MARK: - validateWhenCreated
     
+    @MainActor
     func testCreate_whenNameIsEmpty_shouldReturnNil() {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = ""
@@ -14,6 +15,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         assertCreateByCatchingError(on: sut, name: testName, expectedError: .emptyName)
     }
     
+    @MainActor
     func testValidateWhenCreated_whenNameHasEmptySpaces_shouldThrowError() {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = "       "
@@ -21,6 +23,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         assertCreateByCatchingError(on: sut, name: testName, expectedError: .emptyName)
     }
     
+    @MainActor
     func testValidateWhenCreated_whenNameHasInvalidChars_shouldReturnRightErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = "* adkd"
@@ -34,6 +37,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         XCTAssertEqual(result, targetError)
     }
     
+    @MainActor
     func testValidateWhenCreated_whenNameHasReservedVideoPlaylistNames_shouldReturnRightErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites
@@ -47,6 +51,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         XCTAssertEqual(result, targetError)
     }
     
+    @MainActor
     func testValidateWhenCreated_whenNameHasExistingVideoPlaylistNames_shouldReturnRightErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
         let testName = "aaa"
@@ -60,6 +65,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         XCTAssertEqual(result, targetError)
     }
     
+    @MainActor
     func testValidateWhenCreated_whenNameHasValidName_shouldReturnNil() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
         let testName = "Hey there this is a new video playlist"
@@ -70,7 +76,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
     }
     
     // MARK: - validateWhenRenamed
-    
+    @MainActor
     func testValidateWhenRenamed_whenNameIsEmpty_shouldReturnErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = ""
@@ -80,6 +86,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         XCTAssertEqual(result, TextFieldAlertError(title: "", description: ""), "Expect to have error object with empty title and description")
     }
     
+    @MainActor
     func testValidateWhenRenamed_whenNameIsEmpty_shouldReturnNil() {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = ""
@@ -87,6 +94,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         assertRenameByCatchingError(on: sut, name: testName, expectedError: TextFieldAlertError(title: "", description: ""))
     }
     
+    @MainActor
     func testValidateWhenRenamed_whenNameHasEmptySpaces_shouldThrowError() {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = "       "
@@ -94,6 +102,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         assertRenameByCatchingError(on: sut, name: testName, expectedError: TextFieldAlertError(title: "", description: ""))
     }
     
+    @MainActor
     func testValidateWhenRenamed_whenNameHasInvalidChars_shouldReturnRightErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = "* adkd"
@@ -107,6 +116,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         XCTAssertEqual(result, targetError)
     }
     
+    @MainActor
     func testValidateWhenRenamed_whenNameHasReservedVideoPlaylistNames_shouldReturnRightErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {[]})
         let testName = Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites
@@ -120,6 +130,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         XCTAssertEqual(result, targetError)
     }
     
+    @MainActor
     func testValidateWhenRenamed_whenNameHasExistingVideoPlaylistNames_shouldReturnRightErrorObject() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
         let testName = "aaa"
@@ -133,6 +144,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         XCTAssertEqual(result, targetError)
     }
     
+    @MainActor
     func testValidateWhenRenamed_whenNameHasValidName_shouldReturnNil() throws {
         let sut = VideoPlaylistNameValidator(existingVideoPlaylistNames: {["aaa", "bbb"]})
         let testName = "Hey there this is a new video playlist"
@@ -144,6 +156,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
     
     // MARK: - Helpers
     
+    @MainActor
     private func assertCreateByCatchingError(
         on sut: VideoPlaylistNameValidator,
         name testName: String,
@@ -159,6 +172,7 @@ final class VideoPlaylistNameValidatorTests: XCTestCase {
         }
     }
     
+    @MainActor
     private func assertRenameByCatchingError(
         on sut: VideoPlaylistNameValidator,
         name testName: String,

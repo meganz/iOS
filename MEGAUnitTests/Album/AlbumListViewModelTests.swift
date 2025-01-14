@@ -830,7 +830,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                 placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,

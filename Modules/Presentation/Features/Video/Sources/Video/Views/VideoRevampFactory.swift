@@ -37,6 +37,7 @@ public final class VideoRevampSyncModel: ObservableObject {
     }
 }
 
+@MainActor
 public class VideoRevampFactory {
     public static func makeTabContainerView(
         fileSearchUseCase: some FilesSearchUseCaseProtocol,

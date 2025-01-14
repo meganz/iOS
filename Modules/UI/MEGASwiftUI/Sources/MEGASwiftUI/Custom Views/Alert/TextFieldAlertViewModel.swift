@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 public struct TextFieldAlertViewModel {
     public var textString: String
     let title: String
@@ -9,7 +10,7 @@ public struct TextFieldAlertViewModel {
     let destructiveButtonTitle: String
     let highlightInitialText: Bool?
     let message: String?
-    public var action: ((String?) -> Void)?
+    public var action: (@MainActor (String?) -> Void)?
     public var validator: ((String?) -> TextFieldAlertError?)?
     
     public init(
@@ -21,7 +22,7 @@ public struct TextFieldAlertViewModel {
         destructiveButtonTitle: String,
         highlightInitialText: Bool? = nil,
         message: String? = nil,
-        action: ((String?) -> Void)? = nil,
+        action: (@MainActor (String?) -> Void)? = nil,
         validator: ((String?) -> TextFieldAlertError?)? = nil
     ) {
         self.textString = textString
@@ -38,7 +39,7 @@ public struct TextFieldAlertViewModel {
 }
 
 extension TextFieldAlertViewModel: Equatable {
-    public static func == (lhs: TextFieldAlertViewModel, rhs: TextFieldAlertViewModel) -> Bool {
+    public nonisolated static func == (lhs: TextFieldAlertViewModel, rhs: TextFieldAlertViewModel) -> Bool {
         lhs.textString == rhs.textString &&
         lhs.title == rhs.title &&
         lhs.placeholderText == rhs.placeholderText &&
@@ -48,7 +49,7 @@ extension TextFieldAlertViewModel: Equatable {
     }
 }
 
-public struct TextFieldAlertError: Equatable {
+public struct TextFieldAlertError: Equatable, Sendable {
     let title: String
     let description: String
     

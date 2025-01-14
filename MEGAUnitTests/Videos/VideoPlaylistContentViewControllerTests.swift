@@ -10,7 +10,7 @@ import XCTest
 final class VideoPlaylistContentViewControllerTests: XCTestCase {
     
     // MARK: - quickActionsMenu
-    
+    @MainActor
     func testQuickAction_whenCalled_setActionInSharedUIState() {
         let (sut, _) = makeSUT()
         
@@ -20,7 +20,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
     }
     
     // MARK: - videoPlaylistMenuDelegate
-    
+    @MainActor
     func testVideoPlaylistMenuDelegate_whenCalled_setActionInSharedUIState() {
         let (sut, _) = makeSUT()
         
@@ -30,7 +30,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: VideoPlaylistContentViewController, sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase) {
         let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc)
         let videoSelection = VideoSelection()

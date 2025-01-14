@@ -84,6 +84,7 @@ final class QuickAccessWidgetManagerTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testQuickAccessWidgetManager_nodeUpdateContainsRecentsChangesAndIsAFolder_noChangesShouldOccur() async {
         
         let recentItemsUseCase = MockRecentItemsUseCase()

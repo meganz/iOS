@@ -12,6 +12,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     
     private var subscriptions = Set<AnyCancellable>()
     
+    @MainActor
     func testInit_whenInit_doesNotLoadVideoPlaylists() async {
         let (_, videoPlaylistUseCase, _, _) = makeSUT()
         
@@ -87,6 +88,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         cancellable.cancel()
     }
     
+    @MainActor
     func testInit_inInitialState() {
         let (sut, _, _, _) = makeSUT()
         
@@ -94,6 +96,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.playlistName, "")
     }
     
+    @MainActor
     func testInit_whenShouldShowAddNewPlaylistAlertChanged_shouldReflectChanges() {
         let (sut, _, syncModel, _) = makeSUT()
         
@@ -105,7 +108,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     // MARK: - createUserVideoPlaylist
-    
+    @MainActor
     func testCreateUserVideoPlaylist_whenCalled_createsVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -120,6 +123,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertEqual(invocations, [ .createVideoPlaylist(name: videoPlaylistName) ])
     }
     
+    @MainActor
     func testCreateUserVideoPlaylist_whenCreatedSuccessfully_setsNewlyCreatedPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -133,6 +137,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.newlyCreatedVideoPlaylist, createdVideoPlaylist)
     }
     
+    @MainActor
     func testCreateUserVideoPlaylist_whenCreatedSuccessfully_showsVideoPickerView() async {
         let videoPlaylistName =  "a video playlist name"
         let createdVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -147,6 +152,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowVideoPlaylistPicker)
     }
     
+    @MainActor
     func testCreateUserVideoPlaylist_whenFailedToCreate_doesNotshowsVideoPickerView() async {
         let videoPlaylistName =  "a video playlist name"
         let (sut, _, _, _) = makeSUT(
@@ -174,11 +180,16 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let exp = expectation(description: "load video playlists")
         exp.expectedFulfillmentCount = 6
         var receivedMessages = [MockVideoPlaylistUseCase.Invocation]()
-        let cancellable = await videoPlaylistUseCase
+        let invocationsPublisher: AnyPublisher<[MockVideoPlaylistUseCase.Invocation], Never> = await videoPlaylistUseCase
             .invocationsStore
             .$invocations
-            .drop(while: \.isEmpty)
-            .sink { messages in
+            .receive(on: DispatchQueue.main)
+            .filter({ (invocations: [MockVideoPlaylistUseCase.Invocation]) in
+                !invocations.isEmpty
+            })
+            .eraseToAnyPublisher()
+        
+        let cancellable = invocationsPublisher.sink { messages in
                 receivedMessages = messages
                 exp.fulfill()
             }
@@ -301,7 +312,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     // MARK: - didSelectMoreOptionForItem
-    
+    @MainActor
     func testDidSelectMoreOptionForItem_whenSelectInvalidVideoPlaylist_doNotShowSheet() async {
         let invalidVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "new name", count: 0, type: .favourite, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT()
@@ -311,6 +322,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isSheetPresented)
     }
     
+    @MainActor
     func testDidSelectMoreOptionForItem_selectedVideoPlaylist_setsSelectedsVideoPlaylistEntity() {
         let selectedVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: "video playlist name", count: 0, type: .user, creationTime: Date(), modificationTime: Date())
         let (sut, _, _, _) = makeSUT()
@@ -397,7 +409,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     // MARK: - didSelectActionSheetMenuAction
-    
+    @MainActor
     func testDidSelectActionSheetMenuAction_renameContextAction_showsRenameAlert() {
         let renamePlaylistContextAction = ContextAction(type: .rename, icon: "any", title: "any")
         let (sut, _, _, _) = makeSUT()
@@ -407,6 +419,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowRenamePlaylistAlert)
     }
     
+    @MainActor
     func testDidSelectActionSheetMenuAction_deletePlaylistContextAction_showsRenameAlert() {
         let deletePlaylistPlaylistContextAction = ContextAction(type: .deletePlaylist, icon: "any", title: "any")
         let (sut, _, _, _) = makeSUT()
@@ -416,6 +429,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldShowDeletePlaylistAlert)
     }
     
+    @MainActor
     func testDidSelectActionSheetMenuAction_showShareLink_doesNotShowShareLinkWhenHasNoSelectedVideoPlaylist() {
         let deletePlaylistPlaylistContextAction = ContextAction(type: .shareLink, icon: "any", title: "any")
         let (sut, _, _, _) = makeSUT()
@@ -426,6 +440,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertNil(sut.selectedVideoPlaylistEntity)
     }
     
+    @MainActor
     func testDidSelectActionSheetMenuAction_showShareLink_ShowShareLinkWhenHasSelectedVideoPlaylist() {
         let deletePlaylistPlaylistContextAction = ContextAction(type: .shareLink, icon: "any", title: "any")
         let (sut, _, _, _) = makeSUT()
@@ -438,6 +453,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertNil(sut.selectedVideoPlaylistEntity)
     }
     
+    @MainActor
     func testDidSelectActionSheetMenuAction_manageLink_ShowShareLinkWhenHasSelectedVideoPlaylist() {
         let deletePlaylistPlaylistContextAction = ContextAction(type: .manageLink, icon: "any", title: "any")
         let (sut, _, _, _) = makeSUT()
@@ -451,7 +467,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     // MARK: - renameVideoPlaylist
-    
+    @MainActor
     func testRenameVideoPlaylist_emptyOrNil_doesNotRenameVideoPlaylist() async {
         let invalidNames: [String?] = [nil, ""]
         
@@ -466,6 +482,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenNoSelectedVideoPlaylist_doesNotRenameVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let (sut, videoPlaylistUseCase, _, _) = makeSUT(
@@ -479,6 +496,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(invocations.isEmpty)
     }
     
+    @MainActor
     func testRenameVideoPlaylist_nameIsNil_doesNotRenameVideoPlaylist() async {
         let (sut, videoPlaylistUseCase, _, _) = makeSUT(
             videoPlaylistUseCase: MockVideoPlaylistUseCase(updateVideoPlaylistNameResult: .success(()))
@@ -491,6 +509,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         XCTAssertTrue(invocations.isEmpty)
     }
     
+    @MainActor
     func testRenameVideoPlaylist_whenCalled_renameVideoPlaylist() async {
         let videoPlaylistName =  "a video playlist name"
         let selectedVideoPlaylist = VideoPlaylistEntity(setIdentifier: SetIdentifier(handle: 1), name: videoPlaylistName, count: 0, type: .user, creationTime: Date(), modificationTime: Date())
@@ -710,7 +729,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func makeSUT(
         videoPlaylistUseCase: MockVideoPlaylistUseCase = MockVideoPlaylistUseCase(),
         syncModel: VideoRevampSyncModel = VideoRevampSyncModel(),
@@ -744,6 +763,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         return (sut, videoPlaylistUseCase, syncModel, videoPlaylistModificationUseCase)
     }
     
+    @MainActor
     private func assertThatCleanUpTemporaryVariablesAfterRenaming(on sut: VideoPlaylistsViewModel, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertNil(sut.selectedVideoPlaylistEntity, file: file, line: line)
     }

@@ -3,10 +3,11 @@ import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 
+@MainActor
 public struct AlbumNameValidator {
-    private let existingAlbumNames: () -> [String]
+    private let existingAlbumNames: @MainActor () -> [String]
     
-    public init(existingAlbumNames: @escaping () -> [String]) {
+    public init(existingAlbumNames: @MainActor @escaping () -> [String]) {
         self.existingAlbumNames = existingAlbumNames
     }
     
