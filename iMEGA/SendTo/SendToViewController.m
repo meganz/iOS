@@ -85,7 +85,8 @@
     
     self.sendBarButtonItem.title = LocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
     [self.sendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold]} forState:UIControlStateNormal];
-    
+    [self.sendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold]} forState:UIControlStateDisabled];
+
     self.navigationItem.title = LocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
@@ -811,6 +812,8 @@
     }
     
     [self updateNavigationBarTitle];
+    
+    self.sendBarButtonItem.enabled = ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) > 0);
 }
 
 #pragma mark - UIGestureRecognizerDelegate
