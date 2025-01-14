@@ -76,6 +76,7 @@ enum ChatContentRoutingStyle: Int {
             callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession())),
+            transfersListenerUseCase: TransfersListenerUseCase(repo: TransfersListenerRepository.newRepo, preferenceUseCase: PreferenceUseCase.default),
             router: self,
             permissionRouter: PermissionAlertRouter.makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler()), 
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),

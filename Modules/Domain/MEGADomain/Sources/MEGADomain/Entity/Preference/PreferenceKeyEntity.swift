@@ -42,4 +42,5 @@ public enum PreferenceKeyEntity: String {
     case lastStorageBannerDismissedDate = "lastStorageBannerDismissedDate"
     case lastCloseAdsButtonTappedDate
     case queuedTransfersPaused
+    case transfersPaused
 }
