@@ -477,6 +477,14 @@ extension SharedItemsViewController {
     @objc func tintColorForImage() -> UIColor {
         TokenColors.Icon.onColor
     }
+    
+    @objc func reloadAndScrollToTop() {
+        Task {
+            tableView?.reloadData()
+            tableView?.layoutIfNeeded()
+            tableView?.setContentOffset(.zero, animated: false)
+        }
+    }
 }
 
 // MARK: - SharedItemsTableViewCellDelegate
