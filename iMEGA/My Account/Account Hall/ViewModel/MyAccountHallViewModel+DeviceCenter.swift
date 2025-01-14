@@ -40,16 +40,16 @@ extension MyAccountHallViewModel {
     }
     
     private func makeDeviceListAssets() -> DeviceListAssets {
-        return DeviceListAssets(
+        DeviceListAssets(
             title: Strings.Localizable.Device.Center.title,
             currentDeviceTitle: Strings.Localizable.Device.Center.Current.Device.title,
             otherDevicesTitle: Strings.Localizable.Device.Center.Other.Devices.title,
-            deviceDefaultName: Strings.Localizable.Device.Center.Default.Device.title
+            deviceDefaultName: UIDevice.current.modelName
         )
     }
     
     private func makeBackupListAssets() -> BackupListAssets {
-        return BackupListAssets(
+        BackupListAssets(
             backupTypes: [
                 BackupType(type: .backupUpload, iconName: BackUpTypeIconAssets.backupFolder),
                 BackupType(type: .cameraUpload, iconName: BackUpTypeIconAssets.cameraUploadsFolder),
@@ -63,14 +63,14 @@ extension MyAccountHallViewModel {
     }
     
     private func makeEmptyStateAssets() -> EmptyStateAssets {
-        return EmptyStateAssets(
+        EmptyStateAssets(
             image: EmptyStateIconAssets.searchEmptyState,
             title: Strings.Localizable.noResults
         )
     }
     
     private func makeSearchAssets() -> SearchAssets {
-        return SearchAssets(
+        SearchAssets(
             placeHolder: Strings.Localizable.search,
             cancelTitle: Strings.Localizable.cancel,
             backgroundColor: TokenColors.Background.surface1.swiftUI
@@ -78,7 +78,7 @@ extension MyAccountHallViewModel {
     }
     
     private func deviceCenterActionList() -> [ContextAction] {
-        return [
+        [
             ContextAction(
                 type: .cameraUploads,
                 title: Strings.Localizable.General.cameraUploads,
