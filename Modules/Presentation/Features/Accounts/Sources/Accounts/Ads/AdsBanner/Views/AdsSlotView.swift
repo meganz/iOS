@@ -34,6 +34,15 @@ public struct AdsSlotView<T: View>: View {
                     if viewModel.showCloseButton {
                         closeButton
                             .frame(width: 16, height: 16)
+                            .adaptiveSheetModal(isPresented: $viewModel.showAdsFreeView) {
+                                AdsFreeView(
+                                    viewModel: AdsFreeViewModel(
+                                        purchaseUseCase: viewModel.purchaseUseCase,
+                                        viewProPlanAction: viewModel.adsFreeViewProPlanAction
+                                    )
+                                )
+                                .interactiveDismissDisabled()
+                            }
                     }
                 }
                 .padding(.top, 5)
@@ -56,15 +65,6 @@ public struct AdsSlotView<T: View>: View {
         }
         .onDisappear {
             viewModel.stopMonitoringAdsSlotUpdates()
-        }
-        .adaptiveSheetModal(isPresented: $viewModel.showAdsFreeView) {
-            AdsFreeView(
-                viewModel: AdsFreeViewModel(
-                    purchaseUseCase: viewModel.purchaseUseCase,
-                    viewProPlanAction: viewModel.adsFreeViewProPlanAction
-                )
-            )
-            .interactiveDismissDisabled()
         }
         .ignoresSafeArea(.keyboard)
         .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) ? .all : [.top])
