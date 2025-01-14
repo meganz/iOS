@@ -18,6 +18,8 @@ final class SharedItemsTableViewCell: UITableViewCell {
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var contactVerifiedImageView: UIImageView!
     
+    @IBOutlet weak var descriptionLabel: UILabel!
+
     @objc var delegate: (any SharedItemsTableViewCellDelegate)?
     
     @objc var nodeHandle: UInt64 = 0
@@ -43,5 +45,10 @@ final class SharedItemsTableViewCell: UITableViewCell {
         infoLabel.textColor = TokenColors.Text.secondary
         backgroundColor = TokenColors.Background.page
         infoButton.tintColor = TokenColors.Icon.secondary
+        descriptionLabel.textColor = TokenColors.Text.secondary
+    }
+
+    @objc func setNodeDescription(_ desc: String?) {
+        descriptionLabel?.text = desc
     }
 }

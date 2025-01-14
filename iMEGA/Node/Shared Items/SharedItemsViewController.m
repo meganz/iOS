@@ -460,7 +460,8 @@
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     [self configureAccessibilityForCell:cell];
     [self configureContactNotVerifiedImageVisibilityFor:cell with:user tab:SharedItemsTabIncomingShares];
-    
+    [self configureCellDescription:cell for:node];
+
     return cell;
 }
 
@@ -510,7 +511,7 @@
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     [self configureAccessibilityForCell:cell];
     [self configureContactNotVerifiedImageVisibilityFor:cell with:nil tab:SharedItemsTabOutgoingShares];
-    
+    [self configureCellDescription:cell for:node];
     return cell;
 }
 

@@ -115,7 +115,11 @@ extension SharedItemsViewController {
         configureAccessibility(for: cell)
         return cell
     }
-    
+
+    @objc func configureCellDescription(_ cell: SharedItemsTableViewCell, for node: MEGANode) {
+        cell.setNodeDescription(viewModel.isSearchUsingNodeDescriptionEnabled ? node.description : nil)
+    }
+
     @objc func nodeCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> NodeTableViewCell {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")

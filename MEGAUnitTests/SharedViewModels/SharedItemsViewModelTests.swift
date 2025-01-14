@@ -2,6 +2,8 @@
 
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
@@ -96,19 +98,32 @@ final class SharedItemsViewModelTests: XCTestCase {
         
         XCTAssertTrue(mockShareUseCase.createShareKeysErrorHappened)
     }
-    
+
+    @MainActor
+    func testIsSearchUsingNodeDescriptionEnabled_shouldReturnCorrectValues() async {
+        let input = [false, true]
+        input.forEach { enabled in
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.searchUsingNodeDescription: enabled])
+            let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+            XCTAssertEqual(sut.isSearchUsingNodeDescriptionEnabled, enabled)
+        }
+    }
+
     @MainActor private func makeSUT(
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
+        featureFlagProvider: MockFeatureFlagProvider = .init(list: [:]),
         file: StaticString = #file,
         line: UInt = #line
     ) -> SharedItemsViewModel {
         let sut = SharedItemsViewModel(shareUseCase: shareUseCase,
                                        mediaUseCase: mediaUseCase,
                                        saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
-                                       moveToRubbishBinViewModel: moveToRubbishBinViewModel)
+                                       moveToRubbishBinViewModel: moveToRubbishBinViewModel,
+                                       featureFlagProvider: featureFlagProvider
+        )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
