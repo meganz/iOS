@@ -105,8 +105,12 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
         }
     }
     
+    @MainActor
     func alertViewModel() -> TextFieldAlertViewModel {
-        .init(
+        let validator = AlbumNameValidator(
+            existingAlbumNames: { [weak self] in self?.albums.map(\.album.name) ?? [] }
+        )
+        return .init(
             title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
             placeholderText: albums.map(\.album.name).newAlbumName(),
             affirmativeButtonTitle: Strings.Localizable.createFolderButton,
@@ -122,8 +126,7 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
                     _ = try? await albumListUseCase.createUserAlbum(with: albumName)
                 }
             },
-            validator: AlbumNameValidator(
-                existingAlbumNames: { [weak self] in self?.albums.map(\.album.name) ?? [] }).create
+            validator: validator.create
         )
     }
 }

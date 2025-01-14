@@ -7,6 +7,7 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASwiftUI
 
+@MainActor
 public protocol VideoPlaylistContentViewModelSelectionDelegate: AnyObject {
     
     /// A delegate method to handle all selected button triggered. Implement this to get the event of all selected button alongside the corresponding varaibles.

@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Any configuration needed for video module assets, behaviour or styling
-public struct VideoConfig: Equatable {
+public struct VideoConfig: Equatable, Sendable {
     
     public let videoListAssets: VideoListAssets
     public let rowAssets: RowAssets
@@ -31,7 +31,7 @@ public struct VideoConfig: Equatable {
         self.recentlyWatchedAssets = recentlyWatchedAssets
     }
     
-    public struct VideoListAssets: Equatable {
+    public struct VideoListAssets: Equatable, Sendable {
         
         public let noResultVideoImage: UIImage
         public let checkmarkImage: UIImage
@@ -48,7 +48,7 @@ public struct VideoConfig: Equatable {
         }
     }
     
-    public struct RowAssets: Equatable {
+    public struct RowAssets: Equatable, Sendable {
         
         public let favoriteImage: UIImage
         public let playImage: UIImage
@@ -96,7 +96,7 @@ public struct VideoConfig: Equatable {
             self.labelAssets = labelAssets
         }
         
-        public struct LabelAssets: Equatable {
+        public struct LabelAssets: Equatable, Sendable {
             
             public let redImage: UIImage
             public let orangeImage: UIImage
@@ -137,7 +137,7 @@ public struct VideoConfig: Equatable {
         }
     }
     
-    public struct ToolbarAssets: Equatable {
+    public struct ToolbarAssets: Equatable, Sendable {
         public let offlineImage: UIImage
         public let linkImage: UIImage
         public let saveToPhotosImage: UIImage
@@ -159,7 +159,7 @@ public struct VideoConfig: Equatable {
         }
     }
     
-    public struct ColorAssets: Equatable {
+    public struct ColorAssets: Equatable, Sendable {
         
         public let primaryTextColor: Color
         public let secondaryTextColor: Color

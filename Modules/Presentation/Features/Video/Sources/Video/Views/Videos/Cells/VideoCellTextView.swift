@@ -119,8 +119,10 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
             object: nil,
             queue: .main
         ) { _ in
-            updateMaximumNumberOfLines(for: textView)
-            textView.attributedText = createAttributedTitle()
+            Task { @MainActor in
+                updateMaximumNumberOfLines(for: textView)
+                textView.attributedText = createAttributedTitle()
+            }
         }
     }
     

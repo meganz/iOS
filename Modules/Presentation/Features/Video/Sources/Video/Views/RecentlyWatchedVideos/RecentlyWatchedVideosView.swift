@@ -126,6 +126,7 @@ struct RecentlyWatchedVideosContent: View {
 
 // MARK: - Helpers
 
+@MainActor
 private func recentlyWatchedVideosContent(
     viewState: RecentlyWatchedVideosViewModel.ViewState,
     sections: [RecentlyWatchedVideoSection]

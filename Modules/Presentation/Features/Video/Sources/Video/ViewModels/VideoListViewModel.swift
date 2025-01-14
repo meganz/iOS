@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAPresentation
 import MEGASwift
 
+@MainActor
 final class VideoListViewModel: ObservableObject {
     
     enum ViewState: Equatable {
@@ -141,6 +142,8 @@ final class VideoListViewModel: ObservableObject {
                 }
             }
             .switchToLatest()
+            .subscribe(on: DispatchQueue.main)
+            .receive(on: DispatchQueue.main)
             .values
         
         for await (searchText, sortOrder, locationFilter, durationFilter) in asyncSequence {

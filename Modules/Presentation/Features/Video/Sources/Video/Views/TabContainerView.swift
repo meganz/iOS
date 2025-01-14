@@ -85,6 +85,7 @@ struct TabContainerView: View {
     .preferredColorScheme(.dark)
 }
 
+@MainActor
 private func makeNullViewModel() -> VideoListViewModel {
     VideoListViewModel(
         syncModel: VideoRevampSyncModel(),
@@ -98,6 +99,7 @@ private func makeNullViewModel() -> VideoListViewModel {
     )
 }
 
+@MainActor
 private func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
     VideoPlaylistsViewModel(
         videoPlaylistsUseCase: Preview_VideoPlaylistUseCase(),

@@ -1005,6 +1005,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
     }
     
+    @MainActor
     private func makeAlertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                 placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,

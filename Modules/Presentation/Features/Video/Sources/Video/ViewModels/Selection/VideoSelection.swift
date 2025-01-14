@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAL10n
 import SwiftUI
 
+@MainActor
 public final class VideoSelection: ObservableObject {
     
     @Published public var editMode: EditMode = .inactive {

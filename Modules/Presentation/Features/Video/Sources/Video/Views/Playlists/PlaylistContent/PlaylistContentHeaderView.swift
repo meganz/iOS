@@ -224,6 +224,7 @@ struct PlaylistContentHeaderView: View {
     .preferredColorScheme(.dark)
 }
 
+@MainActor
 private func view(
     viewState: VideoPlaylistContentViewModel.ViewState,
     imageContainers: [any ImageContaining],

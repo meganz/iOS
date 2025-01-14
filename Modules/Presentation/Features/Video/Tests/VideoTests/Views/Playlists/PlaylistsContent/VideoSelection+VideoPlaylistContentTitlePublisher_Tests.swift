@@ -9,7 +9,7 @@ final class VideoSelection_VideoPlaylistContentTitlePublisher_Tests: XCTestCase 
     private var subscriptions = Set<AnyCancellable>()
 
     // MARK: - videoPlaylistContentTitlePublisher
-    
+    @MainActor
     func testVideoPlaylistContentTitlePublisher_whenIsNotEditing_shouldHasNoTitle() {
         let sut = makeSUT()
         
@@ -28,6 +28,7 @@ final class VideoSelection_VideoPlaylistContentTitlePublisher_Tests: XCTestCase 
         XCTAssertEqual(receivedTitle, "")
     }
     
+    @MainActor
     func testVideoPlaylistContentTitlePublisher_whenIsEditing_shouldHasDefaultSelectItemsTitleOnNoSelectedVideos() {
         let sut = makeSUT()
         
@@ -47,6 +48,7 @@ final class VideoSelection_VideoPlaylistContentTitlePublisher_Tests: XCTestCase 
         XCTAssertEqual(receivedTitle, Strings.Localizable.selectTitle)
     }
     
+    @MainActor
     func testVideoPlaylistContentTitlePublisher_whenIsEditing_shouldHasDefaultSelectItemsTitleOnHasSelectedVideos() {
         let sut = makeSUT()
         
@@ -71,7 +73,7 @@ final class VideoSelection_VideoPlaylistContentTitlePublisher_Tests: XCTestCase 
     }
     
     // MARK: - Helpers
-    
+    @MainActor
     private func makeSUT(
         file: StaticString = #filePath,
         line: UInt = #line
