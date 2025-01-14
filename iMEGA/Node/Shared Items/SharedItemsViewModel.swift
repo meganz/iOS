@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAFoundation
+import MEGAPresentation
 import MEGASDKRepo
 import UIKit
 
@@ -11,18 +12,21 @@ import UIKit
     private let mediaUseCase: any MediaUseCaseProtocol
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
-    
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+
     let searchDebouncer = Debouncer(delay: 0.5)
     
     init(shareUseCase: some ShareUseCaseProtocol,
          mediaUseCase: some MediaUseCaseProtocol,
          saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
-         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol
+         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
+        self.featureFlagProvider = featureFlagProvider
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
@@ -60,5 +64,9 @@ import UIKit
     
     @objc func moveNodeToRubbishBin(_ node: MEGANode) {
         moveToRubbishBinViewModel.moveToRubbishBin(nodes: [node].toNodeEntities())
+    }
+
+    @objc var isSearchUsingNodeDescriptionEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
     }
 }
