@@ -740,6 +740,7 @@ final class ChatContentViewModelTests: XCTestCase {
             callUpdateUseCase: callUpdateUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             audioSessionUseCase: audioSessionUseCase,
+            transfersListenerUseCase: MockTransfersListenerUseCase(),
             router: router,
             permissionRouter: _permissionRouter,
             analyticsEventUseCase: analyticsEventUseCase,

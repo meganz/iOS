@@ -14,6 +14,15 @@ public protocol TransfersListenerUseCaseProtocol: Sendable {
     /// Checks if queued transfers are currently paused.
     /// Returns `true` if they are paused, otherwise `false`.
     func areQueuedTransfersPaused() -> Bool
+    /// Pauses all transfers, including both queued and in-progress transfers.
+    /// This will prevent new transfers from starting and pause those that are active.
+    func pauseTransfers()
+    /// Resumes all transfers, including both queued and in-progress transfers.
+    /// This will allow transfers to proceed as normal, processing queued transfers and continuing paused ones.
+    func resumeTransfers()
+    /// Checks if any transfers (in-progress or queued) are currently paused.
+    /// - Returns: `true` if any transfers (in-progress or queued) are paused, otherwise `false`.
+    func areTransfersPaused() -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -26,6 +35,9 @@ public struct TransfersListenerUseCase: TransfersListenerUseCaseProtocol {
     
     @PreferenceWrapper(key: .queuedTransfersPaused, defaultValue: false)
     private var queuedTransfersPaused: Bool
+    
+    @PreferenceWrapper(key: .transfersPaused, defaultValue: false)
+    private var transfersPaused: Bool
     
     public init(
         repo: some TransfersListenerRepositoryProtocol,
@@ -45,5 +57,21 @@ public struct TransfersListenerUseCase: TransfersListenerUseCaseProtocol {
     
     public func areQueuedTransfersPaused() -> Bool {
         queuedTransfersPaused
+    }
+    
+    public func pauseTransfers() {
+        transfersPaused = true
+        queuedTransfersPaused = true
+        repo.pauseTransfers()
+    }
+    
+    public func resumeTransfers() {
+        transfersPaused = false
+        queuedTransfersPaused = false
+        repo.resumeTransfers()
+    }
+    
+    public func areTransfersPaused() -> Bool {
+        transfersPaused || queuedTransfersPaused
     }
 }
