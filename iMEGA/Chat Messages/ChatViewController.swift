@@ -820,6 +820,8 @@ class ChatViewController: MessagesViewController {
             if let titleView = navigationItem.titleView as? ChatTitleView {
                 titleView.lastGreen = lastGreenMinutes
             }
+        case .showResumeTransfersAlert:
+            showRResumeTransfersAlert()
         }
     }
     
@@ -1099,20 +1101,21 @@ class ChatViewController: MessagesViewController {
     }
     
     func checkTransferPauseStatus() {
-        if UserDefaults.standard.bool(forKey: "TransfersPaused") {
-            let alertController = UIAlertController(title: Strings.Localizable.resumeTransfers, message: nil, preferredStyle: .alert)
-            
-            let cancel = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel)
-            
-            let action2 = UIAlertAction(title: Strings.Localizable.resume, style: .default) { _ in
-                MEGASdk.shared.pauseTransfers(false)
-                UserDefaults.standard.set(false, forKey: "TransfersPaused")
-            }
-            
-            alertController.addAction(cancel)
-            alertController.addAction(action2)
-            present(viewController: alertController)
+        chatContentViewModel.dispatch(.checkTransferStatus)
+    }
+    
+    func showRResumeTransfersAlert() {
+        let alertController = UIAlertController(title: Strings.Localizable.resumeTransfers, message: nil, preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel)
+        
+        let action2 = UIAlertAction(title: Strings.Localizable.resume, style: .default) { [weak self] _ in
+            self?.chatContentViewModel.dispatch(.resumeTransfers)
         }
+        
+        alertController.addAction(cancel)
+        alertController.addAction(action2)
+        present(viewController: alertController)
     }
     
     private func addChatBottomInfoScreenToView() {

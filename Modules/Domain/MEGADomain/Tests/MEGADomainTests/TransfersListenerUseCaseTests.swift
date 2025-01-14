@@ -7,7 +7,7 @@ import Testing
 struct TransfersListenerUseCaseTestSuite {
     
     static func makeSUT() -> (sut: TransfersListenerUseCase, repo: MockTransfersListenerRepository) {
-        let repo = MockTransfersListenerRepository()
+        let repo = MockTransfersListenerRepository.newRepo
         let sut = TransfersListenerUseCase(
             repo: repo,
             preferenceUseCase: MockPreferenceUseCase()
@@ -73,6 +73,40 @@ struct TransfersListenerUseCaseTestSuite {
             }
             
             #expect(sut.areQueuedTransfersPaused() == finalState, description)
+        }
+    }
+    
+    @Suite("All Transfers Control")
+    struct AllTransfersControl {
+        
+        @Test("Transfers state transitions after pausing")
+        func testPauseTransfersUpdatesState() {
+            let (sut, repo) = TransfersListenerUseCaseTestSuite.makeSUT()
+            sut.pauseTransfers()
+            #expect(sut.areTransfersPaused() == true, "Transfers should be paused after calling pauseTransfers()")
+            #expect(repo.pauseTransfers_calledTimes == 1, "pauseTransfers should be called exactly once.")
+        }
+        
+        @Test("Transfers state transitions after resuming")
+        func testResumeTransfersUpdatesState() {
+            let (sut, repo) = TransfersListenerUseCaseTestSuite.makeSUT()
+            sut.pauseTransfers()
+            #expect(sut.areTransfersPaused() == true, "Transfers should be paused before calling resumeTransfers()")
+            sut.resumeTransfers()
+            #expect(sut.areTransfersPaused() == false, "Transfers should not be paused after calling resumeTransfers()")
+            #expect(repo.resumeTransfers_calledTimes == 1, "resumeTransfers should be called exactly once.")
+        }
+        
+        @Test("areTransfersPaused reflects either transfer or queued transfer paused state")
+        func testAreTransfersPausedReflectsCorrectState() {
+            let (sut, _) = TransfersListenerUseCaseTestSuite.makeSUT()
+            #expect(sut.areTransfersPaused() == false, "Initially, transfers should not be paused")
+            
+            sut.pauseQueuedTransfers()
+            #expect(sut.areTransfersPaused() == true, "Should reflect true when queued transfers are paused")
+            
+            sut.resumeQueuedTransfers()
+            #expect(sut.areTransfersPaused() == false, "Should reflect false when no transfers are paused")
         }
     }
 }

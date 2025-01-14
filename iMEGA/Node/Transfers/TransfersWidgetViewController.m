@@ -651,7 +651,7 @@ static TransfersWidgetViewController* instance = nil;
         if (indexPath) {
             [self.transfers removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
-            if (self.transfers.count == 0) {
+            if (![self hasActiveTransfers]) {
                 [self.progressView configureData];
                 self.toolbar.hidden = YES;
             }
@@ -751,7 +751,7 @@ static TransfersWidgetViewController* instance = nil;
             }
             [self switchEdit];
             
-            if (self.transfers.count == 0) {
+            if (![self hasActiveTransfers]) {
                 [self.progressView dismissWidget];
             }
             break;
