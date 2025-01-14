@@ -326,7 +326,11 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
         return fullName;
     }
     
-    return [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:handle];
+    fullName = [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:handle];
+    if (fullName) {
+        return fullName;
+    }
+    return @" ";
 }
 
 - (NSString *)fullNameFromCoreDataByHandle:(uint64_t)handle {
