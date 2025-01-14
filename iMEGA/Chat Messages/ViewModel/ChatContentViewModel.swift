@@ -22,6 +22,8 @@ enum ChatContentAction: ActionType {
     case startOrJoinFloatingButtonTapped
     case returnToCallBannerButtonTapped
     case requestLastGreenIfNeeded
+    case resumeTransfers
+    case checkTransferStatus
 }
 
 @MainActor
@@ -35,6 +37,7 @@ final class ChatContentViewModel: ViewModelType {
         case enableAudioVideoButtons(_ enable: Bool)
         case hideStartOrJoinCallButton(_ hide: Bool)
         case updateLastGreenTime(_ lastGreenMinutes: Int) /// Minutes that have elapsed since the user was last online
+        case showResumeTransfersAlert
     }
     
     struct NavBarRightItems: OptionSet {
@@ -60,6 +63,7 @@ final class ChatContentViewModel: ViewModelType {
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let meetingNoUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
+    private let transfersListenerUseCase: any TransfersListenerUseCaseProtocol
     private let callManager: any CallManagerProtocol
 
     private let router: any ChatContentRouting
@@ -93,6 +97,7 @@ final class ChatContentViewModel: ViewModelType {
          callUpdateUseCase: some CallUpdateUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
+         transfersListenerUseCase: some TransfersListenerUseCaseProtocol,
          router: some ChatContentRouting,
          permissionRouter: some PermissionAlertRouting,
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
@@ -108,6 +113,7 @@ final class ChatContentViewModel: ViewModelType {
         self.callUpdateUseCase = callUpdateUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.audioSessionUseCase = audioSessionUseCase
+        self.transfersListenerUseCase = transfersListenerUseCase
         self.router = router
         self.permissionRouter = permissionRouter
         self.analyticsEventUseCase = analyticsEventUseCase
@@ -151,6 +157,12 @@ final class ChatContentViewModel: ViewModelType {
             // If chat room is one to one, ask for last time other user was online
             if let userHandle = chatRoom.oneToOneRoomOtherParticipantUserHandle() {
                 chatRoomUseCase.requestLastGreen(for: userHandle)
+            }
+        case .resumeTransfers:
+            transfersListenerUseCase.resumeTransfers()
+        case .checkTransferStatus:
+            if transfersListenerUseCase.areTransfersPaused() {
+                invokeCommand?(.showResumeTransfersAlert)
             }
         }
     }

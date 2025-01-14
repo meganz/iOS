@@ -20,6 +20,14 @@ public struct TransfersListenerRepository: TransfersListenerRepositoryProtocol {
     public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
+    
+    public func pauseTransfers() {
+        sdk.pauseTransfers(true)
+    }
+    
+    public func resumeTransfers() {
+        sdk.pauseTransfers(false)
+    }
 }
 
 private final class PrivateTransferDelegate: NSObject, MEGATransferDelegate, Sendable {
