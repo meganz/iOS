@@ -51,6 +51,10 @@ final class ChatRoomsListViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        if #unavailable(iOS 18.0) {
+            addBarButtonItem.menu = nil
+            moreBarButtonItem.menu = nil
+        }
         AudioPlayerManager.shared.playerHiddenIgnoringPlayerLifeCycle(true, presenter: self)
     }
     
