@@ -186,7 +186,7 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+        self.tableView.contentOffset = CGPointZero;
     });
 }
 
@@ -821,7 +821,7 @@
     
     [self incomingVerifiedNodes];
     [self incomingUnverifiedNodes];
-    [self.tableView reloadData];
+    [self reloadAndScrollToTop];
 }
 
 - (IBAction)outgoingTouchUpInside:(UIButton *)sender {
@@ -837,7 +837,7 @@
     [self disableSearchAndSelection];
     
     [self allOutgoingNodes];
-    [self.tableView reloadData];
+    [self reloadAndScrollToTop];
 }
 
 - (IBAction)linksTouchUpInside:(UIButton *)sender {
@@ -853,7 +853,7 @@
     [self disableSearchAndSelection];
     
     [self publicLinks];
-    [self.tableView reloadData];
+    [self reloadAndScrollToTop];
 }
 
 - (IBAction)removeLinkAction:(UIBarButtonItem *)sender {
