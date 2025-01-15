@@ -38,6 +38,8 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
         let mediaUseCase = MediaUseCase(
             fileSearchRepo: FilesSearchRepository.newRepo)
         let userAlbumRepo = UserAlbumCacheRepository.newRepo
+        let fileSearchRepo = FilesSearchRepository.newRepo
+        let userVideoPlaylistRepository = UserVideoPlaylistsRepository.newRepo
         
         let content = AddToCollectionView(viewModel: .init(
             mode: mode,
@@ -62,7 +64,7 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
                     albumContentsUseCase: AlbumContentsUseCase(
                         albumContentsRepo: albumContentsUpdatesRepo,
                         mediaUseCase: mediaUseCase,
-                        fileSearchRepo: FilesSearchRepository.newRepo,
+                        fileSearchRepo: fileSearchRepo,
                         userAlbumRepo: userAlbumRepo,
                         sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                         photoLibraryUseCase: photoLibraryUseCase,
@@ -72,6 +74,30 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
                 ),
                 albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
                 addToCollectionRouter: self
+            ),
+            addToPlaylistViewModel: .init(
+                thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
+                videoPlaylistContentUseCase: VideoPlaylistContentsUseCase(
+                    userVideoPlaylistRepository: userVideoPlaylistRepository,
+                    photoLibraryUseCase: photoLibraryUseCase,
+                    fileSearchRepository: fileSearchRepo,
+                    nodeRepository: nodeRepository,
+                    sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                    sensitiveNodeUseCase: sensitiveNodeUseCase
+                ),
+                sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
+                    preferenceUseCase: PreferenceUseCase.default,
+                    sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+                ),
+                router: VideoRevampRouter(
+                    explorerType: .video,
+                    navigationController: presenter?.navigationController),
+                videoPlaylistsUseCase: VideoPlaylistUseCase(
+                    fileSearchUseCase: FilesSearchUseCase(
+                        repo: fileSearchRepo,
+                        nodeRepository: nodeRepository),
+                    userVideoPlaylistsRepository: userVideoPlaylistRepository,
+                    photoLibraryUseCase: photoLibraryUseCase)
             )
         ))
         return UIHostingController(rootView: content)

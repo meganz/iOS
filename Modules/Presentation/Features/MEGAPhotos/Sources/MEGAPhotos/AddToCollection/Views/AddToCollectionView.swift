@@ -16,6 +16,7 @@ public struct AddToCollectionView: View {
     public var body: some View {
         NavigationStackView {
             content
+                .background(TokenColors.Background.page.swiftUI)
                 .toolbar {
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         Button {
@@ -76,7 +77,8 @@ public struct AddToCollectionView: View {
                         .init(
                             title: Strings.Localizable.Videos.Tab.Title.playlist,
                             content: AnyView(
-                                TokenColors.Background.page.swiftUI
+                                AddToPlaylistView(
+                                    viewModel: viewModel.addToPlaylistViewModel)
                             )
                         )
                     ],
