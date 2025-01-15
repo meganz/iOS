@@ -2180,6 +2180,7 @@
 		BF5375692C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */; };
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
 		BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5455E82844377600544A53 /* EndCallDialog.swift */; };
+		BF5718502D3719EC004BD1EC /* DIContainer+FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */; };
 		BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */; };
@@ -15851,6 +15852,7 @@
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
 				0EE5AC1C2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */,
 				0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
+				BF5718502D3719EC004BD1EC /* DIContainer+FeatureFlagProvider.swift in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
 				C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */,

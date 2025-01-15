@@ -29,7 +29,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     var note: String? {
         if let nodeDescription = result.note,
             let query = query(),
-           nodeDescription.range(of: query, options: [.diacriticInsensitive, .caseInsensitive]) != nil {
+           nodeDescription.containsIgnoringCaseAndDiacritics(searchText: query) {
             nodeDescription
         } else {
             nil

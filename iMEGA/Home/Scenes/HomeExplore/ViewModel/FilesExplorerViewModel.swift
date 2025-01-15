@@ -180,13 +180,17 @@ final class FilesExplorerViewModel: ViewModelType {
         try await useCase.search(
             filter: .recursive(
                 searchText: text,
+                searchDescription: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? text : nil,
                 searchTargetLocation: .folderTarget(.rootNode),
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                 formatType: explorerType.toNodeFormatEntity(),
                 sensitiveFilterOption: await sensitiveDisplayPreferenceUseCase.excludeSensitives() ? .nonSensitiveOnly : .disabled,
-                favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled),
-            cancelPreviousSearchIfNeeded: true)
+                favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled,
+                useAndForTextQuery: false
+            ),
+            cancelPreviousSearchIfNeeded: true
+        )
     }
     	
     private func toMEGANode(from nodes: [NodeEntity]) async -> [MEGANode] {

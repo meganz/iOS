@@ -99,6 +99,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
             listSource = configuration?.listSourceType.init(
                 tableView: tableView,
                 nodes: nodes,
+                searchText: searchText,
                 selectedNodes: listSource?.selectedNodes,
                 explorerType: viewModel.getExplorerType(),
                 delegate: self

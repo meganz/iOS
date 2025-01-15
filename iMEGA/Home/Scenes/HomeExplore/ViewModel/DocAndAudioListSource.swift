@@ -6,17 +6,20 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     var selectedNodes: [MEGANode]?
     var explorerType: ExplorerTypeEntity
     var tableView: UITableView
+    private let searchText: String?
     weak var delegate: (any FilesExplorerListSourceDelegate)?
     
     // MARK: - Initializers.
     
     init(tableView: UITableView,
          nodes: [MEGANode]?,
+         searchText: String?,
          selectedNodes: [MEGANode]?,
          explorerType: ExplorerTypeEntity,
          delegate: (any FilesExplorerListSourceDelegate)?) {
         self.tableView = tableView
         self.nodes = nodes
+        self.searchText = searchText
         self.selectedNodes = selectedNodes
         self.explorerType = explorerType
         self.delegate = delegate
@@ -73,7 +76,7 @@ extension DocAndAudioListSource {
         }
         
         cell?.cellFlavor = .explorerView
-        cell?.configureCell(for: node, shouldApplySensitiveBehaviour: true, api: MEGASdk.shared)
+        cell?.configureCell(for: node, searchText: searchText, shouldApplySensitiveBehaviour: true, api: MEGASdk.shared)
         cell?.setSelectedBackgroundView(withColor: .clear)
         
         if tableView.isEditing,

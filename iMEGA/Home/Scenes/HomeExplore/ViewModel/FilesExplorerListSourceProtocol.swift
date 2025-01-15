@@ -18,6 +18,7 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
     var explorerType: ExplorerTypeEntity { get set }
     init(tableView: UITableView,
          nodes: [MEGANode]?,
+         searchText: String?,
          selectedNodes: [MEGANode]?,
          explorerType: ExplorerTypeEntity,
          delegate: (any FilesExplorerListSourceDelegate)?)

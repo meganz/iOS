@@ -32,6 +32,7 @@
     [super awakeFromNib];
     
     self.cancelButtonTrailingConstraint.constant =  ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhonePlus]) ? 10 : 6;
+    [self configureDescriptionLabel];
     [self configureMoreButtonUI];
     [self configureIconsImageColor];
 }
@@ -138,10 +139,10 @@
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
         self.versionedImageView.hidden = YES;
     }
-    
+
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    
+
     self.separatorView.backgroundColor = [UIColor borderStrong];
 }
 

@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwift
 import MEGAUIKit
 
 extension NodeTableViewCell {
@@ -47,7 +48,17 @@ extension NodeTableViewCell {
     @objc func configureMoreButtonUI() {
         moreButton.tintColor = TokenColors.Icon.secondary
     }
-    
+
+    @objc func configureDescriptionLabel() {
+        descriptionLabel?.textColor = TokenColors.Text.secondary
+        descriptionLabel?.font = .preferredFont(forTextStyle: .caption1)
+    }
+
+    func configureCell(for node: MEGANode, searchText: String?, shouldApplySensitiveBehaviour: Bool, api: MEGASdk) {
+        configureCell(for: node, shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour, api: api)
+        showDescriptionIfRequired(for: node, searchText: searchText)
+    }
+
     @objc func setAccessibilityLabelsForIcons(in node: MEGANode) {
         labelImageView?.accessibilityLabel = MEGANode.string(for: node.label)
         favouriteImageView?.accessibilityLabel = Strings.Localizable.favourite
@@ -95,7 +106,21 @@ extension NodeTableViewCell {
                 .sink { [weak thumbnailImageView] in thumbnailImageView?.image = $0 }
         ]
     }
-    
+
+    private func showDescriptionIfRequired(for node: MEGANode, searchText: String?) {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
+              let searchText,
+              searchText.isNotEmpty,
+              let description = node.description,
+              description.containsIgnoringCaseAndDiacritics(searchText: searchText) else {
+            descriptionLabel?.isHidden = true
+            return
+        }
+
+        descriptionLabel?.text = description
+        descriptionLabel?.isHidden = false
+    }
+
     private func configureBlur(isSensitive: Bool) {
         let alpha: CGFloat = isSensitive ? 0.5 : 1
         [
