@@ -203,7 +203,9 @@ extension SharedItemsViewController {
         guard indexPath.section == 0, linksButton?.isSelected == false else { return nil }
         
         if searchController.isActive {
-            return searchUnverifiedSharesArray[indexPath.row] as? MEGAShare
+            if searchUnverifiedSharesArray.count > indexPath.row {
+                return searchUnverifiedSharesArray[indexPath.row] as? MEGAShare
+            }            
         }
         
         if outgoingButton?.isSelected == true {
