@@ -60,7 +60,7 @@ actor NodeTagsSearcher: NodeTagsSearching {
         guard let allTags else { return [] }
         if let searchText {
             return allTags.filter {
-                $0.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) != nil
+                $0.containsIgnoringCaseAndDiacritics(searchText: searchText)
             }
         } else {
             return allTags

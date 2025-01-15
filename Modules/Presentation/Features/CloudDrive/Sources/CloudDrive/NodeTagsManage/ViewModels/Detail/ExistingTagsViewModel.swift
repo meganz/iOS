@@ -146,7 +146,7 @@ final class ExistingTagsViewModel: ObservableObject {
     private func filterNewlyAddedTags(for searchText: String?) -> [String] {
         if let searchText {
             newlyAddedTags.filter {
-                $0.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) != nil
+                $0.containsIgnoringCaseAndDiacritics(searchText: searchText)
             }
         } else {
             newlyAddedTags

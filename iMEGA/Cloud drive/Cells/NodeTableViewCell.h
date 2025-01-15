@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *incomingOrOutgoingView;
 @property (weak, nonatomic) IBOutlet UIImageView *incomingOrOutgoingImageView;
@@ -72,7 +73,6 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 @property (nonatomic, copy) void(^moreButtonAction)(UIButton *) ;
 
 - (void)configureCellForNode:(MEGANode *)node shouldApplySensitiveBehaviour:(BOOL)shouldApplySensitiveBehaviour api:(MEGASdk *)api;
-
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket;
 
 @end

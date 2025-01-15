@@ -81,6 +81,26 @@ public extension String {
               let endIndex = (range(of: end, range: startIndex..<endIndex)?.lowerBound).map({$0}) else { return nil }
         return String(self[startIndex..<endIndex])
     }
+
+    /// Checks if the given search text is contained within the current string,
+    /// ignoring case and diacritic differences.
+    ///
+    /// This method performs a case-insensitive and diacritic-insensitive search,
+    /// meaning it treats letters with accents (e.g., `é`) the same as their base form (e.g., `e`).
+    ///
+    /// - Parameter searchText: The text to search for in the current string.
+    /// - Returns: A Boolean value indicating whether the `searchText` is contained within the string.
+    ///
+    /// ## Example
+    /// ```swift
+    /// let text = "Café au Lait"
+    /// let result1 = text.containsIgnoringCaseAndDiacritics(searchText: "cafe") // true
+    /// let result2 = text.containsIgnoringCaseAndDiacritics(searchText: "Au")   // true
+    /// let result3 = text.containsIgnoringCaseAndDiacritics(searchText: "Latte") // false
+    /// ```
+    func containsIgnoringCaseAndDiacritics(searchText: String) -> Bool {
+        return range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+    }
 }
 
 public extension String {
