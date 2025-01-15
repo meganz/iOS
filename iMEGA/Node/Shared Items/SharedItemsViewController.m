@@ -366,9 +366,16 @@
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     if (self.searchController.isActive) {
         if (self.linksButton.selected || indexPath.section == 1) {
-            return self.searchNodesArray[indexPath.row];
+            if (self.searchNodesArray.count > indexPath.row) {
+                return self.searchNodesArray[indexPath.row];
+            }
         }
-        return self.searchUnverifiedNodesArray[indexPath.row];
+        
+        if (self.searchUnverifiedNodesArray.count > indexPath.row) {
+            return self.searchUnverifiedNodesArray[indexPath.row];
+            
+        }
+        return nil;
     } else {
         if (self.incomingButton.selected) {
             if (indexPath.section == 0) {
