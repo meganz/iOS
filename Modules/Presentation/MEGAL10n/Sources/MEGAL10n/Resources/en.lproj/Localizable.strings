@@ -2941,7 +2941,7 @@
 /* Second step title message for cancellable transfer */
 "transfers.cancellable.creatingFolders"="Creating folders…";
 /* Third step title message for cancellable transfer */
-"transfers.cancellable.transferring"="Transferring…";
+"transfers.cancellable.transferring"="Starting transfers…";
 /* Cancelling transfers step title message for cancellable transfer */
 "transfers.cancellable.cancellingTransfers"="Cancelling transfers…";
 /* Count of folders and files in the scanning stage */
