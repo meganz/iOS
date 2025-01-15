@@ -28,7 +28,6 @@ class PhotoLibraryModeCardViewModel<T: PhotoChronologicalCategory>: PhotoLibrary
         libraryViewModel
             .$library
             .dropFirst()
-            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .compactMap { [weak self] in
                 self?.categoryListTransformation($0)
             }
