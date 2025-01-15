@@ -90,12 +90,14 @@ struct AddToCollectionViewModelTests {
     private static func makeSUT(
         mode: AddToMode = .album,
         selectedPhotos: [NodeEntity] = [],
-        addToAlbumsViewModel: AddToAlbumsViewModel = .init()
+        addToAlbumsViewModel: AddToAlbumsViewModel = .init(),
+        addToPlaylistViewModel: AddToPlaylistViewModel = .init()
     ) -> AddToCollectionViewModel {
         .init(
             mode: mode,
             selectedPhotos: selectedPhotos,
-            addToAlbumsViewModel: addToAlbumsViewModel)
+            addToAlbumsViewModel: addToAlbumsViewModel,
+            addToPlaylistViewModel: addToPlaylistViewModel)
     }
 }
 
@@ -121,5 +123,16 @@ private extension AddToAlbumsViewModel {
             addToCollectionRouter: MockAddToCollectionRouter(),
             contentLibrariesConfiguration: contentLibrariesConfiguration,
             albumSelection: albumSelection)
+    }
+}
+
+private extension AddToPlaylistViewModel {
+    convenience init() {
+        self.init(
+            thumbnailLoader: MockThumbnailLoader(),
+            videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
+            router: MockVideoRevampRouter(),
+            videoPlaylistsUseCase: MockVideoPlaylistUseCase())
     }
 }

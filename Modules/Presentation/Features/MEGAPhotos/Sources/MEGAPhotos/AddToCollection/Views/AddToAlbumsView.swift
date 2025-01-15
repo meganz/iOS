@@ -7,7 +7,7 @@ import MEGAUIComponent
 import SwiftUI
 
 struct AddToAlbumsView: View {
-    @StateObject var viewModel: AddToAlbumsViewModel
+    @ObservedObject var viewModel: AddToAlbumsViewModel
     
     var body: some View {
         content

@@ -9,6 +9,7 @@ public final class AddToCollectionViewModel: ObservableObject {
     
     let mode: AddToMode
     let addToAlbumsViewModel: AddToAlbumsViewModel
+    let addToPlaylistViewModel: AddToPlaylistViewModel
     
     private let selectedPhotos: [NodeEntity]
     
@@ -22,11 +23,13 @@ public final class AddToCollectionViewModel: ObservableObject {
     public init(
         mode: AddToMode,
         selectedPhotos: [NodeEntity],
-        addToAlbumsViewModel: AddToAlbumsViewModel
+        addToAlbumsViewModel: AddToAlbumsViewModel,
+        addToPlaylistViewModel: AddToPlaylistViewModel
     ) {
         self.mode = mode
         self.selectedPhotos = selectedPhotos
         self.addToAlbumsViewModel = addToAlbumsViewModel
+        self.addToPlaylistViewModel = addToPlaylistViewModel
         
         addToAlbumsViewModel.isAddButtonDisabled
             .assign(to: &$isAddButtonDisabled)
