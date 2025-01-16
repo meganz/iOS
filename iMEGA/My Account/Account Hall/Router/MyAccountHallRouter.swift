@@ -220,6 +220,11 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         NotificationsViewRouter(
             navigationController: navigationController,
             notificationsUseCase: notificationsUseCase,
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
             imageLoader: ImageLoader()
         ).start()
     }

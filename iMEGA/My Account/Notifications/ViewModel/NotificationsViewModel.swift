@@ -16,6 +16,7 @@ enum NotificationAction: ActionType {
     case onViewDidAppear
     case didTapNotification(NotificationItem)
     case clearImageCache
+    case handleNodeNavigation(HandleEntity)
 }
 
 @objc final class NotificationsViewModel: NSObject, ViewModelType {
@@ -25,21 +26,32 @@ enum NotificationAction: ActionType {
     }
     
     private let notificationsUseCase: any NotificationsUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private(set) var promoList: [NotificationItem] = []
     private var unreadNotificationIds: [NotificationIDEntity] = []
     private let tracker: any AnalyticsTracking
+    private let router: any NotificationsViewRouting
+    private(set) var handleNodeNavigationTask: Task<Void, Never>?
     var invokeCommand: ((Command) -> Void)?
     let imageLoader: any ImageLoadingProtocol
     
     init(
+        router: some NotificationsViewRouting,
         notificationsUseCase: some NotificationsUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         imageLoader: some ImageLoadingProtocol,
         tracker: some AnalyticsTracking
     ) {
+        self.router = router
         self.notificationsUseCase = notificationsUseCase
+        self.nodeUseCase = nodeUseCase
         self.imageLoader = imageLoader
         self.tracker = tracker
         super.init()
+    }
+    
+    deinit {
+        handleNodeNavigationTask?.cancel()
     }
     
     // MARK: - Sections
@@ -134,6 +146,21 @@ enum NotificationAction: ActionType {
         }
     }
     
+    private func handleTakenDownNode(node: NodeEntity) async {
+        guard let nodeHierarchy = await nodeUseCase.parentsForHandle(node.handle) else { return }
+        let nodeAccess = nodeUseCase.nodeAccessLevel(nodeHandle: node.handle)
+        
+        router.navigateThroughNodeHierarchy(
+            node.isFile ? nodeHierarchy : nodeHierarchy.dropLast(),
+            isOwnNode: nodeAccess == .owner,
+            isInRubbishBin: node.nodeType == .rubbish
+        )
+    }
+    
+    private func presentNode(node: NodeEntity) {
+        router.navigateThroughNodeHierarchyAndPresent(node)
+    }
+    
     func dispatch(_ action: NotificationAction) {
         switch action {
         case .onViewDidLoad:
@@ -147,6 +174,16 @@ enum NotificationAction: ActionType {
             invokeCommand?(.presentURLLink(urlLink))
         case .clearImageCache:
             imageLoaderClearCache()
+        case .handleNodeNavigation(let handle):
+            handleNodeNavigationTask?.cancel()
+            handleNodeNavigationTask = Task { [weak self] in
+                guard let node = await self?.nodeUseCase.nodeForHandle(handle) else { return }
+                if node.isTakenDown {
+                    await self?.handleTakenDownNode(node: node)
+                } else {
+                    self?.presentNode(node: node)
+                }
+            }
         }
     }
     
