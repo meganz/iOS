@@ -84,11 +84,13 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
     
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
-        nil
+        guard let parentHandle = nodes[handle]?.parentHandle else { return nil }
+        return nodes[parentHandle]
     }
     
     public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
-        nil
+        guard let parentHandle = nodes[handle]?.parentHandle, let parentNode = nodes[parentHandle] else { return nil }
+        return [parentNode]
     }
     
     public func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {

@@ -114,6 +114,10 @@ extension NotificationsTableViewController {
         viewModel.dispatch(.didTapNotification(notification))
     }
     
+    @objc func handleNodeNavigation(_ nodeHandle: HandleEntity) {
+        viewModel.dispatch(.handleNodeNavigation(nodeHandle))
+    }
+    
     private func executeCommand(_ command: NotificationsViewModel.Command) {
         switch command {
         case .reloadData:
