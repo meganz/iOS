@@ -37,7 +37,8 @@ extension AppDelegate {
         guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) else { return }
         do {
             try await GoogleMobileAdsConsentManager.shared.gatherConsent()
-            GoogleMobileAdsConsentManager.shared.initializeGoogleMobileAdsSDK()
+            await GoogleMobileAdsConsentManager.shared.initializeGoogleMobileAdsSDK()
+            NotificationCenter.default.post(name: .startAds, object: nil)
         } catch {
             MEGALogError("[AdMob] Google Ads consent manager \(isFromCookieDialog ? "with": "without") cookie dialog received error: \(error)")
         }

@@ -12,7 +12,8 @@ import MEGATest
 import XCTest
 
 final class AdsSlotViewModelTests: XCTestCase {
-    var subscriptions = Set<AnyCancellable>()
+    private var subscriptions = Set<AnyCancellable>()
+    private let notificationCenter = NotificationCenter()
     
     override func tearDown() {
         subscriptions.removeAll()
@@ -68,12 +69,30 @@ final class AdsSlotViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
+        notificationCenter.post(name: .accountDidPurchasedPlan, object: nil)
         await fulfillment(of: [isExternalAdsEnabledExp, displayAdsExp, showAdsFreeViewExp], timeout: 1.0)
 
         XCTAssertEqual(sut.isExternalAdsEnabled, expectedAdsFlag, file: file, line: line)
         XCTAssertEqual(sut.displayAds, expectedAdsFlag, file: file, line: line)
         XCTAssertEqual(sut.showAdsFreeView, expectedAdsFlag, file: file, line: line)
+    }
+    
+    @MainActor func testStartAdsNotification_shouldSetStartAdsToTrue() {
+        let sut = makeSUT()
+        sut.setupSubscriptions()
+        
+        let startAdsExp = expectation(description: "startAds should be true")
+        sut.$startAds
+            .dropFirst()
+            .sink { _ in
+                startAdsExp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        notificationCenter.post(name: .startAds, object: nil)
+        
+        wait(for: [startAdsExp], timeout: 1.0)
+        XCTAssertEqual(sut.startAds, true)
     }
     
     // MARK: - Ads slot
@@ -207,34 +226,6 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertTrue(sut.monitorAdsSlotUpdatesTask?.isCancelled ?? false)
     }
     
-    @MainActor
-    func testInitializeGoogleAds_externalAdsEnabled_shouldInitialize() async {
-        await assertInitializingGoogleAds(isExternalAdsFlagEnabled: true, expectedCallCount: 1)
-    }
-    
-    @MainActor
-    func testInitializeGoogleAds_externalAdsDisabled_shouldNotInitialize() async {
-        await assertInitializingGoogleAds(isExternalAdsFlagEnabled: false, expectedCallCount: 0)
-    }
-    
-    @MainActor private func assertInitializingGoogleAds(
-        isExternalAdsFlagEnabled: Bool,
-        expectedCallCount: Int,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) async {
-        let adMobConsentManager = MockGoogleMobileAdsConsentManager()
-        let sut = makeSUT(
-            isExternalAdsFlagEnabled: isExternalAdsFlagEnabled,
-            adMobConsentManager: adMobConsentManager
-        )
-        
-        await sut.setupAdsRemoteFlag()
-        await sut.initializeGoogleAds()
-        
-        XCTAssertEqual(adMobConsentManager.initializeGoogleMobileAdsSDKCalledCount, expectedCallCount, file: file, line: line)
-    }
-    
     @MainActor func testAdMob_withTestEnvironment_shouldUseTestUnitID() {
         assertAdMob(
             forEnvs: AppConfigurationEntity.allCases.filter({ $0 != .production }),
@@ -333,7 +324,8 @@ final class AdsSlotViewModelTests: XCTestCase {
             preferenceUseCase: MockPreferenceUseCase(),
             tracker: tracker,
             adsFreeViewProPlanAction: {},
-            currentDate: { expectedCloseAdsButtonTappedDate }
+            currentDate: { expectedCloseAdsButtonTappedDate },
+            notificationCenter: notificationCenter
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
