@@ -20,12 +20,14 @@ final public class AdsSlotViewModel: ObservableObject {
     private(set) var monitorAdsSlotUpdatesTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     
+    @Published var startAds: Bool = false
     @Published var isExternalAdsEnabled: Bool?
     @Published var displayAds: Bool = false
     @Published var showCloseButton: Bool = false
     @Published var showAdsFreeView: Bool = false
     private(set) var onViewFirstAppeared: (() -> Void)?
     public let adsFreeViewProPlanAction: (() -> Void)?
+    private let notificationCenter: NotificationCenter
     
     @PreferenceWrapper(key: .lastCloseAdsButtonTappedDate, defaultValue: nil)
     private(set) var lastCloseAdsDate: Date?
@@ -42,7 +44,8 @@ final public class AdsSlotViewModel: ObservableObject {
         tracker: some AnalyticsTracking = DIContainer.tracker,
         onViewFirstAppeared: (() -> Void)? = nil,
         adsFreeViewProPlanAction: (() -> Void)? = nil,
-        currentDate: @escaping @Sendable () -> Date = { Date() }
+        currentDate: @escaping @Sendable () -> Date = { Date() },
+        notificationCenter: NotificationCenter = .default
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
@@ -54,13 +57,14 @@ final public class AdsSlotViewModel: ObservableObject {
         self.onViewFirstAppeared = onViewFirstAppeared
         self.adsFreeViewProPlanAction = adsFreeViewProPlanAction
         self.currentDate = currentDate
+        self.notificationCenter = notificationCenter
         
         $lastCloseAdsDate.useCase = preferenceUseCase
     }
 
     // MARK: Setup
     func setupSubscriptions() {
-        NotificationCenter.default
+        notificationCenter
             .publisher(for: .accountDidPurchasedPlan)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -74,11 +78,15 @@ final public class AdsSlotViewModel: ObservableObject {
                 }
             }
             .store(in: &subscriptions)
-    }
-
-    func initializeGoogleAds() async {
-        guard isExternalAdsEnabled == true else { return }
-        await adMobConsentManager.initializeGoogleMobileAdsSDK()
+        
+        notificationCenter
+            .publisher(for: .startAds)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                startAds = true   
+            }
+            .store(in: &subscriptions)
     }
 
     // MARK: Remote Feature Flag

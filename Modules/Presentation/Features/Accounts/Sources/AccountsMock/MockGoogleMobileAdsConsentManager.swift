@@ -59,5 +59,6 @@ public final class MockMobileAds: MobileAdsProtocol, @unchecked Sendable {
     
     public func start(completionHandler: GADInitializationCompletionHandler?) {
         startAdsCalledCount += 1
+        completionHandler?(.init())
     }
 }
