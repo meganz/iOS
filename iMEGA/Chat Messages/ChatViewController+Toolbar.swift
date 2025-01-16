@@ -162,7 +162,7 @@ extension ChatViewController {
             }
 
             if showSuccess {
-                SVProgressHUD.showSuccess(withStatus: Strings.Localizable.messagesSent)
+                SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.Message.forwardMessage(megaMessages.count))
             }
         }
         
