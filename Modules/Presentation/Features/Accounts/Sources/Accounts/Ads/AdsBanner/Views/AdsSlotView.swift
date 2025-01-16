@@ -17,7 +17,7 @@ public struct AdsSlotView<T: View>: View {
         VStack(spacing: 0) {
             contentView
             
-            if viewModel.isExternalAdsEnabled == true {
+            if viewModel.isExternalAdsEnabled == true && viewModel.startAds {
                 HStack(alignment: .top, spacing: 0) {
                     AdMobBannerView(
                         adSize: adSize,
@@ -57,7 +57,6 @@ public struct AdsSlotView<T: View>: View {
         })
         .task {
             await viewModel.setupAdsRemoteFlag()
-            await viewModel.initializeGoogleAds()
         }
         .onAppear {
             viewModel.startMonitoringAdsSlotUpdates()

@@ -80,13 +80,19 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     }
     
     /// Initializes the Google Mobile Ads SDK. The SDK should only be initialized once.
-    @MainActor
-    public func initializeGoogleMobileAdsSDK() {
-        guard canRequestAds, !isMobileAdsInitialized else { return }
-        
-        $isMobileAdsInitialized.mutate { $0 = true }
-        
-        mobileAds.start(completionHandler: nil)
+    public func initializeGoogleMobileAdsSDK() async {
+        await withAsyncValue { completion in
+            guard canRequestAds, !isMobileAdsInitialized else {
+                completion(.success)
+                return
+            }
+            
+            $isMobileAdsInitialized.mutate { $0 = true }
+            
+            mobileAds.start { _ in
+                completion(.success)
+            }
+        }
     }
     
     // MARK: - Private
