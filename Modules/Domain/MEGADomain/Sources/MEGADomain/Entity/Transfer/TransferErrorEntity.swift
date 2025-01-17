@@ -13,4 +13,5 @@ public enum TransferErrorEntity: Error, CaseIterable {
     case copiedFromTempFolder
     case moveFileToUploadsFolderFailed
     case cancelled
+    case authorizeNodeFailed
 }
