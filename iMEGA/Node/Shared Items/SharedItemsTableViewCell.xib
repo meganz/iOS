@@ -56,8 +56,8 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bof-nP-TMy">
-                                <rect key="frame" x="35" y="0.0" width="12" height="50"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bof-nP-TMy">
+                                <rect key="frame" x="33" y="0.0" width="12" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0DW-7F-j2a">
                                         <rect key="frame" x="0.0" y="19" width="12" height="12"/>
@@ -71,6 +71,23 @@
                                     <constraint firstItem="0DW-7F-j2a" firstAttribute="centerX" secondItem="Bof-nP-TMy" secondAttribute="centerX" id="IUy-1c-5aV"/>
                                     <constraint firstItem="0DW-7F-j2a" firstAttribute="centerY" secondItem="Bof-nP-TMy" secondAttribute="centerY" id="bBk-oR-AmF"/>
                                     <constraint firstAttribute="width" constant="12" id="ren-aM-8nS"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUK-4N-Nzs">
+                                <rect key="frame" x="35" y="0.0" width="12" height="50"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vnd-qw-tea">
+                                        <rect key="frame" x="0.0" y="19" width="12" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="12" id="8EN-dS-DQW"/>
+                                            <constraint firstAttribute="height" constant="12" id="wQI-t7-v5e"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="vnd-qw-tea" firstAttribute="centerX" secondItem="QUK-4N-Nzs" secondAttribute="centerX" id="6Pd-6o-Bic"/>
+                                    <constraint firstAttribute="width" constant="12" id="7Rj-jh-dC7"/>
+                                    <constraint firstItem="vnd-qw-tea" firstAttribute="centerY" secondItem="QUK-4N-Nzs" secondAttribute="centerY" id="941-El-hWY"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ybZ-tz-sPs">
@@ -93,7 +110,7 @@
                         </subviews>
                     </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Dw6-9J-u3t" userLabel="Details Stack View">
-                        <rect key="frame" x="58" y="81.5" width="44" height="31.5"/>
+                        <rect key="frame" x="58" y="83.5" width="44" height="29.5"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Afg-GN-0Wj" userLabel="Info Stack View">
                                 <rect key="frame" x="0.0" y="0.0" width="44" height="12"/>
@@ -114,7 +131,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VvS-QN-xe8">
-                                <rect key="frame" x="0.0" y="15" width="44" height="16.5"/>
+                                <rect key="frame" x="0.0" y="15" width="44" height="14.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -166,10 +183,12 @@
                 <outlet property="favouriteView" destination="ybZ-tz-sPs" id="hef-qY-K27"/>
                 <outlet property="infoButton" destination="BEF-ke-UyQ" id="VH9-fQ-EFU"/>
                 <outlet property="infoLabel" destination="7Pq-NN-leh" id="zMz-hS-d0i"/>
-                <outlet property="labelImageView" destination="0DW-7F-j2a" id="pRO-mz-Dp9"/>
-                <outlet property="labelView" destination="Bof-nP-TMy" id="arG-Rb-wHW"/>
+                <outlet property="labelImageView" destination="vnd-qw-tea" id="5dJ-gJ-l9c"/>
+                <outlet property="labelView" destination="QUK-4N-Nzs" id="DFB-cw-cYu"/>
                 <outlet property="nameLabel" destination="pZi-yf-YO1" id="ctD-oH-Djr"/>
                 <outlet property="permissionsButton" destination="KvU-63-1JG" id="LNA-yx-cwY"/>
+                <outlet property="takeDownImageView" destination="0DW-7F-j2a" id="ubJ-MJ-Al1"/>
+                <outlet property="takeDownView" destination="Bof-nP-TMy" id="yqy-Ea-QO5"/>
                 <outlet property="thumbnailImageView" destination="R2v-xO-2fO" id="reN-zG-BEo"/>
             </connections>
             <point key="canvasLocation" x="86.956521739130437" y="81.361607142857139"/>
