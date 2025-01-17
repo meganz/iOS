@@ -10,6 +10,7 @@ public protocol AccountPlanPurchaseUseCaseProtocol: Sendable {
     var incompleteRestorePublisher: AnyPublisher<Void, Never> { get }
     var failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> { get }
     func purchasePlanResultPublisher() -> AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never>
+    var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> { get }
     
     func registerRestoreDelegate() async
     func deRegisterRestoreDelegate() async
@@ -56,6 +57,10 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
     
     public func purchasePlanResultPublisher() -> AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
         repo.purchasePlanResultPublisher
+    }
+    
+    public var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
+        repo.submitReceiptResultPublisher    
     }
     
     public func registerRestoreDelegate() async {

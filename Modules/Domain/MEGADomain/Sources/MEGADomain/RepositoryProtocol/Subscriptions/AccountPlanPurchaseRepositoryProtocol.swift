@@ -9,6 +9,7 @@ public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol, Senda
     var incompleteRestorePublisher: AnyPublisher<Void, Never> { get }
     var failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> { get }
     var purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> { get }
+    var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> { get }
     
     func registerRestoreDelegate() async
     func deRegisterRestoreDelegate() async

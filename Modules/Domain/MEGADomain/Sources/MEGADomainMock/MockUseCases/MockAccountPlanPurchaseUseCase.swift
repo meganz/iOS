@@ -8,6 +8,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     private let _incompleteRestorePublisher: PassthroughSubject<Void, Never>
     private let _failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never>
     private let _purchasePlanResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>
+    private let _submitReceiptResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>
     
     public var restorePurchaseCalled = 0
     public var purchasePlanCalled = 0
@@ -21,13 +22,16 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
                 successfulRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 incompleteRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never> = PassthroughSubject<AccountPlanErrorEntity, Never>(),
-                purchasePlanResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never> = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()) {
+                purchasePlanResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never> = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>(),
+                submitReceiptResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never> = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+    ) {
         self.accountPlanProducts = accountPlanProducts
         _lowestPlan = lowestPlan
         _successfulRestorePublisher = successfulRestorePublisher
         _incompleteRestorePublisher = incompleteRestorePublisher
         _failedRestorePublisher = failedRestorePublisher
         _purchasePlanResultPublisher = purchasePlanResultPublisher
+        _submitReceiptResultPublisher = submitReceiptResultPublisher
     }
     
     public func accountPlanProducts() async -> [PlanEntity] {
@@ -52,6 +56,10 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
 
     public func purchasePlanResultPublisher() -> AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
         _purchasePlanResultPublisher.eraseToAnyPublisher()
+    }
+    
+    public var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
+        _submitReceiptResultPublisher.eraseToAnyPublisher()
     }
     
     public func purchasePlan(_ plan: PlanEntity) async {
