@@ -43,6 +43,9 @@ let package = Package(
                 .product(name: "FirebaseAppDistribution-Beta", package: "firebase-ios-sdk"),
                 "MEGARepo"
             ],
+            cxxSettings: [
+                .define("ENABLE_CHAT")
+            ],
             swiftSettings: settings),
         .target(
             name: "MEGASDKRepoMock",
