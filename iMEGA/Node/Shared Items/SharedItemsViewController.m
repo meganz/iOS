@@ -449,9 +449,7 @@
     }
 
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
-    
-    cell.nameLabel.text = node.name;
-    cell.nameLabel.textColor = UIColor.labelColor;
+    [cell configureNode:node.name isTakenDown:node.isTakenDown];
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdk.shared contactForEmail:userEmail];
@@ -494,8 +492,7 @@
     self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
     cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
-    cell.nameLabel.textColor = UIColor.labelColor;
-    cell.nameLabel.text = node.name;
+    [cell configureNode:node.name isTakenDown:node.isTakenDown];
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     NSString *userName;
