@@ -2,11 +2,10 @@ import MEGADomain
 import MEGAFoundation
 import MEGAPresentation
 import MEGASDKRepo
-import UIKit
 
 @MainActor
-@objc final class SharedItemsViewModel: NSObject {
-    
+@objc final class SharedItemsViewModel: NSObject, Sendable {
+
     private let router = SharedItemsViewRouter()
     private let shareUseCase: any ShareUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
@@ -66,7 +65,9 @@ import UIKit
         moveToRubbishBinViewModel.moveToRubbishBin(nodes: [node].toNodeEntities())
     }
 
-    @objc var isSearchUsingNodeDescriptionEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+    @objc func descriptionForNode(_ node: MEGANode, with searchText: String?) -> String? {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
+            let description = node.description, let searchText else { return nil }
+        return description.containsIgnoringCaseAndDiacritics(searchText: searchText) ? description : nil
     }
 }

@@ -1,9 +1,11 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
-@objc final class SearchNodeUseCaseOCWrapper: NSObject, Sendable {
-    let searchUC = SearchNodeUseCase(filesSearchRepository: FilesSearchRepository.newRepo)
-    
+@objc final class SharedItemsNodeSearcher: NSObject, Sendable {
+    let searchUC = SharedItemsSearchNodeUseCase(filesSearchRepository: FilesSearchRepository.newRepo)
+    let featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+
     @objc func searchOnInShares(text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
         try await search(type: .inShares, text: text, sortType: sortType)
     }
@@ -20,9 +22,13 @@ import MEGASDKRepo
         searchUC.cancelSearch()
         SVProgressHUD.dismiss()
     }
-    
-    private func search(type: SearchNodeTypeEntity, text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
-        let nodeArray = try await searchUC.search(type: type, text: text, sortType: sortType.toSortOrderEntity())
+
+    private func descriptionArgument(from searchText: String) -> String? {
+        featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? searchText : nil
+    }
+
+    private func search(type: SharedItemsSearchSourceTypeEntity, text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
+        let nodeArray = try await searchUC.search(type: type, text: text, description: descriptionArgument(from: text), sortType: sortType.toSortOrderEntity())
         return nodeArray.toMEGANodes(in: MEGASdk.shared)
     }
 }

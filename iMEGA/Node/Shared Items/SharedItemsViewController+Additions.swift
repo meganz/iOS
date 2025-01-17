@@ -117,7 +117,7 @@ extension SharedItemsViewController {
     }
 
     @objc func configureCellDescription(_ cell: SharedItemsTableViewCell, for node: MEGANode) {
-        cell.setNodeDescription(viewModel.isSearchUsingNodeDescriptionEnabled ? node.description : nil)
+        cell.setNodeDescription(viewModel.descriptionForNode(node, with: searchController.searchBar.text))
     }
 
     @objc func nodeCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> NodeTableViewCell {
@@ -125,8 +125,8 @@ extension SharedItemsViewController {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
         }
         
-        cell.configureCell(for: node, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
-        
+        cell.configureCell(for: node, searchText: searchController.searchBar.text, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
+
         cell.moreButtonAction = { [weak self] moreButton in
             guard let moreButton else { return }
             self?.showNodeActions(moreButton)

@@ -8,6 +8,17 @@ import MEGASDKRepoMock
 import XCTest
 
 final class SharedItemsViewModelTests: XCTestCase {
+    struct DescriptionForNodeTestData {
+        let isFeatureFlagEnabled: Bool
+        let nodeDescription: String?
+        let searchText: String?
+        let output: String?
+        static let flagDisabled = DescriptionForNodeTestData(isFeatureFlagEnabled: false, nodeDescription: "description", searchText: "desc", output: nil)
+        static let nodeDescriptionIsNil = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: nil, searchText: "desc", output: nil)
+        static let searchTextIsNil = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: nil, output: nil)
+        static let searchTextNotMatched = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: "a", output: nil)
+        static let searchTextMatched = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: "desc", output: "description")
+    }
     
     @MainActor
     func testAreMediaNodes_withNodes_true() async {
@@ -100,12 +111,19 @@ final class SharedItemsViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testIsSearchUsingNodeDescriptionEnabled_shouldReturnCorrectValues() async {
-        let input = [false, true]
-        input.forEach { enabled in
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.searchUsingNodeDescription: enabled])
+    func testDescriptionForNode_ShouldReturnCorrectValues() async {
+        let testData: [DescriptionForNodeTestData] = [
+            .flagDisabled,
+            .nodeDescriptionIsNil,
+            .searchTextIsNil,
+            .searchTextNotMatched,
+            .searchTextMatched
+        ]
+
+        testData.forEach { data in
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.searchUsingNodeDescription: data.isFeatureFlagEnabled])
             let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-            XCTAssertEqual(sut.isSearchUsingNodeDescriptionEnabled, enabled)
+            XCTAssertEqual(sut.descriptionForNode(MockNode(handle: 1, description: data.nodeDescription), with: data.searchText), data.output)
         }
     }
 
