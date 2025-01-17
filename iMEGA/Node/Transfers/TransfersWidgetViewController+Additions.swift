@@ -207,6 +207,11 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         completedTransfers.count > 0
     }
     
+    @objc
+    func isSaveInPhotosTransfer(_ transfer: MEGATransfer) -> Bool {
+        transfer.appData == TransferMetaDataEntity.saveInPhotos.rawValue
+    }
+    
     // MARK: - NavigationBarButtons
     @objc func updateNavBarButtonAppearance() {
         CrashlyticsLogger.log(category: .transfersWidget, "Updating Navigation bar button appearance. Navigation bar info: \(String(describing: navigationController?.navigationBar))")
