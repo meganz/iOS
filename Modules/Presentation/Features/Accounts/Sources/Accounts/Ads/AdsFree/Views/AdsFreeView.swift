@@ -7,6 +7,7 @@ import SwiftUI
 struct AdsFreeView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: AdsFreeViewModel
+    @State private var contentHeight: CGFloat? = .zero
     
     var body: some View {
         ZStack {
@@ -21,6 +22,7 @@ struct AdsFreeView: View {
                     bottomButtonsView
                         .padding(.bottom, 30)
                 }
+                .modifier(ConditionalFrameModifier(contentHeight: $contentHeight))
             }
             .task {
                 await viewModel.setUpLowestProPlan()
@@ -28,8 +30,9 @@ struct AdsFreeView: View {
             .onAppear {
                 viewModel.onAppear()
             }
-            .padding(.horizontal)
+            .frame(height: contentHeight)
             .frame(maxWidth: 768)
+            .padding(.horizontal)
         }
     }
     
@@ -47,26 +50,30 @@ struct AdsFreeView: View {
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
     
     private var contentsView: some View {
         VStack(spacing: 30) {
-            ProPlanFeatureView(
-                image: MEGAAssetsImageProvider.image(named: "storage"),
-                title: Strings.Localizable.Ads.AdFree.Content.GenerousStorage.title,
-                message: Strings.Localizable.Ads.AdFree.Content.GenerousStorage.message(viewModel.lowestProPlan.storage)
-            )
-            ProPlanFeatureView(
-                image: MEGAAssetsImageProvider.image(named: "pieChart"),
-                title: Strings.Localizable.Ads.AdFree.Content.TransferSharing.title,
-                message: Strings.Localizable.Ads.AdFree.Content.TransferSharing.message
-            )
-            ProPlanFeatureView(
-                image: MEGAAssetsImageProvider.image(named: "securityLock"),
-                title: Strings.Localizable.Ads.AdFree.Content.AdditionalSecurity.title,
-                message: Strings.Localizable.Ads.AdFree.Content.AdditionalSecurity.message
-            )
+            Group {
+                ProPlanFeatureView(
+                    image: MEGAAssetsImageProvider.image(named: "storage"),
+                    title: Strings.Localizable.Ads.AdFree.Content.GenerousStorage.title,
+                    message: Strings.Localizable.Ads.AdFree.Content.GenerousStorage.message(viewModel.lowestProPlan.storage)
+                )
+                ProPlanFeatureView(
+                    image: MEGAAssetsImageProvider.image(named: "pieChart"),
+                    title: Strings.Localizable.Ads.AdFree.Content.TransferSharing.title,
+                    message: Strings.Localizable.Ads.AdFree.Content.TransferSharing.message
+                )
+                ProPlanFeatureView(
+                    image: MEGAAssetsImageProvider.image(named: "securityLock"),
+                    title: Strings.Localizable.Ads.AdFree.Content.AdditionalSecurity.title,
+                    message: Strings.Localizable.Ads.AdFree.Content.AdditionalSecurity.message
+                )
+            }
+            .fixedSize(horizontal: false, vertical: true)
         }
     }
     
@@ -80,6 +87,28 @@ struct AdsFreeView: View {
                 viewModel.didTapSkipButton()
                 dismiss()
             }
+        }
+    }
+}
+
+private struct ConditionalFrameModifier: ViewModifier {
+    @Binding var contentHeight: CGFloat?
+    
+    @ViewBuilder
+    public func body(content: Content) -> some View {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            content
+                .frame(in: .local)
+                .onPreferenceChange(FramePreferenceKey.self) { value in
+                    Task { @MainActor in
+                        contentHeight = value.height
+                    }
+                }
+        } else {
+            content
+                .onFirstAppear(perform: {
+                    contentHeight = nil
+                })
         }
     }
 }
