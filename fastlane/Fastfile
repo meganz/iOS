@@ -136,6 +136,7 @@ platform :ios do
       scheme: SCHEME,
       configuration: "Debug",
       derived_data_path: "derivedData",
+      buildlog_path: "buildlog",
       cloned_source_packages_path: "SwiftPackages",
       skip_package_ipa: true,
       skip_archive: true,
