@@ -59,8 +59,8 @@ public struct AdsSlotView<T: View>: View {
             await viewModel.setupAdsRemoteFlag()
         }
         .onAppear {
-            viewModel.startMonitoringAdsSlotUpdates()
             viewModel.setupSubscriptions()
+            viewModel.startMonitoringAdsSlotUpdates()
         }
         .onDisappear {
             viewModel.stopMonitoringAdsSlotUpdates()
