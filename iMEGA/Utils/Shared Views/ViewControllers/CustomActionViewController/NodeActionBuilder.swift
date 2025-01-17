@@ -34,6 +34,7 @@ final class NodeActionBuilder {
     private var hasValidProOrUnexpiredBusinessAccount: Bool = false
     private var isHiddenNodesFeatureEnabled: Bool = false
     private var addToDestination: NodeActionAddToDestination = .none
+    private var isMediaFileSavedInPhotos: Bool = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -182,6 +183,11 @@ final class NodeActionBuilder {
     
     func setAddToDestination(_ destination: NodeActionAddToDestination) -> Self {
         self.addToDestination = destination
+        return self
+    }
+    
+    func setMediaFileSavedInPhotos(_ isSavedInPhotos: Bool) -> NodeActionBuilder {
+        self.isMediaFileSavedInPhotos = isSavedInPhotos
         return self
     }
     
@@ -353,7 +359,13 @@ final class NodeActionBuilder {
     }
     
     private func transfersNodeActions() -> [NodeAction] {
-        [.viewInFolderAction(), .shareLinkAction(), .clearAction()]
+        var nodeActions: [NodeAction] = []
+        if !isMediaFileSavedInPhotos {
+            nodeActions.append(.viewInFolderAction())
+        }
+        nodeActions.append(contentsOf: [.shareLinkAction(), .clearAction()])
+        
+        return nodeActions
     }
     
     private func transfersFailedNodeActions() -> [NodeAction] {

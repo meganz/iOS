@@ -250,6 +250,29 @@ struct NodeActionBuilderTestSuite {
             #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin])
         }
     }
+    
+    @Suite("When show actions for Transfers")
+    struct TransfersActionsTests {
+        
+        @Test(
+            "When the current Transfer is a 'Save To Photos' transfer or not",
+            arguments: [
+                (true, [MegaNodeActionType.shareLink, .clear]),
+                (false, [.viewInFolder, .shareLink, .clear])
+            ]
+        )
+        @MainActor func showActionsForSaveToPhotosTransfer(
+            isSavedToPhotos: Bool,
+            expectedActions: [MegaNodeActionType]
+        ) {
+            let actions = NodeActionBuilder()
+                .setDisplayMode(.transfers)
+                .setMediaFileSavedInPhotos(isSavedToPhotos)
+                .build()
+            
+            #expect(actions.types == expectedActions)
+        }
+    }
 }
 
 extension [NodeAction] {

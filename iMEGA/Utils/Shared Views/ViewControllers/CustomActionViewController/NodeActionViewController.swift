@@ -185,6 +185,23 @@ class NodeActionViewController: ActionSheetViewController {
                           isFromSharedItem: isFromSharedItem)
     }
     
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isBackupNode: Bool, isMediaFileSavedInPhotos: Bool = false, sender: Any) {
+        self.nodes = [node]
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.setupActions(
+            node: node,
+            displayMode: displayMode,
+            isBackupNode: isBackupNode,
+            isMediaFileSavedInPhotos: isMediaFileSavedInPhotos
+        )
+    }
+    
     @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare, shouldShowVerifyContact: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
@@ -436,7 +453,7 @@ class NodeActionViewController: ActionSheetViewController {
         return numberOfFilesAndFoldersString
     }
     
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false) {
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false, isMediaFileSavedInPhotos: Bool = false) {
         loadActions = { [self] in
             let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
             let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
@@ -476,6 +493,7 @@ class NodeActionViewController: ActionSheetViewController {
                     nodes: [node.toNodeEntity()],
                     from: displayMode,
                     isFromSharedItem: isFromSharedItem))
+                .setMediaFileSavedInPhotos(isMediaFileSavedInPhotos)
                 .build()
             
             update(actions: actions, sender: self.sender)
