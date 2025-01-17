@@ -20,6 +20,7 @@ let package = Package(
             targets: ["ChatRepoMock"])
     ],
     dependencies: [
+        .package(path: "../../DataSource/MEGASdk"),
         .package(path: "../../DataSource/MEGAChatSdk"),
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Repository/MEGASDKRepo"),
@@ -31,7 +32,11 @@ let package = Package(
             dependencies: [
                 "MEGADomain",
                 "MEGAChatSdk",
+                "MEGASdk",
                 "MEGASDKRepo"
+            ],
+            cxxSettings: [
+                .define("ENABLE_CHAT")
             ],
             swiftSettings: settings
         ),

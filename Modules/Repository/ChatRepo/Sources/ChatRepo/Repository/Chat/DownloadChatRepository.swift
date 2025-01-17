@@ -27,9 +27,21 @@ public struct DownloadChatRepository: DownloadChatRepositoryProtocol {
         to url: URL,
         metaData: TransferMetaDataEntity?
     ) async throws -> TransferEntity {
-        guard let node = chatSdk.chatNode(handle: nodeHandle, messageId: messageId, chatId: chatId) else {
+        guard let chatRoom = chatSdk.chatRoom(forChatId: chatId),
+              var node = chatSdk.chatNode(handle: nodeHandle, messageId: messageId, chatId: chatId) else {
             throw TransferErrorEntity.couldNotFindNodeByHandle
         }
+        
+        /// If node to download is in chat link that user is previewing (haven't joined),
+        /// it is mandatory to authorise the node before downloading.
+        if chatRoom.isPreview,
+           let authorizationToken = chatRoom.authorizationToken {
+            guard let authNode = sdk.authorizeChatNode(node, cauth: authorizationToken) else {
+                throw TransferErrorEntity.authorizeNodeFailed
+            }
+            node = authNode
+        }
+        
         return try await withAsyncThrowingValue { completion in
             sdk.startDownloadNode(
                 node,
