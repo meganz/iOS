@@ -145,7 +145,7 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
         let expectedError = AccountPlanErrorEntity(errorCode: 1, errorMessage: "TestError")
         
-        let exp = expectation(description: "Should receive success purchase result")
+        let exp = expectation(description: "Should receive failed purchase result")
         sut.purchasePlanResultPublisher
             .sink { result in
                 switch result {
@@ -159,6 +159,27 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
             }.store(in: &subscriptions)
         
         sut.failedPurchase(expectedError.errorCode, message: expectedError.errorMessage)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    // MARK: Submit receipt
+    func testSubmitReceiptPublisher_failedResult_shouldSendToPublisher() {
+        let sut = AccountPlanPurchaseRepository(purchase: MockMEGAPurchase(), sdk: MockSdk())
+        let expectedError = AccountPlanErrorEntity(errorCode: -11, errorMessage: nil)
+        
+        let exp = expectation(description: "Should receive failed submit receipt result")
+        sut.submitReceiptResultPublisher
+            .sink { result in
+                switch result {
+                case .success:
+                    XCTFail("Expecting an error but got a success.")
+                case .failure(let error):
+                    XCTAssertEqual(error.errorCode, expectedError.errorCode)
+                }
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.failedSubmitReceipt(expectedError.errorCode)
         wait(for: [exp], timeout: 1)
     }
 }

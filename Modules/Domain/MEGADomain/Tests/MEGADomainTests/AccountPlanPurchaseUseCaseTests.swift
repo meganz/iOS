@@ -12,14 +12,16 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
         successfulRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
         incompleteRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
         failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> = Empty().eraseToAnyPublisher(),
-        purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher()
+        purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher(),
+        submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher()
     ) -> (sut: AccountPlanPurchaseUseCase<MockAccountPlanPurchaseRepository>, repository: MockAccountPlanPurchaseRepository) {
         let mockRepo = MockAccountPlanPurchaseRepository(
             plans: plans,
             successfulRestorePublisher: successfulRestorePublisher,
             incompleteRestorePublisher: incompleteRestorePublisher,
             failedRestorePublisher: failedRestorePublisher,
-            purchasePlanResultPublisher: purchasePlanResultPublisher
+            purchasePlanResultPublisher: purchasePlanResultPublisher,
+            submitReceiptResultPublisher: submitReceiptResultPublisher
         )
         return (AccountPlanPurchaseUseCase(repository: mockRepo), mockRepo)
     }
@@ -169,20 +171,41 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
         let expectedError = AccountPlanErrorEntity(errorCode: 1, errorMessage: "TestError")
         let (sut, _) = makeSUT(purchasePlanResultPublisher: purchasePlanResultPublisher.eraseToAnyPublisher())
         
-        let exp = expectation(description: "Should receive success result from purchasePlanResultPublisher")
+        let exp = expectation(description: "Should receive failed result from purchasePlanResultPublisher")
         sut.purchasePlanResultPublisher()
             .sink { result in
-                switch result {
-                case .success:
+                guard case .failure(let error) = result else {
                     XCTFail("Expecting an error but got a success.")
-                case .failure(let error):
-                    XCTAssertEqual(error.errorCode, expectedError.errorCode)
-                    XCTAssertEqual(error.errorMessage, expectedError.errorMessage)
+                    return
                 }
+                XCTAssertEqual(error.errorCode, expectedError.errorCode)
+                XCTAssertEqual(error.errorMessage, expectedError.errorMessage)
                 exp.fulfill()
             }.store(in: &subscriptions)
         
         purchasePlanResultPublisher.send(.failure(expectedError))
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    // MARK: - Submit receipt
+    
+    func testSubmitReceiptPublisher_failedResult_shouldSendToPublisher() {
+        let submitReceiptResultPublisher = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+        let expectedError = AccountPlanErrorEntity(errorCode: -11, errorMessage: nil)
+        let (sut, _) = makeSUT(submitReceiptResultPublisher: submitReceiptResultPublisher.eraseToAnyPublisher())
+        
+        let exp = expectation(description: "Should receive failed result from submitReceiptResultPublisher")
+        sut.submitReceiptResultPublisher
+            .sink { result in
+                guard case .failure(let error) = result else {
+                    XCTFail("Expecting an error but got a success.")
+                    return
+                }
+                XCTAssertEqual(error.errorCode, expectedError.errorCode)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        submitReceiptResultPublisher.send(.failure(expectedError))
+        wait(for: [exp], timeout: 1)
     }
 }

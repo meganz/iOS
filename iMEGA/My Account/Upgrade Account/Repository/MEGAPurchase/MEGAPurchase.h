@@ -40,6 +40,7 @@
 
 @optional
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage;
+- (void)failedSubmitReceipt:(NSInteger)errorCode;
 
 @end
 

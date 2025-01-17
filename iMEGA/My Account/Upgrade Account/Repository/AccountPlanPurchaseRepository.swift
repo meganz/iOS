@@ -33,6 +33,12 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         purchasePlanResultSourcePublisher.eraseToAnyPublisher()
     }
     
+    private let submitReceiptResultSourcePublisher = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+    var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
+        submitReceiptResultSourcePublisher
+            .eraseToAnyPublisher()
+    }
+    
     init(purchase: MEGAPurchase, sdk: MEGASdk) {
         self.purchase = purchase
         self.sdk = sdk
@@ -123,4 +129,10 @@ extension AccountPlanPurchaseRepository: MEGAPurchaseDelegate {
         let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: errorMessage)
         purchasePlanResultSourcePublisher.send(.failure(error))
     }
+    
+    func failedSubmitReceipt(_ errorCode: Int) {
+        let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: nil)
+        submitReceiptResultSourcePublisher.send(.failure(error))
+    }
+    
 }

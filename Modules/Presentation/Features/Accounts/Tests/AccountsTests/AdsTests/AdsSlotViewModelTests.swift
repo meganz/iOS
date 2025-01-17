@@ -95,6 +95,80 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(sut.startAds, true)
     }
     
+    // MARK: - Submit receipt
+    @MainActor func testSubmitReceiptResultPublisher_successResult_shouldKeepAdsDisplayStatus() async {
+        await assertSubmitReceiptResultPublisher(
+            result: .success,
+            currentAdsSlotConfig: randomAdsSlotConfig,
+            currentIsExternalAdsFlagEnabled: false,
+            shouldCheckAdsDisplay: false,
+            expectedIsExternalAdsEnabled: false,
+            expectedDisplayAds: false
+        )
+    }
+    
+    @MainActor func testSubmitReceiptResultPublisher_failedResult_shouldRecheckAdsDisplayStatus() async {
+        // When a user has successfully purchased a plan from Upgrade page but received failed result on submitting the receipt.
+        // In this case, ads should show again if isExternalAdsFlagEnabled's actual value is true.
+        let adsSlot = randomAdsSlotConfig
+        await assertSubmitReceiptResultPublisher(
+            result: .failure(.init(errorCode: -11, errorMessage: nil)),
+            currentAdsSlotConfig: adsSlot,
+            currentIsExternalAdsFlagEnabled: false, // When user has purchased a plan, isExternalAdsEnabled is automatically set to false.
+            shouldCheckAdsDisplay: true,
+            expectedIsExternalAdsEnabled: true, // Actual value of isExternalAdsEnabled of the account.
+            expectedDisplayAds: adsSlot.displayAds
+        )
+    }
+
+    @MainActor private func assertSubmitReceiptResultPublisher(
+        result: Result<Void, AccountPlanErrorEntity>,
+        currentAdsSlotConfig: AdsSlotConfig,
+        currentIsExternalAdsFlagEnabled: Bool,
+        shouldCheckAdsDisplay: Bool,
+        expectedIsExternalAdsEnabled: Bool,
+        expectedDisplayAds: Bool,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        let submitReceiptResultPublisher = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+        let sut = makeSUT(
+            purchaseUseCase: MockAccountPlanPurchaseUseCase(
+                submitReceiptResultPublisher: submitReceiptResultPublisher
+            ),
+            isExternalAdsFlagEnabled: expectedIsExternalAdsEnabled
+        )
+        await sut.setupAdsRemoteFlag()
+        sut.updateAdsSlot(currentAdsSlotConfig)
+        sut.isExternalAdsEnabled = currentIsExternalAdsFlagEnabled
+        sut.setupSubscriptions()
+        
+        let isExternalAdsEnabledExp = expectation(description: "isExternalAdsEnabled should be \(expectedIsExternalAdsEnabled)")
+        isExternalAdsEnabledExp.isInverted = !shouldCheckAdsDisplay
+        sut.$isExternalAdsEnabled
+            .dropFirst()
+            .sink { _ in
+                isExternalAdsEnabledExp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        let displayAdsExp = expectation(description: "displayAds should be \(expectedDisplayAds)")
+        displayAdsExp.isInverted = !shouldCheckAdsDisplay
+        sut.$displayAds
+            .dropFirst()
+            .sink { _ in
+                displayAdsExp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        submitReceiptResultPublisher.send(result)
+        
+        await fulfillment(of: [isExternalAdsEnabledExp, displayAdsExp], timeout: 1.0)
+        
+        XCTAssertEqual(sut.isExternalAdsEnabled, expectedIsExternalAdsEnabled, file: file, line: line)
+        XCTAssertEqual(sut.displayAds, expectedDisplayAds, file: file, line: line)
+    }
+    
     // MARK: - Ads slot
     @MainActor func testSetupAdsRemoteFlag_whenAccountIsNotFree_shouldDisableExternalAds() async throws {
         let billedAccountTypes = AccountTypeEntity.allCases.filter({ $0 != .free })
@@ -301,7 +375,8 @@ final class AdsSlotViewModelTests: XCTestCase {
     
     // MARK: Helper
     @MainActor private func makeSUT(
-        adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol = MockAdsSlotUpdatesProvider(),
+        adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol = MockAdsSlotUpdatesProvider(),
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol = MockAccountPlanPurchaseUseCase(),
         adsList: [String: String] = [:],
         isExternalAdsFlagEnabled: Bool = true,
         adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
@@ -320,7 +395,7 @@ final class AdsSlotViewModelTests: XCTestCase {
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult),
-            purchaseUseCase: MockAccountPlanPurchaseUseCase(),
+            purchaseUseCase: purchaseUseCase,
             preferenceUseCase: MockPreferenceUseCase(),
             tracker: tracker,
             adsFreeViewProPlanAction: {},

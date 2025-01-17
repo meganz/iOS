@@ -60,9 +60,22 @@ final public class AdsSlotViewModel: ObservableObject {
         self.notificationCenter = notificationCenter
         
         $lastCloseAdsDate.useCase = preferenceUseCase
+        registerDelegates()
     }
 
     // MARK: Setup
+    deinit {
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.deRegisterPurchaseDelegate()
+        }
+    }
+    
+    private func registerDelegates() {
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.registerPurchaseDelegate()
+        }
+    }
+    
     func setupSubscriptions() {
         notificationCenter
             .publisher(for: .accountDidPurchasedPlan)
@@ -74,7 +87,26 @@ final public class AdsSlotViewModel: ObservableObject {
                     guard let self else { return }
                     isExternalAdsEnabled = false
                     showAdsFreeView = false
-                    updateAdsSlot()
+                    displayAds = false
+                }
+            }
+            .store(in: &subscriptions)
+        
+        purchaseUseCase.submitReceiptResultPublisher
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self, case .failure = result else { return }
+                
+                // For failed receipt submission, check if ads should appear.
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    await setupAdsRemoteFlag()
+                    
+                    if isExternalAdsEnabled == true {
+                        displayAds = adsSlotConfig?.displayAds ?? false
+                    } else {
+                        displayAds = false
+                    }
                 }
             }
             .store(in: &subscriptions)
