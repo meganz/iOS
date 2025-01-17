@@ -310,6 +310,12 @@
         if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             //MEGAErrorTypeApiEExist is skipped because if a user is downgrading its subscription, this error will be returned by the API, because the receipt does not contain any new information.
             if (error.type != MEGAErrorTypeApiEExist) {
+                for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
+                    if ([purchaseDelegate respondsToSelector:@selector(failedSubmitReceipt:)]) {
+                        [purchaseDelegate failedSubmitReceipt:error.type];
+                    }
+                }
+                
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:LocalizedString(@"wrongPurchase", @"Error message shown when the purchase has failed"), error.name, (long)error.type]];
             }
         }

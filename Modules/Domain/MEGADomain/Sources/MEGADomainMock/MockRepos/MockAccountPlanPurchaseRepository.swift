@@ -7,6 +7,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
     public let incompleteRestorePublisher: AnyPublisher<Void, Never>
     public let failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never>
     public let purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never>
+    public let submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never>
     public var registerRestoreDelegateCalled = 0
     public var deRegisterRestoreDelegateCalled = 0
     public var restorePurchaseCalled = 0
@@ -22,12 +23,15 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
                 successfulRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
                 incompleteRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
                 failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> = Empty().eraseToAnyPublisher(),
-                purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher()) {
+                purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher(),
+                submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher()
+    ) {
         self.plans = plans
         self.successfulRestorePublisher = successfulRestorePublisher
         self.incompleteRestorePublisher = incompleteRestorePublisher
         self.failedRestorePublisher = failedRestorePublisher
         self.purchasePlanResultPublisher = purchasePlanResultPublisher
+        self.submitReceiptResultPublisher = submitReceiptResultPublisher
     }
     
     public func accountPlanProducts() -> [PlanEntity] {
