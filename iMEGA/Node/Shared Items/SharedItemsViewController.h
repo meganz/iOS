@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell, SearchNodeUseCaseOCWrapper, TaskOCWrapper;
+@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell, SharedItemsNodeSearcher, TaskOCWrapper;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray<MEGAShare *> *searchUnverifiedSharesArray;
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *searchUnverifiedNodesArray;
 
-@property (nonatomic, strong, nullable) SearchNodeUseCaseOCWrapper *searchNodeUseCaseOCWrapper;
+@property (nonatomic, strong, nullable) SharedItemsNodeSearcher *nodeSearcher;
 
 @property (nonatomic, strong) NSMutableArray *incomingNodesMutableArray;
 @property (nonatomic, strong) NSMutableArray *outgoingNodesMutableArray;

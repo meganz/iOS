@@ -3,7 +3,7 @@ import MEGADomainMock
 import XCTest
 
 final class SearchNodeUseCaseTests: XCTestCase {
-    var searchNodeUC: (any SearchNodeUseCaseProtocol)!
+    var searchNodeUC: (any SharedItemsSearchNodeUseCaseProtocol)!
     var filesSearchRepo: MockFilesSearchRepository!
     var searchText: String!
     
@@ -15,7 +15,7 @@ final class SearchNodeUseCaseTests: XCTestCase {
             .publicLink: [NodeEntity(name: "Node5", handle: 5, isFile: true), NodeEntity(name: "Node6", handle: 6, isFile: true)]
         ]
         filesSearchRepo = MockFilesSearchRepository(nodesForLocation: nodesForLocation)
-        searchNodeUC = SearchNodeUseCase(filesSearchRepository: filesSearchRepo)
+        searchNodeUC = SharedItemsSearchNodeUseCase(filesSearchRepository: filesSearchRepo)
         searchText = ""
     }
     
@@ -26,9 +26,9 @@ final class SearchNodeUseCaseTests: XCTestCase {
     }
     
     func testSearch_foundResults() async throws {
-        try await expectResults([1, 2], whenSearchingFor: "Node", searchNodeType: .inShares)
-        try await expectResults([3, 4], whenSearchingFor: "Node", searchNodeType: .outShares)
-        try await expectResults([5, 6], whenSearchingFor: "Node", searchNodeType: .publicLinks)
+        try await expectResults([1, 2], whenSearchingFor: "Node", description: "Desc", searchNodeType: .inShares)
+        try await expectResults([3, 4], whenSearchingFor: "Node", description: "Desc", searchNodeType: .outShares)
+        try await expectResults([5, 6], whenSearchingFor: "Node", description: "Desc", searchNodeType: .publicLinks)
     }
     
     func testCancelSearch() async throws {
@@ -36,8 +36,8 @@ final class SearchNodeUseCaseTests: XCTestCase {
         XCTAssertTrue(filesSearchRepo.hasCancelSearchCalled)
     }
     
-    private func expectResults(_ nodeHandles: [HandleEntity], whenSearchingFor searchText: String, searchNodeType: SearchNodeTypeEntity) async throws {
-        let nodes = try await searchNodeUC.search(type: searchNodeType, text: searchText, sortType: .defaultAsc)
+    private func expectResults(_ nodeHandles: [HandleEntity], whenSearchingFor searchText: String, description: String?, searchNodeType: SharedItemsSearchSourceTypeEntity) async throws {
+        let nodes = try await searchNodeUC.search(type: searchNodeType, text: searchText, description: description, sortType: .defaultAsc)
         XCTAssertEqual(nodes.map(\.handle), nodeHandles)
     }
 }

@@ -9,12 +9,12 @@ extension SharedItemsViewController: UISearchBarDelegate {
     @objc func updateSearchResults(searchString: String, showsHUD: Bool = true) {
         if searchController.isActive {
             if searchString.count < kMinimumLettersToStartTheSearch {
-                searchNodeUseCaseOCWrapper?.cancelSearch()
+                nodeSearcher?.cancelSearch()
                 cancelSearchTask()
                 loadDefaultSharedItems()
             } else {
-                if searchNodeUseCaseOCWrapper == nil {
-                    searchNodeUseCaseOCWrapper = SearchNodeUseCaseOCWrapper()
+                if nodeSearcher == nil {
+                    nodeSearcher = SharedItemsNodeSearcher()
                 }
                 
                 viewModel.searchDebouncer.start { [weak self] in
@@ -22,9 +22,9 @@ extension SharedItemsViewController: UISearchBarDelegate {
                 }
             }
         } else {
-            searchNodeUseCaseOCWrapper?.cancelSearch()
+            nodeSearcher?.cancelSearch()
+            reloadUI()
         }
-        reloadUI()
     }
     
     @objc func loadDefaultSharedItems() {
@@ -70,7 +70,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
     }
 
     @objc func search(by searchText: String, showsHUD: Bool) {
-        guard let searchNodeUseCaseOCWrapper else { return }
+        guard let nodeSearcher else { return }
         if searchTask == nil {
             searchTask = .init()
         }
@@ -79,13 +79,13 @@ extension SharedItemsViewController: UISearchBarDelegate {
         searchTask?.task = Task { @MainActor in
             if incomingButton?.isSelected ?? false {
                 searchUnverifiedNodes(key: searchText)
-                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnInShares)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: nodeSearcher.searchOnInShares)
             } else if outgoingButton?.isSelected ?? false {
                 searchUnverifiedNodes(key: searchText)
-                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnOutShares)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: nodeSearcher.searchOnOutShares)
             } else if linksButton?.isSelected ?? false {
                 searchUnverifiedNodesArray.removeAllObjects()
-                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnPublicLinks)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, showsHUD: showsHUD, asyncSearchClosure: nodeSearcher.searchOnPublicLinks)
             }
         }
     }
@@ -100,8 +100,8 @@ extension SharedItemsViewController: UISearchBarDelegate {
         searchUnverifiedNodesArray.removeAllObjects()
         searchUnverifiedSharesArray.removeAllObjects()
         
-        searchNodeUseCaseOCWrapper?.cancelSearch()
-        searchNodeUseCaseOCWrapper = nil
+        nodeSearcher?.cancelSearch()
+        nodeSearcher = nil
         
         loadDefaultSharedItems()
         
