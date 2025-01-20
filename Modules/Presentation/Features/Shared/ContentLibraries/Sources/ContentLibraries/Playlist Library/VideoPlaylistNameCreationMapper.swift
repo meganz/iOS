@@ -1,8 +1,8 @@
 import MEGAL10n
 
-enum VideoPlaylistNameCreationMapper {
+public enum VideoPlaylistNameCreationMapper {
     
-    static func videoPlaylistName(from newName: String?, from source: [String]) -> String {
+    public static func videoPlaylistName(from newName: String?, from source: [String]) -> String {
         let baseName = baseName(from: newName)
         
         if source.notContains(baseName) {

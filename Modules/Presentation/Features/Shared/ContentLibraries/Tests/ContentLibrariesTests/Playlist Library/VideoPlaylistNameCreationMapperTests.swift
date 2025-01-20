@@ -1,5 +1,5 @@
+@testable import ContentLibraries
 import MEGAL10n
-@testable import Video
 import XCTest
 
 final class VideoPlaylistNameCreationMapperTests: XCTestCase {
