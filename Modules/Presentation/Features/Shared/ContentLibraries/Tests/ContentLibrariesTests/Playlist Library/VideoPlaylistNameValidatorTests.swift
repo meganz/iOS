@@ -1,6 +1,6 @@
+@testable import ContentLibraries
 import MEGAL10n
 import MEGASwiftUI
-@testable import Video
 import XCTest
 
 final class VideoPlaylistNameValidatorTests: XCTestCase {

@@ -4,21 +4,25 @@ import MEGAL10n
 import MEGASwiftUI
 
 @MainActor
-struct VideoPlaylistNameValidator {
-    let existingVideoPlaylistNames: @MainActor () -> [String]
+public struct VideoPlaylistNameValidator {
+    private let existingVideoPlaylistNames: @MainActor () -> [String]
+    
+    public init(existingVideoPlaylistNames: @MainActor @escaping () -> [String]) {
+        self.existingVideoPlaylistNames = existingVideoPlaylistNames
+    }
     
     enum ValidatorError: Error {
         case emptyName
     }
     
-    func validateWhenCreated(with name: String?) throws -> TextFieldAlertError? {
+    public func validateWhenCreated(with name: String?) throws -> TextFieldAlertError? {
         guard let name = name?.trim, name.isNotEmpty else {
             throw ValidatorError.emptyName
         }
         return validate(name)
     }
     
-    func validateWhenRenamed(into name: String?) -> TextFieldAlertError? {
+    public func validateWhenRenamed(into name: String?) -> TextFieldAlertError? {
         guard let name = name?.trim, name.isNotEmpty else {
             return TextFieldAlertError(title: "", description: "")
         }

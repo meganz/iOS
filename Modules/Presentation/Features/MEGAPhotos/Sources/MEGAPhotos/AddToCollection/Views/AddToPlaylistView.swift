@@ -8,15 +8,16 @@ struct AddToPlaylistView: View {
     
     var body: some View {
         VStack {
-            NewPlaylistView {
-                
-            }
+            NewPlaylistView(
+                addPlaylistAction: viewModel.onCreatePlaylistTapped)
             
             contentView
                 .overlay(VideoListPlaceholderView(
                     isActive: !viewModel.isVideoPlayListsLoaded))
                 .padding(.horizontal, TokenSpacing._3)
         }
+        .alert(isPresented: $viewModel.showCreatePlaylistAlert,
+               viewModel.alertViewModel())
     }
     
     private var contentView: some View {
@@ -26,6 +27,9 @@ struct AddToPlaylistView: View {
             didSelectMoreOptionForItem: { _ in})
         .task {
             await viewModel.loadVideoPlaylists()
+        }
+        .task {
+            await viewModel.monitorPlaylistUpdates()
         }
     }
 }
