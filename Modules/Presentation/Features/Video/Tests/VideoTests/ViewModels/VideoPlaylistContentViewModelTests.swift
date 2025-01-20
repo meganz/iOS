@@ -985,6 +985,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         let exp = expectation(description: "listen for event")
         var receivedMessages: [MockVideoPlaylistModificationUseCase.Message]?
         let cancellable = videoPlaylistModificationUseCase.$publishedMessages
+            .receive(on: DispatchQueue.main)
             .sink { messages in
                 receivedMessages = messages
                 exp.fulfill()
@@ -1021,6 +1022,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         exp.assertForOverFulfill = false
         var receivedMessages: [MockVideoPlaylistModificationUseCase.Message]?
         let cancellable = videoPlaylistModificationUseCase.$publishedMessages
+            .receive(on: DispatchQueue.main)
             .sink { messages in
                 receivedMessages = messages
                 exp.fulfill()

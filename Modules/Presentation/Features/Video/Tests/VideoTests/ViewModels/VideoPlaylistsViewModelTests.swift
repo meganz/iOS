@@ -32,6 +32,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         let cancellable = await videoPlaylistUseCase
             .invocationsStore
             .$invocations
+            .receive(on: DispatchQueue.main)
             .filter { $0.count >= 2 }
             .sink { messages in
                 XCTAssertTrue(messages.contains(.systemVideoPlaylists))
