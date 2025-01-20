@@ -127,14 +127,14 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         
         do {
             let sortOrderChangedSequence = sortOrderPreferenceUseCase.monitorSortOrder(for: . videoPlaylistContent)
-                .compactMap {  [weak self] (sortOrder: SortOrderEntity) -> SortOrderEntity? in
+                .values
+                .compactMap { [weak self] (sortOrder: SortOrderEntity) -> SortOrderEntity? in
                     guard let self else {
                         return nil
                     }
-                    return doesSupport(sortOrder) ? sortOrder : .defaultAsc
+                    return await doesSupport(sortOrder) ? sortOrder : .defaultAsc
                 }
                 .removeDuplicates()
-                .values
             
             let anyVideoPlaylistUpdateSequence = combineLatest(
                 videoPlaylistContentsUseCase.monitorVideoPlaylist(for: videoPlaylistEntity),
