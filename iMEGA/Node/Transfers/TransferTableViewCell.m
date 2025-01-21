@@ -1,5 +1,4 @@
 #import "TransferTableViewCell.h"
-#import "MEGAPauseTransferRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
@@ -351,7 +350,10 @@
 
 - (IBAction)pauseTransfer:(id)sender {
     if (self.transfer) {
-        MEGAPauseTransferRequestDelegate *pauseTransferDelegate = [[MEGAPauseTransferRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        RequestDelegate *pauseTransferDelegate = [[RequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+            if (error.type != MEGAErrorTypeApiOk) {
+                return;
+            }
             MEGATransfer *transfer = [MEGASdk.shared transferByTag:self.transfer.tag];
             if (transfer) {
                 self.transfer = transfer;
