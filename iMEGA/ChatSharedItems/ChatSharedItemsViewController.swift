@@ -214,7 +214,11 @@ class ChatSharedItemsViewController: UIViewController {
         sendToVC.messages = messages
         sendToVC.sourceChatId = chatRoom.chatId
         sendToVC.completion = { [weak self] _, _ in
-            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.Message.forwardMessage(messages.count))
+            if messages.count == 1 {
+                SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.forwardedMessage)
+            } else {
+                SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.forwardedMessages)
+            }
             self?.cancelSelectTapped()
         }
         present(sendToNC, animated: true, completion: nil)

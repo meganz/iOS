@@ -1622,8 +1622,10 @@
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Forward";
-/* Success message shown after forwarding messages to other chats */
-"messagesSent"="Messages sent";
+/* Success message shown after forwarding a message to other chat(s) */
+"chat.forwardedMessage"="Message sent";
+/* Success message shown after forwarding messages to other chat(s) */
+"chat.forwardedMessages"="Messages sent";
 /* Title of archived chats button */
 "archivedChats"="Archived";
 /* Confirmation message on archive chat dialog for user to confirm. */
