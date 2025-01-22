@@ -35,21 +35,11 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     self.numberOfRequests--;
     
-    if (error.type) {        
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        if ((error.type == MEGAErrorTypeApiEBusinessPastDue) || (error.type == MEGAErrorTypeApiEOverQuota)) {
-            [SVProgressHUD dismiss];
-        } else {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
-        }
+    if (error.type != MEGAErrorTypeApiEBusinessPastDue && error.type != MEGAErrorTypeApiEOverQuota) {
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
         return;
     }
     

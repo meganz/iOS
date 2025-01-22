@@ -7,6 +7,8 @@ import MEGAPresentation
 import MEGASDKRepo
 import MEGAUIKit
 
+let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
+
 extension MainTabBarController {
     @objc func makeHomeViewController() -> UIViewController {
         HomeScreenFactory().createHomeScreen(
@@ -265,5 +267,20 @@ extension MainTabBarController: MEGANavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController!, willShow viewController: UIViewController!, animated: Bool) {
         guard let psaViewModel else { return }
         hidePSAView(viewController.hidesBottomBarWhenPushed, psaViewModel: psaViewModel)
+    }
+}
+
+// MARK: - MEGAGlobalDelegate
+extension MainTabBarController: MEGAGlobalDelegate {
+    public func onEvent(_ api: MEGASdk, event: MEGAEvent) {
+        if event.type == .reqStatProgress {
+            if event.number == 0 {
+                requestStatusProgressWindowManager.showProgressView(with: RequestStatusProgressViewModel(requestStatProgressUseCase: RequestStatProgressUseCase(repo: EventRepository.newRepo)))
+            }
+            
+            if event.number == -1 {
+                requestStatusProgressWindowManager.hideProgressView()
+            }
+        }
     }
 }
