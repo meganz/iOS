@@ -72,21 +72,26 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isMovingFromParent || isBeingDismissed || presentingViewController?.isBeingDismissed == true {
-            viewModel.dispatch(.viewDidDissapear(reason: .userInitiatedDismissal))
+            viewModel.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
         } else {
             if let selectedNodeActionTypeEntity, isSelectingSupportedNodeActionType(selectedNodeActionTypeEntity) {
-                viewModel.dispatch(.viewDidDissapear(reason: .systemPushedAnotherView))
+                viewModel.dispatch(.viewWillDisappear(reason: .systemPushedAnotherView))
             } else {
-                viewModel.dispatch(.viewDidDissapear(reason: .userInitiatedDismissal))
+                viewModel.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
             }
             selectedNodeActionTypeEntity = nil
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.dispatch(.viewDidDisappear)
+    }
+    
     /// Overriding dismiss function to detect dismissal of current view controller triggered from navigation controller's dismissal
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         super.dismiss(animated: flag, completion: completion)
-        viewModel.dispatch(.viewDidDissapear(reason: .userInitiatedDismissal))
+        viewModel.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
     }
     
     deinit {
