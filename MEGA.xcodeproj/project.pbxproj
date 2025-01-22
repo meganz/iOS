@@ -1709,6 +1709,7 @@
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */; };
 		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
+		A8C21FF92CEB7E5C001730B7 /* RequestStatusProgressWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C21FF72CEB7E5C001730B7 /* RequestStatusProgressWindowManager.swift */; };
 		A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		A8C6494B2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C6494A2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift */; };
 		A8C894452D27F48200F18E40 /* SendToChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C894442D27F47500F18E40 /* SendToChatActivity.swift */; };
@@ -4446,6 +4447,7 @@
 		A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineCollectionViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		A8C21FF72CEB7E5C001730B7 /* RequestStatusProgressWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStatusProgressWindowManager.swift; sourceTree = "<group>"; };
 		A8C262971FA0B4A2006172CE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -7001,6 +7003,7 @@
 				C4B97D8B2B77916500EBA9E5 /* RandomNumberGenerator */,
 				25AD36E62BD882E0004DCF3B /* RepoExtensions */,
 				9441533028E4609B005EF5F9 /* ReportIssue */,
+				A8C21FF82CEB7E5C001730B7 /* RequestStatusProgress */,
 				5D664364249CB0DB00CE9BD1 /* SDKService */,
 				94CD25A72ACD7A090079FABD /* Search */,
 				8371D2A52899331300D0972F /* ShareActivityUtils */,
@@ -10805,6 +10808,14 @@
 				835CE8482AA886B200861544 /* waitingRoomEvent.wav */,
 			);
 			path = Audios;
+			sourceTree = "<group>";
+		};
+		A8C21FF82CEB7E5C001730B7 /* RequestStatusProgress */ = {
+			isa = PBXGroup;
+			children = (
+				A8C21FF72CEB7E5C001730B7 /* RequestStatusProgressWindowManager.swift */,
+			);
+			path = RequestStatusProgress;
 			sourceTree = "<group>";
 		};
 		A8C81E2A29841C9500C794E9 /* MEGASDK */ = {
@@ -15349,6 +15360,7 @@
 				A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */,
 				A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */,
 				2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */,
+				A8C21FF92CEB7E5C001730B7 /* RequestStatusProgressWindowManager.swift in Sources */,
 				9480283A2B6C2741002B4EB4 /* ResourceInfoView.swift in Sources */,
 				9480283C2B6C274A002B4EB4 /* ResourceInfoViewModel.swift in Sources */,
 				9480283E2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift in Sources */,
