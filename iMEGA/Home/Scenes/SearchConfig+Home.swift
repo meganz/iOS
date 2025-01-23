@@ -111,6 +111,7 @@ extension SearchConfig {
                 titleTextColor: UIColor.primaryTextColor().swiftUI,
                 subtitleTextColor: TokenColors.Text.secondary.swiftUI,
                 nodeDescriptionTextNormalColor: TokenColors.Text.secondary.swiftUI,
+                textHighlightColor: TokenColors.Notifications.notificationSuccess.swiftUI,
                 vibrantColor: TokenColors.Text.error.swiftUI,
                 resultPropertyColor: TokenColors.Icon.secondary.swiftUI,
                 verticalThumbnailFooterText: TokenColors.Text.primary.swiftUI,

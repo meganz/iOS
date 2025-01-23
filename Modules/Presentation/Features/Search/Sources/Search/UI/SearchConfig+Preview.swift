@@ -67,6 +67,7 @@ extension SearchConfig.ColorAssets {
         titleTextColor: Color.primary,
         subtitleTextColor: Color.secondary,
         nodeDescriptionTextNormalColor: Color.secondary,
+        textHighlightColor: .gray,
         vibrantColor: Color.red,
         resultPropertyColor: .gray, 
         verticalThumbnailFooterText: .white,
