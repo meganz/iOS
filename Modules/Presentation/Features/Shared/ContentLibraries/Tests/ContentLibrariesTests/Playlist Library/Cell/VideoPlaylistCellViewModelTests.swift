@@ -5,6 +5,7 @@ import MEGADomainMock
 import MEGAPresentationMock
 import MEGATest
 import SwiftUI
+import Testing
 import XCTest
 
 final class VideoPlaylistCellViewModelTests: XCTestCase {
@@ -193,6 +194,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
     private func makeSUT(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase = MockVideoPlaylistContentUseCase(),
+        setSelection: SetSelection = SetSelection(),
         onTapMoreOptions: @escaping (_ node: VideoPlaylistEntity) -> Void = { _ in },
         file: StaticString = #filePath,
         line: UInt = #line
@@ -206,6 +208,7 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
             videoPlaylistContentUseCase: videoPlaylistContentUseCase, 
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc),
             videoPlaylistEntity: videoPlaylistEntity,
+            setSelection: setSelection,
             onTapMoreOptions: onTapMoreOptions
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
@@ -276,5 +279,59 @@ final class VideoPlaylistCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.previewEntity.isExported, videoPlaylist.isLinkShared, file: file, line: line)
         XCTAssertEqual(sut.previewEntity.duration, "01:00", file: file, line: line)
         XCTAssertEqual(sut.previewEntity.thumbnail.imageContainers.count, videoPlaylist.count, file: file, line: line)
+    }
+}
+
+@Suite("VideoPlaylistCellViewModel Tests")
+struct VideoPlaylistCellViewModelTestSuite {
+    @Suite("Set selection")
+    @MainActor
+    struct SetSelectionSuite {
+        @Test("when edit mode is editing selection should be enabled",
+              arguments: [(EditMode.active, true),
+                          (EditMode.inactive, false),
+                          (EditMode.transient, true)])
+        func isSelectionEnabled(mode: EditMode, expectedSelectionEnabled: Bool) async {
+            let setSelection = SetSelection(editMode: mode)
+            let sut = makeSUT(
+                videoPlaylistEntity: .init(
+                    setIdentifier: SetIdentifier(handle: 1)),
+                setSelection: setSelection)
+            
+            #expect(sut.isSelectionEnabled == expectedSelectionEnabled)
+        }
+        
+        @Test("when item selected then it should set isSelected",
+              arguments: [(SetIdentifier(handle: 1), true),
+                          (SetIdentifier(handle: 2), false)])
+        func isSelectionEnabled(selectedIdentifier: SetIdentifier, expectedSelection: Bool) async {
+            let setSelection = SetSelection()
+            let sut = makeSUT(
+                videoPlaylistEntity: .init(
+                    setIdentifier: SetIdentifier(handle: 1)),
+                setSelection: setSelection)
+            
+            setSelection.toggle(selectedIdentifier)
+            
+            #expect(sut.isSelected == expectedSelection)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol = MockVideoPlaylistThumbnailLoader(),
+        videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol = MockVideoPlaylistContentUseCase(),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc),
+        videoPlaylistEntity: VideoPlaylistEntity,
+        setSelection: SetSelection = SetSelection(),
+        onTapMoreOptions: @escaping (_ node: VideoPlaylistEntity) -> Void = { _ in }
+    ) -> VideoPlaylistCellViewModel {
+        .init(
+            videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
+            videoPlaylistContentUseCase: videoPlaylistContentUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            videoPlaylistEntity: videoPlaylistEntity,
+            setSelection: setSelection,
+            onTapMoreOptions: onTapMoreOptions)
     }
 }

@@ -174,6 +174,7 @@ struct ThumbnailLayerView: View {
                 videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
                 sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
                 videoPlaylistEntity: videoPlaylistEntity(),
+                setSelection: SetSelection(),
                 onTapMoreOptions: { _ in }
             )
         }

@@ -23,8 +23,7 @@ struct AddToPlaylistView: View {
     private var contentView: some View {
         VideoPlaylistsCollectionViewRepresenter(
             viewModel: viewModel,
-            router: viewModel.router,
-            didSelectMoreOptionForItem: { _ in})
+            router: viewModel.router)
         .task {
             await viewModel.loadVideoPlaylists()
         }

@@ -6,12 +6,12 @@ import SwiftUI
 public struct VideoPlaylistsCollectionViewRepresenter<ViewModel: VideoPlaylistsContentViewModelProtocol>: UIViewRepresentable {
     @StateObject var viewModel: ViewModel
     let router: any VideoRevampRouting
-    let didSelectMoreOptionForItem: (VideoPlaylistEntity) -> Void
+    let didSelectMoreOptionForItem: ((VideoPlaylistEntity) -> Void)?
     
     public init(
         viewModel: @autoclosure @escaping () -> ViewModel,
         router: some VideoRevampRouting,
-        didSelectMoreOptionForItem: @escaping (VideoPlaylistEntity) -> Void
+        didSelectMoreOptionForItem: ((VideoPlaylistEntity) -> Void)? = nil
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
         self.router = router

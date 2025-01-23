@@ -12,6 +12,8 @@ public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtoco
     public let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     public let router: any VideoRevampRouting
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
+    public let setSelection = SetSelection(
+        mode: .single, editMode: .active)
     
     @Published var isVideoPlayListsLoaded = false
     @Published var showCreatePlaylistAlert = false

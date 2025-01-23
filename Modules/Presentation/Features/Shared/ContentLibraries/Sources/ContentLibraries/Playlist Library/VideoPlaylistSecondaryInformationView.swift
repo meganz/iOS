@@ -7,6 +7,7 @@ public struct VideoPlaylistSecondaryInformationView: View {
     private let totalDuration: String
     private let isPublicLink: Bool
     private let layoutIgnoringOrientation: Bool
+    private let isDisabled: Bool
     
     @State private var isPortrait = true
     
@@ -14,12 +15,14 @@ public struct VideoPlaylistSecondaryInformationView: View {
         videosCount: String,
         totalDuration: String,
         isPublicLink: Bool,
-        layoutIgnoringOrientation: Bool
+        layoutIgnoringOrientation: Bool,
+        isDisabled: Bool = false
     ) {
         self.videosCount = videosCount
         self.totalDuration = totalDuration
         self.isPublicLink = isPublicLink
         self.layoutIgnoringOrientation = layoutIgnoringOrientation
+        self.isDisabled = isDisabled
     }
     
     public var body: some View {
@@ -50,7 +53,7 @@ public struct VideoPlaylistSecondaryInformationView: View {
                 .opacity(isPublicLink ? 1 : 0)
             
             MEGAAssetsImageProvider.image(named: .linked)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Text.secondary.swiftUI)
                 .opacity(isPublicLink ? 1 : 0)
         }
     }
@@ -62,7 +65,7 @@ public struct VideoPlaylistSecondaryInformationView: View {
             secondaryText(text: totalDuration)
             
             MEGAAssetsImageProvider.image(named: .linked)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Text.secondary.swiftUI)
                 .opacity(isPublicLink ? 1 : 0)
         }
     }
@@ -70,7 +73,7 @@ public struct VideoPlaylistSecondaryInformationView: View {
     private func secondaryText(text: String) -> some View {
         Text(text)
             .font(.caption)
-            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Text.secondary.swiftUI)
     }
     
     private var circleSeparatorImage: some View {
@@ -78,7 +81,7 @@ public struct VideoPlaylistSecondaryInformationView: View {
             .renderingMode(.template)
             .resizable()
             .frame(width: 4, height: 4)
-            .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+            .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Icon.secondary.swiftUI)
     }
 }
 
@@ -87,7 +90,8 @@ public struct VideoPlaylistSecondaryInformationView: View {
         videosCount: "24 videos",
         totalDuration: "3:05:20",
         isPublicLink: true,
-        layoutIgnoringOrientation: true
+        layoutIgnoringOrientation: true,
+        isDisabled: false
     )
 }
 
@@ -96,7 +100,8 @@ public struct VideoPlaylistSecondaryInformationView: View {
         videosCount: "24 videos",
         totalDuration: "3:05:20",
         isPublicLink: false,
-        layoutIgnoringOrientation: true
+        layoutIgnoringOrientation: true,
+        isDisabled: false
     )
     .preferredColorScheme(.dark)
 }
@@ -107,7 +112,8 @@ public struct VideoPlaylistSecondaryInformationView: View {
         videosCount: "24 videos",
         totalDuration: "3:05:20",
         isPublicLink: false,
-        layoutIgnoringOrientation: false
+        layoutIgnoringOrientation: false,
+        isDisabled: false
     )
     .preferredColorScheme(.dark)
 }

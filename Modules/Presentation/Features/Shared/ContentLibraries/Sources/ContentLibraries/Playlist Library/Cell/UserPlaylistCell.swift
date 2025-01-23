@@ -22,7 +22,11 @@ struct UserPlaylistCell: View {
             previewEntity: viewModel.previewEntity,
             secondaryInformationViewType: viewModel.secondaryInformationViewType,
             isLoading: viewModel.isLoading,
-            onTappedMoreOptions: { viewModel.onTappedMoreOptions() }
+            isSelectionEnabled: viewModel.isSelectionEnabled,
+            isSelected: viewModel.isSelected,
+            isDisabled: viewModel.isDisabled,
+            onTappedMoreOptions: viewModel.onTappedMoreOptions,
+            onCheckMarkTapped: viewModel.onItemSelected
         )
         .task {
             await viewModel.onViewAppear()
@@ -38,14 +42,31 @@ struct UserPlaylistCellContent: View {
     let previewEntity: VideoPlaylistCellPreviewEntity
     let secondaryInformationViewType: VideoPlaylistCellViewModel.SecondaryInformationViewType
     let isLoading: Bool
+    let isSelectionEnabled: Bool
+    let isSelected: Bool
+    let isDisabled: Bool
     let onTappedMoreOptions: () -> Void
+    let onCheckMarkTapped: () -> Void
     
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
+            checkMarkView
             content
         }
         .padding(0)
         .background(TokenColors.Background.page.swiftUI)
+    }
+    
+    @ViewBuilder
+    private var checkMarkView: some View {
+        if isSelectionEnabled {
+            Button(action: onCheckMarkTapped) {
+                CheckMarkView(
+                    markedSelected: isSelected,
+                    foregroundColor: isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+                )
+            }
+        }
     }
     
     @ViewBuilder
@@ -60,11 +81,12 @@ struct UserPlaylistCellContent: View {
             )
             .frame(width: 142, height: 80, alignment: .center)
             .clipShape(RoundedRectangle(cornerRadius: 4))
+            .opacity(isDisabled ? 0.5 : 1)
             
             VStack(alignment: .leading, spacing: TokenSpacing._3) {
                 Text(previewEntity.title)
                     .font(.subheadline)
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .foregroundStyle(isDisabled ? TokenColors.Text.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
                 
                 secondaryInformationView()
                     .frame(maxHeight: .infinity, alignment: .top)
@@ -73,6 +95,7 @@ struct UserPlaylistCellContent: View {
             
             MEGAAssetsImageProvider.image(named: .moreList)
                 .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                .opacity(isSelectionEnabled ? 0 : 1)
                 .onTapGesture { onTappedMoreOptions() }
         }
     }
@@ -83,13 +106,14 @@ struct UserPlaylistCellContent: View {
         case .emptyPlaylist:
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                 .font(.caption)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .foregroundStyle(isDisabled ? TokenColors.Text.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
         case .information:
             VideoPlaylistSecondaryInformationView(
                 videosCount: previewEntity.count,
                 totalDuration: previewEntity.duration,
                 isPublicLink: previewEntity.isExported,
-                layoutIgnoringOrientation: false
+                layoutIgnoringOrientation: false,
+                isDisabled: isDisabled
             )
         }
     }
@@ -100,7 +124,11 @@ struct UserPlaylistCellContent: View {
         previewEntity: .preview(isExported: false),
         secondaryInformationViewType: .emptyPlaylist,
         isLoading: false,
-        onTappedMoreOptions: {}
+        isSelectionEnabled: false,
+        isSelected: false,
+        isDisabled: false,
+        onTappedMoreOptions: {},
+        onCheckMarkTapped: {}
     )
     .frame(height: 80, alignment: .center)
 }
@@ -110,7 +138,11 @@ struct UserPlaylistCellContent: View {
         previewEntity: .preview(isExported: true),
         secondaryInformationViewType: .emptyPlaylist,
         isLoading: false,
-        onTappedMoreOptions: {}
+        isSelectionEnabled: false,
+        isSelected: false,
+        isDisabled: false,
+        onTappedMoreOptions: {},
+        onCheckMarkTapped: {}
     )
     .preferredColorScheme(.dark)
     .frame(height: 80, alignment: .center)
@@ -129,7 +161,11 @@ struct UserPlaylistCellContent: View {
         ),
         secondaryInformationViewType: .information,
         isLoading: false,
-        onTappedMoreOptions: {}
+        isSelectionEnabled: false,
+        isSelected: false,
+        isDisabled: false,
+        onTappedMoreOptions: {},
+        onCheckMarkTapped: {}
     )
     .frame(height: 80, alignment: .center)
 }
