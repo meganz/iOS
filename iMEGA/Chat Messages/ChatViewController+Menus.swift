@@ -41,7 +41,7 @@ extension ChatViewController {
             guard let content = editMessage?.message.content else {
                 return
             }
-            chatInputBar?.set(text: content)
+            chatInputBar.set(text: content)
         }
     }
     
