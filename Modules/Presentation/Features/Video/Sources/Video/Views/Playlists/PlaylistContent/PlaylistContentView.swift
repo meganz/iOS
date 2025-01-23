@@ -31,6 +31,7 @@ struct PlaylistContentScreen: View {
             viewState: viewModel.viewState,
             previewEntity: viewModel.headerPreviewEntity,
             videos: viewModel.videos,
+            searchText: viewModel.searchText,
             playlistType: viewModel.videoPlaylistEntity.type,
             router: router,
             thumbnailLoader: viewModel.thumbnailLoader,
@@ -119,6 +120,7 @@ struct PlaylistContentView: View {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videos: [NodeEntity]
+    private let searchText: String?
     private let playlistType: VideoPlaylistEntityType
     let router: any VideoRevampRouting
     @StateObject private var videoSelection: VideoSelection
@@ -129,6 +131,7 @@ struct PlaylistContentView: View {
         viewState: VideoPlaylistContentViewModel.ViewState,
         previewEntity: VideoPlaylistCellPreviewEntity,
         videos: [NodeEntity],
+        searchText: String?,
         playlistType: VideoPlaylistEntityType,
         router: any VideoRevampRouting,
         thumbnailLoader: some ThumbnailLoaderProtocol,
@@ -146,6 +149,7 @@ struct PlaylistContentView: View {
         self.nodeUseCase = nodeUseCase
         self.featureFlagProvider = featureFlagProvider
         self.videos = videos
+        self.searchText = searchText
         self.playlistType = playlistType
         self.router = router
         _videoSelection = StateObject(wrappedValue: videoSelection())
@@ -213,6 +217,7 @@ struct PlaylistContentView: View {
     private func listView() -> some View {
         AllVideosCollectionViewRepresenter(
             videos: videos,
+            searchText: searchText,
             videoConfig: videoConfig,
             selection: videoSelection,
             router: router,
@@ -239,6 +244,7 @@ struct PlaylistContentView: View {
             type: .favourite
         ),
         videos: [],
+        searchText: nil,
         playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
@@ -265,6 +271,7 @@ struct PlaylistContentView: View {
             type: .favourite
         ),
         videos: [],
+        searchText: nil,
         playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
@@ -294,6 +301,7 @@ struct PlaylistContentView: View {
             type: .user
         ),
         videos: [ .preview ],
+        searchText: nil,
         playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
@@ -321,6 +329,7 @@ struct PlaylistContentView: View {
             type: .favourite
         ),
         videos: [],
+        searchText: nil,
         playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),
@@ -347,6 +356,7 @@ struct PlaylistContentView: View {
             type: .user
         ),
         videos: [],
+        searchText: nil,
         playlistType: .user,
         router: Preview_VideoRevampRouter(),
         thumbnailLoader: Preview_ThumbnailLoader(),

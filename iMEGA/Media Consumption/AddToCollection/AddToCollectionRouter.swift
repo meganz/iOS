@@ -159,6 +159,11 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
             searchRepository: FilesSearchRepository.newRepo,
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            isDescriptionSearchEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+            }
+        )
     }
 }

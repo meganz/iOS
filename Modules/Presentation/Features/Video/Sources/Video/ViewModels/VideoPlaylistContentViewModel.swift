@@ -55,7 +55,11 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         case empty
         case error
     }
-    
+
+    var searchText: String {
+        syncModel.searchText
+    }
+
     public private(set) var sharedUIState: VideoPlaylistContentSharedUIState
     
     private(set) var presentationConfig: VideoPlaylistContentSnackBarPresentationConfig?

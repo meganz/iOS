@@ -73,31 +73,42 @@ struct AlbumListView: View {
     
     @ViewBuilder
     private func albumContentAdditionView(_ album: AlbumEntity) -> some View {
-        AlbumContentPickerView(viewModel: AlbumContentPickerViewModel(
-            album: album,
-            photoLibraryUseCase: PhotoLibraryUseCase(
-                photosRepository: PhotoLibraryRepository(
-                    cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
-                searchRepository: FilesSearchRepository.newRepo, 
-                sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
-                    sensitiveNodeUseCase: SensitiveNodeUseCase(
-                        nodeRepository: NodeRepository.newRepo,
-                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
-                    contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                        repo: UserAttributeRepository.newRepo),
-                    hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }
+        AlbumContentPickerView(
+            viewModel: AlbumContentPickerViewModel(
+                album: album,
+                photoLibraryUseCase: PhotoLibraryUseCase(
+                    photosRepository: PhotoLibraryRepository(
+                        cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
+                    searchRepository: FilesSearchRepository.newRepo,
+                    sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                        sensitiveNodeUseCase: SensitiveNodeUseCase(
+                            nodeRepository: NodeRepository.newRepo,
+                            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
+                        contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                            repo: UserAttributeRepository.newRepo),
+                        hiddenNodesFeatureFlagEnabled: {
+                            DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+                        }
+                    ),
+                    hiddenNodesFeatureFlagEnabled: {
+                        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+                    },
+                    isDescriptionSearchEnabled: {
+                        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+                    }
+                ),
+                completion: { album, selectedPhotos in
+                    viewModel.onNewAlbumContentAdded(album, photos: selectedPhotos)
+                },
+                isNewAlbum: true,
+                configuration: PhotoLibraryContentConfiguration(
+                    selectLimit: 150,
+                    scaleFactor: UIDevice().iPadDevice ? .five : .three)
             ),
-            completion: { album, selectedPhotos in
-                viewModel.onNewAlbumContentAdded(album, photos: selectedPhotos)
-            },
-            isNewAlbum: true,
-            configuration: PhotoLibraryContentConfiguration(
-                selectLimit: 150,
-                scaleFactor: UIDevice().iPadDevice ? .five : .three)
-        ), invokeDismiss: {
-            viewModel.newlyAddedAlbum = nil
-        })
+            invokeDismiss: {
+                viewModel.newlyAddedAlbum = nil
+            }
+        )
     }
     
     private func shareLinksView(forAlbums albums: [AlbumEntity]) -> some View {
