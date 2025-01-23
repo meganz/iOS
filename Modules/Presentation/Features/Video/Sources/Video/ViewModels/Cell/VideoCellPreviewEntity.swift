@@ -8,6 +8,7 @@ struct VideoCellPreviewEntity: Equatable {
     let imageContainer: any ImageContaining
     let duration: String
     let title: String
+    let description: String?
     let size: String
     let isExported: Bool
     let label: NodeLabelTypeEntity?
@@ -26,6 +27,7 @@ struct VideoCellPreviewEntity: Equatable {
         && isImageContainerEqual
         && lhs.duration == rhs.duration
         && lhs.title == rhs.title
+        && lhs.description == lhs.description
         && lhs.size == rhs.size
         && lhs.isExported == rhs.isExported
         && lhs.label == rhs.label
@@ -40,6 +42,7 @@ extension VideoCellPreviewEntity {
         imageContainer: PreviewImageContainerFactory.withColor(.black, size: CGSize(width: 1000, height: 1000)),
         duration: "",
         title: "",
+        description: nil,
         size: "",
         isExported: false,
         label: nil,

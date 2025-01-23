@@ -29,12 +29,20 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     private let searchRepository: U
     private let sensitiveDisplayPreferenceUseCase: V
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
-    
-    public init(photosRepository: T, searchRepository: U, sensitiveDisplayPreferenceUseCase: V, hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool) {
+    private let isDescriptionSearchEnabled: @Sendable () -> Bool
+
+    public init(
+        photosRepository: T,
+        searchRepository: U,
+        sensitiveDisplayPreferenceUseCase: V,
+        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool,
+        isDescriptionSearchEnabled: @escaping @Sendable () -> Bool
+    ) {
         self.photosRepository = photosRepository
         self.searchRepository = searchRepository
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
+        self.isDescriptionSearchEnabled = isDescriptionSearchEnabled
     }
     
     public func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
@@ -126,12 +134,14 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
             .compactMap { format -> [NodeEntity]? in
                 try? await searchRepository.search(filter: .recursive(
                     searchText: searchText,
+                    searchDescription: isDescriptionSearchEnabled() ? searchText : nil,
                     searchTargetLocation: searchTargetLocation,
                     supportCancel: false,
                     sortOrderType: sortOrder,
                     formatType: format,
                     sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled,
-                    favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled)
+                    favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled,
+                    useAndForTextQuery: false)
                 )
             }
             .reduce([NodeEntity]()) { $0 + $1 }
@@ -143,13 +153,15 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
             .compactMap { format -> [NodeEntity]? in
                 try? await searchRepository.search(filter: .nonRecursive(
                     searchText: searchText,
+                    searchDescription: isDescriptionSearchEnabled() ? searchText : nil,
                     searchTargetNode: searchTargetNode,
                     supportCancel: false,
                     sortOrderType: sortOrder,
                     formatType: format,
                     sensitiveFilterOption: excludeSensitive ? .nonSensitiveOnly : .disabled,
                     favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled,
-                    nodeTypeEntity: .file))
+                    nodeTypeEntity: .file,
+                    useAndForTextQuery: false))
             }
             .reduce([NodeEntity]()) { $0 + $1 }
     }

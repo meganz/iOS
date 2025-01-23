@@ -119,9 +119,13 @@ struct VideoCellViewContent: View {
             }
             .padding(0)
             .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Spacer()
-                .frame(maxHeight: .infinity)
+
+            if let description = previewEntity.description {
+                Text(description)
+                    .lineLimit(1)
+                    .font(.caption)
+                    .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
+            }
         }
     }
     

@@ -70,6 +70,7 @@ class VideoCellPreviewEntityTests: XCTestCase {
             imageContainer: PreviewImageContainerFactory.withColor(.black, size: CGSize(width: 1000, height: 1000)),
             duration: "",
             title: "title",
+            description: nil,
             size: "size",
             isExported: isExported,
             label: label,

@@ -137,10 +137,17 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
         let photoLibraryRepository = PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
-        return PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                   searchRepository: FilesSearchRepository.newRepo,
-                                   sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-                                   hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+        return PhotoLibraryUseCase(
+            photosRepository: photoLibraryRepository,
+            searchRepository: FilesSearchRepository.newRepo,
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            hiddenNodesFeatureFlagEnabled: {
+                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            isDescriptionSearchEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+            }
+        )
     }
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {

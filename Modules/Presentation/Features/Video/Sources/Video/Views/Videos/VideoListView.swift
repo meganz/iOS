@@ -101,6 +101,7 @@ struct VideoListView: View {
     private func listView() -> some View {
         AllVideosCollectionViewRepresenter(
             videos: viewModel.videos,
+            searchText: viewModel.syncModel.searchText,
             videoConfig: videoConfig,
             selection: viewModel.selection,
             router: router,

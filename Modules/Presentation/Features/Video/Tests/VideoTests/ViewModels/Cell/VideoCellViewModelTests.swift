@@ -221,7 +221,13 @@ final class VideoCellViewModelTests: XCTestCase {
         
         XCTAssertEqual(tappedNodes, [ video ])
     }
-    
+
+    @MainActor
+    func testDescription_whenNonEmpty_shouldMatch() {
+        let (sut, _) = makeSUT(nodeEntity: NodeEntity(), description: "Test")
+        XCTAssertEqual(sut.previewEntity.description, "Test")
+    }
+
     // MARK: - Helpers
     
     @MainActor
@@ -230,6 +236,7 @@ final class VideoCellViewModelTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         nodeUseCase: MockNodeUseCase = MockNodeUseCase(),
         nodeEntity: NodeEntity,
+        description: String? = nil,
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void = { _ in },
         onTapped: @escaping (_ node: NodeEntity) -> Void = { _ in },
         featureFlagHiddenNodes: Bool = false,
@@ -244,6 +251,7 @@ final class VideoCellViewModelTests: XCTestCase {
             mode: .plain,
             viewContext: .allVideos,
             nodeEntity: nodeEntity,
+            description: description,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,

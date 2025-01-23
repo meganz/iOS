@@ -31,6 +31,7 @@ final class VideoCellViewModel: ObservableObject {
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var nodeEntity: NodeEntity
+    private let description: String?
     private let onTapMoreOptions: (_ node: NodeEntity) -> Void
     private let onTapped: (_ node: NodeEntity) -> Void
     
@@ -48,6 +49,7 @@ final class VideoCellViewModel: ObservableObject {
         mode: VideoCellViewModel.Mode,
         viewContext: VideoCellViewModel.ViewContext,
         nodeEntity: NodeEntity,
+        description: String?,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
@@ -59,6 +61,7 @@ final class VideoCellViewModel: ObservableObject {
         self.mode = mode
         self.viewContext = viewContext
         self.nodeEntity = nodeEntity
+        self.description = description
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
@@ -71,7 +74,11 @@ final class VideoCellViewModel: ObservableObject {
         
         let cachedContainer = thumbnailLoader.initialImage(for: nodeEntity, type: .thumbnail, placeholder: { placeholder })
         
-        previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: cachedContainer, isDownloaded: false)
+        previewEntity = nodeEntity.toVideoCellPreviewEntity(
+            thumbnailContainer: cachedContainer,
+            isDownloaded: false,
+            description: description
+        )
     }
     
     func attemptLoadThumbnail() async throws {
@@ -104,7 +111,12 @@ final class VideoCellViewModel: ObservableObject {
         
     private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
         guard !previewEntity.imageContainer.isEqual(container) else { return }
-        previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: container, isDownloaded: nodeUseCase.isDownloaded(nodeHandle: nodeEntity.handle))
+        previewEntity = nodeEntity
+            .toVideoCellPreviewEntity(
+                thumbnailContainer: container,
+                isDownloaded: nodeUseCase.isDownloaded(nodeHandle: nodeEntity.handle),
+                description: description
+            )
     }
     
     /// Async sequence will yield inherited sensitivity changes. It will immediately yield the current inherited sensitivity since it could have changed since thumbnail loaded

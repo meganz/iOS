@@ -166,7 +166,11 @@ final class PhotoAlbumContainerViewController: UIViewController {
                     contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                         repo: UserAttributeRepository.newRepo),
                     hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
-                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled)
+                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled,
+                isDescriptionSearchEnabled: {
+                    DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+                }
+            )
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
                 photoLibraryUseCase: photoLibraryUseCase,
@@ -439,10 +443,17 @@ extension PhotoAlbumContainerViewController {
     private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
         let photoLibraryRepository = PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
-        return PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                   searchRepository: FilesSearchRepository.newRepo,
-                                   sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-                                   hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+        return PhotoLibraryUseCase(
+            photosRepository: photoLibraryRepository,
+            searchRepository: FilesSearchRepository.newRepo,
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            hiddenNodesFeatureFlagEnabled: {
+                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            isDescriptionSearchEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+            }
+        )
     }
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {

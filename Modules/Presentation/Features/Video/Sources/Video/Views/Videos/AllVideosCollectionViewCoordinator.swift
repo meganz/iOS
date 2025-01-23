@@ -13,9 +13,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     /// Row Item type to support diffable data source diffing while protecting `NodeEntity` agasint the `DiffableDataSource` API.
     private struct RowItem: Hashable, Sendable {
         let node: NodeEntity
-        
-        init(node: NodeEntity) {
+        let description: String?
+
+        init(node: NodeEntity, description: String?) {
             self.node = node
+            self.description = description
         }
         
         static func == (lhs: RowItem, rhs: RowItem) -> Bool {
@@ -25,13 +27,15 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             && lhs.node.label == rhs.node.label
             && lhs.node.isExported == rhs.node.isExported
             && lhs.node.isMarkedSensitive == rhs.node.isMarkedSensitive
+            && lhs.description == rhs.description
         }
     }
     
     private let videoConfig: VideoConfig
     private let representer: AllVideosCollectionViewRepresenter
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
+    private var searchText: String?
+
     private var dataSource: DiffableDataSource?
     private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item>
     private typealias DiffableDataSource = UICollectionViewDiffableDataSource<Section, Item>
@@ -54,9 +58,10 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         self.videoConfig = representer.videoConfig
     }
     
-    func configure(_ collectionView: UICollectionView) {
+    func configure(_ collectionView: UICollectionView, searchText: String?) {
+        self.searchText = searchText
         configureDataSource(for: collectionView)
-        
+
         switch viewContext() {
         case .playlistContent(let type) where type == .user && featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent):
             configureDragDropInteraction(for: collectionView)
@@ -75,7 +80,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         collectionView.dropDelegate = self
         collectionView.dragInteractionEnabled = true
     }
-    
+
     private func makeDataSource(for collectionView: UICollectionView) -> DiffableDataSource {
         let cellRegistration = CellRegistration { [weak self] cell, _, rowItem in
             guard let self else { return }
@@ -87,6 +92,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 mode: .plain,
                 viewContext: viewContext,
                 nodeEntity: rowItem.node,
+                description: rowItem.description,
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
                 nodeUseCase: viewModel.nodeUseCase,
@@ -123,20 +129,35 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         representer.router.openMediaBrowser(for: video, allVideos: videos)
     }
     
-    func reloadData(with videos: [NodeEntity]) {
+    func reloadData(with videos: [NodeEntity], searchText: String?) {
+        self.searchText = searchText
         reloadSnapshotTask = Task { await reloadData(with: videos) }
     }
     
     private func reloadData(with videos: [NodeEntity]) async {
         var snapshot = DiffableDataSourceSnapshot()
         snapshot.appendSections([.allVideos])
-        snapshot.appendItems(videos.map(RowItem.init(node:)), toSection: .allVideos)
+        snapshot.appendItems(videos.map(rowItem(for:)), toSection: .allVideos)
         guard !Task.isCancelled else { return }
         await dataSource?.apply(snapshot, animatingDifferences: true)
     }
-    
+
     // MARK: - Cell setup
-    
+
+    private func rowItem(for node: NodeEntity) -> RowItem {
+        let searchText = featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? searchText : nil
+        let description: String? = if let searchText,
+                                      let description = node.description,
+                                      searchText.isNotEmpty,
+                                      description.containsIgnoringCaseAndDiacritics(searchText: searchText) {
+            description
+        } else {
+            nil
+        }
+
+        return RowItem(node: node, description: description)
+    }
+
     private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel, adapter: VideoSelectionCheckmarkUIUpdateAdapter) {
         prepareCellForReuse(cell)
         

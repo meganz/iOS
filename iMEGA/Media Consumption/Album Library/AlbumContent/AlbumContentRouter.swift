@@ -46,11 +46,18 @@ struct AlbumContentRouter: AlbumContentRouting {
         let photoLibraryRepository = PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared
         )
-        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                                      searchRepository: FilesSearchRepository.newRepo,
-                                                      sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-                                                      hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
-        
+        let photoLibraryUseCase = PhotoLibraryUseCase(
+            photosRepository: photoLibraryRepository,
+            searchRepository: FilesSearchRepository.newRepo,
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            hiddenNodesFeatureFlagEnabled: {
+                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            isDescriptionSearchEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+            }
+        )
+
         let viewModel = AlbumContentViewModel(
             album: album,
             albumContentsUseCase: albumContentsUseCase,
@@ -76,11 +83,18 @@ struct AlbumContentRouter: AlbumContentRouting {
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared
         )
         let fileSearchRepository = FilesSearchRepository.newRepo
-        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
-                                                      searchRepository: fileSearchRepository,
-                                                      sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-                                                      hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
-        
+        let photoLibraryUseCase = PhotoLibraryUseCase(
+            photosRepository: photoLibraryRepository,
+            searchRepository: fileSearchRepository,
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            hiddenNodesFeatureFlagEnabled: {
+                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            isDescriptionSearchEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+            }
+        )
+
         let viewModel = AlbumContentPickerViewModel(album: album,
                                                     photoLibraryUseCase: photoLibraryUseCase,
                                                     completion: completion,
@@ -157,11 +171,17 @@ struct AlbumContentRouter: AlbumContentRouting {
     func start() {}
     
     private func makePhotoLibraryUseCase() -> some PhotoLibraryUseCaseProtocol {
-        PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository(
-            cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
-                            searchRepository: FilesSearchRepository.newRepo,
-                            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-                            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+        PhotoLibraryUseCase(
+            photosRepository: PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
+            searchRepository: FilesSearchRepository.newRepo,
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            hiddenNodesFeatureFlagEnabled: {
+                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            isDescriptionSearchEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+            }
+        )
     }
     
     private func makeMonitorAlbumPhotosUseCase() -> some MonitorAlbumPhotosUseCaseProtocol {
