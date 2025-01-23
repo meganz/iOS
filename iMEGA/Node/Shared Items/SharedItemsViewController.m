@@ -449,7 +449,7 @@
     }
 
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
-    [cell configureNode:node.name isTakenDown:node.isTakenDown];
+    [cell configureNode:node.name searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdk.shared contactForEmail:userEmail];
@@ -492,7 +492,7 @@
     self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
     cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
-    [cell configureNode:node.name isTakenDown:node.isTakenDown];
+    [cell configureNode:node.name searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     NSString *userName;
@@ -522,7 +522,7 @@
 - (NodeTableViewCell *)linkSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorSharedLink;
-    [cell configureCellForNode:node shouldApplySensitiveBehaviour:NO api:MEGASdk.shared];
+    [cell configureCellFor:node searchText:self.searchController.searchBar.text shouldApplySensitiveBehaviour:NO api:MEGASdk.shared];
     //We are on the Shared Items - Links tab, no need to show any icon next to the thumbnail.
     cell.linkImageView.hidden = YES;
     
@@ -534,7 +534,7 @@
     };
     
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
-    
+
     return cell;
 }
 
