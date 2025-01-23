@@ -845,19 +845,19 @@
 /* Confirmation message displayed after clearing offline files */
 "settings.fileManagement.clearOfflineFiles.done.message"="Fichiers hors connexion effacés";
 /* File versioning menu subTitle */
-"settings.fileManagement.fileVersioning.menu.subtitle"="Store multiple versions of your files. Disabling this setting does not stop your contacts from adding new versions.";
+"settings.fileManagement.fileVersioning.menu.subtitle"="Stockez plusieurs versions de vos fichiers. La désactivation de ce paramètre n'empêche pas vos contacts d'ajouter de nouvelles versions dans les dossiers partagés.";
 /* File versioning button title to delete all older version of files */
-"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Delete all older versions of files";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Supprimer toutes les anciennes versions des fichiers";
 /* File versioning alert title for deleting older versions of files */
-"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Delete older versions of files?";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Supprimer les anciennes versions de fichiers ?";
 /* File versioning alert message for deleting older versions of files */
-"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Any file versions shared to you from a contact will need to be deleted by them. Current versions of files won’t be deleted.";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Toutes les versions de fichiers que vous avez partagées par un contact devront être supprimées par ce dernier. Les versions actuelles des fichiers ne seront pas supprimées.";
 /* File versioning snackbar message after deleting older versions of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="Les versions de fichiers ont été supprimées";
 /* File versioning alert title for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Disable file versioning?";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Désactiver le versionnage des fichiers ?";
 /* File versioning alert message for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, the current version will be replaced once a file is updated.";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="Lorsque le versionnage des fichiers est désactivé, la mise à jour d'un fichier le remplacera complètement.";
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Désactiver";
 /* File versioning footer message */
@@ -1538,8 +1538,8 @@
 "Added"="Ajouté";
 /* used for example when a folder is shared with 2 or more users */
 "users"="utilisateurs";
-/* user (singular) label indicating is receiving some info, for example shared folders */
-"user"="utilisateur";
+/* Business role for sub-business account type named as User */
+"user"="Utilisateur";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Voulez-vous supprimer cette version ?";
 /* Message to notify user the file version will be permanently removed */
@@ -1622,8 +1622,10 @@
 "message_fileNotSupported"="Vous pouvez l’enregistrer Hors ligne et l’ouvrir dans une appli compatible.";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Transférer";
-/* Success message shown after forwarding messages to other chats */
-"messagesSent"="Le message a été envoyé";
+/* Success message shown after forwarding a message to other chat(s) */
+"chat.forwardedMessage"="Le message a été envoyé";
+/* Success message shown after forwarding messages to other chat(s) */
+"chat.forwardedMessages"="Le message a été envoyé";
 /* Title of archived chats button */
 "archivedChats"="Archivées";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1747,7 +1749,7 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Vous êtes sur le point de supprimer les historiques de version de tous les fichiers. Tout fichier partagé avec vous par un contact devra être supprimé par ce contact.\n\nVeuillez noter que les fichiers actuels ne seront pas supprimés.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Programmateur de vidage de la Corbeille";
+"Rubbish-Bin Cleaning Scheduler:"="Paramètres de la Corbeille";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Supprimer les fichiers de plus de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
@@ -1759,7 +1761,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La Corbeille peut être vidée pour vous automatiquement. La fréquence minimale est 7 jours.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver le programmateur de vidage de la Corbeille ou définir une période de conservation plus longue, vous devez détenir un abonnement Pro.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver la vidange automatique de la Corbeille ou fixer une durée de conservation plus longue, vous devez souscrire à l'un de nos abonnements.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Voulez-vous fermer toutes les autres sessions ? Vous serez déconnecté de toutes les autres sessions, sauf de la session actuelle.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2941,7 +2943,7 @@
 /* Second step title message for cancellable transfer */
 "transfers.cancellable.creatingFolders"="Création des dossiers…";
 /* Third step title message for cancellable transfer */
-"transfers.cancellable.transferring"="Transfert…";
+"transfers.cancellable.transferring"="Démarrage des transferts…";
 /* Cancelling transfers step title message for cancellable transfer */
 "transfers.cancellable.cancellingTransfers"="Annulation des transferts…";
 /* Count of folders and files in the scanning stage */
@@ -3436,8 +3438,6 @@
 "device.center.backup.error.status.message"="Erreur";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Bloqué";
-/* Default device name in case the device name cannot be obtained */
-"device.center.default.device.title"="Appareil inconnu";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Erreur inconnue";
 /* Device Center backup error: Filesystem not supported */
@@ -4479,11 +4479,11 @@
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Impossible de gérer les étiquettes";
 /* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Your Pro Flexi plan has expired. Reactivate your subscription to add tags. You can manage this on the MEGA website.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Votre forfait Pro Flexi a expiré. Réactivez votre abonnement pour ajouter des étiquettes. Vous pouvez gérer cela sur le site Web de MEGA.";
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Your Business account has been deactivated. To manage your tags, reactivate your subscription on the MEGA website using your computer.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Votre compte Entreprise a été désactivé. Pour gérer vos étiquettes, réactivez votre abonnement sur le site Web de MEGA à l'aide de votre ordinateur.";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Your Business account has been deactivated. To manage your tags, contact your Business account administrator.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Votre compte Entreprise a été désactivé. Pour gérer vos étiquettes, contactez l'administrateur de votre compte Pour entreprise.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="D’accord, j’ai compris";
 /* Add to collection button title to add items */
