@@ -14,25 +14,6 @@ import VisionKit
 extension ChatViewController {
     
     // MARK: - Overriden properties
-    
-    override var inputAccessoryView: UIView? {
-        guard !isEditing else {
-            return nil
-        }
-           
-        if chatRoom.isPublicChat,
-            chatRoom.isPreview,
-            !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
-            return joinInputBar
-        } else if chatRoom.ownPrivilegeIsReadOnlyOrLower || previewMode {
-            return nil
-        } else if chatInputBar == nil {
-            chatInputBar = ChatInputBar()
-            chatInputBar?.delegate = self
-        }
-        return chatInputBar
-    }   
-    
     override var canBecomeFirstResponder: Bool {
         return true
     }
@@ -47,6 +28,14 @@ extension ChatViewController {
             self?.join(button: button)
         }
         joinInputBar.backgroundColor = TokenColors.Background.page
+        view.addSubview(joinInputBar)
+        joinInputBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            joinInputBar.heightAnchor.constraint(equalToConstant: 126),
+            joinInputBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            joinInputBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            joinInputBar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         return joinInputBar
     }
     
@@ -59,15 +48,14 @@ extension ChatViewController {
         }
         
         joinInputBar.setJoinViewState(newState: newState)
-        
     }
 
     // MARK: - Interface methods.
     
     func dismissKeyboardIfRequired() {
-        if let input = inputAccessoryView as? ChatInputBar,
-           input.isTextViewTheFirstResponder() {
-            input.dismissKeyboard()
+        if inputBarType == .custom(chatInputBar),
+           chatInputBar.isTextViewTheFirstResponder() {
+            chatInputBar.dismissKeyboard()
         }
     }
     
@@ -104,7 +92,7 @@ extension ChatViewController {
     }
 
     func loadDraft() {
-        if let chatInputBar = inputAccessoryView as? ChatInputBar,
+        if inputBarType == .custom(chatInputBar),
             let text = MEGAStore.shareInstance().fetchChatDraft(withChatId: chatRoom.chatId)?.text,
             !text.isEmpty {
             chatInputBar.set(text: text, showKeyboard: false)
@@ -112,11 +100,9 @@ extension ChatViewController {
     }
     
     func saveDraft() {
-        guard let chatInputBar = inputAccessoryView as? ChatInputBar else {
-            return
+        if inputBarType == .custom(chatInputBar) {
+            MEGAStore.shareInstance().insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : (chatInputBar.text ?? ""))
         }
-        
-        MEGAStore.shareInstance().insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : (chatInputBar.text ?? ""))
     }
     
     func presentShareLocation(editing: Bool = false) {
@@ -141,6 +127,20 @@ extension ChatViewController {
     }
     
     // MARK: - Private methods.
+    internal func configureInputBarType() {
+        if isEditing {
+            inputBarType = .custom(UIView(frame: .zero))
+        } else if chatRoom.isPublicChat,
+                  chatRoom.isPreview,
+                  !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
+            inputBarType = .custom(joinInputBar)
+        } else if chatRoom.ownPrivilegeIsReadOnlyOrLower || previewMode {
+            inputBarType = .custom(UIView(frame: .zero))
+        } else {
+            inputBarType = .custom(chatInputBar)
+        }
+    }
+    
     private func join(button: UIButton) {
         if MEGAChatSdk.shared.initState() == .anonymous {
             MEGALinkManager.secondaryLinkURL = publicChatLink
@@ -160,6 +160,7 @@ extension ChatViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.scrollToBottom()
                     self.reloadInputViews()
+                    self.configureInputBarType()
                 }
             }
             if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
@@ -187,7 +188,7 @@ extension ChatViewController {
             self.addToChatViewController = nil
         }
         
-        chatInputBar?.dismissKeyboard()
+        chatInputBar.dismissKeyboard()
 
         if UIDevice.current.iPadDevice {
             let navController = MEGANavigationController(rootViewController: addToChatViewController)
@@ -544,11 +545,9 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func updateTypingIndicatorView(withAttributedString attributedString: NSAttributedString?) {
-        guard let chatInputBar = inputAccessoryView as? ChatInputBar else {
-            return
+        if inputBarType == .custom(chatInputBar) {
+            chatInputBar.setTypingIndicator(text: attributedString)
         }
-        
-        chatInputBar.setTypingIndicator(text: attributedString)
     }
     
     func typing(withText text: String) {
@@ -719,7 +718,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showVoiceClip() {
-        chatInputBar?.voiceRecordingViewEnabled = true
+        chatInputBar.voiceRecordingViewEnabled = true
     }
     
     func showContacts() {

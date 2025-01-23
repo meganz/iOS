@@ -24,10 +24,10 @@ class ChatViewController: MessagesViewController {
 
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
-    var chatInputBar: ChatInputBar?
+    let chatInputBar = ChatInputBar()
     var editMessage: ChatMessage? {
         didSet {
-            chatInputBar?.editMessage = editMessage
+            chatInputBar.editMessage = editMessage
         }
     }
     var addToChatViewController: AddToChatViewController?
@@ -175,7 +175,7 @@ class ChatViewController: MessagesViewController {
             if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
                 layout.setMessageIncomingAvatarSize(.zero)
             }
-            chatInputBar?.dismissKeyboard()
+            chatInputBar.dismissKeyboard()
             navigationController?.setToolbarHidden(false, animated: true)
         }
         
@@ -188,6 +188,7 @@ class ChatViewController: MessagesViewController {
         reloadInputViews()
         configureNavigationBar()
         updateToolbarState()
+        configureInputBarType()
     }
     
     init(
@@ -212,7 +213,8 @@ class ChatViewController: MessagesViewController {
         
         super.viewDidLoad()
         
-        messageInputBar.removeFromSuperview()
+        chatInputBar.delegate = self
+        configureInputBarType()
         
         messagesCollectionView.backgroundColor = TokenColors.Background.page
         chatRoomDelegate.chatViewController = self
@@ -323,6 +325,7 @@ class ChatViewController: MessagesViewController {
         super.viewWillDisappear(animated)
         
         dismissKeyboardIfRequired()
+        navigationController?.setToolbarHidden(true, animated: true)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.MEGAPasscodeViewControllerWillClose, object: nil)
     }
     
@@ -401,7 +404,7 @@ class ChatViewController: MessagesViewController {
     }
     
     @objc func stopVoiceRecording() {
-        chatInputBar?.cancelRecordingIfNeeded()
+        chatInputBar.cancelRecordingIfNeeded()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -416,9 +419,6 @@ class ChatViewController: MessagesViewController {
         startOrJoinCallButton.backgroundColor = TokenColors.Background.inverse
         startOrJoinCallButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
         
-        if let inputbar = inputAccessoryView as? ChatInputBar {
-            inputbar.set(keyboardAppearance: traitCollection.userInterfaceStyle == .dark ? .dark : .light)
-        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
@@ -462,10 +462,10 @@ class ChatViewController: MessagesViewController {
             chatRoomDelegate.loadMoreMessages()
         }
         
-        if let inputBar = inputAccessoryView as? ChatInputBar,
+        if inputBarType == .custom(chatInputBar),
            scrollView.isTracking || scrollView.isDragging,
-           inputBar.voiceRecordingViewCanBeDismissed {
-            inputBar.voiceRecordingViewEnabled = false
+           chatInputBar.voiceRecordingViewCanBeDismissed {
+            chatInputBar.voiceRecordingViewEnabled = false
         }
         
         showOrHideJumpToBottom()
@@ -905,8 +905,8 @@ class ChatViewController: MessagesViewController {
     }
     
     private func relayoutChatInputBarIfNeeded() {
-        if let inputbar = inputAccessoryView as? ChatInputBar {
-            inputbar.relayout()
+        if inputBarType == .custom(chatInputBar) {
+            chatInputBar.relayout()
         }
     }
     
@@ -1066,8 +1066,8 @@ class ChatViewController: MessagesViewController {
         
         // When there are no messages and the introduction text is shown and the keyboard appears the content inset is not added automatically and we do need to add the inset to the collection
         guard chatRoomDelegate.chatMessages.isEmpty,
-              let inputView = inputAccessoryView as? ChatInputBar,
-              inputView.isTextViewTheFirstResponder() else {
+              inputBarType == .custom(chatInputBar),
+              chatInputBar.isTextViewTheFirstResponder() else {
             return
         }
         
@@ -1248,7 +1248,7 @@ extension ChatViewController {
         let keyboardEndFrame = view.convert(keyboardEndFrameInScreenCoords, from: view.window)
         
         // Avoid to setContentOffset if just the chatInputBar is visible
-        guard keyboardEndFrame.height != chatInputBar?.frame.height else {
+        guard keyboardEndFrame.height != chatInputBar.frame.height else {
             return
         }
         
