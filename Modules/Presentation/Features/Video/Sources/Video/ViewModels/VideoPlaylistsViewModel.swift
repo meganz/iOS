@@ -39,6 +39,7 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     private let monitorSortOrderChangedDispatchQueue: DispatchQueue
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
+    let setSelection = SetSelection()
     @Published var videoPlaylists = [VideoPlaylistEntity]()
     @Published var shouldShowAddNewPlaylistAlert = false
     @Published var playlistName = ""

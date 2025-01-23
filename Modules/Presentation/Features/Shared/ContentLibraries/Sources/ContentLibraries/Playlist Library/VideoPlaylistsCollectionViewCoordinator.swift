@@ -150,8 +150,9 @@ public final class VideoPlaylistsCollectionViewCoordinator<ViewModel: VideoPlayl
             videoPlaylistContentUseCase: representer.viewModel.videoPlaylistContentUseCase,
             sortOrderPreferenceUseCase: representer.viewModel.sortOrderPreferenceUseCase,
             videoPlaylistEntity: rowItem.videoPlaylist,
+            setSelection: representer.viewModel.setSelection,
             onTapMoreOptions: { [weak self] in
-                self?.representer.didSelectMoreOptionForItem($0)
+                self?.representer.didSelectMoreOptionForItem?($0)
             }
         )
     }

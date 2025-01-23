@@ -8,4 +8,5 @@ public protocol VideoPlaylistsContentViewModelProtocol: ObservableObject {
     var thumbnailLoader: any ThumbnailLoaderProtocol { get }
     var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol { get }
     var sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol { get }
+    var setSelection: SetSelection { get }
 }
