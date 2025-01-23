@@ -3541,9 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file version.</string>
+        <string>%d version du fichier.</string>
+        <key>many</key>
+        <string>%d versions de fichiers.</string>
         <key>other</key>
-        <string>%d file versions.</string>
+        <string>%d versions de fichiers.</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
@@ -3557,9 +3559,47 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Total size used by file version: [storageSpace]</string>
+        <string>Taille totale utilisée par version de fichier : [storageSpace]</string>
+        <key>many</key>
+        <string>Taille totale utilisée par les versions de fichiers : [storageSpace]</string>
         <key>other</key>
-        <string>Total size used by file versions: [storageSpace]</string>
+        <string>Taille totale utilisée par les versions de fichiers : [storageSpace]</string>
+      </dict>
+    </dict>
+    <key>set.addTo.snackbar.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ajouté à «[A]»</string>
+        <key>many</key>
+        <string>Ajouté %d éléments à «[A]»</string>
+        <key>other</key>
+        <string>Ajouté %d éléments à «[A]»</string>
+      </dict>
+    </dict>
+    <key>chat.message.forwardMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string></string>
+        <key>many</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
       </dict>
     </dict>
   </dict>

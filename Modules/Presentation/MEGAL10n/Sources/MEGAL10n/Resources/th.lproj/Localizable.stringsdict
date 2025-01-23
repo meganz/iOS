@@ -2774,5 +2774,35 @@
         <string>ขนาดรวมที่ใช้โดยเวอร์ชันไฟล์: [storageSpace]</string>
       </dict>
     </dict>
+    <key>set.addTo.snackbar.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added to “[A]”</string>
+        <key>other</key>
+        <string>Added %d items to “[A]”</string>
+      </dict>
+    </dict>
+    <key>chat.message.forwardMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string></string>
+      </dict>
+    </dict>
   </dict>
 </plist>

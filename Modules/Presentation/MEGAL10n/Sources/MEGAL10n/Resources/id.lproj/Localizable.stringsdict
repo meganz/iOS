@@ -2714,10 +2714,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Meskipun kami telah menghubungi anda melalui email di [date], penyimpanan anda masih penuh. Anda memiliki %d file mengambil [storageSpace] di akun anda, yang berarti anda harus mengosongkan beberapa ruang atau meningkatkan ke [plan] rencana. Jika anda tidak segera mengambil tindakan, data anda akan dihapus. Tingkatkan sekarang untuk melindungi file anda. [A]Pelajari lebih lanjut tentang batas penyimpanan anda[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2730,10 +2728,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Meskipun kami telah menghubungi anda beberapa kali melalui email, penyimpanan anda masih penuh. Anda memiliki %d file mengambil [storageSpace] di akun anda, yang berarti anda harus mengosongkan beberapa ruang atau meningkatkan ke [plan] rencana. Jika anda tidak segera mengambil tindakan, data anda akan dihapus. Tingkatkan sekarang untuk melindungi file anda. [A]Pelajari lebih lanjut tentang batas penyimpanan[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2746,10 +2742,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d files taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Meskipun kami telah menghubungi anda melalui email, penyimpanan anda masih penuh. Anda memiliki %d file mengambil [storageSpace] di akun anda, yang berarti anda harus mengosongkan beberapa ruang atau meningkatkan ke [plan] rencana. Jika anda tidak segera mengambil tindakan, data anda akan dihapus. Tingkatkan sekarang untuk melindungi file anda. [A]Pelajari lebih lanjut tentang batas penyimpanan[/A]. </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -2762,10 +2756,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d file version.</string>
         <key>other</key>
-        <string>%d file versions.</string>
+        <string>%d versi file.</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
@@ -2778,10 +2770,36 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Total size used by file version: [storageSpace]</string>
         <key>other</key>
-        <string>Total size used by file versions: [storageSpace]</string>
+        <string>Ukuran total yang digunakan oleh versi file: [storageSpace]</string>
+      </dict>
+    </dict>
+    <key>set.addTo.snackbar.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Menambahkan %d item untuk”[A]”</string>
+      </dict>
+    </dict>
+    <key>chat.message.forwardMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string></string>
       </dict>
     </dict>
   </dict>

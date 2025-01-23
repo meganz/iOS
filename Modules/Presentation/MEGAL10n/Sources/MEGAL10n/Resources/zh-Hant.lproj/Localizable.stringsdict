@@ -2774,5 +2774,33 @@
         <string>檔案版本使用的總空間：[storageSpace]</string>
       </dict>
     </dict>
+    <key>set.addTo.snackbar.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>已新增%d個項目到「[A]」</string>
+      </dict>
+    </dict>
+    <key>chat.message.forwardMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string></string>
+      </dict>
+    </dict>
   </dict>
 </plist>
