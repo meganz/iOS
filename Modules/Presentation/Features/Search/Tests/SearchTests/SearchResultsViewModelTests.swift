@@ -250,6 +250,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     titleTextColor: Color.primary,
                     subtitleTextColor: Color.secondary,
                     nodeDescriptionTextNormalColor: Color.secondary,
+                    textHighlightColor: .gray,
                     vibrantColor: .red,
                     resultPropertyColor: .gray,
                     verticalThumbnailFooterText: .white,
@@ -351,7 +352,18 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let result = harness.resultVM(at: 0)
-        XCTAssertEqual(result.title, "title".forceLeftToRight())
+        XCTAssertEqual(
+            result.title,
+            AttributedString(
+                "title"
+                    .forceLeftToRight()
+                    .highlightedStringWithSearchText(
+                        "query",
+                        primaryTextColor: UIColor(result.titleTextColor),
+                        highlightedTextColor: UIColor(result.colorAssets.textHighlightColor)
+                    )
+            )
+        )
         XCTAssertEqual(result.result.description(.list), "Desc")
     }
 
