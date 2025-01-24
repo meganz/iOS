@@ -1,10 +1,13 @@
 @testable import MEGA
 
+// swiftlint:disable sorted_imports
 import MEGADomain
+import MEGADesignToken
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class SharedItemsViewModelTests: XCTestCase {
@@ -12,12 +15,28 @@ final class SharedItemsViewModelTests: XCTestCase {
         let isFeatureFlagEnabled: Bool
         let nodeDescription: String?
         let searchText: String?
-        let output: String?
+        let output: NSAttributedString?
         static let flagDisabled = DescriptionForNodeTestData(isFeatureFlagEnabled: false, nodeDescription: "description", searchText: "desc", output: nil)
         static let nodeDescriptionIsNil = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: nil, searchText: "desc", output: nil)
         static let searchTextIsNil = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: nil, output: nil)
         static let searchTextNotMatched = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: "a", output: nil)
-        static let searchTextMatched = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: "desc", output: "description")
+        static let searchTextMatched = DescriptionForNodeTestData(
+            isFeatureFlagEnabled: true,
+            nodeDescription: "description",
+            searchText: "desc",
+            output: "description".highlightedStringWithKeyword(
+                "desc", primaryTextColor: TokenColors.Text.secondary, highlightedTextColor: TokenColors.Notifications.notificationSuccess
+            )
+        )
+
+        static let searchTextMatchedMultipleTimes = DescriptionForNodeTestData(
+            isFeatureFlagEnabled: true,
+            nodeDescription: "description1 description2",
+            searchText: "desc",
+            output: "description1 description2".highlightedStringWithKeyword(
+                "desc", primaryTextColor: TokenColors.Text.secondary, highlightedTextColor: TokenColors.Notifications.notificationSuccess
+            )
+        )
     }
     
     @MainActor
@@ -117,7 +136,8 @@ final class SharedItemsViewModelTests: XCTestCase {
             .nodeDescriptionIsNil,
             .searchTextIsNil,
             .searchTextNotMatched,
-            .searchTextMatched
+            .searchTextMatched,
+            .searchTextMatchedMultipleTimes
         ]
 
         testData.forEach { data in
@@ -146,3 +166,5 @@ final class SharedItemsViewModelTests: XCTestCase {
         return sut
     }
 }
+
+// swiftlint:enable sorted_imports

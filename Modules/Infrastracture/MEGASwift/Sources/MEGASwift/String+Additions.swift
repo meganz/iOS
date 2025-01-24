@@ -103,9 +103,9 @@ public extension String {
         return range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil
     }
 
-    func highlightedStringWithSearchText(_ searchText: String?, primaryTextColor: UIColor, highlightedTextColor: UIColor) -> NSAttributedString {
+    func highlightedStringWithKeyword(_ keyword: String?, primaryTextColor: UIColor, highlightedTextColor: UIColor) -> NSAttributedString {
         let primaryTextColorAttr: [NSAttributedString.Key: Any] = [.foregroundColor: primaryTextColor]
-        guard let searchText else {
+        guard let keyword else {
             return .init(string: self, attributes: primaryTextColorAttr)
         }
 
@@ -116,7 +116,7 @@ public extension String {
 
         let result = NSMutableAttributedString()
         var tmpSelf = self
-        while let range = tmpSelf.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
+        while let range = tmpSelf.range(of: keyword, options: [.caseInsensitive, .diacriticInsensitive]) {
             let beforeString = String(tmpSelf[tmpSelf.startIndex..<range.lowerBound])
             let attributedBefore = NSAttributedString(string: beforeString, attributes: primaryTextColorAttr)
             result.append(attributedBefore)

@@ -6,7 +6,7 @@ import MEGAUIKit
 extension MEGANode {
 
     @objc func attributedName(searchText: String?) -> NSAttributedString {
-        name?.highlightedStringWithSearchText(
+        name?.highlightedStringWithKeyword(
             searchText,
             primaryTextColor: TokenColors.Text.primary,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
@@ -16,7 +16,7 @@ extension MEGANode {
     /// Create an NSAttributedString with the name of the node and append isTakedown image
     /// - Returns: The name of the node appending isTakedown image at the end
     @objc func attributedTakenDownName(searchText: String?) -> NSAttributedString {
-        let highlightedName = name?.highlightedStringWithSearchText(searchText, primaryTextColor: TokenColors.Text.error, highlightedTextColor: TokenColors.Notifications.notificationSuccess) ?? .init()
+        let highlightedName = name?.highlightedStringWithKeyword(searchText, primaryTextColor: TokenColors.Text.error, highlightedTextColor: TokenColors.Notifications.notificationSuccess) ?? .init()
         let name = NSMutableAttributedString(attributedString: highlightedName)
 
         let takedownImageAttachment = NSTextAttachment()
@@ -32,6 +32,14 @@ extension MEGANode {
 
     @objc func attributedTakenDownName() -> NSAttributedString {
         attributedTakenDownName(searchText: nil)
+    }
+
+    @objc func attributedDescription(searchText: String?) -> NSAttributedString {
+        description?.highlightedStringWithKeyword(
+            searchText,
+            primaryTextColor: TokenColors.Text.secondary,
+            highlightedTextColor: TokenColors.Notifications.notificationSuccess
+        ) ?? .init()
     }
 
     @objc func fileFolderRenameAlertTitle(invalidChars containsInvalidChars: Bool) -> String {
