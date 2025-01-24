@@ -324,7 +324,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.bannerCollectionView.refreshContainer()
+            self?.bannerCollectionView?.refreshContainer()
         }, completion: nil)
     }
 
