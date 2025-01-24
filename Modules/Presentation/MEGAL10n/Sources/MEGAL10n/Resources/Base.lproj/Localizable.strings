@@ -4512,3 +4512,5 @@
 "photos.addToAlbum.empty.message"="No albums";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="The maximum number of tags is 10";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="Unknown Artist";
