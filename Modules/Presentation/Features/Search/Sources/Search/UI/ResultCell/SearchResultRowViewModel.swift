@@ -29,7 +29,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         }
 
         return AttributedString(
-            title.highlightedStringWithSearchText(
+            title.highlightedStringWithKeyword(
                 query,
                 primaryTextColor: UIColor(titleTextColor),
                 highlightedTextColor: UIColor(colorAssets.textHighlightColor)
