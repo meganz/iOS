@@ -357,7 +357,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             AttributedString(
                 "title"
                     .forceLeftToRight()
-                    .highlightedStringWithSearchText(
+                    .highlightedStringWithKeyword(
                         "query",
                         primaryTextColor: UIColor(result.titleTextColor),
                         highlightedTextColor: UIColor(result.colorAssets.textHighlightColor)
