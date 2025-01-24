@@ -50,7 +50,6 @@ extension NodeTableViewCell {
     }
 
     @objc func configureDescriptionLabel() {
-        descriptionLabel?.textColor = TokenColors.Text.secondary
         descriptionLabel?.font = .preferredFont(forTextStyle: .caption1)
     }
 
@@ -145,7 +144,9 @@ extension NodeTableViewCell {
             return
         }
 
-        descriptionLabel?.text = description
+        descriptionLabel?.attributedText = node.attributedDescription(searchText: searchText)
+        // Note: For some reason app will crash without setting the `descriptionLabel?.textColor` so we need to put it here
+        descriptionLabel?.textColor = TokenColors.Text.secondary
         descriptionLabel?.isHidden = false
     }
 

@@ -2,6 +2,7 @@ import MEGADomain
 import MEGAFoundation
 import MEGAPresentation
 import MEGASDKRepo
+import UIKit
 
 @MainActor
 @objc final class SharedItemsViewModel: NSObject, Sendable {
@@ -65,9 +66,11 @@ import MEGASDKRepo
         moveToRubbishBinViewModel.moveToRubbishBin(nodes: [node].toNodeEntities())
     }
 
-    @objc func descriptionForNode(_ node: MEGANode, with searchText: String?) -> String? {
+    @objc func descriptionForNode(_ node: MEGANode, with searchText: String?) -> NSAttributedString? {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
-            let description = node.description, let searchText else { return nil }
-        return description.containsIgnoringCaseAndDiacritics(searchText: searchText) ? description : nil
+              let description = node.description,
+              let searchText,
+              description.containsIgnoringCaseAndDiacritics(searchText: searchText) else { return nil }
+        return node.attributedDescription(searchText: searchText)
     }
 }

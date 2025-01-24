@@ -53,15 +53,17 @@ final class SharedItemsTableViewCell: UITableViewCell {
         takeDownView.isHidden = !isTakenDownNode
     }
 
-    @objc func setNodeDescription(_ desc: String?) {
-        descriptionLabel?.text = desc
+    @objc func setNodeDescription(_ desc: NSAttributedString?) {
+        descriptionLabel?.attributedText = desc
+        // Note: For some reason app will crash without setting the `descriptionLabel?.textColor` so we need to put it here
+        descriptionLabel?.textColor = TokenColors.Text.secondary
     }
     
     @objc func configureNode(_ name: String, searchText: String?, isTakenDown: Bool) {
         let textColor = isTakenDown ? TokenColors.Text.error : TokenColors.Text.primary
         let takeDownImage: UIImage? = isTakenDown ? UIImage.isTakedown.withTintColorAsOriginal(TokenColors.Support.error) : nil
 
-        nameLabel.attributedText = name.highlightedStringWithSearchText(
+        nameLabel.attributedText = name.highlightedStringWithKeyword(
             searchText,
             primaryTextColor: textColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
