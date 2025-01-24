@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 import MEGASDKRepo
 
 final class AudioPlayerItem: AVPlayerItem {
@@ -33,16 +34,20 @@ final class AudioPlayerItem: AVPlayerItem {
     
     func loadMetadata(completion: @escaping () -> Void) {
         asset.loadMetadata { [weak self] title, artist, albumName, artworkData in
-            guard let `self` = self else { return }
+            guard let self else { return }
             
-            if let nodeName = node?.name {
-                self.name = nodeName
-            } else if let title {
-                self.name = title
+            name = if let title {
+                title
+            } else {
+                node?.name ?? ""
             }
             
-            if let artist = artist {
-                self.artist = artist
+            self.artist = if let artist {
+                artist
+            } else if title != nil { // Only show unknown artist if the title can be determined
+                Strings.Localizable.Media.Audio.Metadata.Missing.artist
+            } else {
+                nil
             }
             
             if let albumName = albumName {
