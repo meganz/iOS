@@ -20,7 +20,8 @@ extension BrowserViewController {
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
                 ),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
+            filesSearchUseCase: FilesSearchUseCase(repo: FilesSearchRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         )
     }
     
@@ -42,7 +43,7 @@ extension BrowserViewController {
     private
     func updateTitle(title: String, shouldPlaceInTitleView: Bool) {
         if shouldPlaceInTitleView {
-            let label = UILabel.customNavigationBarLabel(title: parentNode.name ?? "", subtitle: title, traitCollection: traitCollection)
+            let label = UILabel.customNavigationBarLabel(title: parentNode?.name ?? "", subtitle: title, traitCollection: traitCollection)
         
             if let titleView = navigationItem.titleView {
                 label.frame = .init(
@@ -74,16 +75,16 @@ extension BrowserViewController {
             if isChildBrowserFromIncoming {
                 let accessTypeString = formattedShareType(from: parentShareType)
                 
-                if parentNode.name != nil {
+                if parentNode?.name != nil {
                     return (accessTypeString, true) // here is special case when we put that in titleView
                 } else {
                     return ("(\(accessTypeString))", false)
                 }
             } else {
-                if parentNode == nil || parentNode.type == .root {
+                if parentNode == nil || parentNode?.type == .root {
                     return (Strings.Localizable.cloudDrive, false)
                 } else {
-                    return (parentNode.name ?? "", false)
+                    return (parentNode?.name ?? "", false)
                 }
             }
         }
@@ -114,10 +115,14 @@ extension BrowserViewController {
     }
 
     @objc func updateSelector() {
-        selectorView.backgroundColor = TokenColors.Background.surface1
+        selectorView?.backgroundColor = TokenColors.Background.surface1
 
-        updateButtonAndLineView(for: cloudDriveButton, with: cloudDriveLineView)
-        updateButtonAndLineView(for: incomingButton, with: incomingLineView)
+        if let cloudDriveButton, let cloudDriveLineView {
+            updateButtonAndLineView(for: cloudDriveButton, with: cloudDriveLineView)
+        }
+        if let incomingButton, let incomingLineView {
+            updateButtonAndLineView(for: incomingButton, with: incomingLineView)
+        }
     }
 
     private func updateButtonAndLineView(for button: UIButton, with lineView: UIView) {
@@ -154,10 +159,10 @@ extension BrowserViewController {
     @objc func setParentNodeForBrowserAction() {
         guard isParentBrowser else { return }
         
-        if cloudDriveButton.isSelected && parentNode == nil {
+        if let cloudDriveButton, cloudDriveButton.isSelected && parentNode == nil {
             parentNode = MEGASdk.shared.rootNode
             viewModel.updateParentNode(parentNode)
-        } else if incomingButton.isSelected {
+        } else if let incomingButton, incomingButton.isSelected {
             parentNode = nil
             viewModel.updateParentNode(nil)
         }

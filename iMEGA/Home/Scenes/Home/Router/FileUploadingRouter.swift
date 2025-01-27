@@ -237,7 +237,7 @@ private final class DocumentImportsDelegate: NSObject, UIDocumentPickerDelegate 
 final class TargetFolderBrowserVCDelegate: NSObject, BrowserViewControllerDelegate {
     var completion: ((MEGANode) -> Void)?
 
-    func upload(toParentNode parentNode: MEGANode!) {
+    func upload(toParentNode parentNode: MEGANode) {
         asyncOnMain(weakify(self) {
             $0.completion?(parentNode)
         })

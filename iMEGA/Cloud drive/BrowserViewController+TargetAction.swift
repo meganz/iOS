@@ -35,7 +35,7 @@ extension BrowserViewController {
         guard let browserVC = self.storyboard?.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController else { return nil }
         browserVC.browserAction = browserAction
         browserVC.isChildBrowser = true
-        browserVC.isChildBrowserFromIncoming = incomingButton.isSelected || isChildBrowserFromIncoming
+        browserVC.isChildBrowserFromIncoming = incomingButton?.isSelected ?? false || isChildBrowserFromIncoming
         browserVC.localpath = localpath
         browserVC.parentNode = node
         browserVC.selectedNodesMutableDictionary = selectedNodesMutableDictionary
@@ -59,8 +59,12 @@ extension BrowserViewController {
     
     private func selectSegment(_ segment: BrowserSegments) {
         switch segment {
-        case .cloud: cloudDriveTouchUp(inside: cloudDriveButton)
-        case .incoming: incomingTouchUp(inside: incomingButton)
+        case .cloud:
+            guard let cloudDriveButton else { return }
+            cloudDriveTouchUp(inside: cloudDriveButton)
+        case .incoming:
+            guard let incomingButton else { return }
+            incomingTouchUp(inside: incomingButton)
         }
     }
 }

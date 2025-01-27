@@ -39,8 +39,8 @@ struct BrowserView: UIViewControllerRepresentable {
             _selectedNode = selectedNode
         }
         
-        func didSelect(_ node: MEGANode!) {
-            selectedNode = node?.toNodeEntity()
+        func didSelect(_ node: MEGANode) {
+            selectedNode = node.toNodeEntity()
         }
     }
     

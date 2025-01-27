@@ -10,6 +10,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
         if searchController.isActive {
             if searchString.count < kMinimumLettersToStartTheSearch {
                 nodeSearcher?.cancelSearch()
+                SVProgressHUD.dismiss()
                 cancelSearchTask()
                 loadDefaultSharedItems()
             } else {
@@ -23,6 +24,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
             }
         } else {
             nodeSearcher?.cancelSearch()
+            SVProgressHUD.dismiss()
             reloadUI()
         }
     }
@@ -101,6 +103,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
         searchUnverifiedSharesArray.removeAllObjects()
         
         nodeSearcher?.cancelSearch()
+        SVProgressHUD.dismiss()
         nodeSearcher = nil
         
         loadDefaultSharedItems()

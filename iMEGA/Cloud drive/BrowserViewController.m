@@ -28,14 +28,12 @@
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
-@property (nonatomic, strong) MEGANodeList *nodes;
 @property (nonatomic, strong) MEGAShareList *shares;
 
 @property (nonatomic) NSUInteger remainingOperations;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorViewHeightConstraint;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem *cancelBarButtonItem;
@@ -49,8 +47,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSelectBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarAddBarButtonItem;
 
-@property (nonatomic) NSMutableArray *searchNodesArray;
-@property (nonatomic) UISearchController *searchController;
 @property (nonatomic, assign) BOOL isLoading;
 
 @end
@@ -795,16 +791,7 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
-    if (searchController.isActive) {
-        if ([searchString isEqualToString:@""]) {
-            self.searchNodesArray = [self.nodes.mnz_nodesArrayFromNodeList mutableCopy];
-        } else {
-            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
-            self.searchNodesArray = [[self.nodes.mnz_nodesArrayFromNodeList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
-        }
-    }
-    
-    [self.tableView reloadData];
+    [self updateSearchResultsWithSearchString:searchString];
 }
 
 #pragma mark - UISearchControllerDelegate
