@@ -446,16 +446,22 @@ extension TextEditorViewController {
     private func configureMarkdownSupportText(_ textEditorModel: TextEditorModel) {
         switch textEditorModel.textEditorMode {
         case .view:
-            renderTextUsingMarkdownSupportRenderingOnView(textEditorModel)
+            if textEditorModel.textFile.fileName.fileExtensionGroup.isMarkdownText {
+                renderTextUsingMarkdownSupportRenderingOnView(textEditorModel)
+            } else {
+                renderTextUsingLegacyTextView(isEditable: false)
+            }
         case .edit:
-            renderTextUsingLegacyTextView()
+            renderTextUsingLegacyTextView(isEditable: true)
         case .create, .load:
             break
         }
     }
     
     private func renderTextUsingMarkdownSupportRenderingOnView(_ textEditorModel: TextEditorModel) {
-        let markdownTextView = MarkdownSupportTextView(string: textEditorModel.textFile.content)
+        let markdownTextView = MarkdownSupportTextView(
+            viewModel: MarkdownSupportTextViewModel(string: textEditorModel.textFile.content)
+        )
         let controller = UIHostingController(rootView: markdownTextView)
         controller.view.backgroundColor = .clear
         markdownSupportTextViewController = controller
@@ -464,7 +470,11 @@ extension TextEditorViewController {
         textView.isHidden = true
     }
     
-    private func renderTextUsingLegacyTextView() {
+    private func renderTextUsingLegacyTextView(isEditable: Bool) {
+        if !isEditable {
+            textView.setContentOffset(.zero, animated: false)
+        }
+        textView.isEditable = isEditable
         textView.isHidden = false
         removeMarkdownSupportTextRenderingFromView()
     }

@@ -30,6 +30,9 @@ public protocol FileExtensionGroupRepresentable {
     /// A Boolean value indicating whether the file is a text file that can be edited. This can include TXT, DOCX, RTF files etc.
     var isEditableText: Bool { get }
     
+    /// A Boolean value indicating whether the file is a text file that contains markdown content. This can include MD, MARKDOWN files etc.
+    var isMarkdownText: Bool { get }
+    
     /// A Boolean value indicating whether the file extension falls within any of the defined file extension groups.
     var isKnown: Bool { get }
 }
@@ -74,6 +77,7 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
     var isText: Bool { Option.text.contains(selected) }
     var isWebCode: Bool { Option.webCode.contains(selected) }
     var isEditableText: Bool { Option.editableText.contains(selected) }
+    var isMarkdownText: Bool { Option.markdownText.contains(selected) }
     var isKnown: Bool { Option.allKnown.contains(selected) }
     
     private let selected: FileExtensionGroup.Option
@@ -102,12 +106,14 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
         public static let audio = Self(rawValue: 1 << 4)
         public static let text = Self(rawValue: 1 << 5)
         public static let webCode = Self(rawValue: 1 << 6)
+        public static let markdown = Self(rawValue: 1 << 7)
         
         public static let visualMedia: Self = [.image, .video]
         public static let multiMedia: Self = [.video, .audio]
-        public static let editableText: Self = [.webCode, .text, .empty]
+        public static let editableText: Self = [.webCode, .text, .empty, .markdown]
+        public static let markdownText: Self = [.markdown]
         
-        public static let allKnown: Self = [empty, image, video, audio, text, webCode]
+        public static let allKnown: Self = [empty, image, video, audio, text, webCode, markdown]
     }
     
     private enum Constant {
@@ -120,8 +126,13 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
             "log": .text,
             "wpd": .text,
             "json": .text,
-            "md": .text,
             "org": .text,
+            // MARK: - Markdown Text
+            "markdown": .markdown,
+            "md": .markdown,
+            "mdown": .markdown,
+            "mkd": .markdown,
+            "mkdn": .markdown,
             // MARK: - Audio
             "aac": .audio,
             "ac3": .audio,
@@ -223,7 +234,6 @@ private struct FileExtensionGroup: FileExtensionGroupRepresentable {
             "las": .webCode,
             "lasso": .webCode,
             "lassoapp": .webCode,
-            "markdown": .webCode,
             "met": .webCode,
             "metalink": .webCode,
             "mht": .webCode,
