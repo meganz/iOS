@@ -1,37 +1,43 @@
 import SwiftUI
 
 public struct MarkdownSupportTextView: View {
+    @StateObject private var viewModel: MarkdownSupportTextViewModel
     
-    let localizedStringKey: LocalizedStringKey
-    
-    public init(string: String) {
-        self.localizedStringKey = LocalizedStringKey(string)
+    public init(viewModel: @autoclosure @escaping () -> MarkdownSupportTextViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
     }
     
     public var body: some View {
         ScrollView {
-            Text(localizedStringKey)
-                .textSelection(.enabled)
-                .multilineTextAlignment(.leading)
-                .padding()
+            LazyVStack(alignment: .leading) {
+                ForEach(viewModel.textChunks.indices, id: \.self) { index in
+                    Text(viewModel.textChunks[index])
+                        .textSelection(.enabled)
+                }
+            }
+            .padding(.vertical)
+            .padding(.horizontal, 8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .onAppear {
+            viewModel.loadText()
+        }
     }
 }
 
 // MARK: - Previvew
 
 #Preview {
-    MarkdownSupportTextView(string: "**Hello,**\n\n**Welcome to SwiftUI!**\n\nThis is a Markdown string.")
+    MarkdownSupportTextView(viewModel: MarkdownSupportTextViewModel(string: "**Hello,**\n\n**Welcome to SwiftUI!**\n\nThis is a Markdown string."))
 }
 
 #Preview {
-    MarkdownSupportTextView(string: "**Hello** \n *world*!")
+    MarkdownSupportTextView(viewModel: MarkdownSupportTextViewModel(string: "**Hello** \n *world*!"))
 }
 
 #Preview {
     MarkdownSupportTextView(
-        string: """
+        viewModel: MarkdownSupportTextViewModel(string: """
                 **SwiftUI** is Apple's framework for building UI with a declarative syntax. It's designed to work seamlessly with *Swift*, allowing developers to write beautiful UIs with minimal code. In SwiftUI, we can use `VStack`, `HStack`, and `ZStack` to arrange views vertically, horizontally, or in layers.
                  
                 For example, you can create a vertical stack using the `VStack` layout:
@@ -53,5 +59,5 @@ public struct MarkdownSupportTextView: View {
                  
                 Combine the power of **modern Swift** and *elegant UI frameworks* to build stunning apps with **SwiftUI**!
                 """
-    )
+    ))
 }

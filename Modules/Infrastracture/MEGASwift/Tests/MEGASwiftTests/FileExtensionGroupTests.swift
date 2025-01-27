@@ -6,8 +6,9 @@ final class StringFileExtensionGroupTests: XCTestCase {
     private static let imageExtensions = ["3fr", "arw", "avif", "bmp", "cr2", "crw", "ciff", "cur", "cs1", "dcr", "dng", "erf", "gif", "heic", "ico", "iiq", "j2c", "jp2", "jpf", "jpeg", "jpg", "jxl", "k25", "kdc", "mef", "mos", "mrw", "nef", "nrw", "orf", "pbm", "pef", "pgm", "png", "pnm", "ppm", "psd", "raf", "raw", "rw2", "rwl", "sr2", "srf", "srw", "tga", "tif", "tiff", "webp", "x3f"]
     private static let videoExtensions = ["3g2", "3gp", "avi", "mkv", "m4v", "mov", "mp4", "mqv", "qt"]
     private static let audioExtensions = ["aac", "ac3", "aif", "aiff", "au", "caf", "eac3", "ec3", "flac", "m4a", "mp3", "wav"]
-    private static let textPathExtension = ["txt", "ans", "ascii", "log", "wpd", "json", "md", "org"]
-    private static let webCodePathExtension = ["action", "adp", "ashx", "asmx", "asp", "aspx", "atom", "axd", "bml", "cer", "cfm", "cgi", "css", "dhtml", "do", "dtd", "eml", "htm", "html", "ihtml", "jhtml", "jsonld", "jsp", "jspx", "las", "lasso", "lassoapp", "markdown", "met", "metalink", "mht", "mhtml", "rhtml", "rna", "rnx", "se", "shtml", "stm", "wss", "yaws", "zhtml", "xml", "js", "jar", "java", "class", "php", "php3", "php4", "php5", "phtml", "inc", "pl", "py", "sql", "accdb", "db", "dbf", "mdb", "pdb", "c", "cpp", "h", "cs", "sh", "vb", "swift"]
+    private static let textPathExtension = ["txt", "ans", "ascii", "log", "wpd", "json", "org"]
+    private static let webCodePathExtension = ["action", "adp", "ashx", "asmx", "asp", "aspx", "atom", "axd", "bml", "cer", "cfm", "cgi", "css", "dhtml", "do", "dtd", "eml", "htm", "html", "ihtml", "jhtml", "jsonld", "jsp", "jspx", "las", "lasso", "lassoapp", "met", "metalink", "mht", "mhtml", "rhtml", "rna", "rnx", "se", "shtml", "stm", "wss", "yaws", "zhtml", "xml", "js", "jar", "java", "class", "php", "php3", "php4", "php5", "phtml", "inc", "pl", "py", "sql", "accdb", "db", "dbf", "mdb", "pdb", "c", "cpp", "h", "cs", "sh", "vb", "swift"]
+    private static let markdownTextPathExtension = ["markdown", "md", "mdown", "mkd", "mkdn"]
     private static let maloneyBologna = """
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#*##**+--::----==#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*#####*=-::---===#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -198,6 +199,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
             XCTAssertFalse($0.fileExtensionGroup.isText)
             XCTAssertFalse($0.fileExtensionGroup.isWebCode)
             XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
         }
     }
     
@@ -215,6 +217,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isText)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
                 XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -232,6 +235,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isText)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
                 XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -246,6 +250,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
             XCTAssertFalse($0.fileExtensionGroup.isText)
             XCTAssertFalse($0.fileExtensionGroup.isWebCode)
             XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
         }
     }
     
@@ -262,6 +267,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isText)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
                 XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -278,6 +284,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isText)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
                 XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -293,6 +300,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
             XCTAssertFalse($0.fileExtensionGroup.isText)
             XCTAssertFalse($0.fileExtensionGroup.isWebCode)
             XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
         }
     }
     
@@ -310,6 +318,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isText)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
                 XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -327,6 +336,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isText)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
                 XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -342,6 +352,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
             XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
             XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
             XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
         }
     }
     
@@ -359,6 +370,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -376,6 +388,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -391,6 +404,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
             XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
             XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
             XCTAssertFalse($0.fileExtensionGroup.isText)
+            XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
         }
     }
     
@@ -408,6 +422,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -425,6 +440,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
                 XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
                 XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
             }
     }
     
@@ -440,6 +456,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
         XCTAssertFalse(str.fileExtensionGroup.isMultiMedia)
         XCTAssertFalse(str.fileExtensionGroup.isText)
         XCTAssertFalse(str.fileExtensionGroup.isWebCode)
+        XCTAssertFalse(str.fileExtensionGroup.isMarkdownText)
     }
     
     func testFileExtensionGroupCreateFrom_withNumericString() throws {
@@ -453,6 +470,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
         XCTAssertFalse(str.fileExtensionGroup.isText)
         XCTAssertFalse(str.fileExtensionGroup.isWebCode)
         XCTAssertFalse(str.fileExtensionGroup.isEditableText)
+        XCTAssertFalse(str.fileExtensionGroup.isMarkdownText)
     }
     
     func testFileExtensionGroupCreateFrom_withEmoji() throws {
@@ -467,6 +485,7 @@ final class StringFileExtensionGroupTests: XCTestCase {
             XCTAssertFalse($0.fileExtensionGroup.isText)
             XCTAssertFalse($0.fileExtensionGroup.isWebCode)
             XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isMarkdownText)
         }
         
     }
@@ -482,5 +501,58 @@ final class StringFileExtensionGroupTests: XCTestCase {
         XCTAssertFalse(str.fileExtensionGroup.isText)
         XCTAssertFalse(str.fileExtensionGroup.isWebCode)
         XCTAssertFalse(str.fileExtensionGroup.isEditableText)
+        XCTAssertFalse(str.fileExtensionGroup.isMarkdownText)
+    }
+    
+    func testFileExtensionGroupCreateFrom_withMarkdownTextPathExtension() throws {
+        Self.markdownTextPathExtension.forEach {
+            XCTAssertTrue($0.fileExtensionGroup.isMarkdownText)
+            XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+            XCTAssertTrue($0.fileExtensionGroup.isKnown)
+            
+            XCTAssertFalse($0.fileExtensionGroup.isImage)
+            XCTAssertFalse($0.fileExtensionGroup.isVideo)
+            XCTAssertFalse($0.fileExtensionGroup.isAudio)
+            XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isText)
+            XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+        }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withMarkdownTextFileName() throws {
+        Self.markdownTextPathExtension
+            .map { "FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isMarkdownText)
+                XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withMarkdownTextFilePath() throws {
+        Self.markdownTextPathExtension
+            .map { "/XCImageset.xcasset/FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isMarkdownText)
+                XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            }
     }
 }
