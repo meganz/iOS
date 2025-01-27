@@ -2,13 +2,12 @@
 
 #import "ContactLinkQRViewController.h"
 #import "MEGA-Swift.h"
-#import "OfflineViewController.h"
 #import "TransfersWidgetViewController.h"
 
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 
-@interface MyAccountHallViewController () <UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
+@interface MyAccountHallViewController () <UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *profileBottomSeparatorView;
 @property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
@@ -63,27 +62,11 @@
     [super viewWillDisappear:animated];
     
     [self dispatchOnViewWillDisappearAction];
-    
-    NSInteger index = self.navigationController.viewControllers.count-1;
-    if (![self.navigationController.viewControllers[index] isKindOfClass:OfflineViewController.class] &&
-        !self.isMovingFromParentViewController) {
-        [AudioPlayerManager.shared removeDelegate:self];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
-    [AudioPlayerManager.shared addDelegate:self];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    NSInteger index = self.navigationController.viewControllers.count-1;
-    if ([self.navigationController.viewControllers[index] isKindOfClass:OfflineViewController.class] ||
-        self.isMovingFromParentViewController) {
-        [AudioPlayerManager.shared removeDelegate:self];
-    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -186,12 +169,6 @@
 
 - (IBAction)didTapAddPhoneNumberView {
     [[[SMSVerificationViewRouter alloc] initWithVerificationType:SMSVerificationTypeAddPhoneNumber presenter:self onPhoneNumberVerified: nil] start];
-}
-
-#pragma mark - AudioPlayer
-
-- (void)updateContentView:(CGFloat)height {
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
 }
 
 @end
