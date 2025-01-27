@@ -26,6 +26,7 @@ let package = Package(
                            "libvideocapture_objc",
                            "libvideoframebuffer_objc",
                            "libwebsockets",
+                           "libwebrtc",
                            .product(name: "MEGASdkCpp", package: "MEGASdk")],
             path: "Sources/MEGAChatSDK",
             exclude: ["bindings",
@@ -105,6 +106,11 @@ let package = Package(
             name: "libwebsockets",
             url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libwebsockets_xcframework.zip",
             checksum: "d544160a2a4d50dbe3003abc1b4d443b12f536310ab810ae466f6c3fc4b19018"
+        ),
+        .binaryTarget(
+            name: "libwebrtc",
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libwebrtc_xcframework.zip",
+            checksum: "ee61b35cd31522c51dc693a30feefcbb05cac273b0bec9455b986ed8950a7e29"
         )
     ],
     cxxLanguageStandard: .cxx17
