@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MessageKit
 
 class LoadingMessageReusableView: MessageReusableView {
@@ -10,19 +11,10 @@ class LoadingMessageReusableView: MessageReusableView {
         updateAppearance()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-         super.traitCollectionDidChange(previousTraitCollection)
-         
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-     }
-    
     func updateAppearance() {
-        loadingView.backgroundColor = UIColor.systemBackground
+        loadingView.backgroundColor = TokenColors.Background.page
         loadingBubbles.forEach { (view) in
-            view.backgroundColor = UIColor.mnz_chatLoadingBubble(traitCollection)
+            view.backgroundColor = TokenColors.Background.surface1
         }
     }
-    
 }
