@@ -1,6 +1,8 @@
 #import <UIKit/UIKit.h>
 
-@class BrowserViewModel;
+@class BrowserViewModel, SharedItemsNodeSearcher;
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionCopy = 0,
@@ -31,7 +33,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 @property (weak, nonatomic) IBOutlet UIButton *incomingButton;
 
-@property (nonatomic, strong) MEGANode *parentNode;
+@property (nonatomic, strong, nullable) MEGANode *parentNode;
 @property (nonatomic, strong) NSArray<MEGANode *> *selectedNodesArray;
 
 @property (nonatomic) BrowserAction browserAction;
@@ -49,19 +51,27 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 @property (nonatomic) MEGAShareType parentShareType;
 @property (strong, nonatomic) BrowserViewModel *viewModel;
+@property (nonatomic, nullable) NSMutableArray<MEGANode *> *searchNodesArray;
+@property (nonatomic) UISearchController *searchController;
+@property (nonatomic, strong, nullable) SharedItemsNodeSearcher *nodeSearcher;
+
+@property (nonatomic, strong, nullable) MEGANodeList *nodes;
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 @property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) UIViewController *shimmerViewController;
+@property (nonatomic, strong, nullable) UIViewController *shimmerViewController;
 
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
 - (void)updatePromptTitle;
 - (void)attachNodes;
+- (void)reloadUI;
 
 - (IBAction)cloudDriveTouchUpInside:(UIButton *)sender;
 - (IBAction)incomingTouchUpInside:(UIButton *)sender;
 
 @end
 
+NS_ASSUME_NONNULL_END

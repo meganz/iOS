@@ -20,7 +20,6 @@ import MEGASDKRepo
     
     @objc func cancelSearch() {
         searchUC.cancelSearch()
-        SVProgressHUD.dismiss()
     }
 
     private func descriptionArgument(from searchText: String) -> String? {

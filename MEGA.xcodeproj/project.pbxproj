@@ -1622,6 +1622,8 @@
 		A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */; };
 		A834DD0C2BC0293B00A57058 /* View+WidgetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
+		A837FDF82D42969D00795223 /* BrowserViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */; };
+		A837FDF92D42969D00795223 /* BrowserViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F46296C40070062B6BC /* FileProviderExtension.swift */; };
 		A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F48296C40070062B6BC /* FileProviderItem.swift */; };
@@ -1673,6 +1675,7 @@
 		A882983C29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882983B29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift */; };
 		A882983D29F186AE00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882983B29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift */; };
 		A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */; };
+		A88671A02D43F11900C8AC9B /* SharedItemsNodeSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5A29B9FA74006B919E /* SharedItemsNodeSearcher.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
 		A88E7FEB2549FD8A001B0A66 /* RecentsTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE52549FD8A001B0A66 /* RecentsTableViewHeaderView.xib */; };
 		A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */; };
@@ -4332,6 +4335,7 @@
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WidgetBackground.swift"; sourceTree = "<group>"; };
+		A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+Search.swift"; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPickerFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6812,6 +6816,7 @@
 				0EAF73242A6786D9008F939D /* BrowserView.swift */,
 				947C6CB12A5D408C00CF929E /* BrowserViewController+Additions.swift */,
 				6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */,
+				A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */,
 				942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */,
 				41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */,
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
@@ -14264,6 +14269,7 @@
 				0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */,
 				947C6CB22A5D408C00CF929E /* BrowserViewController+Additions.swift in Sources */,
 				6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
+				A837FDF82D42969D00795223 /* BrowserViewController+Search.swift in Sources */,
 				942A64F729C390410017F439 /* BrowserViewController+TargetAction.swift in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				94B09E5F2B84CC87007D6B84 /* BrowserViewControllerDelegateHandler.swift in Sources */,
@@ -15841,6 +15847,7 @@
 				834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,
 				947C6CB32A5D409100CF929E /* BrowserViewController+Additions.swift in Sources */,
 				6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
+				A837FDF92D42969D00795223 /* BrowserViewController+Search.swift in Sources */,
 				942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				0EB584822C3CC0AD00EEBD99 /* BrowserViewModel.swift in Sources */,
@@ -15983,6 +15990,7 @@
 				B51AA8232CFFEECF001B0AF9 /* ShareDestinationTableViewController+Additions.swift in Sources */,
 				B566759A2A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift in Sources */,
 				77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */,
+				A88671A02D43F11900C8AC9B /* SharedItemsNodeSearcher.swift in Sources */,
 				83A4E47727F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift in Sources */,
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */,

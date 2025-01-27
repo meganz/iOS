@@ -6,6 +6,7 @@ import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
+@MainActor
 final class BrowserViewModelTests: XCTestCase {
     
     func testNodesForParent_parentNodeProvided_shouldReturn() async {
@@ -99,6 +100,7 @@ final class BrowserViewModelTests: XCTestCase {
         isChildBrowser: Bool = false,
         isSelectVideos: Bool = false,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        filesSearchUseCase: some FilesSearchUseCaseProtocol = MockFilesSearchUseCase(),
         sdk: MEGASdk = MockSdk(),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -108,6 +110,7 @@ final class BrowserViewModelTests: XCTestCase {
             isChildBrowser: isChildBrowser,
             isSelectVideos: isSelectVideos,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            filesSearchUseCase: filesSearchUseCase,
             sdk: sdk)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
