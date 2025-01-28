@@ -1,7 +1,6 @@
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
-import MEGAUIComponent
 import SwiftUI
 
 public struct AddToCollectionView: View {
@@ -64,29 +63,22 @@ public struct AddToCollectionView: View {
     }
     
     private var collectionsContent: some View {
-        GeometryReader { geometry in
-            // This check is required for the `onAppear` screen widths to set properly in `MEGATopBar`
-            if geometry.size != .zero {
-                MEGATopBar(
-                    tabs: [
-                        .init(
-                            title: Strings.Localizable.CameraUploads.Albums.title,
-                            content: AnyView(
-                                albumsContent)
-                        ),
-                        .init(
-                            title: Strings.Localizable.Videos.Tab.Title.playlist,
-                            content: AnyView(
-                                AddToPlaylistView(
-                                    viewModel: viewModel.addToPlaylistViewModel)
-                            )
-                        )
-                    ],
-                    fillScreenWidth: true,
-                    header: {
-                        EmptyView()
-                    })
-            }
-        }
+        PageTabView(
+            tabs: [
+                .init(
+                    title: Strings.Localizable.CameraUploads.Albums.title) {
+                        albumsContent
+                    },
+                .init(
+                    title: Strings.Localizable.Videos.Tab.Title.playlist) {
+                        AddToPlaylistView(
+                            viewModel: viewModel.addToPlaylistViewModel)
+                    }
+            ],
+            selectedTextForegroundColor: TokenColors.Button.brand.swiftUI,
+            textForegroundColor: TokenColors.Text.primary.swiftUI,
+            tabSelectionIndicatorColor: TokenColors.Button.brand.swiftUI,
+            backgroundColor: TokenColors.Background.surface1.swiftUI
+        )
     }
 }
