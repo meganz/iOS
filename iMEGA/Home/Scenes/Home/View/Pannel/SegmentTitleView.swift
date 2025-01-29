@@ -138,17 +138,3 @@ final class SegmentTitleView: UIView {
         static let stackViewInset: CGFloat = 16
     }
 }
-
-// MARK: - TraitEnvironmentAware
-
-extension SegmentTitleView: TraitEnvironmentAware {
-
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        updateView(with: currentTrait)
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        colorAppearanceDidChange(to: traitCollection, from: previousTraitCollection)
-    }
-}

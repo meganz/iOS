@@ -71,14 +71,14 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadNibContent()
-        setupView(with: traitCollection)
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
         loadNibContent()
-        setupView(with: traitCollection)
+        setupView()
     }
     
     // MARK: - Switch Tab
@@ -152,7 +152,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     // MARK: - Privates
     
-    private func setupView(with trait: UITraitCollection) {
+    private func setupView() {
         setupSegmentTitle()
         updateTabVisiblity(to: .recents)
         
