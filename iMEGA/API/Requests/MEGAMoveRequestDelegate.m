@@ -38,7 +38,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     self.numberOfRequests--;
     
-    if (error.type != MEGAErrorTypeApiEBusinessPastDue && error.type != MEGAErrorTypeApiEOverQuota) {
+    if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEBusinessPastDue && error.type != MEGAErrorTypeApiEOverQuota) {
         [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
         return;
     }
