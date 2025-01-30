@@ -73,6 +73,8 @@ struct NotificationsViewRouter: NotificationsViewRouting {
             nodeHierarchy: nodeHierarchy,
             isInRubbishBin: isInRubbishBin
         )
+        
+        cancelRootSearchIfNeeded(in: navigationController)
     }
     
     private func selectTabController(in mainTBC: MainTabBarController, isOwnNode: Bool) {
@@ -127,6 +129,13 @@ struct NotificationsViewRouter: NotificationsViewRouting {
         guard let navigationController else { return }
         
         navigationController.popToRootViewController(animated: false)
+    }
+    
+    private func cancelRootSearchIfNeeded(in navigationController: UINavigationController) {
+        guard let viewController = navigationController.viewControllers.first as? NewCloudDriveViewController else {
+            return
+        }
+        viewController.cancelActiveSearch()
     }
     
     func navigateThroughNodeHierarchyAndPresent(_ node: NodeEntity) {
