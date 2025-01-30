@@ -1,11 +1,13 @@
 import MEGAAssets
-import MEGADesignToken
 import MEGAPresentation
 import SwiftUI
 
 public struct SharedLinkView: View {
-    
-    public init() { }
+    private let foregroundColor: Color
+
+    public init(foregroundColor: Color) {
+        self.foregroundColor = foregroundColor
+    }
     
     public var body: some View {
         MEGAAssetsImageProvider
@@ -14,16 +16,16 @@ public struct SharedLinkView: View {
             .aspectRatio(contentMode: .fill)
             .frame(width: 15, height: 15)
             .foregroundStyle(
-                TokenColors.Icon.onColor.swiftUI
+                foregroundColor
             )
     }
 }
 
 #Preview {
-    SharedLinkView()
+    SharedLinkView(foregroundColor: .gray)
 }
 
 #Preview {
-    SharedLinkView()
+    SharedLinkView(foregroundColor: .white)
         .preferredColorScheme(.dark)
 }

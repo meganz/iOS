@@ -10,6 +10,7 @@ import MEGASwift
 import MEGASwiftUI
 import MEGATest
 import SwiftUI
+import Testing
 import XCTest
 
 final class AlbumCellViewModelTests: XCTestCase {
@@ -24,12 +25,6 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfNodes, album.count)
         XCTAssertTrue(sut.thumbnailContainer.type == .placeholder)
         XCTAssertFalse(sut.isLoading)
-    }
-    
-    @MainActor
-    func testInit_album_noCover_shouldSetCorrectThumbnail() {
-        let sut = makeAlbumCellViewModel(album: AlbumEntity(id: 5, type: .user))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssetsImageProvider.image(named: .placeholder), type: .placeholder)))
     }
     
     @MainActor
@@ -504,7 +499,7 @@ final class AlbumCellViewModelTests: XCTestCase {
                                 coverNode: initialCover, count: 0, type: .user)
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let thumbnailLoader = MockThumbnailLoader(initialImage: thumbnailContainer)
-
+        
         let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
         let albumCoverUseCase = MockAlbumCoverUseCase(albumCover: nil)
@@ -604,7 +599,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             exp.fulfill()
         }
         trackTaskCancellation { await sut.monitorCoverPhotoSensitivity() }
-    
+        
         wait(for: [exp], timeout: 0.5)
         subscription.cancel()
     }
@@ -813,5 +808,85 @@ final class AlbumCellViewModelTests: XCTestCase {
         sut.$thumbnailContainer
             .dropFirst()
             .sink(receiveValue: action)
+    }
+}
+
+@Suite("AlbumCellViewModel Tests")
+struct AlbumCellViewModelTestSuite {
+    
+    @Suite("Thumbnail")
+    @MainActor
+    struct Thumbnail {
+        @Test("when album has no cover it should set correct placeholder")
+        func noCoverPlaceholder() {
+            let sut = makeSUT(
+                album: .init(id: 8, type: .user))
+            
+            #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssetsImageProvider.image(named: .timeline), type: .placeholder)))
+        }
+        
+        @Test("when image container is placeholder it should return true",
+              arguments: [(Optional<NodeEntity>.none, true),
+                          (NodeEntity(handle: 1), false)])
+        func isPlaceholder(coverNode: NodeEntity?, isPlaceholder: Bool) {
+            let sut = makeSUT(
+                album: .init(id: 8, coverNode: coverNode, type: .user),
+                thumbnailLoader: MockThumbnailLoader(
+                    initialImage: ImageContainer(
+                        image: Image("folder"),
+                        type: .thumbnail)))
+            
+            #expect(sut.isPlaceholder == isPlaceholder)
+        }
+    }
+    
+    @Suite("Album link shared")
+    @MainActor
+    struct LinkShared {
+        @Test("when link is shared and not placeholder it should show gradient",
+              arguments: [(Optional<NodeEntity>.none, true, false),
+                          (Optional<NodeEntity>.none, false, false),
+                          (NodeEntity(handle: 1), false, false),
+                          (NodeEntity(handle: 1), true, true)])
+        func showGradient(coverNode: NodeEntity?, isLinkShared: Bool, showGradient: Bool) {
+            let sut = makeSUT(
+                album: .init(id: 8, coverNode: coverNode,
+                             type: .user, sharedLinkStatus: .exported(isLinkShared)),
+                thumbnailLoader: MockThumbnailLoader(
+                    initialImage: ImageContainer(
+                        image: Image("folder"),
+                        type: .thumbnail)))
+            
+            #expect(sut.shouldShowGradient == showGradient)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        album: AlbumEntity,
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
+        selection: AlbumSelection = AlbumSelection(),
+        tracker: some AnalyticsTracking = MockTracker(),
+        onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
+        configuration: ContentLibraries.Configuration = .mockConfiguration()
+    ) -> AlbumCellViewModel {
+        .init(thumbnailLoader: thumbnailLoader,
+              monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
+              nodeUseCase: nodeUseCase,
+              sensitiveNodeUseCase: sensitiveNodeUseCase,
+              sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+              albumCoverUseCase: albumCoverUseCase,
+              album: album,
+              selection: selection,
+              tracker: tracker,
+              onAlbumSelected: onAlbumSelected,
+              remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
+              configuration: configuration)
     }
 }

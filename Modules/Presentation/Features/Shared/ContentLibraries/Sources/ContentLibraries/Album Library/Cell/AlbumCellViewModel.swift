@@ -46,6 +46,14 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         isEditing || onAlbumSelected != nil
     }
     
+    var isPlaceholder: Bool {
+        thumbnailContainer.type == .placeholder
+    }
+    
+    var shouldShowGradient: Bool {
+        album.isLinkShared && !isPlaceholder
+    }
+    
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
@@ -99,10 +107,10 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             thumbnailContainer = thumbnailLoader.initialImage(
                 for: coverNode,
                 type: .thumbnail,
-                placeholder: { MEGAAssetsImageProvider.image(named: .placeholder) })
+                placeholder: { MEGAAssetsImageProvider.image(named: .timeline) })
         } else {
             thumbnailContainer = ImageContainer(
-                image: MEGAAssetsImageProvider.image(named: .placeholder),
+                image: MEGAAssetsImageProvider.image(named: .timeline),
                 type: .placeholder)
         }
         
@@ -212,7 +220,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
         } else {
             ImageContainer(
-                image: MEGAAssetsImageProvider.image(named: .placeholder),
+                image: MEGAAssetsImageProvider.image(named: .timeline),
                 type: .placeholder)
         }
         guard let imageContainer,
