@@ -184,11 +184,11 @@ extension CustomModalAlertViewController {
         }
         
         let maxQuota = accountDetails.transferMax
-        let usedTransferPercent = (accountDetails.transferUsed / maxQuota) * 100
+        let usedTransferPercent = (Float(accountDetails.transferUsed) / Float(maxQuota)) * 100
         let formattedMaxQuota = String.memoryStyleString(fromByteCount: Int64(maxQuota), includesUnit: false)
         
         let usageText = Strings.Localizable.TransferQuotaError.FooterMessage.quotaUsage
-            .replacingOccurrences(of: "[A]", with: String(usedTransferPercent))
+            .replacingOccurrences(of: "[A]", with: String(format: "%.0f", usedTransferPercent))
             .replacingOccurrences(of: "[B]", with: formattedMaxQuota)
 
         details.append("\n\n\(usageText)")
