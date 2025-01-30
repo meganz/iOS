@@ -28,7 +28,7 @@ public final class SetSelection: ObservableObject {
         self.editMode = editMode
     }
     
-    func toggle(_ setIdentifier: SetIdentifier) {
+    public func toggle(_ setIdentifier: SetIdentifier) {
         if selectedSets.contains(setIdentifier) {
             selectedSets.remove(setIdentifier)
         } else {

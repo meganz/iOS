@@ -4,7 +4,7 @@ import UIKit
 
 class MockAddToCollectionRouter: AddToCollectionRouting {
     public enum Invocation: Sendable, Equatable {
-        case showSnackBar(message: String)
+        case showSnackBarOnDismiss(message: String)
     }
     public var invocationSequence: AnyAsyncSequence<Invocation> {
         invocationStream.eraseToAnyAsyncSequence()
@@ -24,7 +24,7 @@ class MockAddToCollectionRouter: AddToCollectionRouting {
         
     }
     
-    func showSnackBar(message: String) {
-        invocationContinuation.yield(.showSnackBar(message: message))
+    func showSnackBarOnDismiss(message: String) {
+        invocationContinuation.yield(.showSnackBarOnDismiss(message: message))
     }
 }

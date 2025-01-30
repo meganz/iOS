@@ -305,7 +305,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         
         await sut.addVideosToNewlyCreatedVideoPlaylist(videos: videosToAdd)
         
-        XCTAssertEqual(videoPlaylistModificationUseCase.messages, [ .addVideoToPlaylist ])
+        XCTAssertEqual(videoPlaylistModificationUseCase.messages, [.addVideoToPlaylist(id: createdVideoPlaylist.id, nodes: videosToAdd)])
         XCTAssertTrue(sut.shouldOpenVideoPlaylistContent)
         XCTAssertEqual(sut.newlyCreatedVideoPlaylist, createdVideoPlaylist)
         let message = Strings.Localizable.Videos.Tab.Playlist.Snackbar.videoCount(videosToAdd.count).replacingOccurrences(of: "[A]", with: videoPlaylistName)

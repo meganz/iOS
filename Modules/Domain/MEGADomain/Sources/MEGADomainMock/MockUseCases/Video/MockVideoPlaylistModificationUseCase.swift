@@ -8,16 +8,22 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
     private let deleteVideoPlaylistResult: [VideoPlaylistEntity]
     private let updateVideoPlaylistNameResult: Result<Void, any Error>
     private let deleteVideosInVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error>
+    private let invocationStream: AsyncStream<Invocation>
+    private let invocationContinuation: AsyncStream<Invocation>.Continuation
     
-    public enum Message: Equatable {
-        case addVideoToPlaylist
+    public enum Invocation: Equatable, Sendable {
+        case addVideoToPlaylist(id: HandleEntity, nodes: [NodeEntity])
         case deleteVideoPlaylist
         case updateVideoPlaylistName
         case deleteVideosInVideoPlaylist
     }
     
-    public private(set) var messages = [Message]()
-    @Published public var publishedMessages = [Message]()
+    public private(set) var messages = [Invocation]()
+    @Published public var invocations = [Invocation]()
+    
+    public var invocationSequence: AnyAsyncSequence<Invocation> {
+        invocationStream.eraseToAnyAsyncSequence()
+    }
     
     public init(
         addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
@@ -29,16 +35,19 @@ public final class MockVideoPlaylistModificationUseCase: VideoPlaylistModificati
         self.deleteVideoPlaylistResult = deleteVideoPlaylistResult
         self.updateVideoPlaylistNameResult = updateVideoPlaylistNameResult
         self.deleteVideosInVideoPlaylistResult = deleteVideosInVideoPlaylistResult
+        (invocationStream, invocationContinuation) = AsyncStream.makeStream(of: Invocation.self)
     }
     
     public func addVideoToPlaylist(by id: HandleEntity, nodes: [NodeEntity]) async throws -> VideoPlaylistElementsResultEntity {
-        messages.append(.addVideoToPlaylist)
+        let invocation = Invocation.addVideoToPlaylist(id: id, nodes: nodes)
+        messages.append(invocation)
+        invocationContinuation.yield(invocation)
         return try addToVideoPlaylistResult.get()
     }
     
     public func deleteVideos(in videoPlaylistId: HandleEntity, videos: [VideoPlaylistVideoEntity]) async throws -> VideoPlaylistElementsResultEntity {
         messages.append(.deleteVideosInVideoPlaylist)
-        publishedMessages.append(.deleteVideosInVideoPlaylist)
+        invocations.append(.deleteVideosInVideoPlaylist)
         return try deleteVideosInVideoPlaylistResult.get()
     }
     

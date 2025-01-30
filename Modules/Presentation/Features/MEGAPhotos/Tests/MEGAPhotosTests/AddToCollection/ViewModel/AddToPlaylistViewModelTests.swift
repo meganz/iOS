@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import Combine
 import ContentLibraries
 import MEGADomain
@@ -165,19 +166,102 @@ struct AddToPlaylistViewModelTests {
         }
     }
     
+    @Suite("Add to items to collection view protocol conformance")
+    @MainActor
+    struct CollectionViewProtocolSuite {
+        @Test
+        func isItemsNotEmptyPublisher() async throws {
+            let sut = makeSUT()
+            
+            try await confirmation("isItemsNotEmpty match publisher") { confirmation in
+                let invocationTask = Task {
+                    var expectations = [false, true]
+                    for await isNotEmpty in sut.isItemsNotEmptyPublisher.values {
+                        #expect(isNotEmpty == expectations.removeFirst())
+                        if expectations.isEmpty {
+                            confirmation()
+                            break
+                        }
+                        
+                    }
+                }
+                // Ensure task started
+                try await Task.sleep(nanoseconds: 50_000_000)
+                
+                sut.videoPlaylists = [.init(setIdentifier: SetIdentifier(handle: 1))]
+                sut.videoPlaylists = []
+                
+                Task {
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    invocationTask.cancel()
+                }
+                await invocationTask.value
+            }
+        }
+        
+        @Test
+        func addItems() async {
+            let identifier = SetIdentifier(handle: 4)
+            let playlist = VideoPlaylistEntity(setIdentifier: identifier, name: "Playlist")
+            let selection = SetSelection(
+                mode: .single, editMode: .active)
+            selection.toggle(identifier)
+            
+            let videos = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
+            let addedPhotoCount = 1
+            let videoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase(
+                addToVideoPlaylistResult: .success(.init(success: UInt(addedPhotoCount), failure: 0))
+            )
+            let router = MockAddToCollectionRouter()
+            let sut = makeSUT(
+                setSelection: selection,
+                videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+                addToCollectionRouter: router)
+            sut.videoPlaylists = [playlist]
+            
+            let message = Strings.Localizable.Set.AddTo.Snackbar.message(addedPhotoCount)
+                .replacingOccurrences(of: "[A]", with: playlist.name)
+            await confirmation("Ensure playlist created") { addAlbumItems in
+                let invocationTask = Task {
+                    for await (useCaseInvocation, routerInvocation) in combineLatest(videoPlaylistModificationUseCase.invocationSequence,
+                                                                                     router.invocationSequence) {
+                        #expect(useCaseInvocation == .addVideoToPlaylist(id: identifier.handle, nodes: videos))
+                        #expect(routerInvocation == .showSnackBarOnDismiss(message: message))
+                        addAlbumItems()
+                        break
+                    }
+                }
+                sut.addItems(videos)
+                
+                Task {
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    invocationTask.cancel()
+                }
+                await invocationTask.value
+            }
+        }
+    }
+    
     @MainActor
     private static func makeSUT(
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol = MockVideoPlaylistContentUseCase(),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
         router: some VideoRevampRouting = MockVideoRevampRouter(),
-        videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol = MockVideoPlaylistUseCase()
+        setSelection: SetSelection = SetSelection(),
+        videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol = MockVideoPlaylistUseCase(),
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol = MockVideoPlaylistModificationUseCase(),
+        addToCollectionRouter: some AddToCollectionRouting = MockAddToCollectionRouter()
     ) -> AddToPlaylistViewModel {
         .init(
             thumbnailLoader: thumbnailLoader,
             videoPlaylistContentUseCase: videoPlaylistContentUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             router: router,
-            videoPlaylistsUseCase: videoPlaylistsUseCase)
+            setSelection: setSelection,
+            videoPlaylistsUseCase: videoPlaylistsUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            addToCollectionRouter: addToCollectionRouter
+        )
     }
 }

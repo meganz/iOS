@@ -1,5 +1,5 @@
 import MEGAPresentation
 
 public protocol AddToCollectionRouting: Routing {
-    func showSnackBar(message: String)
+    func showSnackBarOnDismiss(message: String)
 }

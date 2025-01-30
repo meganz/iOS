@@ -97,7 +97,10 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
                         repo: fileSearchRepo,
                         nodeRepository: nodeRepository),
                     userVideoPlaylistsRepository: userVideoPlaylistRepository,
-                    photoLibraryUseCase: photoLibraryUseCase)
+                    photoLibraryUseCase: photoLibraryUseCase),
+                videoPlaylistModificationUseCase: VideoPlaylistModificationUseCase(
+                    userVideoPlaylistsRepository: userVideoPlaylistRepository),
+                addToCollectionRouter: self
             )
         ))
         return UIHostingController(rootView: content)
@@ -108,9 +111,11 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
                            animated: true)
     }
     
-    public func showSnackBar(message: String) {
-        UIApplication.mnz_visibleViewController()
-            .showSnackBar(snackBar: SnackBar(message: message))
+    public func showSnackBarOnDismiss(message: String) {
+        presenter?.dismiss(animated: true) {
+            UIApplication.mnz_visibleViewController()
+                .showSnackBar(snackBar: SnackBar(message: message))
+        }
     }
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {

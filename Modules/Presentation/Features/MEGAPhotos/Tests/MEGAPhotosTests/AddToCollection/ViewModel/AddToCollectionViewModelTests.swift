@@ -8,32 +8,55 @@ import Testing
 
 @Suite("AddToCollectionViewModel Tests")
 struct AddToCollectionViewModelTests {
-
+    
     @Suite("Constructor")
     @MainActor
     struct Constructor {
-        @Test("When album is selected it should enable add button")
-        func addButtonDisabled() async throws {
+        
+        @Test("When collection is selected for tab it should enable the add button")
+        func addButtonDisabled() {
             let albumSelection = AlbumSelection(mode: .single)
+            let setSelection = SetSelection(mode: .single)
             
-            let sut = AddToCollectionViewModelTests
-                .makeSUT(addToAlbumsViewModel: .init(albumSelection: albumSelection))
+            let sut = makeSUT(
+                addToAlbumsViewModel: .init(albumSelection: albumSelection),
+                addToPlaylistViewModel: .init(setSelection: setSelection))
+            sut.selectedTab = .albums
             
             #expect(sut.isAddButtonDisabled == true)
             
             albumSelection.setSelectedAlbums([.init(id: 1, type: .user)])
             
             #expect(sut.isAddButtonDisabled == false)
+            
+            sut.selectedTab = .videoPlaylists
+            
+            #expect(sut.isAddButtonDisabled == true)
+            
+            setSelection.toggle(.init(handle: 5))
+            
+            #expect(sut.isAddButtonDisabled == false)
         }
         
         @Test("When items are not empty it should show bottom bar")
-        func showBottomBar() async throws {
+        func showBottomBar() {
             let addToAlbumsViewModel = AddToAlbumsViewModel()
-            let sut = AddToCollectionViewModelTests
-                .makeSUT(addToAlbumsViewModel: addToAlbumsViewModel)
+            let addToPlaylistVieModel = AddToPlaylistViewModel()
+            let sut = makeSUT(
+                addToAlbumsViewModel: addToAlbumsViewModel,
+                addToPlaylistViewModel: addToPlaylistVieModel)
+            sut.selectedTab = .albums
+            
             #expect(sut.showBottomBar == false)
             
             addToAlbumsViewModel.albums = [.init(album: .init(id: 1, type: .user))]
+            
+            #expect(sut.showBottomBar == true)
+            
+            sut.selectedTab = .videoPlaylists
+            #expect(sut.showBottomBar == false)
+            
+            addToPlaylistVieModel.videoPlaylists = [.init(setIdentifier: .init(handle: 4))]
             
             #expect(sut.showBottomBar == true)
         }
@@ -42,7 +65,8 @@ struct AddToCollectionViewModelTests {
     @Suite("Add to collection button pressed")
     @MainActor
     struct AddToCollection {
-        @Test func addButtonPressed() async throws {
+        @Test("when add button pressed when album tab is active then it should add to album")
+        func addButtonPressedAlbumMode() async throws {
             let album = AlbumEntity(id: 8, type: .user)
             let albumSelection = AlbumSelection(mode: .single)
             albumSelection.setSelectedAlbums([album])
@@ -75,6 +99,43 @@ struct AddToCollectionViewModelTests {
             }
         }
         
+        @Test("When add button pressed when playlist tab then add to playlist ")
+        func addButtonPressedForPlaylistMode() async throws {
+            let videoPlaylist = VideoPlaylistEntity(
+                setIdentifier: SetIdentifier(handle: 5), name: "My Playlist")
+            let setSelection = SetSelection()
+            setSelection.toggle(videoPlaylist.setIdentifier)
+            
+            let videoPlaylistModificationUseCase = MockVideoPlaylistModificationUseCase()
+            let addToPlaylistViewModel = AddToPlaylistViewModel(
+                setSelection: setSelection,
+                videoPlaylistModificationUseCase: videoPlaylistModificationUseCase)
+            addToPlaylistViewModel.videoPlaylists = [videoPlaylist]
+            let videos = [NodeEntity(handle: 10)]
+            
+            let sut = AddToCollectionViewModelTests
+                .makeSUT(selectedPhotos: videos,
+                         addToPlaylistViewModel: addToPlaylistViewModel)
+            sut.selectedTab = .videoPlaylists
+            
+            await confirmation("Add to video playlist") { addVideoItems in
+                let invocationTask = Task {
+                    for await useCaseInvocation in videoPlaylistModificationUseCase.invocationSequence {
+                        #expect(useCaseInvocation == .addVideoToPlaylist(id: videoPlaylist.id, nodes: videos))
+                        addVideoItems()
+                        break
+                    }
+                }
+                sut.addToCollectionTapped()
+                
+                Task {
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    invocationTask.cancel()
+                }
+                await invocationTask.value
+            }
+        }
+        
         @Test("Ensure title is correct for mode",
               arguments: [(AddToMode.album, Strings.Localizable.Set.AddTo.album),
                           (.collection, Strings.Localizable.Set.addTo)])
@@ -85,7 +146,7 @@ struct AddToCollectionViewModelTests {
             #expect(sut.title == expectedTitle)
         }
     }
-
+    
     @MainActor
     private static func makeSUT(
         mode: AddToMode = .album,
@@ -127,12 +188,20 @@ private extension AddToAlbumsViewModel {
 }
 
 private extension AddToPlaylistViewModel {
-    convenience init() {
+    convenience init(
+        setSelection: SetSelection = SetSelection(
+            mode: .single, editMode: .active),
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol = MockVideoPlaylistModificationUseCase()
+    ) {
         self.init(
             thumbnailLoader: MockThumbnailLoader(),
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(),
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
             router: MockVideoRevampRouter(),
-            videoPlaylistsUseCase: MockVideoPlaylistUseCase())
+            setSelection: setSelection,
+            videoPlaylistsUseCase: MockVideoPlaylistUseCase(),
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            addToCollectionRouter: MockAddToCollectionRouter()
+        )
     }
 }
