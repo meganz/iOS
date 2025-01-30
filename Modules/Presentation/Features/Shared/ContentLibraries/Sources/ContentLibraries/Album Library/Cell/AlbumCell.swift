@@ -16,25 +16,23 @@ public struct AlbumCell: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack(alignment: viewModel.isLoading ? .center : .bottomTrailing) {
-                PhotoCellImage(
-                    container: viewModel.thumbnailContainer,
-                    bgColor: TokenColors.Background.surface2.swiftUI
+                AlbumCellImage(
+                    container: viewModel.thumbnailContainer
                 )
                 .overlay(viewModel.photoOverlay())
-                .cornerRadius(6)
                 
-                GeometryReader { geo in
-                    LinearGradient(colors: [TokenColors.Text.primary.swiftUI, .clear], startPoint: .top, endPoint: .bottom)
-                        .frame(height: geo.size.height / 2)
-                        .cornerRadius(5, corners: [.topLeft, .topRight])
-                        .opacity(viewModel.isLinkShared ? 0.4 : 0.0)
-                }
+                LinearGradient(gradient: Gradient(stops: [
+                    .init(color: Color.black.opacity(0.7), location: 0),
+                    .init(color: Color.black.opacity(0.0), location: 1)
+                ]), startPoint: .top, endPoint: .bottom)
+                .opacity(viewModel.shouldShowGradient ? 1.0 : 0.0)
                 
                 ProgressView()
                     .opacity(viewModel.isLoading ? 1.0 : 0.0)
                 
                 VStack {
-                    SharedLinkView()
+                    SharedLinkView(
+                        foregroundColor: viewModel.isPlaceholder ? TokenColors.Icon.secondary.swiftUI : TokenColors.Icon.onColor.swiftUI)
                         .offset(x: 2, y: 0)
                         .opacity(viewModel.isLinkShared ? 1.0 : 0.0)
                     
@@ -45,6 +43,7 @@ public struct AlbumCell: View {
                         .opacity(viewModel.shouldShowEditStateOpacity)
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: 6))
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(viewModel.title)
@@ -78,7 +77,7 @@ public struct AlbumCell: View {
     private var checkMarkView: some View {
         CheckMarkView(
             markedSelected: viewModel.isSelected,
-            foregroundColor: viewModel.isSelected ? TokenColors.Button.primary.swiftUI : TokenColors.Icon.onColor.swiftUI
+            foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
         )
     }
 }

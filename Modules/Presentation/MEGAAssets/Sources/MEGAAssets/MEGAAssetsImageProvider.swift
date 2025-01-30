@@ -118,5 +118,6 @@ public enum MEGAAssetsImageName: String, CaseIterable, Sendable {
          rectangleVideoStackOutline,
          moreList,
          playlist,
-         navigationBarAdd = "navigationbar_add"
+         navigationBarAdd = "navigationbar_add",
+         timeline
 }
