@@ -83,27 +83,27 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libnative_api",
-            url: "https://s3.g.s4.mega.io/010996547823786/ios-xcframeworks/libnative_api_xcframework.zip",
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_api_xcframework.zip",
             checksum: "7cd3473272c32c63ffd885ce51997d30e8114e8ad47969eb455c06e339e11f0d"
         ),
         .binaryTarget(
             name: "libnative_video",
-            url: "https://s3.g.s4.mega.io/010996547823786/ios-xcframeworks/libnative_video_xcframework.zip",
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_video_xcframework.zip",
             checksum: "d7d4c14f69575117fae5288e8f43c8c9c6d7543642b062428d9238f1eead371e"
         ),
         .binaryTarget(
             name: "libvideocapture_objc",
-            url: "https://s3.g.s4.mega.io/010996547823786/ios-xcframeworks/libvideocapture_objc_xcframework.zip",
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideocapture_objc_xcframework.zip",
             checksum: "6bb5e945014b98479c1e5614d2ddf6d51d0c20bbaa1ab5d7e7af1d22c3c19a99"
         ),
         .binaryTarget(
             name: "libvideoframebuffer_objc",
-            url: "https://s3.g.s4.mega.io/010996547823786/ios-xcframeworks/libvideoframebuffer_objc_xcframework.zip",
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideoframebuffer_objc_xcframework.zip",
             checksum: "ea0262b787a5cd520adfb64dc4bc94e5312b588825d3cb272cd5596d067e4fb1"
         ),
         .binaryTarget(
             name: "libwebsockets",
-            url: "https://s3.g.s4.mega.io/010996547823786/ios-xcframeworks/libwebsockets_xcframework.zip",
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libwebsockets_xcframework.zip",
             checksum: "d544160a2a4d50dbe3003abc1b4d443b12f536310ab810ae466f6c3fc4b19018"
         )
     ],
