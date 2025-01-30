@@ -1,3 +1,4 @@
+import Combine
 import ContentLibraries
 import MEGADomain
 import MEGAL10n
@@ -11,9 +12,10 @@ public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtoco
     public let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     public let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     public let router: any VideoRevampRouting
+    public let setSelection: SetSelection
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
-    public let setSelection = SetSelection(
-        mode: .single, editMode: .active)
+    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
+    private let addToCollectionRouter: any AddToCollectionRouting
     
     @Published var isVideoPlayListsLoaded = false
     @Published var showCreatePlaylistAlert = false
@@ -24,13 +26,20 @@ public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtoco
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         router: some VideoRevampRouting,
-        videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
+        setSelection: SetSelection = SetSelection(
+            mode: .single, editMode: .active),
+        videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
+        addToCollectionRouter: some AddToCollectionRouting
     ) {
         self.thumbnailLoader = thumbnailLoader
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.router = router
+        self.setSelection = setSelection
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
+        self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
+        self.addToCollectionRouter = addToCollectionRouter
     }
     
     func loadVideoPlaylists() async {
@@ -69,6 +78,36 @@ public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtoco
     func monitorPlaylistUpdates() async {
         for await _ in videoPlaylistsUseCase.videoPlaylistsUpdatedAsyncSequence {
             await loadVideoPlaylists()
+        }
+    }
+}
+
+extension AddToPlaylistViewModel: AddItemsToCollectionViewModelProtocol {
+    var isAddButtonDisabled: AnyPublisher<Bool, Never> {
+        setSelection.$selectedSets
+            .map { $0.isEmpty }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
+    var isItemsNotEmptyPublisher: AnyPublisher<Bool, Never> {
+        $videoPlaylists
+            .map(\.isNotEmpty)
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
+    func addItems(_ photos: [NodeEntity]) {
+        guard let playlist = setSelection.selectedSets.first,
+              let playlistName = videoPlaylists.first(where: { $0.setIdentifier == playlist })?.name,
+              photos.isNotEmpty else { return }
+        
+        Task { [videoPlaylistModificationUseCase, addToCollectionRouter] in
+            let result = try await videoPlaylistModificationUseCase.addVideoToPlaylist(by: playlist.handle, nodes: photos)
+            
+            let message = Strings.Localizable.Set.AddTo.Snackbar.message(Int(result.success))
+                .replacingOccurrences(of: "[A]", with: playlistName)
+            addToCollectionRouter.showSnackBarOnDismiss(message: message)
         }
     }
 }

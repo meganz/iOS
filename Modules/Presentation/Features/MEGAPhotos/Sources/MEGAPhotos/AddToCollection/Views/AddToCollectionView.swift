@@ -32,7 +32,6 @@ public struct AddToCollectionView: View {
                             
                             Button {
                                 viewModel.addToCollectionTapped()
-                                dismiss()
                             } label: {
                                 Text(Strings.Localizable.Photos.AddTo.Button.Title.add)
                                     .font(.body)
@@ -66,15 +65,18 @@ public struct AddToCollectionView: View {
         PageTabView(
             tabs: [
                 .init(
+                    id: AddToCollectionViewModel.Tabs.albums,
                     title: Strings.Localizable.CameraUploads.Albums.title) {
                         albumsContent
                     },
                 .init(
+                    id: AddToCollectionViewModel.Tabs.videoPlaylists,
                     title: Strings.Localizable.Videos.Tab.Title.playlist) {
                         AddToPlaylistView(
                             viewModel: viewModel.addToPlaylistViewModel)
                     }
             ],
+            selectedTab: $viewModel.selectedTab,
             selectedTextForegroundColor: TokenColors.Button.brand.swiftUI,
             textForegroundColor: TokenColors.Text.primary.swiftUI,
             tabSelectionIndicatorColor: TokenColors.Button.brand.swiftUI,

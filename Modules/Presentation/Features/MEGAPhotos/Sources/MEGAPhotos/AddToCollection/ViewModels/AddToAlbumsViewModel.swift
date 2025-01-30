@@ -152,7 +152,7 @@ extension AddToAlbumsViewModel: AddItemsToCollectionViewModelProtocol {
             
             let message = Strings.Localizable.Set.AddTo.Snackbar.message(Int(result.success))
                 .replacingOccurrences(of: "[A]", with: album.name)
-            addToCollectionRouter.showSnackBar(message: message)
+            addToCollectionRouter.showSnackBarOnDismiss(message: message)
         }
     }
 }

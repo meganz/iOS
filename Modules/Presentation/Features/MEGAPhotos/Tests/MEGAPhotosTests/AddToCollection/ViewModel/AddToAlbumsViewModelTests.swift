@@ -256,7 +256,7 @@ struct AddToAlbumsViewModelTests {
                     for await (useCaseInvocation, routerInvocation) in combineLatest(albumModificationUseCase.invocationSequence,
                                                                                      router.invocationSequence) {
                         #expect(useCaseInvocation == .addPhotosToAlbum(id: album.id, nodes: photos))
-                        #expect(routerInvocation == .showSnackBar(message: message))
+                        #expect(routerInvocation == .showSnackBarOnDismiss(message: message))
                         addAlbumItems()
                         break
                     }

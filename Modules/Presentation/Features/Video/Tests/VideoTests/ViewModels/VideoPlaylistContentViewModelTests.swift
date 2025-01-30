@@ -983,8 +983,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         )
         
         let exp = expectation(description: "listen for event")
-        var receivedMessages: [MockVideoPlaylistModificationUseCase.Message]?
-        let cancellable = videoPlaylistModificationUseCase.$publishedMessages
+        var receivedMessages: [MockVideoPlaylistModificationUseCase.Invocation]?
+        let cancellable = videoPlaylistModificationUseCase.$invocations
             .receive(on: DispatchQueue.main)
             .sink { messages in
                 receivedMessages = messages
@@ -1020,11 +1020,11 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         
         let exp = expectation(description: "listen for event")
         exp.assertForOverFulfill = false
-        var receivedMessages: [MockVideoPlaylistModificationUseCase.Message]?
-        let cancellable = videoPlaylistModificationUseCase.$publishedMessages
+        var receivedInvocations: [MockVideoPlaylistModificationUseCase.Invocation]?
+        let cancellable = videoPlaylistModificationUseCase.$invocations
             .receive(on: DispatchQueue.main)
             .sink { messages in
-                receivedMessages = messages
+                receivedInvocations = messages
                 exp.fulfill()
             }
         
@@ -1045,7 +1045,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         await fulfillment(of: [rubbishBinActionExp], timeout: 0.5)
         
         // Assert
-        XCTAssertEqual(receivedMessages, [ .deleteVideosInVideoPlaylist ])
+        XCTAssertEqual(receivedInvocations, [ .deleteVideosInVideoPlaylist ])
         XCTAssertEqual(videosToBeMovedToRubbihBin, videos)
         XCTAssertEqual(sharedUIState.snackBarText, "")
         XCTAssertFalse(sharedUIState.shouldShowSnackBar)
