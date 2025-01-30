@@ -111,6 +111,11 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         removeToolbar(animated: false)
     }
     
+    // MARK: - CancelSearch outside the controller
+    func cancelActiveSearch() {
+        wrapper?.cancelSearch()
+    }
+    
     // MARK: - AudioPlayerPresenterProtocol
     func updateContentView(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
@@ -205,6 +210,12 @@ class SearchControllerWrapper: NSObject {
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.onSearch = onSearch
         self.onCancel = onCancel
+    }
+    
+    func cancelSearch() {
+        onCancel?()
+        searchController.searchBar.text = ""
+        searchController.isActive = false
     }
 }
 
