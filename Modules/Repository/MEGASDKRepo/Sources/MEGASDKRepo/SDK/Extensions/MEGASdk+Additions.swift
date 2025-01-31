@@ -7,7 +7,7 @@ private let sdkCompletedTransfersProcessingQueue = DispatchQueue(label: "nz.mega
 public extension MEGASdk {
     /// Associates a `NSMutableArray` of completed transfers with every **instance** of `MEGASdk`
     private static let completedTransfers: Atomic<[ObjectIdentifier: NSMutableArray]> = .init(wrappedValue: [:])
-
+    
     @objc var completedTransfers: NSMutableArray {
         sdkCompletedTransfersProcessingQueue.sync {
             privateCompletedTransfers
@@ -20,7 +20,7 @@ public extension MEGASdk {
             transfers.add(transfer)
         }
     }
-
+    
     @objc static func currentUserHandle() -> NSNumber? {
         CurrentUserSource.shared.currentUserHandle.map {
             NSNumber(value: $0)
@@ -72,6 +72,15 @@ public extension MEGASdk {
     @objc func removeMEGATransferDelegateAsync(_ delegate: any MEGATransferDelegate & Sendable) {
         sdkQueue.async { [weak self] in
             self?.remove(delegate)
+        }
+    }
+    
+    func resetTransferWhenComplete() {
+        sdkCompletedTransfersProcessingQueue.async { [weak self] in
+            guard let self, transfers.size == 0 else { return }
+            
+            resetTotalUploads()
+            resetTotalDownloads()
         }
     }
     

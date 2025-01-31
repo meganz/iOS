@@ -451,10 +451,7 @@ extension ProgressIndicatorView: MEGATransferDelegate {
             api.addCompletedTransfer(transfer)
         }
         
-        if MEGASdk.shared.transfers.size == 0 {
-            MEGASdk.shared.resetTotalUploads()
-            MEGASdk.shared.resetTotalDownloads()
-        }
+        api.resetTransferWhenComplete()
         
         self.throttler.start { [weak self] in
             Task { @MainActor in
