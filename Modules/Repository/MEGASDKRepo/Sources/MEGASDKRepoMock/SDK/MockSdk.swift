@@ -66,6 +66,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private let fetchNodesErrorType: MEGAErrorType
     private let retryReason: Retry
     private let fetchNodesProgressSteps: [Double]
+    private let transferList: MEGATransferList
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -183,7 +184,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         fetchNodesTotalBytes: Int64 = 0,
         fetchNodesProgressSteps: [Double] = [],
         fetchNodesErrorType: MEGAErrorType = .apiOk,
-        retryReason: Retry = .none
+        retryReason: Retry = .none,
+        transferList: MEGATransferList = MEGATransferList()
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -248,6 +250,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.fetchNodesProgressSteps = fetchNodesProgressSteps
         self.fetchNodesErrorType = fetchNodesErrorType
         self.retryReason = retryReason
+        self.transferList = transferList
         super.init()
     }
     
@@ -1008,6 +1011,14 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
             transferredBytes: transferredBytes,
             totalBytes: totalBytes
         )
+    }
+    
+    public override var uploadTransfers: MEGATransferList {
+        transferList
+    }
+    
+    public override var downloadTransfers: MEGATransferList {
+        transferList
     }
 }
 
