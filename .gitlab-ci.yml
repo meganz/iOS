@@ -6,6 +6,8 @@ stages:
 
 scan:
   stage: scan_and_wait
+  tags:
+    - secret-scanning
   image:
     name: mega-docker.artifactory.developers.mega.co.nz:8443/gitleaks:v8.18.2-mega-1.0
     entrypoint: [""]
