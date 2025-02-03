@@ -195,3 +195,4 @@
 #import "SecurityOptionsTableViewController.h"
 #import "MasterKeyViewController.h"
 #import "TestPasswordViewController.h"
+#import "ChangePasswordViewController.h"

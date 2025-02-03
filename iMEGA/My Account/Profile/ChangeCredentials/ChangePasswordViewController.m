@@ -10,8 +10,6 @@
 #import "AwaitingEmailConfirmationView.h"
 #import "Helper.h"
 #import "InputView.h"
-#import "PasswordStrengthIndicatorView.h"
-#import "PasswordView.h"
 #import "TwoFactorAuthenticationViewController.h"
 @import MEGASDKRepo;
 @import MEGAL10nObjc;
@@ -32,9 +30,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet InputView *theNewEmailInputView;
 
 @property (weak, nonatomic) IBOutlet PasswordView *currentPasswordView;
-@property (weak, nonatomic) IBOutlet PasswordView *theNewPasswordView;
-@property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
-@property (weak, nonatomic) IBOutlet UIView *passwordStrengthContainer;
 @property (weak, nonatomic) IBOutlet PasswordView *confirmPasswordView;
 
 @property (weak, nonatomic) InputView *activeInputView;
@@ -113,6 +108,10 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
             
             break;
+    }
+    
+    if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
+        [self setupPasswordTextFieldTarget];
     }
     
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
@@ -426,8 +425,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
     switch (textField.tag) {
         case NewEmailTextFieldTag:
             [self.theNewEmailInputView setErrorState:NO withText:LocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
@@ -445,18 +442,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         default:
             break;
     }
-    
-    if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
-        if (textField.tag == NewPasswordTextFieldTag) {
-            if (text.length == 0) {
-                self.passwordStrengthContainer.hidden = YES;
-            } else {
-                self.passwordStrengthContainer.hidden = NO;
-                [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[MEGASdk.shared passwordStrength:text] updateDescription:YES];
-            }
-        }
-    }
-    
     return YES;
 }
 
