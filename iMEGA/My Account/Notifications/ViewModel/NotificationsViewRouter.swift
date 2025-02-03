@@ -73,8 +73,6 @@ struct NotificationsViewRouter: NotificationsViewRouting {
             nodeHierarchy: nodeHierarchy,
             isInRubbishBin: isInRubbishBin
         )
-        
-        cancelRootSearchIfNeeded(in: navigationController)
     }
     
     private func selectTabController(in mainTBC: MainTabBarController, isOwnNode: Bool) {
@@ -98,31 +96,57 @@ struct NotificationsViewRouter: NotificationsViewRouting {
         nodeHierarchy: [NodeEntity],
         isInRubbishBin: Bool
     ) {
-        Task { @MainActor in
-            let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
-            
-            nodeHierarchy.dropLast().forEach { node in
-                guard let intermediateVC = factory.buildBare(
-                    parentNode: node,
-                    config: .init(displayMode: .cloudDrive)
-                ) else {
-                    return
-                }
-                navigationController.addChild(intermediateVC)
+        let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
+        
+        pushIntermediateNodes(
+            in: navigationController,
+            using: factory,
+            nodeHierarchy: nodeHierarchy.dropLast()
+        )
+        
+        pushCloudDriveViewController(
+            nodeHierarchy.last,
+            in: navigationController,
+            using: factory,
+            isInRubbishBin: isInRubbishBin
+        )
+        
+        cancelRootSearchIfNeeded(in: navigationController)
+    }
+
+    private func pushIntermediateNodes(
+        in navigationController: UINavigationController,
+        using factory: CloudDriveViewControllerFactory,
+        nodeHierarchy: [NodeEntity]
+    ) {
+        nodeHierarchy.forEach { node in
+            guard let intermediateVC = factory.buildBare(
+                parentNode: node,
+                config: .init(displayMode: .cloudDrive)
+            ) else {
+                return
             }
-            
-            if let lastNode = nodeHierarchy.last {
-                let displayMode: DisplayMode = isInRubbishBin ? .rubbishBin : .cloudDrive
-                guard let lastVC = factory.buildBare(
-                    parentNode: lastNode,
-                    config: .init(displayMode: displayMode)
-                ) else {
-                    return
-                }
-                
-                navigationController.pushViewController(lastVC, animated: false)
-            }
+            intermediateVC.navigationItem.backButtonTitle = ""
+            navigationController.addChild(intermediateVC)
         }
+    }
+
+    private func pushCloudDriveViewController(
+        _ node: NodeEntity?,
+        in navigationController: UINavigationController,
+        using factory: CloudDriveViewControllerFactory,
+        isInRubbishBin: Bool
+    ) {
+        let displayMode: DisplayMode = isInRubbishBin ? .rubbishBin : .cloudDrive
+        
+        guard let node, let lastVC = factory.buildBare(
+            parentNode: node,
+            config: .init(displayMode: displayMode)
+        ) else {
+            return
+        }
+        lastVC.navigationItem.backButtonTitle = ""
+        navigationController.pushViewController(lastVC, animated: false)
     }
     
     private func resetCurrentNavigationController() {
