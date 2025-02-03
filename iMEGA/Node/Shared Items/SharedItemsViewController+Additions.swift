@@ -66,15 +66,25 @@ extension SharedItemsViewController {
         return tableView?.indexPathForRow(at: buttonPosition)
     }
     
-    @objc func unverifiedIncomingSharedCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> SharedItemsTableViewCell {
+    @objc func unverifiedIncomingSharedCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode, searchText: String?) -> SharedItemsTableViewCell {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "sharedItemsTableViewCell", for: indexPath) as? SharedItemsTableViewCell else {
             return SharedItemsTableViewCell(style: .default, reuseIdentifier: "sharedItemsTableViewCell")
         }
         
         cell.delegate = self
         cell.thumbnailImageView.image = UIImage.mnz_incomingFolder()
-        cell.nameLabel.textColor = UIColor.mnz_red()
-        cell.nameLabel.text = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+
+        let nameTextColor = UIColor.mnz_red()
+        let displayName = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+
+        cell.nameLabel.attributedText = displayName?.highlightedStringWithKeyword(
+            searchText,
+            primaryTextColor: nameTextColor,
+            highlightedTextColor: TokenColors.Notifications.notificationSuccess
+        )
+
+        cell.nameLabel.textColor = nameTextColor
+
         cell.nodeHandle = node.handle
         cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
@@ -87,19 +97,29 @@ extension SharedItemsViewController {
         
         setupLabelAndFavourite(for: node, cell: cell)
         configureAccessibility(for: cell)
+        configureCellDescription(cell, for: node)
         return cell
     }
 
-    @objc func unverifiedOutgoingSharedCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> SharedItemsTableViewCell {
+    @objc func unverifiedOutgoingSharedCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode, searchText: String) -> SharedItemsTableViewCell {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "sharedItemsTableViewCell", for: indexPath) as? SharedItemsTableViewCell else {
             return SharedItemsTableViewCell(style: .default, reuseIdentifier: "sharedItemsTableViewCell")
         }
-        
+
+        let nameTextColor = UIColor.mnz_red()
+
+        cell.nameLabel.attributedText = node.name?.highlightedStringWithKeyword(
+            searchText,
+            primaryTextColor: nameTextColor,
+            highlightedTextColor: TokenColors.Notifications.notificationSuccess
+        )
+
+        cell.nameLabel.textColor = nameTextColor
+
         cell.delegate = self
         cell.thumbnailImageView.image = UIImage.mnz_outgoingFolder()
         cell.nodeHandle = node.handle
-        cell.nameLabel.text = node.name
-        cell.nameLabel.textColor = UIColor.mnz_red()
+
         cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
         
@@ -113,6 +133,7 @@ extension SharedItemsViewController {
         
         setupLabelAndFavourite(for: node, cell: cell)
         configureAccessibility(for: cell)
+        configureCellDescription(cell, for: node)
         return cell
     }
 
