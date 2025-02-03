@@ -1497,6 +1497,7 @@
 		94F80C8F2C80BC050068901C /* TaggableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F80C8E2C80BC050068901C /* TaggableTextView.swift */; };
 		94F92EAE2CAAA25F00966A0F /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = B5866BB42CA539E4009E0A1E /* GoogleMobileAds */; };
 		94F92EB82CAAD6DE00966A0F /* ShareLinkDialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F92EB72CAAD6DE00966A0F /* ShareLinkDialogRouter.swift */; };
+		94FA305A2D4D7FAC006DC9E4 /* ChangePasswordViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA30592D4D7FAC006DC9E4 /* ChangePasswordViewController+Additions.swift */; };
 		94FABD152ADE95A9003E8894 /* CameraUploadsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */; };
 		94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */; };
 		94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */; };
@@ -4218,6 +4219,7 @@
 		94F80C8E2C80BC050068901C /* TaggableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaggableTextView.swift; sourceTree = "<group>"; };
 		94F92EB72CAAD6DE00966A0F /* ShareLinkDialogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkDialogRouter.swift; sourceTree = "<group>"; };
 		94F991472AB45ED500C7CC18 /* SearchConfig+Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchConfig+Home.swift"; sourceTree = "<group>"; };
+		94FA30592D4D7FAC006DC9E4 /* ChangePasswordViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChangePasswordViewController+Additions.swift"; sourceTree = "<group>"; };
 		94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraUploadsRepository.swift; sourceTree = "<group>"; };
 		94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+ResultProperties.swift"; sourceTree = "<group>"; };
 		94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucketProvider.swift; sourceTree = "<group>"; };
@@ -7665,6 +7667,7 @@
 			isa = PBXGroup;
 			children = (
 				5B8D209A246A98F8009BD3E9 /* ChangeCredentials.storyboard */,
+				94FA30592D4D7FAC006DC9E4 /* ChangePasswordViewController+Additions.swift */,
 				4178409E1AC328A600713F3C /* ChangePasswordViewController.h */,
 				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
 			);
@@ -14344,6 +14347,7 @@
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
+				94FA305A2D4D7FAC006DC9E4 /* ChangePasswordViewController+Additions.swift in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				B590F8BF2BD8EFD00044D37F /* ChatAttachedContactsViewController+Additions.swift in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,

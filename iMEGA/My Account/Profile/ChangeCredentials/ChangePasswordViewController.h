@@ -1,4 +1,6 @@
 #import <UIKit/UIKit.h>
+#import "PasswordStrengthIndicatorView.h"
+#import "PasswordView.h"
 
 @interface ChangePasswordViewController : UIViewController
 
@@ -9,6 +11,10 @@ typedef NS_ENUM(NSUInteger, ChangeType) {
     ChangeTypeParkAccount,
     ChangeTypePasswordFromLogout
 };
+
+@property (weak, nonatomic) IBOutlet PasswordView *theNewPasswordView;
+@property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
+@property (weak, nonatomic) IBOutlet UIView *passwordStrengthContainer;
 
 @property (nonatomic) ChangeType changeType;
 
