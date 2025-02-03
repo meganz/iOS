@@ -449,7 +449,8 @@
     }
 
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
-    [cell configureNode:node.name searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
+
+    [cell configureNodeWithName:node.name searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdk.shared contactForEmail:userEmail];
@@ -492,7 +493,7 @@
     self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
     cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
-    [cell configureNode:node.name searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
+    [cell configureNodeWithName:node.name searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     NSString *userName;
@@ -929,12 +930,12 @@
     
     if (self.incomingButton.selected) {
         if (indexPath.section == 0) {
-            return [self unverifiedIncomingSharedCellAtIndexPath:indexPath node:node];
+            return [self unverifiedIncomingSharedCellAtIndexPath:indexPath node:node searchText: self.searchController.searchBar.text];
         }
         return [self isSharedItemsRootNode:node] ? [self incomingSharedCellAtIndexPath:indexPath forNode:node] : [self nodeCellAtIndexPath:indexPath node:node];
     } else if (self.outgoingButton.selected) {
         if (indexPath.section == 0) {
-            return [self unverifiedOutgoingSharedCellAtIndexPath:indexPath node:node];
+            return [self unverifiedOutgoingSharedCellAtIndexPath:indexPath node:node searchText: self.searchController.searchBar.text];
         }
         return [self isSharedItemsRootNode:node] ? [self outgoingSharedCellAtIndexPath:indexPath forNode:node] : [self nodeCellAtIndexPath:indexPath node:node];
     } else {

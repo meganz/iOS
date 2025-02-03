@@ -59,7 +59,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
         descriptionLabel?.textColor = TokenColors.Text.secondary
     }
     
-    @objc func configureNode(_ name: String, searchText: String?, isTakenDown: Bool) {
+    @objc func configureNode(name: String, searchText: String?, isTakenDown: Bool) {
         let textColor = isTakenDown ? TokenColors.Text.error : TokenColors.Text.primary
         let takeDownImage: UIImage? = isTakenDown ? UIImage.isTakedown.withTintColorAsOriginal(TokenColors.Support.error) : nil
 
