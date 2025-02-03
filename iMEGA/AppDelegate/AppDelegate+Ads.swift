@@ -14,7 +14,8 @@ extension AppDelegate {
             adsSlotViewController: tabBar,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            contentView: MainTabBarWrapper(mainTabBar: tabBar)
+            contentView: MainTabBarWrapper(mainTabBar: tabBar),
+            logger: { MEGALogDebug($0) }
         ).build(
             onViewFirstAppeared: onViewFirstAppeared,
             adsFreeViewProPlanAction: { [weak self] in
@@ -37,10 +38,12 @@ extension AppDelegate {
         guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) else { return }
         do {
             try await GoogleMobileAdsConsentManager.shared.gatherConsent()
-            await GoogleMobileAdsConsentManager.shared.initializeGoogleMobileAdsSDK()
-            NotificationCenter.default.post(name: .startAds, object: nil)
         } catch {
             MEGALogError("[AdMob] Google Ads consent manager \(isFromCookieDialog ? "with": "without") cookie dialog received error: \(error)")
         }
+        
+        await GoogleMobileAdsConsentManager.shared.initializeGoogleMobileAdsSDK()
+        NotificationCenter.default.post(name: .startAds, object: nil)
+        MEGALogDebug("[AdMob] Start ads")
     }
 }

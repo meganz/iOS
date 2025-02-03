@@ -4,16 +4,16 @@ import SwiftUI
 struct AdMobBannerView: UIViewRepresentable {
     private let adMob: AdMob
     let adSize: GADAdSize
-    private var bannerViewDidReceiveAdAction: (() -> Void)?
+    private var bannerViewDidReceiveAdsUpdate: ((Result<Void, any Error>) -> Void)?
     
     init(
         adSize: GADAdSize,
         adMob: AdMob,
-        bannerViewDidReceiveAdAction: (() -> Void)? = nil
+        bannerViewDidReceiveAdsUpdate: ((Result<Void, any Error>) -> Void)?
     ) {
         self.adSize = adSize
         self.adMob = adMob
-        self.bannerViewDidReceiveAdAction = bannerViewDidReceiveAdAction
+        self.bannerViewDidReceiveAdsUpdate = bannerViewDidReceiveAdsUpdate
     }
     
     func makeUIView(context: Context) -> some UIView {
@@ -57,7 +57,11 @@ struct AdMobBannerView: UIViewRepresentable {
         }
         
         func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-            parent.bannerViewDidReceiveAdAction?()
+            parent.bannerViewDidReceiveAdsUpdate?(.success)
+        }
+        
+        func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: any Error) {
+            parent.bannerViewDidReceiveAdsUpdate?(.failure(error))
         }
     }
 }
