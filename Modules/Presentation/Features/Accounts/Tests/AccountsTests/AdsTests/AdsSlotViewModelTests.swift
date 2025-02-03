@@ -325,23 +325,37 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     // MARK: - Close button
-    
-    @MainActor func testBannerViewDidReceiveAd_whenNoLoggedInUser_shouldSetShowCloseButtonToFalse() {
+    @MainActor func testBannerViewDidReceiveAdSuccess_whenNoLoggedInUser_shouldSetShowCloseButtonToFalse() {
         assertShowCloseButton(isLoggedIn: false)
     }
     
-    @MainActor func testBannerViewDidReceiveAd_whenUserIsLoggedIn_shouldSetShowCloseButtonToTrue() {
+    @MainActor func testBannerViewDidReceiveAdSuccess_whenUserIsLoggedIn_shouldSetShowCloseButtonToTrue() {
         assertShowCloseButton(isLoggedIn: true)
     }
     
     @MainActor private func assertShowCloseButton(isLoggedIn: Bool) {
-        let sut = makeSUT(isLoggedIn: isLoggedIn)
+        var loggerCalled: Bool = false
+        let sut = makeSUT(isLoggedIn: isLoggedIn, logger: { _ in loggerCalled = true })
         
         XCTAssertFalse(sut.showCloseButton)
         
-        sut.bannerViewDidReceiveAd()
+        sut.bannerViewDidReceiveAdsUpdate(result: .success)
         
         XCTAssertEqual(sut.showCloseButton, isLoggedIn)
+        XCTAssertTrue(loggerCalled)
+    }
+    
+    @MainActor func testBannerViewDidReceiveAdWithError_shouldCallLogger() {
+        enum TestError: Error {
+            case anyError
+        }
+        
+        var loggerCalled: Bool = false
+        let sut = makeSUT(logger: { _ in loggerCalled = true })
+        
+        sut.bannerViewDidReceiveAdsUpdate(result: .failure(TestError.anyError))
+        
+        XCTAssertTrue(loggerCalled)
     }
     
     @MainActor func testDidTapCloseAdsButton_shouldSetShowAdsFreeViewToTrue() {
@@ -386,6 +400,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         expectedCloseAdsButtonTappedDate: Date = Date(),
         tracker: some AnalyticsTracking = MockTracker(),
         isLoggedIn: Bool = true,
+        logger: ((String) -> Void)? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AdsSlotViewModel {
@@ -400,7 +415,8 @@ final class AdsSlotViewModelTests: XCTestCase {
             tracker: tracker,
             adsFreeViewProPlanAction: {},
             currentDate: { expectedCloseAdsButtonTappedDate },
-            notificationCenter: notificationCenter
+            notificationCenter: notificationCenter,
+            logger: logger
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
