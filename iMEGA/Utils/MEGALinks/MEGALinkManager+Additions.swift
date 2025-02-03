@@ -314,11 +314,17 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             contentView: AdsViewWrapper(viewController: containerController),
             presenter: visibleViewController,
-            presentationStyle: presentationStyle
+            presentationStyle: presentationStyle,
+            logger: { MEGALogDebug("\($0) - File/folder link") }
          ).build(adsFreeViewProPlanAction: {
              let appDelegate = UIApplication.shared.delegate as? AppDelegate
              appDelegate?.showUpgradePlanPageFromAds()
          })
-         visibleViewController.present(controller, animated: true, completion: nil)
+         visibleViewController.present(controller, animated: true) {
+             Task {
+                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+                 await appDelegate.showAdMobConsentIfNeeded()
+             }
+         }
      }
  }

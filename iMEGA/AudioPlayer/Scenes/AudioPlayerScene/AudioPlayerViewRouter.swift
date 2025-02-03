@@ -61,13 +61,19 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                     adsSlotViewController: adsSlotViewController,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                     purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-                    contentView: AdsViewWrapper(viewController: audioPlayerViewController)
+                    contentView: AdsViewWrapper(viewController: audioPlayerViewController),
+                    logger: { MEGALogDebug("\($0) - Audio link") }
                 ).build(adsFreeViewProPlanAction: {
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
                     appDelegate?.showUpgradePlanPageFromAds()
                 })
             }
-            presenter.present(audioPlayerViewController, animated: true, completion: nil)
+            presenter.present(audioPlayerViewController, animated: true) {
+                Task {
+                    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+                    await appDelegate.showAdMobConsentIfNeeded()
+                }
+            }
         default:
             presenter.present(build(), animated: true, completion: nil)
         }

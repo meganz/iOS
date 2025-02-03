@@ -14,6 +14,7 @@ public struct AdsSlotRouter<T: View> {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let contentView: T
     private let presentationStyle: UIModalPresentationStyle
+    private let logger: ((String) -> Void)?
     
     public init(
         adsSlotViewController: some AdsSlotViewControllerProtocol,
@@ -21,7 +22,8 @@ public struct AdsSlotRouter<T: View> {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         contentView: T,
         presenter: UIViewController? = nil,
-        presentationStyle: UIModalPresentationStyle = .automatic
+        presentationStyle: UIModalPresentationStyle = .automatic,
+        logger: ((String) -> Void)? = nil
     ) {
         self.adsSlotViewController = adsSlotViewController
         self.accountUseCase = accountUseCase
@@ -29,6 +31,7 @@ public struct AdsSlotRouter<T: View> {
         self.contentView = contentView
         self.presenter = presenter
         self.presentationStyle = presentationStyle
+        self.logger = logger
     }
     
     public func build(
@@ -41,7 +44,8 @@ public struct AdsSlotRouter<T: View> {
             purchaseUseCase: purchaseUseCase,
             preferenceUseCase: PreferenceUseCase(repository: PreferenceRepository.newRepo),
             onViewFirstAppeared: onViewFirstAppeared,
-            adsFreeViewProPlanAction: adsFreeViewProPlanAction
+            adsFreeViewProPlanAction: adsFreeViewProPlanAction,
+            logger: logger
         )
         
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
