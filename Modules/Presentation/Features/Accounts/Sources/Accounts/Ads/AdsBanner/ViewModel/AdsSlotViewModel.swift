@@ -15,6 +15,7 @@ final public class AdsSlotViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     public let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private(set) var logger: ((String) -> Void)?
     
     private(set) var adsSlotConfig: AdsSlotConfig?
     private(set) var monitorAdsSlotUpdatesTask: Task<Void, Never>?
@@ -45,7 +46,8 @@ final public class AdsSlotViewModel: ObservableObject {
         onViewFirstAppeared: (() -> Void)? = nil,
         adsFreeViewProPlanAction: (() -> Void)? = nil,
         currentDate: @escaping @Sendable () -> Date = { Date() },
-        notificationCenter: NotificationCenter = .default
+        notificationCenter: NotificationCenter = .default,
+        logger: ((String) -> Void)? = nil
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
@@ -58,6 +60,7 @@ final public class AdsSlotViewModel: ObservableObject {
         self.adsFreeViewProPlanAction = adsFreeViewProPlanAction
         self.currentDate = currentDate
         self.notificationCenter = notificationCenter
+        self.logger = logger
         
         $lastCloseAdsDate.useCase = preferenceUseCase
         registerDelegates()
@@ -170,9 +173,16 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     // MARK: Close Ads button
-    func bannerViewDidReceiveAd() {
-        /// Show close button only when a user is logged in, otherwise, hide button
-        showCloseButton = accountUseCase.isLoggedIn()
+    func bannerViewDidReceiveAdsUpdate(result: Result<Void, any Error>) {
+        switch result {
+        case .success:
+            logger?("[AdMob] Ads Banner did received ad")
+        
+            // Show close button only when a user is logged in, otherwise, hide button
+            showCloseButton = accountUseCase.isLoggedIn()
+        case .failure(let error):
+            logger?("[AdMob] Ads Banner failed to receive ad with error \(error.localizedDescription)")
+        }
     }
     
     func didTapCloseAdsButton() {

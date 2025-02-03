@@ -22,8 +22,8 @@ public struct AdsSlotView<T: View>: View {
                     AdMobBannerView(
                         adSize: adSize,
                         adMob: viewModel.adMob,
-                        bannerViewDidReceiveAdAction: { [weak viewModel] in
-                            viewModel?.bannerViewDidReceiveAd()
+                        bannerViewDidReceiveAdsUpdate: { [weak viewModel] result in
+                            viewModel?.bannerViewDidReceiveAdsUpdate(result: result)
                         }
                     )
                     .frame(
