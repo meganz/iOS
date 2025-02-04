@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -12,9 +13,16 @@ struct VisualMediaSearchHistoryView: View {
             Section {
                 ForEach(searchedItems) { item in
                     VStack(alignment: .leading) {
-                        Text(item.query)
-                            .font(.body)
-                            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                        HStack(alignment: .center, spacing: 10) {
+                            MEGAAssetsImageProvider.image(named: .clockMediumThin)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                            
+                            Text(item.query)
+                                .font(.body)
+                                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                        }
                         
                         Divider()
                             .frame(maxHeight: 0.5)

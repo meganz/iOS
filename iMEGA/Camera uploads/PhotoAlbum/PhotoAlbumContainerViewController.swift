@@ -26,12 +26,13 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }
     private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
     private lazy var photoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager()
+    private lazy var visualMediaSearchResultsViewModel = makeVisualMediaSearchResultsViewModel()
     private lazy var searchController: UISearchController = {
         let resultController = VisualMediaSearchResultsViewControllerFactory
-            .makeViewController(viewModel: makeVisualMediaSearchResultsViewModel())
+            .makeViewController(viewModel: visualMediaSearchResultsViewModel)
         let controller = UISearchController(searchResultsController: resultController)
         controller.searchResultsUpdater = resultController
-        controller.searchBar.delegate = resultController
+        controller.searchBar.delegate = self
         controller.delegate = self
         controller.obscuresBackgroundDuringPresentation = false
         return controller
@@ -380,6 +381,16 @@ extension PhotoAlbumContainerViewController: AdsSlotDisplayable {}
 extension PhotoAlbumContainerViewController: UISearchControllerDelegate {
     func presentSearchController(_ searchController: UISearchController) {
         searchController.showsSearchResultsController = true
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension PhotoAlbumContainerViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        Task {
+            await visualMediaSearchResultsViewModel.saveSearch()
+        }
     }
 }
 
