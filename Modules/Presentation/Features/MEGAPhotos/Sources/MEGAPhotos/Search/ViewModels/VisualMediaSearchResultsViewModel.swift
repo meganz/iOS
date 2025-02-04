@@ -74,6 +74,12 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
             .assign(to: &photoAlbumContainerInteractionManager.$searchBarText)
     }
     
+    public func saveSearch() async {
+        guard searchText.isNotEmpty else { return }
+        
+        await visualMediaSearchHistoryUseCase.add(entry: .init(id: UUID(), query: searchText, searchDate: Date()))
+    }
+    
     func monitorSearchResults() async {
         let searchText = $searchText
             .debounceImmediate(for: searchDebounceTime, scheduler: debounceQueue)
@@ -82,12 +88,6 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         for await searchQuery in searchText.values {
             performSearch(searchText: searchQuery)
         }
-    }
-    
-    func saveSearch() async {
-        guard searchText.isNotEmpty else { return }
-        
-        await visualMediaSearchHistoryUseCase.add(entry: .init(id: UUID(), query: searchText, searchDate: Date()))
     }
     
     func handleSelectedItemNavigation() async {

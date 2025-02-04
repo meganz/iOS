@@ -51,7 +51,7 @@ struct MonitorAlbumsUseCaseProtocolAdditionsTest {
     @Suite("Calls to monitorLocalizedSystemAlbums")
     struct SortedUserAlbums {
         let userAlbum1 = AlbumEntity(id: 1, name: "1", type: .user)
-        let userAlbum2 = AlbumEntity(id: 2, name: "2", type: .user)
+        let userAlbum2 = AlbumEntity(id: 2, name: "Rātū", type: .user)
         
         @Test("When user albums are returned ensure they are sorted correctly")
         func sortIsAppliedCorrectly() async {
@@ -68,7 +68,7 @@ struct MonitorAlbumsUseCaseProtocolAdditionsTest {
         
         @Test("When search text is provided ensure that only albums matching the search text are returned")
         func searchTextProvided() async {
-            let searchText = "2"
+            let searchText = "ratu"
             let monitorUserAlbumsSequence = SingleItemAsyncSequence(item: [userAlbum1, userAlbum2])
                 .eraseToAnyAsyncSequence()
             var iterator = await MockMonitorAlbumsUseCase(monitorUserAlbumsSequence: monitorUserAlbumsSequence)

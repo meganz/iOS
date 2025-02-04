@@ -23,7 +23,7 @@ public extension MonitorAlbumsUseCaseProtocol {
                         if let localizedName = album.type.localizedAlbumName {
                             album.name = localizedName
                         }
-                        return if let searchText, !album.name.lowercased().contains(searchText.lowercased()) {
+                        return if let searchText, !album.name.containsIgnoringCaseAndDiacritics(searchText: searchText) {
                             nil
                         } else {
                             album
@@ -49,7 +49,7 @@ public extension MonitorAlbumsUseCaseProtocol {
         await monitorUserAlbums(excludeSensitives: excludeSensitives)
             .map { userAlbums in
                 var sortedUserAlbums = if let searchText {
-                    userAlbums.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+                    userAlbums.filter { $0.name.containsIgnoringCaseAndDiacritics(searchText: searchText) }
                 } else {
                     userAlbums
                 }
