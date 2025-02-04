@@ -120,5 +120,6 @@ public enum MEGAAssetsImageName: String, CaseIterable, Sendable {
          playlist,
          navigationBarAdd = "navigationbar_add",
          timeline,
-         clockMediumThin
+         clockMediumThin,
+         glassPlaylist
 }

@@ -4514,3 +4514,7 @@
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="The maximum number of tags is 10";
 /* Artist name to display if meta data for artist could not be found */
 "media.audio.metadata.missing.artist"="Unknown Artist";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="No playlists";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Create playlist";
