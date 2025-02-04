@@ -339,6 +339,14 @@ extension MEGAPhotoBrowserViewController {
             selectedPhotos: [node.toNodeEntity()])
         .start()
     }
+    
+    @objc func addToCollection(node: MEGANode) {
+        AddToCollectionRouter(
+            presenter: self,
+            mode: .collection,
+            selectedPhotos: [node.toNodeEntity()])
+        .start()
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
