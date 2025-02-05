@@ -57,7 +57,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
             uploadFileUseCase: UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo),
             downloadNodeUseCase: DownloadNodeUseCase(
                 downloadFileRepository: DownloadFileRepository(sdk: sdk, sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil),
-                offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
+                offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk, folderSizeCalculator: FolderSizeCalculator()),
                 fileSystemRepository: fileSystemRepository,
                 nodeRepository: nodeRepository,
                 nodeDataRepository: NodeDataRepository.newRepo,

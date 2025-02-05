@@ -19,4 +19,11 @@ public protocol OfflineFilesRepositoryProtocol: RepositoryProtocol, Sendable {
     /// This method clears all metadata for offline nodes stored in the underlying data store.
     /// It does not delete any actual files or folders from the offline directory.
     func removeAllStoredOfflineNodes()
+    
+    /// Computes the total size of all offline files.
+    ///
+    /// This method calculates the cumulative size (in bytes) of all files stored in the offline directory.
+    ///
+    /// - Returns: The total size of offline files in bytes.
+    func offlineSize() -> UInt64
 }

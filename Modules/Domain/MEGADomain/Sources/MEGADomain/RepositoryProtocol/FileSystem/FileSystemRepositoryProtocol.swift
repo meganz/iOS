@@ -45,4 +45,8 @@ public protocol FileSystemRepositoryProtocol: RepositoryProtocol, Sendable {
     /// - Parameter url: The absolute URL of the file or folder.
     /// - Returns: A string representing the relative path, or an empty string if the documents directory could not be determined.
     func relativePathToDocumentsDirectory(for url: URL) -> String
+    /// Retrieves the URL of the offline directory where offline files are stored.
+    /// - Returns: A `URL` representing the absolute path of the offline directory,
+    ///   or `nil` if the directory cannot be determined.
+    func offlineDirectoryURL() -> URL?
 }

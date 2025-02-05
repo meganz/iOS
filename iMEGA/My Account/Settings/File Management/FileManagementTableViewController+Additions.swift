@@ -30,17 +30,4 @@ extension FileManagementTableViewController {
     @objc func isNewFileManagementSettingsEnabled() -> Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFileManagementSettings)
     }
-    
-    @objc func showRubbishBinSettings() {
-        guard isNewFileManagementSettingsEnabled() else { return }
-        
-        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        let rubbishBinRepo = RubbishBinRepository.newRepo
-        let rubbishBinSettingsUpdatesProvider = RubbishBinSettingsUpdateProvider(isPaidAccount: accountUseCase.isPaidAccount, serverSideRubbishBinAutopurgeEnabled: rubbishBinRepo.serverSideRubbishBinAutopurgeEnabled())
-        let rubbishBinSettingRepo = RubbishBinSettingsRepository(rubbishBinSettingsUpdatesProvider: rubbishBinSettingsUpdatesProvider)
-        let rubbishBinSettingsUseCase = RubbishBinSettingsUseCase(rubbishBinSettingsRepository: rubbishBinSettingRepo)
-        let hostingVC = UIHostingController(rootView: RubbishBinSettingView(viewModel: RubbishBinSettingViewModel(accountUseCase: accountUseCase, rubbishBinSettingsUseCase: rubbishBinSettingsUseCase)))
-        hostingVC.title = Strings.Localizable.Settings.FileManagement.RubbishBin.Navigation.title
-        navigationController?.pushViewController(hostingVC, animated: true)
-    }
 }

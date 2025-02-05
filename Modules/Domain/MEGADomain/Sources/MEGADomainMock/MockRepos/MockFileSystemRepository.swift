@@ -12,6 +12,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     private let fileSize: UInt64
     private let creationDate: Date
     private let relativePath: String
+    private let _offlineDirectoryURL: URL?
     
     @Atomic public var removeFileURLs = [URL]()
 
@@ -21,7 +22,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
                 containsOriginalsDirectory: Bool = false,
                 fileSize: UInt64 = 0,
                 creationDate: Date = Date(),
-                relativePath: String = "relativePath") {
+                relativePath: String = "relativePath",
+                offlineDirectoryURL: URL? = nil) {
         self.fileExists = fileExists
         self.copiedNode = copiedNode
         self.movedNode = movedNode
@@ -29,6 +31,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
         self.fileSize = fileSize
         self.creationDate = creationDate
         self.relativePath = relativePath
+        _offlineDirectoryURL = offlineDirectoryURL
     }
     
     public func documentsDirectory() -> URL {
@@ -64,4 +67,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     }
     
     public func removeFolderContents(atURL url: URL) async throws {}
+    
+    public func offlineDirectoryURL() -> URL? {
+        _offlineDirectoryURL
+    }
 }

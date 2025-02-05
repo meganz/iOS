@@ -71,7 +71,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let uploadUC = UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo)
         let downloadUC = DownloadNodeUseCase(
             downloadFileRepository: DownloadFileRepository(sdk: sdk),
-            offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
+            offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk, folderSizeCalculator: FolderSizeCalculator()),
             fileSystemRepository: fileSystemRepository,
             nodeRepository: nodeRepository,
             nodeDataRepository: NodeDataRepository.newRepo,

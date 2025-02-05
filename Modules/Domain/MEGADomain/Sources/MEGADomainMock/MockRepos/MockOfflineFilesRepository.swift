@@ -32,4 +32,8 @@ public final class MockOfflineFilesRepository: OfflineFilesRepositoryProtocol, @
     public func removeAllStoredOfflineNodes() {
         removeAllOfflineNodesCalledTimes += 1
     }
+    
+    public func offlineSize() -> UInt64 {
+        0
+    }
 }

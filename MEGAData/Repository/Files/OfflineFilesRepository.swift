@@ -1,23 +1,31 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     static var newRepo: OfflineFilesRepository {
-        OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared)
+        OfflineFilesRepository(
+            store: MEGAStore.shareInstance(),
+            sdk: MEGASdk.shared,
+            folderSizeCalculator: FolderSizeCalculator()
+        )
     }
     
     private let store: MEGAStore
     private let sdk: MEGASdk
+    private let folderSizeCalculator: any FolderSizeCalculatingProtocol
     let offlineURL: URL?
     
     init(
         store: MEGAStore,
         offlineURL: URL? = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""),
-        sdk: MEGASdk
+        sdk: MEGASdk,
+        folderSizeCalculator: some FolderSizeCalculatingProtocol
     ) {
         self.store = store
         self.sdk = sdk
         self.offlineURL =  offlineURL
+        self.folderSizeCalculator = folderSizeCalculator
     }
     
     func createOfflineFile(name: String, for handle: HandleEntity) {
@@ -29,5 +37,11 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     
     func removeAllStoredOfflineNodes() {
         store.removeAllOfflineNodes()
+    }
+    
+    func offlineSize() -> UInt64 {
+        guard let offlineURL else { return 0 }
+        
+        return folderSizeCalculator.folderSize(at: offlineURL)
     }
 }
