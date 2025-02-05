@@ -82,7 +82,7 @@ extension SettingViewRouter {
             
             SettingCellViewModel(image: UIImage.fileManagementSettings,
                                  title: Strings.Localizable.fileManagement,
-                                 router: FileManagementSettingsViewRouter(presenter: presenter))
+                                 router: FileManagementSettingsViewRouter(navigationController: presenter))
             
             SettingCellViewModel(image: UIImage.advancedSettings,
                                  title: Strings.Localizable.advanced,

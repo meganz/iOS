@@ -43,4 +43,5 @@ public enum PreferenceKeyEntity: String {
     case lastCloseAdsButtonTappedDate
     case queuedTransfersPaused
     case transfersPaused
+    case useMobileDataForPreviewingOriginalPhoto = "MEGAUseMobileDataForPreviewingOriginalPhoto"
 }

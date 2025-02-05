@@ -1459,6 +1459,7 @@
 		94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */; };
 		94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */; };
 		94B85CA12B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B85CA02B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift */; };
+		94B8BC862D513AB700037861 /* RubbishBinSettingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B8BC852D513AB700037861 /* RubbishBinSettingViewRouter.swift */; };
 		94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */; };
 		94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
@@ -4181,6 +4182,7 @@
 		94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoVerifyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94B85CA02B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveNavigationTitleBuilderTests.swift; sourceTree = "<group>"; };
+		94B8BC852D513AB700037861 /* RubbishBinSettingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingViewRouter.swift; sourceTree = "<group>"; };
 		94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarUIHostingController.swift; sourceTree = "<group>"; };
 		94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStore.swift; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
@@ -8418,6 +8420,7 @@
 			children = (
 				6D0D7F6B2CF919CF00817D62 /* RubbishBinSettingView.swift */,
 				6D0D7F6D2CF91A1500817D62 /* RubbishBinSettingViewModel.swift */,
+				94B8BC852D513AB700037861 /* RubbishBinSettingViewRouter.swift */,
 			);
 			path = RubbishBin;
 			sourceTree = "<group>";
@@ -15381,6 +15384,7 @@
 				94B09E692B84CC87007D6B84 /* RubbishBinMenuDelegateHandler.swift in Sources */,
 				6D0D7F6C2CF919CF00817D62 /* RubbishBinSettingView.swift in Sources */,
 				6D0D7F6E2CF91A1500817D62 /* RubbishBinSettingViewModel.swift in Sources */,
+				94B8BC862D513AB700037861 /* RubbishBinSettingViewRouter.swift in Sources */,
 				B52021782A8BA5F8001B66C7 /* RubbishBinTableViewController+Additions.swift in Sources */,
 				5B5A983C212EF29500FDBC79 /* RubbishBinTableViewController.m in Sources */,
 				B68BAEC6221DEB4E00FF6FCD /* SavedIdentifierParser.m in Sources */,

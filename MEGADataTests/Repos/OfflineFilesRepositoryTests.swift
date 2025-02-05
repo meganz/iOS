@@ -86,7 +86,8 @@ struct OfflineFilesRepositoryTestSuite {
         let sut = OfflineFilesRepository(
             store: store,
             offlineURL: offlineURL,
-            sdk: sdk
+            sdk: sdk,
+            folderSizeCalculator: MockFolderSizeCalculator()
         )
         return (sut, store)
     }

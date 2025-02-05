@@ -268,7 +268,6 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         }
 
         case FileManagementTableSectionOnMEGA:
-            [self showRubbishBinSettings];
             break;
         
         case FileManagementTableSectionFileVersioning:

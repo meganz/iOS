@@ -81,6 +81,10 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
         return relativePath
     }
     
+    public func offlineDirectoryURL() -> URL? {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    }
+    
     // MARK: - Private
     
     private func removeItemAsync(at url: URL, completion: @Sendable @escaping (Result<Void, Error>) -> Void) {

@@ -52,6 +52,7 @@ struct OfflineUseCaseTests {
         let (sut, _, offlineFilesRepository) = makeSUT()
 
         try await sut.removeAllOfflineFiles()
+        sut.removeAllStoredFiles()
 
         #expect(offlineFilesRepository.removeAllOfflineNodesCalledTimes == 1, "Expected removeAllOfflineNodes to be called exactly once.")
     }

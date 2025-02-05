@@ -7,7 +7,6 @@ public protocol OfflineUseCaseProtocol: Sendable {
     ///
     /// - Note: for example, if the url is file:///var/mobile/Containers/Data/Application/33596B80-2A8D-4296-8361-46C6AF0A246C/Documents/A/file.txt
     /// this method returns A/file.txt
-    ///
     func relativePathToDocumentsDirectory(for url: URL) -> String
     
     /// Removes the item at the specified URL (async version)
@@ -18,6 +17,19 @@ public protocol OfflineUseCaseProtocol: Sendable {
     ///
     /// This method deletes all files and folders within the offline directory, ensuring no offline data remains.
     func removeAllOfflineFiles() async throws
+    
+    /// Removes all stored offline nodes from the local database.
+    ///
+    /// This method clears all records of offline nodes stored in the local database using `MEGAStore`,
+    /// but it does not delete the actual files from disk.
+    func removeAllStoredFiles()
+    
+    /// Computes the total size of all offline files.
+    ///
+    /// This method calculates the cumulative size (in bytes) of all files stored in the offline directory.
+    ///
+    /// - Returns: The total size of offline files in bytes.
+    func offlineSize() -> UInt64
 }
 
 public struct OfflineUseCase: OfflineUseCaseProtocol {
@@ -41,8 +53,15 @@ public struct OfflineUseCase: OfflineUseCaseProtocol {
     }
     
     public func removeAllOfflineFiles() async throws {
-        try await fileSystemRepository.removeFolderContents(atURL: fileSystemRepository.documentsDirectory())
-        
+        guard let offlineDirectoryURL = fileSystemRepository.offlineDirectoryURL() else { return }
+        try await fileSystemRepository.removeFolderContents(atURL: offlineDirectoryURL)
+    }
+    
+    public func removeAllStoredFiles() {
         offlineFilesRepository.removeAllStoredOfflineNodes()
+    }
+    
+    public func offlineSize() -> UInt64 {
+        offlineFilesRepository.offlineSize()
     }
 }

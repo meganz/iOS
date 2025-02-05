@@ -8,13 +8,18 @@ import MEGASDKRepo
         
     @objc init(saveMediaToPhotoFailureHandler: any SaveMediaToPhotoFailureHandling) {
         self.saveNodeUseCase = SaveNodeUseCase(
-            offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared),
+            offlineFilesRepository: OfflineFilesRepository(
+                store: MEGAStore.shareInstance(),
+                sdk: MEGASdk.shared,
+                folderSizeCalculator: FolderSizeCalculator()
+            ),
             fileCacheRepository: FileCacheRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
             photosLibraryRepository: PhotosLibraryRepository.newRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             preferenceUseCase: PreferenceUseCase.default,
-            transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo,
+            transferInventoryRepository: TransferInventoryRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.newRepo,
             saveMediaToPhotoFailureHandler: saveMediaToPhotoFailureHandler
         )
         super.init()
