@@ -49,7 +49,7 @@ struct UserPlaylistCellContent: View {
     let onCheckMarkTapped: () -> Void
     
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: TokenSpacing._3) {
             checkMarkView
             content
         }
@@ -63,7 +63,7 @@ struct UserPlaylistCellContent: View {
             Button(action: onCheckMarkTapped) {
                 CheckMarkView(
                     markedSelected: isSelected,
-                    foregroundColor: isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+                    foregroundColor: isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI
                 )
             }
         }
@@ -75,23 +75,26 @@ struct UserPlaylistCellContent: View {
             VideoListPlaceholderCell()
                 .shimmering(active: isLoading)
         } else {
-            ThumbnailLayerView(
-                thumbnail: previewEntity.thumbnail,
-                videoPlaylistType: previewEntity.type
-            )
-            .frame(width: 142, height: 80, alignment: .center)
-            .clipShape(RoundedRectangle(cornerRadius: 4))
-            .opacity(isDisabled ? 0.5 : 1)
-            
-            VStack(alignment: .leading, spacing: TokenSpacing._3) {
-                Text(previewEntity.title)
-                    .font(.subheadline)
-                    .foregroundStyle(isDisabled ? TokenColors.Text.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
+            HStack(spacing: TokenSpacing._3) {
+                ThumbnailLayerView(
+                    thumbnail: previewEntity.thumbnail,
+                    videoPlaylistType: previewEntity.type
+                )
+                .frame(width: 142, height: 80, alignment: .center)
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .opacity(isDisabled ? 0.5 : 1)
                 
-                secondaryInformationView()
-                    .frame(maxHeight: .infinity, alignment: .top)
+                VStack(alignment: .leading, spacing: TokenSpacing._3) {
+                    Text(previewEntity.title)
+                        .font(.subheadline)
+                        .foregroundStyle(isDisabled ? TokenColors.Text.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
+                    
+                    secondaryInformationView()
+                        .frame(maxHeight: .infinity, alignment: .top)
+                }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
             }
-            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .gesture(isSelectionEnabled ? tap : nil)
             
             MEGAAssetsImageProvider.image(named: .moreList)
                 .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
@@ -99,6 +102,8 @@ struct UserPlaylistCellContent: View {
                 .onTapGesture { onTappedMoreOptions() }
         }
     }
+    
+    private var tap: some Gesture { TapGesture().onEnded(onCheckMarkTapped) }
     
     @ViewBuilder
     private func secondaryInformationView() -> some View {
