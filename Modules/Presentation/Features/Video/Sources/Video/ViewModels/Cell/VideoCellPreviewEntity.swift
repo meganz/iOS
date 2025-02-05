@@ -9,6 +9,7 @@ struct VideoCellPreviewEntity: Equatable {
     let duration: String
     let title: String
     let description: String?
+    let searchText: String?
     let size: String
     let isExported: Bool
     let label: NodeLabelTypeEntity?
@@ -28,6 +29,7 @@ struct VideoCellPreviewEntity: Equatable {
         && lhs.duration == rhs.duration
         && lhs.title == rhs.title
         && lhs.description == lhs.description
+        && lhs.searchText == rhs.searchText
         && lhs.size == rhs.size
         && lhs.isExported == rhs.isExported
         && lhs.label == rhs.label
@@ -43,6 +45,7 @@ extension VideoCellPreviewEntity {
         duration: "",
         title: "",
         description: nil,
+        searchText: nil,
         size: "",
         isExported: false,
         label: nil,

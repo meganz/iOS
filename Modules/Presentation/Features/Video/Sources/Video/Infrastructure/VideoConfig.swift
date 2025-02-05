@@ -188,7 +188,8 @@ public struct VideoConfig: Equatable, Sendable {
         public let videoFilterChipInactiveForegroundColor: Color
         public let videoFilterChipActiveBackgroundColor: Color
         public let videoFilterChipInactiveBackgroundColor: Color
-        
+        public let highlightedTextColor: Color
+
         /// Specify colors that needs to be injected from Main module.
         public init(
             primaryTextColor: Color,
@@ -217,7 +218,8 @@ public struct VideoConfig: Equatable, Sendable {
             videoFilterChipActiveForegroundColor: Color,
             videoFilterChipInactiveForegroundColor: Color,
             videoFilterChipActiveBackgroundColor: Color,
-            videoFilterChipInactiveBackgroundColor: Color
+            videoFilterChipInactiveBackgroundColor: Color,
+            highlightedTextColor: Color
         ) {
             self.primaryTextColor = primaryTextColor
             self.secondaryTextColor = secondaryTextColor
@@ -246,6 +248,7 @@ public struct VideoConfig: Equatable, Sendable {
             self.videoFilterChipInactiveForegroundColor = videoFilterChipInactiveForegroundColor
             self.videoFilterChipActiveBackgroundColor = videoFilterChipActiveBackgroundColor
             self.videoFilterChipInactiveBackgroundColor = videoFilterChipInactiveBackgroundColor
+            self.highlightedTextColor = highlightedTextColor
         }
     }
 }

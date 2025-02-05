@@ -96,6 +96,7 @@ struct VideoCellViewContent: View {
             VideoCellTitleText(
                 videoConfig: videoConfig,
                 title: previewEntity.title,
+                searchText: previewEntity.searchText,
                 labelImage: previewEntity.labelImage(source: videoConfig.rowAssets.labelAssets),
                 downloadedImage: previewEntity.downloadedImage(source: videoConfig.rowAssets)
             )

@@ -223,9 +223,21 @@ final class VideoCellViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testDescription_whenNonEmpty_shouldMatch() {
-        let (sut, _) = makeSUT(nodeEntity: NodeEntity(), description: "Test")
+    func testDescription_whenSearchIsNonEmpty_shouldReturnTheDescription() {
+        let (sut, _) = makeSUT(nodeEntity: NodeEntity(description: "Test"), searchText: "es")
         XCTAssertEqual(sut.previewEntity.description, "Test")
+    }
+
+    @MainActor
+    func testDescription_whenSearchIsNil_shouldNotReturnTheDescription() {
+        let (sut, _) = makeSUT(nodeEntity: NodeEntity(description: "Test"), searchText: nil)
+        XCTAssertNil(sut.previewEntity.description)
+    }
+
+    @MainActor
+    func testDescription_whenSearchStringDoesNotMatchTheDescription_shouldNotReturnTheDescription() {
+        let (sut, _) = makeSUT(nodeEntity: NodeEntity(description: "Test"), searchText: "hello")
+        XCTAssertNil(sut.previewEntity.description)
     }
 
     // MARK: - Helpers
@@ -236,7 +248,7 @@ final class VideoCellViewModelTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         nodeUseCase: MockNodeUseCase = MockNodeUseCase(),
         nodeEntity: NodeEntity,
-        description: String? = nil,
+        searchText: String? = nil,
         onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void = { _ in },
         onTapped: @escaping (_ node: NodeEntity) -> Void = { _ in },
         featureFlagHiddenNodes: Bool = false,
@@ -251,7 +263,7 @@ final class VideoCellViewModelTests: XCTestCase {
             mode: .plain,
             viewContext: .allVideos,
             nodeEntity: nodeEntity,
-            description: description,
+            searchText: searchText,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,

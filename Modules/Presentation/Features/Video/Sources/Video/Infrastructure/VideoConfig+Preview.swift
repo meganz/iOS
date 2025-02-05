@@ -59,8 +59,8 @@ extension VideoConfig {
             videoFilterChipActiveForegroundColor: TokenColors.Text.inverseAccent.swiftUI,
             videoFilterChipInactiveForegroundColor: TokenColors.Text.primary.swiftUI,
             videoFilterChipActiveBackgroundColor: TokenColors.Button.primary.swiftUI,
-            videoFilterChipInactiveBackgroundColor: TokenColors.Background.surface2.swiftUI
-            
+            videoFilterChipInactiveBackgroundColor: TokenColors.Background.surface2.swiftUI,
+            highlightedTextColor: TokenColors.Notifications.notificationSuccess.swiftUI
         ),
         toolbarAssets: ToolbarAssets(
             offlineImage: MEGAAssetsImageProvider.image(named: "offline")!,

@@ -1,21 +1,25 @@
 import MEGAAssets
 import MEGADomain
+import MEGASwift
 import SwiftUI
 
 struct VideoCellTitleText: View {
     
     let videoConfig: VideoConfig
     let title: String
+    let searchText: String?
     let labelImage: UIImage?
     let downloadedImage: UIImage?
     
     var body: some View {
         VideoCellTitleTextRepresentable(
             text: title,
+            searchText: searchText,
             labelImage: labelImage,
             downloadedImage: downloadedImage,
             foregroundColor: UIColor(videoConfig.colorAssets.primaryTextColor),
-            backgroundColor: UIColor(videoConfig.colorAssets.pageBackgroundColor)
+            backgroundColor: UIColor(videoConfig.colorAssets.pageBackgroundColor),
+            highlightedTextColor: UIColor(videoConfig.colorAssets.highlightedTextColor)
         )
     }
 }
@@ -24,6 +28,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This a short text",
+        searchText: nil,
         labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
         downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
     )
@@ -33,6 +38,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
+        searchText: nil,
         labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
         downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
     )
@@ -42,6 +48,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
+        searchText: nil,
         labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
         downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
     )
@@ -52,6 +59,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is text with label image",
+        searchText: nil,
         labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
         downloadedImage: nil
     )
@@ -62,6 +70,7 @@ struct VideoCellTitleText: View {
     VideoCellTitleText(
         videoConfig: .preview,
         title: "This is text with downloaded image",
+        searchText: nil,
         labelImage: nil,
         downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
     )
@@ -75,23 +84,29 @@ struct VideoCellTitleText: View {
 /// - Always display labelImage if any after the end of the text.
 private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
     private var text: String
+    private let searchText: String?
     private var labelImage: UIImage?
     private var downloadedImage: UIImage?
     private var foregroundColor: UIColor
     private var backgroundColor: UIColor
-    
+    private var highlightedTextColor: UIColor
+
     init(
         text: String,
+        searchText: String?,
         labelImage: UIImage?,
         downloadedImage: UIImage?,
         foregroundColor: UIColor,
-        backgroundColor: UIColor
+        backgroundColor: UIColor,
+        highlightedTextColor: UIColor
     ) {
         self.text = text
+        self.searchText = searchText
         self.labelImage = labelImage
         self.downloadedImage = downloadedImage
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
+        self.highlightedTextColor = highlightedTextColor
     }
     
     func makeUIView(context: Context) -> UITextView {
@@ -149,12 +164,16 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
     }
     
     private func createAttributedTitle() -> NSAttributedString {
-        let attributedTitle = NSMutableAttributedString(string: text, attributes: [
-            .font: UIFont.preferredFont(forTextStyle: .body),
-            .foregroundColor: foregroundColor,
-            .backgroundColor: backgroundColor
-        ])
-        
+        let attributedTitle = NSMutableAttributedString(
+            attributedString: text.highlightedStringWithKeyword(
+                searchText,
+                primaryTextColor: foregroundColor,
+                highlightedTextColor: highlightedTextColor,
+                normalBackgroundColor: backgroundColor,
+                font: .preferredFont(forTextStyle: .body)
+            )
+        )
+
         if let labelImage {
             let label = createImageAttachmentWithPadding(by: labelImage)
             attributedTitle.append(label)
@@ -164,7 +183,7 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
             let label = createImageAttachmentWithPadding(by: downloadedImage)
             attributedTitle.append(label)
         }
-        
+
         return attributedTitle
     }
     
