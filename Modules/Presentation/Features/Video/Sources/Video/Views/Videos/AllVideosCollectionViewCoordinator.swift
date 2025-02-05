@@ -13,11 +13,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     /// Row Item type to support diffable data source diffing while protecting `NodeEntity` agasint the `DiffableDataSource` API.
     private struct RowItem: Hashable, Sendable {
         let node: NodeEntity
-        let description: String?
+        let searchText: String?
 
-        init(node: NodeEntity, description: String?) {
+        init(node: NodeEntity, searchText: String?) {
             self.node = node
-            self.description = description
+            self.searchText = searchText
         }
         
         static func == (lhs: RowItem, rhs: RowItem) -> Bool {
@@ -27,7 +27,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             && lhs.node.label == rhs.node.label
             && lhs.node.isExported == rhs.node.isExported
             && lhs.node.isMarkedSensitive == rhs.node.isMarkedSensitive
-            && lhs.description == rhs.description
+            && lhs.searchText == rhs.searchText
         }
     }
     
@@ -92,7 +92,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 mode: .plain,
                 viewContext: viewContext,
                 nodeEntity: rowItem.node,
-                description: rowItem.description,
+                searchText: rowItem.searchText,
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
                 nodeUseCase: viewModel.nodeUseCase,
@@ -145,17 +145,10 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     // MARK: - Cell setup
 
     private func rowItem(for node: NodeEntity) -> RowItem {
-        let searchText = featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? searchText : nil
-        let description: String? = if let searchText,
-                                      let description = node.description,
-                                      searchText.isNotEmpty,
-                                      description.containsIgnoringCaseAndDiacritics(searchText: searchText) {
-            description
-        } else {
-            nil
-        }
-
-        return RowItem(node: node, description: description)
+        RowItem(
+            node: node,
+            searchText: featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? searchText : nil
+        )
     }
 
     private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel, adapter: VideoSelectionCheckmarkUIUpdateAdapter) {

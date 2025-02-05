@@ -72,7 +72,7 @@ final class RecentlyWatchedVideosCollectionViewCoordinator: NSObject {
                 mode: .plain,
                 viewContext: .recentlyWatchedVideos,
                 nodeEntity: rowItem.node,
-                description: nil,
+                searchText: nil,
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
                 nodeUseCase: viewModel.nodeUseCase,

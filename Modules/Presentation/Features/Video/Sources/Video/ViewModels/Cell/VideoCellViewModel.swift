@@ -31,7 +31,7 @@ final class VideoCellViewModel: ObservableObject {
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var nodeEntity: NodeEntity
-    private let description: String?
+    private let searchText: String?
     private let onTapMoreOptions: (_ node: NodeEntity) -> Void
     private let onTapped: (_ node: NodeEntity) -> Void
     
@@ -49,7 +49,7 @@ final class VideoCellViewModel: ObservableObject {
         mode: VideoCellViewModel.Mode,
         viewContext: VideoCellViewModel.ViewContext,
         nodeEntity: NodeEntity,
-        description: String?,
+        searchText: String?,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
@@ -61,7 +61,7 @@ final class VideoCellViewModel: ObservableObject {
         self.mode = mode
         self.viewContext = viewContext
         self.nodeEntity = nodeEntity
-        self.description = description
+        self.searchText = searchText
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
@@ -77,7 +77,7 @@ final class VideoCellViewModel: ObservableObject {
         previewEntity = nodeEntity.toVideoCellPreviewEntity(
             thumbnailContainer: cachedContainer,
             isDownloaded: false,
-            description: description
+            searchText: searchText
         )
     }
     
@@ -115,7 +115,7 @@ final class VideoCellViewModel: ObservableObject {
             .toVideoCellPreviewEntity(
                 thumbnailContainer: container,
                 isDownloaded: nodeUseCase.isDownloaded(nodeHandle: nodeEntity.handle),
-                description: description
+                searchText: searchText
             )
     }
     
