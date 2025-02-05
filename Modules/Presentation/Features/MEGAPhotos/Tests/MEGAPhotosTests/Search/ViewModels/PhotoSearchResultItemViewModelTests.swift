@@ -1,5 +1,6 @@
 import Combine
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 @testable import MEGAPhotos
 import MEGAPresentation
@@ -13,14 +14,21 @@ struct PhotoSearchResultItemViewModelTests {
     
     @Suite("calls init")
     struct Constructor {
-        @Test("Title should use node name")
+        @Test("Title should use node name and highlight search term")
         @MainActor
         func title() {
             let expectedTitle = "Test"
-            let sut = PhotoSearchResultItemViewModelTests
-                .makeSUT(photo: .init(name: expectedTitle))
+            let searchText = "st"
+            let sut = makeSUT(photo: .init(name: expectedTitle),
+                         searchText: searchText)
             
-            #expect(sut.title == expectedTitle)
+            #expect(sut.title == AttributedString(expectedTitle
+                .forceLeftToRight()
+                .highlightedStringWithKeyword(
+                    searchText,
+                    primaryTextColor: TokenColors.Text.primary,
+                    highlightedTextColor: TokenColors.Notifications.notificationSuccess
+                )))
         }
         
         @Test("Initial image found for photo should set thumbnail container")
@@ -69,11 +77,13 @@ struct PhotoSearchResultItemViewModelTests {
     @MainActor
     private static func makeSUT(
         photo: NodeEntity = .init(handle: 1),
+        searchText: String = "",
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter()
     ) -> PhotoSearchResultItemViewModel {
         PhotoSearchResultItemViewModel(
             photo: photo,
+            searchText: searchText,
             thumbnailLoader: thumbnailLoader,
             photoSearchResultRouter: photoSearchResultRouter)
     }

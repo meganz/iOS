@@ -21,7 +21,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     func testInit_setTitleNodesAndTitlePublishers() throws {
         let sut = makeAlbumCellViewModel(album: album)
         
-        XCTAssertEqual(sut.title, album.name)
+        XCTAssertEqual(sut.title, AttributedString(album.name))
         XCTAssertEqual(sut.numberOfNodes, album.count)
         XCTAssertTrue(sut.thumbnailContainer.type == .placeholder)
         XCTAssertFalse(sut.isLoading)

@@ -18,11 +18,12 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     public let album: AlbumEntity
     let selection: AlbumSelection
     let isLinkShared: Bool
+    let searchText: String?
     
     @Published var numberOfNodes: Int = 0
     @Published var thumbnailContainer: any ImageContaining
     @Published var isLoading: Bool = false
-    @Published var title: String = ""
+    @Published var title: AttributedString = ""
     @Published var isSelected: Bool = false {
         didSet {
             if isSelected != oldValue && selection.isAlbumSelected(album) != isSelected {
@@ -30,7 +31,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             }
         }
     }
-
+    
     @Published var editMode: EditMode = .inactive {
         willSet {
             opacity = newValue.isEditing && album.systemAlbum ? 0.5 : 1.0
@@ -83,6 +84,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         selection: AlbumSelection,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
+        searchText: String? = nil,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
@@ -96,10 +98,21 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         self.selection = selection
         self.tracker = tracker
         self.onAlbumSelected = onAlbumSelected
+        self.searchText = searchText
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
         
-        title = album.name
+        title = if let searchText {
+            AttributedString(album.name
+                .forceLeftToRight()
+                .highlightedStringWithKeyword(
+                    searchText,
+                    primaryTextColor: TokenColors.Text.primary,
+                    highlightedTextColor: TokenColors.Notifications.notificationSuccess
+                ))
+        } else {
+            AttributedString(album.name)
+        }
         numberOfNodes = album.count
         isLinkShared = album.isLinkShared
         
@@ -254,7 +267,7 @@ extension AlbumCellViewModel: Hashable {
     }
     
     nonisolated public static func == (lhs: AlbumCellViewModel, rhs: AlbumCellViewModel) -> Bool {
-        lhs.album == rhs.album
+        lhs.album == rhs.album && lhs.searchText == rhs.searchText
     }
 }
 

@@ -175,14 +175,13 @@ struct AddToPlaylistViewModelTests {
             
             try await confirmation("isItemsNotEmpty match publisher") { confirmation in
                 let invocationTask = Task {
-                    var expectations = [false, true]
+                    var expectations = [false, true, false]
                     for await isNotEmpty in sut.isItemsNotEmptyPublisher.values {
                         #expect(isNotEmpty == expectations.removeFirst())
                         if expectations.isEmpty {
                             confirmation()
                             break
                         }
-                        
                     }
                 }
                 // Ensure task started

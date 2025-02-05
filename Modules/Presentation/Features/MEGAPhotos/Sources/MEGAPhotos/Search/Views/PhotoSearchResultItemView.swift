@@ -5,33 +5,38 @@ import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import MEGASwiftUI
-import MEGAUIComponent
 import SwiftUI
 
 struct PhotoSearchResultItemView: View {
     @ObservedObject var viewModel: PhotoSearchResultItemViewModel
     
     var body: some View {
-        MEGAList(title: viewModel.title)
-            .titleLineLimit(1)
-            .replaceLeadingView {
-                PhotoCellImage(container: viewModel.thumbnailContainer)
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .task {
-                        await viewModel.loadThumbnail()
-                    }
-            }
-            .replaceTrailingView {
-                UIButtonWrapper(
-                    image: MEGAAssetsImageProvider.image(named: .moreList)
-                ) { button in
-                    viewModel.moreButtonPressed(button)
+        HStack(spacing: TokenSpacing._3) {
+            PhotoCellImage(container: viewModel.thumbnailContainer)
+                .frame(width: 40, height: 40)
+                .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
+                .task {
+                    await viewModel.loadThumbnail()
                 }
-                .frame(width: 28, height: 28)
+            
+            Text(viewModel.title)
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .lineLimit(1)
+            
+            Spacer()
+            
+            UIButtonWrapper(
+                image: MEGAAssetsImageProvider.image(named: .moreList)
+            ) { button in
+                viewModel.moreButtonPressed(button)
             }
-            .background(TokenColors.Background.page.swiftUI)
-            .frame(minHeight: 60)
-            .contentShape(Rectangle())
+            .frame(width: 28, height: 28)
+        }
+        .padding(.leading, TokenSpacing._4)
+        .padding(.trailing, TokenSpacing._5)
+        .background(TokenColors.Background.page.swiftUI)
+        .frame(minHeight: 60)
+        .contentShape(Rectangle())
     }
 }
