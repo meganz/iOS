@@ -47,7 +47,7 @@ extension ContactDetailsViewController {
     }
     
     @objc func startCall(inChatRoom chatRoom: MEGAChatRoom, videoEnabled: Bool) {
-        CallKitCallManager.shared.startCall(
+        CallControllerProvider().provideCallController().startCall(
             with: CallActionSync(
                 chatRoom: chatRoom.toChatRoomEntity(),
                 speakerEnabled: videoEnabled,

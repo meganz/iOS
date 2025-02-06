@@ -212,10 +212,10 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success, joinCallCompletion: .success(ChatRoomEntity()))
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let accountUseCase = MockAccountUseCase(isGuest: true)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let sut = WaitingRoomViewModel(chatRoomUseCase: chatRoomUseCase,
                                        callUseCase: callUseCase,
-                                       callManager: callManager,
+                                       callController: callController,
                                        meetingUseCase: meetingUseCase,
                                        accountUseCase: accountUseCase,
                                        chatLink: "Test chatLink")
@@ -226,7 +226,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         
         evaluate {
             sut.viewState == .waitForHostToLetIn &&
-            callManager.startCall_CalledTimes == 1
+            callController.startCall_CalledTimes == 1
         }
     }
     

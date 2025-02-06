@@ -107,7 +107,7 @@ class MainTabBarCallsViewModel: ViewModelType {
     private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
@@ -145,7 +145,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         handleUseCase: some MEGAHandleUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callController: some CallControllerProtocol,
         callUpdateFactory: CXCallUpdateFactory,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         tracker: some AnalyticsTracking
@@ -159,7 +159,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         self.sessionUpdateUseCase = sessionUpdateUseCase
         self.accountUseCase = accountUseCase
         self.handleUseCase = handleUseCase
-        self.callManager = callManager
+        self.callController = callController
         self.callUpdateFactory = callUpdateFactory
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
@@ -251,7 +251,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         } leaveCallAction: { [weak self] in
             guard let self else { return }
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
-            callManager.endCall(in: chatRoom, endForAll: false)
+            callController.endCall(in: chatRoom, endForAll: false)
         }
     }
     
@@ -505,7 +505,7 @@ class MainTabBarCallsViewModel: ViewModelType {
             return
         }
         
-        callManager.startCall(
+        callController.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom,
                 speakerEnabled: intent.callCapability == .videoCall,

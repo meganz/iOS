@@ -64,7 +64,8 @@ final class ChatContentViewModel: ViewModelType {
     private let meetingNoUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
     private let transfersListenerUseCase: any TransfersListenerUseCaseProtocol
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
+    private let callsManager: any CallsManagerProtocol
 
     private let router: any ChatContentRouting
     private let permissionRouter: any PermissionAlertRouting
@@ -103,7 +104,8 @@ final class ChatContentViewModel: ViewModelType {
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
          meetingNoUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
          handleUseCase: some MEGAHandleUseCaseProtocol,
-         callManager: some CallManagerProtocol,
+         callController: some CallControllerProtocol,
+         callsManager: some CallsManagerProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.chatRoom = chatRoom
@@ -119,7 +121,8 @@ final class ChatContentViewModel: ViewModelType {
         self.analyticsEventUseCase = analyticsEventUseCase
         self.meetingNoUserJoinedUseCase = meetingNoUserJoinedUseCase
         self.handleUseCase = handleUseCase
-        self.callManager = callManager
+        self.callController = callController
+        self.callsManager = callsManager
         self.featureFlagProvider = featureFlagProvider
         
         monitorOnCallUpdate()
@@ -381,7 +384,7 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     private func endCall(_ call: CallEntity) {
-        callManager.endCall(in: chatRoom, endForAll: false)
+        callController.endCall(in: chatRoom, endForAll: false)
     }
     
     private func manageStartOrJoinCall(videoCall: Bool, notRinging: Bool) {
@@ -395,7 +398,7 @@ final class ChatContentViewModel: ViewModelType {
                 /// call must be reported to CallKit as start call (setting joining to true for connecting management),
                 /// as CallKit can not longer answer a missed call.
                 if let incomingCallUUID = uuidForActiveCallKitCall() {
-                    callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
+                    callController.answerCall(in: chatRoom, withUUID: incomingCallUUID)
                 } else {
                     startCallJoiningActiveCall(true, withVideo: videoCall, notRinging: notRinging)
                 }
@@ -406,7 +409,7 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     private func startCallJoiningActiveCall(_ joining: Bool, withVideo: Bool, notRinging: Bool) {
-        callManager.startCall(
+        callController.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom,
                 speakerEnabled: chatRoom.isMeeting || withVideo,
@@ -417,7 +420,7 @@ final class ChatContentViewModel: ViewModelType {
         )
     }
     private func uuidForActiveCallKitCall() -> UUID? {
-        callManager.callUUID(forChatRoom: chatRoom)
+        callsManager.callUUID(forChatRoom: chatRoom)
     }
     
     private func checkPermissionsAndStartCall(isVideoEnabled: Bool, notRinging: Bool) {

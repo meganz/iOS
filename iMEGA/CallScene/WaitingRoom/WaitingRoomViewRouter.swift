@@ -49,7 +49,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
-            callManager: CallKitCallManager.shared,
+            callController: CallControllerProvider().provideCallController(),
             meetingUseCase: MeetingCreatingUseCase(
                 meetingCreatingRepo: MeetingCreatingRepository.newRepo,
                 userStoreRepo: UserStoreRepository.newRepo

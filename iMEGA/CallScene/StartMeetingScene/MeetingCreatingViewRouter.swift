@@ -57,7 +57,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
-            callManager: CallKitCallManager.shared,
+            callController: CallControllerProvider().provideCallController(),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             featureFlagProvider: DIContainer.featureFlagProvider,
             link: link,

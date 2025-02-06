@@ -79,7 +79,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
     private let tracker: any AnalyticsTracking
     
     private var noUserJoinedSubscription: AnyCancellable?
@@ -109,7 +109,7 @@ final class MeetingContainerViewModel: ViewModelType {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callController: some CallControllerProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
@@ -124,7 +124,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
-        self.callManager = callManager
+        self.callController = callController
         self.tracker = tracker
         
         subscribeToSeeWaitingRoomListNotification()
@@ -249,15 +249,15 @@ final class MeetingContainerViewModel: ViewModelType {
     
     // MARK: - Private
     private func hangCall(presenter: UIViewController?, sender: UIButton?) {
-        callManager.endCall(in: chatRoom, endForAll: false)
+        callController.endCall(in: chatRoom, endForAll: false)
     }
     
     private func endCallForAll() {
-        callManager.endCall(in: chatRoom, endForAll: true)
+        callController.endCall(in: chatRoom, endForAll: true)
     }
     
     private func hangCall() {
-        callManager.endCall(in: chatRoom, endForAll: false)
+        callController.endCall(in: chatRoom, endForAll: false)
     }
     
     private func hangAndDismissCall(completion: (() -> Void)?) {
@@ -270,7 +270,7 @@ final class MeetingContainerViewModel: ViewModelType {
            call.hasLocalAudio,
            isOneToOneChat == false,
            isOnlyMyselfInTheMeeting() {
-            callManager.muteCall(in: chatRoom, muted: true)
+            callController.muteCall(in: chatRoom, muted: true)
         }
     }
     

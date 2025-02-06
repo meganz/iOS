@@ -436,7 +436,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol = MockSessionUpdateUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        callManager: some CallManagerProtocol = MockCallManager(),
+        callController: some CallControllerProtocol = MockCallController(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         tracker: some AnalyticsTracking = MockTracker()
     ) -> MainTabBarCallsViewModel {
@@ -450,7 +450,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             sessionUpdateUseCase: sessionUpdateUseCase,
             accountUseCase: accountUseCase,
             handleUseCase: handleUseCase,
-            callManager: callManager,
+            callController: callController,
             callUpdateFactory: CXCallUpdateFactory(builder: { CXCallUpdate() }),
             featureFlagProvider: featureFlagProvider,
             tracker: tracker

@@ -487,13 +487,14 @@ extension AppDelegate {
     }
     
     private func startCallWithNoRinging(inChatRoom chatRoom: ChatRoomEntity) {
-        let callManager = CallKitCallManager.shared
+        let callController = CallControllerProvider().provideCallController()
+        let callsManager = CallsManager.shared
         let callUseCase = CallUseCase(repository: CallRepository.newRepo)
         if callUseCase.call(for: chatRoom.chatId) != nil {
-            if let incomingCallUUID = callManager.callUUID(forChatRoom: chatRoom) {
-                callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
+            if let incomingCallUUID = callsManager.callUUID(forChatRoom: chatRoom) {
+                callController.answerCall(in: chatRoom, withUUID: incomingCallUUID)
             } else {
-                callManager.startCall(
+                callController.startCall(
                     with: CallActionSync(
                         chatRoom: chatRoom,
                         notRinging: true,
@@ -502,7 +503,7 @@ extension AppDelegate {
                 )
             }
         } else {
-            callManager.startCall(
+            callController.startCall(
                 with: CallActionSync.startCallNoRinging(in: chatRoom)
             )
         }
@@ -693,12 +694,15 @@ extension AppDelegate {
             noUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository.newRepo),
-            callManager: CallKitCallManager.shared,
+            callsManager: CallsManager.shared,
             passcodeManager: PasscodeManager(),
-            uuidFactory: { UUID() },
-            callUpdateFactory: .defaultFactory
+            uuidFactory: { UUID() }
         )
         self.callsCoordinator = callsCoordinator
+        
+        CallControllerProvider().provideCallController().configureCallsCoordinator(callsCoordinator)
+        
+#if !targetEnvironment(simulator)
         voIPPushDelegate = VoIPPushDelegate(
             callCoordinator: callsCoordinator,
             voIpTokenUseCase: VoIPTokenUseCase(repo: VoIPTokenRepository.newRepo),
@@ -708,6 +712,7 @@ extension AppDelegate {
                 MEGALogDebug($0)
             }
         )
+#endif
     }
     
     @objc func startCall(fromIntent intent: INStartCallIntent) {

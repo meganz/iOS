@@ -244,7 +244,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         }
         let chatRoom = megaChatRoom.toChatRoomEntity()
         Task { @MainActor in
-            CallKitCallManager.shared.startCall(
+            CallControllerProvider().provideCallController().startCall(
                 with: CallActionSync(
                     chatRoom: chatRoom,
                     isJoiningActiveCall: true

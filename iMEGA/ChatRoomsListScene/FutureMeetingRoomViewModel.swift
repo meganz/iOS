@@ -18,7 +18,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
+    private let callsManager: any CallsManagerProtocol
     private let permissionAlertRouter: any PermissionAlertRouting
     private let tracker: any AnalyticsTracking
     private let callInProgressTimeReporter: any CallInProgressTimeReporting
@@ -95,7 +96,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callController: some CallControllerProtocol,
+        callsManager: some CallsManagerProtocol,
         permissionAlertRouter: some PermissionAlertRouting,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         chatNotificationControl: ChatNotificationControl,
@@ -114,7 +116,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.handleUseCase = megaHandleUseCase
-        self.callManager = callManager
+        self.callController = callController
+        self.callsManager = callsManager
         self.permissionAlertRouter = permissionAlertRouter
         self.chatNotificationControl = chatNotificationControl
         self.tracker = tracker
@@ -355,8 +358,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private func joinCall(in chatRoom: ChatRoomEntity) {
         guard let call = callUseCase.call(for: scheduledMeeting.chatId) else { return }
         if call.status == .userNoPresent {
-            if let incomingCallUUID = callManager.callUUID(forChatRoom: chatRoom) {
-                callManager.answerCall(in: chatRoom, withUUID: incomingCallUUID)
+            if let incomingCallUUID = callsManager.callUUID(forChatRoom: chatRoom) {
+                callController.answerCall(in: chatRoom, withUUID: incomingCallUUID)
             } else {
                 startCallJoiningActiveCall(true, notRinging: false, in: chatRoom)
             }
@@ -370,7 +373,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func startCallJoiningActiveCall(_ joining: Bool, notRinging: Bool, in chatRoom: ChatRoomEntity) {
-        callManager.startCall(
+        callController.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom,
                 speakerEnabled: chatRoom.isMeeting,

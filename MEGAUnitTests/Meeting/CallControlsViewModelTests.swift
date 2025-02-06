@@ -352,7 +352,7 @@ final class CallControlsViewModelTests: XCTestCase {
         let containerViewModel: MeetingContainerViewModel
         let audioSessionUseCase: MockAudioSessionUseCase
         let router: MockMeetingFloatingPanelRouter
-        let callManager: MockCallManager
+        let callController: MockCallController
         let localVideoUseCase: MockCallLocalVideoUseCase
         let notificationCenter: MockNotificationCenter
         let layoutUpdateChannel = ParticipantLayoutUpdateChannel()
@@ -379,7 +379,7 @@ final class CallControlsViewModelTests: XCTestCase {
             self.containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
             self.audioSessionUseCase = MockAudioSessionUseCase(isBluetoothAudioRouteAvailable: bluetoothAudioDeviceAvailable, currentSelectedAudioPort: audioPortOutput)
             self.router = MockMeetingFloatingPanelRouter()
-            self.callManager = MockCallManager()
+            self.callController = MockCallController()
             self.localVideoUseCase = MockCallLocalVideoUseCase()
             self.notificationCenter = MockNotificationCenter()
             
@@ -399,7 +399,7 @@ final class CallControlsViewModelTests: XCTestCase {
                     audioAuthorized: permissionsAuthorised,
                     videoAuthorized: permissionsAuthorised
                 ),
-                callManager: callManager,
+                callController: callController,
                 notificationCenter: notificationCenter,
                 audioRouteChangeNotificationName: .audioRouteChange,
                 accountUseCase: MockAccountUseCase(currentUser: .testUser),
@@ -426,11 +426,11 @@ final class CallControlsViewModelTests: XCTestCase {
         }
         
         func endCallNotifiedToCallManager() -> Bool {
-            callManager.endCall_CalledTimes == 1
+            callController.endCall_CalledTimes == 1
         }
         
         func muteCallNotifiedToCallManager() -> Bool {
-            callManager.muteCall_CalledTimes == 1
+            callController.muteCall_CalledTimes == 1
         }
         
         func enableLoudSpeakerCalled() -> Bool {

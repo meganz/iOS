@@ -15,7 +15,7 @@ final class CallsCoordinatorTests: XCTestCase {
         let callUseCase: MockCallUseCase
         let callUpdateUseCase: MockCallUpdateUseCase
         let audioSessionUseCase: MockAudioSessionUseCase
-        let callManager = MockCallManager()
+        let callsManager = MockCallsManager()
         let callKitProviderDelegateFactory = MockCallKitProviderDelegateFactory()
         let meetingNoUserJoinedUseCase = MockMeetingNoUserJoinedUseCase()
         
@@ -37,12 +37,14 @@ final class CallsCoordinatorTests: XCTestCase {
                 noUserJoinedUseCase: meetingNoUserJoinedUseCase,
                 captureDeviceUseCase: MockCaptureDeviceUseCase(),
                 audioSessionUseCase: audioSessionUseCase,
-                callManager: callManager,
+                callsManager: callsManager,
                 passcodeManager: MockPasscodeManager(),
-                uuidFactory: { .testUUID },
-                callUpdateFactory: CXCallUpdateFactory(builder: { MockCXCallUpdate() }),
-                callKitProviderDelegateFactory: callKitProviderDelegateFactory
+                uuidFactory: { .testUUID }
             )
+        }
+        
+        func setupProviderDelegate() {
+            sut.setupProviderDelegate(callKitProviderDelegateFactory.delegate)
         }
     }
     
@@ -55,56 +57,62 @@ final class CallsCoordinatorTests: XCTestCase {
     @MainActor
     func testReportIncomingCall_NewCall_ReportsToCallManager() {
         let harness = Harness(chatRoomEntity: .testChatRoomEntity)
+        harness.setupProviderDelegate()
         harness.sut.reportIncomingCall(in: 123, completion: {})
-        XCTAssertEqual(harness.callManager.incomingCalls, [.init(uuid: .testUUID, chatRoom: .testChatRoomEntity)])
+        XCTAssertEqual(harness.callsManager.incomingCalls, [.init(uuid: .testUUID, chatRoom: .testChatRoomEntity)])
     }
     
     @MainActor
     func testReportIncomingCall_ExistingCall_DoesNotReportAgainToCallManager() {
         let harness = Harness(chatRoomEntity: .testChatRoomEntity)
-        harness.callManager.addIncomingCall(withUUID: .testUUID, chatRoom: .testChatRoomEntity) // simulating existing call
+        harness.callsManager.addCall(CallActionSync(chatRoom: .testChatRoomEntity), withUUID: .testUUID) // simulating existing call
         harness.sut.reportIncomingCall(in: 123, completion: {})
-        XCTAssertEqual(harness.callManager.addIncomingCall_CalledTimes, 1)
+        XCTAssertEqual(harness.callsManager.addCall_CalledTimes, 1)
     }
     
     @MainActor
     func testReportIncomingCall_ExistingCall_ProviderDelegateCalled_CompletionTriggered() {
         let harness = Harness(chatRoomEntity: .testChatRoomEntity)
-        harness.callManager.addIncomingCall(withUUID: .testUUID, chatRoom: .testChatRoomEntity) // simulating existing call
+        harness.setupProviderDelegate()
         var completionCalled = false
+        harness.callsManager.addCall(CallActionSync(chatRoom: .testChatRoomEntity), withUUID: .testUUID) // simulating existing call
         harness.sut.reportIncomingCall(in: 123, completion: { completionCalled = true })
-        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.mockProvider.reportNewIncomingCalls, [.testUUID])
+        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.reportNewIncomingCall_calledTimes, 1)
         XCTAssertTrue(completionCalled)
     }
     
     @MainActor
     func testReportIncomingCall_NewCall_ProviderDelegateCalled_CompletionTriggered() {
         let harness = Harness(chatRoomEntity: .testChatRoomEntity)
+        harness.setupProviderDelegate()
         var completionCalled = false
         harness.sut.reportIncomingCall(in: 123, completion: { completionCalled = true })
-        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.mockProvider.reportNewIncomingCalls, [.testUUID])
+        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.reportNewIncomingCall_calledTimes, 1)
         XCTAssertTrue(completionCalled)
     }
     
     @MainActor
     func testReportIncomingCall_CallExistsInChatUserIsParticipating_DoesNotReportToCallManager() {
         let harness = Harness(chatRoomEntity: .testChatRoomEntity, call: CallEntity(status: .inProgress))
+        harness.setupProviderDelegate()
         harness.sut.reportIncomingCall(in: 123, completion: {})
-        XCTAssertEqual(harness.callManager.incomingCalls, [])
+        XCTAssertEqual(harness.callsManager.incomingCalls, [])
     }
     
     @MainActor
     func testReportIncomingCall_CallExistsInChatUserIsNotParticipating_ReportToCallManager() {
         let harness = Harness(chatRoomEntity: .testChatRoomEntity, call: CallEntity(status: .userNoPresent))
+        harness.setupProviderDelegate()
         harness.sut.reportIncomingCall(in: 123, completion: {})
-        XCTAssertEqual(harness.callManager.incomingCalls, [.init(uuid: .testUUID, chatRoom: .testChatRoomEntity)])
+        XCTAssertEqual(harness.callsManager.incomingCalls, [.init(uuid: .testUUID, chatRoom: .testChatRoomEntity)])
     }
     
     @MainActor
     func testReportIncomingCall_UserHasAlreadyAnsweredInOtherDevice_ShouldReportEndCall() {
         let harness = Harness(chatRoomEntity: .testChatRoomEntity, call: CallEntity(status: .userNoPresent, participants: [100, 101]))
-        harness.sut.reportIncomingCall(in: 123, completion: {})
-        XCTAssertEqual(harness.callManager.removeCall_CalledTimes, 1)
+        harness.setupProviderDelegate()
+        harness.sut.reportIncomingCall(in: 123, completion: { })
+        XCTAssertEqual(harness.callsManager.removeCall_CalledTimes, 1)
     }
     
     @MainActor
@@ -135,23 +143,24 @@ final class CallsCoordinatorTests: XCTestCase {
             chatRoomEntity: .testChatRoomEntity,
             call: initialCall
         )
-        
+        harness.setupProviderDelegate()
+
         harness.sut.reportIncomingCall(in: 123, completion: {})
-        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.mockProvider.reportNewIncomingCalls, [.testUUID])
-        
+        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.reportNewIncomingCall_calledTimes, 1)
+
         let callUpdate = CallEntity(
             status: .userNoPresent,
             changeType: .ringingStatus,
             isRinging: false,
             participants: [100, 101]
         )
-        harness.callManager.endCallExpectationClosure = {
+        harness.callsManager.endCallExpectationClosure = {
             expectation.fulfill()
         }
         harness.callUpdateUseCase.sendCallUpdate(callUpdate)
         
         await fulfillment(of: [expectation], timeout: 0.5)
-        XCTAssertEqual(harness.callManager.removeCall_CalledTimes, 1)
+        XCTAssertEqual(harness.callsManager.removeCall_CalledTimes, 1)
     }
     
     @MainActor
@@ -227,17 +236,39 @@ extension CallActionSync {
 
 struct MockCallKitProviderDelegateFactory: CallKitProviderDelegateProviding {
     class MockCXProviderDelegate: NSObject, CallKitProviderDelegateProtocol {
-        let provider: CXProvider = MockCXProvider(configuration: CXProviderConfiguration())
         
-        var mockProvider: MockCXProvider {
-            provider as! MockCXProvider
+        var reportOutgoingCall_calledTimes = 0
+        var updateCallTitle_calledTimes = 0
+        var updateCallVideo_calledTimes = 0
+        var reportNewIncomingCall_calledTimes = 0
+        var reportEndedCall_calledTimes = 0
+        
+        func reportOutgoingCall(with uuid: UUID) {
+            reportOutgoingCall_calledTimes += 1
+        }
+        
+        func updateCallTitle(_ title: String, for callUUID: UUID) {
+            updateCallTitle_calledTimes += 1
+        }
+        
+        func updateCallVideo(_ video: Bool, for callUUID: UUID) {
+            updateCallVideo_calledTimes += 1
+        }
+        
+        func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping (Bool) -> Void) {
+            reportNewIncomingCall_calledTimes += 1
+            completion(true)
+        }
+        
+        func reportEndedCall(with uuid: UUID, reason: EndCallReason) {
+            reportEndedCall_calledTimes += 1
         }
     }
     
     let delegate = MockCXProviderDelegate()
     func build(
         callCoordinator: any CallsCoordinatorProtocol,
-        callManager: any CallManagerProtocol
+        callsManager: any CallsManagerProtocol
     ) -> any CallKitProviderDelegateProtocol {
         delegate
     }

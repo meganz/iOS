@@ -82,7 +82,8 @@ enum ChatContentRoutingStyle: Int {
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
             meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
             handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
-            callManager: CallKitCallManager.shared
+            callController: CallControllerProvider().provideCallController(),
+            callsManager: CallsManager.shared
         )
         
         let chatViewController = ChatViewController(chatRoom: chatRoom, chatContentViewModel: chatContentViewModel, photoPicker: MEGAPhotoPicker(presenter: presenter))

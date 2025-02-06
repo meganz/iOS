@@ -19,7 +19,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
     private var chatNotificationControl: ChatNotificationControl
     private let permissionRouter: any PermissionAlertRouting
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
@@ -60,7 +60,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         chatUseCase: some ChatUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callController: some CallControllerProtocol,
         callUseCase: some CallUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
@@ -78,7 +78,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.chatUseCase = chatUseCase
         self.accountUseCase = accountUseCase
         self.handleUseCase = megaHandleUseCase
-        self.callManager = callManager
+        self.callController = callController
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
@@ -787,7 +787,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func startCall(in chatRoom: ChatRoomEntity) {
-        callManager.startCall(
+        callController.startCall(
             with: CallActionSync.startCallNoRinging(in: chatRoom)
         )
     }

@@ -65,13 +65,13 @@ final class ChatRoomViewModelTests: XCTestCase {
     
     @MainActor
     func testStartOrJoinCall_callNotExists_startCallCalled() {
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator))
-        let sut = ChatRoomViewModelFactory.make(chatRoomUseCase: chatRoomUseCase, callManager: callManager, callUseCase: MockCallUseCase(call: nil))
+        let sut = ChatRoomViewModelFactory.make(chatRoomUseCase: chatRoomUseCase, callController: callController, callUseCase: MockCallUseCase(call: nil))
 
         sut.startOrJoinCall()
         
-        XCTAssertTrue(callManager.startCall_CalledTimes == 1)
+        XCTAssertTrue(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor
@@ -130,7 +130,7 @@ class ChatRoomViewModelFactory {
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        callManager: some CallManagerProtocol = MockCallManager(),
+        callController: some CallControllerProtocol = MockCallController(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
@@ -154,7 +154,7 @@ class ChatRoomViewModelFactory {
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase, 
-            callManager: callManager,
+            callController: callController,
             callUseCase: callUseCase,
             audioSessionUseCase: audioSessionUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,

@@ -1,4 +1,3 @@
-import CallKit
 import ChatRepo
 import Combine
 import MEGADomain
@@ -16,14 +15,13 @@ protocol CallsCoordinatorFactoryProtocol {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callsManager: some CallsManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
-        uuidFactory: @escaping () -> UUID,
-        callUpdateFactory: CXCallUpdateFactory
+        uuidFactory: @escaping () -> UUID
     ) -> CallsCoordinator
 }
 
-@objc class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
+class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
@@ -33,10 +31,9 @@ protocol CallsCoordinatorFactoryProtocol {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callsManager: some CallsManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
-        uuidFactory: @escaping () -> UUID,
-        callUpdateFactory: CXCallUpdateFactory
+        uuidFactory: @escaping () -> UUID
     ) -> CallsCoordinator {
         CallsCoordinator(
             callUseCase: callUseCase,
@@ -47,30 +44,9 @@ protocol CallsCoordinatorFactoryProtocol {
             noUserJoinedUseCase: noUserJoinedUseCase,
             captureDeviceUseCase: captureDeviceUseCase,
             audioSessionUseCase: audioSessionUseCase,
-            callManager: callManager,
+            callsManager: callsManager,
             passcodeManager: passcodeManager,
-            uuidFactory: uuidFactory,
-            callUpdateFactory: callUpdateFactory,
-            callKitProviderDelegateFactory: CallKitProviderDelegateProvider()
-        )
-    }
-}
-
-protocol CallKitProviderDelegateProviding {
-    func build(
-        callCoordinator: any CallsCoordinatorProtocol,
-        callManager: any CallManagerProtocol
-    ) -> any CallKitProviderDelegateProtocol
-}
-
-struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
-    func build(
-        callCoordinator: any CallsCoordinatorProtocol,
-        callManager: any CallManagerProtocol
-    ) -> any CallKitProviderDelegateProtocol {
-        CallKitProviderDelegate(
-            callCoordinator: callCoordinator,
-            callManager: callManager
+            uuidFactory: uuidFactory
         )
     }
 }
@@ -84,15 +60,13 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
-    
-    private let callManager: any CallManagerProtocol
+    private let callsManager: any CallsManagerProtocol
     
     @Atomic private var providerDelegate: (any CallKitProviderDelegateProtocol)?
     
     private let passcodeManager: any PasscodeManagerProtocol
     
     private let uuidFactory: () -> UUID
-    private let callUpdateFactory: CXCallUpdateFactory
     
     @Atomic private var callUpdateTask: Task<Void, Never>?
     @Atomic private var callSessionUpdateTask: Task<Void, Never>?
@@ -111,11 +85,9 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callsManager: some CallsManagerProtocol,
         passcodeManager: some PasscodeManagerProtocol,
-        uuidFactory: @escaping () -> UUID,
-        callUpdateFactory: CXCallUpdateFactory,
-        callKitProviderDelegateFactory: some CallKitProviderDelegateProviding
+        uuidFactory: @escaping () -> UUID
     ) {
         self.callUseCase = callUseCase
         self.callUpdateUseCase = callUpdateUseCase
@@ -125,20 +97,12 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.audioSessionUseCase = audioSessionUseCase
-        self.callManager = callManager
+        self.callsManager = callsManager
         self.passcodeManager = passcodeManager
         self.uuidFactory = uuidFactory
-        self.callUpdateFactory = callUpdateFactory
         
         super.init()
         
-        self.$providerDelegate.mutate {
-            $0 = callKitProviderDelegateFactory.build(
-                callCoordinator: self,
-                callManager: callManager
-            )
-        }
-
         onCallUpdateListener()
         monitorOnChatConnectionStateUpdate()
     }
@@ -240,22 +204,21 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
         }
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else {
             MEGALogDebug("[CallsCoordinator] Report end call for incoming call in new chat room that could not be fetched")
-            providerDelegate?.provider.reportCall(
+            providerDelegate?.reportEndedCall(
                 with: incomingCallForUnknownChat.callUUID,
-                endedAt: nil,
                 reason: .failed
             )
             return
         }
-        callManager.addIncomingCall(
-            withUUID: incomingCallForUnknownChat.callUUID,
-            chatRoom: chatRoom
+        callsManager.addCall(
+            CallActionSync(chatRoom: chatRoom),
+            withUUID: incomingCallForUnknownChat.callUUID
         )
         updateCallTitle(chatId)
         MEGALogDebug("[CallsCoordinator] Call in new chat room title updated after chat connection state changed to online")
         
         if let answeredCompletion = incomingCallForUnknownChat.answeredCompletion {
-            MEGALogDebug("[CallKit] [CallsCoordinator] Call in new chat room answered after chat room connected to online")
+            MEGALogDebug("[CallsCoordinator] Call in new chat room answered after chat room connected to online")
             answeredCompletion()
         }
     }
@@ -270,10 +233,10 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
               let callUUID = uuidToReportCallConnectChanges(for: call)
         else { return }
         
-        guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
+        guard (callsManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
         else { return }
         
-        providerDelegate.provider.reportOutgoingCall(with: callUUID, startedConnectingAt: nil)
+        providerDelegate.reportOutgoingCall(with: callUUID)
     }
     
     private func reportCallConnectedIfNeeded(_ call: CallEntity) {
@@ -281,29 +244,31 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
               let callUUID = uuidToReportCallConnectChanges(for: call)
         else { return }
         
-        guard (callManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
+        guard (callsManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
         else { return }
         
-        providerDelegate.provider.reportOutgoingCall(with: callUUID, connectedAt: nil)
+        providerDelegate.reportOutgoingCall(with: callUUID)
     }
     
     private func uuidToReportCallConnectChanges(for call: CallEntity) -> UUID? {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return nil }
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return nil }
         return callUUID
     }
     
     private func updateCallTitle(_ chatId: ChatIdEntity) {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId),
+        guard let providerDelegate,
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId),
               let chatTitle = chatRoom.title,
-              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return }
         
-        providerDelegate?.provider.reportCall(with: callUUID, updated: callUpdateFactory.callUpdate(withChatTitle: chatTitle))
+        providerDelegate.updateCallTitle(chatTitle, for: callUUID)
     }
     
     private func updateVideoForCall(_ call: CallEntity) {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
+        guard let providerDelegate,
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return }
         
         var video = call.hasLocalVideo
         
@@ -312,7 +277,7 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
             break
         }
         
-        providerDelegate?.provider.reportCall(with: callUUID, updated: callUpdateFactory.callUpdate(withVideo: video))
+        providerDelegate.updateCallVideo(video, for: callUUID)
     }
     
     private func sendAudioPlayerInterruptDidStartNotificationIfNeeded() {
@@ -326,8 +291,8 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
     
     private func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity) {
-        Task {
-            await MeetingContainerRouter(
+        Task { @MainActor in
+            MeetingContainerRouter(
                 presenter: UIApplication.mnz_presentingViewController(),
                 chatRoom: chatRoom,
                 call: call
@@ -388,6 +353,35 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
                 localizedCameraName: localizedCameraName
             )
         }
+    }
+    
+    private func reportEndCall(_ call: CallEntity) {
+        MEGALogDebug("[CallsCoordinator] Report end call \(call)")
+        
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return }
+        
+        var endCallReason: EndCallReason?
+        switch call.termCodeType {
+        case .invalid, .error, .tooManyParticipants, .tooManyClients, .protocolVersion:
+            endCallReason = .failed
+        case .reject, .userHangup, .noParticipate, .kicked, .callDurationLimit, .callUsersLimit:
+            endCallReason = .remoteEnded
+        case .waitingRoomTimeout:
+            endCallReason = .unanswered
+        default:
+            for handle in call.participants where chatUseCase.myUserHandle() == handle {
+                endCallReason = .answeredElsewhere
+                break
+            }
+        }
+        
+        callsManager.removeCall(withUUID: callUUID)
+        
+        guard let providerDelegate, let endCallReason else { return }
+        providerDelegate.reportEndedCall(with: callUUID, reason: endCallReason)
+        
+        sendAudioPlayerInterruptDidEndNotificationIfNeeded()
     }
 }
 
@@ -467,8 +461,9 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     }
     
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
+        guard let providerDelegate else { return }
         guard userIsNotParticipatingInCall(inChat: chatId) else {
-            MEGALogDebug("[CallKit] Provider avoid reporting new incoming call as user is already participating in a call with the same chatId")
+            MEGALogDebug("[CallsCoordinator] Avoid reporting new incoming call as user is already participating in a call with the same chatId")
             /// According to Apple forums https://forums.developer.apple.com/forums/thread/117939
             /// While your app currently has an active call (ringing or answered), your app is not required to create additional calls for VoIP pushes received during this call. This is intended to be used to support advanced functionality like dynamic call priority, but it could also be used to cancel an incoming call.
             /// We use this functionality to avoid reporting new incoming call when user is already participating in a call in the same chat, what could happen due race conditions between joining a call and VoIP push.
@@ -476,68 +471,33 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         }
         
         var incomingCallUUID: UUID
-        var update: CXCallUpdate
+        var title: String
         if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) {
-            if let callInProgressUUID = callManager.callUUID(forChatRoom: chatRoom) {
-                MEGALogDebug("[CallKit] Provider report new incoming call that already exists")
+            if let callInProgressUUID = callsManager.callUUID(forChatRoom: chatRoom) {
+                MEGALogDebug("[CallsCoordinator] Provider reported new incoming call that already exists")
                 incomingCallUUID = callInProgressUUID
             } else {
-                MEGALogDebug("[CallKit] Provider report new incoming call")
+                MEGALogDebug("[CallsCoordinator] Provider reported new incoming call")
                 incomingCallUUID = uuidFactory()
-                callManager.addIncomingCall(
-                    withUUID: incomingCallUUID,
-                    chatRoom: chatRoom
+                callsManager.addCall(
+                    CallActionSync(chatRoom: chatRoom),
+                    withUUID: incomingCallUUID
                 )
             }
-            update = callUpdateFactory.createCallUpdate(title: chatRoom.title ?? "Unknown")
+            title = chatRoom.title ?? "Unknown"
         } else {
-            MEGALogDebug("[CallKit] Provider report new incoming call in chat room that does not exists, save and wait for chat connection")
+            MEGALogDebug("[CallsCoordinator] Provider reported new incoming call in chat room that does not exists, save and wait for chat connection")
             incomingCallUUID = uuidFactory()
-            update = callUpdateFactory.createCallUpdate(title: Strings.Localizable.connecting)
+            title = Strings.Localizable.connecting
             incomingCallForUnknownChat = IncomingCallForUnknownChat(chatId: chatId, callUUID: incomingCallUUID)
         }
         
-        providerDelegate?.provider.reportNewIncomingCall(with: incomingCallUUID, update: update) { [weak self] error in
-            if let error {
-                CrashlyticsLogger.log("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
-                MEGALogError("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
-                if (error as NSError?)?.code == CXErrorCodeIncomingCallError.Code.filteredByDoNotDisturb.rawValue {
-                    MEGALogDebug("[CallKit] Do not disturb enabled")
-                }
-            } else {
+        providerDelegate.reportNewIncomingCall(with: incomingCallUUID, title: title) { [weak self] succeeded in
+            if succeeded {
                 self?.checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for: chatId)
             }
             completion()
         }
-    }
-    
-    func reportEndCall(_ call: CallEntity) {
-        MEGALogDebug("[CallKit] Report end call \(call)")
-        
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-              let callUUID = callManager.callUUID(forChatRoom: chatRoom) else { return }
-        
-        var callEndedReason: CXCallEndedReason?
-        switch call.termCodeType {
-        case .invalid, .error, .tooManyParticipants, .tooManyClients, .protocolVersion:
-            callEndedReason = .failed
-        case .reject, .userHangup, .noParticipate, .kicked, .callDurationLimit, .callUsersLimit:
-            callEndedReason = .remoteEnded
-        case .waitingRoomTimeout:
-            callEndedReason = .unanswered
-        default:
-            for handle in call.participants where chatUseCase.myUserHandle() == handle {
-                callEndedReason = .answeredElsewhere
-                break
-            }
-        }
-        
-        callManager.removeCall(withUUID: callUUID)
-        guard let callEndedReason else { return }
-        MEGALogDebug("[CallKit] Report end call reason \(callEndedReason.rawValue)")
-        providerDelegate?.provider.reportCall(with: callUUID, endedAt: nil, reason: callEndedReason)
-        
-        sendAudioPlayerInterruptDidEndNotificationIfNeeded()
     }
     
     func disablePassCodeIfNeeded() {
@@ -561,4 +521,18 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             audioSession.unlockForConfiguration()
         }
     }
+    
+    func setupProviderDelegate(_ provider: any CallKitProviderDelegateProtocol) {
+        $providerDelegate.mutate {
+            $0 = provider
+        }
+    }
+}
+
+enum EndCallReason: Int {
+    case failed = 1
+    case remoteEnded
+    case unanswered
+    case answeredElsewhere
+    case declinedElsewhere
 }

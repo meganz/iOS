@@ -129,50 +129,52 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     @MainActor
     func testStartOrJoinCallActionTapped_startCall() {
         chatUseCase.isCallInProgress = false
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callManager: callManager)
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callController: callController)
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(callManager.startCall_CalledTimes == 1)
+        XCTAssertTrue(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor
     func testStartOrJoinCallActionTapped_joinCallUserNoPresentCallKitNoRinging_startCallCalled() {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .userNoPresent)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
 
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callController: callController)
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(callManager.startCall_CalledTimes == 1)
+        XCTAssertTrue(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor
     func testStartOrJoinCallActionTapped_joinCallUserNoPresentCallKitRinging_answerCallCalled() {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .userNoPresent)
-        let callManager = MockCallManager()
-        callManager.addIncomingCall(withUUID: UUID(), chatRoom: ChatRoomEntity(chatId: 100))
+        let callController = MockCallController()
+        let callsManager = MockCallsManager()
+        callsManager.addCall(CallActionSync(chatRoom: ChatRoomEntity(chatId: 100)), withUUID: .testUUID)
 
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callController: callController, callsManager: callsManager)
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(callManager.answerCall_CalledTimes == 1)
+        XCTAssertTrue(callController.answerCall_CalledTimes == 1)
     }
     
     @MainActor
     func testStartOrJoinCallActionTapped_joinCallCallAlreadyParticipating_showCallUI() {
         chatUseCase.isCallInProgress = true
         callUseCase.call = CallEntity(status: .inProgress)
-        let callManager = MockCallManager()
-        callManager.addIncomingCall(withUUID: UUID(), chatRoom: ChatRoomEntity())
+        let callController = MockCallController()
+        let callsManager = MockCallsManager()
+        callsManager.addCall(CallActionSync(chatRoom: .testChatRoomEntity), withUUID: .testUUID)
 
-        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callManager: callManager)
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase, callController: callController, callsManager: callsManager)
 
         viewModel.startOrJoinCall()
         

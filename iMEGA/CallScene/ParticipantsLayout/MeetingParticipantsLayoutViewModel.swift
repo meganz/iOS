@@ -187,7 +187,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
     private let chatRoomUpdateUseCase: any ChatRoomUpdateUseCaseProtocol
     
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let timerSequence: any TimerSequenceProtocol
     
@@ -241,7 +241,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callController: some CallControllerProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         timerSequence: some TimerSequenceProtocol,
         chatRoom: ChatRoomEntity,
@@ -266,7 +266,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.callUpdateUseCase = callUpdateUseCase
         self.sessionUpdateUseCase = sessionUpdateUseCase
         self.chatRoomUpdateUseCase = chatRoomUpdateUseCase
-        self.callManager = callManager
+        self.callController = callController
         self.featureFlagProvider = featureFlagProvider
         self.timerSequence = timerSequence
         self.chatRoom = chatRoom
@@ -1467,7 +1467,7 @@ extension MeetingParticipantsLayoutViewModel {
     
     private func outgoingRingingStopReceived(_ call: CallEntity) {
         if isOneToOne && call.numberOfParticipants == 1 {
-            callManager.endCall(in: chatRoom, endForAll: false)
+            callController.endCall(in: chatRoom, endForAll: false)
             self.tonePlayer.play(tone: .callEnded)
         }
     }
