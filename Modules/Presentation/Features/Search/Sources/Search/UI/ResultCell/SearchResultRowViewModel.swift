@@ -22,14 +22,17 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     /// This property is needed to animate the thumbnailImage when it is first loaded.
     @Published var isThumbnailLoadedOnce = false
 
-    var title: AttributedString {
-        let title = result.title.forceLeftToRight()
+    var plainTitle: String {
+        result.title.forceLeftToRight()
+    }
+
+    var attributedTitle: AttributedString {
         guard let query = query() else {
-            return AttributedString(title)
+            return AttributedString(plainTitle)
         }
 
         return AttributedString(
-            title.highlightedStringWithKeyword(
+            plainTitle.highlightedStringWithKeyword(
                 query,
                 primaryTextColor: UIColor(titleTextColor),
                 highlightedTextColor: UIColor(colorAssets.textHighlightColor)

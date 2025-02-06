@@ -352,11 +352,12 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let result = harness.resultVM(at: 0)
+        let plainTitle = "title".forceLeftToRight()
+        XCTAssertEqual(result.plainTitle, plainTitle)
         XCTAssertEqual(
-            result.title,
+            result.attributedTitle,
             AttributedString(
-                "title"
-                    .forceLeftToRight()
+                plainTitle
                     .highlightedStringWithKeyword(
                         "query",
                         primaryTextColor: UIColor(result.titleTextColor),
