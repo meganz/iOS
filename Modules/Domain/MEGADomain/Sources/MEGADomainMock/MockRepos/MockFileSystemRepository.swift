@@ -14,6 +14,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     private let relativePath: String
     private let _offlineDirectoryURL: URL?
     
+    public var removeFolderContents_calledTimes: Int = 0
+    
     @Atomic public var removeFileURLs = [URL]()
 
     public init(fileExists: Bool = false,
@@ -66,7 +68,9 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
         relativePath
     }
     
-    public func removeFolderContents(atURL url: URL) async throws {}
+    public func removeFolderContents(atURL url: URL) async throws {
+        removeFolderContents_calledTimes += 1
+    }
     
     public func offlineDirectoryURL() -> URL? {
         _offlineDirectoryURL

@@ -5,23 +5,24 @@ import Testing
 
 @Suite("OfflineUseCase Tests - Validates OfflineUseCase functionality")
 struct OfflineUseCaseTests {
-    private let testURL = URL(string: "file:///data/Containers/Data/Application/3EAE35E8-ABD4-49DE-90C9-C1070C22A6E1/Documents/photos/readme.md")!
-    private let expectedRelativePath = "photos/readme.md"
+    private static let testURL = URL(string: "file:///data/Containers/Data/Application/3EAE35E8-ABD4-49DE-90C9-C1070C22A6E1/Documents/photos/readme.md")!
+    private static let invalidURL = URL(string: "invalid://path")!
+    private static let expectedRelativePath = "photos/readme.md"
 
-    private func makeSUT(
+    private static func makeSUT(
         relativePath: String? = nil,
-        offlineFileEntities: [OfflineFileEntity] = [],
-        offlineFileEntity: OfflineFileEntity? = nil
+        offlineSize: UInt64 = 0,
+        offlineDirectoryURL: URL? = nil
     ) -> (
         sut: OfflineUseCase,
         fileSystemRepository: MockFileSystemRepository,
         offlineFilesRepository: MockOfflineFilesRepository
     ) {
-        let fileSystemRepository = MockFileSystemRepository(relativePath: relativePath ?? expectedRelativePath)
-        let offlineFilesRepository = MockOfflineFilesRepository(
-            offlineFileEntities: offlineFileEntities,
-            offlineFileEntity: offlineFileEntity
+        let fileSystemRepository = MockFileSystemRepository(
+            relativePath: relativePath ?? "",
+            offlineDirectoryURL: offlineDirectoryURL
         )
+        let offlineFilesRepository = MockOfflineFilesRepository(offlineSize: offlineSize)
         let sut = OfflineUseCase(
             fileSystemRepository: fileSystemRepository,
             offlineFilesRepository: offlineFilesRepository
@@ -29,31 +30,71 @@ struct OfflineUseCaseTests {
         return (sut, fileSystemRepository, offlineFilesRepository)
     }
 
-    @Test("relativePathToDocumentsDirectory should return expected path")
-    func relativePathToDocumentsDirectory_shouldReturnExpectedPath() {
-        let (sut, _, _) = makeSUT(relativePath: expectedRelativePath)
+    @Suite("OfflineUseCase relativePath Tests")
+    struct RelativePathTests {
+        @Test("When given a valid URL, should return expected path")
+        func withValidURL_shouldReturnExpectedPath() {
+            let (sut, _, _) = makeSUT(relativePath: expectedRelativePath)
+            let result = sut.relativePathToDocumentsDirectory(for: testURL)
+            #expect(result == expectedRelativePath)
+        }
 
-        let result = sut.relativePathToDocumentsDirectory(for: testURL)
-
-        #expect(result == expectedRelativePath, "Expected \(expectedRelativePath), but got \(result)")
+        @Test("When given an invalid URL, should return empty string")
+        func withInvalidURL_shouldReturnEmptyString() {
+            let (sut, _, _) = makeSUT()
+            let result = sut.relativePathToDocumentsDirectory(for: invalidURL)
+            #expect(result.isEmpty)
+        }
     }
 
-    @Test("removeItem should successfully remove the item")
-    func removeItem_whenSuccess_shouldRemoveTheItem() async throws {
-        let (sut, fileSystemRepository, _) = makeSUT()
-
-        try await sut.removeItem(at: testURL)
-
-        #expect(fileSystemRepository.removeFileURLs == [testURL], "Expected file removal for \(testURL)")
+    @Suite("OfflineUseCase removeItem Tests")
+    struct RemoveItemTests {
+        @Test("When file exists, should remove the item")
+        func withExistingFile_shouldRemoveItem() async throws {
+            let (sut, fileSystemRepository, _) = makeSUT()
+            try await sut.removeItem(at: testURL)
+            #expect(fileSystemRepository.removeFileURLs == [testURL])
+        }
     }
 
-    @Test("removeAllOfflineFiles should invoke repository correctly")
-    func removeAllOfflineFiles_whenCalled_shouldInvokeRepository() async throws {
-        let (sut, _, offlineFilesRepository) = makeSUT()
+    @Suite("OfflineUseCase removeAllOfflineFiles Tests")
+    struct RemoveAllOfflineFilesTests {
+        @Test("When offline directory exists, should remove all files")
+        func withOfflineDirectory_shouldRemoveAllFiles() async throws {
+            let (sut, fileSystemRepository, _) = makeSUT(offlineDirectoryURL: testURL)
+            try await sut.removeAllOfflineFiles()
+            #expect(fileSystemRepository.removeFolderContents_calledTimes == 1)
+        }
 
-        try await sut.removeAllOfflineFiles()
-        sut.removeAllStoredFiles()
-
-        #expect(offlineFilesRepository.removeAllOfflineNodesCalledTimes == 1, "Expected removeAllOfflineNodes to be called exactly once.")
+        @Test("When offline directory is nil, should not throw error")
+        func withNilOfflineDirectory_shouldNotThrowError() async throws {
+            let (sut, _, _) = makeSUT()
+            
+            await #expect(throws: Never.self) {
+                try await sut.removeAllOfflineFiles()
+            }
+        }
     }
+
+    @Suite("OfflineUseCase removeAllStoredFiles Tests")
+    struct RemoveAllStoredFilesTests {
+        @Test("Should clear all stored offline nodes")
+        func shouldClearAllStoredNodes() {
+            let (sut, _, offlineFilesRepository) = makeSUT()
+            sut.removeAllStoredFiles()
+            #expect(offlineFilesRepository.removeAllOfflineNodesCalledTimes == 1)
+        }
+    }
+
+    @Suite("OfflineUseCase offlineSize Tests")
+    struct OfflineSizeTests {
+        @Test("Should return correct total size")
+        func shouldReturnCorrectTotalSize() {
+            let expectedSize: UInt64 = 1024 * 1024 * 50
+            let (sut, _, _) = makeSUT(offlineSize: expectedSize)
+            let result = sut.offlineSize()
+            #expect(result == expectedSize)
+        }
+    }
+
 }
