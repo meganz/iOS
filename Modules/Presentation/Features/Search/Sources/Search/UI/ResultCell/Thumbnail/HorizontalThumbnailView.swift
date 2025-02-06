@@ -65,7 +65,7 @@ struct HorizontalThumbnailView: View {
     
     private var titleAndLabel: some View {
         HStack(spacing: 4) {
-            Text(viewModel.title)
+            Text(viewModel.plainTitle)
                 .font(.system(.caption).weight(.medium))
                 .foregroundStyle(viewModel.titleTextColor)
                 .accessibilityLabel(viewModel.accessibilityIdentifier)

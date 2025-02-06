@@ -105,7 +105,7 @@ struct SearchResultRowView: View {
     
     private var titleLine: some View {
         HStack(spacing: 4) {
-            Text(viewModel.title)
+            Text(viewModel.attributedTitle)
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .lineLimit(1)
