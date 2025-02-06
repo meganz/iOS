@@ -80,7 +80,7 @@ struct CallKitProviderDelegateTests {
     }
     
     class Harness {
-        let callManager = MockCallManager()
+        let callsManager = MockCallsManager()
         let cxProvider: MockCXProvider
         let callCoordinator: MockCallsCoordinator
         let sut: CallKitProviderDelegate
@@ -92,14 +92,15 @@ struct CallKitProviderDelegateTests {
             self.cxProvider = cxProvider
             sut = CallKitProviderDelegate(
                 callCoordinator: self.callCoordinator,
-                callManager: callManager,
+                callsManager: callsManager,
                 cxProviderFactory: {
                     cxProvider
-                }
+                },
+                callUpdateFactory: CXCallUpdateFactory(builder: { CXCallUpdate() })
             )
             
             if setupCallManager {
-                callManager.callForUUIDToReturn = .init(chatRoom: ChatRoomEntity())
+                callsManager.callForUUIDToReturn = .init(chatRoom: ChatRoomEntity())
             }
         }
     }
@@ -108,7 +109,7 @@ struct CallKitProviderDelegateTests {
     func didReset_informesCallManager() {
         let harness = Harness()
         harness.sut.providerDidReset(harness.cxProvider)
-        #expect(harness.callManager.removeAllCalls_CalledTimes == 1)
+        #expect(harness.callsManager.removeAllCalls_CalledTimes == 1)
     }
     
     @Suite("Start Call")
@@ -140,7 +141,7 @@ struct CallKitProviderDelegateTests {
         @Test("Performs answer call action, succeeds")
         func answerAction_succeeds() async {
             let harness = Harness()
-            harness.callManager.callForUUIDToReturn = .init(chatRoom: ChatRoomEntity())
+            harness.callsManager.callForUUIDToReturn = .init(chatRoom: ChatRoomEntity())
             harness.callCoordinator.answerCallResult_ToReturn = true
             let answerAction = MockAnswerAction(callUUID: .init())
             harness.sut.provider(harness.cxProvider, perform: answerAction)

@@ -9,13 +9,13 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
     var endCall_CalledTimes = 0
     var muteCall_CalledTimes = 0
     var reportIncomingCall_CalledTimes = 0
-    var reportEndCall_CalledTimes = 0
     var disablePassCodeIfNeeded_CalledTimes = 0
     var startCallResult_ToReturn = false
     var answerCallResult_ToReturn = false
     var endCallResult_ToReturn = false
     var muteCallResult_ToReturn = false
     var configureWebRTCAudioSession_CalledTimes = 0
+    var setupProviderDelegate_CalledTimes = 0
     var endCallCalled = Expectation()
     var muteCallCalled = Expectation()
     var answerCallCalled = Expectation()
@@ -54,15 +54,15 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
         reportIncomingCallExpectationClosure?()
     }
     
-    func reportEndCall(_ call: CallEntity) {
-        reportEndCall_CalledTimes += 1
-    }
-    
     func disablePassCodeIfNeeded() {
         disablePassCodeIfNeeded_CalledTimes += 1
     }
     
     func configureWebRTCAudioSession() {
         configureWebRTCAudioSession_CalledTimes += 1
+    }
+    
+    func setupProviderDelegate(_ provider: any CallKitProviderDelegateProtocol) {
+        setupProviderDelegate_CalledTimes += 1
     }
 }

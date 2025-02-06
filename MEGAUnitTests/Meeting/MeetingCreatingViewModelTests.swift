@@ -77,7 +77,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_didTapStartMeetingButton_userJoiningToNewChat_userShouldJoinChatDismissViewAndJoinActiveCall() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let sut = makeSUT(
             router: router,
             type: .join,
@@ -85,7 +85,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                 joinCallCompletion: .success(chatRoom),
                 checkChatLinkCompletion: .success(chatRoom)
             ),
-            callManager: callManager,
+            callController: callController,
             link: "https://mega-chat-link.com"
         )
         
@@ -106,7 +106,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         
         evaluate {
             router.dismiss_calledTimes == 1 &&
-            callManager.startCall_CalledTimes == 1
+            callController.startCall_CalledTimes == 1
         }
     }
     
@@ -114,7 +114,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_didTapStartMeetingButton_userJoiningChatAlreadyParticipating_viewShouldDismissAndJoinActiveCall() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let sut = makeSUT(
             router: router,
             type: .join,
@@ -122,7 +122,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                 checkChatLinkCompletion: .success(chatRoom)
             ),
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: chatRoom),
-            callManager: callManager,
+            callController: callController,
             link: "https://mega-chat-link.com"
         )
         
@@ -143,7 +143,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         
         evaluate {
             router.dismiss_calledTimes == 1 &&
-            callManager.startCall_CalledTimes == 1
+            callController.startCall_CalledTimes == 1
         }
     }
     
@@ -205,7 +205,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        callManager: some CallManagerProtocol = MockCallManager(),
+        callController: some CallControllerProtocol = MockCallController(),
         tracker: some AnalyticsTracking = DIContainer.tracker,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         link: String? = nil,
@@ -223,7 +223,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase,
             callUseCase: callUseCase,
-            callManager: callManager,
+            callController: callController,
             chatRoomUseCase: chatRoomUseCase,
             tracker: tracker,
             featureFlagProvider: featureFlagProvider,

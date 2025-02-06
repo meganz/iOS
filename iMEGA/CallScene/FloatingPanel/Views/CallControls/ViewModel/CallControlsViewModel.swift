@@ -20,7 +20,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
     private weak var containerViewModel: MeetingContainerViewModel?
     
     private let permissionHandler: any DevicePermissionsHandling
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let audioRouteChangeNotificationName: Notification.Name
@@ -46,7 +46,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         containerViewModel: MeetingContainerViewModel? = nil,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         permissionHandler: some DevicePermissionsHandling,
-        callManager: some CallManagerProtocol,
+        callController: some CallControllerProtocol,
         notificationCenter: NotificationCenter,
         audioRouteChangeNotificationName: Notification.Name,
         accountUseCase: some AccountUseCaseProtocol,
@@ -64,7 +64,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         self.containerViewModel = containerViewModel
         self.permissionHandler = permissionHandler
         self.audioSessionUseCase = audioSessionUseCase
-        self.callManager = callManager
+        self.callController = callController
         self.notificationCenter = notificationCenter
         self.audioRouteChangeNotificationName = audioRouteChangeNotificationName
         self.accountUseCase = accountUseCase
@@ -248,13 +248,13 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         if (chatRoom.chatType == .group || chatRoom.chatType == .meeting) && chatRoom.ownPrivilege == .moderator && call.numberOfParticipants > 1, let containerViewModel {
             router.showHangOrEndCallDialog(containerViewModel: containerViewModel)
         } else {
-            callManager.endCall(in: chatRoom, endForAll: false)
+            callController.endCall(in: chatRoom, endForAll: false)
         }
     }
     
     private func toggleMic() async {
         if await permissionHandler.requestPermission(for: .audio) {
-            callManager.muteCall(in: chatRoom, muted: micEnabled)
+            callController.muteCall(in: chatRoom, muted: micEnabled)
             micEnabled.toggle()
         } else {
             router.showAudioPermissionError()

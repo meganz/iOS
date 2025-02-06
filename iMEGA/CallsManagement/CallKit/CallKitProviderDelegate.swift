@@ -15,23 +15,85 @@ struct DefaultCXProviderFactory {
     }
 }
 
+protocol CallKitProviderDelegateProviding {
+    func build(
+        callCoordinator: any CallsCoordinatorProtocol,
+        callsManager: any CallsManagerProtocol
+    ) -> any CallKitProviderDelegateProtocol
+}
+
+struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
+    func build(
+        callCoordinator: any CallsCoordinatorProtocol,
+        callsManager: any CallsManagerProtocol
+    ) -> any CallKitProviderDelegateProtocol {
+        CallKitProviderDelegate(
+            callCoordinator: callCoordinator,
+            callsManager: callsManager,
+            callUpdateFactory: .defaultFactory
+        )
+    }
+}
+
 protocol CallKitProviderDelegateProtocol {
-    var provider: CXProvider { get }
+    func reportOutgoingCall(with uuid: UUID)
+    func updateCallTitle(_ title: String, for callUUID: UUID)
+    func updateCallVideo(_ video: Bool, for callUUID: UUID)
+    func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping (Bool) -> Void)
+    func reportEndedCall(with uuid: UUID, reason: EndCallReason)
 }
 
 final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, CXProviderDelegate {
-    private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
-    private weak var callManager: (any CallManagerProtocol)?
-    let provider: CXProvider
+    func reportOutgoingCall(with uuid: UUID) {
+        provider.reportOutgoingCall(with: uuid, startedConnectingAt: nil)
+    }
     
+    func updateCallTitle(_ title: String, for callUUID: UUID) {
+        provider.reportCall(with: callUUID, updated: callUpdateFactory.callUpdate(withChatTitle: title))
+    }
+    
+    func updateCallVideo(_ video: Bool, for callUUID: UUID) {
+        provider.reportCall(with: callUUID, updated: callUpdateFactory.callUpdate(withVideo: video))
+    }
+    
+    func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping (Bool) -> Void) {
+        let update = callUpdateFactory.createCallUpdate(title: title)
+        provider.reportNewIncomingCall(with: uuid, update: update) { error in
+            if let error {
+                CrashlyticsLogger.log("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
+                MEGALogError("[CallKit] Provider Error reporting incoming call: \(String(describing: error))")
+                if (error as NSError?)?.code == CXErrorCodeIncomingCallError.Code.filteredByDoNotDisturb.rawValue {
+                    MEGALogDebug("[CallKit] Do not disturb enabled")
+                }
+            }
+            completion(error == nil)
+        }
+    }
+    
+    func reportEndedCall(with uuid: UUID, reason: EndCallReason) {
+        MEGALogDebug("[CallKit] Report end call reason \(reason)")
+        provider.reportCall(
+            with: uuid,
+            endedAt: nil,
+            reason: CXCallEndedReason(rawValue: reason.rawValue) ?? .failed
+        )
+    }
+
+    private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
+    private let callsManager: any CallsManagerProtocol
+    let provider: CXProvider
+    let callUpdateFactory: CXCallUpdateFactory
+
     init(
         callCoordinator: some CallsCoordinatorProtocol,
-        callManager: some CallManagerProtocol,
-        cxProviderFactory: () -> CXProvider = { DefaultCXProviderFactory().build() }
+        callsManager: some CallsManagerProtocol,
+        cxProviderFactory: () -> CXProvider = { DefaultCXProviderFactory().build() },
+        callUpdateFactory: CXCallUpdateFactory
     ) {
         self.callsCoordinator = callCoordinator
-        self.callManager = callManager
+        self.callsManager = callsManager
         provider = cxProviderFactory()
+        self.callUpdateFactory = callUpdateFactory
         super.init()
         provider.setDelegate(self, queue: nil)
     }
@@ -39,7 +101,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     // MARK: - CXProviderDelegate
     func providerDidReset(_ provider: CXProvider) {
         MEGALogDebug("[CallKit] Provider did reset")
-        callManager?.removeAllCalls()
+        callsManager.removeAllCalls()
     }
     
     func providerDidBegin(_ provider: CXProvider) {
@@ -48,8 +110,8 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
         MEGALogDebug("[CallKit] Provider perform start call action")
-        guard let callsCoordinator, let callManager,
-              let callActionSync = callManager.call(forUUID: action.callUUID) else {
+        guard let callsCoordinator,
+              let callActionSync = callsManager.call(forUUID: action.callUUID) else {
             action.fail()
             return
         }
@@ -61,8 +123,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         MEGALogDebug("[CallKit] Provider perform answer call action")
-        guard let callManager,
-              callManager.call(forUUID: action.callUUID) != nil
+        guard callsManager.call(forUUID: action.callUUID) != nil
         else {
             Task { @MainActor in
                 if callsCoordinator?.incomingCallForUnknownChat != nil {
@@ -82,8 +143,8 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
         MEGALogDebug("[CallKit] Provider perform end call action")
-        guard let callsCoordinator, let callManager,
-              let callActionSync = callManager.call(forUUID: action.callUUID) else {
+        guard let callsCoordinator,
+              let callActionSync = callsManager.call(forUUID: action.callUUID) else {
             action.fail()
             return
         }
@@ -99,14 +160,14 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
         MEGALogDebug("[CallKit] Provider perform muted call action - is muted: \(action.isMuted)")
-        guard let callsCoordinator, let callManager else {
+        guard let callsCoordinator else {
             action.fail()
             return
         }
         
-        callManager.updateCall(withUUID: action.callUUID, muted: action.isMuted)
+        callsManager.updateCall(withUUID: action.callUUID, muted: action.isMuted)
         
-        guard let callActionSync = callManager.call(forUUID: action.callUUID) else {
+        guard let callActionSync = callsManager.call(forUUID: action.callUUID) else {
             action.fail()
             return
         }
@@ -144,8 +205,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     private func answerCall(forAction action: CXAnswerCallAction) {
         guard let callsCoordinator,
-              let callManager,
-              let callActionSync = callManager.call(forUUID: action.callUUID)
+              let callActionSync = callsManager.call(forUUID: action.callUUID)
         else {
             MEGALogError("[CallKit] Provider perform answer call action fail because coordinator, manager or action sync not found")
             action.fail()

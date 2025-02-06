@@ -156,7 +156,7 @@ extension MainTabBarController {
             sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
-            callManager: CallKitCallManager.shared, 
+            callController: CallControllerProvider().provideCallController(), 
             callUpdateFactory: .defaultFactory,
             featureFlagProvider: DIContainer.featureFlagProvider,
             tracker: DIContainer.tracker

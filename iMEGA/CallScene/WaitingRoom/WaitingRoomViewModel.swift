@@ -25,7 +25,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let callUpdateUseCase: any CallUpdateUseCaseProtocol
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
     private let meetingUseCase: any MeetingCreatingUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
@@ -96,7 +96,7 @@ final class WaitingRoomViewModel: ObservableObject {
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
          callUpdateUseCase: some CallUpdateUseCaseProtocol,
-         callManager: some CallManagerProtocol,
+         callController: some CallControllerProtocol,
          meetingUseCase: some MeetingCreatingUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
@@ -116,7 +116,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
         self.callUpdateUseCase = callUpdateUseCase
-        self.callManager = callManager
+        self.callController = callController
         self.meetingUseCase = meetingUseCase
         self.authUseCase = authUseCase
         self.accountUseCase = accountUseCase
@@ -194,7 +194,7 @@ final class WaitingRoomViewModel: ObservableObject {
         checkForAudioPermission { [weak self] in
             guard let self, let call else { return }
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
-            callManager.muteCall(in: chatRoom, muted: mute)
+            callController.muteCall(in: chatRoom, muted: mute)
         }
     }
     
@@ -437,7 +437,7 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private func answerCall() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
-        callManager.startCall(
+        callController.startCall(
             with: CallActionSync(
                 chatRoom: chatRoom,
                 audioEnabled: !isMicrophoneMuted,
@@ -451,7 +451,7 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private func dismissCall() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
-        callManager.endCall(in: chatRoom, endForAll: false)
+        callController.endCall(in: chatRoom, endForAll: false)
     }
     
     private func createEphemeralAccountAndJoinChat(firstName: String, lastName: String) async {
@@ -506,7 +506,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private func goToCallUI(for call: CallEntity) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
         router.openCallUI(for: call, in: chatRoom, isSpeakerEnabled: isSpeakerEnabled)
-        callManager.muteCall(in: chatRoom, muted: !isMicrophoneMuted)
+        callController.muteCall(in: chatRoom, muted: !isMicrophoneMuted)
     }
 }
 

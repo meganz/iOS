@@ -100,7 +100,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             containerViewModel: containerViewModel, 
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
-            callManager: CallKitCallManager.shared,
+            callController: CallControllerProvider().provideCallController(),
             notificationCenter: NotificationCenter.default,
             audioRouteChangeNotificationName: AVAudioSession.routeChangeNotification,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),

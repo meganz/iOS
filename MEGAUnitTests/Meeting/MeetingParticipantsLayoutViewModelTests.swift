@@ -714,13 +714,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     @MainActor func testCallUpdate_outgoingRingingStop_isOneToOneAndJustMyself_callMustBeEnded() async {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
         let expectation = expectation(description: "Call ended called expectation")
-        let callManager = MockCallManager {
+        let callController = MockCallController {
             expectation.fulfill()
         }
-        let harness = Harness(callManager: callManager, chatRoom: chatRoom)
+        let harness = Harness(callController: callController, chatRoom: chatRoom)
         harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
         await fulfillment(of: [expectation], timeout: 0.1)
-        XCTAssert(harness.callManager.endCall_CalledTimes == 1)
+        XCTAssert(harness.callController.endCall_CalledTimes == 1)
     }
     
     @MainActor func testCallUpdate_outgoingRingingStop_isOneToOneAndBothInCall_callNotMustBeEnded() async throws {
@@ -728,7 +728,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let harness = Harness(chatRoom: chatRoom)
         harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 2))
         try await Task.sleep(nanoseconds: 100_000_000)
-        XCTAssert(harness.callManager.endCall_CalledTimes == 0)
+        XCTAssert(harness.callController.endCall_CalledTimes == 0)
     }
     
     @MainActor func testCallUpdate_outgoingRingingStop_isNotOneToOne_callNotMustBeEnded() async throws {
@@ -736,7 +736,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let harness = Harness(chatRoom: chatRoom)
         harness.callUpdateUseCase.sendCallUpdate(CallEntity(changeType: .outgoingRingingStop, numberOfParticipants: 1))
         try await Task.sleep(nanoseconds: 100_000_000)
-        XCTAssert(harness.callManager.endCall_CalledTimes == 0)
+        XCTAssert(harness.callController.endCall_CalledTimes == 0)
     }
     
     @MainActor func testAction_participantAdded_downloadAvatar() {
@@ -1312,7 +1312,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     @MainActor final class Harness: Sendable {
         let callUpdateUseCase: MockCallUpdateUseCase
         let sessionUpdateUseCase: MockSessionUpdateUseCase
-        let callManager: MockCallManager
+        let callController: MockCallController
         let tracker = MockTracker()
         let sut: MeetingParticipantsLayoutViewModel
         init(
@@ -1331,7 +1331,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             callUpdateUseCase: MockCallUpdateUseCase = MockCallUpdateUseCase(),
             chatRoomUpdateUseCase: MockChatRoomUpdateUseCase = MockChatRoomUpdateUseCase(),
             sessionUpdateUseCase: MockSessionUpdateUseCase = MockSessionUpdateUseCase(),
-            callManager: MockCallManager = MockCallManager(),
+            callController: MockCallController = MockCallController(),
             featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
             call: CallEntity = CallEntity(),
@@ -1340,7 +1340,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         ) {
             self.callUpdateUseCase = callUpdateUseCase
             self.sessionUpdateUseCase = sessionUpdateUseCase
-            self.callManager = callManager
+            self.callController = callController
             self.sut = .init(
                 containerViewModel: containerViewModel ?? MeetingContainerViewModel(),
                 chatUseCase: chatUseCase,
@@ -1357,7 +1357,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
                 callUpdateUseCase: callUpdateUseCase,
                 sessionUpdateUseCase: sessionUpdateUseCase,
                 chatRoomUpdateUseCase: chatRoomUpdateUseCase,
-                callManager: callManager,
+                callController: callController,
                 featureFlagProvider: featureFlagProvider,
                 timerSequence: MockTimerSequenceFactory(),
                 chatRoom: chatRoom,

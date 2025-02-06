@@ -33,101 +33,101 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testStartCallBarButtonTapped_audioCall_showCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startCallBarButtonTapped(isVideoEnabled: false),
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor func testStartCallBarButtonTapped_audioCallNoAudioGranted_dontShowCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil),
             permissionRouter: MockPermissionAlertRouter(isAudioPermissionGranted: false),
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startCallBarButtonTapped(isVideoEnabled: false),
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 0)
+        XCTAssert(callController.startCall_CalledTimes == 0)
     }
     
     @MainActor func testStartCallBarButtonTapped_videoCall_showCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startCallBarButtonTapped(isVideoEnabled: true),
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor func testStartCallBarButtonTapped_videoCallNoVideoGranted_dontShowCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil),
             permissionRouter: MockPermissionAlertRouter(isVideoPermissionGranted: false),
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startCallBarButtonTapped(isVideoEnabled: true),
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 0)
+        XCTAssert(callController.startCall_CalledTimes == 0)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_existsOtherCallInProgres_showCallAlreadyInProgress() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(isExistingActiveCall: true, currentChatConnectionStatus: .online)
         let callUseCase = MockCallUseCase(call: CallEntity(status: .userNoPresent))
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 0)
+        XCTAssert(callController.startCall_CalledTimes == 0)
         XCTAssert(router.showCallAlreadyInProgress_calledTimes == 1)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_startCall_showCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_answerRingingCall_showCallUI() {
@@ -135,18 +135,20 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let call = CallEntity(isRinging: true)
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
-        let callManager = MockCallManager()
-        callManager.addIncomingCall(withUUID: UUID(), chatRoom: chatRoom)
+        let callController = MockCallController()
+        let callsManager = MockCallsManager()
+        callsManager.addCall(CallActionSync(chatRoom: chatRoom), withUUID: .testUUID)
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
-            callManager: callManager
+            callController: callController,
+            callsManager: callsManager
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.answerCall_CalledTimes == 1)
+        XCTAssert(callController.answerCall_CalledTimes == 1)
     }
     
     @MainActor func testReturnToCallBannerButtonTapped_showCallUI() {
@@ -191,35 +193,35 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testStartOrJoinFloatingButtonTapped_startCall_openWaitingRoom() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, router) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil),
             scheduledMeetingUseCase: MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()]),
-            callManager: callManager
+            callController: callController
         )
 
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 0)
+        XCTAssert(callController.startCall_CalledTimes == 0)
         XCTAssert(router.openWaitingRoom_calledTimes == 1)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_startCallWaitingRoomEnabledUserModerator_showCallUI() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
-            callManager: callManager
+            callController: callController
         )
 
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_joinCallInProgress_showCallUI() {
@@ -227,17 +229,17 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let call = CallEntity(status: .userNoPresent)
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_joinCallInProgressWaitingRoomEnabledUserModerator_showCallUI() {
@@ -245,32 +247,32 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let call = CallEntity(status: .userNoPresent)
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTapped_joinCallInProgressWaitingRoomEnabledUserStandard_openWaitingRoom() {
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, router) = makeChatContentViewModel(
             chatRoom: ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true),
             chatUseCase: MockChatUseCase(currentChatConnectionStatus: .online),
             callUseCase: MockCallUseCase(call: CallEntity(status: .userNoPresent)),
             scheduledMeetingUseCase: MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()]),
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 0)
+        XCTAssert(callController.startCall_CalledTimes == 0)
         XCTAssert(router.openWaitingRoom_calledTimes == 1)
     }
     
@@ -672,19 +674,19 @@ final class ChatContentViewModelTests: XCTestCase {
     @MainActor func testStartOrJoinFloatingButtonTappedTwice_startCall_startCallCalledJustOnce() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: MockCallUseCase(call: nil, callCompletion: .success(CallEntity())),
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     @MainActor func testStartOrJoinFloatingButtonTappedTwice_joinCallInProgress_startCallCalledJustOnce() {
@@ -692,19 +694,19 @@ final class ChatContentViewModelTests: XCTestCase {
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let call = CallEntity(status: .userNoPresent)
         let callUseCase = MockCallUseCase(call: call, answerCallCompletion: .success(call))
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let (sut, _) = makeChatContentViewModel(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
-            callManager: callManager
+            callController: callController
         )
         
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
         test(viewModel: sut, action: .startOrJoinFloatingButtonTapped,
              expectedCommands: [])
-        XCTAssert(callManager.startCall_CalledTimes == 1)
+        XCTAssert(callController.startCall_CalledTimes == 1)
     }
     
     // MARK: - Private
@@ -721,7 +723,8 @@ final class ChatContentViewModelTests: XCTestCase {
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
         meetingNoUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         handleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        callManager: some CallManagerProtocol = MockCallManager(),
+        callController: some CallControllerProtocol = MockCallController(),
+        callsManager: some CallsManagerProtocol = MockCallsManager(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> (ChatContentViewModel, MockChatContentRouter) {
         let router = MockChatContentRouter()
@@ -746,7 +749,8 @@ final class ChatContentViewModelTests: XCTestCase {
             analyticsEventUseCase: analyticsEventUseCase,
             meetingNoUserJoinedUseCase: meetingNoUserJoinedUseCase,
             handleUseCase: handleUseCase,
-            callManager: callManager,
+            callController: callController,
+            callsManager: callsManager,
             featureFlagProvider: featureFlagProvider
         )
         return (sut, router)

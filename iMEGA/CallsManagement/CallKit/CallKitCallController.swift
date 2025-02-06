@@ -2,7 +2,7 @@ import CallKit
 import MEGADomain
 import MEGASwift
 
-protocol CallControlling {
+protocol CallKitCallControlling {
     func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void)
     func request(_ transaction: CXTransaction) async throws
     func requestTransaction(with actions: [CXAction], completion: @escaping ((any Error)?) -> Void)
@@ -11,34 +11,52 @@ protocol CallControlling {
     func requestTransaction(with action: CXAction) async throws
 }
 
-extension CXCallController: CallControlling {}
+extension CXCallController: CallKitCallControlling {}
 
-final class CallKitCallManager {
-    static var shared = CallKitCallManager(
+final class CallKitCallController {
+    static var shared = CallKitCallController(
         callController: CXCallController(),
         uuidFactory: {
             UUID()
         },
         chatIdBase64Converter: { chatId in
             HandleConverter.chatIdHandleConverter(chatId)
-        }
+        },
+        callsManager: CallsManager.shared,
+        callKitProviderDelegateFactory: CallKitProviderDelegateProvider()
     )
-    private let callController: any CallControlling
+    
+    private let callController: any CallKitCallControlling
     private let uuidFactory: () -> UUID
     private let chatIdBase64Converter: (ChatIdEntity) -> String
-    @Atomic private var callsDictionary = [UUID: CallActionSync]()
+    private let callsManager: any CallsManagerProtocol
+    private let callKitProviderDelegateFactory: any CallKitProviderDelegateProviding
+
     init(
-        callController: any CallControlling,
+        callController: any CallKitCallControlling,
         uuidFactory: @escaping () -> UUID,
-        chatIdBase64Converter: @escaping (ChatIdEntity) -> String
+        chatIdBase64Converter: @escaping (ChatIdEntity) -> String,
+        callsManager: some CallsManagerProtocol,
+        callKitProviderDelegateFactory: some CallKitProviderDelegateProviding
     ) {
         self.callController = callController
         self.uuidFactory = uuidFactory
         self.chatIdBase64Converter = chatIdBase64Converter
+        self.callsManager = callsManager
+        self.callKitProviderDelegateFactory = callKitProviderDelegateFactory
     }
 }
 
-extension CallKitCallManager: CallManagerProtocol {
+extension CallKitCallController: CallControllerProtocol {
+    func configureCallsCoordinator(_ callsCoordinator: CallsCoordinator) {
+        callsCoordinator.setupProviderDelegate(
+            callKitProviderDelegateFactory.build(
+                callCoordinator: callsCoordinator,
+                callsManager: callsManager
+            )
+        )
+    }
+    
     func startCall(with actionSync: CallActionSync) {
         let startCallUUID = uuidFactory()
         let callKitHandle = CXHandle(type: .generic, value: chatIdBase64Converter(actionSync.chatRoom.chatId))
@@ -51,7 +69,7 @@ extension CallKitCallManager: CallManagerProtocol {
             guard let self else { return }
             if error == nil {
                 MEGALogDebug("[CallKit]: Controller Call started")
-                addCallActionSync(actionSync, withUUID: startCallUUID)
+                callsManager.addCall(actionSync, withUUID: startCallUUID)
             } else {
                 MEGALogError("[CallKit]: Controller error starting call: \(error!.localizedDescription)")
             }
@@ -71,17 +89,13 @@ extension CallKitCallManager: CallManagerProtocol {
     }
     
     func endCall(in chatRoom: ChatRoomEntity, endForAll: Bool) {
-        guard let callUUID = callUUID(forChatRoom: chatRoom) else {
+        guard let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else {
             MEGALogError("no callUUID for chatRoom \(chatRoom.chatId), expected a value")
             return
         }
         
         if endForAll {
-            var endCallSync = callsDictionary[callUUID]
-            endCallSync?.endForAll = true
-            $callsDictionary.mutate {
-                $0[callUUID] = endCallSync
-            }
+            callsManager.updateEndForAllCall(withUUID: callUUID)
         }
         
         let endCallAction = CXEndCallAction(call: callUUID)
@@ -97,7 +111,7 @@ extension CallKitCallManager: CallManagerProtocol {
     }
     
     func muteCall(in chatRoom: ChatRoomEntity, muted: Bool) {
-        guard let callUUID = callUUID(forChatRoom: chatRoom) else { return }
+        guard let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return }
 
         let muteCallAction = CXSetMutedCallAction(call: callUUID, muted: muted)
         
@@ -108,49 +122,6 @@ extension CallKitCallManager: CallManagerProtocol {
             } else {
                 MEGALogError("[CallKit]: Controller error mute/unmute call: \(error!.localizedDescription)")
             }
-        }
-    }
-    
-    func callUUID(forChatRoom chatRoom: ChatRoomEntity) -> UUID? {
-        callsDictionary.first(where: { $0.value.chatRoom == chatRoom })?.key
-    }
-    
-    func call(forUUID uuid: UUID) -> CallActionSync? {
-        return callsDictionary[uuid]
-    }
-    
-    func removeCall(withUUID uuid: UUID) {
-        $callsDictionary.mutate {
-            $0.removeValue(forKey: uuid)
-        }
-    }
-    
-    func removeAllCalls() {
-        $callsDictionary.mutate {
-            $0.removeAll()
-        }
-    }
-    
-    func addIncomingCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity) {
-        addCall(withUUID: uuid, chatRoom: chatRoom)
-    }
-    
-    func updateCall(withUUID uuid: UUID, muted: Bool) {
-        $callsDictionary.mutate {
-            $0[uuid]?.audioEnabled = !muted
-        }
-    }
-    
-    // MARK: - Private
-    private func addCall(withUUID uuid: UUID, chatRoom: ChatRoomEntity, audioEnabled: Bool = true, videoEnabled: Bool = false, notRinging: Bool = false, isJoiningActiveCall: Bool = false) {
-        $callsDictionary.mutate {
-            $0[uuid] = CallActionSync(chatRoom: chatRoom, videoEnabled: videoEnabled, notRinging: notRinging, isJoiningActiveCall: isJoiningActiveCall)
-        }
-    }
-    
-    private func addCallActionSync(_ action: CallActionSync, withUUID uuid: UUID) {
-        $callsDictionary.mutate {
-            $0[uuid] = action
         }
     }
 }

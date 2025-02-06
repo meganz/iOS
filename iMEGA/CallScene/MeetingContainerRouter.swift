@@ -107,7 +107,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             noUserJoinedUseCase: meetingNoUserJoinedUseCase,
             analyticsEventUseCase: analyticsEventUseCase,
             megaHandleUseCase: megaHandleUseCase,
-            callManager: CallKitCallManager.shared
+            callController: CallControllerProvider().provideCallController()
         )
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc

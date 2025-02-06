@@ -15,7 +15,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callUpdateUseCase: MockCallUpdateUseCase
         let tracker = MockTracker()
         let router = MockMeetingContainerRouter()
-        let callManager = MockCallManager()
+        let callController = MockCallController()
         let noUserJoinedUseCase = MockMeetingNoUserJoinedUseCase()
         
         init(
@@ -45,7 +45,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                 noUserJoinedUseCase: noUserJoinedUseCase,
                 analyticsEventUseCase: analyticsEventUseCase,
                 megaHandleUseCase: megaHandleUseCase,
-                callManager: callManager,
+                callController: callController,
                 tracker: tracker
             )
         }
@@ -72,7 +72,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             callUseCase: MockCallUseCase(call: .testCallEntity)
         )
         test(viewModel: harness.sut, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
-        XCTAssert(harness.callManager.endCall_CalledTimes == 1)
+        XCTAssert(harness.callController.endCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_backButtonTap() {
@@ -211,7 +211,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         )
         
         test(viewModel: harness.sut, action: .participantRemoved, expectedCommands: [])
-        XCTAssertTrue(harness.callManager.muteCall_CalledTimes == 1)
+        XCTAssertTrue(harness.callController.muteCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_muteMicrophoneForGroupWhenLastParticipantLeft() {
@@ -222,7 +222,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         )
         
         test(viewModel: harness.sut, action: .participantRemoved, expectedCommands: [])
-        XCTAssertTrue(harness.callManager.muteCall_CalledTimes == 1)
+        XCTAssertTrue(harness.callController.muteCall_CalledTimes == 1)
     }
     
     @MainActor func testAction_doNotMuteMicrophoneForOneToOneWhenLastParticipantLeft() {
@@ -238,7 +238,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             action: .participantRemoved,
             expectedCommands: []
         )
-        XCTAssertTrue(harness.callManager.muteCall_CalledTimes == 0)
+        XCTAssertTrue(harness.callController.muteCall_CalledTimes == 0)
     }
     
     @MainActor func testAction_endCallForAll() {
@@ -249,7 +249,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             action: .endCallForAll,
             expectedCommands: []
         )
-        XCTAssert(harness.callManager.endCall_CalledTimes == 1)
+        XCTAssert(harness.callController.endCall_CalledTimes == 1)
     }
     
     @MainActor func testHangCall_forNonGuest_shouldResetCallToUnmute() {
@@ -267,7 +267,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
             ),
             expectedCommands: []
         )
-        XCTAssertEqual(harness.callManager.muteCall_CalledTimes, 0)
+        XCTAssertEqual(harness.callController.muteCall_CalledTimes, 0)
     }
     
     @MainActor func testAction_mutedByClient_shouldShowMutedMessage() {

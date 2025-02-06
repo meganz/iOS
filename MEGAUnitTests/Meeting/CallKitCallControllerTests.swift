@@ -17,9 +17,9 @@ extension String {
     static let testChatIdBase64 = "base"
 }
 
-@Suite("CallKitCallManager")
-struct CallKitCallManagerTests {
-    class MockCallController: CallControlling {
+@Suite("CallKitCallController")
+struct CallKitCallControllerTests {
+    class MockCallKitCallController: CallKitCallControlling {
         var requestedTransactions: [CXTransaction] = []
         var errorToReturn: (any Error)?
         func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void) {
@@ -39,13 +39,16 @@ struct CallKitCallManagerTests {
         
     }
     class Harness {
-        let callController = MockCallController()
-        let sut: CallKitCallManager
+        let callController = MockCallKitCallController()
+        let callsManager = MockCallsManager()
+        let sut: CallKitCallController
         init() {
-            sut = CallKitCallManager(
+            sut = CallKitCallController(
                 callController: callController,
                 uuidFactory: { .testUUID },
-                chatIdBase64Converter: { _ in .testChatIdBase64 }
+                chatIdBase64Converter: { _ in .testChatIdBase64 },
+                callsManager: callsManager,
+                callKitProviderDelegateFactory: MockCallKitProviderDelegateFactory()
             )
         }
         
@@ -60,6 +63,7 @@ struct CallKitCallManagerTests {
             )
             return self
         }
+        
         func firstReceivedAction() -> CXAction? {
             callController.requestedTransactions.first?.actions.first
         }
@@ -84,31 +88,6 @@ struct CallKitCallManagerTests {
             #expect(startAction.handle.type == .generic)
             #expect(startAction.handle.value == "base")
         }
-        
-        @Test("Start call and read data")
-        func startCall_thenReadingCallData() throws {
-            let harness = Harness().startCall()
-            let callAction = try #require(harness.sut.call(forUUID: .testUUID))
-            #expect(callAction.chatRoom == .testEntity)
-        }
-    }
-    
-    @Suite("Remove Call")
-    struct RemoveCall {
-        
-        @Test("Removing call cleans storage")
-        func removeCall_cleansStorage() throws {
-            let harness = Harness().startCall()
-            harness.sut.removeCall(withUUID: .testUUID)
-            #expect(harness.sut.call(forUUID: .testUUID) == nil)
-        }
-        
-        @Test("Removing all calls cleans storage")
-        func removeAllCalls_cleansStorage() throws {
-            let harness = Harness().startCall()
-            harness.sut.removeAllCalls()
-            #expect(harness.sut.call(forUUID: .testUUID) == nil)
-        }
     }
     
     @Test
@@ -130,16 +109,5 @@ struct CallKitCallManagerTests {
         harness.sut.endCall(in: .testEntity, endForAll: true)
         let action = try #require(harness.lastReceivedAction() as? CXEndCallAction)
         #expect(action.callUUID == .testUUID)
-    }
-    
-    @Test
-    func updateCall_updatesStorage() throws {
-        let harness = Harness().startCall()
-        harness.sut.updateCall(withUUID: .testUUID, muted: true)
-        let callMuted = try #require(harness.sut.call(forUUID: .testUUID))
-        #expect(callMuted.audioEnabled == false)
-        harness.sut.updateCall(withUUID: .testUUID, muted: false)
-        let callUnmuted = try #require(harness.sut.call(forUUID: .testUUID))
-        #expect(callUnmuted.audioEnabled == true)
     }
 }

@@ -20,7 +20,7 @@ extension MeetingContainerViewModel {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        callManager: some CallManagerProtocol = MockCallManager(),
+        callController: some CallControllerProtocol = MockCallController(),
         tracker: some AnalyticsTracking = MockTracker(),
         isTesting: Bool = true
     ) {
@@ -37,7 +37,7 @@ extension MeetingContainerViewModel {
             noUserJoinedUseCase: noUserJoinedUseCase,
             analyticsEventUseCase: analyticsEventUseCase,
             megaHandleUseCase: megaHandleUseCase,
-            callManager: callManager,
+            callController: callController,
             tracker: tracker
         )
     }

@@ -60,7 +60,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
-    private let callManager: any CallManagerProtocol
+    private let callController: any CallControllerProtocol
 
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -98,7 +98,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         accountUseCase: some AccountUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
-        callManager: some CallManagerProtocol,
+        callController: some CallControllerProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         featureFlagProvider: some FeatureFlagProviderProtocol,
@@ -116,7 +116,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.callUseCase = callUseCase
-        self.callManager = callManager
+        self.callController = callController
         self.chatRoomUseCase = chatRoomUseCase
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
@@ -276,7 +276,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private func startCall(inChatRoom chatRoom: ChatRoomEntity) {
         dismiss { [weak self] in
             guard let self else { return }
-            callManager.startCall(
+            callController.startCall(
                 with: CallActionSync(
                     chatRoom: chatRoom,
                     audioEnabled: !self.isMicrophoneEnabled,

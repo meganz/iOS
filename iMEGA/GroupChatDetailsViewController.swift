@@ -57,8 +57,12 @@ extension GroupChatDetailsViewController {
         try? ChatRoomRepository.newRepo.openChatRoom(chatId: chatRoom.chatId, delegate: delegate)
     }
     
-    var callManager: CallKitCallManager {
-        CallKitCallManager.shared
+    var callsManager: any CallsManagerProtocol {
+        CallsManager.shared
+    }
+    
+    var callController: any CallControllerProtocol {
+        CallControllerProvider().provideCallController()
     }
     
     var callUseCase: some CallUseCaseProtocol {
@@ -82,8 +86,8 @@ extension GroupChatDetailsViewController {
             
             // when user is inside the call, we use callManager to end the call and
             // let CallKit know about this [MEET-4151]
-            if callManager.callUUID(forChatRoom: chatRoomEntity) != nil {
-                callManager.endCall(in: chatRoomEntity, endForAll: true)
+            if callsManager.callUUID(forChatRoom: chatRoomEntity) != nil {
+                callController.endCall(in: chatRoomEntity, endForAll: true)
             } else if let call = callUseCase.call(for: chatRoomEntity.chatId) {
                 // but when current user left (call manager doesn't know about the call)
                 // the call and this user is a host [only then he can see 'end for all
