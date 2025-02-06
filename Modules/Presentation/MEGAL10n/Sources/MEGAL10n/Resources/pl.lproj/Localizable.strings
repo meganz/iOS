@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Zablokowane";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Lokalne";
+"device.center.backup.offline.status.message"="Nieaktywny";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Kopia zapasowa zatrzymana";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="Brak albumów";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Maksymalna liczba tagów to 10";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="Nieznany artysta";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="Brak list odtwarzania";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Utwórz listę odtwarzania";

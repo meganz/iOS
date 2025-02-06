@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="無効になっています";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="オフライン";
+"device.center.backup.offline.status.message"="非アクティブ";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="バックアップが停止しました";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="アルバムがありません";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="タグの最大数は10個です";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="未知のアーティスト";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="プレイリストなし";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="プレイリストを作成";

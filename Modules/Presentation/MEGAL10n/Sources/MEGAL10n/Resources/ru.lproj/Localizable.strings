@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Отключено";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Не в сети";
+"device.center.backup.offline.status.message"="Неактивно";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Резервное копирование остановлено";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="Нет альбомов";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Максимум 10 меток";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="Неизвестный исполнитель";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="Нет плейлистов";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Создать плейлист";

@@ -4764,10 +4764,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تمت إضافة %d عنصر إلى ”[A]“</string>
         <key>one</key>
-        <string>Added to “[A]”</string>
+        <string>تمت الإضافة إلى ”[A]“</string>
+        <key>two</key>
+        <string>تمت إضافة %d عنصرين إلى ”[A]“</string>
+        <key>few</key>
+        <string>تمت إضافة %d عناصر إلى ”[A]“</string>
+        <key>many</key>
+        <string>تمت إضافة %d عنصراً إلى ”[A]“</string>
         <key>other</key>
-        <string>Added %d items to “[A]”</string>
+        <string>تمت إضافة %d عنصر إلى ”[A]“</string>
       </dict>
     </dict>
     <key>chat.message.forwardMessage</key>

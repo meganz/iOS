@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="已禁用";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="离线";
+"device.center.backup.offline.status.message"="非活跃";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="备份已停止";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="没有相册";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="标签的最大数量为10";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="未知艺术家";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="No playlists";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Create playlist";
