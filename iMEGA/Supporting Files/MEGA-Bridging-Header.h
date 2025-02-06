@@ -196,3 +196,4 @@
 #import "MasterKeyViewController.h"
 #import "TestPasswordViewController.h"
 #import "ChangePasswordViewController.h"
+#import "InitialLaunchViewController.h"
