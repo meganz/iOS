@@ -30,6 +30,8 @@
     
     self.setupButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.skipButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    
+    [self createViewModel];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -68,6 +70,8 @@
 #pragma mark - IBActions
 
 - (IBAction)setupButtonPressed:(UIButton *)sender {
+    [self didTapSetupButton];
+    
     OnboardingViewController *setupVC = [OnboardingViewController instantiateOnboardingWithType:OnboardingTypePermissions];
     setupVC.completion = ^{
         [self.delegate setupFinished];
@@ -82,6 +86,8 @@
 }
 
 - (IBAction)skipButtonPressed:(UIButton *)sender {
+    [self didTapSkipSetupButton];
+    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"attention", @"Alert title to attract attention") message:LocalizedString(@"The MEGA app may not work as expected without the required permissions. Are you sure?", @"Message warning the user about the risk of not setting up permissions") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.delegate setupFinished];

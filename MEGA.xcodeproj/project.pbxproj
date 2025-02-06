@@ -1266,6 +1266,9 @@
 		941255522BED03C700058C0D /* CallKitCallControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941255512BED03C700058C0D /* CallKitCallControllerTests.swift */; };
 		9412FF322D14B5630059DB1E /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A01BA7289A5E9200B503FD /* FileManager+Additions.swift */; };
 		9412FF332D14B8D10059DB1E /* FolderContentStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A01BA6289A5E9200B503FD /* FolderContentStat.swift */; };
+		94162AEE2D54EC9F004153B4 /* InitialLaunchViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94162AEC2D54EC9F004153B4 /* InitialLaunchViewController+Additions.swift */; };
+		94162AF52D54F637004153B4 /* InitialLaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94162AE92D54E92F004153B4 /* InitialLaunchViewModel.swift */; };
+		94162AF82D54F7E2004153B4 /* InitialLaunchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94162AF72D54F7E2004153B4 /* InitialLaunchViewModelTests.swift */; };
 		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
 		941A019A2CB44F250057C99D /* DeepLinkingTestsSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941A01992CB44F250057C99D /* DeepLinkingTestsSuite.swift */; };
@@ -3986,6 +3989,9 @@
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		940F41362A9ED39200C2543F /* MEGAIntentDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAIntentDomain; sourceTree = "<group>"; };
 		941255512BED03C700058C0D /* CallKitCallControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitCallControllerTests.swift; sourceTree = "<group>"; };
+		94162AE92D54E92F004153B4 /* InitialLaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLaunchViewModel.swift; sourceTree = "<group>"; };
+		94162AEC2D54EC9F004153B4 /* InitialLaunchViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InitialLaunchViewController+Additions.swift"; sourceTree = "<group>"; };
+		94162AF72D54F7E2004153B4 /* InitialLaunchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLaunchViewModelTests.swift; sourceTree = "<group>"; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		941A01992CB44F250057C99D /* DeepLinkingTestsSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingTestsSuite.swift; sourceTree = "<group>"; };
@@ -9979,6 +9985,14 @@
 			path = AudioSession;
 			sourceTree = "<group>";
 		};
+		94162AEA2D54E951004153B4 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				94162AE92D54E92F004153B4 /* InitialLaunchViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
@@ -11634,6 +11648,7 @@
 			isa = PBXGroup;
 			children = (
 				B6AF22DE26097F500008FF72 /* DiskFullBlockingViewModelTests.swift */,
+				94162AF72D54F7E2004153B4 /* InitialLaunchViewModelTests.swift */,
 			);
 			path = Launching;
 			sourceTree = "<group>";
@@ -13213,6 +13228,8 @@
 			isa = PBXGroup;
 			children = (
 				B6DFECDA2607D97B00B0829B /* Disk Full Blocking Scene */,
+				94162AEA2D54E951004153B4 /* ViewModels */,
+				94162AEC2D54EC9F004153B4 /* InitialLaunchViewController+Additions.swift */,
 				77B3AE0D215D0588008E889A /* InitialLaunchViewController.h */,
 				77B3AE0E215D0588008E889A /* InitialLaunchViewController.m */,
 				E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */,
@@ -14809,7 +14826,9 @@
 				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				83E10DB52C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift in Sources */,
+				94162AEE2D54EC9F004153B4 /* InitialLaunchViewController+Additions.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
+				94162AF52D54F637004153B4 /* InitialLaunchViewModel.swift in Sources */,
 				C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
@@ -16232,6 +16251,7 @@
 				94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */,
 				943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
+				94162AF82D54F7E2004153B4 /* InitialLaunchViewModelTests.swift in Sources */,
 				25CF5EC82BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* LegacyFileVersioningViewModelTests.swift in Sources */,
 				B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */,
