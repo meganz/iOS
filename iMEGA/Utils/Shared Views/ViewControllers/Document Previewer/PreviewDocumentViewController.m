@@ -38,7 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic) QLPreviewController *previewController;
+@property (nonatomic) MEGAQLPreviewController *previewController;
 @property (nonatomic) NSString *nodeFilePath;
 @property (nonatomic, nullable) NSString * textContent;
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
@@ -186,7 +186,7 @@
     self.activityIndicator.hidden = YES;
     self.progressView.hidden = YES;
     self.imageView.hidden = YES;
-    self.previewController = [[QLPreviewController alloc] init];
+    self.previewController = [[MEGAQLPreviewController alloc] init];
     self.previewController.delegate = self;
     self.previewController.dataSource = self;
     self.previewController.view.frame = self.view.bounds;
@@ -211,6 +211,7 @@
 
 - (void)loadTextView {
     UITextView *textView = [self setupTextView];
+    textView.backgroundColor = UIColor.pageBackgroundColor;
     textView.text = self.textContent;
 }
 
@@ -254,8 +255,6 @@
 
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.pageBackgroundColor;
-    
-    [self.openZipButton mnz_setupBasic:self.traitCollection titleColor:NULL];
 }
 
 - (void)createOpenZipButton {

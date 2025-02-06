@@ -96,15 +96,15 @@ extension UIButton {
         removeLayer()
     }
     
-    // MARK: - Private
-    
-    private func setupLayer() {
+    func setupLayer() {
         layer.cornerRadius = 8
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 3
         layer.shadowColor = UIColor.black000000.cgColor
     }
+    
+    // MARK: - Private
     
     private func removeLayer() {
         layer.cornerRadius = 0

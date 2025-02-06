@@ -1,5 +1,6 @@
 #import "MEGAQLPreviewController.h"
 #import "MEGALinkManager.h"
+#import "MEGA-Swift.h"
 
 @interface MEGAQLPreviewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource>
 
@@ -37,6 +38,11 @@
     }
     
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.view.backgroundColor = UIColor.pageBackgroundColor;
 }
 
 #pragma mark - QLPreviewControllerDataSource
