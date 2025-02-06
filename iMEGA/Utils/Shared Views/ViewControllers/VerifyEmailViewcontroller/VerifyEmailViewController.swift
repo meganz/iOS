@@ -3,7 +3,7 @@ import MEGAL10n
 import MEGASDKRepo
 import UIKit
 
-class VerifyEmailViewController: UIViewController {
+final class VerifyEmailViewController: UIViewController {
 
     @IBOutlet weak var warningGradientView: UIView!
 
@@ -32,8 +32,6 @@ class VerifyEmailViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        updateAppearance()
-        
         if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
             localizeLabels()
             boldenText()
@@ -47,25 +45,28 @@ class VerifyEmailViewController: UIViewController {
 
     // MARK: Private
 
-    func configureUI() {
+    private func configureUI() {
         localizeLabels()
         boldenText()
         updateAppearance()
     }
     
-    func updateAppearance() {
+    private func updateAppearance() {
         view.backgroundColor = TokenColors.Background.page
-        resendButton.mnz_setupBasic(traitCollection)
+        resendButton.backgroundColor = TokenColors.Button.primary
+        resendButton.setTitleColor(TokenColors.Text.inverse, for: UIControl.State.normal)
+        logoutButton.backgroundColor = TokenColors.Button.secondary
+        logoutButton.setTitleColor(TokenColors.Text.accent, for: UIControl.State.normal)
 
         topSeparatorView.backgroundColor = TokenColors.Border.strong
         hintButton.setTitleColor(TokenColors.Support.success, for: .normal)
-        hintButton.backgroundColor = .mnz_tertiaryBackgroundElevated(traitCollection)
+        hintButton.backgroundColor = TokenColors.Background.surface3
         bottomSeparatorView.backgroundColor = TokenColors.Border.strong
         
         hintLabel.textColor = TokenColors.Text.secondary
     }
 
-    func addGradientBackground() {
+    private func addGradientBackground() {
         let gradient = CAGradientLayer()
         gradient.frame = warningGradientView.bounds
         gradient.colors = [UIColor.verifyEmailFirstGradient.cgColor,
@@ -77,7 +78,7 @@ class VerifyEmailViewController: UIViewController {
         warningGradientView.layer.addSublayer(gradient)
     }
 
-    func boldenText() {
+    private func boldenText() {
         guard let bottomString = bottomDescriptionLabel.text?.replacingOccurrences(of: "[S]", with: "") else { return }
 
         let bottomStringComponents = bottomString.components(separatedBy: "[/S]")
@@ -101,7 +102,7 @@ class VerifyEmailViewController: UIViewController {
         present(customModal, animated: true, completion: nil)
     }
 
-    func localizeLabels() {
+    private func localizeLabels() {
         topDescriptionLabel.text = Strings.Localizable.yourAccountHasBeenTemporarilySuspendedForYourSafety
         bottomDescriptionLabel.text = Strings.Localizable.sPleaseVerifyYourEmailSAndFollowItsStepsToUnlockYourAccount
         resendButton.setTitle(Strings.Localizable.resend, for: .normal)
@@ -110,7 +111,7 @@ class VerifyEmailViewController: UIViewController {
         hintLabel.text = Strings.Localizable.emailSent
     }
 
-    @objc func checkIfBlocked() {
+    @objc private func checkIfBlocked() {
         let whyAmIBlockedRequestDelegate = RequestDelegate { result in
             guard case let .success(request) = result, request.number == 0 else {
                 return
