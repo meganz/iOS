@@ -57,21 +57,6 @@ extension UIColor {
         }
     }
     
-    @objc class func mnz_tertiaryBackgroundElevated(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.whiteFFFFFF
-            
-        case .dark:
-            return UIColor.gray3A3A3C
-            
-        @unknown default:
-            return UIColor.whiteFFFFFF
-        }
-    }
-    
     // MARK: - Background Colors
     
     @objc class func surface1Background() -> UIColor {
