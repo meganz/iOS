@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Disabled";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Offline";
+"device.center.backup.offline.status.message"="Inactive";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Backup stopped";
 /* Device Center backup paused status */

@@ -845,7 +845,7 @@
 /* Confirmation message displayed after clearing offline files */
 "settings.fileManagement.clearOfflineFiles.done.message"="Archivos sin conexión eliminados";
 /* File versioning menu subTitle */
-"settings.fileManagement.fileVersioning.menu.subtitle"="Store multiple versions of your files. Disabling this setting does not stop your contacts from adding new versions in shared folders.";
+"settings.fileManagement.fileVersioning.menu.subtitle"="Almacena varias versiones de tus archivos. Aunque desactives esta opción, tus contactos podrán añadir nuevas versiones en las carpetas compartidas.";
 /* File versioning button title to delete all older version of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Eliminar las versiones anteriores de los archivos";
 /* File versioning alert title for deleting older versions of files */
@@ -857,7 +857,7 @@
 /* File versioning alert title for disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="¿Desactivar el control de versiones?";
 /* File versioning alert message for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, updating a file will completely replace it.";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="Cuando el control de versiones está desactivado, la versión actual se reemplazará una vez que se actualice el archivo.";
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Desactivar";
 /* File versioning footer message */
@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Desactivado";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Sin conexión";
+"device.center.backup.offline.status.message"="Inactivo";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Backup detenido";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="No hay álbumes";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="El número máximo de etiquetas es 10";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="Artista desconocido";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="No hay listas de reproducción";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Crear lista de reproducción";

@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Uitgeschakeld";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Offline";
+"device.center.backup.offline.status.message"="Inactief";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Back-up gestopt";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="Geen albums";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Het maximum aantal tags is 10";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="Onbekende artiest";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="No playlists";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Create playlist";

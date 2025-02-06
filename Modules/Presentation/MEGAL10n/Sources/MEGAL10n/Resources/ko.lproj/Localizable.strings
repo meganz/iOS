@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="해제됨";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="오프라인";
+"device.center.backup.offline.status.message"="Inactive";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="백업 정지됨";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="사진첩 없음";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="최대 태그 수는 10개입니다";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="Unknown Artist";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="No playlists";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Create playlist";

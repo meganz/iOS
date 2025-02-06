@@ -845,7 +845,7 @@
 /* Confirmation message displayed after clearing offline files */
 "settings.fileManagement.clearOfflineFiles.done.message"="تم مسح الملفات في دون اتصال بالانترنت";
 /* File versioning menu subTitle */
-"settings.fileManagement.fileVersioning.menu.subtitle"="Store multiple versions of your files. Disabling this setting does not stop your contacts from adding new versions in shared folders.";
+"settings.fileManagement.fileVersioning.menu.subtitle"="قم بتخزين نسخ متعددة من ملفاتك. لا يؤدي تعطيل هذا الإعداد إلى إيقاف جهات الاتصال الخاصة بك من إضافة نسخ جديدة في المجلدات المشاركة.";
 /* File versioning button title to delete all older version of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.button"="احذف جميع النسخ القديمة من الملفات";
 /* File versioning alert title for deleting older versions of files */
@@ -857,7 +857,7 @@
 /* File versioning alert title for disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="تعطيل نَسخْ الملف؟";
 /* File versioning alert message for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, updating a file will completely replace it.";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="عند تعطيل نسخ الملف سيؤدي تحديث الملف إلى استبداله تمامًا.";
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="تعطيل";
 /* File versioning footer message */
@@ -1761,7 +1761,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="يمكن افراغ سلة المحذوفات بشكل تلقائي. المدة الادنى هي 7 أيام.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable automatic Rubbish bin emptying or set a longer retention period, you need to subscribe to one of our plans.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="لتعطيل التفريغ التلقائي لسلة المحذوفات أو تعيين فترة احتفاظ أطول تحتاج إلى الاشتراك في إحدى باقاتنا.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="هل تريد انهاء كل الجلسات الفعالة حاليا؟ ذلك سيسجل الخروج من كل هذه الجلسات الفعالة باستثناء الحالية.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -3427,7 +3427,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="تعطيل";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="غير متصل بالانترنت";
+"device.center.backup.offline.status.message"="Inactive";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="توقف النسخ الاحتياطي";
 /* Device Center backup paused status */
@@ -4512,3 +4512,9 @@
 "photos.addToAlbum.empty.message"="لا يوجد ألبومات";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="الحد الأقصى لعدد للتاغات هو 10";
+/* Artist name to display if meta data for artist could not be found */
+"media.audio.metadata.missing.artist"="Unknown Artist";
+/* Add to playlist empty message */
+"photos.addToPlaylist.empty.message"="No playlists";
+/* Add to playlist empty create button title */
+"photos.addToPlaylist.empty.create.button.title"="Create playlist";
