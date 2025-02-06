@@ -29,4 +29,5 @@ protocol ChatRoomsListRouting {
     func showErrorMessage(_ message: String)
     func showSuccessMessage(_ message: String)
     func edit(scheduledMeeting: ScheduledMeetingEntity)
+    func hideAds()
 }

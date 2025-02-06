@@ -769,6 +769,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var showErrorMessage_calledTimes = 0
     var showSuccessMessage_calledTimes = 0
     var editMeeting_calledTimes = 0
+    private(set) var hideAds_calledTimes = 0
     
     var showArchivedChatRoomsCompletion: (() -> Void)?
     
@@ -859,5 +860,9 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     
     func edit(scheduledMeeting: ScheduledMeetingEntity) {
         editMeeting_calledTimes += 1
+    }
+    
+    func hideAds() {
+        hideAds_calledTimes += 1
     }
 }
