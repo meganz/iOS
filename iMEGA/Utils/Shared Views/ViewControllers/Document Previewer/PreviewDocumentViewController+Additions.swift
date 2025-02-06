@@ -1,4 +1,5 @@
 import MEGAAnalyticsiOS
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -67,7 +68,11 @@ extension PreviewDocumentViewController {
         
         openZipButton.translatesAutoresizingMaskIntoConstraints = false
         openZipButton.setTitle(Strings.Localizable.openButton, for: .normal)
-        openZipButton.mnz_setupBasic(traitCollection)
+        openZipButton.backgroundColor = TokenColors.Button.primary
+        openZipButton.setTitleColor(TokenColors.Text.inverse, for: UIControl.State.normal)
+        openZipButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        
+        openZipButton.setupLayer()
         
         view.addSubview(openZipButton)
         
