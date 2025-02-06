@@ -11,6 +11,7 @@ import MEGAUI
 final class ChatRoomViewModel: ObservableObject, Identifiable {
     let chatListItem: ChatListItemEntity
     private let router: any ChatRoomsListRouting
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
@@ -69,7 +70,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         chatListItemDescription: ChatListItemDescriptionEntity? = nil,
         chatListItemAvatar: ChatListItemAvatarEntity? = nil,
-        callInProgressTimeReporter: some CallInProgressTimeReporting = CallInProgressTimeReporter()
+        callInProgressTimeReporter: some CallInProgressTimeReporting = CallInProgressTimeReporter(),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.chatListItem = chatListItem
         self.router = router
@@ -89,6 +91,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         self.shouldShowUnreadCount = chatListItem.unreadCount != 0
         self.callInProgressTimeReporter = callInProgressTimeReporter
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         
         if chatListItem.unreadCount > 0 {
             self.unreadCountString = chatListItem.unreadCount > 99 ? "99+" : "\(chatListItem.unreadCount)"
@@ -179,7 +182,18 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     func showDetails() {
-        router.showDetails(forChatId: chatListItem.chatId)
+        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) {
+            // Adds a slight delay when navigating to Chat or Meeting details to ensure ads are fully hidden.
+            // This prevents ads from briefly appearing in the details view before disappearing.
+            Task { [weak self] in
+                guard let self else { return }
+                router.hideAds()
+                try await Task.sleep(nanoseconds: 500_000)
+                router.showDetails(forChatId: chatListItem.chatId)
+            }
+        } else {
+            router.showDetails(forChatId: chatListItem.chatId)
+        }
     }
     
     func presentMoreOptionsForChat() {

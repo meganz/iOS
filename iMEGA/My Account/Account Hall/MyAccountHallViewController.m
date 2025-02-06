@@ -50,7 +50,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    
+    [self hideAds];
+    
     [self dispatchOnViewAppearAction];
     
     [self loadContent];

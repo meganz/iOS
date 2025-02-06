@@ -285,4 +285,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             shareLinkRouter: ShareLinkDialogRouter(presenter: navigationController)
         ).start()
     }
+    
+    func hideAds() {
+        tabBarController?.hideAds()
+    }
 }

@@ -1,11 +1,28 @@
 import Accounts
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 
 extension MainTabBarController: AdsSlotViewControllerProtocol {
     public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
         mainTabBarAdsViewModel.adsSlotConfigAsyncSequence
+    }
+    
+    func hideAds() {
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) else { return }
+        let adsSlot: [Int: AdsSlotEntity] = [
+            TabType.cloudDrive.rawValue: .files,
+            TabType.cameraUploads.rawValue: .photos,
+            TabType.home.rawValue: .home,
+            TabType.chat.rawValue: .chat,
+            TabType.sharedItems.rawValue: .sharedItems
+        ]
+        
+        guard let currentAdsSlot = adsSlot[selectedIndex] else { return }
+        mainTabBarAdsViewModel.sendNewAdsConfig(
+            AdsSlotConfig(adsSlot: currentAdsSlot, displayAds: false)
+        )
     }
     
     @objc func configureAdsVisibility() {

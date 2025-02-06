@@ -154,4 +154,10 @@ extension MyAccountHallViewController {
         let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfileView))
         profileView?.gestureRecognizers = [profileTapGesture]
     }
+    
+    // MARK: - Ads
+    @objc func hideAds() {
+        guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
+        mainTabBar.hideAds()
+    }
 }

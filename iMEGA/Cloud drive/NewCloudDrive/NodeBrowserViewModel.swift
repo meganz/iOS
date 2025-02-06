@@ -287,7 +287,7 @@ class NodeBrowserViewModel: ObservableObject {
     func onViewAppear() {
         trackScreenViewEvent()
         encourageUpgradeIfNeeded()
-        configureAdsVisibility()
+        configureAdsVisibility(withDelay: true)
         configureTransferWidgetVisibility()
         updateSortOrderIfNeeded()
         nodeSourceUpdatesListener.startListening()
@@ -333,8 +333,19 @@ class NodeBrowserViewModel: ObservableObject {
         upgradeEncouragementViewModel?.encourageUpgradeIfNeeded()
     }
     
-    private func configureAdsVisibility() {
-        adsVisibilityViewModel?.configureAdsVisibility()
+    /// Configures ad visibility, optionally with a delay.
+    ///
+    /// A delay is used when called in `onViewAppear` to ensure the view is fully displayed
+    /// and the navigation bar animation is complete. Since SwiftUI lacks a direct equivalent
+    /// to `viewDidAppear`, this delay helps prevent ads from appearing too soon
+    /// and causing unexpected tabbar icon flickering.
+    private func configureAdsVisibility(withDelay: Bool = false) {
+        Task {
+            if withDelay {
+                try await Task.sleep(nanoseconds: 500_000_000)
+            }
+            adsVisibilityViewModel?.configureAdsVisibility()
+        }
     }
     
     private func configureTransferWidgetVisibility() {

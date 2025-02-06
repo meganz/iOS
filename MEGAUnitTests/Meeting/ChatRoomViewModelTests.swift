@@ -117,6 +117,35 @@ final class ChatRoomViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.unreadCountString, "99+")
     }
+    
+    @MainActor
+    func testHideAds_whenAdsIsEnabledAndShowDetailsIsCalled_shouldCallHideAds() async throws {
+        try await assertHideAds(isAdsEnabled: true, expectedCallTimes: 1)
+    }
+    
+    @MainActor
+    func testHideAds_whenAdsIsDisabledAndShowDetailsIsCalled_shouldNotCallHideAds() async throws {
+        try await assertHideAds(isAdsEnabled: false, expectedCallTimes: 0)
+    }
+    
+    @MainActor
+    private func assertHideAds(
+        isAdsEnabled: Bool,
+        expectedCallTimes: Int,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) async throws {
+        let router = MockChatRoomsListRouter()
+        let sut = ChatRoomViewModelFactory.make(
+            router: router,
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isAdsEnabled])
+        )
+        
+        sut.showDetails()
+        
+        try await Task.sleep(nanoseconds: 500_000)
+        XCTAssertTrue(router.hideAds_calledTimes == expectedCallTimes, "Hide Ads is called \(router.hideAds_calledTimes) times when it should be \(expectedCallTimes)", file: file, line: line)
+    }
 }
 
 class ChatRoomViewModelFactory {
@@ -138,7 +167,8 @@ class ChatRoomViewModelFactory {
         permissionRouter: MockPermissionAlertRouter? = nil,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         chatListItemDescription: ChatListItemDescriptionEntity? = nil,
-        chatListItemAvatar: ChatListItemAvatarEntity? = nil
+        chatListItemAvatar: ChatListItemAvatarEntity? = nil,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
     ) -> ChatRoomViewModel {
         let _permissionRouter = if let permissionRouter {
             permissionRouter
@@ -162,7 +192,8 @@ class ChatRoomViewModelFactory {
             permissionRouter: _permissionRouter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             chatListItemDescription: chatListItemDescription,
-            chatListItemAvatar: chatListItemAvatar
+            chatListItemAvatar: chatListItemAvatar,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
         )
     }
 }

@@ -166,7 +166,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     }
     
     func start() {
-        navigationController?.pushViewController(build(), animated: true)
+        navigationController?.pushViewController(build(), animated: false)
     }
     
     func navigateToDeviceCenter(
