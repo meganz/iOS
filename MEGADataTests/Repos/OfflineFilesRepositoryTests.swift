@@ -77,17 +77,45 @@ struct OfflineFilesRepositoryTestSuite {
         }
     }
     
+    @Suite("OfflineFilesRepository offlineSize Tests")
+    struct OfflineSizeTests {
+        @Test("When offlineURL is nil, should return 0")
+        func whenOfflineURLIsNil_shouldReturnZero() throws {
+            let (sut, _) = makeSUT(offlineURL: nil)
+            
+            #expect(sut.offlineSize() == 0)
+        }
+        
+        @Test("When offlineURL is valid, should return calculated folder size")
+        func whenOfflineURLIsValid_shouldReturnCalculatedSize() throws {
+            let expectedSize: UInt64 = 1024
+            let (sut, _) = makeSUT(folderSize: expectedSize)
+            
+            #expect(sut.offlineSize() == expectedSize)
+        }
+        
+        @Test("When folder size calculator returns 0, should return 0")
+        func whenFolderSizeIsZero_shouldReturnZero() throws {
+            let expectedSize: UInt64 = 0
+            
+            let (sut, _) = makeSUT(folderSize: expectedSize)
+            
+            #expect(sut.offlineSize() == expectedSize)
+        }
+    }
+    
     private static func makeSUT(
         sdk: MockSdk = MockSdk(),
         fileManager: FileManager = MockFileManager(),
-        offlineURL: URL? = testOfflineURL
+        offlineURL: URL? = testOfflineURL,
+        folderSize: UInt64 = 0
     ) -> (OfflineFilesRepository, MockMEGAStore) {
         let store = MockMEGAStore()
         let sut = OfflineFilesRepository(
             store: store,
             offlineURL: offlineURL,
             sdk: sdk,
-            folderSizeCalculator: MockFolderSizeCalculator()
+            folderSizeCalculator: MockFolderSizeCalculator(folderSize: folderSize)
         )
         return (sut, store)
     }

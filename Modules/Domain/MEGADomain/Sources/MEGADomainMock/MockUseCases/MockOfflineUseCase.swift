@@ -4,7 +4,7 @@ import MEGASwift
 
 public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendable {
     private let _relativePathToDocumentsDirectory: String
-    private let offlinesize: UInt64
+    private var _offlineSize: UInt64
     
     private(set) var removeItem_calledTimes = 0
     private(set) var removeAllOfflineFiles_calledTimes = 0
@@ -17,12 +17,12 @@ public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendab
         relativePathToDocumentsDirectory: String = "",
         stubbedRelativePath: String = "",
         stubbedError: Error? = nil,
-        offlinesize: UInt64 = 0
+        offlineSize: UInt64 = 0
     ) {
         _relativePathToDocumentsDirectory = relativePathToDocumentsDirectory
         self.stubbedRelativePath = stubbedRelativePath
         self.stubbedError = stubbedError
-        self.offlinesize = offlinesize
+        _offlineSize = offlineSize
     }
     
     public func relativePathToDocumentsDirectory(for url: URL) -> String {
@@ -37,14 +37,16 @@ public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendab
     }
     
     public func removeAllOfflineFiles() async {
+        _offlineSize = 0
         removeAllOfflineFiles_calledTimes += 1
     }
     
     public func removeAllStoredFiles() {
+        _offlineSize = 0
         removeAllStoredFiles_calledTimes += 1
     }
     
     public func offlineSize() -> UInt64 {
-        offlinesize
+        _offlineSize
     }
 }

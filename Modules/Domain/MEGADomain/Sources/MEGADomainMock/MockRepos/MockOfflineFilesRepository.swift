@@ -6,15 +6,18 @@ public final class MockOfflineFilesRepository: OfflineFilesRepositoryProtocol, @
     
     private let offlineFileEntities: [OfflineFileEntity]
     private let offlineFileEntity: OfflineFileEntity?
+    private let _offlineSize: UInt64
     
     public var removeAllOfflineNodesCalledTimes = 0
     
     public init(
         offlineFileEntities: [OfflineFileEntity] = [],
-        offlineFileEntity: OfflineFileEntity? = nil
+        offlineFileEntity: OfflineFileEntity? = nil,
+        offlineSize: UInt64 = 0
     ) {
         self.offlineFileEntities = offlineFileEntities
         self.offlineFileEntity = offlineFileEntity
+        _offlineSize = offlineSize
     }
     
     public var offlineURL: URL? = URL(fileURLWithPath: "Documents")
@@ -34,6 +37,6 @@ public final class MockOfflineFilesRepository: OfflineFilesRepositoryProtocol, @
     }
     
     public func offlineSize() -> UInt64 {
-        0
+        _offlineSize
     }
 }
