@@ -69,7 +69,10 @@ extension NodeTableViewCell {
             thumbnailPlayImageView?.isHidden = true
         }
 
-        configureNameAndSubtitle(for: node, searchText: searchText)
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+        ? searchText : nil
+        
+        configureNameAndSubtitle(for: node, searchText: keyword)
 
         configureInfoLabelAndVersionImageView(for: node, api: api)
 
