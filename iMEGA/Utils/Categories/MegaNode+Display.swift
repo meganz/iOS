@@ -22,7 +22,7 @@ extension MEGANode {
         let takedownImageAttachment = NSTextAttachment()
         let takeDownImage = UIImage(named: "isTakedown")
         
-        takedownImageAttachment.image = takeDownImage?.withTintColorAsOriginal(.mnz_takenDownNodeIconColor())
+        takedownImageAttachment.image = takeDownImage?.withTintColorAsOriginal(TokenColors.Support.error)
         let takedownImageString = NSAttributedString(attachment: takedownImageAttachment)
         
         name.append(takedownImageString)
