@@ -73,8 +73,21 @@ extension SharedItemsViewController {
         
         cell.delegate = self
         cell.thumbnailImageView.image = UIImage.mnz_incomingFolder()
-        cell.nameLabel.textColor = UIColor.mnz_red()
-        cell.nameLabel.text = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+
+        let nameTextColor = UIColor.mnz_red()
+        let displayName = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+        ? searchController.searchBar.text: nil
+
+        cell.nameLabel.attributedText =
+        displayName?.highlightedStringWithSearchText(
+            keyword,
+            primaryTextColor: nameTextColor,
+            highlightedTextColor: TokenColors.Notifications.notificationSuccess
+        )
+
+        cell.nameLabel.textColor = nameTextColor
         cell.nodeHandle = node.handle
         cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
@@ -94,11 +107,21 @@ extension SharedItemsViewController {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "sharedItemsTableViewCell", for: indexPath) as? SharedItemsTableViewCell else {
             return SharedItemsTableViewCell(style: .default, reuseIdentifier: "sharedItemsTableViewCell")
         }
-        
+
+        let nameTextColor = UIColor.mnz_red()
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+        ? searchController.searchBar.text : nil
+
+        cell.nameLabel.attributedText = node.name?.highlightedStringWithSearchText(
+            keyword,
+            primaryTextColor: nameTextColor,
+            highlightedTextColor: TokenColors.Notifications.notificationSuccess
+        )
+
+        cell.nameLabel.textColor = nameTextColor
         cell.delegate = self
         cell.thumbnailImageView.image = UIImage.mnz_outgoingFolder()
         cell.nodeHandle = node.handle
-        cell.nameLabel.text = node.name
         cell.nameLabel.textColor = UIColor.mnz_red()
         cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
@@ -124,8 +147,11 @@ extension SharedItemsViewController {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
         }
-        
-        cell.configureCell(for: node, searchText: searchController.searchBar.text, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
+
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+                ? searchController.searchBar.text : nil
+
+        cell.configureCell(for: node, searchText: keyword, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
 
         cell.moreButtonAction = { [weak self] moreButton in
             guard let moreButton else { return }

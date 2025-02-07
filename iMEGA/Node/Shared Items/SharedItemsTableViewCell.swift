@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAPresentation
 import UIKit
 
 @objc protocol SharedItemsTableViewCellDelegate {
@@ -56,13 +57,16 @@ final class SharedItemsTableViewCell: UITableViewCell {
     @objc func setNodeDescription(_ desc: String?) {
         descriptionLabel?.text = desc
     }
-    
+
     @objc func configureNode(_ name: String, searchText: String?, isTakenDown: Bool) {
         let textColor = isTakenDown ? TokenColors.Text.error : TokenColors.Text.primary
         let takeDownImage: UIImage? = isTakenDown ? UIImage.isTakedown.withTintColorAsOriginal(TokenColors.Support.error) : nil
 
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+                ? searchText : nil
+
         nameLabel.attributedText = name.highlightedStringWithSearchText(
-            searchText,
+            keyword,
             primaryTextColor: textColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
         )
