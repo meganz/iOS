@@ -77,8 +77,12 @@ extension SharedItemsViewController {
         let nameTextColor = UIColor.mnz_red()
         let displayName = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
 
-        cell.nameLabel.attributedText = displayName?.highlightedStringWithKeyword(
-            searchText,
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+        ? searchText : nil
+
+        cell.nameLabel.attributedText =
+        displayName?.highlightedStringWithKeyword(
+            keyword,
             primaryTextColor: nameTextColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
         )
@@ -107,9 +111,11 @@ extension SharedItemsViewController {
         }
 
         let nameTextColor = UIColor.mnz_red()
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+        ? searchText : nil
 
         cell.nameLabel.attributedText = node.name?.highlightedStringWithKeyword(
-            searchText,
+            keyword,
             primaryTextColor: nameTextColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
         )
@@ -145,8 +151,11 @@ extension SharedItemsViewController {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
         }
-        
-        cell.configureCell(for: node, searchText: searchController.searchBar.text, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
+
+        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+                ? searchController.searchBar.text : nil
+
+        cell.configureCell(for: node, searchText: keyword, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
 
         cell.moreButtonAction = { [weak self] moreButton in
             guard let moreButton else { return }
