@@ -40,23 +40,6 @@ extension UIColor {
         }
     }
     
-    // MARK: Background elevated
-    
-    @objc class func mnz_secondaryBackgroundElevated(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.whiteF7F7F7
-            
-        case .dark:
-            return UIColor.black2C2C2E
-            
-        @unknown default:
-            return UIColor.whiteF7F7F7
-        }
-    }
-    
     // MARK: - Background Colors
     
     @objc class func surface1Background() -> UIColor {
@@ -84,22 +67,6 @@ extension UIColor {
         }
     }
     
-    @objc class func mnz_chatLoadingBubble(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.black00000060
-        case .dark:
-            return UIColor.whiteFFFFFF.withAlphaComponent(
-                0.15
-            )
-            
-        @unknown default:
-            return UIColor.black00000060
-        }
-    }
-    
     @objc class func mnz_chatRichLinkContentBubble(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
@@ -110,34 +77,6 @@ extension UIColor {
             return  UIColor.black1C1C1E
         @unknown default:
             return UIColor.whiteFFFFFF
-        }
-    }
-    
-    @objc class func mnz_reactionBubbleBackgroundColor(
-        _ traitCollection: UITraitCollection,
-        selected: Bool
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            if selected {
-                return UIColor.chatReactionBubbleSelectedLight
-            } else {
-                return TokenColors.Background.page
-            }
-            
-        case .dark:
-            if selected {
-                return UIColor.chatReactionBubbleSelectedDark
-            } else {
-                return TokenColors.Background.page
-            }
-            
-        @unknown default:
-            if selected {
-                return UIColor.chatReactionBubbleSelectedLight
-            } else {
-                return UIColor.chatReactionBubbleSelectedDark
-            }
         }
     }
     
@@ -159,54 +98,7 @@ extension UIColor {
         }
     }
     
-    @objc(
-        mnz_notificationSeenBackgroundForTraitCollection:
-    )
-    class func mnz_notificationSeenBackground(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.whiteFAFAFA
-            
-        case .dark:
-            return UIColor.black1C1C1E
-            
-        @unknown default:
-            return UIColor.whiteFFFFFF
-        }
-    }
-    
     // MARK: - Objects
-    
-    @objc class func mnz_chatIncomingBubble(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.whiteEEEEEE
-        case .dark:
-            return UIColor.black2C2C2E
-            
-        @unknown default:
-            return UIColor.whiteEEEEEE
-        }
-    }
-    
-    @objc class func mnz_chatOutgoingBubble(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.green009476
-            
-        case .dark:
-            return UIColor.green00A382
-            
-        @unknown default:
-            return UIColor.green009476
-        }
-    }
     
     class func mnz_basicButton(
         for traitCollection: UITraitCollection
@@ -218,24 +110,6 @@ extension UIColor {
         TokenColors.Border.strong
     }
     
-    @objc(
-        mnz_handlebarForTraitCollection:
-    )
-    class func mnz_handlebar(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.gray04040F.withAlphaComponent(0.15)
-            
-        case .dark:
-            return UIColor.grayEBEBF5.withAlphaComponent(0.3)
-            
-        @unknown default:
-            return UIColor.whiteFFFFFF
-        }
-    }
-    
     @objc class func supportInfoColor() -> UIColor {
         TokenColors.Support.info
     }
@@ -245,42 +119,6 @@ extension UIColor {
     }
     
     // MARK: - PRO account colors
-    
-    /**
-     The color hex value is #FFA500
-     
-     - Returns: The color associated with the PRO LITE trademark.
-     */
-    @objc class func mnz_proLITE() -> UIColor {
-        UIColor.proAccountLITE
-    }
-    
-    /**
-     The color hex value is #E13339
-     
-     - Returns: The color associated with the PRO I trademark.
-     */
-    @objc class func mnz_redProI() -> UIColor {
-        UIColor.proAccountRedProI
-    }
-    
-    /**
-     The color hex value is #DC191F
-     
-     - Returns: The color associated with the PRO II trademark.
-     */
-    @objc class func mnz_redProII() -> UIColor {
-        UIColor.proAccountRedProII
-    }
-    
-    /**
-     The color hex value is #D90007
-     
-     - Returns: The color associated with the PRO III trademark.
-     */
-    @objc class func mnz_redProIII() -> UIColor {
-        UIColor.proAccountRedProIII
-    }
     
     @objc class func mnz_color(
         proLevel: MEGAAccountType
@@ -370,28 +208,7 @@ extension UIColor {
         isEnabled ? TokenColors.Text.primary: TokenColors.Text.disabled
     }
     
-    // MARK: - Voice recording view
-    
-    class func mnz_voiceRecordingViewBackground(
-        _ traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.whiteFCFCFC
-            
-        case .dark:
-            return UIColor.black1C1C1E
-            
-        @unknown default:
-            return UIColor.whiteFCFCFC
-        }
-    }
-    
     // MARK: Gray
-    
-    class func mnz_gray545457() -> UIColor {
-        UIColor.gray545457
-    }
     
     @objc class func mnz_grayDBDBDB() -> UIColor {
         UIColor.grayDBDBDB
@@ -451,10 +268,6 @@ extension UIColor {
     
     @objc class func mnz_secondaryTextColor() -> UIColor {
         TokenColors.Text.secondary
-    }
-    
-    @objc class func mnz_takenDownNodeIconColor() -> UIColor {
-        TokenColors.Support.error
     }
     
     @objc class func mnz_takenDownNodeTextColor() -> UIColor {
