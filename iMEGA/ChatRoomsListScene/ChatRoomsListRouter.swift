@@ -11,9 +11,12 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     private weak var chatRoomsListViewController: ChatRoomsListViewController?
     private weak var tabBarController: MainTabBarController?
     private lazy var newChatRouter = NewChatRouter(navigationController: navigationController, tabBarController: tabBarController)
-    
-    init(tabBarController: MainTabBarController?) {
+    private let shareLinkRouter: any ShareLinkDialogRouting
+
+    init(tabBarController: MainTabBarController?,
+         shareLinkRouter: some ShareLinkDialogRouting) {
         self.tabBarController = tabBarController
+        self.shareLinkRouter = shareLinkRouter
     }
     
     func build() -> UIViewController {
@@ -84,9 +87,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         ScheduleMeetingRouter(
             presenter: navigationController,
             viewConfiguration: viewConfiguration,
-            shareLinkRouter: ShareLinkDialogRouter(
-                presenter: navigationController
-            )
+            shareLinkRouter: shareLinkRouter
         ).start()
     }
     
@@ -282,7 +283,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         ScheduleMeetingRouter(
             presenter: navigationController,
             viewConfiguration: viewConfiguration,
-            shareLinkRouter: ShareLinkDialogRouter(presenter: navigationController)
+            shareLinkRouter: shareLinkRouter
         ).start()
     }
     

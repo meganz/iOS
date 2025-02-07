@@ -3,7 +3,10 @@ import MEGADomain
 
 extension MainTabBarController {
     @objc func chatViewController() -> UIViewController {
-        ChatRoomsListRouter(tabBarController: self).build()
+        ChatRoomsListRouter(
+            tabBarController: self,
+            shareLinkRouter: ShareLinkDialogRouter(presenter: self)
+        ).build()
     }
     
     @objc func showStartConversation() {
