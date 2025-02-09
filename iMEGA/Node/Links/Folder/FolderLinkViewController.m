@@ -1,6 +1,5 @@
 #import "FolderLinkViewController.h"
 
-#import "SVProgressHUD.h"
 #import "SAMKeychain.h"
 #import "UIScrollView+EmptyDataSet.h"
 
@@ -58,9 +57,22 @@
 @property (nonatomic, strong) RequestDelegate* requestDelegate;
 @property (nonatomic, strong) GlobalDelegate* globalDelegate;
 
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+
 @end
 
 @implementation FolderLinkViewController
+
+#pragma mark - Getter
+
+- (UIActivityIndicatorView *)activityIndicator {
+    if (!_activityIndicator) {
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
+        _activityIndicator.hidesWhenStopped = YES;
+    }
+    
+    return _activityIndicator;
+}
 
 #pragma mark - Lifecycle
 
@@ -72,7 +84,6 @@
     self.searchController.delegate = self;
 
     self.definesPresentationContext = YES;
-    
     self.loginDone = NO;
     self.fetchNodesDone = NO;
     
@@ -116,6 +127,7 @@
 
     [self determineViewMode];
     [self configureContextMenuManager];
+    [self setupSpinner];
     
     self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 
@@ -148,16 +160,15 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
-    [sdkFolder removeMEGAGlobalDelegate:self.globalDelegate];
-    [sdkFolder removeMEGARequestDelegate:self.requestDelegate];
+    [MEGASdk.sharedFolderLink removeMEGAGlobalDelegateAsync:self.globalDelegate];
+    [MEGASdk.sharedFolderLink removeMEGARequestDelegateAsync:self.requestDelegate];
     
     [AudioPlayerManager.shared removeDelegate:self];
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [MEGASdk.shared removeMEGATransferDelegate:self];
+    [MEGASdk.shared removeMEGATransferDelegateAsync:self];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -238,7 +249,7 @@
 }
 
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
-    [SVProgressHUD dismiss];
+    [self stopLoading];
     
     self.titleViewSubtitle = LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available");
     [self setNavigationTitleViewWithSubTitle:self.titleViewSubtitle];
@@ -525,7 +536,7 @@
         [MEGASdk.sharedFolderLink logout];
     }
 
-    [SVProgressHUD dismiss];
+    [self stopLoading];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -795,7 +806,7 @@
         }
             
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD show];
+            [self startLoading];
             break;
         }
             
@@ -871,7 +882,7 @@
             if (request.flag) { //Invalid key
                 [api logout];
                 
-                [SVProgressHUD dismiss];
+                [self stopLoading];
                 
                 if (self.isValidatingDecryptionKey) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
@@ -897,7 +908,7 @@
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [api pauseTransfers:YES];
             }
-            [SVProgressHUD dismiss];
+            [self stopLoading];
             break;
         }
             

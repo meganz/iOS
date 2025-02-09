@@ -178,6 +178,26 @@ extension FolderLinkViewController {
         
         navigationItem.titleView?.sizeToFit()
     }
+    
+    // MARK: - Loading spinner
+    
+    @objc func setupSpinner() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    @objc func startLoading() {
+        activityIndicator.startAnimating()
+    }
+    
+    @objc func stopLoading() {
+        activityIndicator.stopAnimating()
+    }
 }
 
 // MARK: - Ads
