@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) FolderLinkTableViewController *flTableView;
 @property (nonatomic, strong, nullable) FolderLinkCollectionViewController *flCollectionView;
 
+@property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
+
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender;
 
 - (BOOL)isListViewModeSelected;
