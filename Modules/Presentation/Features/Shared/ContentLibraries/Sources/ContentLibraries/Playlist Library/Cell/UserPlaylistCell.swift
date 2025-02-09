@@ -87,7 +87,7 @@ struct UserPlaylistCellContent: View {
                 VStack(alignment: .leading, spacing: TokenSpacing._3) {
                     Text(previewEntity.title)
                         .font(.subheadline)
-                        .foregroundStyle(isDisabled ? TokenColors.Text.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
+                        .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Text.primary.swiftUI)
                     
                     secondaryInformationView()
                         .frame(maxHeight: .infinity, alignment: .top)
@@ -111,7 +111,7 @@ struct UserPlaylistCellContent: View {
         case .emptyPlaylist:
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                 .font(.caption)
-                .foregroundStyle(isDisabled ? TokenColors.Text.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
+                .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Text.primary.swiftUI)
         case .information:
             VideoPlaylistSecondaryInformationView(
                 videosCount: previewEntity.count,
