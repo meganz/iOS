@@ -231,21 +231,26 @@ extension SharedItemsViewController {
     
     @objc func shareAtIndexPath(_ indexPath: IndexPath) -> MEGAShare? {
         guard indexPath.section == 0, linksButton?.isSelected == false else { return nil }
-        
-        if searchController.isActive {
-            if searchUnverifiedSharesArray.count > indexPath.row {
-                return searchUnverifiedSharesArray[indexPath.row] as? MEGAShare
-            }            
+
+        if searchController.isActive, searchUnverifiedSharesArray.count > indexPath.row {
+            // Add logs to trace the cause of crash in [SAO-2729]
+            return searchUnverifiedSharesArray[indexPath.row] as? MEGAShare
         }
-        
-        if outgoingButton?.isSelected == true {
-            return outgoingUnverifiedSharesMutableArray?[indexPath.row] as? MEGAShare
+
+        if outgoingButton?.isSelected == true,
+            let outgoingUnverifiedSharesMutableArray,
+            outgoingUnverifiedSharesMutableArray.count > indexPath.row {
+            // Add logs to trace the cause of crash in [SAO-2729]
+            return outgoingUnverifiedSharesMutableArray[indexPath.row] as? MEGAShare
         }
-        
-        if incomingButton?.isSelected == true {
-            return incomingUnverifiedSharesMutableArray?[indexPath.row] as? MEGAShare
+
+        if incomingButton?.isSelected == true,
+            let incomingUnverifiedSharesMutableArray,
+            incomingUnverifiedSharesMutableArray.count > indexPath.row {
+            // Add logs to trace the cause of crash in [SAO-2729]
+            return incomingUnverifiedSharesMutableArray[indexPath.row] as? MEGAShare
         }
-        
+
         return nil
     }
     
