@@ -96,10 +96,11 @@ struct UserPlaylistCellContent: View {
             }
             .gesture(isSelectionEnabled ? tap : nil)
             
-            MEGAAssetsImageProvider.image(named: .moreList)
-                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                .opacity(isSelectionEnabled ? 0 : 1)
-                .onTapGesture { onTappedMoreOptions() }
+            if !isSelectionEnabled {
+                MEGAAssetsImageProvider.image(named: .moreList)
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                    .onTapGesture(perform: onTappedMoreOptions)
+            }
         }
     }
     
