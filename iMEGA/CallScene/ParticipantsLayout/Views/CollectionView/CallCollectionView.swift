@@ -1,3 +1,4 @@
+import FirebaseCrashlytics
 import MEGADesignToken
 import MEGADomain
 
@@ -75,7 +76,12 @@ class CallCollectionView: UICollectionView {
     /// Check updateParticipantMic, updateParticipantAudioDetected and updateParticipantRaiseHand for update without reloading cells
     private func updateCells(with participants: [CallParticipantEntity]) {
         guard Set(participants).count == participants.count else {
-            CrashlyticsLogger.log(category: .calls, "[CallCollectionView] Duplicated call participants found: \(participants)")
+            let error = NSError.init(
+                domain: "nz.mega.chat.call",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "[CallCollectionView] Duplicated call participants found: \(participants)"]
+            )
+            Crashlytics.crashlytics().record(error: error)
             return
         }
         
