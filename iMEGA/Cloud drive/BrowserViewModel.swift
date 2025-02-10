@@ -71,7 +71,7 @@ import MEGASDKRepo
     
     func search(by searchText: String) async throws -> [NodeEntity] {
         guard let parentNode else { return [] }
-        return try await filesSearchUseCase.search(
+        let nodes: [NodeEntity] = try await filesSearchUseCase.search(
             filter: .recursive(
                 searchText: searchText,
                 searchTargetLocation: .parentNode(parentNode.toNodeEntity()),
@@ -84,6 +84,12 @@ import MEGASDKRepo
             ),
             cancelPreviousSearchIfNeeded: true
         )
+        
+        return if isSelectVideos {
+            nodes.filter { $0.isFolder || $0.name.fileExtensionGroup.isVideo }
+        } else {
+            nodes
+        }
     }
     
     private func filterForVideoAndFolders(nodeList: MEGANodeList) -> MEGANodeList {
