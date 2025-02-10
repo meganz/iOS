@@ -10,31 +10,33 @@ struct AddToPlaylistView: View {
     @ObservedObject var viewModel: AddToPlaylistViewModel
     
     var body: some View {
-        contentView
-            .alert(isPresented: $viewModel.showCreatePlaylistAlert,
-                   viewModel.alertViewModel())
-            .task {
-                await viewModel.loadVideoPlaylists()
+        Group {
+            switch viewModel.viewState {
+            case .loading, .ideal:
+                contentView
+            case .empty:
+                empty
             }
-            .task {
-                await viewModel.monitorPlaylistUpdates()
-            }
+        }
+        .alert(isPresented: $viewModel.showCreatePlaylistAlert,
+               viewModel.alertViewModel())
+        .task {
+            await viewModel.loadVideoPlaylists()
+        }
+        .task {
+            await viewModel.monitorPlaylistUpdates()
+        }
     }
     
-    @ViewBuilder
     private var contentView: some View {
-        if viewModel.videoPlaylists.isNotEmpty {
-            VStack {
-                NewPlaylistView(
-                    addPlaylistAction: viewModel.onCreatePlaylistTapped)
-                
-                playlists
-                    .overlay(VideoListPlaceholderView(
-                        isActive: !viewModel.isVideoPlayListsLoaded))
-                    .padding(.horizontal, TokenSpacing._3)
-            }
-        } else {
-            empty
+        VStack {
+            NewPlaylistView(
+                addPlaylistAction: viewModel.onCreatePlaylistTapped)
+            
+            playlists
+                .overlay(VideoListPlaceholderView(
+                    isActive: viewModel.viewState == .loading))
+                .padding(.horizontal, TokenSpacing._3)
         }
     }
     

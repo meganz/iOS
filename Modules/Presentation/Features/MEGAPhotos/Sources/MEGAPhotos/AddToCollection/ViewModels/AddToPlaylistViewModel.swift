@@ -8,6 +8,11 @@ import SwiftUI
 
 @MainActor
 public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtocol {
+    enum ViewState: Equatable {
+        case loading
+        case ideal
+        case empty
+    }
     public let thumbnailLoader: any ThumbnailLoaderProtocol
     public let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     public let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
@@ -17,7 +22,7 @@ public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtoco
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     private let addToCollectionRouter: any AddToCollectionRouting
     
-    @Published var isVideoPlayListsLoaded = false
+    @Published var viewState: ViewState = .loading
     @Published var showCreatePlaylistAlert = false
     @Published public var videoPlaylists = [VideoPlaylistEntity]()
     
@@ -46,8 +51,7 @@ public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtoco
         videoPlaylists =  await videoPlaylistsUseCase.userVideoPlaylists()
             .sorted { $0.modificationTime > $1.modificationTime }
         
-        guard !isVideoPlayListsLoaded else { return }
-        isVideoPlayListsLoaded.toggle()
+        viewState = videoPlaylists.isNotEmpty ? .ideal : .empty
     }
     
     func onCreatePlaylistTapped() {

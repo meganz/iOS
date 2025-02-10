@@ -54,7 +54,7 @@ struct AddToAlbumsViewModelTests {
             let sut = AddToAlbumsViewModelTests.makeSUT(
                 monitorAlbumsUseCase: monitorAlbumsUseCase)
             
-            #expect(sut.isAlbumsLoaded == false)
+            #expect(sut.viewState == .loading)
             await confirmation("Album view models loaded in correct order", expectedCount: 2) { albumViewModelsLoaded in
                 var expectations = [
                     [AlbumCellViewModel(album: userAlbum2),
@@ -71,7 +71,29 @@ struct AddToAlbumsViewModelTests {
                 await sut.monitorUserAlbums()
                 subscription.cancel()
             }
-            #expect(sut.isAlbumsLoaded == true)
+            #expect(sut.viewState == .ideal)
+        }
+        
+        @Test("when no albums loaded empty state should be shown")
+        func empty() async throws {
+            let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+                monitorUserAlbumsSequence: SingleItemAsyncSequence(item: [AlbumEntity]()).eraseToAnyAsyncSequence()
+            )
+            let sut = AddToAlbumsViewModelTests.makeSUT(
+                monitorAlbumsUseCase: monitorAlbumsUseCase)
+            
+            #expect(sut.viewState == .loading)
+            await confirmation("Album empty state triggered") { albumEmptyStateTriggered in
+                let subscription = sut.$viewState
+                    .dropFirst()
+                    .sink {
+                        #expect($0 == .empty)
+                        albumEmptyStateTriggered()
+                    }
+                
+                await sut.monitorUserAlbums()
+                subscription.cancel()
+            }
         }
     }
     
