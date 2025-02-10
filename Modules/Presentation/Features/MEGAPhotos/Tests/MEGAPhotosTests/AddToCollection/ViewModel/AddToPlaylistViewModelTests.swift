@@ -33,7 +33,7 @@ struct AddToPlaylistViewModelTests {
             let sut = AddToPlaylistViewModelTests
                 .makeSUT(videoPlaylistsUseCase: videoPlaylistsUseCase)
             
-            #expect(sut.isVideoPlayListsLoaded == false)
+            #expect(sut.viewState == .loading)
             
             var cancellable: AnyCancellable?
             await confirmation("Playlist loaded") { playlistLoaded in
@@ -46,8 +46,29 @@ struct AddToPlaylistViewModelTests {
                 
                 await sut.loadVideoPlaylists()
             }
-            #expect(sut.isVideoPlayListsLoaded == true)
+            #expect(sut.viewState == .ideal)
             cancellable?.cancel()
+        }
+        
+        @Test("when no playlist loaded empty state should be shown")
+        func empty() async throws {
+            let videoPlaylistsUseCase = MockVideoPlaylistUseCase(
+                userVideoPlaylistsResult: [])
+            let sut = AddToPlaylistViewModelTests
+                .makeSUT(videoPlaylistsUseCase: videoPlaylistsUseCase)
+            
+            #expect(sut.viewState == .loading)
+            await confirmation("Album empty state triggered") { albumEmptyStateTriggered in
+                let subscription = sut.$viewState
+                    .dropFirst()
+                    .sink {
+                        #expect($0 == .empty)
+                        albumEmptyStateTriggered()
+                    }
+                
+                await sut.loadVideoPlaylists()
+                subscription.cancel()
+            }
         }
     }
     
@@ -141,7 +162,7 @@ struct AddToPlaylistViewModelTests {
                     videoPlaylistsUpdatedAsyncSequence: videoPlaylistsUpdatedStream.eraseToAnyAsyncSequence())
                 let sut = makeSUT(videoPlaylistsUseCase: videoPlaylistsUseCase)
                 
-                await confirmation("Ensure playlist is updated") { updateConfirmation in
+                try await confirmation("Ensure playlist is updated") { updateConfirmation in
                     let invocationTask = Task {
                         for await invocation in videoPlaylistsUseCase.invocationSequence {
                             #expect(invocation == .userVideoPlaylists)
@@ -150,6 +171,9 @@ struct AddToPlaylistViewModelTests {
                             break
                         }
                     }
+                    
+                    // Ensure task started
+                    try await Task.sleep(nanoseconds: 50_000_000)
                     
                     videoPlaylistsUpdatedContinuation.yield(())
                     videoPlaylistsUpdatedContinuation.finish()

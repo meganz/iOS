@@ -10,26 +10,28 @@ struct AddToAlbumsView: View {
     @ObservedObject var viewModel: AddToAlbumsViewModel
     
     var body: some View {
-        content
-            .overlay(AlbumListPlaceholderView(
-                isActive: !viewModel.isAlbumsLoaded)
+        Group {
+            switch viewModel.viewState {
+            case .loading:
+                AlbumListPlaceholderView(
+                    isActive: viewModel.viewState == .loading)
                 .padding(.top, TokenSpacing._3)
-            )
-            .environment(\.editMode, $viewModel.editMode)
-            .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel())
-            .task {
-                await viewModel.monitorUserAlbums()
+            case .ideal:
+                content
+            case .empty:
+                empty
             }
+        }
+        .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel())
+        .task {
+            await viewModel.monitorUserAlbums()
+        }
     }
     
-    @ViewBuilder
     private var content: some View {
-        if viewModel.albums.isNotEmpty {
-            AlbumListContentView(viewModel: viewModel)
-                .padding(.top, TokenSpacing._3)
-        } else {
-            empty
-        }
+        AlbumListContentView(viewModel: viewModel)
+            .padding(.top, TokenSpacing._3)
+            .environment(\.editMode, $viewModel.editMode)
     }
     
     private var empty: some View {

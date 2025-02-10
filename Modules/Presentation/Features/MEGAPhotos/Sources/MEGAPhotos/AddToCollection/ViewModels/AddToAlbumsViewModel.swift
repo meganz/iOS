@@ -10,7 +10,12 @@ import SwiftUI
 
 @MainActor
 public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
-    @Published var isAlbumsLoaded = false
+    enum ViewState: Equatable {
+        case loading
+        case ideal
+        case empty
+    }
+    @Published var viewState: ViewState = .loading
     @Published public var albums = [AlbumCellViewModel]()
     @Published var editMode: EditMode = .active
     @Published var showCreateAlbumAlert = false
@@ -100,8 +105,7 @@ public final class AddToAlbumsViewModel: AlbumListContentViewModelProtocol {
                     )
                 }
             
-            guard !isAlbumsLoaded else { continue }
-            isAlbumsLoaded.toggle()
+            viewState = albums.isNotEmpty ? .ideal : .empty
         }
     }
     
