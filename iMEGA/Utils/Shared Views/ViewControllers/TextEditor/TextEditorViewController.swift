@@ -57,6 +57,10 @@ final class TextEditorViewController: UIViewController {
             textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
+        /// Disables non-contiguous layout for the `UITextView` to force a full text layout update.
+        /// This helps resolve issues where the `UITextView` might become invisible or fail to render long text correctly.
+        textView.layoutManager.allowsNonContiguousLayout = false
+        
         registerForNotifications()
     }
     
