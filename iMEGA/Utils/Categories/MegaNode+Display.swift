@@ -38,7 +38,9 @@ extension MEGANode {
         description?.highlightedStringWithKeyword(
             searchText,
             primaryTextColor: TokenColors.Text.secondary,
-            highlightedTextColor: TokenColors.Notifications.notificationSuccess
+            highlightedTextColor: TokenColors.Notifications.notificationSuccess,
+            normalFont: UIFont.preferredFont(forTextStyle: .caption1),
+            highlightedFont: UIFont.preferredFont(style: .caption1, weight: .bold)
         ) ?? .init()
     }
 
