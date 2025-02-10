@@ -40,11 +40,19 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         )
     }
 
-    var note: String? {
+    var note: AttributedString? {
         if let nodeDescription = result.note,
             let query = query(),
            nodeDescription.containsIgnoringCaseAndDiacritics(searchText: query) {
-            nodeDescription
+            AttributedString(
+                nodeDescription.highlightedStringWithKeyword(
+                    query,
+                    primaryTextColor: UIColor(colorAssets.nodeDescriptionTextNormalColor),
+                    highlightedTextColor: UIColor(colorAssets.textHighlightColor),
+                    normalFont: .preferredFont(forTextStyle: .caption1),
+                    highlightedFont: .preferredFont(style: .caption1, weight: .bold)
+                )
+            )
         } else {
             nil
         }

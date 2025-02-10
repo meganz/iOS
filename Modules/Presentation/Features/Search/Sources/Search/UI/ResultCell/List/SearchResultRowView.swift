@@ -146,9 +146,8 @@ struct SearchResultRowView: View {
     private var note: some View {
         if let note = viewModel.note {
             Text(note)
-                .font(.caption)
                 .lineLimit(1)
-                .foregroundStyle(viewModel.colorAssets.nodeDescriptionTextNormalColor)
+                .padding(.bottom, TokenSpacing._3)
         } else {
             EmptyView()
         }

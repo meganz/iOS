@@ -748,9 +748,20 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
-    func testNodeDescription_whenDescriptionIsNotEmptyAndQueryIsAlsoNotEmpty_shouldReturnNil() async {
+    func testNodeDescription_whenDescriptionIsNotEmptyAndQueryIsAlsoNotEmpty_shouldReturnNil() async throws {
         let harness = generateRandomSearchResultRowViewModel(id: 1, note: "This is test", query: { "test" })
-        XCTAssertEqual(harness.note, "This is test")
+        XCTAssertEqual(
+            harness.note,
+            AttributedString(
+                "This is test".highlightedStringWithKeyword(
+                    "test",
+                    primaryTextColor: UIColor(Color.secondary),
+                    highlightedTextColor: UIColor.systemGray,
+                    normalFont: .preferredFont(forTextStyle: .caption1),
+                    highlightedFont: .preferredFont(style: .caption1, weight: .bold)
+                )
+            )
+        )
     }
 
     @MainActor
