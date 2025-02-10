@@ -103,27 +103,37 @@ public extension String {
         return range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil
     }
 
+    /// Compute the attributed string for the the part matched with a keyword being highlighted
+    /// - Parameters:
+    ///   - keyword: The search keyword
+    ///   - primaryTextColor: The color of the parts that are not matched
+    ///   - highlightedTextColor: The color of the matched text
+    ///   - normalBackgroundColor: The background color of the parts that are not matched
+    ///   - normalFont: The font of the parts that are not matched
+    ///   - highlightedFont: The font of the matched text
+    /// - Returns: The attributed string with proper format
     func highlightedStringWithKeyword(
         _ keyword: String?,
         primaryTextColor: UIColor,
         highlightedTextColor: UIColor,
         normalBackgroundColor: UIColor? = nil,
-        font: UIFont? = nil
+        normalFont: UIFont? = nil,
+        highlightedFont: UIFont? = nil
     ) -> NSAttributedString {
         let primaryTextColorAttr: [NSAttributedString.Key: Any] = [
             .foregroundColor: primaryTextColor,
             .backgroundColor: normalBackgroundColor,
-            .font: font
+            .font: normalFont
         ].compactMapValues { $0 }
 
         guard let keyword else {
             return .init(string: self, attributes: primaryTextColorAttr)
         }
 
-        let highlightedColorAttr = [
-            NSAttributedString.Key.foregroundColor: primaryTextColor,
-            NSAttributedString.Key.backgroundColor: highlightedTextColor,
-            NSAttributedString.Key.font: font
+        let highlightedColorAttr: [NSAttributedString.Key: Any] = [
+            .foregroundColor: primaryTextColor,
+            .backgroundColor: highlightedTextColor,
+            .font: highlightedFont
         ].compactMapValues { $0 }
 
         let result = NSMutableAttributedString()

@@ -25,7 +25,11 @@ final class SharedItemsViewModelTests: XCTestCase {
             nodeDescription: "description",
             searchText: "desc",
             output: "description".highlightedStringWithKeyword(
-                "desc", primaryTextColor: TokenColors.Text.secondary, highlightedTextColor: TokenColors.Notifications.notificationSuccess
+                "desc",
+                primaryTextColor: TokenColors.Text.secondary,
+                highlightedTextColor: TokenColors.Notifications.notificationSuccess,
+                normalFont: UIFont.preferredFont(forTextStyle: .caption1),
+                highlightedFont: UIFont.preferredFont(style: .caption1, weight: .bold)
             )
         )
 
@@ -34,7 +38,11 @@ final class SharedItemsViewModelTests: XCTestCase {
             nodeDescription: "description1 description2",
             searchText: "desc",
             output: "description1 description2".highlightedStringWithKeyword(
-                "desc", primaryTextColor: TokenColors.Text.secondary, highlightedTextColor: TokenColors.Notifications.notificationSuccess
+                "desc",
+                primaryTextColor: TokenColors.Text.secondary,
+                highlightedTextColor: TokenColors.Notifications.notificationSuccess,
+                normalFont: UIFont.preferredFont(forTextStyle: .caption1),
+                highlightedFont: UIFont.preferredFont(style: .caption1, weight: .bold)
             )
         )
     }
