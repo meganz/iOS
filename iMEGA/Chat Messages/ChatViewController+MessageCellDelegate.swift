@@ -210,7 +210,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
            name.fileExtensionGroup.isVisualMedia {
             var mediaNodesArrayIndex = 0
             var foundIndex: Int?
-            var mediaMessagesArray = [HandleEntity]()
+            var mediaMessagesArray = [MEGAChatMessage]()
             let mediaNodesArray = messages.compactMap { message -> MEGANode? in
                 guard let localChatMessage = message as? ChatMessage,
                       localChatMessage.message.type == .attachment,
@@ -227,7 +227,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                             foundIndex = mediaNodesArrayIndex
                         }
                         mediaNodesArrayIndex += 1
-                        mediaMessagesArray.append(localChatMessage.message.messageId)
+                        mediaMessagesArray.append(localChatMessage.message)
                         return authorizedNode
                     } else {
                         return nil
@@ -238,16 +238,20 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                     foundIndex = mediaNodesArrayIndex
                 }
                 mediaNodesArrayIndex += 1
-                mediaMessagesArray.append(localChatMessage.message.messageId)
+                mediaMessagesArray.append(localChatMessage.message)
                 return node
             }
             
-            let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
-                                                                             api: MEGASdk.shared,
-                                                                             displayMode: .chatAttachment,
-                                                                             isFromSharedItem: false,
-                                                                             preferredIndex: UInt(foundIndex ?? 0))
-            photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
+            let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(
+                withMediaNodes: NSMutableArray(array: mediaNodesArray),
+                api: MEGASdk.shared,
+                displayMode: .chatAttachment,
+                isFromSharedItem: false,
+                preferredIndex: UInt(foundIndex ?? 0)
+            )
+            photoBrowserVC.configureMediaAttachment(
+                inChatId: chatRoom.chatId,
+                messages: mediaMessagesArray)
             present(viewController: photoBrowserVC)
         } else {
             dismissKeyboardIfRequired()
