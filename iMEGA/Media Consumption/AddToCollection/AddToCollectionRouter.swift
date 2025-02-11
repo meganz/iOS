@@ -5,8 +5,9 @@ import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
 
-public struct AddToCollectionRouter: AddToCollectionRouting {
+public final class AddToCollectionRouter: AddToCollectionRouting {
     private weak var presenter: UIViewController?
+    private weak var baseViewController: UIViewController?
     private let mode: AddToMode
     private let selectedPhotos: [NodeEntity]
     
@@ -42,12 +43,12 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
         let userVideoPlaylistRepository = UserVideoPlaylistsRepository.newRepo
         
         let content = AddToCollectionView(viewModel: .init(
-            mode: mode,
-            selectedPhotos: selectedPhotos,
+            mode: self.mode,
+            selectedPhotos: self.selectedPhotos,
             addToAlbumsViewModel: .init(
-                monitorAlbumsUseCase: makeMonitorAlbumsUseCase(),
+                monitorAlbumsUseCase: self.makeMonitorAlbumsUseCase(),
                 thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
-                monitorUserAlbumPhotosUseCase: makeMonitorUserAlbumPhotosUseCase(),
+                monitorUserAlbumPhotosUseCase: self.makeMonitorUserAlbumPhotosUseCase(),
                 nodeUseCase: NodeUseCase(
                     nodeDataRepository: NodeDataRepository.newRepo,
                     nodeValidationRepository: NodeValidationRepository.newRepo,
@@ -91,7 +92,7 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
                 ),
                 router: VideoRevampRouter(
                     explorerType: .video,
-                    navigationController: presenter?.navigationController),
+                    navigationController: self.presenter?.navigationController),
                 videoPlaylistsUseCase: VideoPlaylistUseCase(
                     fileSearchUseCase: FilesSearchUseCase(
                         repo: fileSearchRepo,
@@ -103,19 +104,22 @@ public struct AddToCollectionRouter: AddToCollectionRouting {
                 addToCollectionRouter: self
             )
         ))
-        return UIHostingController(rootView: content)
+        let hostingController = UIHostingController(rootView: content)
+        baseViewController = hostingController
+        return hostingController
     }
     
     public func start() {
-        presenter?.present(build(),
-                           animated: true)
+        presenter?.present(build(), animated: true)
     }
     
-    public func showSnackBarOnDismiss(message: String) {
-        presenter?.dismiss(animated: true) {
-            UIApplication.mnz_visibleViewController()
-                .showSnackBar(snackBar: SnackBar(message: message))
-        }
+    public func dismiss(completion: (() -> Void)?) {
+        baseViewController?.dismiss(animated: true, completion: completion)
+    }
+    
+    public func showSnackBar(message: String) {
+        UIApplication.mnz_visibleViewController()
+            .showSnackBar(snackBar: SnackBar(message: message))
     }
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {

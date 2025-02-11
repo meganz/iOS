@@ -17,7 +17,7 @@ struct AddToAlbumsViewModelTests {
     private enum TestError: Error {
         case timeout
     }
-
+    
     @Suite("Ensure Columns Counts")
     @MainActor
     struct ColumnsCount {
@@ -36,7 +36,7 @@ struct AddToAlbumsViewModelTests {
             #expect(sut.columns(horizontalSizeClass: horizontalSizeClass).count == expectedCount)
         }
     }
-   
+    
     @Suite("Monitor User Albums")
     @MainActor
     struct MonitorUseAlbums {
@@ -254,7 +254,7 @@ struct AddToAlbumsViewModelTests {
         }
         
         @Test
-        func addItems() async {
+        func addItems() async throws {
             let album = AlbumEntity(id: 3, type: .user)
             let albumSelection = AlbumSelection(mode: .single)
             albumSelection.setSelectedAlbums([album])
@@ -273,16 +273,22 @@ struct AddToAlbumsViewModelTests {
             
             let message = Strings.Localizable.Set.AddTo.Snackbar.message(addedPhotoCount)
                 .replacingOccurrences(of: "[A]", with: album.name)
-            await confirmation("Ensure create user album created") { addAlbumItems in
+            try await confirmation("Ensure dismissed and items added", expectedCount: 2) { addAlbumItems in
+                var routerInvocations = [MockAddToCollectionRouter.Invocation.dismiss, .showSnackBar(message: message)]
                 let invocationTask = Task {
                     for await (useCaseInvocation, routerInvocation) in combineLatest(albumModificationUseCase.invocationSequence,
                                                                                      router.invocationSequence) {
                         #expect(useCaseInvocation == .addPhotosToAlbum(id: album.id, nodes: photos))
-                        #expect(routerInvocation == .showSnackBarOnDismiss(message: message))
+                        #expect(routerInvocation == routerInvocations.removeFirst())
                         addAlbumItems()
-                        break
+                        if routerInvocations.isEmpty {
+                            break
+                        }
                     }
                 }
+                // Ensure task started
+                try await Task.sleep(nanoseconds: 50_000_000)
+                
                 sut.addItems(photos)
                 
                 Task {
@@ -294,7 +300,7 @@ struct AddToAlbumsViewModelTests {
             
         }
     }
-
+    
     @MainActor
     private static func makeSUT(
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),

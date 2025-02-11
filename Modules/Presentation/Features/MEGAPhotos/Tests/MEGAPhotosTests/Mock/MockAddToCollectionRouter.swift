@@ -2,9 +2,10 @@
 import MEGASwift
 import UIKit
 
-class MockAddToCollectionRouter: AddToCollectionRouting {
+final class MockAddToCollectionRouter: AddToCollectionRouting {
     public enum Invocation: Sendable, Equatable {
-        case showSnackBarOnDismiss(message: String)
+        case dismiss
+        case showSnackBar(message: String)
     }
     public var invocationSequence: AnyAsyncSequence<Invocation> {
         invocationStream.eraseToAnyAsyncSequence()
@@ -24,7 +25,12 @@ class MockAddToCollectionRouter: AddToCollectionRouting {
         
     }
     
-    func showSnackBarOnDismiss(message: String) {
-        invocationContinuation.yield(.showSnackBarOnDismiss(message: message))
+    func dismiss(completion: (() -> Void)?) {
+        invocationContinuation.yield(.dismiss)
+        completion?()
+    }
+    
+    func showSnackBar(message: String) {
+        invocationContinuation.yield(.showSnackBar(message: message))
     }
 }

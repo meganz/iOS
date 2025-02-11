@@ -223,7 +223,7 @@ struct AddToPlaylistViewModelTests {
         }
         
         @Test
-        func addItems() async {
+        func addItems() async throws {
             let identifier = SetIdentifier(handle: 4)
             let playlist = VideoPlaylistEntity(setIdentifier: identifier, name: "Playlist")
             let selection = SetSelection(
@@ -244,16 +244,22 @@ struct AddToPlaylistViewModelTests {
             
             let message = Strings.Localizable.Set.AddTo.Snackbar.message(addedPhotoCount)
                 .replacingOccurrences(of: "[A]", with: playlist.name)
-            await confirmation("Ensure playlist created") { addAlbumItems in
+            try await confirmation("Ensure dismissed and items added", expectedCount: 2) { addAlbumItems in
                 let invocationTask = Task {
+                    var routerInvocations = [MockAddToCollectionRouter.Invocation.dismiss, .showSnackBar(message: message)]
                     for await (useCaseInvocation, routerInvocation) in combineLatest(videoPlaylistModificationUseCase.invocationSequence,
                                                                                      router.invocationSequence) {
                         #expect(useCaseInvocation == .addVideoToPlaylist(id: identifier.handle, nodes: videos))
-                        #expect(routerInvocation == .showSnackBarOnDismiss(message: message))
+                        #expect(routerInvocation == routerInvocations.removeFirst())
                         addAlbumItems()
-                        break
+                        if routerInvocations.isEmpty {
+                            break
+                        }
                     }
                 }
+                // Ensure task started
+                try await Task.sleep(nanoseconds: 50_000_000)
+                
                 sut.addItems(videos)
                 
                 Task {
