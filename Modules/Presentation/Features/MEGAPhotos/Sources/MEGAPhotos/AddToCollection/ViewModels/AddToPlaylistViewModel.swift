@@ -105,13 +105,14 @@ extension AddToPlaylistViewModel: AddItemsToCollectionViewModelProtocol {
         guard let playlist = setSelection.selectedSets.first,
               let playlistName = videoPlaylists.first(where: { $0.setIdentifier == playlist })?.name,
               photos.isNotEmpty else { return }
-        
-        Task { [videoPlaylistModificationUseCase, addToCollectionRouter] in
-            let result = try await videoPlaylistModificationUseCase.addVideoToPlaylist(by: playlist.handle, nodes: photos)
-            
-            let message = Strings.Localizable.Set.AddTo.Snackbar.message(Int(result.success))
-                .replacingOccurrences(of: "[A]", with: playlistName)
-            addToCollectionRouter.showSnackBarOnDismiss(message: message)
+        addToCollectionRouter.dismiss { [videoPlaylistModificationUseCase, addToCollectionRouter] in
+            Task { @MainActor in
+                let result = try await videoPlaylistModificationUseCase.addVideoToPlaylist(by: playlist.handle, nodes: photos)
+                
+                let message = Strings.Localizable.Set.AddTo.Snackbar.message(Int(result.success))
+                    .replacingOccurrences(of: "[A]", with: playlistName)
+                addToCollectionRouter.showSnackBar(message: message)
+            }
         }
     }
 }

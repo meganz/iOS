@@ -1,5 +1,6 @@
 import MEGAPresentation
 
 public protocol AddToCollectionRouting: Routing {
-    func showSnackBarOnDismiss(message: String)
+    func dismiss(completion: (() -> Void)?)
+    func showSnackBar(message: String)
 }

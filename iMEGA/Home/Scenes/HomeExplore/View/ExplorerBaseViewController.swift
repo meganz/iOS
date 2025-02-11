@@ -1,6 +1,7 @@
 import ChatRepo
 import MEGADesignToken
 import MEGADomain
+import MEGAPhotos
 import MEGASDKRepo
 import MEGAUIKit
 
@@ -299,6 +300,16 @@ class ExplorerBaseViewController: UIViewController {
         endEditingMode()
     }
     
+    private func addTo(mode: AddToMode) {
+        guard let nodes = selectedNodes()?.toNodeEntities() else {
+            return
+        }
+        AddToCollectionRouter(
+            presenter: self,
+            mode: mode,
+            selectedPhotos: nodes).start()
+    }
+    
     // MARK: - Methods needs to be overriden by the subclass
     
     func selectedNodes() -> [MEGANode]? {
@@ -366,6 +377,10 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             shareFolders()
         case .manageLink:
             manageLinks()
+        case .addToAlbum:
+            addTo(mode: .album)
+        case .addTo:
+            addTo(mode: .collection)
         default:
             break
         }
