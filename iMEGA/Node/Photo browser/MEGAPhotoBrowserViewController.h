@@ -4,7 +4,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MEGAPhotoBrowserViewController, PhotoBrowserDataProvider, PhotoBrowserViewModel, DefaultNodeAccessoryActionDelegate;
+@class MEGAPhotoBrowserViewController, PhotoBrowserDataProvider, PhotoBrowserViewModel, DefaultNodeAccessoryActionDelegate, MEGAChatMessage;
 
 typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
     MEGAPhotoModeThumbnail = 0,
@@ -29,8 +29,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) NSString *encryptedLink;
 @property (nonatomic) BOOL needsReload;
 @property (nonatomic) MEGAHandle chatId;
-@property (nonatomic) MEGAHandle messageId;
-@property (nonatomic) NSArray *messagesIds;
+@property (nonatomic) NSArray<MEGAChatMessage *> *messages;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *centerToolbarItem;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;

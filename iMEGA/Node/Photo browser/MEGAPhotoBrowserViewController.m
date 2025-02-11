@@ -446,7 +446,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self resetZooms];
             [self reloadTitleWithCompletionHandler:^{}];
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
-            [self updateMessageIdTo:newIndex];
         }
         
         [self configLiveTextLayout];
@@ -860,11 +859,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressForwardbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = self.dataProvider.currentPhoto;
-    if (node == nil) {
-        return;
-    }
-    [node mnz_sendToChatInViewController:self];
+    [self forwardMessageAt:self.dataProvider.currentIndex];
 }
 
 - (IBAction)didPressExportFile:(UIBarButtonItem *)sender {
@@ -1082,7 +1077,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     break;
                     
                 case DisplayModeChatAttachment:
-                    [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[node] messageId:self.messageId chatId:self.chatId presenter:self];
+                    [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[node] messageId:self.currentMessageId chatId:self.chatId presenter:self];
                     break;
                     
                 default:

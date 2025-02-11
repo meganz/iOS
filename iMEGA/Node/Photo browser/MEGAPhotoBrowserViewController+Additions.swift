@@ -125,12 +125,27 @@ extension MEGAPhotoBrowserViewController {
         }
     }
     
-    @objc func configureMediaAttachment(forMessageId messageId: HandleEntity, inChatId chatId: HandleEntity, messagesIds: [HandleEntity]) {
+    func configureMediaAttachment(inChatId chatId: HandleEntity, messages: [MEGAChatMessage]) {
         self.chatId = chatId
-        self.messageId = messageId
-        self.messagesIds = messagesIds
+        self.messages = messages
     }
     
+    @objc func forwardMessage(at index: Int) {
+        let sendToNC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as! UINavigationController
+        let sendToVC = sendToNC.viewControllers.first as! SendToViewController
+        sendToVC.sendMode = .forward
+        sendToVC.messages = [messages[index]]
+        sendToVC.sourceChatId = chatId
+        sendToVC.completion = { _, _ in
+            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.forwardedMessage)
+        }
+        present(sendToNC, animated: true, completion: nil)
+    }
+    
+    @objc var currentMessageId: ChatIdEntity {
+        messages[dataProvider.currentIndex].messageId
+    }
+
     var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
@@ -149,7 +164,7 @@ extension MEGAPhotoBrowserViewController {
                         do {
                             try await saveMediaUseCase.saveToPhotosChatNode(
                                 handle: node.handle,
-                                messageId: self.messageId,
+                                messageId: self.currentMessageId,
                                 chatId: self.chatId
                             )
                         } catch let error as SaveMediaToPhotosErrorEntity {
@@ -209,13 +224,6 @@ extension MEGAPhotoBrowserViewController {
     @objc func downloadFileLink() {
         guard let linkUrl = URL(string: publicLink) else { return }
         DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: self).start()
-    }
-    
-    @objc func updateMessageId(to newIndex: UInt) {
-        if messagesIds.isNotEmpty {
-            guard let newMessageId = messagesIds[safe: Int(newIndex)] as? HandleEntity else { return }
-            messageId = newMessageId
-        }
     }
 
     @objc func openSlideShow() {
@@ -354,7 +362,6 @@ extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
         if dataProvider.shouldUpdateCurrentIndex(toIndex: Int(newIndex)) {
             dataProvider.updateCurrentIndexTo(Int(newIndex))
             needsReload = true
-            updateMessageId(to: newIndex)
         }
     }
 }
@@ -560,7 +567,12 @@ extension MEGAPhotoBrowserViewController {
         case .fileLink:
             exportFile(from: node, sender: sender)
         default:
-            exportMessageFile(from: node, messageId: messageId, chatId: chatId, sender: sender)
+            exportMessageFile(
+                from: node,
+                messageId: currentMessageId,
+                chatId: chatId,
+                sender: sender
+            )
         }
     }
     
