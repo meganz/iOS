@@ -17,7 +17,6 @@
 #import "MEGATransfer+MNZCategory.h"
 #import "MEGAStore.h"
 #import "TransfersWidgetSelected.h"
-#import "UITableView+MNZCategory.h"
 #import "MEGANode+MNZCategory.h"
 
 #import "TransferTableViewCell.h"

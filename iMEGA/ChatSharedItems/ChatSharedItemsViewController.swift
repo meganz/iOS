@@ -274,13 +274,13 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
             navigationItem.rightBarButtonItem = selectBarButton
         }
         
-        tableView.mnz_performBatchUpdates({
+        tableView.performBatchUpdates {
             self.messagesArray.append(message)
             if self.tableView.isEmptyDataSetVisible {
                 self.tableView.reloadEmptyDataSet()
             }
             self.tableView.insertRows(at: [IndexPath(row: self.messagesArray.count - 1, section: 0)], with: .automatic)
-        })
+        }
     }
     
     func onAttachmentReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
@@ -290,14 +290,14 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
             navigationItem.rightBarButtonItem = selectBarButton
         }
     
-        tableView.mnz_performBatchUpdates({
+        tableView.performBatchUpdates {
             self.messagesArray.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-        }, completion: { _ in
+        } completion: { _ in
             if self.tableView.isEmptyDataSetVisible {
                 self.tableView.reloadEmptyDataSet()
             }
-        })
+        }
     }
     
     func onAttachmentDeleted(_ api: MEGAChatSdk, messageId: UInt64) {
@@ -310,15 +310,15 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
             return
         }
         
-        tableView.mnz_performBatchUpdates({
+        tableView.performBatchUpdates {
             self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             self.messagesArray.remove(at: index)
-        }, completion: { _ in
+        } completion: { _ in
             if self.messagesArray.isEmpty {
                 self.navigationItem.rightBarButtonItem = nil
                 self.tableView.reloadEmptyDataSet()
             }
-        })
+        }
     }
     
     func onTruncate(_ api: MEGAChatSdk, messageId: UInt64) {
