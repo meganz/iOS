@@ -1,4 +1,3 @@
-import AsyncAlgorithms
 import Combine
 import ContentLibraries
 import MEGADomain
@@ -153,7 +152,7 @@ struct AddToPlaylistViewModelTests {
         @MainActor
         struct PlaylistUpdates {
             @Test("On playlist updated load playlists")
-            func monitorPlaylists() async throws {
+            func monitorPlaylists() async {
                 let (videoPlaylistsUpdatedStream, videoPlaylistsUpdatedContinuation) = AsyncStream.makeStream(of: Void.self)
                 let videoPlaylist = VideoPlaylistEntity(
                     setIdentifier: SetIdentifier(handle: 1))
@@ -162,18 +161,14 @@ struct AddToPlaylistViewModelTests {
                     videoPlaylistsUpdatedAsyncSequence: videoPlaylistsUpdatedStream.eraseToAnyAsyncSequence())
                 let sut = makeSUT(videoPlaylistsUseCase: videoPlaylistsUseCase)
                 
-                try await confirmation("Ensure playlist is updated") { updateConfirmation in
+                await confirmation("Ensure playlist is updated") { updateConfirmation in
                     let invocationTask = Task {
                         for await invocation in videoPlaylistsUseCase.invocationSequence {
                             #expect(invocation == .userVideoPlaylists)
-                            #expect(sut.videoPlaylists == [videoPlaylist])
                             updateConfirmation()
                             break
                         }
                     }
-                    
-                    // Ensure task started
-                    try await Task.sleep(nanoseconds: 50_000_000)
                     
                     videoPlaylistsUpdatedContinuation.yield(())
                     videoPlaylistsUpdatedContinuation.finish()
@@ -185,6 +180,8 @@ struct AddToPlaylistViewModelTests {
                         invocationTask.cancel()
                     }
                     await invocationTask.value
+                    
+                    #expect(sut.videoPlaylists == [videoPlaylist])
                 }
             }
         }
@@ -197,33 +194,36 @@ struct AddToPlaylistViewModelTests {
         func isItemsNotEmptyPublisher() async throws {
             let sut = makeSUT()
             
-            try await confirmation("isItemsNotEmpty match publisher") { confirmation in
-                let invocationTask = Task {
+            try await confirmation("isItemsNotEmpty match publisher", expectedCount: 3) { confirmation in
+                var cancellable: AnyCancellable?
+                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                     var expectations = [false, true, false]
-                    for await isNotEmpty in sut.isItemsNotEmptyPublisher.values {
-                        #expect(isNotEmpty == expectations.removeFirst())
-                        if expectations.isEmpty {
+                    cancellable = sut.isItemsNotEmptyPublisher
+                        .sink(receiveCompletion: {
+                            cancellable?.cancel()
+                            switch $0 {
+                            case .finished:
+                                continuation.resume()
+                            case .failure(let error):
+                                continuation.resume(throwing: error)
+                            }
+                        }, receiveValue: {
+                            #expect($0 == expectations.removeFirst())
                             confirmation()
-                            break
-                        }
-                    }
+                            if expectations.isEmpty {
+                                cancellable?.cancel()
+                                continuation.resume()
+                            }
+                        })
+                    
+                    sut.videoPlaylists = [.init(setIdentifier: SetIdentifier(handle: 1))]
+                    sut.videoPlaylists = []
                 }
-                // Ensure task started
-                try await Task.sleep(nanoseconds: 50_000_000)
-                
-                sut.videoPlaylists = [.init(setIdentifier: SetIdentifier(handle: 1))]
-                sut.videoPlaylists = []
-                
-                Task {
-                    try? await Task.sleep(nanoseconds: 500_000_000)
-                    invocationTask.cancel()
-                }
-                await invocationTask.value
             }
         }
         
         @Test
-        func addItems() async throws {
+        func addItems() async {
             let identifier = SetIdentifier(handle: 4)
             let playlist = VideoPlaylistEntity(setIdentifier: identifier, name: "Playlist")
             let selection = SetSelection(
@@ -244,21 +244,28 @@ struct AddToPlaylistViewModelTests {
             
             let message = Strings.Localizable.Set.AddTo.Snackbar.message(addedPhotoCount)
                 .replacingOccurrences(of: "[A]", with: playlist.name)
-            try await confirmation("Ensure dismissed and items added", expectedCount: 2) { addAlbumItems in
+            await confirmation("Ensure dismissed and items added", expectedCount: 3) { addAlbumItems in
                 let invocationTask = Task {
-                    var routerInvocations = [MockAddToCollectionRouter.Invocation.dismiss, .showSnackBar(message: message)]
-                    for await (useCaseInvocation, routerInvocation) in combineLatest(videoPlaylistModificationUseCase.invocationSequence,
-                                                                                     router.invocationSequence) {
-                        #expect(useCaseInvocation == .addVideoToPlaylist(id: identifier.handle, nodes: videos))
-                        #expect(routerInvocation == routerInvocations.removeFirst())
-                        addAlbumItems()
-                        if routerInvocations.isEmpty {
-                            break
+                    await withTaskGroup(of: Void.self) { group in
+                        group.addTask {
+                            for await useCaseInvocation in videoPlaylistModificationUseCase.invocationSequence {
+                                #expect(useCaseInvocation == .addVideoToPlaylist(id: identifier.handle, nodes: videos))
+                                addAlbumItems()
+                                break
+                            }
+                        }
+                        group.addTask {
+                            var routerInvocations = [MockAddToCollectionRouter.Invocation.dismiss, .showSnackBar(message: message)]
+                            for await routerInvocation in await router.invocationSequence {
+                                #expect(routerInvocation == routerInvocations.removeFirst())
+                                addAlbumItems()
+                                if routerInvocations.isEmpty {
+                                    break
+                                }
+                            }
                         }
                     }
                 }
-                // Ensure task started
-                try await Task.sleep(nanoseconds: 50_000_000)
                 
                 sut.addItems(videos)
                 

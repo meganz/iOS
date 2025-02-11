@@ -1,4 +1,3 @@
-import AsyncAlgorithms
 import Combine
 import ContentLibraries
 import MEGADomain
@@ -227,7 +226,31 @@ struct AddToAlbumsViewModelTests {
             let sut = AddToAlbumsViewModelTests
                 .makeSUT()
             
-            try await confirmation("isItemsNotEmpty match publisher") { confirmation in
+            try await confirmation("isItemsNotEmpty match publisher", expectedCount: 3) { confirmation in
+                var cancellable: AnyCancellable?
+                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                    var expectations = [false, true, false]
+                    cancellable = sut.isItemsNotEmptyPublisher
+                        .sink(receiveCompletion: {
+                            cancellable?.cancel()
+                            switch $0 {
+                            case .finished:
+                                continuation.resume()
+                            case .failure(let error):
+                                continuation.resume(throwing: error)
+                            }
+                        }, receiveValue: {
+                            #expect($0 == expectations.removeFirst())
+                            confirmation()
+                            if expectations.isEmpty {
+                                cancellable?.cancel()
+                                continuation.resume()
+                            }
+                        })
+                    
+                    sut.albums = [AlbumCellViewModel(album: .init(id: 5, type: .user))]
+                    sut.albums = []
+                }
                 let invocationTask = Task {
                     var expectations = [false, true, false]
                     for await isNotEmpty in sut.isItemsNotEmptyPublisher.values {
@@ -239,11 +262,6 @@ struct AddToAlbumsViewModelTests {
                         
                     }
                 }
-                // Ensure task started
-                try await Task.sleep(nanoseconds: 50_000_000)
-                
-                sut.albums = [AlbumCellViewModel(album: .init(id: 5, type: .user))]
-                sut.albums = []
                 
                 Task {
                     try? await Task.sleep(nanoseconds: 500_000_000)
@@ -254,7 +272,7 @@ struct AddToAlbumsViewModelTests {
         }
         
         @Test
-        func addItems() async throws {
+        func addItems() async {
             let album = AlbumEntity(id: 3, type: .user)
             let albumSelection = AlbumSelection(mode: .single)
             albumSelection.setSelectedAlbums([album])
@@ -273,21 +291,28 @@ struct AddToAlbumsViewModelTests {
             
             let message = Strings.Localizable.Set.AddTo.Snackbar.message(addedPhotoCount)
                 .replacingOccurrences(of: "[A]", with: album.name)
-            try await confirmation("Ensure dismissed and items added", expectedCount: 2) { addAlbumItems in
-                var routerInvocations = [MockAddToCollectionRouter.Invocation.dismiss, .showSnackBar(message: message)]
+            await confirmation("Ensure dismissed and items added", expectedCount: 3) { addAlbumItems in
                 let invocationTask = Task {
-                    for await (useCaseInvocation, routerInvocation) in combineLatest(albumModificationUseCase.invocationSequence,
-                                                                                     router.invocationSequence) {
-                        #expect(useCaseInvocation == .addPhotosToAlbum(id: album.id, nodes: photos))
-                        #expect(routerInvocation == routerInvocations.removeFirst())
-                        addAlbumItems()
-                        if routerInvocations.isEmpty {
-                            break
+                    await withTaskGroup(of: Void.self) { group in
+                        group.addTask {
+                            for await useCaseInvocation in albumModificationUseCase.invocationSequence {
+                                #expect(useCaseInvocation == .addPhotosToAlbum(id: album.id, nodes: photos))
+                                addAlbumItems()
+                                break
+                            }
+                        }
+                        group.addTask {
+                            var routerInvocations = [MockAddToCollectionRouter.Invocation.dismiss, .showSnackBar(message: message)]
+                            for await routerInvocation in await router.invocationSequence {
+                                #expect(routerInvocation == routerInvocations.removeFirst())
+                                addAlbumItems()
+                                if routerInvocations.isEmpty {
+                                    break
+                                }
+                            }
                         }
                     }
                 }
-                // Ensure task started
-                try await Task.sleep(nanoseconds: 50_000_000)
                 
                 sut.addItems(photos)
                 
