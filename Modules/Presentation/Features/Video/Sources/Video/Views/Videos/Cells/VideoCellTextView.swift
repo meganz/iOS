@@ -170,7 +170,8 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
                 primaryTextColor: foregroundColor,
                 highlightedTextColor: highlightedTextColor,
                 normalBackgroundColor: backgroundColor,
-                normalFont: .preferredFont(forTextStyle: .body)
+                normalFont: .preferredFont(forTextStyle: .body),
+                highlightedFont: .preferredFont(forTextStyle: .body)
             )
         )
 
