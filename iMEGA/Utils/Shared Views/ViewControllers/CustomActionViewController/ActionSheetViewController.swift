@@ -107,7 +107,6 @@ class ActionSheetViewController: UIViewController {
         if UIDevice.current.iPadDevice && !UIApplication.shared.isSplitOrSlideOver && (sender is UIBarButtonItem || sender is UIView) {
             modalPresentationStyle = .popover
             popoverPresentationController?.delegate = self
-            popoverPresentationController?.permittedArrowDirections = [.left, .right]
             if let barButtonSender = sender as? UIBarButtonItem {
                 popoverPresentationController?.barButtonItem = barButtonSender
             } else if let viewSender = sender as? UIView {
