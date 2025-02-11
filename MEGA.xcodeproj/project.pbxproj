@@ -797,7 +797,6 @@
 		7288C2CE27F5D3D70010DC19 /* SendFeedbackViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2CD27F5D3D70010DC19 /* SendFeedbackViewRouter.swift */; };
 		729FD75727FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729FD75627FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift */; };
 		7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */; };
-		772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */; };
 		772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
@@ -3538,8 +3537,6 @@
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
 		7720C5B3206A931E00F995D1 /* MEGATransfer+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGATransfer+MNZCategory.h"; sourceTree = "<group>"; };
 		7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGATransfer+MNZCategory.m"; sourceTree = "<group>"; };
-		772BA5702243C7D100F062CB /* UITableView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableView+MNZCategory.h"; sourceTree = "<group>"; };
-		772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+MNZCategory.m"; sourceTree = "<group>"; };
 		773DF39A20EE1470004C3418 /* SendMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendMode.h; sourceTree = "<group>"; };
 		773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareAttachmentType.h; sourceTree = "<group>"; };
 		7747B2D6208623660011814E /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -7321,8 +7318,6 @@
 				41E150021DB7CB1400383645 /* UIImageView+MNZCategory.h */,
 				41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */,
 				C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */,
-				772BA5702243C7D100F062CB /* UITableView+MNZCategory.h */,
-				772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */,
 				5B0CD4282188D71100F97A2C /* UITextField+MNZCategory.h */,
 				5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */,
 				8319C15C22A138D70048B8A3 /* UIView+MNZCategory.h */,
@@ -15677,7 +15672,6 @@
 				B65D17D5289A226A00D5AD33 /* UINavigationViewController+Additions.swift in Sources */,
 				A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */,
 				5D31674224FC9A1B0032492F /* UIResponder+ErrorHandling.swift in Sources */,
-				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */,
 				8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */,
 				B65D17D3289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift in Sources */,

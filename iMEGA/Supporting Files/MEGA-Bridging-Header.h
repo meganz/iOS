@@ -31,7 +31,6 @@
 #import "MEGAChatMessage+MNZCategory.h"
 
 #import "UINavigationController+FDFullscreenPopGesture.h"
-#import "UITableView+MNZCategory.h"
 
 #import "SendToViewController.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
