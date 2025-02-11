@@ -686,16 +686,24 @@ public class SearchResultsViewModel: ObservableObject {
     
     private func updateListItem(with newItems: [SearchResultRowViewModel]) {
         self.listItems = newItems
-        withAnimation {
-            emptyViewModel = Self.makeEmptyView(
-                whenListItems: listItems.isEmpty,
-                query: currentQuery,
-                appliedChips: currentQuery.chips,
-                config: config
-            )
+        let newEmptyViewModel = Self.makeEmptyView(
+            whenListItems: listItems.isEmpty,
+            query: currentQuery,
+            appliedChips: currentQuery.chips,
+            config: config
+        )
+
+        // Disable animation for iOS 15 to avoid app crash
+        // IOS-9571: iOS 15 crash adding files to an empty folder
+        if #available(iOS 16.0, *) {
+            withAnimation {
+                emptyViewModel = newEmptyViewModel
+            }
+        } else {
+            emptyViewModel = newEmptyViewModel
         }
     }
-    
+
     private func refreshSearchResults() async throws {
         try Task.checkCancellation()
         guard let searchResults = try await resultsProvider.refreshedSearchResults(queryRequest: currentQuery) else {
