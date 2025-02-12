@@ -454,7 +454,7 @@ extension VideoRevampTabContainerViewController: DisplayMenuDelegate {
 extension VideoRevampTabContainerViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        let searchText = searchController.searchBar.text?.trim ?? ""
+        let searchText = searchController.searchBar.text ?? ""
         viewModel.dispatch(.searchBarAction(.updateSearchResults(searchText: searchText)))
     }
 }
