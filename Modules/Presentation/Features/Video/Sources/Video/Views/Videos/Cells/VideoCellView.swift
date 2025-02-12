@@ -121,11 +121,12 @@ struct VideoCellViewContent: View {
             .padding(0)
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            if let description = previewEntity.description {
+            if let description = previewEntity.makeDescriptionAttributedString(
+                withPrimaryTextColor: videoConfig.colorAssets.secondaryTextColor,
+                highlightedTextColor: videoConfig.colorAssets.highlightedTextColor
+            ) {
                 Text(description)
                     .lineLimit(1)
-                    .font(.caption)
-                    .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
             }
         }
     }

@@ -20,7 +20,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../../Domain/MEGASwiftUI"),
+        .package(path: "../../../UI/MEGASwiftUI"),
+        .package(path: "../../../UI/MEGAUIKit"),
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../../Presentation/MEGAAssets"),
         .package(path: "../../../Presentation/MEGAL10n"),
@@ -34,6 +35,7 @@ let package = Package(
             name: "Video",
             dependencies: [
                 "MEGASwiftUI",
+                "MEGAUIKit",
                 "MEGAAssets",
                 "MEGAL10n",
                 "MEGAPresentation",

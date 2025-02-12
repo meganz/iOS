@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAPresentation
 import MEGASwiftUI
+import MEGAUIKit
 import SwiftUI
 
 struct VideoCellPreviewEntity: Equatable {
@@ -15,11 +16,27 @@ struct VideoCellPreviewEntity: Equatable {
     let label: NodeLabelTypeEntity?
     let hasThumbnail: Bool
     let isDownloaded: Bool
-    
+
     var shouldShowCircleImage: Bool {
         isExported
     }
-    
+
+    func makeDescriptionAttributedString(
+        withPrimaryTextColor primaryTextColor: Color,
+        highlightedTextColor: Color
+    ) -> AttributedString? {
+        guard let description else { return nil }
+        return AttributedString(
+            description.highlightedStringWithKeyword(
+                searchText,
+                primaryTextColor: UIColor(primaryTextColor),
+                highlightedTextColor: UIColor(highlightedTextColor),
+                normalFont: .preferredFont(forTextStyle: .caption1),
+                highlightedFont: .preferredFont(style: .caption1, weight: .bold)
+            )
+        )
+    }
+
     static func == (lhs: VideoCellPreviewEntity, rhs: VideoCellPreviewEntity) -> Bool {
         let isImageContainerEqual = lhs.imageContainer.image == rhs.imageContainer.image
         && lhs.imageContainer.type == rhs.imageContainer.type
