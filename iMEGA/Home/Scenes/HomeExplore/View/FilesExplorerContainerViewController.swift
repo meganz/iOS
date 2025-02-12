@@ -217,7 +217,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
 // MARK: - UISearchResultsUpdating
 extension FilesExplorerContainerViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text?.trim else {
+        guard let searchText = searchController.searchBar.text, searchText.isNotEmpty else {
             currentState.updateSearchResults(for: nil)
             return
         }
