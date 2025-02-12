@@ -460,6 +460,11 @@ static TransfersWidgetViewController* instance = nil;
             [cell cancelTransfer:nil];
         } else {
             [self removeFromCompletedTransfers:self.completedTransfers[indexPath.row]];
+            MEGATransfer *transfer = [self.completedTransfers objectOrNilAtIndex:indexPath.row];
+            if (transfer) {
+                [self.selectedTransfers addObject:transfer];
+            }
+            [self updateViewState];
             [self.tableView reloadData];
         }
     }
