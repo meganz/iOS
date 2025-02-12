@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -37,7 +38,7 @@ struct AlbumListView: View {
         }, content: {
             shareLinksView(forAlbums: viewModel.selectedUserAlbums)
         })
-        .padding([.top, .bottom], 10)
+        .padding(.top, TokenSpacing._3)
         .onDisappear { viewModel.onViewDisappear() }
         .environment(\.editMode, $editMode)
         .onReceive(viewModel.selection.$editMode) { editMode = $0 }

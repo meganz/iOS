@@ -35,6 +35,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         controller.searchBar.delegate = self
         controller.delegate = self
         controller.obscuresBackgroundDuringPresentation = false
+        controller.hidesNavigationBarDuringPresentation = true
         return controller
     }()
     private lazy var pageController: PhotosPageViewController = {
@@ -199,8 +200,11 @@ final class PhotoAlbumContainerViewController: UIViewController {
     
     private func configureSearchBar() {
         guard isVisualMediaSearchFeatureEnabled else { return }
+        edgesForExtendedLayout = .top
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         extendedLayoutIncludesOpaqueBars = true
+        definesPresentationContext = true
         
         photoAlbumContainerInteractionManager.$searchBarText
             .compactMap { $0 }
