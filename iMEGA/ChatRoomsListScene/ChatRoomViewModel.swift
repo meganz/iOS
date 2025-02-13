@@ -178,7 +178,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     func contains(searchText: String) -> Bool {
-        searchString.localizedCaseInsensitiveContains(searchText)
+        searchString.localizedStandardContains(searchText)
     }
     
     func showDetails() {
