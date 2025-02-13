@@ -1,6 +1,10 @@
 import Foundation
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
+    var bottomConstant: CGFloat {
+        tabBar.isHidden ? -view.safeAreaInsets.bottom : -tabBar.frame.size.height
+    }
+    
     func presentMiniPlayer(_ viewController: UIViewController) {
         guard let miniPlayerView = viewController.view else { return }
         
@@ -16,7 +20,6 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     private func layoutMiniPlayerView(_ miniPlayerView: UIView) {
         miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
         
-        let bottomConstant = -tabBar.frame.size.height
         bottomViewBottomConstraint = miniPlayerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: bottomConstant)
         bottomViewBottomConstraint?.isActive = true
         
@@ -58,7 +61,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     @objc func refreshBottomConstraint() {
         guard bottomView != nil else { return }
         
-        bottomViewBottomConstraint?.constant = -tabBar.frame.size.height
+        bottomViewBottomConstraint?.constant = bottomConstant
         bottomView?.layoutIfNeeded()
     }
     
