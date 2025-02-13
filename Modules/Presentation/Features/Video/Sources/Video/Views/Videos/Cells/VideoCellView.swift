@@ -83,7 +83,7 @@ struct VideoCellViewContent: View {
             }
             .buttonStyle(NoHighlightButtonStyle())
         }
-        .frame(maxWidth: .infinity, idealHeight: 80, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var leadingContent: some View {
