@@ -37,7 +37,6 @@ enum NodeInfoAction: ActionType {
         featureFlagProvider.isFeatureFlagEnabled(for: .nodeTags)
         && !nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
         && !backupUseCase.isBackupNode(node.toNodeEntity())
-        && !isNodeAnIncomingShare(node.toNodeEntity())
     }
 
     init(
@@ -132,15 +131,5 @@ enum NodeInfoAction: ActionType {
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
         rootNavigationController.present(navigationController, animated: true)
-    }
-
-    private func isNodeAnIncomingShare(_ node: NodeEntity) -> Bool {
-        guard !node.isInShare else { return true }
-
-        if let parent = nodeUseCase.nodeForHandle(node.parentHandle) {
-            return isNodeAnIncomingShare(parent)
-        }
-
-        return false
     }
 }

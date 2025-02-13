@@ -70,13 +70,30 @@ struct NodeTagsCellControllerModelTests {
     }
 
     @MainActor
+    @Test("Check for tags managemenet permission",
+          arguments: [
+            (accessLevel: NodeAccessTypeEntity.unknown, hasTagsManagementPermission: false),
+            (accessLevel: NodeAccessTypeEntity.read, hasTagsManagementPermission: false),
+            (accessLevel: NodeAccessTypeEntity.readWrite, hasTagsManagementPermission: false),
+            (accessLevel: NodeAccessTypeEntity.owner, hasTagsManagementPermission: true),
+            (accessLevel: NodeAccessTypeEntity.full, hasTagsManagementPermission: true)
+            ]
+    )
+    func checkTasgManagementPermission(accessLevel: NodeAccessTypeEntity, hasTagsManagementPermission: Bool) {
+        let sut = makeSUT(nodeAccessLevel: accessLevel)
+        #expect(sut.hasTagsManagementPermission == hasTagsManagementPermission)
+    }
+
+    @MainActor
     private func makeSUT(
         node: NodeEntity = NodeEntity(),
         proLevel: AccountTypeEntity = .free,
         isMasterBusinessAccount: Bool = false,
         isExpiredAccount: Bool = false,
-        isInGracePeriod: Bool = false
+        isInGracePeriod: Bool = false,
+        nodeAccessLevel: NodeAccessTypeEntity = .unknown
     ) -> NodeTagsCellControllerModel {
+        let nodeUseCase = MockNodeUseCase(nodeAccessLevel: nodeAccessLevel)
         let accountUseCase = AccountUseCase(
             repository: MockAccountRepository(
                 isMasterBusinessAccount: isMasterBusinessAccount,
@@ -87,6 +104,10 @@ struct NodeTagsCellControllerModelTests {
             )
         )
 
-        return NodeTagsCellControllerModel(node: node, accountUseCase: accountUseCase)
+        return NodeTagsCellControllerModel(
+            node: node,
+            accountUseCase: accountUseCase,
+            nodeUseCase: nodeUseCase
+        )
     }
 }

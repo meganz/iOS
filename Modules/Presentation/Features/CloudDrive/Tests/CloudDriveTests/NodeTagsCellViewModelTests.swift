@@ -86,6 +86,6 @@ struct NodeTagsCellViewModelTests {
             )
         )
 
-        return NodeTagsCellViewModel(node: node, accountUseCase: accountUseCase)
+        return NodeTagsCellViewModel(node: node, accountUseCase: accountUseCase, userInteractionEnabled: false)
     }
 }

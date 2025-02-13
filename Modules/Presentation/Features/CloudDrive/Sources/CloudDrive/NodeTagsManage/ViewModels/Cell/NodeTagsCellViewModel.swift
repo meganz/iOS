@@ -14,6 +14,8 @@ final class NodeTagsCellViewModel: ObservableObject, Sendable {
         accountUseCase.hasExpiredBusinessAccount() || accountUseCase.hasExpiredProFlexiAccount()
     }
 
+    let userInteractionEnabled: Bool
+
     private(set) lazy var nodeTagsViewModel = {
         NodeTagsViewModel(
             tagViewModels: node.tags.map {
@@ -23,8 +25,9 @@ final class NodeTagsCellViewModel: ObservableObject, Sendable {
         )
     }()
 
-    init(node: NodeEntity, accountUseCase: some AccountUseCaseProtocol) {
+    init(node: NodeEntity, accountUseCase: some AccountUseCaseProtocol, userInteractionEnabled: Bool) {
         self.node = node
         self.accountUseCase = accountUseCase
+        self.userInteractionEnabled = userInteractionEnabled
     }
 }
