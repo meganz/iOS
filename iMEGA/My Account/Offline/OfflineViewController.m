@@ -16,8 +16,6 @@
 #import "MEGA-Swift.h"
 #import "MEGAAVViewController.h"
 #import "MEGAQLPreviewController.h"
-#import "OfflineTableViewViewController.h"
-#import "OfflineCollectionViewController.h"
 #import "NodeCollectionViewCell.h"
 #import "OfflineTableViewCell.h"
 #import "UIViewController+MNZCategory.h"
@@ -34,7 +32,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
@@ -51,8 +49,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
-@property (nonatomic, strong) OfflineTableViewViewController *offlineTableView;
-@property (nonatomic, strong) OfflineCollectionViewController *offlineCollectionView;
 @property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
 @property (nonatomic, copy) void (^openFileWhenViewReady)(void);
@@ -90,6 +86,8 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self refreshMiniPlayerIfNeeded];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
     
@@ -135,6 +133,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [AudioPlayerManager.shared removeDelegate:self];
+    [self refreshMiniPlayerIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -951,16 +950,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     return image;
-}
-
-#pragma mark - AudioPlayer
-
-- (void)updateContentView:(CGFloat)height {
-    if (self.viewModePreference == ViewModePreferenceEntityList) {
-        self.offlineTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
-    } else {
-        self.offlineCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
-    }
 }
 
 @end

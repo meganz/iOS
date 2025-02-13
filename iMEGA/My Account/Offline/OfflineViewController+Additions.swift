@@ -85,4 +85,21 @@ extension OfflineViewController {
     @objc func observeViewMode() {
         NotificationCenter.default.addObserver(self, selector: #selector(determineViewMode), name: .MEGAViewModePreferenceDidChange, object: nil)
     }
+    
+    @objc func refreshMiniPlayerIfNeeded() {
+        if AudioPlayerManager.shared.isPlayerAlive(),
+            let mainTabBarController = UIApplication.mainTabBarRootViewController() as? MainTabBarController {
+            mainTabBarController.refreshBottomConstraint()
+        }
+    }
+}
+
+extension OfflineViewController: AudioPlayerPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {
+        if isListViewModeSelected() {
+            offlineTableView?.tableView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+        } else {
+            offlineCollectionView?.collectionView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+        }
+    }
 }

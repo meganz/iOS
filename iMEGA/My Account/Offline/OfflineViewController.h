@@ -1,4 +1,6 @@
 #import <UIKit/UIKit.h>
+#import "OfflineTableViewViewController.h"
+#import "OfflineCollectionViewController.h"
 
 @class MEGAQLPreviewController, MOOfflineNode, ContextMenuManager, OfflineViewModel;
 
@@ -34,6 +36,9 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 @property (nonatomic, strong) UIBarButtonItem *contextBarButtonItem;
 @property (nonatomic, strong) NSString *logsPath;
 @property (nonatomic, strong) OfflineViewModel *viewModel;
+
+@property (nonatomic, strong, nullable) OfflineTableViewViewController *offlineTableView;
+@property (nonatomic, strong, nullable) OfflineCollectionViewController *offlineCollectionView;
 
 - (nullable NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)updateNavigationBarTitle;
