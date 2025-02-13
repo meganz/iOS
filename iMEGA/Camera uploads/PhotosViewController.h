@@ -6,15 +6,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PhotosViewController : UIViewController <MEGATransferDelegate, MEGAGlobalDelegate>
 
-@property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
-
 @property (nonatomic, nullable, strong) MyAvatarManager *myAvatarManager;
 @property (strong, nonatomic) PhotoSelectionAdapter *selection;
 
 @property (weak,   nonatomic) PhotoAlbumContainerViewController *parentPhotoAlbumsController;
-@property (assign, nonatomic) BOOL shouldShowRightBarButton;
 
-@property (nonatomic) IBOutlet UIView *photosBannerView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *editBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;

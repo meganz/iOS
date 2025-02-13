@@ -464,7 +464,6 @@
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
 		411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
-		411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */; };
 		4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
 		4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
 		4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
@@ -3147,8 +3146,6 @@
 		4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MNZCategory.m"; sourceTree = "<group>"; };
 		411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAUser+MNZCategory.h"; sourceTree = "<group>"; };
 		411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAUser+MNZCategory.m"; sourceTree = "<group>"; };
-		411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGACollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGACollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGA-PrefixHeader.pch"; sourceTree = "<group>"; };
 		4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MEGACD.xcdatamodel; sourceTree = "<group>"; };
 		4147C2D21B4EE9BA00A37044 /* MEGAStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAStore.h; sourceTree = "<group>"; };
@@ -7140,8 +7137,6 @@
 				B6D11ADC219CE60E00446B86 /* UploadUtils */,
 				6DB163EE2880F91F004EFBC7 /* ViewModel */,
 				0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */,
-				411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */,
-				411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */,
 				41BADDAE1A8E28FD008408B3 /* Photos.storyboard */,
 				41BADDB41A8E2E92008408B3 /* PhotosViewController.h */,
 				41BADDB51A8E2E92008408B3 /* PhotosViewController.m */,
@@ -14951,7 +14946,6 @@
 				A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
-				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */,
 				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,

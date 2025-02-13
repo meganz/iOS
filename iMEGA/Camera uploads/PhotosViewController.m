@@ -2,24 +2,17 @@
 
 #import "UIScrollView+EmptyDataSet.h"
 #import "EmptyStateView.h"
-#import "Helper.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "MEGAPhotoBrowserViewController.h"
 #import "UICollectionView+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "CameraUploadsTableViewController.h"
-#import "DisplayMode.h"
-#import "BrowserViewController.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
-#import "CustomModalAlertViewController.h"
-#import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"
 #import "NSArray+MNZCategory.h"
 
@@ -240,11 +233,7 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
-            if ([self.photosByMonthYearArray count] == 0) {
-                text = LocalizedString(@"cameraUploadsEnabled", @"");
-            } else {
-                return nil;
-            }
+            text = LocalizedString(@"cameraUploadsEnabled", @"");
         } else {
             text = LocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
         }
@@ -270,9 +259,7 @@
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
-            if ([self.photosByMonthYearArray count] == 0) {
-                image = [UIImage imageNamed:@"cameraEmptyState"];
-            }
+            image = [UIImage imageNamed:@"cameraEmptyState"];
         } else {
             image = [UIImage imageNamed:@"cameraUploadsBoarding"];
         }
