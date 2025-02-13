@@ -454,6 +454,11 @@ final class NodeInfoViewController: UITableViewController {
                             node: node.toNodeEntity(),
                             accountUseCase: AccountUseCase(
                                 repository: AccountRepository.newRepo
+                            ),
+                            nodeUseCase: NodeUseCase(
+                                nodeDataRepository: NodeDataRepository.newRepo,
+                                nodeValidationRepository: NodeValidationRepository.newRepo,
+                                nodeRepository: NodeRepository.newRepo
                             )
                         ), expiredAccountAlertPresenter: UIApplication.shared.delegate as? AppDelegate
                     )

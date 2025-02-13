@@ -49,6 +49,7 @@ extension NodeTagsCellController: UITableViewDataSource {
         ) as? HostingTableViewCell<NodeTagsCellView>
 
         guard let cell, let controller else { return HostingTableViewCell<NodeTagsCellView>() }
+        cell.isUserInteractionEnabled = viewModel.hasTagsManagementPermission
 
         let view = NodeTagsCellView(viewModel: self.viewModel.cellViewModel)
         cell.host(view, parent: controller)
@@ -58,8 +59,9 @@ extension NodeTagsCellController: UITableViewDataSource {
 }
 
 extension NodeTagsCellController: UITableViewDelegate {
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let controller else { return }
+        guard let controller, viewModel.hasTagsManagementPermission else { return }
         if viewModel.isExpiredBusinessOrProFlexiAccount {
             showFeatureUnavailabilityAlert()
         } else {
