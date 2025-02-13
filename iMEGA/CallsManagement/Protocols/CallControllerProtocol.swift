@@ -63,12 +63,9 @@ struct CallControllerProvider {
     
     func isCallKitAvailable() -> Bool {
 #if targetEnvironment(simulator)
-        return false
+        false
 #else
-        // Check if the device supports telephony (some iPads doesn't)
-        let telephonyInfo = CTTelephonyNetworkInfo()
-        let supportsTelephony = telephonyInfo.serviceSubscriberCellularProviders?.isEmpty == false
-        return supportsTelephony
+        true
 #endif
     }
 }
