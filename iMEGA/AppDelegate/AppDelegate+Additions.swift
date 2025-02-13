@@ -702,17 +702,17 @@ extension AppDelegate {
         
         CallControllerProvider().provideCallController().configureCallsCoordinator(callsCoordinator)
         
-#if !targetEnvironment(simulator)
-        voIPPushDelegate = VoIPPushDelegate(
-            callCoordinator: callsCoordinator,
-            voIpTokenUseCase: VoIPTokenUseCase(repo: VoIPTokenRepository.newRepo),
-            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
-            logger: {
-                CrashlyticsLogger.log($0)
-                MEGALogDebug($0)
-            }
-        )
-#endif
+        if CallControllerProvider().isCallKitAvailable() {
+            voIPPushDelegate = VoIPPushDelegate(
+                callCoordinator: callsCoordinator,
+                voIpTokenUseCase: VoIPTokenUseCase(repo: VoIPTokenRepository.newRepo),
+                megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
+                logger: {
+                    CrashlyticsLogger.log($0)
+                    MEGALogDebug($0)
+                }
+            )
+        }
     }
     
     @objc func startCall(fromIntent intent: INStartCallIntent) {

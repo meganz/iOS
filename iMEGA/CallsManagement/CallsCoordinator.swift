@@ -133,6 +133,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
             updateVideoForCall(call)
         case .ringingStatus:
             endCallWhenRingingStopAndUserNotPresent(call)
+        case .callComposition:
+            endCallIfSameUserJoinedCallInOtherDevice(call)
         default:
             break
         }
@@ -317,17 +319,29 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     /// If so, call must be reported as ended in order to dismiss VoIP call notification.
     private func checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for chatId: ChatIdEntity) {
         if let call = callUseCase.call(for: chatId) {
-            for handle in call.participants where chatUseCase.myUserHandle() == handle {
+            if call.participants.contains(where: { $0 == chatUseCase.myUserHandle() }) {
+                MEGALogDebug("[CallsCoordinator] Provider reported new incoming call in chat room that has been already answered by same user in other device, report end call to dismiss incoming call notification")
                 reportEndCall(call)
-                break
             }
         }
     }
     
-    /// This happens when call is ringing (possibly VoIP call notification presented)
-    /// and answered in other device by same user
+    /// Next functions:
+    /// - `func endCallWhenRingingStopAndUserNotPresent(CallEntity)`
+    /// - `func endCallIfSameUserJoinedCallInOtherDevice(CallEntity)`
+    /// happens when call is ringing (possibly VoIP call notification presented),
+    /// and answered in other device by same user.
     private func endCallWhenRingingStopAndUserNotPresent(_ call: CallEntity) {
         if call.status == .userNoPresent && !call.isRinging {
+            reportEndCall(call)
+        }
+    }
+    
+    private func endCallIfSameUserJoinedCallInOtherDevice(_ call: CallEntity) {
+        if call.status == .userNoPresent,
+           call.callCompositionChange == .peerAdded,
+           call.peeridCallCompositionChange == chatUseCase.myUserHandle() {
+            MEGALogDebug("[CallsCoordinator] Call update received while user is not participating in call and same user joined to the call in other device, report end call to dismiss incoming call notification")
             reportEndCall(call)
         }
     }
@@ -370,9 +384,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         case .waitingRoomTimeout:
             endCallReason = .unanswered
         default:
-            for handle in call.participants where chatUseCase.myUserHandle() == handle {
+            if call.participants.contains(where: { $0 == chatUseCase.myUserHandle() }) {
                 endCallReason = .answeredElsewhere
-                break
             }
         }
         
