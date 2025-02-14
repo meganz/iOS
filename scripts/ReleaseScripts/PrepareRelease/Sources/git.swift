@@ -21,10 +21,9 @@ func checkoutSubmoduleToCommit(submodule: Submodule, commitHash: String) throws 
     try runInShell("git checkout \(commitHash)", cwd: URL(fileURLWithPath: submodule.path))
 }
 
-func createReleaseCommitAndPushToOrigin(version: String, prepareBranch: String) throws {
+func createReleaseCommit(version: String, prepareBranch: String) throws {
     try runInShell("git add .")
     try runInShell("git commit -m \"Prepare v\(version)\"")
-    try runInShell("git push --set-upstream origin \(prepareBranch)")
 }
 
 func checkIfGitIsInstalled() throws {
