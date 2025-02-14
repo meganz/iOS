@@ -50,31 +50,23 @@ struct NodeActionViewModel {
         self.featureFlagProvider = featureFlagProvider
     }
     
-    /// Indicates if nodes are already hidden or not. If nodes are hidden, then show unhide action; if not, then show hide action. If no action should be shown, return nil. If nodes contain system-generated nodes, return nil. If nodes are from shared items, return nil.
+    /// Indicates if nodes are already hidden or not. If nodes are hidden, then show unhide action; if not, then show hide action. If no action should be shown, return nil. If nodes are from shared items, return nil.
     /// - Parameter nodes: The nodes to check to show hide entry point or not
     /// - Parameter isFromSharedItem: Indicates if the nodes are from a shared item
     /// - Parameter containsABackupNode: Indicates if the nodes contain a backup node
     /// - Returns: An `Optional<Bool>`: if value is nil, don't show entry point; if value is false, show hide action; if value is true, don't show hide action
     func isHidden(_ nodes: [NodeEntity], isFromSharedItem: Bool, containsBackupNode: Bool) async -> Bool? {
-        do {
-            guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-                  isFromSharedItem == false,
-                  !containsBackupNode,
-                  nodes.isNotEmpty,
-                  try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: nodes) else {
-                return nil
-            }
-            guard hasValidProOrUnexpiredBusinessAccount else {
-                return false
-            }
-            
-            return await containsOnlySensitiveNodes(for: nodes)
-        } catch is CancellationError {
-            MEGALogError("[\(type(of: self))] containsOnlySensitiveNodes cancelled")
-        } catch {
-            MEGALogError("[\(type(of: self))] Error determining node sensitivity. Error: \(error)")
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
+              isFromSharedItem == false,
+              !containsBackupNode,
+              nodes.isNotEmpty else {
+            return nil
         }
-        return nil
+        guard hasValidProOrUnexpiredBusinessAccount else {
+            return false
+        }
+        
+        return await containsOnlySensitiveNodes(for: nodes)
     }
     
     func isSensitive(node: NodeEntity) async -> Bool {

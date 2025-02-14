@@ -114,27 +114,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         }
     }
 
-    func testEvaluateNodeSensitivity_whenSystemGeneratedNodeThrowingError_shouldReturnNil() async {
-        let node = NodeEntity(isFolder: true)
-        let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(
-            containsSystemGeneratedNodeError: NSError(domain: "", code: 0)
-        )
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
-            isAccessible: true)
-        
-        let sut = makeSUT(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
-            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase
-        )
-        let result = await sut.evaluateNodeSensitivity(
-            for: NodeSource.node { node },
-            displayMode: .cloudDrive,
-            isFromSharedItem: false
-        )
-        XCTAssertNil(result)
-    }
-
     func testEvaluateNodeSensitivity_ForSensitiveNode_shouldReturnNodeAsSensitive() async {
         let node = NodeEntity(isFolder: true, isMarkedSensitive: false)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [:])
@@ -173,25 +152,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
             isFromSharedItem: false
         )
         XCTAssertEqual(result, false)
-    }
-    
-    func testEvaluateNodeSensitivity_whenSystemGeneratedNodeInvalidAccount_shouldReturnNil() async {
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(isAccessible: false)
-        let systemNode = NodeEntity(isFolder: true, isMarkedSensitive: false)
-        let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(
-            nodesForLocation: [.cameraUpload: systemNode])
-
-        let sut = makeSUT(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
-            systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase
-        )
-        let result = await sut.evaluateNodeSensitivity(
-            for: NodeSource.node { systemNode },
-            displayMode: .cloudDrive,
-            isFromSharedItem: false
-        )
-        XCTAssertNil(result)
     }
 
     // MARK: - Helpers

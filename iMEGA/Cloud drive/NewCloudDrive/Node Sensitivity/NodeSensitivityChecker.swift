@@ -51,10 +51,6 @@ struct NodeSensitivityChecker: NodeSensitivityChecking {
         }
 
         do {
-            // System generated nodes should not be able to be hidden or unhidden. This should be checked before account
-            guard try await !systemGeneratedNodeUseCase.containsSystemGeneratedNode(nodes: [parentNode]) else {
-                return nil
-            }
             guard sensitiveNodeUseCase.isAccessible() else {
                 return false // Always show hide regardless of the node sensitivity.
             }
