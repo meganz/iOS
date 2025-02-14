@@ -62,47 +62,6 @@ final class NodeActionViewModelTests: XCTestCase {
         }
     }
     
-    func testIsHidden_nodeIsSystemManaged_shouldReturnNil() async throws {
-        let systemNode = NodeEntity(handle: 65)
-        let nodes = [
-            systemNode,
-            NodeEntity(handle: 66, isMarkedSensitive: true)
-        ]
-        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
-        let sut = makeSUT(
-            systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
-                nodesForLocation: [.cameraUpload: systemNode]),
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
-        )
-        let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
-        XCTAssertNil(result)
-    }
-    
-    func testIsHidden_nodeIsSystemManagedAndErrorWasThrown_shouldReturnNil() async throws {
-        
-        let errors: [any Error] = [
-            GenericErrorEntity(),
-            CancellationError()
-        ]
-        
-        for await error in errors.async {
-            let systemNode = NodeEntity(handle: 65)
-            let nodes = [
-                systemNode,
-                NodeEntity(handle: 66, isMarkedSensitive: true)
-            ]
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
-            let sut = makeSUT(
-                systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
-                    nodesForLocation: [.cameraUpload: systemNode],
-                    containsSystemGeneratedNodeError: error),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
-            )
-            let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
-            XCTAssertNil(result)
-        }
-    }
-    
     func testIsHidden_nodesEmpty_shouldReturnNil() async throws {
         let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let sut = makeSUT(

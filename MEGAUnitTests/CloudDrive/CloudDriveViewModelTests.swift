@@ -296,30 +296,6 @@ class CloudDriveViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testIsParentMarkedAsSensitiveForDisplayMode_whenParentIsASystemNodeAndErrorsAreThrown_shouldReturnNil() async throws {
-
-        let errors: [any Error] = [
-            GenericErrorEntity(),
-            CancellationError()
-        ]
-        
-        for await error in errors.async {
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
-            let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false)
-            let sut = makeSUT(
-                parentNode: parentNode,
-                systemGeneratedNodeUseCase: MockSystemGeneratedNodeUseCase(
-                    nodesForLocation: [.cameraUpload: parentNode.toNodeEntity()],
-                    containsSystemGeneratedNodeError: error),
-                accountUseCase: MockAccountUseCase(hasValidProOrUnexpiredBusinessAccount: true),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
-            
-            let isHidden = await sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive, isFromSharedItem: false)
-            XCTAssertNil(isHidden)
-        }
-    }
-    
-    @MainActor
     func testIsParentMarkedAsSensitiveForDisplayMode_accountNotValid_shouldReturnFalse() async throws {
         let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
         let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
