@@ -44,11 +44,16 @@ do {
     log("Checking out \(Submodule.chatSDK.description) to \(userInput.chatHash)")
     try checkoutSubmoduleToCommit(submodule: .chatSDK, commitHash: userInput.chatHash)
 
-    log("Creating prepare branch commit and pushing the branch to GitLab")
-    try createReleaseCommitAndPushToOrigin(version: userInput.version, prepareBranch: prepareBranch)
+    log("Creating prepare branch commit")
+    try createReleaseCommit(version: userInput.version, prepareBranch: prepareBranch)
 
-    log("Creating the prepare MR on GitLab")
-    try await createMR(sourceBranch: prepareBranch, targetBranch: "develop", title: "Prepare v\(userInput.version)", squash: true)
+    log("Pushing the branch to GitLab and creating the prepare MR")
+    try createMRUsingGitCommand(
+        sourceBranch: prepareBranch,
+        targetBranch: "develop",
+        title: "Prepare v\(userInput.version)",
+        squash: true
+    )
 
     log("Finished successfully")
     exit(ProcessResult.success)
