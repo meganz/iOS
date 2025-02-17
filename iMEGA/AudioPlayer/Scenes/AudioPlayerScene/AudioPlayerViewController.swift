@@ -270,10 +270,6 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         updateAppearance()
     }
     
-    private func configureOfflinePlayer() {
-        configureDefaultPlayer()
-    }
-    
     private func configureFileLinkPlayer(title: String, subtitle: String) {
         configureNavigationBar(title: title, subtitle: subtitle)
         configureToolbarButtons()
@@ -515,7 +511,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
             configureDefaultPlayer()
         case .configureOfflinePlayer:
             playerType = .offline
-            configureOfflinePlayer()
+            configureDefaultPlayer()
         case .configureFileLinkPlayer(let title, let subtitle):
             playerType = .fileLink
             configureFileLinkPlayer(title: title, subtitle: subtitle)
