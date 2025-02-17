@@ -36,10 +36,8 @@ final class AudioPlayerItem: AVPlayerItem {
         asset.loadMetadata { [weak self] title, artist, albumName, artworkData in
             guard let self else { return }
             
-            name = if let title {
-                title
-            } else {
-                node?.name ?? ""
+            if let title {
+                name = title
             }
             
             self.artist = if let artist {
