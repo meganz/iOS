@@ -10,6 +10,8 @@ enum SlideShowAction: ActionType {
     case finish
     case resetTimer
     case viewDidAppear
+    case onViewReady
+    case onViewWillDisappear
 }
 
 protocol SlideShowViewModelPreferenceProtocol {
@@ -20,18 +22,24 @@ protocol SlideShowViewModelPreferenceProtocol {
 
 final class SlideShowViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
+        case adjustHeightOfTopAndBottomViews
         case play
         case pause
         case initialPhotoLoaded
+        case hideLoader
         case resetTimer
         case restart
         case showLoader
     }
     
-    private var dataSource: any SlideShowDataSourceProtocol
+    private let dataSource: any SlideShowDataSourceProtocol
     private let slideShowUseCase: any SlideShowUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let notificationCenter: NotificationCenter
+    
+    private var willResignActiveNotificationTask: Task<Void, Never>?
+    private var didBecomeActiveNotificationNotificationTask: Task<Void, Never>?
     
     var configuration: SlideShowConfigurationEntity
     
@@ -42,7 +50,7 @@ final class SlideShowViewModel: ViewModelType {
     var numberOfSlideShowContents: Int {
         dataSource.count
     }
-     
+    
     var timeIntervalForSlideInSeconds: Double {
         configuration.timeIntervalForSlideInSeconds.value
     }
@@ -54,14 +62,16 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     init(dataSource: some SlideShowDataSourceProtocol,
-         slideShowUseCase: any SlideShowUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         tracker: some AnalyticsTracking) {
-        
+         slideShowUseCase: some SlideShowUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         tracker: some AnalyticsTracking,
+         notificationCenter: NotificationCenter = .default
+    ) {
         self.dataSource = dataSource
         self.slideShowUseCase = slideShowUseCase
         self.accountUseCase = accountUseCase
         self.tracker = tracker
+        self.notificationCenter = notificationCenter
         
         if let userHandle = accountUseCase.currentUserHandle {
             configuration = slideShowUseCase.loadConfiguration(forUser: userHandle)
@@ -96,7 +106,7 @@ final class SlideShowViewModel: ViewModelType {
         currentSlideIndex = dataSource.indexOfCurrentPhoto()
         invokeCommand?(.restart)
     }
-        
+    
     func mediaEntity(at indexPath: IndexPath) -> SlideShowCellViewModel? {
         dataSource.items[indexPath.row]
     }
@@ -114,11 +124,35 @@ final class SlideShowViewModel: ViewModelType {
             invokeCommand?(.resetTimer)
         case .viewDidAppear:
             sendScreenEvent()
+        case .onViewReady:
+            subscribeToWillResignActiveNotificationNotification()
+            subscribeToDidBecomeActiveNotificationNotification()
+        case .onViewWillDisappear:
+            willResignActiveNotificationTask?.cancel()
+            didBecomeActiveNotificationNotificationTask?.cancel()
         }
     }
     
     private func sendScreenEvent() {
         tracker.trackAnalyticsEvent(with: SlideShowScreenEvent())
+    }
+    
+    private func subscribeToWillResignActiveNotificationNotification() {
+        willResignActiveNotificationTask = Task(priority: .utility) { [weak self, notificationCenter] in
+            for await _ in notificationCenter.publisher(for: UIApplication.willResignActiveNotification).values {
+                self?.pauseSlideShow()
+                self?.invokeCommand?(.hideLoader)
+            }
+        }
+    }
+    
+    private func subscribeToDidBecomeActiveNotificationNotification() {
+        didBecomeActiveNotificationNotificationTask = Task { [notificationCenter, invokeCommand] in
+            for await _ in notificationCenter.publisher(
+                for: UIApplication.didBecomeActiveNotification).values {
+                invokeCommand?(.adjustHeightOfTopAndBottomViews)
+            }
+        }
     }
 }
 

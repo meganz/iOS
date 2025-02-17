@@ -31,8 +31,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         view.backgroundColor = backgroundColor
         slideShowOptionButton.title = Strings.Localizable.Slideshow.PreferenceSetting.options
         collectionView.updateLayout()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(pauseSlideShow), name: UIApplication.willResignActiveNotification, object: nil)
         
         adjustHeightOfTopAndBottomView()
         setVisibility(false)
@@ -45,6 +43,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         if numberOfSlideShowContents() > 0 {
             playSlideShow()
         }
+        viewModel?.dispatch(.onViewReady)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,7 +71,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        viewModel?.dispatch(.onViewWillDisappear)
     }
     
     override func viewWillLayoutSubviews() {
@@ -107,8 +106,16 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private func adjustHeightOfTopAndBottomView() {
         let safeArea = UIApplication.shared.keyWindow?.safeAreaInsets
-        statusBarBackgroundViewHeightConstraint.constant = safeArea?.top ?? .zero
-        bottomBarBackgroundViewHeightConstraint.constant = safeArea?.bottom ?? .zero
+        let topHeight = safeArea?.top ?? .zero
+        let bottomHeight = safeArea?.bottom ?? .zero
+
+        if statusBarBackgroundViewHeightConstraint.constant != topHeight {
+            statusBarBackgroundViewHeightConstraint.constant = topHeight
+        }
+
+        if bottomBarBackgroundViewHeightConstraint.constant != bottomHeight {
+            bottomBarBackgroundViewHeightConstraint.constant = bottomHeight
+        }
     }
     
     func update(viewModel: SlideShowViewModel) {
@@ -126,6 +133,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     func executeCommand(_ command: SlideShowViewModel.Command) {
          switch command {
+         case .adjustHeightOfTopAndBottomViews: adjustHeightOfTopAndBottomView()
          case .play: play()
          case .pause: pause()
          case .initialPhotoLoaded:
@@ -137,6 +145,7 @@ final class SlideShowViewController: UIViewController, ViewType {
                 at: .centeredHorizontally,
                 animated: false)
              playSlideShow()
+         case .hideLoader: hideLoader()
          case .resetTimer: resetTimer()
          case .restart: restart()
          case .showLoader: showLoader()
@@ -254,11 +263,6 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     @IBAction func playSlideShow() {
         viewModel?.dispatch(.play)
-    }
-    
-    @objc private func pauseSlideShow() {
-        viewModel?.dispatch(.pause)
-        hideLoader()
     }
     
     private func reload() {
