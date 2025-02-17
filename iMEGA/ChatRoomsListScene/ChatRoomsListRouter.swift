@@ -26,6 +26,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             router: self,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
+            chatPresenceUseCase: ChatPresenceUseCase(repository: ChatPresenceRepository.newRepo),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)),

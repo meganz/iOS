@@ -20,7 +20,12 @@ public protocol ChatUpdatesProviderProtocol: Sendable {
     /// - Returns: `AnyAsyncSequence` that will call chatSdk.add on creation and chatSdk.remove onTermination of `AsyncStream`.
     /// It will yield `(HandleEntity, Int)` item until sequence terminated
     var presenceLastGreenUpdates: AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)> { get }
-
+    
+    /// Chat presence configuration updates from `MEGAChatDelegate` `onChatPresenceConfigUpdate` as an `AnyAsyncSequence`
+    ///
+    /// - Returns: `AnyAsyncSequence` that will call chatSdk.add on creation and chatSdk.remove onTermination of `AsyncStream`.
+    /// It will yield `ChatPresenceConfig` item until sequence terminated
+    var presenceConfigUpdates: AnyAsyncSequence<ChatPresenceConfigEntity> { get }
 }
 
 public struct ChatUpdatesProvider: ChatUpdatesProviderProtocol {
@@ -54,6 +59,19 @@ public struct ChatUpdatesProvider: ChatUpdatesProviderProtocol {
         AsyncStream { continuation in
             let delegate = ChatPresenceLastGreenUpdateGlobalDelegate {
                 continuation.yield(($0, $1))
+            }
+            continuation.onTermination = { _ in
+                sdk.remove(delegate)
+            }
+            sdk.add(delegate, queueType: .globalBackground)
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
+    public var presenceConfigUpdates: AnyAsyncSequence<ChatPresenceConfigEntity> {
+        AsyncStream { continuation in
+            let delegate = ChatPresenceConfigUpdateGlobalDelegate {
+                continuation.yield($0)
             }
             continuation.onTermination = { _ in
                 sdk.remove(delegate)
@@ -109,5 +127,18 @@ private final class ChatPresenceLastGreenUpdateGlobalDelegate: NSObject, MEGACha
     
     func onChatPresenceLastGreen(_ api: MEGAChatSdk, userHandle: UInt64, lastGreen: Int) {
         onChatPresenceLastGreenUpdate(userHandle, lastGreen)
+    }
+}
+
+private final class ChatPresenceConfigUpdateGlobalDelegate: NSObject, MEGAChatDelegate, Sendable {
+    private let onChatPresenceConfigUpdate: @Sendable (ChatPresenceConfigEntity) -> Void
+    
+    init(onChatPresenceConfigUpdate: @Sendable @escaping (ChatPresenceConfigEntity) -> Void) {
+        self.onChatPresenceConfigUpdate = onChatPresenceConfigUpdate
+        super.init()
+    }
+    
+    func onChatPresenceConfigUpdate(_ api: MEGAChatSdk, presenceConfig: MEGAChatPresenceConfig) {
+        onChatPresenceConfigUpdate(presenceConfig.toChatPresenceConfigEntity())
     }
 }

@@ -56,6 +56,7 @@ final class ChatContentViewModel: ViewModelType {
     private var chatRoom: ChatRoomEntity
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatPresenceUseCase: any ChatPresenceUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
@@ -94,6 +95,7 @@ final class ChatContentViewModel: ViewModelType {
     init(chatRoom: ChatRoomEntity,
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         chatPresenceUseCase: some ChatPresenceUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
          callUpdateUseCase: some CallUpdateUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
@@ -110,6 +112,7 @@ final class ChatContentViewModel: ViewModelType {
     ) {
         self.chatRoom = chatRoom
         self.chatUseCase = chatUseCase
+        self.chatPresenceUseCase = chatPresenceUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
         self.callUpdateUseCase = callUpdateUseCase
@@ -159,7 +162,7 @@ final class ChatContentViewModel: ViewModelType {
         case .requestLastGreenIfNeeded:
             // If chat room is one to one, ask for last time other user was online
             if let userHandle = chatRoom.oneToOneRoomOtherParticipantUserHandle() {
-                chatRoomUseCase.requestLastGreen(for: userHandle)
+                chatPresenceUseCase.requestLastGreen(for: userHandle)
             }
         case .resumeTransfers:
             transfersListenerUseCase.resumeTransfers()
@@ -548,7 +551,7 @@ final class ChatContentViewModel: ViewModelType {
     // MARK: Chat online status update
     private func monitorOnChatOnlineStatusUpdate() {
         guard chatRoom.chatType == .oneToOne else { return } // For groups there are not online status
-        let chatOnlineStatusUpdates = chatRoomUseCase.monitorOnChatOnlineStatusUpdate()
+        let chatOnlineStatusUpdates = chatPresenceUseCase.monitorOnChatOnlineStatusUpdate()
         Task { [weak self] in
             for try await chatOnlineStatusUpdate in chatOnlineStatusUpdates {
                 self?.onChatOnlineStatusUpdate(chatOnlineStatusUpdate)
@@ -569,7 +572,7 @@ final class ChatContentViewModel: ViewModelType {
             invokeCommand?(.configNavigationBar)
             switch chatOnlineStatus.status {
             case .offline, .away:
-                chatRoomUseCase.requestLastGreen(for: chatOnlineStatus.userHandle)
+                chatPresenceUseCase.requestLastGreen(for: chatOnlineStatus.userHandle)
             default:
                 break
             }
@@ -579,7 +582,7 @@ final class ChatContentViewModel: ViewModelType {
     // MARK: Chat presence last green update
     private func monitorOnChatPresenceLastGreenUpdate() {
         guard chatRoom.chatType == .oneToOne else { return } // For groups there are not presence last green
-        let chatPresenceLastGreenUpdates = chatRoomUseCase.monitorOnPresenceLastGreenUpdates()
+        let chatPresenceLastGreenUpdates = chatPresenceUseCase.monitorOnPresenceLastGreenUpdates()
         Task { [weak self] in
             for try await chatPresenceLastGreenUpdate in chatPresenceLastGreenUpdates {
                 self?.onPresenceLastGreenUpdate(chatPresenceLastGreenUpdate)

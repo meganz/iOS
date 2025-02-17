@@ -3,8 +3,6 @@ import Combine
 // MARK: - Use case protocol -
 public protocol ChatUseCaseProtocol: Sendable {
     func myUserHandle() -> HandleEntity
-    func chatStatus() -> ChatStatusEntity
-    func changeChatStatus(to status: ChatStatusEntity)
     func monitorChatStatusChange() -> AnyPublisher<(HandleEntity, ChatStatusEntity), Never>
     func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never>
     func existsActiveCall() -> Bool
@@ -37,14 +35,6 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func myUserHandle() -> HandleEntity {
         chatRepo.myUserHandle()
-    }
-
-    public func chatStatus() -> ChatStatusEntity {
-        chatRepo.chatStatus()
-    }
-    
-    public func changeChatStatus(to status: ChatStatusEntity) {
-        chatRepo.changeChatStatus(to: status)
     }
     
     public func monitorChatStatusChange() -> AnyPublisher<(HandleEntity, ChatStatusEntity), Never> {

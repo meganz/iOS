@@ -33,10 +33,7 @@ public protocol ChatRoomUseCaseProtocol: Sendable {
     func closeChatRoom(_ chatRoom: ChatRoomEntity)
     func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool
     func userEmail(for handle: HandleEntity) async -> String?
-    func requestLastGreen(for user: HandleEntity)
     func monitorOnChatConnectionStateUpdate() -> AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error>
-    func monitorOnChatOnlineStatusUpdate() -> AnyAsyncSequence<(userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)>
-    func monitorOnPresenceLastGreenUpdates() -> AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)>
 }
 
 public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCaseProtocol, Sendable {
@@ -200,23 +197,9 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
     public func userEmail(for handle: HandleEntity) async -> String? {
         await chatRoomRepo.userEmail(for: handle)
     }
-    
-    public func requestLastGreen(for user: HandleEntity) {
-        chatRoomRepo.requestLastGreen(for: user)
-    }
 
     public func monitorOnChatConnectionStateUpdate() -> AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error> {
         chatRoomRepo.chatConnectionStateUpdate
             .eraseToAnyAsyncThrowingSequence()
-    }
-    
-    public func monitorOnChatOnlineStatusUpdate() -> AnyAsyncSequence<(userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)> {
-        chatRoomRepo.chatOnlineStatusUpdate
-            .eraseToAnyAsyncSequence()
-    }
-    
-    public func monitorOnPresenceLastGreenUpdates() -> AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)> {
-        chatRoomRepo.presenceLastGreenUpdates
-            .eraseToAnyAsyncSequence()
     }
 }

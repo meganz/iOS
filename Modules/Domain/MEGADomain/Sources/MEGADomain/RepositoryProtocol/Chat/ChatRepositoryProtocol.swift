@@ -2,8 +2,6 @@ import Combine
 
 public protocol ChatRepositoryProtocol: RepositoryProtocol, Sendable {
     func myUserHandle() -> HandleEntity
-    func chatStatus() -> ChatStatusEntity
-    func changeChatStatus(to status: ChatStatusEntity)
     func monitorChatStatusChange() -> AnyPublisher<(HandleEntity, ChatStatusEntity), Never>
     func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never>
     func existsActiveCall() -> Bool
