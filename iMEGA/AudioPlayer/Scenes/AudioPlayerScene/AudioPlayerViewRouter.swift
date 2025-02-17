@@ -49,7 +49,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             break
         }
         
-        return configEntity.fileLink != nil ? MEGANavigationController(rootViewController: vc) : vc
+        return configEntity.nodeOriginType == .fileLink ? MEGANavigationController(rootViewController: vc) : vc
     }
     
     @objc func start() {
