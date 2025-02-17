@@ -93,17 +93,24 @@ struct SearchResultRowView: View {
             .clipShape(RoundedRectangle(cornerRadius: 4))
             .overlay(propertyViewsFor(placement: .previewOverlay))
     }
-    
+
+    @ViewBuilder
     private var lines: some View {
         VStack(alignment: .leading, spacing: .zero) {
-            titleLine
-            auxTitleLine
-            subtitleLine
-            note
+            if let note = viewModel.note {
+                titleLine(topPadding: TokenSpacing._3)
+                auxTitleLine
+                subtitleLine
+                noteView(with: note)
+            } else {
+                titleLine(topPadding: 0)
+                auxTitleLine
+                subtitleLine
+            }
         }
     }
     
-    private var titleLine: some View {
+    private func titleLine(topPadding: CGFloat) -> some View {
         HStack(spacing: 4) {
             Text(viewModel.attributedTitle)
                 .font(.subheadline)
@@ -113,6 +120,7 @@ struct SearchResultRowView: View {
                 .accessibilityLabel(viewModel.accessibilityIdentifier)
             propertyViewsFor(placement: .prominent)
         }
+        .padding(.top, topPadding)
     }
     
     // optional, middle line of content
@@ -143,14 +151,10 @@ struct SearchResultRowView: View {
     }
 
     @ViewBuilder
-    private var note: some View {
-        if let note = viewModel.note {
-            Text(note)
-                .lineLimit(1)
-                .padding(.bottom, TokenSpacing._3)
-        } else {
-            EmptyView()
-        }
+    private func noteView(with note: AttributedString) -> some View {
+        Text(note)
+            .lineLimit(1)
+            .padding(.bottom, TokenSpacing._3)
     }
 
     @ViewBuilder
