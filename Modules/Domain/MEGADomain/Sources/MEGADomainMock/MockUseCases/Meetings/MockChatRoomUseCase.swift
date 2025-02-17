@@ -36,7 +36,6 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
     private let shouldOpenWaitRoom: Bool
     private let monitorChatConnectionStateUpdate: AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error>
     private let monitorChatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: ChatIdEntity, status: ChatStatusEntity, inProgress: Bool)>
-    private let monitorPresenceLastGreenUpdates: AnyAsyncSequence<(userHandle: ChatIdEntity, lastGreen: Int)>
 
     public init(
         chatRoomEntity: ChatRoomEntity? = nil,
@@ -54,7 +53,6 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
         userStatusEntity: ChatStatusEntity = ChatStatusEntity.invalid,
         monitorChatConnectionStateUpdate: AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
         monitorChatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: ChatIdEntity, status: ChatStatusEntity, inProgress: Bool)> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        monitorPresenceLastGreenUpdates: AnyAsyncSequence<(userHandle: ChatIdEntity, lastGreen: Int)> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         createChatRoomResult: Result<ChatRoomEntity, ChatRoomErrorEntity> = .failure(.generic),
         renameChatRoomResult: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     ) {
@@ -73,7 +71,6 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
         self.userStatusEntity = userStatusEntity
         self.monitorChatConnectionStateUpdate = monitorChatConnectionStateUpdate
         self.monitorChatOnlineStatusUpdate = monitorChatOnlineStatusUpdate
-        self.monitorPresenceLastGreenUpdates = monitorPresenceLastGreenUpdates
         self.createChatRoomResult = createChatRoomResult
         self.renameChatRoomResult = renameChatRoomResult
     }
@@ -207,18 +204,12 @@ public struct MockChatRoomUseCase: ChatRoomUseCaseProtocol, @unchecked Sendable 
     public func userEmail(for handle: HandleEntity) async -> String? {
         contactEmail
     }
-    
-    public func requestLastGreen(for user: HandleEntity) { }
-    
+        
     public func monitorOnChatConnectionStateUpdate() -> AnyAsyncThrowingSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus), any Error> {
         monitorChatConnectionStateUpdate.eraseToAnyAsyncThrowingSequence()
     }
     
     public func monitorOnChatOnlineStatusUpdate() -> AnyAsyncSequence<(userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)> {
         monitorChatOnlineStatusUpdate.eraseToAnyAsyncSequence()
-    }
-    
-    public func monitorOnPresenceLastGreenUpdates() -> AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)> {
-        monitorPresenceLastGreenUpdates.eraseToAnyAsyncSequence()
     }
 }

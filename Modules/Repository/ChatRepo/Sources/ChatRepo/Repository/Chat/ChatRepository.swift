@@ -50,14 +50,6 @@ public final class ChatRepository: ChatRepositoryProtocol {
         chatSDK.myUserHandle
     }
     
-    public func chatStatus() -> ChatStatusEntity {
-        chatSDK.onlineStatus().toChatStatusEntity()
-    }
-    
-    public func changeChatStatus(to status: ChatStatusEntity) {
-        chatSDK.setOnlineStatus(status.toMEGASChatStatus())
-    }
-    
     public func archivedChatListCount() -> UInt {
         chatSDK.archivedChatListItems?.size ?? 0
     }

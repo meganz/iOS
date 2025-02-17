@@ -364,21 +364,9 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol, @unchecked Se
             }
         }
     }
-    
-    public func requestLastGreen(for user: HandleEntity) {
-        sdk.requestLastGreen(user)
-    }
 
     public var chatConnectionStateUpdate: AnyAsyncSequence<(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus)> {
         chatUpdatesProvider.updates
-    }
-    
-    public var chatOnlineStatusUpdate: AnyAsyncSequence<(userHandle: HandleEntity, status: ChatStatusEntity, inProgress: Bool)> {
-        chatUpdatesProvider.chatOnlineUpdates
-    }
-    
-    public var presenceLastGreenUpdates: AnyAsyncSequence<(userHandle: HandleEntity, lastGreen: Int)> {
-        chatUpdatesProvider.presenceLastGreenUpdates
     }
 }
 

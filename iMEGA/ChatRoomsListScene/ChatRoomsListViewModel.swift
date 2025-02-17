@@ -25,6 +25,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     let router: any ChatRoomsListRouting
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatPresenceUseCase: any ChatPresenceUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
@@ -137,6 +138,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         router: some ChatRoomsListRouting,
         chatUseCase: any ChatUseCaseProtocol,
         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+        chatPresenceUseCase: some ChatPresenceUseCaseProtocol,
         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
         accountUseCase: any AccountUseCaseProtocol,
         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
@@ -153,6 +155,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.router = router
         self.chatUseCase = chatUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatPresenceUseCase = chatPresenceUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.accountUseCase = accountUseCase
@@ -302,7 +305,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             menuType: .menu(type: .chat),
             isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
             timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND ?? "",
-            chatStatus: chatUseCase.chatStatus(),
+            chatStatus: chatPresenceUseCase.onlineStatus(),
             isArchivedChatsVisible: hasArchivedChats
         )
     }
@@ -326,7 +329,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         guard status != chatStatus else {
             return
         }
-        chatUseCase.changeChatStatus(to: status)
+        chatPresenceUseCase.setOnlineStatus(status)
     }
     
     var archivedChatsCount: UInt {
