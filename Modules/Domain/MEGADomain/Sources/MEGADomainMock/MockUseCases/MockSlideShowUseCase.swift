@@ -10,7 +10,9 @@ public final class MockSlideShowUseCase: SlideShowUseCaseProtocol {
     private var config: SlideShowConfigurationEntity
     private var userId: HandleEntity
     
-    public init(config: SlideShowConfigurationEntity, forUser userId: HandleEntity) {
+    public init(
+        config: SlideShowConfigurationEntity = .init(playingOrder: .shuffled, timeIntervalForSlideInSeconds: .slow, isRepeat: false, includeSubfolders: false),
+        forUser userId: HandleEntity = .invalid) {
         self.config = config
         self.userId = userId
     }
