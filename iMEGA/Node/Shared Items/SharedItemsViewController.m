@@ -614,6 +614,7 @@
     [self configToolbarItemsForSharedItems];
     [self configNavigationBarButtonItems];
     [self toolbarItemsSetEnabled:NO];
+    [self audioPlayerHidden:YES];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
