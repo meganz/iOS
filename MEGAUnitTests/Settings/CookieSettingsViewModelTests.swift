@@ -1,3 +1,5 @@
+import Accounts
+import AccountsMock
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -9,12 +11,13 @@ import XCTest
 @MainActor
 class CookieSettingsViewModelTests: XCTestCase {
     private let footersArray: [String] = [
+        "", // Empty footer for the Ads personalisation menu.
         Strings.Localizable.Settings.Accept.Cookies.footer,
         Strings.Localizable.Settings.Cookies.Essential.footer,
         Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer
     ]
     
-    func testConfigViewTask_numberOfSection_shouldBeThree() async {
+    func testConfigViewTask_numberOfSection_shouldBeFour() async {
         let sut = makeSUT()
         
         var commands = [CookieSettingsViewModel.Command]()
@@ -24,7 +27,7 @@ class CookieSettingsViewModelTests: XCTestCase {
         sut.dispatch(.configView)
         await sut.configViewTask?.value
         
-        XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsInactive.numberOfSections)
+        XCTAssertEqual(sut.numberOfSection, 4)
     }
     
     func testAction_configView_cookieSettings_success() {
@@ -88,6 +91,59 @@ class CookieSettingsViewModelTests: XCTestCase {
             expectedURL: expectedURL
         )
     }
+
+    func testAction_showAdPrivacyOptionForm_shouldPresentAdPrivacyOptionForm() async {
+        let adMobConsentManager = MockGoogleMobileAdsConsentManager(isPrivacyOptionsRequired: true)
+        let sut = makeSUT(adMobConsentManager: adMobConsentManager)
+
+        sut.dispatch(.showAdPrivacyOptionForm)
+        await sut.showAdPrivacyOptionFormTask?.value
+        
+        XCTAssertEqual(adMobConsentManager.presentPrivacyOptionsFormCalledCount, 1)
+    }
+    
+    func testShowAdsSettingsAndViewTitle_whenAdsIsEnabledAndPrivacyOptionsRequired_shouldReturnCorrectValues() {
+        assertShowAdsSettingsAndViewTitle(
+            isExternalAdsFlagEnabled: true,
+            isPrivacyOptionsRequired: true,
+            expectedResult: true,
+            expectedViewTitle: Strings.Localizable.General.cookieAndAdSettings,
+            description: "Ads is enabled and privacy options is required. ShowAdsSettings should return true with title for Cookie and ad settings."
+        )
+    }
+    
+    func testShowAdsSettingsAndViewTitle_whenAdsIsDisabled_shouldReturnCorrectValues() {
+        assertShowAdsSettingsAndViewTitle(
+            isExternalAdsFlagEnabled: false,
+            expectedResult: false,
+            expectedViewTitle: Strings.Localizable.General.cookieSettings,
+            description: "Ads is disabled. ShowAdsSettings should return false with title for Cookie settings only."
+        )
+    }
+    
+    func testShowAdsSettingsAndViewTitle_whenAdPrivacyOptionsIsNotRequired_shouldReturnCorrectValues() {
+        assertShowAdsSettingsAndViewTitle(
+            isPrivacyOptionsRequired: false,
+            expectedResult: false,
+            expectedViewTitle: Strings.Localizable.General.cookieSettings,
+            description: "Privacy options is not required. ShowAdsSettings should return false with title for Cookie settings only." 
+        )
+    }
+    
+    private func assertShowAdsSettingsAndViewTitle(
+        isExternalAdsFlagEnabled: Bool = true,
+        isPrivacyOptionsRequired: Bool = true,
+        expectedResult: Bool,
+        expectedViewTitle: String,
+        description: String
+    ) {
+        let sut = makeSUT(
+            isExternalAdsFlagEnabled: isExternalAdsFlagEnabled,
+            adMobConsentManager: MockGoogleMobileAdsConsentManager(isPrivacyOptionsRequired: isPrivacyOptionsRequired)
+        )
+        XCTAssertEqual(sut.showAdsSettings, expectedResult, description)
+        XCTAssertEqual(sut.viewTitle, expectedViewTitle, description)
+    }
     
     func test_updateAutomaticallyAllVisibleSwitch_updatesCommand() {
         let sut = makeSUT()
@@ -138,14 +194,20 @@ class CookieSettingsViewModelTests: XCTestCase {
         cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
         mockRouter: some CookieSettingsRouting = MockCookieSettingsRouter(),
+        isExternalAdsFlagEnabled: Bool = true,
+        adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CookieSettingsViewModel {
         let accountUseCase = MockAccountUseCase(sessionTransferURLResult: sessionTransferURLResult)
         let cookieSettingsUseCase = MockCookieSettingsUseCase(cookieBannerEnable: cookieBannerEnable, cookieSettings: cookieSettings)
-        let sut = CookieSettingsViewModel(accountUseCase: accountUseCase,
-                                          cookieSettingsUseCase: cookieSettingsUseCase,
-                                          router: mockRouter)
+        let sut = CookieSettingsViewModel(
+            accountUseCase: accountUseCase,
+            cookieSettingsUseCase: cookieSettingsUseCase,
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
+            adMobConsentManager: adMobConsentManager,
+            router: mockRouter
+        )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

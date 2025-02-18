@@ -1,3 +1,4 @@
+import Accounts
 import ChatRepo
 import MEGADomain
 import MEGAL10n
@@ -109,7 +110,7 @@ extension SettingViewRouter {
                                                                 navigationController: presenter))
             
             SettingCellViewModel(image: UIImage.cookieSettings,
-                                 title: Strings.Localizable.General.cookieSettings,
+                                 title: cookieSettingsMenuTitle(),
                                  router: CookieSettingsRouter(presenter: presenter))
         }
         
@@ -127,6 +128,14 @@ extension SettingViewRouter {
                                  router: QASettingsRouter(presenter: presenter))
         }
 #endif
+    }
+    
+    private func cookieSettingsMenuTitle() -> String {
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) &&
+            GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired else {
+            return Strings.Localizable.General.cookieSettings
+        }
+        return Strings.Localizable.General.cookieAndAdSettings
     }
 }
 

@@ -1,14 +1,19 @@
 import GoogleMobileAds
+import MEGADomain
+import MEGARepo
 import MEGASwift
 import UserMessagingPlatform
 
 public protocol GoogleMobileAdsConsentManagerProtocol: Sendable {
+    var isPrivacyOptionsRequired: Bool { get }
     func gatherConsent() async throws
     func initializeGoogleMobileAdsSDK() async
+    func presentPrivacyOptionsForm() async throws -> Bool
 }
 
 public protocol AdMobConsentInformationProtocol: Sendable {
     var canRequestAds: Bool { get }
+    var privacyOptionsRequirementStatus: UMPPrivacyOptionsRequirementStatus { get }
     func requestConsentInfoUpdate(
         with parameters: UMPRequestParameters?,
         completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler
@@ -17,6 +22,10 @@ public protocol AdMobConsentInformationProtocol: Sendable {
 
 public protocol AdMobConsentFormProtocol {
     static func loadAndPresentIfRequired(
+        from viewController: UIViewController?
+    ) async throws
+    
+    static func presentPrivacyOptionsForm(
         from viewController: UIViewController?
     ) async throws
 }
@@ -56,6 +65,10 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
         consentInformation.canRequestAds
     }
     
+    public var isPrivacyOptionsRequired: Bool {
+        consentInformation.privacyOptionsRequirementStatus == .required
+    }
+    
     public init(
         consentInformation: AdMobConsentInformationProtocol = UMPConsentInformation.sharedInstance,
         consentFormType: AdMobConsentFormProtocol.Type = UMPConsentForm.self,
@@ -93,6 +106,17 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
                 completion(.success)
             }
         }
+    }
+    
+    /// Presents the privacy options form if required.
+    ///
+    /// This function checks whether the privacy options form is needed (`isPrivacyOptionsRequired`),
+    /// and if so, it asynchronously presents the form using `consentFormType`.
+    @MainActor
+    public func presentPrivacyOptionsForm() async throws -> Bool {
+        guard isPrivacyOptionsRequired else { return false }
+        try await consentFormType.presentPrivacyOptionsForm(from: nil)
+        return true
     }
     
     // MARK: - Private

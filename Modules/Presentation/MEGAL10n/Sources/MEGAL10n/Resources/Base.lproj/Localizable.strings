@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Cookie Policy";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cookie settings";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Cookie and ad settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Terms of Service";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Advertising cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they won’t be personalised.";
+/* Ad settings header title */
+"settings.ad.header.title"="Ad settings";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Ad personalisation";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Version was created as a new file";
 /* Text shown for the action create new file */
