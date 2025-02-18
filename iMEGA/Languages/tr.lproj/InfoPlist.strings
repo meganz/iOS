@@ -1,0 +1,24 @@
+/* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSMicrophoneUsageDescription"="MEGA accesses your microphone when you capture a video, make a call or record voice messages inside the app.";
+/* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSCameraUsageDescription"="MEGA accesses your camera when you capture a video, photo or make a call inside the app.";
+/* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryUsageDescription"="MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera uploads is enabled.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="If you allow access, you can invite your contacts to use MEGA by sending a message or email.";
+/* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryAddUsageDescription"="MEGA requires access to your photo library to add photos and videos to your device gallery";
+/* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.";
+/* Label for any 'Search' button, link, etc. - (String as short as possible). */
+"quickActionSearchString"="Search";
+/*  */
+"quickActionUploadString"="Upload";
+/* Title of the Offline section */
+"quickActionOfflineString"="Offline";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+/* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
+"NSLocalNetworkUsageDescription"="This will let you use MEGA to place and receive calls through devices that are on the same Wi-Fi or local network.";
+/* User tracking usage description. In order to protect user's privacy, Apple requires a specific string explaining why user tracking will be enabled. */
+"NSUserTrackingUsageDescription"="This will be used to personalise the ads you see";

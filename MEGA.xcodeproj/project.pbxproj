@@ -4601,6 +4601,10 @@
 		B5D861472CCB3F7D00A2685C /* RecoveryKeyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyViewModelTests.swift; sourceTree = "<group>"; };
 		B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModel.swift; sourceTree = "<group>"; };
 		B5D8A0DF2CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertCookieDialogRouter.swift; sourceTree = "<group>"; };
+		B5DBE0992D64616100D55AE0 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
+		B5DBE09A2D64616200D55AE0 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B5DBE09B2D64616300D55AE0 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = tr; path = tr.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		B5DBE09C2D64616300D55AE0 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B5E378A22B8334DA000C1DAD /* Notifications */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Notifications; sourceTree = "<group>"; };
 		B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReferralBonusesTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5E4EBD729795A10009C5578 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -13665,6 +13669,7 @@
 				vi,
 				pt,
 				fil,
+				tr,
 			);
 			mainGroup = 137361811A6664C300B740E8;
 			packageReferences = (
@@ -16528,6 +16533,7 @@
 				8334526E258CA3E30052DB3C /* ro */,
 				83345242258CA3010052DB3C /* ru */,
 				8334528E258CA4080052DB3C /* th */,
+				B5DBE0992D64616100D55AE0 /* tr */,
 				8334523E258CA2F20052DB3C /* vi */,
 				8334524C258CA3AB0052DB3C /* zh-Hans */,
 				83345256258CA3B70052DB3C /* zh-Hant */,
@@ -16561,6 +16567,7 @@
 				A8B0DD462D1D7AE6009BC7FD /* ro */,
 				A8B0DD472D1D7AEC009BC7FD /* ru */,
 				A8B0DD492D1D7BAE009BC7FD /* th */,
+				B5DBE09C2D64616300D55AE0 /* tr */,
 				A8B0DD482D1D7AF1009BC7FD /* vi */,
 				A850393A2D1D78A500CCA904 /* zh-Hans */,
 				A8B0DD3A2D1D7A14009BC7FD /* zh-Hant */,
@@ -16587,6 +16594,7 @@
 				A882982E29F1670000DEDE98 /* ro */,
 				A882982F29F1670100DEDE98 /* ru */,
 				A882983129F1670300DEDE98 /* th */,
+				B5DBE09B2D64616300D55AE0 /* tr */,
 				A882983229F1670400DEDE98 /* vi */,
 				A882982329F166F400DEDE98 /* zh-Hans */,
 				A882982429F166F600DEDE98 /* zh-Hant */,
@@ -16613,6 +16621,7 @@
 				E8BB73761D773A450067D89C /* ro */,
 				E8BB73771D773A4C0067D89C /* ru */,
 				E8BB737C1D773A750067D89C /* th */,
+				B5DBE09A2D64616200D55AE0 /* tr */,
 				E8BB73811D773AC30067D89C /* vi */,
 				E8BB73681D77399A0067D89C /* zh-Hans */,
 				E8BB73691D77399C0067D89C /* zh-Hant */,
