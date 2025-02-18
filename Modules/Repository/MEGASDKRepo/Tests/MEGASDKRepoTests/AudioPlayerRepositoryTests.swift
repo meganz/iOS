@@ -20,6 +20,8 @@ final class AudioPlayerRepositoryTests: XCTestCase {
         await sut.registerMEGADelegate()
         
         XCTAssertEqual(sdk.addMEGADelegateCallCount, 1)
+        
+        await sut.unregisterMEGADelegate()
     }
     
     func testUnregisterMEGADelegate_shouldNotCalledRemoveDelegate() async {
