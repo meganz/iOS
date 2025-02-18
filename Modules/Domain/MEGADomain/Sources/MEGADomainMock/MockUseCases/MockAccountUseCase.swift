@@ -43,6 +43,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _hasExpiredBusinessAccount: Bool
     private let _hasExpiredProFlexiAccount: Bool
     public private(set) var refreshAccountDetails_calledCount: Int = 0
+    public private(set) var enableRichLinkPreview_calledCount: Int = 0
+    private let richLinkPreviewEnabled: Bool
 
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -84,7 +86,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         hasActiveBusinessAccount: Bool = false,
         hasActiveProFlexiAccount: Bool = false,
         hasExpiredBusinessAccount: Bool = false,
-        hasExpiredProFlexiAccount: Bool = false
+        hasExpiredProFlexiAccount: Bool = false,
+        richLinkPreviewEnabled: Bool = false
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -126,6 +129,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         _hasBusinessAccountInGracePeriod = hasBusinessAccountInGracePeriod
         _hasExpiredBusinessAccount = hasExpiredBusinessAccount
         _hasExpiredProFlexiAccount = hasExpiredProFlexiAccount
+        self.richLinkPreviewEnabled = richLinkPreviewEnabled
     }
     
     // MARK: - User authentication status and identifiers
@@ -325,5 +329,13 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     
     public func proFlexiAccountStatus() -> AccountStatusEntity {
         _hasActiveProFlexiAccount ? .active : .overdue
+    }
+    
+    public func isRichLinkPreviewEnabled() async -> Bool {
+        richLinkPreviewEnabled
+    }
+    
+    public func enableRichLinkPreview(_ enabled: Bool) {
+        enableRichLinkPreview_calledCount += 1
     }
 }

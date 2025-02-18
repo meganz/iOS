@@ -4524,3 +4524,15 @@
 "photos.addToPlaylist.empty.message"="No playlists";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="Create playlist";
+/* Title in chat settings */
+"settings.chat.title"="Chat and meetings";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="Status";
+/* Title in chat settings to open notifications view settings */
+"settings.chat.notifications.title"="Notification settings";
+/* Title in chat settings to open chat media quality view settings */
+"settings.chat.mediaQuality.title"="Chat media quality";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="Rich URL previews";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="Enhance the MEGA Chat experience. URL content will be retrieved without zero-knowledge encryption.";
