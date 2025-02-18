@@ -57,6 +57,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private let nodeFingerprint: String?
     private let nodeSizes: [MEGAHandle: Int64]
     private let folderInfo: MEGAFolderInfo?
+    private var delegates: [any MEGADelegate] = []
     private var transferDelegates: [any MEGATransferDelegate] = []
     private var requestDelegates: [any MEGARequestDelegate] = []
     private var globalDelegates: [any MEGAGlobalDelegate] = []
@@ -380,10 +381,12 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     }
     
     public override func add(_ delegate: any MEGADelegate) {
+        delegates.append(delegate)
         addMEGADelegateCallCount += 1
     }
     
     public override func remove(_ delegate: any MEGADelegate) {
+        delegates.removeAll { $0 === delegate }
         removeMEGADelegateCallCount += 1
     }
     
@@ -898,12 +901,18 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public func simulateOnUserUpdate(_ userList: MEGAUserList) {
         globalDelegates.forEach { $0.onUsersUpdate?(self, userList: userList) }
+        delegates.forEach { $0.onUsersUpdate?(self, userList: userList) }
     }
     
     public func simulateOnEvent(_ event: MEGAEvent) {
         globalDelegates.forEach {
             $0.onEvent?(self, event: event)
         }
+    }
+    
+    public func simulateOnNodesUpdate(_ nodeList: MEGANodeList) {
+        globalDelegates.forEach { $0.onNodesUpdate?(self, nodeList: nodeList) }
+        delegates.forEach { $0.onNodesUpdate?(self, nodeList: nodeList) }
     }
     
     public override func smsVerifiedPhoneNumber() -> String? {
