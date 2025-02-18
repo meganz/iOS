@@ -1,7 +1,27 @@
+import Accounts
 import Foundation
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+
+enum CookieSettingsSection: Int {
+    case adPersonalisation
+    case acceptCookies
+    case essentialCookies
+    case performanceAndAnalyticsCookies
+    case advertisingCookies
+    
+    var headerTitle: String? {
+        switch self {
+        case .adPersonalisation:
+            Strings.Localizable.Settings.Ad.Header.title
+        case .acceptCookies:
+            Strings.Localizable.General.cookieSettings
+        default:
+            nil
+        }
+    }
+}
 
 enum CookiesBitPosition: Int {
     case essential
@@ -37,6 +57,7 @@ enum CookieSettingsAction: ActionType {
     case advertisingSwitchValueChanged(Bool)
     
     case showCookiePolicy
+    case showAdPrivacyOptionForm
     
     case save
 }
@@ -56,20 +77,11 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             case error(String)
         }
     }
-    
-    enum SectionType {
-        case externalAdsActive, externalAdsInactive
 
-        var numberOfSections: Int {
-            switch self {
-            case .externalAdsActive: return 4
-            case .externalAdsInactive: return 3
-            }
-        }
-    }
-    
     private let accountUseCase: any AccountUseCaseProtocol
     private let cookieSettingsUseCase: any CookieSettingsUseCaseProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let router: any CookieSettingsRouting
     
     var invokeCommand: ((Command) -> Void)?
@@ -81,6 +93,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     private(set) var configViewTask: Task<Void, Never>?
     private(set) var showCookiePolicyURLTask: Task<Void, Never>?
+    private(set) var showAdPrivacyOptionFormTask: Task<Void, Never>?
     
     private let cookieSettingToPosition: [CookiesBitmap: CookiesBitPosition] = [
         .essential: .essential,
@@ -95,18 +108,21 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     init(
         accountUseCase: some AccountUseCaseProtocol,
         cookieSettingsUseCase: some CookieSettingsUseCaseProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         router: some CookieSettingsRouting
     ) {
         self.accountUseCase = accountUseCase
         self.cookieSettingsUseCase = cookieSettingsUseCase
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.adMobConsentManager = adMobConsentManager
         self.router = router
     }
     
     deinit {
         configViewTask?.cancel()
-        configViewTask = nil
         showCookiePolicyURLTask?.cancel()
-        showCookiePolicyURLTask = nil
+        showAdPrivacyOptionFormTask?.cancel()
     }
         
     func dispatch(_ action: CookieSettingsAction) {
@@ -130,9 +146,36 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             
         case .showCookiePolicy:
             showCookiePolicyURL()
+        
+        case .showAdPrivacyOptionForm:
+            showAdPrivacyOptionForm()
 
         case .save:
             save()
+        }
+    }
+    
+    var showAdsSettings: Bool {
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) && adMobConsentManager.isPrivacyOptionsRequired
+    }
+    
+    var viewTitle: String {
+        showAdsSettings ? Strings.Localizable.General.cookieAndAdSettings : Strings.Localizable.General.cookieSettings
+    }
+    
+    func shouldHideSection(_ currentSection: Int) -> Bool {
+        guard let section = CookieSettingsSection(rawValue: currentSection) else { return true }
+        return section == .adPersonalisation ? !showAdsSettings : false
+    }
+    
+    private func showAdPrivacyOptionForm() {
+        showAdPrivacyOptionFormTask?.cancel()
+        showAdPrivacyOptionFormTask = Task {
+            do {
+                _ = try await adMobConsentManager.presentPrivacyOptionsForm()
+            } catch {
+                MEGALogError("[Admob] Ad Privacy option form failed to present with error \(error)")
+            }
         }
     }
     
@@ -183,6 +226,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     private func setFooters() {
         var footersArray: [String] = []
         
+        footersArray.append("")
         footersArray.append(Strings.Localizable.Settings.Accept.Cookies.footer)
         footersArray.append(Strings.Localizable.Settings.Cookies.Essential.footer)
         footersArray.append(Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer)
@@ -191,10 +235,12 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     private func setNumberOfSections() {
-        // The number of sections is fixed to the value of `externalAdsInactive` because we no longer show
-        // the advertising cookie switch. This change is due to the transition to Google Ads,
-        // which doesn't require this section anymore.
-        numberOfSection = SectionType.externalAdsInactive.numberOfSections
+        // Sections will contain:
+        // 1 - Add personalisation (It will be hidden if showAdsSettings is false)
+        // 2 - Accept cookies
+        // 3 - Essential cookies
+        // 4 - Performance and analytics cookies
+        numberOfSection = 4
     }
     
     private func save() {

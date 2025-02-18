@@ -1799,6 +1799,7 @@
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
 		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */; };
+		B54B9BFE2D6426850025A25F /* AccountsMock in Frameworks */ = {isa = PBXBuildFile; productRef = B54B9BFD2D6426850025A25F /* AccountsMock */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
@@ -5404,6 +5405,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */,
+				B54B9BFE2D6426850025A25F /* AccountsMock in Frameworks */,
 				B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */,
 				9444FA8C2C94672B005C240B /* Chat in Frameworks */,
@@ -13344,6 +13346,7 @@
 				BF27E3F32CF3FDD5002C892B /* CloudDrive */,
 				6D004FE82D0A46360039ADF9 /* MEGAConnectivity */,
 				B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */,
+				B54B9BFD2D6426850025A25F /* AccountsMock */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -18588,6 +18591,10 @@
 		B51616482B83361900C6E842 /* Notifications */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Notifications;
+		};
+		B54B9BFD2D6426850025A25F /* AccountsMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AccountsMock;
 		};
 		B55F93E02D12B99400E2149B /* MEGAUIComponent */ = {
 			isa = XCSwiftPackageProductDependency;

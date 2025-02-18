@@ -7,10 +7,14 @@ public enum AdMobError: Error {
 }
 
 public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtocol, @unchecked Sendable {
+    public private(set) var isPrivacyOptionsRequired: Bool = false
     public private(set) var gatherConsentCalledCount = 0
     public private(set) var initializeGoogleMobileAdsSDKCalledCount = 0
-    
-    public init() { }
+    public private(set) var presentPrivacyOptionsFormCalledCount = 0
+
+    public init(isPrivacyOptionsRequired: Bool = false) {
+        self.isPrivacyOptionsRequired = isPrivacyOptionsRequired
+    }
     
     public func gatherConsent() async throws {
         gatherConsentCalledCount += 1
@@ -19,19 +23,27 @@ public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentMana
     public func initializeGoogleMobileAdsSDK() async {
         initializeGoogleMobileAdsSDKCalledCount += 1
     }
+    
+    public func presentPrivacyOptionsForm() async throws -> Bool {
+        presentPrivacyOptionsFormCalledCount += 1
+        return true
+    }
 }
 
 public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol, @unchecked Sendable {
     public private(set) var canRequestAds: Bool
     public private(set) var didRequestConsentInfoUpdate = false
+    public private(set) var privacyOptionsRequirementStatus: UMPPrivacyOptionsRequirementStatus
     private let shouldThrowError: Bool
 
     public init(
+        privacyOptionsRequirementStatus: UMPPrivacyOptionsRequirementStatus = .unknown,
         canRequestAds: Bool = true,
         shouldThrowError: Bool = false
     ) {
         self.canRequestAds = canRequestAds
         self.shouldThrowError = shouldThrowError
+        self.privacyOptionsRequirementStatus = privacyOptionsRequirementStatus
     }
     
     public func requestConsentInfoUpdate(with parameters: UMPRequestParameters?, completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler) {
@@ -50,6 +62,8 @@ public final class MockAdMobConsentForm: AdMobConsentFormProtocol, @unchecked Se
     public static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws {
         didLoadAndPresent = true
     }
+    
+    public static func presentPrivacyOptionsForm(from viewController: UIViewController?) async throws {}
 }
 
 public final class MockMobileAds: MobileAdsProtocol, @unchecked Sendable {

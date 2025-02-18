@@ -4,16 +4,10 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASwiftUI
 
-enum CookieSettingsSection: Int {
-    case acceptCookies
-    case essentialCookies
-    case performanceAndAnalyticsCookies
-    case advertisingCookies
-}
-
 class CookieSettingsTableViewController: UITableViewController {
-    
     @IBOutlet var saveBarButtonItem: UIBarButtonItem!
+    
+    @IBOutlet var adPersonalisationLabel: UILabel!
     
     @IBOutlet weak var acceptCookiesLabel: UILabel!
     @IBOutlet weak var acceptCookiesSwitch: UISwitch!
@@ -122,11 +116,12 @@ class CookieSettingsTableViewController: UITableViewController {
     private func configView() {
         navigationController?.presentationController?.delegate = self
         
-        title = Strings.Localizable.General.cookieSettings
+        title = viewModel.viewTitle
         
-        saveBarButtonItem.title = Strings.Localizable.save
+        saveBarButtonItem.title = Strings.Localizable.close
         self.navigationItem.rightBarButtonItem = saveBarButtonItem
         
+        adPersonalisationLabel.text = Strings.Localizable.Settings.Ad.AdPersonalisation.title
         acceptCookiesLabel.text = Strings.Localizable.Dialog.Cookies.accept
         essentialCookiesLabel.text = Strings.Localizable.Settings.Cookies.essential
         essentialCookiesDetailLabel.text = Strings.Localizable.Settings.Cookies.Essential.alwaysOn
@@ -154,6 +149,8 @@ class CookieSettingsTableViewController: UITableViewController {
         
         saveBarButtonItem.tintColor = TokenColors.Text.secondary
         
+        adPersonalisationLabel.textColor = TokenColors.Text.primary
+        
         acceptCookiesLabel.textColor = TokenColors.Text.primary
         acceptCookiesSwitch.onTintColor = TokenColors.Support.success
         
@@ -167,12 +164,20 @@ class CookieSettingsTableViewController: UITableViewController {
         advertisingCookiesSwitch.onTintColor = TokenColors.Support.success
     }
     
-    private func updateAppearanceForTableViewHeaderFooterView(_ view: UITableViewHeaderFooterView) {
+    private func configureAppearanceForTableViewHeaderFooterView(
+        _ view: UITableViewHeaderFooterView,
+        title: String? = nil
+    ) {
         view.textLabel?.textColor = TokenColors.Text.secondary
+        
+        // Sets the title as how the text is. Not All caps by default.
+        if let title {
+            view.textLabel?.text = title
+        }
     }
     
     private func visibleCookieTypeSwitches() -> [UISwitch] {
-        viewModel.numberOfSection == 3 ? [performanceAndAnalyticsSwitch] : [performanceAndAnalyticsSwitch, advertisingCookiesSwitch]
+        viewModel.numberOfSection == 5 ? [performanceAndAnalyticsSwitch, advertisingCookiesSwitch] : [performanceAndAnalyticsSwitch]
     }
     
     private func updateAcceptCookiesSwitchIfNeeded(newState: Bool) {
@@ -195,10 +200,46 @@ class CookieSettingsTableViewController: UITableViewController {
         cell.backgroundColor = TokenColors.Background.page
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard let footerView = view as? UITableViewHeaderFooterView else { return }
+        configureAppearanceForTableViewHeaderFooterView(footerView)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard viewModel.showAdsSettings, let headerView = view as? UITableViewHeaderFooterView else { return }
+        configureAppearanceForTableViewHeaderFooterView(
+            headerView,
+            title: CookieSettingsSection(rawValue: section)?.headerTitle
+        )
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        viewModel.shouldHideSection(section) ? 0.01 : UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        viewModel.shouldHideSection(section) ? 0.01 : UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section == CookieSettingsSection.adPersonalisation.rawValue else { return }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.dispatch(.showAdPrivacyOptionForm)
+    }
+
     // MARK: - UITableViewDataSource
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.shouldHideSection(section) ? 0 : super.tableView(tableView, numberOfRowsInSection: section)
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.numberOfSection
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        viewModel.showAdsSettings ? CookieSettingsSection(rawValue: section)?.headerTitle : nil
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
@@ -215,11 +256,6 @@ class CookieSettingsTableViewController: UITableViewController {
         default:
             ""
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        guard let footerView = view as? UITableViewHeaderFooterView else { return }
-        updateAppearanceForTableViewHeaderFooterView(footerView)
     }
 }
 
