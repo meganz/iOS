@@ -22,5 +22,6 @@ struct CallsSettingsView: View {
             .padding(.top)
         }
         .noInternetViewModifier()
+        .background()
     }
 }
