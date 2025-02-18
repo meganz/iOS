@@ -81,21 +81,14 @@ final class HomeSearchResultRouter: NodeRouting {
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
-        Task {
-            guard let node = await nodeUseCase.nodeForHandle(nodeHandle) else { return }
-            if node.isTakenDown {
-                showTakenDownAlert(isFolder: node.isFolder)
-            } else {
-                nodeOpener.openNode(
-                    nodeHandle: nodeHandle,
-                    allNodes: allNodeHandles,
-                    config: .init(
-                        displayMode: displayMode,
-                        isFromSharedItem: isFromSharedItem,
-                        warningViewModel: warningViewModel)
-                )
-            }
-        }
+        nodeOpener.openNode(
+            nodeHandle: nodeHandle,
+            allNodes: allNodeHandles,
+            config: .init(
+                displayMode: displayMode,
+                isFromSharedItem: isFromSharedItem,
+                warningViewModel: warningViewModel)
+        )
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?) {
@@ -104,32 +97,5 @@ final class HomeSearchResultRouter: NodeRouting {
     
     func didTapNode(nodeHandle: HandleEntity) {
         didTapNode(nodeHandle: nodeHandle, allNodeHandles: nil, displayMode: nil, isFromSharedItem: false)
-    }
-    
-    func showTakenDownAlert(isFolder: Bool) {
-        let alert = UIAlertController(model: takenDownModel(isFolder: isFolder))
-        navigationController?.present(alert, animated: true)
-    }
-    
-    func takenDownModel(isFolder: Bool) -> AlertModel {
-        let message = isFolder ? Strings.Localizable.thisFolderHasBeenTheSubjectOfATakedownNotice : Strings.Localizable.thisFileHasBeenTheSubjectOfATakedownNotice
-        return .init(
-            title: nil,
-            message: message,
-            actions: [
-                .init(
-                    title: Strings.Localizable.disputeTakedown,
-                    style: .default,
-                    handler: {
-                        NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
-                    }
-                ),
-                .init(
-                    title: Strings.Localizable.cancel,
-                    style: .cancel,
-                    handler: {}
-                )
-            ]
-        )
     }
 }
