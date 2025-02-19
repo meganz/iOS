@@ -98,8 +98,4 @@ public protocol AccountRepositoryProtocol: Sendable {
     /// - Returns: The storage used for backups in bytes.
     /// - Throws: FolderInfoErrorEntity.notFound if the backup root node or its folder info cannot be found.
     func backupStorageUsed() async throws -> Int64
-    
-    // RichLinksPreview management
-    func isRichLinkPreviewEnabled() async -> Bool
-    func enableRichLinkPreview(_ enabled: Bool)
 }

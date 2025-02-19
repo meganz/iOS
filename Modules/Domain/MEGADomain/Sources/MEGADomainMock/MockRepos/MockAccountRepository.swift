@@ -57,9 +57,6 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public let incomingSharesStorage: Int64
     public let backupStorage: Int64
     
-    // MARK: - Rich Link Preview
-    public let richLinkPreviewEnabled: Bool
-
     // MARK: - Initializer
     public init(
         currentUser: UserEntity? = nil,
@@ -95,7 +92,6 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         rubbishBinStorage: Int64 = 0,
         incomingSharesStorage: Int64 = 0,
         backupStorage: Int64 = 0,
-        richLinkPreviewEnabled: Bool = false,
         currentProPlan: AccountPlanEntity? = nil,
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         isUnlimitedStorageAccount: Bool = false,
@@ -144,7 +140,6 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.rubbishBinStorage = rubbishBinStorage
         self.incomingSharesStorage = incomingSharesStorage
         self.backupStorage = backupStorage
-        self.richLinkPreviewEnabled = richLinkPreviewEnabled
         self.onAccountRequestFinish = onAccountRequestFinishUpdate
         self.onUserAlertsUpdates = onUserAlertsUpdates
         self.onContactRequestsUpdates = onContactRequestsUpdates
@@ -310,13 +305,5 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func backupStorageUsed() async throws -> Int64 {
         backupStorage
-    }
-    
-    public func isRichLinkPreviewEnabled() async -> Bool {
-        richLinkPreviewEnabled
-    }
-    
-    public func enableRichLinkPreview(_ enabled: Bool) {
-        
     }
 }
