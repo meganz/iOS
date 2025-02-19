@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="Chờ hồi âm";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Rời khỏi";
+"leaveFolder"="Rời khỏi thư mục";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Bạn có chắc muốn rời khỏi mục chia sẻ này không?";
+"leaveShareAlertMessage"="Bạn có chắc muốn rời khỏi thư mục này không?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các mục chia sẻ này không?";
+"leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các thư mục này không?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Chia sẻ";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Chính Sách Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cài đặt cookie";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Cookie and ad settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Điều Khoản Dịch Vụ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -845,7 +847,7 @@
 /* Confirmation message displayed after clearing offline files */
 "settings.fileManagement.clearOfflineFiles.done.message"="Đã dọn các tệp tin lưu ngoại tuyến";
 /* File versioning menu subTitle */
-"settings.fileManagement.fileVersioning.menu.subtitle"="Store multiple versions of your files. Disabling this setting does not stop your contacts from adding new versions in shared folders.";
+"settings.fileManagement.fileVersioning.menu.subtitle"="Lưu trữ nhiều phiên bản cho tệp tin của bạn. Vô hiệu tùy chọn này không có ngăn cản các tên liên lạc của bạn thêm vào phiên bản mới in trong các thư mục được chia sẻ.";
 /* File versioning button title to delete all older version of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Xóa hết tất cả các phiên bản cũ đang có";
 /* File versioning alert title for deleting older versions of files */
@@ -857,7 +859,7 @@
 /* File versioning alert title for disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Tắt lập phiên bản tệp tin?";
 /* File versioning alert message for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, updating a file will completely replace it.";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="Khi lập phiên bản tệp tin bị vô hiệu hóa, việc cập nhật mới sẽ thay thế tệp tin hoàn toàn.";
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Tắt";
 /* File versioning footer message */
@@ -1761,7 +1763,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Thùng Rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable automatic Rubbish bin emptying or set a longer retention period, you need to subscribe to one of our plans.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Để tắt tính năng tự động dọn Thùng Rác hoặc đặt thời gian trữ rác lâu hơn, bạn cần phải đăng ký một trong các gói của chúng tôi.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Thao tác này sẽ đăng xuất tài khoản ra khỏi tất cả các thiết bị đang sử dụng, ngoại trừ phiên hiện hành. Có chắc muốn tiến hành?";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Cookies quảng cáo";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Được sử dụng bởi các đối tác quảng cáo đã được phê duyệt của chúng tôi để thu thập dữ liệu về các hoạt động duyệt web của bạn và tùy chỉnh quảng cáo bạn thấy trên các dịch vụ của chúng tôi và trên các trang web khác. Không chấp nhận các cookies này có nghĩa là bạn vẫn sẽ thấy quảng cáo nhưng nội dung sẽ không liên quan.";
+/* Ad settings header title */
+"settings.ad.header.title"="Ad settings";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Ad personalisation";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Phiên bản đã được chuyển thành một tệp tin mới toàn vẹn";
 /* Text shown for the action create new file */
@@ -3427,7 +3433,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Đã vô hiệu";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Inactive";
+"device.center.backup.offline.status.message"="Không hoạt động";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Sao lưu chấm dứt";
 /* Device Center backup paused status */
@@ -4513,8 +4519,8 @@
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Số lượng thẻ tối đa là 10";
 /* Artist name to display if meta data for artist could not be found */
-"media.audio.metadata.missing.artist"="Unknown Artist";
+"media.audio.metadata.missing.artist"="Vô Danh";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="No playlists";
+"photos.addToPlaylist.empty.message"="Không có danh sách phát nào";
 /* Add to playlist empty create button title */
-"photos.addToPlaylist.empty.create.button.title"="Create playlist";
+"photos.addToPlaylist.empty.create.button.title"="Tạo danh sách phát";

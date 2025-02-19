@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="Tertunda";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Tinggalkan";
+"leaveFolder"="Leave folder";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
+"leaveShareAlertMessage"="Are you sure you want to leave this folder?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
+"leaveSharesAlertMessage"="Are you sure you want to leave these folders?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Bagikan";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Kebijakan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Pengaturan Cookie";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Cookie and ad settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Persyaratan Layanan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Cookie Iklan";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Digunakan oleh mitra periklanan kami yang disetujui untuk mengumpulkan data tentang aktivitas penjelajahan anda dan menyesuaikan iklan yang anda lihat di layanan kami dan di situs web lain. Tidak menerima cookie ini berarti anda masih akan melihat iklan tetapi iklan tersebut tidak akan dipersonalisasi.";
+/* Ad settings header title */
+"settings.ad.header.title"="Ad settings";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Ad personalisation";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versi dibuat sebagai file baru";
 /* Text shown for the action create new file */
@@ -3427,7 +3433,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Membatalkan";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Inactive";
+"device.center.backup.offline.status.message"="Tidak aktif";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Pencadangan dihentikan";
 /* Device Center backup paused status */
@@ -4513,8 +4519,8 @@
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Jumlah maksimum tag adalah 10";
 /* Artist name to display if meta data for artist could not be found */
-"media.audio.metadata.missing.artist"="Unknown Artist";
+"media.audio.metadata.missing.artist"="Artis Tidak Dikenal";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="No playlists";
+"photos.addToPlaylist.empty.message"="Tidak ada daftar putar";
 /* Add to playlist empty create button title */
-"photos.addToPlaylist.empty.create.button.title"="Create playlist";
+"photos.addToPlaylist.empty.create.button.title"="Buat daftar putar";

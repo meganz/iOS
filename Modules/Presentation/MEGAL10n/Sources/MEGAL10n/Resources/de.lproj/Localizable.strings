@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="Unbestätigt";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Verlassen";
+"leaveFolder"="Ordner verlassen";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Wollen Sie diese Ordnerfreigabe wirklich verlassen?";
+"leaveShareAlertMessage"="Möchten Sie diesen Ordner wirklich verlassen?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Wollen Sie diese Ordnerfreigaben wirklich verlassen?";
+"leaveSharesAlertMessage"="Möchten Sie diese Ordner wirklich verlassen?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Teilen";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Cookie-Richtlinien";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cookie-Einstellungen";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Cookie- und Werbeeinstellungen";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Allgemeine Geschäftsbedingungen";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Cookies zu Werbezwecken";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Verwendet von unseren autorisierten Werbepartnern, um Daten über Ihre Browsing-Aktivitäten zu sammeln und die Werbung, die Sie auf unseren Diensten und auf anderen Websites sehen, zu individualisieren. Wenn Sie diese Cookies nicht akzeptieren, werden Sie zwar weiterhin Werbeanzeigen sehen, diese werden aber nicht personalisiert sein.";
+/* Ad settings header title */
+"settings.ad.header.title"="Werbeeinstellungen";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Personalisierte Werbung";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Version wurde als neue Datei gespeichert";
 /* Text shown for the action create new file */
@@ -4515,6 +4521,6 @@
 /* Artist name to display if meta data for artist could not be found */
 "media.audio.metadata.missing.artist"="Unbekannter Künstler";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="No playlists";
+"photos.addToPlaylist.empty.message"="Keine Playlists";
 /* Add to playlist empty create button title */
-"photos.addToPlaylist.empty.create.button.title"="Create playlist";
+"photos.addToPlaylist.empty.create.button.title"="Playlist erstellen";

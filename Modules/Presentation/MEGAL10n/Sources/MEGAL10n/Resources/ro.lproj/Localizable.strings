@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="În curs";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Părăsește";
+"leaveFolder"="Leave folder";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Sigur vreți să părăsiți această partajare?";
+"leaveShareAlertMessage"="Are you sure you want to leave this folder?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Sigur vreți să părăsiți aceste partajări?";
+"leaveSharesAlertMessage"="Are you sure you want to leave these folders?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Partajează";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Politica privind cookie-urile";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Setări privind cookie-urile";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Cookie and ad settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii de utilizare a serviciului";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Cookie-uri de publicitate";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Utilizate de partenerii noștri de publicitate aprobați pentru a colecta date despre activitățile dvs. de navigare și pentru a personaliza anunțurile pe care le vedeți în serviciile noastre și pe alte site-uri web. Dacă nu acceptați aceste cookie-uri, veți vedea în continuare anunțuri, dar acestea nu vor fi personalizate.";
+/* Ad settings header title */
+"settings.ad.header.title"="Ad settings";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Ad personalisation";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versiunea a fost creată ca un fișier nou.";
 /* Text shown for the action create new file */
@@ -3427,7 +3433,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Dezactivat";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Inactive";
+"device.center.backup.offline.status.message"="Inactiv";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Backup oprit";
 /* Device Center backup paused status */
@@ -4313,11 +4319,11 @@
 /* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Vă rugăm să vă asigurați că cantitatea de spațiu de stocare este sub limita de %@ până la această dată. Contul dvs. poate fi blocat dacă depășiți limita.";
 /* Cancel subscription confirmation alert button title */
-"accounts.cancelSubscriptionConfirmationAlert.button.title"="Închide";
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="Bine, am înțeles";
 /* Error message displayed in the cancel subscription error alert */
 "accounts.cancelSubscriptionErrorAlert.message"="Anularea dvs. nu poate fi procesată chiar acum. Verificați conexiunea și încercați din nou. Dacă problema persistă, contactați Asistența.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
-"accounts.cancelSubscriptionErrorAlert.button.ok"="Închide";
+"accounts.cancelSubscriptionErrorAlert.button.ok"="Bine, am înțeles";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
 "accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="Contactați Asistența";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
@@ -4485,7 +4491,7 @@
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Contul dvs. Business a fost dezactivat. Pentru a gestiona etichetele, contactați administratorul contului Business.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="Închide";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="Bine, am înțeles";
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Adăugați";
 /* Ad-free experience screen header title */
@@ -4513,8 +4519,8 @@
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="Numărul maximal de etichete este 10";
 /* Artist name to display if meta data for artist could not be found */
-"media.audio.metadata.missing.artist"="Unknown Artist";
+"media.audio.metadata.missing.artist"="Artist necunoscut";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="No playlists";
+"photos.addToPlaylist.empty.message"="Nu există liste de redare";
 /* Add to playlist empty create button title */
-"photos.addToPlaylist.empty.create.button.title"="Create playlist";
+"photos.addToPlaylist.empty.create.button.title"="Creați o listă de redare";

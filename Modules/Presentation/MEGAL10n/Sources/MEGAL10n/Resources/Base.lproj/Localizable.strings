@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="Pending";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Leave";
+"leaveFolder"="Leave folder";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Are you sure you want to leave this folder?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Are you sure you want to leave these folders?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Share";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */

@@ -21,4 +21,4 @@
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
 "NSLocalNetworkUsageDescription"="Questo ti darà la possibilità di usare MEGA per fare e ricevere chiamate tramite i dispositivi collegati alla stessa rete Wi-Fi o alla stessa rete LAN.";
 /* User tracking usage description. In order to protect user's privacy, Apple requires a specific string explaining why user tracking will be enabled. */
-"NSUserTrackingUsageDescription"="This will be used to personalise the ads you see";
+"NSUserTrackingUsageDescription"="Questo verrà utilizzato per personalizzare gli annunci che vedrai";

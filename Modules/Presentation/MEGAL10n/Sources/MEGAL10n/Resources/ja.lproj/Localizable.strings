@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="保留中";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="解除";
+"leaveFolder"="フォルダの共有を解除する";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="この共有を解除してもよろしいですか？";
+"leaveShareAlertMessage"="このフォルダの共有を解除してもよろしいですか？";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="これらの共有を解除してもよろしいですか？";
+"leaveSharesAlertMessage"="これらのフォルダの共有を解除してもよろしいですか？";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="共有";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="クッキーポリシー";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="クッキーの設定";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="クッキーと広告の設定";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="ご利用規約";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="広告クッキー";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="お客様の閲覧活動に関するデータを収集し、当社のサービスや他のウェブサイトで表示される広告をカスタマイズするために、当社の承認された広告パートナーによって使用されます。これらのクッキーを受け入れない場合、広告は引き続き表示される一方で、パーソナライズされません。";
+/* Ad settings header title */
+"settings.ad.header.title"="広告設定";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="広告のパーソナライズ";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="バージョンは新しいファイルとして作成されました";
 /* Text shown for the action create new file */

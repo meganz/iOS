@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="В ожидании";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Выйти";
+"leaveFolder"="Покинуть папку";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Действительно покинуть?";
+"leaveShareAlertMessage"="Действительно покинуть эту папку?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Действительно покинуть?";
+"leaveSharesAlertMessage"="Действительно покинуть эти папки?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Обмен";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Политика использования куки-файлов";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Настройки куки-файлов";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Настройки куки-файлов и рекламы";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Условия использования";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Рекламные куки";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Используются нашими одобренными рекламными партнерами для сбора данных о вашей активности в Интернете и настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах. Если вы не примете эти куки-файлы, вы всё равно будете видеть рекламу, но она не будет персонализированной.";
+/* Ad settings header title */
+"settings.ad.header.title"="Настройки рекламы";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Персонализация рекламы";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Версия была успешно как новый файл";
 /* Text shown for the action create new file */

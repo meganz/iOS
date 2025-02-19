@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="In attesa";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Lascia";
+"leaveFolder"="Abbandona la cartella";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Sei sicuro di voler abbandonare questa condivisione?";
+"leaveShareAlertMessage"="Vuoi veramente lasciare questa cartella?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Sei sicuro di voler abbandonare queste condivisioni?";
+"leaveSharesAlertMessage"="Vuoi veramente lasciare queste cartelle?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Condividi";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Politica dei Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Impostazioni dei Cookie";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Impostazioni dei cookie e degli annunci";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termini di Servizio";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -799,13 +801,13 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Svuota il cestino";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the Rubbish bin will be deleted.";
+"emptyRubbishBinAlertTitle"="Tutti gli oggetti nel Cestino saranno eliminati.";
 /* Rubbish bin setting snack bar message' */
 "settings.fileManagement.rubbishBin.snackbar.message"="Cestino pulito";
 /* Upgrade to paid account title */
-"settings.fileManagement.rubbishBin.upgrade.info.title"="Rubbish bin is automatically emptied every %d days. If you would like to disable automatic emptying of the Rubbish bin, upgrade to a paid plan.";
+"settings.fileManagement.rubbishBin.upgrade.info.title"="Il Cestino si svuota automaticamente ogni %d giorni. Se desideri disattivare lo svuotamento automatico del Cestino, passa a un piano a pagamento.";
 /* Rubbish bin auto purge title */
-"settings.fileManagement.rubbishBin.autoPurge.title"="Automatically empty Rubbish bin";
+"settings.fileManagement.rubbishBin.autoPurge.title"="Svuota automaticamente il Cestino";
 /* Rubbish bin auto purge days */
 "settings.fileManagement.rubbishBin.autoPurge.days"="%d giorni";
 /* Empty Rubbish Bin Warning Title */
@@ -813,7 +815,7 @@
 /* Empty Rubbish Bin Cell Title */
 "settings.fileManagement.rubbishBin.clean.title"="Svuota il Cestino";
 /* Rubbish Bin Settings Navigation Title */
-"settings.fileManagement.rubbishBin.navigation.title"="Rubbish bin settings";
+"settings.fileManagement.rubbishBin.navigation.title"="Impostazioni del Cestino";
 /* Empty Rubbish Bin Warning Empty button */
 "settings.fileManagement.rubbishBin.clean.warning.empty"="Svuota";
 /* Title for the File Management settings screen */
@@ -821,11 +823,11 @@
 /* Section header for settings related to MEGA cloud storage */
 "settings.fileManagement.header.onMEGA"="Su MEGA";
 /* Toggle option for enabling mobile data to load high-resolution images */
-"settings.fileManagement.useMobileDataForHighResolution"="Use mobile data to load high resolution images";
+"settings.fileManagement.useMobileDataForHighResolution"="Usa i dati mobili per caricare immagini ad alta risoluzione";
 /* Description explaining the behavior when the toggle is disabled */
-"settings.fileManagement.useMobileDataForHighResolution.description"="If disabled, the high resolution image will only be loaded when you zoom in.";
+"settings.fileManagement.useMobileDataForHighResolution.description"="Se disattivato, l'immagine ad alta risoluzione verrà caricata solo quando si esegue lo zoom in avanti.";
 /* Option to open settings related to the Rubbish Bin */
-"settings.fileManagement.rubbishBinSettings"="Rubbish bin settings";
+"settings.fileManagement.rubbishBinSettings"="Impostazioni del Cestino";
 /* Option for managing file versioning settings */
 "settings.fileManagement.fileVersioning"="Salvataggio delle versioni dei file";
 /* Section header for settings related to device storage */
@@ -833,31 +835,31 @@
 /* Option to clear cached files stored on the device */
 "settings.fileManagement.clearCache"="Svuota cache";
 /* Confirmation message displayed after clearing cached files */
-"settings.fileManagement.clearCache.done.message"="Cache cleared";
+"settings.fileManagement.clearCache.done.message"="Cache eliminata";
 /* Option to clear offline files stored on the device */
-"settings.fileManagement.clearOfflineFiles"="Clear offline files";
+"settings.fileManagement.clearOfflineFiles"="Elimina i file offline";
 /* Alert title shown when clearing offline files */
-"settings.fileManagement.clearOfflineFiles.alert.title"="Clear offline files?";
+"settings.fileManagement.clearOfflineFiles.alert.title"="Eliminare i file offline?";
 /* Alert description explaining the impact of clearing offline files */
-"settings.fileManagement.clearOfflineFiles.alert.description"="If you would like to view these files, an internet connection will be required.";
+"settings.fileManagement.clearOfflineFiles.alert.description"="Se desideri visualizzare questi file, sarà necessaria una connessione Internet.";
 /* Button label to confirm clearing offline files */
 "settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="Pulisci";
 /* Confirmation message displayed after clearing offline files */
-"settings.fileManagement.clearOfflineFiles.done.message"="Offline files cleared";
+"settings.fileManagement.clearOfflineFiles.done.message"="File offline eliminati";
 /* File versioning menu subTitle */
-"settings.fileManagement.fileVersioning.menu.subtitle"="Store multiple versions of your files. Disabling this setting does not stop your contacts from adding new versions in shared folders.";
+"settings.fileManagement.fileVersioning.menu.subtitle"="Archivia più versioni dei tuoi file. La disattivazione di questa impostazione non impedisce ai contatti di aggiungere nuove versioni nelle cartelle condivise.";
 /* File versioning button title to delete all older version of files */
-"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Delete all older versions of files";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Elimina tutte le versioni precedenti dei file";
 /* File versioning alert title for deleting older versions of files */
-"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Delete older versions of files?";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.title"="Eliminare le versioni precedenti dei file?";
 /* File versioning alert message for deleting older versions of files */
-"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Any file versions shared to you from a contact will need to be deleted by them. Current versions of files won’t be deleted.";
+"settings.fileManagement.fileVersioning.deleteOlderVersions.alert.message"="Qualsiasi versione dei file condivisa con te da un contatto dovrà essere eliminata da quest'ultimo. Le versioni correnti dei file non verranno eliminate.";
 /* File versioning snackbar message after deleting older versions of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="Le versioni precedenti dei file sono state eliminate";
 /* File versioning alert title for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Disable file versioning?";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="Disabilitare le versioni dei file?";
 /* File versioning alert message for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, updating a file will completely replace it.";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="Quando le versioni dei file sono disattivate, l'aggiornamento di un file lo sostituirà completamente.";
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Disabilita";
 /* File versioning footer message */
@@ -1007,7 +1009,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invita i tuoi amici";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="%@ di spazio di archiviazione per ogni invito.\nValido per 365 giorni.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleziona contatti dal dispositivo o inserisci più indirizzi email.";
 /*  */
@@ -1015,9 +1017,9 @@
 /*  */
 "howItWorks"="Come funziona";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
+"howItWorksMain"="La persona invitata da te deve creare un account gratuito su MEGA e [S]installare almeno un'applicazione MEGA[/S] (l'app MEGA per desktop o una delle nostre app MEGA per mobile)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
+"howItWorksSecondary"="Puoi avvisare la persona che hai invitato con qualsiasi metodo. Guadagnerai il bonus se hai inserito qui il suo indirizzo email prima che si registrasse con quell'indirizzo.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Non riceverai bonus se inviti qualcuno che ha già usato MEGA in precedenza e non verrai notificato di un rifiuto.";
 /* Header of block with achievements bonuses. */
@@ -1027,7 +1029,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="Spazio di %@";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ GB[/B] storage";
+"account.storage.freePlan"="[B]%@ GB[/B] di spazio di archiviazione";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Trasferisci";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1037,7 +1039,7 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bonus di registrazione";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="You have received %@ storage space as your free signup bonus.";
+"account.achievement.registration.explanation.label"="Hai ricevuto %@ di spazio di archiviazione come bonus di iscrizione gratuito.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonus di invito";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
@@ -1749,7 +1751,7 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Stai per eliminare la storia delle versioni di tutti i file. Qualsiasi versione di un file condiviso con te da un contatto dovrà essere eliminato da quel contatto.\n\nPer favore, nota che i file correnti non saranno eliminati.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Rubbish bin settings";
+"Rubbish-Bin Cleaning Scheduler:"="Impostazioni del Cestino";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Rimuovi file più vecchi di";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
@@ -1761,7 +1763,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Il cestino può essere svuotato per te automaticamente. Il periodo minimo è 7 giorni.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable automatic Rubbish bin emptying or set a longer retention period, you need to subscribe to one of our plans.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Per disattivare lo svuotamento automatico del Cestino o impostare un periodo di conservazione più lungo, devi abbonarti a uno dei nostri piani.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vuoi chiudere tutte le altre sessioni? Questo ti farà uscire da tutte le altre sessioni attive, fatta eccezione per quella corrente.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Cookie pubblicitari";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Utilizzati dai nostri partner pubblicitari approvati per raccogliere dati riguardo le tue attività di navigazione su internet e per personalizzare le pubblicità che vedi nei nostri servizi e su altri siti. Non accettare questi cookie implicherà che vedrai ancora pubblicità ma che non saranno personalizzate.";
+/* Ad settings header title */
+"settings.ad.header.title"="Ad settings";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Ad personalisation";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La versione è stata ripristinata come nuovo file";
 /* Text shown for the action create new file */
