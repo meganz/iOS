@@ -94,7 +94,7 @@ extension AppDelegate {
                         await showAdMobConsentIfNeeded()
                         
                     case .bitmapNotSet:
-                        await showCookieDialog(type: .noAdsCookiePolicy)
+                        await showCookieDialog()
                     }
                 }
             } else {
@@ -113,7 +113,7 @@ extension AppDelegate {
         ).start()
     }
     
-    private func showCookieDialog(type: CustomModalAlertViewController.CookieDialogType) async {
+    private func showCookieDialog() async {
         guard shouldPresentModal else { return }
         
         CustomModalAlertCookieDialogRouter(
@@ -448,7 +448,7 @@ extension AppDelegate {
     }
     
     @MainActor
-    @objc func joinScheduleMeeting(forChatId chatId: ChatIdEntity, retry: Bool = true) {
+    @objc func joinScheduleMeeting(forChatId chatId: ChatIdEntity) {
         DIContainer.tracker.trackAnalyticsEvent(with: ScheduledMeetingReminderNotificationJoinButtonEvent())
         
         guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId)?.toChatRoomEntity() else {
@@ -525,10 +525,6 @@ extension AppDelegate {
         _ = await chatConnectionProvider
             .updates
             .first { @Sendable in $0 == chatId && $1 == .online }
-    }
-    
-    private var permissionAlertRouter: some PermissionAlertRouting {
-        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
 
     // MARK: - Show upgrade Screen

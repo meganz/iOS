@@ -41,7 +41,8 @@ extension AudioPlayer {
     }
 }
 
-extension AudioPlayer: AudioPlayerObservedEventsProtocol {
+// MARK: - Audio Player Observed Events Functions
+extension AudioPlayer {
     // Listening for current item change
     func audio(player: AVQueuePlayer, didChangeItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
         // Audio player media item changed...

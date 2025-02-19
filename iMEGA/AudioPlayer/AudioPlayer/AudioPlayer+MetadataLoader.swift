@@ -5,7 +5,8 @@ enum MetadataLoadError: Error {
     case cancelled
 }
 
-extension AudioPlayer: AudioPlayerMetadataLoaderProtocol {
+// MARK: - Audio Player Metadata Functions
+extension AudioPlayer {
 
     func preloadNextTracksMetadata() {
         tracks.compactMap { $0.loadedMetadata ? nil: $0 }

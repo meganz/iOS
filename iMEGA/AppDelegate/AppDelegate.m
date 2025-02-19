@@ -44,12 +44,10 @@
 #import "TransferSessionManager.h"
 #import <SDWebImage/SDWebImage.h>
 
-@import ChatRepo;
 @import Firebase;
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 @import SDWebImageWebPCoder;
-@import MEGAFoundation;
 #import "MEGA-Swift.h"
 
 @interface AppDelegate () <UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -1074,7 +1072,7 @@
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdBase64];
         
         if ([self hasTappedOnJoinActionWithResponse:response]) {
-            [self joinScheduleMeetingForChatId:chatId retry:YES];
+            [self joinScheduleMeetingForChatId:chatId];
         } else {
             [self openScheduleMeetingForChatId:chatId retry:YES];
         }

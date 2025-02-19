@@ -13,7 +13,6 @@ final class AudioPlayer: NSObject {
     // MARK: - Internal properties
     var mediaPlayerNowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     var mediaPlayerRemoteCommandCenter = MPRemoteCommandCenter.shared()
-    var observers = [UIViewController]()
     var queuePlayer: AVQueuePlayer?
     var tracks: [AudioPlayerItem] = []
     var audioQueueObserver: NSKeyValueObservation?
@@ -54,12 +53,12 @@ final class AudioPlayer: NSObject {
     private var timer: Timer?
     private var taskId: UIBackgroundTaskIdentifier?
     private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
-    
-    // MARK: - Internal Computed Properties
+
+    // MARK: - Internal Computed Properties, intended for important UTs
     var currentIndex: Int? {
         queuePlayer?.items().firstIndex(where: { $0 as? AudioPlayerItem == currentItem() })
     }
-    
+
     var currentName: String? {
         currentItem()?.name
     }
@@ -314,7 +313,8 @@ final class AudioPlayer: NSObject {
     }
 }
 
-extension AudioPlayer: AudioPlayerTimerProtocol {
+// MARK: - Audio Player Time Functions
+extension AudioPlayer {
     func setTimer() {
         if timer != nil {
             invalidateTimer()

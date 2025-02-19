@@ -74,7 +74,6 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
     
-    func loginToFolder(link: String) {}
     func folderLinkLogout() {}
     
     func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool {

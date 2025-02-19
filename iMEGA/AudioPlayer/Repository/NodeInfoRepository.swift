@@ -4,15 +4,9 @@ import MEGASDKRepo
 import MEGASwift
 
 protocol NodeInfoRepositoryProtocol: Sendable {
-    func path(fromHandle: HandleEntity) -> URL?
-    func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]?
-    func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]?
     func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
     func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
     func node(fromHandle: HandleEntity) -> MEGANode?
-    func folderNode(fromHandle: HandleEntity) -> MEGANode?
-    func folderAuthNode(fromNode: MEGANode) -> MEGANode?
-    func loginToFolder(link: String)
     func folderLinkLogout()
     
     /// Used for check wethere a node from a non current user folder link is got take down or not.
@@ -76,18 +70,11 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         
         return sortType
     }
+
+    private func folderNode(fromHandle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: fromHandle) }
     
-    // MARK: - Public functions
-    func node(fromHandle: HandleEntity) -> MEGANode? { sdk.node(forHandle: fromHandle) }
-    func folderNode(fromHandle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: fromHandle) }
-    func folderAuthNode(fromNode: MEGANode) -> MEGANode? { folderSDK.authorizeNode(fromNode) }
-    
-    func path(fromHandle: HandleEntity) -> URL? {
-        guard let node = node(fromHandle: fromHandle) else { return nil }
-        
-        return offlineFileInfoRepository.localPath(fromNode: node) ?? streamingInfoRepository.path(fromNode: node)
-    }
-    
+    private func folderAuthNode(fromNode: MEGANode) -> MEGANode? { folderSDK.authorizeNode(fromNode) }
+
     func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
         return fromNodes?.compactMap {
             guard let url = path(fromHandle: $0.handle),
@@ -95,14 +82,23 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
             return AudioPlayerItem(name: name, url: url, node: $0, hasThumbnail: $0.hasThumbnail())
         }
     }
-    
-    func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
+
+    private func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
         return fromNodes?.compactMap {
             guard let node = folderAuthNode(fromNode: $0),
                   let name = node.name,
                   let url = streamingInfoRepository.path(fromNode: node) else { return nil }
             return AudioPlayerItem(name: name, url: url, node: node, hasThumbnail: $0.hasThumbnail())
         }
+    }
+
+    // MARK: - Public functions
+    func node(fromHandle: HandleEntity) -> MEGANode? { sdk.node(forHandle: fromHandle) }
+    
+    func path(fromHandle: HandleEntity) -> URL? {
+        guard let node = node(fromHandle: fromHandle) else { return nil }
+        
+        return offlineFileInfoRepository.localPath(fromNode: node) ?? streamingInfoRepository.path(fromNode: node)
     }
     
     func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
@@ -111,12 +107,6 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     
     func folderChildrenInfo(fromParentHandle parent: HandleEntity) -> [AudioPlayerItem]? {
         folderPlayableChildren(of: parent).flatMap(authInfo)
-    }
-    
-    func loginToFolder(link: String) {
-        if folderSDK.isLoggedIn() == 0 {
-            folderSDK.login(toFolderLink: link)
-        }
     }
      
     func folderLinkLogout() {

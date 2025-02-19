@@ -1,5 +1,4 @@
 import Foundation
-import MEGADomain
 import MEGASDKRepo
 
 protocol StreamingInfoRepositoryProtocol: Sendable {

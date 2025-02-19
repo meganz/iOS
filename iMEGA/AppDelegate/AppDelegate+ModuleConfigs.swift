@@ -1,6 +1,5 @@
 import ContentLibraries
 import MEGADomain
-import MEGARepo
 import MEGASDKRepo
 
 extension AppDelegate {
