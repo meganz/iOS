@@ -376,22 +376,4 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         guard let currentAccountDetails else { return nil }
         return currentAccountDetails.subscriptions
     }
-    
-    // - MARK: RichLinksPreview management
-    public func isRichLinkPreviewEnabled() async -> Bool {
-        await withAsyncValue { completion in
-            sdk.isRichPreviewsEnabled(with: RequestDelegate { result in
-                switch result {
-                case .success(let request):
-                    completion(.success(request.flag))
-                case .failure:
-                    completion(.success(false))
-                }
-            })
-        }
-    }
-    
-    public func enableRichLinkPreview(_ enabled: Bool) {
-        sdk.enableRichPreviews(enabled)
-    }
 }
