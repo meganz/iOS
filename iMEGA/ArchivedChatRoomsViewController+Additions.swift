@@ -1,4 +1,3 @@
-import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 

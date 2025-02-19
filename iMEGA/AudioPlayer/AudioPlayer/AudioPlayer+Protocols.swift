@@ -5,70 +5,9 @@ import MEGADomain
 
 @objc protocol AudioPlayerProtocol: AnyObject {}
 
-// MARK: - Audio Player Control State Functions
-protocol AudioPlayerStateProtocol {
-    func play()
-    func pause()
-    func togglePlay()
-    func playNext(_ completion: @escaping () -> Void)
-    func playPrevious(_ completion: @escaping () -> Void)
-    func play(item: AudioPlayerItem, completion: @escaping () -> Void)
-    func rewind(direction: RewindDirection)
-    func isShuffleMode() -> Bool
-    func shuffle(_ active: Bool)
-    func isRepeatAllMode() -> Bool
-    func repeatAll(_ active: Bool)
-    func isRepeatOneMode() -> Bool
-    func repeatOne(_ active: Bool)
-    func isDefaultRepeatMode() -> Bool
-    func setProgressCompleted(_ percentage: Float)
-    func setProgressCompleted(_ position: TimeInterval)
-    func setProgressCompleted(_ position: TimeInterval, completion: @escaping () -> Void)
-    func progressDragEventBegan()
-    func progressDragEventEnded()
-    func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
-    func deletePlaylist(items: [AudioPlayerItem])
-    func resetPlayerItems()
-    func updateQueueWithLoopItems()
-    func removeLoopItems()
-    func repeatLastItem()
-    func resetPlaylist()
-    func resetAudioPlayerConfiguration()
-    func blockAudioPlayerInteraction()
-    func unblockAudioPlayerInteraction()
-    func resetCurrentItem()
-}
-
-// MARK: - Audio Player Time Functions
-protocol AudioPlayerTimerProtocol {
-    func setTimer()
-    func invalidateTimer()
-}
-
-// MARK: - Audio Player Remote Command Functions
-protocol AudioPlayerRemoteCommandProtocol {
-    func audioPlayer(didReceivePlayCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus
-    func audioPlayer(didReceivePauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus
-    func audioPlayer(didReceiveNextTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus
-    func audioPlayer(didReceivePreviousTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus
-    func audioPlayer(didReceiveTogglePlayPauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus
-    func audioPlayer(didReceiveChangePlaybackPositionCommand event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus
-}
-
 // MARK: - Audio Player Metadata Functions
 protocol AudioPlayerMetadataLoaderProtocol {
     func preloadNextTracksMetadata()
-}
-
-// MARK: - Audio Player Observed Events Functions
-protocol AudioPlayerObservedEventsProtocol {
-    func audio(player: AVQueuePlayer, didChangeItem value: NSKeyValueObservedChange<AVPlayerItem?>)
-    func audio(player: AVQueuePlayer, didChangeTimeControlStatus value: NSKeyValueObservedChange<AVQueuePlayer.TimeControlStatus>)
-    func audio(player: AVQueuePlayer, reasonForWaitingToPlay value: NSKeyValueObservedChange<AVQueuePlayer.WaitingReason?>)
-    func audio(playerItem: AVPlayerItem, didChangeCurrentItemStatus value: NSKeyValueObservedChange<AVPlayerItem.Status>)
-    func audio(playerItem: AVPlayerItem, isPlaybackBufferEmpty value: NSKeyValueObservedChange<Bool>)
-    func audio(playerItem: AVPlayerItem, isPlaybackLikelyToKeepUp value: NSKeyValueObservedChange<Bool>)
-    func audio(playerItem: AVPlayerItem, isPlaybackBufferFull value: NSKeyValueObservedChange<Bool>)
 }
 
 // MARK: - Audio Player Observers Functions
@@ -81,7 +20,6 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?)
     @objc optional func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?)
-    @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, entireQueue: [AudioPlayerItem]?)
     @objc optional func audio(player: AVQueuePlayer, loopMode: Bool, shuffleMode: Bool, repeatOneMode: Bool)
     @objc optional func audioPlayerWillStartBlockingAction()
     @objc optional func audioPlayerDidFinishBlockingAction()
@@ -90,26 +28,6 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audioPlayerDidFinishBuffering()
     @objc optional func audioPlayerDidAddTracks()
     @objc optional func audioDidStartPlayingItem(_ item: AudioPlayerItem?)
-}
-
-// MARK: - Audio Player Notify Observers Functions
-protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
-    func notify(_ closure: (any AudioPlayerObserversProtocol) -> Void)
-    func notify(_ closures: [(any AudioPlayerObserversProtocol) -> Void])
-    func aboutCurrentState(_ observer: some AudioPlayerObserversProtocol)
-    func aboutCurrentItem(_ observer: some AudioPlayerObserversProtocol)
-    func aboutToReloadCurrentItem(_ observer: some AudioPlayerObserversProtocol)
-    func aboutCurrentItemAndQueue(_ observer: some AudioPlayerObserversProtocol)
-    func aboutCurrentThumbnail(_ observer: some AudioPlayerObserversProtocol)
-    func aboutTheBeginningOfBlockingAction(_ observer: some AudioPlayerObserversProtocol)
-    func aboutTheEndOfBlockingAction(_ observer: some AudioPlayerObserversProtocol)
-    func aboutShowingLoadingView(_ observer: some AudioPlayerObserversProtocol)
-    func aboutHidingLoadingView(_ observer: some AudioPlayerObserversProtocol)
-    func aboutUpdateCurrentIndexPath(_ observer: some AudioPlayerObserversProtocol)
-    func aboutAudioPlayerConfiguration(_ observer: some AudioPlayerObserversProtocol)
-    func aboutAudioPlayerDidFinishBuffering(_ observer: some AudioPlayerObserversProtocol)
-    func aboutStartPlayingNewItem(_ observer: some AudioPlayerObserversProtocol)
-    func aboutAudioPlayerDidAddTracks(_ observer: some AudioPlayerObserversProtocol)
 }
 
 // MARK: - Audio Player Handler

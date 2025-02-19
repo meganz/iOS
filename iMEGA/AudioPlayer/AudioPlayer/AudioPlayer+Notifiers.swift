@@ -1,7 +1,8 @@
 import Foundation
 
-extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
-    
+// MARK: - Audio Player Notify Observers Functions
+extension AudioPlayer: AudioPlayerProtocol {
+
     func notify(_ closure: (any AudioPlayerObserversProtocol) -> Void) {
         listenerManager.notify(closure: closure)
     }

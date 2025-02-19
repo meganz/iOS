@@ -15,24 +15,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
         XCTAssertEqual(mockFolderSdk.folderLinkLogoutCallCount, 1)
     }
     
-    // MARK: - loginToFolder
-    
-    func testLoginToFolder_whenNotLoggedIn_LoginToFolder() {
-        let (sut, _, mockFolderSdk, _, _) = makeSUT(folderSdk: MockFolderSdk(isLoggedIn: false))
-        
-        sut.loginToFolder(link: "any-link")
-        
-        XCTAssertEqual(mockFolderSdk.loginToFolderLinkCallCount, 1)
-    }
-    
-    func testLoginToFolder_whenAlreadyLoggedIn_doesNotLoginToFolderLink() {
-        let (sut, _, mockFolderSdk, _, _) = makeSUT(folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        sut.loginToFolder(link: "any-link")
-        
-        XCTAssertEqual(mockFolderSdk.loginToFolderLinkCallCount, 0)
-    }
-    
     // MARK: - nodeFromHandle
     
     func testNodeFromHandle_whenCalled_callNode() {
@@ -41,26 +23,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
         _ = sut.node(fromHandle: .invalid)
         
         XCTAssertEqual(mockSdk.nodeForHandleCallCount, 1)
-    }
-    
-    // MARK: - FolderNodeFromHandle
-    
-    func testFolderNodeFromHandle_whenCalled_callNode() {
-        let (sut, _, mockFolderSdk, _, _) = makeSUT(folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        _ = sut.folderNode(fromHandle: .invalid)
-        
-        XCTAssertEqual(mockFolderSdk.nodeForHandleCallCount, 1)
-    }
-    
-    // MARK: - folderAuthNodeFromNode
-    
-    func testAuthorizeNode_whenCalled_callNode() {
-        let (sut, _, mockFolderSdk, _, _) = makeSUT(folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        _ = sut.folderAuthNode(fromNode: anyNode())
-        
-        XCTAssertEqual(mockFolderSdk.authorizeNodeCallCount, 1)
     }
     
     // MARK: - pathFromHandle
@@ -161,56 +123,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
             XCTAssertEqual(nodes[index].name, playerItem.name)
             XCTAssertEqual(nodes[index], playerItem.node)
         }
-    }
-    
-    // MARK: - AuthInfoFromNodes
-    
-    func testAuthInfoFromNodes_whenNilNodes_returnsNilItems() {
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        let playerItems = sut.authInfo(fromNodes: nil)
-        
-        XCTAssertNil(playerItems)
-    }
-    
-    func testAuthInfoFromNodes_whenEmptyNodes_returnsEmptyItems() {
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        guard let playerItems = sut.authInfo(fromNodes: []) else {
-            XCTFail("Expect to have empty items, got nil instead.")
-            return
-        }
-        
-        XCTAssertTrue(playerItems.isEmpty)
-    }
-    
-    func testAuthInfoFromNodes_whenHasSingleNodeWithIncompleteData_returnEmptyItems() {
-        let node1 = anyNode(handle: 1, name: "any-name-1")
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [node1]), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        guard let playerItems = sut.authInfo(fromNodes: [node1]) else {
-            XCTFail("Expect to have empty items, got nil instead.")
-            return
-        }
-        
-        XCTAssertTrue(playerItems.isEmpty)
-    }
-    
-    func testAuthInfoFromNodes_whenHasSingleNodeWithCompleteData_returnEmptyItems() {
-        let node1 = anyNode(handle: 1, name: "any-name-1")
-        let (sut, _, mockFolderSdk, _, _) = makeSUT(
-            sdk: MockSdk(nodes: [node1]),
-            folderSdk: MockFolderSdk(isLoggedIn: true),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success(()))
-        )
-        mockFolderSdk.mockAuthorizeNode(with: node1)
-        
-        guard let playerItems = sut.authInfo(fromNodes: [node1]) else {
-            XCTFail("Expect to have items, got nil instead.")
-            return
-        }
-        
-        XCTAssertEqual(playerItems.count, 1)
     }
     
     // MARK: - childrenInfoFromParentHandle

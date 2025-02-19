@@ -53,7 +53,8 @@ extension AudioPlayer {
     }
 }
 
-extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
+// MARK: - Audio Player Remote Command Functions
+extension AudioPlayer {
     @objc func audioPlayer(didReceivePlayCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         guard event.command.isEnabled, let player = queuePlayer, !isAudioPlayerInterrupted else { return .commandFailed }
         if player.rate == 0.0 {

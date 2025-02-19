@@ -4,7 +4,8 @@ enum RewindDirection {
     case backward, forward
 }
 
-extension AudioPlayer: AudioPlayerStateProtocol {
+// MARK: - Audio Player Control State Functions
+extension AudioPlayer {
     
     private func refreshCurrentState(refresh: Bool) {
         if refresh {

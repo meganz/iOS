@@ -3,7 +3,7 @@ import MEGADomain
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
-    public static let newRepo = AudioSessionRepository(audioSession: .sharedInstance())
+    static let newRepo = AudioSessionRepository(audioSession: .sharedInstance())
     
     private let audioSession: AVAudioSession
     
