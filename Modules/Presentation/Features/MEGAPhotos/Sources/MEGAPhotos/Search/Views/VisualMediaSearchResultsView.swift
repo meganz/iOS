@@ -30,6 +30,8 @@ public struct VisualMediaSearchResultsView: View {
     @ViewBuilder
     private var content: some View {
         switch viewModel.viewState {
+        case .loading:
+            VisualMediaSearchLoadingView()
         case .recentlySearched(let items):
             VisualMediaSearchHistoryView(
                 searchedItems: items,
@@ -40,8 +42,6 @@ public struct VisualMediaSearchResultsView: View {
                 selectedItem: $viewModel.selectedVisualMediaResult)
         case .empty:
             EmptySearchView()
-        default:
-            LoadingSpinner()
         }
     }
 }
