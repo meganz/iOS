@@ -87,6 +87,10 @@ public protocol AccountUseCaseProtocol: Sendable {
     func rubbishBinStorageUsed() -> Int64
     func incomingSharesStorageUsed() -> Int64
     func backupStorageUsed() async throws -> Int64
+    
+    // RichLinksPreview management
+    func isRichLinkPreviewEnabled() async -> Bool
+    func enableRichLinkPreview(_ enabled: Bool)
 }
 
 extension AccountUseCaseProtocol {
@@ -308,4 +312,14 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     private func hasBusinessAccountInGracePeriod() -> Bool {
         isBusinessAccountNotExpired() && repository.isInGracePeriod()
     }
+    
+    // - MARK: RichLinksPreview management
+    public func isRichLinkPreviewEnabled() async -> Bool {
+        await repository.isRichLinkPreviewEnabled()
+    }
+    
+    public func enableRichLinkPreview(_ enabled: Bool) {
+        repository.enableRichLinkPreview(enabled)
+    }
+
 }

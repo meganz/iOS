@@ -44,4 +44,5 @@ public enum PreferenceKeyEntity: String {
     case queuedTransfersPaused
     case transfersPaused
     case useMobileDataForPreviewingOriginalPhoto = "MEGAUseMobileDataForPreviewingOriginalPhoto"
+    case richLinksPreviewEnabled = "richLinks"
 }
