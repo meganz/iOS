@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     var bottomConstant: CGFloat {
@@ -9,6 +10,8 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         guard let miniPlayerView = viewController.view else { return }
         
         bottomView?.removeFromSuperview()
+        
+        tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
         
         view.addSubview(miniPlayerView)
         layoutMiniPlayerView(miniPlayerView)
@@ -28,6 +31,31 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
          miniPlayerView.heightAnchor.constraint(equalToConstant: 60)].activate()
     }
     
+    private func addSafeAreaCoverView() {
+        guard safeAreaCoverView == nil else { return }
+        
+        let coverView = UIView()
+        coverView.backgroundColor = TokenColors.Background.surface1
+        coverView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(coverView)
+        
+        NSLayoutConstraint.activate([
+            coverView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            coverView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            coverView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            coverView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        safeAreaCoverView = coverView
+    }
+    
+    private func removeSafeAreaCoverView() {
+        guard safeAreaCoverView != nil else { return }
+        
+        safeAreaCoverView?.removeFromSuperview()
+        safeAreaCoverView = nil
+    }
+    
     func showMiniPlayer() {
         if let navController = selectedViewController as? UINavigationController, 
             let lastController = navController.viewControllers.last,
@@ -42,6 +70,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     func hideMiniPlayer() {
         DispatchQueue.main.async {
             self.bottomView?.isHidden = true
+            self.removeSafeAreaCoverView()
         }
     }
     
@@ -49,6 +78,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         hideMiniPlayer()
         resetMiniPlayerContainer()
         shouldUpdateProgressViewLocation()
+        removeSafeAreaCoverView()
     }
     
     func resetMiniPlayerContainer() {
