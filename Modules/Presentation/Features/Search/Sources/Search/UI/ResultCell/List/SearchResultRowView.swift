@@ -73,6 +73,7 @@ struct SearchResultRowView: View {
                 Spacer()
                     .frame(width: 8)
                 lines
+                    .padding(.vertical, TokenSpacing._2)
                 Spacer()
             }
             .sensitive(viewModel.isSensitive ? .opacity : .none)
@@ -97,20 +98,14 @@ struct SearchResultRowView: View {
     @ViewBuilder
     private var lines: some View {
         VStack(alignment: .leading, spacing: .zero) {
-            if let note = viewModel.note {
-                titleLine(topPadding: TokenSpacing._3)
-                auxTitleLine
-                subtitleLine
-                noteView(with: note)
-            } else {
-                titleLine(topPadding: 0)
-                auxTitleLine
-                subtitleLine
-            }
+            titleLine
+            auxTitleLine
+            subtitleLine
+            noteView
         }
     }
     
-    private func titleLine(topPadding: CGFloat) -> some View {
+    private var titleLine: some View {
         HStack(spacing: 4) {
             Text(viewModel.attributedTitle)
                 .font(.subheadline)
@@ -120,7 +115,6 @@ struct SearchResultRowView: View {
                 .accessibilityLabel(viewModel.accessibilityIdentifier)
             propertyViewsFor(placement: .prominent)
         }
-        .padding(.top, topPadding)
     }
     
     // optional, middle line of content
@@ -151,10 +145,13 @@ struct SearchResultRowView: View {
     }
 
     @ViewBuilder
-    private func noteView(with note: AttributedString) -> some View {
-        Text(note)
-            .lineLimit(1)
-            .padding(.bottom, TokenSpacing._3)
+    private var noteView: some View {
+        if let note = viewModel.note {
+            Text(note)
+                .lineLimit(1)
+        } else {
+            EmptyView()
+        }
     }
 
     @ViewBuilder
