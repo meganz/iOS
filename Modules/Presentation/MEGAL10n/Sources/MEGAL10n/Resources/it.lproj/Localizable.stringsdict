@@ -2713,9 +2713,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Message must be at least %d character</string>
+        <string>Il messaggio deve essere lungo almeno %d carattere</string>
+        <key>many</key>
+        <string>Il messaggio deve essere lungo almeno %d di caratteri</string>
         <key>other</key>
-        <string>Message must be at least %d characters</string>
+        <string>Il messaggio deve essere lungo almeno %d caratteri</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -3287,9 +3289,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Notifications will be muted until [Time]</string>
+        <string>Le notifiche saranno disattivate fino alle [Time]</string>
+        <key>many</key>
+        <string>Le notifiche saranno disattivate fino alle [Time]</string>
         <key>other</key>
-        <string>Notifications will be muted until [Time]</string>
+        <string>Le notifiche saranno disattivate fino alle [Time]</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
@@ -3375,9 +3379,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item hidden</string>
+        <string>%d oggetto nascosto</string>
+        <key>many</key>
+        <string>%d di oggetti nascosti</string>
         <key>other</key>
-        <string>%d items hidden</string>
+        <string>%d oggetti nascosti</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
@@ -3391,9 +3397,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added to [A]</string>
+        <string>Aggiunto a [A]</string>
+        <key>many</key>
+        <string>%d di oggetti aggiunti a [A]</string>
         <key>other</key>
-        <string>Added %d items to [A]</string>
+        <string>%d oggetti aggiunti a [A]</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesOnly</key>
@@ -3407,9 +3415,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>%d file aggiunto</string>
+        <key>many</key>
+        <string>%d di file aggiunti</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>%d file aggiunti</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -3423,9 +3433,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d folder</string>
+        <string>%d cartella aggiunta</string>
+        <key>many</key>
+        <string>%d di cartelle aggiunte</string>
         <key>other</key>
-        <string>Added %d folders</string>
+        <string>%d cartelle aggiunte</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3439,9 +3451,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added %d file</string>
+        <string>%d file aggiunto</string>
+        <key>many</key>
+        <string>%d di file aggiunti</string>
         <key>other</key>
-        <string>Added %d files</string>
+        <string>%d file aggiunti</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3455,9 +3469,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>and %d folder</string>
+        <string>e %d cartella</string>
+        <key>many</key>
+        <string>e %d di cartelle</string>
         <key>other</key>
-        <string>and %d folders</string>
+        <string>e %d cartelle</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
@@ -3471,9 +3487,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
+        <key>many</key>
+        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3487,9 +3505,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato più volte via e-mail, il tuo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
+        <key>many</key>
+        <string>Sebbene ti abbiamo contattato più volte via e-mail, il tuo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato più volte via e-mail, il tuo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3503,9 +3523,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
+        <key>many</key>
+        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d files taking up [storageSpace] in your account, which means you must clear some space or upgrade to a [plan] plan. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo account, il che significa che devi liberare spazio o passare a un piano [plan]. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui tuoi limiti di archiviazione[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3519,9 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file version.</string>
+        <string>%d versione dei file.</string>
+        <key>many</key>
+        <string>%d di versioni dei file.</string>
         <key>other</key>
-        <string>%d file versions.</string>
+        <string>%d versioni dei file.</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
@@ -3535,9 +3559,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Total size used by file version: [storageSpace]</string>
+        <string>Dimensione totale utilizzata dalle versioni dei file: [storageSpace]</string>
+        <key>many</key>
+        <string>Dimensione totale utilizzata dalle versioni dei file: [storageSpace]</string>
         <key>other</key>
-        <string>Total size used by file versions: [storageSpace]</string>
+        <string>Dimensione totale utilizzata dalle versioni dei file: [storageSpace]</string>
       </dict>
     </dict>
     <key>set.addTo.snackbar.message</key>
@@ -3551,9 +3577,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Added to “[A]”</string>
+        <string>Aggiunto a “[A]”</string>
+        <key>many</key>
+        <string>%d di oggetti aggiunti a “[A]”</string>
         <key>other</key>
-        <string>Added %d items to “[A]”</string>
+        <string>%d oggetti aggiunti a “[A]”</string>
       </dict>
     </dict>
     <key>chat.message.forwardMessage</key>

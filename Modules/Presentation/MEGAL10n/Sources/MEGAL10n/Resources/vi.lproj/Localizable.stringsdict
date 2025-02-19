@@ -2784,10 +2784,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added to “[A]”</string>
         <key>other</key>
-        <string>Added %d items to “[A]”</string>
+        <string>Đã thêm %d mục vào “[A]”</string>
       </dict>
     </dict>
     <key>chat.message.forwardMessage</key>

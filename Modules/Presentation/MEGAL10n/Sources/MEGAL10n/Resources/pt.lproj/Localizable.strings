@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="Pendente";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Sair";
+"leaveFolder"="Sair da pasta";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Você tem certeza de que quer sair deste compartilhamento?";
+"leaveShareAlertMessage"="Você tem certeza de que quer sair desta pasta?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Você tem certeza de que quer sair destes compartilhamentos?";
+"leaveSharesAlertMessage"="Você tem certeza de que quer sair destas pastas?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Compartilhar";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Política de cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Configurações de cookies";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Configurações de cookies e anúncios";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termos de serviço";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="Cookies de publicidade";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Usados por parceiros de publicidade aprovados para coletar dados sobre as suas atividades de navegação e personalizar os anúncios que você vê nos nossos serviços e em outros sites. Não aceitar esses cookies significa que você ainda verá anúncios, mas eles não personalizados.";
+/* Ad settings header title */
+"settings.ad.header.title"="Configurações de anúncios";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Personalização de anúncios";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="A versão foi criada como um novo arquivo.";
 /* Text shown for the action create new file */

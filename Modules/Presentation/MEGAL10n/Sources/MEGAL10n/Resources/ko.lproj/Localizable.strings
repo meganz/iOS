@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="대기 중";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="떠나기";
+"leaveFolder"="Leave folder";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="이 공유를 떠나시겠습니까?";
+"leaveShareAlertMessage"="Are you sure you want to leave this folder?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="이 공유들에서 떠나시겠습니까?";
+"leaveSharesAlertMessage"="Are you sure you want to leave these folders?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="공유";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="쿠키 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="쿠키 설정";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Cookie and ad settings";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="이용 약관";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="광고 쿠키";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="당신의 브라우징 활동과 관련한 데이터를 수집하고 당신이 우리 서비스와 다른 웹사이트에서 보는 광고를 개인화하기 위해 우리의 승인된 광고 파트너들에 의해 쓰입니다. 이러한 쿠키를 허용하지 않는 것은 당신은 여전히 광고를 보게 되지만 개인화 되지 않는다는 것을 뜻합니다.";
+/* Ad settings header title */
+"settings.ad.header.title"="Ad settings";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="Ad personalisation";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="버전을 새 파일로 생성하였습니다";
 /* Text shown for the action create new file */

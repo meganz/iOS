@@ -629,11 +629,11 @@
 /* Label shown when a contact request is pending */
 "pending"="待處理中";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="離開";
+"leaveFolder"="離開資料夾";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="您確定要離開此共享嗎？";
+"leaveShareAlertMessage"="你確定要離開這個資料夾嗎？";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="您確定要離開這些共享嗎？";
+"leaveSharesAlertMessage"="你確定要離開這些資料夾嗎？";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="共享";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -690,6 +690,8 @@
 "general.cookiePolicy"="Cookie政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cookie設定";
+/* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
+"general.cookieAndAdSettings"="Cookie和廣告設定";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2484,6 +2486,10 @@
 "settings.cookies.advertisingCookies"="廣告Cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="由我們認可的廣告合作伙伴用於收集有關您的瀏覽活動的資料，並自訂您在我們的服務和其它網站上看到的廣告。不接受這些cookie意味著您仍然會看到廣告，但它們不會是個人化的。";
+/* Ad settings header title */
+"settings.ad.header.title"="廣告設定";
+/* Ad settings menu title for Ad personalisation */
+"settings.ad.adPersonalisation.title"="廣告個人化";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="該版本以新檔案建立";
 /* Text shown for the action create new file */
@@ -4515,6 +4521,6 @@
 /* Artist name to display if meta data for artist could not be found */
 "media.audio.metadata.missing.artist"="未知的藝人";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="No playlists";
+"photos.addToPlaylist.empty.message"="沒有播放列表";
 /* Add to playlist empty create button title */
-"photos.addToPlaylist.empty.create.button.title"="Create playlist";
+"photos.addToPlaylist.empty.create.button.title"="建立播放列表";
