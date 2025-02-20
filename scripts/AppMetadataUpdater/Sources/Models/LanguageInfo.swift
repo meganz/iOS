@@ -23,7 +23,8 @@ struct LanguageInfo {
             LanguageInfo(name: "Vietnamese", transifexCode: "l:vi", fastlaneMetadataFolders: ["vi"]),
             LanguageInfo(name: "Chinese Simpified", transifexCode: "l:zh_CN", fastlaneMetadataFolders: ["zh-Hans"]),
             LanguageInfo(name: "Chinese Traditional", transifexCode: "l:zh_TW", fastlaneMetadataFolders: ["zh-Hant"]),
-            LanguageInfo(name: "German", transifexCode: "l:de", fastlaneMetadataFolders: ["de-DE"])
+            LanguageInfo(name: "German", transifexCode: "l:de", fastlaneMetadataFolders: ["de-DE"]),
+            LanguageInfo(name: "Turkish", transifexCode: "l:tr", fastlaneMetadataFolders: ["tr"])
         ]
     }
 }
