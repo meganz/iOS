@@ -26,7 +26,8 @@ let package = Package(
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../Repository/LogRepo"),
         .package(path: "../../../UI/MEGAUIComponent"),
-        .package(path: "../../../Infrastracture/MEGAConnectivity")
+        .package(path: "../../../Infrastracture/MEGAConnectivity"),
+        .package(path: "../../../MEGAAssets")
     ],
     targets: [
         .target(
@@ -39,7 +40,8 @@ let package = Package(
                 "LogRepo",
                 "MEGASwiftUI",
                 "MEGAUIComponent",
-                "MEGAConnectivity"
+                "MEGAConnectivity",
+                "MEGAAssets"
             ],
             swiftSettings: settings
         ),

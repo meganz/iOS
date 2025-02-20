@@ -4536,3 +4536,15 @@
 "settings.chat.richUrlPreview.title"="Rich URL previews";
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.subtitle"="Enhance the MEGA Chat experience. URL content will be retrieved without zero-knowledge encryption.";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="Set status";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="Status settings";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Show last seen";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA.";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as away";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
