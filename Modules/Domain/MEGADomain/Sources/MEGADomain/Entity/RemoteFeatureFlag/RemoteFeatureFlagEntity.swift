@@ -4,4 +4,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case externalAds = "adse"
     case hiddenNodes = "hnir"
     case nativePhotoPicker = "npp"
+    case sdkUpdateHandlerManager = "iguhm"
 }

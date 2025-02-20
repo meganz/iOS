@@ -12,21 +12,28 @@ public protocol NodeUpdatesProviderProtocol: Sendable {
 
 public struct NodeUpdatesProvider: NodeUpdatesProviderProtocol {
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
-        AsyncStream { continuation in
-            let delegate = NodeUpdateGlobalDelegate {
-                continuation.yield($0)
+        if remoteFeatureFlagRepository.remoteFeatureFlagValue(for: .sdkUpdateHandlerManager) != 0 {
+            MEGALogDebug("[NodeUpdatesProvider] using UpdateHandlerManager")
+            return MEGAUpdateHandlerManager.shared.nodeUpdates
+        } else {
+            MEGALogDebug("[NodeUpdatesProvider] using old implementation")
+            return AsyncStream { continuation in
+                let delegate = NodeUpdateGlobalDelegate {
+                    continuation.yield($0)
+                }
+                
+                sdk.addMEGAGlobalDelegateAsync(delegate, queueType: .globalBackground)
+                
+                continuation.onTermination = { @Sendable _ in
+                    sdk.removeMEGAGlobalDelegateAsync(delegate)
+                }
             }
-            
-            sdk.addMEGAGlobalDelegateAsync(delegate, queueType: .globalBackground)
-            
-            continuation.onTermination = { @Sendable _ in
-                sdk.removeMEGAGlobalDelegateAsync(delegate)
-            }
+            .eraseToAnyAsyncSequence()
         }
-        .eraseToAnyAsyncSequence()
     }
     
     private let sdk: MEGASdk
+    private let remoteFeatureFlagRepository: RemoteFeatureFlagRepository = .newRepo
     
     public init(sdk: MEGASdk) {
         self.sdk = sdk
