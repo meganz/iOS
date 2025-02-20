@@ -4,9 +4,11 @@ class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Senda
     var result: Result<Void, NodeInfoError>
     
     private(set) var localPathfromNodeCallCount = 0
+    private let isOffline: Bool
     
-    init(result: Result<Void, NodeInfoError> = .success(())) {
+    init(result: Result<Void, NodeInfoError> = .success, isOffline: Bool = false) {
         self.result = result
+        self.isOffline = isOffline
     }
     
     func info(fromFiles: [String]?) -> [AudioPlayerItem]? {
@@ -22,5 +24,9 @@ class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Senda
         case .failure: return nil
         case .success: return AudioPlayerItem.mockItem.url
         }
+    }
+    
+    func isOffline(node: MEGANode) -> Bool {
+        isOffline
     }
 }

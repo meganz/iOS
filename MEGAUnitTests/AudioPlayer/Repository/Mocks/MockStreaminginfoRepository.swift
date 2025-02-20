@@ -6,7 +6,7 @@ class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unchecked S
     
     private(set) var pathFromNodeCallCount = 0
     
-    init(result: Result<Void, NodeInfoError> = .success(())) {
+    init(result: Result<Void, NodeInfoError> = .success) {
         self.result = result
     }
     

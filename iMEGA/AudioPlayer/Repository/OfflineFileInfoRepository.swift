@@ -4,6 +4,7 @@ import MEGASwift
 protocol OfflineInfoRepositoryProtocol: Sendable {
     func info(fromFiles: [String]?) -> [AudioPlayerItem]?
     func localPath(fromNode: MEGANode) -> URL?
+    func isOffline(node: MEGANode) -> Bool
 }
 
 final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
@@ -18,6 +19,10 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
     
     func info(fromFiles: [String]?) -> [AudioPlayerItem]? {
         fromFiles?.compactMap { AudioPlayerItem(name: $0.lastPathComponent, url: URL(fileURLWithPath: $0), node: nil) }
+    }
+    
+    func isOffline(node: MEGANode) -> Bool {
+        megaStore.offlineNode(with: node) != nil
     }
     
     func localPath(fromNode: MEGANode) -> URL? {

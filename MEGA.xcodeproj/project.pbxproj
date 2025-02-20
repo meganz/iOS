@@ -1331,6 +1331,7 @@
 		9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */; };
 		9449D42C2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */; };
 		944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */; };
+		944C3AD42D5A517400C6BFB9 /* AudioQueueLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */; };
 		945153A82C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */; };
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
 		945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */; };
@@ -4067,6 +4068,7 @@
 		944917CF2A83C159006234D9 /* MEGAPickerFileProviderRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPickerFileProviderRepo; sourceTree = "<group>"; };
 		9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsTableViewHeaderFooterView+Additions.swift"; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
+		944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioQueueLoader.swift; sourceTree = "<group>"; };
 		945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactoryTests.swift; sourceTree = "<group>"; };
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
@@ -12699,6 +12701,7 @@
 				C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */,
 				C49F8638255AE2030074A054 /* AudioPlayer.swift */,
 				C45E402025DD1C230060E116 /* AudioPlayerManager.swift */,
+				944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -14286,6 +14289,7 @@
 				C44D6DED257013FB003D1723 /* AudioPlaylistViewController.swift in Sources */,
 				C44D6DFF25701420003D1723 /* AudioPlaylistViewModel.swift in Sources */,
 				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
+				944C3AD42D5A517400C6BFB9 /* AudioQueueLoader.swift in Sources */,
 				BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */,
 				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,
 				9428430D2AA7CFDD00278048 /* AudioSessionRepository.swift in Sources */,

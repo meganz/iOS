@@ -9,7 +9,6 @@ enum PlayerConfiguration: String {
 }
 
 final class AudioPlayer: NSObject {
-    
     // MARK: - Internal properties
     var mediaPlayerNowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     var mediaPlayerRemoteCommandCenter = MPRemoteCommandCenter.shared()
@@ -49,11 +48,13 @@ final class AudioPlayer: NSObject {
     var previouslyPlayedItem: AudioPlayerItem?
     var isUserPreviouslyJustPlayedSameItem = false
     
+    let queueLoader = AudioQueueLoader()
+    
     // MARK: - Private properties
     private var timer: Timer?
     private var taskId: UIBackgroundTaskIdentifier?
     private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
-
+    
     // MARK: - Internal Computed Properties, intended for important UTs
     var currentIndex: Int? {
         queuePlayer?.items().firstIndex(where: { $0 as? AudioPlayerItem == currentItem() })
@@ -120,6 +121,9 @@ final class AudioPlayer: NSObject {
     // MARK: - Private Functions
     init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false]) {
         if let config = config { audioPlayerConfig = config }
+        
+        super.init()
+        queueLoader.delegate = self
     }
     
     deinit {
@@ -153,14 +157,12 @@ final class AudioPlayer: NSObject {
     
     private func setupPlayer() {
         setAudioPlayerSession(active: true)
-
-        queuePlayer = AVQueuePlayer(items: tracks)
         
+        queuePlayer = AVQueuePlayer(items: tracks)
         queuePlayer?.usesExternalPlaybackWhileExternalScreenIsActive = true
         queuePlayer?.volume = 1.0
         
         register()
-        
         configurePlayer()
     }
     
@@ -169,13 +171,16 @@ final class AudioPlayer: NSObject {
         unregister()
         
         debouncer.start { [weak self] in
-            guard let `self` = self else { return }
+            guard let self else { return }
             
             self.tracks = tracks
-            self.audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
-            self.pause()
+            audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
+            pause()
             
-            self.secureReplaceCurrentItem(with: tracks.first)
+            if let newFirst = tracks.first {
+                secureReplaceCurrentItem(with: newFirst)
+            }
+            
             self.queuePlayer?.items().lazy.filter({$0 != self.queuePlayer?.items().first}).forEach {
                 self.queuePlayer?.remove($0)
             }
@@ -186,6 +191,12 @@ final class AudioPlayer: NSObject {
             self.configurePlayer()
             self.notify(self.aboutTheEndOfBlockingAction)
         }
+    }
+    
+    func onItemFinishedPlaying() {
+        guard !isCloseRequested else { return }
+        
+        queueLoader.refillQueueIfNeeded()
     }
     
     private func configurePlayer() {
@@ -246,9 +257,10 @@ final class AudioPlayer: NSObject {
     
     func add(tracks: [AudioPlayerItem]) {
         beginBackgroundTask()
-        self.tracks = tracks
+        self.tracks = queueLoader.addAllTracks(tracks)
         
         if queuePlayer != nil {
+            queueLoader.reset()
             refreshPlayer(tracks: self.tracks)
             MEGALogDebug("[AudioPlayer] Refresh the current audio player")
         } else {
@@ -333,5 +345,32 @@ extension AudioPlayer {
     func invalidateTimer() {
         timer?.invalidate()
         timer = nil
+    }
+}
+
+extension AudioPlayer: AudioQueueLoaderDelegate {
+    func currentQueueCount() -> Int {
+        queuePlayer?.items().count ?? 0
+    }
+    
+    func insertBatchInQueue(_ items: [AudioPlayerItem]) {
+        guard items.isNotEmpty else { return }
+        tracks.append(contentsOf: items)
+        
+        if let lastItem = queuePlayer?.items().last {
+            items.forEach {
+                queuePlayer?.secureInsert($0, after: lastItem)
+            }
+        } else if let first = items.first {
+            secureReplaceCurrentItem(with: first)
+            items.dropFirst().forEach {
+                queuePlayer?.secureInsert($0, after: queuePlayer?.currentItem)
+            }
+        }
+    }
+    
+    func setupPlayerQueue(with items: [AudioPlayerItem]) {
+        tracks = items
+        setupPlayer()
     }
 }
