@@ -26,23 +26,6 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     }
     
     @objc
-    func openFolderNode(_ node: MEGANode, isFromViewInFolder: Bool) {
-        guard let navigationController else { return }
-        let nc = UINavigationController()
-        let factory = CloudDriveViewControllerFactory.make(nc: nc)
-        let vc = factory.buildBare(
-            parentNode: node.toNodeEntity(),
-            config: .init(
-                displayMode: node.mnz_isInRubbishBin() && isFromViewInFolder ? .rubbishBin : .cloudDrive,
-                isFromViewInFolder: isFromViewInFolder
-            )
-        )
-        guard let vc else { return }
-        
-        navigationController.pushViewController(vc, animated: true)
-    }
-    
-    @objc
     func configProgressIndicator() {
         let progressIndicatorView = ProgressIndicatorView.init(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
         progressIndicatorView.isUserInteractionEnabled = true
