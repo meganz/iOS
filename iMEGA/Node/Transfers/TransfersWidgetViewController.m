@@ -233,12 +233,12 @@ static TransfersWidgetViewController* instance = nil;
 - (void)showCustomActionsForTransfer:(MEGATransfer *)transfer sender:(UIView *)sender {
     MEGANode *node = transfer.node;
     BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
-    BOOL isMediaFileSavedInPhotos = [self isSaveInPhotosTransfer:transfer];
+    BOOL viewInFolder = [self shouldShowViewInFolder:transfer];
     
     switch (transfer.state) {
         case MEGATransferStateComplete:
         {
-            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isBackupNode:isBackupNode isMediaFileSavedInPhotos:isMediaFileSavedInPhotos sender:sender];
+            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isBackupNode:isBackupNode viewInFolder:viewInFolder sender:sender];
             actionController.transfer = transfer;
             if ([[UIDevice currentDevice] iPadDevice]) {
                 actionController.modalPresentationStyle = UIModalPresentationPopover;
@@ -254,7 +254,7 @@ static TransfersWidgetViewController* instance = nil;
             
         default:
         {
-            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isBackupNode:isBackupNode isMediaFileSavedInPhotos:isMediaFileSavedInPhotos sender:sender];
+            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isBackupNode:isBackupNode viewInFolder:viewInFolder sender:sender];
             actionController.transfer = transfer;
             
             if ([[UIDevice currentDevice] iPadDevice]) {

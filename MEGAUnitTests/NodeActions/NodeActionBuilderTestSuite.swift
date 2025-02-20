@@ -255,19 +255,19 @@ struct NodeActionBuilderTestSuite {
     struct TransfersActionsTests {
         
         @Test(
-            "When the current Transfer is a 'Save To Photos' transfer or not",
+            "When the current Transfer should display 'View in folder' or not",
             arguments: [
-                (true, [MegaNodeActionType.shareLink, .clear]),
-                (false, [.viewInFolder, .shareLink, .clear])
+                (false, [MegaNodeActionType.shareLink, .clear]),
+                (true, [.viewInFolder, .shareLink, .clear])
             ]
         )
-        @MainActor func showActionsForSaveToPhotosTransfer(
-            isSavedToPhotos: Bool,
+        @MainActor func showViewInFolderTransfer(
+            viewInFolder: Bool,
             expectedActions: [MegaNodeActionType]
         ) {
             let actions = NodeActionBuilder()
                 .setDisplayMode(.transfers)
-                .setMediaFileSavedInPhotos(isSavedToPhotos)
+                .setViewInFolder(viewInFolder)
                 .build()
             
             #expect(actions.types == expectedActions)
