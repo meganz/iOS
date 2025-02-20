@@ -96,10 +96,12 @@ extension OfflineViewController {
 
 extension OfflineViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
-        if isListViewModeSelected() {
-            offlineTableView?.tableView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
-        } else {
-            offlineCollectionView?.collectionView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+        Task { @MainActor in
+            if isListViewModeSelected() {
+                offlineTableView?.tableView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+            } else {
+                offlineCollectionView?.collectionView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+            }
         }
     }
 }

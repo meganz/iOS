@@ -14,7 +14,7 @@
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
-@interface ArchivedChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatCallDelegate, UISearchControllerDelegate,  AudioPlayerPresenterProtocol>
+@interface ArchivedChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatCallDelegate, UISearchControllerDelegate>
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
 @property (nonatomic, strong) NSMutableArray *chatListItemArray;
@@ -599,12 +599,6 @@
         default:
             break;
     }
-}
-
-#pragma mark - AudioPlayer
-
-- (void)updateContentView:(CGFloat)height {
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
 }
 
 @end

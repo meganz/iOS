@@ -32,7 +32,7 @@
 @import MEGAUIKit;
 @import MEGASDKRepo;
 
-@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
+@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, UISearchControllerDelegate>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
@@ -932,16 +932,6 @@
             
         default:
             break;
-    }
-}
-
-#pragma mark - AudioPlayerPresenterProtocol
-
-- (void)updateContentView:(CGFloat)height {
-    if (self.viewModePreference == ViewModePreferenceEntityList) {
-        self.flTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
-    } else {
-        self.flCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
     }
 }
 

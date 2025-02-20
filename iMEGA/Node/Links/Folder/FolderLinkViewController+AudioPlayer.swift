@@ -1,13 +1,13 @@
 import Foundation
 
-extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
+extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerPresenterProtocol {
     func presentMiniPlayer(_ viewController: UIViewController) {
         guard let miniPlayerView = viewController.view else { return }
         
         bottomView?.removeFromSuperview()
         
         view.addSubview(miniPlayerView)
-
+        
         miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -18,17 +18,21 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
         ])
         
         bottomView = miniPlayerView
+        
+        Task { @MainActor in
+            AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: false)
+        }
     }
     
     func showMiniPlayer() {
         AudioPlayerManager.shared.showMiniPlayer()
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.bottomView?.isHidden = false
         }
     }
     
     func hideMiniPlayer() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.bottomView?.isHidden = true
         }
     }
@@ -39,15 +43,31 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
     }
     
     func resetMiniPlayerContainer() {        
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.bottomView?.removeFromSuperview()
             self.bottomView = nil
         }
     }
     
+    func currentContainerHeight() async -> CGFloat {
+        await Task { @MainActor in
+            self.bottomView?.frame.height ?? 0
+        }.value
+    }
+    
     @objc func shouldShowMiniPlayer() {
         if AudioPlayerManager.shared.isPlayerAlive() {
             showMiniPlayer()
+        }
+    }
+    
+    func updateContentView(_ height: CGFloat) {
+        Task { @MainActor in
+            if isListViewModeSelected() {
+                flTableView?.tableView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+            } else {
+                flCollectionView?.collectionView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+            }
         }
     }
 }

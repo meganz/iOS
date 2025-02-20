@@ -28,7 +28,7 @@
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, MEGANavigationControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, TextFileEditable, MEGANavigationControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -1279,12 +1279,6 @@
 
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [node navigateToParentAndPresent];
-}
-
-#pragma mark - AudioPlayerPresenterProtocol
-
-- (void)updateContentView:(CGFloat)height {
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
 }
 
 #pragma mark - MEGANavigatioControllerDelegate

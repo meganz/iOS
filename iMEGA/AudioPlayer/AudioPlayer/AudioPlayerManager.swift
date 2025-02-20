@@ -348,7 +348,7 @@ import MEGASDKRepo
             self?.audioSessionUseCase.configureCallAudioSession()
         }
         
-        player?.updateContentViews()
+        refreshPresentersContentOffset(isHidden: true)
         miniPlayerHandlerListenerManager.notify { $0.closeMiniPlayer() }
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
@@ -363,15 +363,29 @@ import MEGASDKRepo
         
         notifyDelegatesToShowHideMiniPlayer(hidden)
         
-        player?.updateContentViews()
+        refreshPresentersContentOffset(isHidden: hidden)
+    }
+    
+    func refreshPresentersContentOffset(isHidden: Bool) {
+        Task {
+            let height = isHidden ? 0 : await miniPlayerHandlerListenerManager.listeners.first?.currentContainerHeight() ?? 0
+            player?.updateContentViews(newHeight: height)
+        }
     }
     
     func playerHiddenIgnoringPlayerLifeCycle(_ hidden: Bool, presenter: UIViewController) {
-        guard presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) else { return }
-        
-        notifyDelegatesToShowHideMiniPlayer(hidden)
-        
-        player?.updateContentViewsIgnorePlayerLifeCycle(showMiniPlayer: !hidden)
+        Task {
+            guard presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) else { return }
+            
+            notifyDelegatesToShowHideMiniPlayer(hidden)
+            
+            let height = hidden ? 0 : await miniPlayerHandlerListenerManager.listeners.first?.currentContainerHeight() ?? 0
+            
+            player?.updateContentViewsIgnorePlayerLifeCycle(
+                showMiniPlayer: !hidden,
+                newHeight: height
+            )
+        }
     }
     
     private func notifyDelegatesToShowHideMiniPlayer(_ hidden: Bool) {

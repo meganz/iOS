@@ -188,6 +188,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}
     func remoteCommandEnabled(_ enabled: Bool) {}
     func resetAudioPlayerConfiguration() {}
+    func refreshPresentersContentOffset(isHidden: Bool) {}
     func playerTracksContains(url: URL) -> Bool { true }
     func resetCurrentItem() {
         setCurrent_callTimes += 1

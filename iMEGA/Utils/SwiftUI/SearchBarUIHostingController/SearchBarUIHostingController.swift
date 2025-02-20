@@ -121,7 +121,9 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
     
     // MARK: - AudioPlayerPresenterProtocol
     func updateContentView(_ height: CGFloat) {
-        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+        Task { @MainActor in
+            additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+        }
     }
     
     // MARK: - Private methods

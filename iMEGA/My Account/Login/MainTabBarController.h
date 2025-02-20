@@ -1,12 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "MEGAChatSdk.h"
 
-@class AudioPlayer;
-@class MiniPlayerViewRouter;
-@class Tab;
-@class PSAViewModel;
-@class MainTabBarCallsViewModel;
-@class MainTabBarAdsViewModel;
+@class AudioPlayer, Tab, PSAViewModel, MainTabBarCallsViewModel, MainTabBarAdsViewModel, BottomOverlayManager;
 
 typedef NS_ENUM(NSInteger, MovementDirection) {
     MovementDirectionUp = 0,
@@ -17,11 +12,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 
-@property (nonatomic, strong, nullable) UIView *bottomView;
+/**
+ The container view sitting just above the tab bar, containing the`bottomOverlayStack`.
+ */
+@property (nonatomic, strong, nullable) UIView *bottomOverlayContainer;
+
+/**
+ A vertical stack view inside the `bottomOverlayContainer`. It arranges any bottom overlays (e.g., `PSA Banner`, `mini-player`, etc...)
+ in a vertical layout.
+ */
+@property (nonatomic, strong, nullable) UIStackView *bottomOverlayStack;
+@property (nonatomic, strong, nullable) NSLayoutConstraint *bottomContainerBottomConstraint;
+@property (nonatomic, strong, nullable) BottomOverlayManager *bottomOverlayManager;
 @property (nonatomic, strong, nullable) UIView *safeAreaCoverView;
-@property (nonatomic, strong, nullable) NSLayoutConstraint *bottomViewBottomConstraint;
+
 @property (nonatomic, strong, nullable) AudioPlayer *player;
-@property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
+@property (nonatomic, strong, nullable) UIViewController *miniPlayerVC;
 @property (nonatomic, strong, nullable) UIImageView *phoneBadgeImageView;
 @property (nonatomic, assign) NSInteger unreadMessages;
 @property (strong, nonatomic) NSMutableArray<UIViewController *> *defaultViewControllers;
