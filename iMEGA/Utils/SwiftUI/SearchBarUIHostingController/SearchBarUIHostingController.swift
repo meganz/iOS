@@ -51,18 +51,21 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         super.viewDidLoad()
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.hidesBackButton = true
-        navigationItem.searchController = wrapper?.searchController
+
         let toolbar = UIToolbar(frame: .zero)
         self.toolbar = toolbar
         if let backButtonTitle {
             setMenuCapableBackButtonWith(menuTitle: backButtonTitle)
         }
         self.navigationItem.searchController = searchBarVisible ? wrapper?.searchController : nil
-        
         wrapper?.onUpdateSearchBarVisibility = { [weak self] isVisible in
             guard let self, let wrapper = self.wrapper else { return }
             self.searchBarVisible = isVisible
-            self.navigationItem.searchController = isVisible ? wrapper.searchController : nil
+            if isVisible {
+                wrapper.attachToViewController(self)
+            } else {
+                navigationItem.searchController = nil
+            }
         }
         
         selectionHandler?.onSelectionModeChange = { [weak self] enabled, config in
@@ -197,6 +200,7 @@ class SearchControllerWrapper: NSObject {
     var onSearch: ((String) -> Void)?
     var onCancel: (() -> Void)?
     var onUpdateSearchBarVisibility: ((Bool) -> Void)?
+    private var searchText: String?
 
     init(
         onSearch: ((String) -> Void)?,
@@ -211,11 +215,20 @@ class SearchControllerWrapper: NSObject {
         self.onSearch = onSearch
         self.onCancel = onCancel
     }
-    
+
     func cancelSearch() {
         onCancel?()
         searchController.searchBar.text = ""
         searchController.isActive = false
+    }
+    
+    /// This function is use when we want to assign the wrapper to a ViewController.
+    /// Discussion: The function is needed because in case we assign and unassign a searchController to a VC, the OS will automatically clear the search text.
+    /// Therefore we need to use this function when we  re-attach the searchController to a VC so that the search text can still be instact.
+    /// - Parameter vc: The ViewController we want to attach the searchController to.
+    func attachToViewController(_ vc: UIViewController) {
+        vc.navigationItem.searchController = searchController
+        searchController.searchBar.text = searchText
     }
 }
 
@@ -235,6 +248,7 @@ extension SearchControllerWrapper: UISearchResultsUpdating {
               searchController.isActive
         else { return }
 
+        searchText = searchString
         onSearch?(searchString)
     }
 }
