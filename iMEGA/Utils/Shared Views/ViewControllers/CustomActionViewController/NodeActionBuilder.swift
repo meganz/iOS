@@ -368,6 +368,16 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
+    private func transfersLinksActions() -> [NodeAction] {
+        var nodeActions: [NodeAction] = []
+        if viewInFolder {
+            nodeActions.append(.viewInFolderAction())
+        }
+        nodeActions.append(.clearAction())
+        
+        return nodeActions
+    }
+    
     private func transfersFailedNodeActions() -> [NodeAction] {
         [.retryAction(), .clearAction()]
     }
@@ -518,7 +528,7 @@ final class NodeActionBuilder {
         case .nodeInsideFolderLink:
             return nodeInsideFolderLinkActions()
         case .publicLinkTransfers:
-            return [.clearAction()]
+            return transfersLinksActions()
         case .transfers:
             return transfersNodeActions()
         case .transfersFailed:
