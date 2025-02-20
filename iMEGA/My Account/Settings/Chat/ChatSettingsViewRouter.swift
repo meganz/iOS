@@ -41,7 +41,8 @@ final class ChatSettingsViewRouter: Routing {
     }
     
     func navigateToStatus() {
-        
+        guard let presenter else { return }
+        SetStatusViewRouter(navigationController: presenter).start()
     }
     
     func navigateToNotifications() {
