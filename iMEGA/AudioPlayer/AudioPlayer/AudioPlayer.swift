@@ -295,15 +295,15 @@ final class AudioPlayer: NSObject {
         presenterListenerManager.remove(presenterListener)
     }
     
-    func updateContentViews() {
+    func updateContentViews(newHeight: CGFloat) {
         presenterListenerManager.notify {
-            $0.updateContentView(isAlive ? 60: 0)
+            $0.updateContentView(isAlive ? newHeight : 0)
         }
     }
     
-    func updateContentViewsIgnorePlayerLifeCycle(showMiniPlayer: Bool) {
+    func updateContentViewsIgnorePlayerLifeCycle(showMiniPlayer: Bool, newHeight: CGFloat) {
         presenterListenerManager.notify {
-            $0.updateContentView(showMiniPlayer ? 60: 0)
+            $0.updateContentView(showMiniPlayer ? newHeight: 0)
         }
     }
     

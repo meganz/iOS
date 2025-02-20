@@ -27,6 +27,8 @@
     [self loadTabViewControllers];
     [MEGAChatSdk.shared addChatDelegate:self];
     [MEGASdk.shared addMEGAGlobalDelegate:self];
+    
+    [self setupBottomOverlayIfNeeded];
 }
 
 - (void)viewDidLayoutSubviews {

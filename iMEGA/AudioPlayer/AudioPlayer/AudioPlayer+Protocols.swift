@@ -97,6 +97,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)
     func remoteCommandEnabled(_ enabled: Bool)
     func resetAudioPlayerConfiguration()
+    func refreshPresentersContentOffset(isHidden: Bool)
 }
 
 // MARK: - Mini Audio Player Handlers Functions
@@ -106,6 +107,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func hideMiniPlayer()
     func closeMiniPlayer()
     func resetMiniPlayerContainer()
+    func currentContainerHeight() async -> CGFloat
 }
 
 // MARK: - Audio Player Presenters

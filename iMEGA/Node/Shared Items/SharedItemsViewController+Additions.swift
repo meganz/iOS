@@ -565,3 +565,11 @@ extension SharedItemsViewController: AdsSlotDisplayable {
         configureAdsVisibility()
     }
 }
+
+extension SharedItemsViewController: AudioPlayerPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {
+        Task { @MainActor in
+            tableView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+        }
+    }
+}

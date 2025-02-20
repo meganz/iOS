@@ -24,7 +24,7 @@
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 
-@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol, TextFileEditable, RecentsPreferenceProtocol>
+@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, TextFileEditable, RecentsPreferenceProtocol>
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
 
@@ -348,13 +348,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     if ([self shouldReloadOnUserUpdateWithUserList:userList]) {
         [self debounce:@selector(getRecentActions) delay:RecentsViewReloadTimeDelay];
     }
-}
-
-#pragma mark - AudioPlayerPresenterProtocol
-
-- (void)updateContentView:(CGFloat)height {
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
-    self.didUpdateMiniPlayerHeight(height);
 }
 
 #pragma mark - RecentsPreferenceProtocol

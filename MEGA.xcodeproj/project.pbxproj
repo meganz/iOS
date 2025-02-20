@@ -1414,6 +1414,7 @@
 		949B0C792AAFA8E90090CA84 /* RenameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C782AAFA8E90090CA84 /* RenameRouter.swift */; };
 		949B0C7C2AAFA8F40090CA84 /* RenameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */; };
 		949B0C7E2AAFA9070090CA84 /* RenameAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */; };
+		949BFF122D5F52C40013F047 /* BottomOverlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949BFF112D5F52C40013F047 /* BottomOverlayManager.swift */; };
 		949CC1552B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CC1542B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift */; };
 		949CC15D2B0FD5230047D581 /* MockMyAccountHallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
@@ -1426,6 +1427,7 @@
 		94A54A972C2B0B940062D8E3 /* ActionSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */; };
 		94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */; };
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
+		94AE705C2D5E20D800F6422C /* MainTabBarController+BottomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AE705B2D5E20D800F6422C /* MainTabBarController+BottomContainer.swift */; };
 		94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */; };
 		94AF34972CBD71700010EBA8 /* UserAttributeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF34962CBD71700010EBA8 /* UserAttributeHandler.swift */; };
 		94AF8A132CE4C4E6009B27A9 /* AnalyticsTracking+ShareLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF8A122CE4C4DA009B27A9 /* AnalyticsTracking+ShareLink.swift */; };
@@ -4144,6 +4146,7 @@
 		949B0C782AAFA8E90090CA84 /* RenameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameRouter.swift; sourceTree = "<group>"; };
 		949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModel.swift; sourceTree = "<group>"; };
 		949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameAlertController.swift; sourceTree = "<group>"; };
+		949BFF112D5F52C40013F047 /* BottomOverlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomOverlayManager.swift; sourceTree = "<group>"; };
 		949CC1542B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewModel+DeviceCenter.swift"; sourceTree = "<group>"; };
 		949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMyAccountHallRouter.swift; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenAppRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.h; sourceTree = SOURCE_ROOT; };
@@ -4155,6 +4158,7 @@
 		94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetModel.swift; sourceTree = "<group>"; };
 		94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeUploadingViewModelTests.swift; sourceTree = "<group>"; };
 		94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTests.swift; sourceTree = "<group>"; };
+		94AE705B2D5E20D800F6422C /* MainTabBarController+BottomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+BottomContainer.swift"; sourceTree = "<group>"; };
 		94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManagementTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		94AF34962CBD71700010EBA8 /* UserAttributeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeHandler.swift; sourceTree = "<group>"; };
 		94AF8A122CE4C4DA009B27A9 /* AnalyticsTracking+ShareLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsTracking+ShareLink.swift"; sourceTree = "<group>"; };
@@ -6930,6 +6934,7 @@
 				948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */,
 				B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */,
 				C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */,
+				94AE705B2D5E20D800F6422C /* MainTabBarController+BottomContainer.swift */,
 				B6D995F7222CA42000A98BEF /* MainTabBarController+CameraUpload.h */,
 				B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */,
 				836A783328E34E5B00B6849F /* MainTabBarController+Chat.swift */,
@@ -9929,6 +9934,7 @@
 			isa = PBXGroup;
 			children = (
 				B5960EF82D2D25FA0060F623 /* AdsSlot */,
+				949BFF102D5F52A10013F047 /* BottomOverlayContainer */,
 				B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */,
 				83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */,
 				83663F5F2AA63869000A1115 /* MainTabBarCallsViewModel.swift */,
@@ -10320,6 +10326,14 @@
 				943FA1DF2CBEF3FE0021EAC3 /* UserAttributes */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		949BFF102D5F52A10013F047 /* BottomOverlayContainer */ = {
+			isa = PBXGroup;
+			children = (
+				949BFF112D5F52C40013F047 /* BottomOverlayManager.swift */,
+			);
+			path = BottomOverlayContainer;
 			sourceTree = "<group>";
 		};
 		94AF34952CBD714F0010EBA8 /* UserAttributes */ = {
@@ -14305,6 +14319,7 @@
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				5D8DC6AF248CB0AE0067A4F9 /* BorderStyle.swift in Sources */,
 				5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */,
+				949BFF122D5F52C40013F047 /* BottomOverlayManager.swift in Sources */,
 				83BEB18B2BAC84EF003AA310 /* BottomSheetRouter.swift in Sources */,
 				0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */,
 				947C6CB22A5D408C00CF929E /* BrowserViewController+Additions.swift in Sources */,
@@ -14875,6 +14890,7 @@
 				948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */,
 				B544E5DB2AB4610C006EB65C /* MainTabBarController+Ads.swift in Sources */,
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
+				94AE705C2D5E20D800F6422C /* MainTabBarController+BottomContainer.swift in Sources */,
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
 				836A783428E34E5B00B6849F /* MainTabBarController+Chat.swift in Sources */,
 				12397E272820C68400A30CCC /* MainTabBarController+PhotoAlbum.swift in Sources */,
