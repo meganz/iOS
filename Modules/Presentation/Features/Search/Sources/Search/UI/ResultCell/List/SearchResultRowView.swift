@@ -19,7 +19,8 @@ struct SearchResultRowView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
-    
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
     var body: some View {
         contentWithInsetsAndSwipeActions
             .replacedByContextMenuWithPreview(
@@ -149,6 +150,7 @@ struct SearchResultRowView: View {
         if let note = viewModel.note {
             Text(note)
                 .lineLimit(1)
+                .dynamicTypeSize(.xSmall ... .accessibility5)
         } else {
             EmptyView()
         }
