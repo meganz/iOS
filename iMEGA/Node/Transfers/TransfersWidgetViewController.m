@@ -997,7 +997,9 @@ static TransfersWidgetViewController* instance = nil;
             if (transfer.type == MEGATransferTypeUpload) {
                 MEGANode *parentNode = [MEGASdk.shared nodeForHandle:node.parentHandle];
                 if (parentNode.isFolder) {
-                    [self openFolderNode:parentNode isFromViewInFolder:YES];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [parentNode navigateToParentAndPresent];
+                    }];
                 }
             }
             
