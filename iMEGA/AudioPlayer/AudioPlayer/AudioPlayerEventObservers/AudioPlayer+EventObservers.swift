@@ -58,11 +58,15 @@ extension AudioPlayer {
             
             previouslyPlayedItem = oldValue
             reset(item: oldValue)
+            
             updateQueueWithLoopItems()
+            
             resetPlayerItems()
         }
         
         reloadCurrentThumbnail()
+        
+        onItemFinishedPlaying()
     }
     
     private func reloadCurrentThumbnail() {
@@ -162,7 +166,7 @@ extension AudioPlayer {
     
     // listening for buffer is empty
     func audio(playerItem: AVPlayerItem, isPlaybackBufferEmpty value: NSKeyValueObservedChange<Bool>) {
-        // Audio Player buffering...
+        onItemFinishedPlaying()
     }
     
     // listening for event that buffer is almost full

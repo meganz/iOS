@@ -6,7 +6,6 @@ import XCTest
 final class NodeInfoRepositoryTests: XCTestCase {
     
     // MARK: - folderLinkLogout
-
     func testFolderLinkLogout_whenCalled_logoutSDK() {
         let (sut, _, mockFolderSdk, _, _) = makeSUT()
         
@@ -16,7 +15,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
     }
     
     // MARK: - nodeFromHandle
-    
     func testNodeFromHandle_whenCalled_callNode() {
         let (sut, mockSdk, _, _, _) = makeSUT(sdk: MockSdk(), folderSdk: MockFolderSdk(isLoggedIn: true))
         
@@ -26,7 +24,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
     }
     
     // MARK: - pathFromHandle
-    
     func testPathFromHandle_whenCalled_searchNode() {
         let (sut, mockSdk, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
         
@@ -48,7 +45,10 @@ final class NodeInfoRepositoryTests: XCTestCase {
         let (sut, _, _, offlineFileInfoRepository, _) = makeSUT(
             sdk: MockSdk(nodes: [node]),
             folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success(()))
+            offlineInfoRepository: MockOfflineInfoRepository(
+                result: .success,
+                isOffline: true
+            )
         )
         
         _ = sut.path(fromHandle: node.handle)
@@ -62,7 +62,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             sdk: MockSdk(nodes: [node]),
             folderSdk: MockFolderSdk(isLoggedIn: true),
             offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic)),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success(()))
+            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         
         _ = sut.path(fromHandle: node.handle)
@@ -71,7 +71,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
     }
     
     // MARK: - infoFromNodes
-    
     func testInfoFromNodes_whenNilNodes_returnsNilPlayerItems() {
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(), folderSdk: MockFolderSdk(isLoggedIn: true))
         
@@ -95,7 +94,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             sdk: MockSdk(nodes: nodes),
             folderSdk: MockFolderSdk(isLoggedIn: true),
             offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic)),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success(()))
+            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         
         let playerItems = sut.info(fromNodes: nodes)
@@ -113,7 +112,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             sdk: MockSdk(nodes: nodes),
             folderSdk: MockFolderSdk(isLoggedIn: true),
             offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic)),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success(()))
+            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         
         let playerItems = sut.info(fromNodes: nodes)
@@ -126,7 +125,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
     }
     
     // MARK: - childrenInfoFromParentHandle
-    
     func testChildrenInfoFromParentHandle_whenInvalidNode_returnsNil() {
         let node1 = anyNode(handle: 1, name: "any-invalid-node-1")
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [node1]), folderSdk: MockFolderSdk(isLoggedIn: true))
@@ -142,7 +140,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
         let (sut, _, _, _, _) = makeSUT(
             sdk: MockSdk(nodes: [parentNode, childNode]),
             folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success(()))
+            offlineInfoRepository: MockOfflineInfoRepository(result: .success)
         )
         
         guard let playerItems = sut.childrenInfo(fromParentHandle: parentNode.handle) else {
@@ -163,7 +161,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
         let (sut, _, _, _, _) = makeSUT(
             sdk: MockSdk(nodes: [parentNode, childNode1, childNode2]),
             folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success(()))
+            offlineInfoRepository: MockOfflineInfoRepository(result: .success)
         )
         
         guard let playerItems = sut.childrenInfo(fromParentHandle: parentNode.handle) else {
@@ -178,7 +176,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
     }
     
     // MARK: - folderInfoFromParentHandle
-    
     func testFolderChildrenInfoFromParentHandle_whenInvalidNode_returnsNil() {
         let node1 = anyNode(handle: 1, name: "any-invalid-node-1")
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [node1]), folderSdk: MockFolderSdk(isLoggedIn: true, nodes: [node1]))
@@ -195,8 +192,8 @@ final class NodeInfoRepositoryTests: XCTestCase {
         let (sut, _, mockFolderSdk, _, _) = makeSUT(
             sdk: MockSdk(nodes: nodes),
             folderSdk: MockFolderSdk(isLoggedIn: true, nodes: nodes),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success(())),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success(()))
+            offlineInfoRepository: MockOfflineInfoRepository(result: .success),
+            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         nodes.forEach(mockFolderSdk.mockAuthorizeNode(with:))
         
@@ -219,8 +216,8 @@ final class NodeInfoRepositoryTests: XCTestCase {
         let (sut, _, mockFolderSdk, _, _) = makeSUT(
             sdk: MockSdk(nodes: nodes),
             folderSdk: MockFolderSdk(isLoggedIn: true, nodes: nodes),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success(())),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success(()))
+            offlineInfoRepository: MockOfflineInfoRepository(result: .success),
+            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         nodes.forEach(mockFolderSdk.mockAuthorizeNode(with:))
         
@@ -236,13 +233,12 @@ final class NodeInfoRepositoryTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    
     private func makeSUT(
         sdk: MockSdk = MockSdk(),
         folderSdk: MockFolderSdk = MockFolderSdk(),
         megaStore: MEGAStore = MEGAStore(),
-        offlineInfoRepository: MockOfflineInfoRepository = MockOfflineInfoRepository(result: .success(())),
-        streamingInfoRepository: MockStreamingInfoRepository = MockStreamingInfoRepository(result: .success(())),
+        offlineInfoRepository: MockOfflineInfoRepository = MockOfflineInfoRepository(result: .success),
+        streamingInfoRepository: MockStreamingInfoRepository = MockStreamingInfoRepository(result: .success),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (

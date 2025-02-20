@@ -82,7 +82,10 @@ extension AudioPlayer {
     }
     
     func updateQueueWithLoopItems() {
-        guard let queuePlayer = queuePlayer,
+        // Only in case, the loader has no more batches in progress or pending, we call `updateQueueWithLoopItems()` to add items
+        // to the audio player, ensuring the audio playback can continue seamlessly.
+        guard !queueLoader.hasPendingWork,
+              let queuePlayer = queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, loopAllowed,
               let currentItem = currentItem(),
               let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }

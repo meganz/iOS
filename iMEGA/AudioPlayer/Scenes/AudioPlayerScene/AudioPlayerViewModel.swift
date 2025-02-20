@@ -308,7 +308,9 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private nonisolated func initializeTracksForAllAudioFilesAsPlaylist(from node: MEGANode, _ allNodes: [MEGANode]) async {
-        guard let (currentTrack, _) = await getTracks(from: node) else {
+        let tracksFromNodes = allNodes.compactMap { streamingInfoUseCase?.info(from: $0) }
+        guard tracksFromNodes.isNotEmpty,
+            let currentTrack = await tracksFromNodes.async.first(where: { await $0.node?.handle == node.handle }) else {
             guard let track = streamingInfoUseCase?.info(from: node) else {
                 await dismiss()
                 return
@@ -316,10 +318,7 @@ final class AudioPlayerViewModel: ViewModelType {
             await initialize(tracks: [track], currentTrack: track)
             return
         }
-        
-        let allTracks = allNodes
-            .compactMap { streamingInfoUseCase?.info(from: $0) }
-        await initialize(tracks: allTracks, currentTrack: currentTrack)
+        await initialize(tracks: tracksFromNodes, currentTrack: currentTrack)
     }
     
     private nonisolated func getTracks(from node: MEGANode) async -> (currentTrack: AudioPlayerItem, childrenTracks: [AudioPlayerItem])? {
