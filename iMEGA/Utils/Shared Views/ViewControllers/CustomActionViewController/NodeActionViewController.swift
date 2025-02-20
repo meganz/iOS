@@ -185,7 +185,7 @@ class NodeActionViewController: ActionSheetViewController {
                           isFromSharedItem: isFromSharedItem)
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isBackupNode: Bool, isMediaFileSavedInPhotos: Bool = false, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isBackupNode: Bool, viewInFolder: Bool = false, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -198,7 +198,7 @@ class NodeActionViewController: ActionSheetViewController {
             node: node,
             displayMode: displayMode,
             isBackupNode: isBackupNode,
-            isMediaFileSavedInPhotos: isMediaFileSavedInPhotos
+            viewInFolder: viewInFolder
         )
     }
     
@@ -453,7 +453,7 @@ class NodeActionViewController: ActionSheetViewController {
         return numberOfFilesAndFoldersString
     }
     
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false, isMediaFileSavedInPhotos: Bool = false) {
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false, viewInFolder: Bool = false) {
         loadActions = { [self] in
             let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
             let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
@@ -493,7 +493,7 @@ class NodeActionViewController: ActionSheetViewController {
                     nodes: [node.toNodeEntity()],
                     from: displayMode,
                     isFromSharedItem: isFromSharedItem))
-                .setMediaFileSavedInPhotos(isMediaFileSavedInPhotos)
+                .setViewInFolder(viewInFolder)
                 .build()
             
             update(actions: actions, sender: self.sender)

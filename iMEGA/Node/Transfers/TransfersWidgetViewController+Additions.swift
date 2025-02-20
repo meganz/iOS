@@ -208,8 +208,9 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     }
     
     @objc
-    func isSaveInPhotosTransfer(_ transfer: MEGATransfer) -> Bool {
-        transfer.appData == TransferMetaDataEntity.saveInPhotos.rawValue
+    func shouldShowViewInFolder(_ transfer: MEGATransfer) -> Bool {
+        guard let appData = transfer.appData else { return true }
+        return !(appData.contains(TransferMetaDataEntity.saveInPhotos.rawValue) || appData.contains(TransferMetaDataEntity.exportFile.rawValue))
     }
     
     // MARK: - NavigationBarButtons
