@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="Payment required";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="Payment overdue";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future" = "Renews on %@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today" = "Renews Today";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow" = "Renews Tomorrow";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */

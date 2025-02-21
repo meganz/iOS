@@ -4,7 +4,10 @@ import MEGASDKRepo
 import UIKit
 
 final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<ProfileSection, ProfileSectionRow> {
-
+    lazy var calendar: Calendar = {
+        Calendar.current
+    }()
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return switch snapshot().sectionIdentifiers[section] {
         case .security: Strings.Localizable.recoveryKey
@@ -22,41 +25,36 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
         }
     }
     
-    private func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> any DateFormatting {
-        let calendar = Calendar.current
-        let startingOfToday = Date().startOfDay(on: calendar)
-        guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,
-                                                                on: Calendar.current) else {
-                                                                    return DateFormatter.dateMedium()
-        }
-        let numberOfDaysAWeek = 7
-        if daysOfDistance > numberOfDaysAWeek {
+    private func dateFormatterForDate(_ date: Date) -> any DateFormatting {
+        let startOfToday = calendar.startOfDay(for: Date())
+        let daysDifference = calendar.dateComponents([.day], from: startOfToday, to: date).day ?? Int.max
+        
+        // If the date is within a week, return a medium style with weekday; otherwise use a standard medium style.
+        if abs(daysDifference) <= 7 {
+            return DateFormatter.dateMediumWithWeekday()
+        } else {
             return DateFormatter.dateMedium()
         }
-
-        if expiryDate.isToday(on: calendar) || expiryDate.isTomorrow(on: calendar) {
-            return DateFormatter.dateRelativeMedium()
-        }
-
-        return DateFormatter.dateMediumWithWeekday()
     }
-    
+
     private func planFooterTitle() -> String? {
-        guard let accountDetails = MEGASdk.shared.mnz_accountDetails,
-              accountDetails.type != .free else {
+        guard
+            let accountDetails = MEGASdk.shared.mnz_accountDetails,
+            accountDetails.subscriptionRenewTime > 0
+        else {
             return nil
         }
-        if accountDetails.subscriptionRenewTime > 0 {
-            let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-            return Strings.Localizable.renewsOn + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
-        } else if accountDetails.proExpiration > 0 &&
-                    accountDetails.type != .business &&
-                    accountDetails.type != .proFlexi {
-            let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-            return Strings.Localizable.expiresOn(expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
-        }
+
+        let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
         
-        return nil
+        if renewDate.isToday(on: calendar) {
+            return Strings.Localizable.Account.Profile.Renewal.today
+        } else if renewDate.isTomorrow(on: calendar) {
+            return Strings.Localizable.Account.Profile.Renewal.tomorrow
+        } else {
+            let formattedDate = dateFormatterForDate(renewDate).localisedString(from: renewDate)
+            return Strings.Localizable.Account.Profile.Renewal.future(formattedDate)
+        }
     }
     
     private func sessionFooterTitle() -> String? {
