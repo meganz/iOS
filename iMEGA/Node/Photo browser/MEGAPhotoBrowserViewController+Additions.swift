@@ -564,15 +564,15 @@ extension MEGAPhotoBrowserViewController {
         }
         
         switch displayMode {
-        case .fileLink:
-            exportFile(from: node, sender: sender)
-        default:
+        case .chatAttachment, .chatSharedFiles:
             exportMessageFile(
                 from: node,
                 messageId: currentMessageId,
                 chatId: chatId,
                 sender: sender
             )
+        default:
+            exportFile(from: node, sender: sender)
         }
     }
     
