@@ -44,7 +44,7 @@ struct HomeRecentActionViewModelTests {
                 }
                 
                 sut.saveToPhotoAlbum(of: NodeEntity())
-                try await Task.sleep(nanoseconds: 500_000_000)
+                try await sut.saveToPhotoAlbumTask?.value
             }
 
             #expect(receivedError == expectedError)
@@ -91,7 +91,7 @@ struct HomeRecentActionViewModelTests {
                 Issue.record("notifyUpdate should not be called")
             }
             sut.saveToPhotoAlbum(of: NodeEntity())
-            try await Task.sleep(nanoseconds: 500_000_000)
+            try await sut.saveToPhotoAlbumTask?.value
             
             #expect(sut.error == nil)
             #expect(mockAnalyticsEventUseCase.type == expectedEvent)
