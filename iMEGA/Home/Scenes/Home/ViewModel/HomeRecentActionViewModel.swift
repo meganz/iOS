@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 import MEGAPermissions
 import MEGASDKRepo
+import MEGASwift
 
 protocol HomeRecentActionViewModelInputs: AnyObject {
     
@@ -31,10 +32,11 @@ final class HomeRecentActionViewModel:
     
     // MARK: - HomeRecentActionViewModelInputs
     func saveToPhotoAlbum(of node: NodeEntity) {
-        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+        saveToPhotoAlbumTask = Task { @MainActor [weak self] in
             guard let self else { return }
-            if granted {
-                handleAuthorized(node: node)
+            let isGranted = await isPhotosPermissionGranted()
+            if isGranted {
+                await handleAuthorized(node: node)
             } else {
                 error = .photos
                 notifyUpdate?(outputs)
@@ -42,19 +44,29 @@ final class HomeRecentActionViewModel:
         }
     }
     
-    private func handleAuthorized(node: NodeEntity) {
+    @MainActor
+    private func isPhotosPermissionGranted() async -> Bool {
+        await withAsyncValue { @Sendable [permissionHandler] completion in
+            permissionHandler.photosPermissionWithCompletionHandler { isGranted in
+                completion(.success(isGranted))
+            }
+        }
+    }
+    
+    @MainActor
+    private func handleAuthorized(node: NodeEntity) async {
         transferWidgetResponder?.bringProgressToFrontKeyWindowIfNeeded()
         
-        Task { @MainActor in
-            do {
-                try await saveMediaToPhotosUseCase.saveToPhotos(nodes: [node])
-            } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity,
-                    errorEntity != .cancelled {
-                    
-                    analyticsEventUseCase.sendAnalyticsEvent(.download(.saveToPhotos))
-                    
-                    await SVProgressHUD.dismiss()
+        do {
+            try await saveMediaToPhotosUseCase.saveToPhotos(nodes: [node])
+        } catch {
+            if let errorEntity = error as? SaveMediaToPhotosErrorEntity,
+               errorEntity != .cancelled {
+                
+                analyticsEventUseCase.sendAnalyticsEvent(.download(.saveToPhotos))
+                
+                await MainActor.run {
+                    SVProgressHUD.dismiss()
                     SVProgressHUD.show(
                         UIImage.saveToPhotos,
                         status: error.localizedDescription
@@ -74,6 +86,7 @@ final class HomeRecentActionViewModel:
     
     // MARK: - Task
     
+    private(set) var saveToPhotoAlbumTask: Task<Void, any Error>?
     private(set) var toggleFavouriteTask: Task<Void, any Error>?
     
     // MARK: - HomeRecentActionViewModelOutputs
@@ -112,6 +125,11 @@ final class HomeRecentActionViewModel:
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
         self.transferWidgetResponder = transferWidgetResponder
         self.analyticsEventUseCase = analyticsEventUseCase
+    }
+    
+    deinit {
+        saveToPhotoAlbumTask?.cancel()
+        toggleFavouriteTask?.cancel()
     }
 }
 
