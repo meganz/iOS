@@ -54,20 +54,16 @@ let package = Package(
                 .define("WEBRTC_POSIX"),
                 .define("WEBRTC_MAC"),
                 .define("WEBRTC_IOS"),
-                .define("V8_DEPRECATION_WARNINGS"),
-                .define("NO_TCMALLOC"),
-                .define("CHROMIUM_BUILD"),
-                .define("CR_XCODE_VERSION=0901"),
-                .define("CR_CLANG_REVISION=\"313786-1\""),
-                .define("_FORTIFY_SOURCE=2"),
-                .define("NVALGRIND"),
-                .define("DYNAMIC_ANNOTATIONS_ENABLED=0"),
-                .define("NS_BLOCK_ASSERTIONS=1"),
-                .define("WEBRTC_ENABLE_PROTOBUF=1"),
                 .define("WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE"),
-                .define("RTC_DISABLE_VP9"),
-                .define("HAVE_SCTP"),
-                .define("WEBRTC_NON_STATIC_TRACE_EVENT_HANDLERS=1"),
+                .define("RTC_ENABLE_VP9"),
+                .define("WEBRTC_HAVE_SCTP"),
+                .define("WEBRTC_LIBRARY_IMPL"),
+                .define("ABSL_ALLOCATOR_NOTHROW=1"),
+                .define("LIBYUV_DISABLE_SME"),
+                .define("LIBYUV_DISABLE_LSX"),
+                .define("LIBYUV_DISABLE_LASX"),
+                .define("WEBRTC_HAS_NEON"),
+                .define("WEBRTC_ARCH_ARM64"),
                 .define("NDEBUG", .when(configuration: .release))
             ]
         ),
@@ -84,23 +80,23 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libnative_api",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_api_xcframework.zip",
-            checksum: "7cd3473272c32c63ffd885ce51997d30e8114e8ad47969eb455c06e339e11f0d"
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_api_update_202501.xcframework.zip",
+            checksum: "13bd83d6c0ccbaf050861befaffe6bbf4d5f2ca810d49f38c9ec8005f1881a2b"
         ),
         .binaryTarget(
             name: "libnative_video",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_video_xcframework.zip",
-            checksum: "d7d4c14f69575117fae5288e8f43c8c9c6d7543642b062428d9238f1eead371e"
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_video_update_202501.xcframework.zip",
+            checksum: "65c2631eaae4ce39cafa8f26c84a4698d61e7cde9d74200741ec563e19469d13"
         ),
         .binaryTarget(
             name: "libvideocapture_objc",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideocapture_objc_xcframework.zip",
-            checksum: "6bb5e945014b98479c1e5614d2ddf6d51d0c20bbaa1ab5d7e7af1d22c3c19a99"
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideocapture_objc_update_202501.xcframework.zip",
+            checksum: "14a78174fa78b35c2eac1eb6b2977592c3c64a4079bb64ea4be0c0c53fdd4366"
         ),
         .binaryTarget(
             name: "libvideoframebuffer_objc",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideoframebuffer_objc_xcframework.zip",
-            checksum: "ea0262b787a5cd520adfb64dc4bc94e5312b588825d3cb272cd5596d067e4fb1"
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideoframebuffer_objc_update_202501.xcframework.zip",
+            checksum: "12284c57ba0b3594759cfc995a86c24e1f48e5ee9b86d88736bfce8b8876bf19"
         ),
         .binaryTarget(
             name: "libwebsockets",
@@ -109,8 +105,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libwebrtc",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libwebrtc_xcframework.zip",
-            checksum: "ee61b35cd31522c51dc693a30feefcbb05cac273b0bec9455b986ed8950a7e29"
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libwebrtc_update_202501.xcframework.zip",
+            checksum: "7cfa00ac8b743641d3ed642bf5a185c26ddde1948a7eee650d05a5ffc83ce2d4"
         )
     ],
     cxxLanguageStandard: .cxx17

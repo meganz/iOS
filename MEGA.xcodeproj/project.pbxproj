@@ -16692,6 +16692,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -16842,7 +16843,8 @@
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -16902,7 +16904,8 @@
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = NO;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -17607,7 +17610,8 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = Debug;
@@ -17661,7 +17665,8 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = Release;
@@ -17781,7 +17786,8 @@
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = NO;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -17942,7 +17948,8 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
+					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = QA;
