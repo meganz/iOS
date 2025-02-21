@@ -5,20 +5,22 @@ setVerbose()
 
 do {
     log("Started execution")
-    let version = if let version = readFromCache(key: .version) {
+    let version = if let version = try? VersionFetcher().fetchVersion() {
         version
     } else {
         try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
     }
 
-    log("Creating release branch and pushing to origin")
-    let releaseBranch = try createReleaseBranchAndPushToOrigin(version: version)
+    log("Creating release branch")
+    let releaseBranch = try createReleaseBranch(with: version)
 
-    log("Creating the release MR on GitLab")
-    let gitlabMR = try await createMR(sourceBranch: releaseBranch, targetBranch: "master", title: "Release \(version)", squash: false)
-
-    log("Commenting in MR to upload build to TestFlight")
-    try await commentInMR(gitlabMR: gitlabMR, message: "deliver_appStore")
+    log("Push the changes and create the release MR on GitLab")
+    try createMRUsingGitCommand(
+        sourceBranch: releaseBranch,
+        targetBranch: "master",
+        title: "Release \(version)",
+        squash: false
+    )
 
     log("Finished successfully")
     exit(ProcessResult.success)

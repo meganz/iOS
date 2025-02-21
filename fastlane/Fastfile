@@ -123,10 +123,12 @@ platform :ios do
     File.write("build_number.txt", build_number)
   end
 
-  desc "fetch the version number and write to file named version_number.txt"
-  lane :fetch_version_number do
-    get_version_number(target: "MEGA")
-    File.write("version_number.txt", lane_context[SharedValues::VERSION_NUMBER]) 
+  desc "Fetch the version number and write to a specified file"
+  lane :fetch_version_number do |options|
+    version = get_version_number(target: "MEGA")
+    file_path = options[:output_file] || "version_number.txt"
+    File.write(file_path, version)
+    UI.success("Version number '#{version}' written to '#{file_path}'")
   end
 
   desc "build app for simulator"
