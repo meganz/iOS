@@ -263,7 +263,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     if (!url) {
         return;
     }
-    
+
     MEGALinkManager.urlType = url.mnz_type;
     switch (MEGALinkManager.urlType) {
         case URLTypeDefault:
@@ -417,6 +417,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 [mainTBC showUploadFile];
+                [self resetLinkAndURLType];
             }
             break;
             
@@ -424,6 +425,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 [mainTBC showScanDocument];
+                [self resetLinkAndURLType];
             }
             break;
             
@@ -431,6 +433,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 [mainTBC showStartConversation];
+                [self resetLinkAndURLType];
             }
             break;
             
@@ -438,6 +441,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 [mainTBC showAddContact];
+                [self resetLinkAndURLType];
             }
             break;
 
@@ -451,6 +455,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 [mainTBC showOfflineAndPresentFileWithHandle:nil];
+                [self resetLinkAndURLType];
             }
             break;
             
@@ -458,6 +463,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 [mainTBC showOfflineAndPresentFileWithHandle:url.lastPathComponent];
+                [self resetLinkAndURLType];
             }
             break;
             
@@ -466,6 +472,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 (MEGALinkManager.urlType == URLTypeShowFavourites) ? [mainTBC showFavouritesNodeWithHandle:nil] : [mainTBC showFavouritesNodeWithHandle:url.lastPathComponent];
+                [self resetLinkAndURLType];
             }
             break;
             
@@ -473,6 +480,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
                 [mainTBC showRecents];
+                [self resetLinkAndURLType];
             }
             break;
             
