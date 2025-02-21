@@ -1033,7 +1033,6 @@
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
     if (self.chatRoom.chatId == item.chatId) {
         self.chatRoom = [api chatRoomForChatId:item.chatId];
-        MEGALogInfo(@"onChatListItemUpdate %@", item);
         
         switch (item.changes) {
             case MEGAChatListItemChangeTypeOwnPrivilege:
