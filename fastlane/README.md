@@ -136,7 +136,7 @@ set the date and time as build number and write it to build_number file
 [bundle exec] fastlane ios fetch_version_number
 ```
 
-fetch the version number and write to file named version_number.txt
+Fetch the version number and write to a specified file
 
 ### ios build_simulator
 
