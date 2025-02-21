@@ -495,8 +495,6 @@
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
-    MEGALogInfo(@"onChatListItemUpdate %@", item);
-    
     // New chat 1on1 or group
     if (item.changes == 0) {
         [self insertRowByChatListItem:item];
