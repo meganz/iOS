@@ -25,6 +25,7 @@ extension SearchFilterEntity {
             MEGASearchFilter(
                 term: term,
                 description: searchDescription,
+                tag: searchTag,
                 parentNodeHandle: parentNode.handle,
                 nodeType: nodeType,
                 category: category,
@@ -38,6 +39,7 @@ extension SearchFilterEntity {
             MEGASearchFilter(
                 term: term,
                 description: searchDescription,
+                tag: searchTag,
                 nodeType: nodeType,
                 category: category,
                 sensitiveFilter: sensitiveFilter,
