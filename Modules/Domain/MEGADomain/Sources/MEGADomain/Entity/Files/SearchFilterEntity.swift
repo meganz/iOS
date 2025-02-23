@@ -42,6 +42,9 @@ public struct SearchFilterEntity: Sendable, Equatable {
     /// Set option for filtering by contains in description
     public let searchDescription: String?
 
+    /// Set option for filtering by contains in tags
+    public let searchTag: String?
+
     /// Location to which the search will be restricted to. If an ancestor was explicitly set via parentNode, search under that particular ancestor.
     public let searchTargetLocation: SearchTargetLocation
     /// Indicates if results should be found recursively through child nodes or focus only at the top level location of passed parent node or root.
@@ -73,6 +76,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     private init(
         searchText: String? = nil,
         searchDescription: String? = nil,
+        searchTag: String? = nil,
         searchTargetLocation: SearchTargetLocation,
         recursive: Bool,
         supportCancel: Bool,
@@ -86,6 +90,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     ) {
         self.searchText = searchText
         self.searchDescription = searchDescription
+        self.searchTag = searchTag
         self.searchTargetLocation = searchTargetLocation
         self.recursive = recursive
         self.supportCancel = supportCancel
@@ -103,6 +108,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     public static func recursive(
         searchText: String? = nil,
         searchDescription: String? = nil,
+        searchTag: String? = nil,
         searchTargetLocation: SearchTargetLocation,
         supportCancel: Bool,
         sortOrderType: SortOrderEntity,
@@ -115,6 +121,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     ) -> Self {
         self.init(searchText: searchText,
                   searchDescription: searchDescription,
+                  searchTag: searchTag,
                   searchTargetLocation: searchTargetLocation,
                   recursive: true,
                   supportCancel: supportCancel,
@@ -133,6 +140,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     public static func nonRecursive(
         searchText: String? = nil,
         searchDescription: String? = nil,
+        searchTag: String? = nil,
         searchTargetNode: NodeEntity,
         supportCancel: Bool,
         sortOrderType: SortOrderEntity,
@@ -145,6 +153,7 @@ public struct SearchFilterEntity: Sendable, Equatable {
     ) -> Self {
         self.init(searchText: searchText,
                   searchDescription: searchDescription,
+                  searchTag: searchTag,
                   searchTargetLocation: .parentNode(searchTargetNode),
                   recursive: false,
                   supportCancel: supportCancel,
