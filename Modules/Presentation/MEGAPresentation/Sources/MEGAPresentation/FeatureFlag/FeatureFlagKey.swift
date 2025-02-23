@@ -15,4 +15,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case newFileManagementSettings = "New File Management Settings"
     case searchUsingNodeDescription = "Search Using Node Description"
     case newChatSetting = "New Chat Setting"
+    case searchByNodeTags = "Search By Node Tags"
 }
