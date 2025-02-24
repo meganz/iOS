@@ -14,6 +14,7 @@ final class CrashlyticsLogger: NSObject {
         case calls
         case nodeInfo
         case sharedItems
+        case viewLifecycle
         var rawValue: String {
             switch self {
             case .general: "General"
@@ -22,6 +23,7 @@ final class CrashlyticsLogger: NSObject {
             case .calls: "Calls"
             case .nodeInfo: "Node Info"
             case .sharedItems: "Shared Items"
+            case .viewLifecycle: "View"
             }
         }
     }
@@ -44,7 +46,12 @@ final class CrashlyticsLogger: NSObject {
     private func log(category: LogCategory, _ msg: String, _ file: String, _ function: String) {
         loggerQueue.async {
             let file = file.components(separatedBy: "/").last ?? ""
-            let msg = "[\(category.rawValue)] \(msg) (\(file).\(function))"
+            let msg = switch category {
+            case .viewLifecycle:
+                "[\(category.rawValue)] \(msg)"
+            default:
+                "[\(category.rawValue)] \(msg) (\(file).\(function))"
+            }
             Crashlytics.crashlytics().log(msg)
     #if DEBUG
             MEGALogDebug("\(msg)")
