@@ -12,9 +12,11 @@ public struct NodeUpdateRepository: NodeUpdateRepositoryProtocol {
         self.sdk = sdk
     }
     
-    public func shouldProcessOnNodesUpdate(parentNode: NodeEntity,
-                                           childNodes: [NodeEntity],
-                                           updatedNodes: [NodeEntity]) -> Bool {
+    public func shouldProcessOnNodesUpdate(
+        parentNode: NodeEntity,
+        childNodes: [NodeEntity],
+        updatedNodes: [NodeEntity]
+    ) -> Bool {
         guard !updatedNodes.contains(where: { $0.parentHandle == parentNode.handle }) else { return true }
         
         let childNodesBase64Handles = Set(childNodes.compactMap({ $0.base64Handle }))

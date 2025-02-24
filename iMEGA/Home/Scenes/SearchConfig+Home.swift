@@ -119,7 +119,9 @@ extension SearchConfig {
                 verticalThumbnailPreviewBackground: TokenColors.Background.surface1.swiftUI,
                 verticalThumbnailTopIconsBackground: TokenColors.Background.surface2.swiftUI,
                 listRowSeparator: TokenColors.Border.strong.swiftUI,
-                checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI
+                checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI,
+                listHeaderTextColor: TokenColors.Text.secondary.swiftUI,
+                listHeaderBackgroundColor: TokenColors.Background.page.swiftUI
             ),
             contextPreviewFactory: contextPreviewFactory
         )

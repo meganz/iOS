@@ -113,7 +113,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     searchInputDebounceDelay: 0,
                     keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
                     viewDisplayMode: .unknown,
-                    isSearchByNodeDescriptionFeatureEnabled: true
+                    isSearchByNodeDescriptionFeatureEnabled: true,
+                    listHeaderViewModel: nil
                 ),
                 mediaDiscoveryViewModel: .init(
                     contentMode: .library,
@@ -159,6 +160,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onOpenUserProfile: {},
                 onUpdateSearchBarVisibility: { _ in },
                 onBack: {},
+                onCancel: {},
                 onEditingChanged: { _ in },
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,

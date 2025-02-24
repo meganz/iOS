@@ -89,7 +89,7 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
         let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg") })
         let nodeUseCase = MockNodeDataUseCase(nodeListEntity: nodeList)
         let expectedResult = mode.makeVisualMediaPresenceChecker(
-            nodeSource: .recentActionBucket(.init()), nodeUseCase: nodeUseCase
+            nodeSource: .mockRecentActionBucketEmpty, nodeUseCase: nodeUseCase
         )()
         XCTAssertFalse(expectedResult)
     }
@@ -99,7 +99,7 @@ final class CloudDriveViewControllerMediaCheckerModeTests: XCTestCase {
         let nodeList = NodeListEntity(nodesCount: 3, nodeAt: { _ in NodeEntity(name: "test.jpg") })
         let nodeUseCase = MockNodeDataUseCase(nodeListEntity: nodeList)
         let expectedResult = mode.makeVisualMediaPresenceChecker(
-            nodeSource: .recentActionBucket(.init()), nodeUseCase: nodeUseCase
+            nodeSource: .mockRecentActionBucketEmpty, nodeUseCase: nodeUseCase
         )()
         XCTAssertFalse(expectedResult)
     }

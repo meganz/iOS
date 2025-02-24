@@ -50,7 +50,14 @@ extension RecentsViewController {
     @objc func showRecentAction(bucket: MEGARecentActionBucket) {
         let factory = CloudDriveViewControllerFactory.make(nc: UINavigationController())
         let vc = factory.build(
-            nodeSource: .recentActionBucket(bucket),
+            nodeSource: .recentActionBucket(
+                MEGARecentActionBucketTrampoline(
+                    bucket: bucket,
+                    parentNodeProvider: { parentHandle in
+                        MEGASdk.shared.node(forHandle: parentHandle)?.toNodeEntity()
+                    }
+                )
+            ),
             config: .init(
                 displayMode: .recents,
                 shouldRemovePlayerDelegate: false

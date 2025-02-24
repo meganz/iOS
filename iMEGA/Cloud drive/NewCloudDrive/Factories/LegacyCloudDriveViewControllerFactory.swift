@@ -19,7 +19,10 @@ struct LegacyCloudDriveViewControllerFactory {
                 vc.parentNode = megaNode
             }
         case .recentActionBucket(let bucket):
-            vc.recentActionBucket = bucket
+            // we should crash here since it's not possible to proceed if casting fails
+            // bucket property on the MEGARecentActionBucketTrampoline can be removed when
+            // this file is removed
+            vc.recentActionBucket = (bucket as! MEGARecentActionBucketTrampoline).bucket
         }
         
         if let displayMode = config.displayMode {

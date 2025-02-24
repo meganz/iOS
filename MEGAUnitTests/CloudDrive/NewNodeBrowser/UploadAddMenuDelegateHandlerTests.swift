@@ -7,6 +7,12 @@ import MEGAPresentationMock
 import MEGATest
 import XCTest
 
+extension NodeSource {
+    static var mockRecentActionBucketEmpty = NodeSource.recentActionBucket(
+        MockRecentActionBucketTrampoline()
+    )
+}
+
 final class UploadAddMenuDelegateHandlerTests: XCTestCase {
 
     func testUploadAddMenu_whenNodeIsNil_shouldAvoidCallingAction() {
@@ -14,7 +20,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
     }
 
     func testUploadAddMenu_shouldAvoidCallingActionsForRecentBucket_actionsShouldBeEmpty() {
-        assertEmptyActions(with: .recentActionBucket(MEGARecentActionBucket()))
+        assertEmptyActions(with: .mockRecentActionBucketEmpty)
     }
 
     func testUploadAddMenu_forValidNodeWithChooseFromPhotosAction_shouldCallTheChooseFromPhotoVideoAction() async {
@@ -114,7 +120,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
         let router = MockNodeInsertionRouter()
         let sut = makeSUT(
             nodeInsertionRouter: router,
-            nodeSource: .recentActionBucket(MEGARecentActionBucket())
+            nodeSource: .mockRecentActionBucketEmpty
         )
         sut.uploadAddMenu(didSelect: .chooseFromPhotos)
         sut.uploadAddMenu(didSelect: .capture)

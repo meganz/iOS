@@ -21,9 +21,16 @@ class NodeBrowserViewModel: ObservableObject {
     // View is in edit mode once user starts selecting nodes
     // Otherwise, view will be in regular mode, with Bool value indicating whether the back button
     // should be displayed or not
-    enum ViewState {
+    
+    enum ViewState: Equatable {
+        enum LeftBarButton: Equatable {
+            case back
+            case avatar
+            case close
+        }
+        
         case editing
-        case regular(showBackButton: Bool)
+        case regular(leftBarButton: LeftBarButton)
     }
 
     let searchResultsViewModel: SearchResultsViewModel
@@ -67,8 +74,11 @@ class NodeBrowserViewModel: ObservableObject {
     @Published var viewMode: ViewModePreferenceEntity
     @Published var editing = false
     @Published var title = ""
-    @Published var viewState: ViewState = .regular(showBackButton: false)
+    @Published var viewState: ViewState = .regular(leftBarButton: .back)
     @Published var editMode: EditMode = .inactive
+    var showAvatarIconInNavBar: Bool {
+        viewState == .regular(leftBarButton: .avatar)
+    }
     var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
     let avatarViewModel: MyAvatarViewModel
@@ -88,6 +98,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let onOpenUserProfile: () -> Void
     private let onUpdateSearchBarVisibility: (Bool) -> Void
     private let onBack: () -> Void
+    private let onCancel: () -> Void
     private let onEditingChanged: (Bool) -> Void
     private let updateTransferWidgetHandler: () -> Void
     private let sortOrderProvider: () -> MEGADomain.SortOrderEntity
@@ -133,6 +144,8 @@ class NodeBrowserViewModel: ObservableObject {
         onOpenUserProfile: @escaping () -> Void,
         onUpdateSearchBarVisibility: @escaping (Bool) -> Void,
         onBack: @escaping () -> Void,
+        // triggered in Recents configs by the left nav bar button
+        onCancel: @escaping () -> Void,
         onEditingChanged: @escaping (Bool) -> Void,
         updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
@@ -156,6 +169,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.onUpdateSearchBarVisibility = onUpdateSearchBarVisibility
         self.onEditingChanged = onEditingChanged
         self.onBack = onBack
+        self.onCancel = onCancel
         self.updateTransferWidgetHandler = updateTransferWidgetHandler
         self.nodeSourceUpdatesListener = nodeSourceUpdatesListener
         self.nodesUpdateListener = nodesUpdateListener
@@ -358,7 +372,14 @@ class NodeBrowserViewModel: ObservableObject {
     }
 
     private func refreshViewState() {
-        viewState = editing ? .editing : .regular(showBackButton: isBackButtonShown)
+        let leftBarButton: ViewState.LeftBarButton = {
+            if config.displayMode == .recents {
+                return .close
+            }
+            return isBackButtonShown ? .back : .avatar
+        }()
+
+        viewState = editing ? .editing : .regular(leftBarButton: leftBarButton)
     }
 
     private func addNodesUpdateHandler() {
@@ -431,6 +452,10 @@ class NodeBrowserViewModel: ObservableObject {
 
     func openUserProfile() {
         onOpenUserProfile()
+    }
+    
+    func closeNavBarButtonTapped() {
+        onCancel()
     }
 
     func back() {
@@ -621,8 +646,8 @@ extension NodeBrowserViewModel {
         switch viewState {
         case .editing:
             true
-        case .regular(let showBackButton):
-            !showBackButton
+        case .regular(let leftBarButton):
+            leftBarButton != .back
         }
     }
 }

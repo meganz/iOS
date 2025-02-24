@@ -70,16 +70,23 @@ struct NodeBrowserView: View {
                 action: { viewModel.selectAll() },
                 label: { Image(.selectAllItems) }
             )
-        case .regular(let isBackButtonShown):
-            if isBackButtonShown {
-                EmptyView()
-            } else {
+        case .regular(let leftBarButton):
+            switch leftBarButton {
+            case .avatar:
                 MyAvatarIconView(
                     viewModel: .init(
                         avatarObserver: viewModel.avatarViewModel,
                         onAvatarTapped: { viewModel.openUserProfile() }
                     )
                 )
+            case .back:
+                EmptyView()
+            case .close:
+                Button(
+                    action: { viewModel.closeNavBarButtonTapped() },
+                    label: { Text(Strings.Localizable.close) }
+                )
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
         }
     }

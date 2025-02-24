@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -37,7 +38,11 @@ struct CloudDriveViewControllerFactory {
     private let nodeActions: NodeActions
     private let viewModeFactory: ViewModeFactory
     private let nodeSensitivityChecker: any NodeSensitivityChecking
-
+    private let listHeaderViewModelFactory: any RecentListHeaderViewModelFactoryProtocol
+    private let calendar: Calendar
+    private let nodeUpdateRepository: any NodeUpdateRepositoryProtocol
+    private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
+    
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
         abTestProvider: some ABTestProviderProtocol,
@@ -60,7 +65,11 @@ struct CloudDriveViewControllerFactory {
         createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         nodeActions: NodeActions,
-        nodeSensitivityChecker: some NodeSensitivityChecking
+        nodeSensitivityChecker: some NodeSensitivityChecking,
+        listHeaderViewModelFactory: some RecentListHeaderViewModelFactoryProtocol,
+        calendar: Calendar,
+        nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol
     ) {
         self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
@@ -84,7 +93,11 @@ struct CloudDriveViewControllerFactory {
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.nodeActions = nodeActions
         self.nodeSensitivityChecker = nodeSensitivityChecker
-
+        self.listHeaderViewModelFactory = listHeaderViewModelFactory
+        self.calendar = calendar
+        self.nodeUpdateRepository = nodeUpdateRepository
+        self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
+        
         self.avatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
                 userAlertsClient: .live,
@@ -147,6 +160,11 @@ struct CloudDriveViewControllerFactory {
         let nodeAssetsManager = NodeAssetsManager.shared
         
         let featureFlagProvider = DIContainer.featureFlagProvider
+        let remoteFeatureFlagProvider = DIContainer.remoteFeatureFlagUseCase
+        
+        let calendar = Calendar.autoupdatingCurrent
+        
+        let hiddenNodesEnabled = remoteFeatureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
         
         return CloudDriveViewControllerFactory(
             featureFlagProvider: featureFlagProvider,
@@ -176,10 +194,11 @@ struct CloudDriveViewControllerFactory {
                 sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
                 mediaUseCase: homeFactory.makeMediaUseCase(),
                 nodeActions: nodeActions,
-                hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+                hiddenNodesFeatureEnabled: hiddenNodesEnabled
             ),
             nodeUseCase: nodeUseCase,
-            preferences: PreferenceUseCase.default, 
+            preferences: PreferenceUseCase.default,
+            
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
@@ -201,14 +220,31 @@ struct CloudDriveViewControllerFactory {
                     systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
                 ),
                 sensitiveNodeUseCase: sensitiveNodeUseCase
+            ),
+            listHeaderViewModelFactory: RecentListHeaderViewModelFactory(
+                calendar: calendar,
+                mediumStyleFormatter: { date in (date as NSDate).mnz_formattedDateMediumStyle() }
+            ),
+            calendar: calendar,
+            nodeUpdateRepository: NodeUpdateRepository.newRepo,
+            sensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCase(
+                sensitiveNodeUseCase: SensitiveNodeUseCase(
+                    nodeRepository: NodeRepository.newRepo,
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                    repo: UserAttributeRepository.newRepo),
+                hiddenNodesFeatureFlagEnabled: { hiddenNodesEnabled }
             )
         )
     }
     
     private func useNewCloudDrive(config: NodeBrowserConfig) -> Bool {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDriveHomeRecents) {
+            return true
+        }
         // disable new Cloud Drive for recents as it's very different
         // config with sections, the ticket to implement the needed behaviour: [SAO-189]
-        config.displayMode != .recents
+        return config.displayMode != .recents
     }
     
     /// build bare is return a plain UIViewController, bare-less version returns one wrapped in the UINavigationController
@@ -367,6 +403,7 @@ struct CloudDriveViewControllerFactory {
             onOpenUserProfile: { nodeActions.userProfileOpener(navigationController) },
             onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
             onBack: { self.navigationController.popViewController(animated: true) },
+            onCancel: { self.navigationController.dismiss(animated: true) },
             onEditingChanged: { enabled in
                 onSelectionModeChange(enabled)
             },
@@ -557,7 +594,8 @@ struct CloudDriveViewControllerFactory {
         let searchResultsVM = makeSearchResultsViewModel(
             nodeSource: nodeSource,
             initialViewMode: initialViewMode,
-            config: overriddenConfig
+            config: overriddenConfig,
+            calendar: calendar
         )
         
         let searchControllerWrapper = SearchControllerWrapper(
@@ -799,7 +837,8 @@ struct CloudDriveViewControllerFactory {
     private func makeSearchResultsViewModel(
         nodeSource: NodeSource,
         initialViewMode: ViewModePreferenceEntity,
-        config: NodeBrowserConfig
+        config: NodeBrowserConfig,
+        calendar: Calendar
     ) -> SearchResultsViewModel {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
@@ -878,7 +917,8 @@ struct CloudDriveViewControllerFactory {
             layout: layout,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
-            isSearchByNodeDescriptionFeatureEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
+            isSearchByNodeDescriptionFeatureEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
+            listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource)
         )
     }
 
@@ -930,8 +970,12 @@ struct CloudDriveViewControllerFactory {
             )
         case .recentActionBucket(let bucket):
             RecentActionBucketProvider(
+                sdk: sdk,
                 bucket: bucket,
-                mapper: resultsMapper
+                mapper: resultsMapper,
+                nodeUseCase: nodeUseCase,
+                nodeUpdateRepository: nodeUpdateRepository,
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
             )
         }
     }
@@ -974,8 +1018,10 @@ struct CloudDriveViewControllerFactory {
                     nodeRepository: NodeRepository.newRepo
                 )
             )
-        default:
-            return nil
+        case .recentActionBucket(let bucket):
+            return CloudDriveNavigationTitleBuilder.makeRecentsTitle(
+                nodesCount: bucket.nodeCount
+            )
         }
     }
     

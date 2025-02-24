@@ -205,6 +205,9 @@ public struct SearchConfig {
         public let listRowSeparator: Color
         
         public let checkmarkBackgroundTintColor: Color
+        
+        public let listHeaderTextColor: Color
+        public let listHeaderBackgroundColor: Color
 
         public init(
             unselectedBorderColor: Color,
@@ -220,7 +223,9 @@ public struct SearchConfig {
             verticalThumbnailPreviewBackground: Color,
             verticalThumbnailTopIconsBackground: Color,
             listRowSeparator: Color,
-            checkmarkBackgroundTintColor: Color
+            checkmarkBackgroundTintColor: Color,
+            listHeaderTextColor: Color,
+            listHeaderBackgroundColor: Color
         ) {
             self.unselectedBorderColor = unselectedBorderColor
             self.selectedBorderColor = selectedBorderColor
@@ -238,6 +243,8 @@ public struct SearchConfig {
             
             self.listRowSeparator = listRowSeparator
             self.checkmarkBackgroundTintColor = checkmarkBackgroundTintColor
+            self.listHeaderTextColor = listHeaderTextColor
+            self.listHeaderBackgroundColor = listHeaderBackgroundColor
         }
     }
 }
