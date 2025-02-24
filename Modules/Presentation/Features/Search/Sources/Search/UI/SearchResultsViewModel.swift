@@ -94,6 +94,8 @@ public class SearchResultsViewModel: ObservableObject {
     private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
 
     private let isSearchByNodeDescriptionFeatureEnabled: Bool
+    
+    let listHeaderViewModel: ListHeaderViewModel?
 
     public init(
         resultsProvider: any SearchResultsProviding,
@@ -105,7 +107,8 @@ public class SearchResultsViewModel: ObservableObject {
         keyboardVisibilityHandler: any KeyboardVisibilityHandling,
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
-        isSearchByNodeDescriptionFeatureEnabled: Bool
+        isSearchByNodeDescriptionFeatureEnabled: Bool,
+        listHeaderViewModel: ListHeaderViewModel?
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -117,6 +120,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.layout = layout
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.isSearchByNodeDescriptionFeatureEnabled = isSearchByNodeDescriptionFeatureEnabled
+        self.listHeaderViewModel = listHeaderViewModel
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -710,6 +714,11 @@ public class SearchResultsViewModel: ObservableObject {
             updateListItem(with: [])
             return
         }
+        
+        // to keep the same behaviour as in legacy cloud drive, when last item is removed
+        // from recent action bucket, we should dismiss the screen
+        // but the comment in there said we should show the empty screen if possible, so we will do that here in NCD
+        
         try Task.checkCancellation()
 
         var newResultViewModels = [SearchResultRowViewModel]()

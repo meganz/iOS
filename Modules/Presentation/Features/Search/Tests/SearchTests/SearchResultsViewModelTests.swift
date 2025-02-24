@@ -81,7 +81,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 showLoadingPlaceholderDelay: 0.1,
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
-                isSearchByNodeDescriptionFeatureEnabled: true
+                isSearchByNodeDescriptionFeatureEnabled: true,
+                listHeaderViewModel: nil
             )
             selection = {
                 self.selectedResults.append($0)
@@ -264,7 +265,9 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                             ? UIColor(red: 0, green: 0.761, blue: 0.604, alpha: 1.0)
                             : UIColor(red: 0, green: 0.659, blue: 0.525, alpha: 1.0)
                         }
-                    )
+                    ),
+                    listHeaderTextColor: Color.red,
+                    listHeaderBackgroundColor: Color.white
                 ),
                 previewContent: .init(
                     actions: [],

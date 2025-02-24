@@ -7,7 +7,7 @@ import XCTest
 final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
 
     func testContextMenu_whenNodeSourceIsRecentBucketAction_shouldReturnNil() {
-        let sut = makeSUT(nodeSource: .recentActionBucket(.init()))
+        let sut = makeSUT(nodeSource: .mockRecentActionBucketEmpty)
         assertContextMenu(sut: sut)
     }
 

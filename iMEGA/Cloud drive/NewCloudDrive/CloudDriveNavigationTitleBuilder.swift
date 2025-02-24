@@ -37,7 +37,7 @@ class CloudDriveNavigationTitleBuilder {
         case .backup:
             makeBackupsTitle(parentNode: parentNode, backupsUseCase: backupsUseCase)
         case .recents:
-            makeRecentsTitle(nodes: nodes)
+            makeRecentsTitle(nodesCount: nodes?.nodesCount ?? 0)
         default:
             ""
         }
@@ -56,9 +56,8 @@ class CloudDriveNavigationTitleBuilder {
         return isBackupsNode ? Strings.Localizable.Backups.title : parentNode?.name ?? ""
     }
 
-    private static func makeRecentsTitle(nodes: NodeListEntity?) -> String {
-        guard let nodes else { return "" }
-        return Strings.Localizable.Recents.Section.Title.items(nodes.nodesCount)
+    static func makeRecentsTitle(nodesCount: Int) -> String {
+        return Strings.Localizable.Recents.Section.Title.items(nodesCount)
     }
 
     private static func editingTitle(selectedNodesArrayCount: Int) -> String {

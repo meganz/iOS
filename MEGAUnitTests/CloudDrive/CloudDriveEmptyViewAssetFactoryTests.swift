@@ -14,7 +14,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
 
     func testDefaultAsset_forRecentBucket_shouldMatch() {
         let sut = makeSUT()
-        let emptyAsset = sut.defaultAsset(for: .recentActionBucket(MEGARecentActionBucket()), config: .init())
+        let emptyAsset = sut.defaultAsset(for: .mockRecentActionBucketEmpty, config: .init())
         let expectedEmptyAsset = SearchConfig.EmptyViewAssets(
             image: Image(.searchEmptyState),
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,

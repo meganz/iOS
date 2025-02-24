@@ -38,7 +38,9 @@ extension SearchConfig {
                 verticalThumbnailPreviewBackground: .gray,
                 verticalThumbnailTopIconsBackground: .white.opacity(0.4),
                 listRowSeparator: .gray,
-                checkmarkBackgroundTintColor: Color("00A886")
+                checkmarkBackgroundTintColor: Color("00A886"),
+                listHeaderTextColor: .black,
+                listHeaderBackgroundColor: .white
             ),
             contextPreviewFactory: .test
         )

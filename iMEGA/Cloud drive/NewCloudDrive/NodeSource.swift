@@ -15,7 +15,7 @@ enum NodeSource {
     /// of showing nodes like in recent mode of legacy cloud drive, used in the Home -> multiple Recents files
     /// which shows CloudDriveVC in sectioned table view mode
     /// see useNewCloudDrive method and [FM-1691]
-    case recentActionBucket(MEGARecentActionBucket)
+    case recentActionBucket(any RecentActionBucket)
     
     var isRoot: Bool {
         switch self {

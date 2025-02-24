@@ -436,7 +436,9 @@ final class CloudDriveViewControllerTests: XCTestCase {
     func testShouldProcessOnNodesUpdate_withDisplayModeRecentsAndNilSdkNodeForHandle_shouldReturnTrue() {
         let recentActionsBucket = MockRecentActionBucket(parentHandle: 0)
         let sdk = MockSdk(nodes: [])
-        let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: false)
+        let nodeUpdateRepository = MockNodeUpdateRepository(
+            shouldProcessOnNodesUpdate: false
+        )
         let sut = makeSUT(nodes: [anyNode(handle: .min, nodeType: .file)], displayMode: .recents, recentActionsBucket: recentActionsBucket)
         let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: nil, sdk: sdk, nodeUpdateRepository: nodeUpdateRepository)
         XCTAssertFalse(result)

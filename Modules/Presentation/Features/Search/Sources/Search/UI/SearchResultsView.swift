@@ -112,16 +112,34 @@ public struct SearchResultsView: View {
         }
     }
     
+    @ViewBuilder
+    private var listHeaderView: some View {
+        if let listHeaderViewModel = viewModel.listHeaderViewModel {
+            HStack {
+                Text(listHeaderViewModel.leadingText)
+                Image(uiImage: listHeaderViewModel.icon)
+                Text(listHeaderViewModel.trailingText)
+                Spacer()
+            }
+            .font(.caption)
+            .foregroundStyle(viewModel.colorAssets.listHeaderTextColor)
+        }
+    }
+    
     private var listContent: some View {
-        List(viewModel.listItems, selection: $viewModel.selectedRowIds) { item in
-            SearchResultRowView(viewModel: item)
-                .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
-                .listRowBackground(Color.clear)
-                .onAppear {
-                    Task {
-                        await viewModel.onItemAppear(item)
-                    }
+        List(selection: $viewModel.selectedRowIds) {
+            Section(header: listHeaderView) {
+                ForEach(viewModel.listItems) { item in
+                    SearchResultRowView(viewModel: item)
+                        .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
+                        .listRowBackground(Color.clear)
+                        .onAppear {
+                            Task {
+                                await viewModel.onItemAppear(item)
+                            }
+                        }
                 }
+            }
         }
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
@@ -212,7 +230,8 @@ public struct SearchResultsView: View {
             layout: .list,
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
             viewDisplayMode: .unknown,
-            isSearchByNodeDescriptionFeatureEnabled: true
+            isSearchByNodeDescriptionFeatureEnabled: true,
+            listHeaderViewModel: nil
         )
         var body: some View {
             SearchResultsView(viewModel: viewModel)
