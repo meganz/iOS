@@ -24,7 +24,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     @Atomic public var searchString: String?
     @Atomic public var searchRecursive: Bool?
     @Atomic public var messages = [Message]()
-    
+    @Atomic public var searchedFilters = [SearchFilterEntity]()
+
     public enum Message: Equatable, Sendable {
         case node(id: HandleEntity)
         case search(searchText: String?, sortOrder: SortOrderEntity)
@@ -79,7 +80,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         let message = Message.search(searchText: searchString,
                                      sortOrder: filter.sortOrderType)
         $messages.mutate { $0.append(message) }
-        
+        $searchedFilters.mutate { $0.append(filter) }
+
         let filterCondition = { (node: NodeEntity) -> Bool in
             let sensitiveCondition = switch filter.sensitiveFilterOption {
             case .disabled: true

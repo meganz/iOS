@@ -2,7 +2,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
-final class SearchNodeUseCaseTests: XCTestCase {
+final class SharedItemsSearchNodeUseCaseTests: XCTestCase {
     var searchNodeUC: (any SharedItemsSearchNodeUseCaseProtocol)!
     var filesSearchRepo: MockFilesSearchRepository!
     var searchText: String!
@@ -26,9 +26,9 @@ final class SearchNodeUseCaseTests: XCTestCase {
     }
     
     func testSearch_foundResults() async throws {
-        try await expectResults([1, 2], whenSearchingFor: "Node", description: "Desc", searchNodeType: .inShares)
-        try await expectResults([3, 4], whenSearchingFor: "Node", description: "Desc", searchNodeType: .outShares)
-        try await expectResults([5, 6], whenSearchingFor: "Node", description: "Desc", searchNodeType: .publicLinks)
+        try await expectResults([1, 2], whenSearchingFor: "Node", description: "Desc", tag: "tag", searchNodeType: .inShares)
+        try await expectResults([3, 4], whenSearchingFor: "Node", description: "Desc", tag: "tag", searchNodeType: .outShares)
+        try await expectResults([5, 6], whenSearchingFor: "Node", description: "Desc", tag: "tag", searchNodeType: .publicLinks)
     }
     
     func testCancelSearch() async throws {
@@ -36,8 +36,24 @@ final class SearchNodeUseCaseTests: XCTestCase {
         XCTAssertTrue(filesSearchRepo.hasCancelSearchCalled)
     }
     
-    private func expectResults(_ nodeHandles: [HandleEntity], whenSearchingFor searchText: String, description: String?, searchNodeType: SharedItemsSearchSourceTypeEntity) async throws {
-        let nodes = try await searchNodeUC.search(type: searchNodeType, text: searchText, description: description, sortType: .defaultAsc)
+    private func expectResults(
+        _ nodeHandles: [HandleEntity],
+        whenSearchingFor searchText: String,
+        description: String?,
+        tag: String?,
+        searchNodeType: SharedItemsSearchSourceTypeEntity
+    ) async throws {
+        let nodes = try await searchNodeUC.search(
+            type: searchNodeType,
+            text: searchText,
+            description: description,
+            tag: tag,
+            sortType: .defaultAsc
+        )
         XCTAssertEqual(nodes.map(\.handle), nodeHandles)
+        let searchFilter = filesSearchRepo.searchedFilters.last
+        XCTAssertEqual(searchFilter?.searchText, searchText)
+        XCTAssertEqual(searchFilter?.searchDescription, description)
+        XCTAssertEqual(searchFilter?.searchTag, tag)
     }
 }
