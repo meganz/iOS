@@ -22,6 +22,7 @@
 
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import <objc/runtime.h>
+#import "MEGA-Swift.h"
 
 @interface _FDFullscreenPopGestureRecognizerDelegate : NSObject <UIGestureRecognizerDelegate>
 
@@ -106,6 +107,9 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     // Forward to primary implementation.
     [self fd_viewWillAppear:animated];
     
+    [CrashlyticsLogger logWithCategory:LogCategoryViewLifecycle msg:[NSString stringWithFormat: @"will appear: %@",
+                                                                     [self class]] file:@(__FILENAME__) function:@(__FUNCTION__)];
+    
     if ([self avoidInstallingPopGesture]) {
         return;
     }
@@ -119,6 +123,9 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 {
     // Forward to primary implementation.
     [self fd_viewWillDisappear:animated];
+    
+    [CrashlyticsLogger logWithCategory:LogCategoryViewLifecycle msg:[NSString stringWithFormat: @"will disappear: %@",
+                                                                     [self class]] file:@(__FILENAME__) function:@(__FUNCTION__)];
     
     if ([self avoidInstallingPopGesture]) {
         return;
