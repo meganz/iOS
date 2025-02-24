@@ -1,7 +1,7 @@
 import MEGAFoundation
 
 public protocol SharedItemsSearchNodeUseCaseProtocol: Sendable {
-    func search(type: SharedItemsSearchSourceTypeEntity, text: String, description: String?, sortType: SortOrderEntity) async throws -> [NodeEntity]
+    func search(type: SharedItemsSearchSourceTypeEntity, text: String, description: String?, tag: String?, sortType: SortOrderEntity) async throws -> [NodeEntity]
     func cancelSearch()
 }
 
@@ -12,7 +12,7 @@ public struct SharedItemsSearchNodeUseCase<T: FilesSearchRepositoryProtocol>: Sh
         self.filesSearchRepository = filesSearchRepository
     }
     
-    public func search(type: SharedItemsSearchSourceTypeEntity, text: String, description: String?, sortType: SortOrderEntity) async throws -> [NodeEntity] {
+    public func search(type: SharedItemsSearchSourceTypeEntity, text: String, description: String?, tag: String?, sortType: SortOrderEntity) async throws -> [NodeEntity] {
         cancelSearch()
         
         let folderTargetEntity: FolderTargetEntity = switch type {
@@ -26,6 +26,7 @@ public struct SharedItemsSearchNodeUseCase<T: FilesSearchRepositoryProtocol>: Sh
         let searchFilterEntity: SearchFilterEntity = .recursive(
             searchText: text,
             searchDescription: description,
+            searchTag: tag,
             searchTargetLocation: .folderTarget(folderTargetEntity),
             supportCancel: true,
             sortOrderType: sortType,

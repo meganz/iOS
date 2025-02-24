@@ -26,8 +26,17 @@ import MEGASDKRepo
         featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? searchText : nil
     }
 
+    private func tagArgument(from searchText: String) -> String? {
+        featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags) ? searchText : nil
+    }
+
     private func search(type: SharedItemsSearchSourceTypeEntity, text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
-        let nodeArray = try await searchUC.search(type: type, text: text, description: descriptionArgument(from: text), sortType: sortType.toSortOrderEntity())
+        let nodeArray = try await searchUC.search(
+            type: type,
+            text: text,
+            description: descriptionArgument(from: text),
+            tag: tagArgument(from: text),
+            sortType: sortType.toSortOrderEntity())
         return nodeArray.toMEGANodes(in: MEGASdk.shared)
     }
 }
