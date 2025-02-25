@@ -91,8 +91,7 @@ final class ProfileViewRouter: ProfileViewRouting {
                     }
                 ).start()
             },
-            featureFlagProvider: DIContainer.featureFlagProvider,
-            logger: { MEGALogError($0) }
+            featureFlagProvider: DIContainer.featureFlagProvider
         ).start()
     }
     

@@ -19,7 +19,6 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private let logger: ((String) -> Void)?
     
     @Published private(set) var features: [FeatureDetails] = []
     
@@ -31,7 +30,6 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        logger: ((String) -> Void)? = nil,
         router: CancelAccountPlanRouting
     ) {
         self.currentSubscription = currentSubscription
@@ -43,7 +41,6 @@ public final class CancelAccountPlanViewModel: ObservableObject {
         self.featureListHelper = featureListHelper
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
-        self.logger = logger
         self.router = router
     }
     
@@ -100,7 +97,6 @@ public final class CancelAccountPlanViewModel: ObservableObject {
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
             accountUseCase: accountUseCase,
             cancelAccountPlanRouter: router,
-            logger: logger,
             featureFlagProvider: featureFlagProvider
         )
     }
