@@ -35,6 +35,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
 
     private let hiddenNodesFeatureEnabled: Bool
     private let searchByDescriptionEnabled: Bool
+    private let searchByNodeTagsEnabled: Bool
 
     // The node from which we want start searching from,
     // root node can be nil in case when we start app in offline
@@ -56,7 +57,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         sdk: MEGASdk,
         nodeActions: NodeActions,
         hiddenNodesFeatureEnabled: Bool,
-        searchByDescriptionEnabled: Bool
+        searchByDescriptionEnabled: Bool,
+        searchByNodeTagsEnabled: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.filesSearchUseCase = filesSearchUseCase
@@ -68,6 +70,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
         self.searchByDescriptionEnabled = searchByDescriptionEnabled
+        self.searchByNodeTagsEnabled = searchByNodeTagsEnabled
 
         mapper = SearchResultMapper(
             sdk: sdk,
@@ -189,6 +192,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             .recursive(
                 searchText: searchQuery.query,
                 searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
+                searchTag: searchByNodeTagsEnabled ? searchQuery.query : nil,
                 searchTargetLocation: { if let parentNode { .parentNode(parentNode) } else { .folderTarget(.rootNode) } }(),
                 supportCancel: true,
                 sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
@@ -202,6 +206,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             .nonRecursive(
                searchText: searchQuery.query,
                searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
+               searchTag: searchByNodeTagsEnabled ? searchQuery.query : nil,
                searchTargetNode: node,
                supportCancel: true,
                sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
