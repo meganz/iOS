@@ -32,7 +32,6 @@ final class CancellationSurveyViewModel: ObservableObject {
     private let cancelAccountPlanRouter: any CancelAccountPlanRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
-    private let logger: ((String) -> Void)?
     var submitSurveyTask: Task<Void, Never>?
     
     // Single selection
@@ -45,7 +44,6 @@ final class CancellationSurveyViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         cancelAccountPlanRouter: some CancelAccountPlanRouting,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        logger: ((String) -> Void)? = nil,
         featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.cancellationSurveyReasonList = cancellationSurveyReasonList
@@ -54,7 +52,6 @@ final class CancellationSurveyViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.cancelAccountPlanRouter = cancelAccountPlanRouter
         self.tracker = tracker
-        self.logger = logger
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -278,7 +275,7 @@ final class CancellationSurveyViewModel: ObservableObject {
                 cancelAccountPlanRouter.showAlert(.success(Date(timeIntervalSince1970: TimeInterval(currentPlanExpirationDate))))
             }
         } catch {
-            logger?("[Cancellation Survey] Error - \(error.localizedDescription)")
+            MEGALogError("[Cancellation Survey] - \(error.localizedDescription)")
             cancelAccountPlanRouter.showAlert(.failure(error))
         }
     }
