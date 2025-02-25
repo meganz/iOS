@@ -83,6 +83,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             excludeSensitives: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
             searchByDescriptionEnabled: Bool = false,
+            searchByNodeTagsEnabled: Bool = false,
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             file: StaticString = #filePath,
             line: UInt = #line
@@ -126,7 +127,8 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
                 hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-                searchByDescriptionEnabled: searchByDescriptionEnabled
+                searchByDescriptionEnabled: searchByDescriptionEnabled,
+                searchByNodeTagsEnabled: searchByNodeTagsEnabled
             )
             
             testCase.trackForMemoryLeaks(on: sut, timeoutNanoseconds: 100_000_000, file: file, line: line)
@@ -221,6 +223,22 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
             let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
             XCTAssertEqual(filter.searchDescription == nil, !enabled)
+            XCTAssertFalse(filter.useAndForTextQuery)
+        }
+    }
+
+    func testSearch_whenSearchByNodeTagsEnabled_shouldHaveCorrectFilterProperty() async throws {
+        for enabled in [false, true] {
+            // given
+            let harness = Harness.init(self, searchByNodeTagsEnabled: enabled)
+
+            // when
+            _ = await harness.sut.search(queryRequest: .userSupplied(.query("foo", isSearchActive: false)))
+
+            // then
+            XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+            let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+            XCTAssertEqual(filter.searchTag == nil, !enabled)
             XCTAssertFalse(filter.useAndForTextQuery)
         }
     }
