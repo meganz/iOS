@@ -7,7 +7,7 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     typealias UsersUpdateHandler = @Sendable ([UserEntity]) -> Void
     
     typealias RequestStartHandler = @Sendable (RequestEntity) -> Void
-    typealias RequestFinishHandler = @Sendable (Result<RequestEntity, MEGAError>) -> Void
+    typealias RequestFinishHandler = @Sendable (Result<RequestEntity, ErrorEntity>) -> Void
     
     let onNodesUpdate: NodesUpdateHandler?
     let onUsersUpdate: UsersUpdateHandler?

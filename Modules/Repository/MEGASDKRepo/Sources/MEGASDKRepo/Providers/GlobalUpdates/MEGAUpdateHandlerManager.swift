@@ -40,9 +40,9 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
     }
     
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        let result: Result<RequestEntity, MEGAError> = switch error.type {
+        let result: Result<RequestEntity, ErrorEntity> = switch error.type {
         case .apiOk: .success(request.toRequestEntity())
-        default: .failure(error)
+        default: .failure(error.toErrorEntity())
         }
         
         handlers.forEach { $0.onRequestFinish?(result) }
