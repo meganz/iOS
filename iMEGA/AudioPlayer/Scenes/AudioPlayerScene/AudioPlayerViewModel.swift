@@ -354,10 +354,14 @@ final class AudioPlayerViewModel: ViewModelType {
     
     private func reloadNodeInfoWithCurrentItem() {
         guard let currentItem = configEntity.playerHandler.playerCurrentItem() else { return }
-        invokeCommand?(.reloadNodeInfo(name: currentItem.name,
-                                       artist: currentItem.artist ?? "",
-                                       thumbnail: currentItem.artwork,
-                                       size: String.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
+        invokeCommand?(
+            .reloadNodeInfo(
+                name: currentItem.name,
+                artist: currentItem.artist ?? "",
+                thumbnail: currentItem.artwork,
+                size: String.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))
+            )
+        )
         
         configEntity.playerHandler.refreshCurrentItemState()
         
@@ -638,7 +642,6 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
 }
 
 extension AudioPlayerViewModel {
-    
     private func setupUpdateItemSubscription() {
         audioPlayerUseCase.reloadItemPublisher()
             .sink(receiveValue: { [weak self] nodes in
@@ -649,29 +652,20 @@ extension AudioPlayerViewModel {
     
     private func onNodesUpdate(_ nodeList: [NodeEntity]) {
         guard
-            nodeList.count > 0,
+            nodeList.isNotEmpty,
             let updatedNode = nodeList.first,
-            let allNodes = configEntity.allNodes
+            configEntity.allNodes?.contains(where: { $0.handle == updatedNode.handle }) == true
         else {
             return
         }
-        
-        let shouldRefreshItem = allNodes.contains { $0.handle == updatedNode.handle }
-        guard shouldRefreshItem else { return }
         
         refreshItem(updatedNode)
     }
     
     private func refreshItem(_ updatedNode: NodeEntity) {
-        guard let node = updatedNode.toMEGANode(in: sdk) else { return }
+        guard let node = nodeInfoUseCase?.node(fromHandle: updatedNode.handle) else { return }
         
-        let dataSourceCommand = AudioPlayerItemDataSourceCommand(configEntity: configEntity)
-        dataSourceCommand.executeRefreshItemDataSource(with: node)
-        
-        refreshItemUI()
-    }
-    
-    private func refreshItemUI() {
+        configEntity.playerHandler.currentPlayer()?.refreshTrack(with: node)
         reloadNodeInfoWithCurrentItem()
     }
 }

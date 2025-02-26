@@ -156,7 +156,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
                 sut.audio(player: anyQueuePlayer(), reload: itemToReload)
             },
             expectedCommands: [
-                .reload(currentItem: itemToReload)
+                .reload(item: itemToReload)
             ]
         )
     }

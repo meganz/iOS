@@ -89,8 +89,12 @@ final class MiniPlayerViewController: UIViewController {
     private func updateCurrent(item: AudioPlayerItem) {
         guard let cell = collectionView.visibleCells.first as? MiniPlayerItemCollectionViewCell,
               let indexPath = collectionView.indexPathsForVisibleItems.first,
-              cell.item == item else { return }
-        
+              cell.item == item else {
+            guard let index = miniPlayerSource?.tracks?.firstIndex(where: { $0?.node?.handle == item.node?.handle }) else { return }
+            miniPlayerSource?.tracks?[index] = item
+            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+            return
+        }
         collectionView.reloadItems(at: [indexPath])
     }
     
