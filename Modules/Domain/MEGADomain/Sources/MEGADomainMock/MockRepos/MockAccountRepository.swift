@@ -60,6 +60,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     // MARK: - Rich Link Preview
     public let richLinkPreviewEnabled: Bool
 
+    // MARK: - Notification Settings
+    public let notificationSettings: NotificationSettingsEntity
+    
     // MARK: - Initializer
     public init(
         currentUser: UserEntity? = nil,
@@ -96,6 +99,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         incomingSharesStorage: Int64 = 0,
         backupStorage: Int64 = 0,
         richLinkPreviewEnabled: Bool = false,
+        notificationSettings: NotificationSettingsEntity = NotificationSettingsEntity(
+            globalChatsDndEnabled: false,
+            globalChatsDndTimestamp: 0
+        ),
         currentProPlan: AccountPlanEntity? = nil,
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         isUnlimitedStorageAccount: Bool = false,
@@ -145,6 +152,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.incomingSharesStorage = incomingSharesStorage
         self.backupStorage = backupStorage
         self.richLinkPreviewEnabled = richLinkPreviewEnabled
+        self.notificationSettings = notificationSettings
         self.onAccountRequestFinish = onAccountRequestFinishUpdate
         self.onUserAlertsUpdates = onUserAlertsUpdates
         self.onContactRequestsUpdates = onContactRequestsUpdates
@@ -317,6 +325,14 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     }
     
     public func enableRichLinkPreview(_ enabled: Bool) {
+        
+    }
+    
+    public func getPushNotificationSettings() async throws -> NotificationSettingsEntity {
+        notificationSettings
+    }
+    
+    public func setPushNotificationSettings(_ settings: NotificationSettingsEntity) async throws {
         
     }
 }

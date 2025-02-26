@@ -14,10 +14,10 @@ public final class SetStatusViewModel: ObservableObject {
     @Published var isBottomSheetPresented = false
     @Published var autoAwayTimeString: String?
 
-    var currentAutoAwayPreset: AutoAwayPreset?
+    var currentAutoAwayPreset: TimeValuePreset?
 
     let chatOnlineStatuses: [ChatStatusEntity] = ChatStatusEntity.options()
-    let autoAwayPresets: [AutoAwayPreset] = AutoAwayPreset.options()
+    let autoAwayPresets: [TimeValuePreset] = TimeValuePreset.autoAwayOptions()
 
     public init(
         chatUseCase: some ChatUseCaseProtocol,
@@ -43,17 +43,11 @@ public final class SetStatusViewModel: ObservableObject {
         isBottomSheetPresented.toggle()
     }
     
-    func autoAwayPresetTapped(_ preset: AutoAwayPreset) {
-        switch preset {
-        case .none:
-            break
-        case .never:
-            chatPresenceUseCase.setAutoAwayPresence(false, seconds: 0)
-        case .minutes(let minutes):
-            chatPresenceUseCase.setAutoAwayPresence(true, seconds: minutes * 60)
-        case .hours(let hours):
-            chatPresenceUseCase.setAutoAwayPresence(true, seconds: hours * 60 * 60)
-        }
+    func autoAwayPresetTapped(_ preset: TimeValuePreset) {
+        chatPresenceUseCase.setAutoAwayPresence(
+            preset == .never ? false : true,
+            seconds: Int64(preset.timeInterval)
+        )
         isBottomSheetPresented.toggle()
     }
     
@@ -80,7 +74,7 @@ public final class SetStatusViewModel: ObservableObject {
     private func configureAutoAway(from presenceConfig: ChatPresenceConfigEntity) {
         isAutoAwayVisible = presenceConfig.status ==  .online
         if presenceConfig.autoAwayEnabled {
-            currentAutoAwayPreset = AutoAwayPreset(fromMinutes: Int(presenceConfig.autoAwayTimeout) / 60)
+            currentAutoAwayPreset = TimeValuePreset(fromMinutes: Int(presenceConfig.autoAwayTimeout) / 60)
             autoAwayTimeString = Strings.Localizable.Settings.Chat.Status.SetStatus.StatusSettings.AutoAway.subtitle(presenceConfig.autoAwayFormatString)
         } else {
             currentAutoAwayPreset = .never

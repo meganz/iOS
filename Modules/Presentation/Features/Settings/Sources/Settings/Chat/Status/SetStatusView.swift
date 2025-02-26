@@ -117,7 +117,7 @@ public struct SetStatusView: View {
     }
     
     private func autoAwayPresetRowView(
-        _ preset: AutoAwayPreset
+        _ preset: TimeValuePreset
     ) -> some View {
         HStack(spacing: .zero) {
             Text(preset.displayName)

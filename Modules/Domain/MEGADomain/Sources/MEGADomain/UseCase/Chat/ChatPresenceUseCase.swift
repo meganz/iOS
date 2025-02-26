@@ -9,7 +9,7 @@ public protocol ChatPresenceUseCaseProtocol: Sendable {
     /// - Parameters:
     ///   - enabled: A boolean value indicating whether the auto away feature should be enabled.
     ///   - seconds: The number of seconds after which your presence status will automatically change to "away".
-    func setAutoAwayPresence(_ enabled: Bool, seconds: Int)
+    func setAutoAwayPresence(_ enabled: Bool, seconds: Int64)
 
     /// Monitors updates to the chat presence configuration.
     ///
@@ -82,7 +82,7 @@ public struct ChatPresenceUseCase<T: ChatPresenceRepositoryProtocol>: ChatPresen
         self.repository = repository
     }
     
-    public func setAutoAwayPresence(_ enabled: Bool, seconds: Int) {
+    public func setAutoAwayPresence(_ enabled: Bool, seconds: Int64) {
         repository.setAutoAwayPresence(enabled, seconds: seconds)
     }
     
