@@ -45,4 +45,6 @@ public enum PreferenceKeyEntity: String {
     case transfersPaused
     case useMobileDataForPreviewingOriginalPhoto = "MEGAUseMobileDataForPreviewingOriginalPhoto"
     case richLinksPreviewEnabled = "richLinks"
+    case chatImageQuality = "chatImageQuality"
+    case chatVideoQuality = "ChatVideoQuality"
 }

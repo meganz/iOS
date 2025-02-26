@@ -4560,3 +4560,15 @@
 "settings.chat.notifications.chatNotifications"="Chat notifications";
 /* Title for mute chat notifications */
 "settings.chat.notifications.muteNotifications.title"="Mute notifications";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="Chat media quality";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="Image quality";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images.";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Always send original size images.";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="Video quality";
