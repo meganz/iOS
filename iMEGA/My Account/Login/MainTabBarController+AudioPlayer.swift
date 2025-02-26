@@ -2,21 +2,22 @@ import MEGADesignToken
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     func presentMiniPlayer(_ viewController: UIViewController) {
-        guard let miniPlayerView = viewController.view else { return }
-        
-        miniPlayerVC?.view.removeFromSuperview()
-        addSubviewToOverlay(
-            miniPlayerView,
-            type: .audioPlayer,
-            priority: .high,
-            height: 60
-        )
-        miniPlayerVC = viewController
-        
-        tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
-        
-        shouldUpdateProgressViewLocation()
         Task { @MainActor in
+            guard let miniPlayerView = viewController.view else { return }
+            
+            miniPlayerVC?.view.removeFromSuperview()
+            addSubviewToOverlay(
+                miniPlayerView,
+                type: .audioPlayer,
+                priority: .high,
+                height: 60
+            )
+            miniPlayerVC = viewController
+            
+            tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
+            
+            shouldUpdateProgressViewLocation()
+            
             AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: false)
         }
     }
@@ -47,11 +48,12 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func showMiniPlayer() {
-        if let navController = selectedViewController as? UINavigationController,
-           let lastController = navController.viewControllers.last,
-           lastController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
-            AudioPlayerManager.shared.showMiniPlayer(in: self)
-            Task { @MainActor in
+        Task { @MainActor in
+            if let navController = selectedViewController as? UINavigationController,
+               let lastController = navController.viewControllers.last,
+               lastController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
+                AudioPlayerManager.shared.showMiniPlayer(in: self)
+                
                 self.bottomOverlayManager?.showItem(.audioPlayer)
                 AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: false)
             }
