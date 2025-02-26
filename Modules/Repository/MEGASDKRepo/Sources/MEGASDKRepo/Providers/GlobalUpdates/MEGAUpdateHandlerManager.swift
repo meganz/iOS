@@ -39,6 +39,19 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
         handlers.forEach { $0.onRequestStart?(request.toRequestEntity()) }
     }
     
+    func onRequestUpdate(_ api: MEGASdk, request: MEGARequest) {
+        handlers.forEach { $0.onRequestUpdate?(request.toRequestEntity()) }
+    }
+    
+    func onRequestTemporaryError(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        let result: Result<RequestEntity, ErrorEntity> = switch error.type {
+        case .apiOk: .success(request.toRequestEntity())
+        default: .failure(error.toErrorEntity())
+        }
+        
+        handlers.forEach { $0.onRequestTemporaryError?(result) }
+    }
+    
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         let result: Result<RequestEntity, ErrorEntity> = switch error.type {
         case .apiOk: .success(request.toRequestEntity())
