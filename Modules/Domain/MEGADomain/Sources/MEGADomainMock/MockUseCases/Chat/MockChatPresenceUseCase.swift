@@ -26,7 +26,7 @@ public final class MockChatPresenceUseCase: ChatPresenceUseCaseProtocol, @unchec
         self.onlineStatusUpdates = onlineStatusUpdates
     }
     
-    public func setAutoAwayPresence(_ enabled: Bool, seconds: Int) {
+    public func setAutoAwayPresence(_ enabled: Bool, seconds: Int64) {
         setAutoAwayPresence_calledTimes += 1
     }
     

@@ -46,7 +46,10 @@ final class ChatSettingsViewRouter: Routing {
     }
     
     func navigateToNotifications() {
-        
+        guard let presenter else { return }
+        NotificationSettingsViewRouter(
+            navigationController: presenter
+        ).start()
     }
     
     func navigateToMediaQuality() {

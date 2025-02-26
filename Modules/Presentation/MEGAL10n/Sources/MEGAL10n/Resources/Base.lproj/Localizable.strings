@@ -4554,3 +4554,9 @@
 "settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as away";
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
 "settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="Notifications settings";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="Chat notifications";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="Mute notifications";

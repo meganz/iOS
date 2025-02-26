@@ -1,7 +1,7 @@
 import MEGASwift
 
 public protocol ChatPresenceRepositoryProtocol: RepositoryProtocol, Sendable {
-    func setAutoAwayPresence(_ enabled: Bool, seconds: Int)
+    func setAutoAwayPresence(_ enabled: Bool, seconds: Int64)
     var monitorOnPresenceConfigUpdates: AnyAsyncSequence<ChatPresenceConfigEntity> { get }
     func presenceConfig() -> ChatPresenceConfigEntity?
     func requestLastGreen(for user: HandleEntity)

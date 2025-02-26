@@ -20,7 +20,7 @@ public final class ChatPresenceRepository: ChatPresenceRepositoryProtocol {
         self.chatUpdatesProvider = chatUpdatesProvider
     }
     
-    public func setAutoAwayPresence(_ enabled: Bool, seconds: Int) {
+    public func setAutoAwayPresence(_ enabled: Bool, seconds: Int64) {
         chatSDK.setPresenceAutoaway(enabled, timeout: seconds)
     }
     
