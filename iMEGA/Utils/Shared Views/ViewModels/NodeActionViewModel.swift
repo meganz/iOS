@@ -30,7 +30,6 @@ struct NodeActionViewModel {
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private let maxDetermineSensitivityTasks: Int
     
@@ -41,13 +40,11 @@ struct NodeActionViewModel {
     init(systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          maxDetermineSensitivityTasks: Int = 500,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.maxDetermineSensitivityTasks = maxDetermineSensitivityTasks
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
-        self.featureFlagProvider = featureFlagProvider
     }
     
     /// Indicates if nodes are already hidden or not. If nodes are hidden, then show unhide action; if not, then show hide action. If no action should be shown, return nil. If nodes are from shared items, return nil.
@@ -88,7 +85,6 @@ struct NodeActionViewModel {
     func addToDestination(nodes: [NodeEntity], from displayMode: DisplayMode, isFromSharedItem: Bool) -> NodeActionAddToDestination {
         
         guard
-            featureFlagProvider.isFeatureFlagEnabled(for: .addToAlbumAndPlaylists),
             isFromSharedItem == false,
             [.photosTimeline, .cloudDrive].contains(displayMode),
             nodes.isNotEmpty else {

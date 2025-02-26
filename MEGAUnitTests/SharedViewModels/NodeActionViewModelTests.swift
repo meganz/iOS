@@ -187,15 +187,13 @@ final class NodeActionViewModelTests: XCTestCase {
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         maxDetermineSensitivityTasks: Int = 10,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
     ) -> NodeActionViewModel {
         NodeActionViewModel(
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             maxDetermineSensitivityTasks: maxDetermineSensitivityTasks,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
-            featureFlagProvider: featureFlagProvider)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
     }
     
     private func makeSensitiveNodes(count: Int = 5) -> [NodeEntity] {
