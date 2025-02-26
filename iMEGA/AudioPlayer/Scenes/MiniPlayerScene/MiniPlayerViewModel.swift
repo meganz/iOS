@@ -26,7 +26,7 @@ final class MiniPlayerViewModel: ViewModelType {
         case reloadPlayerStatus(percentage: Float, isPlaying: Bool)
         case initTracks(currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool)
         case change(currentItem: AudioPlayerItem, indexPath: IndexPath)
-        case reload(currentItem: AudioPlayerItem)
+        case reload(item: AudioPlayerItem)
         case showLoading(_ show: Bool)
         case enableUserInteraction(_ enable: Bool)
     }
@@ -327,7 +327,7 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     nonisolated func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {
         Task { @MainActor in
             guard let currentItem = item else { return }
-            invokeCommand?(.reload(currentItem: currentItem))
+            invokeCommand?(.reload(item: currentItem))
         }
     }
     
@@ -373,47 +373,27 @@ extension MiniPlayerViewModel {
     
     private func onNodesUpdate(_ nodeList: [NodeEntity]) {
         guard
-            nodeList.count > 0,
+            nodeList.isNotEmpty,
             let updatedNode = nodeList.first,
-            let allNodes = configEntity.allNodes
+            configEntity.allNodes?.contains(where: { $0.handle == updatedNode.handle }) == true
         else {
             return
         }
         
-        let shouldRefreshItem = allNodes.contains { $0.handle == updatedNode.handle }
-        guard shouldRefreshItem else { return }
-        
-        refreshItem(updatedNode)
+        refreshItem(updatedNode.handle)
     }
     
-    private func refreshItem(_ updatedEntity: NodeEntity) {
-        guard let node = updatedEntity.toMEGANode(in: sdk) else { return }
-        configEntity.node = node
+    private func refreshItem(_ nodeHandle: HandleEntity) {
+        guard let node = nodeInfoUseCase?.node(fromHandle: nodeHandle) else { return }
         
-        let dataSourceCommand = AudioPlayerItemDataSourceCommand(configEntity: configEntity)
-        dataSourceCommand.executeRefreshItemDataSource(with: node)
-        
-        refreshItemUI(with: node, updatedEntity: updatedEntity)
+        configEntity.playerHandler.currentPlayer()?.refreshTrack(with: node)
+        refreshItemUI(nodeHandle: nodeHandle)
     }
     
-    private func refreshItemUI(with updatedNode: MEGANode, updatedEntity: NodeEntity) {
-        let isDisplayingCurrentItem = configEntity.playerHandler.playerCurrentItem()?.node?.handle == updatedEntity.handle
-        if isDisplayingCurrentItem {
-            guard let currentItem = currentItem(from: updatedNode) else { return }
-            invokeCommand?(.reload(currentItem: currentItem))
-        }
-    }
-    
-    private func currentItem(from updatedNode: MEGANode) -> AudioPlayerItem? {
-        guard
-            let currentPlayingNode = configEntity.node, updatedNode.handle == currentPlayingNode.handle,
-            let newNodeName = updatedNode.name ?? currentPlayingNode.name,
-            let currentItem = configEntity.playerHandler.playerCurrentItem()
-        else {
-            return nil
-        }
-        currentItem.name = newNodeName
-        currentItem.node = updatedNode
-        return currentItem
+    private func refreshItemUI(nodeHandle: HandleEntity) {
+        guard let currentPlayer = configEntity.playerHandler.currentPlayer(),
+              let item = currentPlayer.tracks.first(where: { $0.node?.handle == nodeHandle }) else { return }
+        
+        invokeCommand?(.reload(item: item))
     }
 }

@@ -157,7 +157,6 @@
 		1648E4AC2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
 		1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
-		2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
 		2407FDA62B05C73C00F26248 /* URL+MNZCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */; };
@@ -2858,7 +2857,6 @@
 		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
-		2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemDataSourceCommand.swift; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
 		2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+MNZCategory.swift"; sourceTree = "<group>"; };
@@ -6191,14 +6189,6 @@
 				24A619DE2A52735600EBB863 /* QASettingsViewModelTests.swift */,
 			);
 			path = QASettings;
-			sourceTree = "<group>";
-		};
-		2481EF3F2AC6A7F90094AE63 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		2488EBC12A13B4F2005F910E /* Delegates */ = {
@@ -12750,7 +12740,6 @@
 				C49F861F255ABE860074A054 /* AudioPlayerScene */,
 				C453AB75256E5FCF005E4E1B /* AudioPlaylistScene */,
 				C4AF4A8B2582833200594716 /* MiniPlayerScene */,
-				2481EF3F2AC6A7F90094AE63 /* Shared */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -14299,7 +14288,6 @@
 				24EF67062B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift in Sources */,
 				C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */,
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
-				2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */,
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
 				24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */,
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,

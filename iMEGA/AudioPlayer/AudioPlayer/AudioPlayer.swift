@@ -323,6 +323,19 @@ final class AudioPlayer: NSObject {
         tracks.compactMap { $0.url }
             .contains(url)
     }
+    
+    func refreshTrack(with node: MEGANode) {
+        tracks = tracks.map { track in
+            guard track.node?.handle == node.handle else { return track }
+            let updatedTrack = track
+            if let newName = node.name,
+               !updatedTrack.nameUpdatedByMetadata {
+                updatedTrack.name = newName
+            }
+            updatedTrack.node = node
+            return updatedTrack
+        }
+    }
 }
 
 // MARK: - Audio Player Time Functions
