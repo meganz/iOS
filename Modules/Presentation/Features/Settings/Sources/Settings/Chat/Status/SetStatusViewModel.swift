@@ -72,7 +72,7 @@ public final class SetStatusViewModel: ObservableObject {
     }
     
     private func configureAutoAway(from presenceConfig: ChatPresenceConfigEntity) {
-        isAutoAwayVisible = presenceConfig.status ==  .online
+        isAutoAwayVisible = presenceConfig.status == .online
         if presenceConfig.autoAwayEnabled {
             currentAutoAwayPreset = TimeValuePreset(fromMinutes: Int(presenceConfig.autoAwayTimeout) / 60)
             autoAwayTimeString = Strings.Localizable.Settings.Chat.Status.SetStatus.StatusSettings.AutoAway.subtitle(presenceConfig.autoAwayFormatString)

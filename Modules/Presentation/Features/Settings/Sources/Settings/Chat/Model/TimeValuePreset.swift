@@ -1,15 +1,14 @@
 import Foundation
 import MEGAL10n
 
-@MainActor
-public enum TimeValuePreset: Identifiable, Equatable {
+public enum TimeValuePreset: Identifiable, Equatable, Sendable {
     case untilTomorrowMorning
     case none
     case never
     case minutes(Int64)
     case hours(Int64)
     
-    public nonisolated var id: Int64 {
+    public var id: Int64 {
         switch self {
         case .untilTomorrowMorning: -3
         case .none: -2

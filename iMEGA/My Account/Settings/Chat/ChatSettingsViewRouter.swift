@@ -53,6 +53,7 @@ final class ChatSettingsViewRouter: Routing {
     }
     
     func navigateToMediaQuality() {
-        
+        guard let presenter else { return }
+        ChatMediaQualityViewRouter(navigationController: presenter).start()
     }
 }
