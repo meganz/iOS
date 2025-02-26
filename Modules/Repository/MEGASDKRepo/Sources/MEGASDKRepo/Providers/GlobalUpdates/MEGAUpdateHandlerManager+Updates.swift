@@ -34,6 +34,28 @@ extension MEGAUpdateHandlerManager {
         .eraseToAnyAsyncSequence()
     }
     
+    var requestUpdates: AnyAsyncSequence<RequestEntity> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onRequestUpdate: { continuation.yield($0) })
+            
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
+    var requestTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onRequestTemporaryError: { continuation.yield($0) })
+            
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
     var requestFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onRequestFinish: { continuation.yield($0) })
