@@ -52,6 +52,14 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
         nil
     }
     
+    func nodeForFileLink(_ fileLink: FileLinkEntity) async -> NodeEntity? {
+        nil
+    }
+    
+    func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity? {
+        nil
+    }
+    
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
         nil
     }

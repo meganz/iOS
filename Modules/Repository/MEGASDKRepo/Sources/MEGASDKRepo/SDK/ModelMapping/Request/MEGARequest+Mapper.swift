@@ -38,4 +38,12 @@ extension MEGARequest {
     public func toNodeEntity(in sdk: MEGASdk) -> NodeEntity? {
         toMEGANode(in: sdk)?.toNodeEntity()
     }
+    
+    public func toFolderLinkInfoEntity() -> FolderLinkInfoEntity? {
+        FolderLinkInfoEntity(
+            folderInfo: megaFolderInfo?.toFolderInfoEntity(),
+            nodeHandle: nodeHandle,
+            parentHandle: parentHandle,
+            name: text)
+    }
 }

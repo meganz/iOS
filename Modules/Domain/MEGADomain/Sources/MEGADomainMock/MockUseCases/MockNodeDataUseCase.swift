@@ -3,10 +3,10 @@ import MEGADomain
 import MEGASwift
 
 public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable {
-    
     private let nodeAccessLevelVariable: NodeAccessTypeEntity
     private let filesAndFolders: (Int, Int)
     private let folderInfo: FolderInfoEntity?
+    private let folderLinkInfo: FolderLinkInfoEntity?
     private let size: UInt64
     public var versions: Bool
     public var downloadedToReturn: Bool
@@ -27,6 +27,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
                 labelString: String = "",
                 filesAndFolders: (Int, Int) = (0, 0),
                 folderInfo: FolderInfoEntity? = nil,
+                folderLinkInfo: FolderLinkInfoEntity? = nil,
                 size: UInt64 = UInt64(0),
                 versions: Bool = false,
                 downloaded: Bool = false,
@@ -44,6 +45,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
         labelStringToReturn = Atomic(wrappedValue: labelString)
         self.filesAndFolders = filesAndFolders
         self.folderInfo = folderInfo
+        self.folderLinkInfo = folderLinkInfo
         self.size = size
         self.versions = versions
         self.downloadedToReturn = downloaded
@@ -92,6 +94,10 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
         folderInfo
     }
     
+    public func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity? {
+        folderLinkInfo
+    }
+    
     public func hasVersions(nodeHandle: HandleEntity) -> Bool {
         versions
     }
@@ -112,6 +118,10 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
         nodes.first {
             $0.handle == handle
         }
+    }
+    
+    public func nodeForFileLink(_ fileLink: FileLinkEntity) async -> NodeEntity? {
+        nodeEntity
     }
     
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {

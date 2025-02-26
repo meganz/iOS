@@ -20,17 +20,23 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     private let isNodeInRubbishBin: Bool
     private let nodeAccessLevel: NodeAccessTypeEntity
     private let nodes: [HandleEntity: NodeEntity]
-
+    private let folderLinkInfo: FolderLinkInfoEntity?
+    private let nodeForFileLink: NodeEntity?
+    
     public init(
         isDownloaded: Bool = false,
         isNodeInRubbishBin: Bool = false,
         nodes: [HandleEntity: NodeEntity] = [:],
-        nodeAccessLevel: NodeAccessTypeEntity = .unknown
+        nodeAccessLevel: NodeAccessTypeEntity = .unknown,
+        folderLinkInfo: FolderLinkInfoEntity? = nil,
+        nodeForFileLink: NodeEntity? = nil
     ) {
         self.isDownloaded = isDownloaded
         self.isNodeInRubbishBin = isNodeInRubbishBin
         self.nodes = nodes
         self.nodeAccessLevel = nodeAccessLevel
+        self.folderLinkInfo = folderLinkInfo
+        self.nodeForFileLink = nodeForFileLink
     }
     
     public func rootNode() -> NodeEntity? {
@@ -61,6 +67,10 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         nil
     }
     
+    public func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity? {
+        folderLinkInfo
+    }
+    
     public func hasVersions(nodeHandle: HandleEntity) -> Bool {
         false
     }
@@ -80,6 +90,10 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
         nodes[handle]
+    }
+    
+    public func nodeForFileLink(_ fileLink: FileLinkEntity) async -> NodeEntity? {
+        nodeForFileLink
     }
     
     public func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity? {
