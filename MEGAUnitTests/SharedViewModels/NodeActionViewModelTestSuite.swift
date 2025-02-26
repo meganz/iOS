@@ -9,121 +9,91 @@ struct NodeActionViewModelTestSuite {
     
     @Suite("Calls addToDestination")
     struct AddToDestination {
+        let sut = makeSUT()
         
-        @Suite("When Feature Flag is off")
-        struct FeatureFlagOffTests {
+        @Test("Always return .none destination if isFromSharedItem equals true, regardless of DisplayMode", arguments: DisplayMode.allCases)
+        func addToDestinationWhenSharedItemIsTrue(displayMode: DisplayMode) {
+            #expect(sut.addToDestination(nodes: .png, from: displayMode, isFromSharedItem: true) == .none)
+        }
+        
+        @Suite("When Display Mode is CloudDrive")
+        struct DisplayModeIsCloudDrive {
+            private let displayMode: DisplayMode = .cloudDrive
+            private let sut = makeSUT()
             
-            private let sut = AddToDestination.makeSUT(featureFlagAddToEnabled: false)
-            private static func arguments() -> [(DisplayMode, Bool)] {
-                [true, false]
-                    .flatMap { isFromSharedItem in DisplayMode.allCases.map({ ($0, isFromSharedItem) }) }
+            @Test("When all nodes are visual media and at least one node is an image, destination should be .albums", arguments: [
+                .png,
+                .pngAndJpg,
+                .png + .mp4
+            ])
+            func oneOrMoreImage(nodes: [NodeEntity]) {
+                #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .albums)
             }
-                        
-            @Test("Always return .none destination for all displayModes and isFromSharedItem flag", arguments: arguments())
-            func addToDestination(displayMode: DisplayMode, isFromSharedItem: Bool) {
-                #expect(sut.addToDestination(nodes: [], from: displayMode, isFromSharedItem: isFromSharedItem) == .none)
+            
+            @Test("When all nodes are video files, destination should be .albumsAndVideos", arguments: [
+                [NodeEntity].mp4,
+                .mp4AndMov
+            ])
+            func allVideo(nodes: [NodeEntity]) {
+                #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .albumsAndVideos)
+            }
+            
+            @Test("When there is at least one non-visual-media node, destination should be .none", arguments: [
+                [NodeEntity].nonAudioVisual,
+                .mp4 + .nonAudioVisual
+            ])
+            func containsNonVisualMedia(nodes: [NodeEntity]) {
+                #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .none)
             }
         }
         
-        @Suite("When Feature Flag is on")
-        struct FeatureFlagOnTests {
-            let sut = AddToDestination.makeSUT(featureFlagAddToEnabled: true)
-
-            @Test("Always return .none destination if isFromSharedItem equals true, regardless of DisplayMode", arguments: DisplayMode.allCases)
-            func addToDestinationWhenSharedItemIsTrue(displayMode: DisplayMode) {
-                #expect(sut.addToDestination(nodes: .png, from: displayMode, isFromSharedItem: true) == .none)
+        @Suite("When Display Mode is PhotosTimeline")
+        struct DisplayModeIsPhotosTimeline {
+            
+            private let sut = makeSUT()
+            private let displayMode: DisplayMode = .photosTimeline
+            
+            @Test("When all nodes are visual media, destination should always be .albums", arguments: [
+                [NodeEntity].pngAndJpg,
+                .png + .mp4,
+                .mp4AndMov
+            ])
+            func allAreVisualMedia(nodes: [NodeEntity]) {
+                #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .albums)
             }
             
-            @Suite("When Display Mode is CloudDrive")
-            struct DisplayModeIsCloudDrive {
-                private let displayMode: DisplayMode = .cloudDrive
-                private let sut = AddToDestination.makeSUT(featureFlagAddToEnabled: true)
-
-                @Test("When all nodes are visual media and at least one node is an image, destination should be .albums", arguments: [
-                    .png,
-                    .pngAndJpg,
-                    .png + .mp4
-                ])
-                func oneOrMoreImage(nodes: [NodeEntity]) {
-                    #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .albums)
-                }
-                
-                @Test("When all nodes are video files, destination should be .albumsAndVideos", arguments: [
-                    [NodeEntity].mp4,
-                    .mp4AndMov
-                ])
-                func allVideo(nodes: [NodeEntity]) {
-                    #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .albumsAndVideos)
-                }
-                
-                @Test("When there is at least one non-visual-media node, destination should be .none", arguments: [
-                    [NodeEntity].nonAudioVisual,
-                    .mp4 + .nonAudioVisual
-                ])
-                func containsNonVisualMedia(nodes: [NodeEntity]) {
-                    #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .none)
-                }
-            }
-            
-            @Suite("When Display Mode is PhotosTimeline")
-            struct DisplayModeIsPhotosTimeline {
-                
-                private let sut = AddToDestination.makeSUT(featureFlagAddToEnabled: true)
-                private let displayMode: DisplayMode = .photosTimeline
-                
-                @Test("When all nodes are visual media, destination should always be .albums", arguments: [
-                    [NodeEntity].pngAndJpg,
-                    .png + .mp4,
-                    .mp4AndMov
-                ])
-                func allAreVisualMedia(nodes: [NodeEntity]) {
-                    #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .albums)
-                }
-                
-                @Test("When there is at least one non-visual-media node, destination should be .none", arguments: [
-                    [NodeEntity].nonAudioVisual,
-                    [NodeEntity].nonAudioVisual + .mp4
-                ])
-                func containsNonVisualMedia(nodes: [NodeEntity]) {
-                    #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .none)
-                }
-            }
-            
-            @Suite("When Display Mode is unsupported")
-            struct DisplayModeIsUnsupported {
-                private let sut = AddToDestination.makeSUT(featureFlagAddToEnabled: true)
-                private static let unsupportedDisplayModes: [DisplayMode] = DisplayMode
-                    .allCases
-                    .filter { [.cloudDrive, .photosTimeline].notContains($0) }
-                
-                @Test("Always return .none destination", arguments: unsupportedDisplayModes)
-                func unsupportedDisplayMode(displayMode: DisplayMode) {
-                    #expect(sut.addToDestination(nodes: .mp4, from: displayMode, isFromSharedItem: false) == .none)
-                }
+            @Test("When there is at least one non-visual-media node, destination should be .none", arguments: [
+                [NodeEntity].nonAudioVisual,
+                [NodeEntity].nonAudioVisual + .mp4
+            ])
+            func containsNonVisualMedia(nodes: [NodeEntity]) {
+                #expect(sut.addToDestination(nodes: nodes, from: displayMode, isFromSharedItem: false) == .none)
             }
         }
-                
-        private static func makeSUT(
-            accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
-            featureFlagAddToEnabled: Bool = false
-        ) -> NodeActionViewModel {
-            NodeActionViewModelTestSuite.makeSUT(
-                featureFlagList: [.addToAlbumAndPlaylists: featureFlagAddToEnabled]
-            )
+        
+        @Suite("When Display Mode is unsupported")
+        struct DisplayModeIsUnsupported {
+            private let sut = makeSUT()
+            private static let unsupportedDisplayModes: [DisplayMode] = DisplayMode
+                .allCases
+                .filter { [.cloudDrive, .photosTimeline].notContains($0) }
+            
+            @Test("Always return .none destination", arguments: unsupportedDisplayModes)
+            func unsupportedDisplayMode(displayMode: DisplayMode) {
+                #expect(sut.addToDestination(nodes: .mp4, from: displayMode, isFromSharedItem: false) == .none)
+            }
         }
     }
     
     private static func makeSUT(
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
-        maxDetermineSensitivityTasks: Int = 10,
-        featureFlagList: [FeatureFlagKey: Bool] = [:]
+        maxDetermineSensitivityTasks: Int = 10
     ) -> NodeActionViewModel {
         NodeActionViewModel(
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            maxDetermineSensitivityTasks: maxDetermineSensitivityTasks,
-            featureFlagProvider: MockFeatureFlagProvider(list: featureFlagList))
+            maxDetermineSensitivityTasks: maxDetermineSensitivityTasks)
     }
 }
 

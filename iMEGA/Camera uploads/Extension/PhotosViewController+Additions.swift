@@ -14,10 +14,6 @@ extension PhotosViewController {
     var permissionRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
-    
-    var isAddToFeatureFlagEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .addToAlbumAndPlaylists)
-    }
         
     func handleDownloadAction(for nodes: [MEGANode]) {
 

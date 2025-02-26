@@ -30,7 +30,7 @@ extension PhotosViewController {
             flexibleItem,
             createBarButtonItem(.link, #selector(shareLinkAction)),
             flexibleItem,
-            isAddToFeatureFlagEnabled ? createBarButtonItem(.addTo, #selector(addToAction)) : createBarButtonItem(.move, #selector(moveAction)),
+            createBarButtonItem(.addTo, #selector(addToAction)),
             flexibleItem,
             createBarButtonItem(.rubbishBin, #selector(deleteAction)),
             flexibleItem,
