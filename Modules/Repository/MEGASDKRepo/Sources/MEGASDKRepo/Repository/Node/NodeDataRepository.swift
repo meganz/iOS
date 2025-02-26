@@ -66,6 +66,19 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
         })
     }
     
+    public func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity? {
+        try await withAsyncThrowingValue { completion in
+            sdk.getPublicLinkInformation(withFolderLink: folderLink, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.toFolderLinkInfoEntity()))
+                case .failure:
+                    completion(.failure(FolderInfoErrorEntity.notFound))
+                }
+            })
+        }
+    }
+    
     public func sizeForNode(handle: HandleEntity) -> UInt64? {
         var megaNode: MEGANode
         if let node = sdk.node(forHandle: handle) {

@@ -12,6 +12,7 @@ public protocol NodeUseCaseProtocol: Sendable {
     func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
     func sizeFor(node: NodeEntity) -> UInt64?
     func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity?
+    func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity?
     func hasVersions(nodeHandle: HandleEntity) -> Bool
     func isDownloaded(nodeHandle: HandleEntity) -> Bool
     func isARubbishBinRootNode(nodeHandle: HandleEntity) -> Bool
@@ -19,6 +20,7 @@ public protocol NodeUseCaseProtocol: Sendable {
     /// This will be deprecated soon, please use async version instead to avoid app hang due to sdkMutex.
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity?
+    func nodeForFileLink(_ fileLink: FileLinkEntity) async throws -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]?
     func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity?
@@ -74,6 +76,10 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
         try await nodeDataRepository.folderInfo(node: node)
     }
     
+    public func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity? {
+        try await nodeDataRepository.folderLinkInfo(folderLink)
+    }
+    
     public func hasVersions(nodeHandle: HandleEntity) -> Bool {
         nodeValidationRepository.hasVersions(nodeHandle: nodeHandle)
     }
@@ -96,6 +102,10 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
 
     public func nodeForHandle(_ handle: HandleEntity) async -> NodeEntity? {
         await nodeDataRepository.nodeForHandle(handle)
+    }
+    
+    public func nodeForFileLink(_ fileLink: FileLinkEntity) async throws -> NodeEntity? {
+        try await nodeRepository.nodeFor(fileLink: fileLink)
     }
     
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {

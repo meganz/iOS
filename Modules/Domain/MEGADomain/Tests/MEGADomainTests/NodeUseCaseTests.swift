@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import MEGATest
 import XCTest
 
 final class NodeUseCaseTests: XCTestCase {
@@ -185,6 +186,44 @@ final class NodeUseCaseTests: XCTestCase {
         XCTAssertEqual(result, nodeUpdates)
     }
     
+    func testFolderLinkInfo_whenRequestSucceed_shouldReturnFolderLinkInfoEntity() async throws {
+        let expectedResult = FolderLinkInfoEntity(
+            folderInfo: nil,
+            nodeHandle: HandleEntity(1),
+            parentHandle: HandleEntity(2),
+            name: "Sample")
+        let sut = makeSUT(folderLinkInfoRequestResult: .success(expectedResult))
+        
+        let folderLinkInfo = try await sut.folderLinkInfo(sampleFolderLink)
+        XCTAssertEqual(folderLinkInfo, expectedResult)
+    }
+    
+    func testFolderLinkInfo_whenRequestFailed_shouldThrowError() async {
+        let sut = makeSUT(folderLinkInfoRequestResult: .failure(.notFound))
+        
+        await XCTAsyncAssertThrowsError(try await sut.folderLinkInfo(sampleFolderLink)) { errorThrown in
+            XCTAssertEqual(errorThrown as? FolderInfoErrorEntity, .notFound)
+        }
+    }
+    
+    func testNodeForFileLink_whenHasNode_shouldReturnCorrectNode() async throws {
+        let expectedNode = NodeEntity(handle: HandleEntity(1))
+        let sut = makeSUT(fileLinkNode: expectedNode)
+        
+        let nodeForLink = try await sut.nodeForFileLink(sampleFileLink)
+        
+        XCTAssertEqual(nodeForLink, expectedNode)
+    }
+    
+    func testNodeForFileLink_whenHasNoNode_shouldThrowError() async throws {
+        let sut = makeSUT(fileLinkNode: nil)
+        
+        await XCTAsyncAssertThrowsError(try await sut.nodeForFileLink(sampleFileLink)) { errorThrown in
+            XCTAssertEqual(errorThrown as? NodeErrorEntity, .nodeNotFound)
+        }
+    }
+
+    // MARK: - Helpers
     private func makeSUT(
         accessLevel: NodeAccessTypeEntity = .unknown,
         label: String = "",
@@ -200,13 +239,16 @@ final class NodeUseCaseTests: XCTestCase {
         children: [NodeEntity] = [],
         isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
         isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:],
-        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        folderLinkInfoRequestResult: Result<FolderLinkInfoEntity?, FolderInfoErrorEntity> = .failure(.notFound),
+        fileLinkNode: NodeEntity? = nil
     ) -> NodeUseCase<MockNodeDataRepository, MockNodeValidationRepository, MockNodeRepository> {
         let mockNodeDataRepository = MockNodeDataRepository(
             nodeAccessLevel: accessLevel,
             labelString: label,
             filesAndFoldersCount: filesAndFoldersCount,
             folderInfo: folderInfo,
+            folderLinkInfoRequestResult: folderLinkInfoRequestResult,
             size: size,
             node: node,
             parentNode: parentNode
@@ -219,6 +261,7 @@ final class NodeUseCaseTests: XCTestCase {
         let mockNodeRepository = MockNodeRepository(
             node: node, 
             rubbishBinNode: nodeInRubbishBin,
+            fileLinkNode: fileLinkNode,
             childrenNodes: children,
             parentNodes: parents,
             isInheritingSensitivityResult: isInheritingSensitivityResult,
@@ -230,4 +273,7 @@ final class NodeUseCaseTests: XCTestCase {
             nodeValidationRepository: mockNodeValidationRepository,
             nodeRepository: mockNodeRepository)
     }
+    
+    private let sampleFolderLink = "https://mega.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A"
+    private let sampleFileLink = FileLinkEntity(linkURL: URL(string: "https://mega.nz/file/1dICRLJS#snJiad_4WfCKEK7bgPri3A")!) 
 }

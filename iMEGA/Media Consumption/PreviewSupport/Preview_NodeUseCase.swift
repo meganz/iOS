@@ -32,6 +32,10 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
         nil
     }
     
+    func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity? {
+        nil
+    }
+    
     func hasVersions(nodeHandle: HandleEntity) -> Bool {
         false
     }
@@ -53,6 +57,10 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
     }
     
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        nil
+    }
+    
+    func nodeForFileLink(_ fileLink: FileLinkEntity) async -> NodeEntity? {
         nil
     }
     

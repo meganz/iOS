@@ -8,6 +8,7 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
     private let labelString: String
     private let filesAndFoldersCount: (Int, Int)
     private let folderInfo: FolderInfoEntity?
+    private let folderLinkInfoRequestResult: Result<FolderLinkInfoEntity?, FolderInfoErrorEntity>
     private let size: UInt64?
     private let modificationDate: Date
     private let node: NodeEntity?
@@ -18,6 +19,7 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
         labelString: String = "",
         filesAndFoldersCount: (Int, Int) = (0, 0),
         folderInfo: FolderInfoEntity? = nil,
+        folderLinkInfoRequestResult: Result<FolderLinkInfoEntity?, FolderInfoErrorEntity> = .failure(.notFound),
         size: UInt64? = nil,
         modificationDate: Date = Date(),
         node: NodeEntity? = nil,
@@ -27,6 +29,7 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
         self.labelString = labelString
         self.filesAndFoldersCount = filesAndFoldersCount
         self.folderInfo = folderInfo
+        self.folderLinkInfoRequestResult = folderLinkInfoRequestResult
         self.size = size
         self.modificationDate = modificationDate
         self.node = node
@@ -51,6 +54,10 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
     
     public func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity? {
         folderInfo
+    }
+    
+    public func folderLinkInfo(_ folderLink: String) async throws -> FolderLinkInfoEntity? {
+        try folderLinkInfoRequestResult.get()
     }
 
     public func sizeForNode(handle: HandleEntity) -> UInt64? {
