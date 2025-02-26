@@ -80,8 +80,9 @@ final class MiniPlayerViewController: UIViewController {
             return
         }
         
-        if item != currentItem, lastMovementIndexPath == nil || lastMovementIndexPath == indexPath {
+        if item != currentItem, lastMovementIndexPath == nil || lastMovementIndexPath != indexPath {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            lastMovementIndexPath = indexPath
         }
     }
     
