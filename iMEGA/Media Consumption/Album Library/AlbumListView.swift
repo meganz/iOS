@@ -39,6 +39,7 @@ struct AlbumListView: View {
             shareLinksView(forAlbums: viewModel.selectedUserAlbums)
         })
         .padding(.top, TokenSpacing._3)
+        .background(TokenColors.Background.page.swiftUI)
         .onDisappear { viewModel.onViewDisappear() }
         .environment(\.editMode, $editMode)
         .onReceive(viewModel.selection.$editMode) { editMode = $0 }
