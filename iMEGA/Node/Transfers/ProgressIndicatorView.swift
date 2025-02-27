@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAFoundation
 import MEGARepo
 import MEGASDKRepo
+import MEGASwift
 import UIKit
 
 final class ProgressIndicatorView: UIView {
@@ -108,9 +109,12 @@ final class ProgressIndicatorView: UIView {
     // MARK: - Private
     
     private func updateProgress() {
-        let transferedBytes = MEGASdk.shared.totalsDownloadedBytes.floatValue + MEGASdk.shared.totalsUploadedBytes.floatValue
-        let totalBytes = MEGASdk.shared.totalsDownloadBytes.floatValue + MEGASdk.shared.totalsUploadBytes.floatValue
-        progress = CGFloat(transferedBytes / totalBytes)
+        guard transfers.isNotEmpty else { return }
+        let totals = transfers.reduce(into: (transferred: 0, total: 0)) { result, transfer in
+            result.transferred += transfer.transferredBytes
+            result.total += transfer.totalBytes
+        }
+        progress = CGFloat(totals.transferred) / CGFloat(totals.total)
     }
     
     private func filterUserManualDownloads(_ transfers: [MEGATransfer]) -> [MEGATransfer] {
@@ -244,11 +248,10 @@ extension ProgressIndicatorView {
             isHidden = true
             return
         }
-        
         transfers.removeAll()
         transfers = await transferInventoryUseCase.transfers(filteringUserTransfers: true) +
         sharedFolderTransferInventoryUseCase.transfers(filteringUserTransfers: true)
-        
+
         try Task.checkCancellation()
         
         if let failedTransfer = transferInventoryUseCase.completedTransfers(filteringUserTransfers: true)
@@ -431,6 +434,9 @@ extension ProgressIndicatorView: MEGATransferDelegate {
             return
         }
         
+        guard let index = transfers.firstIndex(where: { transfer.nodeHandle == $0.nodeHandle && transfer.parentHandle == $0.parentHandle }) else { return }
+        transfers[index] = transfer.toTransferEntity()
+        
         updateProgress()
     }
     
@@ -450,8 +456,6 @@ extension ProgressIndicatorView: MEGATransferDelegate {
         if !transfer.isStreamingTransfer {
             api.addCompletedTransfer(transfer)
         }
-        
-        api.resetTransferWhenComplete()
         
         self.throttler.start { [weak self] in
             Task { @MainActor in

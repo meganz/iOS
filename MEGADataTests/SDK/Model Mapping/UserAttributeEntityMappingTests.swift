@@ -5,7 +5,7 @@ import XCTest
 final class UserAttributeEntityMappingTests: XCTestCase {
     
     func testUserAttributeEntity_OnUpdateAttribute_shouldReturnCorrectMapping() {
-        let sut: [UserAttributeEntity] = [.avatar, .firstName, .lastName, .authRing, .lastInteraction, .eD25519PublicKey, .cU25519PublicKey, .keyring, .sigRsaPublicKey, .sigCU255PublicKey, .language, .pwdReminder, .disableVersions, .contactLinkVerification, .richPreviews, .rubbishTime, .lastPSA, .storageState, .geolocation, .cameraUploadsFolder, .myChatFilesFolder, .pushSettings, .alias, .deviceNames, .backupsFolder, .cookieSettings, .jsonSyncConfigData, .drivesName, .noCallKit]
+        let sut: [UserAttributeEntity] = [.avatar, .firstName, .lastName, .authRing, .lastInteraction, .eD25519PublicKey, .cU25519PublicKey, .keyring, .sigRsaPublicKey, .sigCU255PublicKey, .language, .pwdReminder, .disableVersions, .contactLinkVerification, .richPreviews, .rubbishTime, .lastPSA, .storageState, .geolocation, .cameraUploadsFolder, .myChatFilesFolder, .pushSettings, .alias, .deviceNames, .backupsFolder, .cookieSettings, .jsonSyncConfigData, .noCallKit]
         
         for type in sut {
             switch type {
@@ -36,7 +36,6 @@ final class UserAttributeEntityMappingTests: XCTestCase {
             case .backupsFolder: XCTAssertEqual(type.toMEGAUserAttribute(), .backupsFolder)
             case .cookieSettings: XCTAssertEqual(type.toMEGAUserAttribute(), .cookieSettings)
             case .jsonSyncConfigData: XCTAssertEqual(type.toMEGAUserAttribute(), .jsonSyncConfigData)
-            case .drivesName: XCTAssertEqual(type.toMEGAUserAttribute(), .drivesName)
             case .noCallKit: XCTAssertEqual(type.toMEGAUserAttribute(), .noCallKit)
             case .appsPreferences: XCTAssertEqual(type.toMEGAUserAttribute(), .appsPreferences)
             case .contentConsumptionPreferences: XCTAssertEqual(type.toMEGAUserAttribute(), .contentConsumptionPreferences)

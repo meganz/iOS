@@ -122,7 +122,6 @@ public enum RequestTypeEntity: Sendable {
     case cloudStorageUsed
     case sendSMSVerificationCode
     case checkSMSVerificationCode
-    case getRegisteredContacts
     case getCountryCallingCodes
     case verifyCredentials
     case getMiscFlags

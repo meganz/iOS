@@ -8,10 +8,6 @@ public enum SortOrderEntity: CaseIterable, Sendable {
     case creationDesc
     case modificationAsc
     case modificationDesc
-    case photoAsc
-    case photoDesc
-    case videoAsc
-    case videoDesc
     case linkCreationAsc
     case linkCreationDesc
     case labelAsc

@@ -26,7 +26,6 @@ public enum UserAttributeEntity: Sendable {
     case backupsFolder
     case cookieSettings
     case jsonSyncConfigData
-    case drivesName
     case noCallKit
     case appsPreferences
     case contentConsumptionPreferences

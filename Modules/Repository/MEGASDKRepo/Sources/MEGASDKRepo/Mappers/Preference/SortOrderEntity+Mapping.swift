@@ -22,14 +22,6 @@ extension SortOrderEntity {
             return .modificationAsc
         case .modificationDesc:
             return .modificationDesc
-        case .photoAsc:
-            return .photoAsc
-        case .photoDesc:
-            return .photoDesc
-        case .videoAsc:
-            return .videoAsc
-        case .videoDesc:
-            return .videoDesc
         case .linkCreationAsc:
             return .linkCreationAsc
         case .linkCreationDesc:
@@ -74,14 +66,6 @@ extension MEGASortOrderType {
             return .modificationAsc
         case .modificationDesc:
             return .modificationDesc
-        case .photoAsc:
-            return .photoAsc
-        case .photoDesc:
-            return .photoDesc
-        case .videoAsc:
-            return .videoAsc
-        case .videoDesc:
-            return .videoDesc
         case .linkCreationAsc:
             return .linkCreationAsc
         case .linkCreationDesc:
