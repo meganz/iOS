@@ -1,13 +1,12 @@
 import Foundation
 
-@MainActor
-public enum AutoPurgePeriod: Identifiable, Equatable {
+public enum AutoPurgePeriod: Identifiable, Equatable, Sendable {
     case none
     case never
     case days(Int)
     case years(Int)
     
-    public nonisolated var id: Int {
+    public var id: Int {
         switch self {
         case .none: -2
         case .never: -1
@@ -15,7 +14,7 @@ public enum AutoPurgePeriod: Identifiable, Equatable {
         }
     }
     
-    public nonisolated var durationInDays: Int? {
+    public var durationInDays: Int? {
         switch self {
         case .none:
             nil
