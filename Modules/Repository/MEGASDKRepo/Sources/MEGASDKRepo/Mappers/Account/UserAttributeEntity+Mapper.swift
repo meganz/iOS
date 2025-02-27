@@ -33,7 +33,6 @@ extension UserAttributeEntity {
         case .backupsFolder: self = .backupsFolder
         case .cookieSettings: self = .cookieSettings
         case .jsonSyncConfigData: self = .jsonSyncConfigData
-        case .drivesName: self = .drivesName
         case .noCallKit: self = .noCallKit
         case .appsPreferences: self = .appsPreferences
         case .contentConsumptionPreferences: self = .contentConsumptionPreferences
@@ -73,7 +72,6 @@ extension UserAttributeEntity {
         case .backupsFolder: .backupsFolder
         case .cookieSettings: .cookieSettings
         case .jsonSyncConfigData: .jsonSyncConfigData
-        case .drivesName: .drivesName
         case .noCallKit: .noCallKit
         case .appsPreferences: .appsPreferences
         case .contentConsumptionPreferences: .contentConsumptionPreferences
@@ -112,7 +110,6 @@ extension MEGAUserAttribute {
         case .backupsFolder: .backupsFolder
         case .cookieSettings: .cookieSettings
         case .jsonSyncConfigData: .jsonSyncConfigData
-        case .drivesName: .drivesName
         case .noCallKit: .noCallKit
         case .appsPreferences: .appsPreferences
         case .contentConsumptionPreferences: .contentConsumptionPreferences

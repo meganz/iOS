@@ -210,8 +210,6 @@ extension MEGARequestType {
             return .sendSMSVerificationCode
         case .MEGARequestTypeCheckSMSVerificationCode:
             return .checkSMSVerificationCode
-        case .MEGARequestTypeGetRegisteredContacts:
-            return .getRegisteredContacts
         case .MEGARequestTypeGetCountryCallingCodes:
             return .getCountryCallingCodes
         case .MEGARequestTypeVerifyCredentials:

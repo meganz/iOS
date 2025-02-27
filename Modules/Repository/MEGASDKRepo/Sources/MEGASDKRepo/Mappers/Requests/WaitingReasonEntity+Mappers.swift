@@ -9,7 +9,6 @@ extension Retry {
         case .serversBusy: .serverBusy
         case .apiLock: .apiLock
         case .rateLimit: .rateLimit
-        case .localLock: .localLock
         case .unknown: .unknown
         @unknown default: .unknown
         }
@@ -24,7 +23,6 @@ extension WaitingReasonEntity {
         case .serverBusy: .serversBusy
         case .apiLock: .apiLock
         case .rateLimit: .rateLimit
-        case .localLock: .localLock
         case .unknown: .unknown
         }
     }

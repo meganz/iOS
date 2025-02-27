@@ -77,7 +77,7 @@
         }
     }
 
-    return [folderParentPath stringByAppendingPathComponent:[MEGASdk.shared escapeFsIncompatible:node.name]];
+    return [folderParentPath stringByAppendingPathComponent:[MEGASdk.shared escapeFsIncompatible:node.name destinationPath:nil]];
 }
 
 + (NSString *)pathForHandle:(NSString *)base64Handle inSharedSandboxCacheDirectory:(NSString *)directory {

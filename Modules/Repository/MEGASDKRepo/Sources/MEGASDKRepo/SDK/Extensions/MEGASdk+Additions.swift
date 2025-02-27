@@ -75,15 +75,6 @@ public extension MEGASdk {
         }
     }
     
-    func resetTransferWhenComplete() {
-        sdkCompletedTransfersProcessingQueue.async { [weak self] in
-            guard let self, transfers.size == 0 else { return }
-            
-            resetTotalUploads()
-            resetTotalDownloads()
-        }
-    }
-    
     private var privateCompletedTransfers: NSMutableArray {
         let key = ObjectIdentifier(self)
         if let completedTransfers = MEGASdk.completedTransfers.wrappedValue[key] {

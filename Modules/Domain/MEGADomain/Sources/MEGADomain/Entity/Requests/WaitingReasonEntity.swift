@@ -4,6 +4,5 @@ public enum WaitingReasonEntity: Sendable, CaseIterable {
     case serverBusy
     case apiLock
     case rateLimit
-    case localLock
     case unknown
 }
