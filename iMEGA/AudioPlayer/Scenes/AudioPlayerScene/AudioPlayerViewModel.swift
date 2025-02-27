@@ -596,7 +596,13 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
             case .resumeSession(let playbackTime):
                 configEntity.playerHandler.playerResumePlayback(from: playbackTime)
             case .startFromBeginning:
-                configEntity.playerHandler.playerResumePlayback(from: 0)
+                guard let player = configEntity.playerHandler.currentPlayer() else { return }
+                
+                if player.currentIndex == 0 && player.isPaused {
+                    configEntity.playerHandler.playerProgressCompleted(percentage: 0)
+                } else {
+                    configEntity.playerHandler.playerResumePlayback(from: 0)
+                }
             }
         }
     }
