@@ -144,7 +144,7 @@ public struct SearchResultsView: View {
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
         .onChange(of: viewModel.selectedRowIds) { selectedIds in
-            if !selectedIds.isEmpty, !viewModel.editing {
+            if selectedIds.count > 1, !viewModel.editing {
                 viewModel.handleEditingChanged(true)
             }
         }
