@@ -103,6 +103,7 @@ struct SearchResultRowView: View {
             auxTitleLine
             subtitleLine
             noteView
+            tagsView
         }
     }
     
@@ -157,6 +158,23 @@ struct SearchResultRowView: View {
     }
 
     @ViewBuilder
+    private var tagsView: some View {
+        if let tagListViewModel = viewModel.tagListViewModel {
+            HorizontalTagListView(viewModel: tagListViewModel)
+                .padding(
+                    EdgeInsets(
+                        top: TokenSpacing._1,
+                        leading: 0,
+                        bottom: TokenSpacing._2,
+                        trailing: 0
+                    )
+                )
+        } else {
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
     private var moreButton: some View {
         if editMode?.wrappedValue.isEditing != true {
             UIButtonWrapper(
@@ -179,7 +197,8 @@ struct SearchResultRowView: View {
                 colorAssets: .example,
                 previewContent: .example,
                 actions: actions,
-                swipeActions: []
+                swipeActions: [],
+                shouldShowMatchingTags: true
             )
         }
     }
@@ -226,6 +245,7 @@ extension SearchResult {
             backgroundDisplayMode: backgroundDisplayMode,
             title: "title\(idx)",
             note: nil,
+            tags: [],
             isSensitive: false,
             hasThumbnail: false,
             description: { _ in "desc\(idx)" },

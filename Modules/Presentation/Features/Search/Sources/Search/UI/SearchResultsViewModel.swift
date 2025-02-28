@@ -94,7 +94,8 @@ public class SearchResultsViewModel: ObservableObject {
     private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
 
     private let isSearchByNodeDescriptionFeatureEnabled: Bool
-    
+    private let isSearchByNodeTagsFeatureEnabled: Bool
+
     let listHeaderViewModel: ListHeaderViewModel?
 
     public init(
@@ -108,6 +109,7 @@ public class SearchResultsViewModel: ObservableObject {
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
         isSearchByNodeDescriptionFeatureEnabled: Bool,
+        isSearchByNodeTagsFeatureEnabled: Bool,
         listHeaderViewModel: ListHeaderViewModel?
     ) {
         self.resultsProvider = resultsProvider
@@ -120,6 +122,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.layout = layout
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.isSearchByNodeDescriptionFeatureEnabled = isSearchByNodeDescriptionFeatureEnabled
+        self.isSearchByNodeTagsFeatureEnabled = isSearchByNodeTagsFeatureEnabled
         self.listHeaderViewModel = listHeaderViewModel
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
@@ -403,7 +406,8 @@ public class SearchResultsViewModel: ObservableObject {
                 previewMode: content.previewMode
             ),
             actions: rowActions(for: result),
-            swipeActions: swipeActions
+            swipeActions: swipeActions,
+            shouldShowMatchingTags: isSearchByNodeTagsFeatureEnabled
         )
     }
 

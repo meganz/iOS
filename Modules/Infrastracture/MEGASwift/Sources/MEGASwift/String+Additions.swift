@@ -133,7 +133,7 @@ public extension String {
         let highlightedColorAttr: [NSAttributedString.Key: Any] = [
             .foregroundColor: primaryTextColor,
             .backgroundColor: highlightedTextColor,
-            .font: highlightedFont
+            .font: highlightedFont ?? normalFont
         ].compactMapValues { $0 }
 
         let result = NSMutableAttributedString()
@@ -152,6 +152,35 @@ public extension String {
         let remainder = NSAttributedString(string: tmpSelf, attributes: primaryTextColorAttr)
         result.append(remainder)
         return result
+    }
+
+    /// Removes the first leading `#` character from the string.
+    ///
+    /// This function removes only the first occurrence of the `#` character from
+    /// the beginning of the string. If there is no leading `#`, the string remains unchanged.
+    ///
+    /// - Returns: A new string with the first leading `#` character removed, or the original string if no leading `#` is present.
+    ///
+    /// # Example Usage:
+    /// ```swift
+    /// let input1 = "###Swift"
+    /// let output1 = input1.removingFirstLeadingHash()
+    /// print(output1) // Output: "##Swift"
+    ///
+    /// let input2 = "Hello#World"
+    /// let output2 = input2.removingFirstLeadingHash()
+    /// print(output2) // Output: "Hello#World"
+    ///
+    /// let input3 = "#Start"
+    /// let output3 = input3.removingFirstLeadingHash()
+    /// print(output3) // Output: "Start"
+    ///
+    /// let input4 = "NoHash"
+    /// let output4 = input4.removingFirstLeadingHash()
+    /// print(output4) // Output: "NoHash"
+    /// ```
+    func removingFirstLeadingHash() -> String {
+        hasPrefix("#") ? String(dropFirst()) : self
     }
 }
 

@@ -67,6 +67,7 @@ extension SearchConfig.ColorAssets {
         titleTextColor: Color.primary,
         subtitleTextColor: Color.secondary,
         nodeDescriptionTextNormalColor: Color.secondary,
+        tagsTextColor: Color.primary,
         textHighlightColor: .gray,
         vibrantColor: Color.red,
         resultPropertyColor: .gray, 

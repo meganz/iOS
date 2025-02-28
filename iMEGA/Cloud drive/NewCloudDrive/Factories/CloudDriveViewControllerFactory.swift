@@ -902,6 +902,8 @@ struct CloudDriveViewControllerFactory {
         bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
             searchBridge?.updateBottomInset(inset)
         }
+
+        let featureFlagProvider = DIContainer.featureFlagProvider
         return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
@@ -917,7 +919,8 @@ struct CloudDriveViewControllerFactory {
             layout: layout,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
-            isSearchByNodeDescriptionFeatureEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
+            isSearchByNodeDescriptionFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
+            isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource)
         )
     }

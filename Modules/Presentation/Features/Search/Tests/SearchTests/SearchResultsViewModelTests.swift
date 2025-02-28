@@ -82,6 +82,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
                 isSearchByNodeDescriptionFeatureEnabled: true,
+                isSearchByNodeTagsFeatureEnabled: true,
                 listHeaderViewModel: nil
             )
             selection = {
@@ -251,6 +252,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     titleTextColor: Color.primary,
                     subtitleTextColor: Color.secondary,
                     nodeDescriptionTextNormalColor: Color.secondary,
+                    tagsTextColor: .secondary,
                     textHighlightColor: .gray,
                     vibrantColor: .red,
                     resultPropertyColor: .gray,
@@ -278,7 +280,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     selectionAction: {},
                     previewTapAction: {}
                 ),
-                swipeActions: []
+                swipeActions: [],
+                shouldShowMatchingTags: true
             )
         ]
         XCTAssertEqual(harness.sut.listItems.map(\.result), expectedListItems.map(\.result))
@@ -768,6 +771,49 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
+    func testNodeTags_whenFeatureFlagIsDisabled_shouldNotReturnAnyTags() {
+        let sut = generateRandomSearchResultRowViewModel(id: 100, tags: ["tag1"], shouldShowMatchingTags: false)
+        XCTAssertNil(sut.tagListViewModel)
+    }
+
+    @MainActor
+    func testNodeTags_whenFeatureFlagIsEnabledAndQueryTextDoesNotMatch_shouldNotReturnsAnyTags() {
+        let sut = generateRandomSearchResultRowViewModel(
+            id: 100,
+            tags: ["tag1"],
+            shouldShowMatchingTags: true,
+            query: { "test" }
+        )
+        XCTAssertNil(sut.tagListViewModel)
+    }
+
+    @MainActor
+    func testNodeTags_whenFeatureFlagIsEnabledAndQueryTextMatches_shouldReturnsTheTag() {
+        let sut = generateRandomSearchResultRowViewModel(
+            id: 100,
+            tags: ["tag1"],
+            shouldShowMatchingTags: true,
+            query: { "ta" }
+        )
+
+        XCTAssertEqual(
+            sut.tagListViewModel?.tags,
+            [
+                AttributedString(
+                    "#tag1"
+                        .forceLeftToRight()
+                        .highlightedStringWithKeyword(
+                            "ta",
+                            primaryTextColor: UIColor(Color.primary),
+                            highlightedTextColor: UIColor.systemGray,
+                            normalFont: .preferredFont(style: .subheadline, weight: .medium)
+                        )
+                )
+            ]
+        )
+    }
+
+    @MainActor
     private func makeHarnessWithAllItemsSelected(listItemCount count: Int) -> Harness {
         let harness = Harness(self)
         let listItems = Array(1...count).map { generateRandomSearchResultRowViewModel(id: $0) }
@@ -781,6 +827,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     private func generateRandomSearchResultRowViewModel(
         id: Int,
         note: String? = nil,
+        tags: [String] = [],
+        shouldShowMatchingTags: Bool = true,
         query: @escaping () -> String? = { nil }
     ) -> SearchResultRowViewModel {
         .init(
@@ -790,6 +838,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 backgroundDisplayMode: .icon,
                 title: "Title",
                 note: note,
+                tags: tags,
                 isSensitive: false,
                 hasThumbnail: false,
                 description: { _ in ""},
@@ -803,7 +852,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             colorAssets: .example,
             previewContent: .example,
             actions: .init(contextAction: { _ in }, selectionAction: { }, previewTapAction: { }),
-            swipeActions: []
+            swipeActions: [],
+            shouldShowMatchingTags: shouldShowMatchingTags
         )
     }
 

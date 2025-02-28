@@ -9,6 +9,7 @@ public struct SearchResult: Identifiable, Sendable {
     public let backgroundDisplayMode: VerticalBackgroundViewMode
     public let title: String
     public let note: String?
+    public let tags: [String]
     public let isSensitive: Bool
     public let hasThumbnail: Bool
     public let description: @Sendable (ResultCellLayout) -> String
@@ -27,6 +28,7 @@ public struct SearchResult: Identifiable, Sendable {
         backgroundDisplayMode: VerticalBackgroundViewMode,
         title: String,
         note: String?,
+        tags: [String],
         isSensitive: Bool,
         hasThumbnail: Bool,
         description: @escaping @Sendable (ResultCellLayout) -> String,
@@ -43,6 +45,7 @@ public struct SearchResult: Identifiable, Sendable {
         self.backgroundDisplayMode = backgroundDisplayMode
         self.title = title
         self.note = note
+        self.tags = tags
         self.isSensitive = isSensitive
         self.hasThumbnail = hasThumbnail
         self.description = description
@@ -60,6 +63,7 @@ extension SearchResult: Equatable {
         lhs.id == rhs.id &&
         lhs.title == rhs.title &&
         lhs.note == rhs.note &&
+        lhs.tags == rhs.tags &&
         lhs.isSensitive == rhs.isSensitive &&
         lhs.hasThumbnail == rhs.hasThumbnail &&
         lhs.description(.list) == rhs.description(.list) &&

@@ -22,6 +22,7 @@ let package = Package(
             targets: ["MEGASwiftUIMock"])
     ],
     dependencies: [
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../MEGAUI"),
         .package(path: "../../Presentation/MEGAPresentation"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
@@ -33,7 +34,8 @@ let package = Package(
             dependencies: [
                 "MEGAUI",
                 "MEGAPresentation",
-                "MEGAFoundation"
+                "MEGAFoundation",
+                "MEGADesignToken"
             ],
             swiftSettings: settings
         ),

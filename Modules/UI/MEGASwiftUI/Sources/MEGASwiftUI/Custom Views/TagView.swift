@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 public struct TagView: View {
@@ -28,8 +29,34 @@ public struct TagView: View {
         Text(tagName)
             .font(font)
             .foregroundStyle(tagTextColor)
+            .tagStyle(backgroundColor: tagColor, cornerRadius: cornerRadius, paddingInsets: paddingInsets)
+    }
+}
+
+public extension View {
+    func tagStyle(
+        backgroundColor: Color,
+        cornerRadius: CGFloat = TokenSpacing._3,
+        paddingInsets: EdgeInsets = EdgeInsets(
+            top: TokenSpacing._2,
+            leading: TokenSpacing._3,
+            bottom: TokenSpacing._2,
+            trailing: TokenSpacing._3
+        )
+    ) -> some View {
+        modifier(TagStyleModifier(backgroundColor: backgroundColor, cornerRadius: cornerRadius, paddingInsets: paddingInsets))
+    }
+}
+
+private struct TagStyleModifier: ViewModifier {
+    let backgroundColor: Color
+    let cornerRadius: CGFloat
+    let paddingInsets: EdgeInsets
+
+    func body(content: Content) -> some View {
+        content
             .padding(paddingInsets)
-            .background(tagColor)
+            .background(backgroundColor)
             .cornerRadius(cornerRadius)
     }
 }

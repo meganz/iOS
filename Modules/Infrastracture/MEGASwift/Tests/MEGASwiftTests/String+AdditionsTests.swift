@@ -28,4 +28,29 @@ struct StringAdditionsTests {
     func testContainsIgnoringCaseAndDiacritics_withWhitespaceOnlySearchText_shouldReturnFalse() {
         #expect("Café au Lait".containsIgnoringCaseAndDiacritics(searchText: "   ") == false)
     }
+
+    @Test("Removing first leading hash, with empty string – should return empty string")
+    func testRemovingFirstLeadingHash_withEmptyString_shouldReturnEmptyString() {
+        #expect("".removingFirstLeadingHash() == "")
+    }
+
+    @Test("Removing first leading hash, with string starting with multiple hashes – should remove the first hash")
+    func testRemovingFirstLeadingHash_withMultipleLeadingHashes_shouldReturnCorrectString() {
+        #expect("###Swift".removingFirstLeadingHash() == "##Swift")
+    }
+
+    @Test("Removing first leading hash, with string starting with a single hash – should remove that hash")
+    func testRemovingFirstLeadingHash_withSingleLeadingHash_shouldReturnCorrectString() {
+        #expect("#Start".removingFirstLeadingHash() == "Start")
+    }
+
+    @Test("Removing first leading hash, with string that has no leading hash – should return the same string")
+    func testRemovingFirstLeadingHash_withNoLeadingHash_shouldReturnSameString() {
+        #expect("NoHash".removingFirstLeadingHash() == "NoHash")
+    }
+
+    @Test("Removing first leading hash, with string containing only hash – should return an empty string")
+    func testRemovingFirstLeadingHash_withOnlyHash_shouldReturnEmptyString() {
+        #expect("#".removingFirstLeadingHash() == "")
+    }
 }

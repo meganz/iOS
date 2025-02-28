@@ -28,6 +28,7 @@ struct SearchResultMapper: Sendable {
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
             title: node.name,
             note: node.description,
+            tags: node.tags,
             isSensitive: isSensitive(node: node),
             hasThumbnail: node.hasThumbnail,
             description: info(for: node),
