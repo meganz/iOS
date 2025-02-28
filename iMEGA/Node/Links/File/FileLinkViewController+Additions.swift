@@ -8,7 +8,7 @@ extension FileLinkViewController {
         guard let publicLinkString = publicLinkString, let linkUrl = URL(string: publicLinkString) else { return }
         DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: self).start()
     }
-
+    
     @objc func showSendToChat() {
         guard let navigationController =
                 UIStoryboard(
@@ -18,24 +18,32 @@ extension FileLinkViewController {
               let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
             return
         }
-
+        
         sendToViewController.sendMode = .fileAndFolderLink
         self.sendLinkDelegate = SendLinkToChatsDelegate(
             link: linkEncryptedString ?? publicLinkString ?? "",
             navigationController: navigationController
         )
         sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate
-
+        
         self.navigationController?.pushViewController(sendToViewController, animated: true)
     }
-
+    
     @objc func showShareLink() {
         let link = linkEncryptedString ?? publicLinkString
         guard let link = link else { return }
         let activityVC = UIActivityViewController(activityItems: [link], applicationActivities: nil)
         activityVC.popoverPresentationController?.barButtonItem = shareLinkBarButtonItem
-
+        
         present(activityVC, animated: true)
+    }
+    
+    @objc func present(decryption alertController: UIAlertController) {
+        Task { @MainActor in
+            self.present(alertController, animated: true) {
+                self.decryptionAlertControllerHasBeenPresented = true
+            }
+        }
     }
     
     func addToCloudDrive() {
