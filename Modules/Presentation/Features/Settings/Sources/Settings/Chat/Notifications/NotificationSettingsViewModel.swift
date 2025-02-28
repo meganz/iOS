@@ -36,15 +36,16 @@ public final class NotificationSettingsViewModel: ObservableObject {
         }
     }
     
-    func toggleChatNotifications(isCurrentlyEnabled: Bool) {
-        Task {
-            do {
-                notificationSettings.globalChatsDndEnabled.toggle()
-                notificationSettings = try await notificationSettingsUseCase.setPushNotificationSettings(notificationSettings)
-                isChatNotificationsEnabled = !isCurrentlyEnabled
-            } catch {
-                MEGALogError("[Notification Settings] Error setting notification settings: \(error)")
+    func toggleChatNotifications(isCurrentlyEnabled: Bool) async {
+        do {
+            notificationSettings.globalChatsDndEnabled = isCurrentlyEnabled
+            if notificationSettings.globalChatsDndEnabled {
+                notificationSettings.globalChatsDndTimestamp = 0
             }
+            notificationSettings = try await notificationSettingsUseCase.setPushNotificationSettings(notificationSettings)
+            isChatNotificationsEnabled = !isCurrentlyEnabled
+        } catch {
+            MEGALogError("[Notification Settings] Error setting notification settings: \(error)")
         }
     }
     
@@ -52,27 +53,25 @@ public final class NotificationSettingsViewModel: ObservableObject {
         isBottomSheetPresented.toggle()
     }
     
-    func muteNotificationsPresetTapped(_ preset: TimeValuePreset) {
-        Task {
-            do {
-                if preset == .never {
-                    notificationSettings.globalChatsDndEnabled = false
-                    notificationSettings.globalChatsDndTimestamp =  Int64(preset.timeInterval)
-                } else {
-                    notificationSettings.globalChatsDndEnabled = true
-                    notificationSettings.globalChatsDndTimestamp =  Int64(ceil(Date().timeIntervalSince1970 + preset.timeInterval))
-                }
-                notificationSettings = try await notificationSettingsUseCase.setPushNotificationSettings(notificationSettings)
-                isBottomSheetPresented.toggle()
-                mutedUntilString()
-            } catch {
-                MEGALogError("[Notification Settings] Error setting notification settings: \(error)")
+    func muteNotificationsPresetTapped(_ preset: TimeValuePreset) async {
+        do {
+            if preset == .never {
+                notificationSettings.globalChatsDndEnabled = false
+                notificationSettings.globalChatsDndTimestamp =  Int64(preset.timeInterval)
+            } else {
+                notificationSettings.globalChatsDndEnabled = true
+                notificationSettings.globalChatsDndTimestamp =  Int64(ceil(Date().timeIntervalSince1970 + preset.timeInterval))
             }
+            notificationSettings = try await notificationSettingsUseCase.setPushNotificationSettings(notificationSettings)
+            isBottomSheetPresented.toggle()
+            mutedUntilString()
+        } catch {
+            MEGALogError("[Notification Settings] Error setting notification settings: \(error)")
         }
     }
     
     private func mutedUntilString() {
-        if notificationSettings.globalChatsDndTimestamp > 0 {
+        if notificationSettings.globalChatsDndEnabled && notificationSettings.globalChatsDndTimestamp > 0 {
             let remainingTime = ceil(TimeInterval(notificationSettings.globalChatsDndTimestamp) - Date().timeIntervalSince1970)
             muteNotificationsTimeString = remainingTime.dndFormattedString
         } else {

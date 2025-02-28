@@ -30,7 +30,9 @@ public struct NotificationSettingsView: View {
             title: Strings.Localizable.Settings.Chat.Notifications.chatNotifications
         ).replaceTrailingView {
             MEGAToggle(state: .init(isOn: viewModel.isChatNotificationsEnabled)) { state in
-                viewModel.toggleChatNotifications(isCurrentlyEnabled: state.isOn)
+                Task {
+                    await viewModel.toggleChatNotifications(isCurrentlyEnabled: state.isOn)
+                }
             }
         }
     }
@@ -55,7 +57,7 @@ public struct NotificationSettingsView: View {
     private var muteNotificationsPresetListView: some View {
         MEGAList(contentView: {
             ForEach(viewModel.muteNotificationsPresets) { preset in
-                Button(action: { viewModel.muteNotificationsPresetTapped(preset)
+                Button(action: { Task { await viewModel.muteNotificationsPresetTapped(preset) }
                 }, label: {
                     MEGAList(
                         title: preset.displayName
