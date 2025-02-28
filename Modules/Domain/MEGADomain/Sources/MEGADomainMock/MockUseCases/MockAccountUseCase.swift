@@ -44,7 +44,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _hasExpiredProFlexiAccount: Bool
     public private(set) var refreshAccountDetails_calledCount: Int = 0
     public private(set) var enableRichLinkPreview_calledCount: Int = 0
-    private let richLinkPreviewEnabled: Bool
+    private var richLinkPreviewEnabled: Bool
 
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -336,6 +336,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     }
     
     public func enableRichLinkPreview(_ enabled: Bool) {
+        richLinkPreviewEnabled = enabled
         enableRichLinkPreview_calledCount += 1
     }
 }
