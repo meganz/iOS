@@ -36,8 +36,6 @@
 
 @property (nonatomic, getter=isFolderEmpty) BOOL folderEmpty;
 
-@property (nonatomic) BOOL decryptionAlertControllerHasBeenPresented;
-
 @end
 
 @implementation FileLinkViewController
@@ -262,9 +260,7 @@
     decryptAlertAction.enabled = NO;
     [decryptionAlertController addAction:decryptAlertAction];
     
-    [self presentViewController:decryptionAlertController animated:YES completion:^{
-        self.decryptionAlertControllerHasBeenPresented = YES;
-    }];
+    [self presentWithDecryption:decryptionAlertController];
 }
 
 - (void)showDecryptionKeyNotValidAlert {
