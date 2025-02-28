@@ -192,7 +192,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             .recursive(
                 searchText: searchQuery.query,
                 searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
-                searchTag: searchByNodeTagsEnabled ? searchQuery.query : nil,
+                searchTag: searchByNodeTagsEnabled ? searchQuery.query.removingFirstLeadingHash() : nil,
                 searchTargetLocation: { if let parentNode { .parentNode(parentNode) } else { .folderTarget(.rootNode) } }(),
                 supportCancel: true,
                 sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
@@ -206,7 +206,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             .nonRecursive(
                searchText: searchQuery.query,
                searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
-               searchTag: searchByNodeTagsEnabled ? searchQuery.query : nil,
+               searchTag: searchByNodeTagsEnabled ? searchQuery.query.removingFirstLeadingHash() : nil,
                searchTargetNode: node,
                supportCancel: true,
                sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),

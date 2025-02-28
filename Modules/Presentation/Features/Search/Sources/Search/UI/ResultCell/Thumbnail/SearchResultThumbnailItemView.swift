@@ -81,7 +81,8 @@ extension PreviewContent {
                 selectionAction: {},
                 previewTapAction: {}
             ),
-            swipeActions: []
+            swipeActions: [],
+            shouldShowMatchingTags: true
         ),
         selected: .constant([]),
         selectionEnabled: .constant(false)
@@ -106,7 +107,8 @@ extension PreviewContent {
                 selectionAction: {},
                 previewTapAction: {}
             ),
-            swipeActions: []
+            swipeActions: [],
+            shouldShowMatchingTags: true
         ),
         selected: .constant([]),
         selectionEnabled: .constant(false)

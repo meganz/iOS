@@ -185,6 +185,7 @@ public struct SearchConfig {
         public let titleTextColor: Color
         public let subtitleTextColor: Color
         public let nodeDescriptionTextNormalColor: Color
+        public let tagsTextColor: Color
         public let textHighlightColor: Color
         public let vibrantColor: Color
         public let resultPropertyColor: Color
@@ -215,6 +216,7 @@ public struct SearchConfig {
             titleTextColor: Color,
             subtitleTextColor: Color,
             nodeDescriptionTextNormalColor: Color,
+            tagsTextColor: Color,
             textHighlightColor: Color,
             vibrantColor: Color,
             resultPropertyColor: Color,
@@ -232,6 +234,7 @@ public struct SearchConfig {
             self.titleTextColor = titleTextColor
             self.subtitleTextColor = subtitleTextColor
             self.nodeDescriptionTextNormalColor = nodeDescriptionTextNormalColor
+            self.tagsTextColor = tagsTextColor
             self.textHighlightColor = textHighlightColor
             self.vibrantColor = vibrantColor
             self.resultPropertyColor = resultPropertyColor

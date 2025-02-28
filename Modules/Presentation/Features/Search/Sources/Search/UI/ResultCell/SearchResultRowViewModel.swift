@@ -1,4 +1,5 @@
 import MEGAPresentation
+import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 import UIKit
@@ -56,6 +57,31 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         } else {
             nil
         }
+    }
+
+    var tagListViewModel: HorizontalTagListViewModel? {
+        guard shouldShowMatchingTags else { return nil }
+
+        let tags: [AttributedString] = result.tags.compactMap { inputTag in
+            guard let query = query(),
+                  case let tag = "#" + inputTag,
+                  tag.containsIgnoringCaseAndDiacritics(searchText: query) else {
+                return nil
+            }
+
+            return AttributedString(
+                tag
+                    .forceLeftToRight()
+                    .highlightedStringWithKeyword(
+                        query,
+                        primaryTextColor: UIColor(colorAssets.tagsTextColor),
+                        highlightedTextColor: UIColor(colorAssets.textHighlightColor),
+                        normalFont: .preferredFont(style: .subheadline, weight: .medium)
+                    )
+            )
+        }
+
+        return tags.isNotEmpty ? HorizontalTagListViewModel(tags: tags) : nil
     }
 
     var accessibilityIdentifier: String {
@@ -119,6 +145,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     let actions: UserActions
     let rowAssets: SearchConfig.RowAssets
     let swipeActions: [SearchResultSwipeAction]
+    let shouldShowMatchingTags: Bool
 
     init(
         result: SearchResult,
@@ -127,7 +154,8 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         colorAssets: SearchConfig.ColorAssets,
         previewContent: PreviewContent,
         actions: UserActions,
-        swipeActions: [SearchResultSwipeAction]
+        swipeActions: [SearchResultSwipeAction],
+        shouldShowMatchingTags: Bool
     ) {
         self.result = result
         self.query = query
@@ -136,6 +164,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         self.actions = actions
         self.rowAssets = rowAssets
         self.swipeActions = swipeActions
+        self.shouldShowMatchingTags = shouldShowMatchingTags
     }
 
     func loadThumbnail() async {

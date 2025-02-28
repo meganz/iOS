@@ -19,6 +19,7 @@ extension SearchResult {
             backgroundDisplayMode: backgroundDisplayMode,
             title: title,
             note: nil,
+            tags: [],
             isSensitive: isSensitive,
             hasThumbnail: hasThumbnail,
             description: { _ in "Desc" },

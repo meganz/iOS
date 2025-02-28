@@ -244,7 +244,9 @@ final class HomeScreenFactory: NSObject {
         bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
             searchBridge?.updateBottomInset(inset)
         }
-        
+
+        let featureFlagProvider = makeFeatureFlagProvider()
+
         let vm = SearchResultsViewModel(
             resultsProvider: makeResultsProvider(
                 parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
@@ -266,7 +268,8 @@ final class HomeScreenFactory: NSObject {
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
-            isSearchByNodeDescriptionFeatureEnabled: makeFeatureFlagProvider().isFeatureFlagEnabled(for: .searchUsingNodeDescription),
+            isSearchByNodeDescriptionFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
+            isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
             listHeaderViewModel: nil
         )
         return UIHostingController(
