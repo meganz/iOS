@@ -620,7 +620,7 @@ final class NodeActionBuilder {
         nodeActions.append(.copyAction())
         
         if !isBackupNode {
-            if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
+            if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents || displayMode == .photosTimeline {
                 nodeActions.append(.moveToRubbishBinAction())
             }
         }
