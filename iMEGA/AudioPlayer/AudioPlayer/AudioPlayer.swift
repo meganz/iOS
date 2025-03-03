@@ -44,6 +44,7 @@ final class AudioPlayer: NSObject {
     var isPaused = false
     var isCloseRequested = false
     var needToBeResumedAfterInterruption = false
+    var resettingPlayback = false
     
     var previouslyPlayedItem: AudioPlayerItem?
     var isUserPreviouslyJustPlayedSameItem = false
