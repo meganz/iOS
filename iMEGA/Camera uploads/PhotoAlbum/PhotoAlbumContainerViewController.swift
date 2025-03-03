@@ -168,10 +168,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
                     contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                         repo: UserAttributeRepository.newRepo),
                     hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
-                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled,
-                isDescriptionSearchEnabled: {
-                    DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
-                }
+                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
             )
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
@@ -464,9 +461,6 @@ extension PhotoAlbumContainerViewController {
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             hiddenNodesFeatureFlagEnabled: {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            },
-            isDescriptionSearchEnabled: {
-                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
             }
         )
     }

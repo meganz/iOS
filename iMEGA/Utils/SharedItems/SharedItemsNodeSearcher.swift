@@ -22,10 +22,6 @@ import MEGASDKRepo
         searchUC.cancelSearch()
     }
 
-    private func descriptionArgument(from searchText: String) -> String? {
-        featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? searchText : nil
-    }
-
     private func tagArgument(from searchText: String) -> String? {
         featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags) ? searchText : nil
     }
@@ -34,7 +30,7 @@ import MEGASDKRepo
         let nodeArray = try await searchUC.search(
             type: type,
             text: text,
-            description: descriptionArgument(from: text),
+            description: text,
             tag: tagArgument(from: text),
             sortType: sortType.toSortOrderEntity())
         return nodeArray.toMEGANodes(in: MEGASdk.shared)

@@ -34,7 +34,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     @Atomic private var subscriptions = Set<AnyCancellable>()
 
     private let hiddenNodesFeatureEnabled: Bool
-    private let searchByDescriptionEnabled: Bool
     private let searchByNodeTagsEnabled: Bool
 
     // The node from which we want start searching from,
@@ -57,7 +56,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         sdk: MEGASdk,
         nodeActions: NodeActions,
         hiddenNodesFeatureEnabled: Bool,
-        searchByDescriptionEnabled: Bool,
         searchByNodeTagsEnabled: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
@@ -69,7 +67,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.availableChips = allChips
         self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
-        self.searchByDescriptionEnabled = searchByDescriptionEnabled
         self.searchByNodeTagsEnabled = searchByNodeTagsEnabled
 
         mapper = SearchResultMapper(
@@ -191,7 +188,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         return if recursive {
             .recursive(
                 searchText: searchQuery.query,
-                searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
+                searchDescription: searchQuery.query,
                 searchTag: searchByNodeTagsEnabled ? searchQuery.query.removingFirstLeadingHash() : nil,
                 searchTargetLocation: { if let parentNode { .parentNode(parentNode) } else { .folderTarget(.rootNode) } }(),
                 supportCancel: true,
@@ -205,7 +202,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         } else if let node = parentNode ?? nodeUseCase.rootNode() {
             .nonRecursive(
                searchText: searchQuery.query,
-               searchDescription: searchByDescriptionEnabled ? searchQuery.query : nil,
+               searchDescription: searchQuery.query,
                searchTag: searchByNodeTagsEnabled ? searchQuery.query.removingFirstLeadingHash() : nil,
                searchTargetNode: node,
                supportCancel: true,

@@ -180,7 +180,7 @@ final class FilesExplorerViewModel: ViewModelType {
         try await useCase.search(
             filter: .recursive(
                 searchText: text,
-                searchDescription: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? text : nil,
+                searchDescription: text,
                 searchTargetLocation: .folderTarget(.rootNode),
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),

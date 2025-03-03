@@ -12,21 +12,18 @@ import UIKit
     private let mediaUseCase: any MediaUseCaseProtocol
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     let searchDebouncer = Debouncer(delay: 0.5)
     
     init(shareUseCase: some ShareUseCaseProtocol,
          mediaUseCase: some MediaUseCaseProtocol,
          saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
-         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol
     ) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
-        self.featureFlagProvider = featureFlagProvider
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
@@ -67,8 +64,7 @@ import UIKit
     }
 
     @objc func descriptionForNode(_ node: MEGANode, with searchText: String?) -> NSAttributedString? {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
-              let description = node.description,
+        guard let description = node.description,
               let searchText,
               description.containsIgnoringCaseAndDiacritics(searchText: searchText) else { return nil }
         return node.attributedDescription(searchText: searchText)

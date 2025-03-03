@@ -230,7 +230,6 @@ public struct SearchResultsView: View {
             layout: .list,
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
             viewDisplayMode: .unknown,
-            isSearchByNodeDescriptionFeatureEnabled: true,
             isSearchByNodeTagsFeatureEnabled: true,
             listHeaderViewModel: nil
         )

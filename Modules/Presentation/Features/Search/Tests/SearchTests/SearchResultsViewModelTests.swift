@@ -81,7 +81,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 showLoadingPlaceholderDelay: 0.1,
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
-                isSearchByNodeDescriptionFeatureEnabled: true,
                 isSearchByNodeTagsFeatureEnabled: true,
                 listHeaderViewModel: nil
             )
