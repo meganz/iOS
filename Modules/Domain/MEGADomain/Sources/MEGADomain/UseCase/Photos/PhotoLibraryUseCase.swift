@@ -29,20 +29,17 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     private let searchRepository: U
     private let sensitiveDisplayPreferenceUseCase: V
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
-    private let isDescriptionSearchEnabled: @Sendable () -> Bool
 
     public init(
         photosRepository: T,
         searchRepository: U,
         sensitiveDisplayPreferenceUseCase: V,
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool,
-        isDescriptionSearchEnabled: @escaping @Sendable () -> Bool
+        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
     ) {
         self.photosRepository = photosRepository
         self.searchRepository = searchRepository
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
-        self.isDescriptionSearchEnabled = isDescriptionSearchEnabled
     }
     
     public func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
@@ -134,7 +131,7 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
             .compactMap { format -> [NodeEntity]? in
                 try? await searchRepository.search(filter: .recursive(
                     searchText: searchText,
-                    searchDescription: isDescriptionSearchEnabled() ? searchText : nil,
+                    searchDescription: searchText,
                     searchTargetLocation: searchTargetLocation,
                     supportCancel: false,
                     sortOrderType: sortOrder,
@@ -153,7 +150,7 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
             .compactMap { format -> [NodeEntity]? in
                 try? await searchRepository.search(filter: .nonRecursive(
                     searchText: searchText,
-                    searchDescription: isDescriptionSearchEnabled() ? searchText : nil,
+                    searchDescription: searchText,
                     searchTargetNode: searchTargetNode,
                     supportCancel: false,
                     sortOrderType: sortOrder,

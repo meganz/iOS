@@ -68,11 +68,8 @@ extension NodeTableViewCell {
         if !FileExtensionGroupOCWrapper.verify(isVideo: node.name) {
             thumbnailPlayImageView?.isHidden = true
         }
-
-        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
-        ? searchText : nil
         
-        configureNameAndSubtitle(for: node, searchText: keyword)
+        configureNameAndSubtitle(for: node, searchText: searchText)
 
         configureInfoLabelAndVersionImageView(for: node, api: api)
 
@@ -138,8 +135,7 @@ extension NodeTableViewCell {
     }
 
     private func showDescriptionIfRequired(for node: MEGANode, searchText: String?) {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
-              let searchText,
+        guard let searchText,
               searchText.isNotEmpty,
               let description = node.description,
               description.containsIgnoringCaseAndDiacritics(searchText: searchText) else {

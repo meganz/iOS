@@ -12,16 +12,13 @@ import XCTest
 
 final class SharedItemsViewModelTests: XCTestCase {
     struct DescriptionForNodeTestData {
-        let isFeatureFlagEnabled: Bool
         let nodeDescription: String?
         let searchText: String?
         let output: NSAttributedString?
-        static let flagDisabled = DescriptionForNodeTestData(isFeatureFlagEnabled: false, nodeDescription: "description", searchText: "desc", output: nil)
-        static let nodeDescriptionIsNil = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: nil, searchText: "desc", output: nil)
-        static let searchTextIsNil = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: nil, output: nil)
-        static let searchTextNotMatched = DescriptionForNodeTestData(isFeatureFlagEnabled: true, nodeDescription: "description", searchText: "a", output: nil)
+        static let nodeDescriptionIsNil = DescriptionForNodeTestData(nodeDescription: nil, searchText: "desc", output: nil)
+        static let searchTextIsNil = DescriptionForNodeTestData(nodeDescription: "description", searchText: nil, output: nil)
+        static let searchTextNotMatched = DescriptionForNodeTestData(nodeDescription: "description", searchText: "a", output: nil)
         static let searchTextMatched = DescriptionForNodeTestData(
-            isFeatureFlagEnabled: true,
             nodeDescription: "description",
             searchText: "desc",
             output: "description".highlightedStringWithKeyword(
@@ -34,7 +31,6 @@ final class SharedItemsViewModelTests: XCTestCase {
         )
 
         static let searchTextMatchedMultipleTimes = DescriptionForNodeTestData(
-            isFeatureFlagEnabled: true,
             nodeDescription: "description1 description2",
             searchText: "desc",
             output: "description1 description2".highlightedStringWithKeyword(
@@ -140,7 +136,6 @@ final class SharedItemsViewModelTests: XCTestCase {
     @MainActor
     func testDescriptionForNode_ShouldReturnCorrectValues() async {
         let testData: [DescriptionForNodeTestData] = [
-            .flagDisabled,
             .nodeDescriptionIsNil,
             .searchTextIsNil,
             .searchTextNotMatched,
@@ -149,8 +144,7 @@ final class SharedItemsViewModelTests: XCTestCase {
         ]
 
         testData.forEach { data in
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.searchUsingNodeDescription: data.isFeatureFlagEnabled])
-            let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+            let sut = makeSUT()
             XCTAssertEqual(sut.descriptionForNode(MockNode(handle: 1, description: data.nodeDescription), with: data.searchText), data.output)
         }
     }
@@ -160,15 +154,13 @@ final class SharedItemsViewModelTests: XCTestCase {
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
-        featureFlagProvider: MockFeatureFlagProvider = .init(list: [:]),
         file: StaticString = #file,
         line: UInt = #line
     ) -> SharedItemsViewModel {
         let sut = SharedItemsViewModel(shareUseCase: shareUseCase,
                                        mediaUseCase: mediaUseCase,
                                        saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
-                                       moveToRubbishBinViewModel: moveToRubbishBinViewModel,
-                                       featureFlagProvider: featureFlagProvider
+                                       moveToRubbishBinViewModel: moveToRubbishBinViewModel
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

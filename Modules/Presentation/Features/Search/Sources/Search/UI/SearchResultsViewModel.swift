@@ -93,7 +93,6 @@ public class SearchResultsViewModel: ObservableObject {
 
     private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
 
-    private let isSearchByNodeDescriptionFeatureEnabled: Bool
     private let isSearchByNodeTagsFeatureEnabled: Bool
 
     let listHeaderViewModel: ListHeaderViewModel?
@@ -108,7 +107,6 @@ public class SearchResultsViewModel: ObservableObject {
         keyboardVisibilityHandler: any KeyboardVisibilityHandling,
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
-        isSearchByNodeDescriptionFeatureEnabled: Bool,
         isSearchByNodeTagsFeatureEnabled: Bool,
         listHeaderViewModel: ListHeaderViewModel?
     ) {
@@ -121,7 +119,6 @@ public class SearchResultsViewModel: ObservableObject {
         self.viewDisplayMode = viewDisplayMode
         self.layout = layout
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
-        self.isSearchByNodeDescriptionFeatureEnabled = isSearchByNodeDescriptionFeatureEnabled
         self.isSearchByNodeTagsFeatureEnabled = isSearchByNodeTagsFeatureEnabled
         self.listHeaderViewModel = listHeaderViewModel
         self.bridge.queryChanged = { [weak self] query  in
@@ -385,8 +382,7 @@ public class SearchResultsViewModel: ObservableObject {
         return SearchResultRowViewModel(
             result: result,
             query: { [weak self] in
-                guard let self, isSearchByNodeDescriptionFeatureEnabled else { return nil }
-                return currentQuery.query
+                self?.currentQuery.query
             },
             rowAssets: config.rowAssets,
             colorAssets: config.colorAssets,

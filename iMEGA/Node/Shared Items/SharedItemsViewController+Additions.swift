@@ -77,12 +77,9 @@ extension SharedItemsViewController {
         let nameTextColor = UIColor.mnz_red()
         let displayName = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
 
-        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
-        ? searchText : nil
-
         cell.nameLabel.attributedText =
         displayName?.highlightedStringWithKeyword(
-            keyword,
+            searchText,
             primaryTextColor: nameTextColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
         )
@@ -111,11 +108,9 @@ extension SharedItemsViewController {
         }
 
         let nameTextColor = UIColor.mnz_red()
-        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
-        ? searchText : nil
 
         cell.nameLabel.attributedText = node.name?.highlightedStringWithKeyword(
-            keyword,
+            searchText,
             primaryTextColor: nameTextColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
         )
@@ -152,10 +147,12 @@ extension SharedItemsViewController {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
         }
 
-        let keyword = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription)
-                ? searchController.searchBar.text : nil
-
-        cell.configureCell(for: node, searchText: keyword, shouldApplySensitiveBehaviour: false, api: MEGASdk.shared)
+        cell.configureCell(
+            for: node,
+            searchText: searchController.searchBar.text,
+            shouldApplySensitiveBehaviour: false,
+            api: MEGASdk.shared
+        )
 
         cell.moreButtonAction = { [weak self] moreButton in
             guard let moreButton else { return }

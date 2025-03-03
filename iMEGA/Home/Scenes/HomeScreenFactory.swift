@@ -268,7 +268,6 @@ final class HomeScreenFactory: NSObject {
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
-            isSearchByNodeDescriptionFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
             isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
             listHeaderViewModel: nil
         )
@@ -333,7 +332,6 @@ final class HomeScreenFactory: NSObject {
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
             hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-            searchByDescriptionEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription),
             searchByNodeTagsEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
         )
     }

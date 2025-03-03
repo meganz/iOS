@@ -82,7 +82,6 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             nodes: [NodeEntity] = [],
             excludeSensitives: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
-            searchByDescriptionEnabled: Bool = false,
             searchByNodeTagsEnabled: Bool = false,
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             file: StaticString = #filePath,
@@ -127,7 +126,6 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
                 hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-                searchByDescriptionEnabled: searchByDescriptionEnabled,
                 searchByNodeTagsEnabled: searchByNodeTagsEnabled
             )
             
@@ -209,22 +207,6 @@ final class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
         let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
         XCTAssertTrue(filter.recursive)
-    }
-
-    func testSearch_whenSearchWithDescriptionEnabled_shouldHaveCorrectFilterProperty() async throws {
-        for enabled in [false, true] {
-            // given
-            let harness = Harness.init(self, searchByDescriptionEnabled: enabled)
-
-            // when
-            _ = await harness.sut.search(queryRequest: .userSupplied(.query("foo", isSearchActive: false)))
-
-            // then
-            XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
-            let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
-            XCTAssertEqual(filter.searchDescription == nil, !enabled)
-            XCTAssertFalse(filter.useAndForTextQuery)
-        }
     }
 
     func testSearch_whenSearchByNodeTagsEnabled_shouldHaveCorrectFilterProperty() async throws {

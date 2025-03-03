@@ -146,10 +146,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     // MARK: - Cell setup
 
     private func rowItem(for node: NodeEntity) -> RowItem {
-        RowItem(
-            node: node,
-            searchText: featureFlagProvider.isFeatureFlagEnabled(for: .searchUsingNodeDescription) ? searchText : nil
-        )
+        RowItem(node: node, searchText: searchText)
     }
 
     private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel, adapter: VideoSelectionCheckmarkUIUpdateAdapter) {
