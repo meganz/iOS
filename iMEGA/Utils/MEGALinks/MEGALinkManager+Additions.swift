@@ -303,28 +303,41 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
 }
 
 // MARK: - Ads
- extension MEGALinkManager {
-     @MainActor
-     @objc class func presentViewControllerWithAds(_ containerController: UIViewController, adsSlotViewController: UIViewController, presentationStyle: UIModalPresentationStyle = .automatic) {
-         guard let adsSlotViewController = adsSlotViewController as? (any AdsSlotViewControllerProtocol) else { return }
-         let visibleViewController = UIApplication.mnz_visibleViewController()
-         let controller = AdsSlotRouter(
+extension MEGALinkManager {
+    @MainActor
+    @objc class func presentViewControllerWithAds(
+        _ containerController: UIViewController,
+        publicLink: String,
+        isFolderLink: Bool,
+        adsSlotViewController: UIViewController,
+        presentationStyle: UIModalPresentationStyle = .automatic
+    ) {
+        guard let adsSlotViewController = adsSlotViewController as? (any AdsSlotViewControllerProtocol) else { return }
+        let visibleViewController = UIApplication.mnz_visibleViewController()
+        let controller = AdsSlotRouter(
             adsSlotViewController: adsSlotViewController,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
             contentView: AdsViewWrapper(viewController: containerController),
             presenter: visibleViewController,
             presentationStyle: presentationStyle,
+            publicLink: publicLink,
+            isFolderLink: isFolderLink,
             logger: { MEGALogDebug("\($0) - File/folder link") }
-         ).build(adsFreeViewProPlanAction: {
-             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-             appDelegate?.showUpgradePlanPageFromAds()
-         })
-         visibleViewController.present(controller, animated: true) {
-             Task {
-                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                 await appDelegate.showAdMobConsentIfNeeded()
-             }
-         }
-     }
- }
+        ).build(adsFreeViewProPlanAction: {
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.showUpgradePlanPageFromAds()
+        })
+        visibleViewController.present(controller, animated: true) {
+            Task {
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+                await appDelegate.showAdMobConsentIfNeeded()
+            }
+        }
+    }
+}

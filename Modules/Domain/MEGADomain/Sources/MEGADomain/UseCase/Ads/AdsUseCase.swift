@@ -1,4 +1,4 @@
-public protocol AdsUseCaseProtocol {
+public protocol AdsUseCaseProtocol: Sendable {
     func fetchAds(adsFlag: AdsFlagEntity,
                   adUnits: [AdsSlotEntity],
                   publicHandle: HandleEntity) async throws -> [String: String]

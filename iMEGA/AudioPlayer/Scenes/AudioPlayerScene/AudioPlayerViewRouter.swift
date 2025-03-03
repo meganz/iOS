@@ -61,7 +61,14 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                     adsSlotViewController: adsSlotViewController,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                     purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+                    nodeUseCase: NodeUseCase(
+                        nodeDataRepository: NodeDataRepository.newRepo,
+                        nodeValidationRepository: NodeValidationRepository.newRepo,
+                        nodeRepository: NodeRepository.newRepo
+                    ),
                     contentView: AdsViewWrapper(viewController: audioPlayerViewController),
+                    publicLink: configEntity.fileLink,
+                    isFolderLink: false,
                     logger: { MEGALogDebug("\($0) - Audio link") }
                 ).build(adsFreeViewProPlanAction: {
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate

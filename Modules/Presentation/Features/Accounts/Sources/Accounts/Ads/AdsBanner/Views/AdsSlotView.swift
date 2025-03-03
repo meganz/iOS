@@ -55,8 +55,8 @@ public struct AdsSlotView<T: View>: View {
         .onFirstAppear(perform: {
             viewModel.onViewFirstAppeared?()
         })
-        .task {
-            await viewModel.setupAdsRemoteFlag()
+        .onLoad {
+            await viewModel.determineAdsAvailability()
         }
         .onAppear {
             viewModel.setupSubscriptions()

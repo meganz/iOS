@@ -37,7 +37,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         line: UInt = #line
     ) async {
         let sut = makeSUT(isExternalAdsFlagEnabled: isExternalAdsFlagEnabled)
-        await sut.setupAdsRemoteFlag()
+        await sut.determineAdsAvailability()
         sut.setupSubscriptions()
         
         let expectedAdsFlag = isExternalAdsFlagEnabled ? false : isExternalAdsFlagEnabled
@@ -138,7 +138,7 @@ final class AdsSlotViewModelTests: XCTestCase {
             ),
             isExternalAdsFlagEnabled: expectedIsExternalAdsEnabled
         )
-        await sut.setupAdsRemoteFlag()
+        await sut.determineAdsAvailability()
         sut.updateAdsSlot(currentAdsSlotConfig)
         sut.isExternalAdsEnabled = currentIsExternalAdsFlagEnabled
         sut.setupSubscriptions()
@@ -170,32 +170,32 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     // MARK: - Ads slot
-    @MainActor func testSetupAdsRemoteFlag_whenAccountIsNotFree_shouldDisableExternalAds() async throws {
+    @MainActor func testDetermineAdsAvailability_whenAccountIsNotFree_shouldDisableExternalAds() async throws {
         let billedAccountTypes = AccountTypeEntity.allCases.filter({ $0 != .free })
         for type in billedAccountTypes {
             let sut = makeSUT(accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: type)))
-            await sut.setupAdsRemoteFlag()
+            await sut.determineAdsAvailability()
             let isExternalAdsEnabled = try XCTUnwrap(sut.isExternalAdsEnabled)
             XCTAssertFalse(isExternalAdsEnabled, "Account type \(type) should hide ads")
         }
     }
     
     @MainActor
-    func testSetupAdsRemoteFlag_whenAccountIsFreeWithSuccessAccountDetailsResult_shouldMatchExternalAdsValue() async {
-        await assertSetupAdsRemoteFlag(isLoggedIn: true, accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: .free)))
+    func testDetermineAdsAvailability_whenAccountIsFreeWithSuccessAccountDetailsResult_shouldMatchExternalAdsValue() async {
+        await assertDetermineAdsAvailability(isLoggedIn: true, accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: .free)))
     }
               
     @MainActor
-    func testSetupAdsRemoteFlag_whenAccountIsFreeWithFailedAccountDetailsResult_shouldMatchExternalAdsValue() async {
-        await assertSetupAdsRemoteFlag(isLoggedIn: true, accountDetailsResult: .failure(.generic))
+    func testDetermineAdsAvailability_whenAccountIsFreeWithFailedAccountDetailsResult_shouldMatchExternalAdsValue() async {
+        await assertDetermineAdsAvailability(isLoggedIn: true, accountDetailsResult: .failure(.generic))
     }
     
     @MainActor
-    func testSetupAdsRemoteFlag_whenNoLoggedInUser_shouldMatchExternalAdsValue() async {
-        await assertSetupAdsRemoteFlag(isLoggedIn: false)
+    func testDetermineAdsAvailability_whenNoLoggedInUser_shouldMatchExternalAdsValue() async {
+        await assertDetermineAdsAvailability(isLoggedIn: false)
     }
     
-    @MainActor private func assertSetupAdsRemoteFlag(
+    @MainActor private func assertDetermineAdsAvailability(
         isLoggedIn: Bool = true,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .success(AccountDetailsEntity.build(proLevel: .free)),
         file: StaticString = #filePath,
@@ -208,15 +208,65 @@ final class AdsSlotViewModelTests: XCTestCase {
             isLoggedIn: isLoggedIn
         )
         
-        await sut.setupAdsRemoteFlag()
+        await sut.determineAdsAvailability()
         
         XCTAssertEqual(sut.isExternalAdsEnabled, expectedExternalAdsValue, file: file, line: line)
+    }
+    
+    @MainActor
+    func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFileLinkThatShouldHaveAds_shouldEnableExternalAds() async {
+        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 0, isFolderLink: false, expectedExternalAdsValue: true)
+    }
+    
+    @MainActor
+    func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFileLinkThatShouldNotHaveAds_shouldDisableExternalAds() async {
+        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 1, isFolderLink: false, expectedExternalAdsValue: false)
+    }
+    
+    @MainActor
+    func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFolderLinkThatShouldHaveAds_shouldEnableExternalAds() async {
+        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 0, isFolderLink: true, expectedExternalAdsValue: true)
+    }
+    
+    @MainActor
+    func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFolderLinkThatShouldNotHaveAds_shouldDisableExternalAds() async {
+        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 1, isFolderLink: true, expectedExternalAdsValue: false)
+    }
+    
+    @MainActor
+    func testDetermineAdsAvailability_whenAdsIsDisabledAndHasPublicLinkThatShouldHaveAds_shouldStillDisableExternalAds() async {
+        await assertDetermineAdsAvailabilityWithPublicLinks(isAdsEnabled: false, queryAdsValue: 0, isFolderLink: Bool.random(), expectedExternalAdsValue: false)
+    }
+    
+    @MainActor
+    func assertDetermineAdsAvailabilityWithPublicLinks(
+        isAdsEnabled: Bool = true,
+        queryAdsValue: Int,
+        isFolderLink: Bool,
+        expectedExternalAdsValue: Bool
+    ) async {
+        // queryAdsValue
+        // 0 - show ads
+        // 1 - do not show ads
+        let sut = makeSUT(
+            adsUseCase: MockAdsUseCase(queryAdsValue: queryAdsValue),
+            nodeUseCase: MockNodeUseCase(folderLinkInfo: FolderLinkInfoEntity(), nodeForFileLink: NodeEntity()),
+            isExternalAdsFlagEnabled: isAdsEnabled,
+            accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: .free)),
+            isLoggedIn: true,
+            publicNodeLink: "https://mega.nz/link/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
+            isFolderLink: isFolderLink
+        )
+        
+        await sut.determineAdsAvailability()
+        
+        XCTAssertEqual(sut.isExternalAdsEnabled, expectedExternalAdsValue)
     }
 
     @MainActor func testUpdateAdsSlot_externalAdsDisabled_shouldHideAds() async {
         let sut = makeSUT(isExternalAdsFlagEnabled: false)
         
-        await sut.setupAdsRemoteFlag()
+        await sut.determineAdsAvailability()
         sut.updateAdsSlot(randomAdsSlotConfig)
         
         XCTAssertNil(sut.adsSlotConfig)
@@ -283,7 +333,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         sut.updateAdsSlot(randomAdsSlotConfig)
         
         // Monitor Ads slot changes
-        await sut.setupAdsRemoteFlag()
+        await sut.determineAdsAvailability()
         sut.startMonitoringAdsSlotUpdates()
         await sut.monitorAdsSlotUpdatesTask?.value
         
@@ -390,6 +440,8 @@ final class AdsSlotViewModelTests: XCTestCase {
     // MARK: Helper
     @MainActor private func makeSUT(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol = MockAdsSlotUpdatesProvider(),
+        adsUseCase: some AdsUseCaseProtocol = MockAdsUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol = MockAccountPlanPurchaseUseCase(),
         adsList: [String: String] = [:],
         isExternalAdsFlagEnabled: Bool = true,
@@ -400,12 +452,16 @@ final class AdsSlotViewModelTests: XCTestCase {
         expectedCloseAdsButtonTappedDate: Date = Date(),
         tracker: some AnalyticsTracking = MockTracker(),
         isLoggedIn: Bool = true,
+        publicNodeLink: String? = nil,
+        isFolderLink: Bool = false,
         logger: ((String) -> Void)? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AdsSlotViewModel {
         let sut = AdsSlotViewModel(
             adsSlotUpdatesProvider: adsSlotUpdatesProvider,
+            adsUseCase: adsUseCase,
+            nodeUseCase: nodeUseCase,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
@@ -416,6 +472,8 @@ final class AdsSlotViewModelTests: XCTestCase {
             adsFreeViewProPlanAction: {},
             currentDate: { expectedCloseAdsButtonTappedDate },
             notificationCenter: notificationCenter,
+            publicNodeLink: publicNodeLink,
+            isFolderLink: isFolderLink,
             logger: logger
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

@@ -616,7 +616,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 photoBrowserVC.needsReload = YES;
 
-                [self presentViewControllerWithAds:photoBrowserVC adsSlotViewController:photoBrowserVC presentationStyle:UIModalPresentationAutomatic];
+                [self presentViewControllerWithAds:photoBrowserVC
+                                        publicLink:fileLinkURLString
+                                      isFolderLink:false
+                             adsSlotViewController:photoBrowserVC
+                                 presentationStyle:UIModalPresentationAutomatic];
             } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && node.mnz_isPlayable) {
                 [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO isFromSharedItem:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
@@ -640,20 +644,29 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     fileLinkVC.request = request;
     fileLinkVC.error = error;
     
-    [self presentViewControllerWithAds:fileLinkNavigationController adsSlotViewController:fileLinkVC presentationStyle:UIModalPresentationAutomatic];
+    [self presentViewControllerWithAds:fileLinkNavigationController
+                            publicLink:link
+                          isFolderLink:false
+                 adsSlotViewController:fileLinkVC
+                     presentationStyle:UIModalPresentationAutomatic];
 }
 
 + (void)showFolderLinkView {
     MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
     FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
     
+    NSString *link = MEGALinkManager.linkURL.mnz_MEGAURL;
     folderlinkVC.isFolderRootNode = YES;
-    folderlinkVC.publicLinkString = MEGALinkManager.linkURL.mnz_MEGAURL;
+    folderlinkVC.publicLinkString = link;
     folderlinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
     
     folderlinkVC.player = [AudioPlayerManager.shared currentPlayer];
     
-    [self presentViewControllerWithAds:folderNavigationController adsSlotViewController:folderlinkVC presentationStyle:UIModalPresentationFullScreen];
+    [self presentViewControllerWithAds:folderNavigationController
+                            publicLink:link
+                          isFolderLink:true
+                 adsSlotViewController:folderlinkVC
+                     presentationStyle:UIModalPresentationFullScreen];
 }
 
 + (void)showContactRequestsView {

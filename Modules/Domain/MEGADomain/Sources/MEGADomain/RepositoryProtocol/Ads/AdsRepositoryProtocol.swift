@@ -1,4 +1,4 @@
-public protocol AdsRepositoryProtocol: RepositoryProtocol {
+public protocol AdsRepositoryProtocol: RepositoryProtocol, Sendable {
     func fetchAds(adsFlag: AdsFlagEntity,
                   adUnits: [AdsSlotEntity],
                   publicHandle: HandleEntity) async throws -> [String: String]

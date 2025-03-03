@@ -12,25 +12,34 @@ public struct AdsSlotRouter<T: View> {
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let nodeUseCase: (any NodeUseCaseProtocol)?
     private let contentView: T
     private let presentationStyle: UIModalPresentationStyle
+    private let publicLink: String?
+    private let isFolderLink: Bool
     private let logger: ((String) -> Void)?
     
     public init(
         adsSlotViewController: some AdsSlotViewControllerProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        nodeUseCase: (any NodeUseCaseProtocol)? = nil,
         contentView: T,
         presenter: UIViewController? = nil,
         presentationStyle: UIModalPresentationStyle = .automatic,
+        publicLink: String? = nil,
+        isFolderLink: Bool = false,
         logger: ((String) -> Void)? = nil
     ) {
         self.adsSlotViewController = adsSlotViewController
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
+        self.nodeUseCase = nodeUseCase
         self.contentView = contentView
         self.presenter = presenter
         self.presentationStyle = presentationStyle
+        self.publicLink = publicLink
+        self.isFolderLink = isFolderLink
         self.logger = logger
     }
     
@@ -40,11 +49,15 @@ public struct AdsSlotRouter<T: View> {
     ) -> UIViewController {
         let viewModel = AdsSlotViewModel(
             adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
+            adsUseCase: AdsUseCase(repository: AdsRepository.newRepo),
+            nodeUseCase: nodeUseCase,
             accountUseCase: accountUseCase,
             purchaseUseCase: purchaseUseCase,
             preferenceUseCase: PreferenceUseCase(repository: PreferenceRepository.newRepo),
             onViewFirstAppeared: onViewFirstAppeared,
             adsFreeViewProPlanAction: adsFreeViewProPlanAction,
+            publicNodeLink: publicLink,
+            isFolderLink: isFolderLink,
             logger: logger
         )
         
