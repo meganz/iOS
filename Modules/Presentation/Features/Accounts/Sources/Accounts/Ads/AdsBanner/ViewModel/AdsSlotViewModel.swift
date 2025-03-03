@@ -8,6 +8,8 @@ import SwiftUI
 
 @MainActor
 final public class AdsSlotViewModel: ObservableObject {
+    private let adsUseCase: any AdsUseCaseProtocol
+    private let nodeUseCase: (any NodeUseCaseProtocol)?
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let adsSlotUpdatesProvider: any AdsSlotUpdatesProviderProtocol
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
@@ -29,6 +31,8 @@ final public class AdsSlotViewModel: ObservableObject {
     private(set) var onViewFirstAppeared: (() -> Void)?
     public let adsFreeViewProPlanAction: (() -> Void)?
     private let notificationCenter: NotificationCenter
+    private let publicNodeLink: String?
+    private let isFolderLink: Bool
     
     @PreferenceWrapper(key: .lastCloseAdsButtonTappedDate, defaultValue: nil)
     private(set) var lastCloseAdsDate: Date?
@@ -36,6 +40,8 @@ final public class AdsSlotViewModel: ObservableObject {
     
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
+        adsUseCase: some AdsUseCaseProtocol,
+        nodeUseCase: (any NodeUseCaseProtocol)? = nil,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
@@ -47,9 +53,13 @@ final public class AdsSlotViewModel: ObservableObject {
         adsFreeViewProPlanAction: (() -> Void)? = nil,
         currentDate: @escaping @Sendable () -> Date = { Date() },
         notificationCenter: NotificationCenter = .default,
+        publicNodeLink: String? = nil,
+        isFolderLink: Bool,
         logger: ((String) -> Void)? = nil
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
+        self.adsUseCase = adsUseCase
+        self.nodeUseCase = nodeUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.adMobConsentManager = adMobConsentManager
         self.appEnvironmentUseCase = appEnvironmentUseCase
@@ -60,6 +70,8 @@ final public class AdsSlotViewModel: ObservableObject {
         self.adsFreeViewProPlanAction = adsFreeViewProPlanAction
         self.currentDate = currentDate
         self.notificationCenter = notificationCenter
+        self.publicNodeLink = publicNodeLink
+        self.isFolderLink = isFolderLink
         self.logger = logger
         
         $lastCloseAdsDate.useCase = preferenceUseCase
@@ -103,7 +115,7 @@ final public class AdsSlotViewModel: ObservableObject {
                 // For failed receipt submission, check if ads should appear.
                 Task { @MainActor [weak self] in
                     guard let self else { return }
-                    await setupAdsRemoteFlag()
+                    await determineAdsAvailability()
                     
                     if isExternalAdsEnabled == true {
                         displayAds = adsSlotConfig?.displayAds ?? false
@@ -124,18 +136,62 @@ final public class AdsSlotViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
 
-    // MARK: Remote Feature Flag
-    func setupAdsRemoteFlag() async {
-        // Check for enabled external ads only if there is no logged in user or the account type is free
+    // MARK: Ads Flag
+    
+    /// Determines whether ads should be enabled based on user account status and public link queries.
+    func determineAdsAvailability() async {
+        // Check if the user is logged in and has a paid account.
+        // Ads should only be shown if the user is either logged out or has a free account.
         if accountUseCase.isLoggedIn(),
            let accountDetails = try? await accountUseCase.refreshCurrentAccountDetails(),
            accountDetails.proLevel != .free {
             isExternalAdsEnabled = false
             return
         }
-        isExternalAdsEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+        
+        // Check if the ads is enabled via the remote feature flag.
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) else {
+            isExternalAdsEnabled = false
+            return
+        }
+
+        // If ads are enabled and public node link is present, check for a public node link.
+        if let publicNodeLink = publicNodeLink {
+            if isFolderLink {
+                if let folderInfo = try? await nodeUseCase?.folderLinkInfo(publicNodeLink) {
+                    isExternalAdsEnabled = await shouldShowAdsFromPublicHandle(folderInfo.nodeHandle)
+                    return
+                }
+            } else {
+                if let urlLink = URL(string: publicNodeLink),
+                   let node = try? await nodeUseCase?.nodeForFileLink(FileLinkEntity(linkURL: urlLink)) {
+                    isExternalAdsEnabled = await shouldShowAdsFromPublicHandle(node.handle)
+                    return
+                }
+            }
+        }
+        
+        // Enable external ads by default if all checkers are not satisfied.
+        isExternalAdsEnabled = true
     }
     
+    /// Determines whether ads should be displayed for a given public handle.
+    ///
+    /// - Parameter handle: The HandleEntity representing the public file or folder.
+    /// - Returns: true if ads should be shown, false if ads should not be displayed.
+    /// - Note:
+    ///   - If queryAds returns 1, ads should not be shown.
+    ///   - If any error occurs, ads are enabled by default.
+    private func shouldShowAdsFromPublicHandle(_ handle: HandleEntity) async -> Bool {
+        do {
+            let queryResult = try await adsUseCase.queryAds(adsFlag: .defaultAds, publicHandle: handle)
+            let showAdsResult = 0
+            return queryResult == showAdsResult
+        } catch {
+            return true
+        }
+    }
+
     // MARK: Ads Slot changes
     func startMonitoringAdsSlotUpdates() {
         monitorAdsSlotUpdatesTask?.cancel()
