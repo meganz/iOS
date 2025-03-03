@@ -145,6 +145,10 @@ extension AudioPlayer {
         let isRepeatOneEnabled = audioPlayerConfig[.repeatOne] as? Bool ?? false
         let hasReachedEndOfPlaylist = player.items().isEmpty
         
+        if hasReachedEndOfPlaylist && !isRepeatOneEnabled && !isRepeatAllEnabled {
+            resettingPlayback = true
+        }
+        
         /// If the playlist is not finished or a repeat mode is active, notify that a new item is starting. This means that if there are still items to play, or if repeat-all or repeat-one is enabled,
         /// the system should update the now playing status. If there is no repeat mode active, and we have reached the end of the playlist, we want to reset the playlist to the first track
         /// of the playlist, and pause the audio player playback.
