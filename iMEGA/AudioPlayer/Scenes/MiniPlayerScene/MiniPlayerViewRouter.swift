@@ -55,13 +55,45 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         presenter?.isKind(of: FolderLinkViewController.self) ?? false
     }
     
+    /// Returns the active presenter that is currently visible in the view hierarchy.
+    ///
+    /// This method checks if the current presenter is visible (i.e., its view is loaded and attached to a window). If not, it attempts to retrieve a visible
+    /// controller from the main tab bar that conforms to `AudioPlayerPresenterProtocol`, updating the presenter reference if a valid controller
+    /// is found. With this function we try to avoid the issue that appears if the current presenter is not in the view hierarchy, and therefore the full-screen
+    /// player cannot be displayed.
+    ///
+    /// - Returns:An Audio Player presenter that is currently visible, or `nil` if no appropriate presenter is found.
+    private func activePresenter() -> UIViewController? {
+        if let presenter, presenter.isViewLoaded && presenter.view.window != nil {
+            return presenter
+        }
+        
+        if let visibleController = UIApplication.mainTabBarVisibleController(),
+           visibleController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
+            updatePresenter(visibleController)
+            return visibleController
+        }
+        return nil
+    }
+    
     // MARK: - UI Actions
     func dismiss() {
         configEntity.playerHandler.closePlayer()
     }
     
     func showPlayer(node: MEGANode?, filePath: String?) {
-        guard let presenter else { return }
-        AudioPlayerManager.shared.initFullScreenPlayer(node: node, fileLink: filePath, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, messageId: .invalid, chatId: .invalid, isFromSharedItem: configEntity.isFromSharedItem, allNodes: nil)
+        guard let currentPresenter = activePresenter() else { return }
+        
+        AudioPlayerManager.shared.initFullScreenPlayer(
+            node: node,
+            fileLink: filePath,
+            filePaths: configEntity.relatedFiles,
+            isFolderLink: configEntity.isFolderLink,
+            presenter: currentPresenter,
+            messageId: .invalid,
+            chatId: .invalid,
+            isFromSharedItem: configEntity.isFromSharedItem,
+            allNodes: nil
+        )
     }
 }
