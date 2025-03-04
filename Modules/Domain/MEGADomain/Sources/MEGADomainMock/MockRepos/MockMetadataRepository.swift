@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public final class MockMetadataRepository: MetadataRepositoryProtocol {
+public final class MockMetadataRepository: MetadataRepositoryProtocol, @unchecked Sendable {
     public enum Action: Equatable {
         case coordinateForImage(URL)
         case coordinateForVideo(URL)
@@ -25,7 +25,7 @@ public final class MockMetadataRepository: MetadataRepositoryProtocol {
         return coordinate
     }
 
-    public func coordinateForVideo(at url: URL) -> Coordinate? {
+    public func coordinateForVideo(at url: URL) async -> Coordinate? {
         actions.append(.coordinateForVideo(url))
         return coordinate
     }

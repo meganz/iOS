@@ -57,41 +57,57 @@ private final class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
     }
 
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        let transfers = urls.compactMap { url in
-            var fileURL = url
-            if !url.path.contains("/tmp/") {
-                fileURL = URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: url.path))
-            }
+        Task {
+            let transfers = await buildTransfer(for: urls, parentHandle: parent.handle)
 
-            var appData: String?
-            if let coordinate = metadataUseCase.coordinateInTheFile(at: fileURL) {
-                appData = metadataUseCase.formatCoordinate(coordinate)
-            }
-
-            return CancellableTransfer(
-                handle: .invalid,
-                parentHandle: parent.handle,
-                fileLinkURL: nil,
-                localFileURL: fileURL,
-                name: nil,
-                appData: appData,
-                priority: false,
-                isFile: true,
+            CancellableTransferRouterOCWrapper().uploadFiles(
+                transfers,
+                presenter: presenter,
                 type: .upload
             )
+            
+            self.router = nil
         }
-
-        CancellableTransferRouterOCWrapper().uploadFiles(
-            transfers,
-            presenter: presenter,
-            type: .upload
-        )
-
-        self.router = nil
     }
 
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         self.router = nil
+    }
+    
+    private func buildTransfer(for urls: [URL], parentHandle: HandleEntity) async -> [CancellableTransfer] {
+        await withTaskGroup(of: CancellableTransfer.self) { taskGroup in
+            for url in urls {
+                taskGroup.addTask {
+                    var fileURL = url
+                    if !url.path.contains("/tmp/") {
+                        fileURL = URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: url.path))
+                    }
+                    
+                    var appData: String?
+                    if let coordinate = await self.metadataUseCase.coordinateInTheFile(at: fileURL) {
+                        appData = self.metadataUseCase.formatCoordinate(coordinate)
+                    }
+                    
+                    return CancellableTransfer(
+                        handle: .invalid,
+                        parentHandle: parentHandle,
+                        fileLinkURL: nil,
+                        localFileURL: fileURL,
+                        name: nil,
+                        appData: appData,
+                        priority: false,
+                        isFile: true,
+                        type: .upload
+                    )
+                }
+            }
+            
+            var transfers: [CancellableTransfer] = []
+            for await transfer in taskGroup {
+                transfers.append(transfer)
+            }
+            return transfers
+        }
     }
 }
 

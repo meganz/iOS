@@ -1,7 +1,7 @@
 import Foundation
 
-public protocol MetadataUseCaseProtocol {
-    func coordinateInTheFile(at url: URL) -> Coordinate?
+public protocol MetadataUseCaseProtocol: Sendable {
+    func coordinateInTheFile(at url: URL) async -> Coordinate?
     func formatCoordinate(_ coordinate: Coordinate) -> String
 }
 
@@ -20,13 +20,13 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
         self.fileExtensionRepository = fileExtensionRepository
     }
 
-    public func coordinateInTheFile(at url: URL) -> Coordinate? {
+    public func coordinateInTheFile(at url: URL) async -> Coordinate? {
         guard fileSystemRepository.fileExists(at: url) else { return nil }
 
         if fileExtensionRepository.isImage(url: url) {
             return metadataRepository.coordinateForImage(at: url)
         } else if fileExtensionRepository.isVideo(url: url) {
-            return metadataRepository.coordinateForVideo(at: url)
+            return await metadataRepository.coordinateForVideo(at: url)
         }
 
         return nil

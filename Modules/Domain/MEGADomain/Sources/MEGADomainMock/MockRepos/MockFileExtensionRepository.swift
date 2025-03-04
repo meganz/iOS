@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public final class MockFileExtensionRepository: FileExtensionRepositoryProtocol {
+public final class MockFileExtensionRepository: FileExtensionRepositoryProtocol, @unchecked Sendable {
     public enum FileType {
         case unknown
         case image

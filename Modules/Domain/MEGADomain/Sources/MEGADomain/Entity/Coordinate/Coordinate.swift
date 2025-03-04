@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Coordinate: Equatable {
+public struct Coordinate: Equatable, Sendable {
     public let latitude: Double
     public let longitude: Double
 
