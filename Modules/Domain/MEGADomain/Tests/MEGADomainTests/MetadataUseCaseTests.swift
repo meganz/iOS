@@ -3,12 +3,12 @@ import MEGADomainMock
 import XCTest
 
 final class MetadataUseCaseTests: XCTestCase {
-    func testCoordinateInTheFile_whenFileDoesNotExists_shouldReturnNil() {
-        assert(url: sampleURL(), fileExists: false, coordinate: nil, fileType: .unknown)
+    func testCoordinateInTheFile_whenFileDoesNotExists_shouldReturnNil() async {
+        await assert(url: sampleURL(), fileExists: false, coordinate: nil, fileType: .unknown)
     }
 
-    func testCoordinateInTheFile_whenFileIsNotAAudioOrVideo_shouldReturnNil() {
-        assert(
+    func testCoordinateInTheFile_whenFileIsNotAAudioOrVideo_shouldReturnNil() async {
+        await assert(
             url: sampleURL(),
             fileExists: true,
             coordinate: nil,
@@ -17,8 +17,8 @@ final class MetadataUseCaseTests: XCTestCase {
         )
     }
 
-    func testCoordinateInTheFile_whenFileIsAImage_shouldReturnNilWhenCoordinateNotPresent() {
-        assert(
+    func testCoordinateInTheFile_whenFileIsAImage_shouldReturnNilWhenCoordinateNotPresent() async {
+        await assert(
             url: sampleURL(),
             fileExists: true,
             coordinate: nil,
@@ -28,8 +28,8 @@ final class MetadataUseCaseTests: XCTestCase {
         )
     }
 
-    func testCoordinateInTheFile_whenFileIsAVideo_shouldReturnNilWhenCoordinateNotPresent() {
-        assert(
+    func testCoordinateInTheFile_whenFileIsAVideo_shouldReturnNilWhenCoordinateNotPresent() async {
+        await assert(
             url: sampleURL(),
             fileExists: true,
             coordinate: nil,
@@ -39,8 +39,8 @@ final class MetadataUseCaseTests: XCTestCase {
         )
     }
 
-    func testCoordinateInTheFile_whenFileIsAImage_shouldReturnValidCoordinateWhenCoordinatePresent() {
-        assert(
+    func testCoordinateInTheFile_whenFileIsAImage_shouldReturnValidCoordinateWhenCoordinatePresent() async {
+        await assert(
             url: sampleURL(),
             fileExists: true,
             coordinate: Coordinate(latitude: 100, longitude: 100),
@@ -50,8 +50,8 @@ final class MetadataUseCaseTests: XCTestCase {
         )
     }
 
-    func testCoordinateInTheFile_whenFileIsAVideo_shouldReturnValidCoordinateWhenCoordinatePresent() {
-        assert(
+    func testCoordinateInTheFile_whenFileIsAVideo_shouldReturnValidCoordinateWhenCoordinatePresent() async {
+        await assert(
             url: sampleURL(),
             fileExists: true,
             coordinate: Coordinate(latitude: 100, longitude: 100),
@@ -72,7 +72,7 @@ final class MetadataUseCaseTests: XCTestCase {
     }
 
     // MARK: - Private methods.
-
+    
     private typealias SUT = MetadataUseCase
 
     private func makeSUT(
@@ -96,7 +96,7 @@ final class MetadataUseCaseTests: XCTestCase {
         metadataRepositoryActions: [MockMetadataRepository.Action] = [],
         file: StaticString = #filePath,
         line: UInt = #line
-    ) {
+    ) async {
         let metadataRepository = MockMetadataRepository(coordinate: coordinate)
         let fileSystemRepository = MockFileSystemRepository(fileExists: fileExists)
         let fileExtensionRepository = MockFileExtensionRepository(fileType: fileType)
@@ -105,7 +105,7 @@ final class MetadataUseCaseTests: XCTestCase {
             fileSystemRepository: fileSystemRepository,
             fileExtensionRepository: fileExtensionRepository
         )
-        let result = sut.coordinateInTheFile(at: url)
+        let result = await sut.coordinateInTheFile(at: url)
         XCTAssertEqual(result, coordinate, file: file, line: line)
         XCTAssertEqual(fileExtensionRepository.actions, fileExtensionActions, file: file, line: line)
         XCTAssertEqual(metadataRepository.actions, metadataRepositoryActions, file: file, line: line)

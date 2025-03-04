@@ -1,7 +1,6 @@
 import AVFoundation
 import Foundation
 import MEGADomain
-import ImageIO
 
 public final class MetadataRepository: MetadataRepositoryProtocol {
     public init() {}
@@ -19,10 +18,10 @@ public final class MetadataRepository: MetadataRepositoryProtocol {
         return Coordinate(latitude: latitude, longitude: longitude)
     }
 
-    public func coordinateForVideo(at url: URL) -> Coordinate? {
+    public func coordinateForVideo(at url: URL) async -> Coordinate? {
         let asset = AVAsset(url: url)
-
-        for item in asset.metadata {
+        guard let metadata = try? await asset.load(.metadata) else { return nil }
+        for item in metadata {
             if item.key?.isEqual(AVMetadataKey.quickTimeMetadataKeyLocationISO6709) == true,
                let locationDescription = item.stringValue,
                /// Location description will look something like "+13.0716+074.9953+114.877/". we need to extract the latitude and longitude from the string.
