@@ -10,6 +10,7 @@ struct VideoCellPreviewEntity: Equatable {
     let duration: String
     let title: String
     let description: String?
+    let tags: [String]
     let searchText: String?
     let size: String
     let isExported: Bool
@@ -37,6 +38,26 @@ struct VideoCellPreviewEntity: Equatable {
         )
     }
 
+    func makeAttributedStringsForTags(
+        withPrimaryTextColor primaryTextColor: Color,
+        highlightedTextColor: Color
+    ) -> [AttributedString]? {
+        guard let searchText, tags.isNotEmpty else { return nil }
+
+        return tags.map {
+            AttributedString(
+                ("#" + $0)
+                    .forceLeftToRight()
+                    .highlightedStringWithKeyword(
+                        searchText.removingFirstLeadingHash(),
+                        primaryTextColor: UIColor(primaryTextColor),
+                        highlightedTextColor: UIColor(highlightedTextColor),
+                        normalFont: .preferredFont(style: .subheadline, weight: .medium)
+                    )
+            )
+        }
+    }
+
     static func == (lhs: VideoCellPreviewEntity, rhs: VideoCellPreviewEntity) -> Bool {
         let isImageContainerEqual = lhs.imageContainer.image == rhs.imageContainer.image
         && lhs.imageContainer.type == rhs.imageContainer.type
@@ -46,6 +67,7 @@ struct VideoCellPreviewEntity: Equatable {
         && lhs.duration == rhs.duration
         && lhs.title == rhs.title
         && lhs.description == lhs.description
+        && lhs.tags == rhs.tags
         && lhs.searchText == rhs.searchText
         && lhs.size == rhs.size
         && lhs.isExported == rhs.isExported
@@ -62,6 +84,7 @@ extension VideoCellPreviewEntity {
         duration: "",
         title: "",
         description: nil,
+        tags: [],
         searchText: nil,
         size: "",
         isExported: false,

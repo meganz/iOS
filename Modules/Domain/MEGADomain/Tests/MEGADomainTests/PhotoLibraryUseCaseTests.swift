@@ -248,7 +248,8 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
             photosRepository: photosRepository,
             searchRepository: fileSearchRepository,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled }
+            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled },
+            searchByNodeTagsFeatureFlagEnabled: { true }
         )
     }
 

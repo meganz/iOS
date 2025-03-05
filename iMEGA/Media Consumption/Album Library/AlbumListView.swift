@@ -94,6 +94,9 @@ struct AlbumListView: View {
                     ),
                     hiddenNodesFeatureFlagEnabled: {
                         DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+                    },
+                    searchByNodeTagsFeatureFlagEnabled: {
+                        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
                     }
                 ),
                 completion: { album, selectedPhotos in

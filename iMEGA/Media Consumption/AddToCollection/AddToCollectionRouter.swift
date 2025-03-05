@@ -170,6 +170,9 @@ public final class AddToCollectionRouter: AddToCollectionRouting {
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             hiddenNodesFeatureFlagEnabled: {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            searchByNodeTagsFeatureFlagEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
             }
         )
     }

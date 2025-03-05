@@ -63,7 +63,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         guard shouldShowMatchingTags else { return nil }
 
         let tags: [AttributedString] = result.tags.compactMap { inputTag in
-            guard let query = query(),
+            guard let query = query()?.removingFirstLeadingHash(),
                   case let tag = "#" + inputTag,
                   tag.containsIgnoringCaseAndDiacritics(searchText: query) else {
                 return nil
