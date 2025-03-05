@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="상태";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="고급 URL 미리 보기";
+"richUrlPreviews"="Enable sent link previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="MEGA Chat 경험을 향상하세요. URL 컨텐츠가 영지식 암호화 없이 수신됩니다.";
+"richPreviewsFooter"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="음성과 영상 통화";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="완료";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="고급 URL 미리 보기 활성화";
+"enableRichUrlPreviews"="Enable sent link previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="항상 허용";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="절대 안함";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="고급 URL 미리 보기를 영구히 해제하려고 합니다. 당신은 고급 URL 미리 보기를 설정에서 다시 활성화할 수 있습니다. 진행하시겠습니까?";
+"richPreviewsConfirmation"="We’ll stop asking if you want previews of your sent links. You can re-enable sent link previews in the settings. Do you want to proceed?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="미리 보기 제거";
 /*  */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="결제 필요";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="결제 기한 초과";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="%@에 갱신";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="Renews Today";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="Renews Tomorrow";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="다른 통화가 진행 중입니다. 다른 통화를 하기 전에 현재 통화를 종료하세요.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="No playlists";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="Create playlist";
+/* Title in chat settings */
+"settings.chat.title"="대화와 회의";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="상태";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="Notification settings";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="Chat media quality";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="Enable sent link previews";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="상태 설정";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="상태 설정";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="최근 연락 시간 보기";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="대화 알림";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="알림 끄기";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="이미지 품질";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="동영상 품질";

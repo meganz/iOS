@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stato";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Anteprime arricchite degli URL";
+"richUrlPreviews"="Enable sent link previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Migliora l'esperienza con MEGA Chat. I contenuti degli URL verranno recuperati senza la criptazione a conoscenza zero.";
+"richPreviewsFooter"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chiamate vocali e video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="Fatto";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Attiva le anteprime arricchite degli URL";
+"enableRichUrlPreviews"="Enable sent link previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permetti sempre";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Mai";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Stai disattivando l'anteprima ricca degli URL permanentemente. Puoi riattivare l'anteprima ricca degli URL nelle tue Impostazioni. Vuoi procedere?";
+"richPreviewsConfirmation"="We’ll stop asking if you want previews of your sent links. You can re-enable sent link previews in the settings. Do you want to proceed?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Rimuovi anteprima";
 /*  */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="Pagamento necessario";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="Pagamento in ritardo";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="Si rinnova il %@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="Renews Today";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="Renews Tomorrow";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un'altra chiamata in corso. Per favore, termina la chiamata corrente prima di iniziarne un'altra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3355,7 +3361,7 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Aggiungi descrizione";
 /* Schedule meeting title unencrypted disclaimer message */
-"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA can see your meeting name and description, but we keep them private";
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA può vedere il nome e la descrizione della tua riunione, ma li manteniamo privati";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Inserisci fino a 30 caratteri";
 /* Schedule meeting description error */
@@ -3433,7 +3439,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Disattivato";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Inactive";
+"device.center.backup.offline.status.message"="Inattivo";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Backup fermato";
 /* Device Center backup paused status */
@@ -4445,15 +4451,15 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="Unisciti ai milioni di persone e aziende che si affidano a MEGA per archiviare e proteggere i propri dati.";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"="Meeting confirmed: Invite others to join";
+"chat.meetings.shareLink.main"="Meeting confermato: invita altre persone a partecipare";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="Chiunque con questo link può unirsi al meeting e vedere la chat.";
 /* Button title to send to chat in modal shown when sharing a meeting link */
-"chat.meetings.shareLink.sendToChat"="Send link to chat";
+"chat.meetings.shareLink.sendToChat"="Invia link alla chat";
 /* Button title to share link in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.shareLink"="Condividi link";
 /* Title for when adding items to a Sets */
-"set.addTo"="Add to";
+"set.addTo"="Aggiungi a";
 /* Title for when adding items to a Album Sets */
 "set.addTo.album"="Aggiungi all'album";
 /* Node info cell title for tags */
@@ -4471,7 +4477,7 @@
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Massimo 32 caratteri";
 /* Button title shown to the user to add the tags in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Add “#%@” tag";
+"cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Aggiungi il tag “#%@”";
 /* Section title that is shown over the existing tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Tag esistenti";
 /* Section title for visual media photos section */
@@ -4501,11 +4507,11 @@
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Grande archivio";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="Store unlimited data, starting from %@.";
+"ads.adFree.content.generousStorage.message"="Archivia dati illimitati, a partire da %@.";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="Condivisione della banda di trasferimento";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
-"ads.adFree.content.transferSharing.message"="The people you share data with can use your transfer quota to download the items you shared.";
+"ads.adFree.content.transferSharing.message"="Le persone con cui condividi i dati possono utilizzare la tua banda di trasferimento per scaricare gli oggetti che hai condiviso.";
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Sicurezza addizionale nella condivisione";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="No playlists";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="Create playlist";
+/* Title in chat settings */
+"settings.chat.title"="Chat e meeting";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="Stato";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="Notification settings";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="Chat media quality";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="Enable sent link previews";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="Imposta lo stato";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="Impostazioni dello stato";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Mostra l’ultima visita";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="Notifiche della chat";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="Muta le notifiche";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="Qualità delle immagini";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="Qualità dei video";

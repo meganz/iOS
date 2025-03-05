@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="狀態";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="網址連結預覽";
+"richUrlPreviews"="啟用連結傳送預覽";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="提升MEGA Chat使用體驗。為了顯示內容預覽，系統將在沒有零知識的加密情況下對連結進行檢索。";
+"richPreviewsFooter"="預覽您在對話中傳送的連結。 請注意，檢索這些預覽不受零知識加密的保護。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="語音與視訊通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="完成";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="啟用網址連結預覽";
+"enableRichUrlPreviews"="啟用連結傳送預覽";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="總是允許";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="從不";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="您已永久停用網址連結預覽功能。您可以在設定中重新啟用連結預覽功能。請問您想繼續嗎？";
+"richPreviewsConfirmation"="我們將不再詢問您是否想要預覽您傳送的連結。您可以在設定中重新啟用傳送連結的預覽。您想要繼續嗎？";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="移除預覽";
 /*  */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="應付款";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="付款逾期";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="續訂日期%@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="今天續訂";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="明天續訂";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一個通話正在進行中。請先結束目前通話才能撥打另一通。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="沒有播放列表";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="建立播放列表";
+/* Title in chat settings */
+"settings.chat.title"="對話和會議";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="狀態";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="通知設定";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="對話媒體品質";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="啟用連結傳送預覽";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="預覽您在對話中傳送的連結。 請注意，檢索這些預覽不受零知識加密的保護。";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="設定狀態";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="狀態設定";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="顯示最後上線";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="允許聯絡人查看您上次在MEGA上活動的時間";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="將狀態設定為離開";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="閒置%@";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="對話通知";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="通知設成靜音";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="影像品質";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="影片品質";

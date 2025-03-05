@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="ステータス";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="リッチURLプレビュー";
+"richUrlPreviews"="送信済みリンクのプレビューを有効にする";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="MEGA Chat体験を強化します。URLコンテンツは、ゼロ知識暗号化なしで取得されます。";
+"richPreviewsFooter"="チャットで送信したリンクのプレビューを生成します。これらのプレビューの取得は、ゼロ知識暗号化によって保護されていないことにご注意してください。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="音声通話とビデオ通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="完了";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="リッチURLプレビューを有効にする";
+"enableRichUrlPreviews"="送信済みリンクのプレビューを有効にする";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="常に許可";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="決してしない";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="あなたはリッチURLプレビューを永久に無効にしています。リッチURLプレビューを設定で再度有効にできます。続行しますか？";
+"richPreviewsConfirmation"="当社は。送信済みリンクのプレビューをご希望かどうかを尋ねるのを止めます。設定で送信済みリンクのプレビューを再度有効にできます。 続行しますか？";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="プレビューを削除";
 /*  */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="お支払いが必要です";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="お支払い期日超過";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="更新日：%@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="本日更新 ";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="明日更新";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="別の電話がかかってきました。次の電話をかける前に、現在の通話を終えてください。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="プレイリストなし";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="プレイリストを作成";
+/* Title in chat settings */
+"settings.chat.title"="チャットとミーティング";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="ステータス";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="通知設定";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="チャットメディアの品質";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="送信済みリンクのプレビューを有効にする";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="チャットで送信したリンクのプレビューを生成します。これらのプレビューの取得は、ゼロ知識暗号化によって保護されていないことにご注意してください。";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="ステータスの設定";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="ステータス設定";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="最終ログインを表示";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="あなたが最後にMEGAで活動した時間を、連絡先が確認できるようにします";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="ステータスを「離席中」に設定";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@分間活動がない場合";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="チャット通知";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="通知をミュート";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="画質";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="モバイルデータ通信時は最適化された画像を送信し、Wi-Fi時は元サイズの画像を送信します";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="常に最適化された画像を送信してください";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="常に元のサイズの画像を送信してください";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="動画の品質";

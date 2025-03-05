@@ -691,7 +691,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cài đặt cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
-"general.cookieAndAdSettings"="Cookie and ad settings";
+"general.cookieAndAdSettings"="Cookie và cài đặt quảng cáo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Điều Khoản Dịch Vụ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -799,7 +799,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Trên mạng MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Thùng Rác Trống";
+"emptyRubbishBin"="Dọn Thùng Rác";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tất cả các mục trong Thùng Rác sẽ bị xóa.";
 /* Rubbish bin setting snack bar message' */
@@ -813,7 +813,7 @@
 /* Empty Rubbish Bin Warning Title */
 "settings.fileManagement.rubbishBin.clean.warning.title"="Dọn Thùng Rác?";
 /* Empty Rubbish Bin Cell Title */
-"settings.fileManagement.rubbishBin.clean.title"="Thùng Rác Trống";
+"settings.fileManagement.rubbishBin.clean.title"="Dọn Thùng Rác";
 /* Rubbish Bin Settings Navigation Title */
 "settings.fileManagement.rubbishBin.navigation.title"="Thiết đặt Thùng Rác";
 /* Empty Rubbish Bin Warning Empty button */
@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Trạng thái";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Xem trước nội dung URL";
+"richUrlPreviews"="Bật xem trước đường liên kết đã gửi";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Tăng cường trải nghiệm MEGA Chat. Nội dung dạng URL sẽ được truy vấn trực tiếp và không qua mã hóa vô kiến thức.";
+"richPreviewsFooter"="Tạo bản xem trước của các đường liên kết bạn gửi trong chat. Lưu ý rằng việc truy xuất các bản xem trước này không có được bảo vệ bởi mã hóa vô kiến thức.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Gọi thoại và video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="Xong";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Bật hiển thị xem trước nội dung tóm tắt của URL";
+"enableRichUrlPreviews"="Bật xem trước đường liên kết đã gửi";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Luôn luôn cho phép";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Không bao giờ";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Sau khi tắt tính năng xem trước nội dụng URL. Nếu muốn bật lại sẽ cần phải vào phần Thiết Đặt. Có chắc muốn tắt tính này hay không?";
+"richPreviewsConfirmation"="Chúng tôi sẽ không hỏi nếu bạn muốn bật bản xem trước cho đường liên kết đã gửi nữa. Bạn có thể bật lại trong phần thiết đặt. Bạn có muốn tắt hay không?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Ẩn hình xem trước";
 /*  */
@@ -2487,9 +2487,9 @@
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Được sử dụng bởi các đối tác quảng cáo đã được phê duyệt của chúng tôi để thu thập dữ liệu về các hoạt động duyệt web của bạn và tùy chỉnh quảng cáo bạn thấy trên các dịch vụ của chúng tôi và trên các trang web khác. Không chấp nhận các cookies này có nghĩa là bạn vẫn sẽ thấy quảng cáo nhưng nội dung sẽ không liên quan.";
 /* Ad settings header title */
-"settings.ad.header.title"="Ad settings";
+"settings.ad.header.title"="Cài đặt quảng cáo";
 /* Ad settings menu title for Ad personalisation */
-"settings.ad.adPersonalisation.title"="Ad personalisation";
+"settings.ad.adPersonalisation.title"="Cá nhân hóa quảng cáo";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Phiên bản đã được chuyển thành một tệp tin mới toàn vẹn";
 /* Text shown for the action create new file */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="Yêu cầu giải quyết thanh toán";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="Thánh toán bị quá hạn";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="Tự gia hạn vào %@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="Tự gia hạn vào Hôm Nay";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="Tự gia hạn vào Ngày Mai";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Đang có một cuộc gọi đang giang dở. Xin chấm dứt cuộc gọi đó trước khi tham gia vào cuộc khác.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="Không có danh sách phát nào";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="Tạo danh sách phát";
+/* Title in chat settings */
+"settings.chat.title"="Chat và họp mặt";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="Trạng thái";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="Các thiết đặt thông báo";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="Chất lượng phương tiện trong chat";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="Bật xem trước đường liên kết đã gửi";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="Tạo bản xem trước của các đường liên kết bạn gửi trong chat. Lưu ý rằng việc truy xuất các bản xem trước này không có được bảo vệ bởi mã hóa vô kiến thức.";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="Chọn trạng thái hoạt động online";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="Thiết đặt trạng thái";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Hiện lần thấy cuối";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Cho phép các tên liên lạc biết được lần cuối bạn hoạt động trên MEGA";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Đặt trạng thái là Vắng mặt";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ không có hoạt động";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="Âm báo chát";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="Tắt tiếng thông báo";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="Chất lượng hình ảnh";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Gửi hình ảnh với chất lượng được chỉnh tối ưu khi dùng mạng di động nhưng gửi với kích thước gốc khi dùng Wi-Fi";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Luôn gửi hình ảnh với chất lượng được tối ưu";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Luôn gửi hình ảnh với kích thước gốc";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="Chất lượng video";
