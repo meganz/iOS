@@ -3,7 +3,18 @@ import MEGADomain
 import MEGASdk
 import MEGASwift
 
-public final class AccountRepository: NSObject, AccountRepositoryProtocol {    
+public final class AccountRepository: NSObject, AccountRepositoryProtocol {
+    public static var newRepo: AccountRepository {
+        AccountRepository(
+            backupsRootFolderNodeAccess: BackupRootNodeAccess.shared,
+            accountUpdatesProvider: AccountUpdatesProvider(
+                sdk: MEGASdk.sharedSdk,
+                areSOQBannersEnabled: {
+                    true
+                }
+            )
+        )
+    }
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
     private let backupsRootFolderNodeAccess: NodeAccessProtocol

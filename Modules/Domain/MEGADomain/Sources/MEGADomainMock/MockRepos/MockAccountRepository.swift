@@ -3,6 +3,10 @@ import MEGADomain
 import MEGASwift
 
 public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked Sendable {
+    public static var newRepo: MockAccountRepository {
+        MockAccountRepository()
+    }
+    
     // MARK: - User Authentication Details
     let currentUser: UserEntity?
     public let isGuest: Bool

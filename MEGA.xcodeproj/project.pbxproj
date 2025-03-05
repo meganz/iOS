@@ -300,7 +300,6 @@
 		25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A990FB2C8968AA00992256 /* TimeLineViewModel.swift */; };
 		25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */; };
 		25AD36E92BD8848E004DCF3B /* NodeValidationRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */; };
-		25AD36EB2BD88539004DCF3B /* AccountRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */; };
 		25AF215E2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */; };
 		25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */; };
 		25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B774C32B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift */; };
@@ -1600,7 +1599,6 @@
 		A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
-		A5A744AE2B9FF59100605E4C /* AccountRepository+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */; };
 		A5BED9782B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5BED9792B9AF72500C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */; };
@@ -4336,7 +4334,6 @@
 		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
-		A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountRepository+Additions.swift"; sourceTree = "<group>"; };
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
@@ -6456,7 +6453,6 @@
 		25AD36E62BD882E0004DCF3B /* RepoExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				A5A744AD2B9FF59100605E4C /* AccountRepository+Additions.swift */,
 				25AD36E72BD8830B004DCF3B /* NodeValidationRepository+Additions.swift */,
 				2554C5C52BF42B2600844C71 /* SystemGeneratedNodeRepository+Additions.swift */,
 				25D360B22BB51E7F00ACFDA4 /* UserAlbumCacheRepository+Additions.swift */,
@@ -14195,7 +14191,6 @@
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
-				A5A744AE2B9FF59100605E4C /* AccountRepository+Additions.swift in Sources */,
 				94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
@@ -15946,7 +15941,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25AD36EB2BD88539004DCF3B /* AccountRepository+Additions.swift in Sources */,
 				77C2E07C24BCBB9C00B4894A /* ActionSheetActions.swift in Sources */,
 				77C2E07D24BCBC0100B4894A /* ActionSheetCell.swift in Sources */,
 				C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */,
