@@ -29,17 +29,20 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     private let searchRepository: U
     private let sensitiveDisplayPreferenceUseCase: V
     private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
+    private let searchByNodeTagsFeatureFlagEnabled: @Sendable () -> Bool
 
     public init(
         photosRepository: T,
         searchRepository: U,
         sensitiveDisplayPreferenceUseCase: V,
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
+        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool,
+        searchByNodeTagsFeatureFlagEnabled: @escaping @Sendable () -> Bool
     ) {
         self.photosRepository = photosRepository
         self.searchRepository = searchRepository
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
+        self.searchByNodeTagsFeatureFlagEnabled = searchByNodeTagsFeatureFlagEnabled
     }
     
     public func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
@@ -132,6 +135,7 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
                 try? await searchRepository.search(filter: .recursive(
                     searchText: searchText,
                     searchDescription: searchText,
+                    searchTag: searchByNodeTagsFeatureFlagEnabled() ? searchText.removingFirstLeadingHash() : nil,
                     searchTargetLocation: searchTargetLocation,
                     supportCancel: false,
                     sortOrderType: sortOrder,
@@ -151,6 +155,7 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
                 try? await searchRepository.search(filter: .nonRecursive(
                     searchText: searchText,
                     searchDescription: searchText,
+                    searchTag: searchByNodeTagsFeatureFlagEnabled() ? searchText.removingFirstLeadingHash() : nil,
                     searchTargetNode: searchTargetNode,
                     supportCancel: false,
                     sortOrderType: sortOrder,

@@ -9,7 +9,8 @@ extension NodeEntity {
     func toVideoCellPreviewEntity(
         thumbnailContainer: any ImageContaining,
         isDownloaded: Bool,
-        searchText: String?
+        searchText: String?,
+        searchByNodeTagsFeatureFlagEnabled: Bool
     ) -> VideoCellPreviewEntity {
         let description: String? = if let searchText,
                                       let description = description,
@@ -20,12 +21,19 @@ extension NodeEntity {
             nil
         }
 
+        let filteredTags: [String] = if searchByNodeTagsFeatureFlagEnabled, let searchText {
+            tags.filter({ $0.containsIgnoringCaseAndDiacritics(searchText: searchText.removingFirstLeadingHash()) })
+        } else {
+            []
+        }
+
         return VideoCellPreviewEntity(
             isFavorite: isFavourite,
             imageContainer: thumbnailContainer,
             duration: TimeInterval(duration).timeString,
             title: name,
             description: description,
+            tags: filteredTags,
             searchText: searchText,
             size: FileSizeFormatter.memoryStyleString(fromByteCount: Int64(size)),
             isExported: isExported,

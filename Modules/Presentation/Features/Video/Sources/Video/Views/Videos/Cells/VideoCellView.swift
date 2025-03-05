@@ -128,6 +128,13 @@ struct VideoCellViewContent: View {
                 Text(description)
                     .lineLimit(1)
             }
+
+            if let tags = previewEntity.makeAttributedStringsForTags(
+                withPrimaryTextColor: videoConfig.colorAssets.secondaryTextColor,
+                highlightedTextColor: videoConfig.colorAssets.highlightedTextColor
+            ) {
+                HorizontalTagListView(viewModel: .init(tags: tags))
+            }
         }
     }
     

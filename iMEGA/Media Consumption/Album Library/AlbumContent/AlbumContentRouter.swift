@@ -52,6 +52,9 @@ struct AlbumContentRouter: AlbumContentRouting {
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             hiddenNodesFeatureFlagEnabled: {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            searchByNodeTagsFeatureFlagEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
             }
         )
 
@@ -92,6 +95,9 @@ struct AlbumContentRouter: AlbumContentRouting {
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             hiddenNodesFeatureFlagEnabled: {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            searchByNodeTagsFeatureFlagEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
             }
         )
 
@@ -177,6 +183,9 @@ struct AlbumContentRouter: AlbumContentRouting {
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
             hiddenNodesFeatureFlagEnabled: {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            searchByNodeTagsFeatureFlagEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
             }
         )
     }

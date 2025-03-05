@@ -71,6 +71,7 @@ class VideoCellPreviewEntityTests: XCTestCase {
             duration: "",
             title: "title",
             description: nil,
+            tags: [],
             searchText: nil,
             size: "size",
             isExported: isExported,

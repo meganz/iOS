@@ -77,7 +77,8 @@ final class VideoCellViewModel: ObservableObject {
         previewEntity = nodeEntity.toVideoCellPreviewEntity(
             thumbnailContainer: cachedContainer,
             isDownloaded: false,
-            searchText: searchText
+            searchText: searchText,
+            searchByNodeTagsFeatureFlagEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
         )
     }
     
@@ -115,7 +116,8 @@ final class VideoCellViewModel: ObservableObject {
             .toVideoCellPreviewEntity(
                 thumbnailContainer: container,
                 isDownloaded: nodeUseCase.isDownloaded(nodeHandle: nodeEntity.handle),
-                searchText: searchText
+                searchText: searchText,
+                searchByNodeTagsFeatureFlagEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
             )
     }
     

@@ -38,6 +38,9 @@ struct VideoRevampRouter: VideoRevampRouting {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             hiddenNodesFeatureFlagEnabled: {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            searchByNodeTagsFeatureFlagEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
             }
         )
         let videoPlaylistUseCase = VideoPlaylistUseCase(
@@ -136,6 +139,9 @@ struct VideoRevampRouter: VideoRevampRouting {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             hiddenNodesFeatureFlagEnabled: {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            },
+            searchByNodeTagsFeatureFlagEnabled: {
+                DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
             }
         )
         let nodeRepository = NodeRepository.newRepo
