@@ -3,6 +3,12 @@ import MEGADesignToken
 import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
+    private var configureDurationTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    
     struct Dimensions {
         static var waveViewSize = CGSize(width: 42, height: 25)
         static var playButtonSize = CGSize(width: 15, height: 15)
@@ -39,7 +45,12 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setupConstraints() {        
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        configureDurationTask = nil
+    }
+    
+    override func setupConstraints() {
         playButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -125,12 +136,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
                     configureLoadedView()
                 }
             } else if let path = transfer.path {
-                guard FileManager.default.fileExists(atPath: path) else {
-                    MEGALogInfo("Failed to create audio player for URL: \(path)")
-                    return
-                }
-                let asset = AVAsset(url: URL(fileURLWithPath: path))
-                durationLabel.text = CMTimeGetSeconds(asset.duration).timeString
+                configureDuration(with: path)
             }
         } else {
             guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
@@ -177,6 +183,25 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     
     private func isFromCurrentSender(message: any MessageType) -> Bool {
         return UInt64(message.sender.senderId) == MEGAChatSdk.shared.myUserHandle
+    }
+    
+    private func configureDuration(with path: String) {
+        /// Since AVAsset is non-Sendable, using detached task to avoid the following compile error
+        /// Passing argument of non-sendable type 'AVAsset' outside of main actor-isolated context may introduce data races
+        configureDurationTask = Task.detached { [weak self] in
+            guard FileManager.default.fileExists(atPath: path) else {
+                MEGALogInfo("[ChatVoiceClip] No file found at path: \(path)")
+                return
+            }
+            let asset = AVAsset(url: URL(fileURLWithPath: path))
+            let duration: CMTime = (try? await asset.load(.duration)) ?? .zero
+            guard !Task.isCancelled else { return }
+            await self?.updateDurationLabel(CMTimeGetSeconds(duration).timeString)
+        }
+    }
+    
+    private func updateDurationLabel(_ durationText: String) {
+        durationLabel.text = durationText
     }
 }
 

@@ -10,24 +10,28 @@ import XCTest
 
 final class NodeCollectionViewCellViewModelTests: XCTestCase {
     
+    @MainActor
     func testIsNodeVideo_videoName_shouldBeTrue() {
         let viewModel = sut()
         
         XCTAssertTrue(viewModel.isNodeVideo(name: "video.mp4"))
     }
     
+    @MainActor
     func testIsNodeVideo_imageName_shouldBeFalse() {
         let viewModel = sut()
         
         XCTAssertFalse(viewModel.isNodeVideo(name: "image.png"))
     }
     
+    @MainActor
     func testIsNodeVideo_noName_shouldBeFalse() {
         let viewModel = sut()
         
         XCTAssertFalse(viewModel.isNodeVideo(name: ""))
     }
     
+    @MainActor
     func testIsNodeVideoWithValidDuration_withVideo_validDuration_shouldBeTrue() {
         let mockNode = NodeEntity(name: "video.mp4", handle: 1, duration: 10)
         let viewModel = sut(node: mockNode)
@@ -35,6 +39,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.isNodeVideoWithValidDuration())
     }
     
+    @MainActor
     func testIsNodeVideoWithValidDuration_withVideo_zeroDuration_shouldBeTrue() {
         let mockNode = NodeEntity(name: "video.mp4", handle: 1, duration: 0)
         let viewModel = sut(node: mockNode)
@@ -42,6 +47,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.isNodeVideoWithValidDuration())
     }
     
+    @MainActor
     func testIsNodeVideoWithValidDuration_withVideo_invalidDuration_shouldBeFalse() {
         let mockNode = NodeEntity(name: "video.mp4", handle: 1, duration: -1)
         let viewModel = sut(node: mockNode)
@@ -49,6 +55,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.isNodeVideoWithValidDuration())
     }
     
+    @MainActor
     func testIsNodeVideoWithValidDuration_notVideo_shouldBeFalse() {
         let mockNode = NodeEntity(name: "image.png", handle: 1, duration: 0)
         let viewModel = sut(node: mockNode)
@@ -56,6 +63,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.isNodeVideoWithValidDuration())
     }
     
+    @MainActor
     func testIsNodeVideoWithValidDuration_noName_shouldBeFalse() {
         let mockNode = NodeEntity(name: "", handle: 1, duration: 0)
         let viewModel = sut(node: mockNode)
@@ -63,6 +71,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.isNodeVideoWithValidDuration())
     }
     
+    @MainActor
     func testHasThumbnail_NodeEntityHasThumbnail_shouldBeTrue() {
         let mockNode = NodeEntity(handle: 1, hasThumbnail: true)
         let viewModel = sut(node: mockNode)
@@ -70,12 +79,14 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.hasThumbnail)
     }
     
+    @MainActor
     func testHasThumbnail_nodeIsNil_shouldBeFalse() {
         let viewModel = sut(node: nil)
         
         XCTAssertFalse(viewModel.hasThumbnail)
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeIsNil_shouldSetIsSensitiveFalse() async {
         let viewModel = sut(
             node: NodeEntity(handle: 1, isMarkedSensitive: true),
@@ -98,6 +109,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndIsFromSharedItem_shouldSetIsSensitiveFalse() async {
         let viewModel = sut(
             node: nil,
@@ -119,6 +131,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenAccountIsInvalid_shouldSetIsSensitiveFalse() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
@@ -143,6 +156,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeIsSensitive_shouldSetIsSensitiveTrue() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
@@ -167,6 +181,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: true)
         let viewModel = sut(
@@ -192,6 +207,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testConfigureCell_whenFeatureFlagOnAndNodeInheritedSensitivity_shouldSetIsSensitiveTrue() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
         let viewModel = sut(
@@ -216,6 +232,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
         
+    @MainActor
     func testConfigureCell_whenFeatureFlagOffAndNodeInheritedSensitivity_shouldSetIsSensitiveFalse() async {
         let node = NodeEntity(handle: 1, isMarkedSensitive: false)
         let viewModel = sut(
@@ -239,6 +256,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    @MainActor
     func testThumbnailLoading_whenNodeHasValidThumbnail_shouldReturnCachedImage() async throws {
         let imageUrl = try makeImageURL()
         let node = NodeEntity(handle: 1, hasThumbnail: true, isMarkedSensitive: true)
@@ -257,6 +275,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
     
+    @MainActor
     func testThumbnailLoading_whenNodeHasThumbnailAndFailsToLoad_shouldReturnFileTypeImage() async throws {
         let imageData = try XCTUnwrap(UIImage(systemName: "heart.fill")?.pngData())
         let node = NodeEntity(nodeType: .file, name: "test.txt", handle: 1, hasThumbnail: true, isMarkedSensitive: true)
@@ -276,6 +295,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
 }
 
 extension NodeCollectionViewCellViewModelTests {
+    @MainActor
     private func sut(node: NodeEntity? = nil,
                      isFromSharedItem: Bool = false,
                      sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
