@@ -2,7 +2,8 @@ import MEGAL10n
 
 struct SimpleDialogConfigFactory {
     static func upgradePlanDialog(
-        upgradeAction: @escaping () -> Void
+        upgradeAction: @escaping () -> Void,
+        dismissAction: @escaping () -> Void
     ) -> SimpleDialogConfig {
         .init(
             imageResource: .upgradeToProPlan,
@@ -14,13 +15,15 @@ struct SimpleDialogConfigFactory {
                     theme: .primary,
                     action: .action({ _ in upgradeAction() })
                 )
-            ]
+            ],
+            dismissAction: dismissAction
         )
     }
     
     static func shareLinkDialog(
         sendAction: @escaping AsyncViewAction,
-        shareAction: @escaping AsyncViewAction
+        shareAction: @escaping AsyncViewAction,
+        dismissAction: @escaping () -> Void
     ) -> SimpleDialogConfig {
         .init(
             imageResource: .shareLink,
@@ -38,7 +41,8 @@ struct SimpleDialogConfigFactory {
                     theme: .primary,
                     action: .asyncAction(shareAction)
                 )
-            ]
+            ],
+            dismissAction: dismissAction
         )
     }
 }

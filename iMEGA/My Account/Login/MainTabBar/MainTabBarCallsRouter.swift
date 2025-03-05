@@ -201,6 +201,9 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
                 guard let self else { return }
                 UpgradeAccountPlanRouter(presenter: baseViewController, accountDetails: account).start()
             }
+        } dismissAction: { [weak self] in
+            guard let self else { return }
+            baseViewController.dismiss(animated: true)
         }
         
         let dialogView = SimpleDialogView(dialogConfig: dialogConfig)
