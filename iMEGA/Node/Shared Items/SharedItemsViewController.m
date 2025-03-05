@@ -467,6 +467,7 @@
     [self configureAccessibilityForCell:cell];
     [self configureContactNotVerifiedImageVisibilityFor:cell with:user tab:SharedItemsTabIncomingShares];
     [self configureCellDescription:cell for:node];
+    [self configureCellTags:cell for:node];
 
     return cell;
 }
@@ -517,6 +518,7 @@
     [self configureAccessibilityForCell:cell];
     [self configureContactNotVerifiedImageVisibilityFor:cell with:nil tab:SharedItemsTabOutgoingShares];
     [self configureCellDescription:cell for:node];
+    [self configureCellTags:cell for:node];
     return cell;
 }
 

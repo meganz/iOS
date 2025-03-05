@@ -42,7 +42,38 @@ final class SharedItemsViewModelTests: XCTestCase {
             )
         )
     }
-    
+
+    struct TagsForNodeTestData {
+        let isFeatureFlagEnabled: Bool
+        let tags: [String]
+        let searchText: String?
+        let output: [NSAttributedString]
+        static let flagDisabled = TagsForNodeTestData(isFeatureFlagEnabled: false, tags: ["tag"], searchText: "tag", output: [])
+        static let emptyTags = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: [], searchText: "tag", output: [])
+        static let searchTextIsNil = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: nil, output: [])
+        static let searchTextNotMatched = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: "x", output: [attributedOutput(tag: "tag", searchText: "x")])
+        static let singleMatch = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: "ta", output: [attributedOutput(tag: "tag", searchText: "ta")])
+        static let multipleMatches = TagsForNodeTestData(
+            isFeatureFlagEnabled: true,
+            tags: ["tag1", "tag2", "xxx"],
+            searchText: "tag",
+            output: [
+                attributedOutput(tag: "tag1", searchText: "tag"),
+                attributedOutput(tag: "tag2", searchText: "tag"),
+                attributedOutput(tag: "xxx", searchText: "tag")
+            ]
+        )
+
+        private static func attributedOutput(tag: String, searchText: String) -> NSAttributedString {
+            ("#" + tag).forceLeftToRight().highlightedStringWithKeyword(
+                searchText,
+                primaryTextColor: TokenColors.Text.primary,
+                highlightedTextColor: TokenColors.Notifications.notificationSuccess,
+                normalFont: .preferredFont(style: .subheadline, weight: .medium)
+            )
+        }
+    }
+
     @MainActor
     func testAreMediaNodes_withNodes_true() async {
         let mockMediaUseCase = MockMediaUseCase(isPlayableMediaFile: true)
@@ -149,22 +180,44 @@ final class SharedItemsViewModelTests: XCTestCase {
         }
     }
 
+    @MainActor
+    func testTagsForNode_ShouldReturnCorrectValues() async {
+        let testData: [TagsForNodeTestData] = [
+            .flagDisabled,
+            .emptyTags,
+            .searchTextIsNil,
+            .searchTextNotMatched,
+            .singleMatch,
+            .multipleMatches
+        ]
+        testData.forEach { data in
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.searchByNodeTags: data.isFeatureFlagEnabled])
+            let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+            let tagsStringList = MockMEGAStringList(size: data.tags.count, strings: data.tags)
+            XCTAssertEqual(sut.tagsForNode(MockNode(handle: 1, tags: tagsStringList), with: data.searchText), data.output)
+        }
+    }
+
     @MainActor private func makeSUT(
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
+        featureFlagProvider: MockFeatureFlagProvider = .init(list: [:]),
         file: StaticString = #file,
         line: UInt = #line
     ) -> SharedItemsViewModel {
-        let sut = SharedItemsViewModel(shareUseCase: shareUseCase,
-                                       mediaUseCase: mediaUseCase,
-                                       saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
-                                       moveToRubbishBinViewModel: moveToRubbishBinViewModel
+        let sut = SharedItemsViewModel(
+            shareUseCase: shareUseCase,
+            mediaUseCase: mediaUseCase,
+            saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel,
+            featureFlagProvider: featureFlagProvider
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
+
 }
 
 // swiftlint:enable sorted_imports
