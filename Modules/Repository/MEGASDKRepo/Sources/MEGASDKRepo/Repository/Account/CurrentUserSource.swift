@@ -7,6 +7,7 @@ public final class CurrentUserSource: @unchecked Sendable {
     public static let shared = CurrentUserSource(sdk: MEGASdk.sharedSdk)
     
     private let sdk: MEGASdk
+    private let notificationCenter: NotificationCenter
     private var subscriptions = Set<AnyCancellable>()
     private var _currentUserHandle: Atomic<HandleEntity?>
     private var _currentUserEmail: Atomic<String?>
@@ -14,9 +15,16 @@ public final class CurrentUserSource: @unchecked Sendable {
     @Atomic private var _shouldRefreshAccountDetails: Bool = false
     @Atomic private var _accountDetails: AccountDetailsEntity?
     @Atomic private var _storageStatus: StorageStatusEntity?
+    /// Important: This is separate from storage status due to `sdk.getUserAttributeType(.storageState` returning `full` on the paywalled account.
+    /// The value is updated via `onEvent` type `storage`
+    @Atomic private var _isPaywalled = false
     
-    public init(sdk: MEGASdk) {
+    public init(
+        sdk: MEGASdk,
+        notificationCenter: NotificationCenter = .default
+    ) {
         self.sdk = sdk
+        self.notificationCenter = notificationCenter
         let user = sdk.myUser
         _currentUserHandle = Atomic(wrappedValue: user?.handle)
         _currentUserEmail = Atomic(wrappedValue: user?.email)
@@ -46,6 +54,11 @@ public final class CurrentUserSource: @unchecked Sendable {
         currentUserEmail?.isEmpty != false
     }
     
+    /// - Returns: A Boolean value indicating whether the account is paywalled.
+    public var isPaywalled: Bool {
+        _isPaywalled
+    }
+    
     public func currentUser() async -> UserEntity? {
         await Task.detached {
             self.sdk.myUser?.toUserEntity()
@@ -53,8 +66,7 @@ public final class CurrentUserSource: @unchecked Sendable {
     }
     
     private func registerAccountNotifications() {
-        NotificationCenter
-            .default
+        notificationCenter
             .publisher(for: .accountDidLogin)
             .sink { [weak self] _ in
                 guard let self else { return }
@@ -63,8 +75,7 @@ public final class CurrentUserSource: @unchecked Sendable {
             }
             .store(in: &subscriptions)
         
-        NotificationCenter
-            .default
+        notificationCenter
             .publisher(for: .accountDidLogout)
             .sink { [weak self] _ in
                 guard let self else { return }
@@ -74,19 +85,18 @@ public final class CurrentUserSource: @unchecked Sendable {
                 $_shouldRefreshAccountDetails.mutate { $0 = false }
                 $_accountDetails.mutate { $0 = nil }
                 $_storageStatus.mutate { $0 = nil }
+                $_isPaywalled.mutate { $0 = false }
             }
             .store(in: &subscriptions)
         
-        NotificationCenter
-            .default
+        notificationCenter
             .publisher(for: .accountDidFinishFetchNodes)
             .sink { [weak self] _ in
                 self?._currentUserEmail.mutate { $0 = self?.sdk.myUser?.email }
             }
             .store(in: &subscriptions)
         
-        NotificationCenter
-            .default
+        notificationCenter
             .publisher(for: .accountEmailDidChange)
             .compactMap {
                 $0.userInfo?["user"] as? MEGAUser
@@ -99,8 +109,7 @@ public final class CurrentUserSource: @unchecked Sendable {
             }
             .store(in: &subscriptions)
         
-        NotificationCenter
-            .default
+        notificationCenter
             .publisher(for: .accountDidFinishFetchAccountDetails)
             .compactMap { $0.object as? AccountDetailsEntity }
             .sink { [weak self] accountDetails in
@@ -108,12 +117,25 @@ public final class CurrentUserSource: @unchecked Sendable {
             }
             .store(in: &subscriptions)
         
-        NotificationCenter
-            .default
+        notificationCenter
             .publisher(for: .storageStatusDidChange)
             .compactMap { $0.object as? StorageStatusEntity }
             .sink { [weak self] storageStatus in
                 self?.setStorageStatus(storageStatus)
+            }
+            .store(in: &subscriptions)
+        
+        notificationCenter
+            .publisher(for: .storageEventDidChange)
+            .compactMap {
+                guard let eventNumber = ($0.userInfo?[NotificationUserInfoKey.storageEventState] as? UInt),
+                      let storeState = StorageState(rawValue: eventNumber) else {
+                    return nil
+                }
+                return storeState == .paywall
+            }
+            .sink { [weak self] isPaywalled in
+                self?.$_isPaywalled.mutate { $0 = isPaywalled }
             }
             .store(in: &subscriptions)
     }

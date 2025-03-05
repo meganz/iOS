@@ -45,6 +45,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let tracker: any AnalyticsTracking
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
+    private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     
@@ -59,6 +60,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
          tracker: some AnalyticsTracking,
          monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
          sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+         overDiskQuotaChecker: some OverDiskQuotaChecking,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
          albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
@@ -68,6 +70,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         self.tracker = tracker
         self.monitorAlbumsUseCase = monitorAlbumsUseCase
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
+        self.overDiskQuotaChecker = overDiskQuotaChecker
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
@@ -120,7 +123,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     func onCreateAlbum() {
         tracker.trackAnalyticsEvent(with: DIContainer.createNewAlbumDialogEvent)
-        guard selection.editMode.isEditing == false else { return }
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded(),
+              selection.editMode.isEditing == false else { return }
         showCreateAlbumAlert.toggle()
     }
     

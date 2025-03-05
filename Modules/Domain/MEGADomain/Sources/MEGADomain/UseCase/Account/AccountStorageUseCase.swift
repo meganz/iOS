@@ -75,6 +75,11 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     /// This property is used to prevent the display of storage-related banners or warnings
     /// for users with unlimited storage accounts, such as Business or Pro Flexi plans.
     var isUnlimitedStorageAccount: Bool { get }
+    
+    ///  A Boolean value indicating whether the account is paywalled.
+    ///
+    /// - Returns: `true` if the account is paywalled.
+    var isPaywalled: Bool { get }
 }
 
 public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
@@ -155,5 +160,9 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
             return true
         }
         return currentDate().timeIntervalSince(lastDismissedDate) > storageBannerDismissDuration
+    }
+    
+    public var isPaywalled: Bool {
+        accountRepository.isPaywalled
     }
 }

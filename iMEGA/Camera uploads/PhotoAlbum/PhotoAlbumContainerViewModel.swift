@@ -1,7 +1,9 @@
 import Combine
+import MEGADomain
 import MEGAPresentation
 import SwiftUI
 
+@MainActor
 final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var editMode: EditMode = .inactive {
         willSet {
@@ -19,9 +21,14 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var disableSelectBarButton = false
     
     private let tracker: any AnalyticsTracking
+    private let overDiskQuotaChecker: any OverDiskQuotaChecking
     
-    init(tracker: some AnalyticsTracking) {
+    init(
+        tracker: some AnalyticsTracking,
+        overDiskQuotaChecker: some OverDiskQuotaChecking
+    ) {
         self.tracker = tracker
+        self.overDiskQuotaChecker = overDiskQuotaChecker
     }
     
     func didAppear() {
@@ -29,7 +36,18 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     }
     
     func shareLinksTapped() {
-        showShareAlbumLinks = true
         tracker.trackAnalyticsEvent(with: DIContainer.albumListShareLinkMenuItemEvent)
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        showShareAlbumLinks = true
+    }
+    
+    func removeLinksTapped() {
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        showRemoveAlbumLinksAlert.toggle()
+    }
+    
+    func deleteAlbumsTapped() {
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        showDeleteAlbumAlert.toggle()
     }
 }

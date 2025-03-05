@@ -87,18 +87,7 @@ extension AlbumContentViewController: QuickActionsMenuDelegate {
         } else if action == .shareLink || action == .manageLink {
             viewModel.dispatch(.shareLink)
         } else if action == .removeLink {
-            let alert = UIAlertController(title: Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertTitle(1),
-                                          message: Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertMessage(1),
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: { _ in
-                alert.dismiss(animated: true, completion: nil)
-            }))
-            alert.addAction(UIAlertAction(title: Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertConfirmButtonTitle(1),
-                                          style: .default, handler: { [weak self] _ in
-                guard let self else { return }
-                viewModel.dispatch(.removeLink)
-            }))
-            present(alert, animated: true, completion: nil)
+           viewModel.dispatch(.removeLink)
         }
     }
 }
@@ -109,7 +98,7 @@ extension AlbumContentViewController: AlbumMenuDelegate {
         if action == .selectAlbumCover {
             viewModel.dispatch(.showAlbumCoverPicker)
         } else if action == .delete {
-            executeCommand(.showDeleteAlbumAlert)
+            viewModel.dispatch(.deleteAlbum)
         }
     }
 }

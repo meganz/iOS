@@ -211,24 +211,12 @@ struct ImportAlbumView: View {
         .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
     }
     
-    @ViewBuilder
     private func shareLinkButton() -> some View {
-        if #available(iOS 16.0, *) {
-            ShareLink(item: viewModel.publicLink) {
-                Image(uiImage: UIImage.link)
-                    .resizable()
-                    .frame(width: 28, height: 28)
-                    .opacity(viewModel.isShareLinkButtonDisabled ? ImportAlbumViewModel.Constants.disabledOpacity : 1)
-            }
-            .padding(.vertical, Constants.toolbarButtonVerticalPadding)
-            .padding(.horizontal, Constants.toolbarButtonHorizontalPadding)
-            .disabled(viewModel.isShareLinkButtonDisabled)
-        } else {
-            ToolbarImageButton(image: UIImage.link,
-                               isDisabled: viewModel.isShareLinkButtonDisabled,
-                               action: viewModel.shareLinkTapped)
-            .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
-        }
+        ToolbarImageButton(
+            image: UIImage.link,
+            isDisabled: viewModel.isShareLinkButtonDisabled,
+            action: viewModel.shareLinkTapped)
+        .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
     }
 }
 

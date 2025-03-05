@@ -8,17 +8,24 @@ import MEGAPresentation
 import MEGASwiftUI
 
 enum AlbumContentAction: ActionType {
+    case addToAlbumTap
     case onViewReady
     case onViewWillAppear
     case onViewWillDisappear
     case changeSortOrder(SortOrderType)
     case changeFilter(FilterType)
+    case deletePhotosTap
+    case exportFilesTap(sender: Any)
     case showAlbumCoverPicker
     case deletePhotos([NodeEntity])
     case deleteAlbum
+    case deleteAlbumActionTap
+    case downloadButtonTap
     case configureContextMenu(isSelectHidden: Bool)
     case shareLink
+    case sharePhotoLinksTap
     case removeLink
+    case removeLinkActionTap
     case hideNodes
     case renameAlbum
 }
@@ -29,12 +36,18 @@ final class AlbumContentViewModel: ViewModelType {
         case startLoading
         case finishLoading
         case showAlbumPhotos(photos: [NodeEntity], sortOrder: SortOrderType)
+        case deletePhotos
         case dismissAlbum
+        case downloadSelectedItems
+        case exportFiles(sender: Any)
+        case endEditingMode
         case showResultMessage(MessageType)
         case updateNavigationTitle
         case showDeleteAlbumAlert
         case configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?, canAddPhotosToAlbum: Bool)
         case showRenameAlbumAlert(viewModel: TextFieldAlertViewModel)
+        case showRemoveLinkAlert
+        case showSharePhotoLinks
         enum MessageType: Equatable {
             case success(String)
             case custom(UIImage, String)
@@ -52,6 +65,8 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     private let albumContentDataProvider: any AlbumContentPhotoLibraryDataProviderProtocol
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
+    private let overDiskQuotaChecker: any OverDiskQuotaChecking
+    
     private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     private var selectedSortOrder: SortOrderType = .newest
@@ -101,6 +116,7 @@ final class AlbumContentViewModel: ViewModelType {
         monitorAlbumPhotosUseCase: some MonitorAlbumPhotosUseCaseProtocol,
         albumNameUseCase: some AlbumNameUseCaseProtocol,
         router: some AlbumContentRouting,
+        overDiskQuotaChecker: some OverDiskQuotaChecking,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
@@ -115,6 +131,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.monitorAlbumPhotosUseCase = monitorAlbumPhotosUseCase
         self.albumNameUseCase = albumNameUseCase
         self.router = router
+        self.overDiskQuotaChecker = overDiskQuotaChecker
         self.tracker = tracker
         self.albumContentDataProvider = albumContentDataProvider
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
@@ -124,6 +141,9 @@ final class AlbumContentViewModel: ViewModelType {
     
     func dispatch(_ action: AlbumContentAction) {
         switch action {
+        case .addToAlbumTap:
+            guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+            showAlbumContentPicker()
         case .onViewReady:
             onViewReady()
         case .onViewWillAppear where setupSubscriptionTask == nil:
@@ -135,24 +155,37 @@ final class AlbumContentViewModel: ViewModelType {
         case .changeFilter(let filter):
             updateFilter(filter)
         case .showAlbumCoverPicker:
+            guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
             showAlbumCoverPicker()
+        case .deletePhotosTap:
+            invokeCommand?(overDiskQuotaChecker.showOverDiskQuotaIfNeeded() ? .endEditingMode : .deletePhotos)
         case .deletePhotos(let photos):
             deletePhotosTask = Task {
                 await deletePhotos(photos)
             }
         case .deleteAlbum:
+            checkOverQuota(invokeOnAvailable: .showDeleteAlbumAlert)
+        case .deleteAlbumActionTap:
             deleteAlbum()
+        case .downloadButtonTap:
+            invokeCommand?(overDiskQuotaChecker.showOverDiskQuotaIfNeeded() ? .endEditingMode : .downloadSelectedItems)
         case .configureContextMenu(let isSelectHidden):
             isPhotoSelectionHidden = isSelectHidden
             updateRightBarButtons()
+        case .exportFilesTap(let sender):
+            invokeCommand?(overDiskQuotaChecker.showOverDiskQuotaIfNeeded() ? .endEditingMode : .exportFiles(sender: sender))
         case .shareLink:
-            tracker.trackAnalyticsEvent(with: AlbumContentShareLinkMenuToolbarEvent())
-            router.showShareLink(album: album)
+            shareLink()
+        case .sharePhotoLinksTap:
+            invokeCommand?(overDiskQuotaChecker.showOverDiskQuotaIfNeeded() ? .endEditingMode : .showSharePhotoLinks)
         case .removeLink:
+            checkOverQuota(invokeOnAvailable: .showRemoveLinkAlert)
+        case .removeLinkActionTap:
             removeSharedLink()
         case .hideNodes:
             tracker.trackAnalyticsEvent(with: AlbumContentHideNodeMenuItemEvent())
         case .renameAlbum:
+            guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
             showRenameAlbumAlert()
         default:
             break
@@ -175,12 +208,6 @@ final class AlbumContentViewModel: ViewModelType {
         case .user:
             return .user
         }
-    }
-    
-    func showAlbumContentPicker() {
-        router.showAlbumContentPicker(album: album, completion: { [weak self] _, albumPhotos in
-            self?.addAdditionalPhotos(albumPhotos)
-        })
     }
     
     // MARK: Private
@@ -272,6 +299,12 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
+    private func showAlbumContentPicker() {
+        router.showAlbumContentPicker(album: album, completion: { [weak self] _, albumPhotos in
+            self?.addAdditionalPhotos(albumPhotos)
+        })
+    }
+    
     private func showAlbumPhotos() async {
         let notContainImageAndVideo = await !albumContentDataProvider.containsImageAndVideo()
         guard !Task.isCancelled else { return }
@@ -355,7 +388,7 @@ final class AlbumContentViewModel: ViewModelType {
             self?.updateAlbumCover(albumPhoto: coverPhoto)
         })
     }
-
+    
     private func deletePhotos(_ photos: [NodeEntity]) async {
         let photosToDelete = await albumContentDataProvider.albumPhotosToDelete(from: photos)
         guard photosToDelete.isNotEmpty else {
@@ -408,14 +441,20 @@ final class AlbumContentViewModel: ViewModelType {
             updateRightBarButtons()
         }
     }
-
+    
     private func retrieveNewUserAlbumCover(photoId: HandleEntity) {
         retrieveUserAlbumCover = Task {
             guard let newCover = await albumContentsUseCase.userAlbumCoverPhoto(in: album, forPhotoId: photoId),
                   !Task.isCancelled else { return }
-    
+            
             album.coverNode = newCover
         }
+    }
+    
+    private func shareLink() {
+        tracker.trackAnalyticsEvent(with: AlbumContentShareLinkMenuToolbarEvent())
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        router.showShareLink(album: album)
     }
     
     private func removeSharedLink() {
@@ -524,5 +563,10 @@ final class AlbumContentViewModel: ViewModelType {
                 MEGALogError("Error renaming user album: \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func checkOverQuota(invokeOnAvailable command: Command) {
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        invokeCommand?(command)
     }
 }

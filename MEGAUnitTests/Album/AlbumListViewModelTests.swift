@@ -10,6 +10,7 @@ import MEGAPresentationMock
 import MEGASwift
 import MEGASwiftUI
 import MEGATest
+import Testing
 import XCTest
 
 final class AlbumListViewModelTests: XCTestCase {
@@ -847,6 +848,7 @@ final class AlbumListViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
     ) -> AlbumListViewModel {
@@ -857,6 +859,7 @@ final class AlbumListViewModelTests: XCTestCase {
             tracker: tracker,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            overDiskQuotaChecker: overDiskQuotaChecker,
             alertViewModel: alertViewModel(),
             photoAlbumContainerViewModel: photoAlbumContainerViewModel,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider
@@ -888,8 +891,51 @@ extension AlbumListViewModelTests {
     }
 }
 
+@Suite("AlbumListViewModel Tests")
+struct AlbumListViewModelTestsSuite {
+    @Suite("onCreateAlbum")
+    @MainActor
+    struct CreateAlbum {
+        @Test("when account is paywalled it should present over disk quota")
+        func overDiskQuota() {
+            let overDiskQuotaChecker = MockOverDiskQuotaChecker(isPaywalled: true)
+            let sut = makeSUT(
+                overDiskQuotaChecker: overDiskQuotaChecker)
+            
+            sut.onCreateAlbum()
+            
+            #expect(sut.showCreateAlbumAlert == false)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        useCase: some AlbumListUseCaseProtocol = MockAlbumListUseCase(),
+        albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
+        tracker: some AnalyticsTracking = MockTracker(),
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
+    ) -> AlbumListViewModel {
+        .init(
+            usecase: useCase,
+            albumModificationUseCase: albumModificationUseCase,
+            shareCollectionUseCase: shareCollectionUseCase,
+            tracker: tracker,
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            overDiskQuotaChecker: overDiskQuotaChecker,
+            alertViewModel: .init(title: "", affirmativeButtonTitle: "", destructiveButtonTitle: ""))
+    }
+}
+
 extension PhotoAlbumContainerViewModel {
     convenience init() {
-        self.init(tracker: MockTracker())
+        self.init(
+            tracker: MockTracker(),
+            overDiskQuotaChecker: MockOverDiskQuotaChecker())
     }
 }

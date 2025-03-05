@@ -17,6 +17,10 @@ public protocol AccountRepositoryProtocol: Sendable {
     var isMasterBusinessAccount: Bool { get }
     var isSMSAllowed: Bool { get }
     var isAchievementsEnabled: Bool { get }
+    ///  A Boolean value indicating whether the account is paywalled.
+    ///
+    /// - Returns: `true` if the account is paywalled.
+    var isPaywalled: Bool { get }
     func currentAccountPlan() async -> PlanEntity?
     /// Retrieves the current storage status of the user's account.
     /// - Returns: A `StorageStatusEntity` that provides the current status of the user's account storage.

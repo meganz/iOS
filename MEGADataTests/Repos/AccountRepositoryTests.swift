@@ -3,6 +3,7 @@ import MEGADomainMock
 import MEGASDKRepo
 import MEGASDKRepoMock
 import MEGASwift
+import Testing
 import XCTest
 
 @testable import MEGA
@@ -677,5 +678,43 @@ final class AccountRepositoryTests: XCTestCase {
         let result = try await sut.refreshCurrentStorageState()
         
         XCTAssertEqual(result, expectedState, file: file, line: line)
+    }
+}
+
+@Suite("AccountRepository Tests")
+struct AccountRepositoryTestSuite {
+    
+    @Suite("Account Paywalled")
+    struct PaywalledAccount {
+        @Test("Paywall status should return correctly from user store")
+        func isPaywalled() async throws {
+            let notificationCenter = NotificationCenter()
+            let currentUserSource = CurrentUserSource(
+                sdk: MockSdk(),
+                notificationCenter: notificationCenter)
+            notificationCenter.post(
+                name: .storageEventDidChange, object: nil,
+                userInfo: [NotificationUserInfoKey.storageEventState: NSNumber(value: StorageState.paywall.rawValue)])
+            
+            try await Task.sleep(nanoseconds: 10_000_000)
+            
+            let sut = makeSUT(
+                currentUserSource: currentUserSource)
+            
+            #expect(sut.isPaywalled)
+        }
+    }
+    
+    private static func makeSUT(
+        sdk: MEGASdk = MockSdk(),
+        currentUserSource: CurrentUserSource = .shared,
+        backupsRootFolderNodeAccess: some NodeAccessProtocol = MockNodeAccess(),
+        accountUpdatesProvider: some AccountUpdatesProviderProtocol = MockAccountUpdatesProvider()
+    ) -> AccountRepository {
+        .init(
+            sdk: sdk,
+            currentUserSource: currentUserSource,
+            backupsRootFolderNodeAccess: backupsRootFolderNodeAccess,
+            accountUpdatesProvider: accountUpdatesProvider)
     }
 }

@@ -91,6 +91,12 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
+            overDiskQuotaChecker: OverDiskQuotaChecker(
+                accountStorageUseCase: AccountStorageUseCase(
+                    accountRepository: AccountRepository.newRepo,
+                    preferenceUseCase: PreferenceUseCase.default
+                ),
+                appDelegateRouter: AppDelegateRouter()),
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                     placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                     affirmativeButtonTitle: Strings.Localizable.createFolderButton,

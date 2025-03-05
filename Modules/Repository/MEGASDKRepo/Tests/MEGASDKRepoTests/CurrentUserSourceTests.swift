@@ -2,6 +2,7 @@ import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 import MEGASDKRepoMock
+import Testing
 import XCTest
 
 final class CurrentUserSourceTests: XCTestCase {
@@ -124,5 +125,33 @@ final class CurrentUserSourceTests: XCTestCase {
         let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
         source.setAccountDetails(accountDetails)
         XCTAssertEqual(accountDetails, source.accountDetails)
+    }
+}
+
+@Suite("CurrentUserSource Tests")
+struct CurrentUserSourceTestsSuite {
+    @Suite("isPayWalled")
+    struct PaywalledSuite {
+        @Test("when storage state event number is paywall it should return true",
+              arguments: [
+                (StorageState.green, false),
+                (StorageState.orange, false),
+                (StorageState.red, false),
+                (StorageState.change, false),
+                (StorageState.paywall, true)]
+        )
+        func notificationStorageEvent(storageState: StorageState, expectedIsPaywalled: Bool) async throws {
+            let notificationCenter = NotificationCenter()
+            let source = CurrentUserSource(
+                sdk: MockSdk(), notificationCenter: notificationCenter)
+            
+            notificationCenter.post(
+                name: .storageEventDidChange, object: nil,
+                userInfo: [NotificationUserInfoKey.storageEventState: NSNumber(value: storageState.rawValue)])
+            
+            try await Task.sleep(nanoseconds: 10_000_000)
+            
+            #expect(source.isPaywalled == expectedIsPaywalled)
+        }
     }
 }
