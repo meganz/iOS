@@ -443,7 +443,25 @@ class NodeActionBuilderTests {
             .setIsHidden(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .unhide, .move, .copy, .moveToRubbishBin]) == true)
+        #expect(
+            isEqual(
+                nodeActionTypes: [
+                    .info,
+                    .viewVersions,
+                    .favourite,
+                    .label,
+                    .download,
+                    .shareLink,
+                    .exportFile,
+                    .sendToChat,
+                    .rename,
+                    .unhide,
+                    .move,
+                    .copy,
+                    .moveToRubbishBin
+                ]
+            ) == true
+        )
     }
     
     // MARK: - Shared Items tests
@@ -457,7 +475,7 @@ class NodeActionBuilderTests {
             .setisIncomingShareChildView(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.info, .download, .rename, .copy, .leaveSharing]) == true)
+        #expect(isEqual(nodeActionTypes: [.info, .label, .download, .rename, .copy, .leaveSharing]) == true)
     }
     
     @Test
@@ -482,7 +500,11 @@ class NodeActionBuilderTests {
             .setIsFile(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.editTextFile, .info, .download, .rename, .copy, .move, .moveToRubbishBin]) == true)
+        #expect(
+            isEqual(
+                nodeActionTypes: [.editTextFile, .info, .label, .download, .rename, .copy, .move, .moveToRubbishBin]
+            ) == true
+        )
     }
     
     @Test
@@ -494,7 +516,7 @@ class NodeActionBuilderTests {
             .setVersionCount(0)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.info, .download, .rename, .copy, .move, .moveToRubbishBin]) == true)
+        #expect(isEqual(nodeActionTypes: [.info, .label, .download, .rename, .copy, .move, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -506,7 +528,11 @@ class NodeActionBuilderTests {
             .setVersionCount(2)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.info, .viewVersions, .download, .rename, .copy, .move, .moveToRubbishBin]) == true)
+        #expect(
+            isEqual(
+                nodeActionTypes: [.info, .viewVersions, .label, .download, .rename, .copy, .move, .moveToRubbishBin]
+            ) == true
+        )
     }
     
     @Test
