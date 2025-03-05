@@ -1,5 +1,7 @@
 import MEGADesignToken
 import MEGAPresentation
+import MEGASwiftUI
+import SwiftUI
 import UIKit
 
 @objc protocol SharedItemsTableViewCellDelegate {
@@ -23,12 +25,15 @@ final class SharedItemsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var descriptionLabel: UILabel!
 
+    @IBOutlet weak var tagsContainerView: UIView!
+
+    private let tagListViewModel: HorizontalTagListViewModel = .init(tags: [])
     @objc var delegate: (any SharedItemsTableViewCellDelegate)?
     
     @objc var nodeHandle: UInt64 = 0
     
     @objc var isTakenDownNode: Bool = false
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         updateAppearance()
@@ -59,7 +64,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
         // Note: For some reason app will crash without setting the `descriptionLabel?.textColor` so we need to put it here
         descriptionLabel?.textColor = TokenColors.Text.secondary
     }
-    
+
     @objc func configureNode(name: String, searchText: String?, isTakenDown: Bool) {
         let textColor = isTakenDown ? TokenColors.Text.error : TokenColors.Text.primary
         let takeDownImage: UIImage? = isTakenDown ? UIImage.isTakedown.withTintColorAsOriginal(TokenColors.Support.error) : nil
@@ -74,5 +79,28 @@ final class SharedItemsTableViewCell: UITableViewCell {
         takeDownImageView.image = takeDownImage
         // Note: For some reason app will crash without setting the `nameLabel.textColor` so we need to put it here
         nameLabel.textColor = textColor
+    }
+
+    @objc func setNodeTags(_ tags: [NSAttributedString]) {
+        guard tags.isNotEmpty else {
+            tagsContainerView.isHidden = true
+            return
+        }
+        tagsContainerView.isHidden = false
+
+        configureTagListView(with: tags)
+    }
+
+    private func configureTagListView(with tags: [NSAttributedString]) {
+        // Note: It's not ideal to remove then add a new tagListView to tagsContainerView each time,
+        // however due to the conflicting update timing of UIKit and SwiftUI, the cell will update its content first
+        // then the reused tagListView will update a bit later and cause a flickering bug.
+        tagsContainerView.subviews.forEach { $0.removeFromSuperview() }
+        let tagListView = HorizontalTagListView(viewModel: self.tagListViewModel)
+        let tagsHostingController = UIHostingController(rootView: tagListView)
+        tagsHostingController.view.backgroundColor = .clear
+        tagsContainerView?.wrap(tagsHostingController.view)
+        let attributedTags = tags.map { AttributedString($0 ) }
+        tagListViewModel.updateTags(attributedTags)
     }
 }

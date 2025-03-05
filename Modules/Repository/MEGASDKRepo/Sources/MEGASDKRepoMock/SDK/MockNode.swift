@@ -21,6 +21,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     private let _isMarkedSensitive: Bool
     private let _description: String?
     private let _isInShare: Bool
+    private let _tags: MockMEGAStringList?
 
     public init(handle: MEGAHandle,
                 name: String = "",
@@ -40,6 +41,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
                 isTakenDown: Bool = false,
                 isMarkedSensitive: Bool = false,
                 description: String? = nil,
+                tags: MockMEGAStringList? = nil,
                 isInShare: Bool = false
     ) {
         nodeHandle = handle
@@ -60,6 +62,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
         _isTakenDown = isTakenDown
         _isMarkedSensitive = isMarkedSensitive
         _description = description
+        _tags = tags
         _isInShare = isInShare
         super.init()
     }
@@ -107,4 +110,6 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     public override var description: String? { _description }
 
     public override func isInShare() -> Bool { _isInShare }
+
+    public override var tags: MEGAStringList? { _tags }
 }

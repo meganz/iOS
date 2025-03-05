@@ -142,6 +142,10 @@ extension SharedItemsViewController {
         cell.setNodeDescription(viewModel.descriptionForNode(node, with: searchController.searchBar.text))
     }
 
+    @objc func configureCellTags(_ cell: SharedItemsTableViewCell, for node: MEGANode) {
+        cell.setNodeTags(viewModel.tagsForNode(node, with: searchController.searchBar.text))
+    }
+
     @objc func nodeCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> NodeTableViewCell {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
