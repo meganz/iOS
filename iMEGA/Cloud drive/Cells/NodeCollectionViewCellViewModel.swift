@@ -4,11 +4,13 @@ import MEGADomain
 import MEGAPresentation
 import MEGASwift
 
+@MainActor
 @objc class NodeCollectionViewCellViewModel: NSObject {
     
     @Published private(set) var isSensitive: Bool = false
     @Published private(set) var thumbnail: UIImage?
-
+    @Published private(set) var videoDuration: String?
+    
     var hasThumbnail: Bool { node?.hasThumbnail ?? false }
     
     private let node: NodeEntity?
@@ -18,6 +20,11 @@ import MEGASwift
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var task: Task<Void, Never>?
+    private var loadVideoDurationTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
     
     init(node: NodeEntity?,
          isFromSharedItem: Bool,
@@ -37,6 +44,7 @@ import MEGASwift
     deinit {
         task?.cancel()
         task = nil
+        loadVideoDurationTask = nil
     }
     
     @discardableResult
@@ -63,7 +71,24 @@ import MEGASwift
         return isNodeVideo(name: node.name) && node.duration >= 0
     }
     
-    @MainActor
+    func setDurationForVideo(path: String) {
+        loadVideoDurationTask = Task { [weak self] in
+            let asset = AVURLAsset(url: URL(fileURLWithPath: path, isDirectory: false))
+            do {
+                let duration = try await asset.load(.duration)
+                guard !Task.isCancelled else { return }
+                let seconds = CMTimeGetSeconds(duration)
+                if seconds > 0, !CMTIME_IS_POSITIVEINFINITY(duration) {
+                    self?.videoDuration = seconds.timeString
+                } else {
+                    self?.videoDuration = nil
+                }
+            } catch {
+                self?.videoDuration = nil
+            }
+        }
+    }
+    
     private func loadThumbnail(for node: NodeEntity) async {
                 
         guard hasThumbnail else {
@@ -92,7 +117,6 @@ import MEGASwift
         }
     }
     
-    @MainActor
     private func applySensitiveConfiguration(for node: NodeEntity) async {
         guard !isFromSharedItem,
               remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),

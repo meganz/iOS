@@ -17,6 +17,12 @@ extension NodeCollectionViewCell {
         }
     }
     
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        durationLabel?.layer.cornerRadius = 4
+        durationLabel?.layer.masksToBounds = true
+    }
+    
     open override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -61,6 +67,19 @@ extension NodeCollectionViewCell {
                     guard let self else { return }
                     thumbnailImageView?.image = viewModel.hasThumbnail ? $0 : nil
                     thumbnailIconView?.image = viewModel.hasThumbnail ? nil : $0
+                },
+            
+            viewModel
+                .$videoDuration
+                .removeDuplicates()
+                .sink { [weak self] duration in
+                    guard let self else { return }
+                    if let duration {
+                        durationLabel?.isHidden = false
+                        durationLabel?.text = duration
+                    } else {
+                        durationLabel?.isHidden = true
+                    }
                 }
         ]
     }
@@ -82,27 +101,7 @@ extension NodeCollectionViewCell {
     }
     
     @objc func setDurationForVideo(path: String) {
-        let asset = AVURLAsset(url: URL(fileURLWithPath: path, isDirectory: false))
-        asset.loadValuesAsynchronously(forKeys: ["duration"]) {
-            DispatchQueue.main.async {
-                var error: NSError?
-                switch asset.statusOfValue(forKey: "duration", error: &error) {
-                case .loaded:
-                    let time = asset.duration
-                    let seconds = CMTimeGetSeconds(time)
-                    if seconds > 0, !CMTIME_IS_POSITIVEINFINITY(time) {
-                        self.durationLabel?.isHidden = false
-                        self.durationLabel?.layer.cornerRadius = 4
-                        self.durationLabel?.layer.masksToBounds = true
-                        self.durationLabel?.text = seconds.timeString
-                    } else {
-                        self.durationLabel?.isHidden = true
-                    }
-                default:
-                    self.durationLabel?.isHidden = true
-                }
-            }
-        }
+        viewModel.setDurationForVideo(path: path)
     }
     
     @objc func setThumbnail(url: URL) {
