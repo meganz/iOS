@@ -53,7 +53,7 @@ struct NodeActionBuilderTestSuite {
                         .setAccessLevel(.accessOwner)
                         .build()
 
-                    #expect(actions.types == [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy])
+                    #expect(actions.types == [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin])
                 }
 
                 @Test("when AddToDestination set", arguments: [
@@ -68,7 +68,7 @@ struct NodeActionBuilderTestSuite {
                         .setAddToDestination(destination)
                         .build()
 
-                    #expect(actions.types == [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, expectedAction, .copy].compactMap { $0 })
+                    #expect(actions.types == [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, expectedAction, .copy, .moveToRubbishBin].compactMap { $0 })
                 }
             }
         }
