@@ -3197,9 +3197,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Message sent</string>
+        <string></string>
         <key>other</key>
-        <string>Messages sent</string>
+        <string></string>
       </dict>
     </dict>
   </dict>

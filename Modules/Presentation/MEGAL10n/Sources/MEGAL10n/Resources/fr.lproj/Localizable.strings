@@ -629,7 +629,7 @@
 /* Label shown when a contact request is pending */
 "pending"="En attente";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Leave folder";
+"leaveFolder"="Laisser le dossier";
 /* Alert message shown when the user tap on the leave share action for one inshare */
 "leaveShareAlertMessage"="Are you sure you want to leave this folder?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
@@ -691,7 +691,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Paramètres des Témoins";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
-"general.cookieAndAdSettings"="Cookie and ad settings";
+"general.cookieAndAdSettings"="Paramètres relatifs aux cookies et aux annonces";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Conditions générales d’utilisation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="État ";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Aperçus d’URL enrichis";
+"richUrlPreviews"="Activer les aperçus des liens envoyés";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Améliorez l’expérience du dialogue en ligne MEGA Chat. Le contenu des URL sera récupéré sans chiffrement à divulgation nulle de connaissance.";
+"richPreviewsFooter"="Génère un aperçu des liens que vous envoyez dans le chat. Notez que la récupération de ces aperçus n'est pas protégée par un chiffrement à divulgation nulle de connaissance.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Appels vocaux et vidéo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="Terminé";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Activer les aperçus d’URL enrichis";
+"enableRichUrlPreviews"="Activer les aperçus des liens envoyés";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Toujours autoriser";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Jamais";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Vous êtes sur le point de désactiver définitivement les aperçus d’URL enrichis. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Voulez-vous poursuivre ?";
+"richPreviewsConfirmation"="Nous ne vous demanderons plus si vous voulez avoir un aperçu des liens que vous avez envoyés. Vous pouvez réactiver les aperçus des liens envoyés dans les paramètres. Tu veux continuer ?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Supprimer l’aperçu";
 /*  */
@@ -2487,7 +2487,7 @@
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Utilisés par nos partenaires publicitaires agréés pour collecter des données sur vos activités de navigation et personnaliser les publicités que vous voyez sur nos services et sur d’autres sites web. Ne pas accepter ces témoins implique que vous continuerez à voir des publicités, mais elles ne seront pas personnalisées.";
 /* Ad settings header title */
-"settings.ad.header.title"="Ad settings";
+"settings.ad.header.title"="Paramètres de l'annonce";
 /* Ad settings menu title for Ad personalisation */
 "settings.ad.adPersonalisation.title"="Ad personalisation";
 /* Text shown when the creation of a version as a new file was successful */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="Le paiement est exigé";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="Le paiement est en retard";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="Se renouvelle le %@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="Renews Today";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="Renews Tomorrow";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un autre appel est en cours. Veuillez mettre fin à cet appel avant d’en faire un autre.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="No playlists";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="Create playlist";
+/* Title in chat settings */
+"settings.chat.title"="Dialogue en ligne et réunions";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="État";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="Notification settings";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="Chat media quality";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="Activer les aperçus des liens envoyés";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="Génère un aperçu des liens que vous envoyez dans le chat. Notez que la récupération de ces aperçus n'est pas protégée par un chiffrement à divulgation nulle de connaissance.";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="Définir l’état";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="Paramètres d’état";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Afficher «[w]Vu pour la dernière fois[w]»";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="Notifications de conversation";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="Mettre les notifications en sourdine";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="Qualité d’image";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="Qualité des vidéos";

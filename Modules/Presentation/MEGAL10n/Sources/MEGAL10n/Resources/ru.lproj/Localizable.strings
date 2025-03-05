@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Статус";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Превью URL";
+"richUrlPreviews"="Включить превью отправленных ссылок";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Расширьте возможности MEGA chat. Содержимое URL-адреса будет извлекаться без шифрования с нулевым разглашением.";
+"richPreviewsFooter"="Создаёт превью ссылок, которые вы отправляете в чате. Обратите внимание, что получение этих превью не защищено шифрованием с нулевым разглашением.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Голосовые и видеозвонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="Готово";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Включить превью URL";
+"enableRichUrlPreviews"="Включить превью отправленных ссылок";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Всегда разрешать";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Никогда";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Вы отключаете превью URL насовсем. Их можно включить позже в «настройках». Продолжить?";
+"richPreviewsConfirmation"="Мы больше не будем спрашивать, хотите ли вы включить превью отправленных ссылок. Их можно будет включить в настройках. Продолжить?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Удалить превью";
 /*  */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="Требуется оплата";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="Платёж просрочен";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="Продлевается %@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="Продлевается сегодня";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="Продлевается завтра";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Идёт ещё один звонок. Пожалуйста, завершите первый звонок, прежде чем сделать следующий.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="Нет плейлистов";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="Создать плейлист";
+/* Title in chat settings */
+"settings.chat.title"="Чат и встречи";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="Статус";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="Настройки уведомлений";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="Качество медиафайлов в чате";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="Включить превью отправленных ссылок";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="Создаёт превью ссылок, которые вы отправляете в чате. Обратите внимание, что получение этих превью не защищено шифрованием с нулевым разглашением.";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="Установить статус";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="Настройки статуса";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Показывать «был в сети»";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Показывать контактам, когда вы были активны в MEGA последний раз";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Менять статус на «Отсутствует»";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ неактивности";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="Уведомления чата";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="Отключить уведомления";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="Качество изображения";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Отправлять оптимизированные изображения при использовании мобильного Интернета и изображения в исходном качестве при подключении по Wi-Fi";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Всегда отправлять оптимизированные изображения";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Всегда отправлять изображения в исходном качестве";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="Качество видео";

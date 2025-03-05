@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stare";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Previzualizări îmbogățite ale URL-urilor";
+"richUrlPreviews"="Enable sent link previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Îmbunătățește experiența MEGA Chat. Conținutul URL-urilor va fi preluat fără criptare tip zero cunoștințe.";
+"richPreviewsFooter"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Apeluri vocale și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="Terminat";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Activează previzualizările îmbogățite ale URL-urilor";
+"enableRichUrlPreviews"="Enable sent link previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permite întotdeauna";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Niciodată";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Dezactivezi definitiv previzualizările îmbogățite ale URL-urilor. Poți reactiva previzualizările îmbogățite ale URL-urilor din setări. Vrei să continui?";
+"richPreviewsConfirmation"="We’ll stop asking if you want previews of your sent links. You can re-enable sent link previews in the settings. Do you want to proceed?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Elimină previzualizarea";
 /*  */
@@ -2730,6 +2730,12 @@
 "account.profile.accountStatus.gracePeriod"="Plată necesară";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="Plata este scadentă";
+/* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
+"account.profile.renewal.future"="Se reînnoiește pe %@";
+/* Renewal date of the current PRO account, when the date is today */
+"account.profile.renewal.today"="Renews Today";
+/* Renewal date of the current PRO account, when the date is tomorrow */
+"account.profile.renewal.tomorrow"="Renews Tomorrow";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un alt apel în curs. Te rugăm să închei apelul actual înainte de a efectua altul.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4524,3 +4530,41 @@
 "photos.addToPlaylist.empty.message"="Nu există liste de redare";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="Creați o listă de redare";
+/* Title in chat settings */
+"settings.chat.title"="Chaturi și întâlniri";
+/* Title in chat settings to open status view settings */
+"settings.chat.status.title"="Stare";
+/* Title in chat notifications settings */
+"settings.chat.notifications.title"="Notification settings";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.title"="Chat media quality";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.title"="Enable sent link previews";
+/* Title used in settings that enables the generation of link previews in the chat */
+"settings.chat.richUrlPreview.subtitle"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+/* Title in chat status settings */
+"settings.chat.status.setStatus.title"="Setează statusul";
+/* Title section header in set status settings */
+"settings.chat.status.setStatus.statusSettings.title"="Setări privind statusul";
+/* Title in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Afișează văzut(ă) ultima dată";
+/* Subtitle in set status settings for show last seen */
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+/* Title in set status settings for auto away */
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+/* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+/* Title for toggle chat notifications */
+"settings.chat.notifications.chatNotifications"="Notificări de chat";
+/* Title for mute chat notifications */
+"settings.chat.notifications.muteNotifications.title"="Amuțește notificările";
+/* Label title in chat media image quality for uploads */
+"settings.chat.mediaQuality.image.title"="Calitatea imaginilor";
+/* Description of Automatic Image Quality option */
+"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+/* Description of Optimised Image Quality option */
+"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+/* Description of High Image Quality option */
+"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+/* Label title in chat media video quality for uploads */
+"settings.chat.mediaQuality.video.title"="Calitate video";
