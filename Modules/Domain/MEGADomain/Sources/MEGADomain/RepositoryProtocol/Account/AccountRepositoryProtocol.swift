@@ -1,7 +1,7 @@
 import Foundation
 import MEGASwift
 
-public protocol AccountRepositoryProtocol: Sendable {
+public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     // User authentication status and identifiers
     var currentUserHandle: HandleEntity? { get }
     var isGuest: Bool { get }
