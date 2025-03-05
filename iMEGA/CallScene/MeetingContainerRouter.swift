@@ -351,6 +351,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             presenter.dismiss(animated: true) {
                 UpgradeAccountPlanRouter(presenter: presenter, accountDetails: account).start()
             }
+        } dismissAction: {
+            presenter.dismiss(animated: true)
         }
         
         presenter.dismiss(animated: true) {

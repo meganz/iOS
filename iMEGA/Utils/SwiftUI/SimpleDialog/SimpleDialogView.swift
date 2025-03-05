@@ -29,13 +29,15 @@ struct SimpleDialogConfig: Identifiable {
         title: String,
         titleStyle: TitleStyle = .small,
         message: String,
-        buttons: [ButtonModel]
+        buttons: [ButtonModel],
+        dismissAction: @escaping () -> Void
     ) {
         self.imageResource = imageResource
         self.title = title
         self.titleStyle = titleStyle
         self.message = message
         self.buttons = buttons
+        self.dismissAction = dismissAction
     }
     
     enum TitleStyle {
@@ -50,6 +52,7 @@ struct SimpleDialogConfig: Identifiable {
     let titleStyle: TitleStyle
     let message: String
     let buttons: [ButtonModel]
+    let dismissAction: () -> Void
 }
 
 /// This view is intended to show a dialog to the user.
@@ -58,7 +61,13 @@ struct SimpleDialogConfig: Identifiable {
 struct SimpleDialogView: View {
     @Environment(\.colorScheme) private var colorScheme
     let dialogConfig: SimpleDialogConfig
-
+    
+    @State var orientation = UIDevice.current.orientation
+    
+    let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+        .makeConnectable()
+        .autoconnect()
+    
     init(dialogConfig: SimpleDialogConfig) {
         self.dialogConfig = dialogConfig
     }
@@ -84,6 +93,25 @@ struct SimpleDialogView: View {
             }
         }
         .padding(30)
+        .overlay(alignment: .top) {
+            HStack {
+                Spacer()
+                Button {
+                    dialogConfig.dismissAction()
+                } label: {
+                    Image(.closeBanner)
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                }
+            }
+            .padding(.horizontal, 30)
+            .opacity(orientation.isLandscape ? 1 : 0)
+        }
+        .onReceive(orientationChanged) { _ in
+            orientation = UIDevice.current.orientation
+        }
     }
     
     var titleView: Text {
@@ -181,7 +209,8 @@ struct DialogButtonWrapper: UIViewRepresentable {
                 theme: .primary,
                 action: .action({_ in })
             )
-        ]
+        ],
+        dismissAction: { }
     )
     
     VStack {

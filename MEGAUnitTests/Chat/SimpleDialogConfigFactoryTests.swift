@@ -10,6 +10,7 @@ final class SimpleDialogConfigFactoryTests: XCTestCase {
         var sut: SimpleDialogConfig!
         var sendActionTriggered = false
         var shareActionTriggered = false
+        var dismissActionTriggered = false
         var view: UIView?
         init() {
             self.sut = SimpleDialogConfigFactory.shareLinkDialog(
@@ -20,6 +21,9 @@ final class SimpleDialogConfigFactoryTests: XCTestCase {
                 shareAction: {[unowned self] view in
                     self.shareActionTriggered = true
                     self.view = view
+                },
+                dismissAction: {
+                    self.dismissActionTriggered = true
                 }
             )
         }
@@ -48,6 +52,12 @@ final class SimpleDialogConfigFactoryTests: XCTestCase {
         let action = try XCTUnwrap(harness.sut.asyncActionForButton(with: shareTitle))
         await action(UIView())
         XCTAssertTrue(harness.shareActionTriggered)
+    }
+    
+    func test_DismissActionTriggered() {
+        let harness = Harness()
+        harness.sut.dismissAction()
+        XCTAssertTrue(harness.dismissActionTriggered)
     }
 }
 

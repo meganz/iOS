@@ -82,6 +82,9 @@ final class ShareLinkDialogRouter: ShareLinkDialogRouting {
                 guard let self else { return }
                 tracker.trackAnalyticsEvent(with: ShareMeetingLinkScheduledMeetingEvent())
                 await shareLink(data: data, view: view)
+            },
+            dismissAction: {
+                presenter.dismiss(animated: true)
             }
         )
         dialog = presentationHandler(dialogConfig, presenter)
