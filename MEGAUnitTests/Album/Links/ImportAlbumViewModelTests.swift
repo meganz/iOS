@@ -11,6 +11,7 @@ import MEGAPresentationMock
 import MEGASwift
 import MEGASwiftUI
 import MEGATest
+import Testing
 import XCTest
 
 final class ImportAlbumViewModelTests: XCTestCase {
@@ -832,19 +833,21 @@ final class ImportAlbumViewModelTests: XCTestCase {
     // MARK: - Private
     
     @MainActor
-    private func makeImportAlbumViewModel(publicLink: URL,
-                                          publicCollectionUseCase: some PublicCollectionUseCaseProtocol = MockPublicCollectionUseCase(),
-                                          albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
-                                          accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
-                                          importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
-                                          accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
-                                          saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
-                                          transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
-                                          permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
-                                          tracker: some AnalyticsTracking = MockTracker(),
-                                          monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
-                                          file: StaticString = #file,
-                                          line: UInt = #line
+    private func makeImportAlbumViewModel(
+        publicLink: URL,
+        publicCollectionUseCase: some PublicCollectionUseCaseProtocol = MockPublicCollectionUseCase(),
+        albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
+        accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
+        importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
+        transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
+        permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        tracker: some AnalyticsTracking = MockTracker(),
+        monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+        appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
+        file: StaticString = #file,
+        line: UInt = #line
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(
             publicLink: publicLink,
@@ -857,7 +860,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
             transferWidgetResponder: transferWidgetResponder,
             permissionHandler: permissionHandler,
             tracker: tracker,
-            monitorUseCase: monitorUseCase)
+            monitorUseCase: monitorUseCase,
+            appDelegateRouter: appDelegateRouter)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
@@ -897,5 +901,89 @@ final class ImportAlbumViewModelTests: XCTestCase {
             }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
+    }
+}
+
+@Suite("ImportAlbumViewModel Tests")
+struct ImportAlbumViewModelTestSuite {
+    @Suite("Import Photos")
+    @MainActor
+    struct ImportPhotos {
+        @Test
+        func overDiskQuota() async {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: true)
+            let appDelegateRouter = MockAppDelegateRouter()
+            let sut = makSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                appDelegateRouter: appDelegateRouter)
+            
+            await sut.importAlbum()
+            
+            #expect(appDelegateRouter.showOverDiskQuotaCalled == 1)
+        }
+    }
+    
+    @Suite("Save to Photos")
+    @MainActor
+    struct SaveToPhotos {
+        @Test
+        func overDiskQuota() async {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: true)
+            let appDelegateRouter = MockAppDelegateRouter()
+            let sut = makSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                appDelegateRouter: appDelegateRouter)
+            
+            await sut.saveToPhotos()
+            
+            #expect(appDelegateRouter.showOverDiskQuotaCalled == 1)
+        }
+    }
+    
+    @Suite("Share Link")
+    @MainActor
+    struct ShareLinkView {
+        @Test
+        func overDiskQuota() {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: true)
+            let appDelegateRouter = MockAppDelegateRouter()
+            let sut = makSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                appDelegateRouter: appDelegateRouter)
+            
+            sut.shareLinkTapped()
+            
+            #expect(appDelegateRouter.showOverDiskQuotaCalled == 1)
+        }
+    }
+    
+    @MainActor
+    private static func makSUT(
+        publicLink: URL = URL(string: "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKas")!,
+        publicCollectionUseCase: some PublicCollectionUseCaseProtocol = MockPublicCollectionUseCase(),
+        albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
+        accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
+        importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
+        transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
+        permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        tracker: some AnalyticsTracking = MockTracker(),
+        monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+        appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter()
+    ) -> ImportAlbumViewModel {
+        .init(
+            publicLink: publicLink,
+            publicCollectionUseCase: publicCollectionUseCase,
+            albumNameUseCase: albumNameUseCase,
+            accountStorageUseCase: accountStorageUseCase,
+            importPublicAlbumUseCase: importPublicAlbumUseCase,
+            accountUseCase: accountUseCase,
+            saveMediaUseCase: saveMediaUseCase,
+            transferWidgetResponder: transferWidgetResponder,
+            permissionHandler: permissionHandler,
+            tracker: tracker,
+            monitorUseCase: monitorUseCase,
+            appDelegateRouter: appDelegateRouter)
     }
 }

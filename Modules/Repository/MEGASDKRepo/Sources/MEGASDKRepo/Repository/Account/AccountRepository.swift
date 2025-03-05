@@ -74,6 +74,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         sdk.isAchievementsEnabled
     }
     
+    public var isPaywalled: Bool {
+        currentUserSource.isPaywalled
+    }
+    
     public var isUnlimitedStorageAccount: Bool {
         currentAccountDetails?.proLevel == .proFlexi || currentAccountDetails?.proLevel == .business
     }

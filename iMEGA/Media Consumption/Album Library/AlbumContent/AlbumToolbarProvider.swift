@@ -84,29 +84,11 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     
     // MARK: - Toolbar Button actions
     func downloadButtonPressed(_ button: UIBarButtonItem) {
-        guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
-                  return
-              }
-        
-        endEditingMode()
-        
-        let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
-        CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
-        
+        viewModel.dispatch(.downloadButtonTap)
     }
     
     func shareLinkButtonPressed(_ button: UIBarButtonItem) {
-        guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
-                  return
-              }
-        
-        if MEGAReachabilityManager.isReachableHUDIfNot() {
-            GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
-                          nodes: selectedNodes).start()
-            endEditingMode()
-        }
+        viewModel.dispatch(.sharePhotoLinksTap)
     }
     
     func moveBarButtonPressed(_ button: UIBarButtonItem) {
@@ -118,11 +100,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     }
     
     func deleteButtonPressed(_ button: UIBarButtonItem) {
-        guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
-            return
-        }
-        deleteAlbumPhotos(selectedNodes.toNodeEntities())
+        viewModel.dispatch(.deletePhotosTap)
     }
     
     func moreButtonPressed(_ button: UIBarButtonItem) {
@@ -139,14 +117,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     }
     
     func didPressedExportFile(_ button: UIBarButtonItem) {
-        guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
-            return
-        }
-        
-        let entityNodes = selectedNodes.toNodeEntities()
-        ExportFileRouter(presenter: self, sender: button).export(nodes: entityNodes)
-        endEditingMode()
+        viewModel.dispatch(.exportFilesTap(sender: button))
     }
     
     func didPressedSendToChat(_ button: UIBarButtonItem) {
@@ -236,24 +207,6 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     }
     
     // MARK: - Private
-    private func deleteAlbumPhotos(_ photos: [NodeEntity]) {
-        disablePhotoSelection(true)
-        let alertController = UIAlertController(title: Strings.Localizable.CameraUploads.Albums.RemovePhotos.Alert.title,
-                                                message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { [weak self] _ in
-            guard let self else { return }
-            disablePhotoSelection(false)
-        })
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.remove, style: .destructive) { [weak self] _ in
-            guard let self else { return }
-            disablePhotoSelection(false)
-            viewModel.dispatch(.deletePhotos(photos))
-            endEditingMode()
-        })
-        let isHiddenNodesEnabled = albumToolbarConfigurator?.isHiddenNodesEnabled ?? false
-        alertController.popoverPresentationController?.barButtonItem =  isHiddenNodesEnabled ? albumToolbarConfigurator?.moreItem : albumToolbarConfigurator?.removeToRubbishBinItem
-        present(alertController, animated: true)
-    }
     
     private func openBrowserViewController(withAction action: BrowserAction) {
         guard let selectedNodes = selectedNodes(),

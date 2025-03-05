@@ -248,17 +248,33 @@ extension AppDelegate {
         )
     }
     
-    @objc func showOverDiskQuotaView(
-        overDiskQuotaInfomation: any OverDiskQuotaInfomationProtocol,
-        dismissCompletionAction: (() -> Void)?,
-        presentCompletionAction: (() -> Void)?
-    ) {
+    @objc func presentOverDiskQuota() {
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
+            return
+        }
+        let presentOverDiskQuotaScreenCommand = OverDiskQuotaCommand(
+            storageUsed: accountDetails.storageUsed) { [weak self] info in
+                guard let info else { return }
+                self?.presentOverDiskQuotaIfNeededWithInformation(info)
+            }
+        OverDiskQuotaService.shared.send(presentOverDiskQuotaScreenCommand)
+    }
+    
+    private func presentOverDiskQuotaIfNeededWithInformation(_ info: some OverDiskQuotaInfomationProtocol) {
+        guard !isOverDiskQuotaPresented,
+              !(UIApplication.mnz_visibleViewController() is OverDiskQuotaViewController) else {
+            return
+        }
+        
         OverDiskQuotaViewRouter(
             presenter: UIApplication.mnz_presentingViewController(),
             mainTabBar: mainTBC,
-            overDiskQuotaInfomation: overDiskQuotaInfomation,
-            dismissCompletionAction: dismissCompletionAction,
-            presentCompletionAction: presentCompletionAction
+            overDiskQuotaInfomation: info,
+            dismissCompletionAction: { [weak self] in
+                self?.isOverDiskQuotaPresented = false
+            }, presentCompletionAction: { [weak self] in
+                self?.isOverDiskQuotaPresented = true
+            }
         ).start()
     }
 }

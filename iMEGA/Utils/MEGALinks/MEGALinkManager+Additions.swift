@@ -88,13 +88,14 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
                     sdk: sdk,
                     nodeProvider: nodeProvider),
                 fileCacheRepository: FileCacheRepository.newRepo,
-                nodeRepository: nodeRepository, 
+                nodeRepository: nodeRepository,
                 chatNodeRepository: ChatNodeRepository.newRepo,
                 downloadChatRepository: DownloadChatRepository.newRepo),
             transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
             tracker: DIContainer.tracker,
-            monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+            monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            appDelegateRouter: AppDelegateRouter()
         )
         
         let viewController = UIHostingController(rootView: ImportAlbumView(

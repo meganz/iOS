@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (nonatomic) BOOL showAccountUpgradeScreen;
 @property (nonatomic) BOOL loadProductsAndShowAccountUpgradeScreen;
 @property (strong, nonatomic) CloudDriveQuickUploadActionRouter* quickUploadActionRouter;
+@property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 
 - (void)showMainTabBar;
 - (void)showOnboardingWithCompletion:(nullable void (^)(void))completion;

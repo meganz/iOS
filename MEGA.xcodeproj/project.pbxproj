@@ -14,6 +14,7 @@
 		0D4A123B2689921E0024997E /* GlobalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4A123A2689921E0024997E /* GlobalDelegate.swift */; };
 		0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */; };
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
+		0E0CFFC62D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0CFFC52D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift */; };
 		0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */; };
 		0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */ = {isa = PBXBuildFile; productRef = 0E119ACB2C7C3CBC0091BF06 /* MEGAPhotos */; };
 		0E11AFA32D067937000A7E68 /* AddToCollectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */; };
@@ -79,6 +80,10 @@
 		0E9FA0A42C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9FA0A32C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0EAC3A7D2CE3023600E2CF17 /* PhotoSearchResultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC3A7C2CE3023400E2CF17 /* PhotoSearchResultRouter.swift */; };
+		0EAF3FA12D67CF7B007D4E9C /* AppDelegateRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */; };
+		0EAF3FA72D67D630007D4E9C /* MockAppDelegateRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF3FA62D67D61F007D4E9C /* MockAppDelegateRouter.swift */; };
+		0EAF3FB32D680100007D4E9C /* OverDiskQuotaChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF3FB22D6800EF007D4E9C /* OverDiskQuotaChecker.swift */; };
+		0EAF3FB82D68086E007D4E9C /* MockOverDiskQuotaChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF3FB72D680869007D4E9C /* MockOverDiskQuotaChecker.swift */; };
 		0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF73242A6786D9008F939D /* BrowserView.swift */; };
 		0EB5847C2C3CACBF00EEBD99 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */; };
 		0EB584822C3CC0AD00EEBD99 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */; };
@@ -2715,6 +2720,7 @@
 		0D4A123A2689921E0024997E /* GlobalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDelegate.swift; sourceTree = "<group>"; };
 		0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewBaseDataSource.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
+		0E0CFFC52D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaCheckerTests.swift; sourceTree = "<group>"; };
 		0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E119ACA2C7C3CAF0091BF06 /* MEGAPhotos */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPhotos; sourceTree = "<group>"; };
 		0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCollectionRouter.swift; sourceTree = "<group>"; };
@@ -2779,6 +2785,10 @@
 		0E9FA0A32C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentPhotoLibraryDataProvider.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0EAC3A7C2CE3023400E2CF17 /* PhotoSearchResultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSearchResultRouter.swift; sourceTree = "<group>"; };
+		0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateRouter.swift; sourceTree = "<group>"; };
+		0EAF3FA62D67D61F007D4E9C /* MockAppDelegateRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppDelegateRouter.swift; sourceTree = "<group>"; };
+		0EAF3FB22D6800EF007D4E9C /* OverDiskQuotaChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaChecker.swift; sourceTree = "<group>"; };
+		0EAF3FB72D680869007D4E9C /* MockOverDiskQuotaChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOverDiskQuotaChecker.swift; sourceTree = "<group>"; };
 		0EAF73242A6786D9008F939D /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
 		0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewModel.swift; sourceTree = "<group>"; };
 		0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewModelTests.swift; sourceTree = "<group>"; };
@@ -5741,6 +5751,23 @@
 			path = Mock;
 			sourceTree = "<group>";
 		};
+		0EAF3FA52D67D5EF007D4E9C /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				0EAF3FA62D67D61F007D4E9C /* MockAppDelegateRouter.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		0EAF3FB62D680845007D4E9C /* OverDiskQuota */ = {
+			isa = PBXGroup;
+			children = (
+				0EAF3FB72D680869007D4E9C /* MockOverDiskQuotaChecker.swift */,
+				0E0CFFC52D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift */,
+			);
+			path = OverDiskQuota;
+			sourceTree = "<group>";
+		};
 		0ECFECF42ACE0D3700CBC420 /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
@@ -8312,6 +8339,7 @@
 		5DAB28EF24875217004B5D5A /* OverDiskQuota */ = {
 			isa = PBXGroup;
 			children = (
+				0EAF3FB22D6800EF007D4E9C /* OverDiskQuotaChecker.swift */,
 				5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */,
 				5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */,
 				B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */,
@@ -11208,6 +11236,7 @@
 				B611E174286165ED00F360CF /* AppDelegate+SDK.swift */,
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
+				0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */,
 				B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */,
 				A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */,
 			);
@@ -11279,6 +11308,7 @@
 				328984882A288FCC0049CD40 /* DomainExtensions */,
 				943DBBC42CB93AE400B8B14C /* ExportFile */,
 				C4B97D7E2B67924C00EBA9E5 /* FuncCallRecorder */,
+				0EAF3FB62D680845007D4E9C /* OverDiskQuota */,
 				C4B97D732B6781F900EBA9E5 /* RandomNumberGenerator */,
 				248A03182A79024700F183A2 /* Shared Views */,
 				2434EC3B2C61C12F0052D2F0 /* SortOrder */,
@@ -13154,6 +13184,7 @@
 		E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				0EAF3FA52D67D5EF007D4E9C /* Mocks */,
 				E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */,
 			);
 			path = AppDelegate;
@@ -14247,6 +14278,7 @@
 				A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */,
 				B611E175286165ED00F360CF /* AppDelegate+SDK.swift in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
+				0EAF3FA12D67CF7B007D4E9C /* AppDelegateRouter.swift in Sources */,
 				255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				5BE689A42419122C00462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
@@ -15260,6 +15292,7 @@
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
 				94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
+				0EAF3FB32D680100007D4E9C /* OverDiskQuotaChecker.swift in Sources */,
 				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
@@ -16309,6 +16342,7 @@
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
 				0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */,
+				0EAF3FA72D67D630007D4E9C /* MockAppDelegateRouter.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,
 				24C577FF2AC18A9F00302849 /* MockAudioPlayerUseCase.swift in Sources */,
@@ -16349,6 +16383,7 @@
 				947064742D3281D700C89D7F /* MockNotificationsViewRouter.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */,
+				0EAF3FB82D68086E007D4E9C /* MockOverDiskQuotaChecker.swift in Sources */,
 				B5316F982CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift in Sources */,
 				8326E68C2BE50A5400481711 /* MockPasscodeManager.swift in Sources */,
 				94A144602C9DE50800C34A98 /* MockPasteImagePreviewRouter.swift in Sources */,
@@ -16407,6 +16442,7 @@
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
+				0E0CFFC62D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift in Sources */,
 				B59FC7752CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift in Sources */,
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,

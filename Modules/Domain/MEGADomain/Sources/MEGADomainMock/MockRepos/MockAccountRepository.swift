@@ -32,6 +32,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let _currentStorageStatus: StorageStatusEntity
     private let _isUnlimitedStorageAccount: Bool
     private let _shouldRefreshStorageStatus: Bool
+    private let _isPaywalled: Bool
     
     // MARK: - Result Handlers
     private let getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity>
@@ -78,6 +79,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         isBilledProPlan: Bool = false,
         hasMultipleBilledProPlan: Bool = false,
         isAchievementsEnabled: Bool = false,
+        isPaywalled: Bool = false,
         shouldRefreshStorageStatus: Bool = false,
         plans: [PlanEntity] = [],
         isSmsAllowed: Bool = false,
@@ -125,6 +127,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _isBilledProPlan = isBilledProPlan
         _hasMultipleBilledProPlan = hasMultipleBilledProPlan
         _isAchievementsEnabled = isAchievementsEnabled
+        _isPaywalled = isPaywalled
         _shouldRefreshStorageStatus = shouldRefreshStorageStatus
         _plans = plans
         _currentProPlan = currentProPlan
@@ -183,6 +186,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public var isAchievementsEnabled: Bool {
         _isAchievementsEnabled
+    }
+    
+    public var isPaywalled: Bool {
+        _isPaywalled
     }
     
     public func currentAccountPlan() async -> PlanEntity? {

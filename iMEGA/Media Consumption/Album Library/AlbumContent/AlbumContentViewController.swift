@@ -141,6 +141,14 @@ final class AlbumContentViewController: UIViewController, ViewType {
         case .dismissAlbum:
             presentedViewController?.dismiss(animated: false)
             dismiss(animated: true)
+        case .deletePhotos:
+            deleteAlbumPhotos()
+        case .downloadSelectedItems:
+            downloadSelectedNodes()
+        case .endEditingMode:
+            endEditingMode()
+        case .exportFiles(let sender):
+            exportFiles(sender: sender)
         case .showResultMessage(let messageType):
             SVProgressHUD.dismiss(withDelay: 3)
             switch messageType {
@@ -157,6 +165,10 @@ final class AlbumContentViewController: UIViewController, ViewType {
             configureRightBarButtons(contextMenuConfiguration: config, canAddPhotosToAlbum: canAddPhotos)
         case .showRenameAlbumAlert(viewModel: let viewModel):
             present(UIAlertController(alert: viewModel), animated: true)
+        case .showRemoveLinkAlert:
+            showRemoveLinkConfirmation()
+        case .showSharePhotoLinks:
+            showSharePhotoLinks()
         }
     }
     
@@ -206,10 +218,25 @@ final class AlbumContentViewController: UIViewController, ViewType {
                                       preferredStyle: .alert)
         alert.addAction(.init(title: Strings.Localizable.cancel, style: .cancel) { _ in })
         alert.addAction(.init(title: Strings.Localizable.delete, style: .default) { [weak self] _ in
-            self?.viewModel.dispatch(.deleteAlbum)
+            self?.viewModel.dispatch(.deleteAlbumActionTap)
         })
         
         present(alert, animated: true)
+    }
+    
+    private func showRemoveLinkConfirmation() {
+        let alert = UIAlertController(title: Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertTitle(1),
+                                      message: Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertMessage(1),
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: { _ in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertConfirmButtonTitle(1),
+                                      style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            viewModel.dispatch(.removeLinkActionTap)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Action
@@ -232,6 +259,66 @@ final class AlbumContentViewController: UIViewController, ViewType {
     }
     
     @objc private func addToAlbumButtonPressed(_ barButtonItem: UIBarButtonItem) {
-        viewModel.showAlbumContentPicker()
+        viewModel.dispatch(.addToAlbumTap)
+    }
+    
+    private func downloadSelectedNodes() {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        
+        endEditingMode()
+        
+        let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, name: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
+    }
+    
+    private func showSharePhotoLinks() {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
+                          nodes: selectedNodes).start()
+            endEditingMode()
+        }
+    }
+    
+    private func deleteAlbumPhotos() {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        
+        disablePhotoSelection(true)
+        let alertController = UIAlertController(title: Strings.Localizable.CameraUploads.Albums.RemovePhotos.Alert.title,
+                                                message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { [weak self] _ in
+            guard let self else { return }
+            disablePhotoSelection(false)
+        })
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.remove, style: .destructive) { [weak self] _ in
+            guard let self else { return }
+            disablePhotoSelection(false)
+            viewModel.dispatch(.deletePhotos(selectedNodes.toNodeEntities()))
+            endEditingMode()
+        })
+        let isHiddenNodesEnabled = albumToolbarConfigurator?.isHiddenNodesEnabled ?? false
+        alertController.popoverPresentationController?.barButtonItem = isHiddenNodesEnabled ? albumToolbarConfigurator?.moreItem : albumToolbarConfigurator?.removeToRubbishBinItem
+        present(alertController, animated: true)
+    }
+    
+    private func exportFiles(sender: Any) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        
+        ExportFileRouter(presenter: self, sender: sender)
+            .export(nodes: selectedNodes.toNodeEntities())
+        endEditingMode()
     }
 }

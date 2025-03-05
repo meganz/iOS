@@ -43,7 +43,14 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }()
     
     let pageTabViewModel = PagerTabViewModel(tracker: DIContainer.tracker)
-    let viewModel = PhotoAlbumContainerViewModel(tracker: DIContainer.tracker)
+    let viewModel = PhotoAlbumContainerViewModel(
+        tracker: DIContainer.tracker,
+        overDiskQuotaChecker: OverDiskQuotaChecker(
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            appDelegateRouter: AppDelegateRouter()))
     
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?
@@ -362,7 +369,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }
     
     @objc private func deleteAlbumButtonPressed() {
-        viewModel.showDeleteAlbumAlert.toggle()
+        viewModel.deleteAlbumsTapped()
     }
     
     @objc private func shareLinksButtonPressed() {
@@ -370,7 +377,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }
     
     @objc private func removeLinksButtonPressed() {
-        viewModel.showRemoveAlbumLinksAlert.toggle()
+        viewModel.removeLinksTapped()
     }
 }
 

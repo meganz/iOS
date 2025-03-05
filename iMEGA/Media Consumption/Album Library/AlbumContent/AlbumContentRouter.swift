@@ -70,7 +70,13 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumNameUseCase: AlbumNameUseCase(
                 userAlbumRepository: userAlbumRepo),
             router: self,
-            newAlbumPhotosToAdd: newAlbumPhotos)
+            overDiskQuotaChecker: OverDiskQuotaChecker(
+                accountStorageUseCase: AccountStorageUseCase(
+                    accountRepository: AccountRepository.newRepo,
+                    preferenceUseCase: PreferenceUseCase.default
+                ),
+                appDelegateRouter: AppDelegateRouter()
+            ))
         return AlbumContentViewController(viewModel: viewModel)
     }
     

@@ -24,6 +24,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
     private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
     private let monitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let appDelegateRouter: any AppDelegateRouting
     
     private var publicLinkWithDecryptionKey: URL?
     private var subscriptions = Set<AnyCancellable>()
@@ -99,7 +100,8 @@ final class ImportAlbumViewModel: ObservableObject {
          transferWidgetResponder: (some TransferWidgetResponderProtocol)?,
          permissionHandler: some DevicePermissionsHandling,
          tracker: some AnalyticsTracking,
-         monitorUseCase: some NetworkMonitorUseCaseProtocol) {
+         monitorUseCase: some NetworkMonitorUseCaseProtocol,
+         appDelegateRouter: some AppDelegateRouting) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
         self.albumNameUseCase = albumNameUseCase
@@ -110,6 +112,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.permissionHandler = permissionHandler
         self.tracker = tracker
         self.monitorUseCase = monitorUseCase
+        self.appDelegateRouter = appDelegateRouter
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
@@ -158,6 +161,9 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     func shareLinkTapped() {
+        guard validateOverDiskQuota() else {
+            return
+        }
         showShareLink.toggle()
     }
     
@@ -167,6 +173,9 @@ final class ImportAlbumViewModel: ObservableObject {
     
     func importAlbum() async {
         tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToCloudDriveButtonEvent)
+        guard validateOverDiskQuota() else {
+            return
+        }
         guard monitorUseCase.isConnected() else {
             showNoInternetConnection = true
             return
@@ -193,6 +202,10 @@ final class ImportAlbumViewModel: ObservableObject {
     
     func saveToPhotos() async {
         tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToDeviceButtonEvent)
+        guard validateOverDiskQuota() else {
+            return
+        }
+        
         guard monitorUseCase.isConnected() else {
             showNoInternetConnection = true
             return
@@ -424,6 +437,15 @@ final class ImportAlbumViewModel: ObservableObject {
     
     private func toggleLoading() {
         showLoading.toggle()
+    }
+    
+    private func validateOverDiskQuota() -> Bool {
+        guard !accountStorageUseCase.isPaywalled else {
+            enablePhotoLibraryEditMode(false)
+            appDelegateRouter.showOverDiskQuota()
+            return false
+        }
+        return true
     }
 }
 

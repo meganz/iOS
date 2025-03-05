@@ -10,6 +10,7 @@ import MEGAPresentationMock
 import MEGASwift
 import MEGASwiftUI
 import MEGATest
+import Testing
 import XCTest
 
 final class AlbumContentViewModelTests: XCTestCase {
@@ -103,7 +104,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, nodesToAdd)
     }
-
+    
     @MainActor
     func testDispatchViewWillAppear_onAlbumContentUpdated_shouldShowAlbumWithNewNodes() async {
         let albumReloadPublisher = PassthroughSubject<Void, Never>()
@@ -154,7 +155,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         ], timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
+    @MainActor
     func testContextMenuConfiguration_onOnlyImagesLoaded_shouldShowImagesAndHideFilter() {
         let images = [NodeEntity(name: "test.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, type: .favourite)
@@ -193,7 +194,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         ], timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
+    @MainActor
     func testContextMenuConfiguration_onUserAlbumContentLoadedWithItems_shouldShowFilterAndNotInEmptyState() {
         let image = NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)
         let video = NodeEntity(name: "sample2.mp4", handle: 2, mediaType: .video)
@@ -214,7 +215,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         ], timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
+    @MainActor
     func testContextMenuConfiguration_onRawAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
         let expectedNodes = [NodeEntity(name: "sample1.cr2", handle: 1),
                              NodeEntity(name: "sample2.nef", handle: 2)]
@@ -234,7 +235,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         ], timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
+    @MainActor
     func testContextMenuConfiguration_onGifAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
         let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
                              NodeEntity(name: "sample2.gif", handle: 2)]
@@ -254,7 +255,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         ], timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
+    @MainActor
     func testContextMenuConfiguration_onImagesOnlyLoadedForUserAlbum_shouldNotEnableFilter() {
         let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
         let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
@@ -401,7 +402,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    @MainActor 
+    @MainActor
     func testDispatchChangeFilter_onPhotosLoaded_shouldReturnCorrectNodesForFilterTypeAndSetCorrectMenuConfiguration() {
         let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
         let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
@@ -430,7 +431,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             (FilterType.videos, expectedVideo),
             (FilterType.allMedia, allMedia)
         ]
-         
+        
         for (filter, expectedNodes) in testCases {
             let filterConfiguration = makeContextConfiguration(
                 filter: filter.toFilterEntity(),
@@ -444,7 +445,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         }
     }
     
-    @MainActor 
+    @MainActor
     func testShouldShowAddToAlbumButton_onPhotoLibraryNotEmptyOnUserAlbum_shouldReturnTrue() {
         let album = AlbumEntity(id: 1, type: .user)
         let sut = makeAlbumContentViewModel(album: album,
@@ -462,7 +463,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         ], timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
+    @MainActor
     func testShouldShowAddToAlbumButton_onPhotoLibraryEmptyOnUserAlbum_shouldReturnFalse() {
         let album = AlbumEntity(id: 1, type: .user)
         let sut = makeAlbumContentViewModel(album: album,
@@ -486,7 +487,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                             router: router)
         
-        sut.showAlbumContentPicker()
+        sut.dispatch(.addToAlbumTap)
         XCTAssertEqual(router.showAlbumContentPickerCalled, 1)
     }
     
@@ -522,7 +523,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                 XCTFail("Invoked unexpected command: \($0)")
             }
         }
-        sut.showAlbumContentPicker()
+        sut.dispatch(.addToAlbumTap)
         
         wait(for: [exp], timeout: 2)
         XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, expectedAddedPhotos)
@@ -555,13 +556,13 @@ final class AlbumContentViewModelTests: XCTestCase {
                 XCTFail("Invoked unexpected command: \($0)")
             }
         }
-        sut.showAlbumContentPicker()
+        sut.dispatch(.addToAlbumTap)
         
         wait(for: [exp], timeout: 1)
         XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
     }
     
-    @MainActor 
+    @MainActor
     func testShowAlbumContentPicker_onErrorThrown_shouldFinishLoading() {
         let expectedAddedPhotos = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, type: .user)
@@ -593,7 +594,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                 XCTFail("Invoked unexpected command: \($0)")
             }
         }
-        sut.showAlbumContentPicker()
+        sut.dispatch(.addToAlbumTap)
         
         wait(for: [exp], timeout: 2)
         XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
@@ -641,7 +642,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
-    @MainActor 
+    @MainActor
     func testShowAlbumCoverPicker_onChangingNewCoverPic_shouldChangeTheCoverPic() {
         let photos = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 2, type: .user)
@@ -658,7 +659,7 @@ final class AlbumContentViewModelTests: XCTestCase {
              timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
+    @MainActor
     func testDispatchDeletePhotos_onSuccessfulRemovalOfPhotos_shouldShowHudOfNumberOfRemovedItems() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
@@ -684,7 +685,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(albumModificationUseCase.deletedPhotos, albumPhotos)
     }
     
-    @MainActor 
+    @MainActor
     func testDispatchDeletePhotos_onPhotosAlreadyRemoved_shouldDoNothing() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
@@ -711,7 +712,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertNil(albumModificationUseCase.deletedPhotos)
     }
     
-    @MainActor 
+    @MainActor
     func testShowAlbumPhotos_onImagesRemovedWithImageFilter_shouldSwitchToShowVideos() async {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let expectedImages = [NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)]
@@ -756,8 +757,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         ], timeout: 1.0, expectationValidation: ==)
     }
     
-    @MainActor 
-    func testDispatchDeleteAlbum_onSuccessfulRemovalOfAlbum_shouldShowHudOfRemoveAlbum() {
+    @MainActor
+    func testDispatchDeleteAlbumActionTap_onSuccessfulRemovalOfAlbum_shouldShowHudOfRemoveAlbum() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 1, type: .user)
         let albumModificationUseCase = MockAlbumModificationUseCase(albums: [album])
         let sut = makeAlbumContentViewModel(album: album,
@@ -766,7 +767,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let message = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
             .replacingOccurrences(of: "[A]", with: album.name)
         
-        test(viewModel: sut, action: .deleteAlbum, expectedCommands: [
+        test(viewModel: sut, action: .deleteAlbumActionTap, expectedCommands: [
             .dismissAlbum,
             .showResultMessage(.custom(UIImage.hudMinus, message))
         ], timeout: 1.0, expectationValidation: ==)
@@ -774,7 +775,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(albumModificationUseCase.deletedAlbumsIds, [album.id])
     }
     
-    @MainActor 
+    @MainActor
     func testDispatchConfigureContextMenu_onReceived_shouldRebuildContextMenuWithNewSelectHiddenValue() {
         let sut = makeAlbumContentViewModel(album: albumEntity)
         
@@ -853,13 +854,13 @@ final class AlbumContentViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor 
-    func testAction_removeLink_shouldShowSuccessAfterRemoved() {
+    @MainActor
+    func testAction_removeLinkActionTap_shouldShowSuccessAfterRemoved() {
         let userAlbum = AlbumEntity(id: 1, type: .user)
         let sut = makeAlbumContentViewModel(album: userAlbum,
                                             shareCollectionUseCase: MockShareCollectionUseCase(removeSharedCollectionLinkResult: .success))
         
-        test(viewModel: sut, action: .removeLink, expectedCommands: [
+        test(viewModel: sut, action: .removeLinkActionTap, expectedCommands: [
             .showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1)))
         ], timeout: 1.0, expectationValidation: ==)
     }
@@ -987,6 +988,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         monitorAlbumPhotosUseCase: some MonitorAlbumPhotosUseCaseProtocol = MockMonitorAlbumPhotosUseCase(),
         albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
         router: some AlbumContentRouting = MockAlbumContentRouting(),
+        overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         tracker: some AnalyticsTracking = MockTracker(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
@@ -1000,6 +1002,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
             albumNameUseCase: albumNameUseCase,
             router: router,
+            overDiskQuotaChecker: overDiskQuotaChecker,
             newAlbumPhotosToAdd: newAlbumPhotosToAdd,
             tracker: tracker,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
@@ -1031,6 +1034,210 @@ final class AlbumContentViewModelTests: XCTestCase {
             isEmptyState: isEmptyState,
             sharedLinkStatus: sharedLinkStatus
         )
+    }
+}
+
+@Suite("AlbumContentViewModel Tests")
+struct AlbumContentViewModelTestSuite {
+    @Suite("Over Disk Quota")
+    @MainActor
+    struct OverDiskQuota {
+        @Test("when account is not paywalled it should call correct command",
+              arguments: [
+                (true, 0, AlbumContentAction.removeLink, AlbumContentViewModel.Command.showRemoveLinkAlert),
+                (false, 1, .removeLink, .showRemoveLinkAlert),
+                (true, 0, .deleteAlbum, .showDeleteAlbumAlert),
+                (false, 1, .deleteAlbum, .showDeleteAlbumAlert)]
+        )
+        func paywalled(
+            isPaywalled: Bool,
+            expectedCount: Int,
+            action: AlbumContentAction,
+            expectedCommand: AlbumContentViewModel.Command
+        ) async throws {
+            let sut = makeSUT(
+                overDiskQuotaChecker: MockOverDiskQuotaChecker(isPaywalled: isPaywalled))
+            
+            try await confirmation(expectedCount: expectedCount) { confirmation in
+                sut.invokeCommand = { command in
+                    #expect(command == expectedCommand)
+                    confirmation()
+                }
+                
+                sut.dispatch(action)
+                
+                try await waitForCommand()
+            }
+        }
+        
+        @Test("when paywalled it should invoke correct command",
+              arguments: [
+                (true, AlbumContentAction.downloadButtonTap, AlbumContentViewModel.Command.endEditingMode),
+                (false, .downloadButtonTap, .downloadSelectedItems),
+                (true, .sharePhotoLinksTap, .endEditingMode),
+                (false, .sharePhotoLinksTap, .showSharePhotoLinks),
+                (true, .deletePhotosTap, .endEditingMode),
+                (false, .deletePhotosTap, .deletePhotos)]
+        )
+        func overDiskQuota(
+            isPaywalled: Bool,
+            action: AlbumContentAction,
+            expectedCommand: AlbumContentViewModel.Command
+        ) async throws {
+            let sut = makeSUT(
+                overDiskQuotaChecker: MockOverDiskQuotaChecker(isPaywalled: isPaywalled))
+            try await confirmation { confirmation in
+                sut.invokeCommand = { command in
+                    #expect(command == expectedCommand)
+                    confirmation()
+                }
+                
+                sut.dispatch(action)
+                
+                try await waitForCommand()
+            }
+        }
+    }
+    
+    @Suite("Share link")
+    @MainActor
+    struct ShareLink {
+        @Test("when paywalled it should not show the alert",
+              arguments: [(true, 0), (false, 1)])
+        func overDiskQuota(isPaywalled: Bool, expectedCount: Int) {
+            let albumContentRouter = MockAlbumContentRouting()
+            let sut = makeSUT(
+                router: albumContentRouter,
+                overDiskQuotaChecker: MockOverDiskQuotaChecker(isPaywalled: isPaywalled))
+            
+            sut.dispatch(.shareLink)
+            
+            #expect(albumContentRouter.showShareLinkCalled  == expectedCount)
+        }
+    }
+    
+    @Suite("Album Cover")
+    @MainActor
+    struct AlbumCover {
+        @Test("when paywalled it should not show the alert",
+              arguments: [(true, 0), (false, 1)])
+        func overDiskQuota(isPaywalled: Bool, expectedCount: Int) {
+            let albumContentRouter = MockAlbumContentRouting()
+            let sut = makeSUT(
+                router: albumContentRouter,
+                overDiskQuotaChecker: MockOverDiskQuotaChecker(isPaywalled: isPaywalled))
+            
+            sut.dispatch(.showAlbumCoverPicker)
+            
+            #expect(albumContentRouter.showAlbumCoverPickerCalled  == expectedCount)
+        }
+    }
+    
+    @Suite("Rename Album")
+    @MainActor
+    struct RenameAlbum {
+        @Test("when paywalled it should not show the alert",
+              arguments: [(true, 0), (false, 1)])
+        func overDiskQuota(isPaywalled: Bool, expectedCount: Int) async throws {
+            let album = AlbumEntity(id: 1, name: "Test", type: .user)
+            let albumContentRouter = MockAlbumContentRouting()
+            let sut = makeSUT(
+                album: album,
+                router: albumContentRouter,
+                overDiskQuotaChecker: MockOverDiskQuotaChecker(isPaywalled: isPaywalled))
+            
+            let expectedAlertViewModel = TextFieldAlertViewModel(
+                textString: album.name,
+                title: Strings.Localizable.rename,
+                placeholderText: "",
+                affirmativeButtonTitle: Strings.Localizable.rename,
+                affirmativeButtonInitiallyEnabled: false,
+                destructiveButtonTitle: Strings.Localizable.cancel,
+                highlightInitialText: true,
+                message: Strings.Localizable.renameNodeMessage,
+                action: nil,
+                validator: nil)
+            try await confirmation(expectedCount: expectedCount) { confirmation in
+                sut.invokeCommand = { command in
+                    #expect(command == .showRenameAlbumAlert(viewModel: expectedAlertViewModel))
+                    confirmation()
+                }
+                
+                sut.dispatch(.renameAlbum)
+                
+                try await Task.sleep(nanoseconds: 500_000_000)
+            }
+        }
+    }
+    
+    @Suite("Export Files")
+    @MainActor
+    struct ExportFiles {
+        @Test
+        func exportFile() async throws {
+            let button = UIButton()
+            let sut = makeSUT(
+                overDiskQuotaChecker: MockOverDiskQuotaChecker(isPaywalled: false))
+            try await confirmation { confirmation in
+                sut.invokeCommand = { command in
+                    #expect(command == .exportFiles(sender: button))
+                    confirmation()
+                }
+                
+                sut.dispatch(.exportFilesTap(sender: button))
+                
+                try await waitForCommand()
+            }
+        }
+        
+        func paywalled() async throws {
+            let sut = makeSUT(
+                overDiskQuotaChecker: MockOverDiskQuotaChecker(isPaywalled: true))
+            try await confirmation { confirmation in
+                sut.invokeCommand = { command in
+                    #expect(command == .endEditingMode)
+                    confirmation()
+                }
+                
+                sut.dispatch(.exportFilesTap(sender: UIButton()))
+                
+                try await waitForCommand()
+            }
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        album: AlbumEntity = .init(id: 1, type: .user),
+        albumContentsUseCase: some AlbumContentsUseCaseProtocol = MockAlbumContentUseCase(),
+        albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol = MockShareCollectionUseCase(),
+        monitorAlbumPhotosUseCase: some MonitorAlbumPhotosUseCaseProtocol = MockMonitorAlbumPhotosUseCase(),
+        albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
+        router: some AlbumContentRouting = MockAlbumContentRouting(),
+        overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
+        newAlbumPhotosToAdd: [NodeEntity]? = nil,
+        tracker: some AnalyticsTracking = MockTracker(),
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
+    ) -> AlbumContentViewModel {
+        AlbumContentViewModel(
+            album: album,
+            albumContentsUseCase: albumContentsUseCase,
+            albumModificationUseCase: albumModificationUseCase,
+            photoLibraryUseCase: photoLibraryUseCase,
+            shareCollectionUseCase: shareCollectionUseCase,
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
+            albumNameUseCase: albumNameUseCase,
+            router: router,
+            overDiskQuotaChecker: overDiskQuotaChecker,
+            newAlbumPhotosToAdd: newAlbumPhotosToAdd,
+            tracker: tracker,
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+    }
+    
+    private static func waitForCommand() async throws {
+        try await Task.sleep(nanoseconds: 200_000_000)
     }
 }
 
@@ -1114,7 +1321,14 @@ private extension AlbumContentViewModel.Command {
         case (.dismissAlbum, .dismissAlbum),
             (.updateNavigationTitle, .updateNavigationTitle),
             (.startLoading, .startLoading),
-            (.finishLoading, .finishLoading):
+            (.finishLoading, .finishLoading),
+            (.showRemoveLinkAlert, .showRemoveLinkAlert),
+            (.showDeleteAlbumAlert, .showDeleteAlbumAlert),
+            (.downloadSelectedItems, .downloadSelectedItems),
+            (.showSharePhotoLinks, .showSharePhotoLinks),
+            (.endEditingMode, .endEditingMode),
+            (.deletePhotos, .deletePhotos),
+            (.exportFiles, .exportFiles):
             true
         default:
             false

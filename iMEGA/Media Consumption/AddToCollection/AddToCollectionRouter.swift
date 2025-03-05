@@ -110,6 +110,7 @@ public final class AddToCollectionRouter: AddToCollectionRouting {
     }
     
     public func start() {
+        guard !showOverDiskQuotaIfNeeded() else { return }
         presenter?.present(build(), animated: true)
     }
     
@@ -171,5 +172,15 @@ public final class AddToCollectionRouter: AddToCollectionRouting {
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
             }
         )
+    }
+    
+    private func showOverDiskQuotaIfNeeded() -> Bool {
+        OverDiskQuotaChecker(
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            appDelegateRouter: AppDelegateRouter())
+        .showOverDiskQuotaIfNeeded()
     }
 }

@@ -77,7 +77,6 @@
 @property (nonatomic) NSMutableDictionary *backgroundTaskMutableDictionary;
 
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
-@property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 
 @property (nonatomic) MEGAChatInit chatLastKnownInitState;
 
@@ -919,18 +918,6 @@
     }
 }
 
-- (void)presentOverDiskQuotaViewControllerIfNeededWithInformation:(id<OverDiskQuotaInfomationProtocol> _Nonnull)overDiskQuotaInformation {
-    if (self.isOverDiskQuotaPresented || [UIApplication.mnz_visibleViewController isKindOfClass:OverDiskQuotaViewController.class]) {
-        return;
-    }
-
-    __weak typeof(self) weakSelf = self;
-    [self showOverDiskQuotaViewWithOverDiskQuotaInfomation:overDiskQuotaInformation
-                                   dismissCompletionAction:^{ weakSelf.overDiskQuotaPresented = NO; }
-                                   presentCompletionAction:^{ weakSelf.overDiskQuotaPresented = YES; }];
-
-}
-
 - (void)handleTransferQuotaError:(MEGAError *)error transfer:(MEGATransfer *)transfer {
     switch (transfer.type) {
         case MEGATransferTypeDownload:
@@ -1266,14 +1253,7 @@
             if (event.number == StorageStateChange) {
                 [api getAccountDetails];
             } else if (event.number == StorageStatePaywall) {
-                __weak typeof(self) weakSelf = self;
-                NSInteger cloudStorageUsed = MEGASdk.shared.mnz_accountDetails.storageUsed;
-                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand = [OverDiskQuotaCommand.alloc initWithStorageUsed:cloudStorageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
-                    if (infor != nil) {
-                        [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
-                    }
-                }];
-                [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
+                [self presentOverDiskQuota];
             } else {
                 if (event.number == StorageStateRed || event.number == StorageStateOrange) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -1437,15 +1417,7 @@
                 [self presentAccountExpiredAlertIfNeeded];
                 break;
             case MEGAErrorTypeApiEPaywall: {
-                __weak typeof(self) weakSelf = self;
-                NSInteger cloudStorageUsed = MEGASdk.shared.mnz_accountDetails.storageUsed;
-                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
-                    [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStorageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
-                        if (infor != nil) {
-                            [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
-                        }
-                    }];
-                [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
+                [self presentOverDiskQuota];
                 break;
             }
             default:

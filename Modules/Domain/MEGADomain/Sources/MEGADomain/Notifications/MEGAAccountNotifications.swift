@@ -12,5 +12,10 @@ public extension Notification.Name {
     static let sortingPreferenceChanged = Notification.Name("MEGASortingPreference")
     static let dismissOnboardingProPlanDialog = Notification.Name("nz.mega.dismissOnboardingProPlanDialog")
     static let storageStatusDidChange = Notification.Name("nz.mega.storageStatusDidChange")
+    static let storageEventDidChange = Notification.Name("nz.mega.event.storage")
     static let startAds = Notification.Name("nz.mega.startAds")
+}
+
+public enum NotificationUserInfoKey {
+    public static let storageEventState = "nz.mega.event.storage.stateKey"
 }

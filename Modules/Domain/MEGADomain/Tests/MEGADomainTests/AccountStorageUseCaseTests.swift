@@ -2,6 +2,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGASwift
 import MEGATest
+import Testing
 import XCTest
 
 final class AccountStorageUseCaseTests: XCTestCase {
@@ -194,5 +195,28 @@ final class AccountStorageUseCaseTests: XCTestCase {
     ) {
         let sut = MockAccountRepository(isUnlimitedStorageAccount: isUnlimited)
         XCTAssertEqual(sut.isUnlimitedStorageAccount, isUnlimited, "Expected isUnlimitedStorageAccount to be \(isUnlimited) for \(accountType) account", line: line)
+    }
+}
+
+@Suite("AccountStorageUseCase Tests")
+struct AccountStorageUseCaseTestsSuite {
+    
+    @Test("should return current status from repository",
+          arguments: [true, false])
+    func isPaywalled(expected: Bool) async throws {
+        let repository = MockAccountRepository(isPaywalled: expected)
+        let sut = AccountStorageUseCaseTestsSuite
+            .makeSUT(accountRepository: repository)
+        
+        #expect(sut.isPaywalled == expected)
+    }
+    
+    private static func makeSUT(
+        accountRepository: some AccountRepositoryProtocol = MockAccountRepository(),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase()
+    ) -> AccountStorageUseCase {
+        .init(
+            accountRepository: accountRepository,
+            preferenceUseCase: preferenceUseCase)
     }
 }

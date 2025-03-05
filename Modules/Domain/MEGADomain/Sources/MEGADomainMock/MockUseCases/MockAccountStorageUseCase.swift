@@ -5,6 +5,7 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
     private let willStorageQuotaExceed: Bool
     private let _shouldShowStorageBanner: Bool
     private let _isUnlimitedStorageAccount: Bool
+    private let _isPaywalled: Bool
     public var _currentStorageStatus: StorageStatusEntity
     public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
     public var shouldRefreshStorageStatus: Bool
@@ -15,7 +16,8 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         shouldRefreshAccountDetails: Bool = false,
         shouldShowStorageBanner: Bool = false,
-        isUnlimitedStorageAccount: Bool = false
+        isUnlimitedStorageAccount: Bool = false,
+        isPaywalled: Bool = false
     ) {
         self.willStorageQuotaExceed = willStorageQuotaExceed
         self.onStorageStatusUpdates = onStorageStatusUpdates
@@ -23,6 +25,7 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
         self.shouldRefreshStorageStatus = shouldRefreshAccountDetails
         _shouldShowStorageBanner = shouldShowStorageBanner
         _isUnlimitedStorageAccount = isUnlimitedStorageAccount
+        _isPaywalled = isPaywalled
     }
     
     public var currentStorageStatus: StorageStatusEntity {
@@ -47,5 +50,9 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
     
     public var isUnlimitedStorageAccount: Bool {
         _isUnlimitedStorageAccount
+    }
+    
+    public var isPaywalled: Bool {
+        _isPaywalled
     }
 }
