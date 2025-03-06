@@ -81,7 +81,9 @@ import UIKit
               searchText.isNotEmpty,
               let tags = node.tags?.toStringArray() else { return [] }
         let removedHashTagSearchText = searchText.removingFirstLeadingHash()
-        return tags.map {
+        return tags
+            .filter { $0.containsIgnoringCaseAndDiacritics(searchText: removedHashTagSearchText) }
+            .map {
             ("#" + $0)
                 .forceLeftToRight()
                 .highlightedStringWithKeyword(
