@@ -92,6 +92,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func playerHidden(_ hidden: Bool, presenter: UIViewController)
     func playerHiddenIgnoringPlayerLifeCycle(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()
+    @MainActor func dismissFullScreenPlayer() async 
     func presentMiniPlayer(_ viewController: UIViewController)
     func audioInterruptionDidStart()
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)

@@ -7,6 +7,7 @@ import MEGASDKRepo
     @objc static var shared = AudioPlayerManager()
     
     private var player: AudioPlayer?
+    private var fullScreenPlayerRouter: AudioPlayerViewRouter?
     private var miniPlayerRouter: MiniPlayerViewRouter?
     private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<any AudioMiniPlayerHandlerProtocol>()
@@ -283,6 +284,8 @@ import MEGASDKRepo
         playlistRouter.setPresenter(audioPlayerRouter.baseViewController)
         
         audioPlayerRouter.start()
+        
+        fullScreenPlayerRouter = audioPlayerRouter
     }
     
     @MainActor
@@ -356,6 +359,18 @@ import MEGASDKRepo
         miniPlayerVC = nil
         miniPlayerRouter = nil
         player = nil
+    }
+    
+    @MainActor
+    func dismissFullScreenPlayer() async {
+        guard let fullScreenPlayerRouter else { return }
+        
+        await withCheckedContinuation { continuation in
+            fullScreenPlayerRouter.dismiss { [weak self] in
+                self?.fullScreenPlayerRouter = nil
+                continuation.resume()
+            }
+        }
     }
     
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {
