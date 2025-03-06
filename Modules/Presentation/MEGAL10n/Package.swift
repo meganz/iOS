@@ -23,7 +23,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../BuildTools/MEGAPlugins")
+        .package(path: "../../MEGASharedRepo/MEGABuildTools")
     ],
     targets: [
         .target(
@@ -34,7 +34,7 @@ let package = Package(
             ],
             swiftSettings: settings,
             plugins: [
-                .plugin(name: "SwiftGen", package: "MEGAPlugins")
+                .plugin(name: "SwiftGen", package: "MEGABuildTools")
             ]
         ),
         .target(
