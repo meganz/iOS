@@ -631,7 +631,24 @@ extension AppDelegate {
         CustomModalAlertRouter(
             .transferDownloadQuotaError,
             presenter: UIApplication.mnz_presentingViewController(),
-            transferQuotaDisplayMode: mode
+            transferQuotaDisplayMode: mode,
+            actionHandler: { completion in
+                if AudioPlayerManager.shared.isPlayerAlive() {
+                    Task {
+                        await AudioPlayerManager.shared.dismissFullScreenPlayer()
+                        AudioPlayerManager.shared.closePlayer()
+                        completion()
+                    }
+                }
+            },
+            dismissHandler: {
+                if AudioPlayerManager.shared.isPlayerAlive() {
+                    Task {
+                        await AudioPlayerManager.shared.dismissFullScreenPlayer()
+                        AudioPlayerManager.shared.closePlayer()
+                    }
+                }
+            }
         ).start()
         
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: self)

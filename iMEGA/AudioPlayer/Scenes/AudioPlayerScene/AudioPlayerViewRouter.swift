@@ -87,8 +87,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     // MARK: - UI Actions
-    func dismiss() {
-        baseViewController?.dismiss(animated: true)
+    func dismiss(completion: @escaping () -> Void) {
+        baseViewController?.dismiss(animated: true, completion: completion)
     }
     
     func goToPlaylist() {

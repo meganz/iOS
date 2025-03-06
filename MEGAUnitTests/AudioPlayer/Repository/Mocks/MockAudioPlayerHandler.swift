@@ -194,6 +194,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         setCurrent_callTimes += 1
     }
     func currentSpeedMode() -> SpeedMode { .normal }
+    
+    @MainActor func dismissFullScreenPlayer() async {}
 }
 
 extension MockAudioPlayerHandler {

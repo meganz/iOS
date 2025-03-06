@@ -46,7 +46,7 @@ enum AudioPlayerAction: ActionType {
 
 @MainActor
 protocol AudioPlayerViewRouting: Routing, Sendable {
-    func dismiss()
+    func dismiss(completion: @escaping () -> Void)
     func goToPlaylist()
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool)
     func showMiniPlayer(file: String, shouldReload: Bool)
@@ -54,6 +54,12 @@ protocol AudioPlayerViewRouting: Routing, Sendable {
     func share(sender: UIBarButtonItem?)
     func sendToChat()
     func showAction(for node: MEGANode, sender: Any)
+}
+
+extension AudioPlayerViewRouting {
+    func dismiss() {
+        dismiss(completion: {})
+    }
 }
 
 @objc enum RepeatMode: Int, CaseIterable {

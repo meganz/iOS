@@ -10,7 +10,7 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
     var sendToContact_calledTimes = 0
     var showAction_calledTimes = 0
     
-    func dismiss() {
+    func dismiss(completion: @escaping () -> Void) {
         dismiss_calledTimes += 1
     }
     

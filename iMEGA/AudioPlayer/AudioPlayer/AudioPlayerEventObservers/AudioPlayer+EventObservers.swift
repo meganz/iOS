@@ -33,7 +33,8 @@ extension AudioPlayer {
     func registerAudioPlayerNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: AVAudioSession.interruptionNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(changeRoute:)), name: AVAudioSession.routeChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: Notification.Name.MEGAAudioPlayerInterruption, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioPlayer(interruption:)), name: .MEGAAudioPlayerInterruption, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleTransferQuotaExceededNotification(_:)), name: .MEGATransferOverQuota, object: nil)
     }
     
     func unregisterAudioPlayerNotifications() {
@@ -256,6 +257,14 @@ extension AudioPlayer {
         default:
             break
         }
+        
+        notify(aboutCurrentState)
+    }
+    
+    @objc func handleTransferQuotaExceededNotification(_ notification: Notification) {
+        if !isPaused { pause() }
+        
+        opQueue.cancelAllOperations()
         
         notify(aboutCurrentState)
     }

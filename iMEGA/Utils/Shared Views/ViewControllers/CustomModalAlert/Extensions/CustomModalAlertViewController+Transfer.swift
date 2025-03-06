@@ -10,7 +10,11 @@ extension CustomModalAlertViewController {
     typealias TransferQuotaErrorMode = CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode
     
     // MARK: - Public
-    func configureForTransferQuotaError(for displayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
+    func configureForTransferQuotaError(
+        for displayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode,
+        actionHandler: ((@escaping () -> Void) -> Void)? = nil,
+        dismissHandler: (() -> Void)? = nil
+    ) {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         image = transferDialogImage(for: displayMode)
         viewTitle = transferDialogTitle(for: displayMode)
@@ -37,7 +41,16 @@ extension CustomModalAlertViewController {
             firstCompletion = { [weak self] in
                 guard let self else { return }
                 dismiss(animated: true) {
-                    UpgradeAccountRouter().presentUpgradeTVC()
+                    actionHandler? {
+                        UpgradeAccountRouter().presentUpgradeTVC()
+                    }
+                }
+            }
+            
+            dismissCompletion = { [weak self] in
+                guard let self else { return }
+                dismiss(animated: true) {
+                    dismissHandler?()
                 }
             }
         } else {
