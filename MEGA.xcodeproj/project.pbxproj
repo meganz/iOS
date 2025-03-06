@@ -2863,7 +2863,6 @@
 		1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LTHPasscodeViewController+Additions.swift"; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
-		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
@@ -3539,6 +3538,7 @@
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
 		6DD7B2352A776313007EBB20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModelTests.swift; sourceTree = "<group>"; };
+		6DE9E89A2D793BD40008C102 /* MEGABuildTools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGABuildTools; path = Modules/MEGASharedRepo/MEGABuildTools; sourceTree = SOURCE_ROOT; };
 		6DEEA7B72C119596004641C9 /* MEGASDKErrorTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASDKErrorTypeTests.swift; sourceTree = "<group>"; };
 		6DFE02962CB7337600703844 /* MEGAUIComponent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAUIComponent; path = Modules/MEGASharedRepo/MEGAUIComponent; sourceTree = SOURCE_ROOT; };
 		6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListRouting.swift; sourceTree = "<group>"; };
@@ -6078,14 +6078,6 @@
 				BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		167F6A232A41502500D0A6F9 /* BuildTools */ = {
-			isa = PBXGroup;
-			children = (
-				167F6A242A41507D00D0A6F9 /* MEGAPlugins */,
-			);
-			path = BuildTools;
 			sourceTree = "<group>";
 		};
 		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
@@ -11209,7 +11201,6 @@
 		B6061FE528978B040094087E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				167F6A232A41502500D0A6F9 /* BuildTools */,
 				B6FDEF7A2A204E8300276DD6 /* DataSource */,
 				B6FDEF782A204E7700276DD6 /* Domain */,
 				B6FDEF772A204E6700276DD6 /* Infrastracture */,
@@ -12067,6 +12058,7 @@
 		B6FDEF772A204E6700276DD6 /* Infrastracture */ = {
 			isa = PBXGroup;
 			children = (
+				6DE9E89A2D793BD40008C102 /* MEGABuildTools */,
 				6D004FE72D0A46220039ADF9 /* MEGAConnectivity */,
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
 				6D18B4D02B44C75600E4ABA8 /* MEGAMacro */,
