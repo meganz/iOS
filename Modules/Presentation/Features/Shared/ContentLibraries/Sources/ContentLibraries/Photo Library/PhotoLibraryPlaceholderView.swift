@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -21,7 +22,7 @@ struct PhotoLibraryPlaceholderView: View {
             }
             .shimmering(active: isActive)
         }
-        .background(Color(UIColor.systemBackground))
+        .background(TokenColors.Background.page.swiftUI)
         .opacity(isActive ? 1 : 0)
         .animation(.smooth, value: isActive)
     }

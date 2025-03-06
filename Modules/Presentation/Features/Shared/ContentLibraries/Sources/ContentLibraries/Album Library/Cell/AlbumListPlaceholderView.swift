@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -34,7 +35,7 @@ public struct AlbumListPlaceholderView: View {
             }
             .padding(.horizontal, 8)
         }
-        .background(Color(UIColor.systemBackground))
+        .background(TokenColors.Background.page.swiftUI)
         .opacity(isActive ? 1 : 0)
         .animation(.smooth, value: isActive)
     }
