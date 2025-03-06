@@ -1,3 +1,4 @@
+import Chat
 import MEGAL10n
 
 final class CallWaitingRoomUsersDialog {

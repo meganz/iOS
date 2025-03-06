@@ -1,3 +1,4 @@
+import Chat
 import ChatRepo
 import CoreServices
 import Foundation

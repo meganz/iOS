@@ -2,13 +2,13 @@ import Combine
 import Foundation
 import MEGADomain
 
-final class MeetingParticipantStatusPipeline {
-    struct HandlerCollectionType {
-        var addedHandlers = [HandleEntity]()
-        var removedHandlers = [HandleEntity]()
+public final class MeetingParticipantStatusPipeline {
+    public struct HandlerCollectionType {
+        public var addedHandlers = [HandleEntity]()
+        public var removedHandlers = [HandleEntity]()
     }
     
-    let statusPublisher = PassthroughSubject<HandlerCollectionType, Never>()
+    public let statusPublisher = PassthroughSubject<HandlerCollectionType, Never>()
     
     private var handlerCollectionType = HandlerCollectionType()
     private var timerSubscription: AnyCancellable?
@@ -18,12 +18,12 @@ final class MeetingParticipantStatusPipeline {
     
     private var resetCollectionDurationUpToCountCurrentValue = 0
     
-    init(collectionDuration: TimeInterval, resetCollectionDurationUpToCount: UInt) {
+    public init(collectionDuration: TimeInterval, resetCollectionDurationUpToCount: UInt) {
         self.collectionDuration = collectionDuration
         self.resetCollectionDurationUpToCount = resetCollectionDurationUpToCount
     }
     
-    func addParticipant(withHandle handle: HandleEntity) {
+    public func addParticipant(withHandle handle: HandleEntity) {
         if let index = handlerCollectionType.removedHandlers.firstIndex(of: handle) {
             handlerCollectionType.removedHandlers.remove(at: index)
             cancelTimerSubscriptionIfNeeded()
@@ -36,7 +36,7 @@ final class MeetingParticipantStatusPipeline {
         resetTimerSubscriptionIfNeeded()
     }
     
-    func removeParticipant(withHandle handle: HandleEntity) {
+    public func removeParticipant(withHandle handle: HandleEntity) {
         if let index = handlerCollectionType.addedHandlers.firstIndex(of: handle) {
             handlerCollectionType.addedHandlers.remove(at: index)
             cancelTimerSubscriptionIfNeeded()

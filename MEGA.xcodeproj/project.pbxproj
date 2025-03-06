@@ -2198,8 +2198,6 @@
 		BF49DF57282333BA00DE3742 /* CameraUploadManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */; };
 		BF49DFA5282B230800DE3742 /* participantJoined.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF49DFA2282B230800DE3742 /* participantJoined.wav */; };
 		BF49DFA7282B231300DE3742 /* participantLeft.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF49DFA6282B231300DE3742 /* participantLeft.wav */; };
-		BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DFBA282B30C700DE3742 /* TonePlayer.swift */; };
-		BF49DFBF282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */; };
 		BF519D1B2C6991130051329F /* NodeDescriptionFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF519D1A2C6991130051329F /* NodeDescriptionFooterViewModel.swift */; };
 		BF5375612C6D675300D4F364 /* NodeDescriptionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5375602C6D675300D4F364 /* NodeDescriptionCellViewModel.swift */; };
 		BF5375692C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */; };
@@ -4986,8 +4984,6 @@
 		BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadManager+Additions.swift"; sourceTree = "<group>"; };
 		BF49DFA2282B230800DE3742 /* participantJoined.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = participantJoined.wav; sourceTree = "<group>"; };
 		BF49DFA6282B231300DE3742 /* participantLeft.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = participantLeft.wav; sourceTree = "<group>"; };
-		BF49DFBA282B30C700DE3742 /* TonePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonePlayer.swift; sourceTree = "<group>"; };
-		BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantStatusPipeline.swift; sourceTree = "<group>"; };
 		BF519D1A2C6991130051329F /* NodeDescriptionFooterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterViewModel.swift; sourceTree = "<group>"; };
 		BF5375602C6D675300D4F364 /* NodeDescriptionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellViewModel.swift; sourceTree = "<group>"; };
 		BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterViewModelTests.swift; sourceTree = "<group>"; };
@@ -9169,7 +9165,6 @@
 			isa = PBXGroup;
 			children = (
 				839999D7264AE4E800520F38 /* OptionsMenu */,
-				BF49DFC1282C6E0400DE3742 /* Utils */,
 				8366517C26497B3600BC02F0 /* Views */,
 				8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */,
 				8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */,
@@ -12216,15 +12211,6 @@
 			path = PSA;
 			sourceTree = "<group>";
 		};
-		BF49DFC1282C6E0400DE3742 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */,
-				BF49DFBA282B30C700DE3742 /* TonePlayer.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		BF5E34152559E39A0055395E /* ExplorerContainerState */ = {
 			isa = PBXGroup;
 			children = (
@@ -14979,7 +14965,6 @@
 				836651532649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift in Sources */,
 				836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */,
 				836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */,
-				BF49DFBF282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift in Sources */,
 				BF66DFE22613E7BE00066F35 /* MeetingParticipantTableViewCell.swift in Sources */,
 				839BA9DF2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift in Sources */,
 				BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */,
@@ -15681,7 +15666,6 @@
 				25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */,
 				834B518E2C9D8ADC002E46FB /* TimerSequenceFactory.swift in Sources */,
 				8358A6E82925460800EE197C /* ToggleView.swift in Sources */,
-				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				94B09E562B84CC87007D6B84 /* ToolbarActionFactory.swift in Sources */,
 				947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */,
 				94C220412CA2FFB900B16650 /* TrackingEvents.swift in Sources */,
