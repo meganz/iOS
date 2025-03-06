@@ -203,7 +203,7 @@ struct PlaylistView: View {
     
     private var addPlaylistButton: some View {
         Button {
-            viewModel.shouldShowAddNewPlaylistAlert = true
+            viewModel.addPlaylistButtonTap()
         } label: {
             ZStack {
                 Circle()
@@ -247,6 +247,7 @@ struct PlaylistView: View {
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
+            accountStorageUseCase: Preview_AccountStorageUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview,
@@ -254,7 +255,8 @@ struct PlaylistView: View {
             featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: Preview_VideoPlaylistUseCase()
-            )
+            ),
+            videoRevampRouter: Preview_VideoRevampRouter()
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()
@@ -268,6 +270,7 @@ struct PlaylistView: View {
             videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
             sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
+            accountStorageUseCase: Preview_AccountStorageUseCase(),
             syncModel: VideoRevampSyncModel(),
             alertViewModel: .preview,
             renameVideoPlaylistAlertViewModel: .preview,
@@ -275,7 +278,8 @@ struct PlaylistView: View {
             featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: Preview_VideoPlaylistUseCase()
-            )
+            ),
+            videoRevampRouter: Preview_VideoRevampRouter()
         ),
         videoConfig: .preview,
         router: Preview_VideoRevampRouter()

@@ -10,9 +10,14 @@ final class VideoPlaylistContentContainerViewModel: ObservableObject {
     private(set) var cancellables: Set<AnyCancellable> = []
     
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let overDiskQuotaChecker: any OverDiskQuotaChecking
     
-    init(sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol) {
+    private(set) var sharedUIState = VideoPlaylistContentSharedUIState()
+    
+    init(sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+         overDiskQuotaChecker: some OverDiskQuotaChecking) {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.overDiskQuotaChecker = overDiskQuotaChecker
         
         monitorSortOrderChanged()
     }
@@ -46,5 +51,30 @@ final class VideoPlaylistContentContainerViewModel: ObservableObject {
             return
         }
         sortOrderPreferenceUseCase.save(sortOrder: sortOrder, for: .videoPlaylistContent)
+    }
+    
+    func didSelectMenuAction(_ action: DisplayActionEntity) {
+        guard !(action == .newPlaylist && showOverDiskQuotaIfNeeded()) else {
+            return
+        }
+        sharedUIState.selectedDisplayActionEntity = action
+    }
+    
+    func didSelectQuickAction(_ action: QuickActionEntity) {
+        guard !([QuickActionEntity.download, .shareLink, .manageLink,
+                 .removeLink, .rename, .saveToPhotos].contains(action) &&
+                showOverDiskQuotaIfNeeded()) else {
+            return
+        }
+        sharedUIState.selectedQuickActionEntity = action
+    }
+    
+    func didSelectVideoPlaylistAction(_ action: VideoPlaylistActionEntity) {
+        guard !showOverDiskQuotaIfNeeded() else { return }
+        sharedUIState.selectedVideoPlaylistActionEntity = action
+    }
+    
+    func showOverDiskQuotaIfNeeded() -> Bool {
+        overDiskQuotaChecker.showOverDiskQuotaIfNeeded()
     }
 }

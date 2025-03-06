@@ -34,10 +34,12 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
     let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
 
     private let syncModel: VideoRevampSyncModel
     private let monitorSortOrderChangedDispatchQueue: DispatchQueue
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let videoRevampRouter: any VideoRevampRouting
     
     let setSelection = SetSelection()
     @Published var videoPlaylists = [VideoPlaylistEntity]()
@@ -81,18 +83,21 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
         alertViewModel: TextFieldAlertViewModel,
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         contentProvider: some VideoPlaylistsViewModelContentProviderProtocol,
+        videoRevampRouter: some VideoRevampRouting,
         monitorSortOrderChangedDispatchQueue: DispatchQueue = DispatchQueue.main
     ) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
         self.videoPlaylistContentUseCase = videoPlaylistContentUseCase
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.accountStorageUseCase = accountStorageUseCase
         self.syncModel = syncModel
         self.alertViewModel = alertViewModel
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
@@ -100,6 +105,7 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
         self.thumbnailLoader = thumbnailLoader
         self.featureFlagProvider = featureFlagProvider
         self.contentProvider = contentProvider
+        self.videoRevampRouter = videoRevampRouter
         
         syncModel.$shouldShowAddNewPlaylistAlert.assign(to: &$shouldShowAddNewPlaylistAlert)
         
@@ -278,6 +284,9 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     }
     
     func didSelectActionSheetMenuAction(_ contextAction: ContextAction) {
+        guard !showOverDiskQuotaIfNeeded() else {
+            return
+        }
         switch contextAction.type {
         case .rename:
             shouldShowRenamePlaylistAlert = true
@@ -352,5 +361,20 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
         syncModel.snackBarMessage = message
             .replacingOccurrences(of: "[A]", with: selectedVideoPlaylistEntity.name)
         syncModel.shouldShowSnackBar = true
+    }
+    
+    func addPlaylistButtonTap() {
+        guard !showOverDiskQuotaIfNeeded() else {
+            return
+        }
+        shouldShowAddNewPlaylistAlert = true
+    }
+    
+    private func showOverDiskQuotaIfNeeded() -> Bool {
+        guard accountStorageUseCase.isPaywalled else {
+            return false
+        }
+        videoRevampRouter.showOverDiskQuota()
+        return true
     }
 }

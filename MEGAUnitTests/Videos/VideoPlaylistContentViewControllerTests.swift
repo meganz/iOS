@@ -16,7 +16,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
         
         sut.quickActionsMenu(didSelect: .rename, needToRefreshMenu: .random())
         
-        XCTAssertEqual(sut.sharedUIState.selectedQuickActionEntity, .rename)
+        XCTAssertEqual(sut.viewModel.sharedUIState.selectedQuickActionEntity, .rename)
     }
     
     // MARK: - videoPlaylistMenuDelegate
@@ -26,7 +26,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
         
         sut.videoPlaylistMenu(didSelect: .delete)
         
-        XCTAssertEqual(sut.sharedUIState.selectedVideoPlaylistActionEntity, .delete)
+        XCTAssertEqual(sut.viewModel.sharedUIState.selectedVideoPlaylistActionEntity, .delete)
     }
     
     // MARK: - Helpers
@@ -47,6 +47,7 @@ final class VideoPlaylistContentViewControllerTests: XCTestCase {
             presentationConfig: VideoPlaylistContentSnackBarPresentationConfig(shouldShowSnackBar: false, text: nil),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: "any-data".data(using: .utf8)!),
+            accountStorageUseCase: MockAccountStorageUseCase(),
             videoSelection: videoSelection,
             selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection),
             syncModel: VideoRevampSyncModel()

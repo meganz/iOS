@@ -3,21 +3,7 @@ import MEGASdk
 extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
-        let nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
-            viewController: self,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
-        )
-        switch action {
-        case .download, .manageLink, .saveToPhotos, .shareLink, .sendToChat, .exportFile, .moveToRubbishBin:
-            nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, for: node, from: sender)
-        case .removeVideoFromVideoPlaylist:
-            removeVideoFromPlaylistAction()
-        case .moveVideoInVideoPlaylistContentToRubbishBin:
-            didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction()
-        default:
-            break
-        }
-        resetNavigationBar()
+        handleNodesAction(nodeAction, action: action, nodes: [node], sender: sender)
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
@@ -30,15 +16,21 @@ extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
         )
         switch action {
-        case .download, .manageLink, .saveToPhotos, .shareLink, .sendToChat, .exportFile, .moveToRubbishBin, .hide, .unhide:
+        case .download, .manageLink, .saveToPhotos, .shareLink, .exportFile, .moveToRubbishBin:
+            guard !viewModel.showOverDiskQuotaIfNeeded() else {
+                resetNavigationBar()
+                return
+            }
+            fallthrough
+        case .sendToChat, .hide, .unhide:
             nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, forNodes: nodes, from: sender)
             resetNavigationBar()
-        case .removeVideoFromVideoPlaylist:
+        case .removeVideoFromVideoPlaylist where !viewModel.showOverDiskQuotaIfNeeded():
             removeVideoFromPlaylistAction()
-        case .moveVideoInVideoPlaylistContentToRubbishBin:
+        case .moveVideoInVideoPlaylistContentToRubbishBin where !viewModel.showOverDiskQuotaIfNeeded():
             didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction()
         default:
-            break
+            resetNavigationBar()
         }
     }
 }

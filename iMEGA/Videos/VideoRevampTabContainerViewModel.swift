@@ -51,14 +51,17 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     private var subscriptions = Set<AnyCancellable>()
     
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private(set) var videoSelection: VideoSelection
     
     init(
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = SortOrderPreferenceUseCase(preferenceUseCase: PreferenceUseCase.default, sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
+        overDiskQuotaChecker: some OverDiskQuotaChecking,
         videoSelection: VideoSelection,
         syncModel: VideoRevampSyncModel
     ) {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.overDiskQuotaChecker = overDiskQuotaChecker
         self.videoSelection = videoSelection
         self.syncModel = syncModel
         
@@ -80,6 +83,7 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
                 invokeCommand?(.searchBarCommand(.hideSearchBar))
                 syncModel.searchText.removeAll()
             case .newPlaylist:
+                guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
                 syncModel.shouldShowAddNewPlaylistAlert = true
             default:
                 break

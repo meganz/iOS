@@ -2,6 +2,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGATest
+import Testing
 import Video
 import XCTest
 
@@ -411,6 +412,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc)
         let sut = VideoRevampTabContainerViewModel(
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            overDiskQuotaChecker: MockOverDiskQuotaChecker(),
             videoSelection: videoSelection,
             syncModel: VideoRevampSyncModel()
         )
@@ -437,5 +439,39 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
             duration: 2,
             mediaType: mediaType
         )
+    }
+}
+
+@Suite("VideoRevampTabContainerViewModel Tests")
+struct VideoRevampTabContainerViewModelSuite {
+    @Suite("New Playlist")
+    @MainActor
+    struct NewPlaylist {
+        @Test("when over disk quota reached it should not show add new playlist alert")
+        func overDiskQuota() {
+            let syncModel = VideoRevampSyncModel()
+            let overDiskQuotaChecker = MockOverDiskQuotaChecker(isPaywalled: true)
+            let sut = makeSUT(
+                overDiskQuotaChecker: overDiskQuotaChecker,
+                syncModel: syncModel)
+            
+            sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .newPlaylist)))
+            
+            #expect(syncModel.shouldShowAddNewPlaylistAlert == false)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
+        overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
+        videoSelection: VideoSelection = .init(),
+        syncModel: VideoRevampSyncModel = .init()
+    ) -> VideoRevampTabContainerViewModel {
+        .init(
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            overDiskQuotaChecker: overDiskQuotaChecker,
+            videoSelection: videoSelection,
+            syncModel: syncModel)
     }
 }

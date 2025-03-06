@@ -106,6 +106,7 @@ private func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
         videoPlaylistContentUseCase: Preview_VideoPlaylistContentUseCase(),
         videoPlaylistModificationUseCase: Preview_VideoPlaylistModificationUseCase(),
         sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
+        accountStorageUseCase: Preview_AccountStorageUseCase(),
         syncModel: VideoRevampSyncModel(),
         alertViewModel: .preview,
         renameVideoPlaylistAlertViewModel: .preview,
@@ -113,6 +114,7 @@ private func makeVideoPlaylistsViewModel() -> VideoPlaylistsViewModel {
         featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         contentProvider: VideoPlaylistsViewModelContentProvider(
             videoPlaylistsUseCase: Preview_VideoPlaylistUseCase()
-        )
+        ),
+        videoRevampRouter: Preview_VideoRevampRouter()
     )
 }

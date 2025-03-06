@@ -199,10 +199,10 @@ struct SlideShowViewModelTestSuite {
                 
                 sut.dispatch(.onViewReady)
                 
-                try await Task.sleep(nanoseconds: 100_000_000)
+                try await Task.sleep(nanoseconds: 200_000_000)
                 
                 notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
-                try await Task.sleep(nanoseconds: 100_000_000)
+                try await Task.sleep(nanoseconds: 500_000_000)
             }
         }
     }

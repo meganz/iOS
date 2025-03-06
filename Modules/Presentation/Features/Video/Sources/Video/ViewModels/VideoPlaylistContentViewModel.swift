@@ -32,6 +32,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
+    private let videoRevampRouter: any VideoRevampRouting
     private let syncModel: VideoRevampSyncModel
     
     @Published public private(set) var videos: [NodeEntity] = []
@@ -85,6 +87,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
+        videoRevampRouter: some VideoRevampRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         syncModel: VideoRevampSyncModel
     ) {
@@ -101,6 +105,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
+        self.accountStorageUseCase = accountStorageUseCase
+        self.videoRevampRouter = videoRevampRouter
         self.featureFlagProvider = featureFlagProvider
         self.syncModel = syncModel
         
@@ -192,6 +198,20 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     private func doesSupport(_ sortOrder: SortOrderEntity) -> Bool {
         PlaylistContentSupportedSortOrderPolicy.supportedSortOrders.contains(sortOrder)
+    }
+    
+    func showVideoPicker() {
+        defer { shouldShowVideoPlaylistPicker = false }
+        guard !accountStorageUseCase.isPaywalled else {
+            videoRevampRouter.showOverDiskQuota()
+            return
+        }
+        videoRevampRouter.openVideoPicker { [weak self] selectedVideos in
+            guard let self else { return }
+            Task {
+                await addVideosToVideoPlaylist(videos: selectedVideos)
+            }
+        }
     }
     
     func addVideosToVideoPlaylist(videos: [NodeEntity]) async {

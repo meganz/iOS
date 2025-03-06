@@ -149,6 +149,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
             nodeIconUseCase: nodeIconUseCase,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
             videoConfig: videoConfig,
             router: router,
             featureFlagProvider: DIContainer.featureFlagProvider

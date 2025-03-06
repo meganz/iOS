@@ -10,7 +10,7 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
     
     public var messages = [Message]()
     
-    public init(sortOrderEntity: SortOrderEntity) {
+    public init(sortOrderEntity: SortOrderEntity = .none) {
         self.sortOrderEntity = sortOrderEntity
     }
     

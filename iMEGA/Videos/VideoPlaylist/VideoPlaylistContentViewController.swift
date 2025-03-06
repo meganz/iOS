@@ -21,6 +21,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let router: any VideoRevampRouting
     private let presentationConfig: VideoPlaylistContentSnackBarPresentationConfig
     private let syncModel: VideoRevampSyncModel
@@ -37,7 +38,6 @@ final class VideoPlaylistContentViewController: UIViewController {
     )
     private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
-    private(set) var sharedUIState = VideoPlaylistContentSharedUIState()
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
     
@@ -46,7 +46,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private let videoToolbarViewModel = VideoToolbarViewModel()
     private var toolbar = UIToolbar()
     
-    private var viewModel: VideoPlaylistContentContainerViewModel
+    let viewModel: VideoPlaylistContentContainerViewModel
     
     init(
         videoConfig: VideoConfig,
@@ -61,6 +61,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         presentationConfig: VideoPlaylistContentSnackBarPresentationConfig,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         nodeIconUseCase: some NodeIconUsecaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
         videoSelection: VideoSelection,
         selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter,
         syncModel: VideoRevampSyncModel
@@ -75,12 +76,18 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.videoPlaylistModificationUseCase = videoPlaylistModificationUseCase
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.accountStorageUseCase = accountStorageUseCase
         self.router = router
         self.presentationConfig = presentationConfig
         self.videoSelection = videoSelection
         self.selectionAdapter = selectionAdapter
         self.syncModel = syncModel
-        self.viewModel = VideoPlaylistContentContainerViewModel(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+        self.viewModel = VideoPlaylistContentContainerViewModel(
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            overDiskQuotaChecker: OverDiskQuotaChecker(
+                accountStorageUseCase: accountStorageUseCase,
+                appDelegateRouter: AppDelegateRouter()
+            ))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -120,8 +127,9 @@ final class VideoPlaylistContentViewController: UIViewController {
             nodeUseCase: nodeUseCase,
             featureFlagProvider: DIContainer.featureFlagProvider,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
+            accountStorageUseCase: accountStorageUseCase,
             router: router,
-            sharedUIState: sharedUIState,
+            sharedUIState: viewModel.sharedUIState,
             videoSelection: videoSelection,
             selectionAdapter: selectionAdapter,
             presentationConfig: presentationConfig,
@@ -234,28 +242,40 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     @objc private func downloadAction(_ sender: UIBarButtonItem) {
+        guard !showOverDiskQuotaIfNeededOnToolbarAction() else { return }
         let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
         nodeAction(nodeActionViewController, didSelect: .download, forNodes: selectedVideos, from: sender)
     }
     
     @objc private func linkAction(_ sender: UIBarButtonItem) {
+        guard !showOverDiskQuotaIfNeededOnToolbarAction() else { return }
         let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
         nodeAction(nodeActionViewController, didSelect: .manageLink, forNodes: selectedVideos, from: sender)
     }
     
     @objc private func saveToPhotosAction(_ sender: UIBarButtonItem) {
+        guard !showOverDiskQuotaIfNeededOnToolbarAction() else { return }
         let nodeActionViewController = nodeActionViewController(with: selectedVideos, from: sender)
         nodeAction(nodeActionViewController, didSelect: .saveToPhotos, forNodes: selectedVideos, from: sender)
     }
     
     @objc private func removeVideoFromPlaylistAction(_ sender: UIBarButtonItem) {
+        guard !showOverDiskQuotaIfNeededOnToolbarAction() else { return }
         removeVideoFromPlaylistAction()
     }
     
     func removeVideoFromPlaylistAction() {
         let videos = videoSelection.videos.values.map { $0 }
         guard videos.isNotEmpty else { return }
-        sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(videos)
+        viewModel.sharedUIState.didSelectRemoveVideoFromPlaylistAction.send(videos)
+    }
+    
+    private func showOverDiskQuotaIfNeededOnToolbarAction() -> Bool {
+        if viewModel.showOverDiskQuotaIfNeeded() {
+            resetNavigationBar()
+            return true
+        }
+        return false
     }
     
     @objc private func moreAction(_ sender: UIBarButtonItem) {
@@ -266,11 +286,11 @@ final class VideoPlaylistContentViewController: UIViewController {
     func didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction() {
         let videos = videoSelection.videos.values.map { $0 }
         guard videos.isNotEmpty else { return }
-        sharedUIState.didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction.send(videos)
+        viewModel.sharedUIState.didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction.send(videos)
     }
     
     private func listenToDidFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction() {
-        sharedUIState.didFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction
+        viewModel.sharedUIState.didFinishDeleteVideoFromVideoPlaylistContentThenAboutToMoveToRubbishBinAction
             .receive(on: DispatchQueue.main)
             .sink { [weak self] removedVideosFromVideoPlaylist in
                 self?.moveVideoToRubbishBinAction(removedVideosFromVideoPlaylist)
@@ -291,7 +311,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     private func listenToSelectedDisplayActionChanged() {
-        sharedUIState.$selectedDisplayActionEntity
+        viewModel.sharedUIState.$selectedDisplayActionEntity
             .receive(on: DispatchQueue.main)
             .sink { [weak self] selectedDisplayActionEntity in
                 guard let self else { return }
@@ -329,7 +349,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     }()
     
     @objc private func selectAllBarButtonItemTapped() {
-        sharedUIState.isAllSelected = !sharedUIState.isAllSelected
+        viewModel.sharedUIState.isAllSelected = !viewModel.sharedUIState.isAllSelected
     }
     
     private lazy var cancelBarButtonItem = {
@@ -372,7 +392,7 @@ extension VideoPlaylistContentViewController {
         }
         
         Publishers.CombineLatest(
-            sharedUIState.$videosCount.map { $0 == 0 }.removeDuplicates(),
+            viewModel.sharedUIState.$videosCount.map { $0 == 0 }.removeDuplicates(),
             viewModel.$sortOrder
         )
         .receive(on: DispatchQueue.main)
@@ -401,7 +421,7 @@ extension VideoPlaylistContentViewController {
 extension VideoPlaylistContentViewController: DisplayMenuDelegate {
     
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
-        sharedUIState.selectedDisplayActionEntity = action
+        viewModel.didSelectMenuAction(action)
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
@@ -414,7 +434,7 @@ extension VideoPlaylistContentViewController: DisplayMenuDelegate {
 extension VideoPlaylistContentViewController: QuickActionsMenuDelegate {
     
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
-        sharedUIState.selectedQuickActionEntity = action
+        viewModel.didSelectQuickAction(action)
     }
 }
 
@@ -423,7 +443,7 @@ extension VideoPlaylistContentViewController: QuickActionsMenuDelegate {
 extension VideoPlaylistContentViewController: VideoPlaylistMenuDelegate {
     
     func videoPlaylistMenu(didSelect action: VideoPlaylistActionEntity) {
-        sharedUIState.selectedVideoPlaylistActionEntity = action
+        viewModel.didSelectVideoPlaylistAction(action)
     }
 }
 
@@ -432,13 +452,13 @@ extension VideoPlaylistContentViewController: VideoPlaylistMenuDelegate {
 extension VideoPlaylistContentViewController {
     
     private func listenToSnackBarPresentation() {
-        sharedUIState.$shouldShowSnackBar
+        viewModel.sharedUIState.$shouldShowSnackBar
             .filter { $0 == true }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
                 resetNavigationBar()
-                let snackBar = SnackBar(message: sharedUIState.snackBarText)
+                let snackBar = SnackBar(message: viewModel.sharedUIState.snackBarText)
                 showSnackBar(snackBar: snackBar)
             }
             .store(in: &subscriptions)
