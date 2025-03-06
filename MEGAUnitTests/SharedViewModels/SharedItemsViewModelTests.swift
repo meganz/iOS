@@ -51,7 +51,7 @@ final class SharedItemsViewModelTests: XCTestCase {
         static let flagDisabled = TagsForNodeTestData(isFeatureFlagEnabled: false, tags: ["tag"], searchText: "tag", output: [])
         static let emptyTags = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: [], searchText: "tag", output: [])
         static let searchTextIsNil = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: nil, output: [])
-        static let searchTextNotMatched = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: "x", output: [attributedOutput(tag: "tag", searchText: "x")])
+        static let searchTextNotMatched = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: "x", output: [])
         static let singleMatch = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: "ta", output: [attributedOutput(tag: "tag", searchText: "ta")])
         static let multipleMatches = TagsForNodeTestData(
             isFeatureFlagEnabled: true,
@@ -59,8 +59,7 @@ final class SharedItemsViewModelTests: XCTestCase {
             searchText: "tag",
             output: [
                 attributedOutput(tag: "tag1", searchText: "tag"),
-                attributedOutput(tag: "tag2", searchText: "tag"),
-                attributedOutput(tag: "xxx", searchText: "tag")
+                attributedOutput(tag: "tag2", searchText: "tag")
             ]
         )
 
