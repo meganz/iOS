@@ -60,14 +60,8 @@ struct PlaylistContentScreen: View {
             await viewModel.monitorVideoPlaylists()
         }
         .onReceive(viewModel.$shouldShowVideoPlaylistPicker) { shouldShow in
-            if shouldShow {
-                router.openVideoPicker { selectedVideos in
-                    viewModel.shouldShowVideoPlaylistPicker = false
-                    Task {
-                        await viewModel.addVideosToVideoPlaylist(videos: selectedVideos)
-                    }
-                }
-            }
+            guard shouldShow else { return }
+            viewModel.showVideoPicker()
         }
         .task {
             await viewModel.subscribeToSelectedVideoPlaylistActionChanged()

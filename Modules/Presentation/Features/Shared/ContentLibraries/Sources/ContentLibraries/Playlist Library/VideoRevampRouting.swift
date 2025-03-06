@@ -22,6 +22,7 @@ public protocol VideoRevampRouting: Routing {
     
     associatedtype ShareLinkView: View
     func showShareLink(videoPlaylist: VideoPlaylistEntity) -> ShareLinkView
+    func showOverDiskQuota()
 }
 
 extension VideoRevampRouting {

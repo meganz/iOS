@@ -29,7 +29,7 @@ public final class VideoSelection: ObservableObject {
     
     @Published var isSelectionDisabled = false
     
-    public init() { }
+    nonisolated public init() { }
     
     func setSelectedVideos(_ videos: [NodeEntity]) {
         self.videos = Dictionary(uniqueKeysWithValues: videos.map { ($0.handle, $0) })

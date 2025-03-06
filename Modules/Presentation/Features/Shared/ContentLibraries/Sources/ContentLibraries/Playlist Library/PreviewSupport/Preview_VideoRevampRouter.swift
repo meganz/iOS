@@ -20,4 +20,6 @@ struct Preview_VideoRevampRouter: VideoRevampRouting {
     func build() -> UIViewController { UIViewController() }
     
     func start() { }
+    
+    func showOverDiskQuota() { }
 }

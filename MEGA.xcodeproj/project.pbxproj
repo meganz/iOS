@@ -48,6 +48,8 @@
 		0E43E13D2B2F958E0079700A /* PhotoBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E43E13C2B2F958E0079700A /* PhotoBrowserViewModelTests.swift */; };
 		0E43E1422B2F9CF00079700A /* AVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E43E1412B2F9CF00079700A /* AVViewModel.swift */; };
 		0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E43E1452B2F9F860079700A /* AVViewModelTests.swift */; };
+		0E4467112D77B6D200691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4467102D77B63000691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift */; };
+		0E44671C2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */; };
 		0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */; };
 		0E52388B2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */; };
 		0E52388D2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */; };
@@ -2749,6 +2751,8 @@
 		0E43E13C2B2F958E0079700A /* PhotoBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserViewModelTests.swift; sourceTree = "<group>"; };
 		0E43E1412B2F9CF00079700A /* AVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVViewModel.swift; sourceTree = "<group>"; };
 		0E43E1452B2F9F860079700A /* AVViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVViewModelTests.swift; sourceTree = "<group>"; };
+		0E4467102D77B63000691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaNodeActionViewControllerDelegate.swift; sourceTree = "<group>"; };
+		0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaNodeActionViewControllerDelegateTests.swift; sourceTree = "<group>"; };
 		0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEntityMapppingTests.swift; sourceTree = "<group>"; };
 		0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonView.swift; sourceTree = "<group>"; };
 		0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModel.swift; sourceTree = "<group>"; };
@@ -6207,6 +6211,7 @@
 			isa = PBXGroup;
 			children = (
 				2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */,
+				0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -12823,6 +12828,7 @@
 				0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */,
 				C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */,
 				5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */,
+				0E4467102D77B63000691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -15267,6 +15273,7 @@
 				0EAF3FB32D680100007D4E9C /* OverDiskQuotaChecker.swift in Sources */,
 				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
+				0E4467112D77B6D200691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift in Sources */,
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
 				5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */,
 				B59FC7712CF97B1700D88580 /* OverDiskQuotaViewModel.swift in Sources */,
@@ -16413,6 +16420,7 @@
 				940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
 				0E0CFFC62D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift in Sources */,
+				0E44671C2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift in Sources */,
 				B59FC7752CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift in Sources */,
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,

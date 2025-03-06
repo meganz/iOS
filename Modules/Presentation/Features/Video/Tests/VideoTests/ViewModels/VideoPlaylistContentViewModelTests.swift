@@ -1,11 +1,14 @@
 import AsyncAlgorithms
 import Combine
+import ContentLibraries
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwift
 import MEGASwiftUI
+import Testing
 @testable import Video
 import XCTest
 
@@ -1099,6 +1102,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: MockNodeUseCase(),
+            accountStorageUseCase: MockAccountStorageUseCase(),
+            videoRevampRouter: MockVideoRevampRouter(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             syncModel: syncModel
         )
@@ -1148,5 +1153,84 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
         line: UInt = #line
     ) {
         XCTAssertNil(sut.selectedVideos, file: file, line: line)
+    }
+}
+
+@Suite("VideoPlaylistContentViewModel Tests")
+struct VideoPlaylistContentViewModelTestSuite {
+    @Suite("Show Video Picker")
+    @MainActor
+    struct ShowVideoPicker {
+        @Test("when account paywalled it should show over disk quota")
+        func overDiskQuota() {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: true)
+            let videoRevampRouter = MockVideoRevampRouter()
+            let sut = makeSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                videoRevampRouter: videoRevampRouter)
+            sut.shouldShowVideoPlaylistPicker = true
+            
+            sut.showVideoPicker()
+            
+            #expect(videoRevampRouter.showOverDiskQuotaCalled == 1)
+            #expect(videoRevampRouter.openVideoPickerCalled == 0)
+            #expect(sut.shouldShowVideoPlaylistPicker == false)
+        }
+        
+        @Test("when account is not paywalled it should show video picker")
+        func notPaywalled() async throws {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: false)
+            let videoRevampRouter = MockVideoRevampRouter()
+            let sut = makeSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                videoRevampRouter: videoRevampRouter)
+            sut.shouldShowVideoPlaylistPicker = true
+            
+            sut.showVideoPicker()
+            
+            #expect(videoRevampRouter.openVideoPickerCalled == 1)
+            #expect(videoRevampRouter.showOverDiskQuotaCalled == 0)
+            #expect(sut.shouldShowVideoPlaylistPicker == false)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        videoPlaylistEntity: VideoPlaylistEntity =  .init(setIdentifier: .init(handle: 1)),
+        videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol = MockVideoPlaylistContentUseCase(),
+        videoPlaylistThumbnailLoader: some VideoPlaylistThumbnailLoaderProtocol = MockVideoPlaylistThumbnailLoader(),
+        sharedUIState: VideoPlaylistContentSharedUIState = .init(),
+        presentationConfig: VideoPlaylistContentSnackBarPresentationConfig? = nil,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(),
+        selectionDelegate: some VideoPlaylistContentViewModelSelectionDelegate = MockVideoPlaylistContentViewModelSelectionAdapter(),
+        renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel = .init(title: "", affirmativeButtonTitle: "", destructiveButtonTitle: ""),
+        videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol = MockVideoPlaylistUseCase(),
+        videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol = MockVideoPlaylistModificationUseCase(),
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
+        accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
+        videoRevampRouter: some VideoRevampRouting = MockVideoRevampRouter(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        syncModel: VideoRevampSyncModel = .init()
+    ) -> VideoPlaylistContentViewModel {
+        .init(
+            videoPlaylistEntity: videoPlaylistEntity,
+            videoPlaylistContentsUseCase: videoPlaylistContentsUseCase,
+            videoPlaylistThumbnailLoader: videoPlaylistThumbnailLoader,
+            sharedUIState: sharedUIState,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            selectionDelegate: selectionDelegate,
+            renameVideoPlaylistAlertViewModel: renameVideoPlaylistAlertViewModel,
+            videoPlaylistsUseCase: videoPlaylistsUseCase,
+            videoPlaylistModificationUseCase: videoPlaylistModificationUseCase,
+            thumbnailLoader: thumbnailLoader,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            nodeUseCase: nodeUseCase,
+            accountStorageUseCase: accountStorageUseCase,
+            videoRevampRouter: videoRevampRouter,
+            featureFlagProvider: featureFlagProvider,
+            syncModel: syncModel
+        )
     }
 }

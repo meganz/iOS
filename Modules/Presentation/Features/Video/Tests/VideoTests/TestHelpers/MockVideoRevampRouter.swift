@@ -5,6 +5,8 @@ import UIKit
 import Video
 
 final class MockVideoRevampRouter: VideoRevampRouting {
+    private(set) var openVideoPickerCalled = 0
+    private(set) var showOverDiskQuotaCalled = 0
     
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity]) { }
     
@@ -12,7 +14,9 @@ final class MockVideoRevampRouter: VideoRevampRouting {
     
     func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig) { }
     
-    func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void) { }
+    func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void) {
+        openVideoPickerCalled += 1
+    }
     
     func popScreen() { }
     
@@ -23,4 +27,8 @@ final class MockVideoRevampRouter: VideoRevampRouting {
     func build() -> UIViewController { UIViewController() }
     
     func start() { }
+    
+    func showOverDiskQuota() {
+        showOverDiskQuotaCalled += 1
+    }
 }

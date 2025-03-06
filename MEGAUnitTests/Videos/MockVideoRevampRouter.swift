@@ -21,4 +21,6 @@ struct MockVideoRevampRouter: VideoRevampRouting {
     func build() -> UIViewController { UIViewController() }
     
     func start() { }
+    
+    func showOverDiskQuota() { }
 }

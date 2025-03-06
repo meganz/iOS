@@ -51,6 +51,7 @@ public class VideoRevampFactory {
         nodeIconUseCase: some NodeIconUsecaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting,
         featureFlagProvider: any FeatureFlagProviderProtocol
@@ -74,6 +75,7 @@ public class VideoRevampFactory {
             videoPlaylistContentUseCase: videoPlaylistContentUseCase,
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase, 
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            accountStorageUseCase: accountStorageUseCase,
             syncModel: syncModel,
             alertViewModel: TextFieldAlertViewModel(
                 title: Strings.Localizable.Videos.Tab.Playlist.Content.Alert.title,
@@ -94,7 +96,8 @@ public class VideoRevampFactory {
             featureFlagProvider: featureFlagProvider,
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: videoPlaylistUseCase
-            )
+            ),
+            videoRevampRouter: router
         )
         let view = TabContainerView(
             videoListViewModel: videoListViewModel,
@@ -119,6 +122,7 @@ public class VideoRevampFactory {
         nodeUseCase: some NodeUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
         router: some VideoRevampRouting,
         sharedUIState: VideoPlaylistContentSharedUIState,
         videoSelection: VideoSelection,
@@ -156,6 +160,8 @@ public class VideoRevampFactory {
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
+            accountStorageUseCase: accountStorageUseCase,
+            videoRevampRouter: router,
             featureFlagProvider: featureFlagProvider,
             syncModel: syncModel
         )

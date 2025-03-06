@@ -30,7 +30,15 @@ struct VideoRevampRouter: VideoRevampRouting {
             setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: sdk)
         )
         let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
-        let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection(), syncModel: syncModel)
+        let viewModel = VideoRevampTabContainerViewModel(
+            overDiskQuotaChecker: OverDiskQuotaChecker(
+                accountStorageUseCase: AccountStorageUseCase(
+                    accountRepository: AccountRepository.newRepo,
+                    preferenceUseCase: PreferenceUseCase.default
+                ),
+                appDelegateRouter: AppDelegateRouter()),
+            videoSelection: VideoSelection(),
+            syncModel: syncModel)
         let photoLibraryRepository = PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
@@ -115,9 +123,20 @@ struct VideoRevampRouter: VideoRevampRouting {
             viewController: navigationController,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
         )
+        let overDiskQuotaNodeActionDelegate = OverDiskQuotaNodeActionViewControllerDelegate(
+            delegate: delegate,
+            overDiskQuotaChecker: OverDiskQuotaChecker(
+                accountStorageUseCase: AccountStorageUseCase(
+                    accountRepository: AccountRepository.newRepo,
+                    preferenceUseCase: PreferenceUseCase.default
+                ),
+                appDelegateRouter: AppDelegateRouter()),
+            overDiskActions: [.saveToPhotos, .download, .shareLink, .manageLink,
+                              .removeLink, .exportFile, .rename, .copy, .move, .moveToRubbishBin]
+        )
         let viewController = NodeActionViewController(
             node: videoMegaNode,
-            delegate: delegate,
+            delegate: overDiskQuotaNodeActionDelegate,
             displayMode: .cloudDrive,
             isIncoming: false,
             isBackupNode: isBackupNode,
@@ -192,6 +211,10 @@ struct VideoRevampRouter: VideoRevampRouting {
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
             ),
             nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager(sdk: MEGASdk.shared)),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
             videoSelection: videoSelection,
             selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter(selection: videoSelection),
             syncModel: syncModel
@@ -268,6 +291,10 @@ struct VideoRevampRouter: VideoRevampRouting {
                 .ignoresSafeArea(edges: .bottom)
                 .navigationBarHidden(true)
         }
+    }
+    
+    func showOverDiskQuota() {
+        AppDelegateRouter().showOverDiskQuota()
     }
     
     private func makeSensitiveDisplayPreferenceUseCase() -> some SensitiveDisplayPreferenceUseCaseProtocol {

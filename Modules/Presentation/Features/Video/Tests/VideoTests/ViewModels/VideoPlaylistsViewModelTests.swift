@@ -1,10 +1,12 @@
 @preconcurrency import Combine
+import ContentLibraries
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentationMock
 import MEGASwiftUI
 import MEGATest
+import Testing
 @preconcurrency @testable import Video
 import XCTest
 
@@ -750,6 +752,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(),
             videoPlaylistModificationUseCase: videoPlaylistModificationUseCase, 
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc),
+            accountStorageUseCase: MockAccountStorageUseCase(),
             syncModel: syncModel,
             alertViewModel: alertViewModel,
             renameVideoPlaylistAlertViewModel: alertViewModel,
@@ -757,6 +760,7 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
             featureFlagProvider: featureFlagProvider,
             contentProvider: VideoPlaylistsViewModelContentProvider(
                 videoPlaylistsUseCase: videoPlaylistUseCase),
+            videoRevampRouter: MockVideoRevampRouter(),
             monitorSortOrderChangedDispatchQueue: DispatchQueue.main
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
@@ -781,4 +785,70 @@ final class VideoPlaylistsViewModelTests: XCTestCase {
         )
     }
     
+}
+
+@Suite("VideoPlaylistsViewModel Tests")
+struct VideoPlaylistsViewModelTestSuite {
+    @Suite("Add Playlist")
+    @MainActor
+    struct AddPlayList {
+        
+        @Test(arguments: [(true, 1), (false, 0)])
+        func overDiskQuota(isPaywalled: Bool, expectedCount: Int) {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: isPaywalled)
+            let videoRevampRouter = MockVideoRevampRouter()
+            let sut = makeSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                videoRevampRouter: videoRevampRouter)
+            
+            sut.addPlaylistButtonTap()
+            
+            #expect(sut.shouldShowAddNewPlaylistAlert == !isPaywalled)
+            #expect(videoRevampRouter.showOverDiskQuotaCalled == expectedCount)
+        }
+    }
+    
+    @Suite("Select action sheet menu action")
+    @MainActor
+    struct SelectActionSheetMenuAction {
+        
+        @Test("when paywalled actions should not trigger and show over disk quota",
+              arguments: [ContextAction.Category.rename, .shareLink, .manageLink, .removeLink, .deletePlaylist])
+        func overDiskQuota(category: ContextAction.Category) {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: true)
+            let videoRevampRouter = MockVideoRevampRouter()
+            let sut = makeSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                videoRevampRouter: videoRevampRouter)
+            
+            sut.didSelectActionSheetMenuAction(ContextAction(
+                type: category, icon: "", title: ""))
+            
+            #expect(videoRevampRouter.showOverDiskQuotaCalled == 1)
+            #expect(sut.shouldShowRenamePlaylistAlert == false)
+            #expect(sut.selectedVideoPlaylistEntityForShareLink == nil)
+            #expect(sut.shouldShowDeletePlaylistAlert == false)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
+        videoRevampRouter: some VideoRevampRouting = MockVideoRevampRouter()
+    ) -> VideoPlaylistsViewModel {
+        .init(
+            videoPlaylistsUseCase: MockVideoPlaylistUseCase(),
+            videoPlaylistContentUseCase: MockVideoPlaylistContentUseCase(),
+            videoPlaylistModificationUseCase: MockVideoPlaylistModificationUseCase(),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc),
+            accountStorageUseCase: accountStorageUseCase,
+            syncModel: .init(),
+            alertViewModel: .init(title: "", affirmativeButtonTitle: "", destructiveButtonTitle: ""),
+            renameVideoPlaylistAlertViewModel: .init(title: "", affirmativeButtonTitle: "", destructiveButtonTitle: ""),
+            thumbnailLoader: MockThumbnailLoader(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
+            contentProvider: VideoPlaylistsViewModelContentProvider(
+                videoPlaylistsUseCase: MockVideoPlaylistUseCase()),
+            videoRevampRouter: videoRevampRouter)
+    }
 }
