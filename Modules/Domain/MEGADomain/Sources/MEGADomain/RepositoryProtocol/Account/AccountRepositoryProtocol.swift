@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGASwift
 
@@ -40,6 +41,23 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     func refreshCurrentStorageState() async throws -> StorageStatusEntity?
     func isExpiredAccount() -> Bool
     func isInGracePeriod() -> Bool
+    
+    /// Indicates whether account refresh monitoring is active.
+    /// This checks the current value of `monitorRefreshAccountSourcePublisher` in CurrentUserSource to determine
+    /// if an account refresh operation is currently being monitored.
+    var isMonitoringRefreshAccount: Bool { get }
+    
+    /// A publisher that emits updates when account refresh monitoring starts or stops.
+    /// Subscribers can observe this publisher to track the refresh state
+    var monitorRefreshAccount: AnyPublisher<Bool, Never> { get }
+    
+    /// Refreshes the current account details while monitoring the update state.
+    /// - Returns: An updated `AccountDetailsEntity` after refreshing the account details.
+    /// - Throws: An error if the account refresh operation fails.
+    /// This function ensures that `monitorRefreshAccountSourcePublisher` in CurrentUserSource is updated to indicate
+    /// when a refresh operation is in progress `true` and when it has completed `false`.
+    func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity
+
     /// Checks if the current Pro plan is associated with any subscription.
     ///
     /// This function retrieves the list of account subscriptions and the current Pro plan,

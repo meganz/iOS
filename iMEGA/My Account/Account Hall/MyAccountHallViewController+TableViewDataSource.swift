@@ -35,7 +35,8 @@ extension MyAccountHallViewController: UITableViewDataSource {
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
                                      detailText: detailText,
-                                     icon: UIImage.iconStorage.imageFlippedForRightToLeftLayoutDirection())
+                                     icon: UIImage.iconStorage.imageFlippedForRightToLeftLayoutDirection(),
+                                     showLoadingIndicator: viewModel.isAccountUpdating)
     }
     
     // MARK: - My Account row setup data

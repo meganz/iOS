@@ -549,6 +549,83 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertFalse(sut.isUnlimitedStorageAccount)
     }
     
+    func testIsMonitoringRefreshAccount_whenStatusChanged_shouldReturnUpdatedStatus() {
+        let currentUserSource = CurrentUserSource(sdk: MockSdk())
+        let (sut, _) = makeSUT(currentUserSource: currentUserSource)
+        
+        currentUserSource.monitorRefreshAccountSourcePublisher.send(true)
+        XCTAssertTrue(sut.isMonitoringRefreshAccount)
+        
+        currentUserSource.monitorRefreshAccountSourcePublisher.send(false)
+        XCTAssertFalse(sut.isMonitoringRefreshAccount)
+    }
+    
+    func testMonitorRefreshAccount_shouldPublishChanges() {
+        let currentUserSource = CurrentUserSource(sdk: MockSdk())
+        let (sut, _) = makeSUT(currentUserSource: currentUserSource)
+        var receivedValues: [Bool] = []
+        
+        let expectation = expectation(description: "Should receive monitoring state changes")
+        expectation.expectedFulfillmentCount = 2
+        let cancellable = sut.monitorRefreshAccount
+            .dropFirst()
+            .sink {
+                receivedValues.append($0)
+                expectation.fulfill()
+            }
+
+        currentUserSource.monitorRefreshAccountSourcePublisher.send(true)
+        currentUserSource.monitorRefreshAccountSourcePublisher.send(false)
+        wait(for: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(receivedValues, [true, false], "Publisher should emit correct sequence")
+        
+        cancellable.cancel()
+    }
+    
+    func testRefreshAccountAndMonitorUpdate_whenRequestSucceed_shouldReturnAccountDetailsAndUpdatedMonitoringStates() async throws {
+        let expectedAccountDetails = randomAccountDetails()
+        let (sut, _) = makeSUT(accountDetailsClosure: { sdk, delegate in
+                delegate.onRequestFinish?(
+                    sdk,
+                    request: MockRequest(handle: 1, accountDetails: expectedAccountDetails),
+                    error: MockError(errorType: .apiOk))
+            }
+        )
+        var receivedValues: [Bool] = []
+        let cancellable = sut.monitorRefreshAccount
+            .dropFirst()
+            .sink { receivedValues.append($0) }
+
+        let accountDetails = try await sut.refreshAccountAndMonitorUpdate()
+        
+        XCTAssertEqual(receivedValues, [true, false], "Monitoring state should toggle during refresh")
+        XCTAssertEqual(accountDetails, expectedAccountDetails.toAccountDetailsEntity())
+        XCTAssertEqual(accountDetails, sut.currentAccountDetails)
+        
+        cancellable.cancel()
+    }
+    
+    func testRefreshAccountAndMonitorUpdate_whenRequestFailed_shouldThrowErrorAndUpdateMonitoringStates() async throws {
+        let expectedError = MockError.failingError
+        let (sut, _) = makeSUT(accountDetailsClosure: { sdk, delegate in
+                delegate.onRequestFinish?(sdk, request: MockRequest(handle: 1), error: expectedError)
+            }
+        )
+        
+        var receivedValues: [Bool] = []
+        let cancellable = sut.monitorRefreshAccount
+            .dropFirst()
+            .sink { receivedValues.append($0) }
+        
+        await XCTAsyncAssertThrowsError(try await sut.refreshAccountAndMonitorUpdate()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
+            XCTAssertEqual(receivedValues, [true, false], "Monitoring state should toggle during refresh and set false after refresh failed")
+        }
+        
+        cancellable.cancel()
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -579,7 +656,8 @@ final class AccountRepositoryTests: XCTestCase {
         userAlertsUpdates: [UserAlertEntity] = [],
         contactRequestsUpdates: [ContactRequestEntity] = [],
         onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        storageStatus: StorageStatusEntity? = nil
+        storageStatus: StorageStatusEntity? = nil,
+        currentUserSource: CurrentUserSource? = nil
     ) -> (AccountRepository, MockSdk) {
         let incomingNodes = MockNodeList(nodes: incomingNodes)
         let backupsRootNodeAccess = nodeAccess(for: backupRootNodeHandle)
@@ -607,7 +685,7 @@ final class AccountRepositoryTests: XCTestCase {
             storageState: storageStatus?.toStorageState()
         )
         
-        let currentUserSource = CurrentUserSource(sdk: mockSdk)
+        let currentUserSource = currentUserSource ?? CurrentUserSource(sdk: mockSdk)
         
         if let accountDetailsEntity {
             currentUserSource.setAccountDetails(accountDetailsEntity)

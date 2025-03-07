@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
@@ -55,6 +56,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
     public let onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]>
     public let onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
+    public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
+    public let _isMonitoringRefreshAccount: Bool
     
     // MARK: - Node Sizes
     public let rootStorage: Int64
@@ -116,7 +119,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         onAccountRequestFinishUpdate: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
+        isMonitoringRefreshAccount: Bool = false
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -143,6 +148,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
         _bandwidthOverquotaDelay = bandwidthOverquotaDelay
+        _isMonitoringRefreshAccount = isMonitoringRefreshAccount
         
         self.nodesCount = nodesCount
         self.contactsRequestsCount = contactsRequestsCount
@@ -164,6 +170,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.onUserAlertsUpdates = onUserAlertsUpdates
         self.onContactRequestsUpdates = onContactRequestsUpdates
         self.onStorageStatusUpdates = onStorageStatusUpdates
+        self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
     }
     
     // MARK: - AccountRepositoryProtocol Implementation
@@ -345,5 +352,17 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func setPushNotificationSettings(_ settings: NotificationSettingsEntity) async throws {
         
+    }
+    
+    public var isMonitoringRefreshAccount: Bool {
+        _isMonitoringRefreshAccount
+    }
+    
+    public var monitorRefreshAccount: AnyPublisher<Bool, Never> {
+        monitorRefreshAccountPublisher
+    }
+    
+    public func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity {
+        try accountDetailsResult.get()
     }
 }

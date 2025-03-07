@@ -19,6 +19,14 @@ public final class CurrentUserSource: @unchecked Sendable {
     /// The value is updated via `onEvent` type `storage`
     @Atomic private var _isPaywalled = false
     
+    /// A publisher that tracks the state of account refresh monitoring.
+    /// - `true`: The account refresh process is in progress.
+    /// - `false`: No active account refresh operation.
+    /// This publisher should be managed by functions that refresh account details
+    /// to indicate when a refresh begins and ends. Subscribers can observe this
+    /// publisher to respond to changes in the refresh state.
+    public let monitorRefreshAccountSourcePublisher = CurrentValueSubject<Bool, Never>(false)
+    
     public init(
         sdk: MEGASdk,
         notificationCenter: NotificationCenter = .default

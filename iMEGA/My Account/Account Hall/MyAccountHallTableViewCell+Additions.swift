@@ -37,8 +37,6 @@ extension MyAccountHallTableViewCell {
             promoView?.isHidden = true
         }
         
-        detailLabel?.text = data.detailText ?? ""
-        
         if let storageText = data.storageText, storageLabel != nil {
             storageLabel.text = storageText
             storageLabel.textColor = TokenColors.Text.info
@@ -58,6 +56,11 @@ extension MyAccountHallTableViewCell {
             transferUsedLabel.text = transferUsedText
             transferUsedLabel.textColor = TokenColors.Text.success
         }
+        
+        activityIndicatorView?.isHidden = !data.showLoadingIndicator
+        data.showLoadingIndicator ? activityIndicatorView?.startAnimating() : activityIndicatorView?.stopAnimating()
+        detailLabel?.isHidden = data.showLoadingIndicator
+        detailLabel?.text = data.detailText ?? ""
     }
     
     @objc func setupCell() {
