@@ -2,6 +2,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *sectionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pendingViewSpacingConstraint;

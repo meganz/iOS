@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGATest
@@ -29,7 +30,9 @@ final class AccountUseCaseTests: XCTestCase {
         isInGracePeriod: Bool = false,
         accountType: AccountTypeEntity = .free,
         currentProPlan: AccountPlanEntity? = nil,
-        currentSubscription: AccountSubscriptionEntity? = nil
+        currentSubscription: AccountSubscriptionEntity? = nil,
+        isMonitoringRefreshAccount: Bool = false,
+        monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher()
     ) -> AccountUseCase<MockAccountRepository> {
         let repository = MockAccountRepository(
             currentUser: currentUser,
@@ -55,7 +58,9 @@ final class AccountUseCaseTests: XCTestCase {
             bandwidthOverquotaDelay: bandwidthOverquotaDelay,
             accountType: accountType,
             currentProPlan: currentProPlan,
-            currentSubscription: currentSubscription
+            currentSubscription: currentSubscription,
+            monitorRefreshAccountPublisher: monitorRefreshAccountPublisher,
+            isMonitoringRefreshAccount: isMonitoringRefreshAccount
         )
         return AccountUseCase(repository: repository)
     }
@@ -138,6 +143,53 @@ final class AccountUseCaseTests: XCTestCase {
     func testRefreshCurrentAccountDetails_whenFails_shouldThrowGenericError() async {
         let sut = makeSUT(accountDetailsResult: .failure(.generic))
         await XCTAsyncAssertThrowsError(try await sut.refreshCurrentAccountDetails()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
+        }
+    }
+    
+    func testIsMonitoringRefreshAccount_shouldReturnUpdatedStatus() {
+        [true, false]
+            .forEach { isMonitoring in
+                let sut = makeSUT(isMonitoringRefreshAccount: isMonitoring)
+                
+                XCTAssertEqual(sut.isMonitoringRefreshAccount, isMonitoring)
+            }
+    }
+    
+    func testMonitorRefreshAccount_shouldPublishChanges() {
+        let monitorStatusPublisher = CurrentValueSubject<Bool, Never>(false)
+        let sut = makeSUT(monitorRefreshAccountPublisher: monitorStatusPublisher.eraseToAnyPublisher())
+        
+        let expectation = expectation(description: "Should receive monitoring state changes")
+        expectation.expectedFulfillmentCount = 2
+        var receivedValues: [Bool] = []
+        let cancellable = sut.monitorRefreshAccount
+            .dropFirst()
+            .sink {
+                receivedValues.append($0)
+                expectation.fulfill()
+            }
+        
+        monitorStatusPublisher.send(true)
+        monitorStatusPublisher.send(false)
+        
+        wait(for: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(receivedValues, [true, false], "Publisher should emit correct sequence")
+        
+        cancellable.cancel()
+    }
+    
+    func testRefreshAccountAndMonitorUpdate_whenSuccess_shouldReturnAccountDetails() async throws {
+        let accountDetails = AccountDetailsEntity.random
+        let sut = makeSUT(currentAccountDetails: accountDetails, accountDetailsResult: .success(accountDetails))
+        let currentAccountDetails = try await sut.refreshAccountAndMonitorUpdate()
+        XCTAssertEqual(currentAccountDetails, accountDetails)
+    }
+    
+    func testRefreshAccountAndMonitorUpdate_whenFails_shouldThrowGenericError() async {
+        let sut = makeSUT(accountDetailsResult: .failure(.generic))
+        await XCTAsyncAssertThrowsError(try await sut.refreshAccountAndMonitorUpdate()) { errorThrown in
             XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
         }
     }

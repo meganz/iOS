@@ -75,7 +75,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     // MARK: Account Plan view
     @Published private(set) var currentPlanName: String = ""
-    @Published var showCurrentPlanLoadingView: Bool = false
+    @Published var isAccountUpdating: Bool = false
     
     // MARK: - Init
     
@@ -261,7 +261,8 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .planList:
             await fetchPlanList()
         case .accountDetails:
-            await fetchAccountDetails()
+            isAccountUpdating = accountUseCase.isMonitoringRefreshAccount
+            await updateAccountDetails()
         case .contentCounts:
             await fetchCounts()
         case .promos:
@@ -274,21 +275,25 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         configPlanDisplay()
     }
     
-    private func fetchAccountDetails(showCurrentPlanLoadingView: Bool = false) async {
-        self.showCurrentPlanLoadingView = showCurrentPlanLoadingView
-        
+    private func updateAccountDetails(monitorUpdate: Bool = false) async {
         do {
-            let accountDetails = try await myAccountHallUseCase.refreshCurrentAccountDetails()
-            setAccountDetails(accountDetails)
-            self.showCurrentPlanLoadingView = false
-            configPlanDisplay()
-            reloadStorage()
+            let accountDetails = try await (
+                monitorUpdate
+                ? accountUseCase.refreshAccountAndMonitorUpdate()
+                : accountUseCase.refreshCurrentAccountDetails()
+            )
+            updateAccountDisplay(accountDetails)
         } catch {
-            self.showCurrentPlanLoadingView = false
             MEGALogError("[Account Hall] Error loading account details. Error: \(error)")
         }
     }
     
+    private func updateAccountDisplay(_ accountDetails: AccountDetailsEntity) {
+        setAccountDetails(accountDetails)
+        configPlanDisplay()
+        reloadStorage()
+    }
+
     private func fetchCounts() async {
         incomingContactRequestsCount = await myAccountHallUseCase.incomingContactsRequestsCount()
         let relevantUnseenUserAlertsCount = await myAccountHallUseCase.relevantUnseenUserAlertsCount()
@@ -378,15 +383,20 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
                 guard let self else { return }
                 Task { [weak self] in
                     guard let self else { return }
-                    
-                    guard let account else {
-                        await fetchAccountDetails(showCurrentPlanLoadingView: true)
-                        return
+                    if let account {
+                        updateAccountDisplay(account)
+                    } else {
+                        await updateAccountDetails(monitorUpdate: true)
                     }
-                    
-                    setAccountDetails(account)
-                    configPlanDisplay()
                 }
+            }
+            .store(in: &subscriptions)
+        
+        accountUseCase.monitorRefreshAccount
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isUpdating in
+                self?.isAccountUpdating = isUpdating
+                self?.reloadStorage()
             }
             .store(in: &subscriptions)
     }

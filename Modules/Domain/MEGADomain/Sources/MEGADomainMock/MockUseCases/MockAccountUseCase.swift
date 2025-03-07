@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 
@@ -43,9 +44,12 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _hasExpiredBusinessAccount: Bool
     private let _hasExpiredProFlexiAccount: Bool
     public private(set) var refreshAccountDetails_calledCount: Int = 0
+    public private(set) var refreshAccountDetailsWithMonitoringUpdate_calledCount: Int = 0
     public private(set) var enableRichLinkPreview_calledCount: Int = 0
     private var richLinkPreviewEnabled: Bool
-
+    public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
+    public let _isMonitoringRefreshAccount: Bool
+    
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
         isGuest: Bool = false,
@@ -87,7 +91,9 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         hasActiveProFlexiAccount: Bool = false,
         hasExpiredBusinessAccount: Bool = false,
         hasExpiredProFlexiAccount: Bool = false,
-        richLinkPreviewEnabled: Bool = false
+        richLinkPreviewEnabled: Bool = false,
+        monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
+        isMonitoringRefreshAccount: Bool = false
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -130,6 +136,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         _hasExpiredBusinessAccount = hasExpiredBusinessAccount
         _hasExpiredProFlexiAccount = hasExpiredProFlexiAccount
         self.richLinkPreviewEnabled = richLinkPreviewEnabled
+        _isMonitoringRefreshAccount = isMonitoringRefreshAccount
+        self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
     }
     
     // MARK: - User authentication status and identifiers
@@ -266,11 +274,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         refreshAccountDetails_calledCount += 1
-        
-        switch accountDetailsResult {
-        case .success(let details): return details
-        case .failure(let error): throw error
-        }
+        return try accountDetailsResult.get()
     }
     
     public func upgradeSecurity() async throws -> Bool {
@@ -284,10 +288,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     }
     
     public func sessionTransferURL(path: String) async throws -> URL {
-        switch sessionTransferURLResult {
-        case .success(let url): return url
-        case .failure(let error): throw error
-        }
+        try sessionTransferURLResult.get()
     }
     
     public func multiFactorAuthCheck(email: String) async throws -> Bool {
@@ -338,5 +339,18 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public func enableRichLinkPreview(_ enabled: Bool) {
         richLinkPreviewEnabled = enabled
         enableRichLinkPreview_calledCount += 1
+    }
+    
+    public var isMonitoringRefreshAccount: Bool {
+        _isMonitoringRefreshAccount
+    }
+    
+    public var monitorRefreshAccount: AnyPublisher<Bool, Never> {
+        monitorRefreshAccountPublisher
+    }
+    
+    public func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity {
+        refreshAccountDetailsWithMonitoringUpdate_calledCount += 1
+        return try accountDetailsResult.get()
     }
 }

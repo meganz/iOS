@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGASdk
@@ -132,6 +133,28 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         return currentAccountDetails.proLevel == type
     }
     
+    public var isMonitoringRefreshAccount: Bool {
+        currentUserSource.monitorRefreshAccountSourcePublisher.value
+    }
+    
+    public var monitorRefreshAccount: AnyPublisher<Bool, Never> {
+        currentUserSource.monitorRefreshAccountSourcePublisher.eraseToAnyPublisher()
+    }
+
+    public func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity {
+        guard !isMonitoringRefreshAccount else {
+            return try await refreshCurrentAccountDetails()
+        }
+
+        currentUserSource.monitorRefreshAccountSourcePublisher.send(true)
+
+        defer {
+            currentUserSource.monitorRefreshAccountSourcePublisher.send(false)
+        }
+
+        return try await refreshCurrentAccountDetails()
+    }
+
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getAccountDetails(with: RequestDelegate { [weak self] result in

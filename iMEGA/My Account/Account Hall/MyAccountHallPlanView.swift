@@ -57,7 +57,7 @@ struct MyAccountHallPlanView: View {
     
     @ViewBuilder
     private func currentPlanNameView() -> some View {
-        if viewModel.showCurrentPlanLoadingView {
+        if viewModel.isAccountUpdating {
             ProgressView()
         } else {
             Text(viewModel.currentPlanName)

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -263,8 +264,12 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Uq6-Gn-PCX">
+                                                            <rect key="frame" x="356" y="43" width="20" height="20"/>
+                                                        </activityIndicatorView>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="Uq6-Gn-PCX" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="3eq-eq-oIv"/>
                                                         <constraint firstItem="64P-Jn-H5s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MTJ-eX-4ny" secondAttribute="trailing" constant="14" id="Ab5-9A-n8p"/>
                                                         <constraint firstAttribute="bottom" secondItem="64P-Jn-H5s" secondAttribute="bottom" constant="22" id="LEQ-Vm-Kae"/>
                                                         <constraint firstItem="kQy-tK-wrG" firstAttribute="leading" secondItem="bdM-YA-sg4" secondAttribute="trailing" priority="900" constant="7" id="MU6-f5-3mb"/>
@@ -276,6 +281,7 @@
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="centerY" secondItem="bdM-YA-sg4" secondAttribute="centerY" id="UVv-af-YMi"/>
                                                         <constraint firstItem="MTJ-eX-4ny" firstAttribute="leading" secondItem="kQy-tK-wrG" secondAttribute="trailing" priority="900" constant="7" id="Vtu-ek-VHM"/>
                                                         <constraint firstItem="MTJ-eX-4ny" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="ad4-el-Oqh"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Uq6-Gn-PCX" secondAttribute="trailing" constant="7.5" id="hyU-OG-jyj"/>
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="sMd-xb-dn3"/>
                                                         <constraint firstItem="bdM-YA-sg4" firstAttribute="leading" secondItem="UAp-tU-btg" secondAttribute="trailing" constant="18" id="uYD-1R-Kv4"/>
                                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bdM-YA-sg4" secondAttribute="bottom" constant="21.5" id="vP8-4t-IFC"/>
@@ -284,6 +290,7 @@
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                                 <connections>
+                                                    <outlet property="activityIndicatorView" destination="Uq6-Gn-PCX" id="pdL-Oc-L2q"/>
                                                     <outlet property="detailLabel" destination="64P-Jn-H5s" id="2ee-9W-TBp"/>
                                                     <outlet property="iconImageView" destination="UAp-tU-btg" id="BTZ-Js-dQg"/>
                                                     <outlet property="pendingLabel" destination="k9L-sP-xFg" id="tHv-eM-YEf"/>
@@ -378,6 +385,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="jST-BG-0wP"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="LES-4h-z56" secondAttribute="trailing" constant="-20" id="BLp-dp-SpQ"/>
                             <constraint firstItem="LES-4h-z56" firstAttribute="bottom" secondItem="HQg-ZC-hNP" secondAttribute="bottom" id="Fv2-Rw-5Ln"/>

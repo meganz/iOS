@@ -1,3 +1,4 @@
+import Combine
 import DeviceCenter
 import DeviceCenterMocks
 @testable import MEGA
@@ -52,7 +53,12 @@ final class MyAccountHallViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadAccountDetails_shouldLoadAccountDetails() async {
-        let (sut, _) = makeSUT()
+        let isAccountUpdating = Bool.random()
+        let mockAccountUseCase = MockAccountUseCase(
+            accountDetailsResult: .success(AccountDetailsEntity.random),
+            isMonitoringRefreshAccount: isAccountUpdating
+        )
+        let (sut, _) = makeSUT(accountUseCase: mockAccountUseCase)
         var commands = [MyAccountHallViewModel.Command]()
         sut.invokeCommand = { viewCommand in
             commands.append(viewCommand)
@@ -61,11 +67,14 @@ final class MyAccountHallViewModelTests: XCTestCase {
         sut.dispatch(.load(.accountDetails))
         await sut.loadContentTask?.value
         
+        XCTAssertEqual(mockAccountUseCase.refreshAccountDetails_calledCount, 1)
+        XCTAssertEqual(mockAccountUseCase.refreshAccountDetailsWithMonitoringUpdate_calledCount, 0)
+        XCTAssertEqual(sut.isAccountUpdating, isAccountUpdating)
         XCTAssertEqual(commands, [.configPlanDisplay, .reloadStorage])
     }
 
     @MainActor
-    func testViewDidLoad_setupRefreshAccountDetailsSubscription_notifHasNewAccountDetailsObject_shouldSetAccountDetails() async {
+    func testViewDidLoad_setupRefreshAccountDetailsNotification_notifHasNewAccountDetailsObject_shouldSetAccountDetails() async {
         await assertRefreshAccountDetailsNotification(
             expectedAccountDetails: AccountDetailsEntity.random,
             notifContainsNewAccountDetails: true
@@ -73,7 +82,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testViewDidLoad_setupRefreshAccountDetailsSubscription_notifHasNilObject_shouldFetchAccountDetails() async {
+    func testViewDidLoad_setupRefreshAccountDetailsNotification_notifHasNilObject_shouldFetchAccountDetails() async {
         await assertRefreshAccountDetailsNotification(
             expectedAccountDetails: AccountDetailsEntity.random,
             notifContainsNewAccountDetails: false
@@ -81,16 +90,23 @@ final class MyAccountHallViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func assertRefreshAccountDetailsNotification(
+    private func assertRefreshAccountDetailsNotification(
         expectedAccountDetails: AccountDetailsEntity,
         notifContainsNewAccountDetails: Bool
     ) async {
         // If notifContainsNewAccountDetails is true, expectedAccountDetails will be returned on notification object and should be the new account details.
         // If notifContainsNewAccountDetails is false, expectedAccountDetails will be used as returning value on MockMyAccountHallUseCase as the currentAccountDetails when fetchAccountDetails is called
         let notificationCenter = NotificationCenter()
+        let expectedRefreshAccountCallCount = notifContainsNewAccountDetails ? 0 : 1
+        let mockAccountUseCase = MockAccountUseCase(
+            accountDetailsResult: .success(expectedAccountDetails),
+            isMonitoringRefreshAccount: !notifContainsNewAccountDetails
+        )
+
         let (sut, _) = makeSUT(
             currentAccountDetails: notifContainsNewAccountDetails ? nil : expectedAccountDetails,
-            notificationCenter: notificationCenter
+            notificationCenter: notificationCenter,
+            accountUseCase: mockAccountUseCase
         )
         
         sut.dispatch(.viewDidLoad)
@@ -109,6 +125,36 @@ final class MyAccountHallViewModelTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 1.0)
         
         XCTAssertEqual(sut.currentPlanName, expectedAccountDetails.proLevel.toAccountTypeDisplayName())
+        XCTAssertEqual(mockAccountUseCase.refreshAccountDetailsWithMonitoringUpdate_calledCount, expectedRefreshAccountCallCount)
+        XCTAssertEqual(mockAccountUseCase.refreshAccountDetails_calledCount, 0)
+        cancellable.cancel()
+    }
+    
+    @MainActor
+    func testMonitorRefreshAccount_whenStatusIsReceived_shouldUpdateActivityIndicatorDisplay() async {
+        let monitorStatusSourcePublisher = PassthroughSubject<Bool, Never>()
+        let (sut, _) = makeSUT(
+            accountUseCase: MockAccountUseCase(monitorRefreshAccountPublisher: monitorStatusSourcePublisher.eraseToAnyPublisher())
+        )
+        var commands = [MyAccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+        sut.dispatch(.viewDidLoad)
+
+        let exp = expectation(description: "Receive monitorRefreshAccount status")
+        let cancellable = sut.$isAccountUpdating
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+        
+        let expectedStatus = Bool.random()
+        monitorStatusSourcePublisher.send(expectedStatus)
+        await fulfillment(of: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(sut.isAccountUpdating, expectedStatus, "Should set expected status to hide/show activity indicator on Current plan row")
+        XCTAssertEqual(commands, [.reloadStorage], "Should call reloadStorage to hide/show activity indicator on Storage row")
         cancellable.cancel()
     }
     
@@ -721,7 +767,8 @@ final class MyAccountHallViewModelTests: XCTestCase {
         onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        notificationCenter: NotificationCenter = NotificationCenter()
+        notificationCenter: NotificationCenter = NotificationCenter(),
+        accountUseCase: ((any AccountUseCaseProtocol)?) = nil
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
             currentAccountDetails: currentAccountDetails ?? AccountDetailsEntity.random,
@@ -732,7 +779,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
             onContactRequestsUpdates: onContactRequestsUpdates
         )
         
-        let accountUseCase = MockAccountUseCase(rubbishBinStorage: rubbishBinStorage)
+        let accountUseCase = accountUseCase ?? MockAccountUseCase(rubbishBinStorage: rubbishBinStorage)
         let purchaseUseCase = MockAccountPlanPurchaseUseCase()
         let shareUseCase = MockShareUseCase()
         let notificationUseCase = MockNotificationUseCase(

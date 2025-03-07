@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 // MARK: - Use case protocol
@@ -78,6 +79,9 @@ public protocol AccountUseCaseProtocol: Sendable {
     func totalNodesCount() -> UInt64
     func upgradeSecurity() async throws -> Bool
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
+    func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity
+    var monitorRefreshAccount: AnyPublisher<Bool, Never> { get }
+    var isMonitoringRefreshAccount: Bool { get }
     func getMiscFlags() async throws
     func sessionTransferURL(path: String) async throws -> URL
     func multiFactorAuthCheck(email: String) async throws -> Bool
@@ -266,6 +270,18 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
 
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         try await repository.refreshCurrentAccountDetails()
+    }
+
+    public func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity {
+        try await repository.refreshAccountAndMonitorUpdate()
+    }
+    
+    public var monitorRefreshAccount: AnyPublisher<Bool, Never> {
+        repository.monitorRefreshAccount
+    }
+    
+    public var isMonitoringRefreshAccount: Bool {
+        repository.isMonitoringRefreshAccount
     }
     
     public func getMiscFlags() async throws {

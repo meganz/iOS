@@ -12,6 +12,7 @@ public struct MyAccountHallCellData {
     public let pendingText: String?
     public let promoText: String?
     public let disclosureIndicatorIcon: UIImage?
+    public let showLoadingIndicator: Bool
     
     public init(
         sectionText: String? = nil,
@@ -24,7 +25,8 @@ public struct MyAccountHallCellData {
         isPendingViewVisible: Bool = false,
         pendingText: String? = nil,
         promoText: String? = nil,
-        disclosureIndicatorIcon: UIImage? = nil
+        disclosureIndicatorIcon: UIImage? = nil,
+        showLoadingIndicator: Bool = false
     ) {
         self.sectionText = sectionText
         self.detailText = detailText
@@ -37,5 +39,6 @@ public struct MyAccountHallCellData {
         self.pendingText = pendingText
         self.promoText = promoText
         self.disclosureIndicatorIcon = disclosureIndicatorIcon
+        self.showLoadingIndicator = showLoadingIndicator
     }
 }
