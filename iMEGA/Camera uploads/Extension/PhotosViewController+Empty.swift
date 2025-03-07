@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 import UIKit
@@ -62,6 +63,7 @@ extension PhotosViewController {
         let emptyScreenTypeToShow = viewModel.emptyScreenTypeToShow()
         
         let emptyView = emptyView(for: emptyScreenTypeToShow)
+        emptyView.backgroundColor = TokenColors.Background.page
         self.emptyStateView = emptyView
         view.addSubview(emptyView)
         

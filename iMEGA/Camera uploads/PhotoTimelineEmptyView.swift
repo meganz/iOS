@@ -25,6 +25,7 @@ struct PhotoTimelineEmptyView: View {
             }
             .frame(maxHeight: .infinity)
         }
+        .background()
     }
 }
 
