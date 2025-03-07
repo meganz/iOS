@@ -138,6 +138,14 @@ set the date and time as build number and write it to build_number file
 
 Fetch the version number and write to a specified file
 
+### ios fetch_latest_build_number
+
+```sh
+[bundle exec] fastlane ios fetch_latest_build_number
+```
+
+Fetch the latest build number for a specific version and write to a specified file
+
 ### ios build_simulator
 
 ```sh

@@ -1,9 +1,6 @@
 import ArgumentParser
 import Foundation
 
-import ArgumentParser
-import Foundation
-
 /// A command-line tool to update metadata (description or release notes) on Transifex.
 ///
 /// This tool accepts an authorization token and flags to determine which metadata should be updated.
