@@ -118,7 +118,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
+    self.view.backgroundColor = [UIColor pageBackgroundColor];
 }
 
 - (void)reloadPhotos {

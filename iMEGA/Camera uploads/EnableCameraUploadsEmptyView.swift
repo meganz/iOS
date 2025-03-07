@@ -36,6 +36,7 @@ struct EnableCameraUploadsEmptyView: View {
                     .contentShape(Rectangle())
             }
         }
+        .background()
         .padding(.bottom, 32)
     }
 }
