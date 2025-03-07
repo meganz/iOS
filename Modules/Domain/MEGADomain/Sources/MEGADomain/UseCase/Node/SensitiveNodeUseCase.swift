@@ -1,4 +1,6 @@
 import AsyncAlgorithms
+import Combine
+import Foundation
 import MEGASwift
 
 public protocol SensitiveNodeUseCaseProtocol: Sendable {
@@ -43,6 +45,9 @@ public protocol SensitiveNodeUseCaseProtocol: Sendable {
     /// On node update it will yield if folder sensitivity has changed
     /// - Returns: An `AnyAsyncSequence<Void>` indicating folder sensitivity changed
     func folderSensitivityChanged() -> AnyAsyncSequence<Void>
+    
+    /// Return the cached inherited sensitivity state for a given node.
+    func cachedInheritedSensitivity(for nodeHandle: HandleEntity) -> Bool?
 }
 
 public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseProtocol>: SensitiveNodeUseCaseProtocol {
@@ -72,7 +77,11 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
     public func isInheritingSensitivity(node: NodeEntity) async throws -> Bool {
         guard isAccessible() else { return false }
         
-        return try await nodeRepository.isInheritingSensitivity(node: node)
+        let isSensitive = try await nodeRepository.isInheritingSensitivity(node: node)
+        
+        NodeInheritedSensitivityCache.shared.updateCachedInheritedSensitivity(isSensitive, for: node.handle)
+        
+        return isSensitive
     }
     
     public func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
@@ -88,7 +97,9 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
         return nodeRepository.nodeUpdates
             .filter { $0.contains { $0.isFolder && $0.changeTypes.contains(.sensitive)} }
             .map { _ in
-                try await nodeRepository.isInheritingSensitivity(node: node)
+                let isSensitive = try await nodeRepository.isInheritingSensitivity(node: node)
+                NodeInheritedSensitivityCache.shared.updateCachedInheritedSensitivity(isSensitive, for: node.handle)
+                return isSensitive
             }
             .removeDuplicates()
             .eraseToAnyAsyncThrowingSequence()
@@ -131,5 +142,39 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
                     .map({ _ in () })
             }
             .eraseToAnyAsyncSequence()
+    }
+    
+    public func cachedInheritedSensitivity(for nodeHandle: HandleEntity) -> Bool? {
+        NodeInheritedSensitivityCache.shared.cachedInheritedSensitivity(for: nodeHandle)
+    }
+}
+
+/// This is a workaround to fix CC-8509.
+/// Maintain the last updated inherited sensitivity state.
+final class NodeInheritedSensitivityCache: @unchecked Sendable {
+    @Atomic private var inheritedSensitivityState: [HandleEntity: Bool] = [:]
+    private var cancellable: AnyCancellable? // init within shared singleton, hence no Atomic needed
+    
+    static let shared = NodeInheritedSensitivityCache()
+    
+    init() {
+        cancellable = NotificationCenter
+            .default
+            .publisher(for: .accountDidLogout)
+            .sink { [weak self] _ in
+                self?.clearInheritedSensitivityState()
+            }
+    }
+    
+    func cachedInheritedSensitivity(for nodeHandle: HandleEntity) -> Bool? {
+        inheritedSensitivityState[nodeHandle]
+    }
+    
+    func updateCachedInheritedSensitivity(_ isSensitive: Bool, for nodeHandle: HandleEntity) {
+        $inheritedSensitivityState.mutate { $0[nodeHandle] = isSensitive }
+    }
+    
+    private func clearInheritedSensitivityState() {
+        $inheritedSensitivityState.mutate { $0.removeAll() }
     }
 }

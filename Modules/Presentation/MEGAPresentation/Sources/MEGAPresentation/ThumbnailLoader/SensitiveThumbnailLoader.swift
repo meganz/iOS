@@ -21,6 +21,16 @@ struct SensitiveThumbnailLoader: ThumbnailLoaderProtocol {
         } else if node.isMarkedSensitive {
             initialImage
                 .toSensitiveImageContaining(isSensitive: node.isMarkedSensitive)
+        } else if let isSensitive = sensitiveNodeUseCase.cachedInheritedSensitivity(for: node.handle) {
+            /// Currently, when there is sdk updates related to media node, the collectionView will be reloaded (check `PhotoLibraryCollectionViewLayoutChangesMonitor`)
+            /// This results in new instances of `PhotoCellContent` and `PhotoCellViewModel` are created (check the cell registration in `PhotoLibraryCollectionViewCoordinator`)
+            /// In `PhotoCellViewModel`'s init, this `initialImage` function will be called for each refreshed NodeEntity.
+            /// Since the node inherited sensitivity state loading is async, we need to show the placeholder (the else branch below) first while waiting.
+            /// Once the inherited sensitivity state loading completes, the placeholder will be replaced with the loaded thumbnail, hence the flickering
+            /// So the workaround fix the flickering is to cache the inherited sensitivity state.
+            /// Details in the jira ticket CC-8509.
+            initialImage
+                .toSensitiveImageContaining(isSensitive: isSensitive)
         } else {
             ImageContainer(image: placeholder(), type: .placeholder)
         }
