@@ -63,6 +63,10 @@ public final class MockSensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
     public func folderSensitivityChanged() -> AnyAsyncSequence<Void> {
         _folderSensitivityChanged
     }
+    
+    public func cachedInheritedSensitivity(for nodeHandle: HandleEntity) -> Bool? {
+        nil
+    }
 }
 
 // MARK: - Private Helpers

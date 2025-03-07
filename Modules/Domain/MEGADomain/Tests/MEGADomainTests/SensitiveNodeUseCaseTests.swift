@@ -279,6 +279,49 @@ struct SensitiveNodeUseCaseSuite {
         }
     }
     
+    @Suite("Inherited sensitivity cache")
+    struct InheritedSensitivityCache {
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: .build(proLevel: .proI),
+            hasValidProOrUnexpiredBusinessAccount: true
+        )
+        
+        @Test func emptyCacheWhenInheritedSensitivityMonitoringHasNotStarted() async throws {
+            let sut = makeSUT(accountUseCase: accountUseCase)
+            #expect(sut.cachedInheritedSensitivity(for: 1) == nil)
+        }
+        
+        @Test func cacheAvailableWhenInheritedSensitivityMonitoringHasStarted() async throws {
+            let nodeEntity = NodeEntity(handle: 1)
+            
+            let nodeRepository = MockNodeRepository(
+                isInheritingSensitivityResults: [nodeEntity: .success(true)]
+            )
+            let sut = makeSUT(nodeRepository: nodeRepository, accountUseCase: accountUseCase)
+            
+            _ = try await sut.isInheritingSensitivity(node: nodeEntity)
+            
+            #expect(sut.cachedInheritedSensitivity(for: 1) == true)
+        }
+        
+        @Test func emptyCacheUponLogout() async throws {
+            let nodeEntity = NodeEntity(handle: 1)
+            
+            let nodeRepository = MockNodeRepository(
+                isInheritingSensitivityResults: [nodeEntity: .success(true)]
+            )
+            let sut = makeSUT(nodeRepository: nodeRepository, accountUseCase: accountUseCase)
+            
+            _ = try await sut.isInheritingSensitivity(node: nodeEntity)
+            
+            #expect(sut.cachedInheritedSensitivity(for: 1) == true)
+            
+            NotificationCenter.default.post(name: .accountDidLogout, object: nil)
+            
+            #expect(sut.cachedInheritedSensitivity(for: 1) == nil)
+        }
+    }
+    
     private static func makeSUT(
         nodeRepository: MockNodeRepository = MockNodeRepository(),
         accountUseCase: MockAccountUseCase = MockAccountUseCase()

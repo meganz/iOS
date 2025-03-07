@@ -30,4 +30,8 @@ struct Preview_SensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
     func folderSensitivityChanged() -> AnyAsyncSequence<Void> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
+    
+    func cachedInheritedSensitivity(for nodeHandle: HandleEntity) -> Bool? {
+        nil
+    }
 }
