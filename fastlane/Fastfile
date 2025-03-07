@@ -131,6 +131,18 @@ platform :ios do
     UI.success("Version number '#{version}' written to '#{file_path}'")
   end
 
+  desc "Fetch the latest build number for a specific version and write to a specified file"
+  lane :fetch_latest_build_number do |options|
+    latest_testflight_build_number(
+      app_identifier: "mega.ios", 
+      version: options[:version], 
+      api_key: app_store_api_key,
+    )
+    file_path = options[:output_file] || "build_number.txt"
+    File.write(file_path, lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER])
+    UI.success("Build number '#{lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]}' written to '#{file_path}'")
+  end
+
   desc "build app for simulator"
   lane :build_simulator do
     gym(

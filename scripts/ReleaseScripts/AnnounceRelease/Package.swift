@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "AnnounceRelease",
     platforms: [
-        .macOS(.v13)
+        .macOS(.v14)
     ],
     dependencies: [
         .package(path: "../../ReleaseScripts/SharedReleaseScript")
