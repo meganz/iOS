@@ -59,6 +59,7 @@ typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
 
 @property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
 @property (weak, nonatomic) IBOutlet UIView *downloadedView;
+@property (weak, nonatomic) IBOutlet UIView *tagsContainerView;
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) MEGARecentActionBucket *recentActionBucket;

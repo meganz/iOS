@@ -144,17 +144,17 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="oBe-Z8-tyL">
-                                        <rect key="frame" x="0.0" y="53" width="255" height="75"/>
+                                        <rect key="frame" x="0.0" y="53" width="255" height="50"/>
                                         <subviews>
                                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="versioned" translatesAutoresizingMaskIntoConstraints="NO" id="hKh-6E-mfl">
-                                                <rect key="frame" x="-12" y="31.5" width="12" height="12"/>
+                                                <rect key="frame" x="-12" y="19" width="12" height="12"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="12" id="nSK-xj-pz3"/>
                                                     <constraint firstAttribute="height" constant="12" id="oJ8-hO-OBY"/>
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qKL-ee-w3o">
-                                                <rect key="frame" x="0.0" y="12.5" width="255" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="255" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtP-ek-nrg">
                                                         <rect key="frame" x="0.0" y="0.0" width="44" height="50"/>
@@ -187,11 +187,15 @@
                                         </subviews>
                                     </stackView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPA-jZ-fbO">
-                                        <rect key="frame" x="0.0" y="128" width="65" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="104.5" width="65" height="0.0"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qu8-Zl-YE5">
+                                        <rect key="frame" x="0.0" y="106" width="240" height="22"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -233,6 +237,7 @@
                 <outlet property="linkView" destination="eBF-bX-yoh" id="kqe-8N-IX8"/>
                 <outlet property="moreButton" destination="OhI-W3-En8" id="kXo-at-NXJ"/>
                 <outlet property="nameLabel" destination="AgB-Vi-qLn" id="RHk-6U-759"/>
+                <outlet property="tagsContainerView" destination="qu8-Zl-YE5" id="oPi-bI-Wpd"/>
                 <outlet property="thumbnailContainer" destination="NEJ-77-LUr" id="dWv-tX-qKR"/>
                 <outlet property="thumbnailImageView" destination="gQx-1N-Fbx" id="M1d-xr-qnW"/>
                 <outlet property="thumbnailPlayImageView" destination="eLs-OI-Wck" id="sVd-vc-B0k"/>
