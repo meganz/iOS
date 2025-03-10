@@ -249,6 +249,7 @@
         }
     } else {
         [CameraUploadManager.shared disableCameraUpload];
+        
         if (self.cameraUploadSettingChanged != nil) {
             self.cameraUploadSettingChanged();
         }
