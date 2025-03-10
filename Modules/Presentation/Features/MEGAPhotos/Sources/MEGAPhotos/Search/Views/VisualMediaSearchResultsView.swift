@@ -40,8 +40,8 @@ public struct VisualMediaSearchResultsView: View {
             VisualMediaSearchResultFoundView(
                 results: results,
                 selectedItem: $viewModel.selectedVisualMediaResult)
-        case .empty:
-            EmptySearchView()
+        case .empty(let description):
+            EmptySearchView(description: description)
         }
     }
 }

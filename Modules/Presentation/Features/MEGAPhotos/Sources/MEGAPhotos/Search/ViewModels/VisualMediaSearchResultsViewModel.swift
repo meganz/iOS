@@ -3,6 +3,7 @@ import Combine
 import ContentLibraries
 import Foundation
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGASwift
 import SwiftUI
@@ -11,7 +12,7 @@ import SwiftUI
 public final class VisualMediaSearchResultsViewModel: ObservableObject {
     enum ViewState: Equatable {
         case loading
-        case empty
+        case empty(description: String)
         case recentlySearched(items: [SearchHistoryItem])
         case searchResults(VisualMediaSearchResults)
     }
@@ -152,7 +153,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         viewState = if searchHistoryItems.isNotEmpty {
             .recentlySearched(items: searchHistoryItems.toSearchHistoryItems())
         } else {
-            .empty
+            .empty(description: Strings.Localizable.Photos.SearchHistory.Empty.description)
         }
     }
     
@@ -178,6 +179,10 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         try Task.checkCancellation()
         
         for await (albumItems, photoItems) in combineLatest(albumsSequence, photosSequence) {
+            guard !(albumItems.isEmpty && photoItems.isEmpty) else {
+                viewState = .empty(description: Strings.Localizable.noResults)
+                continue
+            }
             viewState = .searchResults(
                 .init(sectionContents: [
                     .init(section: .albums, items: albumItems),
@@ -235,7 +240,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                     return if $0.modificationTime == $1.modificationTime {
                         $0.handle > $1.handle
                     } else {
-                        $0.modificationTime < $1.modificationTime
+                        $0.modificationTime > $1.modificationTime
                     }
                 }
                 return try photos

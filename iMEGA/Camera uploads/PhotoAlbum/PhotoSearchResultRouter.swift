@@ -3,18 +3,18 @@ import MEGAPhotos
 import UIKit
 
 final class PhotoSearchResultRouter: PhotoSearchResultRouterProtocol {
-    private weak var navigationController: UINavigationController?
+    private weak var presenter: UIViewController?
     private let nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate
     private let backupsUseCase: any BackupsUseCaseProtocol
     
     private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     init(
-        navigationController: UINavigationController?,
+        presenter: UIViewController?,
         nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate,
         backupsUseCase: any BackupsUseCaseProtocol
     ) {
-        self.navigationController = navigationController
+        self.presenter = presenter
         self.nodeActionViewControllerDelegate = nodeActionViewControllerDelegate
         self.backupsUseCase = backupsUseCase
     }
@@ -31,14 +31,15 @@ final class PhotoSearchResultRouter: PhotoSearchResultRouterProtocol {
             sender: button
         ) else { return }
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
-        navigationController?.present(nodeActionViewController, animated: true, completion: nil)
+        presenter?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
     func didSelectAlbum(_ album: AlbumEntity) {
-        let viewController = AlbumContentRouter(navigationController: navigationController, album: album, newAlbumPhotos: nil).build()
-        let nav = UINavigationController(rootViewController: viewController)
-        nav.modalPresentationStyle = .fullScreen
-        navigationController?.present(nav, animated: true, completion: nil)
+        let navigationController = MEGANavigationController()
+        let router = AlbumContentRouter(navigationController: navigationController, album: album, newAlbumPhotos: nil)
+        navigationController.setViewControllers([router.build()], animated: false)
+        navigationController.modalPresentationStyle = .fullScreen
+        presenter?.present(navigationController, animated: true, completion: nil)
     }
     
     func didSelectPhoto(_ photo: NodeEntity, otherPhotos: [NodeEntity]) {

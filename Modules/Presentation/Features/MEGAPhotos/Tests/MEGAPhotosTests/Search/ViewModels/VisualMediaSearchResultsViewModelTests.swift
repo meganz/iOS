@@ -2,11 +2,13 @@ import Combine
 import ContentLibraries
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 @testable import MEGAPhotos
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwift
 import MEGATest
+import Testing
 import XCTest
 
 final class VisualMediaSearchResultsViewModelTests: XCTestCase {
@@ -19,7 +21,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         
         let exp = expectation(description: "recently searched items view state")
         let subscription = viewStateUpdates(on: sut) {
-            XCTAssertEqual($0, .empty)
+            XCTAssertEqual($0, .empty(description: Strings.Localizable.Photos.SearchHistory.Empty.description))
             exp.fulfill()
         }
         
@@ -66,8 +68,9 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             monitorUserAlbumsSequence: SingleItemAsyncSequence<[AlbumEntity]>(
                 item: []).eraseToAnyAsyncSequence()
         )
+        let searchText = "fav"
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
-            item: .success([])).eraseToAnyAsyncSequence())
+            item: .success([.init(name: "\(searchText) car", handle: 1, modificationTime: try "2024-11-12T08:00:00Z".date)])).eraseToAnyAsyncSequence())
         let sut = makeSUT(
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
@@ -90,7 +93,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         
         await fulfillment(of: [emptyExp], timeout: 0.2)
         
-        sut.updateSearchText("Search")
+        sut.updateSearchText(searchText)
         
         await fulfillment(of: [loadingExp, searchResultsExp], timeout: 0.2)
         subscription.cancel()
@@ -114,8 +117,9 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let photo1 = NodeEntity(name: "\(searchText) car", handle: 1, modificationTime: try "2024-11-12T08:00:00Z".date)
         let photo2 = NodeEntity(name: "\(searchText) bag", handle: 2, modificationTime: try "2024-11-12T08:00:00Z".date)
         let photo3 = NodeEntity(name: "\(searchText) game", handle: 3, modificationTime: try "2024-11-11T22:05:04Z".date)
+        let photo4 = NodeEntity(name: "\(searchText) movie", handle: 4, modificationTime: try "2024-11-09T08:00:00Z".date)
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
-            item: .success([photo1, photo2, photo3])).eraseToAnyAsyncSequence())
+            item: .success([photo1, photo2, photo3, photo4])).eraseToAnyAsyncSequence())
         let sut = makeSUT(
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
             monitorAlbumsUseCase: monitorAlbumsUseCase,
@@ -131,9 +135,10 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
                         .album(AlbumCellViewModel(album: userAlbum, searchText: searchText))
                     ]),
                     .init(section: .photos, items: [
-                        .photo(PhotoSearchResultItemViewModel(photo: photo3, searchText: searchText)),
                         .photo(PhotoSearchResultItemViewModel(photo: photo2, searchText: searchText)),
-                        .photo(PhotoSearchResultItemViewModel(photo: photo1, searchText: searchText))
+                        .photo(PhotoSearchResultItemViewModel(photo: photo1, searchText: searchText)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo3, searchText: searchText)),
+                        .photo(PhotoSearchResultItemViewModel(photo: photo4, searchText: searchText))
                     ])
                 ])
             ))
@@ -322,5 +327,84 @@ private extension PhotoSearchResultItemViewModel {
             searchText: searchText,
             thumbnailLoader: MockThumbnailLoader(),
             photoSearchResultRouter: MockPhotoSearchResultRouter())
+    }
+}
+
+@Suite("VisualMediaSearchResultsViewModel Tests")
+struct VisualMediaSearchResultsViewModelTestsSuite {
+    @Suite("Perform Search")
+    @MainActor
+    struct PerformSearch {
+        @Test("search performed with no results correct empty state shown")
+        func noResult() async {
+            let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
+                searchQueryHistoryEntries: [])
+            let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
+                monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+                    item: .success([])).eraseToAnyAsyncSequence(),
+                monitorUserAlbumsSequence: SingleItemAsyncSequence(
+                    item: []).eraseToAnyAsyncSequence()
+            )
+            let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
+                item: .success([])).eraseToAnyAsyncSequence())
+            let sut = makeSUT(
+                visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
+                monitorAlbumsUseCase: monitorAlbumsUseCase,
+                monitorPhotosUseCase: monitorPhotosUseCase
+            )
+            
+            await confirmation { confirmation in
+                let monitorSearchTask = Task {
+                    await sut.monitorSearchResults()
+                }
+                let cancellable = sut.$viewState
+                    .dropFirst()
+                    .sink {
+                        #expect($0 == .empty(description: Strings.Localizable.noResults))
+                        monitorSearchTask.cancel()
+                        confirmation()
+                    }
+                
+                sut.updateSearchText("1")
+                
+                await monitorSearchTask.value
+                cancellable.cancel()
+            }
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        photoAlbumContainerInteractionManager: PhotoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager(),
+        visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol = MockVisualMediaSearchHistoryUseCase(),
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
+        monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol = MockMonitorPhotosUseCase(),
+        photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter(),
+        contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            nodeUseCase: MockNodeUseCase(),
+            isAlbumPerformanceImprovementsEnabled: { true }),
+        searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150)
+    ) -> VisualMediaSearchResultsViewModel {
+        .init(
+            photoAlbumContainerInteractionManager: photoAlbumContainerInteractionManager,
+            visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            thumbnailLoader: thumbnailLoader,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            albumCoverUseCase: albumCoverUseCase,
+            monitorPhotosUseCase: monitorPhotosUseCase,
+            photoSearchResultRouter: photoSearchResultRouter,
+            contentLibrariesConfiguration: contentLibrariesConfiguration,
+            searchDebounceTime: searchDebounceTime)
     }
 }

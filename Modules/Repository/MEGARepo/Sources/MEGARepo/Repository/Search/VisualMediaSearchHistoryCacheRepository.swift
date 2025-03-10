@@ -15,6 +15,10 @@ public actor VisualMediaSearchHistoryCacheRepository: VisualMediaSearchHistoryRe
     }
     
     public func add(entry: SearchTextHistoryEntryEntity) async {
+        if let existingIndex = recentSearches.firstIndex(
+            where: { $0.query.localizedCaseInsensitiveContains(entry.query) }) {
+            recentSearches.remove(at: existingIndex)
+        }
         recentSearches.append(entry)
     }
     

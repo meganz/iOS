@@ -42,6 +42,7 @@ final class VisualMediaSearchResultFoundCollectionViewCoordinator: NSObject {
         let photoCellRegistration = PhotoCellRegistration { [weak self] cell, _, viewModel in
             self?.configure(cell) {
                 PhotoSearchResultItemView(viewModel: viewModel)
+                    .background(TokenColors.Background.page.swiftUI)
             }
         }
         let headerElementKind = VisualMediaSearchResultSupplementaryElementKind.titleSectionHeader.elementKind
