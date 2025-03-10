@@ -4,7 +4,9 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
+import MEGASwiftUI
 import MEGAUIKit
+import SwiftUI
 
 extension NodeTableViewCell {
     
@@ -79,6 +81,7 @@ extension NodeTableViewCell {
         separatorView?.backgroundColor = .borderStrong()
 
         showDescriptionIfRequired(for: node, searchText: searchText)
+        showTagsIfRequired(for: node, searchText: searchText)
     }
 
     @objc(configureCellForNode:shouldApplySensitiveBehaviour:api:)
@@ -147,6 +150,33 @@ extension NodeTableViewCell {
         // Note: For some reason app will crash without setting the `descriptionLabel?.textColor` so we need to put it here
         descriptionLabel?.textColor = TokenColors.Text.secondary
         descriptionLabel?.isHidden = false
+    }
+
+    private func showTagsIfRequired(for node: MEGANode, searchText: String?) {
+        tagsContainerView?.subviews.forEach { $0.removeFromSuperview() }
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
+              let searchText = searchText?.removingFirstLeadingHash(),
+              let tags: [AttributedString] = node.tags?.toStringArray()?.compactMap({ tag in
+                  guard tag.containsIgnoringCaseAndDiacritics(searchText: searchText) else { return nil }
+                  return AttributedString(
+                    ("#" + tag)
+                        .forceLeftToRight()
+                        .highlightedStringWithKeyword(
+                            searchText,
+                            primaryTextColor: TokenColors.Text.primary,
+                            highlightedTextColor: TokenColors.Notifications.notificationSuccess,
+                            normalFont: .preferredFont(style: .subheadline, weight: .medium)
+                        )
+                  )
+              }),
+              tags.isNotEmpty else {
+            return
+        }
+
+        let tagListView = HorizontalTagListView(viewModel: HorizontalTagListViewModel(tags: tags))
+        let tagsHostingController = UIHostingController(rootView: tagListView)
+        tagsHostingController.view.backgroundColor = .clear
+        tagsContainerView?.wrap(tagsHostingController.view)
     }
 
     private func configureBlur(isSensitive: Bool) {
