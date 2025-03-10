@@ -18,4 +18,6 @@ extension DIContainer {
     static let createAlbumDialogButtonPressedEvent = CreateAlbumDialogButtonPressedEvent()
     static let addItemsToNewAlbumButtonEvent = AddItemsToNewAlbumButtonEvent()
     static let createNewAlbumDialogEvent = CreateNewAlbumDialogEvent()
+    static let cameraUploadsEnabled = CameraUploadsEnabledEvent()
+    static let cameraUploadsDisabled = CameraUploadsDisabledEvent()
 }

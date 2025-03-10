@@ -14,7 +14,7 @@ extension CameraUploadsTableViewController {
         setMenuCapableBackButtonWith(menuTitle: title)
     }
     
-    @objc 
+    @objc
     func configLabelsTextColor() {
         enableCameraUploadsLabel.textColor = UIColor.primaryTextColor()
         uploadVideosInfoLabel.textColor = UIColor.primaryTextColor()

@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPermissions
+import MEGAPresentation
 import MEGASDKRepo
 
 extension CameraUploadManager {
@@ -19,8 +20,7 @@ extension CameraUploadManager {
     class func disableCameraUploadIfAccessProhibited() {
         if
             permissionHandler.isPhotoLibraryAccessProhibited,
-            Self.isCameraUploadEnabled
-        {
+            Self.isCameraUploadEnabled {
             Self.shared().disableCameraUpload()
         }
     }
@@ -31,6 +31,10 @@ extension CameraUploadManager {
             cameraUploadsUseCase: CameraUploadsUseCase(cameraUploadsRepository: CameraUploadsRepository.newRepo),
             deviceUseCase: DeviceUseCase(repository: DeviceRepository.newRepo)
         )
+    }
+    
+    @objc func trackCameraUploadsEnableStatus(_ enable: Bool) {
+        DIContainer.tracker.trackAnalyticsEvent(with: enable ? DIContainer.cameraUploadsEnabled : DIContainer.cameraUploadsDisabled)
     }
 }
 

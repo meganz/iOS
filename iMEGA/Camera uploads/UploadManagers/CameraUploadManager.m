@@ -563,6 +563,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)enableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = YES;
+    
+    [self trackCameraUploadsEnableStatus:CameraUploadManager.cameraUploadEnabled];
     [self.heartbeat registerHeartbeat];
     [self initializeCameraUpload];
     [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
@@ -597,6 +599,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)disableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = NO;
+    
+    [self trackCameraUploadsEnableStatus:CameraUploadManager.cameraUploadEnabled];
     [self.heartbeat unregisterHeartbeat];
     [self stopVideoUpload];
     [self cancelAllPendingOperations];
