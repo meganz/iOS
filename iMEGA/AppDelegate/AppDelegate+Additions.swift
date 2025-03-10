@@ -1,3 +1,4 @@
+import Accounts
 import Chat
 import ChatRepo
 import Combine
@@ -340,11 +341,20 @@ extension AppDelegate {
 // MARK: - Show launch view controller
 extension AppDelegate {
     @objc func showLaunchViewController() {
-        let launchViewContrller = UIStoryboard(name: "Launch", bundle: nil).instantiateViewController(identifier: "LaunchViewControllerID")
+        var viewController: UIViewController?
+        if isNewLoadingEnabled() {
+            viewController = AppLoadingViewRouter().build()
+        } else {
+            viewController = UIStoryboard(name: "Launch", bundle: nil).instantiateViewController(identifier: "LaunchViewControllerID")
+        }
         UIView.transition(with: window, duration: 0.5,
                           options: [.transitionCrossDissolve, .allowAnimatedContent]) { [weak self] in
-            self?.window.rootViewController = launchViewContrller
+            self?.window.rootViewController = viewController
         }
+    }
+    
+    @objc func isNewLoadingEnabled() -> Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newLoadingView)
     }
 }
 

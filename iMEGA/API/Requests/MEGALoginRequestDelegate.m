@@ -131,16 +131,20 @@
 + (void)presentLaunchViewController:(BOOL)shouldSetupPermissions{
     NSAssert([NSThread isMainThread], @"must be called on main thread");
     
-    LaunchViewController *launchVC;
-    if (shouldSetupPermissions) {
-        launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
+    if ([self isNewLoadingEnabled]) {
+        [self showLoadingViewWithPermissionsPending:shouldSetupPermissions];
     } else {
-        launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+        LaunchViewController *launchVC;
+        if (shouldSetupPermissions) {
+            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
+        } else {
+            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+        }
+        
+        launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
+        UIWindow *window = UIApplication.sharedApplication.delegate.window;
+        window.rootViewController = launchVC;
     }
-    
-    launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
-    UIWindow *window = UIApplication.sharedApplication.delegate.window;
-    window.rootViewController = launchVC;
 }
 
 @end

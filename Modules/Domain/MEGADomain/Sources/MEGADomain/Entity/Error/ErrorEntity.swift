@@ -89,7 +89,7 @@ public enum ErrorTypeEntity: Error, CaseIterable {
     case overDiskQuotaPaywall
 }
 
-public struct ErrorEntity: Error {
+public struct ErrorEntity: Error, Equatable {
     public let type: ErrorTypeEntity
     public let name: String
     public let value: Int64

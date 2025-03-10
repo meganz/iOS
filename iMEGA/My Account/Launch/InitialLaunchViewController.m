@@ -32,6 +32,8 @@
     self.skipButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     
     [self createViewModel];
+    self.setupButton.hidden = self.skipButton.hidden = !self.showViews;
+    self.titleLabel.hidden = self.descriptionLabel.hidden = !self.showViews;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

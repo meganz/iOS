@@ -7,6 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface InitialLaunchViewController : LaunchViewController
 
 @property (nonatomic, strong) InitialLaunchViewModel *viewModel;
+@property (nonatomic) BOOL showViews;
 
 - (void)performAnimation;
 

@@ -122,5 +122,6 @@ public enum MEGAAssetsImageName: String, CaseIterable, Sendable {
          timeline,
          clockMediumThin,
          glassPlaylist,
-         check
+         check,
+         splashScreenMEGALogo
 }

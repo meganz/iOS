@@ -4568,3 +4568,9 @@
 "settings.chat.mediaQuality.image.option.original"="Always send original size images";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="Video quality";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="Connecting to the server";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="Updating file list";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="Preparing file list";
