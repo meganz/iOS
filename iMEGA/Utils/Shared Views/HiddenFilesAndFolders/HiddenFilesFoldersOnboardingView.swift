@@ -46,7 +46,7 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
                         .frame(width: 120, height: 120)
                         .padding(.top, TokenSpacing._5)
                     
-                    Text(Strings.Localizable.Onboarding.HiddenFilesAndFolders.title)
+                    Text(Strings.Localizable.Onboarding.HiddenFilesAndFolders.Header.title)
                         .font(.headline)
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)
                         .padding(.bottom, TokenSpacing._5)
@@ -62,17 +62,20 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
     
     private func descriptionItemViews() -> some View {
         VStack(alignment: .leading, spacing: TokenSpacing._5) {
-            OnboardingItemView(image: .eyeOffRegular,
-                               title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.HideImportant.Content.title,
-                               description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.HideImportant.Content.message)
+            OnboardingItemView(
+                image: .eyeOffRegular,
+                title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.One.title,
+                description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.One.message)
             
-            OnboardingItemView(image: .imagesRegular,
-                               title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.ExcludeTimeline.Content.title,
-                               description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.ExcludeTimeline.Content.message)
+            OnboardingItemView(
+                image: .imagesRegular,
+                title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Two.title,
+                description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Two.message)
             
-            OnboardingItemView(image: .eyeRegular,
-                               title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.OutOfSight.Content.title,
-                               description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.OutOfSight.Content.message)
+            OnboardingItemView(
+                image: .eyeRegular,
+                title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Three.title,
+                description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Three.message)
         }
     }
     
