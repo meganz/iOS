@@ -1,15 +1,16 @@
 import MEGAAssets
 import MEGADesignToken
-import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
 struct EmptySearchView: View {
+    let description: String
+    
     var body: some View {
         ContentUnavailableView {
-            Image(uiImage: MEGAAssetsImageProvider.image(named: "search2") ?? UIImage())
+            Image(uiImage: MEGAAssetsImageProvider.image(named: .glassSearch))
         } description: {
-            Text(Strings.Localizable.Photos.SearchHistory.Empty.description)
+            Text(description)
                 .font(.footnote)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
@@ -18,5 +19,5 @@ struct EmptySearchView: View {
 }
 
 #Preview {
-    EmptySearchView()
+    EmptySearchView(description: "Test")
 }

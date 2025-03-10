@@ -1,6 +1,7 @@
 import ContentLibraries
 import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct VisualMediaSearchLoadingView: View {
@@ -17,6 +18,7 @@ struct VisualMediaSearchLoadingView: View {
             PhotoSearchResultLoadingView(isActive: isActive)
         }
         .frame(maxHeight: .infinity, alignment: .top)
+        .background()
     }
 }
 
@@ -91,11 +93,12 @@ private struct PhotoSearchResultLoadingView: View {
             
             List(0..<placeholderCount, id: \.self) { _ in
                 itemPlaceholder
+                    .listRowBackground(TokenColors.Background.page.swiftUI)
             }
             .shimmering(active: isActive)
         }
         .listStyle(.plain)
-        .background(TokenColors.Background.page.swiftUI)
+        .background()
     }
     
     private var itemPlaceholder: some View {
@@ -106,6 +109,7 @@ private struct PhotoSearchResultLoadingView: View {
             RoundedRectangle(cornerRadius: 12.5, style: .continuous)
                 .frame(width: 158, height: 12)
         }
+        .background()
     }
 }
 

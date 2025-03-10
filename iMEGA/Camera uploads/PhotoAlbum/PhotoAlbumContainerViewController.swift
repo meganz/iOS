@@ -31,7 +31,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
         controller.searchResultsUpdater = self
         controller.searchBar.delegate = self
         controller.obscuresBackgroundDuringPresentation = false
-        controller.hidesNavigationBarDuringPresentation = true
+        controller.hidesNavigationBarDuringPresentation = false
+        controller.searchBar.isTranslucent = false
         return controller
     }()
     private lazy var pageController: PhotosPageViewController = {
@@ -205,7 +206,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
     
     private func configureSearchBar() {
         guard isVisualMediaSearchFeatureEnabled else { return }
-        edgesForExtendedLayout = .top
+        edgesForExtendedLayout = []
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         extendedLayoutIncludesOpaqueBars = true
@@ -475,7 +476,7 @@ extension PhotoAlbumContainerViewController {
                 nodeRepository: NodeRepository.newRepo),
             monitorPhotosUseCase: makeMonitorPhotosUseCase(),
             photoSearchResultRouter: PhotoSearchResultRouter(
-                navigationController: self.navigationController,
+                presenter: self,
                 nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
                     viewController: self,
                     moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)

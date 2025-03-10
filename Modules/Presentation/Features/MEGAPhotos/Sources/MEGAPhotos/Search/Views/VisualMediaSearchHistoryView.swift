@@ -15,6 +15,7 @@ struct VisualMediaSearchHistoryView: View {
                     VStack(alignment: .leading) {
                         HStack(alignment: .center, spacing: 10) {
                             MEGAAssetsImageProvider.image(named: .clockMediumThin)
+                                .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)
                                 .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
