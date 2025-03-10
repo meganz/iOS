@@ -16,7 +16,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         case searchResults(VisualMediaSearchResults)
     }
     @Published private(set) var viewState: ViewState = .loading
-    @Published var searchText = ""
+    @Published private(set) var searchText = ""
     @Published var selectedRecentlySearched: String?
     @Published var selectedVisualMediaResult: VisualMediaSearchResultSelection?
     
@@ -78,6 +78,10 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         guard searchText.isNotEmpty else { return }
         
         await visualMediaSearchHistoryUseCase.add(entry: .init(id: UUID(), query: searchText, searchDate: Date()))
+    }
+    
+    public func updateSearchText(_ newText: String) {
+        searchText = newText
     }
     
     func monitorSearchResults() async {

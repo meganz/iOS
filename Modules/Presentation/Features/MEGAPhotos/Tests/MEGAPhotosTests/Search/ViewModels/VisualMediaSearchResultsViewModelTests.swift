@@ -90,7 +90,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         
         await fulfillment(of: [emptyExp], timeout: 0.2)
         
-        sut.searchText = "Search"
+        sut.updateSearchText("Search")
         
         await fulfillment(of: [loadingExp, searchResultsExp], timeout: 0.2)
         subscription.cancel()
@@ -142,9 +142,9 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         
         trackTaskCancellation { await sut.monitorSearchResults() }
         
-        sut.searchText = "1"
-        sut.searchText = "2"
-        sut.searchText = searchText
+        sut.updateSearchText("1")
+        sut.updateSearchText("2")
+        sut.updateSearchText(searchText)
        
         await fulfillment(of: [exp], timeout: 0.5)
         
@@ -161,7 +161,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let lastSearch = "queenstown trip"
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase()
         let sut = makeSUT(visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase)
-        sut.searchText = lastSearch
+        sut.updateSearchText(lastSearch)
         
         await sut.saveSearch()
         

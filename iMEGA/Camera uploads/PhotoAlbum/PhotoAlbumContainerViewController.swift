@@ -26,14 +26,10 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }
     private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
     private lazy var photoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager()
-    private lazy var visualMediaSearchResultsViewModel = makeVisualMediaSearchResultsViewModel()
     private lazy var searchController: UISearchController = {
-        let resultController = VisualMediaSearchResultsViewControllerFactory
-            .makeViewController(viewModel: visualMediaSearchResultsViewModel)
-        let controller = UISearchController(searchResultsController: resultController)
-        controller.searchResultsUpdater = resultController
+        let controller = UISearchController(searchResultsController: nil)
+        controller.searchResultsUpdater = self
         controller.searchBar.delegate = self
-        controller.delegate = self
         controller.obscuresBackgroundDuringPresentation = false
         controller.hidesNavigationBarDuringPresentation = true
         return controller
@@ -55,6 +51,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?
     private var albumHostingController: UIViewController?
+    private var visualMediaSearchResultsViewController: UIViewController?
+    private var visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel?
     
     var leftBarButton: UIBarButtonItem?
     lazy var shareLinkBarButton = UIBarButtonItem(image: UIImage(resource: .link),
@@ -382,25 +380,73 @@ final class PhotoAlbumContainerViewController: UIViewController {
     @objc private func removeLinksButtonPressed() {
         viewModel.removeLinksTapped()
     }
+    
+    private func showSearchResultsViewController() {
+        guard visualMediaSearchResultsViewController == nil else { return }
+        let visualMediaSearchResultsViewModel = makeVisualMediaSearchResultsViewModel()
+        self.visualMediaSearchResultsViewModel = visualMediaSearchResultsViewModel
+        
+        let visualMediaSearchResultsViewController = VisualMediaSearchResultsViewControllerFactory
+                    .makeViewController(viewModel: visualMediaSearchResultsViewModel)
+        self.visualMediaSearchResultsViewController = visualMediaSearchResultsViewController
+        
+        addChild(visualMediaSearchResultsViewController)
+        view.addSubview(visualMediaSearchResultsViewController.view)
+        visualMediaSearchResultsViewController.didMove(toParent: self)
+        
+        visualMediaSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            visualMediaSearchResultsViewController.view.topAnchor
+                .constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            visualMediaSearchResultsViewController.view.leadingAnchor
+                .constraint(equalTo: self.view.leadingAnchor),
+            visualMediaSearchResultsViewController.view.trailingAnchor
+                .constraint(equalTo: self.view.trailingAnchor),
+            visualMediaSearchResultsViewController.view.bottomAnchor
+                .constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func removeSearchResultsViewController() {
+        guard let visualMediaSearchResultsViewController else { return }
+        
+        visualMediaSearchResultsViewController.willMove(toParent: nil)
+        visualMediaSearchResultsViewController.view.removeFromSuperview()
+        visualMediaSearchResultsViewController.removeFromParent()
+        
+        self.visualMediaSearchResultsViewController = nil
+        visualMediaSearchResultsViewModel = nil
+    }
 }
 
 // MARK: - Ads
 extension PhotoAlbumContainerViewController: AdsSlotDisplayable {}
 
-// MARK: - UISearchControllerDelegate
+// MARK: - UISearchResultsUpdating
 
-extension PhotoAlbumContainerViewController: UISearchControllerDelegate {
-    func presentSearchController(_ searchController: UISearchController) {
-        searchController.showsSearchResultsController = true
+extension PhotoAlbumContainerViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else {
+            return
+        }
+        visualMediaSearchResultsViewModel?.updateSearchText(searchText)
     }
 }
 
 // MARK: - UISearchBarDelegate
 
 extension PhotoAlbumContainerViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        showSearchResultsViewController()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        removeSearchResultsViewController()
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         Task {
-            await visualMediaSearchResultsViewModel.saveSearch()
+            await visualMediaSearchResultsViewModel?.saveSearch()
         }
     }
 }
