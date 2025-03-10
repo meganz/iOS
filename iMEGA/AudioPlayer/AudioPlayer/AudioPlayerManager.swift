@@ -14,6 +14,7 @@ import MEGASDKRepo
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
         DIContainer.playbackContinuationUseCase
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession()))
+    private var shouldRemovePlayerInstance: Bool = false
     
     override private init() {
         super.init()
@@ -348,14 +349,13 @@ import MEGASDKRepo
             self?.audioSessionUseCase.configureCallAudioSession()
         }
         
-        refreshPresentersContentOffset(isHidden: true)
         miniPlayerHandlerListenerManager.notify { $0.closeMiniPlayer() }
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
         
         miniPlayerVC = nil
         miniPlayerRouter = nil
-        player = nil
+        shouldRemovePlayerInstance = true
     }
     
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {
@@ -368,23 +368,13 @@ import MEGASDKRepo
     
     func refreshPresentersContentOffset(isHidden: Bool) {
         Task {
-            let height = isHidden ? 0 : await miniPlayerHandlerListenerManager.listeners.first?.currentContainerHeight() ?? 0
+            let height = isHidden ? 0 : await miniPlayerHandlerListenerManager.listeners.last?.currentContainerHeight() ?? 0
             player?.updateContentViews(newHeight: height)
-        }
-    }
-    
-    func playerHiddenIgnoringPlayerLifeCycle(_ hidden: Bool, presenter: UIViewController) {
-        Task {
-            guard presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) else { return }
             
-            notifyDelegatesToShowHideMiniPlayer(hidden)
-            
-            let height = hidden ? 0 : await miniPlayerHandlerListenerManager.listeners.first?.currentContainerHeight() ?? 0
-            
-            player?.updateContentViewsIgnorePlayerLifeCycle(
-                showMiniPlayer: !hidden,
-                newHeight: height
-            )
+            if shouldRemovePlayerInstance && isHidden {
+                player = nil
+                shouldRemovePlayerInstance = false
+            }
         }
     }
     
@@ -405,14 +395,10 @@ import MEGASDKRepo
         player?.add(presenterListener: delegate)
         
         guard let vc = delegate as? UIViewController else { return }
-        playerHidden(!isPlayerAlive(), presenter: vc)
         miniPlayerRouter?.updatePresenter(vc)
     }
     
     func removeDelegate(_ delegate: any AudioPlayerPresenterProtocol) {
-        guard let vc = delegate as? UIViewController else { return }
-        playerHidden(true, presenter: vc)
-        
         player?.remove(presenterListener: delegate)
     }
 
@@ -431,19 +417,17 @@ import MEGASDKRepo
     }
     
     func showMiniPlayer() {
-        guard let miniPlayerVC = miniPlayerVC else {
+        guard let miniPlayerVC else {
             miniPlayerRouter?.start()
             return
         }
-        miniPlayerHandlerListenerManager.notify { $0.presentMiniPlayer(miniPlayerVC) }
-    }
-    
-    func showMiniPlayer(in handler: any AudioMiniPlayerHandlerProtocol) {
-        guard let miniPlayerVC = miniPlayerVC else {
-            miniPlayerRouter?.start()
-            return
+        miniPlayerHandlerListenerManager.notify {
+            if $0.containsMiniPlayerInstance() {
+                $0.showMiniPlayer()
+            } else {
+                $0.presentMiniPlayer(miniPlayerVC)
+            }
         }
-        handler.presentMiniPlayer(miniPlayerVC)
     }
     
     func audioInterruptionDidStart() {

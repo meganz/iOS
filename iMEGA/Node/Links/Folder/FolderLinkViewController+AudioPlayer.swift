@@ -2,39 +2,48 @@ import Foundation
 
 extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerPresenterProtocol {
     func presentMiniPlayer(_ viewController: UIViewController) {
-        guard let miniPlayerView = viewController.view else { return }
-        
-        bottomView?.removeFromSuperview()
-        
-        view.addSubview(miniPlayerView)
-        
-        miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            miniPlayerView.heightAnchor.constraint(equalToConstant: 60.0),
-            miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            miniPlayerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-        
-        bottomView = miniPlayerView
-        
         Task { @MainActor in
-            AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: false)
+            guard let miniPlayerView = viewController.view else { return }
+            
+            bottomView?.removeFromSuperview()
+            
+            view.addSubview(miniPlayerView)
+            
+            miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                miniPlayerView.heightAnchor.constraint(equalToConstant: 60.0),
+                miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                miniPlayerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ])
+            
+            bottomView = miniPlayerView
+            
+            adjustMiniPlayerDisplay(isHidden: false)
+        }
+    }
+    
+    private func adjustMiniPlayerDisplay(isHidden: Bool) {
+        Task { @MainActor in
+            bottomView?.isHidden = isHidden
+            refreshPresenterContentOffset(isHidden: isHidden)
         }
     }
     
     func showMiniPlayer() {
-        AudioPlayerManager.shared.showMiniPlayer()
         Task { @MainActor in
-            self.bottomView?.isHidden = false
+            AudioPlayerManager.shared.showMiniPlayer()
+            adjustMiniPlayerDisplay(isHidden: false)
         }
     }
     
     func hideMiniPlayer() {
-        Task { @MainActor in
-            self.bottomView?.isHidden = true
-        }
+        adjustMiniPlayerDisplay(isHidden: true)
+    }
+    
+    func containsMiniPlayerInstance() -> Bool {
+        bottomView?.subviews.first != nil
     }
     
     func closeMiniPlayer() {
@@ -44,14 +53,20 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
     
     func resetMiniPlayerContainer() {        
         Task { @MainActor in
-            self.bottomView?.removeFromSuperview()
-            self.bottomView = nil
+            bottomView?.removeFromSuperview()
+            bottomView = nil
+        }
+    }
+    
+    func refreshPresenterContentOffset(isHidden: Bool) {
+        Task { @MainActor in
+            AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: isHidden)
         }
     }
     
     func currentContainerHeight() async -> CGFloat {
         await Task { @MainActor in
-            self.bottomView?.frame.height ?? 0
+            bottomView?.frame.height ?? 0
         }.value
     }
     

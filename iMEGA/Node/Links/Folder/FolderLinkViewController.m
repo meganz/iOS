@@ -155,6 +155,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [sdkFolder retryPendingConnections];
+    
+    [AudioPlayerManager.shared addDelegate:self];
+    [AudioPlayerManager.shared addMiniPlayerHandler:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -174,8 +177,6 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [AudioPlayerManager.shared addDelegate:self];
-    [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self shouldShowMiniPlayer];
 }
 

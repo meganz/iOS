@@ -15,6 +15,11 @@ final class MiniPlayerDataSource: NSObject, MiniPlayerSource {
         tracks?[indexPath.row]
     }
     
+    func indexPath(for item: AudioPlayerItem) -> IndexPath? {
+        guard let index = tracks?.firstIndex(of: item) else { return nil }
+        return IndexPath(row: index, section: 0)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         tracks?.count ?? 0
     }

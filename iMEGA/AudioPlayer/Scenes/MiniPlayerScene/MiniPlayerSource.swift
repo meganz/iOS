@@ -2,6 +2,7 @@ import Foundation
 
 protocol MiniPlayerSource: UICollectionViewDataSource {
     func item(at indexPath: IndexPath) -> AudioPlayerItem?
+    func indexPath(for item: AudioPlayerItem) -> IndexPath?
 }
 
 extension MiniPlayerSource {
