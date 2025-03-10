@@ -162,9 +162,6 @@ extension NotificationsTableViewController {
             let notification = ScheduleMeetingOccurrenceNotification(alert: alert) { [weak self] message in
                 guard let self else { return nil }
                 return createAttributedStringForBoldTags(content: message)?.toSwiftAttributedString()
-            } alternateMessage: { [weak self] in
-                guard let self else { return nil }
-                return alternativeMessage(for: alert, indexPath: indexPath)?.toSwiftAttributedString()
             }
             
             scheduleMeetingOccurrenceNotificationList.append(notification)

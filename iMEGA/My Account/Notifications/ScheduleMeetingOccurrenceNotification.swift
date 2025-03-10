@@ -10,7 +10,6 @@ final class ScheduleMeetingOccurrenceNotification: NSObject, @unchecked Sendable
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let createAttributedStringForBoldTags: (String) -> AttributedString?
-    private let alternateMessage: () -> AttributedString?
     
     @Atomic var message: AttributedString?
     @Atomic var isMessageLoaded = false
@@ -24,14 +23,12 @@ final class ScheduleMeetingOccurrenceNotification: NSObject, @unchecked Sendable
         chatRoomUseCase: some ChatRoomUseCaseProtocol = ChatRoomUseCase(
             chatRoomRepo: ChatRoomRepository.newRepo
         ),
-        createAttributedStringForBoldTags: @escaping (String) -> AttributedString?,
-        alternateMessage: @escaping () -> AttributedString?
+        createAttributedStringForBoldTags: @escaping (String) -> AttributedString?
     ) {
         self.alert = alert
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.createAttributedStringForBoldTags = createAttributedStringForBoldTags
-        self.alternateMessage = alternateMessage
     }
     
     // MARK: - Interface methods.
@@ -51,66 +48,21 @@ final class ScheduleMeetingOccurrenceNotification: NSObject, @unchecked Sendable
         ) else {
             throw ScheduleMeetingErrorEntity.scheduledMeetingNotFound
         }
-        
-        if alert.type == .scheduledMeetingUpdated {
-            if alert.hasScheduledMeetingChangeType(.cancelled) {
-                return createAttributedStringForBoldTags(
-                    occurrenceCancelledMessage(
-                        withStartDate: scheduledMeeting.startDate,
-                        endDate: scheduledMeeting.endDate
-                    )
+        if scheduledMeeting.cancelled {
+            return createAttributedStringForBoldTags(
+                occurrenceCancelledMessage(
+                    withStartDate: scheduledMeeting.startDate,
+                    endDate: scheduledMeeting.endDate
                 )
-            } else if alert.hasScheduledMeetingChangeType(.startDate)
-                        || alert.hasScheduledMeetingChangeType(.endDate) {
-                return createAttributedStringForBoldTags(
-                    occurrenceUpdatedMessage(
-                        withStartDate: scheduledMeeting.startDate,
-                        endDate: scheduledMeeting.endDate
-                    )
-                )
-            }
-        } else if alert.type == .scheduledMeetingNew {
+            )
+        } else {
             return createAttributedStringForBoldTags(
                 occurrenceUpdatedMessage(
                     withStartDate: scheduledMeeting.startDate,
                     endDate: scheduledMeeting.endDate
                 )
             )
-        } else {
-            let occurrences = try? await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(chatId: alert.nodeHandle)
-                            
-            if let occurrence = occurrences?.filter({
-                $0.scheduledId == alert.scheduledMeetingId
-                && $0.parentScheduledId == alert.pendingContactRequestHandle
-                && $0.overrides == alert.number(at: 0)
-            }).first {
-                if occurrence.cancelled {
-                    return createAttributedStringForBoldTags(
-                        occurrenceCancelledMessage(
-                            withStartDate: occurrence.startDate,
-                            endDate: occurrence.endDate
-                        )
-                    )
-                } else {
-                    return createAttributedStringForBoldTags(
-                        occurrenceUpdatedMessage(
-                            withStartDate: occurrence.startDate,
-                            endDate: occurrence.endDate
-                        )
-                    )
-                }
-            } else if scheduledMeeting.cancelled {
-                return createAttributedStringForBoldTags(
-                    occurrenceCancelledMessage(
-                        withStartDate: scheduledMeeting.startDate,
-                        endDate: scheduledMeeting.endDate
-                    )
-                )
-            } else {
-                return alternateMessage()
-            }
         }
-        return nil
     }
     
     private func occurrenceCancelledMessage(withStartDate startDate: Date, endDate: Date) -> String {
