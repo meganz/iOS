@@ -82,7 +82,6 @@
     [self askNotificationPermissionsIfNeeded];
     self.navigationController.toolbarHidden = true;
     
-    [AudioPlayerManager.shared addDelegate:self];
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
@@ -92,15 +91,7 @@
     [MEGAChatSdk.shared removeChatDelegate:self];
     [MEGAChatSdk.shared removeChatCallDelegate:self];
     
-    [AudioPlayerManager.shared playerHiddenIgnoringPlayerLifeCycle:YES presenter:self];
-}
-
-- (void)dealloc {
     [AudioPlayerManager.shared removeDelegate:self];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

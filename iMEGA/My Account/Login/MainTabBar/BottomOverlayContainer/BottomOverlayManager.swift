@@ -22,6 +22,18 @@ final class BottomOverlayManager: NSObject {
         setItemVisibility(for: type, hidden: false)
     }
     
+    func contains(_ type: BottomSubViewType) -> Bool {
+        items.first { $0.type == type } != nil
+    }
+    
+    func view(for type: BottomSubViewType) -> UIView? {
+        items.first { $0.type == type }?.view
+    }
+    
+    func isItemHidden(_ type: BottomSubViewType) -> Bool {
+        items.first { $0.type == type }?.view.isHidden ?? true
+    }
+    
     /// Returns the list of bottom overlay items sorted by their display priority and insertion order.
     ///
     /// The items are primarily sorted by their `priority.rawValue` in ascending order, meaning items with a lower priority value will
@@ -43,6 +55,16 @@ final class BottomOverlayManager: NSObject {
     ) {
         for item in items where item.type == type {
             item.view.isHidden = hidden
+        }
+    }
+    
+    func setItemVisibility(
+        for type: BottomSubViewType,
+        hidden: Bool
+    ) async {
+        await withCheckedContinuation { continuation in
+            self.setItemVisibility(for: type, hidden: hidden)
+            continuation.resume()
         }
     }
 }

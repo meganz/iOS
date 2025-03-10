@@ -192,7 +192,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self encourageToUpgrade];
     
-    [AudioPlayerManager.shared addDelegate:self];
     [MEGASdk.shared addMEGAGlobalDelegateAsync:self queueType:ListenerQueueTypeMain];
     
     [self fetchDataIfRequired];
@@ -204,6 +203,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSNotification.nodeSavedToOffline object:nil];
     [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
+    
+    if (self.shouldRemovePlayerDelegate) {
+        [AudioPlayerManager.shared removeDelegate:self];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -212,10 +215,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.viewModel.editModeActive) {
         self.selectedNodesArray = nil;
         [self toggleWithEditModeActive:NO];
-    }
-    
-    if (self.shouldRemovePlayerDelegate) {
-        [AudioPlayerManager.shared removeDelegate:self];
     }
 }
 
