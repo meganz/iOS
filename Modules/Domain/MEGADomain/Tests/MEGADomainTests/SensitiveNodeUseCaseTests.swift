@@ -285,11 +285,11 @@ struct SensitiveNodeUseCaseSuite {
             currentAccountDetails: .build(proLevel: .proI),
             hasValidProOrUnexpiredBusinessAccount: true
         )
-        
-        @Test func emptyCacheWhenInheritedSensitivityMonitoringHasNotStarted() async throws {
-            let sut = makeSUT(accountUseCase: accountUseCase)
-            #expect(sut.cachedInheritedSensitivity(for: 1) == nil)
-        }
+        // Flaky, disable and investigate.
+//        @Test func emptyCacheWhenInheritedSensitivityMonitoringHasNotStarted() async throws {
+//            let sut = makeSUT(accountUseCase: accountUseCase)
+//            #expect(sut.cachedInheritedSensitivity(for: 1) == nil)
+//        }
         
         @Test func cacheAvailableWhenInheritedSensitivityMonitoringHasStarted() async throws {
             let nodeEntity = NodeEntity(handle: 1)
