@@ -5,6 +5,7 @@ import SwiftUI
 
 public struct SearchResultsView: View {
     @StateObject var viewModel: SearchResultsViewModel
+    @Environment(\.editMode) private var editMode
     
     public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -143,8 +144,8 @@ public struct SearchResultsView: View {
         }
         .listStyle(.plain)
         .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
-        .onChange(of: viewModel.selectedRowIds) { selectedIds in
-            if selectedIds.count > 1, !viewModel.editing {
+        .onChange(of: editMode?.wrappedValue) { newMode in
+            if newMode == .active {
                 viewModel.handleEditingChanged(true)
             }
         }
