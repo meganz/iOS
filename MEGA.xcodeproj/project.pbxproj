@@ -1698,6 +1698,7 @@
 		A882983D29F186AE00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882983B29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift */; };
 		A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */; };
 		A88671A02D43F11900C8AC9B /* SharedItemsNodeSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5A29B9FA74006B919E /* SharedItemsNodeSearcher.swift */; };
+		A88790692D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88790682D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
 		A88E7FEB2549FD8A001B0A66 /* RecentsTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE52549FD8A001B0A66 /* RecentsTableViewHeaderView.xib */; };
 		A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */; };
@@ -4447,6 +4448,7 @@
 		A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IntentHandler+StartCall.swift"; sourceTree = "<group>"; };
 		A885107A292D428F00E92A54 /* MEGAIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAIntent.entitlements; sourceTree = "<group>"; };
 		A8868B1C2A71794700F4BE98 /* ChatRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ChatRepo; sourceTree = "<group>"; };
+		A88790682D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MEGALoginRequestDelegate+Additions.swift"; path = "API/Requests/MEGALoginRequestDelegate+Additions.swift"; sourceTree = "<group>"; };
 		A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogFileView.swift; sourceTree = "<group>"; };
 		A88E7FE52549FD8A001B0A66 /* RecentsTableViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecentsTableViewHeaderView.xib; sourceTree = "<group>"; };
 		A88E7FE62549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentsTableViewHeaderFooterView.h; sourceTree = "<group>"; };
@@ -10849,6 +10851,7 @@
 				A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */,
 				5B7B4C9E1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.h */,
 				5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */,
+				A88790682D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift */,
 				A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */,
 				A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */,
 				5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */,
@@ -15022,6 +15025,7 @@
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
+				A88790692D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift in Sources */,
 				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
 				5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
