@@ -162,7 +162,6 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     }
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?) {}
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {}
-    func playerHiddenIgnoringPlayerLifeCycle(_ hidden: Bool, presenter: UIViewController) {}
     func closePlayer() {
         closePlayer_calledTimes += 1
     }

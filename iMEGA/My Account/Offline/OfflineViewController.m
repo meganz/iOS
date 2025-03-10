@@ -122,8 +122,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [AudioPlayerManager.shared addDelegate:self];
         
     if (self.openFileWhenViewReady != nil) {
         self.openFileWhenViewReady();
@@ -132,7 +130,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [AudioPlayerManager.shared removeDelegate:self];
     [self refreshMiniPlayerIfNeeded];
 }
 
@@ -145,6 +142,9 @@ static NSString *kisDirectory = @"kisDirectory";
         self.selectedItems = nil;
         [self setEditMode:NO];
     }
+    
+    [AudioPlayerManager.shared removeDelegate:self];
+    [self refreshMiniPlayerIfNeeded];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

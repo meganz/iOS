@@ -10,6 +10,7 @@ enum MiniPlayerAction: ActionType {
     case playItem(AudioPlayerItem)
     case onClose
     case showPlayer(MEGANode?, String?)
+    case scrollToCurrentItem
 }
 
 @MainActor
@@ -29,6 +30,7 @@ final class MiniPlayerViewModel: ViewModelType {
         case reload(item: AudioPlayerItem)
         case showLoading(_ show: Bool)
         case enableUserInteraction(_ enable: Bool)
+        case scrollToItem(indexPath: IndexPath)
     }
     
     // MARK: - Private properties
@@ -84,7 +86,6 @@ final class MiniPlayerViewModel: ViewModelType {
                 
                 await audioPlayerUseCase.registerMEGADelegate()
             }
-                
             invoke(command: .showLoading(shouldInitializePlayer))
             determinePlayerSetupOnViewDidLoad()
         case .onPlayPause:
@@ -98,6 +99,13 @@ final class MiniPlayerViewModel: ViewModelType {
             closeMiniPlayer()
         case .showPlayer(let node, let filePath):
             showFullScreenPlayer(node, path: filePath)
+        case .scrollToCurrentItem:
+            if let currentItem = configEntity.playerHandler.playerCurrentItem(),
+               let queue = configEntity.playerHandler.playerPlaylistItems(),
+               let index = queue.firstIndex(of: currentItem) {
+                let indexPath = IndexPath(row: index, section: 0)
+                invokeCommand?(.scrollToItem(indexPath: indexPath))
+            }
         }
     }
     

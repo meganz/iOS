@@ -127,6 +127,8 @@
     if (self.searchController.isActive) {
         [self updateSearchResultsForSearchController:self.searchController];
     }
+    
+    [self addAudioPlayerDelegate];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -137,9 +139,12 @@
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAAudioPlayerShouldUpdateContainerNotification object:nil];
     
     [MEGASdk.shared removeMEGAGlobalDelegate:self];
+    
+    if (self.shouldRemovePlayerDelegate) {
+        [AudioPlayerManager.shared removeDelegate:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -147,16 +152,11 @@
     [self configureAds];
     
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-    [AudioPlayerManager.shared addDelegate:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self configureAds];
-    
-    if (self.shouldRemovePlayerDelegate) {
-        [AudioPlayerManager.shared removeDelegate:self];
-    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

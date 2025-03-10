@@ -5,20 +5,29 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         Task { @MainActor in
             guard let miniPlayerView = viewController.view else { return }
             
-            miniPlayerVC?.view.removeFromSuperview()
             addSubviewToOverlay(
                 miniPlayerView,
                 type: .audioPlayer,
                 priority: .high,
                 height: 60
             )
-            miniPlayerVC = viewController
             
+            adjustMiniPlayerDisplay()
+        }
+    }
+    
+    private func adjustMiniPlayerDisplay() {
+        Task { @MainActor in
             tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
             
             shouldUpdateProgressViewLocation()
             
-            AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: false)
+            await bottomOverlayManager?.setItemVisibility(
+                for: .audioPlayer,
+                hidden: false
+            )
+            
+            refreshPresenterContentOffset(isHidden: false)
         }
     }
     
@@ -47,24 +56,57 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         safeAreaCoverView = nil
     }
     
+    func isMiniPlayerHidden() -> Bool {
+        bottomOverlayManager?.isItemHidden(.audioPlayer) ?? true
+    }
+    
+    func updateMiniPlayerVisibility(for viewController: UIViewController) {
+        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        let miniPlayerHidden = isMiniPlayerHidden()
+        
+        if let audioPlayerDelegate = viewController as? (any AudioPlayerPresenterProtocol) {
+            AudioPlayerManager.shared.addDelegate(audioPlayerDelegate)
+            miniPlayerHidden ? showMiniPlayer() : refreshPresenterContentOffset(isHidden: false)
+        } else {
+            !miniPlayerHidden ? hideMiniPlayer() : refreshPresenterContentOffset(isHidden: true)
+        }
+    }
+    
     func showMiniPlayer() {
         Task { @MainActor in
             if let navController = selectedViewController as? UINavigationController,
                let lastController = navController.viewControllers.last,
                lastController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
-                AudioPlayerManager.shared.showMiniPlayer(in: self)
-                
-                self.bottomOverlayManager?.showItem(.audioPlayer)
-                AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: false)
+                await bottomOverlayManager?.setItemVisibility(
+                    for: .audioPlayer,
+                    hidden: false
+                )
+                adjustMiniPlayerDisplay()
             }
+        }
+    }
+    
+    func containsMiniPlayerInstance() -> Bool {
+        guard let bottomOverlayManager, let bottomOverlayStack else { return false }
+        let audioPlayerView = bottomOverlayManager.view(for: .audioPlayer)
+        let stackContainsPlayer = bottomOverlayStack.subviews.contains(where: { $0 == audioPlayerView})
+        return bottomOverlayManager.contains(.audioPlayer) && stackContainsPlayer
+    }
+    
+    func refreshPresenterContentOffset(isHidden: Bool) {
+        Task { @MainActor in
+            AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: isHidden)
         }
     }
     
     func hideMiniPlayer() {
         Task { @MainActor in
-            self.bottomOverlayManager?.hideItem(.audioPlayer)
-            AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: false)
-            self.removeSafeAreaCoverView()
+            await bottomOverlayManager?.setItemVisibility(
+                for: .audioPlayer,
+                hidden: true
+            )
+            refreshPresenterContentOffset(isHidden: true)
+            removeSafeAreaCoverView()
         }
     }
     
@@ -72,18 +114,17 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         hideMiniPlayer()
         resetMiniPlayerContainer()
         shouldUpdateProgressViewLocation()
-        removeSafeAreaCoverView()
     }
     
     func resetMiniPlayerContainer() {
         Task { @MainActor in
-            self.removeSubviewFromOverlay(.audioPlayer)
+            removeSubviewFromOverlay(.audioPlayer)
         }
     }
     
     func currentContainerHeight() async -> CGFloat {
         await Task { @MainActor in
-            self.bottomOverlayContainer?.frame.height ?? 0
+            bottomOverlayContainer?.frame.height ?? 0
         }.value
     }
     
@@ -98,5 +139,26 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
             AudioPlayerManager.shared.showMiniPlayer()
         }
         shouldUpdateProgressViewLocation()
+    }
+    
+    /// When changing the Audio player handler (e.g.: Opening the Audio Player via a folder link and then closing it to return to the app),
+    /// the view displaying the player in the app might not have been previously added as a delegate. This could result in the content size not being updated.
+    /// This function ensures that the appropriate delegate is added and the content offset is refreshed to avoid that issue.
+    @objc func refreshMiniPlayerVisibility() {
+        Task { @MainActor in
+            if let navController = selectedViewController as? UINavigationController,
+               let lastController = navController.viewControllers.last as? (any AudioPlayerPresenterProtocol) {
+                
+                let bottomContainerHeight = bottomOverlayContainer?.frame.height ?? 0
+                let isPlayerAlive = AudioPlayerManager.shared.isPlayerAlive()
+                
+                if (bottomContainerHeight == 0 && isPlayerAlive) ||
+                    (bottomContainerHeight != 0 && !isPlayerAlive) {
+                    // The delegate is only being added if the AudioPlayerManager listeners array doesn't contains it
+                    AudioPlayerManager.shared.addDelegate(lastController)
+                    refreshPresenterContentOffset(isHidden: !isPlayerAlive)
+                }
+            }
+        }
     }
 }

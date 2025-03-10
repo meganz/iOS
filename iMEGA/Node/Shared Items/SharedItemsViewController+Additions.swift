@@ -523,6 +523,12 @@ extension SharedItemsViewController {
             tableView?.setContentOffset(.zero, animated: false)
         }
     }
+    
+    @objc func addAudioPlayerDelegate() {
+        AudioPlayerManager.shared.addDelegate(self)
+        let isPlayerHidden = !AudioPlayerManager.shared.isPlayerAlive()
+        AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: isPlayerHidden)
+    }
 }
 
 // MARK: - SharedItemsTableViewCellDelegate

@@ -187,7 +187,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         if homeQuickActionSearch {
             homeQuickActionSearch = false
         }
-        AudioPlayerManager.shared.addDelegate(self)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
         configureViewMode()
         configureAdsVisibility()
@@ -196,7 +195,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        AudioPlayerManager.shared.playerHiddenIgnoringPlayerLifeCycle(true, presenter: self)
+        AudioPlayerManager.shared.removeDelegate(self)
     }
 
     private func setupViewModelEventListening() {
