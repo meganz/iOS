@@ -38,7 +38,6 @@ final class ChatRoomsListViewController: UIViewController {
         super.viewDidAppear(animated)
         configureAdsVisibility()
         
-        AudioPlayerManager.shared.addDelegate(self)
         Task { @MainActor in
             await viewModel.askForNotificationsPermissionsIfNeeded()
         }
@@ -55,10 +54,6 @@ final class ChatRoomsListViewController: UIViewController {
             addBarButtonItem.menu = nil
             moreBarButtonItem.menu = nil
         }
-        AudioPlayerManager.shared.playerHiddenIgnoringPlayerLifeCycle(true, presenter: self)
-    }
-    
-    deinit {
         AudioPlayerManager.shared.removeDelegate(self)
     }
     

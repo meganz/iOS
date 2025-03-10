@@ -90,7 +90,6 @@ protocol AudioPlayerMetadataLoaderProtocol {
     @MainActor func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?)
     @MainActor func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool)
     func playerHidden(_ hidden: Bool, presenter: UIViewController)
-    func playerHiddenIgnoringPlayerLifeCycle(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()
     func presentMiniPlayer(_ viewController: UIViewController)
     func audioInterruptionDidStart()
@@ -108,6 +107,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func closeMiniPlayer()
     func resetMiniPlayerContainer()
     func currentContainerHeight() async -> CGFloat
+    func containsMiniPlayerInstance() -> Bool
 }
 
 // MARK: - Audio Player Presenters
@@ -119,6 +119,7 @@ final class ListenerManager<T: AudioPlayerProtocol> {
     var listeners: [T] = []
     
     func add(_ listener: T) {
+        guard !listeners.contains(where: { $0 === listener }) else { return }
         listeners.append(listener)
     }
     func remove(_ listener: T) {

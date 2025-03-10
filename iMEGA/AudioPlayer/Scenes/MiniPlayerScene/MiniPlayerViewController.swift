@@ -42,9 +42,6 @@ final class MiniPlayerViewController: UIViewController {
         }
         
         viewModel.dispatch(.onViewDidLoad)
-        
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
     }
     
     override func viewDidLayoutSubviews() {
@@ -52,6 +49,8 @@ final class MiniPlayerViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
         updateAppearance()
         progressBarView.setNeedsDisplay()
+        
+        viewModel.dispatch(.scrollToCurrentItem)
     }
     
     // MARK: - Private functions
@@ -65,10 +64,11 @@ final class MiniPlayerViewController: UIViewController {
         miniPlayerSource = MiniPlayerDataSource(currentTrack: currentItem, queue: queue, loopMode: loopMode)
         miniPlayerDelegate = MiniPlayerDelegate(delegate: self, loopMode: loopMode, itemsNumber: queue?.count ?? 0)
         imageView.image = UIImage(resource: .defaultArtwork)
-        collectionView.reloadData()
-        collectionView.performBatchUpdates(nil) { _ in
-            let indexPath = IndexPath(row: queue?.firstIndex(of: currentItem) ?? 0, section: 0)
-            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        
+        Task { @MainActor in
+            collectionView.reloadData()
+            let indexPath = miniPlayerSource?.indexPath(for: currentItem) ?? IndexPath(row: 0, section: 0)
+            scrollToItem(at: indexPath)
         }
     }
     
@@ -81,7 +81,7 @@ final class MiniPlayerViewController: UIViewController {
         }
         
         if item != currentItem, lastMovementIndexPath == nil || lastMovementIndexPath != indexPath {
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            scrollToItem(at: indexPath)
             lastMovementIndexPath = indexPath
         }
     }
@@ -115,6 +115,17 @@ final class MiniPlayerViewController: UIViewController {
         enable ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
         playPauseButtonImageView.isHidden = enable
         collectionView.isUserInteractionEnabled = !enable
+    }
+    
+    private func scrollToItem(at indexPath: IndexPath) {
+        Task { @MainActor in
+            let section = indexPath.section
+            let itemCount = collectionView.numberOfItems(inSection: section)
+            
+            guard indexPath.item < itemCount else { return }
+            
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        }
     }
     
     // MARK: - UI configurations
@@ -167,6 +178,8 @@ final class MiniPlayerViewController: UIViewController {
             refreshStateOfLoadingView(show)
         case .enableUserInteraction(let enabled):
             userInteraction(enabled: enabled)
+        case .scrollToItem(let indexPath):
+            scrollToItem(at: indexPath)
         }
     }
 }

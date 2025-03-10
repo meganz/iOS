@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) UIView *safeAreaCoverView;
 
 @property (nonatomic, strong, nullable) AudioPlayer *player;
-@property (nonatomic, strong, nullable) UIViewController *miniPlayerVC;
 @property (nonatomic, strong, nullable) UIImageView *phoneBadgeImageView;
 @property (nonatomic, assign) NSInteger unreadMessages;
 @property (strong, nonatomic) NSMutableArray<UIViewController *> *defaultViewControllers;

@@ -67,13 +67,8 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        AudioPlayerManager.shared.addDelegate(self)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         AudioPlayerManager.shared.removeDelegate(self)
     }
     

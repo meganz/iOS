@@ -30,7 +30,6 @@ extension MainTabBarController {
         
         bottomOverlayContainer?.isHidden = false
         bottomOverlayStack?.isHidden = false
-        view.isHidden = false
         
         rebuildBottomOverlayStack()
     }

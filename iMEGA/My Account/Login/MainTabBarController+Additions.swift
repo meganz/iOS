@@ -72,6 +72,7 @@ extension MainTabBarController {
               let vc = sharedItemsNavigationController.viewControllers.first
         else { return nil }
         (vc as? (any MyAvatarPresenterProtocol))?.configureMyAvatarManager()
+        sharedItemsNavigationController.navigationDelegate = self
         return sharedItemsNavigationController
     }
 
@@ -265,6 +266,8 @@ extension MainTabBarController: UITabBarControllerDelegate {
 // MARK: - MEGANavigationControllerDelegate
 extension MainTabBarController: MEGANavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController!, willShow viewController: UIViewController!, animated: Bool) {
+        updateMiniPlayerVisibility(for: viewController)
+        
         guard let psaViewModel else { return }
         hidePSAView(viewController.hidesBottomBarWhenPushed, psaViewModel: psaViewModel)
     }

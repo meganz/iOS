@@ -79,7 +79,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
                 removeToolbar(animated: true)
             }
             if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
-                audioPlayerManager.playerHiddenIgnoringPlayerLifeCycle(enabled, presenter: self)
+                audioPlayerManager.playerHidden(enabled, presenter: self)
             }
         }
 
@@ -95,13 +95,6 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             AppearanceManager.forceSearchBarUpdate(searchBar,
                                                    backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
                                                    traitCollection: self.traitCollection)
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
-            audioPlayerManager.addDelegate(self)
         }
     }
     

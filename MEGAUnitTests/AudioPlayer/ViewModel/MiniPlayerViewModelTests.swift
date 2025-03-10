@@ -353,19 +353,21 @@ extension MiniPlayerViewModel.Command: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
         case .showLoading(let isLoading):
-            return "Command.showLoading(\(isLoading))"
+            "Command.showLoading(\(isLoading))"
         case .initTracks(let currentItem, let queue, let loopMode):
-            return "MiniPlayerViewModel.Command.initTracks(currentItem: \(currentItem), queue: \(String(describing: queue)), loopMode: \(loopMode))"
+            "MiniPlayerViewModel.Command.initTracks(currentItem: \(currentItem), queue: \(String(describing: queue)), loopMode: \(loopMode))"
         case .reloadNodeInfo(let thumbnail):
-            return "Command.reloadNodeInfo(thumbnail: \(thumbnail.map { "<\(String(describing: $0))>" } ?? "nil"))"
+            "Command.reloadNodeInfo(thumbnail: \(thumbnail.map { "<\(String(describing: $0))>" } ?? "nil"))"
         case .reloadPlayerStatus(let percentage, let isPlaying):
-            return "Command.reloadPlayerStatus(\(percentage)-isPlaying:\(isPlaying)"
+            "Command.reloadPlayerStatus(\(percentage)-isPlaying:\(isPlaying)"
         case .change(let currentItem, let indexPath):
-            return "Command.change(\(currentItem)-indexPath:\(indexPath)"
+            "Command.change(\(currentItem)-indexPath:\(indexPath)"
         case .reload(let currentItem):
-            return "Command.reload(\(currentItem))"
+            "Command.reload(\(currentItem))"
         case .enableUserInteraction(let enabled):
-            return "Command.enableUserInteraction(\(enabled))"
+            "Command.enableUserInteraction(\(enabled))"
+        case .scrollToItem(let indexPath):
+            "Command.scrollToItem(\(indexPath))"
         }
     }
 }
