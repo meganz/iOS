@@ -3,6 +3,7 @@ public struct ChatRoomEntity: Sendable {
         case oneToOne
         case group
         case meeting
+        case noteToSelf
     }
     
     public enum ChangeType: Sendable {
@@ -54,6 +55,7 @@ public struct ChatRoomEntity: Sendable {
     public let isActive: Bool
     public let isArchived: Bool
     public let isMeeting: Bool
+    public let isNoteToSelf: Bool
     public let chatType: ChatType
     public let peers: [Peer]
     public let userHandle: HandleEntity
@@ -78,6 +80,7 @@ public struct ChatRoomEntity: Sendable {
         isActive: Bool,
         isArchived: Bool,
         isMeeting: Bool,
+        isNoteToSelf: Bool,
         chatType: ChatType,
         peers: [Peer],
         userHandle: HandleEntity,
@@ -101,6 +104,7 @@ public struct ChatRoomEntity: Sendable {
         self.isActive = isActive
         self.isArchived = isArchived
         self.isMeeting = isMeeting
+        self.isNoteToSelf = isNoteToSelf
         self.chatType = chatType
         self.peers = peers
         self.userHandle = userHandle

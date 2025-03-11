@@ -9,6 +9,8 @@ public protocol ChatUseCaseProtocol: Sendable {
     func activeCall() -> CallEntity?
     func fetchNonMeetings() -> [ChatListItemEntity]?
     func fetchMeetings() -> [ChatListItemEntity]?
+    func fetchNoteToSelfChat() -> ChatRoomEntity?
+    func createNoteToSelfChat() async throws -> ChatRoomEntity
     func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
@@ -59,6 +61,14 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func fetchNonMeetings() -> [ChatListItemEntity]? {
         chatRepo.fetchNonMeetings()?.sorted(by: { $0.lastMessageDate.compare($1.lastMessageDate) == .orderedDescending })
+    }
+    
+    public func fetchNoteToSelfChat() -> ChatRoomEntity? {
+        chatRepo.fetchNoteToSelfChat()
+    }
+    
+    public func createNoteToSelfChat() async throws -> ChatRoomEntity {
+        try await chatRepo.createNoteToSelfChat()
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {

@@ -8,6 +8,8 @@ public protocol ChatRepositoryProtocol: RepositoryProtocol, Sendable {
     func activeCall() -> CallEntity?
     func fetchMeetings() -> [ChatListItemEntity]?
     func fetchNonMeetings() -> [ChatListItemEntity]?
+    func fetchNoteToSelfChat() -> ChatRoomEntity?
+    func createNoteToSelfChat() async throws -> ChatRoomEntity
     func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
