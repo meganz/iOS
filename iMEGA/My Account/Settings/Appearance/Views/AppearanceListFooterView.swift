@@ -10,7 +10,7 @@ struct AppearanceListFooterWithLinkView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(message)
-                .foregroundColor(TokenColors.Text.primary.swiftUI)
+                .foregroundColor(TokenColors.Text.secondary.swiftUI)
             Link(destination: linkUrl) {
                 Text(linkMessage)
                     .foregroundStyle(TokenColors.Link.primary.swiftUI)
