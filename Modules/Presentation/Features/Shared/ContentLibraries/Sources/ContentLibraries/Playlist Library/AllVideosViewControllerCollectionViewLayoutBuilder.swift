@@ -95,12 +95,18 @@ public struct AllVideosViewControllerCollectionViewLayoutBuilder {
     
     private func makeMultiColumnLayout(columnCount: Int) -> NSCollectionLayoutSection {
         let cellHeight: CGFloat = 80
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(cellHeight))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / CGFloat(columnCount)), heightDimension: .estimated(cellHeight))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(cellHeight))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columnCount)
+        
+        let group = if #available(iOS 16.0, *) {
+            NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: columnCount)
+        } else {
+            NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columnCount)
+        }
+        
         group.interItemSpacing = .fixed(24)
         
         let section = NSCollectionLayoutSection(group: group)
