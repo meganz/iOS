@@ -23,7 +23,7 @@ extension URL {
     }
     
     private func makeNetworkMonitorUseCase() -> some NetworkMonitorUseCaseProtocol {
-        let repository = NetworkMonitorRepository()
+        let repository = NetworkMonitorRepository.newRepo
         let useCase = NetworkMonitorUseCase(repo: repository)
         return useCase
     }

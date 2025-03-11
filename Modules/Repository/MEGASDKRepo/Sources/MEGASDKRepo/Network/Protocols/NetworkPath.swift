@@ -14,7 +14,7 @@ public protocol NetworkPath: Sendable {
     var networkStatus: NetworkPathStatus { get }
 
     /// The list of available network interfaces. E.g.: wifi, cellular, wiredEthernet, etc.
-    var availableNetworkInterfaces: [NetworkInterface] { get }
+    var availableNetworkInterfaces: [any NetworkInterface] { get }
 
     /// Checks whether the network path uses the specified interface type.
     /// - Parameter type: The type of the network interface.
