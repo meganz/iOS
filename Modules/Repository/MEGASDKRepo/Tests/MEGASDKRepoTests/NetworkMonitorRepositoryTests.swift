@@ -6,53 +6,35 @@ import XCTest
 final class NetworkMonitorRepositoryTests: XCTestCase {
     private func makeSUT(
         pathStatus: NetworkPathStatus = .satisfied,
-        availableInterfaces: [NetworkInterface] = []
-    ) -> (NetworkMonitorRepository, MockNetworkMonitor) {
-        let mockPath = MockPath(
+        availableInterfaces: [any NetworkInterface] = []
+    ) -> (NetworkMonitorRepository, MockNetworkMonitorManager) {
+        let mockPath = MockNetworkPath(
             status: pathStatus,
             availableInterfaces: availableInterfaces
         )
-        let mockMonitor = MockNetworkMonitor(currentPath: mockPath)
+        let mockMonitor = MockNetworkMonitorManager(currentPath: mockPath)
         let sut = NetworkMonitorRepository(monitor: mockMonitor)
         
         trackForMemoryLeaks(on: sut)
         return (sut, mockMonitor)
     }
-
-    func testInit_withDefaultMonitor_startsMonitoring() {
-        let (_, mockMonitor) = makeSUT()
-        mockMonitor.start()
-        XCTAssertTrue(mockMonitor.isStarted, "Monitor should start monitoring on initialization.")
-    }
-    
-    func testCancel_whenCalled_stopsMonitoring() {
-        let (_, mockMonitor) = makeSUT()
-        mockMonitor.start()
-        
-        XCTAssertTrue(mockMonitor.isStarted, "Monitor should start monitoring on initialization.")
-        
-        mockMonitor.cancel()
-        
-        XCTAssertFalse(mockMonitor.isStarted, "Monitor should stop monitoring after cancellation.")
-    }
     
     func testConnectionChangedStream_whenStatusChangesToSatisfied_emitsTrue() async throws {
         let (sut, mockMonitor) = makeSUT(pathStatus: .unsatisfied)
-        mockMonitor.start()
         let stream = sut.connectionSequence
         let expectation = self.expectation(description: "Stream emits 'true' when connection becomes satisfied.")
         
         Task {
             for await isConnected in stream where isConnected {
                 XCTAssertTrue(isConnected, "Stream should emit 'true' when connection becomes satisfied.")
-                mockMonitor.cancel()
+
                 expectation.fulfill()
                 break
             }
         }
         
         mockMonitor.simulatePathUpdate(
-            newPath: MockPath(
+            newPath: MockNetworkPath(
                 status: .satisfied,
                 availableInterfaces: [MockNetworkInterface(type: .wifi)]
             )

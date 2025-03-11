@@ -1,4 +1,4 @@
-public enum NetworkInterfaceType {
+public enum NetworkInterfaceType: Sendable, Equatable {
     case other
     case wifi
     case cellular
