@@ -77,22 +77,35 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(sut.showAdsFreeView, expectedAdsFlag, file: file, line: line)
     }
     
-    @MainActor func testStartAdsNotification_shouldSetStartAdsToTrue() {
-        let sut = makeSUT()
+    @MainActor func testStartAdsNotification_whenIsExternalAdsEnabledIsNil_shouldDetermineAndSetAdsAvailability() {
+        assertStartAdsNotification(setCurrentAdsValue: false)
+    }
+    
+    @MainActor func testStartAdsNotification_whenIsExternalAdsEnabledIsAlreadySet_shouldDoNothing() {
+        assertStartAdsNotification(setCurrentAdsValue: true)
+    }
+    
+    @MainActor private func assertStartAdsNotification(setCurrentAdsValue: Bool) {
+        let expectedAdsValue = Bool.random()
+        let sut = makeSUT(isExternalAdsFlagEnabled: expectedAdsValue)
+        if setCurrentAdsValue {
+            sut.isExternalAdsEnabled = expectedAdsValue
+        }
         sut.setupSubscriptions()
         
-        let startAdsExp = expectation(description: "startAds should be true")
-        sut.$startAds
+        let adsExp = expectation(description: "isExternalAdsEnabled should be determined only when it is nil")
+        adsExp.isInverted = setCurrentAdsValue
+        sut.$isExternalAdsEnabled
             .dropFirst()
             .sink { _ in
-                startAdsExp.fulfill()
+                adsExp.fulfill()
             }
             .store(in: &subscriptions)
         
         notificationCenter.post(name: .startAds, object: nil)
         
-        wait(for: [startAdsExp], timeout: 1.0)
-        XCTAssertEqual(sut.startAds, true)
+        wait(for: [adsExp], timeout: 1.0)
+        XCTAssertEqual(sut.isExternalAdsEnabled, expectedAdsValue)
     }
     
     // MARK: - Submit receipt
