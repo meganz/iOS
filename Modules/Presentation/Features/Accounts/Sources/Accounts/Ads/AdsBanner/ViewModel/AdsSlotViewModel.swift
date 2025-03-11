@@ -23,7 +23,6 @@ final public class AdsSlotViewModel: ObservableObject {
     private(set) var monitorAdsSlotUpdatesTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     
-    @Published var startAds: Bool = false
     @Published var isExternalAdsEnabled: Bool?
     @Published var displayAds: Bool = false
     @Published var showCloseButton: Bool = false
@@ -131,7 +130,13 @@ final public class AdsSlotViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
-                startAds = true   
+                
+                /// Avoid redundant calls when `isExternalAdsEnabled` is already set.
+                guard isExternalAdsEnabled == nil else { return }
+                
+                Task {
+                    await determineAdsAvailability()
+                }
             }
             .store(in: &subscriptions)
     }

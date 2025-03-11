@@ -17,7 +17,7 @@ public struct AdsSlotView<T: View>: View {
         VStack(spacing: 0) {
             contentView
             
-            if viewModel.isExternalAdsEnabled == true && viewModel.startAds {
+            if viewModel.isExternalAdsEnabled == true {
                 HStack(alignment: .top, spacing: 0) {
                     AdMobBannerView(
                         adSize: adSize,
@@ -55,9 +55,6 @@ public struct AdsSlotView<T: View>: View {
         .onFirstAppear(perform: {
             viewModel.onViewFirstAppeared?()
         })
-        .onLoad {
-            await viewModel.determineAdsAvailability()
-        }
         .onAppear {
             viewModel.setupSubscriptions()
             viewModel.startMonitoringAdsSlotUpdates()
