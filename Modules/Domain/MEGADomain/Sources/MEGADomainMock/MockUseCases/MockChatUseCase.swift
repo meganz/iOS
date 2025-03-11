@@ -22,7 +22,8 @@ public final class MockChatUseCase: ChatUseCaseProtocol, @unchecked Sendable {
     public var currentChatConnectionStatus = ChatConnectionStatus.invalid
     public var retryPendingConnections_calledTimes = 0
     public var scheduledMeetingList = [ScheduledMeetingEntity]()
-    
+    public var noteToSelfChat: ChatRoomEntity?
+
     public init(
         myUserHandle: HandleEntity = .invalid,
         isGuestAccount: Bool = false,
@@ -33,6 +34,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol, @unchecked Sendable {
         isCallInProgress: Bool = false,
         isActiveWaitingRoom: Bool = false,
         activeCallEntity: CallEntity? = nil,
+        noteToSelfChat: ChatRoomEntity? = nil,
         statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never> = .init(),
         chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never> =  .init(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = .init(),
@@ -50,6 +52,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol, @unchecked Sendable {
         self.isCallInProgress = isCallInProgress
         self.isActiveWaitingRoom = isActiveWaitingRoom
         self.activeCallEntity = activeCallEntity
+        self.noteToSelfChat = noteToSelfChat
         self.statusChangePublisher = statusChangePublisher
         self.chatListItemUpdatePublisher = chatListItemUpdatePublisher
         self.chatCallStatusUpdatePublisher = chatCallStatusUpdatePublisher
@@ -97,6 +100,17 @@ public final class MockChatUseCase: ChatUseCaseProtocol, @unchecked Sendable {
     
     public func fetchMeetings() -> [ChatListItemEntity]? {
         items
+    }
+    
+    public func fetchNoteToSelfChat() -> ChatRoomEntity? {
+        noteToSelfChat
+    }
+    
+    public func createNoteToSelfChat() async throws -> ChatRoomEntity {
+        guard let noteToSelfChat else {
+            throw GenericErrorEntity()
+        }
+        return noteToSelfChat
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {

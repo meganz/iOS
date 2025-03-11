@@ -2,6 +2,7 @@
 import MEGAChatSdk
 import MEGADomain
 import MEGASDKRepo
+import MEGASwift
 
 public final class ChatRepository: ChatRepositoryProtocol {
     
@@ -103,6 +104,27 @@ public final class ChatRepository: ChatRepositoryProtocol {
     public func fetchNonMeetings() -> [ChatListItemEntity]? {
         guard let chatList = chatSDK.chatListItems(by: [.meetingOrNonMeeting, .archivedOrNonArchived], filter: []) else { return nil }
         return (0..<chatList.size).compactMap { chatList.chatListItem(at: $0)?.toChatListItemEntity() }
+    }
+    
+    public func fetchNoteToSelfChat() -> ChatRoomEntity? {
+        chatSDK.chatRooms(by: .noteToSelf)?.chatRoom(at: 0)?.toChatRoomEntity()
+    }
+    
+    public func createNoteToSelfChat() async throws -> ChatRoomEntity {
+        return try await withAsyncThrowingValue { completion in
+            chatSDK.createChatGroup(false, peers: nil, delegate: ChatRequestDelegate(completion: { [weak self] result in
+                switch result {
+                case .success(let request):
+                    guard let noteToSelfChat = self?.chatSDK.chatRoom(forChatId: request.chatHandle) else {
+                        completion(.failure(GenericErrorEntity()))
+                        return
+                    }
+                    completion(.success(noteToSelfChat.toChatRoomEntity()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }))
+        }
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {

@@ -6,4 +6,5 @@ public enum ChatTypeEntity {
     case groupPublic
     case meeting
     case nonMeeting
+    case noteToSelf
 }
