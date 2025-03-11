@@ -53,9 +53,16 @@ final class EnterMeetingLinkControllerWrapper: NSObject {
 extension EnterMeetingLinkControllerWrapper: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         OperationQueue.main.addOperation {
-            textField.select(nil)
-            let menuController = UIMenuController.shared
-            menuController.showMenu(from: textField, rect: textField.bounds)
+            if #available(iOS 16.0, *) {
+                let interaction = UIEditMenuInteraction(delegate: nil)
+                textField.addInteraction(interaction)
+                let configuration = UIEditMenuConfiguration(identifier: nil, sourcePoint: .zero)
+                interaction.presentEditMenu(with: configuration)
+            } else {
+                textField.select(nil)
+                let menuController = UIMenuController.shared
+                menuController.showMenu(from: textField, rect: textField.bounds)
+            }
         }
     }
 }
