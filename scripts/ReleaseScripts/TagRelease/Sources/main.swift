@@ -5,12 +5,13 @@ setVerbose()
 
 do {
     log("Started execution")
+
+    log("Pull latest changes")
+    try pullLatestChanges()
+
+    log("Get the version and the message")
     let input = try releaseInput()
-
-    let releaseBranch = "release/\(input.version)"
-
-    log("Checking out to release branch and pull")
-    try checkoutToReleaseAndPull(releaseBranch)
+    let releaseBranch = try runInShell("git branch --show-current")
 
     log("Creating tag and pushing to origin")
     try createTagAndPushToOrigin(version: input.version, message: input.message)

@@ -7,6 +7,10 @@ public func checkoutToMasterAndPull() throws {
 
 public func checkoutToReleaseAndPull(_ releaseBranch: String) throws {
     try runInShell("git checkout \(releaseBranch)")
+    try pullLatestChanges()
+}
+
+public func pullLatestChanges() throws {
     try runInShell("git submodule update --init --recursive")
     try runInShell("git pull")
 }
