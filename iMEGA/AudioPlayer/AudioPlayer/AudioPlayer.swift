@@ -3,6 +3,7 @@ import Foundation
 import MediaPlayer
 import MEGADomain
 import MEGAFoundation
+import MEGASwift
 
 enum PlayerConfiguration: String {
     case loop, shuffle, repeatOne
@@ -53,7 +54,7 @@ final class AudioPlayer: NSObject {
     
     // MARK: - Private properties
     private var timer: Timer?
-    private var taskId: UIBackgroundTaskIdentifier?
+    @Atomic private var taskId: UIBackgroundTaskIdentifier?
     private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
     
     // MARK: - Internal Computed Properties, intended for important UTs
@@ -208,16 +209,17 @@ final class AudioPlayer: NSObject {
     }
     
     private func beginBackgroundTask() {
-        taskId = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+        endBackgroundTask()
+        let taskId = UIApplication.shared.beginBackgroundTask(withName: "com.mega.audioPlayer.backgroundTask", expirationHandler: {
             self.endBackgroundTask()
         })
+        self.$taskId.mutate { $0 = taskId }
     }
     
     private func endBackgroundTask() {
-        if self.taskId != .invalid {
-            UIApplication.shared.endBackgroundTask(self.taskId ?? .invalid)
-            self.taskId = .invalid
-        }
+        guard let taskId, taskId != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(taskId)
+        self.$taskId.mutate { $0 = .invalid }
     }
     
     private func secureReplaceCurrentItem(with item: AudioPlayerItem?) {
