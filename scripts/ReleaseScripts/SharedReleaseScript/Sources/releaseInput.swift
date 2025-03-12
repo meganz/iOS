@@ -4,20 +4,11 @@ public struct ReleaseInput {
 }
 
 public func releaseInput() throws -> ReleaseInput {
-    let version = if let version = readFromCache(key: .version) {
-        version
-    } else {
-        try majorMinorOrMajorMinorPatchInput(
-            "Enter the version number you're releasing (format: '[major].[minor]' or '[major].[minor].[patch]')"
-        )
-    }
+    let versionFetcher = VersionFetcher()
+    let defaultVersion = try versionFetcher.fetchVersion()
+    let version = try versionInput(defaultVersion: defaultVersion)
 
-    let message = if let message = readFromCache(key: .releaseNotes) {
-        message
-    } else {
-        try releaseNotesInput(defaultReleaseNotes: defaultReleaseNotesInput())
-    }
-
+    let message = try releaseNotesInput(defaultReleaseNotes: defaultReleaseNotesInput())
     return .init(version: version, message: message)
 }
 
@@ -27,28 +18,38 @@ public func defaultReleaseNotesTemplate(
 ) -> String {
     """
     Bug fixes and performance improvements.
-    - SDK release - release/v\(sdkVersion)
-    - MEGAChat release - release/v\(chatVersion)
+    - SDK release - \(sdkVersion)
+    - MEGAChat release - \(chatVersion)
     """
 }
 
 private func defaultReleaseNotesInput() throws -> String {
-    let sdkVersion = if let sdkVersion = readFromCache(key: .sdkVersion) {
-        sdkVersion
-    } else {
-        try submoduleVersionInput(.sdk)
-    }
-
-    let chatVersion = if let chatVersion = readFromCache(key: .chatVersion) {
-        chatVersion
-    } else {
-        try submoduleVersionInput(.chatSDK)
-    }
+    print("Fetching the SDK and Chat branch names")
+    let sdkVersion = try branchNameForSubmodule(with: Submodule.sdk.path)
+    let chatVersion = try branchNameForSubmodule(with: Submodule.chatSDK.path)
+    print("SDK: \(sdkVersion) \t Chat SDK: \(chatVersion)")
 
     return defaultReleaseNotesTemplate(sdkVersion: sdkVersion, chatVersion: chatVersion)
 }
 
-private func submoduleVersionInput(_ submodule: Submodule) throws -> String {
-    let message = "Enter the version number for \(submodule.description) (format: '[major].[minor].[patch]'):"
-    return try majorMinorPatchInput(message)
+private func versionInput(defaultVersion: String) throws -> String {
+    print("Is it for version \"\(defaultVersion)\" ? (yes/no)")
+
+    guard let input = readLine() else {
+        throw InputError.missingInput
+    }
+
+    let matchesYes = try matchesYes(input)
+    let matchesNo = try matchesNo(input)
+
+    switch input {
+    case input where matchesYes:
+        return try defaultVersion
+    case input where matchesNo:
+        return try majorMinorOrMajorMinorPatchInput(
+            "Enter the version number you're releasing (format: '[major].[minor]' or '[major].[minor].[patch]')"
+        )
+    default:
+        throw InputError.wrongInput
+    }
 }
