@@ -99,10 +99,8 @@ extension PreviewDocumentViewController {
     }
     
     @objc func unhideNode(_ node: MEGANode) {
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-        Task {
-            _ = await nodeActionUseCase.unhide(nodes: [node.toNodeEntity()])
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .unhideNodes([node.toNodeEntity()])
     }
 }
 

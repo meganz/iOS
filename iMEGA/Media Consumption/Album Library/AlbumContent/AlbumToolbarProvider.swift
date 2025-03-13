@@ -289,10 +289,9 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
     }
     
     private func unhide(nodes: [NodeEntity]) {
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-        Task { @MainActor in
-            _ = await nodeActionUseCase.unhide(nodes: nodes)
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .unhideNodes(nodes)
+        
         endEditingMode()
     }
 }

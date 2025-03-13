@@ -145,10 +145,8 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     func unhide(nodes: [NodeEntity]) {
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-        Task {
-            _ = await nodeActionUseCase.unhide(nodes: nodes)
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .unhideNodes(nodes)
     }
     
     private func saveToPhotos(nodes: [NodeEntity]) {

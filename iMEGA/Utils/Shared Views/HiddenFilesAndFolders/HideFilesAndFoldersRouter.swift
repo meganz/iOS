@@ -12,7 +12,7 @@ protocol HideFilesAndFoldersRouting {
     func showSeeUpgradePlansOnboarding()
     func showFirstTimeOnboarding(nodes: [NodeEntity])
     func showOnboardingInfo()
-    func showItemsHiddenSuccessfully(count: Int)
+    func showSnackBar(message: String)
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?)
 }
 
@@ -29,6 +29,13 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         Task {
             let viewModel = makeViewModel(nodes: nodes)
             await viewModel.hide()
+        }
+    }
+    
+    func unhideNodes(_ nodes: [NodeEntity]) {
+        Task {
+            let viewModel = makeViewModel(nodes: nodes)
+            await viewModel.unhide()
         }
     }
     
@@ -78,9 +85,10 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         )
     }
     
-    func showItemsHiddenSuccessfully(count: Int) {
-        let snackBar = SnackBar(message: Strings.Localizable.Nodes.Action.hideItems(count))
-        UIApplication.mnz_visibleViewController().showSnackBar(snackBar: snackBar)
+    func showSnackBar(message: String) {
+        let snackBar = SnackBar(message: message)
+        UIApplication.mnz_visibleViewController()
+            .showSnackBar(snackBar: snackBar)
     }
     
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?) {

@@ -334,10 +334,8 @@ extension MEGAPhotoBrowserViewController {
     }
         
     @objc func unhide(node: MEGANode) {
-        Task {
-            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-            _ = await nodeActionUseCase.unhide(nodes: [node].toNodeEntities())
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .unhideNodes([node.toNodeEntity()])
     }
     
     @objc func addToAlbum(node: MEGANode) {
