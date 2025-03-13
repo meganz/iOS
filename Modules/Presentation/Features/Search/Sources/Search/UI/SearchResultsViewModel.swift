@@ -70,7 +70,6 @@ public class SearchResultsViewModel: ObservableObject {
     // this flag is used to indicate whether the data has been loaded for every triggered search
     
     @Atomic private var areNewSearchResultsLoaded = false
-    private var canLoadMore = false
 
     // data source for the results (result list, chips)
     private let resultsProvider: any SearchResultsProviding
@@ -199,9 +198,7 @@ public class SearchResultsViewModel: ObservableObject {
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
     func task() async {
-        canLoadMore = false
         await performInitialSearchOrRefresh()
-        canLoadMore = true
         await startMonitoringResults()
     }
     
@@ -345,6 +342,9 @@ public class SearchResultsViewModel: ObservableObject {
     }
     
     private func loadMoreIfNeeded(at index: Int) async {
+        // Note: Even if the `index` is not close to the end of the result, we still call `performSearch`,
+        // The `resultsProvider` will take care of the outcome by returing nil for the indexes that aren't supposed to
+        // trigger the `load more` process.
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
     
@@ -364,7 +364,6 @@ public class SearchResultsViewModel: ObservableObject {
     }
     
     func onItemAppear(_ item: SearchResultRowViewModel) async {
-        guard canLoadMore else { return }
         await loadMoreIfNeeded(item: item)
     }
 
@@ -540,7 +539,7 @@ public class SearchResultsViewModel: ObservableObject {
         config: SearchConfig
     ) -> ContentUnavailableViewModel? {
         guard empty else { return nil }
-        
+
         // we show contextual, chip-related empty screen only when there
         // is not text query
         if query.query.isEmpty {
@@ -862,11 +861,6 @@ public extension SearchResultsViewModel {
             await showLoadingPlaceholderIfNeeded()
             await queryChanged(to: query)
         }
-    }
-
-    func reloadResults() async {
-        await showLoadingPlaceholderIfNeeded()
-        await queryChanged(to: currentQuery)
     }
 
     func clearSelection() {
