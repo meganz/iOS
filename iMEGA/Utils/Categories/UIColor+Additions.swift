@@ -80,31 +80,7 @@ extension UIColor {
         }
     }
     
-    @objc(
-        mnz_homeRecentsCellBackgroundForTraitCollection:
-    )
-    class func mnz_homeRecentsCellBackground(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light:
-            return UIColor.whiteFFFFFF
-            
-        case .dark:
-            return UIColor.black1C1C1E
-            
-        @unknown default:
-            return UIColor.whiteFFFFFF
-        }
-    }
-    
     // MARK: - Objects
-    
-    class func mnz_basicButton(
-        for traitCollection: UITraitCollection
-    ) -> UIColor {
-        TokenColors.Button.secondary
-    }
     
     @objc class func borderStrong() -> UIColor {
         TokenColors.Border.strong
@@ -148,8 +124,7 @@ extension UIColor {
     }
     
     @objc class func mnz_colorForPriceLabel(
-        proLevel: MEGAAccountType,
-        traitCollection: UITraitCollection
+        proLevel: MEGAAccountType
     ) -> UIColor? {
         var proLevelColor: UIColor?
         switch proLevel {
@@ -204,10 +179,6 @@ extension UIColor {
         TokenColors.Icon.primary
     }
     
-    class func barButtonTitleColor(isEnabled: Bool) -> UIColor {
-        isEnabled ? TokenColors.Text.primary: TokenColors.Text.disabled
-    }
-    
     // MARK: Gray
     
     @objc class func mnz_grayDBDBDB() -> UIColor {
@@ -244,10 +215,6 @@ extension UIColor {
     
     @objc class func mnz_errorRed() -> UIColor {
         TokenColors.Text.error
-    }
-    
-    class func mnz_badgeRed() -> UIColor {
-        TokenColors.Components.interactive
     }
     
     // MARK: White
