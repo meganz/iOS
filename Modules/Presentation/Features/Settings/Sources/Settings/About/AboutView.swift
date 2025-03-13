@@ -13,9 +13,11 @@ struct AboutView: View {
                 AboutItemView(title: Strings.Localizable.sdkVersion, subtitle: viewModel.sdkVersion)
                 ChatSdkVersionView(viewModel: viewModel)
             }
+            .listRowBackground(TokenColors.Background.page.swiftUI)
             Section {
                 LinkView(viewModel: viewModel)
             }
+            .listRowBackground(TokenColors.Background.page.swiftUI)
         }
         .background()
         .foregroundColor(TokenColors.Text.primary.swiftUI)
