@@ -21,7 +21,13 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
             transfersInventoryUseCase: TransferInventoryUseCase(
                 transferInventoryRepository: TransferInventoryRepository.newRepo,
                 fileSystemRepository: FileSystemRepository.newRepo
-            )
+            ),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
+            router: NodeNavigationRouter()
         )
     }
     
@@ -115,6 +121,11 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     @objc
     func resumeQueuedTransfers() {
         viewModel.resumeQueuedTransfers()
+    }
+    
+    @objc
+    func navigateToParentNode(_ node: MEGANode) {
+        viewModel.navigateToParentNode(node.toNodeEntity())
     }
     
     // MARK: - Private

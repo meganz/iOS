@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import Testing
 
+@MainActor
 @Suite("TransfersWidgetViewModel Tests Suite - Ensures the ViewModel behaves correctly for user actions and state verification")
 struct TransfersWidgetViewModelTests {
     
@@ -17,13 +18,15 @@ struct TransfersWidgetViewModelTests {
         )
         let sut = TransfersWidgetViewModel(
             transfersListenerUseCase: mockTransfersListenerUseCase,
-            transfersInventoryUseCase: mockTransferInventoryUseCase
+            transfersInventoryUseCase: mockTransferInventoryUseCase,
+            nodeUseCase: MockNodeUseCase(),
+            router: NodeNavigationRouter()
         )
         return (sut, mockTransfersListenerUseCase)
     }
 
     // MARK: - Action Tests Suite
-    @Suite("Action Tests Suite - Verifies behavior when user triggers actions")
+    @MainActor @Suite("Action Tests Suite - Verifies behavior when user triggers actions")
     struct ActionTests {
         @Test("pauseQueuedTransfers calls the method to pause queued transfers")
         func pauseQueuedTransfers_callsPause() {
@@ -66,7 +69,7 @@ struct TransfersWidgetViewModelTests {
     }
 
     // MARK: - State Verification Tests Suite
-    @Suite("State Verification Tests Suite - Checks the state of queued transfers")
+    @MainActor @Suite("State Verification Tests Suite - Checks the state of queued transfers")
     struct StateVerificationTests {
         @Test("areQueuedTransfersPaused returns true when transfers are paused")
         func areQueuedTransfersPaused_whenPaused_isTrue() {
