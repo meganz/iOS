@@ -264,7 +264,7 @@ class NodeBrowserViewModel: ObservableObject {
                 /// wait for 10 attempts to see if the node is loaded in the nodeSource.
                 let numberOfTries = 10
                 if await waitForNodeToLoad(with: numberOfTries) {
-                    await refreshAndReloadResults()
+                    refresh()
                 }
             }
         }
@@ -409,7 +409,7 @@ class NodeBrowserViewModel: ObservableObject {
                 for try await _ in sensitiveNodeUseCase.mergeInheritedAndDirectSensitivityChanges(for: parentNode) {
                     if let updatedNode = await nodeUseCase.nodeForHandle(parentNode.handle) {
                         await refreshMenuWithUpdatedNodeSource(.node({ updatedNode }))
-                        await refreshAndReloadResults()
+                        refresh()
                     }
                 }
             } catch {
@@ -527,11 +527,6 @@ class NodeBrowserViewModel: ObservableObject {
         }
 
         changeSortOrder(sortOrder.toSortOrderType())
-    }
-
-    private func refreshAndReloadResults() async {
-        refresh()
-        await searchResultsViewModel.reloadResults()
     }
 
     private func subscribeToViewModePreferenceChangeNotification(
