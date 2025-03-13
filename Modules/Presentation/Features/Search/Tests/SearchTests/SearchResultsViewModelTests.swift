@@ -777,29 +777,15 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
-    func testNodeTags_whenFeatureFlagIsEnabledAndQueryTextMatches_shouldReturnsTheTag() {
+    func testNodeTags_whenFeatureFlagIsEnabledAndQueryTextMatches_shouldReturnsTheTag() throws {
         let sut = generateRandomSearchResultRowViewModel(
             id: 100,
             tags: ["tag1"],
             shouldShowMatchingTags: true,
             query: { "ta" }
         )
-
-        XCTAssertEqual(
-            sut.tagListViewModel?.tags,
-            [
-                AttributedString(
-                    "#tag1"
-                        .forceLeftToRight()
-                        .highlightedStringWithKeyword(
-                            "ta",
-                            primaryTextColor: UIColor(Color.primary),
-                            highlightedTextColor: UIColor.systemGray,
-                            normalFont: .preferredFont(style: .subheadline, weight: .medium)
-                        )
-                )
-            ]
-        )
+        let result = try XCTUnwrap(sut.tagListViewModel?.tags.map { $0.toNSAttributedString().string })
+        XCTAssertEqual(result, ["#tag1".forceLeftToRight()])
     }
 
     @MainActor

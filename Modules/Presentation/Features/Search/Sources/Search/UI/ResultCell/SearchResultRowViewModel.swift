@@ -69,16 +69,18 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
                 return nil
             }
 
-            return AttributedString(
+            var attributedString = AttributedString(
                 tag
                     .forceLeftToRight()
                     .highlightedStringWithKeyword(
                         query,
                         primaryTextColor: UIColor(colorAssets.tagsTextColor),
-                        highlightedTextColor: UIColor(colorAssets.textHighlightColor),
-                        normalFont: .preferredFont(style: .subheadline, weight: .medium)
+                        highlightedTextColor: UIColor(colorAssets.textHighlightColor)
                     )
             )
+
+            attributedString.font = .subheadline.weight(.medium)
+            return attributedString
         }
 
         return tags.isNotEmpty ? HorizontalTagListViewModel(tags: tags) : nil
