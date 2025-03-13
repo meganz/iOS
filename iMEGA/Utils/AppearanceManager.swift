@@ -136,17 +136,17 @@ class AppearanceManager: NSObject {
         
         appearance.stackedLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
+        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
         appearance.inlineLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
+        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
         appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
         appearance.compactInlineLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_badgeRed()]
+        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
         appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
         
         tabBar.standardAppearance = appearance
@@ -196,12 +196,12 @@ class AppearanceManager: NSObject {
         navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
         
         let barButtonItemAppearance = UIBarButtonItemAppearance()
-        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: true)]
-        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: false)]
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: TokenColors.Text.primary]
+        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: TokenColors.Text.disabled]
         
         navigationBarAppearance.buttonAppearance = barButtonItemAppearance
         
-        navigationBarAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: true)]
+        navigationBarAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: TokenColors.Text.primary]
         
         return navigationBarAppearance
     }
@@ -225,8 +225,8 @@ class AppearanceManager: NSObject {
         toolbarAppearance.configureWithDefaultBackground()
         toolbarAppearance.backgroundColor = .surface1Background()
         
-        toolbarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: true)]
-        toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.barButtonTitleColor(isEnabled: false)]
+        toolbarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: TokenColors.Text.primary]
+        toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: TokenColors.Text.disabled]
         
         toolbarAppearance.shadowImage = nil
         toolbarAppearance.shadowColor = TokenColors.Border.strong
