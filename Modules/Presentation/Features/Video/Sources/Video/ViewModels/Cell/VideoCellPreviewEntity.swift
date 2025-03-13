@@ -45,16 +45,18 @@ struct VideoCellPreviewEntity: Equatable {
         guard let searchText, tags.isNotEmpty else { return nil }
 
         return tags.map {
-            AttributedString(
+            var attributedString = AttributedString(
                 ("#" + $0)
                     .forceLeftToRight()
                     .highlightedStringWithKeyword(
                         searchText.removingFirstLeadingHash(),
                         primaryTextColor: UIColor(primaryTextColor),
-                        highlightedTextColor: UIColor(highlightedTextColor),
-                        normalFont: .preferredFont(style: .subheadline, weight: .medium)
+                        highlightedTextColor: UIColor(highlightedTextColor)
                     )
             )
+
+            attributedString.font = .subheadline.weight(.medium)
+            return attributedString
         }
     }
 
