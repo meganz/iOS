@@ -125,10 +125,9 @@ extension PhotosViewController {
     }
     
     private func unhide(nodes: [NodeEntity]) {
-        Task {
-            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-            _ = await nodeActionUseCase.unhide(nodes: nodes)
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .unhideNodes(nodes)
+        
         self.toggleEditing()
     }
     

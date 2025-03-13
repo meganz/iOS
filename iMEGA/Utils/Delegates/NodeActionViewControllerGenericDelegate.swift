@@ -352,10 +352,10 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
     
     private func unhide(nodes: [NodeEntity]) {
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-        Task {
-            _ = await nodeActionUseCase.unhide(nodes: nodes)
-        }
+        guard let viewController else { return }
+        
+        HideFilesAndFoldersRouter(presenter: viewController)
+            .unhideNodes(nodes)
     }
     
     private func addTo(mode: AddToMode, nodes: [NodeEntity]) {

@@ -6,7 +6,7 @@ class MockHideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private(set) var showSeeUpgradePlansOnboardingCalled = 0
     private(set) var showShowFirstTimeOnboardingCalled = 0
     private(set) var dismissCalled = 0
-    private(set) var showItemsHiddenSuccessfullyCounts = [Int]()
+    private(set) var showSnackBarMessages = [String]()
     private(set) var dismissCompletion: (() -> Void)?
     
     nonisolated init() {}
@@ -32,7 +32,7 @@ class MockHideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         dismissCalled += 1
     }
     
-    func showItemsHiddenSuccessfully(count: Int) {
-        showItemsHiddenSuccessfullyCounts.append(count)
+    func showSnackBar(message: String) {
+        showSnackBarMessages.append(message)
     }
 }

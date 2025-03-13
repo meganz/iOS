@@ -264,10 +264,8 @@ class ExplorerBaseViewController: UIViewController {
         guard let nodes = selectedNodes()?.toNodeEntities() else {
             return
         }
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-        Task {
-            _ = await nodeActionUseCase.unhide(nodes: nodes)
-        }
+        HideFilesAndFoldersRouter(presenter: self)
+            .unhideNodes(nodes)
         endEditingMode()
     }
     

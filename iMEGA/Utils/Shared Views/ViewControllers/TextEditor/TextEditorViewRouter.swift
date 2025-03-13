@@ -275,9 +275,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func unhide(node: NodeEntity) {
-        Task {
-            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-            _ = await nodeActionUseCase.unhide(nodes: [node])
-        }
+        guard let baseViewController else { return }
+        HideFilesAndFoldersRouter(presenter: baseViewController)
+            .unhideNodes([node])
     }
 }

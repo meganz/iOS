@@ -313,10 +313,11 @@ extension NodeActions {
                 }
             },
             unhide: { nodes in
-                let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-                Task {
-                    _ = await nodeActionUseCase.unhide(nodes: nodes)
+                Task { @MainActor in
+                    HideFilesAndFoldersRouter(presenter: navigationController)
+                        .unhideNodes(nodes)
                 }
+                
             },
             addToAlbum: {
                 AddToCollectionRouter(

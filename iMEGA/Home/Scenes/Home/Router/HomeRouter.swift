@@ -155,10 +155,8 @@ final class HomeRouter: HomeRouterProtocol {
             HideFilesAndFoldersRouter(presenter: navigationController)
                 .hideNodes([node.toNodeEntity()])
         case .unhide(let node):
-            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-            Task {
-                _ = await nodeActionUseCase.unhide(nodes: [node].toNodeEntities())
-            }
+            HideFilesAndFoldersRouter(presenter: navigationController)
+                .unhideNodes([node.toNodeEntity()])
         }
     }
     

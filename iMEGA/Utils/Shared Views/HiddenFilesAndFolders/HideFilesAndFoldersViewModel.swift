@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 @MainActor
 final class HideFilesAndFoldersViewModel {
@@ -30,8 +31,16 @@ final class HideFilesAndFoldersViewModel {
         } else {
             let successCount = await nodeActionUseCase.hide(nodes: nodes)
                 .successfulCount()
-            router.showItemsHiddenSuccessfully(count: successCount)
+            let message = Strings.Localizable.Nodes.Action.hideItems(successCount)
+            router.showSnackBar(message: message)
         }
+    }
+    
+    func unhide() async {
+        let successCount = await nodeActionUseCase.unhide(nodes: nodes)
+            .successfulCount()
+        let message = Strings.Localizable.Nodes.Action.unhideItems(successCount)
+        router.showSnackBar(message: message)
     }
 }
 
