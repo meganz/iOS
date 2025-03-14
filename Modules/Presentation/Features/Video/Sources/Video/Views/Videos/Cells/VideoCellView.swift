@@ -69,7 +69,8 @@ struct VideoCellViewContent: View {
                     leadingContent
                         .frame(width: 142, height: 80)
                         .clipShape(RoundedRectangle(cornerRadius: 4))
-                    
+                        .frame(maxHeight: .infinity, alignment: .top)
+
                     centerContent
                         .padding(0)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -130,7 +131,7 @@ struct VideoCellViewContent: View {
             }
 
             if let tags = previewEntity.makeAttributedStringsForTags(
-                withPrimaryTextColor: videoConfig.colorAssets.secondaryTextColor,
+                withPrimaryTextColor: videoConfig.colorAssets.primaryTextColor,
                 highlightedTextColor: videoConfig.colorAssets.highlightedTextColor
             ) {
                 HorizontalTagListView(viewModel: .init(tags: tags))
