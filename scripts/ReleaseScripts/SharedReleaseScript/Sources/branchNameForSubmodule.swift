@@ -7,7 +7,7 @@ public func branchNameForSubmodule(with path: String) throws -> String {
 
     try directoryManager.change(to: projectRootDirectoryURL + "/" + path)
     try runInShell("git fetch --all")
-    let branchName = try runInShell("git branch -a --contains | grep '/release/' | sed -E 's/^[ \t]*//; s#remotes/origin/##'")
+    let branchName = try runInShell("git branch -a --contains | grep '/release/' | sed -E 's/^[ \t]*//; s#remotes/origin/##' | sort -V | tail -n 1")
     try directoryManager.change(to: originalDirectory)
 
     return branchName.components(separatedBy: .newlines).joined()
