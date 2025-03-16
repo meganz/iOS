@@ -44,7 +44,7 @@ private func versionInput(defaultVersion: String) throws -> String {
 
     switch input {
     case input where matchesYes:
-        return try defaultVersion
+        return defaultVersion
     case input where matchesNo:
         return try majorMinorOrMajorMinorPatchInput(
             "Enter the version number you're releasing (format: '[major].[minor]' or '[major].[minor].[patch]')"

@@ -49,25 +49,4 @@ struct JiraReleaseManager {
             body: body
         )
     }
-
-    private static func parseProjects(from input: String) -> [JiraProject] {
-        var projects: [JiraProject] = []
-        var invalidEntries: [String] = []
-
-        for pair in input.split(separator: ",") {
-            let components = pair.split(separator: ":")
-            if components.count == 2, let id = Int64(components[1]) {
-                projects.append(JiraProject(name: String(components[0]), id: id))
-            } else {
-                invalidEntries.append(String(pair))
-            }
-        }
-
-        if !invalidEntries.isEmpty {
-            print("⚠️ Warning: Ignored invalid Jira projects: \(invalidEntries.joined(separator: ", "))")
-        }
-
-        return projects
-    }
-
 }

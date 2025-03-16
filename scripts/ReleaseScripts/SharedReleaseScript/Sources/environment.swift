@@ -18,7 +18,7 @@ public enum EnvironmentVariable: String, Equatable {
     case gitlabToken = "GITLAB_TOKEN"
 }
 
-public struct JiraProject: Decodable {
+public struct JiraProject: Decodable, Sendable {
     public let name: String
     public let id: Int64
 }

@@ -6,6 +6,7 @@ public enum HTTPError: Error {
     case cannotDecodeContentData
     case cannotParseResponse
     case badURL
+    case invalidURL(String)
 }
 
 public enum HTTPMethod: String {
@@ -123,6 +124,14 @@ public func makeURL(base: URL, path: String, queryItems: [URLQueryItem]? = nil) 
 
     guard let components, let url = components.url else {
         throw HTTPError.badURL
+    }
+
+    return url
+}
+
+public func makeURL(string: String) throws -> URL {
+    guard let url = URL(string: string) else {
+        throw HTTPError.invalidURL(string)
     }
 
     return url
