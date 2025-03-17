@@ -31,7 +31,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         controller.searchResultsUpdater = self
         controller.searchBar.delegate = self
         controller.obscuresBackgroundDuringPresentation = false
-        controller.hidesNavigationBarDuringPresentation = false
+        controller.hidesNavigationBarDuringPresentation = true
         controller.searchBar.isTranslucent = false
         return controller
     }()
@@ -227,6 +227,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
                 guard let self else { return }
                 if navigationItem.searchController?.isActive == true {
                     navigationItem.searchController?.isActive = false
+                    removeSearchResultsViewController()
                 }
                 let selectedTab: PhotoLibraryTab = switch page {
                 case .timeline: .timeline
@@ -489,7 +490,7 @@ extension PhotoAlbumContainerViewController {
     
     private func makeVisualMediaSearchHistoryUseCase() -> some VisualMediaSearchHistoryUseCaseProtocol {
         VisualMediaSearchHistoryUseCase(
-            visualMediaSearchHistoryRepository: VisualMediaSearchHistoryCacheRepository.newRepo)
+            visualMediaSearchHistoryRepository: VisualMediaSearchHistoryCacheRepository.sharedRepo)
     }
     
     private func makeMonitorAlbumsUseCase() -> some MonitorAlbumsUseCaseProtocol {
