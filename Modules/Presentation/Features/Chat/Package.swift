@@ -21,6 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
+        .package(path: "../../../Repository/ChatRepo"),
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../MEGAPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
@@ -31,6 +32,7 @@ let package = Package(
             name: "Chat",
             dependencies: [
                 "MEGADomain",
+                "ChatRepo",
                 "MEGAL10n",
                 "MEGASwiftUI"
             ],

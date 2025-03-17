@@ -19,7 +19,7 @@ final class ManageChatHistoryViewRouter: NSObject, ManageChatHistoryProtocol {
     private let chatId: ChatIdEntity
     private let isChatTypeMeeting: Bool
     
-    @objc init(chatId: ChatIdEntity, isChatTypeMeeting: Bool, navigationController: UINavigationController) {
+    @objc init(chatId: ChatIdEntity, isChatTypeMeeting: Bool, navigationController: UINavigationController?) {
         self.chatId = chatId
         self.isChatTypeMeeting = isChatTypeMeeting
         self.navigationController = navigationController

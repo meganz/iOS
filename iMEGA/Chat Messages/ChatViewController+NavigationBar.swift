@@ -1,3 +1,4 @@
+import Chat
 import ChatRepo
 import Foundation
 import MEGADomain
@@ -51,7 +52,25 @@ extension ChatViewController {
     }
     
     private func didTapTitle() {
-        if chatRoom.isGroup {
+        if chatRoom.isNoteToSelf &&
+            (DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .noteToSelfChat) ||
+             DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .noteToSelfChat)) {
+            NoteToSelfChatInfoViewRouter(
+                navigationController: navigationController,
+                chatRoom: chatRoom
+            ) { [weak self] in
+                guard let self, let chatRoom = chatRoom.toMEGAChatRoom() else { return }
+                navigationController?.pushViewController(ChatSharedItemsViewController.instantiate(with: chatRoom), animated: true)
+            } navigateToManageChatHistoryAction: { [weak self] in
+                guard let self else { return }
+                ManageChatHistoryViewRouter(
+                    chatId: chatRoom.chatId,
+                    isChatTypeMeeting: false,
+                    navigationController: navigationController
+                ).start()
+            }
+            .start()
+        } else if chatRoom.isGroup {
             if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
                 return
             }
