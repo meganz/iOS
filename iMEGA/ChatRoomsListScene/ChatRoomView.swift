@@ -174,7 +174,7 @@ private struct ChatRoomContentTitleView: View {
     
     var body: some View {
         HStack(spacing: 3) {
-            Text(viewModel.chatListItem.title ?? "")
+            Text(viewModel.chatTitle)
                 .font(viewModel.shouldShowUnreadCount ? .subheadline.bold() : .subheadline)
                 .lineLimit(1)
             

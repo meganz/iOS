@@ -140,6 +140,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     // MARK: - Interface methods
     
+    var chatTitle: String {
+        chatListItem.isNoteToSelf ? Strings.Localizable.Chat.Messages.NoteToSelf.title : chatListItem.title ?? ""
+    }
+    
     func loadChatRoomInfo() async {
         let chatId = chatListItem.chatId
         

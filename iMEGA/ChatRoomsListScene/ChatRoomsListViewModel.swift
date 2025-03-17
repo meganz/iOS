@@ -57,6 +57,10 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
+    var existMoreChatsThanNoteToSelf: Bool {
+        chatRooms?.contains(where: { $0.chatListItem.isNoteToSelf == false }) ?? false
+    }
+    
     var shouldShowSearchBar: Bool {
         return isSearchActive || searchText.isNotEmpty || !isChatRoomEmpty
     }
@@ -134,6 +138,12 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     let urlOpener: (URL) -> Void
     
+    var noteToSelfChatEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .noteToSelfChat) ||
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .noteToSelfChat)
+    }
+    var noteToSelfChat: ChatRoomEntity?
+    
     init(
         router: some ChatRoomsListRouting,
         chatUseCase: any ChatUseCaseProtocol,
@@ -174,6 +184,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.urlOpener = urlOpener
         
         configureTitle()
+        initNoteToSelfChat()
     }
     
     deinit {
@@ -559,8 +570,21 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private func filterChats() {
         guard !Task.isCancelled else { return }
+        if noteToSelfChatEnabled {
+            // Swap note to self to first position
+            if let index = chatRooms?.firstIndex(where: { $0.chatListItem.isNoteToSelf }) {
+                chatRooms?.swapAt(0, index)
+            }
+        } else {
+            // Remove note to self from list
+            if let index = chatRooms?.firstIndex(where: { $0.chatListItem.isNoteToSelf }) {
+                chatRooms?.remove(at: index)
+            }
+        }
         
-        if searchText.isNotEmpty {
+        if !existMoreChatsThanNoteToSelf {
+            displayChatRooms = []
+        } else if searchText.isNotEmpty {
             displayChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
         } else {
             displayChatRooms = chatRooms
@@ -907,6 +931,22 @@ final class ChatRoomsListViewModel: ObservableObject {
         let allFutureMeetings = futureMeetings.flatMap {$0.items }
         let firstRecurringMeetingAndHost = allFutureMeetings.first { $0.isRecurring && $0.scheduledMeeting.organizerUserId == accountUseCase.currentUserHandle }
         firstRecurringMeetingAndHost?.isFirstRecurringAndHost = true
+    }
+    
+    private func initNoteToSelfChat() {
+        if noteToSelfChatEnabled {
+            if let noteToSelfChat = chatUseCase.fetchNoteToSelfChat() {
+                self.noteToSelfChat = noteToSelfChat
+            } else {
+                Task {
+                    do {
+                        noteToSelfChat = try await chatUseCase.createNoteToSelfChat()
+                    } catch {
+                        MEGALogError("[ChatRoomsListViewModel] Failed to create NoteToSelfChat: \(error)")
+                    }
+                }
+            }
+        }
     }
 }
 

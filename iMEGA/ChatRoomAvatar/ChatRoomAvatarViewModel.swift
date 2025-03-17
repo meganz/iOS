@@ -26,7 +26,9 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         case placeHolder(String)
     }
     var avatarType: AvatarType {
-        if let primaryAvatarData = chatListItemAvatar.primaryAvatarData,
+        if chatRoom.isNoteToSelf {
+            return .one(.noteToSelfBlue)
+        } else if let primaryAvatarData = chatListItemAvatar.primaryAvatarData,
            let secondaryAvatarData = chatListItemAvatar.secondaryAvatarData,
            let primaryAvatar = UIImage(data: primaryAvatarData),
            let secondaryAvatar = UIImage(data: secondaryAvatarData) {

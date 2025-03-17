@@ -14,6 +14,7 @@ public struct ChatListItemEntity: Sendable {
     public let active: Bool
     public let deleted: Bool
     public let meeting: Bool
+    public let isNoteToSelf: Bool
     
     public let peerHandle: HandleEntity
     
@@ -56,6 +57,7 @@ public struct ChatListItemEntity: Sendable {
         active: Bool,
         deleted: Bool,
         meeting: Bool,
+        noteToSelf: Bool,
         peerHandle: HandleEntity,
         lastMessage: String?,
         lastMessageId: HandleEntity,
@@ -77,6 +79,7 @@ public struct ChatListItemEntity: Sendable {
         self.active = active
         self.deleted = deleted
         self.meeting = meeting
+        self.isNoteToSelf = noteToSelf
         self.peerHandle = peerHandle
         self.lastMessage = lastMessage
         self.lastMessageId = lastMessageId

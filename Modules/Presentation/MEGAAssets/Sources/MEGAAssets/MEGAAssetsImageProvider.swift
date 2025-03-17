@@ -124,5 +124,7 @@ public enum MEGAAssetsImageName: String, CaseIterable, Sendable {
          glassPlaylist,
          check,
          splashScreenMEGALogo,
-         glassSearch
+         glassSearch,
+         noteToSelf,
+         noteToSelfBlue
 }
