@@ -10,6 +10,15 @@ struct ReleaseNotesConverter: Converting {
             throw "Data is not encoded in utf16 format"
         }
 
+        print("""
+        -----------Change Logs Start:-----------
+        \(changeLogs)
+        -----------Change Logs End:-----------
+        -----------Version Start:-----------
+        \(version ?? "No version found")
+        -----------Version End:-----------
+        """)
+
         var changeLog: String?
         if let version {
             changeLog = specificChangeLog(for: version, in: changeLogs)
@@ -18,6 +27,12 @@ struct ReleaseNotesConverter: Converting {
         if changeLog == nil {
             changeLog = basicChangeLog(in: changeLogs)
         }
+
+        print("""
+        -----------Change Log Start:-----------
+        \(changeLog ?? "No changeLog Found")
+        -----------Change Log End:-----------
+        """)
 
         guard let changeLog else { throw "No change log found" }
         return changeLog
