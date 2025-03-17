@@ -180,12 +180,12 @@
     [self.passwordView updateAppearance];
     
     if (self.urlType == URLTypeCancelAccountLink) {
-        [self.confirmAccountButton mnz_setupDelete:self.traitCollection];
+        [self.confirmAccountButton mnz_setupDelete];
     } else {
-        [self.confirmAccountButton mnz_setupPrimary:self.traitCollection];
+        [self.confirmAccountButton mnz_setupPrimary];
     }
     
-    [self.cancelButton mnz_setupCancel:self.traitCollection];
+    [self.cancelButton mnz_setupCancel];
 }
 
 - (void)registerForKeyboardNotifications {

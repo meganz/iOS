@@ -183,7 +183,7 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         countryFieldImageView.tintColor = iconTintColor
         phoneFieldImageView.tintColor = iconTintColor
         
-        nextButton.mnz_setupPrimary(traitCollection)
+        nextButton.mnz_setupPrimary()
     }
 
     private func showSendCodeErrorMessage(_ message: String?) {

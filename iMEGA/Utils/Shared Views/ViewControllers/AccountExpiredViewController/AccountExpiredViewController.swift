@@ -85,7 +85,7 @@ class AccountExpiredViewController: UIViewController {
         view.backgroundColor = TokenColors.Background.page
         
         detailLabel.textColor = TokenColors.Text.secondary
-        dismissButton.mnz_setupCancel(traitCollection)
+        dismissButton.mnz_setupCancel()
     }
     
     // MARK: - IBActions

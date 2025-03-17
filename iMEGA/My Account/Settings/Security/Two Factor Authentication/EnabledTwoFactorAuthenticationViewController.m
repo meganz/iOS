@@ -52,8 +52,8 @@
     self.recoveryKeyView.backgroundColor = [UIColor surface1Background];
     self.recoveryKeyView.layer.borderWidth = 0;
     self.recoveryKeyTextField.textColor = [self primaryTextColor];
-    [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
-    [self.closeButton mnz_setupSecondary:self.traitCollection];  
+    [self.exportRecoveryButton mnz_setupPrimary];
+    [self.closeButton mnz_setupSecondary];  
 }
 
 - (void)showSaveYourRecoveryKeyAlert {

@@ -64,7 +64,7 @@
     self.howItWorksThirdParagraphLabel.textColor = secondaryTextColor;
     self.howItWorksTopSeparatorView.backgroundColor = [self separatorColor];
     
-    [self.inviteButton mnz_setupPrimary:self.traitCollection];
+    [self.inviteButton mnz_setupPrimary];
 }
 
 #pragma mark - IBActions

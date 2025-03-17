@@ -40,7 +40,7 @@
 - (void)updateAppearance {
     self.view.backgroundColor = [UIColor pageBackgroundColor];
     
-    [self.openButton mnz_setupPrimary:self.traitCollection];
+    [self.openButton mnz_setupPrimary];
 }
 
 #pragma mark - IBActions

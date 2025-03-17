@@ -250,8 +250,8 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
 extension TurnOnNotificationsViewController: TraitEnvironmentAware {
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         view.backgroundColor = TokenColors.Background.page
-        openSettingsButton.mnz_setupPrimary(currentTrait)
-        dismissButton.mnz_setupCancel(currentTrait)
+        openSettingsButton.mnz_setupPrimary()
+        dismissButton.mnz_setupCancel()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

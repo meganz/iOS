@@ -30,7 +30,7 @@ extension PasswordReminderViewController {
         dismissButton?.backgroundColor = .clear
         dismissButton?.setTitleColor(TokenColors.Text.primary, for: .normal)
         
-        backupKeyButton?.mnz_setupPrimary(traitCollection)
+        backupKeyButton?.mnz_setupPrimary()
     }
     
     // MARK: - Analytics Events

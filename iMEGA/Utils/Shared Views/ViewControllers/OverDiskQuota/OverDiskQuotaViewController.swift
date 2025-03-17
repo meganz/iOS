@@ -191,20 +191,20 @@ final class OverDiskQuotaViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationController(navigationController, with: traitCollection)
+        setupNavigationController(navigationController)
     }
 
     private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
-        setupScrollView(contentScrollView, with: traitCollection)
-        setupContentView(contentView, with: traitCollection)
-        setupStorageFullLabel(storageFullLabel, with: traitCollection)
-        setupTitleLabel(titleLabel, with: traitCollection)
+        setupScrollView(contentScrollView)
+        setupContentView(contentView)
+        setupStorageFullLabel(storageFullLabel)
+        setupTitleLabel(titleLabel)
         setupMessageTextView(warningParagraphTextView,
                           withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage(with: traitCollection))
         setupWarningView(warningView,
                          with: overDiskQuotaAdvicer.warningActionTitle(with: traitCollection))
-        setupUpgradeButton(with: traitCollection)
-        setupMakeSomeSpaceButton(with: traitCollection)
+        setupUpgradeButton()
+        setupMakeSomeSpaceButton()
     }
 
     // MARK: - Setup MEGA UserData
@@ -222,17 +222,16 @@ final class OverDiskQuotaViewController: UIViewController {
     
     // MARK: - UI Customize
 
-    private func setupNavigationController(_ navigationController: UINavigationController?,
-                                           with trait: UITraitCollection) {
+    private func setupNavigationController(_ navigationController: UINavigationController?) {
         navigationController?.navigationBar.setTranslucent()
     }
 
-    private func setupScrollView(_ scrollView: UIScrollView, with trait: UITraitCollection) {
+    private func setupScrollView(_ scrollView: UIScrollView) {
         disableAdjustingContentInsets(for: contentScrollView)
         scrollView.backgroundColor = TokenColors.Background.page
     }
     
-    private func setupContentView(_ contentView: UIView, with trait: UITraitCollection) {
+    private func setupContentView(_ contentView: UIView) {
         contentView.backgroundColor = TokenColors.Background.page
     }
 
@@ -240,13 +239,13 @@ final class OverDiskQuotaViewController: UIViewController {
         warningView.updateTitle(with: text)
     }
 
-    private func setupStorageFullLabel(_ label: UILabel, with trait: UITraitCollection) {
+    private func setupStorageFullLabel(_ label: UILabel) {
         storageFullLabel.text = Strings.Localizable.storageFull
         storageFullLabel.textColor = TokenColors.Text.onColor
         storageFullLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     }
 
-    private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
+    private func setupTitleLabel(_ titleLabel: UILabel) {
         titleLabel.text = overDiskQuotaAdvicer.titleMessage
         storageFullLabel.textColor = TokenColors.Text.primary
         storageFullLabel.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -257,16 +256,16 @@ final class OverDiskQuotaViewController: UIViewController {
         descriptionTextView.linkTextAttributes = [.foregroundColor: TokenColors.Link.primary]
     }
 
-    private func setupUpgradeButton(with trait: UITraitCollection) {
+    private func setupUpgradeButton() {
         upgradeButton.setTitle(Strings.Localizable.OverDiskQuota.Paywall.Button.upgradeNow, for: .normal)
         upgradeButton.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
-        upgradeButton.mnz_setupPrimary(trait)
+        upgradeButton.mnz_setupPrimary()
     }
 
-    private func setupMakeSomeSpaceButton(with trait: UITraitCollection) {
+    private func setupMakeSomeSpaceButton() {
         makeSomeSpaceButton.setTitle(Strings.Localizable.OverDiskQuota.Paywall.Button.makeSomeSpace, for: .normal)
         makeSomeSpaceButton.addTarget(self, action: .didTapMakeSomeSpaceButton, for: .touchUpInside)
-        makeSomeSpaceButton.mnz_setupSecondary(trait)
+        makeSomeSpaceButton.mnz_setupSecondary()
     }
 
     // MARK: - Button Actions

@@ -54,8 +54,8 @@
     self.titleLabel.textColor = [UIColor primaryTextColor];
     self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
     
-    [self.setupButton mnz_setupPrimary:self.traitCollection];
-    [self.skipButton mnz_setupSecondary:self.traitCollection];
+    [self.setupButton mnz_setupPrimary];
+    [self.skipButton mnz_setupSecondary];
 }
 
 #pragma mark - Public

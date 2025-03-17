@@ -356,7 +356,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self setTermsOfServiceAttributedText];
     [self setTermsForLosingPasswordAttributedText];
     
-    [self.createAccountButton mnz_setupPrimary:self.traitCollection];
+    [self.createAccountButton mnz_setupPrimary];
     
     [self setLoginAttributedText];
 }

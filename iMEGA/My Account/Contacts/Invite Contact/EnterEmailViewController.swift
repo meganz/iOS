@@ -106,9 +106,9 @@ class EnterEmailViewController: UIViewController {
         customizeTagsField()
         
         if tagsField.tags.isNotEmpty || tagsField.text?.mnz_isValidEmail() == true {
-            inviteContactsButton.mnz_setupPrimary(traitCollection)
+            inviteContactsButton.mnz_setupPrimary()
         } else {
-            inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
+            inviteContactsButton.mnz_setupPrimary_disabled()
         }
         
         if instructionsLabel.text == Strings.Localizable.theEmailAddressFormatIsInvalid {
@@ -125,11 +125,11 @@ class EnterEmailViewController: UIViewController {
     
     private func disableInviteContactsButton() {
         inviteContactsButton.setTitle(Strings.Localizable.invite, for: .normal)
-        inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
+        inviteContactsButton.mnz_setupPrimary_disabled()
     }
     
     private func enableInviteContactsButton() {
-        inviteContactsButton.mnz_setupPrimary(traitCollection)
+        inviteContactsButton.mnz_setupPrimary()
         let emailTag = tagsField.text?.mnz_isValidEmail() == true ? 1 : 0
         let tagsNumber = tagsField.tags.count + emailTag
         

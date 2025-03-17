@@ -102,8 +102,8 @@
     
     self.sizeLabel.textColor = [UIColor mnz_secondaryTextColor];
     
-    [self.importButton mnz_setupPrimary:self.traitCollection];
-    [self.openButton mnz_setupSecondary:self.traitCollection];
+    [self.importButton mnz_setupPrimary];
+    [self.openButton mnz_setupSecondary];
 }
 
 - (void)processRequestResult {
