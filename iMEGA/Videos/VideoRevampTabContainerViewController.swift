@@ -237,12 +237,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         )
     }
     
-    private func add(_ child: UIViewController) {
-        addChild(child)
-        view.addSubview(child.view)
-        child.didMove(toParent: self)
-    }
-    
     private func setupBindings() {
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
