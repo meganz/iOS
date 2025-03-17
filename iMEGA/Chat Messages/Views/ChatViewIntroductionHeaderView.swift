@@ -16,6 +16,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     @IBOutlet weak var confidentialityStackView: UIStackView!
     @IBOutlet weak var authenticityStackView: UIStackView!
     @IBOutlet weak var participantsInformationStackView: UIStackView!
+    @IBOutlet weak var noteToSelfStackView: UIStackView!
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var avatarImageViewHeightConstraint: NSLayoutConstraint!
@@ -34,6 +35,9 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
 
     @IBOutlet weak var authenticityImageView: UIImageView!
     @IBOutlet weak var authenticityTextLabel: UILabel!
+    
+    @IBOutlet weak var noteToSelfImageView: UIImageView!
+    @IBOutlet weak var noteToSelfTextLabel: UILabel!
     
     private let contentSpacing: CGFloat = 20.0
     
@@ -55,7 +59,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             return
         }
         
-        participantsLabel.text = participantNames(for: chatRoom)
+        participantsLabel.text = chatRoom.isNoteToSelf ? Strings.Localizable.Chat.Messages.NoteToSelf.Header.title : participantNames(for: chatRoom)
 
         updateAvatar(for: chatRoom)
         updateStatusView(for: chatRoom)
@@ -63,7 +67,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     }
     
     private func updateAvatar(for chatRoom: ChatRoomEntity) {
-        if chatRoom.isGroup {
+        if chatRoom.isGroup || chatRoom.isNoteToSelf {
             avatarImageView.isHidden = true
         } else {
             guard let userHandle = chatRoom.peers.first?.handle else { return }
@@ -72,6 +76,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     }
     
     private func updateStatusView(for chatRoom: ChatRoomEntity) {
+        noteToSelfStackView.isHidden = true
         if chatRoom.chatType == .oneToOne {
             if let userHandle = chatRoom.oneToOneRoomOtherParticipantUserHandle() {
                 let status = chatRoomUseCase.userStatus(forUserHandle: userHandle)
@@ -93,10 +98,22 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             statusLabel.text = ScheduledMeetingDateBuilder(
                 scheduledMeeting: scheduledMeeting
             ).buildDateDescriptionString()
+        } else if chatRoom.isNoteToSelf {
+            configureStatusViewForNoteToSelf()
         } else {
             statusView.isHidden = true
             statusLabel.isHidden = true
         }
+    }
+    
+    private func configureStatusViewForNoteToSelf() {
+        chattingWithTextLabel.isHidden = true
+        descriptionLabel.isHidden = true
+        authenticityStackView.isHidden = true
+        confidentialityStackView.isHidden = true
+        noteToSelfStackView.isHidden = false
+        statusView.isHidden = true
+        statusLabel.isHidden = true
     }
     
     private func formattedDateForScheduleMeeting(_ scheduledMeeting: ScheduledMeetingEntity) -> String {
@@ -169,33 +186,37 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         
         let participantsInformationHeight = max(avatarImageViewHeightConstraint.constant, participantInformationHeight)
         
-        let totalHeight = calculateFittingHeight(withParticipantsInformationHeight: participantsInformationHeight, maxSize: maxSize)
+        let totalHeight = calculateFittingHeight(with: participantsInformationHeight, maxSize: maxSize)
         
         return CGSize(width: size.width, height: totalHeight)
     }
     
-    private func calculateFittingHeight(withParticipantsInformationHeight height: CGFloat, maxSize: CGSize) -> CGFloat {
-        let descriptionLabelSize = descriptionLabel.sizeThatFits(maxSize)
-        let confidentialityLabelSize = confidentialityTextLabel.sizeThatFits(maxSize)
-        let authenticityLabelSize = authenticityTextLabel.sizeThatFits(maxSize)
-        
-        let confidentialityAreaHeight = confidentialityStackView.spacing
-        + confidentialityImageView.bounds.height
-        + confidentialityLabelSize.height
-        
-        let authenticityAreaHeight = authenticityStackView.spacing
-        + authenticityImageView.bounds.height
-        + authenticityLabelSize.height
-        
+    private func calculateFittingHeight(with participantsInfoHeight: CGFloat, maxSize: CGSize) -> CGFloat {
+        let descriptionHeight = calculateLabelHeight(for: descriptionLabel, maxSize: maxSize, includeSpacing: true)
+        let confidentialityHeight = calculateStackViewHeight(for: confidentialityStackView, imageView: confidentialityImageView, label: confidentialityTextLabel, maxSize: maxSize, includeSpacing: true)
+        let authenticityHeight = calculateStackViewHeight(for: authenticityStackView, imageView: authenticityImageView, label: authenticityTextLabel, maxSize: maxSize, includeSpacing: false)
+        let noteToSelfHeight = calculateStackViewHeight(for: noteToSelfStackView, imageView: noteToSelfImageView, label: noteToSelfTextLabel, maxSize: maxSize, includeSpacing: false)
+
         return topConstraint.constant
-        + height
-        + mainStackView.spacing
-        + descriptionLabelSize.height
-        + mainStackView.spacing
-        + confidentialityAreaHeight
-        + mainStackView.spacing
-        + authenticityAreaHeight
-        + bottomConstraint.constant
+            + participantsInfoHeight
+            + descriptionHeight
+            + confidentialityHeight
+            + authenticityHeight
+            + noteToSelfHeight
+            + bottomConstraint.constant
+    }
+
+    private func calculateLabelHeight(for label: UILabel, maxSize: CGSize, includeSpacing: Bool) -> CGFloat {
+        guard !label.isHidden else { return 0 }
+        return label.sizeThatFits(maxSize).height + (includeSpacing ? mainStackView.spacing : 0)
+    }
+
+    private func calculateStackViewHeight(for stackView: UIStackView, imageView: UIImageView, label: UILabel, maxSize: CGSize, includeSpacing: Bool) -> CGFloat {
+        guard !stackView.isHidden else { return 0 }
+        let labelHeight = label.sizeThatFits(maxSize).height
+        let imageHeight = imageView.bounds.height
+        let spacing = stackView.spacing
+        return labelHeight + imageHeight + spacing + (includeSpacing ? mainStackView.spacing : 0)
     }
 }
 

@@ -50,6 +50,7 @@ final class ChatContentViewModel: ViewModelType {
         
         static let videoAndAudioCall: NavBarRightItems = [.videoCall, .audioCall]
         static let addParticipantAndAudioCall: NavBarRightItems = [.addParticipant, .audioCall]
+        static let empty: NavBarRightItems = []
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -179,6 +180,8 @@ final class ChatContentViewModel: ViewModelType {
     func determineNavBarRightItems(isEditing: Bool = false) -> NavBarRightItems {
         if isEditing {
             return .cancel
+        } else if chatRoom.isNoteToSelf {
+            return .empty
         } else if chatRoom.chatType != .oneToOne {
             if (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && chatRoom.isActive {
                 return .addParticipantAndAudioCall
