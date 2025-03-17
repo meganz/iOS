@@ -1,9 +1,7 @@
 import MEGADomain
 
 public struct MockVisualMediaSearchHistoryRepository: VisualMediaSearchHistoryRepositoryProtocol {
-    public static var newRepo: MockVisualMediaSearchHistoryRepository {
-        MockVisualMediaSearchHistoryRepository()
-    }
+    public static let sharedRepo = MockVisualMediaSearchHistoryRepository()
     
     public enum Invocation: Sendable, Equatable {
         case history

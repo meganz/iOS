@@ -1,14 +1,20 @@
+import Foundation
 import MEGADomain
 
 /// In memory cache for search history items
 public actor VisualMediaSearchHistoryCacheRepository: VisualMediaSearchHistoryRepositoryProtocol {
-    public static var newRepo: VisualMediaSearchHistoryCacheRepository {
-        .init()
-    }
-
+    public static let sharedRepo = VisualMediaSearchHistoryCacheRepository()
+    
+    private let notificationCenter: NotificationCenter
     private var recentSearches: [SearchTextHistoryEntryEntity] = []
     
-    public init() { }
+    init(notificationCenter: NotificationCenter = .default) {
+        self.notificationCenter = notificationCenter
+        
+        Task {
+            await observeAccountLogout()
+        }
+    }
     
     public func history() async -> [SearchTextHistoryEntryEntity] {
         recentSearches
@@ -24,5 +30,11 @@ public actor VisualMediaSearchHistoryCacheRepository: VisualMediaSearchHistoryRe
     
     public func delete(entry: SearchTextHistoryEntryEntity) async {
         recentSearches.remove(object: entry)
+    }
+    
+    private func observeAccountLogout() async {
+        for await _ in notificationCenter.notifications(named: .accountDidLogout) {
+            recentSearches.removeAll()
+        }
     }
 }
