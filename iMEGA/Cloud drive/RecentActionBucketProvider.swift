@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 import Search
@@ -145,7 +146,8 @@ final class RecentActionBucketProvider: SearchResultsProviding, @unchecked Senda
     private let nodeUpdateRepository: any NodeUpdateRepositoryProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let sdk: MEGASdk
-    
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+
     init(
         // we will be able to remove the sdk dependency when legacy cloud drive code is deleted
         // it's because we need ability to get MEGARecentActionBBucket from RecentActionBucketEntity
@@ -154,7 +156,8 @@ final class RecentActionBucketProvider: SearchResultsProviding, @unchecked Senda
         mapper: SearchResultMapper,
         nodeUseCase: some NodeUseCaseProtocol,
         nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
-        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.sdk = sdk
         self._bucket = .init(wrappedValue: bucket)
@@ -162,7 +165,8 @@ final class RecentActionBucketProvider: SearchResultsProviding, @unchecked Senda
         self.mapper = mapper
         self.nodeUseCase = nodeUseCase
         self.nodeUpdateRepository = nodeUpdateRepository
-        
+        self.featureFlagProvider = featureFlagProvider
+
         let sequence = refreshedBucket()
         changedNodesTask = Task { [weak self] in
             guard let self else { return }
@@ -213,14 +217,20 @@ final class RecentActionBucketProvider: SearchResultsProviding, @unchecked Senda
         guard let queryEntity, queryEntity.query.isNotEmpty else {
             return list // return all when no query
         }
-        
-        // if query, just filter with name
+
+        // if query, just filter with name or desc (and tags if corresponding feature flags are enabled)
+
+        let isSearchByTagsEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
+
         let queryLowercased = queryEntity.query.lowercased()
         return list.filter { item in
-            return item.name.localizedStandardRange(of: queryLowercased) != nil
+            return (item.name.containsIgnoringCaseAndDiacritics(searchText: queryLowercased)
+                    || item.description?.containsIgnoringCaseAndDiacritics(searchText: queryLowercased) == true
+                    || (isSearchByTagsEnabled && item.tags.contains(where: { $0.containsIgnoringCaseAndDiacritics(searchText: queryLowercased) }))
+            )
         }
     }
-    
+
     var all: SearchResultsEntity {
         .init(
             results: allBucketResults(queryEntity: nil),
