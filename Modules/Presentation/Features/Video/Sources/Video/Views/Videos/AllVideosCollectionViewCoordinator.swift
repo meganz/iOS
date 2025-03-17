@@ -25,6 +25,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             && lhs.node.isFavourite == rhs.node.isFavourite
             && lhs.node.name == rhs.node.name
             && lhs.node.description == rhs.node.description
+            && lhs.node.tags == rhs.node.tags
             && lhs.node.label == rhs.node.label
             && lhs.node.isExported == rhs.node.isExported
             && lhs.node.isMarkedSensitive == rhs.node.isMarkedSensitive
