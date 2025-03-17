@@ -980,7 +980,6 @@
 		835833332948DB0A00394F1A /* AddParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835833322948DB0A00394F1A /* AddParticipantsView.swift */; };
 		8358334D294A1E3200394F1A /* SeeMoreParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8358334C294A1E3200394F1A /* SeeMoreParticipantsView.swift */; };
 		8358A6E82925460800EE197C /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8358A6E72925460800EE197C /* ToggleView.swift */; };
-		8358A6EA2925461C00EE197C /* DisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8358A6E92925461C00EE197C /* DisclosureView.swift */; };
 		8359E4B325F0E1DF0023FE18 /* QuickAccessWidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */; };
 		8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */; };
 		835A60FD2B74EBC200BBB9A1 /* ChatContentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */; };
@@ -3746,7 +3745,6 @@
 		835833322948DB0A00394F1A /* AddParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantsView.swift; sourceTree = "<group>"; };
 		8358334C294A1E3200394F1A /* SeeMoreParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreParticipantsView.swift; sourceTree = "<group>"; };
 		8358A6E72925460800EE197C /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
-		8358A6E92925461C00EE197C /* DisclosureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureView.swift; sourceTree = "<group>"; };
 		8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetAction.swift; sourceTree = "<group>"; };
 		8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatus.swift; sourceTree = "<group>"; };
 		835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentRouter.swift; sourceTree = "<group>"; };
@@ -9593,7 +9591,6 @@
 			isa = PBXGroup;
 			children = (
 				99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */,
-				8358A6E92925461C00EE197C /* DisclosureView.swift */,
 				83B4FC6A292407A300364F04 /* KeyRotationView.swift */,
 				834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */,
 				83792B872950A4080033ED3E /* MeetingDescriptionView.swift */,
@@ -14673,7 +14670,6 @@
 				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */,
 				6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */,
-				8358A6EA2925461C00EE197C /* DisclosureView.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
 				B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */,
 				B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */,

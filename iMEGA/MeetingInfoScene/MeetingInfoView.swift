@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -56,7 +57,7 @@ struct MeetingInfoView: View {
                     }
                     
                     DisclosureView(
-                        image: .sharedFilesInfo,
+                        image: MEGAAssetsImageProvider.image(named: .sharedFilesInfo),
                         text: Strings.Localizable.Meetings.Info.sharedFiles) {
                             viewModel.sharedFilesViewTapped()
                         }
@@ -64,7 +65,7 @@ struct MeetingInfoView: View {
                     
                     if viewModel.isModerator {
                         DisclosureView(
-                            image: .manageChatHistory,
+                            image: MEGAAssetsImageProvider.image(named: .manageChatHistory),
                             text: Strings.Localizable.Meetings.Info.manageMeetingHistory) {
                                 viewModel.manageChatHistoryViewTapped()
                             }

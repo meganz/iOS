@@ -126,5 +126,13 @@ public enum MEGAAssetsImageName: String, CaseIterable, Sendable {
          splashScreenMEGALogo,
          glassSearch,
          noteToSelf,
-         noteToSelfBlue
+         noteToSelfSmall,
+         noteToSelfBlue,
+         sharedFiles,
+         clearChatHistory,
+         unArchiveChat,
+         archiveChat,
+         sharedFilesInfo,
+         manageChatHistory,
+         meetingLink
 }

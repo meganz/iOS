@@ -1,27 +1,38 @@
+import MEGADesignToken
 import SwiftUI
 
-struct DisclosureView: View {
+public struct DisclosureView: View {
     private enum Constants {
         static let disclosureOpacity: CGFloat = 0.6
     }
     
-    let image: ImageResource
+    let image: Image
     let text: String
     let action: (() -> Void)
     @Environment(\.layoutDirection) var layoutDirection
 
-    private let discolureIndicator = "chevron.right"
+    private let disclosureIndicator = "chevron.right"
 
-    var body: some View {
+    public init(
+        image: Image,
+        text: String,
+        action: @escaping () -> Void
+    ) {
+        self.image = image
+        self.text = text
+        self.action = action
+    }
+    
+    public var body: some View {
         VStack {
             Divider()
             HStack {
-                Image(image)
+                image
                 Text(text)
                     .font(.body)
                 Spacer()
-                Image(systemName: discolureIndicator)
-                    .foregroundColor(Color(.gray8E8E93).opacity(Constants.disclosureOpacity))
+                Image(systemName: disclosureIndicator)
+                    .foregroundColor(TokenColors.Icon.secondary.swiftUI.opacity(Constants.disclosureOpacity))
                     .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
             }
             .padding(.horizontal)

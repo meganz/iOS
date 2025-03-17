@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -8,7 +9,7 @@ struct ChatRoomLinkNonHostView: View {
     var body: some View {
         VStack {
             DisclosureView(
-                image: .meetingLink,
+                image: MEGAAssetsImageProvider.image(named: .meetingLink),
                 text: Strings.Localizable.Meetings.Info.shareMeetingLink) {
                     viewModel.shareMeetingLinkTapped()
                 }
