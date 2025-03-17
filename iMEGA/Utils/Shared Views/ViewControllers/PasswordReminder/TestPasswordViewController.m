@@ -154,15 +154,15 @@
     
     if ([self.confirmButton.titleLabel.text isEqualToString:LocalizedString(@"passwordAccepted", 
                                                                             @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.")]) {
-        [self.confirmButton mnz_setupBasic:self.traitCollection titleColor: [UIColor succeedTextColor]];
+        [self.confirmButton mnz_setupBasic:[UIColor succeedTextColor]];
         [self.confirmButton mnz_clearSetup];
       } else {
-        [self.confirmButton mnz_setupSecondary:self.traitCollection];
+        [self.confirmButton mnz_setupSecondary];
       }
     
-    [self.backupKeyButton mnz_setupPrimary:self.traitCollection];
+    [self.backupKeyButton mnz_setupPrimary];
     
-    [self.logoutButton mnz_setupCancel:self.traitCollection];
+    [self.logoutButton mnz_setupCancel];
 }
 
 - (void)configureUI {
@@ -244,7 +244,7 @@
         [self.confirmButton setTitle:LocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
     }
     
-    [self.confirmButton mnz_setupSecondary:self.traitCollection];
+    [self.confirmButton mnz_setupSecondary];
     [self.confirmButton setImage:nil forState:UIControlStateNormal];
 }
 

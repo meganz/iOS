@@ -28,7 +28,7 @@ extension ContactLinkQRViewController {
         setupQRImage(from: contactLinkLabel?.text ?? "")
 
         errorLabel?.textColor = TokenColors.Text.onColor
-        linkCopyButton?.mnz_setupPrimary(traitCollection)
+        linkCopyButton?.mnz_setupPrimary()
     }
 
     private func setupSegmentControl(_ segmentControl: MEGASegmentedControl) {

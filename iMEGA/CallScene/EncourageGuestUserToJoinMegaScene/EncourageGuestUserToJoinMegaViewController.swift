@@ -34,7 +34,7 @@ class EncourageGuestUserToJoinMegaViewController: UIViewController {
         )
         
         createAccountButton.setTitle(Strings.Localizable.createAccount, for: .normal)
-        createAccountButton.mnz_setupPrimary(traitCollection)
+        createAccountButton.mnz_setupPrimary()
         
         paragraph1TitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph1.title
         paragraph1SubtitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph1.description

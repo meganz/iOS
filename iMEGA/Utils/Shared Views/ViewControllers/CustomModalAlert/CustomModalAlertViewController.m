@@ -164,10 +164,10 @@
     }
 #endif
     
-    [self.firstButton mnz_setup:self.firstButtonStyle traitCollection:self.traitCollection];
-    [self.secondButton mnz_setupSecondary:self.traitCollection];
+    [self.firstButton mnz_setup:self.firstButtonStyle];
+    [self.secondButton mnz_setupSecondary];
     
-    [self.dismissButton mnz_setup:self.dismissButtonStyle traitCollection:self.traitCollection];
+    [self.dismissButton mnz_setup:self.dismissButtonStyle];
 }
 
 - (void)configUIAppearance {

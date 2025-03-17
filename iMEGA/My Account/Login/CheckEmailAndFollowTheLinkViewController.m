@@ -107,8 +107,8 @@
     
     self.misspelledLabel.textColor = [UIColor iconSecondaryColor];
     
-    [self.resendButton mnz_setupPrimary:self.traitCollection];
-    [self.cancelButton mnz_setupCancel:self.traitCollection];
+    [self.resendButton mnz_setupPrimary];
+    [self.cancelButton mnz_setupCancel];
 }
 
 #pragma mark - IBActions

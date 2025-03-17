@@ -268,7 +268,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     [self.forgotPasswordButton setTitleColor: [self forgotPasswordTintColor] forState:UIControlStateNormal];
     
-    [self.loginButton mnz_setupPrimary:self.traitCollection];
+    [self.loginButton mnz_setupPrimary];
         
     [self setCreateAccountAttributedText];
 }

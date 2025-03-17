@@ -15,9 +15,9 @@ extension OnboardingViewController {
         pageControl?.pageIndicatorTintColor = pageIndicatorColor()
         pageControl?.backgroundColor = TokenColors.Background.page
         
-        primaryButton?.mnz_setupPrimary(traitCollection)
-        secondaryButton?.mnz_setupSecondary(traitCollection)
-        tertiaryButton?.mnz_setupSecondary(traitCollection)
+        primaryButton?.mnz_setupPrimary()
+        secondaryButton?.mnz_setupSecondary()
+        tertiaryButton?.mnz_setupSecondary()
     }
     
     // MARK: - Private

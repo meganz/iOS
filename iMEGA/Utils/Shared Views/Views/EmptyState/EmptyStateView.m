@@ -137,7 +137,7 @@
 
 - (void)setupColors {
     [self designTokenColors];
-    [self.button mnz_setupPrimary:self.traitCollection];
+    [self.button mnz_setupPrimary];
 }
 
 - (void)bottomViewVisibility {

@@ -61,8 +61,8 @@
     self.seedTextViewView.backgroundColor = [self defaultBackgroundColor];
     self.seedTextViewView.layer.borderColor = [self separatorColor].CGColor;
 
-    [self.openInButton mnz_setup:self.openInButtonStyle traitCollection:self.traitCollection];
-    [self.nextButton mnz_setup:self.nextButtonStyle traitCollection:self.traitCollection];
+    [self.openInButton mnz_setup:self.openInButtonStyle];
+    [self.nextButton mnz_setup:self.nextButtonStyle];
 }
 
 - (void)setupFirstSectionLabelTextAndImage {

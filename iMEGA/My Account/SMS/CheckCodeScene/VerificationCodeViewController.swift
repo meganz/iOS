@@ -89,7 +89,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
         didnotReceiveCodeLabel.textColor = TokenColors.Text.primary
         resendButton.tintColor = TokenColors.Link.primary
 
-        confirmButton.mnz_setupPrimary(traitCollection)
+        confirmButton.mnz_setupPrimary()
     }
     
     private func updateCodeFieldsAppearance() {

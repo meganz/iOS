@@ -68,7 +68,7 @@
     self.subtitleView.backgroundColor = [self defaultBackgroundColor];
     self.howItWorksTopSeparatorView.backgroundColor = [self separatorColor];
     self.howItWorksView.backgroundColor = [self defaultBackgroundColor];
-    [self.addPhoneNumberButton mnz_setupPrimary:self.traitCollection];
+    [self.addPhoneNumberButton mnz_setupPrimary];
 }
 
 @end

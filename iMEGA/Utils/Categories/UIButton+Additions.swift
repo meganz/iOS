@@ -13,79 +13,79 @@ import MEGADesignToken
 
 extension UIButton {
     
-    @objc func mnz_setup(_ style: MEGACustomButtonStyle, traitCollection: UITraitCollection) {
+    @objc func mnz_setup(_ style: MEGACustomButtonStyle) {
         switch style {
         case .basic:
-            mnz_setupBasic(traitCollection)
+            mnz_setupBasic()
             
         case .primary:
-            mnz_setupPrimary(traitCollection)
+            mnz_setupPrimary()
             
         case .secondary:
-            mnz_setupSecondary(traitCollection)
+            mnz_setupSecondary()
             
         case .primaryDisabled:
-            mnz_setupPrimary_disabled(traitCollection)
+            mnz_setupPrimary_disabled()
             
         case .destructive:
-            mnz_setupDestructive(traitCollection)
+            mnz_setupDestructive()
             
         case .cancel:
-            mnz_setupCancel(traitCollection)
+            mnz_setupCancel()
         
         case .delete:
-            mnz_setupDelete(traitCollection)
+            mnz_setupDelete()
             
         default:
-            mnz_setupBasic(traitCollection)
+            mnz_setupBasic()
         }
     }
     
     // MARK: - Buttons
     
-    @objc func mnz_setupBasic(_ traitCollection: UITraitCollection, titleColor: UIColor? = nil) {
+    @objc func mnz_setupBasic(_ titleColor: UIColor? = nil) {
         backgroundColor = TokenColors.Button.secondary
         setTitleColor(titleColor ?? TokenColors.Support.success, for: UIControl.State.normal)
         
         setupLayer()
     }
     
-    @objc func mnz_setupPrimary(_ traitCollection: UITraitCollection) {
+    @objc func mnz_setupPrimary() {
         backgroundColor = TokenColors.Button.primary
         setTitleColor(TokenColors.Text.inverse, for: UIControl.State.normal)
         
         setupLayer()
     }
     
-    @objc func mnz_setupSecondary(_ traitCollection: UITraitCollection) {
+    @objc func mnz_setupSecondary() {
         backgroundColor = TokenColors.Button.secondary
         setTitleColor(TokenColors.Text.accent, for: UIControl.State.normal)
         
         setupLayer()
     }
     
-    @objc func mnz_setupPrimary_disabled(_ traitCollection: UITraitCollection) {
+    @objc func mnz_setupPrimary_disabled() {
         backgroundColor = TokenColors.Button.disabled
         setTitleColor(TokenColors.Text.inverseAccent, for: UIControl.State.normal)
         
         setupLayer()
     }
     
-    @objc func mnz_setupDestructive(_ traitCollection: UITraitCollection) {
+    @objc func mnz_setupDestructive() {
         backgroundColor = TokenColors.Button.secondary
         setTitleColor(TokenColors.Button.brand, for: UIControl.State.normal)
         
         setupLayer()
     }
     
-    @objc func mnz_setupDelete(_ traitCollection: UITraitCollection) {
+    @objc func mnz_setupDelete() {
         backgroundColor = TokenColors.Button.brand
         setTitleColor(UIColor.whiteFFFFFF, for: UIControl.State.normal)
         
         setupLayer()
     }
     
-    @objc func mnz_setupCancel(_ traitCollection: UITraitCollection) {
+    @objc func mnz_setupCancel() {
         backgroundColor = UIColor.clear
         setTitleColor(TokenColors.Icon.secondary, for: UIControl.State.normal)
     }

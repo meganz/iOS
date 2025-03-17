@@ -41,9 +41,9 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
         view.backgroundColor = TokenColors.Background.page
         addPhoneNumberTitle.textColor = TokenColors.Text.primary
         descriptionLabel.textColor = TokenColors.Text.primary
-        addPhoneNumberButton.mnz_setupPrimary(traitCollection)
-        notNowButton.mnz_setupCancel(traitCollection)
-        dontShowAgainButton.mnz_setupCancel(traitCollection)
+        addPhoneNumberButton.mnz_setupPrimary()
+        notNowButton.mnz_setupCancel()
+        dontShowAgainButton.mnz_setupCancel()
     }
     
     // MARK: - Execute command

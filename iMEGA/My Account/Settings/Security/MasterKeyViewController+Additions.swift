@@ -20,8 +20,8 @@ extension MasterKeyViewController {
 
         illustrationView?.backgroundColor = TokenColors.Background.page
 
-        carbonCopyMasterKeyButton?.mnz_setupSecondary(traitCollection)
-        saveMasterKey?.mnz_setupPrimary(traitCollection)
+        carbonCopyMasterKeyButton?.mnz_setupSecondary()
+        saveMasterKey?.mnz_setupPrimary()
 
         let recoveryButtonColor = TokenColors.Link.primary 
 

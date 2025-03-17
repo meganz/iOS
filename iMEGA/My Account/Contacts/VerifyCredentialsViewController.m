@@ -112,7 +112,7 @@
         [self setResetButtonColor:self.verifyOrResetButton];
     } else {
         [self.verifyOrResetButton setTitle:LocalizedString(@"account.verifyContact.confirmButtonText", @"Mark as verified") forState:UIControlStateNormal];
-        [self.verifyOrResetButton mnz_setupPrimary:self.traitCollection];
+        [self.verifyOrResetButton mnz_setupPrimary];
     }
 }
 
