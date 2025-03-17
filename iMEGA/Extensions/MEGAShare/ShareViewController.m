@@ -229,7 +229,7 @@
             [self initChatAndStartLogging];
             [self fetchAttachments];
         }
-        if (!self.fetchNodesDone) {
+        if (!self.fetchNodesDone && [MEGAReachabilityManager isReachable]) {
             [self removeOpenAppView];
             [self loginToMEGA];
         }
