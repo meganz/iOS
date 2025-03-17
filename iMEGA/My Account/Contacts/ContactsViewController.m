@@ -1467,18 +1467,25 @@
                     cell.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor iconSecondaryColor] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
                     cell.verifiedImageView.hidden = YES;
                 } else {
-                    uint64_t peerHandle = chatListItem.peerHandle;
-                    cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
-                    MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:peerHandle];
-                    cell.shareLabel.text = [NSString chatStatusString:userStatus];
-                    cell.onlineStatusView.backgroundColor =  [UIColor colorWithChatStatus: userStatus];
-                    [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
-                    NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:peerHandle];
-                    if (peerEmail) {
-                        MEGAUser *user = [MEGASdk.shared contactForEmail:peerEmail];
-                        cell.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
+                    if (chatRoom.isNoteToSelf) {
+                        cell.nameLabel.text = LocalizedString(@"chat.messages.noteToSelf.title", @"Title for note to self chat, used in the messages view but also in lists where note to self is diplayed");
+                        UIImage *noteToSelfImage = chatListItem.lastMessage == NULL ? [UIImage imageNamed:@"noteToSelf"] : [UIImage imageNamed:@"noteToSelfBlue"];
+                        [cell.avatarImageView setImage:noteToSelfImage];
+                        [cell.shareLabel setHidden:YES];
                     } else {
-                        cell.verifiedImageView.hidden = YES;
+                        uint64_t peerHandle = chatListItem.peerHandle;
+                        cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
+                        MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:peerHandle];
+                        cell.shareLabel.text = [NSString chatStatusString:userStatus];
+                        cell.onlineStatusView.backgroundColor =  [UIColor colorWithChatStatus: userStatus];
+                        [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
+                        NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:peerHandle];
+                        if (peerEmail) {
+                            MEGAUser *user = [MEGASdk.shared contactForEmail:peerEmail];
+                            cell.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
+                        } else {
+                            cell.verifiedImageView.hidden = YES;
+                        }
                     }
                 }
                 return cell;
