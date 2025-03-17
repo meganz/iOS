@@ -41,6 +41,9 @@ let package = Package(
                 "MEGAUIKit",
                 "MEGADesignToken"
             ],
+            resources: [
+                .process("Resources")
+            ],
             swiftSettings: settings
         ),
         .target(
