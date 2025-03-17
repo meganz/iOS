@@ -48,12 +48,16 @@ class ChatTitleView: UIView {
     }
     
     private func updateTitleLabel() {
-        titleLabel.text = chatRoom.title
+        titleLabel.text = chatRoom.isNoteToSelf ?
+        Strings.Localizable.Chat.Messages.NoteToSelf.title :
+        chatRoom.title
     }
     
     private func updateSubtitleLabel() {
         if chatRoom.isArchived {
             subtitleLabel.text = Strings.Localizable.archived
+        } else if chatRoom.isNoteToSelf {
+            subtitleLabel.isHidden = true
         } else if chatRoom.isGroup {
             if !chatRoom.ownPrivilege.isUserInChat {
                 subtitleLabel.text = Strings.Localizable.inactiveChat
@@ -82,7 +86,7 @@ class ChatTitleView: UIView {
     }
     
     private func updateStatusView() {
-        guard !chatRoom.isGroup else {
+        guard chatRoom.chatType == .oneToOne else {
             statusView.isHidden = true
             return
         }
