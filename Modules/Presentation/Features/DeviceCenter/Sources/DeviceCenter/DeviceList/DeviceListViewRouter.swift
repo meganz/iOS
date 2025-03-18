@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGAUIKit
 import SwiftUI
@@ -16,13 +17,15 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let refreshDevicesPublisher: PassthroughSubject<Void, Never>
     private let updateInterval: UInt64
-    private let deviceCenterAssets: DeviceCenterAssets
+    private let deviceCenterActions: [ContextAction]
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let notificationCenter: NotificationCenter
-    
+    private let backupStatusProvider: BackupStatusProviding
+    private let deviceIconProvider: any DeviceIconProviding
+
     public init(
         navigationController: UINavigationController?,
         deviceCenterBridge: DeviceCenterBridge,
@@ -31,20 +34,23 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         cameraUploadsUseCase: some CameraUploadsUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         notificationCenter: NotificationCenter,
-        deviceCenterAssets: DeviceCenterAssets
+        deviceCenterActions: [ContextAction],
+        deviceIconProvider: DeviceIconProviding = DeviceIconProvider(),
+        backupStatusProvider: some BackupStatusProviding = BackupStatusProvider()
     ) {
         self.navigationController = navigationController
         self.deviceCenterBridge = deviceCenterBridge
-        self.deviceCenterAssets = deviceCenterAssets
+        self.deviceCenterActions = deviceCenterActions
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
         self.cameraUploadsUseCase = cameraUploadsUseCase
         self.notificationCenter = notificationCenter
         self.networkMonitorUseCase = networkMonitorUseCase
-        
-        devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
-        refreshDevicesPublisher = PassthroughSubject<Void, Never>()
-        updateInterval = 30
+        self.devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
+        self.refreshDevicesPublisher = PassthroughSubject<Void, Never>()
+        self.updateInterval = 30
+        self.backupStatusProvider = backupStatusProvider
+        self.deviceIconProvider = deviceIconProvider
         
         super.init()
     }
@@ -59,20 +65,17 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
-            deviceListAssets: deviceCenterAssets.deviceListAssets,
-            emptyStateAssets: deviceCenterAssets.emptyStateAssets,
-            searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: BackupStatusProvider().createBackupStatuses(),
-            deviceCenterActions: deviceCenterAssets.deviceCenterActions,
-            deviceIconNames: deviceCenterAssets.deviceIconNames,
+            backupStatusProvider: backupStatusProvider,
+            deviceCenterActions: deviceCenterActions,
+            deviceIconProvider: deviceIconProvider,
             currentDeviceUUID: UIDevice.current.identifierForVendor?.uuidString ?? ""
         )
+        
         let deviceListView = DeviceListView(viewModel: deviceListViewModel)
         let hostingController = UIHostingController(rootView: deviceListView)
         baseViewController = hostingController
-        baseViewController?.title = deviceCenterAssets.deviceListAssets.title
-        baseViewController?.navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: deviceCenterAssets.deviceListAssets.title)
-
+        baseViewController?.title = Strings.Localizable.Device.Center.title
+        baseViewController?.navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.Device.Center.title)
         return hostingController
     }
     
@@ -88,28 +91,24 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         guard let backups = device.backups else { return }
         
         BackupListViewRouter(
-            selectedDevice:
-                SelectedDevice(
-                    id: device.id,
-                    name: device.name.isEmpty ? deviceCenterAssets.deviceListAssets.deviceDefaultName : device.name,
-                    icon: deviceIcon,
-                    isCurrent: isCurrentDevice,
-                    isNewDeviceWithoutCU: false,
-                    backups: backups
-                ),
+            selectedDevice: SelectedDevice(
+                id: device.id,
+                name: device.name.isEmpty ? UIDevice.current.modelName : device.name,
+                icon: deviceIcon,
+                isCurrent: isCurrentDevice,
+                isNewDeviceWithoutCU: false,
+                backups: backups
+            ),
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
-            notificationCenter: NotificationCenter.default,
+            notificationCenter: notificationCenter,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,
-            backupListAssets: deviceCenterAssets.backupListAssets,
-            emptyStateAssets: deviceCenterAssets.emptyStateAssets,
-            searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: BackupStatusProvider().createBackupStatuses(),
-            deviceCenterActions: deviceCenterAssets.deviceCenterActions
+            deviceCenterActions: deviceCenterActions,
+            backupStatusProvider: backupStatusProvider
         ).start()
     }
     
@@ -119,14 +118,13 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         deviceIcon: String
     ) {
         BackupListViewRouter(
-            selectedDevice:
-                SelectedDevice(
-                    id: deviceId,
-                    name: deviceName,
-                    icon: deviceIcon,
-                    isCurrent: true,
-                    isNewDeviceWithoutCU: true
-                ),
+            selectedDevice: SelectedDevice(
+                id: deviceId,
+                name: deviceName,
+                icon: deviceIcon,
+                isCurrent: true,
+                isNewDeviceWithoutCU: true
+            ),
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             notificationCenter: notificationCenter,
@@ -135,11 +133,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             networkMonitorUseCase: networkMonitorUseCase,
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,
-            backupListAssets: deviceCenterAssets.backupListAssets,
-            emptyStateAssets: deviceCenterAssets.emptyStateAssets,
-            searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: BackupStatusProvider().createBackupStatuses(),
-            deviceCenterActions: deviceCenterAssets.deviceCenterActions
+            deviceCenterActions: deviceCenterActions,
+            backupStatusProvider: backupStatusProvider
         ).start()
     }
 }

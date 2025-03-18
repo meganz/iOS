@@ -133,7 +133,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .didTapDeviceCenterButton:
             router.navigateToDeviceCenter(
                 deviceCenterBridge: deviceCenterBridge,
-                deviceCenterAssets: makeDeviceCenterAssetData()
+                deviceCenterActions: makeDeviceCenterActionList()
             )
         case .navigateToProfile: router.navigateToProfile()
         case .navigateToUsage: router.navigateToUsage()

@@ -1,5 +1,6 @@
 import Combine
 @testable import DeviceCenter
+import DeviceCenterMocks
 import MEGADomain
 import MEGADomainMock
 import MEGATest
@@ -55,27 +56,8 @@ final class BackupListsViewRouterTests: XCTestCase {
             networkMonitorUseCase: networkMonitorUseCase,
             navigationController: mockPresenter,
             deviceCenterBridge: DeviceCenterBridge(),
-            backupListAssets:
-                BackupListAssets(
-                    backupTypes: [
-                        BackupType(type: .backupUpload, iconName: "backup")
-                    ]
-                ),
-            emptyStateAssets:
-                EmptyStateAssets(
-                    image: "",
-                    title: ""
-                ),
-            searchAssets: SearchAssets(
-                placeHolder: "",
-                cancelTitle: "",
-                backgroundColor: Color(.systemBackground)
-                
-            ),
-            backupStatuses: [
-                BackupStatus(status: .upToDate, title: "", color: .blue, iconName: "circle.fill")
-            ],
-            deviceCenterActions: []
+            deviceCenterActions: [],
+            backupStatusProvider: MockBackupStatusProvider(statuses: [])
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)

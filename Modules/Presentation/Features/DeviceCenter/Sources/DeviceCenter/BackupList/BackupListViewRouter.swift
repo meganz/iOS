@@ -19,11 +19,9 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
-    private let backupListAssets: BackupListAssets
-    private let emptyStateAssets: EmptyStateAssets
-    private let searchAssets: SearchAssets
-    private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [ContextAction]
+    private let backupStatusProvider: any BackupStatusProviding
+    private let folderIconProvider: any FolderIconProviding
     
     public init(
         selectedDevice: SelectedDevice,
@@ -35,11 +33,9 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         navigationController: UINavigationController?,
         deviceCenterBridge: DeviceCenterBridge,
-        backupListAssets: BackupListAssets,
-        emptyStateAssets: EmptyStateAssets,
-        searchAssets: SearchAssets,
-        backupStatuses: [BackupStatus],
-        deviceCenterActions: [ContextAction]
+        deviceCenterActions: [ContextAction],
+        backupStatusProvider: some BackupStatusProviding = BackupStatusProvider(),
+        folderIconProvider: some FolderIconProviding = FolderIconProvider()
     ) {
         self.selectedDevice = selectedDevice
         self.devicesUpdatePublisher = devicesUpdatePublisher
@@ -50,11 +46,9 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.navigationController = navigationController
         self.deviceCenterBridge = deviceCenterBridge
-        self.backupListAssets = backupListAssets
-        self.emptyStateAssets = emptyStateAssets
-        self.searchAssets = searchAssets
-        self.backupStatuses = backupStatuses
         self.deviceCenterActions = deviceCenterActions
+        self.backupStatusProvider = backupStatusProvider
+        self.folderIconProvider = folderIconProvider
     }
     
     public func build() -> UIViewController {
@@ -68,17 +62,14 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             router: self,
             deviceCenterBridge: deviceCenterBridge,
             notificationCenter: notificationCenter,
-            backupListAssets: backupListAssets,
-            emptyStateAssets: emptyStateAssets,
-            searchAssets: searchAssets,
-            backupStatuses: backupStatuses,
+            backupStatusProvider: backupStatusProvider,
+            folderIconProvider: folderIconProvider,
             deviceCenterActions: deviceCenterActions
         )
         let backupListView = BackupListView(viewModel: backupListViewModel)
         let hostingController = UIHostingController(rootView: backupListView)
         baseViewController = hostingController
         updateTitle(selectedDevice.name)
-
         return hostingController
     }
     

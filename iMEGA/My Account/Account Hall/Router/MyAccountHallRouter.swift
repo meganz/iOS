@@ -6,7 +6,7 @@ import MEGASDKRepo
 import MEGASwiftUI
 
 public protocol MyAccountHallRouting: Routing {
-    func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterAssets: DeviceCenterAssets)
+    func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterActions: [ContextAction])
     func navigateToProfile()
     func navigateToUsage()
     func navigateToSettings()
@@ -171,7 +171,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     
     func navigateToDeviceCenter(
         deviceCenterBridge: DeviceCenterBridge,
-        deviceCenterAssets: DeviceCenterAssets
+        deviceCenterActions: [ContextAction]
     ) {
         DeviceListViewRouter(
             navigationController: navigationController,
@@ -193,7 +193,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
                 ),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationCenter: NotificationCenter.default,
-            deviceCenterAssets: deviceCenterAssets
+            deviceCenterActions: deviceCenterActions
         ).start()
     }
     

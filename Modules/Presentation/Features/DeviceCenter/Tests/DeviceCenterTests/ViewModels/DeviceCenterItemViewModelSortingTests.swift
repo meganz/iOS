@@ -160,7 +160,6 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
             currentDeviceId: mockCurrentDeviceId
         )
         let assets = ItemAssets(
-            iconName: "",
             status:
                 BackupStatus(
                     status: .upToDate

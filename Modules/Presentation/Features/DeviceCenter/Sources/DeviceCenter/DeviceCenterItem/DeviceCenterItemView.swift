@@ -16,7 +16,7 @@ struct DeviceCenterItemView: View {
     
     var body: some View {
         HStack {
-            Image(viewModel.assets.iconName)
+            Image(viewModel.assets.iconName, bundle: .module)
                 .scaledToFit()
                 .frame(width: 40, height: 40)
                 .padding(EdgeInsets(top: 10, leading: 12, bottom: 10, trailing: 8))
@@ -36,7 +36,7 @@ struct DeviceCenterItemView: View {
                             .background(Color(viewModel.assets.backupStatus.color))
                             .clipShape(Capsule())
                     } else {
-                        Image(viewModel.assets.backupStatus.iconName)
+                        Image(viewModel.assets.backupStatus.iconName, bundle: .module)
                             .renderingMode(.template)
                             .foregroundStyle(Color(viewModel.assets.backupStatus.color))
                             .frame(width: 12, height: 12)

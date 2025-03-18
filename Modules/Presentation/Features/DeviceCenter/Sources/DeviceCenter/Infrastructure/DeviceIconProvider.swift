@@ -12,9 +12,9 @@ public final class DeviceIconProvider: DeviceIconProviding {
     private let iconMapping: [BackupDeviceTypeEntity: String] = [
         .android: "android",
         .iphone: "ios",
-        .linux: "pc-linux",
-        .mac: "pc-mac",
-        .win: "pc-windows",
+        .linux: "pcLinux",
+        .mac: "pcMac",
+        .win: "pcWindows",
         .drive: "drive",
         .defaultMobile: "mobile",
         .defaultPc: "pc"
