@@ -42,16 +42,16 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         self.audioPlayerManager = audioPlayerManager
         super.init(rootView: rootView)
     }
-
+    
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.hidesBackButton = true
-
+        
         let toolbar = UIToolbar(frame: .zero)
         self.toolbar = toolbar
         if let backButtonTitle {
@@ -82,7 +82,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
                 audioPlayerManager.playerHidden(enabled, presenter: self)
             }
         }
-
+        
         selectionHandler?.onSelectionChanged = { [weak self] config in
             self?.updateToolbar(with: config)
         }
@@ -102,9 +102,17 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         super.viewWillDisappear(animated)
         audioPlayerManager?.removeDelegate(self)
     }
-
+    
     deinit {
         removeToolbar(animated: false)
+        wrapper?.onUpdateSearchBarVisibility = nil
+        selectionHandler?.onSelectionModeChange = nil
+        selectionHandler?.onSelectionChanged = nil
+        browseDelegate.endEditingMode = nil
+        
+        navigationItem.searchController = nil
+        
+        CrashlyticsLogger.log(category: .viewLifecycle, "SearchBarUIHostingController deinit.")
     }
     
     // MARK: - CancelSearch outside the controller
@@ -144,7 +152,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             self.toolbar?.removeFromSuperview()
             return
         }
-
+        
         UIView.animate(
             withDuration: 0.33,
             animations: {
@@ -155,16 +163,16 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             }
         )
     }
-
+    
     private func addToolbar(for config: BottomToolbarConfig, animated: Bool = false) {
         guard let toolbar else { return }
-
+        
         toolbar.alpha = 0
         configureToolbar(with: config)
-
+        
         tabBarController?.view.addSubview(toolbar)
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-
+        
         if let tabBar = tabBarController?.tabBar {
             NSLayoutConstraint.activate([
                 toolbar.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: 0),
@@ -196,7 +204,7 @@ class SearchControllerWrapper: NSObject {
     var onCancel: (() -> Void)?
     var onUpdateSearchBarVisibility: ((Bool) -> Void)?
     private var searchText: String?
-
+    
     init(
         onSearch: ((String) -> Void)?,
         onCancel: (() -> Void)?
@@ -210,7 +218,7 @@ class SearchControllerWrapper: NSObject {
         self.onSearch = onSearch
         self.onCancel = onCancel
     }
-
+    
     func cancelSearch() {
         onCancel?()
         searchController.searchBar.text = ""
@@ -229,20 +237,20 @@ class SearchControllerWrapper: NSObject {
 
 // MARK: - UISearchResultsUpdating
 extension SearchControllerWrapper: UISearchResultsUpdating {
-
+    
     var isSearching: Bool {
         searchController.isActive && !isSearchBarEmpty
     }
-
+    
     var isSearchBarEmpty: Bool {
         searchController.searchBar.text?.isEmpty ?? true
     }
-
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchString = searchController.searchBar.text,
               searchController.isActive
         else { return }
-
+        
         searchText = searchString
         onSearch?(searchString)
     }
