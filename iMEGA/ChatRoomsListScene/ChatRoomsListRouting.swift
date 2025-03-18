@@ -21,6 +21,7 @@ protocol ChatRoomsListRouting {
         archiveAction: @escaping () -> Void
     )
     func showGroupChatInfo(forChatRoom chatRoom: ChatRoomEntity)
+    func showNoteToSelfInfo(noteToSelfChat: ChatRoomEntity)
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
     func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity)
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)

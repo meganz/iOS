@@ -1,3 +1,4 @@
+import Chat
 import ChatRepo
 import MEGADomain
 import MEGAL10n
@@ -215,6 +216,27 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         
         groupChatDetailsController.chatRoom = megaChatRoom
         navigationController?.pushViewController(groupChatDetailsController, animated: true)
+    }
+    
+    func showNoteToSelfInfo(noteToSelfChat: ChatRoomEntity) {
+        guard let navigationController else {
+            return
+        }
+        
+        NoteToSelfChatInfoViewRouter(
+            navigationController: navigationController,
+            chatRoom: noteToSelfChat
+        ) {
+            guard let chatRoom = noteToSelfChat.toMEGAChatRoom() else { return }
+            navigationController.pushViewController(ChatSharedItemsViewController.instantiate(with: chatRoom), animated: true)
+        } navigateToManageChatHistoryAction: {
+            ManageChatHistoryViewRouter(
+                chatId: noteToSelfChat.chatId,
+                isChatTypeMeeting: false,
+                navigationController: navigationController
+            ).start()
+        }
+        .start()
     }
     
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {

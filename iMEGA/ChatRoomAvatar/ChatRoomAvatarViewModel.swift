@@ -8,6 +8,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     private let title: String
     private let peerHandle: HandleEntity
     private let chatRoom: ChatRoomEntity
+    private let chatListItem: ChatListItemEntity?
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var userImageUseCase: any UserImageUseCaseProtocol
@@ -23,11 +24,12 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     enum AvatarType {
         case two(primary: UIImage, secondary: UIImage)
         case one(UIImage)
+        case noteToSelf(UIImage)
         case placeHolder(String)
     }
     var avatarType: AvatarType {
         if chatRoom.isNoteToSelf {
-            return .one(.noteToSelfBlue)
+            return chatListItem?.lastMessageId == .invalid ? .noteToSelf(.noteToSelfSmall) : .one(.noteToSelfBlue)
         } else if let primaryAvatarData = chatListItemAvatar.primaryAvatarData,
            let secondaryAvatarData = chatListItemAvatar.secondaryAvatarData,
            let primaryAvatar = UIImage(data: primaryAvatarData),
@@ -48,6 +50,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         title: String,
         peerHandle: HandleEntity,
         chatRoom: ChatRoomEntity,
+        chatListItem: ChatListItemEntity? = nil,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
         userImageUseCase: some UserImageUseCaseProtocol,
@@ -60,6 +63,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         self.title = title
         self.peerHandle = peerHandle
         self.chatRoom = chatRoom
+        self.chatListItem = chatListItem
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.userImageUseCase = userImageUseCase
