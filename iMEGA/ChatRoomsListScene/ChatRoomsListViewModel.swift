@@ -51,7 +51,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     var isChatRoomEmpty: Bool {
         switch chatViewMode {
         case .chats:
-            return displayChatRooms?.isEmpty ?? true
+            return (displayChatRooms?.isEmpty ?? true) || !existMoreChatsThanNoteToSelf
         case .meetings:
             return displayFutureMeetings?.isEmpty ?? true && displayPastMeetings?.isEmpty ?? true
         }
@@ -582,9 +582,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             }
         }
         
-        if !existMoreChatsThanNoteToSelf {
-            displayChatRooms = []
-        } else if searchText.isNotEmpty {
+        if searchText.isNotEmpty {
             displayChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
         } else {
             displayChatRooms = chatRooms

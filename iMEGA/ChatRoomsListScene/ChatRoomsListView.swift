@@ -108,7 +108,7 @@ struct ChatRoomsListView: View {
                     }
                     
                     if chatRooms.isNotEmpty {
-                        if !viewModel.isSearchActive {
+                        if !viewModel.isSearchActive && viewModel.existMoreChatsThanNoteToSelf {
                             ChatRoomsTopRowView(state: viewModel.contactsOnMegaViewState)
                                 .onTapGesture(perform: viewModel.contactsOnMegaViewState.action)
                                 .listRowInsets(EdgeInsets())
@@ -118,6 +118,7 @@ struct ChatRoomsListView: View {
                         
                         ForEach(chatRooms) { chatRoom in
                             ChatRoomView(viewModel: chatRoom)
+                                .listRowSeparator(viewModel.existMoreChatsThanNoteToSelf ? .visible : .hidden)
                                 .listRowInsets(EdgeInsets())
                                 .background()
                         }
@@ -135,6 +136,7 @@ struct ChatRoomsListView: View {
                     , alignment: .center
                 )
                 .background()
+                .scrollBounceBasedOnSize
             } else {
                 LoadingSpinner()
             }

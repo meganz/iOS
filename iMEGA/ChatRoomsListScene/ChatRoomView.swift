@@ -47,22 +47,43 @@ struct ChatRoomView: View {
     }
     
     private func swipeActionLabels() -> [SwipeActionLabel] {
-        [
-            SwipeActionLabel(
-                imageName: "archiveChatSwipeActionButton",
-                backgroundColor: TokenColors.Support.warning.swiftUI,
-                action: {
-                    viewModel.archiveChat()
-                }
-            ),
-            SwipeActionLabel(
-                imageName: "moreListChatSwipeActionButton",
-                backgroundColor: TokenColors.Support.info.swiftUI,
-                action: {
-                    viewModel.presentMoreOptionsForChat()
-                }
-            )
-        ]
+        if viewModel.isNoteToSelfChatAndEmpty {
+            []
+        } else if viewModel.chatListItem.isNoteToSelf {
+            [
+                SwipeActionLabel(
+                    imageName: "archiveChatSwipeActionButton",
+                    backgroundColor: TokenColors.Support.warning.swiftUI,
+                    action: {
+                        viewModel.archiveChat()
+                    }
+                ),
+                SwipeActionLabel(
+                    imageName: "info",
+                    backgroundColor: TokenColors.Support.info.swiftUI,
+                    action: {
+                        viewModel.chatRoomInfoTapped()
+                    }
+                )
+            ]
+        } else {
+            [
+                SwipeActionLabel(
+                    imageName: "archiveChatSwipeActionButton",
+                    backgroundColor: TokenColors.Support.warning.swiftUI,
+                    action: {
+                        viewModel.archiveChat()
+                    }
+                ),
+                SwipeActionLabel(
+                    imageName: "moreListChatSwipeActionButton",
+                    backgroundColor: TokenColors.Support.info.swiftUI,
+                    action: {
+                        viewModel.presentMoreOptionsForChat()
+                    }
+                )
+            ]
+        }
     }
 }
 
@@ -148,7 +169,7 @@ private struct ChatRoomContentDetailsView: View {
                     ChatRoomContentTitleView()
                     Spacer()
                     
-                    if let displayDateString = viewModel.displayDateString {
+                    if !viewModel.isNoteToSelfChatAndEmpty, let displayDateString = viewModel.displayDateString {
                         Text(displayDateString)
                             .font(.caption2)
                     }
@@ -185,7 +206,9 @@ private struct ChatRoomContentTitleView: View {
             }
             
             if viewModel.chatListItem.publicChat == false {
-                Image(.privateChat)
+                if !viewModel.chatListItem.isNoteToSelf {
+                    Image(.privateChat)
+                }
             }
             
             if viewModel.isMuted {
@@ -225,10 +248,12 @@ private struct ChatRoomContentDescriptionView: View {
                     .foregroundColor(descriptionTextColor)
             }
         } else if let description = viewModel.description {
-            Text(description)
-                .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                .foregroundColor(descriptionTextColor)
-                .lineLimit(1)
+            if !viewModel.isNoteToSelfChatAndEmpty {
+                Text(description)
+                    .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
+                    .foregroundColor(descriptionTextColor)
+                    .lineLimit(1)
+            }
         } else {
             Text("Placeholder")
                 .font(.caption)

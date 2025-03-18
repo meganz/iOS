@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAL10n
 
 extension MEGAChatListItem {
 
@@ -24,7 +25,11 @@ extension MEGAChatListItem {
     }
     
     @objc func chatTitle() -> String {
-        return chatRoom?.chatTitle() ?? ""
+       self.isNoteToSelf ? Strings.Localizable.Chat.Messages.NoteToSelf.title : chatRoom?.chatTitle() ?? ""
+    }
+    
+    @objc func noteToSelfImage() -> UIImage {
+        lastMessageId == .invalid ? .noteToSelfSmall : .noteToSelfBlue
     }
     
     private func nickName(forHandle handle: HandleEntity?) -> String? {

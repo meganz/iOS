@@ -763,6 +763,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var present_calledTimes = 0
     var presentMoreOptionsForChat_calledTimes = 0
     var showGroupChatInfo_calledTimes = 0
+    var showNoteToSelfInfo_calledTimes = 0
     var showMeetingInfo_calledTimes = 0
     var showMeetingOccurrences_calledTimes = 0
     var showContactDetailsInfo_calledTimes = 0
@@ -827,6 +828,10 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         showGroupChatInfo_calledTimes += 1
     }
     
+    func showNoteToSelfInfo(noteToSelfChat: ChatRoomEntity) {
+        showNoteToSelfInfo_calledTimes += 1
+    }
+
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
         showMeetingInfo_calledTimes += 1
     }

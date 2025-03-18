@@ -41,6 +41,11 @@ struct ChatRoomAvatarView: View {
                     .scaledToFill()
                     .frame(width: size.width + offsetValue, height: size.height + offsetValue)
                     .clipShape(Circle())
+            } else if case let .noteToSelf(avatar) = viewModel.avatarType {
+                Image(uiImage: avatar)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .clipShape(Circle())
             } else if case let .placeHolder(name) = viewModel.avatarType {
                 Image(systemName: name)
                     .resizable()

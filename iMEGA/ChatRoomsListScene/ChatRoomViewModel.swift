@@ -52,6 +52,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     let shouldShowUnreadCount: Bool
     let unreadCountString: String
     
+    var isNoteToSelfChatAndEmpty: Bool {
+        chatListItem.isNoteToSelf && chatListItem.lastMessageId == .invalid
+    }
+    
     init(
         chatListItem: ChatListItemEntity,
         router: some ChatRoomsListRouting,
@@ -104,6 +108,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 title: chatListItem.title ?? "",
                 peerHandle: chatListItem.peerHandle,
                 chatRoom: chatRoomEntity,
+                chatListItem: chatListItem,
                 chatRoomUseCase: chatRoomUseCase,
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
@@ -229,6 +234,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         chatRoomUseCase.archive(true, chatRoom: chatRoom)
     }
     
+    func chatRoomInfoTapped() {
+        showChatRoomInfo()
+    }
+    
     func pushNotificationSettingsChanged() {
         let newValue = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         guard isMuted != newValue else { return }
@@ -292,6 +301,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
+        if isNoteToSelfChatAndEmpty {
+            return []
+        }
         var options: [ChatRoomContextMenuOption] = []
         if chatListItem.meeting && scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).isNotEmpty {
             options.append(
@@ -318,16 +330,19 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             )
         }
         
-        let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
-        
-        options += [
-            ChatRoomContextMenuOption(
+        if !chatListItem.isNoteToSelf {
+            let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
+            
+            options += [ChatRoomContextMenuOption(
                 title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
                 image: .mutedChat,
                 action: { [weak self] in
                     guard let self else { return }
                     self.toggleDND()
-                }),
+                })]
+        }
+        
+        options += [
             ChatRoomContextMenuOption(
                 title: Strings.Localizable.info,
                 image: .info,
@@ -386,13 +401,17 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 router.showGroupChatInfo(forChatRoom: chatRoom)
             }
         } else {
-            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
-                  let userHandle = chatRoomUseCase.peerHandles(forChatRoom: chatRoom).first,
-                  let userEmail = chatRoomUserUseCase.contactEmail(forUserHandle: userHandle) else {
-                return
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
+            if chatListItem.isNoteToSelf {
+                router.showNoteToSelfInfo(noteToSelfChat: chatRoom)
+            } else {
+                guard let userHandle = chatRoomUseCase.peerHandles(forChatRoom: chatRoom).first,
+                      let userEmail = chatRoomUserUseCase.contactEmail(forUserHandle: userHandle) else {
+                    return
+                }
+                
+                router.showContactDetailsInfo(forUseHandle: userHandle, userEmail: userEmail)
             }
-            
-            router.showContactDetailsInfo(forUseHandle: userHandle, userEmail: userEmail)
         }
     }
     
