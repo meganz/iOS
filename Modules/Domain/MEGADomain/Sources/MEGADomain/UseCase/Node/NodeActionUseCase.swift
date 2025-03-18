@@ -54,9 +54,14 @@ public protocol NodeActionUseCaseProtocol: Sendable {
 
 public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseCaseProtocol {
     private let repo: T
+    private let maxSetSensitivityTasks: Int
     
-    public init(repo: T) {
+    public init(
+        repo: T,
+        maxSetSensitivityTasks: Int = 10
+    ) {
         self.repo = repo
+        self.maxSetSensitivityTasks = maxSetSensitivityTasks
     }
     
     public func fetchNodes() async throws {
@@ -103,19 +108,37 @@ public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseC
     
     private func setSensitive(nodes: [NodeEntity], sensitive: Bool) async -> [HandleEntity: Result<NodeEntity, any Error>] {
         await withTaskGroup(of: (handle: HandleEntity, resultType: Result<NodeEntity, any Error>).self) { group in
-            nodes.forEach { node in
+            let maxConcurrentTasks = min(maxSetSensitivityTasks, nodes.count)
+            var iterator = nodes.makeIterator()
+            
+            for _ in 0..<maxConcurrentTasks {
+                guard let node = iterator.next() else { break }
+                guard node.isMarkedSensitive != sensitive else { continue }
                 group.addTask {
-                    do {
-                        let updatedNode = try await repo.setSensitive(node: node, sensitive: sensitive)
-                        return (node.handle, .success(updatedNode))
-                    } catch {
-                        return (node.handle, .failure(error))
-                    }
+                    (node.handle, await setSensitive(node: node, sensitive: sensitive))
                 }
             }
-            return await group.reduce(into: [HandleEntity: Result<NodeEntity, any Error>](), { result, resultTypeTuple in
-                result[resultTypeTuple.handle] = resultTypeTuple.resultType
-            })
+            
+            var results = [HandleEntity: Result<NodeEntity, any Error>]()
+            while let (nodeHandle, result) = await group.next() {
+                if let node = iterator.next(),
+                   node.isMarkedSensitive != sensitive {
+                    group.addTask {
+                        (node.handle, await setSensitive(node: node, sensitive: sensitive))
+                    }
+                }
+                results[nodeHandle] = result
+            }
+            return results
+        }
+    }
+    
+    private func setSensitive(node: NodeEntity, sensitive: Bool) async -> Result<NodeEntity, any Error> {
+        do {
+            let updatedNode = try await repo.setSensitive(node: node, sensitive: sensitive)
+            return .success(updatedNode)
+        } catch {
+            return .failure(error)
         }
     }
 }

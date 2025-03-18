@@ -1,8 +1,10 @@
 import MEGADomain
 import MEGADomainMock
-import XCTest
+import Testing
 
-final class NodeActionUseCaseTests: XCTestCase {
+@Suite("NodeActionUseCase Tests")
+struct NodeActionUseCaseTests {
+    @Test
     func testCreateFolder() async throws {
         let name = "FolderName"
         let parent = NodeEntity(handle: 123)
@@ -12,42 +14,51 @@ final class NodeActionUseCaseTests: XCTestCase {
     
         let nodeEntity = try await sut.createFolder(name: name, parent: parent)
         
-        XCTAssertEqual(nodeEntity, createdFolder)
+        #expect(nodeEntity == createdFolder)
     }
     
+    @Test
     func testRenameNode() async throws {
         let sut = NodeActionUseCase(repo: MockNodeActionRepository.newRepo)
         let newName = "newName"
         let node = NodeEntity(name: "name")
         let nodeEntity = try await sut.rename(node: node, name: newName)
-        XCTAssertEqual(nodeEntity.name, newName)
+        
+        #expect(nodeEntity.name == newName)
     }
     
+    @Test
     func testTrashNode() async throws {
         let sut = NodeActionUseCase(repo: MockNodeActionRepository.newRepo)
         let node = NodeEntity(parentHandle: 123)
         let nodeEntity = try await sut.trash(node: node)
-        XCTAssertNotEqual(node.parentHandle, nodeEntity.parentHandle)
+        
+        #expect(node.parentHandle != nodeEntity.parentHandle)
     }
     
+    @Test
     func testUntrashNode() async throws {
         let sut = NodeActionUseCase(repo: MockNodeActionRepository.newRepo)
         let node = NodeEntity(parentHandle: 123)
         let nodeEntity = try await sut.untrash(node: node)
-        XCTAssertNotEqual(node.parentHandle, nodeEntity.parentHandle)
+        
+        #expect(node.parentHandle != nodeEntity.parentHandle)
     }
     
+    @Test
     func testMoveNode() async throws {
         let sut = NodeActionUseCase(repo: MockNodeActionRepository.newRepo)
         let node = NodeEntity()
         let parent = NodeEntity()
         let nodeEntity = try await sut.move(node: node, toParent: parent)
-        XCTAssertEqual(nodeEntity.parentHandle, parent.handle)
+        
+        #expect(nodeEntity.parentHandle == parent.handle)
     }
     
+    @Test
     func testHide_onNodeSuccessAndFailed_shouldReturnBothResultTypesCorrectly() async throws {
-        let firstNode = NodeEntity(handle: 5, isMarkedSensitive: true)
-        let secondNode = NodeEntity(handle: 9, isMarkedSensitive: true)
+        let firstNode = NodeEntity(handle: 5, isMarkedSensitive: false)
+        let secondNode = NodeEntity(handle: 9, isMarkedSensitive: false)
         let repository = MockNodeActionRepository(
             setSensitiveResults: [firstNode.handle: .success(firstNode),
                                   secondNode.handle: .failure(GenericErrorEntity())])
@@ -56,53 +67,56 @@ final class NodeActionUseCaseTests: XCTestCase {
         
         let results = await sut.hide(nodes: [firstNode, secondNode])
         
-        XCTAssertEqual(results.count, 2)
+        #expect(results.count == 2)
         
-        switch try XCTUnwrap(results[firstNode.handle]) {
+        switch try #require(results[firstNode.handle]) {
         case .success(let node):
-            XCTAssertEqual(node, firstNode)
+            #expect(node == firstNode)
         case .failure:
-            XCTFail("Should have been successful")
+            Issue.record("Should have been successful")
         }
         
-        switch try XCTUnwrap(results[secondNode.handle]) {
+        switch try #require(results[secondNode.handle]) {
         case .success:
-            XCTFail("Should have been failure")
+            Issue.record("Should have been failure")
         case .failure(let error):
-            XCTAssertTrue(error is GenericErrorEntity)
+            #expect(error is GenericErrorEntity)
         }
         
-        XCTAssertTrue(repository.sensitive == true)
+        #expect(repository.sensitive == true)
     }
     
+    @Test
     func testUnhide_onNodeSuccessAndFailed_shouldReturnBothResultTypesCorrectly() async throws {
-        let firstNode = NodeEntity(handle: 8, isMarkedSensitive: false)
-        let secondNode = NodeEntity(handle: 9, isMarkedSensitive: false)
+        let firstNode = NodeEntity(handle: 8, isMarkedSensitive: true)
+        let secondNode = NodeEntity(handle: 9, isMarkedSensitive: true)
         let expectedError = NodeErrorEntity.nodeNotFound
         let repository = MockNodeActionRepository(
             setSensitiveResults: [firstNode.handle: .success(firstNode),
                                   secondNode.handle: .failure(expectedError)])
         
-        let sut = NodeActionUseCase(repo: repository)
+        let sut = NodeActionUseCase(
+            repo: repository,
+            maxSetSensitivityTasks: 1)
         
         let results = await sut.unhide(nodes: [firstNode, secondNode])
         
-        XCTAssertEqual(results.count, 2)
+        #expect(results.count == 2)
         
-        switch try XCTUnwrap(results[firstNode.handle]) {
+        switch try #require(results[firstNode.handle]) {
         case .success(let node):
-            XCTAssertEqual(node, firstNode)
+            #expect(node == firstNode)
         case .failure:
-            XCTFail("Should have been successful")
+            Issue.record("Should have been successful")
         }
         
-        switch try XCTUnwrap(results[secondNode.handle]) {
+        switch try #require(results[secondNode.handle]) {
         case .success:
-            XCTFail("Should have been failure")
+            Issue.record("Should have been failure")
         case .failure(let error):
-            XCTAssertEqual(error as? NodeErrorEntity, expectedError)
+            #expect(error as? NodeErrorEntity == expectedError)
         }
         
-        XCTAssertTrue(repository.sensitive == false)
+        #expect(repository.sensitive == false)
     }
 }
