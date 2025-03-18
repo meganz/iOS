@@ -78,7 +78,7 @@ extension MEGASortOrderType {
             return .favouriteAsc
         case .favouriteDesc:
             return .favouriteDesc
-        @unknown default:
+        default:
             return .none
         }
     }
