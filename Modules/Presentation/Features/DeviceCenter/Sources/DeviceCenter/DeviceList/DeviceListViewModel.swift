@@ -12,25 +12,25 @@ public final class DeviceListViewModel: ObservableObject {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
-    private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [ContextAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private let currentDeviceUUID: String
+    private let backupStatusProvider: BackupStatusProviding
     private var cancellable: Set<AnyCancellable> = []
     private var searchTextPublisher = PassthroughSubject<String, Never>()
     private var searchCancellable: AnyCancellable?
     private var currentDeviceId: String?
-    private let deviceIconNames: [BackupDeviceTypeEntity: String]
+    private let deviceIconProvider: any DeviceIconProviding
     /// Dictionary that allow us to organize the different backup statuses by type.
-    private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
-        Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
-    }
-    /// Dictionary that allow us to organise the different actions available within Device Center by type. It helps to initialise the arrays of available actions for each element (devices, backups, sync, or camera uploads folders) in a simple way, using the `ContextAction.Category`.
-    private var sortedAvailableActions: [ContextAction.Category: [ContextAction]] {
-        Dictionary(grouping: deviceCenterActions, by: \.type)
-    }
+    private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus]?
+    /// Dictionary that allow us to organise the different actions available within Device Center by type.
+    /// It helps to initialise the arrays of available actions for each element (devices, backups, sync, or camera uploads folders)
+    /// in a simple way, using the `ContextAction.Category`.
+    private var sortedAvailableActions: [ContextAction.Category: [ContextAction]]?
+    
     private var networkMonitorTask: Task<Void, Never>?
+    
     var isFilteredDevicesEmpty: Bool {
         filteredDevices.isEmpty
     }
@@ -41,9 +41,6 @@ public final class DeviceListViewModel: ObservableObject {
     @Published private(set) var currentDevice: DeviceCenterItemViewModel?
     @Published private(set) var otherDevices: [DeviceCenterItemViewModel] = []
     @Published private(set) var filteredDevices: [DeviceCenterItemViewModel] = []
-    @Published private(set) var deviceListAssets: DeviceListAssets
-    @Published private(set) var emptyStateAssets: EmptyStateAssets
-    @Published private(set) var searchAssets: SearchAssets
     @Published private(set) var refreshDevicesPublisher: PassthroughSubject<Void, Never>
     @Published var isSearchActive: Bool
     @Published var searchText: String = ""
@@ -59,12 +56,9 @@ public final class DeviceListViewModel: ObservableObject {
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
-        deviceListAssets: DeviceListAssets,
-        emptyStateAssets: EmptyStateAssets,
-        searchAssets: SearchAssets,
-        backupStatuses: [BackupStatus],
+        backupStatusProvider: some BackupStatusProviding,
         deviceCenterActions: [ContextAction],
-        deviceIconNames: [BackupDeviceTypeEntity: String],
+        deviceIconProvider: some DeviceIconProviding,
         currentDeviceUUID: String
     ) {
         self.devicesUpdatePublisher = devicesUpdatePublisher
@@ -75,16 +69,15 @@ public final class DeviceListViewModel: ObservableObject {
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
-        self.deviceListAssets = deviceListAssets
-        self.emptyStateAssets = emptyStateAssets
-        self.searchAssets = searchAssets
-        self.backupStatuses = backupStatuses
+        self.backupStatusProvider = backupStatusProvider
         self.deviceCenterActions = deviceCenterActions
-        self.deviceIconNames = deviceIconNames
+        self.deviceIconProvider = deviceIconProvider
         self.isSearchActive = false
         self.searchText = ""
         self.currentDeviceUUID = currentDeviceUUID
         
+        buildBackupStatusLookup()
+        buildActionCategoryMapping()
         setupSearchCancellable()
         setupDevicesUpdateSubscription()
         loadUserDevices()
@@ -93,6 +86,15 @@ public final class DeviceListViewModel: ObservableObject {
     
     deinit {
         networkMonitorTask?.cancel()
+    }
+    
+    private func buildBackupStatusLookup() {
+        let statuses = backupStatusProvider.createBackupStatuses()
+        sortedBackupStatuses = Dictionary(uniqueKeysWithValues: statuses.map { ($0.status, $0) })
+    }
+    
+    private func buildActionCategoryMapping() {
+        sortedAvailableActions = Dictionary(grouping: deviceCenterActions, by: \.type)
     }
     
     private func showLoadingPlaceholder() {
@@ -108,9 +110,7 @@ public final class DeviceListViewModel: ObservableObject {
     private func setupSearchCancellable() {
         searchCancellable = $searchText
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.filterDevices()
-            }
+            .sink { [weak self] _ in self?.filterDevices() }
     }
     
     private func loadUserDevices() {
@@ -124,28 +124,19 @@ public final class DeviceListViewModel: ObservableObject {
         if let currentDevice {
             return [currentDevice] + otherDevices
         }
-        
         return otherDevices
     }
     
     private func filterDevices() {
-        if searchText.isNotEmpty {
-            filteredDevices = allDevices().filter {
-                $0.name.lowercased().contains(searchText.lowercased())
-            }
-        } else {
-            filteredDevices = allDevices()
-        }
+        filteredDevices = searchText.isNotEmpty ?
+            allDevices().filter { $0.name.lowercased().contains(searchText.lowercased()) } :
+            allDevices()
     }
     
     private func loadDeviceViewModel(_ device: DeviceEntity) -> DeviceCenterItemViewModel? {
-        guard let deviceAssets = loadAssets(for: device) else {
-            return nil
-        }
+        guard let deviceAssets = loadAssets(for: device) else { return nil }
         
-        // The action of navigating to the Camera Uploads Settings will only be available for the current device, as long as it is an iPhone or iPad.
         let isCUActionAvailable = device.id == currentDeviceUUID || (device.id == currentDeviceId && device.isMobileDevice())
-        
         return DeviceCenterItemViewModel(
             router: router,
             refreshDevicesPublisher: refreshDevicesPublisher,
@@ -153,7 +144,7 @@ public final class DeviceListViewModel: ObservableObject {
             nodeUseCase: nodeUseCase,
             deviceCenterBridge: deviceCenterBridge,
             itemType: .device(device),
-            sortedAvailableActions: sortedAvailableActions,
+            sortedAvailableActions: sortedAvailableActions ?? [:],
             isCUActionAvailable: isCUActionAvailable,
             assets: deviceAssets,
             currentDeviceUUID: { UIDevice.current.identifierForVendor?.uuidString ?? "" }
@@ -166,21 +157,19 @@ public final class DeviceListViewModel: ObservableObject {
             name: UIDevice.current.modelName,
             status: .noCameraUploads
         )
-        
         if let deviceVM = loadDeviceViewModel(device) {
             currentDevice = deviceVM
         }
     }
     
-    private func loadAssets(for device: DeviceEntity) -> ItemAssets? {
-        guard let deviceStatus = device.status, let backupStatus = sortedBackupStatuses[deviceStatus] else {
-            return nil
-        }
+    func loadAssets(for device: DeviceEntity) -> ItemAssets? {
+        guard let deviceStatus = device.status,
+              let backupStatus = sortedBackupStatuses?[deviceStatus] else { return nil }
         let userAgent = device.backups?.first?.userAgent
         return ItemAssets(
-            iconName: deviceIconName(userAgent: userAgent, isMobile: device.isMobileDevice() || device.id == currentDeviceUUID),
+            iconName: deviceIconProvider.iconName(for: userAgent, isMobile: device.isMobileDevice() || device.id == currentDeviceUUID),
             status: backupStatus,
-            defaultName: deviceListAssets.deviceDefaultName
+            defaultName: UIDevice.current.modelName
         )
     }
     
@@ -192,7 +181,6 @@ public final class DeviceListViewModel: ObservableObject {
     @MainActor
     private func monitorNetworkChanges() {
         let connectionSequence = networkMonitorUseCase.connectionSequence
-        
         networkMonitorTask?.cancel()
         networkMonitorTask = Task { [weak self] in
             for await isConnected in connectionSequence {
@@ -207,29 +195,10 @@ public final class DeviceListViewModel: ObservableObject {
         monitorNetworkChanges()
     }
     
-    func deviceIconName(userAgent: String?, isMobile: Bool) -> String {
-        let defaultIcon = isMobile ? BackupDeviceTypeEntity.defaultMobile : BackupDeviceTypeEntity.defaultPc
-        let defaultIconName = deviceIconNames[defaultIcon] ?? ""
-
-        guard let userAgent = userAgent else { return defaultIconName }
-        
-        if let bestMatch = deviceIconNames
-            .compactMap({ (key, value) -> (iconName: String, priority: Int)? in
-                guard userAgent.lowercased().matches(regex: key.toRegexString()) else { return nil }
-                return (iconName: value, priority: key.priority())
-            }).max(by: { $0.priority < $1.priority }) {
-                return bestMatch.iconName
-            }
-
-        return defaultIconName
-    }
-    
     private func setupDevicesUpdateSubscription() {
         devicesUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] devices in
-                self?.arrangeDevices(devices)
-            }
+            .sink { [weak self] devices in self?.arrangeDevices(devices) }
             .store(in: &cancellable)
     }
     
@@ -249,19 +218,17 @@ public final class DeviceListViewModel: ObservableObject {
     @MainActor
     func arrangeDevices(_ devices: [DeviceEntity]) {
         currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
-        
         if let device = devices.first(where: { $0.id == currentDeviceId }),
            let currentDeviceVM = loadDeviceViewModel(device) {
             currentDevice = currentDeviceVM
         } else {
             loadDefaultDevice()
         }
-        
         do {
             otherDevices = try devices
                 .filter { $0.id != currentDeviceId }
                 .compactMap(loadDeviceViewModel)
-                .sorted {$0.name < $1.name}
+                .sorted { $0.name < $1.name }
         } catch {
             debugPrint("[Device Center] Error while arranging devices: \(error.localizedDescription)")
         }

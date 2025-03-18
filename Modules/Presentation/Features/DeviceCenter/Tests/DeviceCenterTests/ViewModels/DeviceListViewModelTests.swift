@@ -134,38 +134,6 @@ final class DeviceListViewModelTests: XCTestCase {
         
         XCTAssertTrue(task.isCancelled, "Task should be cancelled")
     }
-
-    @MainActor
-    func testDeviceIconName_knownUserAgent_expectedIconName() async throws {
-        let testData = [
-            ("device1", "MEGAiOS/11.2 MEGAEnv/Dev (Darwin 22.6.0 iPhone11,2) MegaClient/4.28.2/64", true, "iphone"),
-            ("device2", "Mozilla/5.0 (Android 13; M2101K6G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36", true, "android"),
-            ("device3", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1", false, "pcLinux"),
-            ("device4", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246", false, "pcWindows"),
-            ("device5", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9", false, "pcMac"),
-            ("device6", "Mozilla/5.0", true, "mobile"),
-            ("device7", "Mozilla/5.0", false, "pc")
-        ]
-        
-        let devices = makeTestDevices(testData)
-        let viewModel = makeSUT(devices: devices, currentDeviceId: mockCurrentDeviceId)
-        
-        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
-            viewModel: viewModel
-        ) { _ in
-            for (deviceName, _, isMobile, expectedIconName) in testData {
-                do {
-                    let userAgent = try XCTUnwrap(devices.first(where: { $0.name == deviceName })?.backups?.first?.userAgent)
-                    let foundIconName = viewModel.deviceIconName(userAgent: userAgent, isMobile: isMobile)
-                    XCTAssertEqual(foundIconName, expectedIconName, "Icon name for \(deviceName) was incorrect.")
-                } catch {
-                    XCTFail("Failed to unwrap userAgent for \(deviceName): \(error)")
-                }
-            }
-        }
-        
-        cancellables.forEach { $0.cancel() }
-    }
     
     @MainActor
     func testHasNetworkConnection_whenConnected_shouldReturnTrue() async throws {
@@ -284,27 +252,16 @@ final class DeviceListViewModelTests: XCTestCase {
         return [device1, device2]
     }
     
-    private func backupStatusEntities() -> [BackupStatusEntity] {
-        [.upToDate, .offline, .blocked, .outOfQuota, .error, .disabled, .paused, .updating, .scanning, .initialising, .backupStopped, .noCameraUploads]
+    private func backupStatusEntities() -> [BackupStatus] {
+        [.upToDate, .offline, .blocked, .outOfQuota, .error, .disabled, .paused, .updating, .scanning, .initialising, .backupStopped, .noCameraUploads].compactMap {
+            BackupStatus(status: $0) }
     }
     
-    private let defaultDeviceListAssets = DeviceListAssets(title: "", currentDeviceTitle: "", otherDevicesTitle: "", deviceDefaultName: "")
-    private let defaultEmptyStateAssets = EmptyStateAssets(image: "", title: "")
-    private let defaultSearchAssets = SearchAssets(placeHolder: "", cancelTitle: "", backgroundColor: .black)
     private let defaultActions = [
         ContextAction(type: .cameraUploads),
         ContextAction(type: .info),
         ContextAction(type: .rename),
         ContextAction(type: .sort)
-    ]
-    private let defaultIconNames: [BackupDeviceTypeEntity: String] = [
-        .android: "android",
-        .iphone: "iphone",
-        .linux: "pcLinux",
-        .mac: "pcMac",
-        .win: "pcWindows",
-        .defaultMobile: "mobile",
-        .defaultPc: "pc"
     ]
     
     @MainActor
@@ -352,28 +309,16 @@ final class DeviceListViewModelTests: XCTestCase {
         }.eraseToAnyAsyncSequence()
     }
     
-    private func makeTestDevices(_ testData: [(name: String, userAgent: String, isMobile: Bool, expectedIconName: String)]) -> [DeviceEntity] {
-        testData.enumerated().map { index, data in
-            var backup = BackupEntity(id: index + 1, name: "backup\(index + 1)", userAgent: data.userAgent, type: .cameraUpload)
-            backup.backupStatus = .upToDate
-            
-            return DeviceEntity(
-                id: "\(index + 1)",
-                name: data.name,
-                backups: [backup],
-                status: .upToDate
-            )
-        }
-    }
-    
     @MainActor
     private func makeSUT(
         devices: [DeviceEntity] = [],
         currentDeviceId: String = "",
         updateInterval: UInt64 = 1,
-        networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase()
+        networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
+        deviceIconProvider: MockDeviceIconProvider = MockDeviceIconProvider()
     ) -> DeviceListViewModel {
-        let backupStatusEntities = backupStatusEntities()
+        let backupStatusProvider = MockBackupStatusProvider(statuses: backupStatusEntities())
+        
         let sut = DeviceListViewModel(
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             refreshDevicesPublisher: PassthroughSubject<Void, Never>(),
@@ -386,12 +331,9 @@ final class DeviceListViewModelTests: XCTestCase {
             ),
             nodeUseCase: MockNodeDataUseCase(),
             networkMonitorUseCase: networkMonitorUseCase,
-            deviceListAssets: defaultDeviceListAssets,
-            emptyStateAssets: defaultEmptyStateAssets,
-            searchAssets: defaultSearchAssets,
-            backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
+            backupStatusProvider: backupStatusProvider,
             deviceCenterActions: defaultActions,
-            deviceIconNames: defaultIconNames,
+            deviceIconProvider: deviceIconProvider,
             currentDeviceUUID: ""
         )
         

@@ -24,60 +24,7 @@ extension MyAccountHallViewModel {
         }
     }
     
-    func makeDeviceCenterAssetData() -> DeviceCenterAssets {
-        DeviceCenterAssets(
-            deviceListAssets:
-                makeDeviceListAssets(),
-            backupListAssets:
-                makeBackupListAssets(),
-            emptyStateAssets:
-                makeEmptyStateAssets(),
-            searchAssets:
-                makeSearchAssets(),
-            deviceCenterActions: deviceCenterActionList(),
-            deviceIconNames: deviceIconNamesList()
-        )
-    }
-    
-    private func makeDeviceListAssets() -> DeviceListAssets {
-        DeviceListAssets(
-            title: Strings.Localizable.Device.Center.title,
-            currentDeviceTitle: Strings.Localizable.Device.Center.Current.Device.title,
-            otherDevicesTitle: Strings.Localizable.Device.Center.Other.Devices.title,
-            deviceDefaultName: UIDevice.current.modelName
-        )
-    }
-    
-    private func makeBackupListAssets() -> BackupListAssets {
-        BackupListAssets(
-            backupTypes: [
-                BackupType(type: .backupUpload, iconName: BackUpTypeIconAssets.backupFolder),
-                BackupType(type: .cameraUpload, iconName: BackUpTypeIconAssets.cameraUploadsFolder),
-                BackupType(type: .mediaUpload, iconName: BackUpTypeIconAssets.cameraUploadsFolder),
-                BackupType(type: .twoWay, iconName: BackUpTypeIconAssets.syncFolder),
-                BackupType(type: .downSync, iconName: BackUpTypeIconAssets.syncFolder),
-                BackupType(type: .upSync, iconName: BackUpTypeIconAssets.syncFolder),
-                BackupType(type: .invalid, iconName: BackUpTypeIconAssets.syncFolder)
-            ]
-        )
-    }
-    
-    private func makeEmptyStateAssets() -> EmptyStateAssets {
-        EmptyStateAssets(
-            image: EmptyStateIconAssets.searchEmptyState,
-            title: Strings.Localizable.noResults
-        )
-    }
-    
-    private func makeSearchAssets() -> SearchAssets {
-        SearchAssets(
-            placeHolder: Strings.Localizable.search,
-            cancelTitle: Strings.Localizable.cancel,
-            backgroundColor: TokenColors.Background.surface1.swiftUI
-        )
-    }
-    
-    private func deviceCenterActionList() -> [ContextAction] {
+    func makeDeviceCenterActionList() -> [ContextAction] {
         [
             ContextAction(
                 type: .cameraUploads,
@@ -148,28 +95,6 @@ extension MyAccountHallViewModel {
         ]
     }
     
-    private func deviceIconNamesList() -> [BackupDeviceTypeEntity: String] {
-        [
-            .android: DeviceIconAssets.android,
-            .iphone: DeviceIconAssets.ios,
-            .linux: DeviceIconAssets.pcLinux,
-            .mac: DeviceIconAssets.pcMac,
-            .win: DeviceIconAssets.pcWindows,
-            .defaultMobile: DeviceIconAssets.mobile,
-            .defaultPc: DeviceIconAssets.pc
-        ]
-    }
-    
-    private struct DeviceIconAssets {
-        static let android = "android"
-        static let ios = "ios"
-        static let pcLinux = "pc-linux"
-        static let pcMac = "pc-mac"
-        static let pcWindows = "pc-windows"
-        static let mobile = "mobile"
-        static let pc = "pc"
-    }
-    
     private struct DeviceCenterActionIconAssets {
         static let cameraUploadsSettings = "cameraUploadsSettings"
         static let info = "info"
@@ -184,26 +109,5 @@ extension MyAccountHallViewModel {
         static let oldest = "oldest"
         static let label = "label"
         static let favourite = "favourite"
-    }
-    
-    private struct BackUpStatusIconAssets {
-        static let upToDate = "backUpStatusUpToDate"
-        static let updating = "backUpStatusUpdating"
-        static let noCameraUploads = "backUpStatusNoCameraUploads"
-        static let disabled  = "backUpStatusDisabled"
-        static let offlineStatus = "backUpStatusOfflineStatus"
-        static let error = "backUpStatusError"
-        static let paused = "backUpStatusPaused"
-        static let outOfQuota = "backUpStatusOutOfQuota"
-    }
-    
-    private struct BackUpTypeIconAssets {
-        static let backupFolder = "backupFolder"
-        static let cameraUploadsFolder = "cameraUploadsFolder"
-        static let syncFolder = "syncFolder"
-    }
-    
-    private struct EmptyStateIconAssets {
-        static let searchEmptyState = "searchEmptyState"
     }
 }

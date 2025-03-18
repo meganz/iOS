@@ -1,5 +1,4 @@
 import DeviceCenter
-import SwiftUI
 
 public final class MockDeviceIconProvider: DeviceIconProviding {
     private var stubbedIconName: String

@@ -19,22 +19,16 @@ public final class BackupListViewModel: ObservableObject {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let router: any BackupListRouting
     private let deviceCenterBridge: DeviceCenterBridge
-    private let backupListAssets: BackupListAssets
-    private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [ContextAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private let notificationCenter: NotificationCenter
     private(set) var selectedDevice: SelectedDevice
-    private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
-        Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
-    }
-    private var sortedBackupTypes: [BackupTypeEntity: BackupType] {
-        Dictionary(uniqueKeysWithValues: backupListAssets.backupTypes.map { ($0.type, $0) })
-    }
-    private var sortedAvailableActions: [ContextAction.Category: [ContextAction]] {
-        Dictionary(grouping: deviceCenterActions, by: \.type)
-    }
+    private let backupStatusProvider: any BackupStatusProviding
+    private let folderIconProvider: any FolderIconProviding
+    private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus]?
+    private var sortedAvailableActions: [ContextAction.Category: [ContextAction]]?
+    
     private var backupsPreloaded = false
     private var searchCancellable: AnyCancellable?
     private var backupNameChangeObserver: Any?
@@ -53,8 +47,6 @@ public final class BackupListViewModel: ObservableObject {
     
     @Published private(set) var backupModels: [DeviceCenterItemViewModel] = []
     @Published private(set) var filteredBackups: [DeviceCenterItemViewModel] = []
-    @Published private(set) var emptyStateAssets: EmptyStateAssets
-    @Published private(set) var searchAssets: SearchAssets
     @Published var isSearchActive: Bool
     @Published var searchText: String = ""
     @Published var hasNetworkConnection: Bool = false
@@ -76,10 +68,8 @@ public final class BackupListViewModel: ObservableObject {
         router: some BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
         notificationCenter: NotificationCenter,
-        backupListAssets: BackupListAssets,
-        emptyStateAssets: EmptyStateAssets,
-        searchAssets: SearchAssets,
-        backupStatuses: [BackupStatus],
+        backupStatusProvider: some BackupStatusProviding,
+        folderIconProvider: some FolderIconProviding,
         deviceCenterActions: [ContextAction]
     ) {
         self.selectedDevice = selectedDevice
@@ -91,14 +81,14 @@ public final class BackupListViewModel: ObservableObject {
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
         self.notificationCenter = notificationCenter
-        self.backupListAssets = backupListAssets
-        self.emptyStateAssets = emptyStateAssets
-        self.searchAssets = searchAssets
-        self.backupStatuses = backupStatuses
+        self.backupStatusProvider = backupStatusProvider
+        self.folderIconProvider = folderIconProvider
         self.deviceCenterActions = deviceCenterActions
         self.isSearchActive = false
         self.searchText = ""
         
+        buildBackupStatusLookup()
+        buildActionCategoryMapping()
         setupSearchCancellable()
         addObservers()
         
@@ -112,6 +102,15 @@ public final class BackupListViewModel: ObservableObject {
     deinit {
         networkMonitorTask?.cancel()
         shouldChangeCUBackupNameTask?.cancel()
+    }
+    
+    private func buildBackupStatusLookup() {
+        let statuses = backupStatusProvider.createBackupStatuses()
+        sortedBackupStatuses = Dictionary(uniqueKeysWithValues: statuses.map { ($0.status, $0) })
+    }
+    
+    private func buildActionCategoryMapping() {
+        sortedAvailableActions = Dictionary(grouping: deviceCenterActions, by: \.type)
     }
     
     private func addObservers() {
@@ -150,21 +149,18 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     private func filterBackups() {
-        let hasSearchQuery = searchText.isNotEmpty
-        if hasSearchQuery {
+        if searchText.isNotEmpty {
             filteredBackups = backupModels.filter {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         } else {
             resetBackups()
         }
-        
         handleSortAction(sortTypeSelected)
     }
     
     private func monitorNetworkChanges() {
         let connectionSequence = networkMonitorUseCase.connectionSequence
-        
         networkMonitorTask?.cancel()
         networkMonitorTask = Task { [weak self] in
             for await isConnected in connectionSequence {
@@ -194,7 +190,7 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func updateCurrentDevice(_ devices: [DeviceEntity]) {
-        guard let currentDevice = devices.first(where: {$0.id == selectedDevice.id}) else {
+        guard let currentDevice = devices.first(where: { $0.id == selectedDevice.id }) else {
             showEmptyStateView = true
             return
         }
@@ -217,7 +213,7 @@ public final class BackupListViewModel: ObservableObject {
                         nodeUseCase: nodeUseCase,
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
-                        sortedAvailableActions: sortedAvailableActions,
+                        sortedAvailableActions: sortedAvailableActions ?? [:],
                         isCUActionAvailable: selectedDevice.isCurrent && selectedDevice.isMobile,
                         assets: assets,
                         currentDeviceUUID: { UIDevice.current.identifierForVendor?.uuidString ?? "" }
@@ -225,26 +221,25 @@ public final class BackupListViewModel: ObservableObject {
                 }
                 return nil
             }
-        
         handleSortAction(sortTypeSelected)
     }
     
     func loadAssets(for backup: BackupEntity) -> ItemAssets? {
         guard let backupStatus = backup.backupStatus,
-              let status = sortedBackupStatuses[backupStatus],
-              let backupType = sortedBackupTypes[backup.type] else {
+              let status = sortedBackupStatuses?[backupStatus],
+              let backupIcon = folderIconProvider.iconName(for: backup.type) else {
             return nil
         }
         
         return ItemAssets(
-            iconName: backupType.iconName,
+            iconName: backupIcon,
             status: status
         )
     }
     
     func actionTypesForDevice() -> [ContextAction.Category] {
         if selectedDevice.isNewDeviceWithoutCU {
-           return [.cameraUploads]
+            return [.cameraUploads]
         } else if selectedDevice.isCurrent && selectedDevice.isMobile {
             return [.rename, .info, .cameraUploads, .sort]
         }
@@ -253,7 +248,7 @@ public final class BackupListViewModel: ObservableObject {
     
     func availableActionsForCurrentDevice() -> [ContextAction] {
         actionTypesForDevice()
-            .sortedMapping(sortedActions: sortedAvailableActions)
+            .sortedMapping(sortedActions: sortedAvailableActions ?? [:])
     }
     
     func showCameraUploadsSettingsFlow() {
@@ -297,10 +292,7 @@ public final class BackupListViewModel: ObservableObject {
         return RenameActionEntity(
             oldName: selectedDevice.name,
             otherNamesInContext: deviceNames,
-            actionType: .device(
-                deviceId: selectedDevice.id,
-                maxCharacters: 32
-            ),
+            actionType: .device(deviceId: selectedDevice.id, maxCharacters: 32),
             alertTitles: [
                 .invalidCharacters: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay),
                 .duplicatedName: Strings.Localizable.Device.Center.Rename.Device.Duplicated.name,
@@ -311,13 +303,14 @@ public final class BackupListViewModel: ObservableObject {
                 .duplicatedName: Strings.Localizable.Device.Center.Rename.Device.Different.name,
                 .none: Strings.Localizable.renameNodeMessage
             ],
-            alertPlaceholder: Strings.Localizable.Device.Center.Rename.Device.title) {
-                Task { [weak self] in
-                    await self?.syncDevicesAndLoadBackups()
-                }
+            alertPlaceholder: Strings.Localizable.Device.Center.Rename.Device.title
+        ) {
+            Task { [weak self] in
+                await self?.syncDevicesAndLoadBackups()
             }
+        }
     }
-
+    
     private func makeDeviceInfoModel() async -> ResourceInfoModel {
         guard selectedDevice.backups.isNotEmpty else {
             return ResourceInfoModel(
@@ -328,7 +321,7 @@ public final class BackupListViewModel: ObservableObject {
         }
         
         let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: selectedDevice.backups)
-
+        
         return ResourceInfoModel(
             icon: selectedDevice.icon,
             name: selectedDevice.name,
@@ -339,7 +332,7 @@ public final class BackupListViewModel: ObservableObject {
             totalSize: folderInfo.totalSize
         )
     }
-
+    
     private func onSortTypeChanged() {
         guard let sortType = SortType(rawValue: sortIndexSelected) else { return }
         sortTypeSelected = sortType

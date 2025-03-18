@@ -38,33 +38,6 @@ final class DeviceListViewRouterTests: XCTestCase {
             ),
             isCameraUploadsNode: true
         )
-        let deviceListAssets = DeviceCenterAssets(
-            deviceListAssets:
-                DeviceListAssets(
-                    title: "Device List",
-                    currentDeviceTitle: "This device",
-                    otherDevicesTitle: "Other devices",
-                    deviceDefaultName: "Unknown Device"
-                ),
-            backupListAssets:
-                BackupListAssets(
-                    backupTypes: [
-                        BackupType(type: .backupUpload, iconName: "backup")
-                    ]
-                ),
-            emptyStateAssets:
-                EmptyStateAssets(
-                    image: "",
-                    title: ""
-                ),
-            searchAssets: SearchAssets(
-                placeHolder: "",
-                cancelTitle: "",
-                backgroundColor: Color(.systemBackground)
-            ),
-            deviceCenterActions: [],
-            deviceIconNames: [:]
-        )
         
         let sut = DeviceListViewRouter(
             navigationController: mockPresenter,
@@ -74,7 +47,7 @@ final class DeviceListViewRouterTests: XCTestCase {
             cameraUploadsUseCase: cameraUploadsUseCase,
             networkMonitorUseCase: MockNetworkMonitorUseCase(),
             notificationCenter: NotificationCenter.default,
-            deviceCenterAssets: deviceListAssets
+            deviceCenterActions: []
         )
         
         return (sut, mockPresenter)

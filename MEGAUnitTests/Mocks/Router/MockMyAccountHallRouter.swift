@@ -13,7 +13,7 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
     var navigateToSettings_calledTimes = 0
     var navigateToNotificationCentre_calledTimes = 0
     
-    func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterAssets: DeviceCenterAssets) {
+    func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterActions: [ContextAction]) {
         navigateToDeviceCenter_calledTimes += 1
     }
     

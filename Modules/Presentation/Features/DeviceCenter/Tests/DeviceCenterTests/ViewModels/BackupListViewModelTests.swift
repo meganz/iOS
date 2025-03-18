@@ -328,10 +328,6 @@ final class BackupListViewModelTests: XCTestCase {
         [.upToDate, .offline, .blocked, .outOfQuota, .error, .disabled, .paused, .updating, .scanning, .initialising, .backupStopped, .noCameraUploads]
     }
     
-    private func backupTypeEntities() -> [BackupTypeEntity] {
-        [.backupUpload, .cameraUpload, .mediaUpload, .twoWay, .downSync, .upSync, .invalid]
-    }
-    
     @MainActor
     private func validateCurrentStatus(_ viewModel: BackupListViewModel, _ backupEntity: BackupEntity) {
         let assets = viewModel.loadAssets(for: backupEntity)
@@ -411,8 +407,7 @@ final class BackupListViewModelTests: XCTestCase {
     ) -> BackupListViewModel {
         
         let node = NodeEntity(handle: 1)
-        let backupStatusEntities = backupStatusEntities()
-        let backupTypeEntities = backupTypeEntities()
+        let mockBackupStatusProvider = MockBackupStatusProvider(statuses: backupStatusEntities().compactMap { BackupStatus(status: $0)})
         let sut = BackupListViewModel(
             selectedDevice: selectedDevice,
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
@@ -428,21 +423,8 @@ final class BackupListViewModelTests: XCTestCase {
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
             notificationCenter: NotificationCenter.default,
-            backupListAssets:
-                BackupListAssets(
-                    backupTypes: backupTypeEntities.compactMap { BackupType(type: $0) }
-                ),
-            emptyStateAssets:
-                EmptyStateAssets(
-                    image: "",
-                    title: ""
-                ),
-            searchAssets: SearchAssets(
-                placeHolder: "",
-                cancelTitle: "", 
-                backgroundColor: Color(.systemBackground)
-            ),
-            backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
+            backupStatusProvider: mockBackupStatusProvider,
+            folderIconProvider: MockFolderIconProvider(),
             deviceCenterActions: [
                 ContextAction(
                     type: .cameraUploads

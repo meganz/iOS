@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
@@ -11,19 +12,17 @@ struct SearchableView<WrappedView: View>: View {
     @Binding private var hasNetworkConnection: Bool
     
     var isFilteredListEmpty: Bool
-    var searchAssets: SearchAssets
-    var emptyStateAssets: EmptyStateAssets
     
     private var contentView: some View {
         VStack(spacing: 5.0) {
             SearchBarView(
                 text: $searchText,
                 isEditing: $isEditing,
-                placeholder: searchAssets.placeHolder,
-                cancelTitle: searchAssets.cancelTitle
+                placeholder: Strings.Localizable.search,
+                cancelTitle: Strings.Localizable.cancel
             )
             .padding(8)
-            .background(searchAssets.backgroundColor)
+            .background(TokenColors.Background.surface1.swiftUI)
             wrappedView
         }
         .background()
@@ -34,16 +33,12 @@ struct SearchableView<WrappedView: View>: View {
         searchText: Binding<String>,
         isEditing: Binding<Bool>,
         isFilteredListEmpty: Bool,
-        searchAssets: SearchAssets,
-        emptyStateAssets: EmptyStateAssets,
         hasNetworkConnection: Binding<Bool>
     ) {
         self.wrappedView = wrappedView
         self._searchText = searchText
         self._isEditing = isEditing
         self.isFilteredListEmpty = isFilteredListEmpty
-        self.searchAssets = searchAssets
-        self.emptyStateAssets = emptyStateAssets
         self._hasNetworkConnection = hasNetworkConnection
     }
     
@@ -53,8 +48,8 @@ struct SearchableView<WrappedView: View>: View {
                  .emptyStateOverlay(
                      isSearchActive: isEditing,
                      isFilteredListEmpty: isFilteredListEmpty,
-                     emptyStateImage: emptyStateAssets.image,
-                     emptyStateTitle: emptyStateAssets.title
+                     emptyStateImage: "searchEmptyState",
+                     emptyStateTitle: Strings.Localizable.noResults
                  )
         } else {
             contentView

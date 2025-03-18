@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
@@ -11,8 +12,6 @@ struct DeviceListView: View {
             searchText: $viewModel.searchText,
             isEditing: $viewModel.isSearchActive,
             isFilteredListEmpty: viewModel.isFilteredDevicesEmpty,
-            searchAssets: viewModel.searchAssets,
-            emptyStateAssets: viewModel.emptyStateAssets,
             hasNetworkConnection: $viewModel.hasNetworkConnection
         )
     }
@@ -49,7 +48,7 @@ struct DeviceListContentView: View {
                     .listRowInsets(EdgeInsets())
                 }
             } else {
-                Section(header: Text(viewModel.deviceListAssets.currentDeviceTitle)) {
+                Section(header: Text(Strings.Localizable.Device.Center.Current.Device.title)) {
                     if let currentDeviceVM = viewModel.currentDevice {
                         DeviceCenterItemView(
                             viewModel: currentDeviceVM,
@@ -60,7 +59,7 @@ struct DeviceListContentView: View {
                 }
                 
                 if viewModel.otherDevices.isNotEmpty {
-                    Section(header: Text(viewModel.deviceListAssets.otherDevicesTitle)) {
+                    Section(header: Text(Strings.Localizable.Device.Center.Other.Devices.title)) {
                         ForEach(viewModel.otherDevices) { deviceViewModel in
                             DeviceCenterItemView(
                                 viewModel: deviceViewModel,
