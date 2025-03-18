@@ -184,6 +184,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        homeViewModel?.trackHomeScreenEvent()
         if homeQuickActionSearch {
             homeQuickActionSearch = false
         }
@@ -707,6 +708,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             case .label:
                 self.router.didTap(on: .setLabel(node))
             case .hide:
+                homeViewModel?.trackHideNodeAction()
                 self.router.didTap(on: .hide(node))
             case .unhide:
                 self.router.didTap(on: .unhide(node))

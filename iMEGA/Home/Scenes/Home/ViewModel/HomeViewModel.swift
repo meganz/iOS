@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 
+@MainActor
 @objc final class HomeViewModel: NSObject {
     
     private let shareUseCase: any ShareUseCaseProtocol
@@ -18,7 +19,6 @@ import MEGASDKRepo
         self.tracker = tracker
     }
     
-    @MainActor
     func openShareFolderDialog(forNode node: MEGANode, router: HomeRouter?) {
         Task {
             do {
@@ -32,6 +32,10 @@ import MEGASDKRepo
     
     // MARK: - Analytics tracker
     
+    func trackHomeScreenEvent() {
+        tracker.trackAnalyticsEvent(with: HomeScreenEvent())
+    }
+    
     func didStartSearchSession() {
         tracker.trackAnalyticsEvent(with: HomeScreenSearchMenuToolbarEvent())
     }
@@ -42,5 +46,9 @@ import MEGASDKRepo
     
     func didTapUploadFilesButton() {
         tracker.trackAnalyticsEvent(with: IOSUploadFilesButtonEvent())
+    }
+    
+    func trackHideNodeAction() {
+        tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
     }
 }

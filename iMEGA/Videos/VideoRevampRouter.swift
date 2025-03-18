@@ -121,7 +121,9 @@ struct VideoRevampRouter: VideoRevampRouting {
         let isBackupNode = backupsUseCase.isBackupNode(videoNodeEntity)
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: navigationController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(
+                presenter: navigationController),
+            nodeActionListener: DefaultAnalyticsNodeActionListener().nodeActionListener()
         )
         let overDiskQuotaNodeActionDelegate = OverDiskQuotaNodeActionViewControllerDelegate(
             delegate: delegate,

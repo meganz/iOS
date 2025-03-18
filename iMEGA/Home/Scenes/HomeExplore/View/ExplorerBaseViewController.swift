@@ -1,7 +1,9 @@
 import ChatRepo
+import MEGAAnalyticsiOS
 import MEGADesignToken
 import MEGADomain
 import MEGAPhotos
+import MEGAPresentation
 import MEGASDKRepo
 import MEGAUIKit
 
@@ -368,6 +370,8 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
         case .saveToPhotos:
             saveToPhotosButtonPressed(sender)
         case .hide:
+            DIContainer.tracker
+                .trackAnalyticsEvent(with: HideNodeMultiSelectMenuItemEvent())
             hide()
         case .unhide:
             unhide()
