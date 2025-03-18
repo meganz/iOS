@@ -24,8 +24,12 @@ final class BackupStatusFactory: BackupStatusFactoryProtocol {
     }
 }
 
-final class BackupStatusHelper {
-    static func createBackupStatuses() -> [BackupStatus] {
+public protocol BackupStatusProviding {
+    func createBackupStatuses() -> [BackupStatus]
+}
+
+final class BackupStatusProvider: BackupStatusProviding {
+    func createBackupStatuses() -> [BackupStatus] {
         return [
             BackupStatusFactory.createBackupStatus(
                status: .upToDate,

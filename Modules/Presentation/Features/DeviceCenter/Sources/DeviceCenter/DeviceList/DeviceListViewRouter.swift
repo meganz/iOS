@@ -62,7 +62,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             deviceListAssets: deviceCenterAssets.deviceListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
             searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: BackupStatusHelper.createBackupStatuses(),
+            backupStatuses: BackupStatusProvider().createBackupStatuses(),
             deviceCenterActions: deviceCenterAssets.deviceCenterActions,
             deviceIconNames: deviceCenterAssets.deviceIconNames,
             currentDeviceUUID: UIDevice.current.identifierForVendor?.uuidString ?? ""
@@ -108,7 +108,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             backupListAssets: deviceCenterAssets.backupListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
             searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: BackupStatusHelper.createBackupStatuses(),
+            backupStatuses: BackupStatusProvider().createBackupStatuses(),
             deviceCenterActions: deviceCenterAssets.deviceCenterActions
         ).start()
     }
@@ -138,7 +138,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             backupListAssets: deviceCenterAssets.backupListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
             searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: BackupStatusHelper.createBackupStatuses(),
+            backupStatuses: BackupStatusProvider().createBackupStatuses(),
             deviceCenterActions: deviceCenterAssets.deviceCenterActions
         ).start()
     }
