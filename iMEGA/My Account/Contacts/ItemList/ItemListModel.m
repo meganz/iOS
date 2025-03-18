@@ -15,7 +15,6 @@
 
 @interface ItemListModel ()
 
-@property MEGAChatListItem *chat;
 @property NSString *email;
 
 @end
@@ -56,7 +55,7 @@
 
 - (NSString *)name {
     if (self.chat) {
-        return self.chat.title;
+        return self.chat.chatTitle;
     } else if (self.user) {
         NSString *nickname = self.user.mnz_nickname;
         if (nickname.length > 0) {

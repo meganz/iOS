@@ -1460,17 +1460,16 @@
                 ContactTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
                 MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
                 MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
+                cell.nameLabel.text = chatListItem.chatTitle;
                 if (chatListItem.isGroup) {
-                    cell.nameLabel.text = chatListItem.title;
                     cell.shareLabel.text = [chatRoom participantsNamesWithMe:YES];
                     cell.onlineStatusView.backgroundColor = nil;
                     cell.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor iconSecondaryColor] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
                     cell.verifiedImageView.hidden = YES;
                 } else {
                     if (chatRoom.isNoteToSelf) {
-                        cell.nameLabel.text = LocalizedString(@"chat.messages.noteToSelf.title", @"Title for note to self chat, used in the messages view but also in lists where note to self is diplayed");
-                        UIImage *noteToSelfImage = chatListItem.lastMessage == NULL ? [UIImage imageNamed:@"noteToSelf"] : [UIImage imageNamed:@"noteToSelfBlue"];
-                        [cell.avatarImageView setImage:noteToSelfImage];
+                        [cell.avatarImageView setImage:chatListItem.noteToSelfImage];
+                        [cell.avatarImageView setContentMode:UIViewContentModeCenter];
                         [cell.shareLabel setHidden:YES];
                     } else {
                         uint64_t peerHandle = chatListItem.peerHandle;

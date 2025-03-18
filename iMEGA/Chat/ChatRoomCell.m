@@ -134,7 +134,7 @@
     self.chatListItem = chatListItem;
     [self.timer invalidate];
 
-    self.privateChatImageView.hidden = chatListItem.isPublicChat;
+    self.privateChatImageView.hidden = chatListItem.isPublicChat || chatListItem.isNoteToSelf;
 
     self.chatTitle.text = self.chatListItem.chatTitle;
     [self updateLastMessageForChatListItem:chatListItem];
@@ -229,7 +229,11 @@
 }
 
 - (void)configureAvatar:(MEGAChatListItem *)chatListItem {
-    if (chatListItem.isGroup) {
+    if (chatListItem.isNoteToSelf) {
+        [self.avatarView.avatarImageView setImage:chatListItem.noteToSelfImage];
+        [self.avatarView.avatarImageView setContentMode:UIViewContentModeCenter];
+        [self.avatarView configureWithMode:MegaAvatarViewModeSingle];
+    } else if (chatListItem.isGroup) {
         MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
         [self.avatarView setupFor:chatRoom];
     } else {
@@ -253,6 +257,12 @@
     self.chatListItem = item;
     
     self.onCallDuration.hidden = YES;
+
+    if (item.isNoteToSelf && item.lastMessageId == MEGAInvalidHandle) {
+        self.chatLastTime.hidden = YES;
+        self.chatLastMessage.hidden = YES;
+        return;
+    }
     
     switch (item.lastMessageType) {
             
