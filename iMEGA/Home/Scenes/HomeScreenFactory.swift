@@ -284,6 +284,8 @@ final class HomeScreenFactory: NSObject {
                 tracker.trackAnalyticsEvent(with: SearchResultSaveToDeviceMenuItemEvent())
             case .manageLink, .shareLink:
                 tracker.trackAnalyticsEvent(with: SearchResultShareMenuItemEvent())
+            case .hide:
+                tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
             default:
                 {}() // we do not track other events here yet
             }

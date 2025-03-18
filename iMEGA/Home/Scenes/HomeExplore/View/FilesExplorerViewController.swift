@@ -1,4 +1,6 @@
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 @MainActor
@@ -51,7 +53,8 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: navigationController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+            nodeActionListener: DefaultAnalyticsNodeActionListener().nodeActionListener()
         )
         let vc = NodeActionViewController(node: node,
                                           delegate: delegate,

@@ -1,6 +1,8 @@
 import ChatRepo
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPermissions
+import MEGAPresentation
 import MEGASDKRepo
 
 extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegate {
@@ -21,7 +23,8 @@ extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegat
     private func handleNodesAction(_ nodeAction: NodeActionViewController, action: MegaNodeActionType, nodes: [MEGANode], sender: Any) {
         let nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: self,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self),
+            nodeActionListener: DefaultAnalyticsNodeActionListener().nodeActionListener()
         )
         switch action {
         case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos, .hide, .unhide, .addTo, .addToAlbum:
