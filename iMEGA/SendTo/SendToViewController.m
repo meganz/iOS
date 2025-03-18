@@ -568,10 +568,14 @@
 
         [cell configureAvatar:chatListItem];
         
-        cell.chatTitle.text = chatListItem.title;
+        cell.chatTitle.text = chatListItem.chatTitle;
         
-        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
-        cell.chatLastMessage.text = [chatRoom participantsNamesWithMe:YES];
+        if (chatListItem.isNoteToSelf) {
+            cell.chatLastMessage.hidden = YES;
+        } else {
+            MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
+            cell.chatLastMessage.text = [chatRoom participantsNamesWithMe:YES];
+        }
         cell.chatLastTime.hidden = YES;
         
         for (MEGAChatListItem *tempChatListItem in self.selectedGroupChatsMutableArray) {
@@ -579,7 +583,7 @@
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
-        cell.privateChatImageView.hidden = chatListItem.publicChat;
+        cell.privateChatImageView.hidden = chatListItem.publicChat || chatListItem.isNoteToSelf;
         
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = UIColor.clearColor;

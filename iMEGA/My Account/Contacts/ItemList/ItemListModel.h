@@ -6,6 +6,7 @@
 
 @property MEGAUser *user;
 
+@property MEGAChatListItem *chat;
 @property (readonly) BOOL isGroup;
 @property (readonly) NSString *name;
 @property (readonly) uint64_t handle;
