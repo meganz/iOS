@@ -20,13 +20,14 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
         
         return userGroupedBackups.keys.compactMap { deviceId in
             guard let deviceBackups = userGroupedBackups[deviceId],
+                  let deviceName = deviceNamesDictionary[deviceId],
                     deviceBackups.isNotEmpty else { return nil }
             
             let backups = updateBackupsWithSyncStatus(deviceBackups)
             
             return DeviceEntity(
                 id: deviceId,
-                name: deviceNamesDictionary[deviceId] ?? "",
+                name: deviceName,
                 backups: backups,
                 status: calculateGlobalStatus(backups)
             )
