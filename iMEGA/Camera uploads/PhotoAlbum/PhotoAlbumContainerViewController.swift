@@ -24,7 +24,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
             pageTabHostingController?.view?.isUserInteractionEnabled = !newValue
         }
     }
-    private let isVisualMediaSearchFeatureEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .visualMediaSearch)
     private lazy var photoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager()
     private lazy var searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
@@ -205,7 +204,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }
     
     private func configureSearchBar() {
-        guard isVisualMediaSearchFeatureEnabled else { return }
         edgesForExtendedLayout = []
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
