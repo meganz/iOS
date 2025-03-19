@@ -148,8 +148,8 @@ final public class AdsSlotViewModel: ObservableObject {
         // Check if the user is logged in and has a paid account.
         // Ads should only be shown if the user is either logged out or has a free account.
         if accountUseCase.isLoggedIn(),
-           let accountDetails = try? await accountUseCase.refreshCurrentAccountDetails(),
-           accountDetails.proLevel != .free {
+           (try? await accountUseCase.refreshCurrentAccountDetails()) != nil,
+           accountUseCase.hasValidProOrUnexpiredBusinessAccount() {
             isExternalAdsEnabled = false
             return
         }
