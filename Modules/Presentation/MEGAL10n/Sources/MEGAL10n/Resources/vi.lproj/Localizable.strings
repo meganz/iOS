@@ -4568,3 +4568,29 @@
 "settings.chat.mediaQuality.image.option.original"="Luôn gửi hình ảnh với kích thước gốc";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="Chất lượng video";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="Đang kết nối tới máy chủ";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="Đang cập nhật danh sách tệp tin";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="Đang chuẩn bị danh sách các tệp tin";
+/* Hidden files and folders onboarding header title */
+"onboarding.hiddenFilesAndFolders.header.title"="New feature: Hidden files and folders";
+/* Hidden files and folders onboarding content item one title */
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Hide files and folders";
+/* Hidden files and folders onboarding content item one message */
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
+/* Hidden files and folders onboarding content item two title */
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Control visibility easily";
+/* Hidden files and folders onboarding content item two message */
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management --> User interface” in your app settings.";
+/* Hidden files and folders onboarding content item three title */
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Shared files stay visible";
+/* Hidden files and folders onboarding content item three message */
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Files and folders shared with contacts or with public links are still accessible and visible, even if hidden.";
+/* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
+"chat.messages.noteToSelf.title"="Ghi chú cho bản[w]thân";
+/* Title for note to self chat messages view header, at the top the chat room */
+"chat.messages.noteToSelf.header.title"="Giữ mọi thứ cho riêng mình";
+/* Description text for note to self chat messages view header, at the top of the chat room */
+"chat.messages.noteToSelf.header.description"="A private space for pictures, important information, or big ideas. Always synced, and protected with zero-knowledge encryption.";

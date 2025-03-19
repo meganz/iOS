@@ -11,8 +11,6 @@ class ChatSDKManager
     end
 
     def copy_headers
-        FileUtils.cp_r "#{@sdk_third_party_path}/webrtc/.", "#{@chat_third_party_path}/webrtc", remove_destination: true, :verbose => true
-
         sdk_third_party_parent_folder = Pathname.new(@sdk_third_party_path).parent.to_s
         sdk_mega_folder = File.join(sdk_third_party_parent_folder, "mega")
         chat_mega_folder = File.join(@chat_third_party_path, "include", "mega")

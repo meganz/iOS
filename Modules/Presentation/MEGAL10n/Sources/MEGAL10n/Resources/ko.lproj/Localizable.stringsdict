@@ -2634,6 +2634,20 @@
         <string>%d개의 항목 숨겨짐</string>
       </dict>
     </dict>
+    <key>nodes.action.unhideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@unhiddeItems@</string>
+      <key>unhiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>항목 %d개 숨김 해제</string>
+      </dict>
+    </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2784,10 +2798,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Added to “[A]”</string>
         <key>other</key>
-        <string>Added %d items to “[A]”</string>
+        <string>“[A]”에 %d개의 항목 추가함</string>
       </dict>
     </dict>
     <key>chat.message.forwardMessage</key>

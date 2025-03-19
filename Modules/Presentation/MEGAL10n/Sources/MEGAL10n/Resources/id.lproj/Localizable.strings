@@ -631,9 +631,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Tinggalkan folder";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this folder?";
+"leaveShareAlertMessage"="Apakah anda yakin ingin meninggalkan folder ini?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these folders?";
+"leaveSharesAlertMessage"="Apakah anda yakin ingin meninggalkan folder ini?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Bagikan";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -691,7 +691,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Pengaturan Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
-"general.cookieAndAdSettings"="Cookie and ad settings";
+"general.cookieAndAdSettings"="Pengaturan cookie dan iklan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Persyaratan Layanan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Tidak pernah";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="We’ll stop asking if you want previews of your sent links. You can re-enable sent link previews in the settings. Do you want to proceed?";
+"richPreviewsConfirmation"="Kami akan berhenti menanyakan apakah anda ingin pratinjau tautan yang anda kirim. Anda dapat mengaktifkan kembali pratinjau tautan terkirim di pengaturan. Apakah anda ingin melanjutkan?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Hapus preview";
 /*  */
@@ -2487,9 +2487,9 @@
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Digunakan oleh mitra periklanan kami yang disetujui untuk mengumpulkan data tentang aktivitas penjelajahan anda dan menyesuaikan iklan yang anda lihat di layanan kami dan di situs web lain. Tidak menerima cookie ini berarti anda masih akan melihat iklan tetapi iklan tersebut tidak akan dipersonalisasi.";
 /* Ad settings header title */
-"settings.ad.header.title"="Ad settings";
+"settings.ad.header.title"="Pengaturan iklan";
 /* Ad settings menu title for Ad personalisation */
-"settings.ad.adPersonalisation.title"="Ad personalisation";
+"settings.ad.adPersonalisation.title"="Personalisasi iklan";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versi dibuat sebagai file baru";
 /* Text shown for the action create new file */
@@ -2733,9 +2733,9 @@
 /* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
 "account.profile.renewal.future"="Diperbarui pada %@";
 /* Renewal date of the current PRO account, when the date is today */
-"account.profile.renewal.today"="Renews Today";
+"account.profile.renewal.today"="Memperbarui hari ini";
 /* Renewal date of the current PRO account, when the date is tomorrow */
-"account.profile.renewal.tomorrow"="Renews Tomorrow";
+"account.profile.renewal.tomorrow"="Memperbarui besok";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Panggilan lain sedang berlangsung. Harap akhiri panggilan anda saat ini sebelum melakukan panggilan lain.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4535,9 +4535,9 @@
 /* Title in chat settings to open status view settings */
 "settings.chat.status.title"="Status";
 /* Title in chat notifications settings */
-"settings.chat.notifications.title"="Notification settings";
+"settings.chat.notifications.title"="Pengaturan notifikasi";
 /* Label title in chat media image quality for uploads */
-"settings.chat.mediaQuality.title"="Chat media quality";
+"settings.chat.mediaQuality.title"="Kualitas media obrolan";
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Aktifkan pratinjau tautan terkirim";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -4549,11 +4549,11 @@
 /* Title in set status settings for show last seen */
 "settings.chat.status.setStatus.statusSettings.lastSeen.title"="Tampilkan yang terakhir terlihat";
 /* Subtitle in set status settings for show last seen */
-"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Izinkan kontak untuk melihat terakhir kali anda aktif di MEGA";
 /* Title in set status settings for auto away */
-"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Setel status sebagai Sedang Pergi";
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
-"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ ketidakaktifan";
 /* Title for toggle chat notifications */
 "settings.chat.notifications.chatNotifications"="Pemberitahuan obrolan";
 /* Title for mute chat notifications */
@@ -4561,10 +4561,36 @@
 /* Label title in chat media image quality for uploads */
 "settings.chat.mediaQuality.image.title"="Kualitas gambar";
 /* Description of Automatic Image Quality option */
-"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+"settings.chat.mediaQuality.image.option.auto"="Kirim gambar yang dioptimalkan saat menggunakan data seluler tetapi gambar ukuran asli saat menggunakan Wi-Fi";
 /* Description of Optimised Image Quality option */
-"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+"settings.chat.mediaQuality.image.option.optimised"="Selalu kirim gambar yang dioptimalkan";
 /* Description of High Image Quality option */
-"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+"settings.chat.mediaQuality.image.option.original"="Selalu kirim gambar ukuran asli";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="Kualitas video";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="Menghubungkan ke server";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="Mengupdate daftar file";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="Mempersiapkan daftar file";
+/* Hidden files and folders onboarding header title */
+"onboarding.hiddenFilesAndFolders.header.title"="Fitur baru: File dan folder tersembunyi";
+/* Hidden files and folders onboarding content item one title */
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Sembunyikan file dan folder";
+/* Hidden files and folders onboarding content item one message */
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Simpan file sensitif di drive Cloud anda secara pribadi dan tidak terlihat dengan mudah. Secara default, file tersembunyi tidak muncul di bagian Cloud drive, Foto, dan Terbaru.";
+/* Hidden files and folders onboarding content item two title */
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Kontrol visibilitas dengan mudah";
+/* Hidden files and folders onboarding content item two message */
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Untuk menampilkan file tersembunyi, aktifkan pengaturan “Tampilkan item tersembunyi” di bawah “Manajemen File -> Antarmuka pengguna” di pengaturan aplikasi anda.";
+/* Hidden files and folders onboarding content item three title */
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="File yang dibagikan tetap terlihat";
+/* Hidden files and folders onboarding content item three message */
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="File dan folder yang dibagikan dengan kontak atau dengan tautan publik masih dapat diakses dan terlihat, meskipun disembunyikan.";
+/* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
+"chat.messages.noteToSelf.title"="Catatan untuk diri sendiri";
+/* Title for note to self chat messages view header, at the top the chat room */
+"chat.messages.noteToSelf.header.title"="Simpan untuk dirimu sendiri";
+/* Description text for note to self chat messages view header, at the top of the chat room */
+"chat.messages.noteToSelf.header.description"="Ruang pribadi untuk gambar, informasi penting, atau ide-ide besar. Selalu disinkronkan, dan dilindungi dengan enkripsi zero-knowledge.";

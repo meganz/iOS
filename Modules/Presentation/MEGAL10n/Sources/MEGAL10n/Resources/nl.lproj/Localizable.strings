@@ -4568,3 +4568,29 @@
 "settings.chat.mediaQuality.image.option.original"="Stuur altijd afbeeldingen in originele grootte";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="Video Kwaliteit";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="Verbinding maken met de server";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="Bestandslijst bijwerken";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="Bestandslijst voorbereiden";
+/* Hidden files and folders onboarding header title */
+"onboarding.hiddenFilesAndFolders.header.title"="Nieuw kenmerk: Verborgen bestanden en mappen";
+/* Hidden files and folders onboarding content item one title */
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Verberg bestanden en mappen";
+/* Hidden files and folders onboarding content item one message */
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Gevoelige bestanden op uw Cloud-schijf eenvoudig privé en uit het zicht houden. Verborgen bestanden worden standaard niet weergegeven in de sectie Cloudschijf, Foto's en Recente bestanden.";
+/* Hidden files and folders onboarding content item two title */
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Controleer de zichtbaarheid eenvoudig";
+/* Hidden files and folders onboarding content item two message */
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer -> Gebruikersinterface” in uw applicatie-instellingen.";
+/* Hidden files and folders onboarding content item three title */
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Gedeelde bestanden blijven zichtbaar";
+/* Hidden files and folders onboarding content item three message */
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Bestanden en mappen die worden gedeeld met contactpersonen of met openbare links zijn nog steeds toegankelijk en zichtbaar, zelfs als ze verborgen zijn.";
+/* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
+"chat.messages.noteToSelf.title"="Hou er rekening mee dat ik mezelf";
+/* Title for note to self chat messages view header, at the top the chat room */
+"chat.messages.noteToSelf.header.title"="Hou het voor uzelf";
+/* Description text for note to self chat messages view header, at the top of the chat room */
+"chat.messages.noteToSelf.header.description"="Een privéruimte voor foto's, belangrijke informatie of grote ideeën. Altijd gesynchroniseerd en beveiligd met zero-knowledge codering.";

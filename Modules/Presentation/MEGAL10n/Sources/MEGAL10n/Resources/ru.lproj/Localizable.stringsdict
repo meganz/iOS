@@ -3762,6 +3762,26 @@
         <string>%d элемента скрыто</string>
       </dict>
     </dict>
+    <key>nodes.action.unhideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@unhiddeItems@</string>
+      <key>unhiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Показан %d элемент</string>
+        <key>few</key>
+        <string>Показано %d элемента</string>
+        <key>many</key>
+        <string>Показано %d элементов</string>
+        <key>other</key>
+        <string>Показано %d элемента</string>
+      </dict>
+    </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
