@@ -46,9 +46,12 @@ struct App: AsyncParsableCommand {
         print("Current version: \(version)")
 
         print("Fetching the SDK and Chat branch names")
-        let sdkVersion = try branchNameForSubmodule(with: Submodule.sdk.path)
-        let chatSDKVersion = try branchNameForSubmodule(with: Submodule.chatSDK.path)
-        print("SDK: \(sdkVersion) \t Chat SDK: \(chatSDKVersion)")
+        let sdkVersion = try tagOrBranchNameForSubmodule(with: Submodule.sdk.path)
+        let chatSDKVersion = try tagOrBranchNameForSubmodule(with: Submodule.chatSDK.path)
+        print("""
+        - \(sdkVersion.description(type: "SDK"))
+        - \(chatSDKVersion.description(type: "Chat SDK"))
+        """)
 
         print("Fetching release notes for \(version)")
         let releaseNotes = try await fetchReleaseNotes(
@@ -65,8 +68,8 @@ struct App: AsyncParsableCommand {
 
         let message = """
         \(releaseNotes)
-        - SDK release - \(sdkVersion)
-        - MEGAChat release - \(chatSDKVersion)
+        - \(sdkVersion.description(type: "SDK"))
+        - \(chatSDKVersion.description(type: "Chat SDK"))
         """
 
         print("Creating release in Gitlab")

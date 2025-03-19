@@ -63,8 +63,8 @@ struct App: AsyncParsableCommand {
         )
 
         print("Fetching the SDK and Chat branch names")
-        let sdkVersion = try branchNameForSubmodule(with: Submodule.sdk.path)
-        let chatSDKVersion = try branchNameForSubmodule(with: Submodule.chatSDK.path)
+        let sdkVersion = try tagOrBranchNameForSubmodule(with: Submodule.sdk.path)
+        let chatSDKVersion = try tagOrBranchNameForSubmodule(with: Submodule.chatSDK.path)
         print("SDK: \(sdkVersion) \t Chat SDK: \(chatSDKVersion)")
 
         print("Fetching release notes for \(currentReleaseVersion)")
@@ -85,8 +85,8 @@ struct App: AsyncParsableCommand {
                 releaseCandidateSlackChannelIds: releaseCandidateSlackChannelIds.components(separatedBy: ","),
                 version: currentReleaseVersion,
                 buildNumber: buildNumber,
-                sdkBranch: sdkVersion,
-                chatSDKBranch: chatSDKVersion,
+                sdkVersion: sdkVersion,
+                chatSDKVersion: chatSDKVersion,
                 jiraBaseURLString: jiraBaseURLString,
                 releaseNotes: releaseNotes,
                 token: slackAuthorization,
