@@ -65,7 +65,10 @@ struct App: AsyncParsableCommand {
         print("Fetching the SDK and Chat branch names")
         let sdkVersion = try tagOrBranchNameForSubmodule(with: Submodule.sdk.path)
         let chatSDKVersion = try tagOrBranchNameForSubmodule(with: Submodule.chatSDK.path)
-        print("SDK: \(sdkVersion) \t Chat SDK: \(chatSDKVersion)")
+        print("""
+        - \(sdkVersion.description(type: "SDK")) 
+        - \(chatSDKVersion.description(type: "Chat SDK"))
+        """)
 
         print("Fetching release notes for \(currentReleaseVersion)")
         let releaseNotes = try await fetchReleaseNotes(
