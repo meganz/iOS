@@ -7,8 +7,8 @@ struct SlackMessageSender {
         releaseCandidateSlackChannelIds: [String],
         version: String,
         buildNumber: String,
-        sdkBranch: String,
-        chatSDKBranch: String,
+        sdkVersion: SubmoduleReferenceType,
+        chatSDKVersion: SubmoduleReferenceType,
         jiraBaseURLString: String,
         releaseNotes: String,
         token: String,
@@ -25,8 +25,8 @@ struct SlackMessageSender {
                             channelId: channel,
                             version: version,
                             buildNumber: buildNumber,
-                            sdkBranch: sdkBranch,
-                            chatSDKBranch: chatSDKBranch,
+                            sdkVersion: sdkVersion,
+                            chatSDKVersion: chatSDKVersion,
                             jiraBaseURLString: jiraBaseURLString,
                             releaseNotes: releaseNotes,
                             token: token,
@@ -94,8 +94,8 @@ struct SlackMessageSender {
         channelId: String,
         version: String,
         buildNumber: String,
-        sdkBranch: String,
-        chatSDKBranch: String,
+        sdkVersion: SubmoduleReferenceType,
+        chatSDKVersion: SubmoduleReferenceType,
         jiraBaseURLString: String,
         releaseNotes: String,
         token: String,
@@ -103,14 +103,15 @@ struct SlackMessageSender {
     ) async throws {
         let jiraReleasePackageLink = jiraBaseURLString + "/issues/?jql=fixVersion%20%3D%20%22iOS%20\(version)%22"
         let testFlightLink = "\(testflightBaseUrl)\(buildNumber)"
+
         let body = [
             "channel": channelId,
             "text":
         """
         *🚀 New iOS Release Candidate Available!*
         *Version:* <\(testFlightLink)|\(version)(\(buildNumber))>
-        • *SDK Branch:* `\(sdkBranch)`
-        • *Chat SDK Branch:* `\(chatSDKBranch)`
+        • \(sdkVersion.description(type: "SDK"))
+        • \(chatSDKVersion.description(type: "Chat SDK"))
         
         🔗 <\(jiraReleasePackageLink)|View Jira Release Package>
         
