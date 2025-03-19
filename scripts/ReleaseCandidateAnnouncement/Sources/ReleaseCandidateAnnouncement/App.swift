@@ -55,7 +55,7 @@ struct App: AsyncParsableCommand {
         print("Next version: \(nextReleaseVersion)")
 
         print("Creating release version iOS \(nextReleaseVersion) for all Main Application Jira projects")
-        try await JiraReleaseManager.createReleaseVersion(
+        try await createReleaseVersion(
             version: nextReleaseVersion,
             jiraBaseURL: jiraBaseURL,
             jiraToken: jiraAuthorization,

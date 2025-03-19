@@ -43,6 +43,10 @@ pipeline {
         success {
             script {
                 def message = ":rocket: The RC announcement was successful"
+                
+                if (env.gitlabTriggerPhrase == 'jira_create_version') {
+                    message = ":rocket: Successfully created the release version in Jira"
+                }
 
                 if (hasGitLabMergeRequest()) {
                     def mrNumber = env.gitlabMergeRequestIid
@@ -52,12 +56,18 @@ pipeline {
                         env.MERGE_REQUEST_URL = "${GITLAB_API_BASE_URL}/projects/193/merge_requests/${mrNumber}/notes"
                         sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
                     }
+                } else {
+                    slackSend color: "good", message: "${message}"
                 }
             }
         }
         failure {
             script {
                 def message = ":x: The RC announcement failed"
+
+                if (env.gitlabTriggerPhrase == 'jira_create_version') {
+                    message = ":x: failed to create the release version in Jira"
+                }
 
                 if (hasGitLabMergeRequest()) {
                     def mrNumber = env.gitlabMergeRequestIid
@@ -72,6 +82,11 @@ pipeline {
                         env.MARKDOWN_LINK = "${message} <br />Build Log: ${json.markdown}"
                         env.MERGE_REQUEST_URL = "${GITLAB_API_BASE_URL}/projects/193/merge_requests/${mrNumber}/notes"
                         sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+                    }
+                } else {
+                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
+                        slackUploadFile filePath:"console.txt", initialComment: "${message}"
                     }
                 }
             }                    
@@ -90,6 +105,11 @@ pipeline {
         }
         
         stage('Install Dependencies') {
+            when { 
+                anyOf {
+                    environment name: 'gitlabTriggerPhrase', value: 'announce_release' 
+                }
+            }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                     injectEnvironments({
@@ -106,6 +126,11 @@ pipeline {
         }
 
         stage('Announce RC') {
+            when { 
+                anyOf {
+                    environment name: 'gitlabTriggerPhrase', value: 'announce_release' 
+                }
+            }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                     injectEnvironments({
@@ -115,6 +140,25 @@ pipeline {
                                 env.NEXT_RELEASE_VERSION = parameters[0]
 
                                 sh 'swift run ReleaseCandidateAnnouncement --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --jira-base-url-string \"$JIRA_BASE_URL\" --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --slack-authorization \"$RELEASE_ANNOUNCEMENT_SLACK_TOKEN\" --code-freeze-slack-channel-ids \"$MOBILE_DEV_TEAM_SLACK_CHANNEL_ID\" --testflight-base-url \"$MEGA_IOS_TESTFLIGHT_BASE_URL\" --release-candidate-slack-channel-ids \"$IOS_RC_TEAM_SLACK_CHANNEL_IDS\" --next-release-version \"$NEXT_RELEASE_VERSION\"'
+                            }
+                        }
+                    })
+                }
+            }
+        }
+
+        stage('Create Jira version in all projects') {
+            when { 
+                anyOf {
+                    environment name: 'gitlabTriggerPhrase', value: 'jira_create_version' 
+                }
+            }
+            steps {
+                withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                    injectEnvironments({
+                        script {
+                            dir("scripts/CreateReleaseVersionInJira/") {
+                                sh 'swift run CreateReleaseVersionInJira --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --jira-base-url-string \"$JIRA_BASE_URL\"'
                             }
                         }
                     })

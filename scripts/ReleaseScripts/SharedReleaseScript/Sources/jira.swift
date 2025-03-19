@@ -1,20 +1,32 @@
 import Foundation
 
-public func createReleaseVersion(version: String) async throws {
+public func createReleaseVersion(
+    version: String,
+    jiraBaseURL: URL,
+    jiraToken: String,
+    jiraProjects: String
+) async throws {
     let releasePath = "/rest/api/2/version"
-    let url = try makeURL(base: environment.jiraBaseURL, path: releasePath)
+    let url = try makeURL(base: jiraBaseURL, path: releasePath)
 
-    // Execute release creation concurrently for all projects
-    await withThrowingTaskGroup(of: Void.self) { group in
-        for project in environment.jiraProjects {
+    let jiraProjects = parseProjects(from: jiraProjects)
+
+    await withTaskGroup(of: Void.self) { group in
+        for project in jiraProjects {
             group.addTask {
-                try await createReleaseVersion(project: project, version: version, jiraURL: url)
+                do {
+                    try await createReleaseVersion(project: project, version: version, jiraURL: url, jiraToken: jiraToken)
+                } catch {
+                    print(
+                        "Creating release version iOS \(version) for jira project \(project.name) Failed: \(error)"
+                    )
+                }
             }
         }
     }
 }
 
-private func createReleaseVersion(project: JiraProject, version: String, jiraURL: URL) async throws {
+private func createReleaseVersion(project: JiraProject, version: String, jiraURL: URL, jiraToken: String) async throws {
     let body: [String: Any] = [
         "name": "iOS \(version)",
         "project": project.name,
@@ -25,7 +37,7 @@ private func createReleaseVersion(project: JiraProject, version: String, jiraURL
     try await sendRequest(
         url: jiraURL,
         method: .post,
-        token: .bearer(environment.jiraToken),
+        token: .bearer(jiraToken),
         headers: [.init(field: "Content-Type", value: "application/json")],
         body: body
     )

@@ -2,6 +2,7 @@ import SharedReleaseScript
 
 enum GitError: Error {
     case missingTag
+    case couldNotCreateUpcomingHotfixPatchVersion
 }
 
 func createHotfixBranchFromTag(_ tag: String, hotfixVersion: String) throws -> String {
@@ -17,6 +18,22 @@ func createHotfixBranchFromTag(_ tag: String, hotfixVersion: String) throws -> S
     return try createHotfixBranchAndPushToOrigin(hotfixVersion)
 }
 
+func latestTag() throws -> String {
+    try runInShell("git describe --tags $(git rev-list --tags --max-count=1)").trimmingCharacters(in: .whitespacesAndNewlines)
+}
+
+func upcomingHotfixPatchVersion() throws -> String {
+    let latestTag = try latestTag()
+    let components = latestTag.split(separator: ".")
+    if components.count == 2 {
+        return "\(latestTag).1"
+    } else if components.count == 3, let patchVersion = Int(components[2]) {
+        return "\(components[0]).\(components[1]).\(patchVersion + 1)"
+    }
+
+    throw GitError.couldNotCreateUpcomingHotfixPatchVersion
+}
+
 private func isTagInTagList(_ tag: String) throws -> Bool {
     try runInShell("git fetch --tags --force")
     let tagList = try runInShell("git tag")
@@ -27,7 +44,6 @@ private func createHotfixBranchAndPushToOrigin(_ hotfixVersion: String) throws -
     let branchName = "release/\(hotfixVersion)"
     try runInShell("git checkout -b \(branchName)")
     try updateAndCommitNewVersionNumber(hotfixVersion)
-    try runInShell("git push --set-upstream origin \(branchName)")
     return branchName
 }
 

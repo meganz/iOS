@@ -4,9 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "PrepareHotfix",
-    platforms: [
-        .macOS(.v13)
-    ],
+    platforms: [.macOS(.v14)],
     dependencies: [
         .package(path: "../../ReleaseScripts/SharedReleaseScript")
     ],

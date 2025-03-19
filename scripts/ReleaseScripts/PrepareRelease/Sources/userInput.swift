@@ -8,14 +8,8 @@ struct UserInput {
 
 func userInput() throws -> UserInput {
     let version = try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
-    writeToCache(key: .version, value: version)
-
     let sdkHash = try commitHashFromUser(submodule: .sdk)
-    writeToCache(key: .sdkHash, value: sdkHash)
-
     let chatHash = try commitHashFromUser(submodule: .chatSDK)
-    writeToCache(key: .chatHash, value: chatHash)
-
     return .init(version: version, sdkHash: sdkHash, chatHash: chatHash)
 }
 
