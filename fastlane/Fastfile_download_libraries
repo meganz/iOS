@@ -11,28 +11,27 @@
 #   - unzip_path: The directory where the contents of the zip file will be placed.
 #   - use_cache: Set to true to use the zip file found in "download_file_path"; otherwise, the file will be downloaded again.
 lane :configure_sdk_and_chat_library do |options|
-    UI.header  "Configure SDK"
-    configure_sdk(
+    UI.header "Configure MEGAChat"
+    configure_chat_sdk(
       file: options[:file],
       key:  options[:key],
       download_file_path: options[:download_file_path],
       unzip_path: options[:unzip_path],
       use_cache: options[:use_cache]
     )
-    UI.success  "Successfully configured SDK ✅"
-
-    UI.header "Configure MEGAChat"
-    configure_chat_sdk
     UI.success "Successfully configured MEGAChat ✅"
   end
 
-  private_lane :configure_sdk do |options|
+  private_lane :configure_chat_sdk do |options|
+    sdk_third_party_path = ENV['SDK_THIRD_PARTY_PATH']
+    chat_third_party_path = ENV['CHAT_THIRD_PARTY_PATH']
+
     file = options[:file].nil? ? ENV['MEGA_URL_DOWNLOAD_THIRD_PARTY_LIBRARIES_FILE'] : options[:file]
     key = options[:key].nil? ? ENV['MEGA_URL_DOWNLOAD_THIRD_PARTY_LIBRARIES_KEY'] : options[:key]
 
     file_link_url = "https://mega.nz/#!#{file}!#{key}"
     download_file_path = options[:download_file_path].nil? ? "#{ENV['MEGA_LIBRARIES_ZIP_DOWNLOAD_PATH']}#{file}" : options[:download_file_path]
-    unzip_path = options[:unzip_path].nil? ? ENV['SDK_THIRD_PARTY_PATH'] : options[:unzip_path]
+    unzip_path = options[:unzip_path].nil? ? chat_third_party_path : options[:unzip_path]
     use_cache = options[:use_cache].nil? ? false : options[:use_cache]
 
     download_libraries(
@@ -54,16 +53,6 @@ lane :configure_sdk_and_chat_library do |options|
       use_cache: use_cache
     )
     UI.success "Successfully completed ✅"
-  end
-
-  private_lane :configure_chat_sdk do 
-    sdk_third_party_path = ENV['SDK_THIRD_PARTY_PATH']
-    chat_third_party_path = ENV['CHAT_THIRD_PARTY_PATH']
-
-    wait_until_folder_is_created(
-      folder_path: chat_third_party_path,
-      timeout: 120 #seconds
-    )
 
     copy_sdk_libraries_to_chat_sdk(
       sdk_third_party_path: sdk_third_party_path,

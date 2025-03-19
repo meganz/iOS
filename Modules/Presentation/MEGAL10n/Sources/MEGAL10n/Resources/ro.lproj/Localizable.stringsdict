@@ -3386,6 +3386,22 @@
         <string>%d de elemente ascunse</string>
       </dict>
     </dict>
+    <key>nodes.action.unhideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@unhiddeItems@</string>
+      <key>unhiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item unhidden</string>
+        <key>other</key>
+        <string>%d items unhidden</string>
+      </dict>
+    </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

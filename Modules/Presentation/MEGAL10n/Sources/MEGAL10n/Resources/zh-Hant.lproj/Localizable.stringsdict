@@ -2634,6 +2634,20 @@
         <string>已隱藏%d個項目</string>
       </dict>
     </dict>
+    <key>nodes.action.unhideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@unhiddeItems@</string>
+      <key>unhiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>已取消隱藏%d個項目</string>
+      </dict>
+    </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

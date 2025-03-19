@@ -4568,3 +4568,29 @@
 "settings.chat.mediaQuality.image.option.original"="始终发送原始大小的图像";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="视频画质";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="正在连接到服务器";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="正在更新文件列表";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="正在准备文件列表";
+/* Hidden files and folders onboarding header title */
+"onboarding.hiddenFilesAndFolders.header.title"="新功能：隐藏的文件和文件夹";
+/* Hidden files and folders onboarding content item one title */
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="隐藏文件和文件夹";
+/* Hidden files and folders onboarding content item one message */
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
+/* Hidden files and folders onboarding content item two title */
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="轻松控制可见性";
+/* Hidden files and folders onboarding content item two message */
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="要显示隐藏文件，请在您应用程序设置的“文件管理 --> 用户界面” 下打开“显示隐藏项目”设置。";
+/* Hidden files and folders onboarding content item three title */
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="共享文件保持可见状态";
+/* Hidden files and folders onboarding content item three message */
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="已共享给联系人或带有公共链接的文件和文件夹仍然可以访问和可见，即使设置隐藏。";
+/* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
+"chat.messages.noteToSelf.title"="隐私笔记";
+/* Title for note to self chat messages view header, at the top the chat room */
+"chat.messages.noteToSelf.header.title"="保留自己的隐私";
+/* Description text for note to self chat messages view header, at the top of the chat room */
+"chat.messages.noteToSelf.header.description"="存放图片、重要信息或大型创意的私密空间。始终保持同步，并使用零知识加密进行保护。";

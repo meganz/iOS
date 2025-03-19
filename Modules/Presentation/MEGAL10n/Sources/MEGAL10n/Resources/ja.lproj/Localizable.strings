@@ -4568,3 +4568,29 @@
 "settings.chat.mediaQuality.image.option.original"="常に元のサイズの画像を送信してください";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="動画の品質";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="サーバーに接続中";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="ファイルリストを更新中";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="ファイルリストを準備中";
+/* Hidden files and folders onboarding header title */
+"onboarding.hiddenFilesAndFolders.header.title"="新機能：非表示ファイルと非表示フォルダ";
+/* Hidden files and folders onboarding content item one title */
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="ファイルとフォルダを隠す";
+/* Hidden files and folders onboarding content item one message */
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="クラウドドライブ内の機密ファイルを、簡単に非公開にできます。デフォルトでは、隠しファイルはクラウドドライブ、写真、および「最近使用」セクションに表示されません。";
+/* Hidden files and folders onboarding content item two title */
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="表示/非表示を簡単に制御";
+/* Hidden files and folders onboarding content item two message */
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="非表示ファイルを表示するには、アプリの設定で「ファイル管理（File Management） --> ユーザーインターフェース（User interface）」の「非表示項目を表示（Show hidden items）」をオンにします。";
+/* Hidden files and folders onboarding content item three title */
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="共有ファイルは表示されたまま";
+/* Hidden files and folders onboarding content item three message */
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="連絡先や公開リンクで共有されたファイルやフォルダは、たとえ非表示であってもアクセス可能で、表示されます。";
+/* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
+"chat.messages.noteToSelf.title"="自分へのメモ";
+/* Title for note to self chat messages view header, at the top the chat room */
+"chat.messages.noteToSelf.header.title"="秘密にしておく";
+/* Description text for note to self chat messages view header, at the top of the chat room */
+"chat.messages.noteToSelf.header.description"="写真、重要な情報、大きなアイデア用のプライベートスペースです。常に同期され、ゼロナレッジ暗号化で保護されています。";

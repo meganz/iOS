@@ -397,7 +397,7 @@
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
 "sharedItems.link.linkUpdated"="Link atualizado - copie novamente.";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(somente Pro)";
+"proOnly"="(somente usuários Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Definir uma data de validade";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -2997,7 +2997,7 @@
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Não foi possível conectar-se à internet. Verifique a sua conexão e tente novamente.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
-"meetings.displayInMainView.title"="Mostrar na Vista Principal";
+"meetings.displayInMainView.title"="Mostrar na vista principal";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Cota de armazenamento excedida";
 /* Title of section Next on Audio Playlist */
@@ -4465,7 +4465,7 @@
 /* Node info cell title for tags */
 "cloudDrive.nodeInfo.nodeTags.header"="Etiquetas";
 /* Text displayed in the Node Info cell to indicate that the tags feature is only available to Pro users. */
-"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Somente para usuários Pro";
+"cloudDrive.nodeInfo.nodeTags.feature.availableForProOnlyText"="Somente usuários Pro";
 /* Title for `Add tags` screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.title"="Adicionar etiquetas";
 /* The placeholder of the input text in the Add Tags screen */
@@ -4568,3 +4568,29 @@
 "settings.chat.mediaQuality.image.option.original"="Sempre enviar imagens no tamanho original";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="Qualidade dos vídeos";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="Conectando ao servidor";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="Atualizando lista de arquivos";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="Preparando lista de arquivos";
+/* Hidden files and folders onboarding header title */
+"onboarding.hiddenFilesAndFolders.header.title"="Novo recurso: arquivos e pastas ocultos";
+/* Hidden files and folders onboarding content item one title */
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Oculte arquivos e pastas";
+/* Hidden files and folders onboarding content item one message */
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Mantenha facilmente arquivos confidenciais na sua Nuvem de arquivos privados e longe da vista. Os arquivos ocultos não aparecem na Nuvem de arquivos, Fotos e Atividades recentes de forma predeterminada.";
+/* Hidden files and folders onboarding content item two title */
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Controle a visibilidade facilmente";
+/* Hidden files and folders onboarding content item two message */
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Para mostrar arquivos ocultos, ative a opção “Mostrar itens ocultos” em “Gerenciamento de arquivos - Interface do usuário” nas configurações do seu aplicativo.";
+/* Hidden files and folders onboarding content item three title */
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Os arquivos compartilhados permanecem visíveis";
+/* Hidden files and folders onboarding content item three message */
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Os arquivos e as pastas compartilhados com contatos ou por meio de links públicos permanecem acessíveis e visíveis, mesmo se estiverem ocultos.";
+/* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
+"chat.messages.noteToSelf.title"="Lembrete";
+/* Title for note to self chat messages view header, at the top the chat room */
+"chat.messages.noteToSelf.header.title"="Guarde para você";
+/* Description text for note to self chat messages view header, at the top of the chat room */
+"chat.messages.noteToSelf.header.description"="Um espaço privado para fotos, informação importante ou grandes ideias. Sempre sincronizado e protegido com criptografia de conhecimento zero.";

@@ -631,9 +631,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="غادر المجلد";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this folder?";
+"leaveShareAlertMessage"="هل تريد بالتأكيد مغادرة هذا المجلد؟";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these folders?";
+"leaveSharesAlertMessage"="هل تريد بالتأكيد ترك هذه المجلدات؟";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="شارك";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -691,7 +691,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="إعدادات ملفات تعريف الارتباط Cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
-"general.cookieAndAdSettings"="Cookie and ad settings";
+"general.cookieAndAdSettings"="إعدادات ملفات تعريف الارتباط Cookie والإعلانات";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="شروط الخدمة";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="الحالة";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Enable sent link previews";
+"richUrlPreviews"="تمكين معاينات الرابط المرسل";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"richPreviewsFooter"="يقوم بإنشاء عرض محتوى للروابط التي ترسلها في المحادثة. لاحظ أن استرداد هذه العروض للمحتوى غير محمي بتشفير المعرفة الصفرية.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="اتصالات فيديو وصوت";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="تم";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Enable sent link previews";
+"enableRichUrlPreviews"="تمكين معاينات الرابط المرسل";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="السماح دائماً";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="أبداً";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="We’ll stop asking if you want previews of your sent links. You can re-enable sent link previews in the settings. Do you want to proceed?";
+"richPreviewsConfirmation"="سنتوقف عن السؤال عما إذا كنت تريد معاينات للروابط المرسلة. يمكنك إعادة تمكين معاينات الروابط المرسلة في الإعدادات. هل تريد المتابعة؟";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="إزالة العرض";
 /*  */
@@ -2487,9 +2487,9 @@
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="يستخدمها شركاؤنا الإعلانيون المعتمدون لجمع بيانات حول أنشطة التصفح الخاصة بك وتخصيص الإعلانات التي تراها على خدماتنا وعلى مواقع الويب الأخرى. إن عدم قبول ملفات تعريف الارتباط cookies هذه يعني أنك ستظل ترى الإعلانات ولكن لن يتم تخصيصها.";
 /* Ad settings header title */
-"settings.ad.header.title"="Ad settings";
+"settings.ad.header.title"="إعدادات الإعلانات";
 /* Ad settings menu title for Ad personalisation */
-"settings.ad.adPersonalisation.title"="Ad personalisation";
+"settings.ad.adPersonalisation.title"="تخصيص الإعلانات";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="تم إنشاء النسخة كملف جديد.";
 /* Text shown for the action create new file */
@@ -2733,9 +2733,9 @@
 /* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
 "account.profile.renewal.future"="يجدد بتاريخ %@";
 /* Renewal date of the current PRO account, when the date is today */
-"account.profile.renewal.today"="Renews Today";
+"account.profile.renewal.today"="يجدد اليوم";
 /* Renewal date of the current PRO account, when the date is tomorrow */
-"account.profile.renewal.tomorrow"="Renews Tomorrow";
+"account.profile.renewal.tomorrow"="يجدد غدًا";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="مكالمة أخرى جارية. يرجى إنهاء مكالمتك الحالية قبل إجراء أخرى.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3439,7 +3439,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="تعطيل";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Inactive";
+"device.center.backup.offline.status.message"="غير نشط";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="توقف النسخ الاحتياطي";
 /* Device Center backup paused status */
@@ -4525,23 +4525,23 @@
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="الحد الأقصى لعدد للتاغات هو 10";
 /* Artist name to display if meta data for artist could not be found */
-"media.audio.metadata.missing.artist"="Unknown Artist";
+"media.audio.metadata.missing.artist"="فنان غير معروف";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="No playlists";
+"photos.addToPlaylist.empty.message"="لا توجد قوائم تشغيل";
 /* Add to playlist empty create button title */
-"photos.addToPlaylist.empty.create.button.title"="Create playlist";
+"photos.addToPlaylist.empty.create.button.title"="إنشاء قائمة تشغيل";
 /* Title in chat settings */
 "settings.chat.title"="المحادثة و الاجتماعات";
 /* Title in chat settings to open status view settings */
 "settings.chat.status.title"="الحالة";
 /* Title in chat notifications settings */
-"settings.chat.notifications.title"="Notification settings";
+"settings.chat.notifications.title"="إعدادات الإشعارات";
 /* Label title in chat media image quality for uploads */
-"settings.chat.mediaQuality.title"="Chat media quality";
+"settings.chat.mediaQuality.title"="جودة وسائط المحادثة";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.title"="Enable sent link previews";
+"settings.chat.richUrlPreview.title"="تمكين معاينات الرابط المرسل";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"settings.chat.richUrlPreview.subtitle"="يقوم بإنشاء عرض محتوى للروابط التي ترسلها في المحادثة. لاحظ أن استرداد هذه العروض للمحتوى غير محمي بتشفير المعرفة الصفرية.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="ضع الحالة";
 /* Title section header in set status settings */
@@ -4549,11 +4549,11 @@
 /* Title in set status settings for show last seen */
 "settings.chat.status.setStatus.statusSettings.lastSeen.title"="إظهار تاريخ اخر ظهور";
 /* Subtitle in set status settings for show last seen */
-"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="السماح لجهات الاتصال برؤية آخر مرة كنت فيها نشطًا على ميغا MEGA";
 /* Title in set status settings for auto away */
-"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="تعيين الحالة كبعيد";
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
-"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ من عدم النشاط";
 /* Title for toggle chat notifications */
 "settings.chat.notifications.chatNotifications"="إشعارات المحادثة";
 /* Title for mute chat notifications */
@@ -4561,10 +4561,36 @@
 /* Label title in chat media image quality for uploads */
 "settings.chat.mediaQuality.image.title"="جودة الصورة";
 /* Description of Automatic Image Quality option */
-"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+"settings.chat.mediaQuality.image.option.auto"="أرسل صورًا محسّنة عندما تكون على بيانات الهاتف المحمول ولكن صورًا بالحجم الأصلي عند الاتصال بشبكة الواي فاي Wi-Fi";
 /* Description of Optimised Image Quality option */
-"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+"settings.chat.mediaQuality.image.option.optimised"="أرسل دائمًا صورًا محسّنة";
 /* Description of High Image Quality option */
-"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+"settings.chat.mediaQuality.image.option.original"="أرسل دائمًا صورًا بالحجم الأصلي";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="جودة الفيديو";
+/* Message displayed while the app is connecting to a MEGA server */
+"login.connectingToServer"="جاري الاتصال بالمخدم";
+/* Status text when updating the file manager */
+"login.downloadFilelist"="جاري تحديث قائمة الملف";
+/* After login, updating the file list, the file list should be processed before showing it to the user */
+"login.preparingFileList"="إعداد قائمة الملف";
+/* Hidden files and folders onboarding header title */
+"onboarding.hiddenFilesAndFolders.header.title"="ميزة جديدة: ملفات ومجلدات مخفية";
+/* Hidden files and folders onboarding content item one title */
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="إخفاء ملفات و مجلدات";
+/* Hidden files and folders onboarding content item one message */
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="يمكنك بسهولة الاحتفاظ بالملفات الحساسة في السواقة السحابية الخاصة بك وبعيدًا عن الأنظار. افتراضيًا، لا تظهر الملفات المخفية في السواقة السحابية والصور وقسم «مؤخراً».";
+/* Hidden files and folders onboarding content item two title */
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="التحكم في الرؤية بسهولة";
+/* Hidden files and folders onboarding content item two message */
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="لإظهار الملفات المخفية، قم بتشغيل إعداد «إظهار العناصر المخفية» ضمن «إدارة الملفات -> واجهة المستخدم» في إعدادات التطبيق.";
+/* Hidden files and folders onboarding content item three title */
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="تظل الملفات المشاركة مرئية";
+/* Hidden files and folders onboarding content item three message */
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="لا تزال الملفات والمجلدات التي تمت مشاركتها مع جهات الاتصال أو مع الروابط العامة قابلة للوصول ومرئية حتى لو كانت مخفية.";
+/* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
+"chat.messages.noteToSelf.title"="ملاحظة لنفسي";
+/* Title for note to self chat messages view header, at the top the chat room */
+"chat.messages.noteToSelf.header.title"="احتفظ بها لنفسك";
+/* Description text for note to self chat messages view header, at the top of the chat room */
+"chat.messages.noteToSelf.header.description"="مساحة خاصة للصور أو المعلومات المهمة أو الأفكار الكبيرة. تتم مزامنتها وحمايتها دائمًا باستخدام تشفير المعرفة الصفرية.";

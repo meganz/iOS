@@ -2733,9 +2733,9 @@
 /* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
 "account.profile.renewal.future"="Renews on %@";
 /* Renewal date of the current PRO account, when the date is today */
-"account.profile.renewal.today"="Renews Today";
+"account.profile.renewal.today"="Renews today";
 /* Renewal date of the current PRO account, when the date is tomorrow */
-"account.profile.renewal.tomorrow"="Renews Tomorrow";
+"account.profile.renewal.tomorrow"="Renews tomorrow";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -4579,7 +4579,7 @@
 /* Hidden files and folders onboarding content item one title */
 "onboarding.hiddenFilesAndFolders.content.item.one.title"="Hide files and folders";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud Drive, Photos, and Recents section.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Control visibility easily";
 /* Hidden files and folders onboarding content item two message */
