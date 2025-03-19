@@ -184,12 +184,36 @@ final class AdsSlotViewModelTests: XCTestCase {
     
     // MARK: - Ads slot
     @MainActor func testDetermineAdsAvailability_whenAccountIsNotFree_shouldDisableExternalAds() async throws {
-        let billedAccountTypes = AccountTypeEntity.allCases.filter({ $0 != .free })
+        try await assertDetermineAdsAvailabilityForAccountTypeList(
+            billedAccountTypes: AccountTypeEntity.allCases.filter({ $0 != .free }),
+            hasValidProOrUnexpiredBusinessAccount: true
+        )
+    }
+    
+    @MainActor func testDetermineAdsAvailability_whenAccountIsExpiredBusinessAndExpiredProFlexi_shouldEnableExternalAds() async throws {
+        try await assertDetermineAdsAvailabilityForAccountTypeList(
+            billedAccountTypes: [.business, .proFlexi],
+            hasValidProOrUnexpiredBusinessAccount: false
+        )
+    }
+    
+    @MainActor private func assertDetermineAdsAvailabilityForAccountTypeList(
+        billedAccountTypes: [AccountTypeEntity],
+        hasValidProOrUnexpiredBusinessAccount: Bool
+    ) async throws {
         for type in billedAccountTypes {
-            let sut = makeSUT(accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: type)))
+            let sut = makeSUT(
+                accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: type)),
+                hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount
+            )
             await sut.determineAdsAvailability()
             let isExternalAdsEnabled = try XCTUnwrap(sut.isExternalAdsEnabled)
-            XCTAssertFalse(isExternalAdsEnabled, "Account type \(type) should hide ads")
+            let expectedIsExternalAdsEnabled = !hasValidProOrUnexpiredBusinessAccount
+            XCTAssertEqual(
+                isExternalAdsEnabled,
+                expectedIsExternalAdsEnabled,
+                "Account type \(type) should \(expectedIsExternalAdsEnabled ? "show" : "hide") ads"
+            )
         }
     }
     
@@ -467,6 +491,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         isLoggedIn: Bool = true,
         publicNodeLink: String? = nil,
         isFolderLink: Bool = false,
+        hasValidProOrUnexpiredBusinessAccount: Bool = false,
         logger: ((String) -> Void)? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -478,7 +503,7 @@ final class AdsSlotViewModelTests: XCTestCase {
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             adMobConsentManager: adMobConsentManager,
             appEnvironmentUseCase: appEnvironmentUseCase,
-            accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult),
+            accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn, accountDetailsResult: accountDetailsResult, hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount),
             purchaseUseCase: purchaseUseCase,
             preferenceUseCase: MockPreferenceUseCase(),
             tracker: tracker,
