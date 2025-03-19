@@ -1,13 +1,14 @@
 import DeviceCenter
+import MEGADomain
 
 public final class MockBackupStatusProvider: BackupStatusProviding {
-    private let statuses: [BackupStatus]
+    private let stubbedItem: BackupStatus?
     
-    public init(statuses: [BackupStatus]) {
-        self.statuses = statuses
+    public init(stubbedItem: BackupStatus? = nil) {
+        self.stubbedItem = stubbedItem
     }
     
-    public func createBackupStatuses() -> [BackupStatus] {
-        statuses
+    public func backupStatus(for status: BackupStatusEntity) -> BackupStatus? {
+        stubbedItem
     }
 }

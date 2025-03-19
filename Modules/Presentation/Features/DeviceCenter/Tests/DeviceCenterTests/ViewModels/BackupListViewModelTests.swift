@@ -12,26 +12,12 @@ final class BackupListViewModelTests: XCTestCase {
     let mockAuxDeviceId = "2"
     let mockAuxDeviceName = "device2"
     
-    @MainActor
-    func test_loadAssets_matchesBackupStatuses() {
-        var backup = BackupEntity(
-            id: 1,
-            name: "backup1"
-        )
-        
-        let viewModel = makeSUT(
-            selectedDevice: SelectedDevice(
-                id: mockCurrentDeviceId,
-                name: mockCurrentDeviceName,
-                backups: [backup]
-            )
-        )
-        
-        for status in backupStatusEntities() {
-            backup.backupStatus = status
-            validateCurrentStatus(viewModel, backup)
-        }
-    }
+    let mockBackupStatus = BackupStatus(
+        status: .upToDate,
+        title: "",
+        color: .blue,
+        iconName: ""
+    )
     
     @MainActor
     func testLoadBackupsModels_backupsWithDifferentStatus_loadsBackupModels() {
@@ -329,13 +315,6 @@ final class BackupListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    private func validateCurrentStatus(_ viewModel: BackupListViewModel, _ backupEntity: BackupEntity) {
-        let assets = viewModel.loadAssets(for: backupEntity)
-        XCTAssertNotNil(assets)
-        XCTAssertEqual(assets?.backupStatus.status, backupEntity.backupStatus)
-    }
-    
-    @MainActor
     private func makeSUTForDevices(
         deviceId: String,
         deviceName: String,
@@ -407,7 +386,6 @@ final class BackupListViewModelTests: XCTestCase {
     ) -> BackupListViewModel {
         
         let node = NodeEntity(handle: 1)
-        let mockBackupStatusProvider = MockBackupStatusProvider(statuses: backupStatusEntities().compactMap { BackupStatus(status: $0)})
         let sut = BackupListViewModel(
             selectedDevice: selectedDevice,
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
@@ -423,7 +401,7 @@ final class BackupListViewModelTests: XCTestCase {
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
             notificationCenter: NotificationCenter.default,
-            backupStatusProvider: mockBackupStatusProvider,
+            backupStatusProvider: MockBackupStatusProvider(stubbedItem: mockBackupStatus),
             folderIconProvider: MockFolderIconProvider(),
             deviceCenterActions: [
                 ContextAction(

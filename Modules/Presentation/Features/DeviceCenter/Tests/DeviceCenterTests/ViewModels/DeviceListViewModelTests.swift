@@ -12,6 +12,13 @@ final class DeviceListViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
     let mockAuxDeviceId = "2"
     
+    let mockBackupStatus = BackupStatus(
+        status: .upToDate,
+        title: "",
+        color: .blue,
+        iconName: ""
+    )
+    
     @MainActor
     func testLoadUserDevices_returnsUserDevices() async throws {
         let sourceDevices = devices()
@@ -317,8 +324,6 @@ final class DeviceListViewModelTests: XCTestCase {
         networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
         deviceIconProvider: MockDeviceIconProvider = MockDeviceIconProvider()
     ) -> DeviceListViewModel {
-        let backupStatusProvider = MockBackupStatusProvider(statuses: backupStatusEntities())
-        
         let sut = DeviceListViewModel(
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             refreshDevicesPublisher: PassthroughSubject<Void, Never>(),
@@ -331,7 +336,7 @@ final class DeviceListViewModelTests: XCTestCase {
             ),
             nodeUseCase: MockNodeDataUseCase(),
             networkMonitorUseCase: networkMonitorUseCase,
-            backupStatusProvider: backupStatusProvider,
+            backupStatusProvider: MockBackupStatusProvider(stubbedItem: mockBackupStatus),
             deviceCenterActions: defaultActions,
             deviceIconProvider: deviceIconProvider,
             currentDeviceUUID: ""

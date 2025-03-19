@@ -57,7 +57,7 @@ final class BackupListsViewRouterTests: XCTestCase {
             navigationController: mockPresenter,
             deviceCenterBridge: DeviceCenterBridge(),
             deviceCenterActions: [],
-            backupStatusProvider: MockBackupStatusProvider(statuses: [])
+            backupStatusProvider: MockBackupStatusProvider()
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
