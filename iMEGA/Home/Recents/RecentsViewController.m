@@ -18,7 +18,7 @@
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 
-static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
+static const NSTimeInterval RecentsViewReloadTimeDelay = 0.5;
 
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, TextFileEditable, RecentsPreferenceProtocol>
 
