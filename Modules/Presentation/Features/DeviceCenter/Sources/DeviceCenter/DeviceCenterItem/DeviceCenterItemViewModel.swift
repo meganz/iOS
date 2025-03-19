@@ -297,52 +297,52 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     func backupStatusDetailedErrorMessage() -> String? {
         guard case let .backup(backup) = itemType,
               backup.backupStatus == .error else { return nil }
-        switch backup.substate {
-        case .unknownError: return Strings.Localizable.Device.Center.Backup.Error.unknown
-        case .unsupportedFileSystem: return Strings.Localizable.Device.Center.Backup.Error.fileSystemUnsupported
-        case .invalidRemoteType: return Strings.Localizable.Device.Center.Backup.Error.folderCantSync
-        case .invalidLocalType: return Strings.Localizable.Device.Center.Backup.Error.fileSyncIndividual
-        case .initialScanFailed: return Strings.Localizable.Device.Center.Backup.Error.initialScanFailed
-        case .localPathTemporaryUnavailable: return Strings.Localizable.Device.Center.Backup.Error.folderDeviceUnlocatedNow
-        case .localPathUnavailable: return Strings.Localizable.Device.Center.Backup.Error.folderDeviceUnlocated
-        case .remoteNodeNotFound: return Strings.Localizable.Device.Center.Backup.Error.folderMegaMovedOrDeleted
-        case .storageOverquota: return Strings.Localizable.Device.Center.Backup.Error.storageQuotaReached
-        case .accountExpired: return Strings.Localizable.Device.Center.Backup.Error.planExpired
-        case .foreignTargetOverstorage: return Strings.Localizable.Device.Center.Backup.Error.userSharedQuotaReached
-        case .remotePathHasChanged: return Strings.Localizable.Device.Center.Backup.Error.folderMegaMovedOrDeleted
-        case .shareNonFullAccess: return Strings.Localizable.Device.Center.Backup.Error.sharedFolderNoFullAccess
-        case .localFilesystemMismatch: return Strings.Localizable.Device.Center.Backup.Error.filesInFolder
-        case .putNodesError: return Strings.Localizable.Device.Center.Backup.Error.filesInFolder
-        case .activeSyncBelowPath: return Strings.Localizable.Device.Center.Backup.Error.containsSyncedFolders
-        case .activeSyncAbovePath: return Strings.Localizable.Device.Center.Backup.Error.insideSyncedFolder
-        case .remoteNodeMovedToRubbish: return Strings.Localizable.Device.Center.Backup.Error.folderInRubbish
-        case .remoteNodeInsideRubbish: return Strings.Localizable.Device.Center.Backup.Error.folderInRubbish
-        case .vBoxSharedFolderUnsupported: return Strings.Localizable.Device.Center.Backup.Error.virtualboxFolders
-        case .localPathSyncCollision: return Strings.Localizable.Device.Center.Backup.Error.insideSyncedFolder
-        case .accountBlocked: return Strings.Localizable.Device.Center.Backup.Error.accountBlocked
-        case .unknownTemporaryError: return Strings.Localizable.Device.Center.Backup.Error.problemSyncingContactSupport
-        case .tooManyActionPackets: return Strings.Localizable.Device.Center.Backup.Error.accountReloaded
-        case .loggedOut: return Strings.Localizable.Device.Center.Backup.Error.loggedOut
-        case .wholeAccountRefetched: return Strings.Localizable.Device.Center.Backup.Error.accountReloaded
-        case .backupModified: return Strings.Localizable.Device.Center.Backup.Error.changesToMegaFolder
-        case .backupSourceNotBelowDrive: return Strings.Localizable.Device.Center.Backup.Error.externalDriveUnlocated
-        case .syncConfigWriteFailure: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
-        case .activeSyncSamePath: return Strings.Localizable.Device.Center.Backup.Error.alreadySyncedPath
-        case .couldNotMoveCloudNodes: return Strings.Localizable.Device.Center.Backup.Error.renamingFailed
-        case .couldNotCreateIgnoreFile: return Strings.Localizable.Device.Center.Backup.Error.syncIgnored
-        case .syncConfigReadFailure: return Strings.Localizable.Device.Center.Backup.Error.couldntReadSyncConfig
-        case .unknownDrivePath: return Strings.Localizable.Device.Center.Backup.Error.unknownDrivePath
-        case .invalidScanInterval: return Strings.Localizable.Device.Center.Backup.Error.invalidScanInterval
-        case .notificationSystemUnavailable: return Strings.Localizable.Device.Center.Backup.Error.communicateWithFolderLocation
-        case .unableToAddWatch: return Strings.Localizable.Device.Center.Backup.Error.addFilesystemWatch
-        case .unableToRetrieveRootFSID: return Strings.Localizable.Device.Center.Backup.Error.cantReadSyncLocation
-        case .unableToOpenDatabase: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
-        case .insufficientDiskSpace: return Strings.Localizable.Device.Center.Backup.Error.insufficientDownloadSpace
-        case .failureAccessingPersistentStorage: return Strings.Localizable.Device.Center.Backup.Error.cantReadSyncLocation
-        case .mismatchOfRootRSID: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
-        case .filesystemFileIdsAreUnstable: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
-        case .filesystemIDUnavailable: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
-        default: return Strings.Localizable.Device.Center.Backup.Error.unknown
+        return switch backup.substate {
+        case .unknownError: Strings.Localizable.Device.Center.Backup.Error.unknown
+        case .unsupportedFileSystem: Strings.Localizable.Device.Center.Backup.Error.fileSystemUnsupported
+        case .invalidRemoteType: Strings.Localizable.Device.Center.Backup.Error.folderCantSync
+        case .invalidLocalType: Strings.Localizable.Device.Center.Backup.Error.fileSyncIndividual
+        case .initialScanFailed: Strings.Localizable.Device.Center.Backup.Error.initialScanFailed
+        case .localPathTemporaryUnavailable: Strings.Localizable.Device.Center.Backup.Error.folderDeviceUnlocatedNow
+        case .localPathUnavailable: Strings.Localizable.Device.Center.Backup.Error.folderDeviceUnlocated
+        case .remoteNodeNotFound: Strings.Localizable.Device.Center.Backup.Error.folderMegaMovedOrDeleted
+        case .storageOverquota: Strings.Localizable.Device.Center.Backup.Error.storageQuotaReached
+        case .accountExpired: Strings.Localizable.Device.Center.Backup.Error.planExpired
+        case .foreignTargetOverstorage: Strings.Localizable.Device.Center.Backup.Error.userSharedQuotaReached
+        case .remotePathHasChanged: Strings.Localizable.Device.Center.Backup.Error.folderMegaMovedOrDeleted
+        case .shareNonFullAccess: Strings.Localizable.Device.Center.Backup.Error.sharedFolderNoFullAccess
+        case .localFilesystemMismatch: Strings.Localizable.Device.Center.Backup.Error.filesInFolder
+        case .putNodesError: Strings.Localizable.Device.Center.Backup.Error.filesInFolder
+        case .activeSyncBelowPath: Strings.Localizable.Device.Center.Backup.Error.containsSyncedFolders
+        case .activeSyncAbovePath: Strings.Localizable.Device.Center.Backup.Error.insideSyncedFolder
+        case .remoteNodeMovedToRubbish: Strings.Localizable.Device.Center.Backup.Error.folderInRubbish
+        case .remoteNodeInsideRubbish: Strings.Localizable.Device.Center.Backup.Error.folderInRubbish
+        case .vBoxSharedFolderUnsupported: Strings.Localizable.Device.Center.Backup.Error.virtualboxFolders
+        case .localPathSyncCollision: Strings.Localizable.Device.Center.Backup.Error.insideSyncedFolder
+        case .accountBlocked: Strings.Localizable.Device.Center.Backup.Error.accountBlocked
+        case .unknownTemporaryError: Strings.Localizable.Device.Center.Backup.Error.problemSyncingContactSupport
+        case .tooManyActionPackets: Strings.Localizable.Device.Center.Backup.Error.accountReloaded
+        case .loggedOut: Strings.Localizable.Device.Center.Backup.Error.loggedOut
+        case .wholeAccountRefetched: Strings.Localizable.Device.Center.Backup.Error.accountReloaded
+        case .backupModified: Strings.Localizable.Device.Center.Backup.Error.changesToMegaFolder
+        case .backupSourceNotBelowDrive: Strings.Localizable.Device.Center.Backup.Error.externalDriveUnlocated
+        case .syncConfigWriteFailure: Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
+        case .activeSyncSamePath: Strings.Localizable.Device.Center.Backup.Error.alreadySyncedPath
+        case .couldNotMoveCloudNodes: Strings.Localizable.Device.Center.Backup.Error.renamingFailed
+        case .couldNotCreateIgnoreFile: Strings.Localizable.Device.Center.Backup.Error.syncIgnored
+        case .syncConfigReadFailure: Strings.Localizable.Device.Center.Backup.Error.couldntReadSyncConfig
+        case .unknownDrivePath: Strings.Localizable.Device.Center.Backup.Error.unknownDrivePath
+        case .invalidScanInterval: Strings.Localizable.Device.Center.Backup.Error.invalidScanInterval
+        case .notificationSystemUnavailable: Strings.Localizable.Device.Center.Backup.Error.communicateWithFolderLocation
+        case .unableToAddWatch: Strings.Localizable.Device.Center.Backup.Error.addFilesystemWatch
+        case .unableToRetrieveRootFSID: Strings.Localizable.Device.Center.Backup.Error.cantReadSyncLocation
+        case .unableToOpenDatabase: Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
+        case .insufficientDiskSpace: Strings.Localizable.Device.Center.Backup.Error.insufficientDownloadSpace
+        case .failureAccessingPersistentStorage: Strings.Localizable.Device.Center.Backup.Error.cantReadSyncLocation
+        case .mismatchOfRootRSID: Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
+        case .filesystemFileIdsAreUnstable: Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
+        case .filesystemIDUnavailable: Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
+        default: Strings.Localizable.Device.Center.Backup.Error.unknown
         }
     }
 }

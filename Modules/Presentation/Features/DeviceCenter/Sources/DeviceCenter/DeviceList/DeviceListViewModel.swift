@@ -22,8 +22,6 @@ public final class DeviceListViewModel: ObservableObject {
     private var searchCancellable: AnyCancellable?
     private var currentDeviceId: String?
     private let deviceIconProvider: any DeviceIconProviding
-    /// Dictionary that allow us to organize the different backup statuses by type.
-    private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus]?
     /// Dictionary that allow us to organise the different actions available within Device Center by type.
     /// It helps to initialise the arrays of available actions for each element (devices, backups, sync, or camera uploads folders)
     /// in a simple way, using the `ContextAction.Category`.
@@ -76,7 +74,6 @@ public final class DeviceListViewModel: ObservableObject {
         self.searchText = ""
         self.currentDeviceUUID = currentDeviceUUID
         
-        buildBackupStatusLookup()
         buildActionCategoryMapping()
         setupSearchCancellable()
         setupDevicesUpdateSubscription()
@@ -86,11 +83,6 @@ public final class DeviceListViewModel: ObservableObject {
     
     deinit {
         networkMonitorTask?.cancel()
-    }
-    
-    private func buildBackupStatusLookup() {
-        let statuses = backupStatusProvider.createBackupStatuses()
-        sortedBackupStatuses = Dictionary(uniqueKeysWithValues: statuses.map { ($0.status, $0) })
     }
     
     private func buildActionCategoryMapping() {
@@ -110,7 +102,9 @@ public final class DeviceListViewModel: ObservableObject {
     private func setupSearchCancellable() {
         searchCancellable = $searchText
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-            .sink { [weak self] _ in self?.filterDevices() }
+            .sink { [weak self] _ in
+                self?.filterDevices()
+            }
     }
     
     private func loadUserDevices() {
@@ -164,7 +158,7 @@ public final class DeviceListViewModel: ObservableObject {
     
     func loadAssets(for device: DeviceEntity) -> ItemAssets? {
         guard let deviceStatus = device.status,
-              let backupStatus = sortedBackupStatuses?[deviceStatus] else { return nil }
+              let backupStatus = backupStatusProvider.backupStatus(for: deviceStatus) else { return nil }
         let userAgent = device.backups?.first?.userAgent
         return ItemAssets(
             iconName: deviceIconProvider.iconName(for: userAgent, isMobile: device.isMobileDevice() || device.id == currentDeviceUUID),
@@ -198,7 +192,9 @@ public final class DeviceListViewModel: ObservableObject {
     private func setupDevicesUpdateSubscription() {
         devicesUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] devices in self?.arrangeDevices(devices) }
+            .sink { [weak self] devices in
+                self?.arrangeDevices(devices)
+            }
             .store(in: &cancellable)
     }
     

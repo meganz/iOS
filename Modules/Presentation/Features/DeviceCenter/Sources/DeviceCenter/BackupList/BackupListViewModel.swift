@@ -26,7 +26,6 @@ public final class BackupListViewModel: ObservableObject {
     private(set) var selectedDevice: SelectedDevice
     private let backupStatusProvider: any BackupStatusProviding
     private let folderIconProvider: any FolderIconProviding
-    private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus]?
     private var sortedAvailableActions: [ContextAction.Category: [ContextAction]]?
     
     private var backupsPreloaded = false
@@ -87,7 +86,6 @@ public final class BackupListViewModel: ObservableObject {
         self.isSearchActive = false
         self.searchText = ""
         
-        buildBackupStatusLookup()
         buildActionCategoryMapping()
         setupSearchCancellable()
         addObservers()
@@ -102,11 +100,6 @@ public final class BackupListViewModel: ObservableObject {
     deinit {
         networkMonitorTask?.cancel()
         shouldChangeCUBackupNameTask?.cancel()
-    }
-    
-    private func buildBackupStatusLookup() {
-        let statuses = backupStatusProvider.createBackupStatuses()
-        sortedBackupStatuses = Dictionary(uniqueKeysWithValues: statuses.map { ($0.status, $0) })
     }
     
     private func buildActionCategoryMapping() {
@@ -226,7 +219,7 @@ public final class BackupListViewModel: ObservableObject {
     
     func loadAssets(for backup: BackupEntity) -> ItemAssets? {
         guard let backupStatus = backup.backupStatus,
-              let status = sortedBackupStatuses?[backupStatus],
+              let status = backupStatusProvider.backupStatus(for: backupStatus),
               let backupIcon = folderIconProvider.iconName(for: backup.type) else {
             return nil
         }

@@ -25,98 +25,98 @@ final class BackupStatusFactory: BackupStatusFactoryProtocol {
 }
 
 public protocol BackupStatusProviding {
-    func createBackupStatuses() -> [BackupStatus]
+    func backupStatus(for status: BackupStatusEntity) -> BackupStatus?
 }
 
 public final class BackupStatusProvider: BackupStatusProviding {
+    private lazy var backupStatusDictionary: [BackupStatusEntity: BackupStatus] = {
+        Dictionary(uniqueKeysWithValues: createBackupStatuses().map { ($0.status, $0) })
+    }()
+    
     public init() {}
     
-    public func createBackupStatuses() -> [BackupStatus] {
+    public func backupStatus(for status: BackupStatusEntity) -> BackupStatus? {
+        backupStatusDictionary[status]
+    }
+    
+    private func createBackupStatuses() -> [BackupStatus] {
         [
-            BackupStatusFactory.createBackupStatus(
-               status: .upToDate,
-               title: Strings.Localizable.Device.Center.Backup.UpToDate.Status.message,
-               color: TokenColors.Text.success,
-               iconName: BackUpStatusIconAssets.upToDate
+            BackupStatus(
+                status: .upToDate,
+                title: Strings.Localizable.Device.Center.Backup.UpToDate.Status.message,
+                color: TokenColors.Text.success,
+                iconName: BackUpStatusIconAssets.upToDate.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .scanning,
                 title: Strings.Localizable.Device.Center.Backup.Scanning.Status.message,
                 color: TokenColors.Text.info,
-                iconName: BackUpStatusIconAssets.updating
+                iconName: BackUpStatusIconAssets.updating.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .initialising,
                 title: Strings.Localizable.Device.Center.Backup.Initialising.Status.message,
                 color: TokenColors.Text.info,
-                iconName: BackUpStatusIconAssets.updating
+                iconName: BackUpStatusIconAssets.updating.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .updating,
                 title: Strings.Localizable.Device.Center.Backup.Updating.Status.message,
                 color: TokenColors.Text.info,
-                iconName: BackUpStatusIconAssets.updating
+                iconName: BackUpStatusIconAssets.updating.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .noCameraUploads,
                 title: Strings.Localizable.Device.Center.Backup.NoCameraUploads.Status.message,
                 color: TokenColors.Text.warning,
-                iconName: BackUpStatusIconAssets.noCameraUploads
+                iconName: BackUpStatusIconAssets.noCameraUploads.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .disabled,
                 title: Strings.Localizable.Device.Center.Backup.Disabled.Status.message,
                 color: TokenColors.Text.warning,
-                iconName: BackUpStatusIconAssets.disabled
+                iconName: BackUpStatusIconAssets.disabled.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .offline,
                 title: Strings.Localizable.Device.Center.Backup.Offline.Status.message,
                 color: TokenColors.Text.secondary,
-                iconName: BackUpStatusIconAssets.offline
+                iconName: BackUpStatusIconAssets.offline.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .backupStopped,
                 title: Strings.Localizable.Device.Center.Backup.BackupStopped.Status.message,
                 color: TokenColors.Text.secondary,
-                iconName: BackUpStatusIconAssets.error
+                iconName: BackUpStatusIconAssets.error.rawValue
             ),
-            
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .paused,
                 title: Strings.Localizable.Device.Center.Backup.Paused.Status.message,
                 color: TokenColors.Text.secondary,
-                iconName: BackUpStatusIconAssets.paused
+                iconName: BackUpStatusIconAssets.paused.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .outOfQuota,
                 title: Strings.Localizable.Device.Center.Backup.OutOfQuota.Status.message,
                 color: TokenColors.Text.error,
-                iconName: BackUpStatusIconAssets.outOfQuota
+                iconName: BackUpStatusIconAssets.outOfQuota.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .error,
                 title: Strings.Localizable.Device.Center.Backup.Error.Status.message,
                 color: TokenColors.Text.error,
-                iconName: BackUpStatusIconAssets.error
+                iconName: BackUpStatusIconAssets.error.rawValue
             ),
-            BackupStatusFactory.createBackupStatus(
+            BackupStatus(
                 status: .blocked,
                 title: Strings.Localizable.Device.Center.Backup.Blocked.Status.message,
                 color: TokenColors.Text.error,
-                iconName: BackUpStatusIconAssets.disabled
+                iconName: BackUpStatusIconAssets.disabled.rawValue
             )
         ]
     }
     
-    private struct BackUpStatusIconAssets {
-        static let upToDate = "upToDate"
-        static let updating = "updating"
-        static let noCameraUploads = "noCameraUploads"
-        static let disabled  = "disabled"
-        static let offline = "offline"
-        static let error = "error"
-        static let paused = "paused"
-        static let outOfQuota = "outOfQuota"
+    private enum BackUpStatusIconAssets: String {
+        case upToDate, updating, noCameraUploads, disabled, offline, error, paused, outOfQuota
     }
 }
