@@ -13,21 +13,24 @@ public func releaseInput() throws -> ReleaseInput {
 }
 
 public func defaultReleaseNotesTemplate(
-    sdkVersion: String,
-    chatVersion: String
+    sdkVersion: SubmoduleReferenceType,
+    chatVersion: SubmoduleReferenceType
 ) -> String {
     """
     Bug fixes and performance improvements.
-    - SDK release - \(sdkVersion)
-    - MEGAChat release - \(chatVersion)
+    - \(sdkVersion.description(type: "SDK"))
+    - \(chatVersion.description(type: "Chat SDK"))
     """
 }
 
 private func defaultReleaseNotesInput() throws -> String {
     print("Fetching the SDK and Chat branch names")
-    let sdkVersion = try branchNameForSubmodule(with: Submodule.sdk.path)
-    let chatVersion = try branchNameForSubmodule(with: Submodule.chatSDK.path)
-    print("SDK: \(sdkVersion) \t Chat SDK: \(chatVersion)")
+    let sdkVersion = try tagOrBranchNameForSubmodule(with: Submodule.sdk.path)
+    let chatVersion = try tagOrBranchNameForSubmodule(with: Submodule.chatSDK.path)
+    print("""
+    \(sdkVersion.description(type: "SDK"))
+    \(chatVersion.description(type: "Chat SDK"))
+    """)
 
     return defaultReleaseNotesTemplate(sdkVersion: sdkVersion, chatVersion: chatVersion)
 }
