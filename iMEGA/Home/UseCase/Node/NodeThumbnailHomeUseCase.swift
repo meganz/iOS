@@ -10,6 +10,8 @@ protocol NodeThumbnailHomeUseCaseProtocol: Sendable {
         of nodeHandle: HandleEntity,
         completion: @escaping (UIImage?) -> Void
     )
+    
+    func loadThumbnail(of nodeHandle: HandleEntity) async -> UIImage?
 }
 
 struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
@@ -38,6 +40,14 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         }
         asyncOnGlobal {
             downloadthumbnailForNode(node, completion: completion)
+        }
+    }
+    
+    func loadThumbnail(of nodeHandle: HandleEntity) async -> UIImage? {
+        await withCheckedContinuation { continuation in
+            loadThumbnail(of: nodeHandle) { image in
+                continuation.resume(returning: image)
+            }
         }
     }
 

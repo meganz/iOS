@@ -2603,7 +2603,6 @@
 		C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */; };
 		C4F06F742B691633005C1A3D /* UpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F712B6915F7005C1A3D /* UpgradeEncouragementShowTimeTracker.swift */; };
 		C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */; };
-		C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */; };
 		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
@@ -5359,7 +5358,6 @@
 		C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeEncouragementShowTimeTracker.swift; sourceTree = "<group>"; };
 		C4F06F712B6915F7005C1A3D /* UpgradeEncouragementShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementShowTimeTracker.swift; sourceTree = "<group>"; };
 		C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementShowTimeTrackerTests.swift; sourceTree = "<group>"; };
-		C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAsset+Additions.swift"; sourceTree = "<group>"; };
 		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
@@ -7283,7 +7281,6 @@
 				2FF46AF524D251EA00D6C504 /* FDFullscreenPopGesture */,
 				5D79B519249846E70070FECD /* Foundation */,
 				5D03C99D2488972400BE5EEB /* UIKit */,
-				C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */,
 				C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */,
 				BF7EBD27244E8B5A0015255F /* CGPoint+Additions.swift */,
 				0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */,
@@ -14342,7 +14339,6 @@
 				BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */,
 				BFE149732C7410F60024555A /* AutoGrowingTextView.swift in Sources */,
 				0E96EAD32ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift in Sources */,
-				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
 				25E2717D2A3FE96800DDB678 /* AVPlayerManager.swift in Sources */,
 				0E43E1422B2F9CF00079700A /* AVViewModel.swift in Sources */,

@@ -33,12 +33,6 @@ final class AudioPlayer: NSObject {
     let preloadMetadataMaxItems = 3
     let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
-    var opQueue = OperationQueue() {
-        didSet {
-            opQueue.qualityOfService = .background
-            opQueue.maxConcurrentOperationCount = preloadMetadataMaxItems
-        }
-    }
     var onClosePlayerCompletion: (() -> Void)?
     var isAutoPlayEnabled = true
     var isAudioPlayerInterrupted = false
@@ -51,6 +45,8 @@ final class AudioPlayer: NSObject {
     var isUserPreviouslyJustPlayedSameItem = false
     
     let queueLoader = AudioQueueLoader()
+    
+    var preloadMetadataTask: Task<Void, Never>?
     
     // MARK: - Private properties
     private var timer: Timer?
@@ -141,7 +137,8 @@ final class AudioPlayer: NSObject {
             pause()
         }
         unregister()
-        opQueue.cancelAllOperations()
+        
+        preloadMetadataTask?.cancel()
     }
     
     private func unregister() {
@@ -204,7 +201,6 @@ final class AudioPlayer: NSObject {
     private func configurePlayer() {
         isAutoPlayEnabled ? play() : pause()
         
-        opQueue.cancelAllOperations()
         preloadNextTracksMetadata()
     }
     

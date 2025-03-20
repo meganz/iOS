@@ -28,6 +28,26 @@ public extension Set where Element == Task<Void, any Error> {
     }
 }
 
+public extension Collection where Element: Sendable, Index == Int {
+    func taskGroup(maxConcurrentTasks: Int = 3, operation: @Sendable @escaping (Element) async -> Void) async {
+        await withTaskGroup(of: Void.self) { taskGroup in
+            let maxConcurrentTasks = Swift.min(maxConcurrentTasks, count)
+            for item in self[0..<maxConcurrentTasks] {
+                guard !Task.isCancelled else { break }
+                taskGroup.addTask { await operation(item) }
+            }
+            
+            var nextTaskIndex = maxConcurrentTasks
+            for await _ in taskGroup where nextTaskIndex < count {
+                guard !Task.isCancelled else { break }
+                let item = self[nextTaskIndex]
+                nextTaskIndex += 1
+                taskGroup.addTask { await operation(item) }
+            }
+        }
+    }
+}
+
 fileprivate extension Sequence where Element == Task<Void, any Error> {
     
     func task(for action: @escaping @Sendable () async -> Void) -> Task<Void, any Error> {

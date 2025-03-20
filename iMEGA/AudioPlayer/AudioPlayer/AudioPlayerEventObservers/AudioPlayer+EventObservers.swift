@@ -12,7 +12,6 @@ extension AudioPlayer {
         audioQueueBufferAlmostThereObserver = queuePlayer?.currentItem?.observe(\.isPlaybackLikelyToKeepUp, options: [.new], changeHandler: audio(playerItem:isPlaybackLikelyToKeepUp:))
         audioQueueBufferFullObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferFull:))
         audioQueueLoadedTimeRangesObserver = queuePlayer?.currentItem?.observe(\.loadedTimeRanges, options: .new, changeHandler: audio(playerItem:didLoadedTimeRanges:))
-        metadataQueueFinishAllOperationsObserver = opQueue.observe(\.operationCount, options: [.new], changeHandler: operation(queue:didFinished:))
     }
     
     func unregisterAudioPlayerEvents() {
@@ -27,7 +26,6 @@ extension AudioPlayer {
         audioQueueBufferFullObserver?.invalidate()
         audioQueueLoadedTimeRangesObserver?.invalidate()
         audioSeekFallbackObserver?.invalidate()
-        metadataQueueFinishAllOperationsObserver?.invalidate()
     }
     
     func registerAudioPlayerNotifications() {
@@ -193,12 +191,6 @@ extension AudioPlayer {
     func audio(playerItem: AVPlayerItem, isPlaybackBufferFull value: NSKeyValueObservedChange<Bool>) {
         // Audio Player buffering is hidden...
     }
-    
-    func operation(queue: OperationQueue, didFinished: NSKeyValueObservedChange<Int>) {
-        if queue.operations.isEmpty {
-            preloadNextTracksMetadata()
-        }
-    }
 
     @objc func audioPlayer(interruption notification: Notification) {
         guard let userInfo = notification.userInfo,
@@ -264,7 +256,7 @@ extension AudioPlayer {
     @objc func handleTransferQuotaExceededNotification(_ notification: Notification) {
         if !isPaused { pause() }
         
-        opQueue.cancelAllOperations()
+        preloadMetadataTask?.cancel()
         
         notify(aboutCurrentState)
     }
