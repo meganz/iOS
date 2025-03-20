@@ -79,73 +79,58 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
             .max {$0.priority < $1.priority}
     }
     
-    private func updateBackupsWithSyncStatus(_ backups: [BackupEntity]) -> [BackupEntity] {
-        let currentDate = Date().timeIntervalSince1970
-        let maxLastHeartbeatTimeForMobiles: Double = 3600.0
-        let maxLastSyncTimeForOtherDevices: Double = 1800.0
-        
-        return backups.map { backup in
+    private func updateBackupsWithSyncStatus(
+        _ backups: [BackupEntity],
+        currentTime: TimeInterval = Date().timeIntervalSince1970
+    ) -> [BackupEntity] {
+        backups.map { backup in
             var updatedBackup = backup
-            var backupSyncState: BackupStatusEntity?
-            var lastBackupHeartbeat: TimeInterval = 0
-            
-            let isMobileBackup = backup.type == .mediaUpload || backup.type == .cameraUpload
-            
-            lastBackupHeartbeat = max(
-                (backup.timestamp?.timeIntervalSince1970 ?? 0),
-                (backup.activityTimestamp?.timeIntervalSince1970 ?? 0)
-            )
-            
-            let timeSinceLastInteractionInSeconds = currentDate - lastBackupHeartbeat
-            
-            let lastInteractionOutOfRange = (isMobileBackup && timeSinceLastInteractionInSeconds > maxLastHeartbeatTimeForMobiles) || !isMobileBackup && timeSinceLastInteractionInSeconds > maxLastSyncTimeForOtherDevices
-            
-            switch backup.syncState {
-            case .unknown:
-                backupSyncState = .backupStopped
-            case .failed, .temporaryDisabled:
-                switch backup.substate {
-                case .storageOverquota:
-                    backupSyncState = .outOfQuota
-                case .accountExpired, .accountBlocked, .noSyncError:
-                    backupSyncState = .blocked
+
+            updatedBackup.backupStatus = {
+                switch backup.syncState {
+                case .unknown:
+                    return .backupStopped
+                case .failed, .temporaryDisabled:
+                    switch backup.substate {
+                    case .storageOverquota:
+                        return .outOfQuota
+                    case .accountExpired, .accountBlocked, .noSyncError:
+                        return .blocked
+                    default:
+                        return .error
+                    }
+                case .pauseDown:
+                    return .paused
+                case .disabled:
+                    return .disabled
                 default:
-                    backupSyncState = .error
-                }
-            case .pauseDown:
-                backupSyncState = .paused
-            case .disabled:
-                backupSyncState = .disabled
-            default:
-                if lastBackupHeartbeat == 0 || lastInteractionOutOfRange {
-                    let backupOlderThan10Minutes = currentDate - (backup.timestamp?.timeIntervalSince1970 ?? 0) > 600
-                    let currentBackupFolderExists = backup.rootHandle != .invalid
-                    
-                    if currentBackupFolderExists || backupOlderThan10Minutes {
-                        backupSyncState = .offline
-                    }
-                } else if backup.isPaused() {
-                    backupSyncState = .paused
-                } else {
-                    switch backup.status {
-                    case .upToDate, .inactive:
-                        if backup.syncState == .active || backup.syncState.isPaused() {
-                            backupSyncState = .upToDate
+                    if backup.lastBackupHeartbeat == 0 || backup.lastInteractionOutOfRange(from: currentTime) {
+                        let backupOlderThan10Minutes = currentTime - (backup.timestamp?.timeIntervalSince1970 ?? 0) > 600
+                        if backup.rootHandle != .invalid || backupOlderThan10Minutes {
+                            return .offline
                         }
-                    case .stalled: // specific status for syncs
-                        backupSyncState = .blocked
-                    case .unknown:
-                        backupSyncState = .initialising
-                    case .syncing:
-                        backupSyncState = .updating
-                    case .pending:
-                        backupSyncState = .scanning
+                    } else if backup.isPaused {
+                        return .paused
+                    } else {
+                        switch backup.status {
+                        case .upToDate, .inactive:
+                            if backup.syncState == .active || backup.syncState.isPaused {
+                                return .upToDate
+                            }
+                        case .stalled:
+                            return .blocked
+                        case .unknown:
+                            return .initialising
+                        case .syncing:
+                            return .updating
+                        case .pending:
+                            return .scanning
+                        }
                     }
+                    return nil
                 }
-            }
-            
-            updatedBackup.backupStatus = backupSyncState
-            
+            }()
+
             return updatedBackup
         }
     }

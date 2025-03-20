@@ -30,6 +30,32 @@ public struct BackupEntity: Sendable, Identifiable {
     public let timestamp: Date?
     public let activityTimestamp: Date?
     
+    public var isMobileBackup: Bool {
+        type == .mediaUpload || type == .cameraUpload
+    }
+    
+    /// The last heartbeat timestamp (in seconds since 1970) from either timestamp or activityTimestamp.
+    public var lastBackupHeartbeat: TimeInterval {
+        max(timestamp?.timeIntervalSince1970 ?? 0,
+            activityTimestamp?.timeIntervalSince1970 ?? 0)
+    }
+    
+    public var isTwoWayPaused: Bool {
+        type == .twoWay && syncState.isPaused
+    }
+    
+    public var isUploadPaused: Bool {
+        type.isUpload() && (syncState == .pauseUp || syncState == .pauseFull)
+    }
+    
+    public var isDownSyncPaused: Bool {
+        type == .downSync && (syncState == .pauseDown || syncState == .pauseFull)
+    }
+    
+    public var isPaused: Bool {
+        isTwoWayPaused || isUploadPaused || isDownSyncPaused
+    }
+    
     public init(
         id: Int,
         name: String,
@@ -68,20 +94,22 @@ public struct BackupEntity: Sendable, Identifiable {
         self.activityTimestamp = activityTimestamp
     }
     
-    public func isTwoWayPaused() -> Bool {
-        type == .twoWay && syncState.isPaused()
+    /// Returns the time (in seconds) since the last backup heartbeat based on a given reference time.
+    public func timeSinceLastInteraction(from currentTime: TimeInterval = Date().timeIntervalSince1970) -> TimeInterval {
+        currentTime - lastBackupHeartbeat
     }
     
-    public func isUploadPaused() -> Bool {
-        type.isUpload() && (syncState == .pauseUp || syncState == .pauseFull)
-    }
-    
-    public func isDownSyncPaused() -> Bool {
-        type == .downSync && (syncState == .pauseDown || syncState == .pauseFull)
-    }
-    
-    public func isPaused() -> Bool {
-        isTwoWayPaused() || isUploadPaused() || isDownSyncPaused()
+    /// Determines if the elapsed time since the last backup interaction exceeds the allowed threshold.
+    ///
+    /// The allowed threshold (`maxInterval`) is defined in minutes and varies based on the backup type:
+    /// - **Mobile Backups** (e.g. mediaUpload, cameraUpload): A maximum interval of **60 minutes**.
+    /// - **Other Backups or syncs**: A maximum interval of **30 minutes**.
+    ///
+    /// - Parameter currentTime: The reference time (in seconds since 1970) used to compute the elapsed time. Defaults to the current time.
+    /// - Returns: `true` if the elapsed time exceeds the allowed threshold, otherwise `false`.
+    public func lastInteractionOutOfRange(from currentTime: TimeInterval = Date().timeIntervalSince1970) -> Bool {
+        let maxInterval: TimeInterval = isMobileBackup ? 3600.0 : 1800.0
+        return timeSinceLastInteraction(from: currentTime) > maxInterval
     }
 }
 
