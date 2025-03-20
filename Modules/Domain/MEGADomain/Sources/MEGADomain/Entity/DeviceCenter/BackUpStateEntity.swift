@@ -13,7 +13,7 @@ public enum BackUpStateEntity: Sendable {
     case deleted
     case unknown
     
-    public func isPaused() -> Bool {
+    public var isPaused: Bool {
         self == .pauseUp || self == .pauseDown || self == .pauseFull
     }
 }
