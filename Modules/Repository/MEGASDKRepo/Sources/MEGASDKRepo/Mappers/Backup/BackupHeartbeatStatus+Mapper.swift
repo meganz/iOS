@@ -3,25 +3,27 @@ import MEGASdk
 
 extension MEGABackupHeartbeatStatus {
     public func toBackupHeartbeatStatusEntity() -> BackupHeartbeatStatusEntity {
-        switch self {
-        case .upToDate: return .upToDate
-        case .syncing: return .syncing
-        case .pending: return .pending
-        case .inactive: return .inactive
-        case .unknown: return .unknown
-        @unknown default: return .unknown
+        return switch self {
+        case .upToDate: .upToDate
+        case .syncing: .syncing
+        case .pending: .pending
+        case .inactive: .inactive
+        case .stalled: .stalled
+        case .unknown: .unknown
+        @unknown default: .unknown
         }
     }
 }
 
 extension BackupHeartbeatStatusEntity {
     public func toMEGABackupHeartbeatStatus() -> MEGABackupHeartbeatStatus {
-        switch self {
-        case .upToDate: return .upToDate
-        case .syncing: return .syncing
-        case .pending: return .pending
-        case .inactive: return .inactive
-        case .unknown: return .unknown
+        return switch self {
+        case .upToDate: .upToDate
+        case .syncing: .syncing
+        case .pending: .pending
+        case .inactive: .inactive
+        case .stalled: .stalled
+        case .unknown: .unknown
         }
     }
 }
