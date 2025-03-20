@@ -135,6 +135,7 @@ extension SharedItemsViewController {
         setupLabelAndFavourite(for: node, cell: cell)
         configureAccessibility(for: cell)
         configureCellDescription(cell, for: node)
+        configureCellTags(cell, for: node)
         return cell
     }
 
@@ -204,9 +205,13 @@ extension SharedItemsViewController {
             searchUnverifiedNodesArray.addObjects(from: nodes)
             return
         }
-        
+        let tagKey = key.removingFirstLeadingHash()
         nodes.indices.filter {
-            nodes[$0].name?.lowercased().contains(key.lowercased()) == true
+            nodes[$0].name?.containsIgnoringCaseAndDiacritics(searchText: key) == true
+            || nodes[$0].description?.containsIgnoringCaseAndDiacritics(searchText: key) == true
+            || (viewModel.isSearchByNodetagsEnabled && nodes[$0].tags?.toStringArray()?.contains(
+                where: { $0.containsIgnoringCaseAndDiacritics(searchText: tagKey) }
+            ) == true)
         }.forEach { index in
             searchUnverifiedSharesArray.add(shares[index])
             searchUnverifiedNodesArray.add(nodes[index])
