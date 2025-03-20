@@ -132,6 +132,8 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
                         if backup.syncState == .active || backup.syncState.isPaused() {
                             backupSyncState = .upToDate
                         }
+                    case .stalled: // specific status for syncs
+                        backupSyncState = .blocked
                     case .unknown:
                         backupSyncState = .initialising
                     case .syncing:

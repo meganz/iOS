@@ -5,5 +5,6 @@ public enum BackupHeartbeatStatusEntity: Sendable {
     case syncing
     case pending
     case inactive
+    case stalled
     case unknown
 }

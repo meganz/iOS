@@ -143,7 +143,7 @@ final class DeviceCenterRepositoryTests: XCTestCase {
             let backupType = MEGABackupType(rawValue: Int.random(in: -1...5)) ?? .invalid
             let syncState = BackUpState(rawValue: Int.random(in: 0...9)) ?? .unknown
             let backupSubstate = syncState == .failed || syncState == .temporaryDisabled ? BackUpSubState(rawValue: Int.random(in: 0...45)) ?? .noSyncError : .noSyncError
-            let heartbeatStatus = MEGABackupHeartbeatStatus(rawValue: UInt(Int.random(in: 1...5))) ?? .unknown
+            let heartbeatStatus = MEGABackupHeartbeatStatus(rawValue: UInt(Int.random(in: 1...6))) ?? .unknown
             
             let mockBackupInfo = MockBackupInfo(
                 identifier: identifier,
