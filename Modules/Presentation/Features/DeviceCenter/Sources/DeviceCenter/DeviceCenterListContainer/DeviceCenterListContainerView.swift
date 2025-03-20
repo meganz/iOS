@@ -44,9 +44,9 @@ struct ListViewContainer<Content>: View where Content: View {
         ActionSheetContentView(
             headerView:
                 ActionSheetHeaderView(
-                    iconName: selectedItem.assets.iconName,
+                    headerIcon: Image(selectedItem.assets.iconName, bundle: .module),
                     title: selectedItem.name,
-                    detailImageName: selectedItem.assets.backupStatus.iconName,
+                    subtitleIcon: Image(selectedItem.assets.backupStatus.iconName, bundle: .module),
                     subtitle: selectedItem.assets.backupStatus.title,
                     subtitleColor: selectedItem.assets.backupStatus.color
                 ),
