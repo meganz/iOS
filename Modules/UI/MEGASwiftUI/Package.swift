@@ -24,6 +24,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../MEGAUI"),
+        .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../Presentation/MEGAPresentation"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../Infrastracture/MEGATest")
@@ -35,6 +36,7 @@ let package = Package(
                 "MEGAUI",
                 "MEGAPresentation",
                 "MEGAFoundation",
+                "MEGAL10n",
                 "MEGADesignToken"
             ],
             swiftSettings: settings
@@ -47,6 +49,7 @@ let package = Package(
             name: "MEGASwiftUITests",
             dependencies: ["MEGASwiftUI",
                            "MEGASwiftUIMock",
+                           "MEGAL10n",
                            "MEGATest"
                           ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")])

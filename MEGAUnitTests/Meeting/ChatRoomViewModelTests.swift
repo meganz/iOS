@@ -1,3 +1,4 @@
+@testable import Chat
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -188,6 +189,7 @@ class ChatRoomViewModelFactory {
             callUseCase: callUseCase,
             audioSessionUseCase: audioSessionUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
+            noteToSelfNewFeatureBadgeStore: NoteToSelfNewFeatureBadgeStore(userAttributeUseCase: MockUserAttributeUseCase()),
             chatNotificationControl: chatNotificationControl ?? ChatNotificationControl(delegate: MockPushNotificationControl()),
             permissionRouter: _permissionRouter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,

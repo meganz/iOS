@@ -8,6 +8,8 @@ public protocol UserAttributeUseCaseProtocol: Sendable {
     func saveScheduledMeetingOnBoardingRecord(key: String, record: ScheduledMeetingOnboardingRecord) async throws
     func retrieveRaiseHandAttribute() async throws -> RaiseHandNewFeatureBadgeEntity?
     func saveRaiseHandNewFeatureBadge(presentedTimes: Int) async throws
+    func retrieveNoteToSelfNewFeatureBadgeAttribute() async throws -> NoteToSelfNewFeatureBadgeEntity?
+    func saveNoteToSelfNewFeatureBadge(presentedTimes: Int) async throws
 }
 
 public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttributeUseCaseProtocol {
@@ -95,7 +97,7 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
         }
     }
     
-    // MARK: - Scheduled meeting onboarding
+    // MARK: - Raise hand 'NEW' badge
     
     public func retrieveRaiseHandAttribute() async throws -> RaiseHandNewFeatureBadgeEntity? {
         guard let jsonData = try await retrieveRaiseHandJSONData() else { return nil }
@@ -125,5 +127,37 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
         guard let raiseHandTipIosData = try? JSONEncoder().encode(raiseHandNewFeatureBadgeEntity) else { throw JSONCodingErrorEntity.encoding }
         
         return String(decoding: raiseHandTipIosData, as: UTF8.self)
+    }
+    
+    // MARK: - Note to self 'NEW' badge
+    
+    public func retrieveNoteToSelfNewFeatureBadgeAttribute() async throws -> NoteToSelfNewFeatureBadgeEntity? {
+        guard let jsonData = try await retrieveNoteToSelfNewFeatureBadgeJSONData() else { return nil }
+        return try JSONDecoder().decode(NoteToSelfNewFeatureBadgeEntity.self, from: jsonData)
+    }
+    
+    public func saveNoteToSelfNewFeatureBadge(presentedTimes: Int) async throws {
+        let resultJson = try jsonStringForNoteToSelfShowedPreference(presentedTimes: presentedTimes)
+        
+        guard resultJson.isNotEmpty else { throw JSONCodingErrorEntity.encoding }
+        try await updateUserAttribute(.appsPreferences, key: NoteToSelfNewFeatureBadgeKeyEntity.key, value: resultJson)
+    }
+    
+    private func retrieveNoteToSelfNewFeatureBadgeJSONData() async throws -> Data? {
+        let appsPreference = try? await userAttribute(for: .appsPreferences)
+        
+        guard let encodedString = appsPreference?[NoteToSelfNewFeatureBadgeKeyEntity.key] as? String,
+              encodedString.isNotEmpty,
+              let jsonData = encodedString.base64DecodedData else { return nil }
+        
+        return jsonData
+    }
+    
+    private func jsonStringForNoteToSelfShowedPreference(presentedTimes: Int) throws -> String {
+        let noteToSelfNewFeatureBadgeEntity = NoteToSelfNewFeatureBadgeEntity(presentedCount: presentedTimes)
+        
+        guard let noteToSelfData = try? JSONEncoder().encode(noteToSelfNewFeatureBadgeEntity) else { throw JSONCodingErrorEntity.encoding }
+        
+        return String(decoding: noteToSelfData, as: UTF8.self)
     }
 }

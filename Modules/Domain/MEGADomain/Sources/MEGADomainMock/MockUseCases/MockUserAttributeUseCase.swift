@@ -14,7 +14,6 @@ public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol, @unch
         contentConsumption: ContentConsumptionEntity? = nil,
         scheduleMeetingOnboarding: ScheduledMeetingOnboardingEntity? = nil,
         raiseHandNewFeatureBadge: RaiseHandNewFeatureBadgeEntity? = nil
-
     ) {
         self.userAttribute = userAttribute
         self.userAttributeContainer = userAttributeContainer
@@ -53,5 +52,18 @@ public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol, @unch
     
     public func retrieveRaiseHandAttribute() async throws -> RaiseHandNewFeatureBadgeEntity? {
         raiseHandNewFeatureBadge
+    }
+    
+    public func saveNoteToSelfNewFeatureBadge(presentedTimes: Int) async throws {
+        userAttributeContainer[.appsPreferences] = [RaiseHandNewFeatureBadgeKeyEntity.key: "\(presentedTimes)"]
+    }
+    
+    public func retrieveNoteToSelfNewFeatureBadgeAttribute() async throws -> NoteToSelfNewFeatureBadgeEntity? {
+        guard let presentedTimesString = userAttributeContainer[.appsPreferences]?[RaiseHandNewFeatureBadgeKeyEntity.key],
+              let presentedTimesInt = Int(presentedTimesString)
+        else {
+            throw GenericErrorEntity()
+        }
+        return NoteToSelfNewFeatureBadgeEntity(presentedCount: presentedTimesInt)
     }
 }
