@@ -14,8 +14,8 @@ extension ItemListViewController {
         cell.avatarView.avatarImageView.layer.cornerRadius = cell.avatarView.avatarImageView.frame.size.width / 2
         cell.avatarView.avatarImageView.layer.masksToBounds = true
         
-        if item.chat.isNoteToSelf {
-            cell.avatarView.avatarImageView.image = item.chat.noteToSelfImage()
+        if item.isNoteToSelf {
+            cell.avatarView.avatarImageView.image = item.noteToSelfImage
             cell.avatarView.configure(mode: .single)
         } else if item.isGroup {
             guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: item.handle) else { return }
