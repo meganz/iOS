@@ -31,6 +31,10 @@ import UIKit
         self.featureFlagProvider = featureFlagProvider
     }
 
+    @objc var isSearchByNodetagsEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
+    }
+
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
         Task {
             do {
@@ -76,7 +80,7 @@ import UIKit
     }
 
     @objc func tagsForNode(_ node: MEGANode, with searchText: String?) -> [NSAttributedString] {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
+        guard isSearchByNodetagsEnabled,
               let searchText,
               searchText.isNotEmpty,
               let tags = node.tags?.toStringArray() else { return [] }

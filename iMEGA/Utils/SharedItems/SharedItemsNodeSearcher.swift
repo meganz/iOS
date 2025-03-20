@@ -27,12 +27,12 @@ import MEGASDKRepo
     }
 
     private func search(type: SharedItemsSearchSourceTypeEntity, text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
-        let nodeArray = try await searchUC.search(
+        try await searchUC.search(
             type: type,
             text: text,
             description: text,
             tag: tagArgument(from: text),
-            sortType: sortType.toSortOrderEntity())
-        return nodeArray.toMEGANodes(in: MEGASdk.shared)
+            sortType: sortType.toSortOrderEntity()
+        ).toMEGANodes(in: MEGASdk.shared)
     }
 }
