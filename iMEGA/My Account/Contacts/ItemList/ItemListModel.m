@@ -15,6 +15,7 @@
 
 @interface ItemListModel ()
 
+@property MEGAChatListItem *chat;
 @property NSString *email;
 
 @end
@@ -45,6 +46,14 @@
     return self;
 }
 
+- (BOOL)isNoteToSelf {
+    if (self.chat) {
+        return self.chat.isNoteToSelf;
+    } else {
+        return NO;
+    }
+}
+
 - (BOOL)isGroup {
     if (self.chat) {
         return YES;
@@ -66,6 +75,10 @@
     } else {
         return self.email;
     }
+}
+
+- (UIImage *)noteToSelfImage {
+    return self.chat.noteToSelfImage;
 }
 
 - (uint64_t)handle {
