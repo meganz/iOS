@@ -27,13 +27,17 @@ struct LegacyNoInternetViewModifier: ViewModifier {
     }
 
     private var noInternetConnectionView: some View {
-        VStack {
-            Image(.noInternetEmptyState)
-            Text(Strings.Localizable.noInternetConnection)
-                .font(.headline.weight(.regular))
-                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        ZStack {
+            TokenColors.Background.page.swiftUI
+            VStack {
+                Image(.noInternetEmptyState)
+                Text(Strings.Localizable.noInternetConnection)
+                    .font(.headline.weight(.regular))
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            }
+            .padding(.bottom, 70)
         }
-        .padding(.bottom, 70)
+
     }
 }
 
