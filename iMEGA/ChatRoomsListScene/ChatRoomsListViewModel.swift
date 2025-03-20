@@ -1,3 +1,4 @@
+import Chat
 import ChatRepo
 import Combine
 import Foundation
@@ -715,6 +716,9 @@ final class ChatRoomsListViewModel: ObservableObject {
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession())),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
+            noteToSelfNewFeatureBadgeStore: NoteToSelfNewFeatureBadgeStore(
+                userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+            ),
             chatNotificationControl: chatNotificationControl,
             permissionRouter: permissionAlertRouter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,

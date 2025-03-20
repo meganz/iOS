@@ -1,3 +1,4 @@
+import Chat
 import Combine
 import Foundation
 import MEGADomain
@@ -20,6 +21,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
+    private let noteToSelfNewFeatureBadgeStore: any NoteToSelfNewFeatureBadgeStoring
     private let callController: any CallControllerProtocol
     private var chatNotificationControl: ChatNotificationControl
     private let permissionRouter: any PermissionAlertRouting
@@ -37,7 +39,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
     @Published var totalCallDuration: TimeInterval = 0
-    
+    @Published var shouldShowNoteToSelfNewFeatureBadge: Bool = false
+
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
     
@@ -69,6 +72,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         callUseCase: some CallUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+        noteToSelfNewFeatureBadgeStore: some NoteToSelfNewFeatureBadgeStoring,
         chatNotificationControl: ChatNotificationControl,
         permissionRouter: some PermissionAlertRouting,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
@@ -88,6 +92,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.noteToSelfNewFeatureBadgeStore = noteToSelfNewFeatureBadgeStore
         self.chatNotificationControl = chatNotificationControl
         self.permissionRouter = permissionRouter
         self.chatListItemCacheUseCase = chatListItemCacheUseCase
@@ -125,6 +130,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.displayDateString = formattedLastMessageSentDate()
         
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: chatListItem.chatId)
+
+        showNoteToSelfNewFeatureBadgeIfNeeded()
+
         if let call = callUseCase.call(for: chatListItem.chatId) {
             startMonitoringCallInProgressTime(for: call)
         }
@@ -838,6 +846,18 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         callInProgressTimeMonitorTask = Task { [weak self, callInProgressTimeReporter] in
             for await timeInterval in callInProgressTimeReporter.configureCallInProgress(for: call) {
                 self?.totalCallDuration = timeInterval
+            }
+        }
+    }
+    
+    private func showNoteToSelfNewFeatureBadgeIfNeeded() {
+        if chatListItem.isNoteToSelf && chatListItem.lastMessageId == .invalid {
+            Task { @MainActor in
+                let shouldShowNoteToSelfNewFeatureBadge = await noteToSelfNewFeatureBadgeStore.shouldShowNoteToSelfNewFeatureBadge()
+                if shouldShowNoteToSelfNewFeatureBadge {
+                    await noteToSelfNewFeatureBadgeStore.incrementNoteToSelfNewFeatureBadgePresented()
+                }
+                self.shouldShowNoteToSelfNewFeatureBadge = shouldShowNoteToSelfNewFeatureBadge
             }
         }
     }

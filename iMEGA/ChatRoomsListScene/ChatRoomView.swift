@@ -173,6 +173,10 @@ private struct ChatRoomContentDetailsView: View {
                         Text(displayDateString)
                             .font(.caption2)
                     }
+                    
+                    if viewModel.shouldShowNoteToSelfNewFeatureBadge {
+                        NewFeatureBadgeView()
+                    }
                 }
                 
                 HStack(alignment: .top, spacing: 3) {
