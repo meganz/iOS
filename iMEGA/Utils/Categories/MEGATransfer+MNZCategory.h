@@ -14,6 +14,7 @@
 - (NSString *)mnz_extractMessageIDFromAppData;
 - (void)mnz_moveFileToDestinationIfVoiceClipData;
 - (NSUInteger)mnz_orderByState;
+- (void)mnz_setCoordinates:(NSString *)coordinates;
 
 - (MEGANode *)node;
 

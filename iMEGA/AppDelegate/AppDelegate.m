@@ -1691,9 +1691,15 @@
         }
                 
         if ([transfer.appData containsString:@">localIdentifier"]) {
-            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
+            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@">"];
             [[Helper uploadingNodes] removeObject:localIdentifier];
         }
+        
+        if ([transfer.appData containsString:@">setCoordinates="]) {
+            NSString *coordinates = [transfer.appData mnz_stringBetweenString:@">setCoordinates=" andString:@">"];
+            [transfer mnz_setCoordinates:coordinates];
+        }
+        
         [Helper startPendingUploadTransferIfNeeded];
     }
     
