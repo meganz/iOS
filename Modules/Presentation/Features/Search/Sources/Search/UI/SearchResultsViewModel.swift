@@ -521,7 +521,16 @@ public class SearchResultsViewModel: ObservableObject {
             
             selectedRowIds.formUnion(selectedItems.map { $0.id })
             
-            withAnimation {
+            if #available(iOS 16.0, *) {
+                withAnimation {
+                    emptyViewModel = Self.makeEmptyView(
+                        whenListItems: listItems.isEmpty,
+                        query: query,
+                        appliedChips: results.appliedChips,
+                        config: config
+                    )
+                }
+            } else {
                 emptyViewModel = Self.makeEmptyView(
                     whenListItems: listItems.isEmpty,
                     query: query,
