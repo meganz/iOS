@@ -673,8 +673,19 @@ static NSString* const B = @"[B]";
                     if (exifDictionary) {
                         NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
                         NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
-                        if (latitude && longitude) {
-                            return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
+                        NSString *latitudeRef = [exifDictionary objectForKey:@"LatitudeRef"];
+                        NSString *longitudeRef = [exifDictionary objectForKey:@"LongitudeRef"];
+                        if (latitude && longitude && latitudeRef && longitudeRef) {
+                            double latValue = [latitude doubleValue];
+                            double lonValue = [longitude doubleValue];
+                            
+                            if ([latitudeRef isEqualToString:@"S"]) {
+                                latValue = -latValue;
+                            }
+                            if ([longitudeRef isEqualToString:@"W"]) {
+                                lonValue = -lonValue;
+                            }
+                            return [NSString stringWithFormat:@"%f&%f", latValue, lonValue];
                         }
                     }
                 } else {

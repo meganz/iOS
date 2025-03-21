@@ -139,18 +139,14 @@
     return node;
 }
 
-#pragma mark - Private
-
 - (void)mnz_setCoordinates:(NSString *)coordinates {
-    NSArray *appDataComponentComponentsArray = [coordinates componentsSeparatedByString:@"="];
-    NSString *appDataSecondComponentComponentsString = [appDataComponentComponentsArray objectAtIndex:1];
-    NSArray *setCoordinatesComponentsArray = [appDataSecondComponentComponentsString componentsSeparatedByString:@"&"];
+    NSArray *setCoordinatesComponentsArray = [coordinates componentsSeparatedByString:@"&"];
     if (setCoordinatesComponentsArray.count == 2) {
         NSString *latitude = setCoordinatesComponentsArray.firstObject;
         NSString *longitude = [setCoordinatesComponentsArray objectAtIndex:1];
         if (latitude && longitude) {
             MEGANode *node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
-            [MEGASdk.shared setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
+            [MEGASdk.shared setUnshareableNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
         }
     }
 }
