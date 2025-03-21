@@ -4,12 +4,21 @@ public enum SubmoduleReferenceType: Sendable {
     case tag(String)
     case branch(String)
 
-    public func description(type: String) -> String {
+    public func description(type: String, plainText: Bool = false) -> String {
         switch self {
         case .tag(let tag):
-            "*\(type) release:* `\(tag)`"
+            plainText ? "\(type) Release: \(tag)" : "*\(type) Release:* `\(tag)`"
         case .branch(let branch):
-            "*\(type) Branch:* `\(branch)`"
+            plainText ? "\(type) Branch: \(branch)" : "*\(type) Branch:* `\(branch)`"
+        }
+    }
+
+    public func description(for submodule: Submodule, plainText: Bool = false) -> String {
+        switch submodule {
+        case .sdk:
+            description(type: "SDK", plainText: plainText)
+        case .chatSDK:
+            description(type: "Chat SDK", plainText: plainText)
         }
     }
 }
