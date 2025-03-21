@@ -35,3 +35,6 @@ scripts/ReleaseScripts/*/.build
 scripts/ReleaseScripts/*/.swiftpm
 scripts/ReleaseScripts/Resources/values.env
 scripts/ReleaseScripts/Resources/cache.json
+
+## macOS Finder
+.DS_Store
