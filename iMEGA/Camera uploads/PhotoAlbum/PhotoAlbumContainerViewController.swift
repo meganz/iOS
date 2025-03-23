@@ -210,6 +210,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
         extendedLayoutIncludesOpaqueBars = true
         definesPresentationContext = true
         
+        updateSearchBarAppearance(traitCollection: traitCollection)
+        
         photoAlbumContainerInteractionManager.$searchBarText
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
@@ -555,5 +557,23 @@ extension PhotoAlbumContainerViewController {
             accountUseCase: AccountUseCase(
                 repository: AccountRepository.newRepo)
         )
+    }
+    
+    private func updateSearchBarAppearance(traitCollection: UITraitCollection) {
+        AppearanceManager.forceSearchBarUpdate(
+            searchController.searchBar,
+            backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
+            traitCollection: traitCollection)
+    }
+}
+
+extension PhotoAlbumContainerViewController: TraitEnvironmentAware {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+    
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        updateSearchBarAppearance(traitCollection: currentTrait)
     }
 }
