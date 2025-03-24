@@ -587,6 +587,7 @@
             case URLTypeFileLink:
             case URLTypeFolderLink:
                 [self showSharedLinkForNoLoggedInUser:url];
+                break;
                 
             default:
                 [self showLink:url];

@@ -329,7 +329,7 @@ extension MEGALinkManager {
             presentationStyle: presentationStyle,
             publicLink: publicLink,
             isFolderLink: isFolderLink,
-            logger: { MEGALogDebug("\($0) - File/folder link") }
+            logger: { MEGALogDebug("\($0) - \(isFolderLink ? "Folder" : "File") link") }
         ).build(adsFreeViewProPlanAction: {
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.showUpgradePlanPageFromAds()
