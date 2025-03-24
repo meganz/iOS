@@ -53,8 +53,7 @@ extension ChatViewController {
     
     private func didTapTitle() {
         if chatRoom.isNoteToSelf &&
-            (DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .noteToSelfChat) ||
-             DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .noteToSelfChat)) {
+            DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .noteToSelfChat) {
             NoteToSelfChatInfoViewRouter(
                 navigationController: navigationController,
                 chatRoom: chatRoom
