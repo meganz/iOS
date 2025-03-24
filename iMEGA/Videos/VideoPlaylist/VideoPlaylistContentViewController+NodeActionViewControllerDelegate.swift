@@ -1,3 +1,5 @@
+import MEGAAnalyticsiOS
+import MEGAPresentation
 import MEGASdk
 
 extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
@@ -13,7 +15,8 @@ extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
     private func handleNodesAction(_ nodeAction: NodeActionViewController, action: MegaNodeActionType, nodes: [MEGANode], sender: Any) {
         let nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: self,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self),
+            nodeActionListener: nodeActionListener(tracker: tracker)
         )
         switch action {
         case .download, .manageLink, .saveToPhotos, .shareLink, .exportFile, .moveToRubbishBin:
@@ -31,6 +34,17 @@ extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
             didSelectMoveVideoInVideoPlaylistContentToRubbishBinAction()
         default:
             resetNavigationBar()
+        }
+    }
+    
+    private func nodeActionListener(tracker: any AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
+        { action in
+            switch action {
+            case .hide:
+                tracker.trackAnalyticsEvent(with: HideNodeMultiSelectMenuItemEvent())
+            default:
+                break // we do not track other events here yet
+            }
         }
     }
 }

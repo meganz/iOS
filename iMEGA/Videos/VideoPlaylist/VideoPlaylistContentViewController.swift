@@ -47,6 +47,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     private var toolbar = UIToolbar()
     
     let viewModel: VideoPlaylistContentContainerViewModel
+    let tracker: any AnalyticsTracking
     
     init(
         videoConfig: VideoConfig,
@@ -64,7 +65,8 @@ final class VideoPlaylistContentViewController: UIViewController {
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         videoSelection: VideoSelection,
         selectionAdapter: VideoPlaylistContentViewModelSelectionAdapter,
-        syncModel: VideoRevampSyncModel
+        syncModel: VideoRevampSyncModel,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.videoConfig = videoConfig
         self.videoPlaylistEntity = videoPlaylistEntity
@@ -82,6 +84,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         self.videoSelection = videoSelection
         self.selectionAdapter = selectionAdapter
         self.syncModel = syncModel
+        self.tracker = tracker
         self.viewModel = VideoPlaylistContentContainerViewModel(
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             overDiskQuotaChecker: OverDiskQuotaChecker(
