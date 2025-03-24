@@ -469,7 +469,7 @@ import MEGASDKRepo
         player?.resetAudioPlayerConfiguration()
     }
     
-    func resetCurrentItem() {
+    func resetCurrentItem(shouldResetPlayback: Bool) {
         player?.resetCurrentItem()
     }
     
@@ -498,5 +498,10 @@ import MEGASDKRepo
             on: playerCurrentItemTime(),
             outOf: player?.duration ?? 0.0
         )
+    }
+    
+    func resettingAudioPlayer(shouldResetPlayback: Bool) {
+        player?.isAudioPlayerBeingReset = true
+        player?.resettingPlayback = shouldResetPlayback
     }
 }

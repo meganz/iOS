@@ -189,12 +189,14 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func resetAudioPlayerConfiguration() {}
     func refreshPresentersContentOffset(isHidden: Bool) {}
     func playerTracksContains(url: URL) -> Bool { true }
-    func resetCurrentItem() {
+    func resetCurrentItem(shouldResetPlayback: Bool) {
         setCurrent_callTimes += 1
     }
     func currentSpeedMode() -> SpeedMode { .normal }
     
     @MainActor func dismissFullScreenPlayer() async {}
+    
+    func resettingAudioPlayer(shouldResetPlayback: Bool) {}
 }
 
 extension MockAudioPlayerHandler {

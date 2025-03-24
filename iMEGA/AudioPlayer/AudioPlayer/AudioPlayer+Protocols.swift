@@ -74,7 +74,8 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func playerRepeatDisabled()
     func changePlayer(speed: SpeedMode)
     func refreshCurrentItemState()
-    func resetCurrentItem()
+    func resetCurrentItem(shouldResetPlayback: Bool)
+    func resettingAudioPlayer(shouldResetPlayback: Bool)
 }
 
 // MARK: - Audio Player Configuration Functions
