@@ -4,9 +4,11 @@ import MEGARepo
 
 final class FeatureFlagViewModel: ObservableObject {
     private var useCase: any FeatureFlagUseCaseProtocol
-    
-    var featureFlagList: [FeatureFlagEntity] = FeatureFlagKey.allCases.map { FeatureFlagEntity(name: $0.rawValue, isEnabled: false) }
-    
+
+    var featureFlagList: [FeatureFlagEntity] = FeatureFlagKey.allCases
+        .filter { !FeatureFlagKey.rolledOutKeys.contains($0) }
+        .map { FeatureFlagEntity(name: $0.rawValue, isEnabled: false) }
+
     init(useCase: any FeatureFlagUseCaseProtocol = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)) {
         self.useCase = useCase
         self.syncUpFeatureFlags()

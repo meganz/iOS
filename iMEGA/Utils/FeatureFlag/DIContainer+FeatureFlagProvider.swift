@@ -28,6 +28,7 @@ struct FeatureFlagProvider: FeatureFlagProviderProtocol {
     }
     
     public func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {
+        if FeatureFlagKey.rolledOutKeys.contains(key) { return true }
         guard !Self.disableFeatureFlags else { return false }
 
         return useCase.isFeatureFlagEnabled(for: key.rawValue)

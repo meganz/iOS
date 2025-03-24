@@ -15,4 +15,11 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case searchByNodeTags = "Search By Node Tags"
     case newCloudDriveHomeRecents = "New Cloud Drive - Recent files"
     case newLoadingView = "New Loading view"
+    case noteToSelfChat = "Note to Self Chat"
+
+    /// The keys that are ready for production release, but not yet removed from code.
+    /// Discussion:
+    /// - For some features, we want to release them without having to remove their flags from code as a risk management measure.
+    /// Instead we'll enable them first and then proceed to remove the flags after the features are stable.
+    public static let rolledOutKeys: Set<FeatureFlagKey> = [Self.nodeTags, .searchByNodeTags]
 }
