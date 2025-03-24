@@ -1,12 +1,4 @@
-def injectEnvironments(Closure body) {
-    withEnv([
-        "PATH=/var/lib/jenkins/.rbenv/shims:/var/lib/jenkins/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
-        "LC_ALL=en_US.UTF-8",
-        "LANG=en_US.UTF-8"
-    ]) {
-        body.call()
-    }
-}
+@Library('jenkins-ios-shared-lib') _
 
 pipeline {
     agent { label 'mac-jenkins-slave-ios' }
@@ -22,6 +14,7 @@ pipeline {
         MATCH_PASSWORD = credentials('MATCH_PASSWORD')
         APP_STORE_CONNECT_API_KEY_VALUE = credentials('APP_STORE_CONNECT_API_KEY_VALUE')
         TRANSIFIX_AUTHORIZATION_TOKEN = credentials('TRANSIFIX_AUTHORIZATION_TOKEN')
+        MEGA_IOS_PROJECT_ID = credentials('MEGA_IOS_PROJECT_ID')
     }
     post {
         success {
@@ -37,18 +30,8 @@ pipeline {
                 } else if (env.gitlabTriggerPhrase == 'verify_translations') {
                     message = ":white_check_mark: No missing translation keys."
                 }
-
-                if (hasGitLabMergeRequest()) {
-                    def mrNumber = env.gitlabMergeRequestIid
-
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        env.MARKDOWN_LINK = message
-                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
-                    }
-                }
-
-                slackSend color: "good", message: "${message} \nbranch: ${GIT_BRANCH}"
+                
+                statusNotifier.postSuccess(message, env.MEGA_IOS_PROJECT_ID)
             }
         }
         failure {
@@ -65,26 +48,7 @@ pipeline {
                     message = ":x: Missing translation keys."
                 }
 
-                if (hasGitLabMergeRequest()) {
-                    def mrNumber = env.gitlabMergeRequestIid
-
-                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    }
-
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        final String response = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
-                        def json = new groovy.json.JsonSlurperClassic().parseText(response)
-                        env.MARKDOWN_LINK = "${message} <br />Build Log: ${json.markdown}"
-                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
-                    }
-                }
-
-                withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                    sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    slackUploadFile filePath:"console.txt", initialComment: "${message} \nbranch: ${GIT_BRANCH}"
-                }
+                statusNotifier.postFailure(message, env.MEGA_IOS_PROJECT_ID)
             }                    
         }
         cleanup {
@@ -95,9 +59,11 @@ pipeline {
         stage('Bundle install') {
             steps {
                 gitlabCommitStatus(name: 'Bundle install') {
-                    injectEnvironments({
-                        sh "bundle install"
-                    })
+                    script {
+                        envInjector.injectEnvs {
+                            sh "bundle install"
+                        }
+                    }
                 }
             }
         }
@@ -112,14 +78,14 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Set build number') {
-                            injectEnvironments({
-                                sh "bundle exec fastlane set_time_as_build_number"
-                                sh "bundle exec fastlane fetch_version_number"
-                                script {
+                            script {
+                                envInjector.injectEnvs {
+                                    sh "bundle exec fastlane set_time_as_build_number"
+                                    sh "bundle exec fastlane fetch_version_number"
                                     env.MEGA_BUILD_NUMBER = readFile(file: './fastlane/build_number.txt')
                                     env.MEGA_VERSION_NUMBER = readFile(file: './fastlane/version_number.txt')
                                 }
-                            })
+                            }
                         }
                     }
                 }
@@ -132,11 +98,13 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Check translations') {
-                            injectEnvironments({
-                                dir("scripts/") {
-                                    sh 'python3 check_translations.py'
+                            script {
+                                envInjector.injectEnvs {
+                                    dir("scripts/") {
+                                        sh 'python3 check_translations.py'
+                                    }
                                 }
-                            })
+                            }
                         }
                     }
                 }
@@ -150,9 +118,11 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Download app metadata') {
-                            injectEnvironments({
-                                sh 'bundle exec fastlane download_metadata'
-                            })
+                            script {
+                                envInjector.injectEnvs {
+                                    sh 'bundle exec fastlane download_metadata'
+                                }
+                            }
                         }
                     }
                 }
@@ -165,14 +135,16 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Download device ids from firebase and upload it to developer portal') {
-                            injectEnvironments({
-                                withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
-                                    sh "cp \$firebase_credentials service_credentials_file.json"
-                                    sh "bundle exec fastlane download_device_ids_from_firebase"
-                                    sh "bundle exec fastlane upload_device_ids_to_developer_portal"
-                                    sh "rm service_credentials_file.json"
-                                } 
-                            })
+                            script {
+                                envInjector.injectEnvs {
+                                    withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
+                                        sh "cp \$firebase_credentials service_credentials_file.json"
+                                        sh "bundle exec fastlane download_device_ids_from_firebase"
+                                        sh "bundle exec fastlane upload_device_ids_to_developer_portal"
+                                        sh "rm service_credentials_file.json"
+                                    } 
+                                }
+                            }
                         }
                     }  
                 }
@@ -193,14 +165,16 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'Submodule update and run cmake') {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                                injectEnvironments({
-                                    sh "git submodule foreach --recursive git clean -xfd"
-                                    sh "git submodule sync --recursive"
-                                    sh "git submodule update --init --recursive"
-                                    dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
-                                        sh "cmake -P genDbSchema.cmake"
+                                script {
+                                    envInjector.injectEnvs {
+                                        sh "git submodule foreach --recursive git clean -xfd"
+                                        sh "git submodule sync --recursive"
+                                        sh "git submodule update --init --recursive"
+                                        dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
+                                            sh "cmake -P genDbSchema.cmake"
+                                        }
                                     }
-                                })
+                                }
                             }
                         }
                     }
@@ -209,9 +183,11 @@ pipeline {
                 stage('Downloading third party libraries') {
                     steps {
                         gitlabCommitStatus(name: 'Downloading third party libraries') {
-                            injectEnvironments({
-                                sh "bundle exec fastlane configure_sdk_and_chat_library use_cache:true"
-                            })
+                            script {
+                                envInjector.injectEnvs {
+                                    sh "bundle exec fastlane configure_sdk_and_chat_library use_cache:true"
+                                }
+                            }
                         }
                     }
                 }
@@ -219,11 +195,11 @@ pipeline {
                 stage('Install certificate and provisioning profiles in temporary keychain') {
                     steps {
                         gitlabCommitStatus(name: 'Install certificate and provisioning profiles in temporary keychain') {
-                            injectEnvironments({
-                                sh "bundle exec fastlane create_temporary_keychain"
-                                withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                                    sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore' readonly:true"
-                                    script {
+                            script {
+                                envInjector.injectEnvs {
+                                    sh "bundle exec fastlane create_temporary_keychain"
+                                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                                        sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'appstore' readonly:true"
                                         def readonly = "true"
                                         if (env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices') {
                                             readonly = "false"
@@ -231,9 +207,9 @@ pipeline {
 
                                         sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'development' readonly:${readonly}"
                                         sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'adhoc' readonly:${readonly}"
-                                    }                                   
+                                    }
                                 }
-                            })
+                            }
                         }
                     }
                 }
@@ -249,12 +225,12 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Archive appstore') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                        injectEnvironments({
-                            sh "bundle exec fastlane archive_appstore"
-                            script {
+                        script {
+                            envInjector.injectEnvs {
+                                sh "bundle exec fastlane archive_appstore"
                                 env.MEGA_BUILD_ARCHIVE_PATH = readFile(file: './fastlane/archive_path.txt')
                             }
-                        })
+                        }
                     }
                 }
             }
@@ -271,9 +247,11 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Archive adhoc') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                        injectEnvironments({
-                            sh "bundle exec fastlane archive_adhoc"
-                        })
+                        script {
+                            envInjector.injectEnvs {
+                                sh "bundle exec fastlane archive_adhoc"
+                            }
+                        }
                     }
                 }
             }
@@ -290,9 +268,11 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'Upload to Testflight') {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                                injectEnvironments({
-                                    sh "bundle exec fastlane upload_to_itunesconnect"
-                                })
+                                script {
+                                    envInjector.injectEnvs {
+                                        sh "bundle exec fastlane upload_to_itunesconnect"
+                                    }
+                                }
                             }
                         }
                     }
@@ -309,17 +289,15 @@ pipeline {
                     }
                     steps {
                         script {
-                            if (env.gitlabTriggerPhrase == 'deliver_appStore') {
-                                gitlabCommitStatus(name: 'Upload appstore symbols to crashlytics') {
-                                    injectEnvironments({
+                            envInjector.injectEnvs {
+                                if (env.gitlabTriggerPhrase == 'deliver_appStore') {    
+                                    gitlabCommitStatus(name: 'Upload appstore symbols to crashlytics') {
                                         sh "bundle exec fastlane upload_symbols configuration:Release"
-                                    })
-                                }
-                            } else {
-                                gitlabCommitStatus(name: 'Upload QA symbols to crashlytics') {
-                                    injectEnvironments({
+                                    }
+                                } else {
+                                    gitlabCommitStatus(name: 'Upload QA symbols to crashlytics') {
                                         sh "bundle exec fastlane upload_symbols configuration:QA"
-                                    })
+                                    }
                                 }
                             }
                         }
@@ -336,12 +314,14 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Upload build to Firebase') {
-                            injectEnvironments({
-                                withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
-                                    sh "cp \$firebase_credentials service_credentials_file.json"
-                                    sh "bundle exec fastlane upload_build_to_firebase configuration:QA"
-                                } 
-                            })
+                            script {
+                                envInjector.injectEnvs {
+                                    withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
+                                        sh "cp \$firebase_credentials service_credentials_file.json"
+                                        sh "bundle exec fastlane upload_build_to_firebase configuration:QA"
+                                    } 
+                                }
+                            }
                         }
                     }
                 }
@@ -354,8 +334,8 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Prepare archive zip to be uploaded to MEGA') {
-                            injectEnvironments({
-                                script {
+                            script {
+                                envInjector.injectEnvs {
                                     withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
                                         def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}.zip"
                                         env.zipPath = "${WORKSPACE}/${fileName}"
@@ -365,7 +345,7 @@ pipeline {
                                         sh 'rm ${zipPath}'
                                     }
                                 } 
-                            })
+                            }
                         }
                     }
                 }
@@ -378,12 +358,14 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Update what\'s new to appstore connect') {
-                            injectEnvironments({
-                                dir("scripts/AppMetadataUpdater/") {
-                                    sh 'swift run AppMetadataUpdater --update-release-notes -v $MEGA_VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                            script {
+                                envInjector.injectEnvs {
+                                    dir("scripts/AppMetadataUpdater/") {
+                                        sh 'swift run AppMetadataUpdater --update-release-notes -v $MEGA_VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                                    }
+                                    sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                                 }
-                                sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
-                            })
+                            }
                         }
                     }
                 }
@@ -396,12 +378,14 @@ pipeline {
                     }
                     steps {
                         gitlabCommitStatus(name: 'Update app description to appstore connect') {
-                            injectEnvironments({
-                                dir("scripts/AppMetadataUpdater/") {
-                                    sh 'swift run AppMetadataUpdater --update-description \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                            script {
+                                envInjector.injectEnvs {
+                                    dir("scripts/AppMetadataUpdater/") {
+                                        sh 'swift run AppMetadataUpdater --update-description \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                                    }
+                                    sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                                 }
-                                sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
-                            })
+                            }
                         }
                     }
                 }
@@ -419,21 +403,14 @@ pipeline {
             }
             steps {
                 gitlabCommitStatus(name: 'Delete temporary keychain') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane delete_temporary_keychain"
-                    })
+                    script {
+                        envInjector.injectEnvs {
+                            sh "bundle exec fastlane delete_temporary_keychain"
+                        }
+                    }
                 }
             }
         }
     }
-}
-
-/**
- * Check if this build is triggered by a GitLab Merge Request.
- * @return true if this build is triggerd by a GitLab MR. False if this build is triggerd
- * by a plain git push.
- */
-private boolean hasGitLabMergeRequest() {
-    return env.gitlabMergeRequestIid != null && !env.gitlabMergeRequestIid.isEmpty()
 }
 

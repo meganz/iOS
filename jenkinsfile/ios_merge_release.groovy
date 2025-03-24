@@ -1,12 +1,4 @@
-def injectEnvironments(Closure body) {
-    withEnv([
-        "PATH=/var/lib/jenkins/.rbenv/shims:/var/lib/jenkins/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
-        "LC_ALL=en_US.UTF-8",
-        "LANG=en_US.UTF-8"
-    ]) {
-        body.call()
-    }
-}
+@Library('jenkins-ios-shared-lib') _
 
 pipeline {
     agent { label 'mac-jenkins-slave-ios' }
@@ -29,17 +21,12 @@ pipeline {
     post {
         success {
             script {
-                def message = ":rocket: The Merge Release script execution was successful"
-                slackSend color: "good", message: "${message}"
+                statusNotifier.postSuccess(":rocket: The Merge Release script execution was successful", env.MEGA_IOS_PROJECT_ID)
             }
         }
         failure {
             script {
-                def message = ":x: The Merge Release script execution failed"
-                withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                    sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    slackUploadFile filePath:"console.txt", initialComment: "${message}"
-                }
+                statusNotifier.postFailure(":x: The Merge Release script execution failed", env.MEGA_IOS_PROJECT_ID)
             }                    
         }
         cleanup {
@@ -49,38 +36,42 @@ pipeline {
     stages {
         stage('Bundle install') {
             steps {
-                injectEnvironments({
-                    sh "bundle install"
-                })
+                script {
+                    envInjector.injectEnvs {
+                        sh "bundle install"
+                    }
+                }
             }
         }
         
         stage('Install Dependencies') {
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                    injectEnvironments({
-                        sh "git submodule foreach --recursive git clean -xfd"
-                        sh "git submodule sync --recursive"
-                        sh "git submodule update --init --recursive"
-                        dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
-                            sh "cmake -P genDbSchema.cmake"
+                    script {
+                        envInjector.injectEnvs {
+                            sh "git submodule foreach --recursive git clean -xfd"
+                            sh "git submodule sync --recursive"
+                            sh "git submodule update --init --recursive"
+                            dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
+                                sh "cmake -P genDbSchema.cmake"
+                            }
                         }
-                    })
+                    }
                 }
             }
 
         }
 
-        stage('Announce RC') {
+        stage('merge release') {
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                    injectEnvironments({
-                        script {
+                    script {
+                        envInjector.injectEnvs {
                             dir("scripts/MergeRelease/") {
                                 sh 'swift run MergeRelease --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --gitlab-base-url \"$GITLAB_API_BASE_URL\" --gitlab-token \"$GITLAB_BEARER_TOKEN\" --jira-base-url-string \"$JIRA_BASE_URL\" --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --github-access-token \"$GITHUB_ACCESS_TOKEN\" --project-id \"$MEGA_IOS_PROJECT_ID\"'
                             }
                         }
-                    })
+                    }
                 }
             }
         }
