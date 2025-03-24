@@ -1,4 +1,4 @@
-@Library('jenkins-android-shared-lib') _
+@Library(['jenkins-android-shared-lib', 'jenkins-ios-shared-lib']) _
 
 import groovy.json.JsonSlurperClassic
 import mega.privacy.android.pipeline.DefaultParserWrapper
@@ -6,16 +6,6 @@ import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.CommandLineParser
 import org.apache.commons.cli.Option
 import org.apache.commons.cli.Options
-
-def injectEnvironments(Closure body) {
-    withEnv([
-        "PATH=/var/lib/jenkins/.rbenv/shims:/var/lib/jenkins/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
-        "LC_ALL=en_US.UTF-8",
-        "LANG=en_US.UTF-8"
-    ]) {
-        body.call()
-    }
-}
 
 pipeline {
     agent { label 'mac-jenkins-slave-ios' }
@@ -38,57 +28,21 @@ pipeline {
         MEGA_IOS_TESTFLIGHT_BASE_URL = credentials('MEGA_IOS_TESTFLIGHT_BASE_URL')
         IOS_RC_TEAM_SLACK_CHANNEL_IDS = credentials('IOS_RC_TEAM_SLACK_CHANNEL_IDS')
         GITLAB_API_BASE_URL = credentials('GITLAB_API_BASE_URL')
+        MEGA_IOS_PROJECT_ID = credentials('MEGA_IOS_PROJECT_ID')
     }
     post {
         success {
             script {
                 def message = ":rocket: The RC announcement was successful"
-                
-                if (env.gitlabTriggerPhrase == 'jira_create_version') {
-                    message = ":rocket: Successfully created the release version in Jira"
-                }
-
-                if (hasGitLabMergeRequest()) {
-                    def mrNumber = env.gitlabMergeRequestIid
-
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        env.MARKDOWN_LINK = message
-                        env.MERGE_REQUEST_URL = "${GITLAB_API_BASE_URL}/projects/193/merge_requests/${mrNumber}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
-                    }
-                } else {
-                    slackSend color: "good", message: "${message}"
-                }
+                message = env.gitlabTriggerPhrase == 'jira_create_version' ? ":rocket: Successfully created the release version in Jira"
+                statusNotifier.postSuccess(message, env.MEGA_IOS_PROJECT_ID)
             }
         }
         failure {
             script {
                 def message = ":x: The RC announcement failed"
-
-                if (env.gitlabTriggerPhrase == 'jira_create_version') {
-                    message = ":x: failed to create the release version in Jira"
-                }
-
-                if (hasGitLabMergeRequest()) {
-                    def mrNumber = env.gitlabMergeRequestIid
-
-                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    }
-
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        final String response = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt \"$GITLAB_API_BASE_URL\"/projects/193/uploads', returnStdout: true).trim()
-                        def json = new groovy.json.JsonSlurperClassic().parseText(response)
-                        env.MARKDOWN_LINK = "${message} <br />Build Log: ${json.markdown}"
-                        env.MERGE_REQUEST_URL = "${GITLAB_API_BASE_URL}/projects/193/merge_requests/${mrNumber}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
-                    }
-                } else {
-                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                        slackUploadFile filePath:"console.txt", initialComment: "${message}"
-                    }
-                }
+                message = env.gitlabTriggerPhrase == 'jira_create_version' ? ":x: Failed to create the release version in Jira" : message
+                statusNotifier.postFailure(message, env.MEGA_IOS_PROJECT_ID)
             }                    
         }
         cleanup {
@@ -98,9 +52,11 @@ pipeline {
     stages {
         stage('Bundle install') {
             steps {
-                injectEnvironments({
-                    sh "bundle install"
-                })
+                script {
+                    envInjector.injectEnvs {
+                        sh "bundle install"
+                    }
+                }
             }
         }
         
@@ -112,17 +68,18 @@ pipeline {
             }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                    injectEnvironments({
-                        sh "git submodule foreach --recursive git clean -xfd"
-                        sh "git submodule sync --recursive"
-                        sh "git submodule update --init --recursive"
-                        dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
-                            sh "cmake -P genDbSchema.cmake"
+                    script {
+                        envInjector.injectEnvs {
+                            sh "git submodule foreach --recursive git clean -xfd"
+                            sh "git submodule sync --recursive"
+                            sh "git submodule update --init --recursive"
+                            dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
+                                sh "cmake -P genDbSchema.cmake"
+                            }
                         }
-                    })
+                    }
                 }
             }
-
         }
 
         stage('Announce RC') {
@@ -133,8 +90,8 @@ pipeline {
             }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                    injectEnvironments({
-                        script {
+                    script {
+                        envInjector.injectEnvs {
                             dir("scripts/ReleaseCandidateAnnouncement/") {
                                 def parameters = parseParameters(env.gitlabTriggerPhrase)
                                 env.NEXT_RELEASE_VERSION = parameters[0]
@@ -142,7 +99,7 @@ pipeline {
                                 sh 'swift run ReleaseCandidateAnnouncement --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --jira-base-url-string \"$JIRA_BASE_URL\" --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --slack-authorization \"$RELEASE_ANNOUNCEMENT_SLACK_TOKEN\" --code-freeze-slack-channel-ids \"$MOBILE_DEV_TEAM_SLACK_CHANNEL_ID\" --testflight-base-url \"$MEGA_IOS_TESTFLIGHT_BASE_URL\" --release-candidate-slack-channel-ids \"$IOS_RC_TEAM_SLACK_CHANNEL_IDS\" --next-release-version \"$NEXT_RELEASE_VERSION\"'
                             }
                         }
-                    })
+                    }
                 }
             }
         }
@@ -155,26 +112,17 @@ pipeline {
             }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                    injectEnvironments({
-                        script {
+                    script {
+                        envInjector.injectEnvs {
                             dir("scripts/CreateReleaseVersionInJira/") {
                                 sh 'swift run CreateReleaseVersionInJira --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --jira-base-url-string \"$JIRA_BASE_URL\"'
                             }
                         }
-                    })
+                    }
                 }
             }
         }
     }
-}
-
-/**
- * Check if this build is triggered by a GitLab Merge Request.
- * @return true if this build is triggerd by a GitLab MR. False if this build is triggerd
- * by a plain git push.
- */
-private boolean hasGitLabMergeRequest() {
-    return env.gitlabMergeRequestIid != null && !env.gitlabMergeRequestIid.isEmpty()
 }
 
 private def parseParameters(String fullCommand) {
