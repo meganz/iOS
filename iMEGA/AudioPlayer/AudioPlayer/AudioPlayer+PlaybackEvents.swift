@@ -481,7 +481,8 @@ extension AudioPlayer {
     func resetCurrentItem() {
         guard let currentItem = currentItem() else { return }
         
-        let resumePlaying = isPlaying
+        let shouldResetPlayback = resettingPlayback
+        let resumePlaying = isPlaying || (isPaused && shouldResetPlayback)
         
         if resumePlaying {
             pause()
@@ -491,6 +492,9 @@ extension AudioPlayer {
         
         if resumePlaying {
             play()
+            if shouldResetPlayback {
+                resettingPlayback = false
+            }
         }
     }
 }

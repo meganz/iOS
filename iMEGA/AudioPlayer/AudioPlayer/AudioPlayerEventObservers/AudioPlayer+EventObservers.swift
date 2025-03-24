@@ -135,6 +135,14 @@ extension AudioPlayer {
         }
         
         refreshNowPlayingInfo()
+        
+        if isAudioPlayerBeingReset {
+            if resettingPlayback {
+                play()
+                resettingPlayback = false
+            }
+            isAudioPlayerBeingReset = false
+        }
     }
     
     func audio(player: AVQueuePlayer, didStartPlayingCurrentItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
@@ -142,7 +150,7 @@ extension AudioPlayer {
         
         let isRepeatAllEnabled = audioPlayerConfig[.loop] as? Bool ?? false
         let isRepeatOneEnabled = audioPlayerConfig[.repeatOne] as? Bool ?? false
-        let hasReachedEndOfPlaylist = player.items().isEmpty
+        let hasReachedEndOfPlaylist = player.items().count == 1
         
         if hasReachedEndOfPlaylist && !isRepeatOneEnabled && !isRepeatAllEnabled {
             resettingPlayback = true

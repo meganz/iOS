@@ -119,6 +119,8 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         
+        configEntity.playerHandler.resettingAudioPlayer(shouldResetPlayback: configEntity.playerType != .fileLink)
+        
         Task.detached {
             await self.preparePlayer(isOffline: self.configEntity.playerType == .offline)
         }
@@ -151,7 +153,7 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         configurePlayer()
-        configEntity.playerHandler.resetCurrentItem()
+        configEntity.playerHandler.resetCurrentItem(shouldResetPlayback: configEntity.playerType != .fileLink)
     }
     
     private func preparePlayerForNonOfflinePlayerType() async {
@@ -172,7 +174,7 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         configurePlayer()
-        configEntity.playerHandler.resetCurrentItem()
+        configEntity.playerHandler.resetCurrentItem(shouldResetPlayback: configEntity.playerType != .fileLink)
     }
     
     private func configurePlayer() {
