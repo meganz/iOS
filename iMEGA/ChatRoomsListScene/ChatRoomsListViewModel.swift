@@ -140,7 +140,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     let urlOpener: (URL) -> Void
     
     var noteToSelfChatEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .noteToSelfChat) ||
         DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .noteToSelfChat)
     }
     var noteToSelfChat: ChatRoomEntity?
