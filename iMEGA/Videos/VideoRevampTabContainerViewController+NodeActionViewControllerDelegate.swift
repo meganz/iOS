@@ -10,7 +10,8 @@ extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegat
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         let nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: self,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self),
+            nodeActionListener: nodeActionListener(tracker: tracker)
         )
         nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, for: node, from: sender)
         resetNavigationBar()
@@ -24,7 +25,7 @@ extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegat
         let nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: self,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self),
-            nodeActionListener: DefaultAnalyticsNodeActionListener().nodeActionListener()
+            nodeActionListener: nodeActionListener(tracker: tracker)
         )
         switch action {
         case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos, .hide, .unhide, .addTo, .addToAlbum:
@@ -32,6 +33,17 @@ extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegat
             resetNavigationBar()
         default:
             break
+        }
+    }
+    
+    private func nodeActionListener(tracker: any AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
+        { action in
+            switch action {
+            case .hide:
+                tracker.trackAnalyticsEvent(with: HideNodeMultiSelectMenuItemEvent())
+            default:
+                break // we do not track other events here yet
+            }
         }
     }
 }

@@ -57,6 +57,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
 
     private let videoConfig: VideoConfig
     let router: any VideoRevampRouting
+    let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private let videoToolbarViewModel: VideoToolbarViewModel
@@ -76,6 +77,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.viewModel = viewModel
@@ -90,6 +92,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.videoConfig = videoConfig
         self.router = router
+        self.tracker = tracker
         self.videoToolbarViewModel = VideoToolbarViewModel()
         self.featureFlagProvider = featureFlagProvider
         super.init(nibName: nil, bundle: nil)
