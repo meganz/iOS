@@ -150,10 +150,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 case .success:
                     tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
                     postAccountDidPurchasedPlanNotification()
-                    postRefreshAccountDetailsNotification()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                         guard let self else { return }
+                        purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
                         postDismissOnboardingProPlanDialog()
                         isDismiss = true
                     }
@@ -300,10 +300,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
 
     // MARK: - Private
-    private func postRefreshAccountDetailsNotification() {
-        NotificationCenter.default.post(name: .refreshAccountDetails, object: nil)
-    }
-    
     private func postAccountDidPurchasedPlanNotification() {
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
     }

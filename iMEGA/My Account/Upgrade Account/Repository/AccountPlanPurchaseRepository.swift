@@ -12,6 +12,7 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
     
     private let purchase: MEGAPurchase
     private let sdk: MEGASdk
+    private let currentUserSource: CurrentUserSource
     
     private let successfulRestoreSourcePublisher = PassthroughSubject<Void, Never>()
     var successfulRestorePublisher: AnyPublisher<Void, Never> {
@@ -39,9 +40,18 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
             .eraseToAnyPublisher()
     }
     
-    init(purchase: MEGAPurchase, sdk: MEGASdk) {
+    var monitorSubmitReceiptAfterPurchase: AnyPublisher<Bool, Never> {
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.eraseToAnyPublisher()
+    }
+
+    init(
+        purchase: MEGAPurchase,
+        sdk: MEGASdk,
+        currentUserSource: CurrentUserSource = .shared
+    ) {
         self.purchase = purchase
         self.sdk = sdk
+        self.currentUserSource = currentUserSource
     }
     
     func registerRestoreDelegate() async {
@@ -101,6 +111,18 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         guard let pricing = purchase.pricing else { return 0 }
         return pricing.transferGB(atProductIndex: index)
     }
+    
+    func startMonitoringSubmitReceiptAfterPurchase() {
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.send(purchase.isSubmittingReceipt)
+    }
+    
+    func endMonitoringPurchaseReceipt() {
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.send(false)
+    }
+    
+    var isSubmittingReceiptAfterPurchase: Bool {
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.value
+    }
 }
 
 // MARK: - MEGARequestDelegate
@@ -128,6 +150,10 @@ extension AccountPlanPurchaseRepository: MEGAPurchaseDelegate {
     func failedPurchase(_ errorCode: Int, message errorMessage: String?) {
         let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: errorMessage)
         purchasePlanResultSourcePublisher.send(.failure(error))
+    }
+    
+    func successSubmitReceipt() {
+        submitReceiptResultSourcePublisher.send(.success)
     }
     
     func failedSubmitReceipt(_ errorCode: Int) {
