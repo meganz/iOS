@@ -31,8 +31,7 @@ final class FileManagementSettingsViewRouter: FileManagementRouter {
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                 removeOfflineFilesCompletion: removeOfflineFilesCompletion,
                 navigateToRubbishBinSettings: navigateToRubbishBinSettings,
-                navigateToFileVersioning: navigateToFileVersioning,
-                errorLogger: { MEGALogError($0) }
+                navigateToFileVersioning: navigateToFileVersioning
             )
             let hostingVC = UIHostingController(rootView: FileManagementView(viewModel: viewModel))
             hostingVC.navigationItem.backButtonTitle = ""
