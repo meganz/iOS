@@ -1,13 +1,14 @@
 import Foundation
 import MEGAFoundation
 import MEGAL10n
+import SwiftUI
 
 public typealias DateFormatterClosure = @Sendable (Date) -> String
 
 /// ResourceInfoModel: Data model to hold and provide all necessary information to display details about a resource.
 public struct ResourceInfoModel: Sendable {
     /// icon: Representative image of the current resource that is established according to the type of resource
-    public let icon: String
+    public let icon: Image
     /// name: Name associated with the current resource
     public let name: String
     /// counter: A `ResourceCounter` instance that encapsulates the count of files and folders within the resource.
@@ -25,7 +26,7 @@ public struct ResourceInfoModel: Sendable {
     private let formatDateClosure: DateFormatterClosure
     
     public init(
-        icon: String,
+        icon: Image,
         name: String,
         counter: ResourceCounter,
         totalSize: UInt64 = UInt64(0),

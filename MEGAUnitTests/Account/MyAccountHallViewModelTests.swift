@@ -9,6 +9,7 @@ import MEGAPresentation
 import MEGAPresentationMock
 import MEGASDKRepoMock
 import MEGASwift
+import SwiftUI
 import XCTest
 
 final class MyAccountHallViewModelTests: XCTestCase {
@@ -550,7 +551,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         
         deviceCenterBridge.infoActionTapped(
             ResourceInfoModel(
-                icon: "",
+                icon: Image(.black),
                 name: "",
                 counter: ResourceCounter.emptyCounter
             )

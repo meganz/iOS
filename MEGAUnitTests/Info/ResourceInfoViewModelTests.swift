@@ -3,12 +3,13 @@ import DeviceCenter
 import MEGAFoundation
 import MEGAL10n
 import MEGATest
+import SwiftUI
 import XCTest
 
 final class ResourceInfoViewModelTests: XCTestCase {
     
     func testIconProperty_returnsInfoModelIcon() {
-        let icon = "iconName"
+        let icon = Image(.brown)
         let viewModel = makeSUT(icon: icon)
         XCTAssertEqual(viewModel.icon, icon)
     }
@@ -62,7 +63,7 @@ final class ResourceInfoViewModelTests: XCTestCase {
     }
     
     private func makeSUT(
-        icon: String = "",
+        icon: Image = Image(.blue),
         name: String = "",
         totalSize: UInt64 = 0,
         added: Date? = nil,
