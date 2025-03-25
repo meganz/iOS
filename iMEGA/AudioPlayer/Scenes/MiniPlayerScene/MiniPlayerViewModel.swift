@@ -116,6 +116,7 @@ final class MiniPlayerViewModel: ViewModelType {
     private func determinePlayerSetupOnViewDidLoad() {
         guard shouldInitializePlayer else {
             configurePlayer()
+            configEntity.playerHandler.refreshCurrentItemState()
             return
         }
         
@@ -185,11 +186,6 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         invokeCommand?(.initTracks(currentItem: currentItem, queue: configEntity.playerHandler.playerPlaylistItems(), loopMode: configEntity.playerHandler.currentRepeatMode() == .loop))
-        if let artworkImage = currentItem.artwork {
-            invokeCommand?(.reloadNodeInfo(thumbnail: artworkImage))
-        }
-        
-        configEntity.playerHandler.refreshCurrentItemState()
     }
     
     // MARK: - Node Init
