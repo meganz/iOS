@@ -61,12 +61,17 @@ final class MiniPlayerViewModelTests: XCTestCase {
         let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT(playerType: .offline, shouldInitializePlayer: true, relatedFileLinks: ["/examples/mp3/SoundHelix-Song-1.mp3"])
         
         let expectation = XCTestExpectation(description: #function)
-        expectation.expectedFulfillmentCount = 4
+        expectation.expectedFulfillmentCount = 3
         
-        mockPlayerHandler.onAutoPlayCompletion = { expectation.fulfill() }
-        mockPlayerHandler.onAddPlayerTracksCompletion = { expectation.fulfill() }
-        mockPlayerHandler.onAddPlayerListenerCompletion = { expectation.fulfill() }
-        mockPlayerHandler.onRefreshCurrentItemStateCompletion = { expectation.fulfill() }
+        mockPlayerHandler.onAutoPlayCompletion = {
+            expectation.fulfill()
+        }
+        mockPlayerHandler.onAddPlayerTracksCompletion = {
+            expectation.fulfill()
+        }
+        mockPlayerHandler.onAddPlayerListenerCompletion = {
+            expectation.fulfill()
+        }
         
         viewModel.dispatch(.onViewDidLoad)
         
@@ -102,12 +107,17 @@ final class MiniPlayerViewModelTests: XCTestCase {
                 let (viewModel, _, mockPlayerHandler, _, _, streamingInfoUseCase) = makeSUT(node: MockNode(handle: 1), playerType: playerType, shouldInitializePlayer: true, relatedFileLinks: ["/examples/mp3/SoundHelix-Song-1.mp3"])
                 
                 let expectation = XCTestExpectation()
-                expectation.expectedFulfillmentCount = 4
+                expectation.expectedFulfillmentCount = 3
                 
-                mockPlayerHandler.onAutoPlayCompletion = { expectation.fulfill() }
-                mockPlayerHandler.onAddPlayerTracksCompletion = { expectation.fulfill() }
-                mockPlayerHandler.onAddPlayerListenerCompletion = { expectation.fulfill() }
-                mockPlayerHandler.onRefreshCurrentItemStateCompletion = { expectation.fulfill() }
+                mockPlayerHandler.onAutoPlayCompletion = {
+                    expectation.fulfill()
+                }
+                mockPlayerHandler.onAddPlayerTracksCompletion = {
+                    expectation.fulfill()
+                }
+                mockPlayerHandler.onAddPlayerListenerCompletion = {
+                    expectation.fulfill()
+                }
                 
                 streamingInfoUseCase.completeInfoNode(with: .mockItem)
                 
