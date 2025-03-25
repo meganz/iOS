@@ -13,7 +13,9 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
         incompleteRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
         failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> = Empty().eraseToAnyPublisher(),
         purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher(),
-        submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher()
+        submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher(),
+        monitorSubmitReceiptPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
+        isSubmittingReceiptAfterPurchase: Bool = false
     ) -> (sut: AccountPlanPurchaseUseCase<MockAccountPlanPurchaseRepository>, repository: MockAccountPlanPurchaseRepository) {
         let mockRepo = MockAccountPlanPurchaseRepository(
             plans: plans,
@@ -21,7 +23,9 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
             incompleteRestorePublisher: incompleteRestorePublisher,
             failedRestorePublisher: failedRestorePublisher,
             purchasePlanResultPublisher: purchasePlanResultPublisher,
-            submitReceiptResultPublisher: submitReceiptResultPublisher
+            submitReceiptResultPublisher: submitReceiptResultPublisher,
+            monitorSubmitReceiptPublisher: monitorSubmitReceiptPublisher,
+            isSubmittingReceiptAfterPurchase: isSubmittingReceiptAfterPurchase
         )
         return (AccountPlanPurchaseUseCase(repository: mockRepo), mockRepo)
     }
@@ -207,5 +211,48 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
         
         submitReceiptResultPublisher.send(.failure(expectedError))
         wait(for: [exp], timeout: 1)
+    }
+    
+    func testStartMonitoringSubmitReceiptAfterPurchase_whenCalled_shouldBeCalledOnce() {
+        let (sut, mockRepo) = makeSUT()
+        sut.startMonitoringSubmitReceiptAfterPurchase()
+        XCTAssertEqual(mockRepo.startMonitoringSubmitReceiptAfterPurchaseCalled, 1)
+    }
+    
+    func testEndMonitoringPurchaseReceipt_whenCalled_shouldBeCalledOnce() {
+        let (sut, mockRepo) = makeSUT()
+        sut.endMonitoringPurchaseReceipt()
+        XCTAssertEqual(mockRepo.endMonitoringPurchaseReceiptCalled, 1)
+    }
+    
+    func testIsSubmittingReceiptAfterPurchase_whenCalled_shouldReturnCorrectValue() {
+        let expectedValue = Bool.random()
+        let (sut, _) = makeSUT(isSubmittingReceiptAfterPurchase: expectedValue)
+        
+        XCTAssertEqual(sut.isSubmittingReceiptAfterPurchase, expectedValue)
+    }
+
+    func testMonitorSubmitReceiptAfterPurchase_shouldPublishChanges() {
+        let monitorStatusPublisher = CurrentValueSubject<Bool, Never>(false)
+        let (sut, _) = makeSUT(monitorSubmitReceiptPublisher: monitorStatusPublisher.eraseToAnyPublisher())
+        
+        let expectation = expectation(description: "Should receive monitoring state changes")
+        expectation.expectedFulfillmentCount = 2
+        var receivedValues: [Bool] = []
+        let cancellable = sut.monitorSubmitReceiptAfterPurchase
+            .dropFirst()
+            .sink {
+                receivedValues.append($0)
+                expectation.fulfill()
+            }
+        
+        monitorStatusPublisher.send(true)
+        monitorStatusPublisher.send(false)
+        
+        wait(for: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(receivedValues, [true, false], "Publisher should emit correct sequence")
+        
+        cancellable.cancel()
     }
 }

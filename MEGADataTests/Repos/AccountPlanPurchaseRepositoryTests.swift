@@ -1,6 +1,7 @@
 import Combine
 @testable import MEGA
 import MEGADomain
+import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
 
@@ -181,5 +182,80 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         
         sut.failedSubmitReceipt(expectedError.errorCode)
         wait(for: [exp], timeout: 1)
+    }
+    
+    func testStartMonitoringSubmitReceiptAfterPurchase_whenCalled_shouldSetIsSubmittingReceiptValueToMonitoringStatus() {
+        let isSubmittingReceipt = Bool.random()
+        let currentUserSource = CurrentUserSource(sdk: MockSdk())
+        let sut = makeSUT(
+            purchase: MockMEGAPurchase(isSubmittingReceipt: isSubmittingReceipt),
+            currentUserSource: currentUserSource
+        )
+        
+        sut.startMonitoringSubmitReceiptAfterPurchase()
+        
+        XCTAssertEqual(currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.value, isSubmittingReceipt)
+    }
+    
+    func testEndMonitoringPurchaseReceipt_whenCalled_shouldSetMonitoringStatusToFalse() {
+        let currentUserSource = CurrentUserSource(sdk: MockSdk())
+        let sut = makeSUT(
+            purchase: MockMEGAPurchase(isSubmittingReceipt: true),
+            currentUserSource: currentUserSource
+        )
+        
+        sut.endMonitoringPurchaseReceipt()
+        
+        XCTAssertEqual(currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.value, false)
+    }
+
+    func testIsSubmittingReceiptAfterPurchase_whenCalled_shouldReturnCurrentSourceValue() {
+        assertIsSubmittingReceiptAfterPurchase(true)
+        
+        assertIsSubmittingReceiptAfterPurchase(false)
+    }
+    
+    private func assertIsSubmittingReceiptAfterPurchase(_ value: Bool) {
+        let currentUserSource = CurrentUserSource(sdk: MockSdk())
+        let sut = makeSUT(currentUserSource: currentUserSource)
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.send(value)
+        
+        XCTAssertEqual(sut.isSubmittingReceiptAfterPurchase, value)
+    }
+
+    func testMonitorSubmitReceiptAfterPurchase_shouldPublishChanges() {
+        let currentUserSource = CurrentUserSource(sdk: MockSdk())
+        let sut = makeSUT(currentUserSource: currentUserSource)
+        var receivedValues: [Bool] = []
+        
+        let expectation = expectation(description: "Should receive monitoring state changes")
+        expectation.expectedFulfillmentCount = 2
+        let cancellable = sut.monitorSubmitReceiptAfterPurchase
+            .dropFirst()
+            .sink {
+                receivedValues.append($0)
+                expectation.fulfill()
+            }
+
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.send(true)
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.send(false)
+        wait(for: [expectation], timeout: 1.0)
+        
+        XCTAssertEqual(receivedValues, [true, false], "Publisher should emit correct sequence")
+        
+        cancellable.cancel()
+    }
+    
+    // MARK: - Helper
+    private func makeSUT(
+        purchase: MockMEGAPurchase = MockMEGAPurchase(),
+        sdk: MockSdk = MockSdk(),
+        currentUserSource: CurrentUserSource = CurrentUserSource(sdk: MockSdk())
+    ) -> AccountPlanPurchaseRepository {
+        AccountPlanPurchaseRepository(
+            purchase: purchase,
+            sdk: sdk,
+            currentUserSource: currentUserSource
+        )
     }
 }

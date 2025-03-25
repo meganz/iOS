@@ -27,6 +27,12 @@ public final class CurrentUserSource: @unchecked Sendable {
     /// publisher to respond to changes in the refresh state.
     public let monitorRefreshAccountSourcePublisher = CurrentValueSubject<Bool, Never>(false)
     
+    /// A publisher that tracks the status of receipt submission after a purchase.
+    /// - `true`: The receipt submission process is active.
+    /// - `false`: The process is not active or has completed.
+    /// - Used to control UI updates, such as displaying a loading indicator.
+    public let monitorSubmitReceiptAfterPurchaseSourcePublisher = CurrentValueSubject<Bool, Never>(false)
+    
     public init(
         sdk: MEGASdk,
         notificationCenter: NotificationCenter = .default

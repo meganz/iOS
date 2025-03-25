@@ -59,6 +59,7 @@ struct MyAccountHallPlanView: View {
     private func currentPlanNameView() -> some View {
         if viewModel.isAccountUpdating {
             ProgressView()
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
         } else {
             Text(viewModel.currentPlanName)
                 .font(.body)

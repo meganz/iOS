@@ -8,8 +8,9 @@ final class MockMEGAPurchase: MEGAPurchase, @unchecked Sendable {
         purchaseDelegateMutableArray = NSMutableArray()
     }
     
-    init(productPlans: [MockSKProduct]) {
+    init(productPlans: [MockSKProduct] = [], isSubmittingReceipt: Bool = false) {
         super.init(products: productPlans)
+        setIsSubmittingReceipt(isSubmittingReceipt)
     }
     
     var hasRestoreDelegate: Bool {
