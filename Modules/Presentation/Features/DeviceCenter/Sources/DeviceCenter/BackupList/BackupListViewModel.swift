@@ -307,7 +307,7 @@ public final class BackupListViewModel: ObservableObject {
     private func makeDeviceInfoModel() async -> ResourceInfoModel {
         guard selectedDevice.backups.isNotEmpty else {
             return ResourceInfoModel(
-                icon: selectedDevice.icon,
+                icon: Image(selectedDevice.icon, bundle: .module),
                 name: selectedDevice.name,
                 counter: ResourceCounter.emptyCounter
             )
@@ -316,7 +316,7 @@ public final class BackupListViewModel: ObservableObject {
         let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: selectedDevice.backups)
         
         return ResourceInfoModel(
-            icon: selectedDevice.icon,
+            icon: Image(selectedDevice.icon, bundle: .module),
             name: selectedDevice.name,
             counter: ResourceCounter(
                 files: folderInfo.files,

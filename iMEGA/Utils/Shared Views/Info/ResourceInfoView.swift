@@ -15,7 +15,7 @@ struct ResourceInfoView: View {
             List {
                 VStack(alignment: .center) {
                     Spacer()
-                    Image(viewModel.icon)
+                    viewModel.icon
                         .resizable()
                         .scaledToFit()
                         .frame(width: 80, height: 80)
@@ -106,7 +106,7 @@ struct DetailRow: View {
     }
     
     let infoModel = ResourceInfoModel(
-        icon: "pc-mac",
+        icon: Image(.blue),
         name: "MEGA Mac",
         counter: ResourceCounter(
             files: 15,
