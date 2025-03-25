@@ -497,6 +497,8 @@ class NodeBrowserViewModel: ObservableObject {
         editing = false
         refresh()
         searchResultsViewModel.bridge.editingCancelled()
+        
+        CrashlyticsLogger.log(category: .cloudDrive, "stop editing")
     }
 
     /// Waits for the node to be loaded from the `NodeSource`.

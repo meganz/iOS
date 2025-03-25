@@ -15,6 +15,7 @@ final class CrashlyticsLogger: NSObject {
         case nodeInfo
         case sharedItems
         case viewLifecycle
+        case cloudDrive
         var rawValue: String {
             switch self {
             case .general: "General"
@@ -24,6 +25,7 @@ final class CrashlyticsLogger: NSObject {
             case .nodeInfo: "Node Info"
             case .sharedItems: "Shared Items"
             case .viewLifecycle: "View"
+            case .cloudDrive: "Cloud Drive"
             }
         }
     }

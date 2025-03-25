@@ -130,6 +130,8 @@ struct CloudDriveBottomToolbarItemsFactory {
                 sender: sender
             )
         }
+        
+        CrashlyticsLogger.log(category: .cloudDrive, "Toolbar Action type: \(type), displayMode: \(displayMode)")
     }
     
     private func presentMoreActions(
