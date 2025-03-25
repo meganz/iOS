@@ -14,6 +14,10 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
     public var purchasePlanCalled = 0
     public var registerPurchaseDelegateCalled = 0
     public var deRegisterPurchaseDelegateCalled = 0
+    public let monitorSubmitReceiptPublisher: AnyPublisher<Bool, Never>
+    public let _isSubmittingReceiptAfterPurchase: Bool
+    public var startMonitoringSubmitReceiptAfterPurchaseCalled = 0
+    public var endMonitoringPurchaseReceiptCalled = 0
     
     public static var newRepo: MockAccountPlanPurchaseRepository {
         MockAccountPlanPurchaseRepository()
@@ -24,7 +28,9 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
                 incompleteRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
                 failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> = Empty().eraseToAnyPublisher(),
                 purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher(),
-                submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher()
+                submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> = Empty().eraseToAnyPublisher(),
+                monitorSubmitReceiptPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
+                isSubmittingReceiptAfterPurchase: Bool = false
     ) {
         self.plans = plans
         self.successfulRestorePublisher = successfulRestorePublisher
@@ -32,6 +38,8 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
         self.failedRestorePublisher = failedRestorePublisher
         self.purchasePlanResultPublisher = purchasePlanResultPublisher
         self.submitReceiptResultPublisher = submitReceiptResultPublisher
+        self.monitorSubmitReceiptPublisher = monitorSubmitReceiptPublisher
+        _isSubmittingReceiptAfterPurchase = isSubmittingReceiptAfterPurchase
     }
     
     public func accountPlanProducts() -> [PlanEntity] {
@@ -60,5 +68,21 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
     
     public func deRegisterPurchaseDelegate() async {
         deRegisterPurchaseDelegateCalled += 1
+    }
+    
+    public var monitorSubmitReceiptAfterPurchase: AnyPublisher<Bool, Never> {
+        monitorSubmitReceiptPublisher
+    }
+    
+    public var isSubmittingReceiptAfterPurchase: Bool {
+        _isSubmittingReceiptAfterPurchase
+    }
+    
+    public func startMonitoringSubmitReceiptAfterPurchase() {
+        startMonitoringSubmitReceiptAfterPurchaseCalled += 1
+    }
+    
+    public func endMonitoringPurchaseReceipt() {
+        endMonitoringPurchaseReceiptCalled += 1
     }
 }

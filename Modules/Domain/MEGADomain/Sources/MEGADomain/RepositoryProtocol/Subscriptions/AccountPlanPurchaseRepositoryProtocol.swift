@@ -10,6 +10,10 @@ public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol, Senda
     var failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> { get }
     var purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> { get }
     var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> { get }
+    var monitorSubmitReceiptAfterPurchase: AnyPublisher<Bool, Never> { get }
+    var isSubmittingReceiptAfterPurchase: Bool { get }
+    func startMonitoringSubmitReceiptAfterPurchase()
+    func endMonitoringPurchaseReceipt()
     
     func registerRestoreDelegate() async
     func deRegisterRestoreDelegate() async

@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableArray *products;
 @property (nonatomic, strong) SKProduct *pendingStoreProduct;
 @property (nonatomic, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
+@property (nonatomic, getter=isSubmittingReceipt) BOOL submittingReceipt;
 @end
 
 @implementation MEGAPurchase
@@ -133,6 +134,10 @@
     // If isPurchasing is true, the promoted plan is ongoing
     // If isPurchasing is false, the promoted plan purchase is not active or has finished
     self.purchasingPromotedPlan = isPurchasing;
+}
+
+- (void)setIsSubmittingReceipt:(BOOL)isSubmittingReceipt {
+    self.submittingReceipt = isSubmittingReceipt;
 }
 
 #pragma mark - SKProductsRequestDelegate Methods
@@ -297,6 +302,12 @@
 
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
+        [self setIsSubmittingReceipt:true];
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (error.type) {
         if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
@@ -310,6 +321,7 @@
                 
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:LocalizedString(@"wrongPurchase", @"Error message shown when the purchase has failed"), error.name, (long)error.type]];
             }
+            [self setIsSubmittingReceipt:false];
         }
         return;
     }
@@ -317,6 +329,11 @@
     if (request.type == MEGARequestTypeGetPricing) {
         self.pricing = request.pricing;
         [self requestProducts];
+    } else if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
+        [self setIsSubmittingReceipt:false];
+        for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
+            [delegate successSubmitReceipt];
+        }
     }
 }
 

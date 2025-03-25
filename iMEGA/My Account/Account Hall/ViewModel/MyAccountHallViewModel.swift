@@ -102,9 +102,13 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         
         setAccountDetails(myAccountHallUseCase.currentAccountDetails)
         makeDeviceCenterBridge()
+        registerDelegates()
     }
     
     deinit {
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.deRegisterPurchaseDelegate()
+        }
         loadContentTask?.cancel()
         loadContentTask = nil
     }
@@ -115,6 +119,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         switch action {
         case .viewDidLoad:
             trackAccountScreenEvent()
+            registerDelegates()
             setupSubscriptions()
         case .viewWillAppear:
             startAccountUpdatesMonitoring()
@@ -145,6 +150,13 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .didTapNotificationCentre:
             trackNotificationCentreButtonPressedEvent()
             router.navigateToNotificationCentre()
+        }
+    }
+    
+    // MARK: - Setup
+    private func registerDelegates() {
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.registerPurchaseDelegate()
         }
     }
     
@@ -261,7 +273,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         case .planList:
             await fetchPlanList()
         case .accountDetails:
-            isAccountUpdating = accountUseCase.isMonitoringRefreshAccount
+            isAccountUpdating = accountUseCase.isMonitoringRefreshAccount || purchaseUseCase.isSubmittingReceiptAfterPurchase
             await updateAccountDetails()
         case .contentCounts:
             await fetchCounts()
@@ -376,22 +388,41 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     private func setupSubscriptions() {
-        notificationCenter
-            .publisher(for: .refreshAccountDetails)
-            .map({ $0.object as? AccountDetailsEntity })
-            .sink { [weak self] account in
-                guard let self else { return }
+        /// Listens for the result of receipt submission.
+        /// - If the submission is successful, it refreshes the account details and
+        ///   ends any ongoing purchase receipt monitoring.
+        /// - If unsuccessful, it does nothing.
+        purchaseUseCase.submitReceiptResultPublisher
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self, case .success = result else { return }
                 Task { [weak self] in
                     guard let self else { return }
-                    if let account {
-                        updateAccountDisplay(account)
-                    } else {
-                        await updateAccountDetails(monitorUpdate: true)
-                    }
+                    purchaseUseCase.endMonitoringPurchaseReceipt()
+                    await updateAccountDetails(monitorUpdate: true)
                 }
             }
             .store(in: &subscriptions)
+
+        /// Monitors whether receipt submission is in progress after a purchase.
+        /// - When `startMonitoringSubmitReceiptAfterPurchase` is called,
+        ///   `monitorSubmitReceiptAfterPurchase` will publish updates.
+        /// - If `monitorSubmitReceiptAfterPurchase` emits `true`, the UI will show
+        ///   the loading indicator.
+        /// - If `false`, it is ignored.
+        purchaseUseCase.monitorSubmitReceiptAfterPurchase
+            .removeDuplicates()
+            .filter { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.isAccountUpdating = true
+                self?.reloadStorage()
+            }
+            .store(in: &subscriptions)
         
+        /// Monitors the account refresh process, primarily used after a plan purchase.
+        /// - When `monitorRefreshAccount` emits `true`, the UI displays a loading indicator.
+        /// - When it emits `false`, the UI hides the loading indicator.
         accountUseCase.monitorRefreshAccount
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isUpdating in
