@@ -144,7 +144,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: backup)
         
         return ResourceInfoModel(
-            icon: assets.iconName,
+            icon: Image(assets.iconName, bundle: .module),
             name: backup.name,
             counter: ResourceCounter(
                 files: folderInfo.files,
@@ -157,7 +157,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private func makeDeviceInfoEntity(_ device: DeviceEntity) async -> ResourceInfoModel {
         guard let backups = device.backups else {
             return ResourceInfoModel(
-                icon: assets.iconName,
+                icon: Image(assets.iconName, bundle: .module),
                 name: device.name,
                 counter: ResourceCounter.emptyCounter
             )
@@ -166,7 +166,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: backups)
 
         return ResourceInfoModel(
-            icon: assets.iconName,
+            icon: Image(assets.iconName, bundle: .module),
             name: device.name,
             counter: ResourceCounter(
                 files: folderInfo.files,
