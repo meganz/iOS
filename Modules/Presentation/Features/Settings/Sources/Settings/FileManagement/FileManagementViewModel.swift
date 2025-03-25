@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
 
@@ -15,7 +16,6 @@ public final class FileManagementViewModel: ObservableObject {
     private let removeOfflineFilesCompletion: () -> Void
     private let navigateToRubbishBinSettings: () -> Void
     private let navigateToFileVersioning: () -> Void
-    private let errorLogger: ((String) -> Void)?
     
     @Published private(set) var isMobileDataEnabled: Bool = false
     @Published private(set) var formattedCacheSize: String = ""
@@ -34,8 +34,7 @@ public final class FileManagementViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         removeOfflineFilesCompletion: @escaping () -> Void,
         navigateToRubbishBinSettings: @escaping () -> Void,
-        navigateToFileVersioning: @escaping () -> Void,
-        errorLogger: ((String) -> Void)? = nil
+        navigateToFileVersioning: @escaping () -> Void
     ) {
         self.cacheUseCase = cacheUseCase
         self.offlineUseCase = offlineUseCase
@@ -45,7 +44,6 @@ public final class FileManagementViewModel: ObservableObject {
         self.removeOfflineFilesCompletion = removeOfflineFilesCompletion
         self.navigateToRubbishBinSettings = navigateToRubbishBinSettings
         self.navigateToFileVersioning = navigateToFileVersioning
-        self.errorLogger = errorLogger
     }
     
     deinit {
@@ -96,9 +94,9 @@ public final class FileManagementViewModel: ObservableObject {
                 showSnackBar(message: Strings.Localizable.Settings.FileManagement.ClearOfflineFiles.Done.message)
                 updateOfflineFilesSize()
             } catch is CancellationError {
-                errorLogger?("[FileManagement] Offline files clearing task was cancelled")
-            }  catch {
-                errorLogger?("[FileManagement] error when clearing offline files: \(error)")
+                MEGALogError("[FileManagement] Offline files clearing task was cancelled")
+            } catch {
+                MEGALogError("[FileManagement] error when clearing offline files: \(error)")
             }
         }
     }
@@ -143,9 +141,9 @@ public final class FileManagementViewModel: ObservableObject {
                 showSnackBar(message: Strings.Localizable.Settings.FileManagement.ClearCache.Done.message)
                 updateCacheSize()
             } catch is CancellationError {
-                errorLogger?("[FileManagement] Cache clearing task was cancelled")
+                MEGALogError("[FileManagement] Cache clearing task was cancelled")
             } catch {
-                errorLogger?("[FileManagement] error when clearing cache: \(error)")
+                MEGALogError("[FileManagement] error when clearing cache: \(error)")
             }
         }
     }
