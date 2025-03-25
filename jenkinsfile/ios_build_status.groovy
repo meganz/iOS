@@ -10,7 +10,7 @@ def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
         }
 
         def message = ":warning: Over 10 `.swift` files changed, please explain why you need to do this change or break the MR into smaller ones"
-        statusNotifier.postMessage(message, env.MEGA_IOS_PROJECT_ID, SlackColorType.WARNING)
+        statusNotifier.postMessage(message, env.MEGA_IOS_PROJECT_ID, "warning")
     }
 }
 
