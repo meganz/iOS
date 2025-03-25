@@ -3,7 +3,7 @@ import MEGAL10n
 import SwiftUI
 
 final class ResourceInfoViewModel: ObservableObject {
-    var icon: String {
+    var icon: Image {
         infoModel.icon
     }
     
