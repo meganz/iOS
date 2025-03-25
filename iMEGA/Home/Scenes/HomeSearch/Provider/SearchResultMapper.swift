@@ -176,6 +176,7 @@ struct SearchResultMapper: Sendable {
                         backgroundColor: turquoiseBackgroundColor,
                         action: {
                             nodeActions.restoreFromRubbishBin([node])
+                            CrashlyticsLogger.log(category: .cloudDrive, "Swipe action restoreFromRubbishBin - nodes: \(node.handle)")
                         }
                     )
                 ]
@@ -186,6 +187,7 @@ struct SearchResultMapper: Sendable {
                 backgroundColor: TokenColors.Support.warning.swiftUI,
                 action: {
                     nodeActions.shareOrManageLink([node])
+                    CrashlyticsLogger.log(category: .cloudDrive, "Swipe action shareOrManageLink - nodes: \(node.handle)")
                 }
             )
 
@@ -194,6 +196,7 @@ struct SearchResultMapper: Sendable {
                 backgroundColor: turquoiseBackgroundColor,
                 action: {
                     nodeActions.nodeDownloader([node])
+                    CrashlyticsLogger.log(category: .cloudDrive, "Swipe action nodeDownloader - nodes: \(node.handle)")
                 }
             )
 
@@ -203,6 +206,7 @@ struct SearchResultMapper: Sendable {
                     backgroundColor: TokenColors.Support.error.swiftUI,
                     action: {
                         nodeActions.moveToRubbishBin([node])
+                        CrashlyticsLogger.log(category: .cloudDrive, "Swipe action moveToRubbishBin - nodes: \(node.handle)")
                     }
                 )
 

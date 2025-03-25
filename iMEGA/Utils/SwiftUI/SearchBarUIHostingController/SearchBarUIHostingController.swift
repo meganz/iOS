@@ -104,6 +104,8 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
     }
     
     deinit {
+        CrashlyticsLogger.log(category: .viewLifecycle, "SearchBarUIHostingController deinit - Before removeToolbar")
+        
         removeToolbar(animated: false)
         wrapper?.onUpdateSearchBarVisibility = nil
         selectionHandler?.onSelectionModeChange = nil

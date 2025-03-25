@@ -366,6 +366,8 @@ class NodeActionViewController: ActionSheetViewController {
             } else {
                 delegate.nodeAction?(self, didSelect: action.type, forNodes: nodes, from: sender)
             }
+            
+            CrashlyticsLogger.log(category: .cloudDrive, "didSelectNodeAction: \(action.type), nodes: \(nodes.map(\.handle))")
         })
     }
     
