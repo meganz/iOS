@@ -59,6 +59,9 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
 
 extension PhotoSearchResultItemViewModel: Equatable {
     nonisolated static func == (lhs: PhotoSearchResultItemViewModel, rhs: PhotoSearchResultItemViewModel) -> Bool {
-        lhs.photo == rhs.photo && lhs.searchText == rhs.searchText
+        lhs.photo.handle == rhs.photo.handle &&
+        lhs.photo.name == rhs.photo.name &&
+        lhs.photo.isMarkedSensitive == rhs.photo.isMarkedSensitive &&
+        lhs.searchText == rhs.searchText
     }
 }
