@@ -9,6 +9,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     private let _failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never>
     private let _purchasePlanResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>
     private let _submitReceiptResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>
+    private let _monitorSubmitReceiptPublisher: AnyPublisher<Bool, Never>
     
     public var restorePurchaseCalled = 0
     public var purchasePlanCalled = 0
@@ -17,13 +18,19 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     public var registerPurchaseDelegateCalled = 0
     public var deRegisterPurchaseDelegateCalled = 0
     
+    private let _isSubmittingReceiptAfterPurchase: Bool
+    public private(set) var startMonitoringSubmitReceiptAfterPurchaseCalled = 0
+    public private(set) var endMonitoringPurchaseReceiptCalled = 0
+    
     public init(accountPlanProducts: [PlanEntity] = [],
                 lowestPlan: PlanEntity = PlanEntity(),
                 successfulRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 incompleteRestorePublisher: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>(),
                 failedRestorePublisher: PassthroughSubject<AccountPlanErrorEntity, Never> = PassthroughSubject<AccountPlanErrorEntity, Never>(),
                 purchasePlanResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never> = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>(),
-                submitReceiptResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never> = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+                submitReceiptResultPublisher: PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never> = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>(),
+                monitorSubmitReceiptPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
+                isSubmittingReceiptAfterPurchase: Bool = false
     ) {
         self.accountPlanProducts = accountPlanProducts
         _lowestPlan = lowestPlan
@@ -32,6 +39,8 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
         _failedRestorePublisher = failedRestorePublisher
         _purchasePlanResultPublisher = purchasePlanResultPublisher
         _submitReceiptResultPublisher = submitReceiptResultPublisher
+        _monitorSubmitReceiptPublisher = monitorSubmitReceiptPublisher
+        _isSubmittingReceiptAfterPurchase = isSubmittingReceiptAfterPurchase
     }
     
     public func accountPlanProducts() async -> [PlanEntity] {
@@ -61,6 +70,10 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     public var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
         _submitReceiptResultPublisher.eraseToAnyPublisher()
     }
+
+    public var monitorSubmitReceiptAfterPurchase: AnyPublisher<Bool, Never> {
+        _monitorSubmitReceiptPublisher
+    }
     
     public func purchasePlan(_ plan: PlanEntity) async {
         purchasePlanCalled += 1
@@ -84,5 +97,17 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     
     public func deRegisterPurchaseDelegate() async {
         deRegisterPurchaseDelegateCalled += 1
+    }
+    
+    public var isSubmittingReceiptAfterPurchase: Bool {
+        _isSubmittingReceiptAfterPurchase
+    }
+    
+    public func startMonitoringSubmitReceiptAfterPurchase() {
+        startMonitoringSubmitReceiptAfterPurchaseCalled += 1
+    }
+    
+    public func endMonitoringPurchaseReceipt() {
+        endMonitoringPurchaseReceiptCalled += 1
     }
 }

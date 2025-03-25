@@ -11,6 +11,10 @@ public protocol AccountPlanPurchaseUseCaseProtocol: Sendable {
     var failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> { get }
     func purchasePlanResultPublisher() -> AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never>
     var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> { get }
+    var monitorSubmitReceiptAfterPurchase: AnyPublisher<Bool, Never> { get }
+    var isSubmittingReceiptAfterPurchase: Bool { get }
+    func startMonitoringSubmitReceiptAfterPurchase()
+    func endMonitoringPurchaseReceipt()
     
     func registerRestoreDelegate() async
     func deRegisterRestoreDelegate() async
@@ -61,6 +65,22 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
     
     public var submitReceiptResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
         repo.submitReceiptResultPublisher    
+    }
+    
+    public var monitorSubmitReceiptAfterPurchase: AnyPublisher<Bool, Never> {
+        repo.monitorSubmitReceiptAfterPurchase
+    }
+    
+    public var isSubmittingReceiptAfterPurchase: Bool {
+        repo.isSubmittingReceiptAfterPurchase
+    }
+    
+    public func startMonitoringSubmitReceiptAfterPurchase() {
+        repo.startMonitoringSubmitReceiptAfterPurchase()
+    }
+    
+    public func endMonitoringPurchaseReceipt() {
+        repo.endMonitoringPurchaseReceipt()
     }
     
     public func registerRestoreDelegate() async {

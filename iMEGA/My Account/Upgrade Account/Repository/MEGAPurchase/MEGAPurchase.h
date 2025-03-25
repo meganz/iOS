@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchasePricingDelegate>> *pricingsDelegateMutableArray;
 @property (nonatomic, strong) MEGAPricing *pricing;
 @property (nonatomic, readonly, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
+@property (nonatomic, readonly, getter=isSubmittingReceipt) BOOL submittingReceipt;
 
 + (MEGAPurchase *)sharedInstance;
 - (instancetype)initWithProducts:(NSArray<SKProduct *>*)products;
@@ -27,6 +28,7 @@
 - (SKProduct *)pendingPromotedProductForPayment;
 - (void)savePendingPromotedProduct:(SKProduct *)product;
 - (void)setIsPurchasingPromotedPlan:(BOOL)isPurchasing;
+- (void)setIsSubmittingReceipt:(BOOL)isSubmittingReceipt;
 
 @end
 
@@ -41,6 +43,7 @@
 @optional
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage;
 - (void)failedSubmitReceipt:(NSInteger)errorCode;
+- (void)successSubmitReceipt;
 
 @end
 

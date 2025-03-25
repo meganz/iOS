@@ -65,7 +65,8 @@ extension MyAccountHallTableViewCell {
     
     @objc func setupCell() {
         backgroundColor = TokenColors.Background.page
-        
+        activityIndicatorView?.color = TokenColors.Icon.secondary
+
         if iconImageView != nil {
             iconImageView.tintColor = TokenColors.Icon.primary
         }
@@ -75,7 +76,7 @@ extension MyAccountHallTableViewCell {
         }
         
         if detailLabel != nil {
-            detailLabel.textColor =  TokenColors.Text.secondary
+            detailLabel.textColor = TokenColors.Text.secondary
         }
         
         if pendingView != nil {
