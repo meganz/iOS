@@ -10,7 +10,7 @@ class ActionSheetCell: UITableViewCell {
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
         if let badge = action.badgeModel {
-            accessoryView = newFeatureBadgeView(badge)
+            addNewFeatureBadgeView(badge)
         } else {
             accessoryView = action.accessoryView
             attachAccessoryAction()
@@ -37,21 +37,32 @@ class ActionSheetCell: UITableViewCell {
         }
     }
     
-    func newFeatureBadgeView(_ badge: Badge) -> UIView {
-        let badgeView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
+    func addNewFeatureBadgeView(_ badge: Badge) {
+        let badgeView = UIView()
         badgeView.backgroundColor = badge.backgroundColor
         badgeView.layer.cornerRadius = 10
-        
-        let badgeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 15))
+        badgeView.translatesAutoresizingMaskIntoConstraints = false
+
+        let badgeLabel = UILabel()
         badgeLabel.textColor = badge.foregroundColor
-        badgeLabel.font = UIFont.preferredFont(style: .caption2, weight: .medium)
+        badgeLabel.font = UIFont.preferredFont(forTextStyle: .caption2)
         badgeLabel.text = badge.title
         badgeLabel.textAlignment = .center
+        badgeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         badgeView.addSubview(badgeLabel)
-        badgeLabel.center = badgeView.center
+        NSLayoutConstraint.activate([
+            badgeLabel.topAnchor.constraint(equalTo: badgeView.topAnchor, constant: 4),
+            badgeLabel.bottomAnchor.constraint(equalTo: badgeView.bottomAnchor, constant: -4),
+            badgeLabel.leadingAnchor.constraint(equalTo: badgeView.leadingAnchor, constant: 8),
+            badgeLabel.trailingAnchor.constraint(equalTo: badgeView.trailingAnchor, constant: -8)
+        ])
         
-        return badgeView
+        addSubview(badgeView)
+        NSLayoutConstraint.activate([
+            badgeView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            badgeView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
     
     private func attachAccessoryAction() {
