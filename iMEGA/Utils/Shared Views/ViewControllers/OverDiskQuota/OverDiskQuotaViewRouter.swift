@@ -5,7 +5,6 @@ import MEGASDKRepo
 protocol OverDiskQuotaViewRouting: Routing {
     func dismiss()
     func showUpgradePlanPage()
-    func navigateToCloudDriveTab()
 }
 
 final class OverDiskQuotaViewRouter: OverDiskQuotaViewRouting {
@@ -43,25 +42,6 @@ final class OverDiskQuotaViewRouter: OverDiskQuotaViewRouting {
             presenter: baseViewController,
             accountDetails: currentAccountDetails
         ).start()
-    }
-    
-    func navigateToCloudDriveTab() {
-        mainTabBar?.selectedIndex = TabType.cloudDrive.rawValue
-        
-        guard let navigationController = mainTabBar?.children.first as? UINavigationController else {
-            dismiss()
-            return
-        }
-        
-        if let cdViewController = navigationController.viewControllers.last as? NewCloudDriveViewController {
-            if cdViewController.displayModeProvider.displayMode() != .cloudDrive {
-                navigationController.popToRootViewController(animated: true)
-            }
-        } else {
-            navigationController.popToRootViewController(animated: true)
-        }
-
-        dismiss()
     }
     
     func build() -> UIViewController {
