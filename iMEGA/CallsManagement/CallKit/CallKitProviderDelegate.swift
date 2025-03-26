@@ -36,7 +36,8 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
 }
 
 protocol CallKitProviderDelegateProtocol {
-    func reportOutgoingCall(with uuid: UUID)
+    func reportOutgoingCallStartedConnecting(with uuid: UUID)
+    func reportOutgoingCallConnected(with uuid: UUID)
     func updateCallTitle(_ title: String, for callUUID: UUID)
     func updateCallVideo(_ video: Bool, for callUUID: UUID)
     func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping (Bool) -> Void)
@@ -44,8 +45,12 @@ protocol CallKitProviderDelegateProtocol {
 }
 
 final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, CXProviderDelegate {
-    func reportOutgoingCall(with uuid: UUID) {
+    func reportOutgoingCallStartedConnecting(with uuid: UUID) {
         provider.reportOutgoingCall(with: uuid, startedConnectingAt: nil)
+    }
+    
+    func reportOutgoingCallConnected(with uuid: UUID) {
+        provider.reportOutgoingCall(with: uuid, connectedAt: nil)
     }
     
     func updateCallTitle(_ title: String, for callUUID: UUID) {

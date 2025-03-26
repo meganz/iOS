@@ -43,6 +43,15 @@ final class CallsCoordinatorTests: XCTestCase {
             )
         }
         
+        @MainActor
+        static func withOutgoingCall(in chatRoomEntity: ChatRoomEntity) -> Harness {
+            let harness = Harness(chatRoomEntity: .testChatRoomEntity)
+            harness.setupProviderDelegate()
+            harness.callsManager.addCall(CallActionSync(chatRoom: .testChatRoomEntity), withUUID: .testUUID)
+            harness.callsManager.callForUUIDToReturn = CallActionSync(chatRoom: .testChatRoomEntity)
+            return harness
+        }
+            
         func setupProviderDelegate() {
             sut.setupProviderDelegate(callKitProviderDelegateFactory.delegate)
         }
@@ -216,6 +225,40 @@ final class CallsCoordinatorTests: XCTestCase {
         _ = await harness.sut.startCall(.isJoiningActiveCall(false))
         XCTAssertEqual(harness.meetingNoUserJoinedUseCase.startTimer_calledTimes, 1)
     }
+    
+    @MainActor
+    func testOutgoingCall_statusChangeToJoining_shouldReportOutgoingCallStartedConnecting() async throws {
+        let harness = Harness.withOutgoingCall(in: .testChatRoomEntity)
+        
+        let callUpdate = CallEntity(
+            status: .joining,
+            chatId: 123,
+            changeType: .status,
+            isOwnClientCaller: true
+        )
+        harness.callUpdateUseCase.sendCallUpdate(callUpdate)
+        
+        try await Task.sleep(nanoseconds: 50_000_000)
+
+        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.reportOutgoingCallStartedConnecting_calledTimes, 1)
+    }
+    
+    @MainActor
+    func testOutgoingCall_statusChangeToInProgress_shouldReportOutgoingCallConnected() async throws {
+        let harness = Harness.withOutgoingCall(in: .testChatRoomEntity)
+
+        let callUpdate = CallEntity(
+            status: .inProgress,
+            chatId: 123,
+            changeType: .status,
+            isOwnClientCaller: true
+        )
+        harness.callUpdateUseCase.sendCallUpdate(callUpdate)
+        
+        try await Task.sleep(nanoseconds: 50_000_000)
+
+        XCTAssertEqual(harness.callKitProviderDelegateFactory.delegate.reportOutgoingCallConnected_calledTimes, 1)
+    }
 }
 
 extension ChatRoomEntity {
@@ -237,16 +280,21 @@ extension CallActionSync {
 struct MockCallKitProviderDelegateFactory: CallKitProviderDelegateProviding {
     class MockCXProviderDelegate: NSObject, CallKitProviderDelegateProtocol {
         
-        var reportOutgoingCall_calledTimes = 0
+        var reportOutgoingCallStartedConnecting_calledTimes = 0
+        var reportOutgoingCallConnected_calledTimes = 0
         var updateCallTitle_calledTimes = 0
         var updateCallVideo_calledTimes = 0
         var reportNewIncomingCall_calledTimes = 0
         var reportEndedCall_calledTimes = 0
         
-        func reportOutgoingCall(with uuid: UUID) {
-            reportOutgoingCall_calledTimes += 1
+        func reportOutgoingCallStartedConnecting(with uuid: UUID) {
+            reportOutgoingCallStartedConnecting_calledTimes += 1
         }
         
+        func reportOutgoingCallConnected(with uuid: UUID) {
+            reportOutgoingCallConnected_calledTimes += 1
+        }
+
         func updateCallTitle(_ title: String, for callUUID: UUID) {
             updateCallTitle_calledTimes += 1
         }
