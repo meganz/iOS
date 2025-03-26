@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,27 +56,23 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </imageView>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6bw-X5-gQJ">
-                                    <rect key="frame" x="4" y="756" width="93.5" height="24"/>
+                                    <rect key="frame" x="4" y="756" width="89.5" height="24"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHs-wa-Yzr">
-                                            <rect key="frame" x="0.0" y="0.0" width="69.5" height="24"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Participant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae0-ne-geK">
-                                                    <rect key="frame" x="4" y="5" width="61.5" height="14.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
+                                            <rect key="frame" x="0.0" y="0.0" width="4" height="24"/>
                                             <constraints>
-                                                <constraint firstItem="Ae0-ne-geK" firstAttribute="leading" secondItem="gHs-wa-Yzr" secondAttribute="leading" constant="4" id="0PX-oy-MIG"/>
-                                                <constraint firstItem="Ae0-ne-geK" firstAttribute="centerY" secondItem="gHs-wa-Yzr" secondAttribute="centerY" id="DmE-8K-cuH"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ae0-ne-geK" secondAttribute="trailing" constant="4" id="hVH-1X-OwB"/>
+                                                <constraint firstAttribute="width" constant="4" id="9PN-gF-HeW"/>
                                                 <constraint firstAttribute="height" constant="24" id="pr3-Uk-rGN"/>
                                             </constraints>
                                         </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Participant" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae0-ne-geK">
+                                            <rect key="frame" x="4" y="5" width="61.5" height="14.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="micMuted" translatesAutoresizingMaskIntoConstraints="NO" id="C0Z-bC-2l6">
-                                            <rect key="frame" x="69.5" y="0.0" width="24" height="24"/>
+                                            <rect key="frame" x="65.5" y="0.0" width="24" height="24"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="24" id="QKY-Ve-urf"/>
@@ -86,6 +82,10 @@
                                     </subviews>
                                     <viewLayoutGuide key="safeArea" id="1Bx-BE-Jy1"/>
                                     <color key="backgroundColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.086274509799999996" alpha="0.5025197401" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="Ae0-ne-geK" firstAttribute="centerY" secondItem="6bw-X5-gQJ" secondAttribute="centerY" id="52V-Tg-SKU"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="dok-Oc-Cgi"/>
+                                    </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                             <integer key="value" value="2"/>
@@ -96,6 +96,7 @@
                             <color key="backgroundColor" red="0.20000000000000001" green="0.1843137255" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="aFk-YE-N4v" firstAttribute="height" secondItem="cBL-OH-Rsv" secondAttribute="height" priority="999" id="9DU-yh-Mc8"/>
+                                <constraint firstItem="6bw-X5-gQJ" firstAttribute="width" relation="lessThanOrEqual" secondItem="cBL-OH-Rsv" secondAttribute="width" multiplier="0.98" id="CRQ-k6-b32"/>
                                 <constraint firstItem="aFk-YE-N4v" firstAttribute="centerY" secondItem="cBL-OH-Rsv" secondAttribute="centerY" id="ZTd-Ml-fvi"/>
                                 <constraint firstItem="aFk-YE-N4v" firstAttribute="centerX" secondItem="cBL-OH-Rsv" secondAttribute="centerX" id="cC9-By-1Mq"/>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="414" id="efv-P5-3Ei"/>
@@ -104,7 +105,7 @@
                             </constraints>
                         </view>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3Ni-IQ-UdW" customClass="CallCollectionView" customModule="MEGA" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="788" width="414" height="108"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="108" id="24m-pV-ZUr"/>
@@ -123,7 +124,7 @@
                             </variation>
                         </collectionView>
                         <pageControl hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="rae-xX-FxW">
-                            <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                         </pageControl>
                     </subviews>
                     <constraints>
