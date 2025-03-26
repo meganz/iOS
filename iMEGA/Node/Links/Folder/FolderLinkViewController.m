@@ -482,11 +482,14 @@
     
     self.viewModePreference = ViewModePreferenceEntityList;
     
+    [self.flTableView willMoveToParentViewController:nil];
+    [self.flTableView.view removeFromSuperview];
+    [self.flTableView removeFromParentViewController];
     self.flTableView = [FolderLinkTableViewController instantiateWithFolderLink:self];
     [self addChildViewController:self.flTableView];
     self.flTableView.view.frame = self.containerView.bounds;
     [self.containerView addSubview:self.flTableView.view];
-    [self. flTableView didMoveToParentViewController:self];
+    [self.flTableView didMoveToParentViewController:self];
     
     self.flTableView.tableView.emptyDataSetSource = self;
     self.flTableView.tableView.emptyDataSetDelegate = self;
@@ -841,11 +844,12 @@
                     }
                     break;
                 }
-                    
+
                 case MEGAErrorTypeApiENoent: {
-                    if (request.type == MEGARequestTypeFetchNodes || request.type == MEGARequestTypeLogin) {
+                    if (request && (request.type == MEGARequestTypeFetchNodes || request.type == MEGARequestTypeLogin)) {
                         [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
                     }
+
                     break;
                 }
                     
