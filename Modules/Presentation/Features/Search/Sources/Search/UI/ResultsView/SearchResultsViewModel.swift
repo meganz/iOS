@@ -96,6 +96,9 @@ public class SearchResultsViewModel: ObservableObject {
 
     let listHeaderViewModel: ListHeaderViewModel?
 
+    // Specifies whether the results are selectable or not.
+    let isSelectionEnabled: Bool
+
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
@@ -107,7 +110,8 @@ public class SearchResultsViewModel: ObservableObject {
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
         isSearchByNodeTagsFeatureEnabled: Bool,
-        listHeaderViewModel: ListHeaderViewModel?
+        listHeaderViewModel: ListHeaderViewModel?,
+        isSelectionEnabled: Bool
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -120,6 +124,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.isSearchByNodeTagsFeatureEnabled = isSearchByNodeTagsFeatureEnabled
         self.listHeaderViewModel = listHeaderViewModel
+        self.isSelectionEnabled = isSelectionEnabled
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             

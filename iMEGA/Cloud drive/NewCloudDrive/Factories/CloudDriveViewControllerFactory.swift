@@ -937,7 +937,8 @@ struct CloudDriveViewControllerFactory {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
             isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
-            listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource)
+            listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
+            isSelectionEnabled: true
         )
     }
 

@@ -269,7 +269,8 @@ final class HomeScreenFactory: NSObject {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
             isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
-            listHeaderViewModel: nil
+            listHeaderViewModel: nil,
+            isSelectionEnabled: false
         )
         return UIHostingController(
             rootView: SearchResultsView(viewModel: vm)

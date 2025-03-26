@@ -112,45 +112,11 @@ public struct SearchResultsView: View {
             thumbnailContent
         }
     }
-    
-    @ViewBuilder
-    private var listHeaderView: some View {
-        if let listHeaderViewModel = viewModel.listHeaderViewModel {
-            HStack {
-                Text(listHeaderViewModel.leadingText)
-                Image(uiImage: listHeaderViewModel.icon)
-                Text(listHeaderViewModel.trailingText)
-                Spacer()
-            }
-            .font(.caption)
-            .foregroundStyle(viewModel.colorAssets.listHeaderTextColor)
-        }
-    }
-    
+
     private var listContent: some View {
-        List(selection: $viewModel.selectedRowIds) {
-            Section(header: listHeaderView) {
-                ForEach(viewModel.listItems) { item in
-                    SearchResultRowView(viewModel: item)
-                        .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
-                        .listRowBackground(Color.clear)
-                        .onAppear {
-                            Task {
-                                await viewModel.onItemAppear(item)
-                            }
-                        }
-                }
-            }
-        }
-        .listStyle(.plain)
-        .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
-        .onChange(of: editMode?.wrappedValue) { newMode in
-            if newMode == .active {
-                viewModel.handleEditingChanged(true)
-            }
-        }
+        SearchResultsListView(viewModel: viewModel)
     }
-    
+
     private var thumbnailContent: some View {
         GeometryReader { geo in
             ScrollView {
@@ -232,7 +198,8 @@ public struct SearchResultsView: View {
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
             viewDisplayMode: .unknown,
             isSearchByNodeTagsFeatureEnabled: true,
-            listHeaderViewModel: nil
+            listHeaderViewModel: nil,
+            isSelectionEnabled: false
         )
         var body: some View {
             SearchResultsView(viewModel: viewModel)
