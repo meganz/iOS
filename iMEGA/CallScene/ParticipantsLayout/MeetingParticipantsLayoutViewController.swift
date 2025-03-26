@@ -290,6 +290,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
                 top: topConstraint,
                 bottom: bottomConstraint
             )
+            speakerNameLabel.invalidateIntrinsicContentSize()
         case .hideRecording(let hidden):
             titleView.hideRecordingIndicator(hidden)
             recordingImageView.isHidden = statusBarHidden ? hidden : true
