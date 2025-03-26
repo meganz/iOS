@@ -230,26 +230,23 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         $callSessionUpdateTask.mutate { $0 = nil }
     }
     
-    private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {
+    private func reportCallStateIfNeeded(_ call: CallEntity, report: (any CallKitProviderDelegateProtocol, UUID) -> Void) {
+        // Report outgoing call connect status just happens for outgoing calls (isOwnClientCaller)
+        // or when joining an active call (isJoiningActiveCall) that is not ringing
         guard let providerDelegate,
-              let callUUID = uuidToReportCallConnectChanges(for: call)
+              let callUUID = uuidToReportCallConnectChanges(for: call),
+              (callsManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
         else { return }
-        
-        guard (callsManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
-        else { return }
-        
-        providerDelegate.reportOutgoingCall(with: callUUID)
+
+        report(providerDelegate, callUUID)
     }
-    
+
+    private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {
+        reportCallStateIfNeeded(call) { $0.reportOutgoingCallStartedConnecting(with: $1) }
+    }
+
     private func reportCallConnectedIfNeeded(_ call: CallEntity) {
-        guard let providerDelegate,
-              let callUUID = uuidToReportCallConnectChanges(for: call)
-        else { return }
-        
-        guard (callsManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
-        else { return }
-        
-        providerDelegate.reportOutgoingCall(with: callUUID)
+        reportCallStateIfNeeded(call) { $0.reportOutgoingCallConnected(with: $1) }
     }
     
     private func uuidToReportCallConnectChanges(for call: CallEntity) -> UUID? {
