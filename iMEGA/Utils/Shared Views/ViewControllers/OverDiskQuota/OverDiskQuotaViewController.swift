@@ -155,7 +155,7 @@ final class OverDiskQuotaViewController: UIViewController {
     @IBOutlet private var warningParagraphTextView: UITextView!
 
     @IBOutlet private var upgradeButton: UIButton!
-    @IBOutlet private var makeSomeSpaceButton: UIButton!
+    @IBOutlet private var dismissButton: UIButton!
 
     @IBOutlet weak var warningView: OverDiskQuotaWarningView!
 
@@ -204,7 +204,7 @@ final class OverDiskQuotaViewController: UIViewController {
         setupWarningView(warningView,
                          with: overDiskQuotaAdvicer.warningActionTitle(with: traitCollection))
         setupUpgradeButton()
-        setupMakeSomeSpaceButton()
+        setupDismissButton()
     }
 
     // MARK: - Setup MEGA UserData
@@ -262,10 +262,10 @@ final class OverDiskQuotaViewController: UIViewController {
         upgradeButton.mnz_setupPrimary()
     }
 
-    private func setupMakeSomeSpaceButton() {
-        makeSomeSpaceButton.setTitle(Strings.Localizable.OverDiskQuota.Paywall.Button.makeSomeSpace, for: .normal)
-        makeSomeSpaceButton.addTarget(self, action: .didTapMakeSomeSpaceButton, for: .touchUpInside)
-        makeSomeSpaceButton.mnz_setupSecondary()
+    private func setupDismissButton() {
+        dismissButton.setTitle(Strings.Localizable.dismiss, for: .normal)
+        dismissButton.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
+        dismissButton.mnz_setupSecondary()
     }
 
     // MARK: - Button Actions
@@ -274,8 +274,8 @@ final class OverDiskQuotaViewController: UIViewController {
         viewModel?.dispatch(.didTapUpgradeButton)
     }
 
-    @objc fileprivate func didTapMakeSomeSpaceButton() {
-        viewModel?.dispatch(.didTapMakeSomeSpaceButton)
+    @objc fileprivate func didTapDismissButton() {
+        viewModel?.dispatch(.didTapDismissButton)
     }
 
     // MARK: - Internal Data Structure
@@ -318,7 +318,7 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 
 private extension Selector {
     static let didTapUpgradeButton = #selector(OverDiskQuotaViewController.didTapUpgradeButton)
-    static let didTapMakeSomeSpaceButton = #selector(OverDiskQuotaViewController.didTapMakeSomeSpaceButton)
+    static let didTapDismissButton = #selector(OverDiskQuotaViewController.didTapDismissButton)
 }
 
 // MARK: - TraitEnvironmentAware
