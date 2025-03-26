@@ -43,13 +43,13 @@ struct OverDiskQuotaViewModelTests {
             #expect(router.showUpgradePlanPage_calledTimes == 1)
         }
         
-        @Test("Call navigateToCloudDriveTab when Make some space button is tapped")
-        func makeSomeSpaceButton() {
+        @Test("Call dismiss when Dismiss button is tapped")
+        func dismiss() {
             let (sut, router) = makeSUT()
             
-            sut.dispatch(.didTapMakeSomeSpaceButton)
+            sut.dispatch(.didTapDismissButton)
             
-            #expect(router.navigateToCloudDriveTab_calledTimes == 1)
+            #expect(router.dismiss_calledTimes == 1)
         }
     }
 }

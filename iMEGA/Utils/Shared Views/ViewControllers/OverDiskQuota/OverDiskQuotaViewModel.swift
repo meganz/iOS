@@ -6,7 +6,7 @@ import MEGASDKRepo
 enum OverDiskQuotaViewAction: ActionType, Equatable {
     case onViewDidLoad
     case didTapUpgradeButton
-    case didTapMakeSomeSpaceButton
+    case didTapDismissButton
 }
 
 final class OverDiskQuotaViewModel: NSObject, ViewModelType {
@@ -32,8 +32,8 @@ final class OverDiskQuotaViewModel: NSObject, ViewModelType {
             setupSubscriptions()
         case .didTapUpgradeButton:
             router?.showUpgradePlanPage()
-        case .didTapMakeSomeSpaceButton:
-            router?.navigateToCloudDriveTab()
+        case .didTapDismissButton:
+            router?.dismiss()
         }
     }
     
