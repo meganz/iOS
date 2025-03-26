@@ -82,7 +82,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
                 isSearchByNodeTagsFeatureEnabled: true,
-                listHeaderViewModel: nil
+                listHeaderViewModel: nil,
+                isSelectionEnabled: true
             )
             selection = {
                 self.selectedResults.append($0)
