@@ -4668,18 +4668,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>على الرغم من أننا اتصلنا بك عبر البريد الإلكتروني بتاريخ [date] فإن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغل [storageSpace] في حسابك، مما يعني أنه يجب عليك تفريغ بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
         <key>one</key>
-        <string>على الرغم من أننا اتصلنا بك عبر البريد الإلكتروني بتاريخ [date] فإن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغل [storageSpace] في حسابك، مما يعني أنه يجب عليك تفريغ بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>two</key>
-        <string>على الرغم من أننا اتصلنا بك عبر البريد الإلكتروني بتاريخ [date] فإن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفين يشغلان [storageSpace] في حسابك، مما يعني أنه يجب عليك تفريغ بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>few</key>
-        <string>على الرغم من أننا اتصلنا بك عبر البريد الإلكتروني بتاريخ [date] فإن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفات يشغلون [storageSpace] في حسابك، مما يعني أنه يجب عليك تفريغ بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>many</key>
-        <string>على الرغم من أننا اتصلنا بك عبر البريد الإلكتروني بتاريخ [date] فإن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفاً يشغلون [storageSpace] في حسابك، مما يعني أنه يجب عليك تفريغ بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>على الرغم من أننا اتصلنا بك عبر البريد الإلكتروني بتاريخ [date] فإن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغلون [storageSpace] في حسابك، مما يعني أنه يجب عليك تفريغ بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -4692,18 +4684,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغل [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
         <key>one</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغل [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>two</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفين يشغلان [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>few</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفات يشغلون [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>many</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفاً يشغلون [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغلون [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -4716,18 +4700,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغل [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
         <key>one</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغل [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>two</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفين يشغلان [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>few</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفات يشغلون [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
-        <key>many</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملفاً يشغلون [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A].</string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>على الرغم من أننا اتصلنا بك عدة مرات عبر البريد الإلكتروني إلا أن مساحة التخزين الخاصة بك لا تزال ممتلئة. لديك %d ملف يشغلون [storageSpace] في حسابك مما يعني أنه يجب عليك مسح بعض المساحة أو الترقية إلى باقة [plan]. إذا لم تتخذ إجراءً قريبًا، فسيتم حذف بياناتك. قم بالترقية الآن لحماية ملفاتك. [A]اعرف المزيد عن حدود التخزين[/A]. </string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
