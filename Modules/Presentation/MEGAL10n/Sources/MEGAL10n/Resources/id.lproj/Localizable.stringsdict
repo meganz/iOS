@@ -2728,8 +2728,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Meskipun kami telah menghubungi anda melalui email di [date], penyimpanan anda masih penuh. Anda memiliki %d file mengambil [storageSpace] di akun anda, yang berarti anda harus mengosongkan beberapa ruang atau meningkatkan ke [plan] rencana. Jika anda tidak segera mengambil tindakan, data anda akan dihapus. Tingkatkan sekarang untuk melindungi file anda. [A]Pelajari lebih lanjut tentang batas penyimpanan anda[/A]. </string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2742,8 +2744,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Meskipun kami telah menghubungi anda beberapa kali melalui email, penyimpanan anda masih penuh. Anda memiliki %d file mengambil [storageSpace] di akun anda, yang berarti anda harus mengosongkan beberapa ruang atau meningkatkan ke [plan] rencana. Jika anda tidak segera mengambil tindakan, data anda akan dihapus. Tingkatkan sekarang untuk melindungi file anda. [A]Pelajari lebih lanjut tentang batas penyimpanan[/A]. </string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2756,8 +2760,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Meskipun kami telah menghubungi anda melalui email, penyimpanan anda masih penuh. Anda memiliki %d file mengambil [storageSpace] di akun anda, yang berarti anda harus mengosongkan beberapa ruang atau meningkatkan ke [plan] rencana. Jika anda tidak segera mengambil tindakan, data anda akan dihapus. Tingkatkan sekarang untuk melindungi file anda. [A]Pelajari lebih lanjut tentang batas penyimpanan[/A]. </string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>

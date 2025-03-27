@@ -3117,9 +3117,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Obwohl wir Sie am [date] per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Account. Dies bedeutet, dass Sie Speicherplatz freigeben oder auf ein [plan]-Paket upgraden müssen. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Obwohl wir Sie am [date] per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Dateien belegen [storageSpace] in Ihrem Account. Dies bedeutet, dass Sie Speicherplatz freigeben oder auf ein [plan]-Paket upgraden müssen. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3133,9 +3133,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Obwohl wir Sie mehrfach per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Account. Dies bedeutet, dass Sie Speicherplatz freigeben oder auf ein [plan]-Paket upgraden müssen. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Obwohl wir Sie mehrfach per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Dateien belegen [storageSpace] in Ihrem Account. Dies bedeutet, dass Sie Speicherplatz freigeben oder auf ein [plan]-Paket upgraden müssen. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3149,9 +3149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Obwohl wir Sie per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Account. Dies bedeutet, dass Sie Speicherplatz freigeben oder auf ein [plan]-Paket upgraden müssen. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Obwohl wir Sie per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Dateien belegen [storageSpace] in Ihrem Account. Dies bedeutet, dass Sie Speicherplatz freigeben oder auf ein [plan]-Paket upgraden müssen. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
