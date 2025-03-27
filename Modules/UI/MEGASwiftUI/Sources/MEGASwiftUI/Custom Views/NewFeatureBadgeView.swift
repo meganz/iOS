@@ -9,6 +9,7 @@ public struct NewFeatureBadgeView: View {
     public var body: some View {
         Text(Strings.Localizable.new)
             .font(.caption2)
+            .bold()
             .foregroundColor(TokenColors.Text.onColor.swiftUI)
             .padding(
                 EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4)

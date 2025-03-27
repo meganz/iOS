@@ -189,7 +189,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
             detail: nil,
             image: UIImage(resource: .callRaiseHand),
             syncIconAndTextColor: true,
-            badgeModel: showRaiseHandBadge ? Badge.raiseHandFeature : nil,
+            showNewFeatureBadge: showRaiseHandBadge,
             style: .default,
             actionHandler: { [weak self] in
                 self?.signalHandAction(!raised)
