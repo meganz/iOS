@@ -904,6 +904,10 @@ struct CloudDriveViewControllerFactory {
         }
 
         let featureFlagProvider = DIContainer.featureFlagProvider
+        let shouldEnableSelection = switch nodeSource {
+        case .recentActionBucket: false
+        default: true
+        }
         return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
@@ -912,7 +916,7 @@ struct CloudDriveViewControllerFactory {
             bridge: searchBridge,
             config: .searchConfig(
                 contextPreviewFactory: homeScreenFactory.contextPreviewFactory(
-                    enableItemMultiSelection: true
+                    enableItemMultiSelection: shouldEnableSelection
                 ),
                 defaultEmptyViewAsset: { makeDefaultEmptyViewAsset(for: nodeSource, config: config) }
             ),
@@ -921,7 +925,7 @@ struct CloudDriveViewControllerFactory {
             viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
             isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
-            isSelectionEnabled: true
+            isSelectionEnabled: shouldEnableSelection
         )
     }
 
