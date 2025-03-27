@@ -76,6 +76,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     @PreferenceWrapper(key: .presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
     var presentPasscodeLater: Bool
     
+    private var logoutNotificationObserver: (any NSObjectProtocol)?
+
     init(
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
@@ -105,6 +107,7 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         
         onCallUpdateListener()
         monitorOnChatConnectionStateUpdate()
+        logoutNotificationObserver = logoutNotificationsObserver()
     }
     
     deinit {
@@ -392,6 +395,22 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         providerDelegate.reportEndedCall(with: callUUID, reason: endCallReason)
         
         sendAudioPlayerInterruptDidEndNotificationIfNeeded()
+    }
+    
+    private func logoutNotificationsObserver() -> any NSObjectProtocol {
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name.MEGAIsBeingLogout,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.didReceiveIsBeingLogoutNotification()
+        }
+    }
+    
+    private func didReceiveIsBeingLogoutNotification() {
+        guard let callInProgress = chatUseCase.activeCall() else { return }
+        MEGALogDebug("[CallsCoordinator] Hang active call because account is being logged out")
+        callUseCase.hangCall(for: callInProgress.callId)
     }
 }
 
