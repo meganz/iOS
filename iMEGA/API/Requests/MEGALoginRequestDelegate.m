@@ -1,7 +1,6 @@
 #import "MEGALoginRequestDelegate.h"
 #import "SVProgressHUD.h"
 #import "MEGA-Swift.h"
-#import "InitialLaunchViewController.h"
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -123,27 +122,8 @@
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
         [handler shouldSetupPermissionsWithCompletion:^(BOOL shouldSetupPermissions) {
-            [MEGALoginRequestDelegate presentLaunchViewController:shouldSetupPermissions];
+            [self showLoadingViewWithPermissionsPending:shouldSetupPermissions];
         }];
-    }
-}
-
-+ (void)presentLaunchViewController:(BOOL)shouldSetupPermissions{
-    NSAssert([NSThread isMainThread], @"must be called on main thread");
-    
-    if ([self isNewLoadingEnabled]) {
-        [self showLoadingViewWithPermissionsPending:shouldSetupPermissions];
-    } else {
-        LaunchViewController *launchVC;
-        if (shouldSetupPermissions) {
-            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
-        } else {
-            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
-        }
-        
-        launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
-        UIWindow *window = UIApplication.sharedApplication.delegate.window;
-        window.rootViewController = launchVC;
     }
 }
 

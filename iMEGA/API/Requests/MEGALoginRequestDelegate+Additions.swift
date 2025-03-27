@@ -2,12 +2,9 @@ import Accounts
 import MEGAPresentation
 
 extension MEGALoginRequestDelegate {
-    @objc class func isNewLoadingEnabled() -> Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newLoadingView)
-    }
     
     @MainActor
-    @objc class func showLoadingView(permissionsPending: Bool) {
+    @objc func showLoadingView(permissionsPending: Bool) {
         var viewController: UIViewController?
         if permissionsPending {
             viewController = AppLoadingViewRouter {
