@@ -11,15 +11,14 @@ struct ChatTabsSelectorView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            VStack {
-                Spacer()
+            VStack(spacing: 0) {
                 Button(action: {
                     action(.chats)
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.chat)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
                         .foregroundColor(chatViewMode == .chats ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
-                    
+                        .frame(minHeight: 40)
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
@@ -30,18 +29,18 @@ struct ChatTabsSelectorView: View {
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .chats ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
+                    .background(TokenColors.Button.brand.swiftUI)
                     .opacity(chatViewMode == .chats ? 1 : 0)
             }
             
-            VStack {
-                Spacer()
+            VStack(spacing: 0) {
                 Button(action: {
                     action(.meetings)
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.meeting)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
                         .foregroundColor(chatViewMode == .meetings ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
+                        .frame(minHeight: 40)
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
@@ -52,11 +51,10 @@ struct ChatTabsSelectorView: View {
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .meetings ? TokenColors.Button.brand.swiftUI : TokenColors.Icon.secondary.swiftUI)
+                    .background(TokenColors.Button.brand.swiftUI)
                     .opacity(chatViewMode == .meetings ? 1 : 0)
             }
         }
-        .frame(maxHeight: 44)
         .background(TokenColors.Background.surface1.swiftUI)
     }
 }
