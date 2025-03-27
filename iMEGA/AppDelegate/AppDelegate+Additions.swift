@@ -341,20 +341,11 @@ extension AppDelegate {
 // MARK: - Show launch view controller
 extension AppDelegate {
     @objc func showLaunchViewController() {
-        var viewController: UIViewController?
-        if isNewLoadingEnabled() {
-            viewController = AppLoadingViewRouter().build()
-        } else {
-            viewController = UIStoryboard(name: "Launch", bundle: nil).instantiateViewController(identifier: "LaunchViewControllerID")
-        }
+        let viewController: UIViewController? = AppLoadingViewRouter().build()
         UIView.transition(with: window, duration: 0.5,
                           options: [.transitionCrossDissolve, .allowAnimatedContent]) { [weak self] in
             self?.window.rootViewController = viewController
         }
-    }
-    
-    @objc func isNewLoadingEnabled() -> Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newLoadingView)
     }
 }
 
