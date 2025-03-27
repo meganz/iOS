@@ -8,59 +8,37 @@ struct AudioPlayerEventObserversLoadingLogicController {
         playerTimeControlStatus: AVPlayer.TimeControlStatus,
         isUserPreviouslyJustPlayedSameItem: Bool
     ) -> Bool {
-        if let waitingReason = reasonForWaitingToPlay {
-            switch waitingReason {
-            case .evaluatingBufferingRate, .toMinimizeStalls, .interstitialEvent, .waitingForCoordinatedPlayback:
-                return true
-            default:
-                return false
-            }
-        } else {
-            let controller = ReasonWaitingToPlayNilLogicController()
-            return controller.shouldNotifyLoadingView(
-                reasonForWaitingToPlay: reasonForWaitingToPlay,
+        guard let waitingReason = reasonForWaitingToPlay else {
+            return fallbackNotification(
                 playerStatus: playerStatus,
-                playerTimeControlStatus: playerTimeControlStatus,
-                isUserPreviouslyJustPlayedSameItem: isUserPreviouslyJustPlayedSameItem
+                playerTimeControlStatus: playerTimeControlStatus
             )
         }
-    }
-    
-    func shouldNotifyLoadingViewWhenDidChangeCurrentItemStatus(playerItemStatus: AVPlayerItem.Status) -> Bool? {
-        switch playerItemStatus {
-        case .unknown, .readyToPlay:
-            return true
-        case .failed:
-            return false
-        default:
-            return nil
+        
+        return switch waitingReason {
+        case .evaluatingBufferingRate, .toMinimizeStalls, .interstitialEvent, .waitingForCoordinatedPlayback: true
+        default: false
         }
     }
     
-    struct ReasonWaitingToPlayNilLogicController {
-        
-        func shouldNotifyLoadingView(
-            reasonForWaitingToPlay: AVPlayer.WaitingReason?,
-            playerStatus: AVPlayer.Status,
-            playerTimeControlStatus: AVPlayer.TimeControlStatus,
-            isUserPreviouslyJustPlayedSameItem: Bool
-        ) -> Bool {
-            let isPaused = playerTimeControlStatus == .paused
-            let isReady = playerStatus == .readyToPlay
-            let isUnknown = playerStatus == .unknown
-            let isPlaying = playerTimeControlStatus == .playing
-            
-            if isUnknown && isPaused {
-                return true
-            } else if isReady {
-                guard isPlaying else {
-                    let isUserPausedCurrentPlayingItemWithoutChangingItemBefore = isPaused && isUserPreviouslyJustPlayedSameItem
-                    return !isUserPausedCurrentPlayingItemWithoutChangingItemBefore
-                }
-                return false
-            } else {
-                return !(isPaused && isReady)
-            }
+    func shouldNotifyLoadingViewWhenDidChangeCurrentItemStatus(
+        playerItemStatus: AVPlayerItem.Status
+    ) -> Bool? {
+        switch playerItemStatus {
+        case .unknown, .readyToPlay: true
+        case .failed: false
+        default: nil
+        }
+    }
+    
+    private func fallbackNotification(
+        playerStatus: AVPlayer.Status,
+        playerTimeControlStatus: AVPlayer.TimeControlStatus
+    ) -> Bool {
+        switch (playerStatus, playerTimeControlStatus) {
+        case (_, .playing), (.readyToPlay, _): false
+        case (.unknown, .paused): true
+        default: true // default to notifying for any other combination.
         }
     }
 }

@@ -2,83 +2,95 @@ import AVFoundation
 @testable import MEGA
 import XCTest
 
-class ReasonWaitingToPlayNilLogicControllerTests: XCTestCase {
-
-    func testUnknownStatusPausedTimeControl_ReturnsTrue() {
-        let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
+final class ReasonWaitingToPlayNilLogicControllerTests: XCTestCase {
+    private func makeSUT() -> AudioPlayerEventObserversLoadingLogicController {
+        AudioPlayerEventObserversLoadingLogicController()
+    }
+    
+    private func assertWaitingReasonNotification(
+        waitingReason: AVPlayer.WaitingReason,
+        expected: Bool
+    ) {
+        let sut = makeSUT()
         
-        let result = sut.shouldNotifyLoadingView(
-            reasonForWaitingToPlay: nil,
-            playerStatus: .unknown,
+        let result = sut.shouldNotifyLoadingViewWhenReasonForWaitingToPlay(
+            reasonForWaitingToPlay: waitingReason,
+            playerStatus: .failed,
             playerTimeControlStatus: .paused,
             isUserPreviouslyJustPlayedSameItem: false
         )
-        
-        XCTAssertTrue(result)
+        XCTAssertEqual(result, expected, "For waitingReason \(waitingReason), expected \(expected) but got \(result)")
     }
     
-    func testReadyToPlayPausedSameItem_ReturnsFalse() {
-        let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
-        
-        let result = sut.shouldNotifyLoadingView(
+    private func assertFallbackNotification(
+        playerStatus: AVPlayer.Status,
+        timeControlStatus: AVPlayer.TimeControlStatus,
+        expected: Bool,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let sut = makeSUT()
+        let result = sut.shouldNotifyLoadingViewWhenReasonForWaitingToPlay(
             reasonForWaitingToPlay: nil,
-            playerStatus: .readyToPlay,
-            playerTimeControlStatus: .paused,
-            isUserPreviouslyJustPlayedSameItem: true
-        )
-        
-        XCTAssertFalse(result)
-    }
-    
-    func testReadyToPlayNotPausedSameItem_ReturnsFalse() {
-        let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
-        
-        let result = sut.shouldNotifyLoadingView(
-            reasonForWaitingToPlay: nil,
-            playerStatus: .readyToPlay,
-            playerTimeControlStatus: .playing,
-            isUserPreviouslyJustPlayedSameItem: true
-        )
-        
-        XCTAssertFalse(result)
-    }
-    
-    func testReadyToPlayNotPausedNotSameItem_ReturnsFalse() {
-        let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
-        
-        let result = sut.shouldNotifyLoadingView(
-            reasonForWaitingToPlay: nil,
-            playerStatus: .readyToPlay,
-            playerTimeControlStatus: .playing,
+            playerStatus: playerStatus,
+            playerTimeControlStatus: timeControlStatus,
             isUserPreviouslyJustPlayedSameItem: false
         )
-        
-        XCTAssertFalse(result)
+        XCTAssertEqual(result, expected, "For (\(playerStatus), \(timeControlStatus)) expected \(expected) but got \(result)")
     }
     
-    func testUnknownNotPaused_ReturnsTrue() {
-        let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
-        
-        let result = sut.shouldNotifyLoadingView(
-            reasonForWaitingToPlay: nil,
-            playerStatus: .unknown,
-            playerTimeControlStatus: .playing,
-            isUserPreviouslyJustPlayedSameItem: false
-        )
-        
-        XCTAssertTrue(result)
+    func testWaitingReason_whenWaitingReasonIsPositive_shouldReturnTrue() {
+        let positiveReasons: [AVPlayer.WaitingReason] = [
+            .evaluatingBufferingRate,
+            .toMinimizeStalls,
+            .interstitialEvent,
+            .waitingForCoordinatedPlayback
+        ]
+        positiveReasons.forEach { reason in
+            assertWaitingReasonNotification(waitingReason: reason, expected: true)
+        }
     }
     
-    func testReadyToPlayPausedDifferentItem_ReturnsTrue() {
-        let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
-        
-        let result = sut.shouldNotifyLoadingView(
-            reasonForWaitingToPlay: nil,
-            playerStatus: .readyToPlay,
-            playerTimeControlStatus: .paused,
-            isUserPreviouslyJustPlayedSameItem: false
-        )
-        
-        XCTAssertTrue(result)
+    func testWaitingReason_whenWaitingReasonIsNoItemToPlay_shouldReturnFalse() {
+        let negativeReason: AVPlayer.WaitingReason = .noItemToPlay
+        assertWaitingReasonNotification(waitingReason: negativeReason, expected: false)
+    }
+    
+    func testFallback_whenPlayerStatusIsReadyToPlayAndReasonIsNil_shouldReturnFalse() {
+        assertFallbackNotification(playerStatus: .readyToPlay, timeControlStatus: .paused, expected: false)
+        assertFallbackNotification(playerStatus: .readyToPlay, timeControlStatus: .waitingToPlayAtSpecifiedRate, expected: false)
+    }
+    
+    func testFallback_whenTimeControlStatusIsPlayingAndReasonIsNil_shouldReturnFalse() {
+        assertFallbackNotification(playerStatus: .failed, timeControlStatus: .playing, expected: false)
+        assertFallbackNotification(playerStatus: .unknown, timeControlStatus: .playing, expected: false)
+    }
+    
+    func testFallback_whenPlayerStatusIsUnknownAndPausedAndReasonIsNil_shouldReturnTrue() {
+        assertFallbackNotification(playerStatus: .unknown, timeControlStatus: .paused, expected: true)
+    }
+    
+    func testFallback_whenDefaultCasesAndReasonIsNil_shouldReturnTrue() {
+        assertFallbackNotification(playerStatus: .failed, timeControlStatus: .paused, expected: true)
+        assertFallbackNotification(playerStatus: .failed, timeControlStatus: .waitingToPlayAtSpecifiedRate, expected: true)
+        assertFallbackNotification(playerStatus: .unknown, timeControlStatus: .waitingToPlayAtSpecifiedRate, expected: true)
+    }
+    
+    func testDidChangeCurrentItemStatus_whenPlayerItemStatusIsUnknown_shouldReturnTrue() {
+        let sut = makeSUT()
+        let result = sut.shouldNotifyLoadingViewWhenDidChangeCurrentItemStatus(playerItemStatus: .unknown)
+        XCTAssertEqual(result, true)
+    }
+    
+    func testDidChangeCurrentItemStatus_whenPlayerItemStatusIsReadyToPlay_shouldReturnTrue() {
+        let sut = makeSUT()
+        let result = sut.shouldNotifyLoadingViewWhenDidChangeCurrentItemStatus(playerItemStatus: .readyToPlay)
+        XCTAssertEqual(result, true)
+    }
+    
+    func testDidChangeCurrentItemStatus_whenPlayerItemStatusIsFailed_shouldReturnFalse() {
+        let sut = makeSUT()
+        let result = sut.shouldNotifyLoadingViewWhenDidChangeCurrentItemStatus(playerItemStatus: .failed)
+        XCTAssertEqual(result, false)
     }
 }
