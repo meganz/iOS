@@ -3505,11 +3505,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
-        <key>many</key>
-        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3523,11 +3521,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Embora tenhamos entrado em contato com você por email várias vezes, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
-        <key>many</key>
-        <string>Embora tenhamos entrado em contato com você por email várias vezes, o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Embora tenhamos entrado em contato com você por email várias vezes, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3541,11 +3537,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
-        <key>many</key>
-        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua conta, o que significa que você precisa liberar espaço ou fazer um upgrade para o plano [plan]. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A]. </string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
