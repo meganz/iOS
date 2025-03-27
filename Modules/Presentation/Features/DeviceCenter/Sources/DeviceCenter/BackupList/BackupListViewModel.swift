@@ -218,15 +218,15 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func loadAssets(for backup: BackupEntity) -> ItemAssets? {
-        guard let backupStatus = backup.backupStatus,
-              let status = backupStatusProvider.backupStatus(for: backupStatus),
+        guard let displayStatus = backup.toDisplayStatus(),
+              let statusAssets = backupStatusProvider.backupDisplayAssets(for: displayStatus),
               let backupIcon = folderIconProvider.iconName(for: backup.type) else {
             return nil
         }
         
         return ItemAssets(
             iconName: backupIcon,
-            status: status
+            statusAssets: statusAssets
         )
     }
     

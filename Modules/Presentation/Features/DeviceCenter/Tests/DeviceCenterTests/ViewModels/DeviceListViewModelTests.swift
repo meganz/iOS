@@ -12,8 +12,7 @@ final class DeviceListViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
     let mockAuxDeviceId = "2"
     
-    let mockBackupStatus = BackupStatus(
-        status: .upToDate,
+    let stubbedStatusAssets = StatusAssets(
         title: "",
         color: .blue,
         iconName: ""
@@ -259,11 +258,6 @@ final class DeviceListViewModelTests: XCTestCase {
         return [device1, device2]
     }
     
-    private func backupStatusEntities() -> [BackupStatus] {
-        [.upToDate, .offline, .blocked, .outOfQuota, .error, .disabled, .paused, .updating, .scanning, .initialising, .backupStopped, .noCameraUploads].compactMap {
-            BackupStatus(status: $0) }
-    }
-    
     private let defaultActions = [
         ContextAction(type: .cameraUploads),
         ContextAction(type: .info),
@@ -336,7 +330,7 @@ final class DeviceListViewModelTests: XCTestCase {
             ),
             nodeUseCase: MockNodeDataUseCase(),
             networkMonitorUseCase: networkMonitorUseCase,
-            backupStatusProvider: MockBackupStatusProvider(stubbedItem: mockBackupStatus),
+            backupStatusProvider: MockBackupStatusProvider(stubbedDeviceDisplayAssets: stubbedStatusAssets),
             deviceCenterActions: defaultActions,
             deviceIconProvider: deviceIconProvider,
             currentDeviceUUID: ""

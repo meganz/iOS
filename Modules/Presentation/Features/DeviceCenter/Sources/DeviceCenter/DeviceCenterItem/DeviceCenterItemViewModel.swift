@@ -41,6 +41,14 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
        }
     }
     
+    var backupStatus: BackupStatusEntity? {
+        switch itemType {
+        case .backup(let backup): backup.backupStatus
+        case .device(let device): device.status
+        default: nil
+        }
+    }
+    
     /// `router` and `refreshDevicesPublisher` are declared as optional with a nil default value to accommodate the shared usage of `DeviceCenterItemViewModel` across different item types (devices, backups, sync, and camera upload (CU) folders). These properties are essential for navigating and refreshing the UI when interacting with device-related functionalities. However, for other item types like backups, sync, and CU folders, these functionalities are not required.
     init(
         router: (any DeviceListRouting)? = nil,
@@ -79,7 +87,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     }
     
     private func calculateProgress() {
-        if assets.backupStatus.status == .updating {
+        if backupStatus == .updating {
             var progress = 0
             switch itemType {
             case .backup(let backup):

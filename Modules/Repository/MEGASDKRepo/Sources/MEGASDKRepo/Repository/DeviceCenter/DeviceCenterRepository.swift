@@ -79,12 +79,32 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
             .max {$0.priority < $1.priority}
     }
     
+    /// Updates an array of BackupEntity objects with their corresponding sync status.
+    ///
+    /// This function iterates over the provided list of backups, determines the appropriate sync status based on each backup's
+    /// current sync state, substate, last activity, etc., and then updates the backup's status accordingly.
+    ///
+    /// Additionally, if a backup has had no activity for a duration longer than the specified inactive backup limit,
+    /// it will be marked as inactive.
+    ///
+    /// - Parameters:
+    ///   - backups: An array of BackupEntity objects to be updated.
+    ///   - currentTime: The reference time (in seconds since 1970) used to evaluate backup activity. Defaults to the current time.
+    ///   - inactiveLimit: The time interval (in seconds) after which a backup is considered inactive if no activity is detected.
+    ///     Defaults to 60 days in seconds ("60 * 24 * 60 * 60").
+    /// - Returns: An updated array of BackupEntity objects with their backupStatus field set based on the evaluation logic.
     private func updateBackupsWithSyncStatus(
         _ backups: [BackupEntity],
-        currentTime: TimeInterval = Date().timeIntervalSince1970
+        currentTime: TimeInterval = Date().timeIntervalSince1970,
+        inactiveLimit: TimeInterval = 60 * 24 * 60 * 60 // 60 days in seconds
     ) -> [BackupEntity] {
         backups.map { backup in
             var updatedBackup = backup
+            
+            if currentTime - backup.lastBackupHeartbeat > inactiveLimit {
+                updatedBackup.backupStatus = .inactive
+                return updatedBackup
+            }
 
             updatedBackup.backupStatus = {
                 switch backup.syncState {
@@ -105,8 +125,8 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
                     return .disabled
                 default:
                     if backup.lastBackupHeartbeat == 0 || backup.lastInteractionOutOfRange(from: currentTime) {
-                        let backupOlderThan10Minutes = currentTime - (backup.timestamp?.timeIntervalSince1970 ?? 0) > 600
-                        if backup.rootHandle != .invalid || backupOlderThan10Minutes {
+                        let isBackupOlderThan10Minutes = currentTime - (backup.timestamp?.timeIntervalSince1970 ?? 0) > 600
+                        if backup.rootHandle != .invalid || isBackupOlderThan10Minutes {
                             return .offline
                         }
                     } else if backup.isPaused {

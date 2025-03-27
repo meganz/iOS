@@ -1,6 +1,7 @@
 import Foundation
 
 public enum BackupStatusEntity: Hashable, Sendable {
+    case inactive
     case upToDate
     case offline
     case blocked

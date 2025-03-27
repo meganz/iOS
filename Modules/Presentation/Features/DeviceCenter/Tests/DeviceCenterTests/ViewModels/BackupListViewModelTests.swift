@@ -12,11 +12,10 @@ final class BackupListViewModelTests: XCTestCase {
     let mockAuxDeviceId = "2"
     let mockAuxDeviceName = "device2"
     
-    let mockBackupStatus = BackupStatus(
-        status: .upToDate,
-        title: "",
+    let stubbedStatusAssets = StatusAssets(
+        title: "Up To Date",
         color: .blue,
-        iconName: ""
+        iconName: "upToDate"
     )
     
     @MainActor
@@ -325,14 +324,13 @@ final class BackupListViewModelTests: XCTestCase {
         let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: deviceId)
         
         let viewModel = makeSUT(
-            selectedDevice: 
-                SelectedDevice(
-                    id: deviceId,
-                    name: deviceName,
-                    isCurrent: isCurrent,
-                    isNewDeviceWithoutCU: isNewDeviceWithoutCU,
-                    backups: backups().filter { $0.deviceId == deviceId }
-                ),
+            selectedDevice: SelectedDevice(
+                id: deviceId,
+                name: deviceName,
+                isCurrent: isCurrent,
+                isNewDeviceWithoutCU: isNewDeviceWithoutCU,
+                backups: backups().filter { $0.deviceId == deviceId }
+            ),
             deviceCenterUseCase: mockUseCase
         )
         
@@ -392,30 +390,20 @@ final class BackupListViewModelTests: XCTestCase {
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: MockNodeDataUseCase(
-                nodes: [
-                    node
-                ],
+                nodes: [node],
                 node: node
             ),
             networkMonitorUseCase: networkMonitorUseCase,
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
             notificationCenter: NotificationCenter.default,
-            backupStatusProvider: MockBackupStatusProvider(stubbedItem: mockBackupStatus),
+            backupStatusProvider: MockBackupStatusProvider(stubbedBackupDisplayAssets: stubbedStatusAssets),
             folderIconProvider: MockFolderIconProvider(),
             deviceCenterActions: [
-                ContextAction(
-                    type: .cameraUploads
-                ),
-                ContextAction(
-                    type: .info
-                ),
-                ContextAction(
-                    type: .rename
-                ),
-                ContextAction(
-                    type: .sort
-                )
+                ContextAction(type: .cameraUploads),
+                ContextAction(type: .info),
+                ContextAction(type: .rename),
+                ContextAction(type: .sort)
             ]
         )
         
