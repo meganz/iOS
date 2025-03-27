@@ -157,12 +157,12 @@ public final class DeviceListViewModel: ObservableObject {
     }
     
     func loadAssets(for device: DeviceEntity) -> ItemAssets? {
-        guard let deviceStatus = device.status,
-              let backupStatus = backupStatusProvider.backupStatus(for: deviceStatus) else { return nil }
+        guard let displayStatus = device.backups?.toDeviceDisplayStatus(),
+              let statusAssets = backupStatusProvider.deviceDisplayAssets(for: displayStatus) else { return nil }
         let userAgent = device.backups?.first?.userAgent
         return ItemAssets(
             iconName: deviceIconProvider.iconName(for: userAgent, isMobile: device.isMobileDevice() || device.id == currentDeviceUUID),
-            status: backupStatus,
+            statusAssets: statusAssets,
             defaultName: UIDevice.current.modelName
         )
     }

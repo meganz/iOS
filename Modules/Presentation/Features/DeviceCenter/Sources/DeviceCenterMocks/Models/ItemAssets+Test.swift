@@ -4,13 +4,13 @@ import SwiftUI
 public extension ItemAssets {
     init(
         iconName: String = "",
-        status: BackupStatus,
+        statusAssets: StatusAssets,
         defaultName: String? = nil,
         isTesting: Bool = true
     ) {
         self.init(
             iconName: iconName,
-            status: status,
+            statusAssets: statusAssets,
             defaultName: defaultName
         )
     }

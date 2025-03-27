@@ -46,9 +46,9 @@ struct ListViewContainer<Content>: View where Content: View {
                 ActionSheetHeaderView(
                     headerIcon: Image(selectedItem.assets.iconName, bundle: .module),
                     title: selectedItem.name,
-                    subtitleIcon: Image(selectedItem.assets.backupStatus.iconName, bundle: .module),
-                    subtitle: selectedItem.assets.backupStatus.title,
-                    subtitleColor: selectedItem.assets.backupStatus.color
+                    subtitleIcon: Image(selectedItem.assets.statusAssets.iconName, bundle: .module),
+                    subtitle: selectedItem.assets.statusAssets.title,
+                    subtitleColor: selectedItem.assets.statusAssets.color
                 ),
             actionButtons: {
                 selectedItem.availableActions.compactMap { action in

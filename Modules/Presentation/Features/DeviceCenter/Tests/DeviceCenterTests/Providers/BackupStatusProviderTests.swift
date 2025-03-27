@@ -4,49 +4,71 @@ import Testing
 
 @Suite("Backup Status Provider Test Suite - Testing backup status mapping")
 struct BackupStatusProviderTestSuite {
-    @Test("Returns expected backup status for given backup status entity", arguments: [
-        (BackupStatusEntity.upToDate, "upToDate"),
-        (BackupStatusEntity.scanning, "updating"),
-        (BackupStatusEntity.initialising, "updating"),
-        (BackupStatusEntity.updating, "updating"),
-        (BackupStatusEntity.noCameraUploads, "noCameraUploads"),
-        (BackupStatusEntity.disabled, "disabled"),
-        (BackupStatusEntity.offline, "offline"),
-        (BackupStatusEntity.backupStopped, "error"),
-        (BackupStatusEntity.paused, "paused"),
-        (BackupStatusEntity.outOfQuota, "outOfQuota"),
-        (BackupStatusEntity.error, "error"),
-        (BackupStatusEntity.blocked, "disabled")
+    // MARK: - Backup Display Assets Tests
+    @Test("Returns expected backup display assets for given backup display status entity", arguments: [
+        (BackupDisplayStatusEntity.upToDate, "upToDate"),
+        (.updating, "updating"),
+        (.paused, "paused"),
+        (.disabled, "disabled"),
+        (.error, "error"),
+        (.inactive, "inactive")
     ])
-    func returnsExpectedBackupStatusForEntity(
-        backupStatusEntity: BackupStatusEntity,
+    func returnsExpectedBackupDisplayAssetsForEntity(
+        backupDisplayStatusEntity: BackupDisplayStatusEntity,
         expectedIconName: String
     ) {
         let provider = BackupStatusProvider()
-        guard let backupStatus = provider.backupStatus(for: backupStatusEntity) else {
-            Issue.record("Expected a BackupStatus for \(backupStatusEntity)")
+        guard let assets = provider.backupDisplayAssets(for: backupDisplayStatusEntity) else {
+            Issue.record("Expected StatusAssets for \(backupDisplayStatusEntity)")
             return
         }
-        #expect(backupStatus.iconName == expectedIconName, "Expected iconName \(expectedIconName) for status \(backupStatusEntity) but got \(backupStatus.iconName)")
+        #expect(assets.iconName == expectedIconName,
+                "Expected iconName \(expectedIconName) for status \(backupDisplayStatusEntity) but got \(assets.iconName)")
     }
     
-    @Test("Backup status dictionary contains a BackupStatus for each defined status", arguments: [
-        BackupStatusEntity.upToDate,
-        BackupStatusEntity.scanning,
-        BackupStatusEntity.initialising,
-        BackupStatusEntity.updating,
-        BackupStatusEntity.noCameraUploads,
-        BackupStatusEntity.disabled,
-        BackupStatusEntity.offline,
-        BackupStatusEntity.backupStopped,
-        BackupStatusEntity.paused,
-        BackupStatusEntity.outOfQuota,
-        BackupStatusEntity.error,
-        BackupStatusEntity.blocked
+    @Test("Backup display assets dictionary contains assets for each defined backup display status", arguments: [
+        BackupDisplayStatusEntity.upToDate,
+        .updating,
+        .paused,
+        .disabled,
+        .error,
+        .inactive
     ])
-    func backupStatusDictionaryContainsStatus(backupStatusEntity: BackupStatusEntity) {
+    func backupDisplayAssetsDictionaryContainsStatus(backupDisplayStatusEntity: BackupDisplayStatusEntity) {
         let provider = BackupStatusProvider()
-        #expect(provider.backupStatus(for: backupStatusEntity) != nil,
-                "Expected a BackupStatus for \(backupStatusEntity)")
+        #expect(provider.backupDisplayAssets(for: backupDisplayStatusEntity) != nil,
+                "Expected StatusAssets for \(backupDisplayStatusEntity)")
+    }
+    
+    // MARK: - Device Display Assets Tests
+    @Test("Returns expected device display assets for given device display status entity", arguments: [
+        (DeviceDisplayStatusEntity.inactive, "inactive"),
+        (.attentionNeeded, "attentionNeeded"),
+        (.updating, "updating"),
+        (.upToDate, "upToDate")
+    ])
+    func returnsExpectedDeviceDisplayAssetsForEntity(
+        deviceDisplayStatusEntity: DeviceDisplayStatusEntity,
+        expectedIconName: String
+    ) {
+        let provider = BackupStatusProvider()
+        guard let assets = provider.deviceDisplayAssets(for: deviceDisplayStatusEntity) else {
+            Issue.record("Expected StatusAssets for \(deviceDisplayStatusEntity)")
+            return
+        }
+        #expect(assets.iconName == expectedIconName,
+                "Expected iconName \(expectedIconName) for device status \(deviceDisplayStatusEntity) but got \(assets.iconName)")
+    }
+    
+    @Test("Device display assets dictionary contains assets for each defined device display status", arguments: [
+        DeviceDisplayStatusEntity.inactive,
+        .attentionNeeded,
+        .updating,
+        .upToDate
+    ])
+    func deviceDisplayAssetsDictionaryContainsStatus(deviceDisplayStatusEntity: DeviceDisplayStatusEntity) {
+        let provider = BackupStatusProvider()
+        #expect(provider.deviceDisplayAssets(for: deviceDisplayStatusEntity) != nil,
+                "Expected StatusAssets for \(deviceDisplayStatusEntity)")
     }
 }

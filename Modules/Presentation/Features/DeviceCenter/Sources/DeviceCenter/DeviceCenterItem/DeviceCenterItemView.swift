@@ -33,17 +33,17 @@ struct DeviceCenterItemView: View {
                             .foregroundStyle(TokenColors.Text.onColor.swiftUI)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
-                            .background(Color(viewModel.assets.backupStatus.color))
+                            .background(Color(viewModel.assets.statusAssets.color))
                             .clipShape(Capsule())
                     } else {
-                        Image(viewModel.assets.backupStatus.iconName, bundle: .module)
+                        Image(viewModel.assets.statusAssets.iconName, bundle: .module)
                             .renderingMode(.template)
-                            .foregroundStyle(Color(viewModel.assets.backupStatus.color))
+                            .foregroundStyle(Color(viewModel.assets.statusAssets.color))
                             .frame(width: 12, height: 12)
                     }
-                    Text(viewModel.assets.backupStatus.title)
+                    Text(viewModel.assets.statusAssets.title)
                         .font(.caption)
-                        .foregroundStyle(Color(viewModel.assets.backupStatus.color))
+                        .foregroundStyle(Color(viewModel.assets.statusAssets.color))
                     Spacer()
                 }
             }
