@@ -2728,8 +2728,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>[date]にメールでご連絡しましたが、ストレージはまだいっぱいです。アカウント内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、スペースを空けるか、[plan]プランにアップグレードしていただくご必要があります。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2742,8 +2744,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>メールで複数回ご連絡しましたが、ストレージはまだいっぱいです。アカウント内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、スペースを空けるか、[plan]プランにアップグレードしていただくご必要があります。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2756,8 +2760,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>メールでご連絡しましたが、ストレージはまだいっぱいです。アカウント内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、スペースを空けるか、[plan]プランにアップグレードしていただくご必要があります。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>

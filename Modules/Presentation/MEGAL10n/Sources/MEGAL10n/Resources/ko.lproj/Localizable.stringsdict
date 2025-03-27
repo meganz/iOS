@@ -2728,8 +2728,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>우리가 [date]에 이메일로 연락하였지만, 당신의 저장소가 아직도 가득 차있으며, 당신의 계정에 [storageSpace]의 용량을 차지하는 파일 %d개가 있고, 이것은 당신이 공간을 확보하거나 [plan] 요금제로 업그레이드 하여야 한다는 것을 의미합니다. 빨리 조치를 취하지 않으면, 당신의 데이터가 삭제됩니다. 파일을 지키려면 지금 업그레이드 하세요. [A]저장소 한도에 대해 더 알아보세요[/A].</string>
+        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2742,8 +2744,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>우리가 이메일로 여러번 연락하였지만, 당신의 저장소가 아직도 가득 차있으며, 당신의 계정에 [storageSpace]의 용량을 차지하는 파일 %d개가 있고, 이것은 당신이 공간을 확보하거나 [plan] 요금제로 업그레이드 하여야 한다는 것을 의미합니다. 빨리 조치를 취하지 않으면, 당신의 데이터가 삭제됩니다. 파일을 지키려면 지금 업그레이드 하세요. [A]저장소 한도에 대해 더 알아보세요[/A].</string>
+        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2756,8 +2760,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>우리가 이메일로 연락하였지만, 당신의 저장소가 아직도 가득 차있으며, 당신의 계정에 [storageSpace]의 용량을 차지하는 파일 %d개가 있고, 이것은 당신이 공간을 확보하거나 [plan] 요금제로 업그레이드 하여야 한다는 것을 의미합니다. 빨리 조치를 취하지 않으면, 당신의 데이터가 삭제됩니다. 파일을 지키려면 지금 업그레이드 하세요. [A]저장소 한도에 대해 더 알아보세요[/A].</string>
+        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
