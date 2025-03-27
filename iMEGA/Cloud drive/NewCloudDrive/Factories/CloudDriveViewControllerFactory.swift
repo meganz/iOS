@@ -238,15 +238,6 @@ struct CloudDriveViewControllerFactory {
         )
     }
     
-    private func useNewCloudDrive(config: NodeBrowserConfig) -> Bool {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDriveHomeRecents) {
-            return true
-        }
-        // disable new Cloud Drive for recents as it's very different
-        // config with sections, the ticket to implement the needed behaviour: [SAO-189]
-        return config.displayMode != .recents
-    }
-    
     /// build bare is return a plain UIViewController, bare-less version returns one wrapped in the UINavigationController
     func buildBare(
         parentNode: NodeEntity,
@@ -273,18 +264,10 @@ struct CloudDriveViewControllerFactory {
         nodeSource: NodeSource,
         config: NodeBrowserConfig
     ) -> UIViewController? {
-        if useNewCloudDrive(config: config) {
-            newCloudDriveViewController(
-                nodeSource: nodeSource,
-                config: config
-            )
-        } else {
-            LegacyCloudDriveViewControllerFactory().build(
-                nodeSource: nodeSource,
-                config: config,
-                sdk: sdk
-            )
-        }
+        newCloudDriveViewController(
+            nodeSource: nodeSource,
+            config: config
+        )
     }
     
     func build(
