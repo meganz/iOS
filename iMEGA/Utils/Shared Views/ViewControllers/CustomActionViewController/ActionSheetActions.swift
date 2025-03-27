@@ -11,7 +11,7 @@ class BaseAction: NSObject {
     var style: UIAlertAction.Style = .default
     var enabled: Bool = true
     var syncIconAndTextColor: Bool = false
-    var badgeModel: Badge?
+    var showNewFeatureBadge: Bool = false
     
     override var hash: Int {
         var hasher = Hasher()
@@ -22,7 +22,7 @@ class BaseAction: NSObject {
         hasher.combine(style.hashValue)
         hasher.combine(enabled)
         hasher.combine(syncIconAndTextColor)
-        hasher.combine(badgeModel)
+        hasher.combine(showNewFeatureBadge)
         return hasher.finalize()
     }
     
@@ -35,7 +35,7 @@ class BaseAction: NSObject {
         && style == otherObject.style
         && enabled == otherObject.enabled
         && syncIconAndTextColor == otherObject.syncIconAndTextColor
-        && badgeModel == otherObject.badgeModel
+        && showNewFeatureBadge == otherObject.showNewFeatureBadge
     }
 }
 
@@ -49,7 +49,7 @@ class ActionSheetAction: BaseAction {
         image: UIImage?,
         enabled: Bool = true,
         syncIconAndTextColor: Bool = false,
-        badgeModel: Badge? = nil,
+        showNewFeatureBadge: Bool = false,
         style: UIAlertAction.Style,
         actionHandler: @escaping () -> Void
     ) {
@@ -60,7 +60,7 @@ class ActionSheetAction: BaseAction {
         self.image = image
         self.enabled = enabled
         self.syncIconAndTextColor = syncIconAndTextColor
-        self.badgeModel = badgeModel
+        self.showNewFeatureBadge = showNewFeatureBadge
         self.style = style
     }
     
@@ -400,32 +400,5 @@ extension NodeAction {
             title: Strings.Localizable.Set.AddTo.album,
             image: .addTo,
             type: .addToAlbum)
-    }
-}
-
-// MARK: Badge
-
-class Badge: NSObject {
-    
-    var title: String
-    var foregroundColor: UIColor
-    var backgroundColor: UIColor
-    
-    required init(title: String, foregroundColor: UIColor, backgroundColor: UIColor) {
-        self.title = title
-        self.foregroundColor = foregroundColor
-        self.backgroundColor = backgroundColor
-        
-        super.init()
-    }
-}
-
-extension Badge {
-    static var raiseHandFeature: Self {
-        .init(
-            title: Strings.Localizable.Chat.Call.ContextMenu.newFeature,
-            foregroundColor: TokenColors.Text.inverse,
-            backgroundColor: TokenColors.Text.info
-        )
     }
 }

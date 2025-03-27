@@ -1,16 +1,17 @@
 import MEGADesignToken
-import MEGAL10n
+import MEGASwiftUI
+import SwiftUI
 
 class ActionSheetCell: UITableViewCell {
 
     var accessoryTappedHandler: (() -> Void)?
     
     func configureCell(action: BaseAction) {
-        NSLayoutConstraint.activate([heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0)])
+        NSLayoutConstraint.activate([contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0)])
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
-        if let badge = action.badgeModel {
-            addNewFeatureBadgeView(badge)
+        if action.showNewFeatureBadge {
+            addNewFeatureBadgeView()
         } else {
             accessoryView = action.accessoryView
             attachAccessoryAction()
@@ -37,31 +38,18 @@ class ActionSheetCell: UITableViewCell {
         }
     }
     
-    func addNewFeatureBadgeView(_ badge: Badge) {
-        let badgeView = UIView()
-        badgeView.backgroundColor = badge.backgroundColor
-        badgeView.layer.cornerRadius = 10
-        badgeView.translatesAutoresizingMaskIntoConstraints = false
-
-        let badgeLabel = UILabel()
-        badgeLabel.textColor = badge.foregroundColor
-        badgeLabel.font = UIFont.preferredFont(forTextStyle: .caption2)
-        badgeLabel.text = badge.title
-        badgeLabel.textAlignment = .center
-        badgeLabel.translatesAutoresizingMaskIntoConstraints = false
+    func addNewFeatureBadgeView() {
+        let badgeView = NewFeatureBadgeView()
         
-        badgeView.addSubview(badgeLabel)
-        NSLayoutConstraint.activate([
-            badgeLabel.topAnchor.constraint(equalTo: badgeView.topAnchor, constant: 4),
-            badgeLabel.bottomAnchor.constraint(equalTo: badgeView.bottomAnchor, constant: -4),
-            badgeLabel.leadingAnchor.constraint(equalTo: badgeView.leadingAnchor, constant: 8),
-            badgeLabel.trailingAnchor.constraint(equalTo: badgeView.trailingAnchor, constant: -8)
-        ])
+        let badgeHostingController = UIHostingController(rootView: badgeView)
+        badgeHostingController.view.backgroundColor = .clear
+        badgeHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(badgeHostingController.view)
         
-        addSubview(badgeView)
         NSLayoutConstraint.activate([
-            badgeView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            badgeView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            badgeHostingController.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            badgeHostingController.view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            badgeHostingController.view.heightAnchor.constraint(greaterThanOrEqualToConstant: 60)
         ])
     }
     
