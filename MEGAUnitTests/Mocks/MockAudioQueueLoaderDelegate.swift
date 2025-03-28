@@ -12,8 +12,4 @@ final class MockAudioQueueLoaderDelegate: AudioQueueLoaderDelegate {
         insertedBatches.append(items)
         currentQueue.append(contentsOf: items)
     }
-    
-    func setupPlayerQueue(with items: [AudioPlayerItem]) {
-        currentQueue = items
-    }
 }

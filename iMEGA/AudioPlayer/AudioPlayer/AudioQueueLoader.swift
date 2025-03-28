@@ -1,14 +1,27 @@
 protocol AudioQueueLoaderDelegate: AnyObject {
-    /// The delegate returns how many items are currently in the AVQueuePlayer.
+    /// Returns the number of items currently in the AVQueuePlayer.
     func currentQueueCount() -> Int
-    
-    /// Insert a list of items at the end (or after the last item).
+
+    /// Inserts a list of AudioPlayerItem objects at the end (or after the last item) of the player's queue.
     func insertBatchInQueue(_ items: [AudioPlayerItem])
-    
-    /// Called if we want to fully replace the queue with a fresh batch.
-    func setupPlayerQueue(with items: [AudioPlayerItem])
 }
 
+/// A loader responsible for managing and batching audio tracks for the AVQueuePlayer.
+/// The loader takes a list of tracks and delivers them in batches for playback.
+/// When the player's queue drops to or below a defined threshold, the loader fetches and inserts the next batch.
+/// It supports asynchronous preloading of the next batch and allows the caller to shuffle the remaining tracks on demand.
+///
+/// **Key Features:**
+/// - **Batch Loading:**
+///   Returns up to `batchSize` tracks for immediate playback via `addAllTracks(_:)` and refills the queue
+///   when the queue count falls to or below `queueThreshold`.
+/// - **Asynchronous Preloading:**
+///   Preloads the next batch in the background and stores it in `pendingBatch` for quick insertion.
+/// - **On-Demand Shuffling:**
+///   The caller can call `shuffleTracks()` to randomize the order of the remaining tracks before preloading.
+/// - **Customization:**
+///   - `batchSize`: Number of tracks loaded per batch (default is 100).
+///   - `queueThreshold`: Queue count threshold that triggers loading a new batch (default is 50).
 final class AudioQueueLoader {
     weak var delegate: (any AudioQueueLoaderDelegate)?
     
@@ -16,35 +29,31 @@ final class AudioQueueLoader {
     private var pendingBatch: [AudioPlayerItem] = []
     
     /// The size of each batch to be loaded from the `remainingTracks`.
-    ///
     /// **How it works:**
-    /// 1. When the audio player is first initialized (via `addAllTracks`), the loader will fetch up to `batchSize` tracks for immediate playback.
-    /// 2. Afterwards, if the number of tracks in the audio player's queue (i.e., tracks awaiting playback) drops below `queueThreshold`,
-    ///    the loader automatically fetches the next `batchSize` tracks and prepares them for insertion.
-    ///
-    /// **Default behavior:**
-    /// - By default, `batchSize` is set to 100 (but can be customized).
-    /// - If the queue size falls to `queueThreshold` or lower, the loader requests a new batch of tracks.
+    /// 1. On initialization via `addAllTracks(_:)`, the loader returns up to `batchSize` tracks for immediate playback.
+    /// 2. When the player's queue count drops to or below `queueThreshold`, a new batch of `batchSize` tracks is fetched.
     private let batchSize: Int
    
-    /// The threshold for the audio player's queue count.
-    ///
+    /// The queue count threshold to trigger loading a new batch.
     /// **How it works:**
-    /// 1. Once the audio player’s queue size (the number of tracks awaiting playback) falls to `queueThreshold` or below,
-    ///    the loader attempts to fetch a new batch of tracks (see `batchSize`).
-    /// 2. If a batch is already preloaded (`pendingBatch`), that batch is inserted immediately; otherwise, a new batch is fetched.
-    ///
-    /// **Default behavior:**
-    /// - By default, `queueThreshold` is set to 50 (but can be customized).
-    /// - Whenever the queue size drops to `queueThreshold` or lower, the loader acts to refill the queue.
+    /// 1. When the number of tracks awaiting playback falls to `queueThreshold` or below,
+    ///    the loader fetches a new batch.
+    /// 2. If a preloaded batch (`pendingBatch`) is available, it is inserted immediately.
     private let queueThreshold: Int
     
+    /// Indicates whether a background preloading task is in progress.
     private var isPreloading = false
     
+    /// Returns `true` if there is any pending work: either preloading is active,
+    /// there are remaining tracks, or a preloaded batch is available.
     var hasPendingWork: Bool {
         isPreloading || remainingTracks.isNotEmpty || pendingBatch.isNotEmpty
     }
     
+    /// Initializes the loader with a customizable batch size and queue threshold.
+    /// - Parameters:
+    ///   - batchSize: The number of tracks to load per batch (default is 100).
+    ///   - queueThreshold: The queue count threshold that triggers loading a new batch (default is 50).
     init(
         batchSize: Int = 100,
         queueThreshold: Int = 50
@@ -53,21 +62,24 @@ final class AudioQueueLoader {
         self.queueThreshold = queueThreshold
     }
     
-    /// Adds all tracks to the loader and returns the first batch
-    /// so the player can set up its queue immediately.
+    /// Sets all tracks into the loader and returns the first batch for immediate playback.
+    /// - Parameter tracks: An array of `AudioPlayerItem` to load.
+    /// - Returns: The first batch of tracks, containing up to `batchSize` items.
     func addAllTracks(_ tracks: [AudioPlayerItem]) -> [AudioPlayerItem] {
         remainingTracks = tracks
         return loadNextBatch()
     }
     
-    /// Resets the loader to a clean state, clearing remaining tracks and pending batch.
+    /// Resets the loader by clearing all remaining tracks and any preloaded batch.
     func reset() {
         isPreloading = false
         remainingTracks.removeAll()
         pendingBatch.removeAll()
     }
     
-    /// Starts a background task to preload the next batch into `pendingBatch`.
+    /// Starts a background task to preload the next batch of tracks. This method checks if preloading is not already in progress and
+    /// if there are remaining tracks. It then loads the next batch synchronously and schedules a background task to store it in `pendingBatch`.
+    /// If the player's queue is below the threshold when preloading completes, the pending batch is inserted immediately.
     func prepareNextBatchInBackground() {
         guard !isPreloading, remainingTracks.isNotEmpty else { return }
         
@@ -86,8 +98,8 @@ final class AudioQueueLoader {
         }
     }
     
-    /// Inserts the `pendingBatch` into the delegate's queue and
-    /// then prepares another batch if any tracks remain.
+    /// Inserts the preloaded batch (`pendingBatch`) into the player's queue via the delegate. After insertion, it clears `pendingBatch`
+    /// and starts preloading the subsequent batch.
     func insertPendingBatch() {
         guard pendingBatch.isNotEmpty else { return }
         
@@ -97,7 +109,8 @@ final class AudioQueueLoader {
         prepareNextBatchInBackground()
     }
     
-    /// Checks if the queue is below threshold, and if so, inserts a new batch.
+    /// Checks if the player's queue is below the threshold and, if so, either inserts the preloaded batch or loads a new batch immediately.
+    /// After insertion, it initiates background preloading for the next batch.
     func refillQueueIfNeeded() {
         guard isQueueBelowThreshold() else { return }
         
@@ -111,9 +124,22 @@ final class AudioQueueLoader {
         }
     }
     
+    /// Shuffles the remaining tracks in the loader.
+    /// If a preloaded batch exists, it is first appended to the remaining tracks and cleared. The remaining tracks are then randomized,
+    /// and background preloading is started.
+    func shuffleTracks() {
+        if pendingBatch.isNotEmpty {
+            remainingTracks.append(contentsOf: pendingBatch)
+            pendingBatch.removeAll()
+        }
+        remainingTracks.shuffle()
+        prepareNextBatchInBackground()
+    }
+    
     // MARK: - Private Methods
     
-    /// Loads the next `batchSize` items from `remainingTracks`.
+    /// Loads the next `batchSize` tracks from `remainingTracks`. The tracks are selected in the current order of the `remainingTracks` list.
+    /// - Returns: An array of `AudioPlayerItem` containing the next batch.
     private func loadNextBatch() -> [AudioPlayerItem] {
         guard remainingTracks.isNotEmpty else { return [] }
         
@@ -122,6 +148,8 @@ final class AudioQueueLoader {
         return batch
     }
     
+    /// Checks if the current number of items in the player's queue is at or below `queueThreshold`.
+    /// - Returns: `true` if the queue count is at or below `queueThreshold`; otherwise, `false`.
     private func isQueueBelowThreshold() -> Bool {
         let currentCount = delegate?.currentQueueCount() ?? 0
         return currentCount <= queueThreshold

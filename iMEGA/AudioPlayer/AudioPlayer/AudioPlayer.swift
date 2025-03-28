@@ -371,19 +371,18 @@ extension AudioPlayer: AudioQueueLoaderDelegate {
         tracks.append(contentsOf: items)
         
         if let lastItem = queuePlayer?.items().last {
-            items.forEach {
-                queuePlayer?.secureInsert($0, after: lastItem)
+            var anchor = lastItem
+            for item in items {
+                queuePlayer?.secureInsert(item, after: anchor)
+                anchor = item
             }
         } else if let first = items.first {
             secureReplaceCurrentItem(with: first)
-            items.dropFirst().forEach {
-                queuePlayer?.secureInsert($0, after: queuePlayer?.currentItem)
+            var anchor = queuePlayer?.currentItem ?? first
+            for item in items.dropFirst() {
+                queuePlayer?.secureInsert(item, after: anchor)
+                anchor = item
             }
         }
-    }
-    
-    func setupPlayerQueue(with items: [AudioPlayerItem]) {
-        tracks = items
-        setupPlayer()
     }
 }
