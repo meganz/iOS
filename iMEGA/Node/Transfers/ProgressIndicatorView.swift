@@ -424,8 +424,8 @@ extension ProgressIndicatorView: MEGATransferDelegate {
         var isExportFile = false
         var isSaveToPhotos = false
         if let appData = transfer.appData {
-            isExportFile = appData.contains(NSString().mnz_appDataToExportFile())
-            isSaveToPhotos = appData.contains(NSString().mnz_appDataToSaveInPhotosApp())
+            isExportFile = appData.contains(TransferMetaDataEntity.exportFile.rawValue)
+            isSaveToPhotos = appData.contains(TransferMetaDataEntity.saveInPhotos.rawValue)
         }
         
         guard transfer.path?.hasPrefix(transferInventoryUseCase.documentsDirectory().path) ?? false ||

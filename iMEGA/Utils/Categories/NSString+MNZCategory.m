@@ -1,7 +1,6 @@
 #import "NSString+MNZCategory.h"
 #import <AVKit/AVKit.h>
 #import <CommonCrypto/CommonDigest.h>
-#import <Photos/Photos.h>
 #import "Helper.h"
 #import "NSDate+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
@@ -26,10 +25,6 @@ static NSString* const B = @"[B]";
 
 #pragma mark - appData
 
-- (NSString *)mnz_appDataToSaveInPhotosApp {
-    return [self stringByAppendingString:@">SaveInPhotosApp"];
-}
-
 - (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip {
     if (asVoiceClip) {
         return [self stringByAppendingString:[NSString stringWithFormat:@">attachVoiceClipToChatID=%llu", chatId]];
@@ -53,10 +48,6 @@ static NSString* const B = @"[B]";
 
 - (NSString *)mnz_appDataToPath:(NSString *)path {
     return (path ? [self stringByAppendingString:[NSString stringWithFormat:@">path=%@", path]] : self);
-}
-
-- (NSString *)mnz_appDataToExportFile {
-    return [self stringByAppendingString:@">exportFile"];
 }
 
 #pragma mark - Utils

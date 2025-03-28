@@ -1,4 +1,4 @@
 public enum TransferMetaDataEntity: Sendable {
-    case exportFile
-    case saveInPhotos
+    case exportFile // When download and "export file" to another application
+    case saveInPhotos // When download and save to Photos.app
 }
