@@ -46,10 +46,6 @@ static NSString* const B = @"[B]";
     return (localIdentifier ? [self stringByAppendingString:[NSString stringWithFormat:@">localIdentifier=%@", localIdentifier]] : self);
 }
 
-- (NSString *)mnz_appDataToPath:(NSString *)path {
-    return (path ? [self stringByAppendingString:[NSString stringWithFormat:@">path=%@", path]] : self);
-}
-
 #pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
@@ -248,34 +244,6 @@ static NSString* const B = @"[B]";
     return @"";
 }
 
-+ (NSString *)localizedSortOrderType:(MEGASortOrderType)sortOrderType {
-    switch (sortOrderType) {
-        case MEGASortOrderTypeDefaultDesc:
-            return LocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order");
-            
-        case MEGASortOrderTypeSizeDesc:
-            return LocalizedString(@"largest", @"Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size");
-            
-        case MEGASortOrderTypeSizeAsc:
-            return LocalizedString(@"smallest", @"Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size");
-            
-        case MEGASortOrderTypeModificationDesc:
-            return LocalizedString(@"newest", @"Sort by option (5/6). This one order the files by its modification date, newer first");
-            
-        case MEGASortOrderTypeModificationAsc:
-            return LocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first");
-            
-        case MEGASortOrderTypeLabelAsc:
-            return LocalizedString(@"cloudDrive.sort.label", @"A menu item in the left panel drop down menu to allow sorting by label.");
-            
-        case MEGASortOrderTypeFavouriteAsc:
-            return LocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites");
-            
-        default:
-            return LocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically");
-    }
-}
-
 - (BOOL)mnz_isValidEmail {
     NSString *emailRegex =
     @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
@@ -379,88 +347,6 @@ static NSString* const B = @"[B]";
     NSRange range = [self rangeOfCharacterFromSet:decimalDigitInvertedCharacterSet];
     
     return (range.location == NSNotFound);
-}
-
-- (BOOL)mnz_containsEmoji {
-    __block BOOL containsEmoji = NO;
-    
-    [self enumerateSubstringsInRange:NSMakeRange(0,
-                                                 [self length])
-                             options:NSStringEnumerationByComposedCharacterSequences
-                          usingBlock:^(NSString *substring,
-                                       NSRange substringRange,
-                                       NSRange enclosingRange,
-                                       BOOL *stop)
-     {
-         const unichar hs = [substring characterAtIndex:0];
-         // surrogate pair
-         if (0xd800 <= hs &&
-             hs <= 0xdbff)
-         {
-             if (substring.length > 1)
-             {
-                 const unichar ls = [substring characterAtIndex:1];
-                 const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
-                 if (0x1d000 <= uc &&
-                     uc <= 0x1f9ff)
-                 {
-                     containsEmoji = YES;
-                 }
-             }
-         }
-         else if (substring.length > 1)
-         {
-             const unichar ls = [substring characterAtIndex:1];
-             if (ls == 0x20e3 ||
-                 ls == 0xfe0f ||
-                 ls == 0xd83c)
-             {
-                 containsEmoji = YES;
-             }
-         }
-         else
-         {
-             // non surrogate
-             if (0x2100 <= hs &&
-                 hs <= 0x27ff)
-             {
-                 containsEmoji = YES;
-             }
-             else if (0x2B05 <= hs &&
-                      hs <= 0x2b07)
-             {
-                 containsEmoji = YES;
-             }
-             else if (0x2934 <= hs &&
-                      hs <= 0x2935)
-             {
-                 containsEmoji = YES;
-             }
-             else if (0x3297 <= hs &&
-                      hs <= 0x3299)
-             {
-                 containsEmoji = YES;
-             }
-             else if (hs == 0xa9 ||
-                      hs == 0xae ||
-                      hs == 0x303d ||
-                      hs == 0x3030 ||
-                      hs == 0x2b55 ||
-                      hs == 0x2b1c ||
-                      hs == 0x2b1b ||
-                      hs == 0x2b50)
-             {
-                 containsEmoji = YES;
-             }
-         }
-         
-         if (containsEmoji)
-         {
-             *stop = YES;
-         }
-     }];
-    
-    return containsEmoji;
 }
 
 - (BOOL)mnz_isPureEmojiString {

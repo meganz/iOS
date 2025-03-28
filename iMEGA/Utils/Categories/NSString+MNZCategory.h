@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_appDataToDownloadAttachToMessageID:(uint64_t)messageID;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
 - (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier;
-- (NSString *)mnz_appDataToPath:(NSString *)path;
 
 #pragma mark - Utils
 
@@ -26,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString * _Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end;
 + (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders;
-+ (NSString *)localizedSortOrderType:(MEGASortOrderType)sortOrderType;
 
 + (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus;
 + (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration isGroup:(BOOL)isGroup;
@@ -49,7 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)mnz_isDecimalNumber;
 
-- (BOOL)mnz_containsEmoji;
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
 - (NSString *)mnz_initialForAvatar;
