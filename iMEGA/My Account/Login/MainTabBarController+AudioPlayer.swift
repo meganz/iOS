@@ -61,7 +61,15 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func updateMiniPlayerVisibility(for viewController: UIViewController) {
-        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        guard AudioPlayerManager.shared.isPlayerAlive() else {
+            if let audioPlayerDelegate = viewController as? (any AudioPlayerPresenterProtocol) {
+                /// If the mini-player was closed on a different screen while the audio player was active,
+                /// any previously modified content inset may no longer be valid. This call forces a reset of the
+                /// current view's content inset to ensure proper layout.
+                audioPlayerDelegate.updateContentView(0)
+            }
+            return
+        }
         let miniPlayerHidden = isMiniPlayerHidden()
         
         if let audioPlayerDelegate = viewController as? (any AudioPlayerPresenterProtocol) {
