@@ -79,7 +79,8 @@ struct AlbumContentRouter: AlbumContentRouting {
                     preferenceUseCase: PreferenceUseCase.default
                 ),
                 appDelegateRouter: AppDelegateRouter()
-            ))
+            ),
+            newAlbumPhotosToAdd: newAlbumPhotos)
         return AlbumContentViewController(viewModel: viewModel)
     }
     
