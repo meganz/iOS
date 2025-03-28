@@ -2,7 +2,6 @@
 
 #import "ItemCollectionViewCell.h"
 
-#import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"

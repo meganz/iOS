@@ -8,7 +8,7 @@
 
 typedef void (^ShowSelectedNodeAction)(UIViewController *);
 
-@class CloudDriveViewController, ThumbnailViewerTableViewCellViewModel;
+@class ThumbnailViewerTableViewCellViewModel;
 
 @interface ThumbnailViewerTableViewCell : UITableViewCell
 

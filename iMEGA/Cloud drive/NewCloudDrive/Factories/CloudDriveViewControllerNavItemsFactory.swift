@@ -72,6 +72,8 @@ struct CloudDriveViewControllerNavItemsFactory {
         let addBarMenuConfig = CMConfigEntity(menuType: .menu(type: .uploadAdd), viewMode: currentViewMode)
         return contextMenuManager.menu(with: addBarMenuConfig, label: label)
     }
+    
+    // MARK: - Private
 
     /// Get the most updated value of parentNode and access type.
     /// Because a CD node can be changed externally (e.g: User rename or change access type of the node from another platform/device),
@@ -86,5 +88,16 @@ struct CloudDriveViewControllerNavItemsFactory {
         
         let accessType = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle)
         return (parentNode, accessType)
+    }
+    
+    private func sharedShouldShowMediaDiscoveryContextMenuOption(
+        mediaDiscoveryDetectionEnabled: Bool, // can't inject node here as we need to handle nil case (happens during offline starts)
+        hasMediaFiles: Bool?,
+        isFromSharedItem: Bool,
+        viewModePreference: ViewModePreferenceEntity
+    ) -> Bool {
+        let shouldAutomaticallyShowMediaView = mediaDiscoveryDetectionEnabled &&
+        hasMediaFiles == true && !isFromSharedItem
+        return shouldAutomaticallyShowMediaView || viewModePreference == .mediaDiscovery
     }
 }
