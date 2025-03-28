@@ -435,6 +435,9 @@ extension AudioPlayer {
         // reset the playlist by inserting the following playlist items
         playerPlaylist.forEach { queuePlayer.secureInsert($0, after: queuePlayer.items().last) }
         
+        // Update the queue loader's state to match the new shuffled order
+        queueLoader.shuffleTracks()
+        
         notify(aboutTheEndOfBlockingAction)
     }
 
