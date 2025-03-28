@@ -596,7 +596,7 @@
 }
 
 - (void)nodesSortTypeHasChanged {
-    [self reloadUI];
+    [self updateSearchResultsWithSearchString:_searchController.searchBar.text showsHUD:YES];
 }
 
 #pragma mark - IBActions
