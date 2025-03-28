@@ -117,7 +117,7 @@ final class AlbumContentViewModel: ViewModelType {
         albumNameUseCase: some AlbumNameUseCaseProtocol,
         router: some AlbumContentRouting,
         overDiskQuotaChecker: some OverDiskQuotaChecking,
-        newAlbumPhotosToAdd: [NodeEntity]? = nil,
+        newAlbumPhotosToAdd: [NodeEntity]?,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
