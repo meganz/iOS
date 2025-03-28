@@ -152,7 +152,6 @@
 		12E23289286D49000099775D /* NodeActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E23288286D49000099775D /* NodeActionViewModel.swift */; };
 		12E7FEEE28723AD6001E4A08 /* PageStayTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E7FEED28723AD6001E4A08 /* PageStayTimeTracker.swift */; };
 		12E9105528247C5300FBC6DA /* AlbumContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E9105428247C5200FBC6DA /* AlbumContentViewController.swift */; };
-		12F041CC27E25454007F60CF /* CloudDriveViewController+MediaDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F041CB27E25454007F60CF /* CloudDriveViewController+MediaDiscovery.swift */; };
 		12F23A58284EA35D007B9821 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F23A57284EA35D007B9821 /* PhotoAlbum.swift */; };
 		12FF88E12846E2CC00D99BED /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
 		12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE323745FC600BBD23F /* EmptyStateView.m */; };
@@ -195,7 +194,6 @@
 		245570642CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */; };
 		245603672CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */; };
 		245603692CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */; };
-		24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */; };
 		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
 		245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */; };
 		246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246013112A459166007EF5ED /* AdvancedViewRouterTests.swift */; };
@@ -264,7 +262,6 @@
 		24FCDBA22CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FCDB992CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataClass.swift */; };
 		250B11A42CBC840C00E2743E /* NodeActionViewModelTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B11A32CBC840C00E2743E /* NodeActionViewModelTestSuite.swift */; };
 		250B11A62CBC844100E2743E /* NodeActionBuilderTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B11A52CBC844100E2743E /* NodeActionBuilderTestSuite.swift */; };
-		251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */; };
 		2525E9152C1A4F0800E04432 /* GetNodeLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */; };
 		2525E9192C1A539F00E04432 /* GetNodeLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */; };
 		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
@@ -294,7 +291,6 @@
 		258DC66D2C789604007B0025 /* NodeInfoLocationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */; };
 		2590021D2C605778004A421C /* SpotlightContentIndexerActorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */; };
 		2591C1382C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */; };
-		259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */; };
 		259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */; };
 		259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */; };
 		25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A4E4E82BD8B83700B3F308 /* NodeTableViewCellViewModel.swift */; };
@@ -310,7 +306,6 @@
 		25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */; };
 		25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B774C32B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift */; };
 		25B8467C2B60AACD002B6134 /* CameraUploadsStatsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B8467B2B60AACD002B6134 /* CameraUploadsStatsRepository.swift */; };
-		25BE0B092AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */; };
 		25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */; };
 		25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */; };
 		25CEA2992BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */; };
@@ -768,7 +763,6 @@
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */; };
-		6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */; };
 		6D64B70D2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */; };
 		6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
@@ -803,7 +797,6 @@
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
 		7288C2C927F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */; };
 		7288C2CE27F5D3D70010DC19 /* SendFeedbackViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2CD27F5D3D70010DC19 /* SendFeedbackViewRouter.swift */; };
-		729FD75727FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729FD75627FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift */; };
 		7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */; };
 		772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
@@ -874,7 +867,6 @@
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
 		830294AF2C11BB1F0002DF63 /* CallControlsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830294AE2C11BB1F0002DF63 /* CallControlsViewModelTests.swift */; };
-		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
 		830C28E025E6900200E9B56E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28DF25E6900200E9B56E /* GridView.swift */; };
@@ -934,7 +926,6 @@
 		8335C63D282E7A7A00509479 /* NameCollisionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363281F28102BE6004F6121 /* NameCollisionRouter.swift */; };
 		8335C63E282E7A8400509479 /* NameCollisionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363282328102BFC004F6121 /* NameCollisionViewModel.swift */; };
 		8335C641282E7ABB00509479 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
-		83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */; };
 		8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */; };
 		8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
 		833B0B7F28EEBEB20074EB6B /* ChatSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B0B7E28EEBEB20074EB6B /* ChatSettingsTableViewController.swift */; };
@@ -1054,7 +1045,6 @@
 		83784A1F2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83784A1D2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift */; };
 		83784A202B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83784A1E2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib */; };
 		83792B882950A4080033ED3E /* MeetingDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83792B872950A4080033ED3E /* MeetingDescriptionView.swift */; };
-		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
 		837ABEF825DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837ABEF625DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift */; };
@@ -1160,8 +1150,6 @@
 		83BA006B2798709200498493 /* CancellableTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BA00692798703600498493 /* CancellableTransfer.swift */; };
 		83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */; };
 		83BEB18B2BAC84EF003AA310 /* BottomSheetRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BEB18A2BAC84EF003AA310 /* BottomSheetRouter.swift */; };
-		83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */; };
-		83BFA3AA27CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFA3A927CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift */; };
 		83BFA3AC27CFC2FB00BDF997 /* NodeSelectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */; };
 		83BFB9A727D8E2CE001755B6 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
 		83BFDBD3291BE67900FFFEA0 /* MeetingInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFDBD2291BE67900FFFEA0 /* MeetingInfoViewModel.swift */; };
@@ -1314,7 +1302,6 @@
 		9437CEC12CAFFE7F0051F947 /* QuickAccessWidgetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437CEC02CAFFE710051F947 /* QuickAccessWidgetViewModelTests.swift */; };
 		9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437CEC32CB0080D0051F947 /* MockOfflineFilesUseCase.swift */; };
 		94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */; };
-		9439F10D2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */; };
 		9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */; };
 		943BD8472C91CA5C00619F2B /* MockWarningViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943BD8462C91CA5C00619F2B /* MockWarningViewRouter.swift */; };
 		943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */; };
@@ -1329,7 +1316,6 @@
 		943FA1D72CBE6D2B0021EAC3 /* UserAttributeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FA1D62CBE6D1D0021EAC3 /* UserAttributeHandlerTests.swift */; };
 		943FA1E12CBEF4110021EAC3 /* MockUserAttributesMEGAStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FA1E02CBEF40F0021EAC3 /* MockUserAttributesMEGAStore.swift */; };
 		943FA1E32CBEF4250021EAC3 /* MockMOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FA1E22CBEF41F0021EAC3 /* MockMOUser.swift */; };
-		944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */; };
 		9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */; };
 		9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */; };
 		9443B38C2B28BA8500D87E35 /* MEGANode+MNZCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9443B38B2B28BA8500D87E35 /* MEGANode+MNZCategory.swift */; };
@@ -1354,8 +1340,6 @@
 		9459CA892C6510B900458B67 /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459CA882C6510B900458B67 /* MemoryUsage.swift */; };
 		945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945A90C72C3D611500E10BBF /* MockMeetingContainerRouter.swift */; };
 		945DEF732CC90DA300E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945DEF722CC90D9200E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift */; };
-		9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */; };
-		94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */; };
 		94614C7329104F6900503174 /* TransferTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C7229104F6900503174 /* TransferTableViewCell.xib */; };
 		94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C742910554200503174 /* TransferNodeTableViewCell.xib */; };
 		94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
@@ -1776,6 +1760,7 @@
 		A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
 		A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */; };
 		A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */; };
+		A8F29E6F2D958279002774A7 /* MockNodeSensitivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */; };
 		A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5155727F6F24F00AEE4D6 /* ISEmojiView */; };
 		A8F5156B27F6F58300AEE4D6 /* FLEX in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5156A27F6F58300AEE4D6 /* FLEX */; };
 		A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5157327F6F87A00AEE4D6 /* DZNEmptyDataSet */; };
@@ -1862,7 +1847,6 @@
 		B5960EFA2D2D261B0060F623 /* AdsSlotDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5960EF92D2D261B0060F623 /* AdsSlotDisplayable.swift */; };
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
-		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
 		B598F73B2D01E0B600B2B6EB /* MEGASwiftUIMock in Frameworks */ = {isa = PBXBuildFile; productRef = B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */; };
 		B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */; };
 		B59FC7712CF97B1700D88580 /* OverDiskQuotaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */; };
@@ -1988,7 +1972,6 @@
 		B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BA24D25155B3A009787BD /* SMSVerificationViewModelTests.swift */; };
 		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
 		B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */; };
-		B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */; };
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D671250DBA0B00D74666 /* CGSize.swift */; };
 		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */; };
@@ -2161,7 +2144,6 @@
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
 		BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3327FA737200C1A2E5 /* GKContactImage */; };
 		BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3D27FA757800C1A2E5 /* GKContactImage */; };
-		BF20F2412B9873370020C390 /* CloudDriveViewController+SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20F2402B9873370020C390 /* CloudDriveViewController+SemanticColors.swift */; };
 		BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
 		BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
@@ -2214,7 +2196,6 @@
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */; };
 		BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */; };
-		BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */; };
 		BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */; };
 		BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */; };
 		BF5E33AF2558D8330055395E /* FilesExplorerGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33AD2558D8330055395E /* FilesExplorerGridViewController.swift */; };
@@ -2491,7 +2472,6 @@
 		C44FE40925B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */; };
 		C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */; };
 		C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */; };
-		C45093FE270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45093FD270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift */; };
 		C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */; };
 		C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */; };
 		C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */; };
@@ -2517,7 +2497,6 @@
 		C45D79252593AD5600EB6C2F /* MiniPlayerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D79242593AD5600EB6C2F /* MiniPlayerDataSource.swift */; };
 		C45D792F2593AEBA00EB6C2F /* MiniPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D792E2593AEBA00EB6C2F /* MiniPlayerDelegate.swift */; };
 		C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E402025DD1C230060E116 /* AudioPlayerManager.swift */; };
-		C45F97F3264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F97F2264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift */; };
 		C45F97FD264A9FA60004DCA5 /* MyAvatarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */; };
 		C45F9819264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F9818264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift */; };
 		C45F982B264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F982A264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift */; };
@@ -2531,8 +2510,6 @@
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
 		C4652805265294C700371270 /* BannerContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4652804265294C700371270 /* BannerContainer.storyboard */; };
-		C4653A4D274BD09000BB14C2 /* BucketHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */; };
-		C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */; };
 		C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */; };
 		C467AD5026A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
 		C46978572CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46978552CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift */; };
@@ -2858,7 +2835,6 @@
 		12E23288286D49000099775D /* NodeActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewModel.swift; sourceTree = "<group>"; };
 		12E7FEED28723AD6001E4A08 /* PageStayTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageStayTimeTracker.swift; sourceTree = "<group>"; };
 		12E9105428247C5200FBC6DA /* AlbumContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentViewController.swift; sourceTree = "<group>"; };
-		12F041CB27E25454007F60CF /* CloudDriveViewController+MediaDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+MediaDiscovery.swift"; sourceTree = "<group>"; };
 		12F23A57284EA35D007B9821 /* PhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmptyStateView+Timeline.swift"; sourceTree = "<group>"; };
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2902,7 +2878,6 @@
 		245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MegaNodeActionType+NodeActionTypeEntity_Mapper.swift"; sourceTree = "<group>"; };
 		245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModel.swift; sourceTree = "<group>"; };
 		245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModelTests.swift; sourceTree = "<group>"; };
-		24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerTests.swift; sourceTree = "<group>"; };
 		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
 		245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaData.swift; sourceTree = "<group>"; };
 		246013112A459166007EF5ED /* AdvancedViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouterTests.swift; sourceTree = "<group>"; };
@@ -2962,7 +2937,6 @@
 		24FCDB9A2CAC39C3002D91D5 /* MORecentlyOpenedNode+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MORecentlyOpenedNode+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		250B11A32CBC840C00E2743E /* NodeActionViewModelTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewModelTestSuite.swift; sourceTree = "<group>"; };
 		250B11A52CBC844100E2743E /* NodeActionBuilderTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionBuilderTestSuite.swift; sourceTree = "<group>"; };
-		251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ViewMode.swift"; sourceTree = "<group>"; };
 		2525E9142C1A4F0800E04432 /* GetNodeLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModel.swift; sourceTree = "<group>"; };
 		2525E9182C1A539F00E04432 /* GetNodeLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeLinkViewModelTests.swift; sourceTree = "<group>"; };
 		2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertView.swift; sourceTree = "<group>"; };
@@ -2990,7 +2964,6 @@
 		258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoLocationViewModelTests.swift; sourceTree = "<group>"; };
 		2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActorTests.swift; sourceTree = "<group>"; };
 		2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActor.swift; sourceTree = "<group>"; };
-		259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+AudioPlayerPresenterProtocol.swift"; sourceTree = "<group>"; };
 		2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
@@ -3005,7 +2978,6 @@
 		25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentMenuAction.swift; sourceTree = "<group>"; };
 		25B774C32B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerViewModelTests.swift; sourceTree = "<group>"; };
 		25B8467B2B60AACD002B6134 /* CameraUploadsStatsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadsStatsRepository.swift; sourceTree = "<group>"; };
-		25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModelTests.swift; sourceTree = "<group>"; };
 		25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewController.swift; sourceTree = "<group>"; };
 		25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModelTests.swift; sourceTree = "<group>"; };
 		25CEA2982BD608CC003DE00E /* ItemCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
@@ -3535,7 +3507,6 @@
 		6D5B40722D0420D80088E7CC /* RubbishBinSettingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingViewModelTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
-		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModel.swift; sourceTree = "<group>"; };
 		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
 		6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadAdvancedOptionsViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -3556,7 +3527,6 @@
 		7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAReachabilityManager+Additions.swift"; sourceTree = "<group>"; };
 		7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HelpTableViewController+Feedback.swift"; sourceTree = "<group>"; };
 		7288C2CD27F5D3D70010DC19 /* SendFeedbackViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewRouter.swift; sourceTree = "<group>"; };
-		729FD75627FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -3629,8 +3599,6 @@
 		77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareDestinationTableViewController.h; sourceTree = "<group>"; };
 		77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareDestinationTableViewController.m; sourceTree = "<group>"; };
 		830294AE2C11BB1F0002DF63 /* CallControlsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsViewModelTests.swift; sourceTree = "<group>"; };
-		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
-		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetView.swift; sourceTree = "<group>"; };
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		830C28DF25E6900200E9B56E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
@@ -3707,8 +3675,6 @@
 		833452AC258CA4350052DB3C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		833452AE258CA4530052DB3C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
 		833452B0258CA45B0052DB3C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
-		83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveCollectionViewController.h; sourceTree = "<group>"; };
-		83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveCollectionViewController.m; sourceTree = "<group>"; };
 		8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomsListViewModelTests.swift; sourceTree = "<group>"; };
 		8337BC60256283F400F3A81A /* ShortcutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutDetail.swift; sourceTree = "<group>"; };
 		833B0B7E28EEBEB20074EB6B /* ChatSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -3817,8 +3783,6 @@
 		83784A1D2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyParticipantsListTableViewCell.swift; sourceTree = "<group>"; };
 		83784A1E2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyParticipantsListTableViewCell.xib; sourceTree = "<group>"; };
 		83792B872950A4080033ED3E /* MeetingDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDescriptionView.swift; sourceTree = "<group>"; };
-		837A88BD20B42290007B55D1 /* CloudDriveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveViewController.h; sourceTree = "<group>"; };
-		837A88BE20B42290007B55D1 /* CloudDriveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveViewController.m; sourceTree = "<group>"; };
 		837A88C020B44AA8007B55D1 /* OfflineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineViewController.h; sourceTree = "<group>"; };
 		837A88C120B44AA8007B55D1 /* OfflineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfflineViewController.m; sourceTree = "<group>"; };
 		837A88C320B45C11007B55D1 /* SendToViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendToViewController.h; sourceTree = "<group>"; };
@@ -3917,8 +3881,6 @@
 		83BA00692798703600498493 /* CancellableTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransfer.swift; sourceTree = "<group>"; };
 		83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemsRepository.swift; sourceTree = "<group>"; };
 		83BEB18A2BAC84EF003AA310 /* BottomSheetRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetRouter.swift; sourceTree = "<group>"; };
-		83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+Additions.swift"; sourceTree = "<group>"; };
-		83BFA3A927CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodeActionViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSelectionType.swift; sourceTree = "<group>"; };
 		83BFDBD2291BE67900FFFEA0 /* MeetingInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewModel.swift; sourceTree = "<group>"; };
 		83BFDBD4291BE6A300FFFEA0 /* MeetingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewController.swift; sourceTree = "<group>"; };
@@ -4067,7 +4029,6 @@
 		9437CEC02CAFFE710051F947 /* QuickAccessWidgetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetViewModelTests.swift; sourceTree = "<group>"; };
 		9437CEC32CB0080D0051F947 /* MockOfflineFilesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOfflineFilesUseCase.swift; sourceTree = "<group>"; };
 		94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
-		9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCloudDriveViewControllerFactory.swift; sourceTree = "<group>"; };
 		9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeFactoryTests.swift; sourceTree = "<group>"; };
 		943BD8462C91CA5C00619F2B /* MockWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWarningViewRouter.swift; sourceTree = "<group>"; };
 		943C92562AC4360C00C2F67E /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
@@ -4082,7 +4043,6 @@
 		943FA1D62CBE6D1D0021EAC3 /* UserAttributeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeHandlerTests.swift; sourceTree = "<group>"; };
 		943FA1E02CBEF40F0021EAC3 /* MockUserAttributesMEGAStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserAttributesMEGAStore.swift; sourceTree = "<group>"; };
 		943FA1E22CBEF41F0021EAC3 /* MockMOUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMOUser.swift; sourceTree = "<group>"; };
-		944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertTypeModel.swift; sourceTree = "<group>"; };
 		9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertDataModel.swift; sourceTree = "<group>"; };
 		9443B38B2B28BA8500D87E35 /* MEGANode+MNZCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MNZCategory.swift"; sourceTree = "<group>"; };
@@ -4110,8 +4070,6 @@
 		9459CA882C6510B900458B67 /* MemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUsage.swift; sourceTree = "<group>"; };
 		945A90C72C3D611500E10BBF /* MockMeetingContainerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingContainerRouter.swift; sourceTree = "<group>"; };
 		945DEF722CC90D9200E16BB6 /* CustomModalAlertViewController+CancelSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+CancelSubscription.swift"; sourceTree = "<group>"; };
-		9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+EmptyState.swift"; sourceTree = "<group>"; };
-		94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+Backup.swift"; sourceTree = "<group>"; };
 		94614C7229104F6900503174 /* TransferTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferTableViewCell.xib; sourceTree = "<group>"; };
 		94614C742910554200503174 /* TransferNodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferNodeTableViewCell.xib; sourceTree = "<group>"; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAExportRequestDelegate.h; path = API/Requests/MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
@@ -4540,6 +4498,7 @@
 		A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocationSearchTableViewCell.m; path = Chat/LocationSearchTableViewCell.m; sourceTree = "<group>"; };
 		A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call.mp3; sourceTree = "<group>"; };
 		A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hang_out.mp3; sourceTree = "<group>"; };
+		A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeSensitivityChecker.swift; sourceTree = "<group>"; };
 		A8F515B027F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+OpenAppRequiredView.swift"; sourceTree = "<group>"; };
 		A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailAndFollowTheLinkViewController.h; sourceTree = "<group>"; };
 		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
@@ -4614,7 +4573,6 @@
 		B5960EF92D2D261B0060F623 /* AdsSlotDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsSlotDisplayable.swift; sourceTree = "<group>"; };
 		B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModel.swift; sourceTree = "<group>"; };
-		B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModel.swift; sourceTree = "<group>"; };
 		B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourageGuestUserToJoinMegaViewModelTests.swift; sourceTree = "<group>"; };
 		B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewModel.swift; sourceTree = "<group>"; };
 		B59FC7742CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewModelTests.swift; sourceTree = "<group>"; };
@@ -4752,7 +4710,6 @@
 		B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadOperation+Utils.h"; sourceTree = "<group>"; };
 		B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CameraUploadOperation+Utils.m"; sourceTree = "<group>"; };
 		B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeThumbnailHomeUseCase.swift; sourceTree = "<group>"; };
-		B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+CameraUpload.swift"; sourceTree = "<group>"; };
 		B6790E05256B81C600154F6D /* MEGANode+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions.swift"; sourceTree = "<group>"; };
 		B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileSystemImageCacheClient+Additions.swift"; sourceTree = "<group>"; };
 		B67B18EF25CB80690022D6C0 /* MEGA.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MEGA.xctestplan; sourceTree = "<group>"; };
@@ -4961,7 +4918,6 @@
 		BF1589232436A27A007AF9EC /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		BF1589252436A296007AF9EC /* MessageInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputBar.xib; sourceTree = "<group>"; };
 		BF15894B2436EB8D007AF9EC /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
-		BF20F2402B9873370020C390 /* CloudDriveViewController+SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+SemanticColors.swift"; sourceTree = "<group>"; };
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
 		BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDrivePhotosPickerRouter.swift; sourceTree = "<group>"; };
@@ -5004,7 +4960,6 @@
 		BF5455E82844377600544A53 /* EndCallDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialog.swift; sourceTree = "<group>"; };
 		BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveAssetUploader.swift; sourceTree = "<group>"; };
 		BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveMediaCaptureRouter.swift; sourceTree = "<group>"; };
-		BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+SemanticColors.swift"; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
 		BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
 		BF5E33AD2558D8330055395E /* FilesExplorerGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerGridViewController.swift; sourceTree = "<group>"; };
@@ -5252,7 +5207,6 @@
 		C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+MetadataLoader.swift"; sourceTree = "<group>"; };
 		C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderFooterView.swift; sourceTree = "<group>"; };
 		C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistHeaderFooterView.xib; sourceTree = "<group>"; };
-		C45093FD270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveCollectionViewController+DynamicType.swift"; sourceTree = "<group>"; };
 		C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoRepository.swift; sourceTree = "<group>"; };
 		C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCase.swift; sourceTree = "<group>"; };
 		C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+AudioPlayer.swift"; sourceTree = "<group>"; };
@@ -5277,7 +5231,6 @@
 		C45D79242593AD5600EB6C2F /* MiniPlayerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDataSource.swift; sourceTree = "<group>"; };
 		C45D792E2593AEBA00EB6C2F /* MiniPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDelegate.swift; sourceTree = "<group>"; };
 		C45E402025DD1C230060E116 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
-		C45F97F2264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+MyAvatar.swift"; sourceTree = "<group>"; };
 		C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarManager.swift; sourceTree = "<group>"; };
 		C45F9818264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+MyAvatar.swift"; sourceTree = "<group>"; };
 		C45F982A264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+MyAvatar.swift"; sourceTree = "<group>"; };
@@ -5289,8 +5242,6 @@
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
 		C4652804265294C700371270 /* BannerContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BannerContainer.storyboard; sourceTree = "<group>"; };
-		C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BucketHeaderView.xib; sourceTree = "<group>"; };
-		C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketHeaderView.swift; sourceTree = "<group>"; };
 		C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASegmentedControl.swift; sourceTree = "<group>"; };
 		C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeComponentProtocol.swift; sourceTree = "<group>"; };
 		C46978552CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListener.swift; sourceTree = "<group>"; };
@@ -5883,12 +5834,11 @@
 				94B85CA02B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift */,
 				BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */,
 				BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */,
-				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
-				25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */,
 				BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */,
 				BF67D77E2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift */,
 				9422636D2B445FF60010B667 /* DisplayModeTests.swift */,
 				2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */,
+				A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */,
 				9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */,
 				BF5F118B2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift */,
 				B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */,
@@ -6879,31 +6829,9 @@
 				0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */,
 				415226691A692ECC00EC7BB6 /* Cloud.storyboard */,
 				BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */,
-				C45093FD270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift */,
-				83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */,
-				83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */,
 				BF11FEE32B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift */,
 				BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */,
 				BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */,
-				944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */,
-				BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */,
-				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
-				830B54892178845300BE1E1F /* CloudDriveTableViewController.m */,
-				83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */,
-				259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */,
-				94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */,
-				B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */,
-				729FD75627FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift */,
-				9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */,
-				12F041CB27E25454007F60CF /* CloudDriveViewController+MediaDiscovery.swift */,
-				C45F97F2264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift */,
-				83BFA3A927CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift */,
-				6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */,
-				BF20F2402B9873370020C390 /* CloudDriveViewController+SemanticColors.swift */,
-				251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */,
-				837A88BD20B42290007B55D1 /* CloudDriveViewController.h */,
-				837A88BE20B42290007B55D1 /* CloudDriveViewController.m */,
-				B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */,
 				BF67D7742B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift */,
 				BF67D7762B9EAC8300978846 /* CreateNewFolderAlertViewRouter.swift */,
 				BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */,
@@ -8829,8 +8757,6 @@
 		832E102C202CB21700BDD30F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C4653A4E274BDA9C00BB14C2 /* BucketHeaderView.swift */,
-				C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */,
 				C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */,
 				C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */,
 				B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */,
@@ -12967,7 +12893,6 @@
 				BFB529732C4A2100003034EF /* CloudDriveContextMenuFactory.swift */,
 				94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */,
 				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
-				9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */,
 				BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */,
 				94B273EB2D3F01270029D78C /* RecentListHeaderViewModelFactory.swift */,
 				94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */,
@@ -13818,7 +13743,6 @@
 				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				5DAC09DD24CFE20E001B6476 /* BannerCarouselCollectionViewCell.xib in Resources */,
 				C4652805265294C700371270 /* BannerContainer.storyboard in Resources */,
-				C4653A4D274BD09000BB14C2 /* BucketHeaderView.xib in Resources */,
 				BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */,
 				8366518B26497B3600BC02F0 /* CallNotificationView.xib in Resources */,
 				83C49BC2265262AD00A7764B /* CallParticipantCell.xib in Resources */,
@@ -14377,7 +14301,6 @@
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				94B09E5F2B84CC87007D6B84 /* BrowserViewControllerDelegateHandler.swift in Sources */,
 				0EB5847C2C3CACBF00EEBD99 /* BrowserViewModel.swift in Sources */,
-				C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */,
 				5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */,
 				5DC0FD4D24D903A4004DB649 /* ButtonStyleFactory.swift in Sources */,
 				C49FB1EE258B6F1000B1280D /* CALayer+Additions.swift in Sources */,
@@ -14550,8 +14473,6 @@
 				C4F638722BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift in Sources */,
 				BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */,
 				94B09E5B2B84CC87007D6B84 /* CloudDriveBottomToolbarFactory.swift in Sources */,
-				C45093FE270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift in Sources */,
-				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */,
 				BFB529742C4A2100003034EF /* CloudDriveContextMenuFactory.swift in Sources */,
 				C46978572CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift in Sources */,
@@ -14561,26 +14482,9 @@
 				94B09E5E2B84CC87007D6B84 /* CloudDriveNodeInsertionRouter.swift in Sources */,
 				BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */,
 				C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */,
-				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
-				BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */,
-				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
-				83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */,
-				259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */,
-				94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */,
-				B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */,
-				729FD75727FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift in Sources */,
-				9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */,
-				12F041CC27E25454007F60CF /* CloudDriveViewController+MediaDiscovery.swift in Sources */,
-				C45F97F3264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift in Sources */,
-				83BFA3AA27CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift in Sources */,
-				6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */,
-				BF20F2412B9873370020C390 /* CloudDriveViewController+SemanticColors.swift in Sources */,
-				251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */,
-				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */,
 				94B09E5A2B84CC87007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift in Sources */,
 				BFDAC1722B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift in Sources */,
-				B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */,
 				BF65423C2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift in Sources */,
 				5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */,
 				5D64660624890BBE006030A5 /* ColorProviding.swift in Sources */,
@@ -14908,7 +14812,6 @@
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
 				6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */,
-				9439F10D2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift in Sources */,
 				A873E85B26E2228400CBB174 /* LegacyFileVersioningViewModel.swift in Sources */,
 				BF0B5E0B2BB2C88B00ADE274 /* LegacyNoInternetViewModel.swift in Sources */,
 				BF0B5E0D2BB2C98400ADE274 /* LegacyNoInternetViewModifier.swift in Sources */,
@@ -16258,8 +16161,6 @@
 				C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */,
 				BFDAC17A2B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift in Sources */,
 				BFDAC17E2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift in Sources */,
-				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
-				25BE0B092AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift in Sources */,
 				BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */,
 				9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */,
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
@@ -16382,6 +16283,7 @@
 				24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */,
 				94B09E702B84D0B6007D6B84 /* MockNodeInsertionRouter.swift in Sources */,
 				B5BA0E172CE1E75E00B01FC7 /* MockNodeLabelActionRepository.swift in Sources */,
+				A8F29E6F2D958279002774A7 /* MockNodeSensitivityChecker.swift in Sources */,
 				947064742D3281D700C89D7F /* MockNotificationsViewRouter.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */,

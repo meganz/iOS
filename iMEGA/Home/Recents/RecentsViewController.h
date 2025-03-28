@@ -1,7 +1,5 @@
 #import <UIKit/UIKit.h>
 
-@class CloudDriveViewController;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol RecentNodeActionDelegate <NSObject>

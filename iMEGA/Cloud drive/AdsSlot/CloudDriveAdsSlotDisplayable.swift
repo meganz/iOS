@@ -3,13 +3,6 @@ protocol CloudDriveAdsSlotDisplayable {
     var shouldDisplayAdsSlot: Bool { get }
 }
 
-extension CloudDriveViewController: CloudDriveAdsSlotDisplayable {
-    var shouldDisplayAdsSlot: Bool {
-        // We should only display Ads for .cloudDrive mode, for other modes (.rubbishBin, .backup, etc..) we should not show Ads
-        displayMode == .cloudDrive
-    }
-}
-
 extension NewCloudDriveViewController: CloudDriveAdsSlotDisplayable {
     var shouldDisplayAdsSlot: Bool {
         displayModeProvider.displayMode() == .cloudDrive

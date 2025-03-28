@@ -8,7 +8,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
     
     @objc func updateSearchResults(searchString: String, showsHUD: Bool = true) {
         if searchController.isActive {
-            if searchString.count < kMinimumLettersToStartTheSearch {
+            if searchString.count < 1 {
                 nodeSearcher?.cancelSearch()
                 SVProgressHUD.dismiss()
                 cancelSearchTask()
