@@ -2722,6 +2722,7 @@
 		0D4A123A2689921E0024997E /* GlobalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDelegate.swift; sourceTree = "<group>"; };
 		0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewBaseDataSource.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
+		0E04F43D2D96522A0048A692 /* MEGASwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGASwift; path = Modules/MEGASharedRepo/MEGASwift; sourceTree = SOURCE_ROOT; };
 		0E0CFFC52D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaCheckerTests.swift; sourceTree = "<group>"; };
 		0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E119ACA2C7C3CAF0091BF06 /* MEGAPhotos */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPhotos; sourceTree = "<group>"; };
@@ -4913,7 +4914,6 @@
 		B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+User.swift"; sourceTree = "<group>"; };
 		B6FB5F8329A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeTypeEntityMapperTests.swift; sourceTree = "<group>"; };
 		B6FCBFD627121B4500B3599F /* PhotosViewController+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+PhotoLibrary.swift"; sourceTree = "<group>"; };
-		B6FCDABA2898A86400319754 /* MEGASwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASwift; sourceTree = "<group>"; };
 		B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemImageCacheClient.swift; sourceTree = "<group>"; };
 		BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 4.xcdatamodel"; sourceTree = "<group>"; };
 		BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceClipInputBar.swift; sourceTree = "<group>"; };
@@ -12083,7 +12083,7 @@
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
 				6D18B4D02B44C75600E4ABA8 /* MEGAMacro */,
 				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
-				B6FCDABA2898A86400319754 /* MEGASwift */,
+				0E04F43D2D96522A0048A692 /* MEGASwift */,
 				1678D7F02A45474E00336C52 /* MEGATest */,
 			);
 			path = Infrastracture;
