@@ -1587,6 +1587,7 @@
 		A56274E02C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */; };
 		A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */; };
+		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
 		A5BED9782B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
@@ -4301,6 +4302,7 @@
 		A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Additions.swift"; sourceTree = "<group>"; };
 		A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInProgressTimeReporter.swift; sourceTree = "<group>"; };
 		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
+		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
@@ -10725,6 +10727,7 @@
 				6D9934AF2C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift */,
 				A88E7FEA2549FD8A001B0A66 /* RecentsViewController.h */,
 				A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */,
+				A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */,
 			);
 			path = Recents;
 			sourceTree = "<group>";
@@ -15361,6 +15364,7 @@
 				B52B8C68297FE9A400981F47 /* RecentsViewController+Additions.swift in Sources */,
 				6D9934B02C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift in Sources */,
 				A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */,
+				A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */,
 				A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */,
 				B5AF2F142CCA4E0F0094CE20 /* RecoveryKeyViewModel.swift in Sources */,
 				B575517A2CCB6B7000E65123 /* RecoveryKeyViewRouter.swift in Sources */,

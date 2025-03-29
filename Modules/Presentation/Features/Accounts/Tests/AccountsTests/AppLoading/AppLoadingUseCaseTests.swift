@@ -1,5 +1,6 @@
 @testable import Accounts
 import MEGADomain
+import MEGADomainMock
 import MEGASDKRepo
 import MEGASwift
 import Testing
@@ -7,129 +8,141 @@ import Testing
 @Suite("App loading use case tests")
 struct AppLoadingUseCaseTests {
     
-    private var requestProviderMock: RequestProviderMock
-    private var appLoadingRepositoryMock: AppLoadingRepositoryMock
-    private var sut: AppLoadingUseCase
-    
-    init() {
-        requestProviderMock = RequestProviderMock()
-        appLoadingRepositoryMock = AppLoadingRepositoryMock()
-        sut = AppLoadingUseCase(requestProvider: requestProviderMock, appLoadingRepository: appLoadingRepositoryMock)
+    static func makeSUT(
+        requestStatesRepository: MockRequestStatesRepository = MockRequestStatesRepository(),
+        appLoadingRepository: AppLoadingRepositoryMock = AppLoadingRepositoryMock()
+    ) -> AppLoadingUseCase {
+        AppLoadingUseCase(requestStatesRepository: requestStatesRepository, appLoadingRepository: appLoadingRepository)
     }
     
-    @Test("Test waiting reason")
-    func testWaitingReason() {
-        let expectedWaitingReason = WaitingReasonEntity.connectivity
-        appLoadingRepositoryMock.waitingReason = expectedWaitingReason
-        
-        let waitingReason = sut.waitingReason
-        
-        #expect(waitingReason == expectedWaitingReason)
+    @Suite("Waiting reason")
+    struct WaitingReasonTests {
+        @Test("Should yield correct waiting reason")
+        func shouldYieldCorrectReason() {
+            let expectedWaitingReason = WaitingReasonEntity.connectivity
+            let appLoadingRepositoryMock = AppLoadingRepositoryMock()
+            appLoadingRepositoryMock.waitingReason = expectedWaitingReason
+            
+            let sut = makeSUT(appLoadingRepository: appLoadingRepositoryMock)
+            
+            #expect(sut.waitingReason == expectedWaitingReason)
+        }
     }
     
-    @Test("Test app loading start updates")
-    func testAppLoadingStartUpdates() async {
-        let requestEntity = RequestEntity(type: .fetchNodes)
-        requestProviderMock.requestStartUpdates = AsyncStream { continuation in
-            continuation.yield(requestEntity)
-            continuation.finish()
-        }.eraseToAnyAsyncSequence()
-        
-        let updates = await sut.appLoadingStartUpdates.first { requestEntity in
-            requestEntity.type == .fetchNodes
+    @Suite("App loading start updates")
+    struct AppLoadingStartUpdatesTests {
+        @Test
+        func shouldFilterFetchNodesRequestOnly() async {
+            let requestStatesRepository = MockRequestStatesRepository(
+                requestStartUpdates: [
+                    RequestEntity(type: .fetchNodes),
+                    RequestEntity(type: .accountDetails)
+                ].async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
+            
+            var requestEntities: [RequestEntity] = []
+            for await requestEntity in sut.appLoadingStartUpdates {
+                requestEntities.append(requestEntity)
+            }
+            
+            #expect(requestEntities.map(\.type) == [.fetchNodes])
+        }
+    }
+    @Suite("App loading updates")
+    struct AppLoadingUpdatesTests {
+        @Test
+        func shouldFilterFetchNodesRequestOnly() async {
+            let requestStatesRepository = MockRequestStatesRepository(
+                requestUpdates: [
+                    RequestEntity(type: .fetchNodes),
+                    RequestEntity(type: .accountDetails)
+                ].async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
+            
+            var requestEntities: [RequestEntity] = []
+            for await requestEntity in sut.appLoadingUpdates {
+                requestEntities.append(requestEntity)
+            }
+            
+            #expect(requestEntities.map(\.type) == [.fetchNodes])
+        }
+    }
+    
+    @Suite("App loading temporary error updates")
+    struct AppLoadingTemporaryErrorUpdatesTests {
+        @Test("Success result")
+        func shouldSkipUpdates() async {
+            let requestStatesRepository = MockRequestStatesRepository(requestTemporaryErrorUpdates: [Result.success(RequestEntity(type: .login))].async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
+            var iterator = sut.appLoadingTemporaryErrorUpdates.makeAsyncIterator()
+            #expect(await iterator.next() == nil)
         }
         
-        #expect(updates == requestEntity)
-    }
-    
-    @Test("Test app loading updates")
-    func testAppLoadingUpdates() async {
-        let requestEntity = RequestEntity(type: .fetchNodes)
-        requestProviderMock.requestUpdates = AsyncStream { continuation in
-            continuation.yield(requestEntity)
-            continuation.finish()
-        }.eraseToAnyAsyncSequence()
-        
-        let updates = await sut.appLoadingUpdates.first { requestEntity in
-            requestEntity.type == .fetchNodes
+        @Test("Failure with tryAgain error")
+        func shouldSkipUpdatesWithTryAgainError() async {
+            let requestStatesRepository = MockRequestStatesRepository(requestTemporaryErrorUpdates: [Result.failure(ErrorEntity(type: .tryAgain, name: "", value: 1))].async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
+            var iterator = sut.appLoadingTemporaryErrorUpdates.makeAsyncIterator()
+            #expect(await iterator.next() == nil)
         }
         
-        #expect(updates == requestEntity)
+        @Test("Failure with error other than tryAgain")
+        func shouldYieldUpdates() async {
+            let requestStatesRepository = MockRequestStatesRepository(requestTemporaryErrorUpdates: [Result.failure(ErrorEntity(type: .badArguments, name: "", value: 1))].async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
+            var iterator = sut.appLoadingTemporaryErrorUpdates.makeAsyncIterator()
+            let result = await iterator.next()
+            
+            #expect(performing: {
+                try result?.get()
+            }, throws: { error in
+                if let errorEntity = error as? ErrorEntity, errorEntity.type == .badArguments {
+                    true
+                } else {
+                    false
+                }
+            })
+        }
     }
     
-    @Test("Test app loading temporary error updates should return nil if success")
-    func testAppLoadingTemporaryErrorUpdates_resultSuccess() async {
-        let requestEntity = RequestEntity(type: .login)
-        let result = Result<RequestEntity, ErrorEntity>.success(requestEntity)
-        requestProviderMock.requestTemporaryErrorUpdates = AsyncStream { continuation in
-            continuation.yield(result)
-            continuation.finish()
-        }.eraseToAnyAsyncSequence()
-        
-        let updates = await sut.appLoadingTemporaryErrorUpdates.first { _ in
-            true
+    @Suite("App loading finish updates")
+    struct AppLoadingFinishUpdatesTests {
+        @Test("Request finish successfully")
+        func shouldYiedSuccessUpdates() async {
+            let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [Result.success(RequestEntity(type: .login))].async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
+            var iterator = sut.appLoadingFinishUpdates.makeAsyncIterator()
+            let result = try? await iterator.next()?.get()
+            #expect(result?.type == .login)
         }
         
-        #expect(updates == nil)
-    }
-    
-    @Test("Test app loading temporary error updates should return nil if error is try again")
-    func testAppLoadingTemporaryErrorUpdates_errorTryAgain() async {
-        let errorEntity = ErrorEntity(type: .tryAgain, name: "", value: 1)
-        let result = Result<RequestEntity, ErrorEntity>.failure(errorEntity)
-        requestProviderMock.requestTemporaryErrorUpdates = AsyncStream { continuation in
-            continuation.yield(result)
-            continuation.finish()
-        }.eraseToAnyAsyncSequence()
-        
-        let updates = await sut.appLoadingTemporaryErrorUpdates.first { _ in
-            true
+        @Test("Request finish with error")
+        func shouldYiedErrorUpdates() async {
+            let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [Result.failure(ErrorEntity(type: .badArguments, name: "", value: 1))].async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
+            var iterator = sut.appLoadingFinishUpdates.makeAsyncIterator()
+            
+            await #expect(performing: {
+                try await iterator.next()?.get()
+            }, throws: { error in
+                if let errorEntity = error as? ErrorEntity, errorEntity.type == .badArguments {
+                    true
+                } else {
+                    false
+                }
+            })
         }
-        
-        #expect(updates == nil)
-    }
-    
-    @Test("Test app loading temporary error updates")
-    func testAppLoadingTemporaryErrorUpdates() async {
-        let errorEntity = ErrorEntity(type: .badArguments, name: "", value: 1)
-        let result = Result<RequestEntity, ErrorEntity>.failure(errorEntity)
-        requestProviderMock.requestTemporaryErrorUpdates = AsyncStream { continuation in
-            continuation.yield(result)
-            continuation.finish()
-        }.eraseToAnyAsyncSequence()
-        
-        let updates = await sut.appLoadingTemporaryErrorUpdates.first { _ in
-            true
-        }
-        
-        #expect(updates == result)
-    }
-    
-    @Test("Test app loading finish updates")
-    func testAppLoadingFinishUpdates() async {
-        let requestEntity = RequestEntity(type: .login)
-        let result = Result<RequestEntity, ErrorEntity>.success(requestEntity)
-        requestProviderMock.requestFinishUpdates = AsyncStream { continuation in
-            continuation.yield(result)
-            continuation.finish()
-        }.eraseToAnyAsyncSequence()
-        
-        let updates = await sut.appLoadingFinishUpdates.first { _ in
-            true
-        }
-        
-        #expect(updates == result)
     }
 }
 
 // Mocks
-final class RequestProviderMock: RequestProviderProtocol, @unchecked Sendable {
-    var requestStartUpdates: AnyAsyncSequence<RequestEntity> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
-    var requestUpdates: AnyAsyncSequence<RequestEntity> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
-    var requestTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
-    var requestFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
-}
-
 final class AppLoadingRepositoryMock: AppLoadingRepositoryProtocol, @unchecked Sendable {
     static let newRepo: AppLoadingRepositoryMock = {
         AppLoadingRepositoryMock()

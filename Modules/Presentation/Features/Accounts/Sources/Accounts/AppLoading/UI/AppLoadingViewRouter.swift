@@ -15,7 +15,7 @@ public struct AppLoadingViewRouter: Routing {
     public func build() -> UIViewController {
         let viewModel = AppLoadingViewModel(
             appLoadingUseCase: AppLoadingUseCase(
-                requestProvider: RequestProvider(),
+                requestStatesRepository: RequestStatesRepository.newRepo,
                 appLoadingRepository: AppLoadingRepository.newRepo
             ),
             requestStatProgressUseCase: RequestStatProgressUseCase(repo: EventRepository.newRepo),
