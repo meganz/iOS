@@ -12,6 +12,10 @@ public struct MockRecentNodesUseCase: RecentNodesUseCaseProtocol {
     
     private let recentActionBuckets: Result<[RecentActionBucketEntity], GenericErrorEntity>
     
+    public var recentActionBucketsUpdates: AnyAsyncSequence<Void> {
+        EmptyAsyncSequence<Void>().eraseToAnyAsyncSequence()
+    }
+    
     public init(
         recentActionBuckets: Result<[RecentActionBucketEntity], GenericErrorEntity> = .success([])
     ) {

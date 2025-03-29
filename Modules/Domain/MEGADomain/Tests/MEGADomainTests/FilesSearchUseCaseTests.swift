@@ -103,7 +103,7 @@ final class FilesSearchUseCaseTests: XCTestCase {
     
     func testNodeUpdates_whenHasNoNodeUpdates_shouldNotEmitsUpdate() async {
         let sut = makeSUT(
-            nodeRepository: MockNodeRepository(nodeUpdates: EmptyAsyncSequence().eraseToAnyAsyncSequence())
+            nodeRepository: MockNodeRepository()
         )
         
         var receivedNodeUpdates: [NodeEntity] = []

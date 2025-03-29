@@ -1,5 +1,4 @@
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 public protocol AppLoadingUseCaseProtocol: Sendable {
@@ -15,31 +14,31 @@ struct AppLoadingUseCase: AppLoadingUseCaseProtocol {
         appLoadingRepository.waitingReason
     }
     
-    private let requestProvider: any RequestProviderProtocol
+    private let requestStatesRepository: any RequestStatesRepositoryProtocol
     private let appLoadingRepository: any AppLoadingRepositoryProtocol
     
     init(
-        requestProvider: some RequestProviderProtocol,
+        requestStatesRepository: some RequestStatesRepositoryProtocol,
         appLoadingRepository: some AppLoadingRepositoryProtocol
     ) {
-        self.requestProvider = requestProvider
+        self.requestStatesRepository = requestStatesRepository
         self.appLoadingRepository = appLoadingRepository
     }
     
     var appLoadingStartUpdates: AnyAsyncSequence<RequestEntity> {
-        requestProvider.requestStartUpdates
+        requestStatesRepository.requestStartUpdates
             .filter { $0.type == .fetchNodes }
             .eraseToAnyAsyncSequence()
     }
     
     var appLoadingUpdates: AnyAsyncSequence<RequestEntity> {
-        requestProvider.requestUpdates
+        requestStatesRepository.requestUpdates
             .filter { $0.type == .login || $0.type == .fetchNodes }
             .eraseToAnyAsyncSequence()
     }
     
     var appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
-        requestProvider.requestTemporaryErrorUpdates
+        requestStatesRepository.requestTemporaryErrorUpdates
             .filter { result in
                 if case .failure(let errorEntity) = result {
                     // if error is tryAgain, reqStats with progress appear, we don't need to display the reason
@@ -51,6 +50,6 @@ struct AppLoadingUseCase: AppLoadingUseCaseProtocol {
     }
     
     var appLoadingFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
-        requestProvider.requestFinishUpdates
+        requestStatesRepository.requestFinishUpdates
     }
 }

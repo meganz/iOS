@@ -5,6 +5,26 @@ import MEGASDKRepo
 
 extension RecentsViewController {
     
+    @objc func makeRecentsViewModel() -> RecentsViewModel {
+        let recentNodesUseCase = RecentNodesUseCase(
+            recentNodesRepository: RecentNodesRepository.newRepo,
+            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
+            userUpdateRepository: UserUpdateRepository.newRepo,
+            requestStatesRepository: RequestStatesRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo,
+            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }
+        )
+        
+        return RecentsViewModel(recentNodesUseCase: recentNodesUseCase)
+    }
+    
+    @objc func onViewDidLoad() {
+        viewModel.recentActionsUpdates = { [weak self] in
+            self?.getRecentActions()
+        }
+        viewModel.onViewDidLoad()
+    }
+    
     @objc func showContactVerificationView(forUserEmail userEmail: String) {
         guard let user = MEGASdk.sharedSdk.contact(forEmail: userEmail),
               let verifyCredentialsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "VerifyCredentialsViewControllerID") as? VerifyCredentialsViewController else {
@@ -21,12 +41,6 @@ extension RecentsViewController {
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
         self.present(navigationController, animated: true)
-    }
-    
-    @objc func shouldReloadOnUserUpdate(userList: MEGAUserList) -> Bool {
-        userList
-            .toUserEntities()
-            .contains(where: { $0.changes.contains(.CCPrefs) })
     }
     
     @objc func getRecentActions() {

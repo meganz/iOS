@@ -18,9 +18,7 @@
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 
-static const NSTimeInterval RecentsViewReloadTimeDelay = 0.5;
-
-@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, TextFileEditable, RecentsPreferenceProtocol>
+@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, TextFileEditable, RecentsPreferenceProtocol>
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
 
@@ -54,17 +52,23 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 0.5;
     self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     
     RecentsPreferenceManager.delegate = self;
-    [MEGASdk.shared addMEGADelegate:self];
     
     self.tableView.sectionHeaderTopPadding = 0.0f;
+    
+    [self onViewDidLoad];
 }
 
 - (void)removeFromParentViewController {
     [super removeFromParentViewController];
     
     RecentsPreferenceManager.delegate = nil;
+}
 
-    [MEGASdk.shared removeMEGADelegateAsync:self];
+- (RecentsViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self makeRecentsViewModel];
+    }
+    return _viewModel;
 }
 
 #pragma mark - Actions
@@ -312,37 +316,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 0.5;
         [RecentsPreferenceManager setShowRecents:YES];
         [self.tableView reloadEmptyDataSet];
         [self.tableView reloadData];
-    }
-}
-
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    BOOL shouldProcessOnNodesUpdate = NO;
-    NSArray *nodesUpdateArray = nodeList.mnz_nodesArrayFromNodeList;
-    for (MEGANode *nodeUpdated in nodesUpdateArray) {
-        if ((nodeUpdated.isFolder && [nodeUpdated hasChangedType:MEGANodeChangeTypeNew]) || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
-            shouldProcessOnNodesUpdate = NO;
-        } else {
-            shouldProcessOnNodesUpdate = YES;
-            break;
-        }
-    }
-    
-    if (shouldProcessOnNodesUpdate) {
-        [self debounce:@selector(getRecentActions) delay:RecentsViewReloadTimeDelay];
-    }
-}
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (request.type == MEGARequestTypeFetchNodes) {
-        [self getRecentActions];
-    }
-}
-
-- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
-    if ([self shouldReloadOnUserUpdateWithUserList:userList]) {
-        [self debounce:@selector(getRecentActions) delay:RecentsViewReloadTimeDelay];
     }
 }
 

@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+@class RecentsViewModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol RecentNodeActionDelegate <NSObject>
@@ -19,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getRecentActionsActivityIndicatorView;
 
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
+
+@property (strong, nonatomic) RecentsViewModel *viewModel;
 
 @end
 
