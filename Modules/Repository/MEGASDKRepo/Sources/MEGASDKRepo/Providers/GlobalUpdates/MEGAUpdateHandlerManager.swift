@@ -44,21 +44,11 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
     }
     
     func onRequestTemporaryError(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        let result: Result<RequestEntity, ErrorEntity> = switch error.type {
-        case .apiOk: .success(request.toRequestEntity())
-        default: .failure(error.toErrorEntity())
-        }
-        
-        handlers.forEach { $0.onRequestTemporaryError?(result) }
+        handlers.forEach { $0.onRequestTemporaryError?(RequestResponseEntity(requestEntity: request.toRequestEntity(), error: error.toErrorEntity())) }
     }
     
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        let result: Result<RequestEntity, ErrorEntity> = switch error.type {
-        case .apiOk: .success(request.toRequestEntity())
-        default: .failure(error.toErrorEntity())
-        }
-        
-        handlers.forEach { $0.onRequestFinish?(result) }
+        handlers.forEach { $0.onRequestFinish?(RequestResponseEntity(requestEntity: request.toRequestEntity(), error: error.toErrorEntity())) }
     }
     
     // MARK: - Transfer events

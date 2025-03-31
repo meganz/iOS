@@ -72,72 +72,49 @@ struct AppLoadingUseCaseTests {
     
     @Suite("App loading temporary error updates")
     struct AppLoadingTemporaryErrorUpdatesTests {
-        @Test("Success result")
-        func shouldSkipUpdates() async {
-            let requestStatesRepository = MockRequestStatesRepository(requestTemporaryErrorUpdates: [Result.success(RequestEntity(type: .login))].async.eraseToAnyAsyncSequence()
+        @Test(
+            "Failure with error",
+            arguments: zip(
+                [
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .tryAgain, name: "", value: 1)),
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .badArguments, name: "", value: 1))
+                ],
+                [false, true]
             )
+        )
+        func shouldYieldUpdatesIfNotTryAgainError(requestResponseEntity: RequestResponseEntity, shouldYieldUpdates: Bool) async {
+            let requestStatesRepository = MockRequestStatesRepository(requestTemporaryErrorUpdates: [requestResponseEntity].async.eraseToAnyAsyncSequence())
             let sut = makeSUT(requestStatesRepository: requestStatesRepository)
-            var iterator = sut.appLoadingTemporaryErrorUpdates.makeAsyncIterator()
-            #expect(await iterator.next() == nil)
-        }
-        
-        @Test("Failure with tryAgain error")
-        func shouldSkipUpdatesWithTryAgainError() async {
-            let requestStatesRepository = MockRequestStatesRepository(requestTemporaryErrorUpdates: [Result.failure(ErrorEntity(type: .tryAgain, name: "", value: 1))].async.eraseToAnyAsyncSequence()
-            )
-            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
-            var iterator = sut.appLoadingTemporaryErrorUpdates.makeAsyncIterator()
-            #expect(await iterator.next() == nil)
-        }
-        
-        @Test("Failure with error other than tryAgain")
-        func shouldYieldUpdates() async {
-            let requestStatesRepository = MockRequestStatesRepository(requestTemporaryErrorUpdates: [Result.failure(ErrorEntity(type: .badArguments, name: "", value: 1))].async.eraseToAnyAsyncSequence()
-            )
-            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
-            var iterator = sut.appLoadingTemporaryErrorUpdates.makeAsyncIterator()
-            let result = await iterator.next()
             
-            #expect(performing: {
-                try result?.get()
-            }, throws: { error in
-                if let errorEntity = error as? ErrorEntity, errorEntity.type == .badArguments {
-                    true
-                } else {
-                    false
-                }
-            })
+            var iterator = sut.appLoadingTemporaryErrorUpdates.makeAsyncIterator()
+            let result = await iterator.next() != nil
+            
+            #expect(result == shouldYieldUpdates)
         }
     }
     
     @Suite("App loading finish updates")
     struct AppLoadingFinishUpdatesTests {
-        @Test("Request finish successfully")
-        func shouldYiedSuccessUpdates() async {
-            let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [Result.success(RequestEntity(type: .login))].async.eraseToAnyAsyncSequence()
+        @Test(
+            "Request finish successfully",
+            arguments: zip(
+                [
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .ok, name: "", value: 1)),
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .tryAgain, name: "", value: 1)),
+                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .ok, name: "", value: 1))
+                ],
+                [false, false, true]
+            )
+        )
+        func shouldYiedUpdatesIfCompletedFetchNodesRequests(requestResponseEntity: RequestResponseEntity, shouldYieldUpdates: Bool) async {
+            let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [requestResponseEntity].async.eraseToAnyAsyncSequence()
             )
             let sut = makeSUT(requestStatesRepository: requestStatesRepository)
-            var iterator = sut.appLoadingFinishUpdates.makeAsyncIterator()
-            let result = try? await iterator.next()?.get()
-            #expect(result?.type == .login)
-        }
-        
-        @Test("Request finish with error")
-        func shouldYiedErrorUpdates() async {
-            let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [Result.failure(ErrorEntity(type: .badArguments, name: "", value: 1))].async.eraseToAnyAsyncSequence()
-            )
-            let sut = makeSUT(requestStatesRepository: requestStatesRepository)
-            var iterator = sut.appLoadingFinishUpdates.makeAsyncIterator()
             
-            await #expect(performing: {
-                try await iterator.next()?.get()
-            }, throws: { error in
-                if let errorEntity = error as? ErrorEntity, errorEntity.type == .badArguments {
-                    true
-                } else {
-                    false
-                }
-            })
+            var iterator = sut.appLoadingFinishUpdates.makeAsyncIterator()
+            let result = await iterator.next() != nil
+            
+            #expect(result == shouldYieldUpdates)
         }
     }
 }

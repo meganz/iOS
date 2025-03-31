@@ -4,8 +4,8 @@ import MEGASwift
 public protocol AppLoadingUseCaseProtocol: Sendable {
     var appLoadingStartUpdates: AnyAsyncSequence<RequestEntity> { get }
     var appLoadingUpdates: AnyAsyncSequence<RequestEntity> { get }
-    var appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> { get }
-    var appLoadingFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> { get }
+    var appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Void> { get }
+    var appLoadingFinishUpdates: AnyAsyncSequence<Void> { get }
     var waitingReason: WaitingReasonEntity { get }
 }
 
@@ -37,19 +37,17 @@ struct AppLoadingUseCase: AppLoadingUseCaseProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    var appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
+    /// if error is tryAgain, reqStats with progress appear, we don't need to display the reason
+    var appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Void> {
         requestStatesRepository.requestTemporaryErrorUpdates
-            .filter { result in
-                if case .failure(let errorEntity) = result {
-                    // if error is tryAgain, reqStats with progress appear, we don't need to display the reason
-                    return errorEntity.type != .tryAgain
-                }
-                return false
-            }
+            .compactMap { $0.error.type == .tryAgain ? nil : () }
             .eraseToAnyAsyncSequence()
     }
     
-    var appLoadingFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
-        requestStatesRepository.requestFinishUpdates
+    var appLoadingFinishUpdates: AnyAsyncSequence<Void> {
+        requestStatesRepository
+            .completedRequestUpdates
+            .compactMap { $0.type == .fetchNodes ? () : nil }
+            .eraseToAnyAsyncSequence()
     }
 }

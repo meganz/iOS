@@ -45,7 +45,7 @@ extension MEGAUpdateHandlerManager {
         .eraseToAnyAsyncSequence()
     }
     
-    var requestTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
+    var requestTemporaryErrorUpdates: AnyAsyncSequence<RequestResponseEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onRequestTemporaryError: { continuation.yield($0) })
             
@@ -56,7 +56,7 @@ extension MEGAUpdateHandlerManager {
         .eraseToAnyAsyncSequence()
     }
     
-    var requestFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
+    var requestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onRequestFinish: { continuation.yield($0) })
             
