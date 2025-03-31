@@ -53,8 +53,7 @@ final class RegionListViewController: UIViewController, ViewType {
         viewModel.dispatch(.onViewReady)
         
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                                               traitCollection: traitCollection)
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background())
     }
 
     override func viewWillAppear(_ animated: Bool) {

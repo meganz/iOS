@@ -179,8 +179,7 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor pageBackgroundColor]
-                            traitCollection:self.traitCollection];
+       backgroundColorWhenDesignTokenEnable:[UIColor pageBackgroundColor]];
     
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;

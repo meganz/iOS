@@ -170,7 +170,7 @@
 - (void)setupColors {
     self.navigationController.toolbarHidden = YES;
     
-    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
     self.termsAndPoliciesBarButtonItem.tintColor = [self primaryTextColor];
     
     self.view.backgroundColor = self.tableView.backgroundColor = [self defaultBackgroundColor];

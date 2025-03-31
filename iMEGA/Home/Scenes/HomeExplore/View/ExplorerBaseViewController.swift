@@ -328,7 +328,7 @@ extension ExplorerBaseViewController: TraitEnvironmentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
+        AppearanceManager.forceToolbarUpdate(toolbar)
     }
 }
 

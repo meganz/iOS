@@ -82,7 +82,7 @@
         [AppearanceManager setupAppearance:self.traitCollection];
         
         //Force appearance changes on the tab bar
-        [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
+        [AppearanceManager setupTabbar:self.tabBar];
     }
     
     [self configurePhoneImageBadge];

@@ -100,7 +100,7 @@ extension MainTabBarController {
 
         selectedViewController = defaultViewControllers[TabManager.getPreferenceTab().tabType.rawValue]
 
-        AppearanceManager.setupTabbar(tabBar, traitCollection: traitCollection)
+        AppearanceManager.setupTabbar(tabBar)
     }
 
     @objc func configProgressView() {

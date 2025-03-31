@@ -160,8 +160,8 @@ extension FolderLinkViewController {
         view.backgroundColor = TokenColors.Background.page
         
         if let navController = navigationController {
-            AppearanceManager.forceNavigationBarUpdate(navController.navigationBar, traitCollection: traitCollection)
-            AppearanceManager.forceToolbarUpdate(navController.toolbar, traitCollection: traitCollection)
+            AppearanceManager.forceNavigationBarUpdate(navController.navigationBar)
+            AppearanceManager.forceToolbarUpdate(navController.toolbar)
         }
         
         if navigationItem.titleView != nil, let titleViewSubtitle {

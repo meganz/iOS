@@ -13,7 +13,7 @@ extension ContactLinkQRViewController {
             
             // The SVProgressHUD appearance is not updated when enabling/disabling dark mode.
             // By updating the appearance and dismissing the HUD, it will have the correct configuration the next time is shown.
-            AppearanceManager.configureSVProgressHUD(traitCollection)
+            AppearanceManager.configureSVProgressHUD()
             SVProgressHUD.dismiss()
             
         case QRSection.scanCode.rawValue:

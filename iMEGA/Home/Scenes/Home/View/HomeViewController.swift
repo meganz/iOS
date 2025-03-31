@@ -493,13 +493,13 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
     
     private func updateNavigationBarTitleColor(for traitCollection: UITraitCollection) {
         guard let navigationBar = navigationController?.navigationBar else { return }
-        AppearanceManager.forceNavigationBarTitleUpdate(navigationBar, traitCollection: traitCollection)
+        AppearanceManager.forceNavigationBarTitleUpdate(navigationBar)
     }
 
     private func updateNavigationBarBackgroundColor(_ color: UIColor) {
         guard let navigationBar = navigationController?.navigationBar else { return }
         
-        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        AppearanceManager.forceNavigationBarUpdate(navigationBar)
     }
 
     func didUpdateAnimationProgress(

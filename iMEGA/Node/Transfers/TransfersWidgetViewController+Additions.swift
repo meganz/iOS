@@ -212,7 +212,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         CrashlyticsLogger.log(category: .transfersWidget, "Updating Navigation bar button appearance. Navigation bar info: \(String(describing: navigationController?.navigationBar))")
         
         guard let nav = navigationController else { return }
-        AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
+        AppearanceManager.forceNavigationBarUpdate(nav.navigationBar)
     }
     
     // MARK: - Register TableViewCell Nibs

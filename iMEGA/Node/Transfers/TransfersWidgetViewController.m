@@ -147,7 +147,7 @@ static TransfersWidgetViewController* instance = nil;
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self reloadView];
-        [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceToolbarUpdate:self.toolbar];
     } else if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
         [self reloadView];
     }

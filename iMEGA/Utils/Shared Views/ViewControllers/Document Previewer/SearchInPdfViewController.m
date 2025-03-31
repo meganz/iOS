@@ -32,8 +32,7 @@
     }
     
     [AppearanceManager forceSearchBarUpdate:self.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                            traitCollection:self.traitCollection];
+       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -58,8 +57,7 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceSearchBarUpdate:self.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                                traitCollection:self.traitCollection];
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
     }
 }
 
