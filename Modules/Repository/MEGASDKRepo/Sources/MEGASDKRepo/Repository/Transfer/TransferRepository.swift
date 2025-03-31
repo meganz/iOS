@@ -9,6 +9,14 @@ public struct TransferRepository: TransferRepositoryProtocol {
     
     private let sdk: MEGASdk
     
+    public var completedTransferUpdates: AnyAsyncSequence<TransferEntity> {
+        MEGAUpdateHandlerManager
+            .shared
+            .transferFinishUpdates
+            .compactMap { try? $0.get() }
+            .eraseToAnyAsyncSequence()
+    }
+    
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }

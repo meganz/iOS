@@ -1,26 +1,22 @@
 import Foundation
+import MEGADomain
+import MEGASDKRepo
 
-extension FolderLinkViewController: MEGATransferDelegate {
+extension FolderLinkViewController {
     
-    public func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        if let node = nodeFromDownload(transfer: transfer) {
-            didDownloadTransferFinish(node)
+    @objc func makeFolderLinkViewModel() -> FolderLinkViewModel {
+        let viewModel = FolderLinkViewModel(
+            folderLinkUseCase: FolderLinkUseCase(transferRepository: TransferRepository.newRepo)
+        )
+        viewModel.onNodeDownloadTransferFinish = { [weak self] handleEntity in
+            guard let node = self?.isFromFolderLink(nodeHandle: handleEntity) else { return }
+            self?.didDownloadTransferFinish(node)
         }
+        return viewModel
     }
     
-    private func nodeFromDownload(transfer: MEGATransfer) -> MEGANode? {
-        guard isOffline(transfer: transfer),
-              isFromFolderLink(node: transfer.node()) else { return nil }
-        return transfer.node()
-    }
-    
-    private func isOffline(transfer: MEGATransfer) -> Bool {
-        !transfer.isStreamingTransfer && transfer.type == .download
-    }
-    
-    private func isFromFolderLink(node: MEGANode?) -> Bool {
-        guard let node = node else { return false }
-        return nodesArray.contains(node)
+    private func isFromFolderLink(nodeHandle: HandleEntity) -> MEGANode? {
+        return nodesArray.first(where: { $0.handle == nodeHandle })
     }
 }
 

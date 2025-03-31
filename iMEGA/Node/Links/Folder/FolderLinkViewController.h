@@ -6,6 +6,7 @@
 @class FolderLinkTableViewController;
 @class FolderLinkCollectionViewController;
 @class SendLinkToChatsDelegate;
+@class FolderLinkViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -37,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) FolderLinkCollectionViewController *flCollectionView;
 
 @property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
+
+@property (nonatomic, strong) FolderLinkViewModel *viewModel;
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender;
 

@@ -1588,6 +1588,7 @@
 		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
+		A5B5073C2D9AC8FC00447859 /* FolderLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5073B2D9AC8F700447859 /* FolderLinkViewModel.swift */; };
 		A5BED9782B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5BED9792B9AF72500C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */; };
@@ -4270,6 +4271,7 @@
 		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
+		A5B5073B2D9AC8F700447859 /* FolderLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkViewModel.swift; sourceTree = "<group>"; };
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
@@ -10041,6 +10043,7 @@
 				C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
+				A5B5073B2D9AC8F700447859 /* FolderLinkViewModel.swift */,
 			);
 			path = Folder;
 			sourceTree = "<group>";
@@ -14467,6 +14470,7 @@
 				6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */,
 				C472964426C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
+				A5B5073C2D9AC8FC00447859 /* FolderLinkViewModel.swift in Sources */,
 				5D646602248909F8006030A5 /* FontStyle.swift in Sources */,
 				BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */,
 				BFFE2293293488980063CFF2 /* FutureMeetingRoomViewModel.swift in Sources */,
