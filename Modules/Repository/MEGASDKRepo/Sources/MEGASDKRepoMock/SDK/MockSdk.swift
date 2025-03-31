@@ -767,13 +767,45 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         return node
     }
     
-    public var stubbedDownloadTransfer: MockTransfer?
+    public var stubbedDownloadTransferResult: Result<MockTransfer, MockError>?
+    public var stubbedUploadTransferResult: Result<MockTransfer, MockError>?
     
     public override func startDownloadNode(_ node: MEGANode, localPath: String, fileName: String?, appData: String?, startFirst: Bool, cancelToken: MEGACancelToken?, collisionCheck: CollisionCheck, collisionResolution: CollisionResolution, delegate: any MEGATransferDelegate) {
-        delegate.onTransferFinish?(
-            self,
-            transfer: stubbedDownloadTransfer ?? MockTransfer(type: .download, nodeHandle: node.handle, parentHandle: node.parentHandle),
-            error: MockError(errorType: .apiOk))
+        let transfer: MockTransfer
+        let error: MockError
+        
+        switch stubbedDownloadTransferResult {
+        case .success(let stubbedTransfer):
+            transfer = stubbedTransfer
+            error = MockError(errorType: .apiOk)
+        case .failure(let stubbedError):
+            transfer = MockTransfer(type: .download, nodeHandle: node.handle, parentHandle: node.parentHandle)
+            error = stubbedError
+        case nil:
+            transfer = MockTransfer(type: .download, nodeHandle: node.handle, parentHandle: node.parentHandle)
+            error = MockError(errorType: .apiOk)
+        }
+        
+        delegate.onTransferFinish?(self, transfer: transfer, error: error)
+    }
+    
+    public override func startUpload(withLocalPath localPath: String, parent: MEGANode, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, delegate: any MEGATransferDelegate) {
+        let transfer: MockTransfer
+        let error: MockError
+        
+        switch stubbedUploadTransferResult {
+        case .success(let stubbedTransfer):
+            transfer = stubbedTransfer
+            error = MockError(errorType: .apiOk)
+        case .failure(let stubbedError):
+            transfer = MockTransfer(type: .upload, parentHandle: parent.parentHandle)
+            error = stubbedError
+        case nil:
+            transfer = MockTransfer(type: .upload, parentHandle: parent.parentHandle)
+            error = MockError(errorType: .apiOk)
+        }
+        
+        delegate.onTransferFinish?(self, transfer: transfer, error: error)
     }
     
     // MARK: - ADS

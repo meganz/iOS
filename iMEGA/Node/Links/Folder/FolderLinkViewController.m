@@ -74,6 +74,13 @@
     return _activityIndicator;
 }
 
+- (FolderLinkViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self makeFolderLinkViewModel];
+    }
+    return _viewModel;
+}
+
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
@@ -132,8 +139,6 @@
     self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 
     [self updateAppearance];
-
-    [MEGASdk.shared addMEGATransferDelegate:self];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
        backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
@@ -141,6 +146,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self.viewModel onViewAppear];
     
     MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
     [sdkFolder addMEGAGlobalDelegate:self.globalDelegate];
@@ -159,6 +166,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    [self.viewModel onViewDisappear];
+    
     [MEGASdk.sharedFolderLink removeMEGAGlobalDelegateAsync:self.globalDelegate];
     [MEGASdk.sharedFolderLink removeMEGARequestDelegateAsync:self.requestDelegate];
     
@@ -166,8 +175,6 @@
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
-    [MEGASdk.shared removeMEGATransferDelegateAsync:self];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
