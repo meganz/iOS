@@ -2,6 +2,7 @@ import AsyncAlgorithms
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGASwift
 
 @MainActor
 public final class AppLoadingViewModel: ObservableObject {
@@ -54,42 +55,33 @@ public final class AppLoadingViewModel: ObservableObject {
     func onViewAppear() async {
         for await newStatus in statusStream {
             self.status = newStatus
+            if status == .completed {
+                self.appLoadComplete?()
+            }
         }
     }
     
-    var statusStream: AsyncStream<AppLoadingViewState> {
-        AsyncStream { continuation in
-            Task {
-                let reqStatsProgressStream = requestStatProgressUseCase.requestStatsProgress
-                    .map { event in
-                        event.number == -1 ? AppLoadingViewState.loading(percentage: 0) : AppLoadingViewState.loading(percentage: Double(event.number))
-                    }
-                
-                let appLoadingUpdatesStream = appLoadingUseCase.appLoadingUpdates
-                    .map { requestEntity in
-                        AppLoadingViewState.loading(percentage: requestEntity.progress)
-                    }
-                
-                let appLoadingTemporaryErrorUpdatesStream = appLoadingUseCase.appLoadingTemporaryErrorUpdates
-                    .map { [weak self] _ in
-                        AppLoadingViewState.error(reason: self?.appLoadingUseCase.waitingReason.message ?? "")
-                    }
-                
-                let appLoadingFinishUpdatesStream = appLoadingUseCase.appLoadingFinishUpdates
-                    .compactMap { [weak self] result in
-                        if case let .success(request) = result, request.type == .fetchNodes {
-                            await self?.appLoadComplete?()
-                            return AppLoadingViewState.completed
-                        }
-                        return nil
-                    }
-                
-                let appLoadingStream = merge(appLoadingUpdatesStream, appLoadingTemporaryErrorUpdatesStream, appLoadingFinishUpdatesStream)
-                    
-                for await newState in merge(reqStatsProgressStream, appLoadingStream) {
-                    continuation.yield(newState)
-                }
+    var statusStream: AnyAsyncSequence<AppLoadingViewState> {
+        let reqStatsProgressStream = requestStatProgressUseCase.requestStatsProgress
+            .map { event in
+                event.number == -1 ? AppLoadingViewState.loading(percentage: 0) : AppLoadingViewState.loading(percentage: Double(event.number))
             }
-        }
+        
+        let appLoadingUpdatesStream = appLoadingUseCase.appLoadingUpdates
+            .map { requestEntity in
+                AppLoadingViewState.loading(percentage: requestEntity.progress)
+            }
+        
+        let appLoadingTemporaryErrorUpdatesStream = appLoadingUseCase.appLoadingTemporaryErrorUpdates
+            .map { [weak self] _ in
+                AppLoadingViewState.error(reason: self?.appLoadingUseCase.waitingReason.message ?? "")
+            }
+        
+        let appLoadingFinishUpdatesStream = appLoadingUseCase.appLoadingFinishUpdates
+            .map { AppLoadingViewState.completed }
+        
+        let appLoadingStream = merge(appLoadingUpdatesStream, appLoadingTemporaryErrorUpdatesStream, appLoadingFinishUpdatesStream)
+            
+        return merge(reqStatsProgressStream, appLoadingStream).eraseToAnyAsyncSequence()
     }
 }

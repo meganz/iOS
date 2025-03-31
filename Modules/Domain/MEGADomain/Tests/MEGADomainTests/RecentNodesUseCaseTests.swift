@@ -100,15 +100,15 @@ struct RecentNodesUseCaseTests {
             "Request finish updates",
             arguments: zip(
                 [
-                    Result.success(RequestEntity(type: .fetchNodes)),
-                    .success(RequestEntity(type: .login)),
-                    .failure(ErrorEntity(type: .badArguments, name: "", value: 1))
+                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .ok, name: "", value: 1)),
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .ok, name: "", value: 1)),
+                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .badArguments, name: "", value: 1))
                 ],
                 [true, false, false]
             )
         )
-        func shouldYieldRecentActionBucketsUpdates(result: Result<RequestEntity, ErrorEntity>, shouldYieldUpdates: Bool) async throws {
-            let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [result].async.eraseToAnyAsyncSequence())
+        func shouldYieldRecentActionBucketsUpdates(requestResponseEntity: RequestResponseEntity, shouldYieldUpdates: Bool) async throws {
+            let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [requestResponseEntity].async.eraseToAnyAsyncSequence())
             let sut = sut(requestStatesRepository: requestStatesRepository)
             
             var iterator = sut.recentActionBucketsUpdates.makeAsyncIterator()

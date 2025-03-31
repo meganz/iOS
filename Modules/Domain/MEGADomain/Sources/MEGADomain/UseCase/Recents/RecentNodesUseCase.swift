@@ -30,9 +30,8 @@ public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol, S: ContentCon
             .filter { $0.contains(where: { $0.changes.contains(.CCPrefs) }) }
             .map { _ in () }
         
-        let requestFinishUpdates = requestStatesRepository
-            .requestFinishUpdates
-            .compactMap { try? $0.get() }
+        let completedFetchNodesRequestUpdates = requestStatesRepository
+            .completedRequestUpdates
             .filter { $0.type == .fetchNodes }
             .map { _ in () }
         
@@ -50,7 +49,7 @@ public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol, S: ContentCon
         
         return merge(
             userUpdates,
-            requestFinishUpdates,
+            completedFetchNodesRequestUpdates,
             nodeUpdates
         ).eraseToAnyAsyncSequence()
     }

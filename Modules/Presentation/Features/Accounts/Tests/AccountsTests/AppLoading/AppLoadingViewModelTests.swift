@@ -36,10 +36,24 @@ struct AppLoadingViewModelTests {
 
 // Mock classes
 final class AppLoadingUseCaseMock: AppLoadingUseCaseProtocol, @unchecked Sendable {
-    var appLoadingStartUpdates: AnyAsyncSequence<RequestEntity> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
-    var appLoadingUpdates: AnyAsyncSequence<RequestEntity> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
-    var appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
-    var appLoadingFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
+    let appLoadingStartUpdates: AnyAsyncSequence<RequestEntity>
+    let appLoadingUpdates: AnyAsyncSequence<RequestEntity>
+    let appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Void>
+    let appLoadingFinishUpdates: AnyAsyncSequence<Void>
     
-    var waitingReason: WaitingReasonEntity = .apiLock
+    let waitingReason: WaitingReasonEntity
+
+    init(
+        appLoadingStartUpdates: AnyAsyncSequence<RequestEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        appLoadingUpdates: AnyAsyncSequence<RequestEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        appLoadingTemporaryErrorUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        appLoadingFinishUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        waitingReason: WaitingReasonEntity = .apiLock
+    ) {
+        self.appLoadingStartUpdates = appLoadingStartUpdates
+        self.appLoadingUpdates = appLoadingUpdates
+        self.appLoadingTemporaryErrorUpdates = appLoadingTemporaryErrorUpdates
+        self.appLoadingFinishUpdates = appLoadingFinishUpdates
+        self.waitingReason = waitingReason
+    }
 }

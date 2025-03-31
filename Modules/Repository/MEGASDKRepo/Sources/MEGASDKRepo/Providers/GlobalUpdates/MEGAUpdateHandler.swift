@@ -8,8 +8,8 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     
     typealias RequestStartHandler = @Sendable (RequestEntity) -> Void
     typealias RequestUpdateHandler = @Sendable (RequestEntity) -> Void
-    typealias RequestTemporaryErrorHandler = @Sendable (Result<RequestEntity, ErrorEntity>) -> Void
-    typealias RequestFinishHandler = @Sendable (Result<RequestEntity, ErrorEntity>) -> Void
+    typealias RequestTemporaryErrorHandler = @Sendable (RequestResponseEntity) -> Void
+    typealias RequestFinishHandler = @Sendable (RequestResponseEntity) -> Void
     
     typealias TransferFinishHandler = @Sendable (Result<TransferEntity, ErrorEntity>) -> Void
     

@@ -14,11 +14,11 @@ public struct RequestStatesRepository: RequestStatesRepositoryProtocol {
         MEGAUpdateHandlerManager.shared.requestUpdates
     }
     
-    public var requestTemporaryErrorUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
+    public var requestTemporaryErrorUpdates: AnyAsyncSequence<RequestResponseEntity> {
         MEGAUpdateHandlerManager.shared.requestTemporaryErrorUpdates
     }
     
-    public var requestFinishUpdates: AnyAsyncSequence<Result<RequestEntity, ErrorEntity>> {
+    public var requestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> {
         MEGAUpdateHandlerManager.shared.requestFinishUpdates
     }
 }
