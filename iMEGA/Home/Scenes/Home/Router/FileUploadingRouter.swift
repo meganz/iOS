@@ -49,33 +49,12 @@ final class FileUploadingRouter {
     // MARK: - Display PhotoAlbum Selection View Controller
 
     private func presentPhotoAlbumSelection(completion: @escaping (([PHAsset], MEGANode) -> Void)) {
-        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .nativePhotoPicker) {
-            Task { @MainActor in
-                let assets = await photoPicker.pickAssets()
-                if assets.count > 0 {
-                    self.presentDestinationFolderBrowser { targetNode in
-                        completion(assets, targetNode)
-                    }
+        Task { @MainActor in
+            let assets = await photoPicker.pickAssets()
+            if assets.count > 0 {
+                self.presentDestinationFolderBrowser { targetNode in
+                    completion(assets, targetNode)
                 }
-            }
-        } else {
-            let albumTableViewController = AlbumsTableViewController(
-                selectionActionType: AlbumsSelectionActionType.upload,
-                selectionActionDisabledText: HomeLocalisation.upload.rawValue
-            ) { [weak self] assets in
-                asyncOnMain {
-                    self?.presentDestinationFolderBrowser { targetNode in
-                        completion(assets, targetNode)
-                    }
-                }
-            }
-            asyncOnMain { [weak self] in
-                guard let self else { return }
-                self.navigationController?.present(
-                    MEGANavigationController(rootViewController: albumTableViewController),
-                    animated: true,
-                    completion: nil
-                )
             }
         }
     }
