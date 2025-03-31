@@ -151,7 +151,7 @@ final class VideoPlaylistContentViewController: UIViewController {
         setupContextMenuBarButton()
         
         if let navigationBar = navigationController?.navigationBar {
-            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+            AppearanceManager.forceNavigationBarUpdate(navigationBar)
         }
     }
     

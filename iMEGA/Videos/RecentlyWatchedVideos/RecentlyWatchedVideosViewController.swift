@@ -107,7 +107,7 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     
     private func forceNavigationBarUpdateIfNeeded() {
         if let navigationBar = navigationController?.navigationBar {
-            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+            AppearanceManager.forceNavigationBarUpdate(navigationBar)
         }
     }
     

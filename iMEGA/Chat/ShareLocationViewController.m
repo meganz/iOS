@@ -91,8 +91,7 @@
     [self updateAppearance];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                            traitCollection:self.traitCollection];
+       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -105,8 +104,7 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                                traitCollection:self.traitCollection];
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
         [self updateAppearance];
     }
 }

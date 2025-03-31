@@ -31,7 +31,7 @@ class AppearanceManager: NSObject {
             return
         }
 #endif
-        setupNavigationBarAppearance(traitCollection)
+        setupNavigationBarAppearance()
         
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().tintColor = TokenColors.Text.secondary
@@ -59,12 +59,12 @@ class AppearanceManager: NSObject {
         
         self.setupActivityIndicatorAppearance(traitCollection)
         
-        self.setupToolbar(traitCollection)
+        self.setupToolbar()
         
-        self.configureSVProgressHUD(traitCollection)
+        self.configureSVProgressHUD()
     }
     
-    @objc class func configureSVProgressHUD(_ traitCollection: UITraitCollection) {
+    @objc class func configureSVProgressHUD() {
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
         SVProgressHUD.setMinimumSize(CGSize(width: 180, height: 100))
         SVProgressHUD.setRingThickness(2)
@@ -87,23 +87,22 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setMinimumDismissTimeInterval(2)
     }
     
-    @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
+    @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar) {
         navigationBar.tintColor = UIColor.barTint()
         
-        let navigationBarAppearance = makeNavigationBarAppearance(traitCollection)
+        let navigationBarAppearance = makeNavigationBarAppearance()
         
         navigationBar.standardAppearance = navigationBarAppearance
         navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
-    @objc class func forceNavigationBarTitleUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
+    @objc class func forceNavigationBarTitleUpdate(_ navigationBar: UINavigationBar) {
         navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: UIColor.primaryTextColor()]
         navigationBar.scrollEdgeAppearance?.titleTextAttributes = [.foregroundColor: UIColor.primaryTextColor()]
     }
     
     @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar,
-                                          backgroundColorWhenDesignTokenEnable: UIColor,
-                                          traitCollection: UITraitCollection) {
+                                          backgroundColorWhenDesignTokenEnable: UIColor) {
         // In order to set the color for `searchBar.searchTextField.backgroundColor`, we need to set `searchBar.searchTextField.borderStyle = .none` otherwise the correct will display incorrectly
         // and since `searchBar.searchTextField.borderStyle = .none` removes the default rounded corner, we need to re-set it.
         searchBar.searchTextField.borderStyle = .none
@@ -119,8 +118,8 @@ class AppearanceManager: NSObject {
         )
     }
     
-    @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
-        let appearance = makeUIToolbarAppearance(traitCollection)
+    @objc class func forceToolbarUpdate(_ toolbar: UIToolbar) {
+        let appearance = makeUIToolbarAppearance()
         toolbar.standardAppearance = appearance
         toolbar.scrollEdgeAppearance = appearance
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
@@ -130,7 +129,7 @@ class AppearanceManager: NSObject {
         }
     }
     
-    @objc class func setupTabbar(_ tabBar: UITabBar, traitCollection: UITraitCollection) {
+    @objc class func setupTabbar(_ tabBar: UITabBar) {
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .surface1Background()
         
@@ -166,24 +165,23 @@ class AppearanceManager: NSObject {
     /// This is the associated method with `setTranslucentNavigationBar`
     /// which is used to reset the global navigation bar to the state
     /// before the global navigation bar is changed.
-    /// - Parameter traitCollection: The `trailCollection` in which the navigation bar appearance is changed.
-    class func forceResetNavigationBar(_ traitCollection: UITraitCollection) {
-        AppearanceManager.setupNavigationBarAppearance(traitCollection)
+    class func forceResetNavigationBar() {
+        AppearanceManager.setupNavigationBarAppearance()
     }
     
     // MARK: - Private
     
-    private class func setupNavigationBarAppearance(_ traitCollection: UITraitCollection) {
+    private class func setupNavigationBarAppearance() {
         UINavigationBar.appearance().tintColor = UIColor.barTint()
         UINavigationBar.appearance().isTranslucent = false
         
-        let navigationBarAppearance = makeNavigationBarAppearance(traitCollection)
+        let navigationBarAppearance = makeNavigationBarAppearance()
         
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
     }
     
-    private class func makeNavigationBarAppearance(_ traitCollection: UITraitCollection) -> UINavigationBarAppearance {
+    private class func makeNavigationBarAppearance() -> UINavigationBarAppearance {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.backgroundColor = .surface1Background()
@@ -211,15 +209,15 @@ class AppearanceManager: NSObject {
         UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : TokenColors.Text.secondary
     }
     
-    private class func setupToolbar(_ traitCollection: UITraitCollection) {
-        let toolbarAppearance = makeUIToolbarAppearance(traitCollection)
+    private class func setupToolbar() {
+        let toolbarAppearance = makeUIToolbarAppearance()
         
         UIToolbar.appearance().standardAppearance = toolbarAppearance
         UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
         UIToolbar.appearance().tintColor = TokenColors.Icon.primary
     }
     
-    private class func makeUIToolbarAppearance(_ traitCollection: UITraitCollection) -> UIToolbarAppearance {
+    private class func makeUIToolbarAppearance() -> UIToolbarAppearance {
         let toolbarAppearance = UIToolbarAppearance()
         
         toolbarAppearance.configureWithDefaultBackground()

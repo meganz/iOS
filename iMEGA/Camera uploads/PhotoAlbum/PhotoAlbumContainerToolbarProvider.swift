@@ -62,7 +62,7 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
     func updateRemoveLinksToolbarButtons(canRemoveLinks: Bool) {
         if canRemoveLinks {
             toolbar.items = [shareLinkBarButton, flexibleItem, removeLinksBarButton, flexibleItem, deleteBarButton]
-            AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
+            AppearanceManager.forceToolbarUpdate(toolbar)
         } else {
             toolbar.items = [shareLinkBarButton, flexibleItem, deleteBarButton]
         }

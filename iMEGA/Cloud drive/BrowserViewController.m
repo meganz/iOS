@@ -120,11 +120,10 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
+        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                                traitCollection:self.traitCollection];
+           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
         
         [self updateAppearance];
 

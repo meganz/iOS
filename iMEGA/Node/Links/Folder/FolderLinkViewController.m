@@ -136,8 +136,7 @@
     [MEGASdk.shared addMEGATransferDelegate:self];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]
-                            traitCollection:self.traitCollection];
+       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

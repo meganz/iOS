@@ -135,7 +135,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
         
         if let navigationBar = navigationController?.navigationBar {
-            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+            AppearanceManager.forceNavigationBarUpdate(navigationBar)
         }
     }
     
@@ -303,8 +303,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             navigationItem.searchController = searchController
         }
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                                               traitCollection: traitCollection)
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background())
     }
     
     private func hideSearchBar() {
@@ -490,8 +489,7 @@ extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background(),
-                                               traitCollection: traitCollection)
+                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background())
     }
 }
 

@@ -72,7 +72,7 @@ class InviteContactViewController: UIViewController {
     // MARK: - Private
     
     private func forceResetNavigationBar() {
-        AppearanceManager.forceResetNavigationBar(traitCollection)
+        AppearanceManager.forceResetNavigationBar()
     }
     
     private func setupColors() {

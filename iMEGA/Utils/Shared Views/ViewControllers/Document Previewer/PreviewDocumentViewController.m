@@ -131,8 +131,8 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
+        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar];
         
         [self updateAppearance];
     }
