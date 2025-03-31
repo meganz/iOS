@@ -61,10 +61,10 @@ struct App: AsyncParsableCommand {
         )
         print("release notes: \(releaseNotes)")
 
-        print("Merge the branch.")
-        try await ReleaseBranchManager
-            .mergeReleaseMR(version, gitlabBaseURL: gitlabBaseURL, gitlabToken: gitlabToken, projectID: projectID)
-        print("Merge the branch completed.")
+//        print("Merge the branch.")
+//        try await ReleaseBranchManager
+//            .mergeReleaseMR(version, gitlabBaseURL: gitlabBaseURL, gitlabToken: gitlabToken, projectID: projectID)
+//        print("Merge the branch completed.")
 
         let message = """
         \(releaseNotes)
@@ -72,26 +72,26 @@ struct App: AsyncParsableCommand {
         - \(chatSDKVersion.description(type: "Chat SDK"))
         """
 
-        print("Creating release in Gitlab")
-        try await ReleaseBranchManager
-            .createRelease(
-                with: version,
-                message: message,
-                gitlabBaseURL: gitlabBaseURL,
-                gitlabToken: gitlabToken,
-                projectID: projectID
-            )
-        print("Creating release in Gitlab completed.")
+//        print("Creating release in Gitlab")
+//        try await ReleaseBranchManager
+//            .createRelease(
+//                with: version,
+//                message: message,
+//                gitlabBaseURL: gitlabBaseURL,
+//                gitlabToken: gitlabToken,
+//                projectID: projectID
+//            )
+//        print("Creating release in Gitlab completed.")
 
-        print("Marking version \(version) as released in Jira projects")
-        try await JiraReleaseManager
-            .markCurrentVersionAsReleasedInAllProjects(
-                version: version,
-                jiraProjects: jiraProjects,
-                jiraBaseURL: jiraBaseURL,
-                jiraToken: jiraAuthorization
-            )
-        print("Marking version \(version) as released in Jira projects completed")
+//        print("Marking version \(version) as released in Jira projects")
+//        try await JiraReleaseManager
+//            .markCurrentVersionAsReleasedInAllProjects(
+//                version: version,
+//                jiraProjects: jiraProjects,
+//                jiraBaseURL: jiraBaseURL,
+//                jiraToken: jiraAuthorization
+//            )
+//        print("Marking version \(version) as released in Jira projects completed")
 
         print("Pushing master to GitHub")
         try await GithubManager

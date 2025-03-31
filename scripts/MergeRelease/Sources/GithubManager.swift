@@ -10,15 +10,15 @@ struct GithubManager {
         try runInShell("git remote add public https://megaiospush:\(githubAccessToken)@github.com/meganz/iOS.git")
         try runInShell("git fetch public")
         try runInShell("git fetch origin")
-        try runInShell("git checkout origin/master")
-        try runInShell("git pull origin master")
+        try runInShell("git checkout origin/lf/Fix-the-merge-release-script-issue")
+        try runInShell("git pull origin lf/Fix-the-merge-release-script-issue")
         try runInShell("git config http.postBuffer 100000000")
-        try runInShell("git push public origin/master")
-        try await createReleaseOnGithub(
-            for: version,
-            githubBearerToken: githubAccessToken,
-            message: message
-        )
+        try runInShell("git push public origin/lf/Fix-the-merge-release-script-issue")
+//        try await createReleaseOnGithub(
+//            for: version,
+//            githubBearerToken: githubAccessToken,
+//            message: message
+//        )
     }
 
     static func createReleaseOnGithub(
