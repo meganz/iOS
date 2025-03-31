@@ -11,6 +11,8 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     typealias RequestTemporaryErrorHandler = @Sendable (Result<RequestEntity, ErrorEntity>) -> Void
     typealias RequestFinishHandler = @Sendable (Result<RequestEntity, ErrorEntity>) -> Void
     
+    typealias TransferFinishHandler = @Sendable (Result<TransferEntity, ErrorEntity>) -> Void
+    
     let onNodesUpdate: NodesUpdateHandler?
     let onUsersUpdate: UsersUpdateHandler?
     
@@ -19,13 +21,16 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     let onRequestTemporaryError: RequestTemporaryErrorHandler?
     let onRequestFinish: RequestFinishHandler?
     
+    let onTransferFinish: TransferFinishHandler?
+    
     init(
         onNodesUpdate: NodesUpdateHandler? = nil,
         onUsersUpdate: UsersUpdateHandler? = nil,
         onRequestStart: RequestStartHandler? = nil,
         onRequestUpdate: RequestUpdateHandler? = nil,
         onRequestTemporaryError: RequestTemporaryErrorHandler? = nil,
-        onRequestFinish: RequestFinishHandler? = nil
+        onRequestFinish: RequestFinishHandler? = nil,
+        onTransferFinish: TransferFinishHandler? = nil
     ) {
         self.onNodesUpdate = onNodesUpdate
         self.onUsersUpdate = onUsersUpdate
@@ -33,5 +38,6 @@ final class MEGAUpdateHandler: NSObject, Sendable {
         self.onRequestUpdate = onRequestUpdate
         self.onRequestTemporaryError = onRequestTemporaryError
         self.onRequestFinish = onRequestFinish
+        self.onTransferFinish = onTransferFinish
     }
 }

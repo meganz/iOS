@@ -36,7 +36,6 @@ final class OfflineViewModelTests: XCTestCase {
     
     @MainActor
     private func makeOfflineViewModelVMSut(
-        transferUseCase: some NodeTransferUseCaseProtocol = MockNodeTransferUseCase(),
         offlineUseCase: some OfflineUseCaseProtocol = MockOfflineUseCase(),
         megaStore: MEGAStore = MockMEGAStore(),
         fileManager: MockFileManager = MockFileManager(),
@@ -46,7 +45,6 @@ final class OfflineViewModelTests: XCTestCase {
     ) -> OfflineViewModel {
         
         let sut = OfflineViewModel(
-            transferUseCase: transferUseCase,
             offlineUseCase: offlineUseCase,
             megaStore: megaStore,
             fileManager: fileManager,
@@ -94,8 +92,10 @@ final class OfflineViewModelTests: XCTestCase {
     @MainActor
     func testAction_onViewAppear_shouldReloadUIWhenNodeDownloadCompletionUpdatesAvaliable() async {
         // given
-        let nodeTransferUseCase = MockNodeTransferUseCase()
-        let sut = makeOfflineViewModelVMSut(transferUseCase: nodeTransferUseCase)
+        let offlineUseCase = MockOfflineUseCase(
+            nodeDownloadCompletionUpdates: [()].async.eraseToAnyAsyncSequence()
+        )
+        let sut = makeOfflineViewModelVMSut(offlineUseCase: offlineUseCase)
         
         let expectation = expectation(description: #function)
         var receivedCommand: OfflineViewModel.Command?
@@ -107,53 +107,23 @@ final class OfflineViewModelTests: XCTestCase {
         
         // when
         sut.dispatch(.onViewAppear)
-        
-        nodeTransferUseCase.yield(TransferEntity(type: .download, nodeHandle: 1))
         
         await fulfillment(of: [expectation], timeout: 1)
         
         // then
         XCTAssertEqual(receivedCommand, .reloadUI)
     }
-    
+
     @MainActor
-    func testAction_onViewAppear_shouldNotReloadUIWhenNodeTransferIsNotDownload() async {
+    func testAction_onViewWillDisappear_shouldStopMonitoringNodeDownloadCompletionUpdates() async {
         // given
-        let nodeTransferUseCase = MockNodeTransferUseCase()
-        let sut = makeOfflineViewModelVMSut(transferUseCase: nodeTransferUseCase)
+        let (stream, continuation) = AsyncStream<Void>.makeStream()
+        let offlineUseCase = MockOfflineUseCase(nodeDownloadCompletionUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeOfflineViewModelVMSut(offlineUseCase: offlineUseCase)
         
         let expectation = expectation(description: #function)
-        expectation.isInverted = true
-        var receivedCommand: OfflineViewModel.Command?
         
-        sut.invokeCommand = {
-            receivedCommand = $0
-            expectation.fulfill()
-        }
-        
-        // when
-        sut.dispatch(.onViewAppear)
-        
-        nodeTransferUseCase.yield(TransferEntity(type: .upload, nodeHandle: 1))
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        // then
-        XCTAssertNil(receivedCommand)
-    }
-    
-    @MainActor
-    func testAction_onViewWillDisappear_shouldNotReceiveAnyCommands() async {
-        // given
-        let nodeTransferUseCase = MockNodeTransferUseCase()
-        let sut = makeOfflineViewModelVMSut(transferUseCase: nodeTransferUseCase)
-        
-        let expectation = expectation(description: #function)
-        expectation.isInverted = true
-        var receivedCommand: OfflineViewModel.Command?
-        
-        sut.invokeCommand = {
-            receivedCommand = $0
+        continuation.onTermination = { _ in
             expectation.fulfill()
         }
         
@@ -161,12 +131,7 @@ final class OfflineViewModelTests: XCTestCase {
         sut.dispatch(.onViewAppear)
         sut.dispatch(.onViewWillDisappear)
         
-        nodeTransferUseCase.yield(TransferEntity(type: .download, nodeHandle: 1))
-        
         await fulfillment(of: [expectation], timeout: 1)
-        
-        // then
-        XCTAssertNil(receivedCommand)
     }
     
     @MainActor

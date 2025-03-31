@@ -12,7 +12,8 @@ struct OfflineUseCaseTests {
     private static func makeSUT(
         relativePath: String? = nil,
         offlineSize: UInt64 = 0,
-        offlineDirectoryURL: URL? = nil
+        offlineDirectoryURL: URL? = nil,
+        nodeTransferRepository: MockNodeTransferRepository = MockNodeTransferRepository()
     ) -> (
         sut: OfflineUseCase,
         fileSystemRepository: MockFileSystemRepository,
@@ -25,7 +26,8 @@ struct OfflineUseCaseTests {
         let offlineFilesRepository = MockOfflineFilesRepository(offlineSize: offlineSize)
         let sut = OfflineUseCase(
             fileSystemRepository: fileSystemRepository,
-            offlineFilesRepository: offlineFilesRepository
+            offlineFilesRepository: offlineFilesRepository,
+            nodeTransferRepository: nodeTransferRepository
         )
         return (sut, fileSystemRepository, offlineFilesRepository)
     }
@@ -97,4 +99,24 @@ struct OfflineUseCaseTests {
         }
     }
 
+    @Suite("Node Download Completion Updates")
+    struct NodeDownloadCompletionUpdates {
+        @Test func shouldYieldUpdatesDownloadOnly() async throws {
+            let updates: [Result<TransferEntity, ErrorEntity>] = [
+                .success(TransferEntity(type: .download, nodeHandle: 1)),
+                .success(TransferEntity(type: .upload, nodeHandle: 2)),
+                .failure(ErrorEntity(type: .badArguments, name: "", value: 1))
+            ]
+            
+            let nodeTransferRepository = MockNodeTransferRepository(transferFinishUpdates: updates.async.eraseToAnyAsyncSequence())
+            let (sut, _, _) = makeSUT(nodeTransferRepository: nodeTransferRepository)
+            
+            var updatesCount = 0
+            for await _ in sut.nodeDownloadCompletionUpdates {
+                updatesCount += 1
+            }
+            
+            #expect(updatesCount == 1)
+        }
+    }
 }

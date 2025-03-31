@@ -884,6 +884,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         transferDelegates.forEach {
             $0.onTransferFinish?(self, transfer: transfer, error: error)
         }
+        
+        delegates.forEach {
+            $0.onTransferFinish?(self, transfer: transfer, error: error)
+        }
     }
     
     public func simulateOnRequestFinish(_ request: MEGARequest, error: MEGAError) {

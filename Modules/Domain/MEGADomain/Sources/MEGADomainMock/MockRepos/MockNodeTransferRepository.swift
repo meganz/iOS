@@ -5,19 +5,12 @@ public final class MockNodeTransferRepository: NodeTransferRepositoryProtocol {
     public static var newRepo: MockNodeTransferRepository {
         MockNodeTransferRepository()
     }
-    
-    private let stream: AsyncStream<TransferEntity>
-    private let continuation: AsyncStream<TransferEntity>.Continuation
-    
-    public var nodeTransferCompletionUpdates: AnyAsyncSequence<TransferEntity> {
-        stream.eraseToAnyAsyncSequence()
-    }
-    
-    public init() {
-        (stream, continuation) = AsyncStream<TransferEntity>.makeStream()
-    }
-    
-    public func yield(_ transferEntity: TransferEntity) {
-        continuation.yield(transferEntity)
+
+    public let transferFinishUpdates: AnyAsyncSequence<Result<TransferEntity, ErrorEntity>>
+
+    public init(
+        transferFinishUpdates: AnyAsyncSequence<Result<TransferEntity, ErrorEntity>> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    ) {
+        self.transferFinishUpdates = transferFinishUpdates
     }
 }

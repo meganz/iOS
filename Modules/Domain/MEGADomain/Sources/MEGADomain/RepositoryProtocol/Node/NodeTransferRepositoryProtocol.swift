@@ -2,5 +2,5 @@ import Foundation
 import MEGASwift
 
 public protocol NodeTransferRepositoryProtocol: RepositoryProtocol, Sendable {
-    var nodeTransferCompletionUpdates: AnyAsyncSequence<TransferEntity> { get }
+    var transferFinishUpdates: AnyAsyncSequence<Result<TransferEntity, ErrorEntity>> { get }
 }

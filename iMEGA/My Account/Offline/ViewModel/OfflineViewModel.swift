@@ -17,7 +17,6 @@ final class OfflineViewModel: NSObject, ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     private let throttler: any Throttleable
-    private let transferUseCase: any NodeTransferUseCaseProtocol
     private let offlineUseCase: any OfflineUseCaseProtocol
     private let megaStore: MEGAStore
     private let fileManager: FileManager
@@ -30,14 +29,12 @@ final class OfflineViewModel: NSObject, ViewModelType {
     
     // MARK: - Init
     init(
-        transferUseCase: some NodeTransferUseCaseProtocol,
         offlineUseCase: some OfflineUseCaseProtocol,
         megaStore: MEGAStore,
         fileManager: FileManager = FileManager.default,
         documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first,
         throttler: some Throttleable = Throttler(timeInterval: 1.0)
     ) {
-        self.transferUseCase = transferUseCase
         self.offlineUseCase = offlineUseCase
         self.megaStore = megaStore
         self.fileManager = fileManager
@@ -61,10 +58,8 @@ final class OfflineViewModel: NSObject, ViewModelType {
     // MARK: - Subscriptions
     
     private func startMonitoringNodeDownloadCompletionUpdates() {
-        nodeDownloadMonitoringTask = Task { [weak self, transferUseCase] in
-            for await _ in transferUseCase.nodeTransferCompletionUpdates.filter({
-                $0.type == .download
-            }) {
+        nodeDownloadMonitoringTask = Task { [weak self, offlineUseCase] in
+            for await _ in offlineUseCase.nodeDownloadCompletionUpdates {
                 try Task.checkCancellation()
                 self?.throttler.start { @Sendable in
                     Task { @MainActor in

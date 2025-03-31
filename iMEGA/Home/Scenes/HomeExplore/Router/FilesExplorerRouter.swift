@@ -32,7 +32,7 @@ struct FilesExplorerRouter {
         let fileSearchRepo = FilesSearchRepository(sdk: sdk)
         let useCase = FilesSearchUseCase(repo: fileSearchRepo,
                                          nodeRepository: NodeRepository.newRepo)
-        let nodeDownloadUpdatesUseCase = NodeDownloadUpdatesUseCase(repo: NodeTransferRepository.newRepo(includesSharedFolder: false))
+        let nodeDownloadUpdatesUseCase = NodeDownloadUpdatesUseCase(repo: NodeTransferRepository.newRepo)
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         
         let viewModel = FilesExplorerViewModel(
