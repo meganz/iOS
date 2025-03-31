@@ -332,7 +332,9 @@
     } else if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
         [self setIsSubmittingReceipt:false];
         for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
-            [delegate successSubmitReceipt];
+            if ([delegate respondsToSelector:@selector(successSubmitReceipt)]) {
+                [delegate successSubmitReceipt];
+            }
         }
     }
 }
