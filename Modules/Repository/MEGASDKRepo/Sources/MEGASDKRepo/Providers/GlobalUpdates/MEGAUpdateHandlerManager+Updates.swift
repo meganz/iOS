@@ -66,4 +66,15 @@ extension MEGAUpdateHandlerManager {
         }
         .eraseToAnyAsyncSequence()
     }
+    
+    var transferFinishUpdates: AnyAsyncSequence<Result<TransferEntity, ErrorEntity>> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onTransferFinish: { continuation.yield($0) })
+            
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }
+        .eraseToAnyAsyncSequence()
+    }
 }

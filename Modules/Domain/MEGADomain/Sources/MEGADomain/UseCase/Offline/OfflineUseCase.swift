@@ -1,4 +1,6 @@
+import AsyncAlgorithms
 import Foundation
+import MEGASwift
 
 public protocol OfflineUseCaseProtocol: Sendable {
     /// Returns the relative path to the documents directory for the given URL.
@@ -30,18 +32,24 @@ public protocol OfflineUseCaseProtocol: Sendable {
     ///
     /// - Returns: The total size of offline files in bytes.
     func offlineSize() -> UInt64
+    
+    /// Filter the successful node transfer event of type download.
+    var nodeDownloadCompletionUpdates: AnyAsyncSequence<Void> { get }
 }
 
 public struct OfflineUseCase: OfflineUseCaseProtocol {
     private let fileSystemRepository: any FileSystemRepositoryProtocol
     private let offlineFilesRepository: any OfflineFilesRepositoryProtocol
+    private let nodeTransferRepository: any NodeTransferRepositoryProtocol
     
     public init(
         fileSystemRepository: some FileSystemRepositoryProtocol,
-        offlineFilesRepository: some OfflineFilesRepositoryProtocol
+        offlineFilesRepository: some OfflineFilesRepositoryProtocol,
+        nodeTransferRepository: some NodeTransferRepositoryProtocol
     ) {
         self.fileSystemRepository = fileSystemRepository
         self.offlineFilesRepository = offlineFilesRepository
+        self.nodeTransferRepository = nodeTransferRepository
     }
     
     public func relativePathToDocumentsDirectory(for url: URL) -> String {
@@ -63,5 +71,14 @@ public struct OfflineUseCase: OfflineUseCaseProtocol {
     
     public func offlineSize() -> UInt64 {
         offlineFilesRepository.offlineSize()
+    }
+    
+    public var nodeDownloadCompletionUpdates: AnyAsyncSequence<Void> {
+        nodeTransferRepository
+            .transferFinishUpdates
+            .compactMap { try? $0.get() }
+            .filter { $0.type == .download }
+            .map { _ in () }
+            .eraseToAnyAsyncSequence()
     }
 }

@@ -24,7 +24,8 @@ final class FileManagementSettingsViewRouter: FileManagementRouter {
                 cacheUseCase: CacheUseCase(cacheRepository: CacheRepository.newRepo),
                 offlineUseCase: OfflineUseCase(
                     fileSystemRepository: FileSystemRepository.newRepo,
-                    offlineFilesRepository: OfflineFilesRepository.newRepo
+                    offlineFilesRepository: OfflineFilesRepository.newRepo,
+                    nodeTransferRepository: NodeTransferRepository.newRepo
                 ),
                 mobileDataUseCase: MobileDataUseCase(preferenceUseCase: PreferenceUseCase.default),
                 fileVersionsUseCase: FileVersionsUseCase(repo: FileVersionsRepository.newRepo),
@@ -61,7 +62,8 @@ final class FileManagementSettingsViewRouter: FileManagementRouter {
     func removeOfflineFilesCompletion() {
         let offlineUseCase = OfflineUseCase(
             fileSystemRepository: FileSystemRepository.newRepo,
-            offlineFilesRepository: OfflineFilesRepository.newRepo
+            offlineFilesRepository: OfflineFilesRepository.newRepo,
+            nodeTransferRepository: NodeTransferRepository.newRepo
         )
         
         offlineUseCase.removeAllStoredFiles()

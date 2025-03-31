@@ -61,6 +61,16 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
         handlers.forEach { $0.onRequestFinish?(result) }
     }
     
+    // MARK: - Transfer events
+    func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
+        let result: Result<TransferEntity, ErrorEntity> = switch error.type {
+        case .apiOk: .success(transfer.toTransferEntity())
+        default: .failure(error.toErrorEntity())
+        }
+        
+        handlers.forEach { $0.onTransferFinish?(result) }
+    }
+    
     // MARK: - Handler management
     func add(handler: MEGAUpdateHandler) {
         $handlers.mutate { $0.append(handler) }

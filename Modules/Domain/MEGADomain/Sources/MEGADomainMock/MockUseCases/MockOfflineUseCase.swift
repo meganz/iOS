@@ -13,16 +13,20 @@ public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendab
     public var stubbedError: Error?
     public var stubbedRelativePath: String
     
+    public let nodeDownloadCompletionUpdates: AnyAsyncSequence<Void>
+    
     public init(
         relativePathToDocumentsDirectory: String = "",
         stubbedRelativePath: String = "",
         stubbedError: Error? = nil,
-        offlineSize: UInt64 = 0
+        offlineSize: UInt64 = 0,
+        nodeDownloadCompletionUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         _relativePathToDocumentsDirectory = relativePathToDocumentsDirectory
         self.stubbedRelativePath = stubbedRelativePath
         self.stubbedError = stubbedError
         _offlineSize = offlineSize
+        self.nodeDownloadCompletionUpdates = nodeDownloadCompletionUpdates
     }
     
     public func relativePathToDocumentsDirectory(for url: URL) -> String {
