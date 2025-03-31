@@ -51,4 +51,16 @@ import MEGASDKRepo
     func trackHideNodeAction() {
         tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
     }
+    
+    func trackDidScrollSmartBannerView() {
+        tracker.trackAnalyticsEvent(with: SmartBannerSwipeEvent())
+    }
+    
+    func trackDidTapVPNSmartBanner() {
+        tracker.trackAnalyticsEvent(with: VpnSmartBannerItemSelectedEvent())
+    }
+    
+    func trackDidTapPWMSmartBanner() {
+        tracker.trackAnalyticsEvent(with: PwmSmartBannerItemSelectedEvent())
+    }
 }

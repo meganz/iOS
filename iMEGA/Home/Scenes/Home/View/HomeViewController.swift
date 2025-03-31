@@ -786,9 +786,21 @@ extension HomeViewController: MEGASearchBarViewDelegate {
 // MARK: - MEGABannerViewDelegate
 
 extension HomeViewController: MEGABannerViewDelegate {
-
+    func didScrollMEGABannerView() {
+        homeViewModel?.trackDidScrollSmartBannerView()
+    }
+    
     func didSelectMEGABanner(withBannerIdentifier bannerIdentifier: Int, actionURL: URL?) {
         bannerViewModel?.inputs.didSelectBanner(actionURL: actionURL)
+        
+        if let actionURL {
+            let url = actionURL as NSURL
+            switch url.mnz_type() {
+            case .vpn: homeViewModel?.trackDidTapVPNSmartBanner()
+            case .pwm: homeViewModel?.trackDidTapPWMSmartBanner()
+            default: return
+            }
+        }
     }
 
     func dismissMEGABanner(_ bannerView: MEGABannerView, withBannerIdentifier bannerIdentifier: Int) {
