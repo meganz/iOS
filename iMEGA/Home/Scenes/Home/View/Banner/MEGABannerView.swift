@@ -2,7 +2,8 @@ import MEGAUIKit
 import UIKit
 
 protocol MEGABannerViewDelegate: AnyObject {
-
+    func didScrollMEGABannerView()
+    
     func dismissMEGABanner(_ bannerView: MEGABannerView, withBannerIdentifier bannerIdentifier: Int)
 
     func didSelectMEGABanner(withBannerIdentifier bannerIdentifier: Int, actionURL: URL?)
@@ -200,6 +201,10 @@ extension MEGABannerView: UICollectionViewDataSource, UICollectionViewDelegate {
             withBannerIdentifier: selectedBanner.identifier,
             actionURL: selectedBanner.actionURL
         )
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        delegate?.didScrollMEGABannerView()
     }
 }
 

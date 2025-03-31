@@ -99,6 +99,60 @@ struct HomeViewModelTests {
         )
     }
     
+    @Test
+    @MainActor
+    func smartBannerViewDidScroll() {
+        let tracker = MockTracker()
+        let sut = HomeViewModelTests.makeSUT(
+            tracker: tracker
+        )
+        
+        sut.trackDidScrollSmartBannerView()
+        
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                SmartBannerSwipeEvent()
+            ]
+        )
+    }
+    
+    @Test
+    @MainActor
+    func didTapVPNSmartBanner() {
+        let tracker = MockTracker()
+        let sut = HomeViewModelTests.makeSUT(
+            tracker: tracker
+        )
+        
+        sut.trackDidTapVPNSmartBanner()
+        
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                VpnSmartBannerItemSelectedEvent()
+            ]
+        )
+    }
+    
+    @Test
+    @MainActor
+    func didTapPWMSmartBanner() {
+        let tracker = MockTracker()
+        let sut = HomeViewModelTests.makeSUT(
+            tracker: tracker
+        )
+        
+        sut.trackDidTapPWMSmartBanner()
+        
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                PwmSmartBannerItemSelectedEvent()
+            ]
+        )
+    }
+
     @MainActor
     private static func makeSUT(
         shareUseCase: any ShareUseCaseProtocol = MockShareUseCase(),
