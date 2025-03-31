@@ -633,27 +633,10 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        if RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo).isFeatureFlagEnabled(for: .nativePhotoPicker) {
-            let photoPicker = MEGAPhotoPicker(presenter: self)
-            Task { @MainActor in
-                let assets = await photoPicker.pickAssets()
-                await startUpload(assets: assets)
-            }
-        } else {
-            let selectionActionDisabledText = Strings.Localizable.send
-            let albumTableViewController = AlbumsTableViewController(selectionActionType: AlbumsSelectionActionType.send,
-                                                                     selectionActionDisabledText: selectionActionDisabledText) { [weak self] assets in
-                guard let self else {
-                    return
-                }
-                
-                Task {
-                    await self.startUpload(assets: assets)
-                }
-            }
-            albumTableViewController.source = .chat
-            let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
-            present(viewController: navigationController)
+        let photoPicker = MEGAPhotoPicker(presenter: self)
+        Task { @MainActor in
+            let assets = await photoPicker.pickAssets()
+            await startUpload(assets: assets)
         }
     }
     

@@ -42,29 +42,13 @@ struct CloudDrivePhotosPickerRouter {
     func start() {
         permissionHandler.photosPermissionWithCompletionHandler { granted in
             if granted {
-                if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .nativePhotoPicker) {
-                    Task { @MainActor in
-                        let assets = await photoPicker.pickAssets()
-                        assetUploader.upload(assets: assets, to: parentNode.handle)
-                    }
-                } else {
-                    loadPhotoAlbumBrowser()
+                Task { @MainActor in
+                    let assets = await photoPicker.pickAssets()
+                    assetUploader.upload(assets: assets, to: parentNode.handle)
                 }
             } else {
                 permissionRouter.alertPhotosPermission()
             }
         }
-    }
-    
-    // MARK: - Private
-    
-    private func loadPhotoAlbumBrowser() {
-        let albumTableViewController = AlbumsTableViewController(
-            selectionActionType: .upload,
-            selectionActionDisabledText: Strings.Localizable.upload
-        ) { assetUploader.upload(assets: $0, to: parentNode.handle) }
-        
-        let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
-        presenter.present(navigationController, animated: true)
     }
 }

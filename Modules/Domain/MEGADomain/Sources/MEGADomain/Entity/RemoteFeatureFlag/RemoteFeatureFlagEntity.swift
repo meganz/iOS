@@ -3,7 +3,6 @@ public enum RemoteFeatureFlag: String, Sendable {
     case albumPerformanceImprovements = "iappi"
     case externalAds = "adse"
     case hiddenNodes = "hnir"
-    case nativePhotoPicker = "npp"
     case sdkUpdateHandlerManager = "iguhm"
     case noteToSelfChat = "n2s"
 }
