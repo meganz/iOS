@@ -92,6 +92,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public private(set) var catchupWithSDKCallCount = 0
     public private(set) var setRubbishBinAutopurgePeriodCallCount = 0
     public private(set) var rubbishBinAutopurgePeriodDays = 0
+    public private(set) var pausedTransfersCall: Bool?
     
     public enum Message: Equatable, Hashable {
         case publicNodeForMegaFileLink(String)
@@ -473,6 +474,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public override func isNodeInheritingSensitivity(_ node: MEGANode) -> Bool {
         nodesInheritingSensitivity[node.handle] ?? _isNodeInheritingSensitivity
+    }
+    
+    public override func pauseTransfers(_ pause: Bool) {
+        pausedTransfersCall = pause
     }
     
     // MARK: - Sets

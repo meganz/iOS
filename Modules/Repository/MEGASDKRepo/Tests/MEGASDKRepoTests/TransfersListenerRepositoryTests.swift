@@ -1,60 +1,32 @@
 import MEGADomain
 import MEGASdk
-import MEGASDKRepo
+@testable import MEGASDKRepo
 import MEGASDKRepoMock
-import XCTest
+import Testing
 
-final class TransfersListenerRepositoryTests: XCTestCase {
-    final class Harness: Sendable {
-        let sut: TransfersListenerRepository
-        fileprivate let sdk: TestSdk
+@Suite("TransfersListenerRepository Tests")
+struct TransfersListenerRepositoryTests {
+    @Test("Pause transfers")
+    func shouldPauseTransfers() {
+        let sdk = MockSdk()
+        let repository = TransfersListenerRepository(sdk: sdk)
         
-        init() {
-            sdk = TestSdk()
-            sut = .init(sdk: sdk)
-        }
+        #expect(sdk.pausedTransfersCall == nil)
+        
+        repository.pauseTransfers()
+        
+        #expect(sdk.pausedTransfersCall == true)
     }
     
-    final class TestSdk: MEGASdk, @unchecked Sendable {
-        var transferDelegates = [MEGATransferDelegate]()
-        override func add(_ delegate: any MEGATransferDelegate, queueType: ListenerQueueType) {
-            transferDelegates.append(delegate)
-        }
+    @Test("Resume transfers")
+    func shouldNotPauseTransfers() {
+        let sdk = MockSdk()
+        let repository = TransfersListenerRepository(sdk: sdk)
         
-        func simulateTransfer(_ transfer: MockTransfer) {
-            transferDelegates.forEach {
-                $0.onTransferFinish?(MockSdk(), transfer: transfer, error: .init())
-            }
-        }
-    }
-    
-    func testTransfers() async {
-        // given
-        let harness = Harness()
-        let mockTransfers = [MockTransfer(nodeHandle: 1), MockTransfer(nodeHandle: 2)]
+        #expect(sdk.pausedTransfersCall == nil)
         
-        // when
-        let taskStartedExp = expectation(description: "Waiting for Task to start")
-        let exp = expectation(description: "Waiting for transfers")
-        exp.expectedFulfillmentCount = mockTransfers.count
+        repository.resumeTransfers()
         
-        let task = Task { @Sendable in
-            taskStartedExp.fulfill()
-            var expectedResults = mockTransfers.map(\.nodeHandle)
-            for await transfer in harness.sut.completedTransfers {
-                XCTAssertEqual(transfer.nodeHandle, expectedResults.removeFirst())
-                exp.fulfill()
-            }
-        }
-        
-        await fulfillment(of: [taskStartedExp], timeout: 0.5)
-        
-        mockTransfers.forEach {
-            harness.sdk.simulateTransfer($0)
-        }
-        
-        // and then
-        await fulfillment(of: [exp], timeout: 0.5)
-        task.cancel()
+        #expect(sdk.pausedTransfersCall == false)
     }
 }
