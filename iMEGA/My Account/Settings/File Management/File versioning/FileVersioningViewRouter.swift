@@ -14,7 +14,7 @@ final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     }
     
     func build() -> UIViewController {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFileManagementSettings) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newSetting) {
             let viewModel = FileVersioningViewModel(
                 fileVersionsUseCase: FileVersionsUseCase(repo: FileVersionsRepository.newRepo),
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
