@@ -475,7 +475,6 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANode *restoreNode = [MEGASdk.shared nodeForHandle:self.restoreHandle];
         [[NameCollisionRouterOCWrapper.alloc init] moveNodes:@[self] to:restoreNode presenter:UIApplication.mnz_presentingViewController];
-        [MEGASdk.shared disableExportNode:self];
     }
 }
 
