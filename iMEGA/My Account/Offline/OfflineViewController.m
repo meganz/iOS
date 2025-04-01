@@ -45,7 +45,7 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (nonatomic, strong) dispatch_queue_t serialQueue;
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 @property (nonatomic, strong) NSMutableArray *offlineItems;
-@property (nonatomic, strong) NSMutableArray *offlineFiles;
+@property (nonatomic, strong) NSMutableArray *offlineNonMultimediaFiles;
 
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
@@ -350,8 +350,10 @@ static NSString *kisDirectory = @"kisDirectory";
         
         MEGASortOrderType sortOrderType = [Helper sortTypeFor:self.currentOfflinePath];
         tmpOfflineItems = [self sortBySortType:sortOrderType array: tmpOfflineItems];
-        
-        offsetIndex = 0;
+
+        int multimediaOffsetIndex = 0;
+        int nonMultimediaOffsetIndex = 0;
+
         for (NSDictionary *p in tmpOfflineItems) {
             NSURL *fileURL = [p objectForKey:kPath];
             NSString *fileName = [p objectForKey:kFileName];
@@ -365,7 +367,6 @@ static NSString *kisDirectory = @"kisDirectory";
                 
                 NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
                 [tempDictionary setValue:fileName forKey:kFileName];
-                [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
                 [tempDictionary setValue:fileURL forKey:kPath];
                 
                 NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[fileURL path] error:nil];
@@ -382,9 +383,12 @@ static NSString *kisDirectory = @"kisDirectory";
                 if (!isDirectory) {
                     [tmpOfflineSortedFileItems addObject:tempDictionary];
                     if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:fileName]) {
+                        [tempDictionary setValue:[NSNumber numberWithInt:multimediaOffsetIndex] forKey:kIndex];
+                        multimediaOffsetIndex++;
                         [tmpOfflineMultimediaFiles addObject:[fileURL path]];
                     } else if (![self shouldSkipQLPreviewForFile:fileName]) {
-                        offsetIndex++;
+                        [tempDictionary setValue:[NSNumber numberWithInt:nonMultimediaOffsetIndex] forKey:kIndex];
+                        nonMultimediaOffsetIndex++;
                         [tmpOfflineFiles addObject:[fileURL path]];
                     }
                 }
@@ -394,7 +398,7 @@ static NSString *kisDirectory = @"kisDirectory";
         dispatch_sync(dispatch_get_main_queue(), ^{
             self.offlineSortedItems = tmpOfflineSortedItems;
             self.offlineSortedFileItems = tmpOfflineSortedFileItems;
-            self.offlineFiles = tmpOfflineFiles;
+            self.offlineNonMultimediaFiles = tmpOfflineFiles;
             self.offlineMultimediaFiles = tmpOfflineMultimediaFiles;
             self.offlineItems = tmpOfflineItems;
             [self updateNavigationBarTitle];
@@ -477,16 +481,17 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (nullable MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath isMultimedia:(BOOL)isMultimedia {
-    NSArray *filesArray = isMultimedia ? self.offlineMultimediaFiles : self.offlineFiles;
+    NSArray *filesArray = isMultimedia ? self.offlineMultimediaFiles : self.offlineNonMultimediaFiles;
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:filesArray];
     NSMutableArray *items = self.viewModePreference == ViewModePreferenceEntityThumbnail ? self.offlineSortedFileItems : self.offlineSortedItems;
     NSDictionary *item = [items objectOrNilAtIndex:indexPath.row];
     if (item == nil) {
         return nil;
     }
+
     NSInteger selectedIndexFile = [[item objectForKey:kIndex] integerValue];
     previewController.currentPreviewItemIndex = selectedIndexFile;
-    
+
     switch (self.viewModePreference) {
         case ViewModePreferenceEntityPerFolder:
             break;
@@ -667,12 +672,12 @@ static NSString *kisDirectory = @"kisDirectory";
     [[NSFileManager defaultManager] fileExistsAtPath:self.previewDocumentPath isDirectory:&isDirectory];
     if (isDirectory) {
         NSString *folderPathFromOffline = [self folderPathFromOffline:self.previewDocumentPath folder:name];
-        
+
         OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
         [offlineVC setFolderPathFromOffline:folderPathFromOffline];
         
         [self.navigationController pushViewController:offlineVC animated:YES];
-        
+
     } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.previewDocumentPath]) {
         if (MEGAChatSdk.shared.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
@@ -681,7 +686,7 @@ static NSString *kisDirectory = @"kisDirectory";
         
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
-        if (asset.playable) {
+        if (asset.isPlayable) {
             if ([asset tracksWithMediaType:AVMediaTypeVideo].count > 0) {
                 AVPlayerViewController *megaAVViewController = [[AVPlayerManager shared] makePlayerControllerFor:[NSURL fileURLWithPath:self.previewDocumentPath]];
                 [self presentViewController:megaAVViewController animated:YES completion:nil];
