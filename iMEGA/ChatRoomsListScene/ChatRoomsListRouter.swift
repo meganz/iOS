@@ -36,15 +36,35 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             permissionAlertRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler),
             chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo),
             retryPendingConnectionsUseCase: RetryPendingConnectionsUseCase(repo: RetryPendingConnectionsRepository.newRepo),
-            urlOpener: { UIApplication.shared.open($0) }
+            urlOpener: { UIApplication.shared.open($0) },
+            myAvatarViewModel: myAvatarViewModel
         )
-        let viewController = ChatRoomsListViewController(viewModel: viewModel)
+        
+        let chatRoomsListView = ChatRoomsListView(viewModel: viewModel)
+        
+        let viewController = ChatRoomsListViewController(
+            rootView: chatRoomsListView,
+            viewModel: viewModel
+        )
         let navigation = MEGANavigationController(rootViewController: viewController)
         navigation.tabBarItem = UITabBarItem(title: nil, image: UIImage(resource: .chatIcon), tag: 2)
         navigationController = navigation
-        viewModel.configureMyAvatarManager()
         chatRoomsListViewController = viewController
         return navigation
+    }
+    
+    var myAvatarViewModel: MyAvatarViewModel {
+        MyAvatarViewModel(
+            megaNotificationUseCase: MEGANotificationUseCase(
+                userAlertsClient: .live,
+                notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
+            ), userImageUseCase: UserImageUseCase(
+                userImageRepo: UserImageRepository.newRepo,
+                userStoreRepo: UserStoreRepository.newRepo,
+                thumbnailRepo: ThumbnailRepository.newRepo,
+                fileSystemRepo: FileSystemRepository.newRepo
+            ), megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+        )
     }
     
     func presentStartConversation() {
@@ -312,5 +332,25 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     
     func hideAds() {
         tabBarController?.hideAds()
+    }
+    
+    func openUserProfile() {
+        guard let navigationController else { return }
+        MyAccountHallRouter(
+            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            shareUseCase: ShareUseCase(
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
+            navigationController: navigationController
+        ).start()
     }
 }

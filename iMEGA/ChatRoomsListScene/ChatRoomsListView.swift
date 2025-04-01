@@ -27,7 +27,53 @@ struct ChatRoomsListView: View {
                 content()
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                MyAvatarIconView(
+                    viewModel: .init(
+                        avatarObserver: viewModel.myAvatarViewModel,
+                        onAvatarTapped: { viewModel.openUserProfile() }
+                    )
+                )
+            }
+            
+            ToolbarItem(placement: .principal) {
+                VStack {
+                    Text(viewModel.title)
+                        .font(.headline)
+                        .lineLimit(1)
+                    if let subtitle = viewModel.chatStatus?.localizedIdentifier {
+                        Text(subtitle)
+                            .font(.caption)
+                    }
+                }
+            }
+            
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                switch viewModel.chatViewMode {
+                case .chats:
+                    Button {
+                        viewModel.addChatButtonTapped()
+                    } label: {
+                        Image(uiImage: UIImage.navigationbarAdd)
+                    }
+                    .disabled(!viewModel.isConnectedToNetwork)
+                case .meetings:
+                    addMenuButton {
+                        Image(uiImage: UIImage.navigationbarAdd)
+                    }
+                    .disabled(!viewModel.isConnectedToNetwork)
+                }
+                
+                contextMenuButton {
+                    Image(uiImage: UIImage.moreNavigationBar)
+                }
+            }
+        }
         .background()
+        .task {
+            await viewModel.askForNotificationsPermissionsIfNeeded()
+        }
         .onAppear {
             viewModel.loadChatRoomsIfNeeded()
         }
@@ -72,6 +118,15 @@ struct ChatRoomsListView: View {
         )
     }
     
+    func addMenuButton<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
+        return viewModel.contextMenuManager.menu(with: viewModel.addMeetingsMenuConfiguration, label: label)
+    }
+    
+    func contextMenuButton<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
+        guard let config = viewModel.contextMenuConfiguration else { return nil }
+        return viewModel.contextMenuManager.menu(with: config, label: label)
+    }
+
     @ViewBuilder
     func emptyView(state: ChatRoomsEmptyViewState) -> some View {
         if viewModel.isSearching {

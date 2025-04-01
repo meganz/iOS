@@ -946,7 +946,6 @@
 		83422B25255984C300D46907 /* MEGAWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83422B20255984C300D46907 /* MEGAWidget.swift */; };
 		83422B28255984C300D46907 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83422B23255984C300D46907 /* Assets.xcassets */; };
 		8342CB0128EB3B830078D35F /* ChatRoomsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342CAFE28EB3B820078D35F /* ChatRoomsListViewController.swift */; };
-		8342CB0228EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342CAFF28EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift */; };
 		8342CB0B28EB3DEC0078D35F /* ChatTabsSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */; };
 		8346CA6E283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */; };
 		8346CA6F283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */; };
@@ -3658,7 +3657,6 @@
 		83422B20255984C300D46907 /* MEGAWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAWidget.swift; sourceTree = "<group>"; };
 		83422B23255984C300D46907 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8342CAFE28EB3B820078D35F /* ChatRoomsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomsListViewController.swift; sourceTree = "<group>"; };
-		8342CAFF28EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatRoomsListViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTabsSelectorView.swift; sourceTree = "<group>"; };
 		8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCollisionRouterOCWrapper.swift; sourceTree = "<group>"; };
 		8348A8D72901902B00B66463 /* ActiveCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModel.swift; sourceTree = "<group>"; };
@@ -9518,7 +9516,6 @@
 				83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */,
 				6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */,
 				836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */,
-				8342CAFF28EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift */,
 				8342CAFE28EB3B820078D35F /* ChatRoomsListViewController.swift */,
 				836A783128E34C2900B6849F /* ChatRoomsListViewModel.swift */,
 				83B71A5F28F0356600E006C6 /* ChatRoomView.swift */,
@@ -14189,7 +14186,6 @@
 				83DE9D0828EC376F00F24DF4 /* ChatRoomsListRouter.swift in Sources */,
 				6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */,
 				836A783028E2F2B500B6849F /* ChatRoomsListView.swift in Sources */,
-				8342CB0228EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift in Sources */,
 				8342CB0128EB3B830078D35F /* ChatRoomsListViewController.swift in Sources */,
 				836A783228E34C2900B6849F /* ChatRoomsListViewModel.swift in Sources */,
 				83B71A6228F03A2D00E006C6 /* ChatRoomsTopRowView.swift in Sources */,

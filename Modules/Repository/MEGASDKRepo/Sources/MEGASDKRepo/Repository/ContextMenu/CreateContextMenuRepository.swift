@@ -44,7 +44,6 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsOutShare(config.isOutShare)
                         .setIsExported(config.isExported)
                         .setIsEmptyState(config.isEmptyState)
-                        .setShouldScheduleMeeting(config.shouldScheduleMeeting)
                         .setSharedLinkStatus(config.sharedLinkStatus)
                         .setIsArchivedChatsVisible(config.isArchivedChatsVisible)
                         .setIsMediaFile(config.isMediaFile)

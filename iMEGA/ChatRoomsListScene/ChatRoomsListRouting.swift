@@ -31,4 +31,5 @@ protocol ChatRoomsListRouting {
     func showSuccessMessage(_ message: String)
     func edit(scheduledMeeting: ScheduledMeetingEntity)
     func hideAds()
+    func openUserProfile()
 }
