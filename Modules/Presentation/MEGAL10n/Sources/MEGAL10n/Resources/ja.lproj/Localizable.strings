@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="動画を再開しますか？";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="%1$sは%2$sから再開します";
+"video.alert.resumeVideo.message"="「%1$s」は%2$sから再開します";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="再開";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="エラー";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="ブロックされています";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="非アクティブ";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="注意が必要です";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="不明なエラー。";
 /* Device Center backup error: Filesystem not supported */

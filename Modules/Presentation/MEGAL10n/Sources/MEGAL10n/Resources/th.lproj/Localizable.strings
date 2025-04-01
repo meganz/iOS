@@ -859,7 +859,7 @@
 /* File versioning alert title for disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="ปิดใช้งานการเก็บเวอร์ชันไฟล์หรือไม่";
 /* File versioning alert message for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="When file versioning is disabled, updating a file will completely replace it.";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="เมื่อปิดใช้งานการจัดเวอร์ชันไฟล์ การอัปเดตไฟล์จะเป็นการแทนที่ไฟล์เดิมทั้งหมด";
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="ปิดใช้งาน";
 /* File versioning footer message */
@@ -2489,7 +2489,7 @@
 /* Ad settings header title */
 "settings.ad.header.title"="การตั้งค่าโฆษณา";
 /* Ad settings menu title for Ad personalisation */
-"settings.ad.adPersonalisation.title"="Ad personalisation";
+"settings.ad.adPersonalisation.title"="การปรับโฆษณาให้เหมาะกับแต่ละบุคคล";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="สร้างเวอร์ชันเป็นไฟล์ใหม่แล้ว";
 /* Text shown for the action create new file */
@@ -2733,9 +2733,9 @@
 /* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
 "account.profile.renewal.future"="ต่ออายุเมื่อวันที่ %@";
 /* Renewal date of the current PRO account, when the date is today */
-"account.profile.renewal.today"="Renews today";
+"account.profile.renewal.today"="ต่ออายุวันนี้";
 /* Renewal date of the current PRO account, when the date is tomorrow */
-"account.profile.renewal.tomorrow"="Renews tomorrow";
+"account.profile.renewal.tomorrow"="ต่ออายุวันพรุ่งนี้";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="อยู่ระหว่างดำเนินการโทรอีก กรุณาวางสายปัจจุบันของคุณก่อนที่จะโทรออกอีกครั้ง";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="เล่นวิดีโอต่อจากก่อนหน้านี้หรือไม่";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="ไฟล์ %1$s จะเริ่มเล่นต่อตั้งแต่ %2$s เป็นต้นไป";
+"video.alert.resumeVideo.message"="ไฟล์ “%1$s” จะเริ่มเล่นต่อตั้งแต่ %2$s เป็นต้นไป";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="ต่อ";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="ผิดพลาด";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="บล็อกแล้ว";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="ไม่ได้ใช้งาน";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="รอตรวจสอบ";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="ข้อผิดพลาดที่ไม่รู้จัก";
 /* Device Center backup error: Filesystem not supported */
@@ -4525,19 +4529,19 @@
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="กำหนดแท็กได้สูงสุดแค่ 10 รายการเท่านั้น";
 /* Artist name to display if meta data for artist could not be found */
-"media.audio.metadata.missing.artist"="Unknown Artist";
+"media.audio.metadata.missing.artist"="ศิลปินไม่ปรากฏ";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="No playlists";
+"photos.addToPlaylist.empty.message"="ไม่มีเพลย์ลิสต์";
 /* Add to playlist empty create button title */
-"photos.addToPlaylist.empty.create.button.title"="Create playlist";
+"photos.addToPlaylist.empty.create.button.title"="สร้างเพลย์ลิสต์";
 /* Title in chat settings */
 "settings.chat.title"="แชทและการประชุม";
 /* Title in chat settings to open status view settings */
 "settings.chat.status.title"="สถานะ";
 /* Title in chat notifications settings */
-"settings.chat.notifications.title"="Notification settings";
+"settings.chat.notifications.title"="ตั้งค่าการแจ้งเตือน";
 /* Label title in chat media image quality for uploads */
-"settings.chat.mediaQuality.title"="Chat media quality";
+"settings.chat.mediaQuality.title"="คุณภาพสื่อในแชท";
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="เปิดใช้งานการดูตัวอย่างลิงก์ที่ส่ง";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -4549,11 +4553,11 @@
 /* Title in set status settings for show last seen */
 "settings.chat.status.setStatus.statusSettings.lastSeen.title"="แสดงการดูครั้งล่าสุด";
 /* Subtitle in set status settings for show last seen */
-"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="อนุญาตให้ผู้ติดต่อเห็นเวลาใช้งาน MEGA ล่าสุดของคุณ";
 /* Title in set status settings for auto away */
-"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="ตั้งสถานะเป็นไม่อยู่";
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
-"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="เมื่อไม่มีการใช้งานเป็นเวลา %@";
 /* Title for toggle chat notifications */
 "settings.chat.notifications.chatNotifications"="แจ้งเตือนแชท";
 /* Title for mute chat notifications */
@@ -4561,11 +4565,11 @@
 /* Label title in chat media image quality for uploads */
 "settings.chat.mediaQuality.image.title"="คุณภาพของรูป";
 /* Description of Automatic Image Quality option */
-"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+"settings.chat.mediaQuality.image.option.auto"="เมื่อใช้เน็ตมือถือแอปจะส่งภาพแบบปรับให้เหมาะสม แต่ถ้าใช้ Wi-Fi แอปจะส่งภาพเป็นต้นฉบับ";
 /* Description of Optimised Image Quality option */
-"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+"settings.chat.mediaQuality.image.option.optimised"="ส่งเป็นภาพที่ผ่านการปรับให้เหมาะสมเสมอ";
 /* Description of High Image Quality option */
-"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+"settings.chat.mediaQuality.image.option.original"="ส่งเป็นภาพต้นฉบับเสมอ";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="คุณภาพวีดีโอ";
 /* Message displayed while the app is connecting to a MEGA server */
@@ -4575,22 +4579,22 @@
 /* After login, updating the file list, the file list should be processed before showing it to the user */
 "login.preparingFileList"="กำลังเตรียมการรายการไฟล์";
 /* Hidden files and folders onboarding header title */
-"onboarding.hiddenFilesAndFolders.header.title"="New feature: Hidden files and folders";
+"onboarding.hiddenFilesAndFolders.header.title"="ฟีเจอร์ใหม่: ซ่อนไฟล์และโฟลเดอร์";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Hide files and folders";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="ซ่อนไฟล์และโฟลเดอร์";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="เก็บไฟล์สำคัญในคลาวด์ไดร์ฟให้เป็นส่วนตัวและลับสายตาได้อย่างง่ายดาย โดยค่าเริ่มต้น ไฟล์ที่ซ่อนอยู่จะไม่ปรากฏในคลาวด์ไดร์ฟ รูปภาพ และส่วนล่าสุดของคุณ";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Control visibility easily";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="ควบคุมการมองเห็นได้ง่าย";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management --> User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="หากต้องการแสดงไฟล์ที่ซ่อนอยู่ ให้เปิดการตั้งค่า \"แสดงรายการที่ซ่อนอยู่\" ใน \"การจัดการไฟล์ -> หน้าจอผู้ใช้\" ในการตั้งค่าแอปของคุณ";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Shared files stay visible";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="ไฟล์ที่แชร์ยังคงมองเห็นได้";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Files and folders shared with contacts or with public links are still accessible and visible, even if hidden.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="ไฟล์และโฟลเดอร์ที่แชร์กับผู้ติดต่อหรือลิงก์สาธารณะยังคงเข้าถึงและมองเห็นได้ แม้ว่าจะซ่อนอยู่ก็ตาม";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="โน้ตถึงตัวเอง";
 /* Title for note to self chat messages view header, at the top the chat room */
 "chat.messages.noteToSelf.header.title"="เก็บโน้ตไว้เป็นส่วนตัว";
 /* Description text for note to self chat messages view header, at the top of the chat room */
-"chat.messages.noteToSelf.header.description"="A private space for pictures, important information, or big ideas. Always synced, and protected with zero-knowledge encryption.";
+"chat.messages.noteToSelf.header.description"="พื้นที่ส่วนตัวสำหรับรูปภาพ ข้อมูลสำคัญ หรือไอเดียดี ๆ ซิงค์อยู่เสมอ และปกป้องด้วยการเข้ารหัสด้วยวิธีซีโร่-นอว์เลจ";

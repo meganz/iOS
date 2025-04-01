@@ -3117,9 +3117,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag nog steeds vol. U heeft %d bestand die neemt [storageSpace] beslag op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw  opslaglimieten[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3133,9 +3133,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft%d bestand die [storageSpace] beslag neemt op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die in [storageSpace] beslag nemen op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3149,9 +3149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Hoewel we per e-mail contact met je hebben opgenomen, is je opslag nog steeds vol. Je hebt %d bestand in beslag nemen [storageSpace] op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om je opslag uit te breiden. Als je niet snel actie onderneemt, worden je gegevens verwijderd. Upgrade nu om je bestanden te beschermen. [A]Meer informatie over je opslaglimieten[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestand die [storageSpace] beslag opneemt op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A].  </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>

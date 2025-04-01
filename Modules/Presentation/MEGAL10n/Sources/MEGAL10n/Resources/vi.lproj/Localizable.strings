@@ -217,7 +217,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Không có kết quả";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Dọn Thùng Rác";
+"cloudDriveEmptyState_titleRubbishBin"="Thùng Rác Trống";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Trình Chiếu";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -379,11 +379,11 @@
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="Cảnh báo bản quyền";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
-"copyrightWarningToAll"="Thông báo mới về luật bản quyền";
+"copyrightWarningToAll"="Cảnh báo bản quyền cho tất cả người dùng";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA tôn trọng luật bản quyền của người khác và yêu cầu người sử dụng dịch vụ Ổ Mây MEGA nên thực hiện theo quy định của pháp luật về quyền tác giả.";
+"copyrightMessagePart1"="MEGA tôn trọng luật bản quyền của tất cả đơn vị và yêu cầu người sử dụng dịch vụ MEGA Cloud nên tuân theo theo quy định của pháp luật về quyền tác giả.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Tất cả các người sử dụng đều bị giám sát chặt chẽ khi dùng dịch vụ Ổ Mây MEGA nhằm để tránh việc lưu trữ và phân phát nội dung vi phạm bản quyền. Bạn (khách hàng hay người sử dụng) không được phép đăng tải, tải xuống, lưu trữ, chia sẻ, cho xem, truyền nội dung, quản lý thư mục từ bạn bè, gửi email, lấy liên kết từ các tệp tin, dữ liệu có chứa nội dung vi phạm bản quyền hoặc tài sản độc quyền của cá nhân hay tập thể khác trong tài khoản của mình.";
+"copyrightMessagePart2"="Quý vị bị nghiêm cấm sử dụng dịch vụ MEGA Cloud để vi phạm bản quyền. Quý vị không được tải lên, tải xuống, lưu trữ, chia sẻ, trình bày, phát trực tuyến, phân phối, gửi bằng email, tạo đường liên kết đến nội dung, truyền tải hoặc cung cấp bất kỳ tệp tin, dữ liệu hoặc nội dung nào có vi phạm bất kỳ bản quyền hoặc quyền sở hữu nào khác của bất kỳ cá nhân hoặc tổ chức nào.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Đồng ý";
 /* button caption text that the user clicks when he disagrees */
@@ -821,7 +821,7 @@
 /* Title for the File Management settings screen */
 "settings.fileManagement.title"="Quản lý tệp tin";
 /* Section header for settings related to MEGA cloud storage */
-"settings.fileManagement.header.onMEGA"="Trên mạng MEGA";
+"settings.fileManagement.header.onMEGA"="Trên MEGA";
 /* Toggle option for enabling mobile data to load high-resolution images */
 "settings.fileManagement.useMobileDataForHighResolution"="Dùng mạng di động để tải ảnh ở độ phân giải cao";
 /* Description explaining the behavior when the toggle is disabled */
@@ -831,7 +831,7 @@
 /* Option for managing file versioning settings */
 "settings.fileManagement.fileVersioning"="Nhật ký phiên bản tệp tin";
 /* Section header for settings related to device storage */
-"settings.fileManagement.header.onYourDevice"="Trong điện thoại";
+"settings.fileManagement.header.onYourDevice"="Trong thiết bị của bạn";
 /* Option to clear cached files stored on the device */
 "settings.fileManagement.clearCache"="Dọn bộ nhớ tạm";
 /* Confirmation message displayed after clearing cached files */
@@ -1705,7 +1705,7 @@
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng tải camêra là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp cho mọi người dùng. Tạo tài khoản ngay.";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Thiếp lập MEGA";
+"Setup MEGA"="Thiết lập MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="Để tận dụng sức mạnh của MEGA, ứng dụng cần phải xin phép một số quyền truy cập.";
 /* Message warning the user about the risk of not setting up permissions */
@@ -1839,7 +1839,7 @@
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Gói thành viện hạng Pro sắp hết hạn";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="Thông báo gỡ bỏ";
+"Takedown notice"="Cáo thị yêu cầu gỡ bỏ";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="Nội dung gỡ bỏ đã được khôi phục";
 /* Label shown inside an unseen notification */
@@ -2027,9 +2027,9 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Ngay lập tức";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="Tệp tin này đã bị yêu cầu cần phải gỡ bỏ.";
+"This file has been the subject of a takedown notice."="Tệp tin này đã bị yêu cầu từ cáo thị cần phải gỡ bỏ.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="Thư mục này đã bị yêu cầu cần phải gỡ bỏ.";
+"This folder has been the subject of a takedown notice."="Thư mục này đã bị yêu cầu từ cáo thị cần phải gỡ bỏ.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Phản đối yêu cầu gỡ bỏ";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
@@ -2955,7 +2955,7 @@
 /* Second step title message for cancellable transfer */
 "transfers.cancellable.creatingFolders"="Đang tạo các thư mục…";
 /* Third step title message for cancellable transfer */
-"transfers.cancellable.transferring"="Đang bắt[w]đầu truyền tải…";
+"transfers.cancellable.transferring"="Đang bắt đầu truyền tải…";
 /* Cancelling transfers step title message for cancellable transfer */
 "transfers.cancellable.cancellingTransfers"="Đang hủy các phiên truyền tải…";
 /* Count of folders and files in the scanning stage */
@@ -3365,7 +3365,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Nhập được tới 30 ký tự";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Nhập được tới 3.000 ký tự";
+"meetings.scheduleMeeting.description.lenghtError"="Nhập được tới 3000 ký tự";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Hủy";
 /* Schedule meeting create button */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Tiếp tục phát video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="%1$s sẽ tiếp tục phát tại %2$s";
+"video.alert.resumeVideo.message"="“%1$s” sẽ tiếp tục phát tại %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Tiếp tục truyền";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="Lỗi";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Bị chặn";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="Không hoạt động";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="Cần sự chú ý";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Lỗi không xác định được.";
 /* Device Center backup error: Filesystem not supported */
@@ -3901,9 +3905,9 @@
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.message"="Giữ an[w]ninh trực[w]tuyến với VPN tốc[w]độ cao của chúng[w]tôi.";
+"onboarding.upgradeAccount.content.megaVPN.message"="Giữ an ninh trực tuyến với VPN tốc độ cao của chúng tôi.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.title"="Cuộc gọi và cuộc họp không hạn[w]chế";
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="Cuộc gọi và cuộc họp không hạn chế";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.message"="Nhắn tin, gọi video và họp hoàn toàn riêng tư với số lượng người tham gia không giới hạn.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
@@ -4391,7 +4395,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Mô tả được cập nhật";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Loại bỏ các thay đổi?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Bạn có muốn lưu các thay đổi bạn đã viết trong phần mô tả không?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4475,7 +4479,7 @@
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.invalidTagName"="Thẻ không thể chứa ký hiệu hoặc khoảng trắng. Thẻ sẽ hiện bằng chữ thường. Các ký tự không phải chữ Latinh như là tiếng Trung hoặc tiếng Hàn, được phép sử dụng.";
 /* Error shown to the user when a invalid tag name is entered in the Add tags screen */
-"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Tối[w]đa 32 ký[w]tự";
+"cloudDrive.nodeInfo.nodeTags.addTags.tagNameTooLong"="Tối đa 32 ký tự";
 /* Button title shown to the user to add the tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.buttonTitle"="Thêm thẻ “#%@”";
 /* Section title that is shown over the existing tags in the Add tags screen */
@@ -4501,9 +4505,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Thêm";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="Muốn dùng MEGA mà không có quảng cáo?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Nâng cấp lên gói Pro với nhiều không gian lưu trữ và hơn thế nữa. Các gói Pro của chúng tôi có giá từ %@ một tháng.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Không gian hào phóng";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4575,22 +4579,22 @@
 /* After login, updating the file list, the file list should be processed before showing it to the user */
 "login.preparingFileList"="Đang chuẩn bị danh sách các tệp tin";
 /* Hidden files and folders onboarding header title */
-"onboarding.hiddenFilesAndFolders.header.title"="New feature: Hidden files and folders";
+"onboarding.hiddenFilesAndFolders.header.title"="Tính năng mới: Tệp tin và thư mục ẩn";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Hide files and folders";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Ẩn đi tệp tin và thư mục";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Dễ dàng giữ các tệp tin nhạy cảm trong Ổ Mây của bạn ở chế độ riêng tư và ngoài tầm nhìn. Theo mặc định, các tệp tin ẩn đi không có xuất hiện trong phần Ổ Mây, Ảnh và Sử dụng gần đây của bạn.";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Control visibility easily";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Kiểm soát chế độ hiển thị dễ dàng";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management --> User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Để hiển thị các tệp tin bị ẩn, hãy bật “Hiển thị các mục ẩn” trong “Quản lý tệp tin -> Giao diện người dùng” trong phần thiết đặt ứng dụng của bạn.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Shared files stay visible";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Các tệp tin đã chia sẻ vẫn được hiển thị";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Files and folders shared with contacts or with public links are still accessible and visible, even if hidden.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Các tệp tin và thư mục đã được chia sẻ với các tên liên lạc hoặc bằng đường liên kết công khai vẫn có thể truy cập được và có hiển thị, ngay cả khi bị ẩn.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
-"chat.messages.noteToSelf.title"="Ghi chú cho bản[w]thân";
+"chat.messages.noteToSelf.title"="Lời nhắn cho bản thân";
 /* Title for note to self chat messages view header, at the top the chat room */
 "chat.messages.noteToSelf.header.title"="Giữ mọi thứ cho riêng mình";
 /* Description text for note to self chat messages view header, at the top of the chat room */
-"chat.messages.noteToSelf.header.description"="A private space for pictures, important information, or big ideas. Always synced, and protected with zero-knowledge encryption.";
+"chat.messages.noteToSelf.header.description"="Một không gian riêng cho hình ảnh, thông tin quan trọng hoặc ý tưởng lớn. Sẽ luôn được đồng bộ hóa và được bảo vệ bằng mã hóa vô kiến thức.";

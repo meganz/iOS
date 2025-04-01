@@ -2728,10 +2728,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>尽管我们已于[date]通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。 </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2744,10 +2742,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>尽管我们已通过电子邮件多次与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2760,10 +2756,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
+        <string>尽管我们已通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
