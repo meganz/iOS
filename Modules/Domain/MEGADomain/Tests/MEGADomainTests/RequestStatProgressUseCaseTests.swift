@@ -4,7 +4,7 @@ import Testing
 
 @Suite("Request stats progress use case test suite")
 struct RequestStatProgressUseCaseTests {
-    @Test("Only process reqStatProgress events. Two events recived, one is reqStatProgress type")
+    @Test("Only process reqStatProgress events. Two events received, one is reqStatProgress type")
     func testRequestStatsProgresss() async {
         let repo = MockEventRepository.newRepo
         let sut = RequestStatProgressUseCase(repo: repo)

@@ -23,6 +23,14 @@ extension MEGAUpdateHandlerManager {
         }.eraseToAnyAsyncSequence()
     }
     
+    var eventUpdates: AnyAsyncSequence<EventEntity> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onEvent: { continuation.yield($0) })
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }.eraseToAnyAsyncSequence()
+    }
     var requestStartUpdates: AnyAsyncSequence<RequestEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onRequestStart: { continuation.yield($0) })
