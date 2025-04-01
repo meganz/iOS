@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 
 final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     private weak var baseViewController: UIViewController?

@@ -1,6 +1,6 @@
 import DeviceCenter
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 struct RenameRouter: Routing, RenameViewRouting, Sendable {
     private weak var presenter: UIViewController?

@@ -1,6 +1,6 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
-import MEGAPresentationMock
+import MEGAAppPresentationMock
 import MEGATest
 import XCTest
 

@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 struct Preview_AnalyticsTracking: AnalyticsTracking {
     func trackAnalyticsEvent(with eventIdentifier: any EventIdentifier) {

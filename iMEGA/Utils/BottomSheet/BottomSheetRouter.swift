@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 import SwiftUI
 
 final class BottomSheetRouter<Content>: Routing where Content: View {

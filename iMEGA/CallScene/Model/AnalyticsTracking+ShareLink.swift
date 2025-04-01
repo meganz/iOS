@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 // as this action is tracked from multiple places scattered around the code,
 // this simple tool allows to know which one is triggered from where

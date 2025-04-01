@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAPhotos
-import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI

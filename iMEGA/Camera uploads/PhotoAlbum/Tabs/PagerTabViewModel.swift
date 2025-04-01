@@ -1,7 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 
 enum PhotoLibraryTab: CaseIterable {
     case timeline

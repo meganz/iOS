@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 protocol CallWillEndAlertRouting: Routing {
     func showCallWillEndAlert(upgradeAction: @escaping () -> Void, notNowAction: @escaping () -> Void)

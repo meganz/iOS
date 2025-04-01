@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
-import MEGAPresentation
 import SwiftUI
 
 extension ThumbnailLoaderProtocol {

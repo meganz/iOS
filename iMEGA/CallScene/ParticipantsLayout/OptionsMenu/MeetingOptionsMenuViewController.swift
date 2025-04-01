@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 class MeetingOptionsMenuViewController: ActionSheetViewController, ViewType {
     

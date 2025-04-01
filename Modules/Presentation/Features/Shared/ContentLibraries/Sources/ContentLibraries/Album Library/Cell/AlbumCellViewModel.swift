@@ -1,10 +1,10 @@
 import AsyncAlgorithms
 @preconcurrency import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI

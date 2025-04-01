@@ -1,7 +1,7 @@
 import ContentLibraries
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 import SwiftUI
 
 struct VisualMediaSearchResultFoundView: UIViewRepresentable {

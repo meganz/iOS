@@ -2,11 +2,11 @@
 import ContentLibraries
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 @testable import MEGADomain
 import MEGADomainMock
 import MEGAPermissionsMock
-import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 final class PhotosViewModelTests: XCTestCase {

@@ -1,7 +1,7 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGAPresentation
 
 public protocol CameraSwitching: Sendable {
     func switchCamera() async

@@ -1,8 +1,8 @@
 import Combine
 import ContentLibraries
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI

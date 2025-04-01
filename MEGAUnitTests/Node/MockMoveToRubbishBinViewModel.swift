@@ -1,5 +1,4 @@
 @testable import MEGA
-
 import MEGADomain
 
 final class MockMoveToRubbishBinViewModel: MoveToRubbishBinViewModelProtocol {

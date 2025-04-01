@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomainMock
-import MEGAPresentation
 import Testing
 
 struct ABTestProviderTests {

@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 import PhotosBrowser
 

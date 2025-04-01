@@ -1,5 +1,5 @@
 @preconcurrency import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 extension DIContainer {
     static let transferOverQuotaDialogEvent = TransferOverQuotaDialogEvent()

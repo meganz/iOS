@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
-import MEGAPresentation
 
 protocol NameCollisionViewRouting: Routing, Sendable {
     func showNameCollisionsView()

@@ -1,12 +1,12 @@
 import AsyncAlgorithms
 @preconcurrency import Combine
 import Foundation
+import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
-import MEGAPresentation
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
-import MEGAAssets
 
 @MainActor
 public class PhotoCardViewModel: ObservableObject {

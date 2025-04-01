@@ -1,6 +1,6 @@
 import DeviceCenter
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import UIKit
 
 public final class MockDeviceListViewRouter: DeviceListRouting {

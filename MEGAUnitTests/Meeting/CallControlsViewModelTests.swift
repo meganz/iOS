@@ -1,12 +1,12 @@
 import Chat
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
-import MEGAPresentationMock
 import XCTest
 
 final class CallControlsViewModelTests: XCTestCase {

@@ -1,8 +1,8 @@
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASDKRepo
 
 extension CustomModalAlertViewController {

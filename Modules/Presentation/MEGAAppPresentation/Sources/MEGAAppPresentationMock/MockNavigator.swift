@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 import UIKit
 
 public final class MockNavigator: Routing {

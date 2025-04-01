@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 struct DefaultAnalyticsNodeActionListener {
     private let tracker: any AnalyticsTracking

@@ -1,7 +1,6 @@
 import CoreData
-import MEGADomain
-
 @testable import MEGA
+import MEGADomain
 
 extension OfflineFileEntity {
     public func toMOOfflineNode(in context: NSManagedObjectContext) -> MOOfflineNode {

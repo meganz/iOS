@@ -1,5 +1,5 @@
 import Accounts
-import MEGAPresentation
+import MEGAAppPresentation
 
 extension MEGALoginRequestDelegate {
     

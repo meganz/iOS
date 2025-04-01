@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
-import MEGAPresentation
-import MEGAPresentationMock
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import Testing
 
 struct DefaultAnalyticsNodeActionListenerTests {

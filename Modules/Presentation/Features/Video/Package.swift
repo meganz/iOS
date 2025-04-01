@@ -25,7 +25,7 @@ let package = Package(
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../../Presentation/MEGAAssets"),
         .package(path: "../../../Presentation/MEGAL10n"),
-        .package(path: "../../../Presentation/MEGAPresentation"),
+        .package(path: "../../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(path: "../Shared/ContentLibraries"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
@@ -38,7 +38,7 @@ let package = Package(
                 "MEGAUIKit",
                 "MEGAAssets",
                 "MEGAL10n",
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "ContentLibraries",
                 .product(
                     name: "AsyncAlgorithms",
@@ -54,7 +54,7 @@ let package = Package(
                 "MEGADomain",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGATest",
-                .product(name: "MEGAPresentationMock", package: "MEGAPresentation")
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
             ],
             swiftSettings: settings
         )

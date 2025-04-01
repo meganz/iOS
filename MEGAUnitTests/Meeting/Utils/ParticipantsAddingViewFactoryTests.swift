@@ -1,7 +1,7 @@
 @testable import MEGA
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 import XCTest
 
 @MainActor

@@ -1,6 +1,6 @@
 import Combine
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 import SwiftUI
 
 final class MeetingInfoViewController: UIViewController {

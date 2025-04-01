@@ -1,7 +1,6 @@
-@testable @preconcurrency import PhotosBrowser
-
-@preconcurrency import MEGAPresentation
+@preconcurrency import MEGAAppPresentation
 import MEGATest
+@testable @preconcurrency import PhotosBrowser
 import Testing
 
 struct ToolbarConfigurationFactoryTests {

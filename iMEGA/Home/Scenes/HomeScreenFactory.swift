@@ -1,11 +1,11 @@
 import ChatRepo
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 import MEGASwift

@@ -8,18 +8,18 @@ let settings: [SwiftSetting] = [
 ]
 
 let package = Package(
-    name: "MEGAPresentation",
+    name: "MEGAAppPresentation",
     platforms: [
         .macOS(.v10_15), .iOS(.v15)
     ],
     products: [
         .library(
-            name: "MEGAPresentation",
-            targets: ["MEGAPresentation"]
+            name: "MEGAAppPresentation",
+            targets: ["MEGAAppPresentation"]
         ),
         .library(
-            name: "MEGAPresentationMock",
-            targets: ["MEGAPresentationMock"]
+            name: "MEGAAppPresentationMock",
+            targets: ["MEGAAppPresentationMock"]
         )
     ],
     dependencies: [
@@ -31,7 +31,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MEGAPresentation",
+            name: "MEGAAppPresentation",
             dependencies: [
                 "MEGAAnalyticsDomain",
                 "MEGADomain",
@@ -40,15 +40,15 @@ let package = Package(
             ],
             swiftSettings: settings),
         .target(
-            name: "MEGAPresentationMock",
-            dependencies: ["MEGAPresentation", 
+            name: "MEGAAppPresentationMock",
+            dependencies: ["MEGAAppPresentation", 
                             .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ],
             swiftSettings: settings),
         .testTarget(
-            name: "MEGAPresentationTests",
-            dependencies: ["MEGAPresentation",
-                           "MEGAPresentationMock",
+            name: "MEGAAppPresentationTests",
+            dependencies: ["MEGAAppPresentation",
+                           "MEGAAppPresentationMock",
                            "MEGATest",
                            "MEGAAnalyticsDomain",
                            "MEGADomain",

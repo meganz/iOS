@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 
 extension UIColor {
     

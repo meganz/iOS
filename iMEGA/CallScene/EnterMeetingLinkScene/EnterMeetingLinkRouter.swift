@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 
 protocol EnterMeetingLinkRouting: Routing {
     func showLinkError()

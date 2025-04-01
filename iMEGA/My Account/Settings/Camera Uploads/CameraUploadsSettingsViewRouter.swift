@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 import UIKit
 
 typealias CameraUploadEnabledStateDidChange = () -> Void

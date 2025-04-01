@@ -1,6 +1,6 @@
 import GoogleMobileAds
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 

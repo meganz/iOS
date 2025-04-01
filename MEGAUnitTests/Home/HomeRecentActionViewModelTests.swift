@@ -1,5 +1,4 @@
 @testable import MEGA
-
 import MEGADomain
 import MEGADomainMock
 import MEGAPermissionsMock

@@ -1,11 +1,11 @@
 import Combine
 import ContentLibraries
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPhotos
-import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 import MEGAUIKit

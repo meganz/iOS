@@ -1,7 +1,6 @@
 import Foundation
-import XCTest
-
 @testable import MEGAFoundation
+import XCTest
 
 final class UnitDataStorageTests: XCTestCase {
     func test_baseUnit_returnsBits() {

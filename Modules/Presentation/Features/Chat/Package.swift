@@ -23,7 +23,7 @@ let package = Package(
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../../Repository/ChatRepo"),
         .package(path: "../../../Presentation/MEGAL10n"),
-        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../MEGAAssets")
@@ -53,8 +53,8 @@ let package = Package(
                     package: "MEGADomain"
                 ),
                 .product(
-                    name: "MEGAPresentationMock",
-                    package: "MEGAPresentation"
+                    name: "MEGAAppPresentationMock",
+                    package: "MEGAAppPresentation"
                 )
             ],
             swiftSettings: settings

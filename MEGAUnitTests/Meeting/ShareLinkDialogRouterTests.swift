@@ -1,8 +1,8 @@
 @testable import MEGA
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGAPresentationMock
 import XCTest
 
 final class ShareLinkDialogRouterTests: XCTestCase {

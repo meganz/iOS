@@ -4,8 +4,8 @@
 import MEGADomain
 import MEGADesignToken
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGASDKRepoMock
 import MEGASwift
 import XCTest

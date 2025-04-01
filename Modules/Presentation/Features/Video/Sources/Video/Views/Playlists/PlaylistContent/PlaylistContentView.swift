@@ -1,8 +1,8 @@
 import ContentLibraries
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import SwiftUI
 
 struct PlaylistContentScreen: View {

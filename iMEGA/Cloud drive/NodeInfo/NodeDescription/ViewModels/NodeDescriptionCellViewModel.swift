@@ -1,8 +1,8 @@
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
-import MEGAPresentation
 import MEGASwift
 
 @MainActor

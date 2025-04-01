@@ -1,7 +1,7 @@
 import Accounts
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 
 @MainActor

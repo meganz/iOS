@@ -1,10 +1,10 @@
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
-import MEGAPresentation
-import MEGAPresentationMock
 
 extension WaitingRoomViewModel {
     convenience init(

@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAChatSdk
+import MEGADomain
 
 extension ChatMessageScheduledMeetingChangeType {
     func toMEGAScheduledMeetingChangeType() -> MEGAChatMessageScheduledMeetingChangeType? {

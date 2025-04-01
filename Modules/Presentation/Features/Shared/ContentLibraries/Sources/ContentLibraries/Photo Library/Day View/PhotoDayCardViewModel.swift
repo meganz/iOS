@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 public final class PhotoDayCardViewModel: PhotoCardViewModel {
     private let photoByDay: PhotoByDay
@@ -21,10 +21,10 @@ public final class PhotoDayCardViewModel: PhotoCardViewModel {
     }
     
     public init(photoByDay: PhotoByDay,
-         thumbnailLoader: some ThumbnailLoaderProtocol,
-         nodeUseCase: some NodeUseCaseProtocol,
-         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+                thumbnailLoader: some ThumbnailLoaderProtocol,
+                nodeUseCase: some NodeUseCaseProtocol,
+                sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+                remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.photoByDay = photoByDay
         title = DateFormatter.dateLong().localisedString(from: photoByDay.categoryDate)
         

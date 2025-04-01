@@ -1,11 +1,11 @@
 @testable import Chat
 @testable import MEGA
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
-import MEGAPresentationMock
 import XCTest
 
 final class ChatRoomViewModelTests: XCTestCase {

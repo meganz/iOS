@@ -1,9 +1,9 @@
 import Combine
 import ContentLibraries
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
-import MEGAPresentation
 import SwiftUI
 
 protocol MediaDiscoveryContentDelegate: AnyObject {

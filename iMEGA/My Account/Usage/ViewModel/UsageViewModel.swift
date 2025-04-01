@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 enum StorageType {
     case cloud, backups, rubbishBin, incomingShares, chart

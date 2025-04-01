@@ -1,9 +1,9 @@
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASwiftUI
 import Notifications
 

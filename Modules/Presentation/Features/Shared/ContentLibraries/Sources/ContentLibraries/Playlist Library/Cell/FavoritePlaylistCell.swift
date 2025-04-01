@@ -1,8 +1,8 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import SwiftUI
 
 struct FavoritePlaylistCell: View {

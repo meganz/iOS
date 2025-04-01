@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 enum FileVersioningViewAction: ActionType {
     case onViewLoaded
@@ -94,7 +94,7 @@ final class LegacyFileVersioningViewModel: ViewModelType {
             guard delete, let self else { return }
             
             Task {
-                guard ((try? await self.fileVersionsUseCase.deletePreviousFileVersions()) != nil) else { return }
+                guard (try? await self.fileVersionsUseCase.deletePreviousFileVersions()) != nil else { return }
                 self.updateFileVersion()
             }
         }

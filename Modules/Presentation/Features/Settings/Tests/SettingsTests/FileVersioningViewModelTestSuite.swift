@@ -1,9 +1,8 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import Testing
-
 @testable import Settings
+import Testing
 
 @Suite("FileVersioningViewModelTestSuite")
 struct FileVersioningViewModelTestSuite {

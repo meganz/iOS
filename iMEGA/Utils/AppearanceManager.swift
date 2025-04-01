@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 
 @MainActor
 class AppearanceManager: NSObject {

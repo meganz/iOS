@@ -1,8 +1,8 @@
 import Accounts
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 enum CookieSettingsSection: Int {
     case adPersonalisation

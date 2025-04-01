@@ -1,7 +1,7 @@
 @preconcurrency import FileProvider
+import MEGAAppPresentation
 import MEGADomain
 import MEGAPickerFileProviderDomain
-import MEGAPresentation
 import MEGASDKRepo
 
 final class FileProviderExtension: NSFileProviderExtension {

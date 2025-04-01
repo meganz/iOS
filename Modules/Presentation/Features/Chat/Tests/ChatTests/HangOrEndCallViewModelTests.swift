@@ -1,6 +1,6 @@
 @testable import Chat
+import MEGAAppPresentationMock
 import MEGADomainMock
-import MEGAPresentationMock
 import Testing
 
 @MainActor

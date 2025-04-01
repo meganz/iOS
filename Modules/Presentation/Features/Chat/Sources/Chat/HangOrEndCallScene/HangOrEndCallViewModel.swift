@@ -1,6 +1,6 @@
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 public enum HangOrEndCallAction {
     case leaveCall

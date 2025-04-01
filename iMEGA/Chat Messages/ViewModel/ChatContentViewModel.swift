@@ -1,9 +1,9 @@
 import Chat
 import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 protocol ChatContentRouting: Routing {
     func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool)

@@ -1,7 +1,7 @@
 import ChatRepo
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 @MainActor
 protocol ShareLinkDialogRouting {

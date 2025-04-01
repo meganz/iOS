@@ -1,9 +1,9 @@
 import Combine
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAPermissions
-import MEGAPresentation
 
 @MainActor
 protocol HomeUploadingViewModelInputs {

@@ -1,10 +1,10 @@
 import Chat
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 class MeetingParticipantsLayoutViewModelTests: XCTestCase {

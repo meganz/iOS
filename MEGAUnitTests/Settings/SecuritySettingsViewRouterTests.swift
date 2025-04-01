@@ -1,7 +1,6 @@
+@testable import MEGA
 import MEGATest
 import XCTest
-
-@testable import MEGA
 
 final class SecuritySettingsViewRouterTests: XCTestCase {
     func test_build_returnsSecurityOptionsTableViewController() {

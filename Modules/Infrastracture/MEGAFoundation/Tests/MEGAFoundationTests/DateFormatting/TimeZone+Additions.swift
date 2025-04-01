@@ -1,7 +1,6 @@
 import Foundation
-import XCTest
-
 @testable import MEGAFoundation
+import XCTest
 
 final class TimeZone_Additions: XCTestCase {
     func test_TimeZoneGMT_shouldReturnZeroSecondsFromGMT() {

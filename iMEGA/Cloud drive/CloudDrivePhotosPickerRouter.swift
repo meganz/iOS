@@ -1,7 +1,7 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGAPresentation
 import MEGAUI
 
 protocol AssetUploader {

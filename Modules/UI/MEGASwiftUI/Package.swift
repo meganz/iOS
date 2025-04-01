@@ -25,7 +25,7 @@ let package = Package(
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../MEGAUI"),
         .package(path: "../../../Presentation/MEGAL10n"),
-        .package(path: "../../Presentation/MEGAPresentation"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../Infrastracture/MEGATest")
     ],
@@ -34,7 +34,7 @@ let package = Package(
             name: "MEGASwiftUI",
             dependencies: [
                 "MEGAUI",
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "MEGAFoundation",
                 "MEGAL10n",
                 "MEGADesignToken"

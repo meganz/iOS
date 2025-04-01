@@ -1,7 +1,7 @@
 import Chat
 import ChatRepo
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 

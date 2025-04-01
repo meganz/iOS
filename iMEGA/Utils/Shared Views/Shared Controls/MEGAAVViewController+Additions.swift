@@ -1,10 +1,10 @@
 import Combine
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASdk
 import MEGASDKRepo
 import MEGASwift

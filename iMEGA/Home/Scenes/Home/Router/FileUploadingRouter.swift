@@ -1,7 +1,7 @@
 import CoreServices
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGAUI
 import VisionKit
 

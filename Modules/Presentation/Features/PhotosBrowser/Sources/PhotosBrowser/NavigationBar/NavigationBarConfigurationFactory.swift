@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 struct NavigationBarConfigurationFactory {
     static func configuration(on displayMode: PhotosBrowserDisplayMode) -> NavigationBarConfigurationStrategy {

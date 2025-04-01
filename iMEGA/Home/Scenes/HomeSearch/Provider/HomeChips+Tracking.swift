@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 import Search
 
 extension AnalyticsTracking {

@@ -1,7 +1,7 @@
 import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 /// This class is responsible for checking and monitoring the limitations of the free tier users in a call.
 /// Note: we currently show limitations info for organisers and hosts

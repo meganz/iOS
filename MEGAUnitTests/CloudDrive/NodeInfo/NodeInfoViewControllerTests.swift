@@ -1,6 +1,6 @@
 @testable import MEGA
+import MEGAAppPresentationMock
 import MEGADomainMock
-import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 

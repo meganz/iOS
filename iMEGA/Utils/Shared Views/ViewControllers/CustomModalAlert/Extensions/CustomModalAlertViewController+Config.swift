@@ -1,7 +1,7 @@
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 
 extension CustomModalAlertViewController {
     func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ image: UIImage?, hasBonusButton: Bool = true, firstButtonTitle: String = Strings.Localizable.seePlans, dismissTitle: String = Strings.Localizable.dismiss, analyticsEvents: CustomModalAlertViewModel.CustomModalAlertViewAnalyticEvents? = nil) {

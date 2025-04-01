@@ -1,7 +1,7 @@
 import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 @MainActor
 final public class TermsAndPoliciesViewModel: ObservableObject {

@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 @objc final class AVViewModel: NSObject {
     private let videoPlayerScreenEvent = VideoPlayerScreenEvent()

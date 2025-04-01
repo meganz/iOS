@@ -1,7 +1,7 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
-import MEGAPresentation
 import MEGASwift
 import SwiftUI
 

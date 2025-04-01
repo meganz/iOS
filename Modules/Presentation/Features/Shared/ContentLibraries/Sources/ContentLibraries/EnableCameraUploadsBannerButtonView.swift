@@ -1,7 +1,7 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
-import MEGAAssets
 
 public struct EnableCameraUploadsBannerButtonView: View {
     private enum Constants {

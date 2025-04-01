@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 
 struct SecuritySettingsViewRouter: Routing {
     private weak var presenter: UINavigationController?

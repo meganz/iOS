@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 
 enum RegionListAction: ActionType {
     case onViewReady

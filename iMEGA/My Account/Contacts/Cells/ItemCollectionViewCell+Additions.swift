@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 import MEGASwift
 import MEGAUIKit
 

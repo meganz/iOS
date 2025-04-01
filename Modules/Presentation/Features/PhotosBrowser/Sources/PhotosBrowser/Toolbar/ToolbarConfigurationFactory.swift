@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 struct ToolbarConfigurationFactory {
     static func configuration(on displayMode: PhotosBrowserDisplayMode) -> ToolbarConfigurationStrategy {

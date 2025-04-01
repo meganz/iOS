@@ -1,9 +1,9 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 final class SlideShowOptionViewModelTests: XCTestCase {

@@ -1,6 +1,6 @@
 import Combine
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 
 public enum PhotosBrowserAction: ActionType {
     case onViewReady

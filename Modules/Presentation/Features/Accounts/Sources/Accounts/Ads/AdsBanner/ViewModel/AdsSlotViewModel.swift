@@ -1,7 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 import SwiftUI

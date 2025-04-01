@@ -1,6 +1,6 @@
 @testable import ContentLibraries
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import SwiftUI
 
 final class MockVideoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoaderProtocol, @unchecked Sendable {

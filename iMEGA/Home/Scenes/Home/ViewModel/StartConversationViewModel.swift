@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 enum StartConversationAction: ActionType {
     case viewDidLoad

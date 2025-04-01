@@ -1,7 +1,7 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 enum AddPhoneNumberAction: ActionType {
     case onViewReady

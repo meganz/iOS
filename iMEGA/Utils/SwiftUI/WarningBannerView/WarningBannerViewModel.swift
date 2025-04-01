@@ -1,6 +1,6 @@
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 
 enum WarningBannerType: CustomStringConvertible, Equatable {
     case noInternetConnection

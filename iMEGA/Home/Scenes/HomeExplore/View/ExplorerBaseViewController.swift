@@ -1,9 +1,9 @@
 import ChatRepo
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAPhotos
-import MEGAPresentation
 import MEGASDKRepo
 import MEGAUIKit
 

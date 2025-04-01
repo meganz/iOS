@@ -1,7 +1,7 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 

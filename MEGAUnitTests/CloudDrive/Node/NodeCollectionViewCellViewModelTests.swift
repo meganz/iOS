@@ -1,9 +1,9 @@
 import Combine
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASdk
 import MEGASDKRepoMock
 import XCTest

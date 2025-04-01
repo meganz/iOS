@@ -1,7 +1,7 @@
 import Accounts
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 import Settings
 import SwiftUI

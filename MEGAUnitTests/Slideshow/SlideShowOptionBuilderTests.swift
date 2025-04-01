@@ -1,7 +1,7 @@
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGAL10n
-import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 final class SlideShowOptionBuilderTests: XCTestCase {

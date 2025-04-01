@@ -1,7 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 
 final class ChatRoomParticipantsListViewModel: ObservableObject {

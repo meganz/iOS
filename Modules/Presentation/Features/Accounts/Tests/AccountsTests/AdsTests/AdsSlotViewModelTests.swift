@@ -2,10 +2,10 @@
 import AccountsMock
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASDKRepoMock
 import MEGASwift
 import MEGATest

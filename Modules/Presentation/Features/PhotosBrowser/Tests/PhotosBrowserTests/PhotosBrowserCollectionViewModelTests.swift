@@ -1,11 +1,9 @@
 import Combine
 import Foundation
-
-@testable @preconcurrency import PhotosBrowser
-
+@preconcurrency import MEGAAppPresentation
 import MEGADomain
-@preconcurrency import MEGAPresentation
 import MEGATest
+@testable @preconcurrency import PhotosBrowser
 import Testing
 
 struct PhotosBrowserCollectionViewModelTests {

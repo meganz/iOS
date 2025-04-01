@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 import UIKit
 
 enum SettingsAction: ActionType {

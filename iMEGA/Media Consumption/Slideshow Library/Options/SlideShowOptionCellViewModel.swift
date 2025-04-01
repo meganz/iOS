@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 final class SlideShowOptionCellViewModel: Identifiable, ObservableObject {
     let id: String

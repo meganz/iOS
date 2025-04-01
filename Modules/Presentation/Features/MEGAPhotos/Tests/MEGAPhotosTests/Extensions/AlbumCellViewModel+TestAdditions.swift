@@ -1,8 +1,8 @@
 import ContentLibraries
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import SwiftUI
 
 extension AlbumCellViewModel {

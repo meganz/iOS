@@ -1,9 +1,9 @@
 @preconcurrency import Combine
 import ContentLibraries
 @testable import MEGA
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 import MEGASDKRepoMock
 import XCTest
 
