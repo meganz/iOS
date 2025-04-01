@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 actor SpotlightContentIndexerActor {
     
@@ -8,6 +9,7 @@ actor SpotlightContentIndexerActor {
     private let nodeAttributeUseCase: any NodeAttributeUseCaseProtocol
     private let spotlightSearchableIndexUseCase: any SpotlightSearchableIndexUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     
     private enum Constants {
         static let favouritesId = "favourites"
@@ -16,12 +18,14 @@ actor SpotlightContentIndexerActor {
     init(favouritesUseCase: some FavouriteNodesUseCaseProtocol, 
          nodeAttributeUseCase: some NodeAttributeUseCaseProtocol,
          spotlightSearchableIndexUseCase: some SpotlightSearchableIndexUseCaseProtocol,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+         nodeUpdatesProvider: some NodeUpdatesProviderProtocol
     ) {
         self.favouritesUseCase = favouritesUseCase
         self.nodeAttributeUseCase = nodeAttributeUseCase
         self.spotlightSearchableIndexUseCase = spotlightSearchableIndexUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.nodeUpdatesProvider = nodeUpdatesProvider
     }
     
     func indexSearchableItems() async {
@@ -30,6 +34,7 @@ actor SpotlightContentIndexerActor {
             let items = try await fetchSearchableItems()
             try await spotlightSearchableIndexUseCase.indexSearchableItems(items)
             MEGALogDebug("[Spotlight] \(items.count) Favourites indexed")
+            await monitorNodesUpdates()
         } catch {
             MEGALogError("[Spotlight] Indexing favourites error: \(error.localizedDescription)")
         }
@@ -111,6 +116,7 @@ actor SpotlightContentIndexerActor {
     private func deIndex(node: NodeEntity) async {
         do {
             try await spotlightSearchableIndexUseCase.deleteSearchableItems(withIdentifiers: [node].map(\.base64Handle))
+            MEGALogDebug("[Spotlight] \(node.base64Handle) deindexed")
         } catch {
             MEGALogError("[Spotlight] Deindexing \(node.base64Handle) error: \(error.localizedDescription)")
         }
@@ -131,5 +137,11 @@ actor SpotlightContentIndexerActor {
             title: node.name,
             contentDescription: content.description,
             thumbnailData: content.thumbnailData)
+    }
+    
+    func monitorNodesUpdates() async {
+        for await nodeEntities in nodeUpdatesProvider.nodeUpdates {
+            await reindex(updatedNodes: nodeEntities)
+        }
     }
 }

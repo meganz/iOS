@@ -33,11 +33,10 @@ final class SpotlightIndexer: NSObject {
                     hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })),
             nodeAttributeUseCase: NodeAttributeUseCase(
                 repo: NodeAttributeRepository.newRepo),
-            spotlightSearchableIndexUseCase: spotlightSearchableIndexUseCase
+            spotlightSearchableIndexUseCase: spotlightSearchableIndexUseCase,
+            nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk)
         )
-        
         super.init()
-        sdk.add(self, queueType: .globalBackground)
     }
     
     @objc func indexFavourites() async {
@@ -65,14 +64,5 @@ final class SpotlightIndexer: NSObject {
             return false
         }
         return true
-    }
-}
-
-extension SpotlightIndexer: MEGAGlobalDelegate {
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        Task {
-            guard let nodeEntities = nodeList?.toNodeEntities() else { return }
-            await contentIndexerActor.reindex(updatedNodes: nodeEntities)
-        }
     }
 }
