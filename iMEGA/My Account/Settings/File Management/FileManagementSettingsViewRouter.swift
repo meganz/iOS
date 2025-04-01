@@ -19,7 +19,7 @@ final class FileManagementSettingsViewRouter: FileManagementRouter {
     }
     
     func build() -> UIViewController {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFileManagementSettings) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newSetting) {
             let viewModel = FileManagementViewModel(
                 cacheUseCase: CacheUseCase(cacheRepository: CacheRepository.newRepo),
                 offlineUseCase: OfflineUseCase(

@@ -9,10 +9,8 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case nodeTags = "Node Tags"
     case webclientSubscribersCancelSubscription = "Webclient subscribers cancel subscription flow"
     case multipleOptionsForCancellationSurvey = "Multiple Options for Cancellation Survey"
-    case newCallsSetting = "New Calls Setting"
-    case newFileManagementSettings = "New File Management Settings"
-    case newChatSetting = "New Chat Setting"
     case searchByNodeTags = "Search By Node Tags"
+    case newSetting = "New Setting"
     case noteToSelfChat = "Note to Self Chat"
 
     /// The keys that are ready for production release, but not yet removed from code.

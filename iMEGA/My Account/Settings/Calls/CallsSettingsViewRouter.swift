@@ -15,7 +15,7 @@ final class CallsSettingsViewRouter: Routing {
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.shared))
         let viewModel = CallsSettingsViewModel(analyticsEventUseCase: analyticsEventUseCase)
         
-        return if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newCallsSetting) {
+        return if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newSetting) {
             UIHostingController(rootView: CallsSettingsView(viewModel: viewModel))
         } else {
             UIHostingController(rootView: LegacyCallsSettingsView(viewModel: viewModel))

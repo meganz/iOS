@@ -15,7 +15,7 @@ final class ChatSettingsViewRouter: Routing {
     }
     
     func build() -> UIViewController {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newChatSetting) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newSetting) {
             let viewModel = ChatSettingsViewModel(
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                 chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),

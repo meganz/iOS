@@ -28,6 +28,6 @@ extension FileManagementTableViewController {
     }
     
     @objc func isNewFileManagementSettingsEnabled() -> Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFileManagementSettings)
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newSetting)
     }
 }
