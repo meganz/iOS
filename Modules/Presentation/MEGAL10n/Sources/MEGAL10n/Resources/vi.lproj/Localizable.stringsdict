@@ -2644,10 +2644,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d item unhidden</string>
         <key>other</key>
-        <string>%d items unhidden</string>
+        <string>%d mục đã bỏ ẩn</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
@@ -2730,10 +2728,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email vào ngày [date], không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong tài khoản của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường dung lượng. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2746,10 +2742,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email nhiều lần, không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong tài khoản của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường dung lượng. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2762,10 +2756,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email, không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong tài khoản của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường dung lượng. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>

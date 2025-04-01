@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Video fortsetzen?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="%1$s wird bei %2$s fortgesetzt";
+"video.alert.resumeVideo.message"="„%1$s“ wird bei %2$s fortgesetzt";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Fortsetzen";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="Fehler";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blockiert";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="Inaktiv";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="Aktion erforderlich";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Unbekannter Fehler.";
 /* Device Center backup error: Filesystem not supported */

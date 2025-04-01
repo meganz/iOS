@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="继续播放？";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="%1$s将从%2$s开始继续播放";
+"video.alert.resumeVideo.message"="“%1$s”将从%2$s继续播放";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="恢复";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="错误";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="已锁定";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="非活跃";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="需要注意";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="未知错误。";
 /* Device Center backup error: Filesystem not supported */
@@ -4579,7 +4583,7 @@
 /* Hidden files and folders onboarding content item one title */
 "onboarding.hiddenFilesAndFolders.content.item.one.title"="隐藏文件和文件夹";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="轻松将云盘中的敏感文件设置为私密不可见。默认情况下，隐藏的文件不会在您的云盘、照片和近期中显示。";
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="轻松控制可见性";
 /* Hidden files and folders onboarding content item two message */

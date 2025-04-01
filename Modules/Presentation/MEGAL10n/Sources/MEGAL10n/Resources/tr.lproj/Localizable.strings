@@ -651,7 +651,7 @@
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Full access";
 /* Title of the Settings section */
-"settingsTitle"="Settings";
+"settingsTitle"="Ayarlar";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera uploads";
 /* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
@@ -1377,9 +1377,9 @@
 /* Content of the notification when there is unknown activity on the Chat */
 "You may have new messages"="You have new messages";
 /* Notification text body shown when you have received a contact request */
-"contactRequest"="Contact request";
+"contactRequest"="iletişim isteği";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="New shared folder";
+"newSharedFolder"="Yeni paylaşılan klasör";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Are you sure you want to stop the signup process?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
@@ -2443,7 +2443,7 @@
 /* Title of Favourites explorer view card on Home */
 "home.favourites.title"="Favourites";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Home";
+"Home"="Ana sayfa";
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="Docs";
 /* Message shown when a link is shared with separated key */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Resume video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="%1$s will resume from %2$s";
+"video.alert.resumeVideo.message"="“%1$s“ will resume from %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Resume";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="Error";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blocked";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="Inactive";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="Attention needed";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Unknown error.";
 /* Device Center backup error: Filesystem not supported */

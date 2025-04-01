@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Reiei videoclipul?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="%1$s va fi reluat de la %2$s";
+"video.alert.resumeVideo.message"="“%1$s“ will resume from %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Reia";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="Eroare";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blocat";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="Inactiv";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="Attention needed";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Eroare necunoscută.";
 /* Device Center backup error: Filesystem not supported */

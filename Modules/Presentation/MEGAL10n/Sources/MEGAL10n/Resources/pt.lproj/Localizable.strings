@@ -443,7 +443,7 @@
 /* Success message shown when you have copied 1 file and {1+} folders */
 "copyFileFoldersMessage"="1 arquivo e %d pastas copiados";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%ds arquivos e 1 pasta copiados";
+"copyFilesFolderMessage"="%d arquivos e 1 pasta copiados";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] arquivos e [B] pastas copiados";
 /* Title for the action that allows you to rename a file or folder */
@@ -847,7 +847,7 @@
 /* Confirmation message displayed after clearing offline files */
 "settings.fileManagement.clearOfflineFiles.done.message"="Arquivos offline deletados";
 /* File versioning menu subTitle */
-"settings.fileManagement.fileVersioning.menu.subtitle"="Armazena várias versões dos seus arquivos. Desativar esta configuração não vai impedir que os seus contatos adicionem novas versões em pastas compartilhadas.";
+"settings.fileManagement.fileVersioning.menu.subtitle"="Permite armazenar várias versões dos seus arquivos. Desativar esta configuração não vai impedir que os seus contatos adicionem novas versões em pastas compartilhadas.";
 /* File versioning button title to delete all older version of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.button"="Deletar todas as versões anteriores de arquivos";
 /* File versioning alert title for deleting older versions of files */
@@ -1831,7 +1831,7 @@
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Visualização em miniaturas";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Visualização de página";
+"Page View"="Visualização em página";
 /* There are no notifications to display. */
 "No notifications"="Não há notificações";
 /* The header of a notification related to payments */
@@ -1891,13 +1891,13 @@
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="[X] itens foram eliminados da pasta compartilhada";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
-"Your payment for the %1 plan was received."="O seu pagamento para o plano %1 foi recebido.";
+"Your payment for the %1 plan was received."="O seu pagamento do plano %1 foi recebido.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Não recebemos o pagamento do plano %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="O seu plano Pro expirará amanhã.";
+"Your PRO membership plan will expire in 1 day."="O seu plano Pro vai expirar amanhã.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="O seu plano Pro expirará em %1 dias.";
+"Your PRO membership plan will expire in %1 days."="O seu plano Pro vai expirar em %1 dias.";
 /* The professional pricing plan which the user was on expired one day ago. */
 "Your PRO membership plan expired 1 day ago"="O seu plano Pro expirou há 1 dia";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
@@ -1909,7 +1909,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque você já atingiu o seu limite de armazenamento";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Permitir que seus contatos vejam o seu último acesso ao MEGA";
+"Allow your contacts to see the last time you were active on MEGA."="Permitir que os seus contatos vejam o seu último acesso ao MEGA";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Último acesso há muito tempo atrás";
 /*  */
@@ -1965,7 +1965,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Alterado por %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@”  e mais %ld";
+"home.recent.multipleFileTitle"="“%@” e mais %ld";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Criado por %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2107,7 +2107,7 @@
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Remover a seleção";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
-"No Photos or Videos"="Não há Fotos ou Vídeos";
+"No Photos or Videos"="Não há fotos ou vídeos";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Ver na pasta";
 /* Error message shown when opening a link with an account that not corresponds to the link */
@@ -2995,7 +2995,7 @@
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Descreva o problema usando um mínimo de 10 caracteres";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Não foi possível conectar-se à internet. Verifique a sua conexão e tente novamente.";
+"general.NoIntenerConnection"="Não foi possível conectar-se à Internet. Verifique a sua conexão e tente novamente.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Mostrar na vista principal";
 /* Label indicating storage over quota */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Retomar o vídeo?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="%1$s será retomado a partir de %2$s";
+"video.alert.resumeVideo.message"="“%1$s” será retomado a partir de %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Continuar";
 /* Alert button title that will start playing the video from the beginning */
@@ -3450,6 +3450,10 @@
 "device.center.backup.error.status.message"="Erro";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Bloqueado";
+/* Device Center backup inactive status */
+"device.center.backup.inactive.status.message"="Inativo";
+/* Device Center device attention needed status */
+"device.center.device.attentionNeeded.status.message"="Atenção necessária";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Erro desconhecido.";
 /* Device Center backup error: Filesystem not supported */
@@ -4561,7 +4565,7 @@
 /* Label title in chat media image quality for uploads */
 "settings.chat.mediaQuality.image.title"="Qualidade da imagem";
 /* Description of Automatic Image Quality option */
-"settings.chat.mediaQuality.image.option.auto"="Envia imagens otimizadas quando o dispositivo estiver utilizando dados móveis, e imagens em tamanho original quando o dispositivo estiver utilizando Wi-Fi";
+"settings.chat.mediaQuality.image.option.auto"="Permite enviar imagens otimizadas quando o dispositivo estiver utilizando dados móveis, e imagens em tamanho original quando o dispositivo estiver utilizando Wi-Fi";
 /* Description of Optimised Image Quality option */
 "settings.chat.mediaQuality.image.option.optimised"="Sempre enviar imagens otimizadas";
 /* Description of High Image Quality option */
