@@ -11,7 +11,7 @@ public struct MockEventRepository: EventRepositoryProtocol {
         (stream, continuation) = AsyncStream.makeStream(of: EventEntity.self)
     }
     
-    public var event: AnyAsyncSequence<EventEntity> {
+    public var eventUpdates: AnyAsyncSequence<EventEntity> {
         stream.eraseToAnyAsyncSequence()
     }
     

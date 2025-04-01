@@ -14,7 +14,7 @@ public struct RequestStatProgressUseCase<T: EventRepositoryProtocol>: RequestSta
     
     public var requestStatsProgress: AnyAsyncSequence<EventEntity> {
         repo
-            .event
+            .eventUpdates
             .filter { $0.type == .reqStatProgress }
             .eraseToAnyAsyncSequence()
     }

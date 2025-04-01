@@ -5,6 +5,7 @@ import MEGASdk
 final class MEGAUpdateHandler: NSObject, Sendable {
     typealias NodesUpdateHandler = @Sendable ([NodeEntity]) -> Void
     typealias UsersUpdateHandler = @Sendable ([UserEntity]) -> Void
+    typealias EventHandler = @Sendable (EventEntity) -> Void
     
     typealias RequestStartHandler = @Sendable (RequestEntity) -> Void
     typealias RequestUpdateHandler = @Sendable (RequestEntity) -> Void
@@ -15,6 +16,7 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     
     let onNodesUpdate: NodesUpdateHandler?
     let onUsersUpdate: UsersUpdateHandler?
+    let onEvent: EventHandler?
     
     let onRequestStart: RequestStartHandler?
     let onRequestUpdate: RequestUpdateHandler?
@@ -26,6 +28,7 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     init(
         onNodesUpdate: NodesUpdateHandler? = nil,
         onUsersUpdate: UsersUpdateHandler? = nil,
+        onEvent: EventHandler? = nil,
         onRequestStart: RequestStartHandler? = nil,
         onRequestUpdate: RequestUpdateHandler? = nil,
         onRequestTemporaryError: RequestTemporaryErrorHandler? = nil,
@@ -34,6 +37,7 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     ) {
         self.onNodesUpdate = onNodesUpdate
         self.onUsersUpdate = onUsersUpdate
+        self.onEvent = onEvent
         self.onRequestStart = onRequestStart
         self.onRequestUpdate = onRequestUpdate
         self.onRequestTemporaryError = onRequestTemporaryError
