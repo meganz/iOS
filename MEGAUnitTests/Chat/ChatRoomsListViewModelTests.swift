@@ -686,6 +686,15 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertEqual(router.presentScheduleMeeting_calledTimes, 1)
     }
     
+    @MainActor
+    func test_myAvatarIsTapped_userProfileShouldBePresented() {
+        let router = MockChatRoomsListRouter()
+        let viewModel = makeChatRoomsListViewModel(router: router)
+        
+        viewModel.openUserProfile()
+        XCTAssertEqual(router.openUserProfile_calledTimes, 1)
+    }
+    
     // MARK: - Private methods
     
     private func pastDate(bySubtractHours numberOfHours: Int) -> Date? {
@@ -743,7 +752,12 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
             tracker: tracker,
-            urlOpener: {_ in }
+            urlOpener: {_ in },
+            myAvatarViewModel: MyAvatarViewModel(
+                megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
+                userImageUseCase: MockUserImageUseCase(),
+                megaHandleUseCase: MockMEGAHandleUseCase()
+            )
         )
         return sut
     }
@@ -773,6 +787,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var showSuccessMessage_calledTimes = 0
     var editMeeting_calledTimes = 0
     private(set) var hideAds_calledTimes = 0
+    var openUserProfile_calledTimes = 0
     
     var showArchivedChatRoomsCompletion: (() -> Void)?
     
@@ -871,5 +886,9 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     
     func hideAds() {
         hideAds_calledTimes += 1
+    }
+    
+    func openUserProfile() {
+        openUserProfile_calledTimes += 1
     }
 }

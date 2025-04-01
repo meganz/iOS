@@ -82,7 +82,6 @@ public struct CMConfigEntity: Sendable {
     public var chatStatus: ChatStatusEntity
     public var shouldStartMeeting: Bool
     public var shouldJoiningMeeting: Bool
-    public var shouldScheduleMeeting: Bool
     public var sharedLinkStatus: SharedLinkStatusEntity?
     public var isArchivedChatsVisible: Bool = false
     public var isMediaFile: Bool = false
@@ -131,7 +130,6 @@ public struct CMConfigEntity: Sendable {
         chatStatus: ChatStatusEntity = .invalid,
         shouldStartMeeting: Bool = false,
         shouldJoiningMeeting: Bool = false,
-        shouldScheduleMeeting: Bool = false,
         sharedLinkStatus: SharedLinkStatusEntity? = nil,
         isArchivedChatsVisible: Bool = false,
         isMediaFile: Bool = false,
@@ -179,7 +177,6 @@ public struct CMConfigEntity: Sendable {
         self.chatStatus = chatStatus
         self.shouldStartMeeting = shouldStartMeeting
         self.shouldJoiningMeeting = shouldJoiningMeeting
-        self.shouldScheduleMeeting = shouldScheduleMeeting
         self.sharedLinkStatus = sharedLinkStatus
         self.isArchivedChatsVisible = isArchivedChatsVisible
         self.isMediaFile = isMediaFile

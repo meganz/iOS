@@ -44,7 +44,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         meetingContextMenuDelegate: self,
         createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
     )
-    private var myAvatarManager: MyAvatarManager?
+    let myAvatarViewModel: MyAvatarViewModel
     
     lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
     lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
@@ -133,8 +133,11 @@ final class ChatRoomsListViewModel: ObservableObject {
         (currentTip == .startMeeting || (currentTip == .recurringOrStartMeeting && !presentingRecurringMeetingTip))
     }
     
-    var refreshContextMenuBarButton: (@MainActor () -> Void)?
-    
+    @Published var contextMenuConfiguration: CMConfigEntity?
+    var addMeetingsMenuConfiguration: CMConfigEntity {
+        CMConfigEntity(menuType: .menu(type: .meeting))
+    }
+
     private let emptyViewStateFactory = ChatRoomsEmptyViewStateFactory()
     
     let urlOpener: (URL) -> Void
@@ -160,7 +163,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        urlOpener: @escaping (URL) -> Void
+        urlOpener: @escaping (URL) -> Void,
+        myAvatarViewModel: MyAvatarViewModel
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -182,6 +186,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         self.urlOpener = urlOpener
+        self.myAvatarViewModel = myAvatarViewModel
         
         configureTitle()
         initNoteToSelfChat()
@@ -221,6 +226,10 @@ final class ChatRoomsListViewModel: ObservableObject {
                 bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : []
             )
         }
+    }
+    
+    func openUserProfile() {
+        router.openUserProfile()
     }
     
     func startMeeting() {
@@ -309,16 +318,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         cancelLoadingTask()
         cancelSearchTask()
         cancelMeetingTipTask()
-    }
-    
-    func contextMenuConfiguration() -> CMConfigEntity {
-        CMConfigEntity(
-            menuType: .menu(type: .chat),
-            isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
-            timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND ?? "",
-            chatStatus: chatPresenceUseCase.onlineStatus(),
-            isArchivedChatsVisible: hasArchivedChats
-        )
     }
     
     func selectChatMode(_ mode: ChatViewMode) {
@@ -809,6 +808,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             }, receiveValue: { [weak self] statusForUser in
                 guard let self, let myHandle = self.accountUseCase.currentUserHandle, statusForUser.0 == myHandle else { return }
                 chatStatus = statusForUser.1
+                refreshContextMenu()
             })
             .store(in: &subscriptions)
     }
@@ -892,7 +892,16 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func refreshContextMenu() {
-        Task { @MainActor in refreshContextMenuBarButton?() }
+        Task { @MainActor in
+            contextMenuConfiguration = CMConfigEntity(
+                menuType: 
+                        .menu(type: .chat),
+                isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
+                timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND ?? "",
+                chatStatus: chatPresenceUseCase.onlineStatus(),
+                isArchivedChatsVisible: hasArchivedChats
+            )
+        }
     }
     
     private func fetchScheduledMeetingTipRecord() {
@@ -1013,24 +1022,6 @@ extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
     private func shouldCancelActionIfCallInProgress(_ action: MeetingActionEntity) -> Bool {
         // It is not allowed to start o join with link another meeting if an active call is in progress
         chatUseCase.existsActiveCall() && [.startMeeting, .joinMeeting].contains(action)
-    }
-}
-
-// MARK: - MyAvatarPresenterProtocol
-extension ChatRoomsListViewModel: MyAvatarPresenterProtocol {
-    func setupMyAvatar(barButton: UIBarButtonItem) {
-        myAvatarBarButton = barButton
-        refreshMyAvatar()
-    }
-    
-    func configureMyAvatarManager() {
-        guard let navController = router.navigationController else { return }
-        myAvatarManager = MyAvatarManager(navigationController: navController, delegate: self)
-        myAvatarManager?.setup()
-    }
-    
-    func refreshMyAvatar() {
-        myAvatarManager?.refreshMyAvatar()
     }
 }
 

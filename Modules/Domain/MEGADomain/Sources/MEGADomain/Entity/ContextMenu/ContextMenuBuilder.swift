@@ -36,7 +36,6 @@ public final class ContextMenuBuilder {
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
     private var chatStatus: ChatStatusEntity = .invalid
-    private var shouldScheduleMeeting = false
     private var sharedLinkStatus: SharedLinkStatusEntity = .unavailable
     private var isArchivedChatsVisible: Bool = false
     private var isMediaFile: Bool = false
@@ -229,11 +228,6 @@ public final class ContextMenuBuilder {
     
     public func setChatStatus(_ chatStatus: ChatStatusEntity) -> ContextMenuBuilder {
         self.chatStatus = chatStatus
-        return self
-    }
-    
-    public func setShouldScheduleMeeting(_ shouldScheduleMeeting: Bool) -> ContextMenuBuilder {
-        self.shouldScheduleMeeting = shouldScheduleMeeting
         return self
     }
     
@@ -581,7 +575,11 @@ public final class ContextMenuBuilder {
     private func meetingMenu() -> CMEntity {
         CMEntity(
             displayInline: true,
-            children: shouldScheduleMeeting ? [startMeeting, joinMeeting, scheduleMeeting] : [startMeeting, joinMeeting]
+            children: [
+                startMeeting,
+                joinMeeting,
+                scheduleMeeting
+            ]
         )
     }
     
