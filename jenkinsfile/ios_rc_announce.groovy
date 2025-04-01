@@ -34,7 +34,7 @@ pipeline {
         success {
             script {
                 def message = ":rocket: The RC announcement was successful"
-                message = env.gitlabTriggerPhrase == 'jira_create_version' ? ":rocket: Successfully created the release version in Jira"
+                message = env.gitlabTriggerPhrase == 'jira_create_version' ? ":rocket: Successfully created the release version in Jira" : message
                 statusNotifier.postSuccess(message, env.MEGA_IOS_PROJECT_ID)
             }
         }
