@@ -1,7 +1,7 @@
 @testable import ContentLibraries
+@testable import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomainMock
-@testable import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 final class ThumbnailLoaderFactoryTests: XCTestCase {

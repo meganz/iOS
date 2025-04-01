@@ -1,8 +1,8 @@
 @testable import MEGA
 @preconcurrency import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGATest
 import Testing
 

@@ -2,9 +2,9 @@ import AsyncAlgorithms
 @preconcurrency import Combine
 import ContentLibraries
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASwiftUI
 
 @MainActor

@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI

@@ -1,9 +1,9 @@
 @testable import Accounts
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGATest
 import Testing
 

@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI

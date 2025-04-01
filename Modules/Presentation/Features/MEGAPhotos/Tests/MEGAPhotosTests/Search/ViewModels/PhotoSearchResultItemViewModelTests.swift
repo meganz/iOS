@@ -1,10 +1,10 @@
 import Combine
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 @testable import MEGAPhotos
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASwift
 import SwiftUI
 import Testing

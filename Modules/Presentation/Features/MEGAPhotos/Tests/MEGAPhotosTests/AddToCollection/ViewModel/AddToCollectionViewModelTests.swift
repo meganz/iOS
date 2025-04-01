@@ -1,9 +1,9 @@
 import ContentLibraries
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 @testable import MEGAPhotos
-import MEGAPresentationMock
 import Testing
 
 @Suite("AddToCollectionViewModel Tests")

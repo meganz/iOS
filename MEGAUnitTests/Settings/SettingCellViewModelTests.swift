@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGAPresentation
+import MEGAAppPresentation
 import Testing
 
 @MainActor

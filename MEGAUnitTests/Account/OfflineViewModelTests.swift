@@ -1,13 +1,12 @@
 import Combine
 import CoreData
+@testable import MEGA
 import MEGADomain
 import MEGADomainMock
 import MEGAFoundation
 import MEGASwift
 import MEGATest
 import XCTest
-
-@testable import MEGA
 
 final class OfflineViewModelTests: XCTestCase {
     private let relativePath = "relative/path"

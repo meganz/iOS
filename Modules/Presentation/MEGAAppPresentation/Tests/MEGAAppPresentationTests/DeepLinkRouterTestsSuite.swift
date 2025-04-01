@@ -1,5 +1,5 @@
-@testable import MEGAPresentation
-import MEGAPresentationMock
+@testable import MEGAAppPresentation
+import MEGAAppPresentationMock
 import Testing
 
 @Suite("Deep Link Router Tests - Verifies app and App Store opening behavior based on deep links and in-app navigation.")

@@ -1,8 +1,8 @@
 import Combine
 @testable import ContentLibraries
+import MEGAAppPresentation
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
 import XCTest
 
 final class PhotoLibraryFilterViewModelTest: XCTestCase {

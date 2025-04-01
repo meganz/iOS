@@ -1,5 +1,5 @@
 import DeviceCenter
-import MEGAPresentation
+import MEGAAppPresentation
 import SwiftUI
 
 protocol ResourceInfoViewRouting: Routing {

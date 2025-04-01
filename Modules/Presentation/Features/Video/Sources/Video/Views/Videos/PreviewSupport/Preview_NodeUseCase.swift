@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASwift
 
 public final class Preview_NodeUseCase: NodeUseCaseProtocol {

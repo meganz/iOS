@@ -1,7 +1,7 @@
+import MEGAAppPresentation
 import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
-import MEGAPresentation
 import MEGAUIComponent
 import SwiftUI
 

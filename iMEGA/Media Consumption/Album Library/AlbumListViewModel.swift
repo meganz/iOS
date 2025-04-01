@@ -2,9 +2,9 @@ import AsyncAlgorithms
 import Combine
 import ContentLibraries
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI

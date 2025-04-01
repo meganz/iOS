@@ -1,9 +1,9 @@
 import ContactsUI
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGAPresentation
 import MessageUI
 import UIKit
 

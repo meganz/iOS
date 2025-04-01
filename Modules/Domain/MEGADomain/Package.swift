@@ -21,7 +21,7 @@ let package = Package(
             targets: ["MEGADomainMock"])
     ],
     dependencies: [
-        .package(path: "../../Infrastracture/MEGASwift"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")

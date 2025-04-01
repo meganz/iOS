@@ -1,8 +1,8 @@
 import ChatRepo
 import Combine
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASwift
 
 protocol CallsCoordinatorFactoryProtocol {

@@ -1,8 +1,8 @@
 import AsyncAlgorithms
 import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASwift
 
 @MainActor

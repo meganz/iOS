@@ -1,8 +1,8 @@
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 final class ChatRoomLinkViewModel: ObservableObject {
     private let router: any MeetingInfoRouting

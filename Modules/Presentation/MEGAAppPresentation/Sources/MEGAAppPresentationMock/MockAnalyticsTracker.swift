@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 import MEGASwift
 
 public final class MockTracker: AnalyticsTracking, @unchecked Sendable {

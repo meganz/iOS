@@ -1,5 +1,4 @@
 @testable import MEGAFoundation
-
 import XCTest
 
 // These are simple tests, and it's hard to test the actual functionality of os_signpost

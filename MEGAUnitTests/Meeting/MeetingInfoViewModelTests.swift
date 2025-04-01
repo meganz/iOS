@@ -1,9 +1,9 @@
 import Combine
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 import MEGATest
 import XCTest
 

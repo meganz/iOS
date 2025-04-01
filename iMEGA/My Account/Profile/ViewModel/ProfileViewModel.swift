@@ -2,8 +2,8 @@ import Accounts
 import Combine
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 
 enum TwoFactorAuthStatus: Int {

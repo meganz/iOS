@@ -1,9 +1,9 @@
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGAPresentation
 
 enum MeetingCreatingViewAction: ActionType {
     case onViewReady

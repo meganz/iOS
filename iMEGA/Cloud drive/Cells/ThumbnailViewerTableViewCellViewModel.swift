@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 @MainActor
 @objc final class ThumbnailViewerTableViewCellViewModel: NSObject {

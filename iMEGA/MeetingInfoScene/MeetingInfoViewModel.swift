@@ -1,8 +1,8 @@
 import ChatRepo
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import SwiftUI
 
 @MainActor

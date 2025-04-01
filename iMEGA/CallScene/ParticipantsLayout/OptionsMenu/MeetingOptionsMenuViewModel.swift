@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 enum MeetingOptionsMenuAction: ActionType {
     case onViewReady

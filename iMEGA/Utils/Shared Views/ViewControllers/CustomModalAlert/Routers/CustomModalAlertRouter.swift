@@ -1,7 +1,7 @@
 import Accounts
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 @objc enum CustomModalAlertMode: Int {
     case storageEvent = 0

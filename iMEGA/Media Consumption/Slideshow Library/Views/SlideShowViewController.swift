@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
-import MEGAPresentation
 import UIKit
 
 protocol SlideShowInteraction {

@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 final class UsageViewRouter: Routing {
     private let accountUseCase: any AccountUseCaseProtocol

@@ -1,8 +1,8 @@
 import DeviceCenter
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 protocol RenameViewRouting: Routing, Sendable {
     func renamingFinished(with result: Result<Void, any Error>)

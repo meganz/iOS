@@ -1,10 +1,10 @@
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
-import MEGAPresentation
 import SwiftUI
 
 @MainActor

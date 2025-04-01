@@ -1,9 +1,8 @@
 @testable import MEGA
-
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASwift
 import MEGATest
 import Testing

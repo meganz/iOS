@@ -1,3 +1,4 @@
+@testable import MEGA
 import MEGADomain
 import MEGADomainMock
 import MEGASDKRepo
@@ -5,8 +6,6 @@ import MEGASDKRepoMock
 import MEGASwift
 import Testing
 import XCTest
-
-@testable import MEGA
 
 final class AccountRepositoryTests: XCTestCase {
     private let urlPath = "https://mega.nz"

@@ -24,7 +24,7 @@ let package = Package(
         .package(path: "../../../Infrastructure/MEGASwift"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Presentation/MEGAAssets"),
         .package(path: "../Shared/ContentLibraries"),
@@ -37,7 +37,7 @@ let package = Package(
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGADomain",
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "MEGASwift",
                 "MEGAL10n",
                 "MEGAAssets",
@@ -51,7 +51,7 @@ let package = Package(
                 "MEGAPhotos",
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
-                .product(name: "MEGAPresentationMock", package: "MEGAPresentation")
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
             ],
             swiftSettings: settings)
     ],

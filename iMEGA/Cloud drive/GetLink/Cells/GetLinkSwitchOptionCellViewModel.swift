@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 
 struct GetLinkSwitchOptionCellViewModel: GetLinkCellViewModelType {
     let type: GetLinkCellType

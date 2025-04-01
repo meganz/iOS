@@ -1,8 +1,8 @@
 import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
-import MEGAPresentation
 import MEGASDKRepo
 
 enum MediaDiscoveryAction: ActionType {

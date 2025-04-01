@@ -3,7 +3,6 @@ import MEGADomain
 import MEGADomainMock
 import MEGASDKRepoMock
 import MEGASwift
-
 import XCTest
 
 final class CloudDriveDownloadTransfersListenerTests: XCTestCase {

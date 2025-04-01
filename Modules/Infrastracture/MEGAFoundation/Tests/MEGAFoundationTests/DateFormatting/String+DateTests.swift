@@ -1,7 +1,6 @@
 import Foundation
-import XCTest
-
 @testable import MEGAFoundation
+import XCTest
 
 final class String_DateTests: XCTestCase {
     func test_date_validISO8601String_returnsCorrectDate() throws {

@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGAPresentation
+import MEGAAppPresentation
 
 extension Routing {
     func build() -> UIViewController { UIViewController() }

@@ -1,9 +1,9 @@
 @testable import ContentLibraries
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGAAssets
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGATest
 import SwiftUI
 import XCTest

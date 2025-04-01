@@ -1,8 +1,8 @@
 import Chat
 import ChatRepo
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 
 extension ChatViewController {

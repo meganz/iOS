@@ -1,7 +1,7 @@
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASwiftUI
 
 enum SlideShowAction: ActionType {

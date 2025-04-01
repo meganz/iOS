@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 
 public enum GetLinkCellType: Sendable {
     case info

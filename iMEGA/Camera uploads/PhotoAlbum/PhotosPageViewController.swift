@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 import UIKit
 
 final class PhotosPageViewController: UIPageViewController {

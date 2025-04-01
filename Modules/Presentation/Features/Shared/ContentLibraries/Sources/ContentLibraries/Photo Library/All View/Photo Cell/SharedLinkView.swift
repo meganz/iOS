@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGAAssets
-import MEGAPresentation
 import SwiftUI
 
 public struct SharedLinkView: View {

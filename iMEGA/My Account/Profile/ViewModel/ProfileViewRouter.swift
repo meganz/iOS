@@ -1,6 +1,6 @@
 import Accounts
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 
 protocol ProfileViewRouting: Routing {

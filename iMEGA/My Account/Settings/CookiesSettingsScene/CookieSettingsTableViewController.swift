@@ -1,7 +1,7 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
-import MEGAPresentation
 import MEGASwiftUI
 
 class CookieSettingsTableViewController: UITableViewController {

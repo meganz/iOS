@@ -1,7 +1,7 @@
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 @MainActor
 final class NodeDescriptionCellControllerModel {

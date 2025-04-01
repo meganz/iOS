@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 
 public struct VideoPlaylistCellPreviewEntity: Sendable {
     public let thumbnail: VideoPlaylistThumbnail

@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 extension DIContainer {
     static let timelineEvent = TimelineTabEvent()

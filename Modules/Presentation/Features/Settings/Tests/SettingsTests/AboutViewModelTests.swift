@@ -1,9 +1,8 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import XCTest
-
 @testable import Settings
+import XCTest
 
 final class AboutViewModeTests: XCTestCase {
     private var preferenceUC: MockPreferenceUseCase!

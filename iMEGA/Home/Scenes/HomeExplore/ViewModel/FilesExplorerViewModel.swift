@@ -1,7 +1,7 @@
 import AsyncAlgorithms
+import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
-import MEGAPresentation
 import MEGASDKRepo
 
 enum FilesExplorerAction: ActionType {

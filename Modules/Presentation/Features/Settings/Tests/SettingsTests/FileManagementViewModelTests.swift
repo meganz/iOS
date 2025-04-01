@@ -1,8 +1,7 @@
 import MEGADomain
 import MEGADomainMock
-import Testing
-
 @testable import Settings
+import Testing
 
 @MainActor
 @Suite("FileManagementViewModel Tests")

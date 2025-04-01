@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 import MEGASwift
 
 public final class MockFeatureFlagProvider: FeatureFlagProviderProtocol, @unchecked Sendable {

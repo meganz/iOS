@@ -23,7 +23,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../../UI/MEGAUIKit"),
         .package(path: "../../../Infrastracture/MEGATest"),
@@ -35,7 +35,7 @@ let package = Package(
             name: "DeviceCenter",
             dependencies: [
                 "MEGADomain",
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "MEGASwiftUI",
                 "MEGAL10n",
                 "MEGAUIKit",

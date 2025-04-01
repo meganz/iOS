@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 enum CreateTextFileAlertViewAction: ActionType {
     case createTextFile(_ fileName: String)

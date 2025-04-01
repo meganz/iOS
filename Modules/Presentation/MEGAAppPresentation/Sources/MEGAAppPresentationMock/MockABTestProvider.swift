@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 public final class MockABTestProvider: ABTestProviderProtocol {
     private let list: [ABTestFlagKey: ABTestVariant]

@@ -1,8 +1,8 @@
 @preconcurrency import Combine
 @testable import ContentLibraries
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 import MEGASwift
 import SwiftUI
 import XCTest

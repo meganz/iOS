@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 import UIKit
 
 public extension UIAlertController {

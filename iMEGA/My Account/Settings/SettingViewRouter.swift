@@ -1,8 +1,8 @@
 import Accounts
 import ChatRepo
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASDKRepo
 import Settings
 import UIKit

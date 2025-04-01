@@ -1,7 +1,7 @@
 import ContentLibraries
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import SwiftUI
 @testable import Video
 import XCTest

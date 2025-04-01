@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 
 enum EnterMeetingLinkViewAction: ActionType {
     case didTapJoinButton(String)

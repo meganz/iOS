@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 @objc final class PhotoBrowserViewModel: NSObject {
     

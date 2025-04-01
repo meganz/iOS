@@ -1,10 +1,10 @@
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADesignToken
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGAPresentation
-import MEGAPresentationMock
 import Search
 import SearchMock
 import SwiftUI

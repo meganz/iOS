@@ -1,9 +1,9 @@
 import ChatRepo
 import Foundation
 import LogRepo
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 import SwiftUI

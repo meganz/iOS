@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 protocol PSAViewRouting: Routing {
     func currentPSAView() -> PSAView?

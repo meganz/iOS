@@ -1,8 +1,8 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGAL10n
-import MEGAPresentation
-import MEGAPresentationMock
 import XCTest
 
 @MainActor

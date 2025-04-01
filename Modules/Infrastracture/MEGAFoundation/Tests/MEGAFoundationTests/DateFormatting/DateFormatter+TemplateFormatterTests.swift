@@ -1,7 +1,6 @@
 import Foundation
-import XCTest
-
 @testable import MEGAFoundation
+import XCTest
 
 final class DateFormatter_TemplateFormatterTests: XCTestCase {
 

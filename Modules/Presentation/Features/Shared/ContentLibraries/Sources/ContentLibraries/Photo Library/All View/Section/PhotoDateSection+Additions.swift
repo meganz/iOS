@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 import UIKit
 
 extension Array where Element: PhotoDateSection {

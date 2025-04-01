@@ -1,10 +1,10 @@
 import Combine
 @testable @preconcurrency import MEGA
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 @preconcurrency import XCTest
 
 final class MeetingContainerViewModelTests: XCTestCase {

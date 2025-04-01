@@ -1,7 +1,7 @@
 import Combine
+import MEGAAppPresentation
 import MEGADomain
 import MEGAPermissions
-import MEGAPresentation
 import MEGASwift
 
 final class CameraUploadStatusBannerViewModel: ObservableObject {

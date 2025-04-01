@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAChatSdk
+import MEGADomain
 
 extension MEGAChatGeolocation {
     func toChatGeolocationEntity() -> ChatGeolocationEntity {

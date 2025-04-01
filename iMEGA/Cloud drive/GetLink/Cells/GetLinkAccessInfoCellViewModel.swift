@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 enum GetLinkAccessInfoCellAction: ActionType {
     case onViewReady

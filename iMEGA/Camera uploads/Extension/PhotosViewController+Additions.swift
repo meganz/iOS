@@ -1,8 +1,8 @@
 import ChatRepo
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAPermissions
-import MEGAPresentation
 import MEGASDKRepo
 
 extension PhotosViewController {

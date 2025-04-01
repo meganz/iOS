@@ -1,5 +1,5 @@
-import MEGADomain
 import Chat
+import MEGADomain
 import MEGASwiftUI
 import XCTest
 

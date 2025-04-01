@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGAL10n
-import MEGAPresentation
 
 extension ShareViewController {
     

@@ -1,10 +1,10 @@
 import Chat
 import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGAPresentation
 import MEGASwift
 import MEGAUI
 

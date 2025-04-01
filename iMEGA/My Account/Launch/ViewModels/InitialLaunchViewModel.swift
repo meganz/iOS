@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 enum InitialLaunchAction: ActionType {
     case didTapSetUpMEGAButton

@@ -1,9 +1,9 @@
 import Chat
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 @MainActor
 @objc final class ContactsViewModel: NSObject {

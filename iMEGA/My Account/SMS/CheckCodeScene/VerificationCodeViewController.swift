@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
-import MEGAPresentation
 import UIKit
 
 final class VerificationCodeViewController: UIViewController, ViewType {

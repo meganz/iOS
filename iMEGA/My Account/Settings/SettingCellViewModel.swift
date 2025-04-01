@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 import UIKit
 
 class SettingCellViewModel: ViewModelType {

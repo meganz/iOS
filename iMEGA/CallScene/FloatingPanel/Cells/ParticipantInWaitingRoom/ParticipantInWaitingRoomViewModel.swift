@@ -1,7 +1,7 @@
 import Combine
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 enum ParticipantNoInWaitingRoomViewAction: ActionType {
     case onViewReady

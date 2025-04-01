@@ -1,10 +1,10 @@
 import Combine
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
-import MEGAPresentation
 
 enum AudioPlayerAction: ActionType {
     

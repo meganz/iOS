@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 import SwiftUI
 
 public struct VideoPlaylistsCollectionViewRepresenter<ViewModel: VideoPlaylistsContentViewModelProtocol>: UIViewRepresentable {

@@ -1,11 +1,10 @@
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGATest
-import XCTest
-
 @testable import Settings
+import XCTest
 
 final class TermsAndPoliciesViewModelTests: XCTestCase {
 

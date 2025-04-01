@@ -1,5 +1,5 @@
+@preconcurrency import MEGAAppPresentation
 import MEGADomain
-@preconcurrency import MEGAPresentation
 
 protocol NodeSensitivityChecking: Sendable {
     /// Determines whether to show the "Hide" or "Unhide" option for a given node source based on its sensitivity status.

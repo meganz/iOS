@@ -1,7 +1,7 @@
 @preconcurrency import Combine
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 import MEGATest
 @preconcurrency @testable import Video
 import XCTest

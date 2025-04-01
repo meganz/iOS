@@ -1,4 +1,4 @@
-import MEGAPresentation
+import MEGAAppPresentation
 
 final class CustomModalAlertCookieDialogRouter: Routing {
     private weak var presenter: UIViewController?

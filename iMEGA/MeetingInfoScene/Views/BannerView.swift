@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
-import MEGAPresentation
 import SwiftUI
 
 // will move this to MEGASwiftUI as part of [MEET-3647]

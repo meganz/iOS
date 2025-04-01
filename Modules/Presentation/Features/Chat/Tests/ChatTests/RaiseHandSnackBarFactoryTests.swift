@@ -1,5 +1,5 @@
-import MEGADomain
 import Chat
+import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGASwiftUI

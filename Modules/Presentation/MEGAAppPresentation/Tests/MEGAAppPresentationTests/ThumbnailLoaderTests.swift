@@ -1,6 +1,6 @@
+@testable import MEGAAppPresentation
 import MEGADomain
 import MEGADomainMock
-@testable import MEGAPresentation
 import MEGASwift
 import MEGATest
 import SwiftUI

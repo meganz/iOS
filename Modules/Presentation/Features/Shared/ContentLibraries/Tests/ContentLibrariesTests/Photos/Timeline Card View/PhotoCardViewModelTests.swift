@@ -1,11 +1,11 @@
 import Combine
 @testable import ContentLibraries
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAFoundation
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASwift
 import MEGASwiftUI
 import MEGATest

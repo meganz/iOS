@@ -1,9 +1,9 @@
 import Chat
 import ChatRepo
 import Combine
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 protocol WaitingRoomParticipantsListRouting {
     func dismiss()

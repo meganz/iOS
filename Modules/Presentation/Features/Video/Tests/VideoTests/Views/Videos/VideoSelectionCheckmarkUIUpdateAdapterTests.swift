@@ -1,7 +1,7 @@
 import Combine
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
-import MEGAPresentationMock
 @testable import Video
 import XCTest
 

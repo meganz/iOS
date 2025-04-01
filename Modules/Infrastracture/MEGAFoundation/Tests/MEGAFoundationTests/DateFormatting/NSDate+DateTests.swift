@@ -1,6 +1,5 @@
-import XCTest
-
 @testable import MEGAFoundation
+import XCTest
 
 final class NSDate_DateTests: XCTestCase {
     func testIsToday_whenToday_expectedTrue() {

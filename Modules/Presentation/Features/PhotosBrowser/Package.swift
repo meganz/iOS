@@ -20,7 +20,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../Presentation/MEGAAssets"),
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Infrastracture/MEGATest"),
@@ -33,17 +33,17 @@ let package = Package(
             dependencies: ["MEGADomain",
                            "MEGAAssets",
                            "MEGAL10n",
-                           "MEGAPresentation",
+                           "MEGAAppPresentation",
                            "MEGASwiftUI",
                            "MEGADesignToken"],
             swiftSettings: settings),
         .testTarget(
             name: "PhotosBrowserTests",
             dependencies: ["PhotosBrowser",
-                           "MEGAPresentation",
+                           "MEGAAppPresentation",
                            "MEGAAssets",
                            "MEGATest",
-                           .product(name: "MEGAPresentationMock", package: "MEGAPresentation")],
+                           .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")],
             swiftSettings: settings)
     ]
 )

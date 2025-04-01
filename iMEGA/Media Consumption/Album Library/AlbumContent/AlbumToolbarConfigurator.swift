@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 
 final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     private let favouriteAction: ButtonAction

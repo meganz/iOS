@@ -1,9 +1,9 @@
 import Accounts
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI

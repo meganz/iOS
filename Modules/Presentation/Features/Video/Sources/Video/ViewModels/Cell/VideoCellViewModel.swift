@@ -1,6 +1,6 @@
 @preconcurrency import Combine
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASwift
 import SwiftUI
 

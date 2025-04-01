@@ -1,6 +1,6 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAPermissions
-import MEGAPresentation
 import MEGASDKRepo
 
 extension CameraUploadManager {

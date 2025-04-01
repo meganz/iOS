@@ -21,7 +21,7 @@ let package = Package(
         .package(path: "../../../../Domain/MEGASwiftUI"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
         .package(path: "../../../Infrastracture/MEGATest"),
-        .package(path: "../../../MEGAPresentation"),
+        .package(path: "../../../MEGAAppPresentation"),
         .package(path: "../../../../Presentation/MEGAL10n"),
         .package(path: "../../../../Presentation/MEGAAssets"),
         .package(path: "../../../../Domain/MEGADomain"),
@@ -35,7 +35,7 @@ let package = Package(
         .target(
             name: "ContentLibraries",
             dependencies: [
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGADomain",
@@ -52,11 +52,11 @@ let package = Package(
             name: "ContentLibrariesTests",
             dependencies: [
                 "ContentLibraries",
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "MEGAAssets",
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
-                .product(name: "MEGAPresentationMock", package: "MEGAPresentation"),
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ],

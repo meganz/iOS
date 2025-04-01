@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 import SwiftUI
 
 public struct AccountPlanView: View {

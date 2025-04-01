@@ -23,8 +23,8 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "MEGAPresentationTests",
-        "name" : "MEGAPresentationTests"
+        "identifier" : "MEGAAppPresentationTests",
+        "name" : "MEGAAppPresentationTests"
       }
     }
   ],

@@ -1,7 +1,7 @@
 import Combine
 import ContentLibraries
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import SwiftUI
 
 final class AlbumCoverPickerPhotoCellViewModel: PhotoCellViewModel {

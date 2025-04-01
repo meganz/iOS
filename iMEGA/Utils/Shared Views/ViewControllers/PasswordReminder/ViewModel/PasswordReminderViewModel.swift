@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 final class PasswordReminderViewModel: NSObject {
     enum PasswordReminderAnalyticsEvent {

@@ -19,7 +19,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../Repository/ChatRepo"),
@@ -34,7 +34,7 @@ let package = Package(
             name: "Settings",
             dependencies: [
                 "MEGADomain",
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "MEGAL10n",
                 "ChatRepo",
                 "LogRepo",
@@ -49,7 +49,7 @@ let package = Package(
             name: "SettingsTests",
             dependencies: ["Settings",
                            "MEGATest",
-                           .product(name: "MEGAPresentationMock", package: "MEGAPresentation"),
+                           .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain")])
     ],
     swiftLanguageModes: [.v6]

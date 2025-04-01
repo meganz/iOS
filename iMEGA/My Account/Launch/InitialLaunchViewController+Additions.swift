@@ -1,5 +1,5 @@
 import Foundation
-import MEGAPresentation
+import MEGAAppPresentation
 
 extension InitialLaunchViewController {
     @objc func createViewModel() {

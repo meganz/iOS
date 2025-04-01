@@ -1,9 +1,9 @@
 import Chat
 import Combine
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
-import MEGAPresentation
 
 enum MeetingContainerAction: ActionType {
     case onViewReady

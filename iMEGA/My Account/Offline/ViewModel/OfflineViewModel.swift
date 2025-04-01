@@ -1,7 +1,7 @@
 import Combine
+import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
-import MEGAPresentation
 
 enum OfflineViewAction: ActionType {
     case onViewAppear

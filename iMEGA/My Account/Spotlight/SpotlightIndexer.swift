@@ -1,7 +1,7 @@
 import Combine
 import CoreSpotlight
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 import UniformTypeIdentifiers

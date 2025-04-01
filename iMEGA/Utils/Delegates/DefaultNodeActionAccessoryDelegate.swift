@@ -1,5 +1,5 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 @objc final class DefaultNodeAccessoryActionDelegate: NSObject, NodeAccessoryActionDelegate {
     nonisolated override init() {

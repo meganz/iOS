@@ -1,5 +1,5 @@
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 import SwiftUI
 
 struct PhotoLibraryFilterLocationView: View {

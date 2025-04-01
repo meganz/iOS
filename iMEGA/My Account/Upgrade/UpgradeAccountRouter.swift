@@ -1,8 +1,8 @@
 import Accounts
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 
 @MainActor

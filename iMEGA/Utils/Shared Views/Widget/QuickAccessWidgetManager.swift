@@ -1,8 +1,8 @@
 @preconcurrency import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
-import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 import WidgetKit

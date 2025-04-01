@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
-import MEGAPresentation
 import MEGASDKRepo
 
 @objc final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {

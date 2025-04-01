@@ -1,11 +1,11 @@
 import AsyncAlgorithms
 import Combine
 import ContentLibraries
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGAPresentation
-import MEGAPresentationMock
 import MEGASwift
 import MEGASwiftUI
 import Testing

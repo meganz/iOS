@@ -19,7 +19,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Localization/MEGAL10n"),
-        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
     ],
@@ -28,7 +28,7 @@ let package = Package(
             name: "Notifications",
             dependencies: [
                 "MEGAL10n",
-                "MEGAPresentation",
+                "MEGAAppPresentation",
                 "MEGASwiftUI",
                 "MEGADesignToken"
             ],

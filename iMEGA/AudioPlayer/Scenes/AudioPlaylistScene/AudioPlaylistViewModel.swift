@@ -1,6 +1,6 @@
 import Foundation
 import MEGAAnalyticsiOS
-import MEGAPresentation
+import MEGAAppPresentation
 
 enum AudioPlaylistAction: ActionType {
     case onViewDidLoad

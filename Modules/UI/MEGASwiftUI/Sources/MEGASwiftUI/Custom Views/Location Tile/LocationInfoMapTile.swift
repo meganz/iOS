@@ -1,6 +1,6 @@
 import MapKit
+import MEGAAppPresentation
 import MEGADesignToken
-import MEGAPresentation
 import SwiftUI
 
 public struct LocationInfoMapTile<ID: Hashable>: View {
