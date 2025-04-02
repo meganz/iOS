@@ -2749,6 +2749,7 @@
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
 		0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelTests.swift; sourceTree = "<group>"; };
+		0ED1EBD02D9B90E00037B39F /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGATest; path = Modules/MEGASharedRepo/MEGATest; sourceTree = SOURCE_ROOT; };
 		0EDE0DDA2A20587E0006A9F1 /* GetCollectionsLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsLinkViewModel.swift; sourceTree = "<group>"; };
 		0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumsLinkInitialSections.swift; sourceTree = "<group>"; };
 		0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_NodeUseCase.swift; sourceTree = "<group>"; };
@@ -2816,7 +2817,6 @@
 		163BF5C52D7EED36005B6335 /* LTHPasscodeViewController+LockOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LTHPasscodeViewController+LockOrientation.swift"; sourceTree = "<group>"; };
 		1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LTHPasscodeViewController+Additions.swift"; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
@@ -11945,7 +11945,7 @@
 				6D18B4D02B44C75600E4ABA8 /* MEGAMacro */,
 				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
 				0E04F43D2D96522A0048A692 /* MEGASwift */,
-				1678D7F02A45474E00336C52 /* MEGATest */,
+				0ED1EBD02D9B90E00037B39F /* MEGATest */,
 			);
 			path = Infrastracture;
 			sourceTree = "<group>";
