@@ -1,6 +1,8 @@
 @preconcurrency @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import MEGATest
 import XCTest
@@ -122,7 +124,8 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
                     router: MockAudioPlayerViewRouter(),
                     playbackContinuationUseCase: MockPlaybackContinuationUseCase(),
                     audioPlayerUseCase: MockAudioPlayerUseCase(),
-                    accountUseCase: MockAccountUseCase()
+                    accountUseCase: MockAccountUseCase(),
+                    tracker: MockTracker()
                 )
             )
         }

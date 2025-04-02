@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAPresentation
 
 enum AudioPlaylistAction: ActionType {
@@ -35,14 +36,20 @@ final class AudioPlaylistViewModel: ViewModelType {
     private var selectedItems: [AudioPlayerItem]?
     private var isDataReloadingEnabled = true
     private var pendingItemsToBeUpdatedArray = [AudioPlayerItem]()
+    private let tracker: any AnalyticsTracking
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(configEntity: AudioPlayerConfigEntity, router: some AudioPlaylistViewRouting) {
+    init(
+        configEntity: AudioPlayerConfigEntity,
+        router: some AudioPlaylistViewRouting,
+        tracker: some AnalyticsTracking
+    ) {
         self.configEntity = configEntity
         self.router = router
+        self.tracker = tracker
     }
     
     // MARK: - Private functions
@@ -104,6 +111,7 @@ final class AudioPlaylistViewModel: ViewModelType {
         case .onViewDidLoad:
             initScreen()
         case .move(let movedItem, let position, let direction):
+            trackReorderItemsInPlaylist()
             configEntity.playerHandler.move(item: movedItem, to: position, direction: direction)
         case .removeSelectedItems:
             removeAllSelectedItems()
@@ -125,6 +133,11 @@ final class AudioPlaylistViewModel: ViewModelType {
             isDataReloadingEnabled = true
             reloadPendingItems()
         }
+    }
+    
+    // MARK: - Analytics
+    private func trackReorderItemsInPlaylist() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerQueueReorderedEvent())
     }
 }
 

@@ -1,13 +1,24 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
+import MEGAPresentation
+import MEGAPresentationMock
+import MEGASDKRepoMock
 import XCTest
 
 final class AudioPlaylistViewModelTests: XCTestCase {
     let router = MockAudioPlaylistViewRouter()
     let playerHandler = MockAudioPlayerHandler()
     
+    private var anyAudioNode: MockNode {
+        MockNode(handle: 1, name: "first-audio.mp3", nodeType: .file)
+    }
+    
     @MainActor
-    lazy var viewModel = AudioPlaylistViewModel(configEntity: AudioPlayerConfigEntity(parentNode: MEGANode(), playerHandler: playerHandler),
-                                                router: router)
+    lazy var viewModel = AudioPlaylistViewModel(
+        configEntity: AudioPlayerConfigEntity(parentNode: MEGANode(), playerHandler: playerHandler),
+        router: router,
+        tracker: MockTracker()
+    )
     
     @MainActor func testAudioPlayerActions() throws {
         let mockPlayerCurrentItem = AudioPlayerItem.mockItem
@@ -45,10 +56,52 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
+    // MARK: - Analytics Tests
+    
+    @MainActor
+    func testAnalytics_onMove_tracksReorderEvent() {
+        let tracker = MockTracker()
+        let configEntity = audioPlayerConfigEntity(node: anyAudioNode)
+        let (sut, trackerOut) = makeSUT(
+            configEntity: configEntity,
+            tracker: tracker
+        )
+        
+        let movedItem = AudioPlayerItem.mockItem
+        let indexPath = IndexPath(row: 1, section: 0)
+        sut.dispatch(.move(movedItem, indexPath, .up))
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: trackerOut.trackedEventIdentifiers,
+            with: [AudioPlayerQueueReorderedEvent()]
+        )
+    }
+    
     private func compareAudioPlayerItem(_ item: AudioPlayerItem, _ other: AudioPlayerItem) -> Bool {
         guard let handle = item.node?.handle, let otherHandle = other.node?.handle else {
             return item.url == other.url
         }
         return handle == otherHandle
+    }
+    
+    @MainActor
+    private func makeSUT(
+        configEntity: AudioPlayerConfigEntity,
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> (sut: AudioPlaylistViewModel, tracker: MockTracker) {
+        let router = MockAudioPlaylistViewRouter()
+        let sut = AudioPlaylistViewModel(configEntity: configEntity, router: router, tracker: tracker)
+        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: #filePath, line: #line)
+        return (sut, tracker as! MockTracker)
+    }
+    
+    private func audioPlayerConfigEntity(node: MockNode, isFolderLink: Bool = false, fileLink: String? = nil) -> AudioPlayerConfigEntity {
+        let playerHandler = MockAudioPlayerHandler()
+        return AudioPlayerConfigEntity(
+            node: node,
+            isFolderLink: isFolderLink,
+            fileLink: fileLink,
+            playerHandler: playerHandler
+        )
     }
 }

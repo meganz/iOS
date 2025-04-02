@@ -1,8 +1,12 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentation
+import MEGAPresentationMock
 import MEGASDKRepoMock
+import MEGATest
 import XCTest
 
 final class AudioPlayerViewModelTests: XCTestCase {
@@ -307,6 +311,84 @@ final class AudioPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(streamingInfoUseCase.stopServer_calledTimes, 1)
     }
     
+    // MARK: - Analytics
+    
+    @MainActor
+    func testAnalytics_onViewDidLoad_tracksAudioPlayerIsActivatedEvent() {
+        let tracker = MockTracker()
+        let (sut, _, _) = makeSUT(
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            tracker: tracker
+        )
+        
+        sut.dispatch(.onViewDidLoad)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerIsActivatedEvent()])
+    }
+    
+    @MainActor
+    func testAnalytics_onShuffleActive_tracksAudioPlayerShuffleEnabledEvent() {
+        let tracker = MockTracker()
+        let (sut, _, _) = makeSUT(
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            tracker: tracker
+        )
+        
+        sut.dispatch(.onShuffle(active: true))
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerShuffleEnabledEvent()])
+    }
+    
+    @MainActor
+    func testAnalytics_onRepeatPressed_tracksLoopAndRepeatOneEvents() {
+        let tracker = MockTracker()
+        let (sut, _, _) = makeSUT(
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            tracker: tracker
+        )
+        
+        sut.dispatch(.onRepeatPressed)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerLoopQueueEnabledEvent()])
+        
+        tracker.reset()
+        
+        sut.dispatch(.onRepeatPressed)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerLoopPlayingItemEnabledEvent()])
+        
+        tracker.reset()
+        
+        sut.dispatch(.onRepeatPressed)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [])
+    }
+    
+    @MainActor
+    func testAnalytics_showPlaylist_tracksQueueButtonPressedEvent() {
+        let tracker = MockTracker()
+        let (sut, _, _) = makeSUT(
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            tracker: tracker
+        )
+        
+        sut.dispatch(.showPlaylist)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerQueueButtonPressedEvent()])
+    }
+    
     // MARK: - Helpers
     
     @MainActor
@@ -341,6 +423,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     @MainActor
     private func makeSUT(
         configEntity: AudioPlayerConfigEntity,
+        tracker: some AnalyticsTracking = MockTracker(),
         nodeInfoUseCase: (any NodeInfoUseCaseProtocol)? = nil,
         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
@@ -359,7 +442,8 @@ final class AudioPlayerViewModelTests: XCTestCase {
             offlineInfoUseCase: offlineInfoUseCase,
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
             audioPlayerUseCase: mockAudioPlayerUseCase,
-            accountUseCase: accountUseCase
+            accountUseCase: accountUseCase,
+            tracker: tracker
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
         return (sut, mockPlaybackContinuationUseCase, router)

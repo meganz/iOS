@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -107,6 +108,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     
     private let sdk: MEGASdk
     private var repeatItemsState: RepeatMode {
@@ -114,8 +116,12 @@ final class AudioPlayerViewModel: ViewModelType {
             invokeCommand?(.updateRepeat(status: repeatItemsState))
             switch repeatItemsState {
             case .none: configEntity.playerHandler.playerRepeatDisabled()
-            case .loop: configEntity.playerHandler.playerRepeatAll(active: true)
-            case .repeatOne: configEntity.playerHandler.playerRepeatOne(active: true)
+            case .loop:
+                configEntity.playerHandler.playerRepeatAll(active: true)
+                trackLoopIsEnabled()
+            case .repeatOne:
+                configEntity.playerHandler.playerRepeatOne(active: true)
+                trackRepeatOneIsEnabled()
             }
         }
     }
@@ -144,7 +150,8 @@ final class AudioPlayerViewModel: ViewModelType {
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
-         sdk: MEGASdk = MEGASdk.shared
+         sdk: MEGASdk = MEGASdk.shared,
+         tracker: some AnalyticsTracking
     ) {
         self.configEntity = configEntity
         self.router = router
@@ -157,6 +164,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
         self.speedModeState = configEntity.playerHandler.currentSpeedMode()
         self.sdk = sdk
+        self.tracker = tracker
         
         self.setupUpdateItemSubscription()
     }
@@ -373,6 +381,28 @@ final class AudioPlayerViewModel: ViewModelType {
         
         invokeCommand?(.showLoading(false))
     }
+    
+    // MARK: - Analytics
+    private func trackInitializeAudioPlayer() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerIsActivatedEvent())
+    }
+    
+    private func trackShuffleIsEnabled() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerShuffleEnabledEvent())
+    }
+    
+    private func trackLoopIsEnabled() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerLoopQueueEnabledEvent())
+    }
+    
+    private func trackRepeatOneIsEnabled() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerLoopPlayingItemEnabledEvent())
+    }
+    
+    private func trackAccessingAudioPlayerPlaylist() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerQueueButtonPressedEvent())
+    }
+    
 
     // MARK: - Dispatch action
     func dispatch(_ action: AudioPlayerAction) {
@@ -394,6 +424,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             
             if shouldInitializePlayer() {
+                trackInitializeAudioPlayer()
                 invokeCommand?(.showLoading(true))
                 Task.detached {
                     await self.preparePlayer()
@@ -412,6 +443,9 @@ final class AudioPlayerViewModel: ViewModelType {
         case .progressDragEventEnded:
             configEntity.playerHandler.playerProgressDragEventEnded()
         case .onShuffle(let active):
+            if active {
+                trackShuffleIsEnabled()
+            }
             configEntity.playerHandler.playerShuffle(active: active)
         case .onPrevious:
             if configEntity.playerHandler.playerCurrentItemTime() == 0.0 && repeatItemsState == .repeatOne {
@@ -443,6 +477,7 @@ final class AudioPlayerViewModel: ViewModelType {
             case .half: speedModeState = .normal
             }
         case .showPlaylist:
+            trackAccessingAudioPlayerPlaylist()
             router.goToPlaylist()
         case .`import`:
             if let node = configEntity.node {
