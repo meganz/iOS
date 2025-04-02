@@ -166,7 +166,7 @@ pipeline {
         stage('Install Dependencies') {
             when { 
                 anyOf {
-                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                    expression { return env.gitlabTriggerPhrase ==~ /^deliver_appStore.*$/ }
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa' 
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                     environment name: 'GIT_BRANCH', value: 'origin/develop'
@@ -231,7 +231,7 @@ pipeline {
         stage('Archive appstore') {
             when { 
                 anyOf {
-                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore'
+                    expression { return env.gitlabTriggerPhrase ==~ /^deliver_appStore.*$/ }
                 }
             }
             steps {
@@ -274,7 +274,7 @@ pipeline {
                 stage('Upload to Testflight') {    
                     when { 
                         anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore'
+                            expression { return env.gitlabTriggerPhrase ==~ /^deliver_appStore.*$/ }
                         }
                     } 
                     steps {
@@ -293,7 +293,7 @@ pipeline {
                 stage('Upload symbols to crashlytics') {
                     when { 
                         anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                            expression { return env.gitlabTriggerPhrase ==~ /^deliver_appStore.*$/ }
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                             environment name: 'GIT_BRANCH', value: 'origin/develop'
@@ -302,7 +302,8 @@ pipeline {
                     steps {
                         script {
                             envInjector.injectEnvs {
-                                if (env.gitlabTriggerPhrase == 'deliver_appStore') {    
+                                def pattern = "^deliver_appStore.*$"
+                                if (env.gitlabTriggerPhrase ==~ pattern) {
                                     gitlabCommitStatus(name: 'Upload appstore symbols to crashlytics') {
                                         sh "bundle exec fastlane upload_symbols configuration:Release"
                                     }
@@ -341,7 +342,7 @@ pipeline {
                 stage('Prepare archive zip to be uploaded to MEGA') {
                     when { 
                         anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore'
+                            expression { return env.gitlabTriggerPhrase ==~ /^deliver_appStore.*$/ }
                         }
                     }
                     steps {
@@ -407,7 +408,7 @@ pipeline {
         stage('Delete temporary keychain') {
             when { 
                 anyOf {
-                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
+                    expression { return env.gitlabTriggerPhrase ==~ /^deliver_appStore.*$/ }
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
                     environment name: 'GIT_BRANCH', value: 'origin/develop'
