@@ -10,4 +10,8 @@ public final class MockTracker: AnalyticsTracking, @unchecked Sendable {
     public func trackAnalyticsEvent(with eventIdentifier: EventIdentifier) {
         $trackedEventIdentifiers.mutate { $0.append(eventIdentifier) }
     }
+    
+    public func reset() {
+        $trackedEventIdentifiers.mutate { $0 = [] }
+    }
 }

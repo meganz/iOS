@@ -300,7 +300,8 @@ import MEGASDKRepo
                         offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
                         playbackContinuationUseCase: DIContainer.playbackContinuationUseCase, 
                         audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared)),
-                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                        tracker: DIContainer.tracker
                     )
                 } else {
                     return AudioPlayerViewModel(
@@ -310,7 +311,8 @@ import MEGASDKRepo
                         streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
                         playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
                         audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared)),
-                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                        tracker: DIContainer.tracker
                     )
                 }
             }

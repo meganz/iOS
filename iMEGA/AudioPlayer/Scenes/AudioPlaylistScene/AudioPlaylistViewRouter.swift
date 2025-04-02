@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 
 final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     private weak var baseViewController: UIViewController?
@@ -13,7 +14,11 @@ final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     func build() -> UIViewController {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "AudioPlaylistViewControllerID") as! AudioPlaylistViewController
 
-        vc.viewModel = AudioPlaylistViewModel(configEntity: configEntity, router: self)
+        vc.viewModel = AudioPlaylistViewModel(
+            configEntity: configEntity,
+            router: self,
+            tracker: DIContainer.tracker
+        )
         baseViewController = vc
         
         return vc
