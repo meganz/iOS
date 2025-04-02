@@ -302,8 +302,7 @@ pipeline {
                     steps {
                         script {
                             envInjector.injectEnvs {
-                                def pattern = "^deliver_appStore.*$"
-                                if (env.gitlabTriggerPhrase ==~ pattern) {
+                                if (env.gitlabTriggerPhrase ==~ /^deliver_appStore.*$/) {
                                     gitlabCommitStatus(name: 'Upload appstore symbols to crashlytics') {
                                         sh "bundle exec fastlane upload_symbols configuration:Release"
                                     }
