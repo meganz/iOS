@@ -10,11 +10,19 @@ public final class MetadataRepository: MetadataRepositoryProtocol {
               let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil),
               let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any],
               let dictionary = imageProperties[kCGImagePropertyGPSDictionary] as? [String: AnyObject],
-              let latitude = dictionary["Latitude"] as? Double,
-              let longitude = dictionary["Longitude"] as? Double else {
+              var latitude = dictionary["Latitude"] as? Double,
+              var longitude = dictionary["Longitude"] as? Double,
+              let latitudeRef = dictionary["LatitudeRef"] as? String,
+              let longitudeRef = dictionary["LongitudeRef"] as? String else {
             return nil
         }
 
+        if latitudeRef == "S" {
+            latitude = -latitude
+        }
+        if longitudeRef == "W" {
+            longitude = -longitude
+        }
         return Coordinate(latitude: latitude, longitude: longitude)
     }
 
