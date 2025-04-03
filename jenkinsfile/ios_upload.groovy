@@ -427,6 +427,11 @@ pipeline {
 }
 
 private def parseParameters(String fullCommand) {
+    if (fullCommand == null) {
+        println("This job was not triggered by comment")
+        return [false]  // Default return value
+    }
+
     println("Parsing parameters")
     String[] parameters = fullCommand.split("\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*\$)")
 
