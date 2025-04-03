@@ -589,13 +589,11 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func voiceRecordingStarted() {
         audioController.stopAnyOngoingPlaying()
-        isVoiceRecordingInProgress = true
-        updateRightBarButtons()
+        chatContentViewModel.dispatch(.startRecordVoiceClip)
     }
     
     func voiceRecordingEnded() {
-        isVoiceRecordingInProgress = false
-        updateRightBarButtons()
+        chatContentViewModel.dispatch(.stopRecordVoiceClip)
     }
 }
 
