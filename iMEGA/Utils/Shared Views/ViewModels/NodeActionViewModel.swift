@@ -30,6 +30,7 @@ struct NodeActionViewModel {
     private let systemGeneratedNodeUseCase: any SystemGeneratedNodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     
     private let maxDetermineSensitivityTasks: Int
     
@@ -40,11 +41,13 @@ struct NodeActionViewModel {
     init(systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          maxDetermineSensitivityTasks: Int = 500,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+         nodeUseCase: some NodeUseCaseProtocol) {
         self.systemGeneratedNodeUseCase = systemGeneratedNodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.maxDetermineSensitivityTasks = maxDetermineSensitivityTasks
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.nodeUseCase = nodeUseCase
     }
     
     /// Indicates if nodes are already hidden or not. If nodes are hidden, then show unhide action; if not, then show hide action. If no action should be shown, return nil. If nodes are from shared items, return nil.
@@ -114,6 +117,14 @@ struct NodeActionViewModel {
         }
         
         return finalDestination
+    }
+    
+    func filesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
+        nodeUseCase.getFilesAndFolders(nodeHandle: nodeHandle)
+    }
+    
+    func isRestorable(node: NodeEntity, isBackupNode: Bool) -> Bool {
+        nodeUseCase.isRestorable(node: node) && !isBackupNode
     }
     
     // MARK: - Private methods

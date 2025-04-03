@@ -35,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable MEGANode *)mnz_firstbornInShareOrOutShareParentNode;
 - (NSMutableArray *)mnz_parentTreeArray;
 - (NSString *)mnz_fileType;
-- (BOOL)mnz_isRestorable;
 - (BOOL)mnz_isPlayable;
 - (BOOL)mnz_isPlaying;
 - (BOOL)mnz_isInRubbishBin;

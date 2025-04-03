@@ -5,16 +5,10 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
     private func contextMenuConfiguration() -> CMConfigEntity? {
         guard let parentNode = parentNode else { return nil }
 
-        let isBackupNode = BackupsUseCase(
-            backupsRepository: BackupsRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo
-        ).isBackupNode(parentNode.toNodeEntity())
-
         return CMConfigEntity(
             menuType: .menu(type: .folderLink),
             viewMode: isListViewModeSelected() ? .list : .thumbnail,
             sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
-            isRestorable: isBackupNode ? false : parentNode.mnz_isRestorable(),
             showMediaDiscovery: containsMediaFiles()
         )
     }

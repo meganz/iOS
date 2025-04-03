@@ -474,6 +474,9 @@
 - (void)mnz_restore {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANode *restoreNode = [MEGASdk.shared nodeForHandle:self.restoreHandle];
+        if (restoreNode == nil || [MEGASdk.shared isNodeInRubbish:restoreNode] ) {
+            restoreNode = MEGASdk.shared.rootNode;
+        }
         [[NameCollisionRouterOCWrapper.alloc init] moveNodes:@[self] to:restoreNode presenter:UIApplication.mnz_presentingViewController];
     }
 }
@@ -788,15 +791,6 @@
     }
     
     return fileType;
-}
-
-- (BOOL)mnz_isRestorable {
-    MEGANode *restoreNode = [MEGASdk.shared nodeForHandle:self.restoreHandle];
-    if (restoreNode && ![MEGASdk.shared isNodeInRubbish:restoreNode] && [MEGASdk.shared isNodeInRubbish:self]) {
-        return YES;
-    } else {
-        return NO;
-    }
 }
 
 - (BOOL)mnz_isInRubbishBin {
