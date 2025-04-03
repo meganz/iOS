@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAPresentation
+import MEGAL10n
 import MEGASDKRepo
 
 @MainActor
@@ -10,6 +11,7 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
     private var chatRoom: ChatRoomEntity
     
     @Published var isArchived: Bool
+    @Published var showArchiveChatAlert: Bool = false
     
     public init(
         router: some NoteToSelfChatInfoViewRouterProtocol,
@@ -30,7 +32,20 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
         router.navigateToManageChatHistory()
     }
     
-    func archiveChatTapped() async {
+    func archiveChatTapped() {
+        showArchiveChatAlert = true
+    }
+    
+    func cancelArchiveChat() {
+        showArchiveChatAlert = false
+    }
+    
+    var archiveChatAlertTitle: String {
+        chatRoom.isArchived ? Strings.Localizable.unarchiveChatMessage : Strings.Localizable.archiveChatMessage
+    }
+        
+    func archiveChat() async {
+        showArchiveChatAlert = false
         do {
             let archivedValue = try await chatRoomUseCase.archive(!chatRoom.isArchived, chatRoom: chatRoom)
             isArchived = archivedValue
@@ -38,6 +53,9 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
                 return
             }
             self.chatRoom = chatRoom
+            if chatRoom.isArchived {
+                router.navigateToChatsListAfterArchiveNoteToSelfChat()
+            }
         } catch {
             MEGALogError("[NoteToSelf Info] Error archiving/unarchiving chat: \(error)")
         }

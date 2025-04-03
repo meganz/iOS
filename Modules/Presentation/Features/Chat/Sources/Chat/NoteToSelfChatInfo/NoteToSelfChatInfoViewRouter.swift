@@ -7,6 +7,7 @@ import UIKit
 public protocol NoteToSelfChatInfoViewRouterProtocol: Routing {
     func navigateToSharedFiles()
     func navigateToManageChatHistory()
+    func navigateToChatsListAfterArchiveNoteToSelfChat()
 }
 
 public final class NoteToSelfChatInfoViewRouter: NoteToSelfChatInfoViewRouterProtocol {
@@ -35,6 +36,10 @@ public final class NoteToSelfChatInfoViewRouter: NoteToSelfChatInfoViewRouterPro
     
     public func navigateToManageChatHistory() {
         navigateToManageChatHistoryAction()
+    }
+    
+    public func navigateToChatsListAfterArchiveNoteToSelfChat() {
+        navigationController?.popToRootViewController(animated: true)
     }
     
     public func build() -> UIViewController {
