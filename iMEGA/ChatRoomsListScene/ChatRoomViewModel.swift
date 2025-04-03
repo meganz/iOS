@@ -309,9 +309,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
-        if isNoteToSelfChatAndEmpty {
-            return []
-        }
         var options: [ChatRoomContextMenuOption] = []
         if chatListItem.meeting && scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).isNotEmpty {
             options.append(
