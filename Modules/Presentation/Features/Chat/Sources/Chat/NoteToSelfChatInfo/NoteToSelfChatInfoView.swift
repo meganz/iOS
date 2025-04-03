@@ -21,6 +21,18 @@ public struct NoteToSelfChatInfoView: View {
         }
         .background()
         .navigationTitle(Strings.Localizable.info)
+        .alert(viewModel.archiveChatAlertTitle, isPresented: $viewModel.showArchiveChatAlert) {
+            Button {
+                viewModel.cancelArchiveChat()
+            } label: {
+                Text(Strings.Localizable.cancel)
+            }
+            Button {
+                Task { await viewModel.archiveChat() }
+            } label: {
+                Text(Strings.Localizable.ok)
+            }
+        }
     }
     
     private var noteToSelfHeaderView: some View {
@@ -74,7 +86,7 @@ public struct NoteToSelfChatInfoView: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            Task { await viewModel.archiveChatTapped() }
+            viewModel.archiveChatTapped()
         }
     }
 }
