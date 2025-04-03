@@ -5,14 +5,8 @@ extension FileLinkViewController: FileLinkContextMenuDelegate {
     private func contextMenuConfiguration() -> CMConfigEntity? {
         guard let node else { return nil }
 
-        let isBackupNode = BackupsUseCase(
-            backupsRepository: BackupsRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo
-        ).isBackupNode(node.toNodeEntity())
-
         return CMConfigEntity(
             menuType: .menu(type: .fileLink),
-            isRestorable: isBackupNode ? false : node.mnz_isRestorable(),
             isMediaFile: node.toNodeEntity().mediaType != nil
         )
     }

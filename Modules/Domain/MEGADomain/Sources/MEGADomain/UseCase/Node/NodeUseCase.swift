@@ -126,12 +126,7 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     }
  
     public func isRestorable(node: NodeEntity) -> Bool {
-        let restoreParentHandle = node.restoreParentHandle
-        guard let restoreNode = nodeRepository.nodeForHandle(restoreParentHandle) else {
-            return false
-        }
-        
-        return !isInRubbishBin(nodeHandle: restoreNode.handle) && isInRubbishBin(nodeHandle: node.handle)
+        isInRubbishBin(nodeHandle: node.handle)
     }
     
     public func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {

@@ -22,6 +22,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     private let nodes: [HandleEntity: NodeEntity]
     private let folderLinkInfo: FolderLinkInfoEntity?
     private let nodeForFileLink: NodeEntity?
+    private let nodeInRubbishBin: NodeEntity?
     
     public init(
         isDownloaded: Bool = false,
@@ -29,7 +30,8 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         nodes: [HandleEntity: NodeEntity] = [:],
         nodeAccessLevel: NodeAccessTypeEntity = .unknown,
         folderLinkInfo: FolderLinkInfoEntity? = nil,
-        nodeForFileLink: NodeEntity? = nil
+        nodeForFileLink: NodeEntity? = nil,
+        nodeInRubbishBin: NodeEntity? = nil
     ) {
         self.isDownloaded = isDownloaded
         self.isNodeInRubbishBin = isNodeInRubbishBin
@@ -37,6 +39,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         self.nodeAccessLevel = nodeAccessLevel
         self.folderLinkInfo = folderLinkInfo
         self.nodeForFileLink = nodeForFileLink
+        self.nodeInRubbishBin = nodeInRubbishBin
     }
     
     public func rootNode() -> NodeEntity? {
@@ -127,7 +130,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
     
     public func isRestorable(node: NodeEntity) -> Bool {
-        false
+        nodeInRubbishBin?.handle == node.handle
     }
     
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {

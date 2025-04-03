@@ -29,7 +29,12 @@ class NodeActionViewController: ActionSheetViewController {
         sensitiveNodeUseCase: SensitiveNodeUseCase(
             nodeRepository: NodeRepository.newRepo,
             accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo))
+                repository: AccountRepository.newRepo)),
+        nodeUseCase: NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
     )
     
     var sender: Any
@@ -272,7 +277,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsPdf(node.name?.pathExtension == "pdf")
                 .setIsLink(isLink)
                 .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
-                .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
+                .setIsRestorable(viewModel.isRestorable(node: node.toNodeEntity(), isBackupNode: isBackupNode))
                 .setVersionCount(node.mnz_numberOfVersions() - 1)
                 .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
                 .setIsInVersionsView(isInVersionsView)
@@ -447,8 +452,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     private func getFilesAndFolders(_ nodeModel: NodeEntity) -> String {
-        let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let numberOfFilesAndFolders = nodeUseCase.getFilesAndFolders(nodeHandle: nodeModel.handle)
+        let numberOfFilesAndFolders = viewModel.filesAndFolders(nodeHandle: nodeModel.handle)
         let numberOfFiles = numberOfFilesAndFolders.0
         let numberOfFolders = numberOfFilesAndFolders.1
         let numberOfFilesAndFoldersString = NSString.mnz_string(byFiles: numberOfFiles, andFolders: numberOfFolders)
@@ -476,7 +480,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsFavourite(node.isFavourite)
                 .setLabel(node.label)
                 .setIsBackupNode(isBackupNode)
-                .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
+                .setIsRestorable(viewModel.isRestorable(node: node.toNodeEntity(), isBackupNode: isBackupNode))
                 .setIsPdf(node.name?.pathExtension == "pdf")
                 .setisIncomingShareChildView(isIncoming)
                 .setIsExported(node.isExported())
