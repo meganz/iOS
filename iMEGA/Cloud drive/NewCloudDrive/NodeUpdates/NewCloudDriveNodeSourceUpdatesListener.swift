@@ -32,20 +32,23 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     }
     
     private let originalNodeSource: NodeSource
-    private var nodeUpdatesListener: any NodesUpdateListenerProtocol
+    private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
+    private var monitorNodeUpdatesTask: Task<Void, Never>?
     
     @Atomic
     private var runningState: RunningState = .notStarted
     
     init(
         originalNodeSource: NodeSource,
-        nodeUpdatesListener: some NodesUpdateListenerProtocol
+        nodeUpdatesProvider: some NodeUpdatesProviderProtocol
     ) {
         self.originalNodeSource = originalNodeSource
-        self.nodeUpdatesListener = nodeUpdatesListener
-        self.nodeUpdatesListener.onNodesUpdateHandler = { [weak self] updatedNodes in
-            self?.consumeNodeUpdates(updatedNodes)
-        }
+        self.nodeUpdatesProvider = nodeUpdatesProvider
+        startMonitoringNodeUpdates()
+    }
+    
+    deinit {
+        monitorNodeUpdatesTask?.cancel()
     }
     
     // To be called when the client needs to listening to NodeSource updates
@@ -64,6 +67,14 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     /// by all VC in the stacks, only the top VC in the stack should update the navigation bar)
     func stopListening() {
         $runningState.mutate { $0 = .inactive(pendingNodesUpdate: nil) }
+    }
+    
+    private func startMonitoringNodeUpdates() {
+        monitorNodeUpdatesTask = Task { [weak self, nodeUpdatesProvider] in
+            for await nodeEntities in nodeUpdatesProvider.nodeUpdates {
+                self?.consumeNodeUpdates(nodeEntities)
+            }
+        }
     }
     
     private func consumeNodeUpdates(_ updatedNodes: [NodeEntity]) {

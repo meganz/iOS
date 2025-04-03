@@ -88,7 +88,7 @@ class NodeBrowserViewModel: ObservableObject {
     @Published var nodeSource: NodeSource
     
     private let nodeSourceUpdatesListener: any CloudDriveNodeSourceUpdatesListening
-    private var nodesUpdateListener: any NodesUpdateListenerProtocol
+    private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
@@ -107,7 +107,8 @@ class NodeBrowserViewModel: ObservableObject {
     private var accountStorageMonitoringTask: Task<Void, Never>?
     private var refreshStorageStatusTask: Task<Void, Never>?
     private var updatedViewModesTask: Task<Void, Never>?
-
+    private var monitorNodeUpdatesTask: Task<Void, Never>?
+    
     var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
         didSet {
             Task {
@@ -129,7 +130,7 @@ class NodeBrowserViewModel: ObservableObject {
         avatarViewModel: MyAvatarViewModel,
         noInternetViewModel: LegacyNoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
-        nodesUpdateListener: some NodesUpdateListenerProtocol,
+        nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
@@ -172,7 +173,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.onCancel = onCancel
         self.updateTransferWidgetHandler = updateTransferWidgetHandler
         self.nodeSourceUpdatesListener = nodeSourceUpdatesListener
-        self.nodesUpdateListener = nodesUpdateListener
+        self.nodeUpdatesProvider = nodeUpdatesProvider
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.accountStorageUseCase = accountStorageUseCase
@@ -269,7 +270,7 @@ class NodeBrowserViewModel: ObservableObject {
             }
         }
 
-        addNodesUpdateHandler()
+        startMonitoringNodeUpdates()
         subscribeToViewModePreferenceChangeNotification(with: cloudDriveViewModeMonitoringService)
         if !accountStorageUseCase.isUnlimitedStorageAccount {
             monitorStorageStatusUpdates()
@@ -280,7 +281,8 @@ class NodeBrowserViewModel: ObservableObject {
         accountStorageMonitoringTask?.cancel()
         refreshStorageStatusTask?.cancel()
         updatedViewModesTask?.cancel()
-
+        monitorNodeUpdatesTask?.cancel()
+        
         accountStorageMonitoringTask = nil
         refreshStorageStatusTask = nil
         updatedViewModesTask = nil
@@ -382,23 +384,31 @@ class NodeBrowserViewModel: ObservableObject {
         viewState = editing ? .editing : .regular(leftBarButton: leftBarButton)
     }
 
-    private func addNodesUpdateHandler() {
-        nodesUpdateListener.onNodesUpdateHandler = { [weak self] updatedNodes in
-            guard let self,
-                  let parentNode = nodeSource.parentNode else {
-                return
-            }
-
-            if updatedNodes.contains(
-                where: {
-                    $0.handle == parentNode.handle &&
-                    ($0.changeTypes.contains(.parent)
-                     || $0.changeTypes.contains(.removed))
-                }
-            ) {
-                onNodeStructureChanged()
+    private func startMonitoringNodeUpdates() {
+        monitorNodeUpdatesTask = Task { [weak self, nodeUpdatesProvider] in
+            for await nodeEntities in nodeUpdatesProvider.nodeUpdates {
+                self?.handleNodeUpdates(with: nodeEntities)
             }
         }
+    }
+    
+    private func handleNodeUpdates(with updatedNodes: [NodeEntity]) {
+        guard nodeStructureChanged(with: updatedNodes) else {
+            return
+        }
+        onNodeStructureChanged()
+    }
+    
+    private func nodeStructureChanged(with updatedNodes: [NodeEntity]) -> Bool {
+        guard let parentNode = nodeSource.parentNode else { return false }
+        
+        return updatedNodes.contains(
+            where: {
+                $0.handle == parentNode.handle &&
+                ($0.changeTypes.contains(.parent)
+                 || $0.changeTypes.contains(.removed))
+            }
+        )
     }
 
     private func listenToNodeSensitivityChanges() {

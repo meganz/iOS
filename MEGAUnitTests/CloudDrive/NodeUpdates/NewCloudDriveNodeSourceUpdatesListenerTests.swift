@@ -2,20 +2,28 @@ import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGASDKRepoMock
 import MEGASwift
 import XCTest
 
 final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
     
     class Harness {
-        let mockNodeUpdateListener: MockSDKNodesUpdateListenerRepository = MockSDKNodesUpdateListenerRepository.newRepo
+        private let stream: AsyncStream<[NodeEntity]>
+        private let continuation: AsyncStream<[NodeEntity]>.Continuation
+        
         let sut: NewCloudDriveNodeSourceUpdatesListener
         var cancellables = Set<AnyCancellable>()
         
-        init(nodeEntity: NodeEntity) {
+        init() {
+            (stream, continuation) = AsyncStream<[NodeEntity]>.makeStream()
+            let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
+            
+            let testNodeEntity = NodeEntity(name: "0", handle: 0)
+            
             sut = NewCloudDriveNodeSourceUpdatesListener(
-                originalNodeSource: .node { nodeEntity },
-                nodeUpdatesListener: mockNodeUpdateListener
+                originalNodeSource: .node { testNodeEntity },
+                nodeUpdatesProvider: nodeUpdatesProvider
             )
         }
 
@@ -28,19 +36,18 @@ final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
         }
         
         func invokeNodesUpdate(_ updatedNodes: [NodeEntity]) {
-            mockNodeUpdateListener.onNodesUpdateHandler?(updatedNodes)
+            continuation.yield(updatedNodes)
         }
     }
     
-    let testNodeEntity = NodeEntity(name: "0", handle: 0)
-    
-    func test_nodesUpdatedBeforeListening_shouldNotEmitNodeSource() {
+    func test_nodesUpdatedBeforeListening_shouldNotEmitNodeSource() async {
         // Given
-        let harness = Harness(nodeEntity: testNodeEntity)
+        let harness = Harness()
+        let expectation = expectation(description: #function)
+        expectation.isInverted = true
         
-        var result: NodeSource?
-        harness.sut.nodeSourcePublisher.sink { nodeSource in
-            result = nodeSource
+        harness.sut.nodeSourcePublisher.sink { _ in
+            expectation.fulfill()
         }.store(in: &harness.cancellables)
         
         // when
@@ -49,33 +56,36 @@ final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
         harness.invokeNodesUpdate(updatedNodes)
         
         // then
-        XCTAssertNil(result)
+        await fulfillment(of: [expectation], timeout: 1)
     }
     
-    func test_nodesUpdatedAfterListeningButNewUpdatesDontMatchCurrentNode_shouldNotEmitNodeSource() {
+    func test_nodesUpdatedAfterListeningButNewUpdatesDontMatchCurrentNode_shouldNotEmitNodeSource() async {
         // Given
-        let harness = Harness(nodeEntity: testNodeEntity)
+        let harness = Harness()
+        let expectation = expectation(description: #function)
+        expectation.isInverted = true
         
-        var result: NodeSource?
-        harness.sut.nodeSourcePublisher.sink { nodeSource in
-            result = nodeSource
+        harness.sut.nodeSourcePublisher.sink { _ in
+            expectation.fulfill()
         }.store(in: &harness.cancellables)
         
         // when
+        harness.startListening()
         let updatedNodes = [NodeEntity(name: "1", handle: 1), NodeEntity(name: "2", handle: 2)]
         harness.invokeNodesUpdate(updatedNodes)
         
         // then
-        XCTAssertNil(result)
+        await fulfillment(of: [expectation], timeout: 1)
     }
     
-    func test_nodesUpdatedAfterListening_shouldEmitNodeSource() {
+    func test_nodesUpdatedAfterListening_shouldEmitNodeSource() async {
         // Given
-        let harness = Harness(nodeEntity: testNodeEntity)
+        let harness = Harness()
+        let expectation = expectation(description: #function)
         
-        var result: NodeSource?
         harness.sut.nodeSourcePublisher.sink { nodeSource in
-            result = nodeSource
+            XCTAssertEqual(nodeSource.parentNode?.name, "0-new")
+            expectation.fulfill()
         }.store(in: &harness.cancellables)
         
         // when
@@ -84,36 +94,17 @@ final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
         harness.invokeNodesUpdate(updatedNodes)
         
         // then
-        XCTAssertEqual(result?.parentNode?.name, "0-new")
+        await fulfillment(of: [expectation], timeout: 1)
     }
     
-    func test_nodesUpdatedAfterListeningAndThenStopping_shouldNotEmitNodeSource() {
+    func test_nodesUpdatedAfterListeningAndThenStopping_shouldNotEmitNodeSource() async {
         // Given
-        let harness = Harness(nodeEntity: testNodeEntity)
+        let harness = Harness()
+        let expectation = expectation(description: #function)
+        expectation.isInverted = true
         
-        var result: NodeSource?
-        harness.sut.nodeSourcePublisher.sink { nodeSource in
-            result = nodeSource
-        }.store(in: &harness.cancellables)
-        
-        // when
-        harness.startListening()
-        harness.stopListening()
-        
-        let updatedNodes = [NodeEntity(name: "0-new", handle: 0), NodeEntity(name: "1", handle: 1), NodeEntity(name: "2", handle: 2)]
-        harness.invokeNodesUpdate(updatedNodes)
-        
-        // then
-        XCTAssertNil(result)
-    }
-    
-    func test_nodesUpdatedAfterListeningAndThenStoppingAndStartAgain_shouldNotEmitNodeSource() {
-        // Given
-        let harness = Harness(nodeEntity: testNodeEntity)
-        
-        var result: NodeSource?
-        harness.sut.nodeSourcePublisher.sink { nodeSource in
-            result = nodeSource
+        harness.sut.nodeSourcePublisher.sink { _ in
+            expectation.fulfill()
         }.store(in: &harness.cancellables)
         
         // when
@@ -123,9 +114,30 @@ final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
         let updatedNodes = [NodeEntity(name: "0-new", handle: 0), NodeEntity(name: "1", handle: 1), NodeEntity(name: "2", handle: 2)]
         harness.invokeNodesUpdate(updatedNodes)
         
+        // then
+        await fulfillment(of: [expectation], timeout: 1)
+    }
+    
+    func test_nodesUpdatedAfterListeningAndThenStoppingAndStartAgain_shouldEmitNodeSource() async {
+        // Given
+        let harness = Harness()
+        let expectation = expectation(description: #function)
+        
+        harness.sut.nodeSourcePublisher.sink { nodeSource in
+            XCTAssertEqual(nodeSource.parentNode?.name, "0-new")
+            expectation.fulfill()
+        }.store(in: &harness.cancellables)
+        
+        // when
+        harness.startListening()
+        harness.stopListening()
+        
+        let updatedNodes = [NodeEntity(name: "0-new", handle: 0), NodeEntity(name: "1", handle: 1), NodeEntity(name: "2", handle: 2)]
+        harness.invokeNodesUpdate(updatedNodes)
+        
         harness.startListening()
         
         // then
-        XCTAssertEqual(result?.parentNode?.name, "0-new")
+        await fulfillment(of: [expectation], timeout: 1)
     }
 }

@@ -5,6 +5,7 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGASDKRepoMock
 import MEGASwift
 import MEGAUIKit
 import Search
@@ -56,7 +57,8 @@ class NodeBrowserViewModelTests: XCTestCase {
         var savedViewModes: [ViewModePreferenceEntity] = []
         var updateTransferWidgetHandler: () -> Void
 
-        let nodesUpdateListener: any NodesUpdateListenerProtocol
+        let nodeUpdatesStream: AsyncStream<[NodeEntity]>
+        let nodeUpdatesContinuation: AsyncStream<[NodeEntity]>.Continuation
         let cloudDriveViewModeMonitoringService: MockCloudDriveViewModeMonitoringService
         let nodeUseCase: MockNodeDataUseCase
         let tracker = MockTracker()
@@ -92,7 +94,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             var saver: (ViewModePreferenceEntity) -> Void = {_ in }
             
             self.updateTransferWidgetHandler = updateTransferWidgetHandler
-            self.nodesUpdateListener = MockSDKNodesUpdateListenerRepository.newRepo
+            (nodeUpdatesStream, nodeUpdatesContinuation) = AsyncStream<[NodeEntity]>.makeStream()
+            let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: nodeUpdatesStream.eraseToAnyAsyncSequence())
             self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService()
             self.nodeUseCase = MockNodeDataUseCase(nodes: [node])
 
@@ -144,9 +147,9 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 nodeSourceUpdatesListener: NewCloudDriveNodeSourceUpdatesListener(
                     originalNodeSource: .testNode,
-                    nodeUpdatesListener: nodesUpdateListener
+                    nodeUpdatesProvider: MockNodeUpdatesProvider()
                 ),
-                nodesUpdateListener: nodesUpdateListener,
+                nodeUpdatesProvider: nodeUpdatesProvider,
                 cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
                 nodeUseCase: nodeUseCase,
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(
@@ -169,6 +172,10 @@ class NodeBrowserViewModelTests: XCTestCase {
             )
             
             saver = { self.savedViewModes.append($0) }
+        }
+        
+        func invokeNodeUpdates(_ updatedNodes: [NodeEntity]) {
+            nodeUpdatesContinuation.yield(updatedNodes)
         }
     }
     
@@ -362,9 +369,12 @@ class NodeBrowserViewModelTests: XCTestCase {
             .init(),
             .init(changeTypes: [.removed])
         ]
+        
         let harness = Harness(node: nodes[1], onNodeStructureChanged: exp.fulfill)
-        harness.nodesUpdateListener.onNodesUpdateHandler?(nodes)
-        await fulfillment(of: [exp], timeout: 1.0)
+        
+        harness.invokeNodeUpdates(nodes)
+        
+        await fulfillment(of: [exp], timeout: 10.0)
     }
 
     @MainActor
