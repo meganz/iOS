@@ -570,9 +570,10 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func filterChats() {
         guard !Task.isCancelled else { return }
         if noteToSelfChatEnabled {
-            // Swap note to self to first position
-            if let index = chatRooms?.firstIndex(where: { $0.chatListItem.isNoteToSelf }) {
-                chatRooms?.swapAt(0, index)
+            // If note to self chat exists, remove from the list and add it at first position
+            if let index = chatRooms?.firstIndex(where: { $0.chatListItem.isNoteToSelf }),
+               let noteToSelfChat = chatRooms?.remove(at: index) {
+                chatRooms?.insert(noteToSelfChat, at: 0)
             }
         } else {
             // Remove note to self from list
