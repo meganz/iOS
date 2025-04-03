@@ -18,7 +18,7 @@ extension ChatViewController {
         }
         navigationItem.rightBarButtonItems = createNavBarRightButtonItems()
                 
-        chatContentViewModel.dispatch(.updateCallNavigationBarButtons(shouldDisableAudioVideoCalling, isVoiceRecordingInProgress))
+        chatContentViewModel.dispatch(.updateCallNavigationBarButtons)
     }
     
     private func addRightBarButtons() {

@@ -15,7 +15,7 @@ protocol ChatContentRouting: Routing {
 
 enum ChatContentAction: ActionType {
     case startOrJoinCallCleanUp
-    case updateCallNavigationBarButtons(_ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool)
+    case updateCallNavigationBarButtons
     case updateContent
     case updateChatRoom(_ chatRoom: ChatRoomEntity)
     case inviteParticipants(_ userHandles: [HandleEntity])
@@ -25,6 +25,8 @@ enum ChatContentAction: ActionType {
     case requestLastGreenIfNeeded
     case resumeTransfers
     case checkTransferStatus
+    case startRecordVoiceClip
+    case stopRecordVoiceClip
 }
 
 @MainActor
@@ -33,10 +35,9 @@ final class ChatContentViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configNavigationBar
         case tapToReturnToCallCleanUp
-        case showStartOrJoinCallButton
         case showTapToReturnToCall(_ title: String)
         case enableAudioVideoButtons(_ enable: Bool)
-        case hideStartOrJoinCallButton(_ hide: Bool)
+        case configureStartOrJoinCallButton(_ title: String, _ hide: Bool)
         case updateLastGreenTime(_ lastGreenMinutes: Int) /// Minutes that have elapsed since the user was last online
         case showResumeTransfersAlert
     }
@@ -67,6 +68,7 @@ final class ChatContentViewModel: ViewModelType {
     private let meetingNoUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let handleUseCase: any MEGAHandleUseCaseProtocol
     private let transfersListenerUseCase: any TransfersListenerUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let callController: any CallControllerProtocol
     private let callsManager: any CallsManagerProtocol
 
@@ -91,9 +93,12 @@ final class ChatContentViewModel: ViewModelType {
     private var callTimeTrackingTask: Task<Void, Never>?
     private var updateContentTask: Task<Void, Never>?
     private var chatCallUpdateTask: Task<Void, Never>?
+    private var networkMonitorTask: Task<Void, Never>?
 
     private var isStartingOrJoiningCall: Bool = false
-    
+    private var isConnectedToNetwork: Bool
+    private var isVoiceRecordingInProgress: Bool = false
+
     init(chatRoom: ChatRoomEntity,
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
@@ -103,6 +108,7 @@ final class ChatContentViewModel: ViewModelType {
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
          transfersListenerUseCase: some TransfersListenerUseCaseProtocol,
+         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
          router: some ChatContentRouting,
          permissionRouter: some PermissionAlertRouting,
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
@@ -121,6 +127,7 @@ final class ChatContentViewModel: ViewModelType {
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.transfersListenerUseCase = transfersListenerUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.router = router
         self.permissionRouter = permissionRouter
         self.analyticsEventUseCase = analyticsEventUseCase
@@ -129,12 +136,19 @@ final class ChatContentViewModel: ViewModelType {
         self.callController = callController
         self.callsManager = callsManager
         self.featureFlagProvider = featureFlagProvider
-        
+        self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
+
+        monitorNetworkChanges()
         monitorOnCallUpdate()
         subscribeToNoUserJoinedNotification()
         monitorOnChatConnectionStateUpdate()
         monitorOnChatOnlineStatusUpdate()
         monitorOnChatPresenceLastGreenUpdate()
+    }
+    
+    deinit {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = nil
     }
     
     // MARK: - Dispatch actions
@@ -143,9 +157,8 @@ final class ChatContentViewModel: ViewModelType {
         switch action {
         case .startOrJoinCallCleanUp:
             onUpdateStartOrJoinCallButtons()
-        case .updateCallNavigationBarButtons(let disableCalling,
-                                             let isVoiceRecordingInProgress):
-            onUpdateNavigationBarButtonItems(disableCalling, isVoiceRecordingInProgress)
+        case .updateCallNavigationBarButtons:
+            onUpdateNavigationBarButtonItems()
         case .updateContent:
             updateContentIfNeeded()
         case .updateChatRoom(let chatRoom):
@@ -172,10 +185,22 @@ final class ChatContentViewModel: ViewModelType {
             if transfersListenerUseCase.areTransfersPaused() {
                 invokeCommand?(.showResumeTransfersAlert)
             }
+        case .startRecordVoiceClip:
+            updateVoiceRecordingState(true)
+        case .stopRecordVoiceClip:
+            updateVoiceRecordingState(false)
         }
     }
     
     // MARK: - Public
+    
+    var titleForStartOrJoinCallButton: String {
+        if chatRoom.isMeeting {
+            chatUseCase.isCallInProgress(for: chatRoom.chatId) ? Strings.Localizable.Meetings.Scheduled.ButtonOverlay.joinMeeting : Strings.Localizable.Meetings.Scheduled.ButtonOverlay.startMeeting
+        } else {
+            Strings.Localizable.Chat.joinCall
+        }
+    }
     
     func determineNavBarRightItems(isEditing: Bool = false) -> NavBarRightItems {
         if isEditing {
@@ -227,29 +252,33 @@ final class ChatContentViewModel: ViewModelType {
         }
     }
     
-    private func onUpdateNavigationBarButtonItems(
-        _ disableCalling: Bool,
-        _ isVoiceRecordingInProgress: Bool
-    ) {
+    private func onUpdateNavigationBarButtonItems() {
         updateNavigationBarTask?.cancel()
         updateNavigationBarTask = Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress)
+            let shouldEnable = await shouldEnableAudioVideoButtons()
             enableNavigationBarButtonItems(shouldEnable)
         }
     }
     
-    private func shouldEnableAudioVideoButtons(
-        _ disableCalling: Bool,
-        _ isVoiceRecordingInProgress: Bool
-    ) async -> Bool {
+    /// Determine if navigation bar call  buttons should be enabled/disabled based on several variables to avoid start audio and video calls under not desired scenarios
+    /// Buttons should be disabled:
+    /// - for users with read only permissions,
+    /// - when chat is not connected,
+    /// - without network connectivity,
+    /// - if there is a call in other or in this chat,
+    /// - if there is a voice recording in progress,
+    /// - if chat has waiting room enabled and user is not moderator
+    private func shouldEnableAudioVideoButtons() async -> Bool {
         let connectionStatus = await chatUseCase.chatConnectionStatus(for: chatRoom.chatId)
         let call = await chatUseCase.chatCall(for: chatRoom.chatId)
         let privilege = chatRoom.ownPrivilege
         let ownPrivilegeSmallerThanStandard = [.unknown, .removed, .readOnly].contains(privilege)
         let existsActiveCall = chatUseCase.existsActiveCall()
         let isWaitingRoomNonHost = chatRoom.isWaitingRoomEnabled && privilege != .moderator
-        let shouldEnable = !(disableCalling || ownPrivilegeSmallerThanStandard || connectionStatus != .online ||
-                             !MEGAReachabilityManager.isReachable() || existsActiveCall || call != nil || isVoiceRecordingInProgress || isWaitingRoomNonHost)
+        let shouldEnable = !(
+            ownPrivilegeSmallerThanStandard || connectionStatus != .online ||
+            !isConnectedToNetwork || existsActiveCall || call != nil || isVoiceRecordingInProgress || isWaitingRoomNonHost
+        )
         
         return shouldEnable
     }
@@ -266,7 +295,12 @@ final class ChatContentViewModel: ViewModelType {
     private func updateStartOrJoinCallButton( _ scheduledMeetings: [ScheduledMeetingEntity]) {
         stopTimer()
         isStartingOrJoiningCall = false
-        invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
+        invokeCommand?(
+            .configureStartOrJoinCallButton(
+                titleForStartOrJoinCallButton,
+                shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)
+            )
+        )
     }
     
     private func updateReturnToCallCleanUpButton() {
@@ -287,9 +321,13 @@ final class ChatContentViewModel: ViewModelType {
         case .initial, .joining, .userNoPresent:
             updateStartOrJoinCallButton(scheduledMeetings)
             updateReturnToCallCleanUpButton()
-            invokeCommand?(.showStartOrJoinCallButton)
         case .inProgress:
-            updateStartOrJoinCallButton(scheduledMeetings)
+            invokeCommand?(
+                .configureStartOrJoinCallButton(
+                    titleForStartOrJoinCallButton,
+                    true
+                )
+            )
             initTimerForCall(call)
             showCallEndTimerIfNeeded(call: call)
         case .connecting:
@@ -330,13 +368,19 @@ final class ChatContentViewModel: ViewModelType {
         invokeCommand?(.showTapToReturnToCall(title))
     }
     
+    /// Determine if start or join call floating button should be hide based on several variables
+    /// 1. For group chats (group or meeting), if there is a call in progress and user is not participating, it should show the button with join string.
+    /// 2. Just for meetings chats with scheduled meetings, if there is not a call, it should show the button with start string.
+    /// 3. All other scenarios, should be hidden: no network, while recording voice clips, chat is archived, chat is individual or user is no longer in the chat
     private func shouldHideStartOrJoinCallButton(scheduledMeetings: [ScheduledMeetingEntity]) -> Bool {
-        chatRoom.isArchived
-        || chatRoom.chatType != .meeting
-        || scheduledMeetings.isEmpty
-        || chatUseCase.isCallInProgress(for: chatRoom.chatId)
+        !isConnectedToNetwork
+        || isVoiceRecordingInProgress
+        || chatRoom.isArchived
+        || chatRoom.chatType == .oneToOne
+        || chatRoom.chatType == .noteToSelf
+        || (chatRoom.chatType == .meeting && !chatUseCase.isCallInProgress(for: chatRoom.chatId) && scheduledMeetings.isEmpty)
+        || (chatRoom.chatType == .group && !chatUseCase.isCallInProgress(for: chatRoom.chatId))
         || !chatRoom.ownPrivilege.isUserInChat
-        || (chatRoom.ownPrivilege == .readOnly && !chatUseCase.isCallInProgress(for: chatRoom.chatId))
     }
     
     private func inviteParticipants(_ userHandles: [HandleEntity]) {
@@ -452,6 +496,12 @@ final class ChatContentViewModel: ViewModelType {
     private func shouldOpenWaitingRoom() -> Bool {
         guard chatRoom.isWaitingRoomEnabled else { return false }
         return chatRoom.ownPrivilege != .moderator
+    }
+    
+    private func updateVoiceRecordingState(_ isRecording: Bool) {
+        isVoiceRecordingInProgress = isRecording
+        onUpdateNavigationBarButtonItems()
+        onUpdateStartOrJoinCallButtons()
     }
     
     private func showCallEndDialog(withCall call: CallEntity) {   
@@ -593,6 +643,7 @@ final class ChatContentViewModel: ViewModelType {
             }
         }
     }
+    
     private func onPresenceLastGreenUpdate(_ presenceLastGreen: (userHandle: HandleEntity, lastGreen: Int)) {
         if presenceLastGreen.userHandle == chatRoom.peers.first?.handle {
             let status = chatRoomUseCase.userStatus(forUserHandle: presenceLastGreen.userHandle)
@@ -601,6 +652,18 @@ final class ChatContentViewModel: ViewModelType {
                 invokeCommand?(.updateLastGreenTime(presenceLastGreen.lastGreen))
             default:
                 break
+            }
+        }
+    }
+    
+    // MARK: - Network monitor
+    private func monitorNetworkChanges() {
+        networkMonitorTask?.cancel()
+        networkMonitorTask = Task { [weak self, networkMonitorUseCase] in
+            for await isConnected in networkMonitorUseCase.connectionSequence {
+                self?.isConnectedToNetwork = isConnected
+                self?.onUpdateStartOrJoinCallButtons()
+                self?.onUpdateNavigationBarButtonItems()
             }
         }
     }

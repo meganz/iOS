@@ -10,14 +10,14 @@ import XCTest
 
 final class ChatContentViewModelTests: XCTestCase {
     
-    @MainActor func testStartOrJoinCallCleanUp_callCleanUp() {
+    @MainActor func testStartOrJoinCall_hideStartOrJoinCallButton() {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let chatUseCase = MockChatUseCase()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .startOrJoinCallCleanUp,
-             expectedCommands: [.hideStartOrJoinCallButton(true)])
+             expectedCommands: [.configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true)])
     }
     
     @MainActor func testUpdateCallNavigationBarButtons_callUpdateCallBarButtons() {
@@ -26,7 +26,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
-        test(viewModel: sut, action: .updateCallNavigationBarButtons(false, false),
+        test(viewModel: sut, action: .updateCallNavigationBarButtons,
              expectedCommands: [.enableAudioVideoButtons(false)])
     }
     
@@ -289,7 +289,7 @@ final class ChatContentViewModelTests: XCTestCase {
         )
         
         test(viewModel: sut, action: .updateContent,
-             expectedCommands: [.tapToReturnToCallCleanUp, .hideStartOrJoinCallButton(true)])
+             expectedCommands: [.tapToReturnToCallCleanUp, .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true)])
     }
     
     @MainActor func testUpdateContent_connectionIsNotOnline_shouldCallCleanUpAndUpdateStartOrJoinCallButton() {
@@ -302,10 +302,10 @@ final class ChatContentViewModelTests: XCTestCase {
         let (sut, _) = makeChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: .updateContent,
-             expectedCommands: [.tapToReturnToCallCleanUp, .hideStartOrJoinCallButton(true)])
+             expectedCommands: [.tapToReturnToCallCleanUp, .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true)])
     }
     
-    @MainActor func testUpdateContent_joiningTheCall_shouldCall4Commands() {
+    @MainActor func testUpdateContent_joiningTheCall_shouldUpdateNavBarStartOrJoinAndReturnButtons() {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let chatUseCase = MockChatUseCase()
@@ -316,13 +316,12 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
-                                .hideStartOrJoinCallButton(true),
-                                .tapToReturnToCallCleanUp,
-                                .showStartOrJoinCallButton
+                                .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true),
+                                .tapToReturnToCallCleanUp
                                ])
     }
     
-    @MainActor func testUpdateContent_callInProgress_shouldCall2Commands() {
+    @MainActor func testUpdateContent_callInProgress_shoulHideStartOrJoinAndShowReturnButtons() {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let chatUseCase = MockChatUseCase()
@@ -334,7 +333,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
-                                .hideStartOrJoinCallButton(true),
+                                .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true),
                                 .showTapToReturnToCall("Tap to return to call 00:00")
                                ])
     }
@@ -355,7 +354,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
-                                .hideStartOrJoinCallButton(true),
+                                .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true),
                                 .showTapToReturnToCall("Tap to return to call 00:00")
                                ])
         XCTAssert(router.showEndCallDialog_calledTimes == 1)
@@ -377,7 +376,7 @@ final class ChatContentViewModelTests: XCTestCase {
                                ])
     }
     
-    @MainActor func testUpdateContent_callInDestroyed_shouldCall3Commands() {
+    @MainActor func testUpdateContent_callInDestroyed_shouldUpdateCallButtons() {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let chatUseCase = MockChatUseCase()
@@ -389,7 +388,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .updateContent,
              expectedCommands: [.configNavigationBar,
-                                .hideStartOrJoinCallButton(true),
+                                .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true),
                                 .tapToReturnToCallCleanUp])
     }
     
@@ -400,7 +399,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(
             viewModel: sut,
-            action: .updateCallNavigationBarButtons(false, false),
+            action: .updateCallNavigationBarButtons,
             expectedCommands: [
                 .enableAudioVideoButtons(false)
             ]
@@ -414,7 +413,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(
             viewModel: sut,
-            action: .updateCallNavigationBarButtons(false, false),
+            action: .updateCallNavigationBarButtons,
             expectedCommands: [
                 .enableAudioVideoButtons(true)
             ]
@@ -431,7 +430,7 @@ final class ChatContentViewModelTests: XCTestCase {
             viewModel: sut,
             actions: [
                 .updateChatRoom(newChatRoom),
-                .updateCallNavigationBarButtons(false, false)
+                .updateCallNavigationBarButtons
             ],
             expectedCommands: [
                 .enableAudioVideoButtons(false)
@@ -449,7 +448,7 @@ final class ChatContentViewModelTests: XCTestCase {
             viewModel: sut,
             actions: [
                 .updateChatRoom(newChatRoom),
-                .updateCallNavigationBarButtons(false, false)
+                .updateCallNavigationBarButtons
             ],
             expectedCommands: [
                 .enableAudioVideoButtons(true)
@@ -562,7 +561,7 @@ final class ChatContentViewModelTests: XCTestCase {
             ],
             expectedCommands: [
                 .configNavigationBar,
-                .hideStartOrJoinCallButton(true),
+                .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true),
                 .showTapToReturnToCall("Tap to return to call 00:00")
             ]
         )
@@ -589,7 +588,7 @@ final class ChatContentViewModelTests: XCTestCase {
             ],
             expectedCommands: [
                 .configNavigationBar,
-                .hideStartOrJoinCallButton(true),
+                .configureStartOrJoinCallButton(sut.titleForStartOrJoinCallButton, true),
                 .showTapToReturnToCall("Tap to return to call 00:00")
             ]
         )
@@ -746,6 +745,7 @@ final class ChatContentViewModelTests: XCTestCase {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             audioSessionUseCase: audioSessionUseCase,
             transfersListenerUseCase: MockTransfersListenerUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             router: router,
             permissionRouter: _permissionRouter,
             analyticsEventUseCase: analyticsEventUseCase,
