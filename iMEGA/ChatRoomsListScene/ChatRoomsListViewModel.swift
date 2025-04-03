@@ -879,7 +879,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func onChatListItemsUpdate(_ chatListItems: [ChatListItemEntity]) {
         let chatRooms = chatListItems.compactMap { chatRoomUseCase.chatRoom(forChatId: $0.chatId) }
         if (chatViewMode == .chats &&
-            chatRooms.contains(where: { $0.chatType == .oneToOne || $0.chatType == .group })) ||
+            chatRooms.contains(where: { $0.chatType == .oneToOne || $0.chatType == .group || $0.chatType == .noteToSelf })) ||
             (chatViewMode == .meetings &&
              chatRooms.contains(where: { $0.chatType == .meeting })) {
             fetchChats()
