@@ -208,7 +208,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
     
     private func showEditTextFile(for node: MEGANode) {
-        if let vc = (viewController as? MEGANavigationController)?.viewControllers.last {
+        if let vc = (viewController as? UINavigationController)?.viewControllers.last {
             node.mnz_editTextFile(in: vc)
         }
     }
