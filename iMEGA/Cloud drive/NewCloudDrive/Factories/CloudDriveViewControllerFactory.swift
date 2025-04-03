@@ -300,7 +300,7 @@ struct CloudDriveViewControllerFactory {
         searchResultsViewModel: SearchResultsViewModel,
         noInternetViewModel: LegacyNoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
-        nodesUpdateListener: some NodesUpdateListenerProtocol,
+        nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
         nodeUseCase: some NodeUseCaseProtocol,
         config: NodeBrowserConfig,
@@ -344,8 +344,8 @@ struct CloudDriveViewControllerFactory {
             avatarViewModel: avatarViewModel, 
             noInternetViewModel: noInternetViewModel,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
-            nodesUpdateListener: nodesUpdateListener, 
-            cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService, 
+            nodeUpdatesProvider: nodeUpdatesProvider,
+            cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
@@ -633,11 +633,11 @@ struct CloudDriveViewControllerFactory {
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
         
-        let nodesUpdateListener = SDKNodesUpdateListenerRepository(sdk: sdk)
+        let nodeUpdatesProvider = NodeUpdatesProvider(sdk: sdk)
 
         let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
             originalNodeSource: nodeSource,
-            nodeUpdatesListener: nodesUpdateListener
+            nodeUpdatesProvider: nodeUpdatesProvider
         )
 
         let cloudDriveViewModeMonitoringService = CloudDriveViewModeMonitoringService(
@@ -651,7 +651,7 @@ struct CloudDriveViewControllerFactory {
             searchResultsViewModel: searchResultsVM,
             noInternetViewModel: noInternetViewModel, 
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
-            nodesUpdateListener: nodesUpdateListener, 
+            nodeUpdatesProvider: nodeUpdatesProvider,
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
             nodeUseCase: nodeUseCase,
             config: overriddenConfig,
