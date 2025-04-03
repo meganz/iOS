@@ -74,8 +74,6 @@ class ChatViewController: MessagesViewController {
     var sendTypingTimer: Timer?
     var keyboardVisible = false
     var richLinkWarningCounterValue: Int = 0
-    var isVoiceRecordingInProgress = false
-    var shouldDisableAudioVideoCalling = false
     var unreadNewMessagesCount = 0 {
         didSet {
             chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
@@ -222,7 +220,7 @@ class ChatViewController: MessagesViewController {
         update()
         
         messagesCollectionView.allowsMultipleSelection = true
-        configureStartOrJoinCallButton()
+        layoutStartOrJoinCallButton()
         configureTapToReturnToCallButton()
         configurePreviewerButton()
         addObservers()
@@ -808,10 +806,8 @@ class ChatViewController: MessagesViewController {
             configureNavigationBar()
         case .tapToReturnToCallCleanUp:
             tapToReturnToCallCleanup()
-        case .hideStartOrJoinCallButton(let hide):
-            hideStartOrJoinCallButton(hide)
-        case .showStartOrJoinCallButton:
-            showStartOrJoinCallButton()
+        case .configureStartOrJoinCallButton(let title, let hide):
+            configureStartOrJoinCallButton(title: title, hide: hide)
         case .showTapToReturnToCall(let title):
             showTapToReturnToCall(withTitle: title)
         case .enableAudioVideoButtons(let enable):
@@ -875,7 +871,7 @@ class ChatViewController: MessagesViewController {
         tapToReturnToCallCleanup()
     }
     
-    private func configureStartOrJoinCallButton() {
+    private func layoutStartOrJoinCallButton() {
         startOrJoinCallButton.addTarget(self, action: #selector(didTapStartOrJoinCallFloatingButton), for: .touchUpInside)
         view.addSubview(startOrJoinCallButton)
         startOrJoinCallButton.isHidden = true
@@ -987,14 +983,6 @@ class ChatViewController: MessagesViewController {
     
     private func addObservers() {
         NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.reachabilityChanged,
-            object: nil,
-            queue: OperationQueue.main
-        ) { [weak self] _ in
-            self?.configureNavigationBar()
-        }
-        
-        NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleKeyboardShown(_:)),
             name: UIResponder.keyboardDidShowNotification,
@@ -1034,11 +1022,6 @@ class ChatViewController: MessagesViewController {
     }
     
     private func removeObservers() {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: NSNotification.Name.reachabilityChanged,
-            object: nil
-        )
         NotificationCenter.default.removeObserver(
             self,
             name: UIResponder.keyboardDidShowNotification,
