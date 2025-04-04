@@ -1,3 +1,4 @@
+import Chat
 import ChatRepo
 import MEGAAppPresentation
 import MEGADomain
@@ -85,7 +86,10 @@ enum ChatContentRoutingStyle: Int {
             meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo),
             handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             callController: CallControllerProvider().provideCallController(),
-            callsManager: CallsManager.shared
+            callsManager: CallsManager.shared,
+            noteToSelfNewFeatureBadgeStore: NoteToSelfNewFeatureBadgeStore(
+                userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+            )
         )
         
         let chatViewController = ChatViewController(chatRoom: chatRoom, chatContentViewModel: chatContentViewModel, photoPicker: MEGAPhotoPicker(presenter: presenter))
