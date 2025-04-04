@@ -314,7 +314,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     // MARK: - Analytics
     
     @MainActor
-    func testAnalytics_onViewDidLoad_tracksAudioPlayerIsActivatedEvent() {
+    func testAnalytics_onViewDidLoad_shouldTrackAudioPlayerIsActivatedEvent() {
         let tracker = MockTracker()
         let (sut, _, _) = makeSUT(
             configEntity: audioPlayerConfigEntity(node: anyAudioNode),
@@ -329,7 +329,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAnalytics_onShuffleActive_tracksAudioPlayerShuffleEnabledEvent() {
+    func testAnalytics_onShuffleActive_shouldTrackAudioPlayerShuffleEnabledEvent() {
         let tracker = MockTracker()
         let (sut, _, _) = makeSUT(
             configEntity: audioPlayerConfigEntity(node: anyAudioNode),
@@ -344,7 +344,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAnalytics_onRepeatPressed_tracksLoopAndRepeatOneEvents() {
+    func testAnalytics_onRepeatPressed_shouldTrackLoopAndRepeatOneEvents() {
         let tracker = MockTracker()
         let (sut, _, _) = makeSUT(
             configEntity: audioPlayerConfigEntity(node: anyAudioNode),
@@ -375,7 +375,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testAnalytics_showPlaylist_tracksQueueButtonPressedEvent() {
+    func testAnalytics_showPlaylist_shouldTrackQueueButtonPressedEvent() {
         let tracker = MockTracker()
         let (sut, _, _) = makeSUT(
             configEntity: audioPlayerConfigEntity(node: anyAudioNode),
@@ -387,6 +387,76 @@ final class AudioPlayerViewModelTests: XCTestCase {
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [AudioPlayerQueueButtonPressedEvent()])
+    }
+    
+    @MainActor
+    func testAnalytics_onChangeSpeedModePressed_shouldTrackSpeedChangeEvents() {
+        let tracker = MockTracker()
+        
+        let (sut, _, _) = makeSUT(
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            tracker: tracker
+        )
+        
+        sut.dispatch(.onChangeSpeedModePressed)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerSpeedChangeOneAndHalfXEvent()]
+        )
+        
+        tracker.reset()
+        
+        sut.dispatch(.onChangeSpeedModePressed)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerSpeedChange2XEvent()]
+        )
+        
+        tracker.reset()
+        
+        sut.dispatch(.onChangeSpeedModePressed)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerSpeedChangeHalfXEvent()]
+        )
+        
+        tracker.reset()
+        
+        sut.dispatch(.onChangeSpeedModePressed)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerSpeedChange1XEvent()]
+        )
+    }
+    
+    @MainActor
+    func testAnalytics_onGoBackward_shouldTrackBackwardEvent() {
+        let tracker = MockTracker()
+        let (sut, _, _) = makeSUT(
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            tracker: tracker
+        )
+        sut.dispatch(.onGoBackward)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerBack15SecondsEvent()]
+        )
+    }
+
+    @MainActor
+    func testAnalytics_onGoForward_shouldTrackForwardEvent() {
+        let tracker = MockTracker()
+        let (sut, _, _) = makeSUT(
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            tracker: tracker
+        )
+        sut.dispatch(.onGoForward)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AudioPlayerForward15SecondsEvent()]
+        )
     }
     
     // MARK: - Helpers

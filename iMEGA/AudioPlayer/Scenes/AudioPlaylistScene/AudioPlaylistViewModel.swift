@@ -114,6 +114,7 @@ final class AudioPlaylistViewModel: ViewModelType {
             trackReorderItemsInPlaylist()
             configEntity.playerHandler.move(item: movedItem, to: position, direction: direction)
         case .removeSelectedItems:
+            trackRemoveTracksButtonTapped()
             removeAllSelectedItems()
         case .didSelect(let item):
             invokeCommand?(.showToolbar)
@@ -138,6 +139,10 @@ final class AudioPlaylistViewModel: ViewModelType {
     // MARK: - Analytics
     private func trackReorderItemsInPlaylist() {
         tracker.trackAnalyticsEvent(with: AudioPlayerQueueReorderedEvent())
+    }
+    
+    private func trackRemoveTracksButtonTapped() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerQueueItemRemovedEvent())
     }
 }
 

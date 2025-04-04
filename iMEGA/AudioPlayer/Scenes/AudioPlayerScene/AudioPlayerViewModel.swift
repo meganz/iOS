@@ -129,6 +129,13 @@ final class AudioPlayerViewModel: ViewModelType {
         didSet {
             invokeCommand?(.updateSpeed(mode: speedModeState))
             configEntity.playerHandler.changePlayer(speed: speedModeState)
+           
+            switch speedModeState {
+            case .normal: trackAudioPlayerSpeedChange1X()
+            case .oneAndAHalf: trackAudioPlayerSpeedChangeOneAndHalfX()
+            case .double: trackAudioPlayerSpeedChange2X()
+            case .half: trackAudioPlayerSpeedChangeHalfX()
+            }
         }
     }
     private(set) var isSingleTrackPlayer: Bool = false
@@ -403,7 +410,30 @@ final class AudioPlayerViewModel: ViewModelType {
         tracker.trackAnalyticsEvent(with: AudioPlayerQueueButtonPressedEvent())
     }
     
+    private func trackAudioPlayerSpeedChangeHalfX() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerSpeedChangeHalfXEvent())
+    }
 
+    private func trackAudioPlayerSpeedChange1X() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerSpeedChange1XEvent())
+    }
+
+    private func trackAudioPlayerSpeedChangeOneAndHalfX() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerSpeedChangeOneAndHalfXEvent())
+    }
+
+    private func trackAudioPlayerSpeedChange2X() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerSpeedChange2XEvent())
+    }
+
+    private func trackAudioPlayerForward15Seconds() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerForward15SecondsEvent())
+    }
+
+    private func trackAudioPlayerBack15Seconds() {
+        tracker.trackAnalyticsEvent(with: AudioPlayerBack15SecondsEvent())
+    }
+    
     // MARK: - Dispatch action
     func dispatch(_ action: AudioPlayerAction) {
         switch action {
@@ -460,8 +490,10 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             configEntity.playerHandler.playNext()
         case .onGoBackward:
+            trackAudioPlayerBack15Seconds()
             configEntity.playerHandler.goBackward()
         case .onGoForward:
+            trackAudioPlayerForward15Seconds()
             configEntity.playerHandler.goForward()
         case .onRepeatPressed:
             switch repeatItemsState {
