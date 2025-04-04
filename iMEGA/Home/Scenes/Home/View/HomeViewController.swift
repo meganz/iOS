@@ -193,11 +193,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         configureAdsVisibility()
         bannerCollectionView?.refreshContainer()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        AudioPlayerManager.shared.removeDelegate(self)
-    }
 
     private func setupViewModelEventListening() {
         myAvatarViewModel?.notifyUpdate = { [weak self] output in
@@ -842,9 +837,11 @@ private extension Selector {
 // MARK: - AudioPlayer
 extension HomeViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
-        Task { @MainActor in
-            additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
-        }
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }
 

@@ -35,11 +35,6 @@ final class ChatRoomsListViewController: UIHostingController<ChatRoomsListView> 
         configureAdsVisibility()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        AudioPlayerManager.shared.removeDelegate(self)
-    }
-    
     // this function should be called in only 2 places :
     // 1. when view is created to have a default value
     // 2. whenever unread count changes (this is triggered by MainTabBarController
@@ -73,9 +68,11 @@ final class ChatRoomsListViewController: UIHostingController<ChatRoomsListView> 
 
 extension ChatRoomsListViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
-        Task { @MainActor in
-            additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
-        }
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }
 

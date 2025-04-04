@@ -28,8 +28,7 @@ final class AudioPlayer: NSObject {
     var audioSeekFallbackObserver: NSKeyValueObservation?
     var metadataQueueFinishAllOperationsObserver: NSKeyValueObservation?
     var audioPlayerConfig: [PlayerConfiguration: Any] = [.loop: false, .shuffle: false]
-    var listenerManager = ListenerManager<any AudioPlayerObserversProtocol>()
-    var presenterListenerManager = ListenerManager<any AudioPlayerPresenterProtocol>()
+    var observersListenerManager = ListenerManager<any AudioPlayerObserversProtocol>()
     let preloadMetadataMaxItems = 3
     let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
@@ -286,37 +285,17 @@ final class AudioPlayer: NSObject {
     }
     
     @objc func add(listener: any AudioPlayerObserversProtocol) {
-        if listenerManager.listeners.notContains(where: { $0 === listener }) {
-            listenerManager.add(listener)
+        if observersListenerManager.listeners.notContains(where: { $0 === listener }) {
+            observersListenerManager.add(listener)
         }
     }
     
     @objc func remove(listener: any AudioPlayerObserversProtocol) {
-        listenerManager.remove(listener)
+        observersListenerManager.remove(listener)
     }
     
     func removeAllListeners() {
-        listenerManager.listeners.removeAll()
-    }
-    
-    @objc func add(presenterListener: any AudioPlayerPresenterProtocol) {
-        presenterListenerManager.add(presenterListener)
-    }
-    
-    @objc func remove(presenterListener: any AudioPlayerPresenterProtocol) {
-        presenterListenerManager.remove(presenterListener)
-    }
-    
-    func updateContentViews(newHeight: CGFloat) {
-        presenterListenerManager.notify {
-            $0.updateContentView(isAlive ? newHeight : 0)
-        }
-    }
-    
-    func updateContentViewsIgnorePlayerLifeCycle(showMiniPlayer: Bool, newHeight: CGFloat) {
-        presenterListenerManager.notify {
-            $0.updateContentView(showMiniPlayer ? newHeight: 0)
-        }
+        observersListenerManager.listeners.removeAll()
     }
     
     func playerTracksContains(url: URL) -> Bool {

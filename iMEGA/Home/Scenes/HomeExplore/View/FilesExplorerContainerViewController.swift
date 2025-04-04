@@ -67,11 +67,6 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        AudioPlayerManager.shared.removeDelegate(self)
-    }
-    
     // MARK: - Bar Buttons    
     func updateTitle(_ title: String?) {
         self.title = title
@@ -235,8 +230,10 @@ extension FilesExplorerContainerViewController: TraitEnvironmentAware {
 // MARK: - AudioPlayer
 extension FilesExplorerContainerViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
-        Task { @MainActor in
-            additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
-        }
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }

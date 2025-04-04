@@ -97,11 +97,6 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        audioPlayerManager?.removeDelegate(self)
-    }
-    
     deinit {
         CrashlyticsLogger.log(category: .viewLifecycle, "SearchBarUIHostingController deinit - Before removeToolbar")
         
@@ -123,9 +118,11 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
     
     // MARK: - AudioPlayerPresenterProtocol
     func updateContentView(_ height: CGFloat) {
-        Task { @MainActor in
-            additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
-        }
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
     
     // MARK: - Private methods

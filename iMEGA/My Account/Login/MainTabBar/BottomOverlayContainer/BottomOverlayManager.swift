@@ -49,22 +49,12 @@ final class BottomOverlayManager: NSObject {
             .map { $0.element }
     }
     
-    private func setItemVisibility(
+    func setItemVisibility(
         for type: BottomSubViewType,
         hidden: Bool
     ) {
         for item in items where item.type == type {
             item.view.isHidden = hidden
-        }
-    }
-    
-    func setItemVisibility(
-        for type: BottomSubViewType,
-        hidden: Bool
-    ) async {
-        await withCheckedContinuation { continuation in
-            self.setItemVisibility(for: type, hidden: hidden)
-            continuation.resume()
         }
     }
 }

@@ -27,7 +27,7 @@
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, TextFileEditable, MEGANavigationControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, TextFileEditable> {
     BOOL allNodesSelected;
 }
 
@@ -38,8 +38,6 @@
 @property (nonatomic, strong) NSMutableDictionary *incomingIndexPathsMutableDictionary;
 @property (nonatomic, strong) NSMutableDictionary *outgoingNodesForEmailMutableDictionary;
 @property (nonatomic, strong) NSMutableDictionary *outgoingIndexPathsMutableDictionary;
-
-@property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
 @end
 
@@ -96,8 +94,6 @@
         self.sortOrderType = MEGASortOrderTypeDefaultAsc;
     }
     
-    [self assignAsMEGANavigationDelegateWithDelegate:self];
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"NodeTableViewCell" bundle:nil] forCellReuseIdentifier:@"nodeCell"];
     
@@ -116,8 +112,6 @@
     
     [self reloadUI];
     
-    self.shouldRemovePlayerDelegate = YES;
-    
     [self refreshMyAvatar];
     
     [self setBackBarButton];
@@ -127,7 +121,7 @@
         [self updateSearchResultsForSearchController:self.searchController];
     }
     
-    [self addAudioPlayerDelegate];
+    [self updateMiniPlayerPresenter];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -140,10 +134,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [MEGASdk.shared removeMEGAGlobalDelegate:self];
-    
-    if (self.shouldRemovePlayerDelegate) {
-        [AudioPlayerManager.shared removeDelegate:self];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1279,18 +1269,6 @@
 
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [node navigateToParentAndPresent];
-}
-
-#pragma mark - MEGANavigatioControllerDelegate
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {
-        self.shouldRemovePlayerDelegate = ![viewController conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)];
-    }
-}
-
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    self.shouldRemovePlayerDelegate = YES;
 }
 
 #pragma mark - BrowserViewControllerDelegate, ContactsViewControllerDelegate

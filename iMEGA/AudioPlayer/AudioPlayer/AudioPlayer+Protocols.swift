@@ -84,8 +84,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func addPlayer(tracks: [AudioPlayerItem])
     func addPlayer(listener: any AudioPlayerObserversProtocol)
     func removePlayer(listener: any AudioPlayerObserversProtocol)
-    @MainActor func addDelegate(_ delegate: any AudioPlayerPresenterProtocol)
-    func removeDelegate(_ delegate: any AudioPlayerPresenterProtocol)
+    @MainActor func updateMiniPlayerPresenter(_ presenter: any AudioPlayerPresenterProtocol)
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol)
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol)
     @MainActor func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?)
@@ -98,7 +97,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)
     func remoteCommandEnabled(_ enabled: Bool)
     func resetAudioPlayerConfiguration()
-    func refreshPresentersContentOffset(isHidden: Bool)
+    func refreshContentOffset(presenter: any AudioPlayerPresenterProtocol, isHidden: Bool)
 }
 
 // MARK: - Mini Audio Player Handlers Functions
@@ -108,13 +107,14 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func hideMiniPlayer()
     func closeMiniPlayer()
     func resetMiniPlayerContainer()
-    func currentContainerHeight() async -> CGFloat
+    func currentContainerHeight() -> CGFloat
     func containsMiniPlayerInstance() -> Bool
 }
 
 // MARK: - Audio Player Presenters
-@objc protocol AudioPlayerPresenterProtocol: AudioPlayerProtocol {
+@objc protocol AudioPlayerPresenterProtocol where Self: UIViewController {
     func updateContentView(_ height: CGFloat)
+    func hasUpdatedContentView() -> Bool
 }
 
 final class ListenerManager<T: AudioPlayerProtocol> {

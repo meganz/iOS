@@ -52,6 +52,8 @@
     [self.view setNeedsLayout];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self forceTabBarPositionToBottomIfNeeded];
+    
+    [self refreshMiniPlayerVisibility];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -72,7 +74,6 @@
     [self shouldShowMiniPlayer];
     
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
-    [self refreshMiniPlayerVisibility];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

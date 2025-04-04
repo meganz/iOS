@@ -2,33 +2,31 @@ import MEGADesignToken
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     func presentMiniPlayer(_ viewController: UIViewController) {
-        Task { @MainActor in
-            guard let miniPlayerView = viewController.view else { return }
-            
-            addSubviewToOverlay(
-                miniPlayerView,
-                type: .audioPlayer,
-                priority: .high,
-                height: 60
-            )
-            
-            adjustMiniPlayerDisplay()
-        }
+        guard let miniPlayerView = viewController.view else { return }
+        
+        addSubviewToOverlay(
+            miniPlayerView,
+            type: .audioPlayer,
+            priority: .high,
+            height: 60
+        )
+        
+        adjustMiniPlayerDisplay()
     }
     
     private func adjustMiniPlayerDisplay() {
-        Task { @MainActor in
-            tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
-            
-            shouldUpdateProgressViewLocation()
-            
-            await bottomOverlayManager?.setItemVisibility(
+        tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.shouldUpdateProgressViewLocation()
+            self.bottomOverlayManager?.setItemVisibility(
                 for: .audioPlayer,
                 hidden: false
             )
-            
-            refreshPresenterContentOffset(isHidden: false)
-        }
+        }, completion: { _ in
+            guard let presenter = (self.selectedViewController as? UINavigationController)?.viewControllers.last as? (any AudioPlayerPresenterProtocol) else { return }
+            presenter.updateContentView(self.bottomOverlayContainer?.frame.height ?? 0)
+        })
     }
     
     private func addSafeAreaCoverView() {
@@ -62,35 +60,34 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     
     func updateMiniPlayerVisibility(for viewController: UIViewController) {
         guard AudioPlayerManager.shared.isPlayerAlive() else {
-            if let audioPlayerDelegate = viewController as? (any AudioPlayerPresenterProtocol) {
+            if let presenter = viewController as? (any AudioPlayerPresenterProtocol),
+               presenter.hasUpdatedContentView() {
                 /// If the mini-player was closed on a different screen while the audio player was active,
                 /// any previously modified content inset may no longer be valid. This call forces a reset of the
                 /// current view's content inset to ensure proper layout.
-                audioPlayerDelegate.updateContentView(0)
+                presenter.updateContentView(0)
             }
             return
         }
         let miniPlayerHidden = isMiniPlayerHidden()
         
-        if let audioPlayerDelegate = viewController as? (any AudioPlayerPresenterProtocol) {
-            AudioPlayerManager.shared.addDelegate(audioPlayerDelegate)
-            miniPlayerHidden ? showMiniPlayer() : refreshPresenterContentOffset(isHidden: false)
-        } else {
-            !miniPlayerHidden ? hideMiniPlayer() : refreshPresenterContentOffset(isHidden: true)
+        if let presenter = viewController as? (any AudioPlayerPresenterProtocol) {
+            AudioPlayerManager.shared.updateMiniPlayerPresenter(presenter)
+            miniPlayerHidden ? showMiniPlayer() : presenter.updateContentView(bottomOverlayContainer?.frame.height ?? 0)
+        } else if !miniPlayerHidden {
+            hideMiniPlayer()
         }
     }
     
     func showMiniPlayer() {
-        Task { @MainActor in
-            if let navController = selectedViewController as? UINavigationController,
-               let lastController = navController.viewControllers.last,
-               lastController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
-                await bottomOverlayManager?.setItemVisibility(
-                    for: .audioPlayer,
-                    hidden: false
-                )
-                adjustMiniPlayerDisplay()
-            }
+        if let navController = selectedViewController as? UINavigationController,
+           let lastController = navController.viewControllers.last,
+           lastController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
+            bottomOverlayManager?.setItemVisibility(
+                for: .audioPlayer,
+                hidden: false
+            )
+            adjustMiniPlayerDisplay()
         }
     }
     
@@ -101,21 +98,18 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         return bottomOverlayManager.contains(.audioPlayer) && stackContainsPlayer
     }
     
-    func refreshPresenterContentOffset(isHidden: Bool) {
-        Task { @MainActor in
-            AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: isHidden)
-        }
+    func refreshContentOffset(presenter: (any AudioPlayerPresenterProtocol), isHidden: Bool) {
+        AudioPlayerManager.shared.refreshContentOffset(presenter: presenter, isHidden: isHidden)
     }
     
     func hideMiniPlayer() {
-        Task { @MainActor in
-            await bottomOverlayManager?.setItemVisibility(
-                for: .audioPlayer,
-                hidden: true
-            )
-            refreshPresenterContentOffset(isHidden: true)
-            removeSafeAreaCoverView()
-        }
+        bottomOverlayManager?.setItemVisibility(
+            for: .audioPlayer,
+            hidden: true
+        )
+        guard let presenter = (selectedViewController as? UINavigationController)?.viewControllers.last as? (any AudioPlayerPresenterProtocol) else { return }
+        presenter.updateContentView(bottomOverlayContainer?.frame.height ?? 0)
+        removeSafeAreaCoverView()
     }
     
     func closeMiniPlayer() {
@@ -125,15 +119,11 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func resetMiniPlayerContainer() {
-        Task { @MainActor in
-            removeSubviewFromOverlay(.audioPlayer)
-        }
+        removeSubviewFromOverlay(.audioPlayer)
     }
     
-    func currentContainerHeight() async -> CGFloat {
-        await Task { @MainActor in
-            bottomOverlayContainer?.frame.height ?? 0
-        }.value
+    func currentContainerHeight() -> CGFloat {
+        bottomOverlayContainer?.frame.height ?? 0
     }
     
     @objc func refreshBottomConstraint() {
@@ -149,24 +139,23 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         shouldUpdateProgressViewLocation()
     }
     
-    /// When changing the Audio player handler (e.g.: Opening the Audio Player via a folder link and then closing it to return to the app),
-    /// the view displaying the player in the app might not have been previously added as a delegate. This could result in the content size not being updated.
-    /// This function ensures that the appropriate delegate is added and the content offset is refreshed to avoid that issue.
+    /// Refreshes the mini player’s visibility by ensuring that both the delegate and content view
+    /// accurately reflect the current state of the audio player.
+    /// If the audio player is alive, the bottom overlay container should be visible (i.e., its height non‑zero)
+    /// and the presenter’s content view should be updated accordingly. If these conditions aren’t met, this
+    /// function assigns the proper delegate and refreshes the content view’s height.
     @objc func refreshMiniPlayerVisibility() {
-        Task { @MainActor in
-            if let navController = selectedViewController as? UINavigationController,
-               let lastController = navController.viewControllers.last as? (any AudioPlayerPresenterProtocol) {
-                
-                let bottomContainerHeight = bottomOverlayContainer?.frame.height ?? 0
-                let isPlayerAlive = AudioPlayerManager.shared.isPlayerAlive()
-                
-                if (bottomContainerHeight == 0 && isPlayerAlive) ||
-                    (bottomContainerHeight != 0 && !isPlayerAlive) {
-                    // The delegate is only being added if the AudioPlayerManager listeners array doesn't contains it
-                    AudioPlayerManager.shared.addDelegate(lastController)
-                    refreshPresenterContentOffset(isHidden: !isPlayerAlive)
-                }
-            }
+        guard let presenter = (selectedViewController as? UINavigationController)?.viewControllers.last as? (any AudioPlayerPresenterProtocol) else { return }
+        
+        let bottomContainerVisible = (bottomOverlayContainer?.frame.height ?? 0) != 0
+        let playerAlive = AudioPlayerManager.shared.isPlayerAlive()
+        let presenterUpdated = presenter.hasUpdatedContentView()
+        
+        /// If the bottom container’s visibility or the presenter’s content state does not match the player’s state, update the presenter.
+        if (playerAlive != bottomContainerVisible) || (playerAlive != presenterUpdated) {
+            AudioPlayerManager.shared.updateMiniPlayerPresenter(presenter)
+            let newHeight = playerAlive ? (bottomOverlayContainer?.frame.height ?? 0) : 0
+            presenter.updateContentView(newHeight)
         }
     }
 }

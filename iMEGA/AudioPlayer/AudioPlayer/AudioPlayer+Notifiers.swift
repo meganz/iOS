@@ -4,7 +4,7 @@ import Foundation
 extension AudioPlayer: AudioPlayerProtocol {
 
     func notify(_ closure: (any AudioPlayerObserversProtocol) -> Void) {
-        listenerManager.notify(closure: closure)
+        observersListenerManager.notify(closure: closure)
     }
     
     func notify(_ closures: [(any AudioPlayerObserversProtocol) -> Void]) {
@@ -74,7 +74,7 @@ extension AudioPlayer: AudioPlayerProtocol {
     func notifyAboutToReload(item: AudioPlayerItem) {
         guard let player = queuePlayer else { return }
         
-        listenerManager.notify { $0.audio?(player: player, reload: item) }
+        observersListenerManager.notify { $0.audio?(player: player, reload: item) }
     }
     
     func aboutAudioPlayerConfiguration(_ observer: some AudioPlayerObserversProtocol) {

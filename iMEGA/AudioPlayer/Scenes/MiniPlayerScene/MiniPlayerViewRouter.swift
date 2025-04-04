@@ -43,6 +43,10 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         self.presenter = presenter
     }
     
+    func currentPresenter() -> UIViewController? {
+        presenter
+    }
+    
     func folderSDKLogout(required: Bool) {
         folderSDKLogoutRequired = required
     }

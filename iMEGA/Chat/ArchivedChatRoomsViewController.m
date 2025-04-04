@@ -90,8 +90,6 @@
 
     [MEGAChatSdk.shared removeChatDelegate:self];
     [MEGAChatSdk.shared removeChatCallDelegate:self];
-    
-    [AudioPlayerManager.shared removeDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
