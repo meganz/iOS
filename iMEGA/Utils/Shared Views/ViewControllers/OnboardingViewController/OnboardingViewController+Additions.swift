@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADesignToken
-import MEGASDKRepo
 
 extension OnboardingViewController {
     @objc func setupTertiaryButton() {

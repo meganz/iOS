@@ -1,7 +1,7 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
-import MEGASDKRepo
 
 struct OfflineStoreBridge: OfflineStoreBridgeProtocol {
     

@@ -10,7 +10,7 @@
 #import "QRSettingsTableViewController.h"
 
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 

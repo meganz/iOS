@@ -2,10 +2,10 @@ import Combine
 @testable import MEGA
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGASdk
-import MEGASDKRepoMock
 import XCTest
 
 final class NodeCollectionViewCellViewModelTests: XCTestCase {

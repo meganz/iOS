@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADesignToken
-import MEGASDKRepo
 import MEGAUIKit
 import UIKit
 

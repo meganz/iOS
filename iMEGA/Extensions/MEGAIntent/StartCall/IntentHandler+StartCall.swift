@@ -1,8 +1,8 @@
 import Contacts
 import Intents
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 
 extension IntentHandler: INStartCallIntentHandling {
     

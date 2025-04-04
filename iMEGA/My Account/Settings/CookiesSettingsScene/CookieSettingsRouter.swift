@@ -1,8 +1,8 @@
 import Accounts
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @MainActor
 protocol CookieSettingsRouting: Routing, Sendable {

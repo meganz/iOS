@@ -6,7 +6,7 @@
 #import "MEGA-Swift.h"
 #endif
 
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 @import MEGAL10nObjc;
 
 @interface LaunchViewController () <MEGARequestDelegate>

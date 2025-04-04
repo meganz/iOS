@@ -4,7 +4,7 @@
 #import "MEGAStore.h"
 #import "UIApplication+MNZCategory.h"
 #import "MEGA-Swift.h"
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @implementation MEGAChatNotificationDelegate
 

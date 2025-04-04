@@ -18,7 +18,7 @@ let package = Package(
             targets: ["MEGAFoundation"])
     ],
     dependencies: [
-        .package(path: "../MEGASwift")
+        .package(path: "../../MEGASharedRepo/MEGASwift")
     ],
     targets: [
         .target(

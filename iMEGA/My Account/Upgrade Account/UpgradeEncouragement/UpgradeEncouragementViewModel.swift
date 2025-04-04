@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @MainActor
 final class UpgradeEncouragementViewModel {

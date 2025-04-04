@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 struct ImportNodeRepository: ImportNodeRepositoryProtocol {

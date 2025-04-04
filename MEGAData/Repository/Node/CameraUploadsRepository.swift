@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 public final class CameraUploadsRepository: NSObject, CameraUploadsRepositoryProtocol {

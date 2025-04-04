@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 extension FolderLinkViewController: FolderLinkContextMenuDelegate {
     private func contextMenuConfiguration() -> CMConfigEntity? {

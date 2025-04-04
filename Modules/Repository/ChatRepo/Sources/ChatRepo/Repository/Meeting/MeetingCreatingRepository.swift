@@ -1,7 +1,7 @@
 import Foundation
+import MEGAAppSDKRepo
 @preconcurrency import MEGAChatSdk
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 public final class MeetingCreatingRepository: NSObject, MeetingCreatingRepositoryProtocol, Sendable {

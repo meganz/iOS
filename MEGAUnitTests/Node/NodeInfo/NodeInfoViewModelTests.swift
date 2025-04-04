@@ -1,10 +1,10 @@
 @testable import MEGA
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAppSDKRepo
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepo
-import MEGASDKRepoMock
 import XCTest
 
 final class NodeInfoViewModelTests: XCTestCase {

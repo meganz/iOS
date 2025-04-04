@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 /// Loader factory to provide the correct thumbnail loader for feature flag
 public enum ThumbnailLoaderFactory {

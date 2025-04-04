@@ -4,11 +4,11 @@ import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 import MEGASwiftUI
 
 enum ChatViewMode {

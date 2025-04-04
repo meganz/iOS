@@ -1,8 +1,8 @@
 import ChatRepo
 import Combine
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 
 final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRouting {
     private(set) var presenter: UINavigationController

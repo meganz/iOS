@@ -1,6 +1,6 @@
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
-import MEGASDKRepo
 
 extension TransferTableViewCell {
     open override func prepareForReuse() {

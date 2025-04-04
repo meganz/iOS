@@ -45,7 +45,7 @@
 
 @import Firebase;
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 @import SDWebImageWebPCoder;
 #import "MEGA-Swift.h"
 

@@ -1,8 +1,8 @@
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGASdk
-import MEGASDKRepoMock
 import XCTest
 
 final class ThumbnailViewerTableViewCellViewModelTests: XCTestCase {

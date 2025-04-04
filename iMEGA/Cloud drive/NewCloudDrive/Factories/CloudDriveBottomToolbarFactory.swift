@@ -1,9 +1,9 @@
 import ChatRepo
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGASDKRepo
 
 struct BottomToolbarConfig {
     let accessType: NodeAccessTypeEntity

@@ -1,6 +1,6 @@
 @testable import Accounts
+import MEGAAppSDKRepoMock
 import MEGASdk
-import MEGASDKRepoMock
 import Testing
 
 @Suite("App loading repository tests")

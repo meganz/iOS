@@ -1,7 +1,7 @@
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGARepo
-import MEGASDKRepo
 
 extension OfflineViewController {
     @objc func createOfflineViewModel() -> OfflineViewModel {

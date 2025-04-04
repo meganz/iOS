@@ -1,9 +1,9 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGARepo
-import MEGASDKRepo
 import UIKit
 
 extension TransfersWidgetViewController: TransferWidgetResponderProtocol {

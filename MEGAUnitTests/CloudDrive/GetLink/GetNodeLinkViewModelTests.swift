@@ -1,11 +1,11 @@
 @testable import MEGA
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAppSDKRepo
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGASDKRepo
-import MEGASDKRepoMock
 import MEGATest
 import XCTest
 

@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 struct HandleConverter {
     static func chatIdHandleConverter(_ chadId: ChatIdEntity) -> String {

@@ -1,7 +1,7 @@
 import ChatRepo
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 protocol PhotoBrowserDataProviderProtocol: Sendable {

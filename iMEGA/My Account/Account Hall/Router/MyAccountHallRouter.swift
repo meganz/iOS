@@ -1,8 +1,8 @@
 import DeviceCenter
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import MEGASwiftUI
 
 public protocol MyAccountHallRouting: Routing {

@@ -1,9 +1,9 @@
 import Combine
 import CoreSpotlight
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 import UniformTypeIdentifiers
 
 final class SpotlightIndexer: NSObject {

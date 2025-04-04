@@ -1,10 +1,10 @@
 import Chat
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 import MEGAUI
 
 @objc

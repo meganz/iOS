@@ -1,6 +1,6 @@
 import Foundation
 @testable import MEGA
-import MEGASDKRepoMock
+import MEGAAppSDKRepoMock
 import XCTest
 
 class AVPlayerManagerTests: XCTestCase {

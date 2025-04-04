@@ -1,9 +1,9 @@
 import ChatRepo
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
-import MEGASDKRepo
 
 extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegate {
     

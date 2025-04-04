@@ -2,9 +2,9 @@
 import ContentLibraries
 @testable import MEGA
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepoMock
 import XCTest
 
 class MediaDiscoveryContentViewModelTests: XCTestCase {

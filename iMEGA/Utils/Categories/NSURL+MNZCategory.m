@@ -9,7 +9,7 @@
 #import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @implementation NSURL (MNZCategory)
 

@@ -1,8 +1,8 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
-import MEGASDKRepo
 import MEGASwiftUI
 import UIKit
 

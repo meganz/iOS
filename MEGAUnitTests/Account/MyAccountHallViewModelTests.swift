@@ -5,9 +5,9 @@ import DeviceCenterMocks
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepoMock
 import MEGASwift
 import SwiftUI
 import XCTest

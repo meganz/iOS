@@ -4,10 +4,10 @@ import CoreServices
 import Foundation
 import ISEmojiView
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import MEGAUI
 import MessageKit
 import VisionKit

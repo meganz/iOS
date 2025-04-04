@@ -9,7 +9,7 @@
 
 @import MEGAL10nObjc;
 @import MEGAUIKit;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;

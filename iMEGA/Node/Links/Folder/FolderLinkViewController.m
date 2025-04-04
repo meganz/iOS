@@ -30,7 +30,7 @@
 @import MEGADomain;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, UISearchControllerDelegate>
 

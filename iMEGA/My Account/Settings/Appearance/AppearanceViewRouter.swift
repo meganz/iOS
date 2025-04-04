@@ -1,8 +1,8 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 
 struct AppearanceViewRouter: Routing {
     

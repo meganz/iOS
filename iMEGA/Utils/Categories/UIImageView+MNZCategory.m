@@ -15,7 +15,7 @@
 #endif
 
 @import SDWebImage;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 static const void *base64HandleKey = &base64HandleKey;
 

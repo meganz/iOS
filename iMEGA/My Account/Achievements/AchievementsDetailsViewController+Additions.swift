@@ -1,6 +1,6 @@
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGAL10n
-import MEGASDKRepo
 
 extension AchievementsDetailsViewController {
     @objc func showAddPhoneNumber() {

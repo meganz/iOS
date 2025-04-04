@@ -1,6 +1,6 @@
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
-import MEGASDKRepo
 import MEGASwift
 
 public struct NotificationSettingsRepository: NotificationSettingsRepositoryProtocol {

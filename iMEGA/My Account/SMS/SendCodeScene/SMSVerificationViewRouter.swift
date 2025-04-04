@@ -1,7 +1,7 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @objc enum SMSVerificationType: Int {
     case unblockAccount

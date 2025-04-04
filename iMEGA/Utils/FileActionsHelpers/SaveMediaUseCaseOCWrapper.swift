@@ -1,7 +1,7 @@
 import ChatRepo
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
-import MEGASDKRepo
 
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
     @objc func saveToPhotos(nodes: [MEGANode], isFolderLink: Bool = false) {

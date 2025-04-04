@@ -1,7 +1,7 @@
 @preconcurrency import FileProvider
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPickerFileProviderDomain
-import MEGASDKRepo
 
 final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator, Sendable {
     

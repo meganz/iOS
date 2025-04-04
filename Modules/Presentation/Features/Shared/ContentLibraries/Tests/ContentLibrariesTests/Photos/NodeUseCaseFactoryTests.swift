@@ -1,7 +1,7 @@
 @testable import ContentLibraries
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepo
 import XCTest
 
 final class NodeUseCaseFactoryTests: XCTestCase {

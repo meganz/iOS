@@ -1,10 +1,10 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGASDKRepoMock
 import XCTest
 
 final class TextEditorViewModelTests: XCTestCase {

@@ -1,7 +1,7 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 final class ActionWarningViewRouter: NSObject, Routing {
     private weak var presenter: UIViewController?

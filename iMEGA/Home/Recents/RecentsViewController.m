@@ -16,7 +16,7 @@
 @import ChatRepo;
 @import MEGAFoundation;
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, TextFileEditable, RecentsPreferenceProtocol>
 

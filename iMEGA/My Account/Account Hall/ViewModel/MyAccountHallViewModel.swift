@@ -3,8 +3,8 @@ import DeviceCenter
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 enum MyAccountSection: Int, CaseIterable {

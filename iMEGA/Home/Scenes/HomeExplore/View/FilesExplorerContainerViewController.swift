@@ -1,8 +1,8 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGASDKRepo
 import MEGAUI
 import MEGAUIKit
 

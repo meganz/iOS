@@ -1,6 +1,6 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @objc final class SharedItemsNodeSearcher: NSObject, Sendable {
     let searchUC = SharedItemsSearchNodeUseCase(filesSearchRepository: FilesSearchRepository.newRepo)

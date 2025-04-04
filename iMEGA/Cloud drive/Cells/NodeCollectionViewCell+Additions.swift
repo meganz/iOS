@@ -1,7 +1,7 @@
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGASdk
-import MEGASDKRepo
 import UIKit
 
 private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0

@@ -1,8 +1,8 @@
 import ChatRepo
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import Settings
 import SwiftUI
 

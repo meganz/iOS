@@ -1,8 +1,8 @@
 import AudioToolbox
 import AVFAudio
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 public final class TonePlayer: NSObject {
     public enum ToneType: String {

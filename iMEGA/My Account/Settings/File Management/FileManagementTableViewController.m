@@ -11,7 +11,7 @@
 #import "NSString+MNZCategory.h"
 
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     FileManagementTableSectionMobileData = 0,

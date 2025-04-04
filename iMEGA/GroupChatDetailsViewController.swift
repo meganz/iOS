@@ -2,10 +2,10 @@ import ChatRepo
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 extension GroupChatDetailsViewController {
     @objc var userPrivilegeIsAboveReadOnly: Bool {

@@ -1,8 +1,8 @@
 import Foundation
 import LogRepo
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 import MEGASwift
 
 extension Helper {

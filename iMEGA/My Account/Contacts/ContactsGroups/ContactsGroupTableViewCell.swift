@@ -1,7 +1,7 @@
 import ChatRepo
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
-import MEGASDKRepo
 import UIKit
 
 class ContactsGroupTableViewCell: UITableViewCell {

@@ -1,7 +1,7 @@
+import MEGAAppSDKRepo
 import MEGAChatSdk
 import MEGADomain
 import MEGASdk
-import MEGASDKRepo
 import MEGASwift
 
 public struct DownloadChatRepository: DownloadChatRepositoryProtocol {

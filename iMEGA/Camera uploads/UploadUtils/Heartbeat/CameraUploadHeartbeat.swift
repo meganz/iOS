@@ -1,7 +1,7 @@
 import FirebaseCrashlytics
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import MEGAUI
 
 final class CameraUploadHeartbeat: NSObject {

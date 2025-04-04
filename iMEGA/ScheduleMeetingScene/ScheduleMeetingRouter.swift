@@ -1,7 +1,7 @@
 import ChatRepo
 import Combine
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import SwiftUI
 
 /// hosts all parameters need to present and execute action on share link modal [MEET-3644]

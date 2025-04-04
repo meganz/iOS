@@ -1,7 +1,7 @@
 @preconcurrency import AVFoundation
 import Foundation
+import MEGAAppSDKRepo
 import MEGAL10n
-import MEGASDKRepo
 
 final class AudioPlayerItem: AVPlayerItem {
     var name: String

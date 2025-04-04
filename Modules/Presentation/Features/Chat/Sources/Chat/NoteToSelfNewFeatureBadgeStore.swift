@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 /// Protocol responsible for managing the display behavior of the 'NEW' badge in the 'Note to Self' UI.
 /// The display count is stored as a user attribute, ensuring persistence across iOS sessions.

@@ -1,9 +1,9 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 
 @MainActor
 protocol MyAvatarViewModelInputs {

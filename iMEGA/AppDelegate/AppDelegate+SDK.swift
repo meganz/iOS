@@ -1,8 +1,8 @@
 import ContentLibraries
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 
 extension AppDelegate {
     @objc func initializeCameraUploadsNode() {

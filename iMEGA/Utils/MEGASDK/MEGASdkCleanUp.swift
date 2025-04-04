@@ -1,7 +1,7 @@
 import ChatRepo
+import MEGAAppSDKRepo
 import MEGAChatSdk
 import MEGASdk
-import MEGASDKRepo
 
 @objc class MEGASdkCleanUp: NSObject {
     @objc static func localLogout() {

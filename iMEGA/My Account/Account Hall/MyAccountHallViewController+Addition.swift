@@ -1,8 +1,8 @@
 import Accounts
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import MEGASwiftUI
 
 extension MyAccountHallViewController {

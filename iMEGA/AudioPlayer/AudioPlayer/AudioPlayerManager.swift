@@ -1,7 +1,7 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @objc final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
     @objc static var shared = AudioPlayerManager()

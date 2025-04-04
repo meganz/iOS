@@ -1,9 +1,9 @@
 import ChatRepo
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPhotos
-import MEGASDKRepo
 
 class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate {
     private weak var viewController: UIViewController?

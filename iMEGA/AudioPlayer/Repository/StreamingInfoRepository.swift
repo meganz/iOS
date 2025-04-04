@@ -1,5 +1,5 @@
 import Foundation
-import MEGASDKRepo
+import MEGAAppSDKRepo
 
 protocol StreamingInfoRepositoryProtocol: Sendable {
     func serverStart()

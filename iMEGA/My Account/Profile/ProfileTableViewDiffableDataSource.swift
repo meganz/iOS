@@ -1,6 +1,6 @@
+import MEGAAppSDKRepo
 import MEGAFoundation
 import MEGAL10n
-import MEGASDKRepo
 import UIKit
 
 final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<ProfileSection, ProfileSectionRow> {

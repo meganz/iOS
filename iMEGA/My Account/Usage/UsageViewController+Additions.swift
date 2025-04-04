@@ -1,7 +1,7 @@
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 extension UsageViewController {
     private enum ColorType {

@@ -2,11 +2,11 @@ import Accounts
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASdk
-import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI

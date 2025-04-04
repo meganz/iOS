@@ -1,10 +1,10 @@
 import ChatRepo
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAPhotos
-import MEGASDKRepo
 import MEGAUIKit
 
 class ExplorerBaseViewController: UIViewController {

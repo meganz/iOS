@@ -13,7 +13,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @interface NodeVersionsViewController () <
 UITableViewDelegate,

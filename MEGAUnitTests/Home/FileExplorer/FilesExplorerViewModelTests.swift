@@ -1,9 +1,9 @@
 @testable import MEGA
 import MEGAAppPresentationMock
+import MEGAAppSDKRepo
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepo
-import MEGASDKRepoMock
 import XCTest
 
 final class FilesExplorerViewModelTests: XCTestCase {

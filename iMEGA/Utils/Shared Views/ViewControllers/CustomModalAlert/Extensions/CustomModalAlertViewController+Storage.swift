@@ -1,9 +1,9 @@
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 extension CustomModalAlertViewController {
     func configureForStorageEvent(_ event: MEGAEvent) {

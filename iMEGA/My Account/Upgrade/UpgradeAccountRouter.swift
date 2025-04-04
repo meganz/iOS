@@ -1,9 +1,9 @@
 import Accounts
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
-import MEGASDKRepo
 
 @MainActor
 protocol UpgradeAccountRouting {

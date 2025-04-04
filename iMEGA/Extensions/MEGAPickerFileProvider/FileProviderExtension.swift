@@ -1,8 +1,8 @@
 @preconcurrency import FileProvider
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPickerFileProviderDomain
-import MEGASDKRepo
 
 final class FileProviderExtension: NSFileProviderExtension {
     private var credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)

@@ -1,6 +1,6 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 public struct NodeUseCaseFactory {
     public static func makeNodeUseCase(

@@ -1,8 +1,8 @@
 import Combine
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGARepo
-import MEGASDKRepo
 
 final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol

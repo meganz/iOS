@@ -1,7 +1,7 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
-import MEGASDKRepo
 
 extension CameraUploadManager {
     @objc func scheduleCameraUploadBackgroundRefresh() {

@@ -1,6 +1,6 @@
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomain
-import MEGASDKRepoMock
 
 final class MockStreamingInfoUseCase: StreamingInfoUseCaseProtocol, @unchecked Sendable {
     private(set) var startServer_calledTimes = 0

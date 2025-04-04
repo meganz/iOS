@@ -1,6 +1,6 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 protocol RecoveryKeyViewRouting: Routing {
     var recoveryKeyViewController: UIViewController? { get }

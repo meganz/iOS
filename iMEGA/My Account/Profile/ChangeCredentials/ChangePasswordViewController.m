@@ -11,7 +11,7 @@
 #import "Helper.h"
 #import "InputView.h"
 #import "TwoFactorAuthenticationViewController.h"
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 @import MEGAL10nObjc;
 
 typedef NS_ENUM(NSUInteger, TextFieldTag) {

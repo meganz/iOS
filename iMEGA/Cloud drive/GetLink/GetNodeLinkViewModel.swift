@@ -1,8 +1,8 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
-import MEGASDKRepo
 
 final class GetNodeLinkViewModel: ViewModelType {
     

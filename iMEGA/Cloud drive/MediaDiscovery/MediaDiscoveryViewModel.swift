@@ -1,9 +1,9 @@
 import Combine
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
-import MEGASDKRepo
 
 enum MediaDiscoveryAction: ActionType {
     case onViewReady

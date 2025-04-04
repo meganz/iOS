@@ -8,11 +8,11 @@ import Intents
 import LogRepo
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 import PushKit
 import SafariServices
 

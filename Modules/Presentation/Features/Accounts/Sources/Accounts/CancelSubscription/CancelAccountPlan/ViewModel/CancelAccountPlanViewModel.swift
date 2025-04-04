@@ -1,8 +1,8 @@
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @MainActor
 public final class CancelAccountPlanViewModel: ObservableObject {

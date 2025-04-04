@@ -1,10 +1,10 @@
 import ChatRepoMock
 import Foundation
 @testable import MEGA
+import MEGAAppSDKRepo
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepo
-import MEGASDKRepoMock
 import XCTest
 
 class DownloadFileRepositoryTests: XCTestCase {

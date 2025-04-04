@@ -3,8 +3,8 @@ import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 enum TwoFactorAuthStatus: Int {
     case unknown
