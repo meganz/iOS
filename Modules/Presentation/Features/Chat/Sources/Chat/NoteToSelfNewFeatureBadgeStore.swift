@@ -13,6 +13,10 @@ public protocol NoteToSelfNewFeatureBadgeStoring: Sendable {
     /// Increments the display count of the 'NEW' badge by one.
     /// This method should persist the updated count as a user attribute.
     func incrementNoteToSelfNewFeatureBadgePresented() async
+    
+    /// Set as max the displayed times count of the 'NEW' badge, avoiding showing it in the future.
+    /// This method should persist the max count as a user attribute.
+    func saveNoteToSelfNewFeatureBadgeAsPresented() async
 }
 
 public struct NoteToSelfNewFeatureBadgeStore: NoteToSelfNewFeatureBadgeStoring {
@@ -50,6 +54,14 @@ public struct NoteToSelfNewFeatureBadgeStore: NoteToSelfNewFeatureBadgeStoring {
             }
         } catch {
             MEGALogError("[NoteToSelfBadgeStore] Unable to increment note to self new feature badge presented times. \(error.localizedDescription)")
+        }
+    }
+    
+    public func saveNoteToSelfNewFeatureBadgeAsPresented() async {
+        do {
+            try await userAttributeUseCase.saveNoteToSelfNewFeatureBadge(presentedTimes: Constants.noteToSelfNewFeatureBadgeMaxPresentedCount)
+        } catch {
+            logError("[NoteToSelfBadgeStore] Unable to save note to self new feature badge already presented. \(error.localizedDescription)")
         }
     }
 }

@@ -1,3 +1,4 @@
+@testable import Chat
 import ChatRepoMock
 @testable import MEGA
 import MEGAAppPresentation
@@ -753,6 +754,7 @@ final class ChatContentViewModelTests: XCTestCase {
             handleUseCase: handleUseCase,
             callController: callController,
             callsManager: callsManager,
+            noteToSelfNewFeatureBadgeStore: NoteToSelfNewFeatureBadgeStore(userAttributeUseCase: MockUserAttributeUseCase()),
             featureFlagProvider: featureFlagProvider
         )
         return (sut, router)
