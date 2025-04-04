@@ -169,8 +169,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func isPlayerPlaying() -> Bool { true }
     func isPlayerPaused() -> Bool { false }
     func isPlayerAlive() -> Bool { true }
-    func addDelegate(_ delegate: any AudioPlayerPresenterProtocol) {}
-    func removeDelegate(_ delegate: any AudioPlayerPresenterProtocol) {}
+    func updateMiniPlayerPresenter(_ presenter: any AudioPlayerPresenterProtocol) {}
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
     func isShuffleEnabled() -> Bool { false }
@@ -187,7 +186,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}
     func remoteCommandEnabled(_ enabled: Bool) {}
     func resetAudioPlayerConfiguration() {}
-    func refreshPresentersContentOffset(isHidden: Bool) {}
+    func refreshContentOffset(presenter: any AudioPlayerPresenterProtocol, isHidden: Bool) {}
     func playerTracksContains(url: URL) -> Bool { true }
     func resetCurrentItem(shouldResetPlayback: Bool) {
         setCurrent_callTimes += 1

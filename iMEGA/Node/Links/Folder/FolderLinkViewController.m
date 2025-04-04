@@ -86,6 +86,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.currentContentInsetHeight = 0;
+    
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
@@ -171,7 +173,6 @@
     [MEGASdk.sharedFolderLink removeMEGAGlobalDelegateAsync:self.globalDelegate];
     [MEGASdk.sharedFolderLink removeMEGARequestDelegateAsync:self.requestDelegate];
     
-    [AudioPlayerManager.shared removeDelegate:self];
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
@@ -180,7 +181,7 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [AudioPlayerManager.shared addDelegate:self];
+    [AudioPlayerManager.shared updateMiniPlayerPresenter:self];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self shouldShowMiniPlayer];
 }
@@ -429,11 +430,16 @@
 }
 
 - (void)reloadData {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self refreshContentInset];
+    }];
     if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.flTableView.tableView reloadData];
     } else {
         [self.flCollectionView reloadData];
     }
+    [CATransaction commit];
 }
 
 - (GlobalDelegate *)globalDelegate {
@@ -499,6 +505,8 @@
     
     self.flTableView.tableView.emptyDataSetSource = self;
     self.flTableView.tableView.emptyDataSetDelegate = self;
+    
+    [self refreshContentInset];
 }
     
 - (void)initCollection {
@@ -517,6 +525,8 @@
 
     self.flCollectionView.collectionView.emptyDataSetDelegate = self;
     self.flCollectionView.collectionView.emptyDataSetSource = self;
+    
+    [self refreshContentInset];
 }
     
 - (void)changeViewModePreference {

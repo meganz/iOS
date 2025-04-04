@@ -143,7 +143,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [self setEditMode:NO];
     }
     
-    [AudioPlayerManager.shared removeDelegate:self];
     [self refreshMiniPlayerIfNeeded];
 }
 

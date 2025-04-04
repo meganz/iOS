@@ -113,9 +113,11 @@ extension RecentsViewController {
 
 extension RecentsViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
-        Task { @MainActor in
-            tableView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
-            didUpdateMiniPlayerHeight?(height)
-        }
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+        didUpdateMiniPlayerHeight?(height)
+    }
+    
+    func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }

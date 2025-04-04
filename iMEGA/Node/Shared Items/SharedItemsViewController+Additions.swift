@@ -529,10 +529,8 @@ extension SharedItemsViewController {
         }
     }
     
-    @objc func addAudioPlayerDelegate() {
-        AudioPlayerManager.shared.addDelegate(self)
-        let isPlayerHidden = !AudioPlayerManager.shared.isPlayerAlive()
-        AudioPlayerManager.shared.refreshPresentersContentOffset(isHidden: isPlayerHidden)
+    @objc func updateMiniPlayerPresenter() {
+        AudioPlayerManager.shared.updateMiniPlayerPresenter(self)
     }
 }
 
@@ -580,8 +578,10 @@ extension SharedItemsViewController: AdsSlotDisplayable {
 
 extension SharedItemsViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
-        Task { @MainActor in
-            tableView?.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
-        }
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }

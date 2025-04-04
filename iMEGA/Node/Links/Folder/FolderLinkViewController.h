@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) FolderLinkViewModel *viewModel;
 
+@property (nonatomic, assign) CGFloat currentContentInsetHeight;
+
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender;
 
 - (BOOL)isListViewModeSelected;
